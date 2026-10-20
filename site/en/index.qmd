@@ -161,6 +161,10 @@ Distinguish representation, decodability, and causal use; understand XOR, superp
 :::
 ::::
 
+## Follow project progress
+
+The [repository roadmap](../docs/roadmap.md) distinguishes implemented features, priority work, and the acceptance criteria required to mark a module complete. It avoids treating a published explanation as proof that an implementation or experiment has been verified.
+
 ## Project principles
 
 :::: {.principle-grid}
