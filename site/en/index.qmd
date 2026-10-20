@@ -81,7 +81,7 @@ Measure quality, memory, and latency trade-offs without overinterpreting one met
 
 **Outcome:** ablations, uncertainty estimates, and explicit limitations.
 :::
-:::
+::::
 
 The [detailed learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) defines exit criteria for each module. Python implementations live in `src/llm_lab/`; Quarto pages explain the mathematics, show minimal code, and link to executable tests.
 
