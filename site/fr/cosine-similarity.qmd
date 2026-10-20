@@ -1,0 +1,101 @@
+---
+title: "La similarité cosinus mesure-t-elle la similarité sémantique ?"
+subtitle: "Géométrie, anisotropie, classement des voisins et choix de métrique"
+lang: fr
+---
+
+## La question derrière la métrique par défaut
+
+La similarité cosinus est souvent utilisée pour comparer des embeddings de phrases, de documents ou de requêtes. Elle est simple, peu coûteuse et invariante à la norme des vecteurs. Mais elle ne mesure pas directement la « similarité sémantique » : elle mesure l'alignement angulaire de deux représentations produites par un modèle donné.
+
+Cette distinction compte. La métrique ne peut être interprétée indépendamment de **la tâche, de l'encodeur, de la distribution des données et de l'objectif d'entraînement**.
+
+## 1. Définition et hypothèses
+
+Pour deux vecteurs non nuls (x,y\in\mathbb{R}^d),
+
+\[
+\operatorname{cos}(x,y)=\frac{x^\top y}{\|x\|_2\,\|y\|_2}.
+\]
+
+Le score appartient à \([-1,1]\). Une valeur élevée signifie que les vecteurs pointent dans des directions proches. Il ne signifie pas, à lui seul, que les textes sont équivalents, qu'ils impliquent la même réponse ou qu'ils sont interchangeables dans un système de recherche.
+
+La normalisation retire l'information portée par la norme. C'est souhaitable si cette norme est un facteur parasite ; c'est potentiellement dommageable si le modèle a appris à y encoder un signal utile. Steck, Ekanadham et Kallus montrent analytiquement que, pour certaines familles de modèles linéaires régularisés, les similarités cosinus peuvent être arbitraires, non uniques ou dépendantes de la régularisation. Leur résultat invite à éviter l'usage automatique de la métrique, mais ne prouve pas que le cosinus échoue pour tous les encodeurs modernes.
+
+## 2. Pourquoi le cosinus peut être trompeur
+
+### Anisotropie et concentration des scores
+
+Un espace est anisotrope lorsque les vecteurs ne sont pas répartis uniformément dans toutes les directions. Dans ce cas, des paires de phrases peu liées peuvent malgré tout avoir des cosinus élevés. Li et al. (EMNLP 2020) analysent l'anisotropie des embeddings de phrases BERT pré-entraînés et montrent qu'elle nuit à la similarité sémantique dans leurs expériences. Ethayarajh (2019) observe également des représentations contextualisées non isotropes dans BERT, ELMo et GPT-2.
+
+**Conséquence pratique :** regarder uniquement quelques exemples de scores est insuffisant. Examiner la distribution des scores pour des paires positives, négatives et aléatoires, et mesurer si la métrique sépare effectivement les classes pertinentes.
+
+### Le phénomène de *hubness*
+
+Dans les espaces de grande dimension, certains points peuvent devenir les plus proches voisins d'un grand nombre d'autres points. Ces « hubs » peuvent apparaître fréquemment dans les résultats sans être de bons résultats pour chaque requête. Le classement local peut alors être biaisé, même si la formule de distance est calculée correctement.
+
+### Une proximité n'est pas une pertinence
+
+Deux textes peuvent être très proches lexicalement ou thématiquement mais exprimer des faits opposés (« le traitement fonctionne » / « le traitement ne fonctionne pas »). Inversement, deux formulations très différentes peuvent répondre à la même question. La similarité de représentation n'est donc pas automatiquement équivalente à l'équivalence logique, à la pertinence documentaire ou à l'utilité pour un RAG.
+
+### La métrique dépend du modèle et de l'objectif d'entraînement
+
+Les modèles Sentence Transformers ne partagent pas tous la même fonction de score cible : certains sont entraînés ou recommandés pour le produit scalaire, d'autres pour le cosinus. La documentation Sentence Transformers précise que le produit scalaire de vecteurs normalisés équivaut au cosinus, tandis que le produit scalaire de vecteurs non normalisés conserve l'information de norme. Il faut respecter les hypothèses du modèle choisi plutôt que remplacer la métrique par défaut sans évaluation.
+
+## 3. Quand le cosinus est un bon choix
+
+Le cosinus est une baseline raisonnable lorsque :
+
+- l'encodeur est conçu et évalué pour la similarité sémantique ;
+- la normalisation est cohérente avec son entraînement et son usage recommandé ;
+- l'objectif est de comparer des directions plutôt que les amplitudes des représentations ;
+- le système est validé sur des requêtes et documents représentatifs de l'usage réel ;
+- le classement des voisins, pas seulement la valeur absolue du score, est évalué.
+
+Il devient moins fiable comme indicateur autonome lorsque l'encodeur n'a pas été adapté à la tâche, que les scores sont concentrés dans une plage étroite, que les données sont hors distribution, ou que la tâche exige une distinction logique fine.
+
+## 4. Expérience reproductible à ajouter au dépôt
+
+L'expérience doit isoler la métrique du reste du système.
+
+1. Choisir un jeu d'évaluation documenté (par exemple STS Benchmark pour la similarité de phrases, et un jeu de recherche pertinent pour un scénario de retrieval).
+2. Comparer plusieurs encodeurs : un modèle de phrases entraîné pour la similarité, un modèle d'embeddings de recherche et, si possible, des embeddings BERT bruts comme témoin.
+3. Comparer cosinus, produit scalaire, distance euclidienne et classement par rang. Documenter si les vecteurs sont normalisés.
+4. Rapporter les métriques adaptées à la tâche : Spearman/Pearson pour un score de similarité annoté, Recall@k / MRR / nDCG pour la recherche.
+5. Inspecter les faux positifs, les hubs et la distribution des scores ; fournir des intervalles d'incertitude lorsque le protocole le permet.
+
+Ne pas comparer des métriques sur des modèles entraînés avec des objectifs différents puis attribuer tout écart à la seule formule. Si l'on compare cosinus et produit scalaire, inclure explicitement le cas des vecteurs normalisés, où les deux sont équivalents en classement.
+
+```python
+import numpy as np
+
+def cosine_similarity(x: np.ndarray, y: np.ndarray) -> float:
+    """Cosine similarity for two non-zero vectors."""
+    x_norm = np.linalg.norm(x)
+    y_norm = np.linalg.norm(y)
+    if x_norm == 0 or y_norm == 0:
+        raise ValueError("Cosine similarity is undefined for zero vectors.")
+    return float(np.dot(x, y) / (x_norm * y_norm))
+```
+
+Ce fragment explicite la définition et le cas limite des vecteurs nuls ; il ne constitue pas, à lui seul, un benchmark.
+
+## 5. Lecture critique des sources
+
+### Articles scientifiques
+
+- **Steck, Ekanadham & Kallus (2024).** [Is Cosine-Similarity of Embeddings Really About Similarity? — arXiv:2403.05440](https://arxiv.org/abs/2403.05440), également publié dans les actes *WWW 2024 Companion* ([DOI](https://doi.org/10.1145/3589335.3651526)). Analyse théorique de l'effet de la régularisation sur les similarités calculées à partir d'embeddings.
+- **Li et al. (2020).** [On the Sentence Embeddings from Pre-trained Language Models — EMNLP 2020](https://aclanthology.org/2020.emnlp-main.733/). Étudie l'anisotropie des embeddings de phrases BERT et propose BERT-flow.
+- **Ethayarajh (2019).** [How Contextual are Contextualized Word Representations? — arXiv:1909.00512](https://arxiv.org/abs/1909.00512). Compare la géométrie des représentations de BERT, ELMo et GPT-2.
+- **Nastase & Merlo (2025).** [Testing the assumptions about the geometry of sentence embedding spaces: the cosine measure need not apply — arXiv:2509.01606](https://arxiv.org/abs/2509.01606). Examine si la géométrie des embeddings de phrases prédit les performances sur diverses tâches linguistiques ; à lire en distinguant ses résultats empiriques de toute généralisation universelle.
+
+### Documentation et explications techniques
+
+- **Sentence Transformers.** [Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html) et [fonctions de similarité disponibles](https://sbert.net/docs/package_reference/util/similarity.html). Référence pratique pour comprendre les métriques exposées par la bibliothèque et la différence entre cosinus, produit scalaire et distances.
+- **Sentence Transformers.** [Modèles pré-entraînés](https://sbert.net/docs/sentence_transformer/pretrained_models.html). Exemples de modèles de recherche conçus pour le produit scalaire : le choix de métrique peut faire partie du contrat d'utilisation du modèle.
+
+La documentation d'une bibliothèque décrit un comportement d'implémentation ; elle ne remplace pas une évaluation scientifique. Les articles cités portent sur des modèles, des objectifs et des protocoles différents : leurs résultats ne doivent pas être fusionnés en une conclusion unique sans tenir compte de ces différences.
+
+## À retenir
+
+Le cosinus est une **métrique géométrique**, pas une définition universelle de la sémantique. Le bon réflexe est de traiter toute métrique comme une hypothèse expérimentale : choisir un modèle adapté, établir une baseline, mesurer le classement sur une tâche cible et analyser les erreurs.
