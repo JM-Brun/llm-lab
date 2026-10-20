@@ -1,0 +1,50 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - index.qmd
+    - en/index.qmd
+    - fr/transformer.qmd
+    - en/transformer.qmd
+    - references.qmd
+
+website:
+  title: "LLM Lab"
+  description: "A bilingual, code-first guide to the mathematics and implementation of language models."
+  site-url: "https://jm-brun.github.io/llm-lab/"
+  repo-url: "https://github.com/JM-Brun/llm-lab"
+  repo-actions: [source, issue]
+  page-navigation: true
+  navbar:
+    left:
+      - text: "Français"
+        href: index.qmd
+      - text: "English"
+        href: en/index.qmd
+      - text: "Références / References"
+        href: references.qmd
+  sidebar:
+    style: "docked"
+    contents:
+      - section: "Français"
+        contents:
+          - index.qmd
+          - fr/transformer.qmd
+      - section: "English"
+        contents:
+          - en/index.qmd
+          - en/transformer.qmd
+      - references.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-copy: true
+    code-overflow: wrap
+    link-external-newwindow: true
+    smooth-scroll: true
+
+execute:
+  freeze: auto
