@@ -75,6 +75,16 @@ The repository is an independent learning and experimentation project. These sou
     - https://cyber.sites.beta.gouv.fr/nous-connaitre/publications/publications-internationales/design-principles-for-llm-based-systems-with-zero-trust/
     - **Use for:** a security perspective for later system-level experiments. Model construction and application security are related but distinct topics.
 
+## Research notes on embedding geometry
+
+These papers underpin the bilingual critical notes in the Quarto site. Treat each conclusion within its stated assumptions, models, tasks, and evaluation protocol.
+
+- **Cosine similarity and embedding geometry:** Steck, Ekanadham & Kallus, [*Is Cosine-Similarity of Embeddings Really About Similarity?*](https://arxiv.org/abs/2403.05440); Ethayarajh, [*How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512); Nastase & Merlo, [*Testing the assumptions about the geometry of sentence embedding spaces*](https://arxiv.org/abs/2509.01606); Zhelezniak et al., [*Correlation Coefficients and Semantic Textual Similarity*](https://arxiv.org/abs/1905.07790).
+- **Linearity and multidimensional features:** Park, Choe & Veitch, [*The Linear Representation Hypothesis and the Geometry of Large Language Models*](https://arxiv.org/abs/2311.03658); Engels et al., [*Not All Language Model Features Are One-Dimensionally Linear*](https://arxiv.org/abs/2405.14860); Tiblias et al., [*Shape Happens*](https://arxiv.org/html/2510.01025v1); Elhage et al., [*Toy Models of Superposition*](https://transformer-circuits.pub/2022/toy_model/).
+- **Probe evaluation:** Hewitt & Liang, [*Designing and Interpreting Probes with Control Tasks*](https://aclanthology.org/D19-1275/); Barin-Pacela et al., [*Stop Probing, Start Coding*](https://proceedings.mlr.press/v337/barin-pacela26a.html).
+
+Read the corresponding [cosine-similarity note](../site/fr/cosine-similarity.qmd) and [linearity note](../site/fr/linearite-embeddings.qmd) for assumptions, counterexamples, and suggested reproducible tests. The bibliography is a starting point; a citation does not by itself establish that every claim has been independently reproduced in this repository.
+
 ## How references and illustrations should be used
 
 - Prefer original papers, official framework documentation, and maintained source repositories for technical claims.
