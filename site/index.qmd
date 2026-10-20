@@ -21,7 +21,7 @@ Le but n'est **pas** d'entraîner un modèle de production depuis zéro. Il s'ag
 | 4. Fine-tuning | Comment adapter un modèle à une tâche ? | Baseline, SFT et analyse d'erreurs |
 | 5. Efficacité et évaluation | Quels compromis entre qualité, mémoire et latence ? | Ablations, métriques, incertitude et limites |
 
-Le [parcours détaillé](../docs/learning-path.md) donne les critères de sortie de chaque module. Le code Python est conservé dans `src/llm_lab/` ; les pages Quarto expliquent les mathématiques, montrent des extraits minimaux et renvoient aux tests exécutables.
+Le [parcours détaillé](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) donne les critères de sortie de chaque module. Le code Python est conservé dans `src/llm_lab/` ; les pages Quarto expliquent les mathématiques, montrent des extraits minimaux et renvoient aux tests exécutables.
 
 ## Une boucle d'apprentissage
 
@@ -38,7 +38,7 @@ L'attention permet à chaque position de construire une représentation contextu
 
 ![Schéma de la pile de blocs décodeurs GPT-2.](https://jalammar.github.io/images/gpt2/gpt2-transformer-block-vectors-2.png){fig-alt="Pile de blocs décodeurs avec attention auto-régressive masquée et réseau feed-forward" width=100%}
 
-_Figure 1 — Illustration de Jay Alammar, reproduite depuis [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/). L'image reste hébergée par son auteur ; voir la page source pour le contexte et les droits applicables._
+_Figure 1 — Illustration de Jay Alammar, intégrée depuis [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/). L'image reste hébergée par son auteur ; voir la page source pour le contexte et les droits applicables._
 
 Consulter le chapitre [Attention et masque causal](fr/transformer.qmd) pour relier ce schéma aux équations et au code.
 
