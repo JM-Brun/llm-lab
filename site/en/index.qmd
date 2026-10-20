@@ -21,7 +21,7 @@ The goal is **not** to train a production model from scratch. It is to build sma
 | 4. Fine-tuning | How can a model adapt to a task? | Baseline, SFT run, and error analysis |
 | 5. Efficiency and evaluation | What are the quality, memory, and latency trade-offs? | Ablations, metrics, uncertainty, and limitations |
 
-The [detailed learning path](../../docs/learning-path.md) defines exit criteria for each module. Python implementations live in `src/llm_lab/`; Quarto pages explain the mathematics, show minimal code, and link to executable tests.
+The [detailed learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) defines exit criteria for each module. Python implementations live in `src/llm_lab/`; Quarto pages explain the mathematics, show minimal code, and link to executable tests.
 
 ## A learning loop
 
