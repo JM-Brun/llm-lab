@@ -89,6 +89,11 @@ Ce fragment explicite la définition et le cas limite des vecteurs nuls ; il ne 
 - **Ethayarajh (2019).** [How Contextual are Contextualized Word Representations? — arXiv:1909.00512](https://arxiv.org/abs/1909.00512). Compare la géométrie des représentations de BERT, ELMo et GPT-2.
 - **Nastase & Merlo (2025).** [Testing the assumptions about the geometry of sentence embedding spaces: the cosine measure need not apply — arXiv:2509.01606](https://arxiv.org/abs/2509.01606). Examine si la géométrie des embeddings de phrases prédit les performances sur diverses tâches linguistiques ; à lire en distinguant ses résultats empiriques de toute généralisation universelle.
 
+### Compléments scientifiques et illustrations
+
+- **Zhelezniak et al. (2019).** [Correlation Coefficients and Semantic Textual Similarity — arXiv:1905.07790](https://arxiv.org/abs/1905.07790). Montre que cosinus et corrélation de Pearson sont liés pour certaines représentations, et évalue des cas où les corrélations de rang sont plus adaptées. Utile pour rappeler que la métrique doit être validée sur la tâche et le type de vecteurs.
+- **Nielsen & Hansen (2024).** [Hubness Reduction Improves Sentence-BERT Semantic Spaces — PMLR](https://proceedings.mlr.press/v233/nielsen24a.html) ([arXiv](https://arxiv.org/abs/2311.18364)). Étudie le phénomène de *hubness* et des méthodes pour le réduire dans des espaces Sentence-BERT.
+
 ### Documentation et explications techniques
 
 - **Sentence Transformers.** [Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html) et [fonctions de similarité disponibles](https://sbert.net/docs/package_reference/util/similarity.html). Référence pratique pour comprendre les métriques exposées par la bibliothèque et la différence entre cosinus, produit scalaire et distances.
