@@ -16,6 +16,7 @@ This roadmap separates **current evidence**, **next implementation work**, and *
 - End-to-end invariance tests for causal attention.
 - Reproducible experiments behind the cosine-similarity and feature-linearity articles.
 - Browser-based visual/accessibility review and automated link checking for the site.
+- A committed `uv.lock` at the reviewed base snapshot; the current setup can resolve dependencies during CI, but it does not yet guarantee the same locked dependency graph across runs.
 - An explicit repository licence. Do not infer permission to reuse the code or content.
 
 ## Prioritized plan
@@ -28,7 +29,7 @@ Tasks:
 2. Check internal links, external source links, image loading, alternative text, headings, and rendered mathematics.
 3. Fix notation inconsistencies in the mathematical foundations and attention self-checks.
 4. Link the website, learning path, reference list, and this roadmap consistently.
-5. Confirm the committed lockfile reproduces CI's Python environment; document Quarto as a separate dependency.
+5. Generate and commit `uv.lock`, then change CI to install with `uv sync --locked --dev`; document Quarto as a separate system dependency.
 6. Add tests for the causal-mask helper, including input validation and preservation of the input array; then add a full-attention future-token invariance test when attention code exists.
 
 **Acceptance criteria**
