@@ -15,7 +15,10 @@ website:
   repo-url: "https://github.com/JM-Brun/llm-lab"
   repo-actions: [source, issue]
   page-navigation: true
+  search: true
   navbar:
+    background: "#10233f"
+    foreground: "#f8fafc"
     left:
       - text: "Français"
         href: index.qmd
@@ -23,8 +26,13 @@ website:
         href: en/index.qmd
       - text: "Références / References"
         href: references.qmd
+    right:
+      - icon: github
+        href: https://github.com/JM-Brun/llm-lab
+        aria-label: "GitHub repository"
   sidebar:
     style: "docked"
+    search: true
     contents:
       - section: "Français"
         contents:
@@ -35,16 +43,24 @@ website:
           - en/index.qmd
           - en/transformer.qmd
       - references.qmd
+  page-footer:
+    left: "LLM Lab · Mathématiques, code et expériences reproductibles"
+    right:
+      - text: "Code source"
+        href: https://github.com/JM-Brun/llm-lab
 
 format:
   html:
-    theme: cosmo
+    theme:
+      - cosmo
+      - styles.scss
     toc: true
     toc-depth: 3
     code-copy: true
     code-overflow: wrap
     link-external-newwindow: true
     smooth-scroll: true
+    anchor-sections: true
 
 execute:
   freeze: auto
