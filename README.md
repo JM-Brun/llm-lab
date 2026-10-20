@@ -4,6 +4,23 @@ A reproducible, code-first lab for understanding how language models work—from
 
 The goal is not to train a production-scale LLM from scratch. It is to implement small, inspectable components, test their mathematical properties, run controlled experiments, and document what the evidence does and does not show.
 
+## Learn through the Quarto site
+
+The project includes a bilingual Quarto website that explains concepts step by step in **French and English**, connecting intuition, mathematical notation, readable Python examples, tests, and experimental limitations.
+
+- French introduction: `site/index.qmd`
+- English introduction: `site/en/index.qmd`
+- Attention and causal masking: `site/fr/transformer.qmd` and `site/en/transformer.qmd`
+- Visual references and image provenance: `site/references.qmd`
+
+The site uses carefully attributed illustrations embedded from their original source when suitable. It does not mirror or redistribute external image files. An accessible URL is not a licence: check reuse terms before copying or modifying a figure. The site can be rendered locally with the [Quarto CLI](https://quarto.org/docs/get-started/).
+
+```bash
+quarto render site
+```
+
+The rendered site is written to `site/_site/`. The Quarto CLI is a separate system dependency; it is not installed by `uv`.
+
 ## Learning principles
 
 - **Understand before scaling:** start with small tensors, toy corpora, and small models.
@@ -39,6 +56,7 @@ See [the learning path](docs/learning-path.md) for module-level objectives and [
 - `experiments/`: versioned configurations and runnable experiment entry points.
 - `reports/`: concise, evidence-backed results and limitations.
 - `docs/`: learning path, foundations, experiment protocol, and references.
+- `site/`: Quarto website sources in French and English.
 
 ## Quick start
 
@@ -73,11 +91,11 @@ Core exercises should run on CPU with small inputs. Later experiments may offer 
 
 ## Research and references
 
-The project builds on existing educational work rather than presenting established techniques as original. See [the annotated references](docs/references.md). Each experiment should cite the method, implementation, dataset, and evaluation setup it uses.
+The project builds on existing educational work rather than presenting established techniques as original. See [the annotated references](docs/references.md) and [the Quarto figure provenance page](site/references.qmd). Each experiment should cite the method, implementation, dataset, and evaluation setup it uses.
 
 ## Status
 
-Initial repository scaffold. The first implementation is a small, tested cross-entropy loss and numerical gradient check; model components will be added incrementally.
+Initial repository scaffold with a first numerical exercise and a bilingual Quarto learning-site foundation. Model components and chapters will be added incrementally; a successful site render and clean CI run still need to be verified.
 
 ## License
 
