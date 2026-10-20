@@ -22,9 +22,9 @@ Each position forms a query, compares it with the keys of available positions, a
 
 Three learned projections transform each representation:
 
-[
+$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
-]
+$
 
 - **Query (\(Q\))**: what a position is looking for in context.
 - **Key (\(K\))**: the features used to compare positions.
@@ -32,10 +32,10 @@ Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
 
 Scaled dot-product attention is:
 
-[
+$
 \operatorname{Attention}(Q,K,V)
 =\operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
-]
+$
 
 The factor \(\sqrt{d_k}\) controls score magnitude before softmax. \(M\) is the mask: future positions receive \(-\infty\), which gives them zero probability after softmax.
 
@@ -53,7 +53,7 @@ _This original diagram summarizes the access constraint. The Jay Alammar illustr
 
 _Figure 1 — Illustration by Jay Alammar from [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/). The figure is embedded from the original source and is not redistributed in this repository._
 
-At position \(i\), only positions \(j \leq i\) are visible. Forbidden scores are masked with (-\infty) **before** softmax, making their probabilities zero.
+At position \(i\), only positions \(j \leq i\) are visible. Forbidden scores are masked with \(-\infty\) **before** softmax, making their probabilities zero.
 
 ### Visual supplement: attention updates representations
 
