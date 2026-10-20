@@ -12,7 +12,7 @@ Cette distinction compte. La métrique ne peut être interprétée indépendamme
 
 ## 1. Définition et hypothèses
 
-Pour deux vecteurs non nuls (x,y\in\mathbb{R}^d),
+Pour deux vecteurs non nuls $x,y\in\mathbb{R}^d$,
 
 \[
 \operatorname{cos}(x,y)=\frac{x^\top y}{\|x\|_2\,\|y\|_2}.
