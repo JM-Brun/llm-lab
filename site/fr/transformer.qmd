@@ -22,9 +22,9 @@ Chaque position construit une question (query), compare cette question aux clés
 
 Trois projections apprises transforment chaque représentation :
 
-[
+$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
-]
+$
 
 - **Query (\(Q\))** : ce que la position cherche dans le contexte.
 - **Key (\(K\))** : les caractéristiques utilisées pour comparer les positions.
@@ -32,10 +32,10 @@ Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
 
 L'attention à produit scalaire mise à l'échelle s'écrit :
 
-[
+$
 \operatorname{Attention}(Q,K,V)
 =\operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
-]
+$
 
 Le facteur \(\sqrt{d_k}\) limite l'amplitude des scores avant softmax. \(M\) est le masque : pour les positions futures, on ajoute \(-\infty\), ce qui donne une probabilité nulle après softmax.
 
@@ -53,7 +53,7 @@ _Ce schéma original du dépôt résume la contrainte d'accès. Les illustration
 
 _Figure 1 — Illustration de Jay Alammar, issue de [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/). La figure est intégrée depuis la source originale et n'est pas redistribuée dans ce dépôt._
 
-Dans la matrice de scores, une position \(i\) ne peut regarder que les positions \(j \leq i\). Les cases interdites sont masquées avec (-\infty) **avant** le softmax ; leur probabilité devient alors nulle.
+Dans la matrice de scores, une position \(i\) ne peut regarder que les positions \(j \leq i\). Les cases interdites sont masquées avec \(-\infty\) **avant** le softmax ; leur probabilité devient alors nulle.
 
 ### Complément visuel : l'attention transforme les représentations
 
