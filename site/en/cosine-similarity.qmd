@@ -12,7 +12,7 @@ This distinction matters. A metric cannot be interpreted independently of **the 
 
 ## 1. Definition and assumptions
 
-For two non-zero vectors (x,y\in\mathbb{R}^d),
+For two non-zero vectors $x,y\in\mathbb{R}^d$,
 
 \[
 \operatorname{cos}(x,y)=\frac{x^\top y}{\|x\|_2\,\|y\|_2}.
