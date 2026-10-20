@@ -161,6 +161,10 @@ Distinguer représentation, décodabilité et usage causal ; comprendre XOR, sup
 :::
 ::::
 
+## Suivre la progression
+
+Le [plan de développement du dépôt](../docs/roadmap.md) distingue les fonctionnalités déjà présentes, les travaux prioritaires et les critères permettant de considérer un module comme terminé. Il évite de confondre une explication publiée avec une implémentation ou une expérience réellement vérifiée.
+
 ## Les principes qui guident le projet
 
 :::: {.principle-grid}
