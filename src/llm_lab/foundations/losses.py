@@ -62,4 +62,4 @@ def cross_entropy_gradient(
     probabilities = np.exp(shifted)
     probabilities /= probabilities.sum(axis=1, keepdims=True)
     probabilities[np.arange(logits.shape[0]), target_array] -= 1.0
-    return probabilities / logits.shape[0]
+    return np.asarray(probabilities / logits.shape[0], dtype=np.float64)
