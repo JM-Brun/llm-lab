@@ -6,6 +6,10 @@ lang: fr
 
 Cette page distingue les **ressources pédagogiques recommandées** des **illustrations effectivement intégrées** aux pages. Une image visible en ligne n'est pas automatiquement libre de réutilisation.
 
+## Schéma original du dépôt
+
+Le diagramme du masque causal affiché dans le chapitre est créé pour ce projet et stocké dans `site/images/causal-attention-mask.svg`. Il est réutilisable avec le code du dépôt, sous réserve de la licence du dépôt lorsqu'elle sera explicitement définie.
+
 ## Illustrations intégrées
 
 ::: {.reference-card}
