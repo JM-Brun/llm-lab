@@ -1,0 +1,61 @@
+---
+title: "Références et provenance des illustrations"
+subtitle: "Sources externes, attribution et réutilisation responsable"
+lang: fr
+---
+
+## Illustrations intégrées
+
+### Figure 1 — Pile de blocs GPT-2
+
+- **Auteur :** Jay Alammar.
+- **Source :** [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/).
+- **Fichier distant utilisé :** [gpt2-transformer-block-vectors-2.png](https://jalammar.github.io/images/gpt2/gpt2-transformer-block-vectors-2.png).
+- **Utilisation :** image distante intégrée dans les pages d'introduction française et anglaise, avec légende et texte alternatif.
+- **Provenance :** l'image est chargée depuis le site de l'auteur ; aucune copie locale n'est incluse dans le dépôt.
+- **Droits :** cette attribution ne constitue pas une licence de réutilisation. Vérifier les conditions du site ou demander une autorisation avant toute redistribution ou modification.
+
+### Figure 2 — Fenêtres de données et masque causal
+
+- **Auteur :** Jay Alammar.
+- **Source :** [The Illustrated GPT-2, section sur le masked self-attention](https://jalammar.github.io/illustrated-gpt2/).
+- **Fichier distant utilisé :** [transformer-decoder-attention-mask-dataset.png](https://jalammar.github.io/images/gpt2/transformer-decoder-attention-mask-dataset.png).
+- **Utilisation :** chapitre sur l'attention causale en français et en anglais, avec légende et texte alternatif.
+- **Provenance et droits :** image intégrée depuis la source originale, non stockée dans le dépôt. Voir les conditions de l'auteur avant toute réutilisation indépendante.
+
+### Figure 3 — Un bloc d'attention met à jour les représentations
+
+- **Auteur :** 3Blue1Brown.
+- **Source :** [Transformers, the tech behind LLMs](https://www.3blue1brown.com/lessons/gpt/).
+- **Fichier distant utilisé :** [attent.jpg](https://storage.googleapis.com/3blue1brown-website-bucket/lessons/2024/gpt/attent.jpg).
+- **Utilisation :** chapitre sur l'attention causale en français et en anglais ; légende et texte alternatif inclus.
+- **Provenance :** image intégrée depuis l'hébergement de 3Blue1Brown, sans copie locale.
+- **Droits :** 3Blue1Brown décrit les conditions d'utilisation des images fixes et extraits sur sa [page officielle](https://www.3blue1brown.com/about/). Vérifier ces conditions avant toute autre utilisation.
+
+## Autres ressources visuelles recommandées
+
+### Sara Ravi — GPT-2 Architecture Demystified
+
+[Article original](https://sararavi14.medium.com/gpt-2-architecture-demystified-a-step-by-step-breakdown-74b1c5c80d17).
+
+Référence complémentaire pour une présentation progressive de l'architecture GPT-2. Le site renvoie à l'article d'origine plutôt que de recopier ses figures : les droits et conditions de réutilisation de chaque illustration doivent être vérifiés séparément.
+
+### 3Blue1Brown — Transformers, the tech behind LLMs
+
+[Leçon originale](https://www.3blue1brown.com/lessons/gpt/).
+
+Ressource vidéo et animée pour l'intuition mathématique. Ce dépôt ne téléverse ni ne republie les vidéos. Pour toute utilisation d'images fixes ou d'extraits, suivre les conditions publiées par [3Blue1Brown](https://www.3blue1brown.com/about/), notamment l'attribution visible et les limites annoncées.
+
+## Autres références techniques
+
+- [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch)
+- [Hugging Face — LLM Course en français](https://huggingface.co/learn/llm-course/fr)
+- [PyTorch — Transformer building blocks](https://docs.pytorch.org/tutorials/intermediate/transformer_building_blocks.html)
+- [PyTorch — Scaled dot-product attention](https://docs.pytorch.org/tutorials/intermediate/scaled_dot_product_attention_tutorial)
+- [Quarto — documentation officielle](https://quarto.org/docs/)
+
+## Politique de citation du dépôt
+
+Pour chaque figure externe, indiquer près de l'image : l'auteur ou le détenteur des droits, le titre ou la page source, un lien direct vers la ressource, et toute licence connue. Une URL accessible n'implique pas que l'image soit libre de réutilisation.
+
+Priorité est donnée aux schémas originaux créés dans le dépôt, aux ressources explicitement sous licence ouverte et aux intégrations depuis les sites des auteurs. Les ressources externes doivent enrichir les explications, sans remplacer les dérivations mathématiques, le code et les tests du projet.

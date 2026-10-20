@@ -1,0 +1,106 @@
+---
+title: "Attention et masque causal"
+subtitle: "De l'intuition aux équations, puis à une implémentation testable"
+lang: fr
+---
+
+## 1. Le problème : contextualiser chaque token
+
+Un modèle de langage autorégressif prédit le prochain token à partir du préfixe déjà observé. Une représentation indépendante de chaque token ne suffit pas : le sens de « banque » dépend, par exemple, du contexte.
+
+L'attention calcule une combinaison pondérée des représentations disponibles. Pour une séquence de longueur \(T\), on représente les entrées par une matrice \(X \in \mathbb{R}^{T \times d_{model}}\).
+
+## 2. Construire les requêtes, clés et valeurs
+
+Trois projections apprises transforment chaque représentation :
+
+\[
+Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
+\]
+
+- **Query (\(Q\))** : ce que la position cherche dans le contexte.
+- **Key (\(K\))** : les caractéristiques utilisées pour comparer les positions.
+- **Value (\(V\))** : l'information qui sera agrégée.
+
+L'attention à produit scalaire mise à l'échelle s'écrit :
+
+\[
+\operatorname{Attention}(Q,K,V)
+=\operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
+\]
+
+Le facteur \(\sqrt{d_k}\) limite l'amplitude des scores avant softmax. \(M\) est le masque : pour les positions futures, on ajoute \(-\infty\), ce qui donne une probabilité nulle après softmax.
+
+## 3. Visualiser le masque causal
+
+![Exemple de fenêtres d'entraînement et de cibles décalées d'un token.](https://jalammar.github.io/images/gpt2/transformer-decoder-attention-mask-dataset.png){fig-alt="Les tokens futurs sont masqués pour chaque préfixe ; les cibles correspondent au token suivant" width=100%}
+
+_Figure 1 — Illustration de Jay Alammar, issue de [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/). La figure est intégrée depuis la source originale et n'est pas redistribuée dans ce dépôt._
+
+Dans la matrice de scores, une position \(i\) ne peut regarder que les positions \(j \leq i\). Pour une séquence de quatre tokens, le motif autorisé est :
+
+\[
+\begin{bmatrix}
+1&0&0&0\\
+1&1&0&0\\
+1&1&1&0\\
+1&1&1&1
+\end{bmatrix}
+\]
+
+Les \(0\) représentent les positions interdites, pas des valeurs d'attention après softmax. Une implémentation peut masquer les logits avec \(-\infty\) avant softmax.
+
+### Complément visuel : l'attention transforme les représentations
+
+![Illustration du bloc d'attention : les représentations des tokens sont mises à jour par le contexte.](https://storage.googleapis.com/3blue1brown-website-bucket/lessons/2024/gpt/attent.jpg){fig-alt="Schéma de 3Blue1Brown montrant un bloc d'attention qui modifie la représentation du token model selon le contexte" width=100%}
+
+_Figure 2 — Image de [3Blue1Brown, « Transformers, the tech behind LLMs »](https://www.3blue1brown.com/lessons/gpt/). Intégrée depuis la source originale avec attribution ; consulter les [conditions de réutilisation de 3Blue1Brown](https://www.3blue1brown.com/about/) avant toute autre utilisation._
+
+## 4. Code minimal avec NumPy
+
+Cette fonction illustre uniquement l'application d'un masque à des scores déjà calculés. Elle n'implémente pas les projections, le calcul des scores, ni les têtes multiples.
+
+```python
+import numpy as np
+from numpy.typing import NDArray
+
+
+def apply_causal_mask(scores: NDArray[np.float64]) -> NDArray[np.float64]:
+    """Mask future positions in a square attention-score matrix."""
+    if scores.ndim != 2 or scores.shape[0] != scores.shape[1]:
+        raise ValueError("scores must be a square 2D matrix")
+
+    masked = scores.copy()
+    future = np.triu(np.ones(scores.shape, dtype=bool), k=1)
+    masked[future] = -np.inf
+    return masked
+```
+
+Exemple de vérification :
+
+```python
+scores = np.zeros((4, 4), dtype=np.float64)
+masked = apply_causal_mask(scores)
+
+assert np.isneginf(masked[0, 1:]).all()
+assert np.isfinite(masked[3, :]).all()
+```
+
+Pour une implémentation complète, il faut aussi tester les dimensions, la stabilité numérique, les gradients et l'absence de fuite d'information depuis les tokens futurs. Dans un modèle de production, préférer les primitives d'attention éprouvées de PyTorch et mesurer leurs résultats sur le matériel cible.
+
+## 5. Apprendre visuellement
+
+- [Jay Alammar — The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) : parcours illustré des blocs GPT-2, des embeddings et de l'attention masquée.
+- [Sara Ravi — GPT-2 Architecture Demystified](https://sararavi14.medium.com/gpt-2-architecture-demystified-a-step-by-step-breakdown-74b1c5c80d17) : autre lecture pas à pas de l'architecture.
+- [3Blue1Brown — Transformers, the tech behind LLMs](https://www.3blue1brown.com/lessons/gpt/) : explication visuelle et animée des mécanismes fondamentaux.
+
+Ces ressources sont complémentaires, pas des spécifications d'implémentation. En cas de divergence, vérifier les équations dans l'article original, la documentation du framework et les tests du dépôt.
+
+## 6. Questions de contrôle
+
+1. Pourquoi diviser les scores par \(\sqrt{d_k}\) ?
+2. À quel endroit du calcul applique-t-on le masque causal ?
+3. Pourquoi le masque est-il nécessaire même si les exemples d'entraînement contiennent déjà les tokens dans le bon ordre ?
+4. Quel test démontre qu'un token futur ne peut pas influencer la sortie à une position précédente ?
+
+Répondre à ces questions et écrire les tests avant de passer à l'attention multi-tête.

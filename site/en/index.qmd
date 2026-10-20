@@ -1,0 +1,58 @@
+---
+title: "Understanding LLMs, from maths to code"
+subtitle: "A bilingual, reproducible, experiment-driven learning lab"
+lang: en
+---
+
+# Why this project?
+
+LLM Lab is a hands-on path to understanding modern language models, starting with small building blocks: vectors, probabilities, loss functions, and gradients. Each concept is then connected to tested Python code, measurable experiments, and explicit limitations.
+
+The goal is **not** to train a production model from scratch. It is to build small, inspectable components and compare their behavior with trustworthy references.
+
+## Learning path
+
+| Stage | Core question | Verifiable outcome |
+|---|---|---|
+| 0. Numerical foundations | How do we measure prediction error? | Loss and gradient checked numerically |
+| 1. Text and tokenization | How is text mapped to token IDs? | Tested encode/decode and training windows |
+| 2. Attention | How does a token use previous context? | Causal attention with shape and mask tests |
+| 3. A tiny GPT | How can a model learn next-token prediction? | Training loop, validation, and generation |
+| 4. Fine-tuning | How can a model adapt to a task? | Baseline, SFT run, and error analysis |
+| 5. Efficiency and evaluation | What are the quality, memory, and latency trade-offs? | Ablations, metrics, uncertainty, and limitations |
+
+The [detailed learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) defines exit criteria for each module. Python implementations live in `src/llm_lab/`; Quarto pages explain the mathematics, show minimal code, and link to executable tests.
+
+## A learning loop
+
+1. **Intuition:** understand the problem with a small example.
+2. **Mathematics:** state dimensions, assumptions, and equations.
+3. **Implementation:** write a readable Python reference implementation.
+4. **Tests:** check edge cases and numerical properties.
+5. **Experiment:** compare against a baseline with controlled data and configuration.
+6. **Analysis:** report results, failures, and limitations.
+
+## First chapter: causal attention
+
+Attention lets each position build a context-aware representation. In an autoregressive model such as GPT, a causal mask prevents a position from using future tokens.
+
+![GPT-2 decoder block stack.](https://jalammar.github.io/images/gpt2/gpt2-transformer-block-vectors-2.png){fig-alt="Stack of decoder blocks with masked self-attention and a feed-forward network" width=100%}
+
+_Figure 1 — Illustration by Jay Alammar, embedded from [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/). The image remains hosted by its author; consult the source page for context and applicable rights._
+
+Read [Causal attention and masks](transformer.qmd) to connect this diagram to equations and code.
+
+## Scientific and engineering principles
+
+- Keep training, validation, and test data separate.
+- Do not draw conclusions from a single metric or random seed.
+- Check gradients with finite differences when appropriate.
+- Cite external work, figures, datasets, and implementations.
+- Do not download or redistribute an illustration without checking its licence.
+
+## Language
+
+- [Version française](../index.qmd)
+- [English version](index.qmd)
+
+The site is built with [Quarto](https://quarto.org/). Its pages are versioned alongside the code so explanations can evolve with tests and experiments.
