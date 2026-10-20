@@ -136,6 +136,31 @@ _Figure 1 — Illustration by Jay Alammar, embedded from [The Illustrated GPT-2]
 
 [Open the chapter: causal attention and masks →](transformer.qmd)
 
+## Beyond default assumptions
+
+Some common assumptions deserve to be tested rather than repeated. These notes connect mathematics, research literature, and reproducible experiments.
+
+:::: {.learning-grid}
+::: {.learning-card}
+<span class="step">06 / METRICS</span>
+
+### Cosine similarity
+
+When does the angle between two embeddings reflect the similarity we care about? Anisotropy, *hubness*, alternative metrics, and evaluation protocols.
+
+[Read the critical note](cosine-similarity.qmd){.card-link}
+:::
+::: {.learning-card}
+<span class="step">07 / REPRESENTATIONS</span>
+
+### The linearity hypothesis
+
+Distinguish representation, decodability, and causal use; understand XOR, superposition, and the limits of probes.
+
+[Read the critical note](embedding-linearity.qmd){.card-link}
+:::
+::::
+
 ## Project principles
 
 :::: {.principle-grid}
