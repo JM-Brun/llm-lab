@@ -29,8 +29,7 @@ def test_gradient_matches_central_finite_differences() -> None:
             plus[row, column] += epsilon
             minus[row, column] -= epsilon
             numerical[row, column] = (
-                cross_entropy_from_logits(plus, targets)
-                - cross_entropy_from_logits(minus, targets)
+                cross_entropy_from_logits(plus, targets) - cross_entropy_from_logits(minus, targets)
             ) / (2 * epsilon)
 
     np.testing.assert_allclose(analytical, numerical, rtol=1e-5, atol=1e-7)
