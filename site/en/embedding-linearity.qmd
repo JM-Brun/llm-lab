@@ -1,0 +1,93 @@
+---
+title: "The linearity hypothesis in representation spaces"
+subtitle: "Representation, decodability, superposition, and generalization"
+lang: en
+---
+
+## What kind of linearity are we talking about?
+
+In neural-network interpretability, it is often assumed that a concept—sentiment, grammatical gender, a factual property, or a control direction—corresponds to a direction in activation space. This idea is useful, but the statement “the concept is represented linearly” can refer to several distinct claims.
+
+The scientific question is not simply whether linearity exists. It is to specify **which concept, in which layer, under which definition of representation, on which distribution, and for which operation**.
+
+## 1. Three claims that should not be conflated
+
+1. **Linear representation:** the presence or strength of a feature contributes to the activation along a direction or a linear combination of directions.
+2. **Linear accessibility / decodability:** a simple linear model can recover the feature from the activations.
+3. **Functional use:** the network actually uses the feature in the computation that produces its output.
+
+These properties are not equivalent. A feature may be present in a distributed code without being easily decoded by a linear boundary. And an accurate linear probe does not, by itself, demonstrate that the feature is causally used by the model.
+
+Park, Choe, and Veitch formalize different versions of the linear representation hypothesis and connect some definitions to probing and steering. Garg, Kleinberg, and Peng (2026) explicitly distinguish linear representation from linear accessibility and quantify the additional difficulty imposed by linear decoding in a sparse representation setting.
+
+## 2. A teaching counterexample: XOR
+
+Let (x_1,x_2\in\{0,1\}) and (y=x_1\oplus x_2). The positive examples are ((0,1)) and ((1,0)); the negative examples are ((0,0)) and ((1,1)). No line perfectly separates the two classes in the original input coordinates.
+
+But XOR is not “impossible to represent linearly” in an absolute sense. With a feature transformation, for example (\phi(x_1,x_2)=(x_1,x_2,x_1x_2)), separation becomes linear in the transformed space. The lesson is that **linear separability depends on the representation and the chosen features**.
+
+This is why a failed linear probe does not automatically prove that information is absent, and a successful probe does not establish a particular internal mechanism.
+
+## 3. Superposition: more features than dimensions
+
+Elhage et al.'s *Toy Models of Superposition* (Anthropic, 2022) studies how a network can represent more features than it has available dimensions, encoding them in overlapping directions. The representation may remain linear at the level of latent features, while recovering those features from mixed activations becomes difficult and may require nonlinear inference.
+
+This matters: “linear” does not mean “one feature per neuron,” “easy to decode with a linear classifier,” or “unambiguously interpretable.”
+
+Barin-Pacela et al. (UAI 2026) study limitations of linear probes and sparse autoencoders for out-of-distribution compositional generalization. Within their theoretical and experimental setup, they show that linear representation does not imply linear accessibility; they also investigate limitations of amortized inference in sparse autoencoders. These conclusions should be interpreted within the scope of their assumptions, not as proof that every probe or SAE fails.
+
+## 4. Why probes can create a misleading impression
+
+Hewitt and Liang (EMNLP 2019) show that probe accuracy also depends on the probe's ability to learn the task, not only on information in the representations. They propose control tasks to measure probe selectivity. At a minimum, this motivates controlling for:
+
+- probe capacity and regularization;
+- baselines and control tasks;
+- data splits and duplicates;
+- generalization to out-of-distribution examples and compositions;
+- the layer and exact activation extraction point.
+
+A more powerful probe may recover more information, but then it becomes harder to attribute its performance to the structure of the representation itself.
+
+## 5. Reproducible experiments to add to the repository
+
+### Experiment A — XOR and representation
+
+1. Generate the four XOR points.
+2. Evaluate a linear classifier on the original coordinates.
+3. Add the feature (x_1x_2) and evaluate the same type of classifier again.
+4. Compare against an MLP, clearly separating model capacity from representation quality.
+
+Expected result: the linear classifier fails in the original space but succeeds after the transformation. This demonstrates a geometric property; it is not direct evidence about LLM representations.
+
+### Experiment B — Decodability and generalization
+
+For a language model and a precisely defined property:
+
+1. Extract activations from a specified layer;
+2. train a linear probe with a separate validation protocol;
+3. compare against a majority baseline and a controlled nonlinear probe;
+4. evaluate on a distribution or compositional combinations absent from training;
+5. add a control task following Hewitt & Liang;
+6. report uncertainty and errors, not only accuracy.
+
+Do not treat a performance difference between probes as proof that information is “absent” or “used” without additional assumptions.
+
+## 6. Research and technical reading
+
+### Papers and preprints
+
+- **Park, Choe & Veitch (2023).** [The Linear Representation Hypothesis and the Geometry of Large Language Models — arXiv:2311.03658](https://arxiv.org/abs/2311.03658). Formalizes versions of the linear representation hypothesis and studies the role of the inner product in representation space.
+- **Elhage et al. (2022).** [Toy Models of Superposition](https://transformer-circuits.pub/2022/toy_model/). Illustrated technical article on feature superposition and its implications for interpretability.
+- **Hewitt & Liang (2019).** [Designing and Interpreting Probes with Control Tasks — EMNLP 2019](https://aclanthology.org/D19-1275/). Proposes control tasks to distinguish representation structure from what the probe learns.
+- **Garg, Kleinberg & Peng (2026).** [How Many Features Can a Language Model Store Under the Linear Representation Hypothesis? — arXiv:2602.11246](https://arxiv.org/abs/2602.11246). Theoretical analysis of the gap between linear representation and linear accessibility under sparsity assumptions.
+- **Barin-Pacela et al. (2026).** [Stop Probing, Start Coding: Why Linear Probes and Sparse Autoencoders Fail at Compositional Generalization — UAI 2026, PMLR 337](https://proceedings.mlr.press/v337/barin-pacela26a.html). Studies compositional generalization failures and limitations of amortized inference in the setting considered.
+
+### Accessible explanations
+
+- **Transformer Circuits / Anthropic.** [Toy Models of Superposition](https://transformer-circuits.pub/2022/toy_model/). The *Features as Directions* and *The Geometry of Superposition* sections are especially useful for connecting intuition, geometry, and experiments.
+- **Hewitt.** [Designing and Interpreting Probes with Control Tasks](https://nlp.stanford.edu/~johnhew/probe-control/). Supplementary educational material on probe selectivity.
+- **Distill.** [A Mathematical Framework for Transformer Circuits](https://transformer-circuits.pub/2021/framework/index.html). A visual introduction to analysing linear and nonlinear transformations in Transformers.
+
+## Takeaway
+
+Linearity is a useful, testable hypothesis, not a universal law. A rigorous claim must specify the representation, concept, decoding criterion, and evaluation distribution. **Failure of linear decodability does not imply absence of information; linear decodability alone does not establish causality.**
