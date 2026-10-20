@@ -60,3 +60,22 @@ def test_invalid_inputs_raise_value_error(
 ) -> None:
     with pytest.raises(ValueError):
         cross_entropy_from_logits(logits, targets)
+
+
+@pytest.mark.parametrize(
+    ("logits", "targets"),
+    [
+        (np.zeros(3), np.array([0])),
+        (np.zeros((0, 3)), np.array([], dtype=np.int64)),
+        (np.zeros((2, 3)), np.array([0])),
+        (np.zeros((1, 3)), np.array([3])),
+        (np.zeros((1, 3)), np.array([-1])),
+        (np.zeros((1, 3)), np.array([0.5])),
+    ],
+)
+def test_gradient_invalid_inputs_raise_value_error(
+    logits: np.ndarray,
+    targets: np.ndarray,
+) -> None:
+    with pytest.raises(ValueError):
+        cross_entropy_gradient(logits, targets)
