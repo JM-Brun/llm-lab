@@ -5,7 +5,7 @@ lang: en
 toc: false
 ---
 
-::: {.hero-intro}
+:::: {.hero-intro}
 <p class="eyebrow">MATHS · PYTHON · EXPERIMENTS</p>
 
 ## Understand language models, one mechanism at a time
@@ -16,13 +16,13 @@ From numerical foundations to a tiny GPT: each idea is explained, translated int
 [Start with causal attention](transformer.qmd){.btn .btn-primary}
 [Explore the source code](https://github.com/JM-Brun/llm-lab){.btn .btn-outline-primary}
 </div>
-:::
+::::
 
 ## A laboratory, not a black box
 
 LLM Lab is a hands-on path to understanding modern language models, starting with vectors, probabilities, loss functions, and gradients. The goal is **not** to train a production model from scratch: it is to build small, inspectable components and compare their behavior with trustworthy references.
 
-::: {.learning-grid}
+:::: {.learning-grid}
 ::: {.learning-card}
 <span class="step">00 / FOUNDATIONS</span>
 
@@ -87,7 +87,7 @@ The [detailed learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/l
 
 ## A six-step learning loop
 
-::: {.method-grid}
+:::: {.method-grid}
 ::: {.method-step}
 <span>01</span>
 **Intuition**
@@ -124,7 +124,7 @@ Compare against a baseline with controlled data and configuration.
 
 Report results, failures, and limitations.
 :::
-:::
+::::
 
 ## First chapter: causal attention
 
@@ -138,7 +138,7 @@ _Figure 1 — Illustration by Jay Alammar, embedded from [The Illustrated GPT-2]
 
 ## Project principles
 
-::: {.principle-grid}
+:::: {.principle-grid}
 ::: {.principle}
 **Reproducibility**
 
@@ -159,12 +159,12 @@ Check gradients with finite differences when appropriate.
 
 Cite external work, figures, datasets, and implementations.
 :::
-:::
+::::
 
 External illustrations remain attributed to their authors. A working URL does not imply a reuse licence: see the [references page](../references.qmd).
 
-::: {.language-switch}
+:::: {.language-switch}
 **Choose a language:** [Français](../index.qmd) · [English](index.qmd)
-:::
+::::
 
 The site is built with [Quarto](https://quarto.org/). Pages are versioned alongside the code so explanations can evolve with tests and experiments.
