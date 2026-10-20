@@ -1,0 +1,93 @@
+---
+title: "L'hypothèse de linéarité dans les espaces de représentations"
+subtitle: "Représentation, décodabilité, superposition et généralisation"
+lang: fr
+---
+
+## De quelle linéarité parle-t-on ?
+
+En interprétabilité des réseaux de neurones, on suppose souvent qu'un concept — le sentiment, le genre grammatical, une propriété factuelle ou une direction de contrôle — correspond à une direction dans l'espace d'activations. Cette idée est utile, mais l'expression « le concept est représenté linéairement » recouvre plusieurs affirmations distinctes.
+
+La question scientifique n'est pas simplement de savoir si la linéarité existe. Elle est de préciser **quel concept, dans quelle couche, avec quelle définition de la représentation, sur quelle distribution et pour quelle opération**.
+
+## 1. Trois affirmations à ne pas confondre
+
+1. **Représentation linéaire :** la présence ou l'intensité d'une caractéristique contribue à l'activation selon une direction ou une combinaison linéaire de directions.
+2. **Accessibilité linéaire / décodabilité :** un modèle linéaire simple peut récupérer cette caractéristique à partir des activations.
+3. **Utilisation fonctionnelle :** le réseau utilise effectivement cette caractéristique dans le calcul qui produit sa sortie.
+
+Ces propriétés ne sont pas équivalentes. Une caractéristique peut être présente dans un code distribué sans être facilement décodable par une frontière linéaire. Et un probe linéaire précis ne démontre pas à lui seul que la caractéristique est causalement utilisée par le modèle.
+
+Park, Choe et Veitch formalisent différentes versions de l'hypothèse de représentation linéaire et relient certaines définitions aux probes et au *steering*. Garg, Kleinberg et Peng (2026) distinguent explicitement représentation linéaire et accessibilité linéaire, et quantifient la difficulté supplémentaire imposée par le décodage linéaire dans un cadre de représentation parcimonieuse.
+
+## 2. Le contre-exemple pédagogique : XOR
+
+Considérons (x_1,x_2\in\{0,1\}) et (y=x_1\oplus x_2). Les points de classe positive sont ((0,1)) et ((1,0)) ; ceux de classe négative sont ((0,0)) et ((1,1)). Aucune droite ne sépare parfaitement ces deux classes dans les coordonnées d'entrée d'origine.
+
+Mais XOR n'est pas « impossible à représenter linéairement » dans l'absolu. Avec une transformation de caractéristiques, par exemple (\phi(x_1,x_2)=(x_1,x_2,x_1x_2)), la séparation devient linéaire dans l'espace transformé. La leçon est que **la séparabilité linéaire dépend de la représentation et des caractéristiques choisies**.
+
+C'est pourquoi un échec de probe linéaire ne prouve pas automatiquement l'absence d'information, et une réussite ne suffit pas à prouver un mécanisme interne.
+
+## 3. Superposition : plus de caractéristiques que de dimensions
+
+Les *Toy Models of Superposition* d'Elhage et al. (Anthropic, 2022) étudient comment un réseau peut représenter plus de caractéristiques que de dimensions disponibles, en les encodant dans des directions qui se chevauchent. La représentation peut rester linéaire au niveau des caractéristiques latentes, tandis que leur récupération à partir de l'activation mélangée devient difficile et peut nécessiter une inférence non linéaire.
+
+C'est un point important : « linéaire » ne signifie ni « une caractéristique par neurone », ni « facilement décodable par un classifieur linéaire », ni « interprétable sans ambiguïté ».
+
+Le travail de Barin-Pacela et al. (UAI 2026) étudie les limites des probes linéaires et des autoencodeurs parcimonieux pour la généralisation compositionnelle hors distribution. Les auteurs montrent, dans leur cadre expérimental et théorique, que la représentation linéaire n'implique pas l'accessibilité linéaire ; ils examinent également les limites de l'inférence amortie des autoencodeurs parcimonieux. Il faut interpréter ces conclusions dans le périmètre de leurs hypothèses, et non comme une preuve que tous les probes ou tous les SAE échouent.
+
+## 4. Pourquoi les probes peuvent donner une fausse impression
+
+Hewitt et Liang (EMNLP 2019) montrent que la précision d'un probe dépend aussi de sa capacité à apprendre la tâche, et pas seulement de l'information présente dans les représentations. Ils proposent des tâches de contrôle pour mesurer la sélectivité du probe. Cela implique de contrôler au minimum :
+
+- la capacité et la régularisation du probe ;
+- les baselines et les tâches de contrôle ;
+- la séparation des données et les doublons ;
+- la généralisation à des exemples et compositions hors distribution ;
+- la couche et le point exact d'extraction des activations.
+
+Un probe plus puissant peut récupérer davantage d'information, mais il devient alors plus difficile d'attribuer sa performance à la structure de la représentation elle-même.
+
+## 5. Expérience reproductible à ajouter au dépôt
+
+### Expérience A — XOR et représentation
+
+1. Générer les quatre points XOR.
+2. Évaluer un classifieur linéaire sur les coordonnées originales.
+3. Ajouter la caractéristique (x_1x_2) et réévaluer le même type de classifieur.
+4. Comparer à un MLP, en séparant clairement capacité du modèle et qualité de représentation.
+
+Résultat attendu : le classifieur linéaire échoue dans l'espace d'origine mais réussit après transformation. Ce résultat illustre une propriété géométrique, pas une affirmation directe sur les représentations des LLM.
+
+### Expérience B — Décodabilité et généralisation
+
+Sur un modèle de langage et une propriété définie précisément :
+
+1. Extraire les activations d'une couche déterminée ;
+2. entraîner un probe linéaire avec un protocole de validation séparé ;
+3. comparer à une baseline majoritaire et à un probe non linéaire contrôlé ;
+4. tester sur une distribution ou des combinaisons compositionnelles absentes de l'entraînement ;
+5. ajouter une tâche de contrôle à la manière de Hewitt & Liang ;
+6. rapporter l'incertitude et les erreurs, pas uniquement l'accuracy.
+
+Ne pas présenter une différence de performance entre probes comme une preuve que l'information est « absente » ou « utilisée » sans hypothèses supplémentaires.
+
+## 6. Lectures scientifiques et techniques
+
+### Articles et prépublications
+
+- **Park, Choe & Veitch (2023).** [The Linear Representation Hypothesis and the Geometry of Large Language Models — arXiv:2311.03658](https://arxiv.org/abs/2311.03658). Formalise des versions de l'hypothèse de représentation linéaire et étudie le rôle du produit scalaire dans l'espace de représentation.
+- **Elhage et al. (2022).** [Toy Models of Superposition](https://transformer-circuits.pub/2022/toy_model/). Article technique illustré sur la superposition de caractéristiques et ses conséquences pour l'interprétabilité.
+- **Hewitt & Liang (2019).** [Designing and Interpreting Probes with Control Tasks — EMNLP 2019](https://aclanthology.org/D19-1275/). Propose des tâches de contrôle pour distinguer la structure des représentations de ce que le probe apprend lui-même.
+- **Garg, Kleinberg & Peng (2026).** [How Many Features Can a Language Model Store Under the Linear Representation Hypothesis? — arXiv:2602.11246](https://arxiv.org/abs/2602.11246). Analyse théorique de la différence entre représentation linéaire et accessibilité linéaire sous des hypothèses de parcimonie.
+- **Barin-Pacela et al. (2026).** [Stop Probing, Start Coding: Why Linear Probes and Sparse Autoencoders Fail at Compositional Generalization — UAI 2026, PMLR 337](https://proceedings.mlr.press/v337/barin-pacela26a.html). Étudie les échecs de généralisation compositionnelle et les limites de l'inférence amortie dans le cadre considéré.
+
+### Explications accessibles
+
+- **Transformer Circuits / Anthropic.** [Toy Models of Superposition](https://transformer-circuits.pub/2022/toy_model/). Les sections *Features as Directions* et *The Geometry of Superposition* sont particulièrement utiles pour relier intuition, géométrie et expériences.
+- **Hewitt.** [Designing and Interpreting Probes with Control Tasks](https://nlp.stanford.edu/~johnhew/probe-control/). Matériel pédagogique complémentaire sur la sélectivité des probes.
+- **Distill.** [A Mathematical Framework for Transformer Circuits](https://transformer-circuits.pub/2021/framework/index.html). Une introduction visuelle à l'analyse mécaniste des transformations linéaires et non linéaires dans les Transformers.
+
+## À retenir
+
+La linéarité est une hypothèse utile et testable, pas une loi universelle. Toute affirmation rigoureuse doit préciser la représentation, le concept, le critère de décodage et la distribution d'évaluation. **L'absence de décodabilité linéaire n'implique pas l'absence d'information ; la décodabilité linéaire n'établit pas à elle seule une causalité.**
