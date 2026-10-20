@@ -2,57 +2,169 @@
 title: "Comprendre les LLM, du calcul au code"
 subtitle: "Un laboratoire pédagogique bilingue, reproductible et orienté expériences"
 lang: fr
+toc: false
 ---
 
-# Pourquoi ce projet ?
+::: {.hero-intro}
+<p class="eyebrow">MATHS · PYTHON · EXPÉRIENCES</p>
 
-LLM Lab est un parcours pratique pour comprendre les modèles de langage modernes en partant des objets les plus simples : vecteurs, probabilités, fonctions de perte et gradients. Chaque notion doit ensuite être reliée à une implémentation Python testée, à une expérience mesurable et à ses limites.
+## Comprendre les modèles de langage, un mécanisme à la fois
 
-Le but n'est **pas** d'entraîner un modèle de production depuis zéro. Il s'agit de construire des composants réduits et inspectables, puis de confronter leurs résultats à des références fiables.
+Des fondations numériques à un petit GPT : chaque idée est expliquée, traduite en code lisible, puis mise à l'épreuve par des tests et des expériences reproductibles.
 
-## Le parcours
+<div class="hero-actions">
+[Commencer par l'attention causale](fr/transformer.qmd){.btn .btn-primary}
+[Explorer le code source](https://github.com/JM-Brun/llm-lab){.btn .btn-outline-primary}
+</div>
+:::
 
-| Étape | Question centrale | Résultat vérifiable |
-|---|---|---|
-| 0. Fondations numériques | Comment mesurer l'erreur d'une prédiction ? | Fonction de perte et gradient vérifiés numériquement |
-| 1. Texte et tokenisation | Comment transformer le texte en identifiants ? | Encodeur/décodeur testé et fenêtres d'entraînement |
-| 2. Attention | Comment un token utilise-t-il le contexte précédent ? | Attention causale avec tests de forme et de masque |
-| 3. Petit GPT | Comment apprendre à prédire le token suivant ? | Boucle d'entraînement, validation et génération |
-| 4. Fine-tuning | Comment adapter un modèle à une tâche ? | Baseline, SFT et analyse d'erreurs |
-| 5. Efficacité et évaluation | Quels compromis entre qualité, mémoire et latence ? | Ablations, métriques, incertitude et limites |
+## Un laboratoire, pas une boîte noire
 
-Le [parcours détaillé](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) donne les critères de sortie de chaque module. Le code Python est conservé dans `src/llm_lab/` ; les pages Quarto expliquent les mathématiques, montrent des extraits minimaux et renvoient aux tests exécutables.
+LLM Lab propose un parcours pratique pour comprendre les modèles de langage modernes à partir de vecteurs, de probabilités, de fonctions de perte et de gradients. Le but n'est **pas** d'entraîner un modèle de production depuis zéro : il s'agit de construire des composants réduits et inspectables, puis de confronter leurs résultats à des références fiables.
 
-## Une boucle d'apprentissage
+::: {.learning-grid}
+::: {.learning-card}
+<span class="step">00 / FONDATIONS</span>
 
-1. **Intuition :** comprendre le problème avec un exemple réduit.
-2. **Mathématiques :** expliciter les dimensions, les hypothèses et les équations.
-3. **Implémentation :** coder une version de référence lisible en Python.
-4. **Tests :** vérifier les cas limites et les propriétés numériques.
-5. **Expérience :** comparer à une baseline en fixant les données et la configuration.
-6. **Analyse :** publier les résultats, les échecs et les limites.
+### Fondations numériques
+
+Comprendre les logits, les probabilités, la cross-entropie et les gradients.
+
+**Résultat :** une fonction de perte et son gradient vérifiés numériquement.
+
+[Voir les fondations](https://github.com/JM-Brun/llm-lab/blob/main/docs/mathematical-foundations.md){.card-link}
+:::
+::: {.learning-card}
+<span class="step">01 / DONNÉES</span>
+
+### Texte et tokenisation
+
+Passer du texte à une suite d'identifiants, puis construire des fenêtres d'entraînement.
+
+**Résultat :** un encodeur/décodeur testé et des exemples inspectables.
+:::
+::: {.learning-card learning-card-featured}
+<span class="step">02 / ATTENTION</span>
+
+### Attention causale
+
+Comprendre les requêtes, clés, valeurs et le masque qui interdit l'accès aux tokens futurs.
+
+**Résultat :** une attention causale avec tests de forme et de masque.
+
+[Lire le premier chapitre](fr/transformer.qmd){.card-link}
+:::
+::: {.learning-card}
+<span class="step">03 / MODÈLE</span>
+
+### Construire un petit GPT
+
+Relier embeddings, blocs Transformer, prédiction du token suivant et génération.
+
+**Résultat :** une boucle d'entraînement, une validation et une génération observables.
+:::
+::: {.learning-card}
+<span class="step">04 / ADAPTATION</span>
+
+### Fine-tuning et SFT
+
+Établir une baseline, adapter un modèle à une tâche et analyser les erreurs.
+
+**Résultat :** un protocole d'expérience documenté et des résultats comparables.
+:::
+::: {.learning-card}
+<span class="step">05 / ÉVALUATION</span>
+
+### Efficacité et fiabilité
+
+Mesurer les compromis entre qualité, mémoire et latence sans surinterpréter une métrique.
+
+**Résultat :** des ablations, des mesures d'incertitude et des limites explicites.
+:::
+:::
+
+Le [parcours détaillé](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) définit les critères de sortie de chaque module. Les implémentations Python vivent dans le répertoire `src/llm_lab/` ; les pages Quarto expliquent les mathématiques, présentent des extraits minimaux et renvoient aux tests exécutables.
+
+## Une méthode en six temps
+
+::: {.method-grid}
+::: {.method-step}
+<span>01</span>
+**Intuition**
+
+Partir d'un exemple réduit et d'une question précise.
+:::
+::: {.method-step}
+<span>02</span>
+**Mathématiques**
+
+Expliciter les équations, dimensions et hypothèses.
+:::
+::: {.method-step}
+<span>03</span>
+**Implémentation**
+
+Écrire une version de référence lisible en Python.
+:::
+::: {.method-step}
+<span>04</span>
+**Tests**
+
+Vérifier les propriétés numériques et les cas limites.
+:::
+::: {.method-step}
+<span>05</span>
+**Expérience**
+
+Comparer à une baseline avec données et configuration contrôlées.
+:::
+::: {.method-step}
+<span>06</span>
+**Analyse**
+
+Documenter résultats, échecs et limites.
+:::
+:::
 
 ## Premier chapitre : attention causale
 
-L'attention permet à chaque position de construire une représentation contextualisée. Dans un modèle autorégressif comme GPT, un masque causal interdit à une position de consulter les tokens futurs.
+L'attention construit une représentation contextualisée de chaque token. Dans un modèle autorégressif comme GPT, un masque causal interdit à une position de consulter les tokens futurs.
 
 ![Schéma de la pile de blocs décodeurs GPT-2.](https://jalammar.github.io/images/gpt2/gpt2-transformer-block-vectors-2.png){fig-alt="Pile de blocs décodeurs avec attention auto-régressive masquée et réseau feed-forward" width=100%}
 
 _Figure 1 — Illustration de Jay Alammar, intégrée depuis [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/). L'image reste hébergée par son auteur ; voir la page source pour le contexte et les droits applicables._
 
-Consulter le chapitre [Attention et masque causal](fr/transformer.qmd) pour relier ce schéma aux équations et au code.
+[Ouvrir le chapitre : attention et masque causal →](fr/transformer.qmd)
 
-## Principes de rigueur
+## Les principes qui guident le projet
 
-- Séparer les données d'entraînement, de validation et de test.
-- Ne pas conclure à partir d'une seule métrique ou d'un seul seed.
-- Vérifier les gradients par différences finies lorsque c'est pertinent.
-- Citer les travaux, figures, jeux de données et implémentations externes.
-- Ne pas télécharger ni redistribuer une illustration sans vérifier sa licence.
+::: {.principle-grid}
+::: {.principle}
+**Reproductibilité**
 
-## Langue
+Fixer les données, la configuration et les seeds quand c'est pertinent.
+:::
+::: {.principle}
+**Rigueur scientifique**
 
-- [Version française](index.qmd)
-- [English version](en/index.qmd)
+Séparer entraînement, validation et test ; ne pas conclure à partir d'une seule métrique.
+:::
+::: {.principle}
+**Vérification**
+
+Contrôler les gradients par différences finies lorsque c'est pertinent.
+:::
+::: {.principle}
+**Provenance**
+
+Citer les travaux, figures, jeux de données et implémentations externes.
+:::
+:::
+
+Les illustrations externes restent attribuées à leurs auteurs. Une URL accessible n'implique pas une licence de réutilisation : voir la [page des références](references.qmd).
+
+::: {.language-switch}
+**Choisir la langue :** [Français](index.qmd) · [English](en/index.qmd)
+:::
 
 Le site est construit avec [Quarto](https://quarto.org/). Les pages sont versionnées avec le code afin que les explications puissent évoluer en même temps que les tests et les expériences.
