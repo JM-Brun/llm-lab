@@ -22,9 +22,9 @@ Chaque position construit une question (query), compare cette question aux clés
 
 Trois projections apprises transforment chaque représentation :
 
-$
+$$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
-$
+$$
 
 - **Query (\(Q\))** : ce que la position cherche dans le contexte.
 - **Key (\(K\))** : les caractéristiques utilisées pour comparer les positions.
@@ -32,10 +32,10 @@ $
 
 L'attention à produit scalaire mise à l'échelle s'écrit :
 
-$
+$$
 \operatorname{Attention}(Q,K,V)
 =\operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
-$
+$$
 
 Le facteur \(\sqrt{d_k}\) limite l'amplitude des scores avant softmax. \(M\) est le masque : pour les positions futures, on ajoute \(-\infty\), ce qui donne une probabilité nulle après softmax.
 
