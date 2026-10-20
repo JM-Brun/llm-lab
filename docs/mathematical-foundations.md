@@ -21,7 +21,7 @@ For logits (z \in \mathbb{R}^C), softmax maps logits to probabilities:
 p_i = \frac{\exp(z_i)}{\sum_{j=1}^{C}\exp(z_j)}.
 \]
 
-For a target class (y), cross-entropy is:
+For a target class $y$, cross-entropy is:
 
 \[
 \mathcal{L}(z,y) = -\log p_y.
@@ -54,7 +54,11 @@ Scaled dot-product attention is:
 \operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}} + M\right)V,
 \]
 
-where (M) masks positions that must not be attended to. For causal language modeling, future positions must be inaccessible. Test this behavior directly by changing future tokens and checking that earlier-position outputs remain unchanged.
+where $M$ masks positions that must not be attended to. For causal language modeling, future positions must be inaccessible. Test this behavior directly by changing future tokens and checking that earlier-position outputs remain unchanged.
+
+## Geometry and representation assumptions
+
+Distances and directions are properties of a representation together with a chosen metric; they are not automatically equivalent to semantic similarity or causal importance. Before using cosine similarity, state whether vectors are normalized and how relevance is evaluated. Before claiming a feature is represented linearly, distinguish linear representation from linear decodability and functional use by the model. The bilingual research notes on [cosine similarity](../site/fr/cosine-similarity.qmd) and the [linearity hypothesis](../site/fr/linearite-embeddings.qmd) discuss these assumptions, counterexamples, and experimental controls.
 
 ## Optimization checklist
 
