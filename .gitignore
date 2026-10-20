@@ -12,6 +12,11 @@ dist/
 *.egg-info/
 .wheels/
 
+# Quarto build/cache artifacts
+site/_site/
+site/.quarto/
+site/_freeze/
+
 # Test, coverage, and type-check caches
 .pytest_cache/
 .coverage
