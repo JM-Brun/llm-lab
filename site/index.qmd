@@ -5,7 +5,7 @@ lang: fr
 toc: false
 ---
 
-::: {.hero-intro}
+:::: {.hero-intro}
 <p class="eyebrow">MATHS · PYTHON · EXPÉRIENCES</p>
 
 ## Comprendre les modèles de langage, un mécanisme à la fois
@@ -16,13 +16,13 @@ Des fondations numériques à un petit GPT : chaque idée est expliquée, tradui
 [Commencer par l'attention causale](fr/transformer.qmd){.btn .btn-primary}
 [Explorer le code source](https://github.com/JM-Brun/llm-lab){.btn .btn-outline-primary}
 </div>
-:::
+::::
 
 ## Un laboratoire, pas une boîte noire
 
 LLM Lab propose un parcours pratique pour comprendre les modèles de langage modernes à partir de vecteurs, de probabilités, de fonctions de perte et de gradients. Le but n'est **pas** d'entraîner un modèle de production depuis zéro : il s'agit de construire des composants réduits et inspectables, puis de confronter leurs résultats à des références fiables.
 
-::: {.learning-grid}
+:::: {.learning-grid}
 ::: {.learning-card}
 <span class="step">00 / FONDATIONS</span>
 
@@ -81,13 +81,13 @@ Mesurer les compromis entre qualité, mémoire et latence sans surinterpréter u
 
 **Résultat :** des ablations, des mesures d'incertitude et des limites explicites.
 :::
-:::
+::::
 
 Le [parcours détaillé](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) définit les critères de sortie de chaque module. Les implémentations Python vivent dans le répertoire `src/llm_lab/` ; les pages Quarto expliquent les mathématiques, présentent des extraits minimaux et renvoient aux tests exécutables.
 
 ## Une méthode en six temps
 
-::: {.method-grid}
+:::: {.method-grid}
 ::: {.method-step}
 <span>01</span>
 **Intuition**
@@ -124,7 +124,7 @@ Comparer à une baseline avec données et configuration contrôlées.
 
 Documenter résultats, échecs et limites.
 :::
-:::
+::::
 
 ## Premier chapitre : attention causale
 
@@ -138,7 +138,7 @@ _Figure 1 — Illustration de Jay Alammar, intégrée depuis [The Illustrated GP
 
 ## Les principes qui guident le projet
 
-::: {.principle-grid}
+:::: {.principle-grid}
 ::: {.principle}
 **Reproductibilité**
 
@@ -159,12 +159,12 @@ Contrôler les gradients par différences finies lorsque c'est pertinent.
 
 Citer les travaux, figures, jeux de données et implémentations externes.
 :::
-:::
+::::
 
 Les illustrations externes restent attribuées à leurs auteurs. Une URL accessible n'implique pas une licence de réutilisation : voir la [page des références](references.qmd).
 
-::: {.language-switch}
+:::: {.language-switch}
 **Choisir la langue :** [Français](index.qmd) · [English](en/index.qmd)
-:::
+::::
 
 Le site est construit avec [Quarto](https://quarto.org/). Les pages sont versionnées avec le code afin que les explications puissent évoluer en même temps que les tests et les expériences.
