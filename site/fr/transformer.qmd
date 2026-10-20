@@ -12,7 +12,7 @@ L'attention permet à chaque token de construire une représentation contextuali
 
 Un modèle de langage autorégressif prédit le prochain token à partir du préfixe déjà observé. Une représentation indépendante de chaque token ne suffit pas : le sens de « banque » dépend, par exemple, du contexte.
 
-L'attention calcule une combinaison pondérée des représentations disponibles. Pour une séquence de longueur (T), on représente les entrées par une matrice (X \in \mathbb{R}^{T \times d_{model}}).
+L'attention calcule une combinaison pondérée des représentations disponibles. Pour une séquence de longueur \(T\), on représente les entrées par une matrice \(X \in \mathbb{R}^{T \times d_{model}}\).
 
 ::: {.callout-note title="Intuition"}
 Chaque position construit une question (query), compare cette question aux clés (keys) des positions disponibles, puis combine les valeurs (values) selon les poids obtenus. Le masque détermine quelles positions peuvent contribuer à cette combinaison.
@@ -26,9 +26,9 @@ Trois projections apprises transforment chaque représentation :
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
 ]
 
-- **Query ((Q))** : ce que la position cherche dans le contexte.
-- **Key ((K))** : les caractéristiques utilisées pour comparer les positions.
-- **Value ((V))** : l'information qui sera agrégée.
+- **Query (\(Q\))** : ce que la position cherche dans le contexte.
+- **Key (\(K\))** : les caractéristiques utilisées pour comparer les positions.
+- **Value (\(V\))** : l'information qui sera agrégée.
 
 L'attention à produit scalaire mise à l'échelle s'écrit :
 
@@ -37,7 +37,7 @@ L'attention à produit scalaire mise à l'échelle s'écrit :
 =\operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
 ]
 
-Le facteur (sqrt{d_k}) limite l'amplitude des scores avant softmax. (M) est le masque : pour les positions futures, on ajoute (-\infty), ce qui donne une probabilité nulle après softmax.
+Le facteur \(\sqrt{d_k}\) limite l'amplitude des scores avant softmax. \(M\) est le masque : pour les positions futures, on ajoute \(-\infty\), ce qui donne une probabilité nulle après softmax.
 
 ::: {.callout-important title="Point de vigilance"}
 Le masque s'applique aux **scores avant softmax**. Mettre à zéro des poids après softmax n'est pas équivalent : les poids restants ne sont alors plus nécessairement normalisés.
@@ -53,7 +53,7 @@ _Ce schéma original du dépôt résume la contrainte d'accès. Les illustration
 
 _Figure 1 — Illustration de Jay Alammar, issue de [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/). La figure est intégrée depuis la source originale et n'est pas redistribuée dans ce dépôt._
 
-Dans la matrice de scores, une position (i) ne peut regarder que les positions (j \leq i). Les cases interdites sont masquées avec (-\infty) **avant** le softmax ; leur probabilité devient alors nulle.
+Dans la matrice de scores, une position \(i\) ne peut regarder que les positions \(j \leq i\). Les cases interdites sont masquées avec (-\infty) **avant** le softmax ; leur probabilité devient alors nulle.
 
 ### Complément visuel : l'attention transforme les représentations
 
