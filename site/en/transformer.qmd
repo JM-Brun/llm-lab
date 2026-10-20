@@ -22,9 +22,9 @@ Each position forms a query, compares it with the keys of available positions, a
 
 Three learned projections transform each representation:
 
-$
+$$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
-$
+$$
 
 - **Query (\(Q\))**: what a position is looking for in context.
 - **Key (\(K\))**: the features used to compare positions.
@@ -32,10 +32,10 @@ $
 
 Scaled dot-product attention is:
 
-$
+$$
 \operatorname{Attention}(Q,K,V)
 =\operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
-$
+$$
 
 The factor \(\sqrt{d_k}\) controls score magnitude before softmax. \(M\) is the mask: future positions receive \(-\infty\), which gives them zero probability after softmax.
 
