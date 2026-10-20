@@ -15,7 +15,7 @@ State the convention at each function boundary; do not rely on shape intuition a
 
 ## Softmax and cross-entropy
 
-For logits (z \in \mathbb{R}^C), softmax maps logits to probabilities:
+For logits $z \\in \\mathbb{R}^C$, softmax maps logits to probabilities:
 
 \[
 p_i = \frac{\exp(z_i)}{\sum_{j=1}^{C}\exp(z_j)}.
@@ -37,7 +37,7 @@ For a batch, explicitly define whether the loss is summed or averaged; gradient 
 
 ## Gradient verification
 
-For parameter (\theta_i), a central finite-difference approximation is:
+For parameter $\\theta_i$, a central finite-difference approximation is:
 
 \[
 g_i^{\mathrm{num}} = \frac{\mathcal{L}(\theta_i + \epsilon) - \mathcal{L}(\theta_i - \epsilon)}{2\epsilon}.
