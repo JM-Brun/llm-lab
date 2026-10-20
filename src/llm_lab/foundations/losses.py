@@ -23,6 +23,8 @@ def cross_entropy_from_logits(
     """
     if logits.ndim != 2:
         raise ValueError("logits must have shape (batch_size, num_classes)")
+    if not np.all(np.isfinite(logits)):
+        raise ValueError("logits must contain only finite values")
     if logits.shape[0] == 0 or logits.shape[1] == 0:
         raise ValueError("logits must have a non-empty batch and class dimension")
 
@@ -47,6 +49,8 @@ def cross_entropy_gradient(
     """Return the gradient of mean cross-entropy with respect to logits."""
     if logits.ndim != 2:
         raise ValueError("logits must have shape (batch_size, num_classes)")
+    if not np.all(np.isfinite(logits)):
+        raise ValueError("logits must contain only finite values")
     if logits.shape[0] == 0 or logits.shape[1] == 0:
         raise ValueError("logits must have a non-empty batch and class dimension")
 
