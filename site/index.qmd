@@ -136,6 +136,31 @@ _Figure 1 — Illustration de Jay Alammar, intégrée depuis [The Illustrated GP
 
 [Ouvrir le chapitre : attention et masque causal →](fr/transformer.qmd)
 
+## Au-delà des méthodes par défaut
+
+Certaines hypothèses courantes méritent d'être testées plutôt que simplement reprises. Ces notes relient mathématiques, littérature scientifique et expériences reproductibles.
+
+:::: {.learning-grid}
+::: {.learning-card}
+<span class="step">06 / MÉTRIQUES</span>
+
+### Similarité cosinus
+
+Quand l'angle entre deux embeddings reflète-t-il la similarité recherchée ? Anisotropie, *hubness*, métriques alternatives et protocole d'évaluation.
+
+[Lire la note critique](fr/cosine-similarity.qmd){.card-link}
+:::
+::: {.learning-card}
+<span class="step">07 / REPRÉSENTATIONS</span>
+
+### L'hypothèse de linéarité
+
+Distinguer représentation, décodabilité et usage causal ; comprendre XOR, superposition et limites des probes.
+
+[Lire la note critique](fr/linearite-embeddings.qmd){.card-link}
+:::
+::::
+
 ## Les principes qui guident le projet
 
 :::: {.principle-grid}
