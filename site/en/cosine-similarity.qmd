@@ -89,6 +89,12 @@ This snippet makes the definition and zero-vector edge case explicit; it is not,
 - **Ethayarajh (2019).** [How Contextual are Contextualized Word Representations? — arXiv:1909.00512](https://arxiv.org/abs/1909.00512). Compares the geometry of BERT, ELMo, and GPT-2 representations.
 - **Nastase & Merlo (2025).** [Testing the assumptions about the geometry of sentence embedding spaces: the cosine measure need not apply — arXiv:2509.01606](https://arxiv.org/abs/2509.01606). Investigates whether sentence embedding geometry predicts performance across linguistic tasks; read its empirical findings without treating them as a universal theorem.
 
+### Additional research and visual explanations
+
+- **Zhelezniak et al. (2019).** [Correlation Coefficients and Semantic Textual Similarity — arXiv:1905.07790](https://arxiv.org/abs/1905.07790). Shows that cosine and Pearson correlation are closely related for some representations, and evaluates cases where rank correlations are more suitable. Useful evidence that the metric must be validated for the task and vector type.
+- **Nielsen & Hansen (2024).** [Hubness Reduction Improves Sentence-BERT Semantic Spaces — PMLR](https://proceedings.mlr.press/v233/nielsen24a.html) ([arXiv](https://arxiv.org/abs/2311.18364)). Studies hubness and mitigation methods in Sentence-BERT spaces.
+- **Interactive illustration.** [A Fifth of Your Corpus Is Unreachable. It Isn’t the Dimensions](https://sugeerth.github.io/blog/hubness/). A browser-based, reproducible simulation illustrates how nearest-neighbour hubness can emerge from geometry alone. Its synthetic Gaussian corpus is a teaching model, not an estimate of real retrieval-system performance.
+
 ### Technical documentation and explanations
 
 - **Sentence Transformers.** [Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html) and [available similarity functions](https://sbert.net/docs/package_reference/util/similarity.html). Practical reference for library metrics and the distinction between cosine, dot product, and distances.
