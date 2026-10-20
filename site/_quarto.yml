@@ -32,7 +32,6 @@ website:
         aria-label: "GitHub repository"
   sidebar:
     style: "docked"
-    search: true
     contents:
       - section: "Français"
         contents:
