@@ -36,6 +36,18 @@ This matters: “linear” does not mean “one feature per neuron,” “easy t
 
 Barin-Pacela et al. (UAI 2026) study limitations of linear probes and sparse autoencoders for out-of-distribution compositional generalization. Within their theoretical and experimental setup, they show that linear representation does not imply linear accessibility; they also investigate limitations of amortized inference in sparse autoencoders. These conclusions should be interpreted within the scope of their assumptions, not as proof that every probe or SAE fails.
 
+## 3 bis. Features are not always one-dimensional
+
+Engels et al. show that some internal language-model features are better described by **irreducible multidimensional structures** than by a single direction. Their most intuitive example is circular: days of the week and months can form rings, a geometry suited to periodicity. The authors connect these structures to modular-arithmetic computation and investigate their role with interventions. This qualifies the strong claim “one concept = one direction” without invalidating cases where a linear direction is a good approximation.
+
+Tiblias et al. extend this line of work with *Supervised Multi-Dimensional Scaling* (SMDS), which explicitly compares geometric hypotheses—lines, circles, clusters, and others—instead of imposing one shape. Their study focuses mainly on temporal reasoning, so its results should not be generalized to every concept or model without testing.
+
+**Visual explanations and code:**
+
+- [Figure 1 — overview of SMDS and feature geometries](https://arxiv.org/html/2510.01025v1#S0.F1); [Figure 2 — example of a discovered circular structure](https://arxiv.org/html/2510.01025v1#S3.F2).
+- [*Shape Happens* code and data](https://github.com/UKPLab/arxiv2025-shape-happens) for inspecting the protocol and attempting a reproduction.
+- [*Toy Models of Superposition*](https://transformer-circuits.pub/2022/toy_model/) for interactive visualizations and geometric intuitions about superposition.
+
 ## 4. Why probes can create a misleading impression
 
 Hewitt and Liang (EMNLP 2019) show that probe accuracy also depends on the probe's ability to learn the task, not only on information in the representations. They propose control tasks to measure probe selectivity. At a minimum, this motivates controlling for:
