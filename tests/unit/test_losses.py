@@ -83,6 +83,8 @@ def test_loss_and_gradient_do_not_mutate_logits() -> None:
         (np.zeros((1, 3)), np.array([3])),
         (np.zeros((1, 3)), np.array([-1])),
         (np.zeros((1, 3)), np.array([0.5])),
+        (np.array([[np.nan, 0.0, 1.0]]), np.array([0])),
+        (np.array([[np.inf, 0.0, 1.0]]), np.array([0])),
     ],
 )
 def test_invalid_inputs_raise_value_error(
@@ -102,6 +104,8 @@ def test_invalid_inputs_raise_value_error(
         (np.zeros((1, 3)), np.array([3])),
         (np.zeros((1, 3)), np.array([-1])),
         (np.zeros((1, 3)), np.array([0.5])),
+        (np.array([[np.nan, 0.0, 1.0]]), np.array([0])),
+        (np.array([[np.inf, 0.0, 1.0]]), np.array([0])),
     ],
 )
 def test_gradient_invalid_inputs_raise_value_error(
