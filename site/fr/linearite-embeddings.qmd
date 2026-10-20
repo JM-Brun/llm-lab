@@ -36,6 +36,18 @@ C'est un point important : « linéaire » ne signifie ni « une caractéristiqu
 
 Le travail de Barin-Pacela et al. (UAI 2026) étudie les limites des probes linéaires et des autoencodeurs parcimonieux pour la généralisation compositionnelle hors distribution. Les auteurs montrent, dans leur cadre expérimental et théorique, que la représentation linéaire n'implique pas l'accessibilité linéaire ; ils examinent également les limites de l'inférence amortie des autoencodeurs parcimonieux. Il faut interpréter ces conclusions dans le périmètre de leurs hypothèses, et non comme une preuve que tous les probes ou tous les SAE échouent.
 
+## 3 bis. Les caractéristiques ne sont pas toujours unidimensionnelles
+
+Engels et al. montrent que certaines caractéristiques internes de modèles de langage sont mieux décrites par des **structures multidimensionnelles irréductibles** que par une seule direction. Leur exemple le plus intuitif est circulaire : les jours de la semaine et les mois peuvent s'organiser en anneaux, géométrie adaptée à leur périodicité. Les auteurs relient ces structures à des calculs d'arithmétique modulaire et étudient leur rôle par interventions. Cela nuance l'hypothèse forte « un concept = une direction », sans invalider les cas où une direction linéaire est une bonne approximation.
+
+Tiblias et al. étendent cette piste avec *Supervised Multi-Dimensional Scaling* (SMDS), qui compare explicitement plusieurs hypothèses géométriques — ligne, cercle, clusters, etc. — au lieu d'imposer une forme unique. Leur étude porte surtout sur le raisonnement temporel ; ses résultats ne doivent donc pas être généralisés sans test à tous les concepts ou modèles.
+
+**Illustrations et code :**
+
+- [Figure 1 — aperçu de SMDS et des géométries de caractéristiques](https://arxiv.org/html/2510.01025v1#S0.F1) ; [Figure 2 — exemple de découverte d'une structure circulaire](https://arxiv.org/html/2510.01025v1#S3.F2).
+- [Code et données de *Shape Happens*](https://github.com/UKPLab/arxiv2025-shape-happens) pour examiner le protocole et tenter de le reproduire.
+- [*Toy Models of Superposition*](https://transformer-circuits.pub/2022/toy_model/) : visualisations interactives et intuitions géométriques sur la superposition.
+
 ## 4. Pourquoi les probes peuvent donner une fausse impression
 
 Hewitt et Liang (EMNLP 2019) montrent que la précision d'un probe dépend aussi de sa capacité à apprendre la tâche, et pas seulement de l'information présente dans les représentations. Ils proposent des tâches de contrôle pour mesurer la sélectivité du probe. Cela implique de contrôler au minimum :
