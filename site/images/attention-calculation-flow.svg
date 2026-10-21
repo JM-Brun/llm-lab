@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="590" viewBox="0 0 1200 590" role="img" aria-labelledby="title desc">
+<title id="title">Les étapes du calcul d'attention</title>
+<desc id="desc">Q et K produisent les scores, mise à l'échelle puis masque causal, softmax ligne par ligne, poids qui combinent les valeurs V pour produire les sorties.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#344054"/></marker></defs>
+<rect width="1200" height="590" rx="22" fill="#fbfcfe"/>
+<text x="600" y="42" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#172b4d">De Q, K et V à une représentation contextualisée</text>
+<g font-family="Arial,sans-serif" text-anchor="middle">
+<rect x="45" y="104" width="200" height="92" rx="14" fill="#e8f1ff" stroke="#4778b8" stroke-width="2"/><text x="145" y="138" font-size="20" font-weight="700" fill="#173b67">Q et K</text><text x="145" y="164" font-size="16" fill="#173b67">requêtes et clés</text>
+<rect x="300" y="104" width="200" height="92" rx="14" fill="#fff3d6" stroke="#bc8a24" stroke-width="2"/><text x="400" y="138" font-size="20" font-weight="700" fill="#704d0a">Scores</text><text x="400" y="164" font-size="16" fill="#704d0a">QKᵀ / √dₖ</text>
+<rect x="555" y="104" width="200" height="92" rx="14" fill="#fde9e7" stroke="#c66a5c" stroke-width="2"/><text x="655" y="138" font-size="20" font-weight="700" fill="#813b32">Masque M</text><text x="655" y="164" font-size="16" fill="#813b32">bloque le futur</text>
+<rect x="810" y="104" width="160" height="92" rx="14" fill="#f0eaff" stroke="#8063b3" stroke-width="2"/><text x="890" y="138" font-size="20" font-weight="700" fill="#4b337b">Softmax</text><text x="890" y="164" font-size="16" fill="#4b337b">par ligne</text>
+<rect x="1020" y="104" width="145" height="92" rx="14" fill="#e9f7f0" stroke="#3a9270" stroke-width="2"/><text x="1092" y="138" font-size="20" font-weight="700" fill="#17583f">Poids A</text><text x="1092" y="164" font-size="16" fill="#17583f">somme = 1*</text>
+<g stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#arrow)"><path d="M245 150 H293"/><path d="M500 150 H548"/><path d="M755 150 H803"/><path d="M970 150 H1013"/></g>
+<rect x="810" y="302" width="160" height="92" rx="14" fill="#e8f1ff" stroke="#4778b8" stroke-width="2"/><text x="890" y="336" font-size="20" font-weight="700" fill="#173b67">Valeurs V</text><text x="890" y="362" font-size="16" fill="#173b67">contenu transmis</text>
+<rect x="555" y="302" width="200" height="92" rx="14" fill="#e9f7f0" stroke="#3a9270" stroke-width="2"/><text x="655" y="336" font-size="20" font-weight="700" fill="#17583f">Agrégation</text><text x="655" y="362" font-size="16" fill="#17583f">O = A V</text>
+<path d="M1092 196 V250 H655 V294" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<path d="M890 302 V260 H655 V294" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<rect x="300" y="302" width="200" height="92" rx="14" fill="#f0eaff" stroke="#8063b3" stroke-width="2"/><text x="400" y="336" font-size="20" font-weight="700" fill="#4b337b">Sortie O</text><text x="400" y="362" font-size="16" fill="#4b337b">nouveaux vecteurs</text>
+<path d="M555 348 H508" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<text x="600" y="454" font-size="17" font-weight="700" fill="#172b4d">À distinguer</text>
+<text x="600" y="481" font-size="16" fill="#344054">Les scores sont des nombres bruts ; le softmax crée des poids relatifs ;</text><text x="600" y="505" font-size="16" fill="#344054">les poids sélectionnent la combinaison des valeurs, pas une « explication » complète.</text>
+<text x="600" y="545" font-size="14" fill="#5d6878">* Pour chaque ligne non vide, les poids autorisés somment à 1. Le masque dépend du type d'attention.</text>
+</g></svg>
