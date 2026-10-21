@@ -10,37 +10,37 @@ In information theory, Shannon entropy quantifies the average uncertainty of a d
 
 ## 1. From the information in an event to the entropy of a variable
 
-A rare event is more surprising than an almost certain one. For an outcome (x) with probability (p(x)>0), its information content, or surprisal, is:
+A rare event is more surprising than an almost certain one. For an outcome $x$ with probability $p$x$>0$, its information content, or surprisal, is:
 
 $$
-I(x)=-\log_2 p(x).
+I$x$=-\log_2 p$x$.
 $$
 
-It is measured in bits. An event with probability (1/2) carries 1 bit; an event with probability (1/8) carries 3 bits. This depends on the reference distribution: surprise is not an absolute property of an event.
+It is measured in bits. An event with probability $1/2$ carries 1 bit; an event with probability $1/8$ carries 3 bits. This depends on the reference distribution: surprise is not an absolute property of an event.
 
-For a discrete random variable (X) with distribution (p(x)), entropy is the expected surprisal:
+For a discrete random variable $X$ with distribution $p$x$$, entropy is the expected surprisal:
 
 $$
-H(X)=\mathbb{E}_{X\sim p}[-\log_2 p(X)]
-=-\sum_{x:p(x)>0}p(x)\log_2 p(x).
+H$X$=\mathbb{E}_{X\sim p}[-\log_2 p$X$]
+=-\sum_{x:p$x$>0}p$x$\log_2 p$x$.
 $$
 
-We use the continuous-limit convention (0\log 0=0). Entropy describes a distribution, not the surprise of an outcome that has already occurred.
+We use the continuous-limit convention $0\log 0=0$. Entropy describes a distribution, not the surprise of an outcome that has already occurred.
 
 ## 2. Reading the formula and its limits
 
-- **Zero entropy:** if one outcome is certain, (H(X)=0). There is no uncertainty to resolve.
-- **Uniform distribution:** if (X) has (n) equally likely outcomes, (H(X)=\log_2 n). For 8 outcomes, entropy is 3 bits.
-- **Maximum:** over a finite alphabet of size (n), (H(X)\leq\log_2 n), with equality for the uniform distribution.
+- **Zero entropy:** if one outcome is certain, (H$X$=0). There is no uncertainty to resolve.
+- **Uniform distribution:** if $X$ has $n$ equally likely outcomes, (H$X$=\log_2 n). For 8 outcomes, entropy is 3 bits.
+- **Maximum:** over a finite alphabet of size $n$, (H$X$\leq\log_2 n), with equality for the uniform distribution.
 - **Concentrated distributions:** entropy generally decreases as probability mass concentrates on fewer outcomes, but it does not tell us whether a particular prediction is correct.
 - **Units:** base-2 logarithms give bits; natural logarithms give nats. Changing the base changes the unit and scales the value by a constant.
 
 ### Worked example
 
-For (p=(1/2,1/4,1/4)),
+For $p=(1/2,1/4,1/4)$,
 
 $$
-H(X)=-\left(\frac12\log_2\frac12
+H$X$=-\left(\frac12\log_2\frac12
 +2\cdot\frac14\log_2\frac14\right)=1.5\text{ bits}.
 $$
 
@@ -48,30 +48,30 @@ Entropy is a weighted average: rare outcomes have high surprisal, but contribute
 
 ## 3. Joint entropy, conditional entropy, and mutual information
 
-For discrete variables (X,Y), joint entropy (H(X,Y)) describes uncertainty about the pair. Conditional entropy describes the uncertainty remaining about (Y) after observing (X):
+For discrete variables $X,Y$, joint entropy (H$X,Y$) describes uncertainty about the pair. Conditional entropy describes the uncertainty remaining about $Y$ after observing $X$:
 
 $$
-H(Y\mid X)=\sum_x p(x)H(Y\mid X=x).
+H(Y\mid X)=\sum_x p$x$H(Y\mid X=x).
 $$
 
 The entropy chain rule is:
 
 $$
-H(X,Y)=H(X)+H(Y\mid X).
+H$X,Y$=H$X$+H(Y\mid X).
 $$
 
-Mutual information measures the average reduction in uncertainty about (Y) provided by (X):
+Mutual information measures the average reduction in uncertainty about $Y$ provided by $X$:
 
 $$
-I(X;Y)=H(Y)-H(Y\mid X)
-=\sum_{x,y}p(x,y)\log\frac{p(x,y)}{p(x)p(y)}.
+I$X;Y$=H$Y$-H(Y\mid X)
+=\sum_{x,y}p(x,y)\log\frac{p(x,y)}{p$x$p(y)}.
 $$
 
-It is symmetric and non-negative; (I(X;Y)=0) if and only if (X) and (Y) are independent (for the distributions considered). Statistical dependence alone does not establish causation.
+It is symmetric and non-negative; $I$X;Y$=0$ if and only if $X$ and $Y$ are independent (for the distributions considered). Statistical dependence alone does not establish causation.
 
 ## 4. Why entropy is connected to compression
 
-In a lossless code, frequent symbols can receive shorter codewords and rare symbols longer ones. For a discrete memoryless source, Shannon entropy is a lower bound on the average length of a prefix code; suitable codes can approach that bound over long sequences. This does not guarantee that every compression method reaches exactly (H(X)) on a short sample.
+In a lossless code, frequent symbols can receive shorter codewords and rare symbols longer ones. For a discrete memoryless source, Shannon entropy is a lower bound on the average length of a prefix code; suitable codes can approach that bound over long sequences. This does not guarantee that every compression method reaches exactly (H$X$) on a short sample.
 
 For a sequence, factorizing probability into conditionals turns probabilities into ideal code length:
 
@@ -90,19 +90,19 @@ $$
 S=-k_B\sum_i p_i\ln p_i,
 $$
 
-where (k_B) is Boltzmann's constant. With microstate probabilities and natural logarithms, (S=k_B H_{\mathrm{nats}}). The factor (k_B) gives thermodynamic entropy physical units.
+where (k_B) is Boltzmann's constant. With microstate probabilities and natural logarithms, $S=k_B H_{\mathrm{nats}}$. The factor (k_B) gives thermodynamic entropy physical units.
 
 The shared formula reflects a common probabilistic structure, but the interpretations are not interchangeable. Information theory studies, among other things, message distributions and coding cost. Statistical physics uses probabilities over microstates in a physical ensemble, and entropy enters thermodynamic laws under assumptions about the ensemble and constraints. “Disorder” can be a rough intuition, but it is not a substitute for the definition or physical conditions.
 
 ## 6. Continuous variables: an additional caveat
 
-For a continuous density (f(x)), differential entropy is sometimes defined as:
+For a continuous density (f$x$), differential entropy is sometimes defined as:
 
 $$
-h(X)=-\int f(x)\ln f(x)\,dx.
+h$X$=-\int f$x$\ln f$x$\,dx.
 $$
 
-Unlike discrete entropy, it can be negative and depends on changes of scale or coordinates. It should not be read as an absolute code length without specifying quantization or a reference. Properties of (H(X)) cannot be transferred to (h(X)) without care.
+Unlike discrete entropy, it can be negative and depends on changes of scale or coordinates. It should not be read as an absolute code length without specifying quantization or a reference. Properties of (H$X$) cannot be transferred to (h$X$) without care.
 
 ## 7. What entropy does not tell us
 
