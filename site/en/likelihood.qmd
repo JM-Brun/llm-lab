@@ -1,0 +1,58 @@
+---
+title: "Likelihood and log-likelihood"
+subtitle: "Connecting observed tokens to the training objective"
+lang: en
+---
+
+::: {.chapter-lead}
+Likelihood measures the probability of observed data for fixed parameters. In autoregressive language modeling, it is built from the conditional probabilities of each target token.
+:::
+
+## Autoregressive factorization
+
+For a sequence \(x_{1:T}\):
+
+\[
+P_\theta(x_{1:T})=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}).
+\]
+
+For multiple independent dataset sequences, total likelihood is the product of each sequence probability. Products of many numbers at most one become tiny quickly, so we use log-likelihood:
+
+\[
+\log P_\theta(x_{1:T})=
+\sum_{t=1}^{T}\log P_\theta(x_t\mid x_{<t}).
+\]
+
+The logarithm turns products into sums, which are more stable and convenient to compute.
+
+## From likelihood to loss
+
+Negative log-likelihood \(\operatorname{NLL}\) is:
+
+\[
+\operatorname{NLL}(\theta)=-\log P_\theta(x_{1:T}).
+\]
+
+For fixed sequences and the same included positions, maximizing log-likelihood is equivalent to minimizing NLL. Averaging per token is a common scaling, useful for comparing sequences of different lengths, but it is not the same as the raw sum.
+
+## Example
+
+If the probabilities assigned to three observed tokens are \((0.5, 0.25, 0.8)\), then the sequence likelihood (under the model and prefix) is \(0.1\), and NLL is \(-\log(0.1)\approx2.303\). Log-likelihood is approximately \(-2.303\).
+
+::: {.callout-warning title="Misconceptions"}
+- **“High likelihood proves the model is true.”** No: it indicates probabilistic fit to selected observations relative to a model, tokenizer, and data distribution.
+- **“Token probabilities are independent.”** They are conditional on the prefix; the product follows from the chain rule, not independence.
+- **“NLL is comparable without specifying the tokenizer.”** Not always: different segmentations change the number and granularity of evaluated events.
+:::
+
+## Self-check
+
+1. Why use log-likelihood rather than the direct product?
+2. What justifies factorizing a sequence into conditional probabilities?
+3. Why document the tokenizer and NLL reduction when comparing models?
+
+**Next:** [Cross-entropy](cross-entropy.qmd) · [Loss](loss.qmd)
+
+:::: {.language-switch}
+[Français](../fr/vraisemblance.qmd) · [English](likelihood.qmd)
+::::

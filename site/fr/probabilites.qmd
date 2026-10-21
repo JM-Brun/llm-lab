@@ -1,0 +1,55 @@
+---
+title: "Probabilités : la distribution prédite"
+subtitle: "Normalisation, incertitude et limites de l'interprétation"
+lang: fr
+---
+
+::: {.chapter-lead}
+Le softmax convertit les logits en une distribution catégorielle sur le vocabulaire. Les probabilités décrivent ce que le modèle attribue aux alternatives, pas une certitude sur la vérité du texte généré.
+:::
+
+## Définition
+
+Pour des logits \(z\in\mathbb{R}^{V}\) :
+
+\[
+p_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}},\qquad
+p_i\geq0,\qquad \sum_{i=1}^{V}p_i=1.
+\]
+
+Le vecteur \(p\) appartient au simplexe des distributions discrètes. Pour un token cible \(y\), \(p_y\) est la probabilité prédite à cette position.
+
+## Exemple et température
+
+Avec \(z=(0,\log 3)\), \(p=(0.25,0.75)\). Avec une température \(\tau>0\), on peut définir \(p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i\). Une température plus élevée tend à aplatir la distribution ; une plus faible tend à la concentrer. Cela modifie les probabilités sans modifier l'ordre des logits.
+
+La température peut changer la calibration, mais son effet doit être mesuré sur des données tenues à part. Une distribution plus concentrée n'est pas automatiquement plus exacte.
+
+## Probabilité conditionnelle dans un LLM
+
+Un modèle autorégressif factorise la probabilité d'une séquence :
+
+\[
+P_\theta(x_1,\ldots,x_T)=\prod_{t=1}^{T}
+P_\theta(x_t\mid x_{<t}).
+\]
+
+Chaque distribution est conditionnée par le préfixe. La probabilité d'un token ne doit donc pas être interprétée comme une propriété indépendante du contexte.
+
+::: {.callout-warning title="Idées reçues"}
+- **« 90 % signifie 90 % de chances que la réponse soit vraie. »** Pas en général. C'est une probabilité du modèle sur une sortie selon son contexte et son tokenizer ; la calibration et la vérité factuelle sont des questions distinctes.
+- **« La somme vaut 1, donc la distribution est bien calibrée. »** La normalisation est une propriété algébrique, la calibration est une propriété empirique.
+- **« Le token le plus probable est toujours le meilleur texte. »** L'argmax local peut produire une séquence différente de celle obtenue par recherche globale ou échantillonnage ; les critères de qualité sont plus larges.
+:::
+
+## Questions de contrôle
+
+1. Quelle différence entre normalisation et calibration ?
+2. Pourquoi \(P_\theta(x_t\mid x_{<t})\) dépend-il du préfixe ?
+3. Que change la température, et que ne peut-elle pas garantir ?
+
+**Suite :** [Vraisemblance](vraisemblance.qmd) · [Cross-entropie](cross-entropy.qmd)
+
+:::: {.language-switch}
+[Français](probabilites.qmd) · [English](../en/probabilities.qmd)
+::::

@@ -1,0 +1,74 @@
+---
+title: "Cross-entropy: penalizing predictions"
+subtitle: "Deriving the objective from target distributions to logits"
+lang: en
+---
+
+::: {.chapter-lead}
+Cross-entropy compares a target distribution \(q\) with a predicted distribution \(p\). For a one-hot target — a single correct token — it becomes the negative log-probability of the target token.
+:::
+
+## Definition
+
+\[
+H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
+\]
+
+Here, \(q_i\geq0\), \(\sum_iq_i=1\), and \(p\) is a normalized distribution. For a one-hot target class \(y\), \(q_y=1\) and all other entries are zero:
+
+\[
+H(q,p)=-\log p_y.
+\]
+
+In next-token prediction, \(y\) is the observed target token ID at that position. The loss increases when the model assigns a low probability to that token.
+
+## Derivative with respect to logits
+
+With \(p_i=\operatorname{softmax}(z)_i\), the one-hot loss is:
+
+\[
+\ell(z,y)=-z_y+\log\sum_{j=1}^{V}e^{z_j}.
+\]
+
+Differentiating gives:
+
+\[
+\frac{\partial\ell}{\partial z_i}
+= -\mathbb{1}[i=y]+\frac{e^{z_i}}{\sum_j e^{z_j}}
+= p_i-\mathbb{1}[i=y].
+\]
+
+The gradient pushes the target logit upward relative to the others and reduces alternative logits according to their probabilities. This formula is for one unweighted position; class weights, label smoothing, and batch reduction change the formula or its scale.
+
+## Cross-entropy, entropy, and KL divergence
+
+Target entropy is \(H(q)=-\sum_iq_i\log q_i\). Kullback–Leibler divergence satisfies:
+
+\[
+D_{\mathrm{KL}}(q\Vert p)=\sum_iq_i\log\frac{q_i}{p_i}
+=H(q,p)-H(q).
+\]
+
+For a fixed target, minimizing cross-entropy with respect to \(p\) therefore also minimizes \(D_{\mathrm{KL}}(q\Vert p)\). For a one-hot target, \(H(q)=0\), so the two quantities are equal.
+
+::: {.callout-warning title="Misconceptions"}
+- **“Cross-entropy is a symmetric distance between distributions.”** No: it is not symmetric and is not a distance in the usual sense.
+- **“Cross-entropy must lie between 0 and 1.”** No: it can grow arbitrarily large if \(p_y\) approaches zero.
+- **“CrossEntropyLoss expects probabilities.”** In the usual PyTorch class-index API, it expects unnormalized logits and applies an operation equivalent to log-softmax followed by NLL.
+:::
+
+## Numerical example
+
+If the target is class 2 and \(p_2=0.8\), then \(\ell=-\log(0.8)\approx0.223\). If \(p_2=0.01\), the loss is about \(4.605\). A wrong but highly confident prediction is strongly penalized.
+
+## Self-check
+
+1. Why does the loss approach zero when the target receives probability 1?
+2. Why is cross-entropy not a symmetric metric?
+3. How does the mathematical formula differ from the PyTorch API?
+
+**Next:** [Loss](loss.qmd) · [Gradients](gradients.qmd)
+
+:::: {.language-switch}
+[Français](../fr/cross-entropy.qmd) · [English](cross-entropy.qmd)
+::::

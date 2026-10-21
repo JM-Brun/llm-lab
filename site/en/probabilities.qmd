@@ -1,0 +1,55 @@
+---
+title: "Probabilities: the predicted distribution"
+subtitle: "Normalization, uncertainty, and limits of interpretation"
+lang: en
+---
+
+::: {.chapter-lead}
+Softmax converts logits into a categorical distribution over the vocabulary. Probabilities describe how the model scores alternatives, not certainty about the truth of generated text.
+:::
+
+## Definition
+
+For logits \(z\in\mathbb{R}^{V}\):
+
+\[
+p_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}},\qquad
+p_i\geq0,\qquad \sum_{i=1}^{V}p_i=1.
+\]
+
+The vector \(p\) belongs to the simplex of discrete distributions. For target token \(y\), \(p_y\) is the probability predicted at that position.
+
+## Example and temperature
+
+For \(z=(0,\log 3)\), \(p=(0.25,0.75)\). With temperature \(\tau>0\), define \(p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i\). Higher temperature tends to flatten the distribution; lower temperature tends to concentrate it. This changes probabilities without changing the ordering of logits.
+
+Temperature may affect calibration, but its effect must be measured on held-out data. A more concentrated distribution is not automatically more accurate.
+
+## Conditional probability in an LLM
+
+An autoregressive model factorizes a sequence probability:
+
+\[
+P_\theta(x_1,\ldots,x_T)=\prod_{t=1}^{T}
+P_\theta(x_t\mid x_{<t}).
+\]
+
+Each distribution is conditioned on the prefix. A token probability should therefore not be interpreted as a context-independent property.
+
+::: {.callout-warning title="Misconceptions"}
+- **“90% means a 90% chance that the answer is true.”** Not in general. It is the model's probability for an output given its context and tokenizer; calibration and factual truth are distinct questions.
+- **“The probabilities sum to 1, so the distribution is calibrated.”** Normalization is algebraic; calibration is empirical.
+- **“The most probable token always gives the best text.”** Local argmax can produce a different sequence from global search or sampling; quality involves more than one local choice.
+:::
+
+## Self-check
+
+1. What is the difference between normalization and calibration?
+2. Why does \(P_\theta(x_t\mid x_{<t})\) depend on the prefix?
+3. What does temperature change, and what can it not guarantee?
+
+**Next:** [Likelihood](likelihood.qmd) · [Cross-entropy](cross-entropy.qmd)
+
+:::: {.language-switch}
+[Français](../fr/probabilites.qmd) · [English](probabilities.qmd)
+::::

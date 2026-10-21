@@ -4,6 +4,20 @@ project:
   render:
     - index.qmd
     - en/index.qmd
+    - fr/mathematical-foundations.qmd
+    - en/mathematical-foundations.qmd
+    - fr/logits.qmd
+    - en/logits.qmd
+    - fr/probabilites.qmd
+    - en/probabilities.qmd
+    - fr/vraisemblance.qmd
+    - en/likelihood.qmd
+    - fr/cross-entropy.qmd
+    - en/cross-entropy.qmd
+    - fr/loss.qmd
+    - en/loss.qmd
+    - fr/gradients.qmd
+    - en/gradients.qmd
     - fr/transformer.qmd
     - en/transformer.qmd
     - fr/cosine-similarity.qmd
@@ -28,6 +42,8 @@ website:
         href: index.qmd
       - text: "English"
         href: en/index.qmd
+      - text: "Fondations / Foundations"
+        href: fr/mathematical-foundations.qmd
       - text: "Références / References"
         href: references.qmd
     right:
@@ -40,12 +56,30 @@ website:
       - section: "Français"
         contents:
           - index.qmd
+          - section: "Fondations mathématiques"
+            contents:
+              - fr/mathematical-foundations.qmd
+              - fr/logits.qmd
+              - fr/probabilites.qmd
+              - fr/cross-entropy.qmd
+              - fr/loss.qmd
+              - fr/vraisemblance.qmd
+              - fr/gradients.qmd
           - fr/transformer.qmd
           - fr/cosine-similarity.qmd
           - fr/linearite-embeddings.qmd
       - section: "English"
         contents:
           - en/index.qmd
+          - section: "Mathematical foundations"
+            contents:
+              - en/mathematical-foundations.qmd
+              - en/logits.qmd
+              - en/probabilities.qmd
+              - en/cross-entropy.qmd
+              - en/loss.qmd
+              - en/likelihood.qmd
+              - en/gradients.qmd
           - en/transformer.qmd
           - en/cosine-similarity.qmd
           - en/embedding-linearity.qmd

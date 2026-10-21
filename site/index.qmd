@@ -32,7 +32,7 @@ Comprendre les logits, les probabilités, la cross-entropie et les gradients.
 
 **Résultat :** une fonction de perte et son gradient vérifiés numériquement.
 
-[Voir les fondations](https://github.com/JM-Brun/llm-lab/blob/main/docs/mathematical-foundations.md){.card-link}
+[Explorer les fondations](fr/mathematical-foundations.qmd){.card-link}
 :::
 ::: {.learning-card}
 <span class="step">01 / DONNÉES</span>
