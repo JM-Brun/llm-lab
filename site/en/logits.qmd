@@ -58,6 +58,8 @@ At each position $t$, the output head provides $z_t\in\mathbb{R}^{V}$. The model
 
 ## Check your understanding
 
+[Open the related exercise space](exercises.qmd#foundations) — detailed exercises will be authored separately.
+
 1. Why does adding a constant to every logit leave probabilities unchanged?
 
 <details>
