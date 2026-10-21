@@ -10,15 +10,15 @@ Cross-entropy compares a target distribution $q$ with a predicted distribution $
 
 ## Definition
 
-$
+$$
 H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
-$
+$$
 
 Here, $q_i\geq0$, $\sum_iq_i=1$, and $p$ is a normalized distribution. For a one-hot target class $y$, $q_y=1$ and all other entries are zero:
 
-$
+$$
 H(q,p)=-\log p_y.
-$
+$$
 
 In next-token prediction, $y$ is the observed target token ID at that position. The loss increases when the model assigns a low probability to that token.
 
@@ -26,17 +26,17 @@ In next-token prediction, $y$ is the observed target token ID at that position. 
 
 With $p_i=\operatorname{softmax}(z)_i$, the one-hot loss is:
 
-$
+$$
 \ell(z,y)=-z_y+\log\sum_{j=1}^{V}e^{z_j}.
-$
+$$
 
 Differentiating gives:
 
-$
+$$
 \frac{\partial\ell}{\partial z_i}
 = -\mathbb{1}[i=y]+\frac{e^{z_i}}{\sum_j e^{z_j}}
 = p_i-\mathbb{1}[i=y].
-$
+$$
 
 The gradient pushes the target logit upward relative to the others and reduces alternative logits according to their probabilities. This formula is for one unweighted position; class weights, label smoothing, and batch reduction change the formula or its scale.
 
@@ -44,10 +44,10 @@ The gradient pushes the target logit upward relative to the others and reduces a
 
 Target entropy is $H(q)=-\sum_iq_i\log q_i$. Kullback–Leibler divergence satisfies:
 
-$
+$$
 D_{\mathrm{KL}}(q\Vert p)=\sum_iq_i\log\frac{q_i}{p_i}
 =H(q,p)-H(q).
-$
+$$
 
 For a fixed target, minimizing cross-entropy with respect to $p$ therefore also minimizes $D_{\mathrm{KL}}(q\Vert p)$. For a one-hot target, $H(q)=0$, so the two quantities are equal.
 
@@ -61,9 +61,9 @@ For a fixed target, minimizing cross-entropy with respect to $p$ therefore also 
 
 If events actually follow distribution $q$, but a code is built from probabilities $p$, the ideal length assigned to outcome $i$ is $-\log_2 p_i$ bits. Its expected length under $q$ is therefore cross-entropy:
 
-$
+$$
 H(q,p)=-\sum_i q_i\log_2 p_i.
-$
+$$
 
 With natural logarithms, the same expression is measured in nats. The logarithm base sets the unit but does not change the qualitative conclusions. If $p_i=0$ for an outcome with $q_i>0$, the cost is infinite: the model rules out an event that can occur.
 
@@ -71,9 +71,9 @@ With natural logarithms, the same expression is measured in nats. The logarithm 
 
 KL divergence is:
 
-$
+$$
 D_{\mathrm{KL}}(q\Vert p)=\sum_i q_i\log\frac{q_i}{p_i}.
-$
+$$
 
 It compares target distribution $q$ with approximation $p$ and satisfies $D_{\mathrm{KL}}(q\Vert p)=H(q,p)-H(q)$. Since $H(q)$ is constant when the target is fixed, minimizing cross-entropy is equivalent to minimizing KL in the direction $q\Vert p$.
 
