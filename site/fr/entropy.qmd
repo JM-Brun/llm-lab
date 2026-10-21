@@ -5,7 +5,7 @@ lang: fr
 ---
 
 ::: {.chapter-lead}
-En théorie de l'information, l'entropie de Shannon quantifie l'incertitude moyenne d'une variable aléatoire discrète, ou de façon équivalente la longueur moyenne idéale d'un code optimal dans des conditions précises. Elle ne mesure pas directement le « désordre », la vérité, la complexité universelle ou l'ignorance d'une personne.
+En théorie de l'information, l'entropie de Shannon quantifie l'incertitude moyenne d'une variable aléatoire discrète. Sous les hypothèses du codage optimal, elle correspond aussi à la longueur moyenne idéale du code. Elle ne mesure pas directement la vérité, la complexité universelle ou l'ignorance d'une personne.
 :::
 
 ## 1. De l'information d'un événement à l'entropie d'une variable
@@ -114,7 +114,7 @@ Contrairement à l'entropie discrète, elle peut être négative et dépend du c
 - **« L'entropie différentielle est toujours positive. »** Faux ; elle peut être négative et dépend de l'échelle.
 :::
 
-## 8. Lien avec les autres concepts du site
+## 8. Relier l'entropie aux autres concepts
 
 - [Probabilités](probabilites.qmd) : définit la distribution qui sert à calculer l'entropie.
 - [Vraisemblance](vraisemblance.qmd) : relie les probabilités des observations à leur log-probabilité.
@@ -133,6 +133,6 @@ Contrairement à l'entropie discrète, elle peut être négative et dépend du c
 
 Les autres vidéos proposées sont répertoriées dans la [bibliographie du projet](../references.qmd). Elles sont des ressources pédagogiques complémentaires ; les définitions et affirmations formelles ci-dessus s'appuient d'abord sur les références mathématiques et physiques.
 
-:::: {.language-switch}
+::: {.language-switch}
 [Français](entropy.qmd) · [English](../en/entropy.qmd)
-::::
+:::
