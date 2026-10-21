@@ -76,7 +76,7 @@ Ressource vidéo et animée pour l'intuition mathématique. Ce dépôt ne télé
 Ces liens sont proposés pour compléter la lecture. Ils servent d'appui pédagogique ; les affirmations historiques et mathématiques de référence restent reliées aux articles originaux ou à la documentation correspondante.
 
 - [Vidéo pédagogique recommandée](https://www.youtube.com/watch?v=oikbkiHtGP0) — lien fourni pour ce parcours ; le titre et les métadonnées n'ont pas été confirmés indépendamment.
-- [Vidéo YouTube fournie — YxXyN2ifK8A](https://www.youtube.com/watch?v=YxXyN2ifK8A) — lien à examiner ; titre et contenu non confirmés indépendamment.
+- [udiprod — *Visualization of tensors, part 1*](https://www.youtube.com/watch?v=YxXyN2ifK8A) — visualisation du concept mathématique de tenseur ; utile pour distinguer le sens physique/mathématique du sens simplifié utilisé dans les bibliothèques de machine learning.
 - [Vidéo YouTube fournie — Hwr9OpeO9fM](https://www.youtube.com/watch?v=Hwr9OpeO9fM) — lien à examiner ; titre et contenu non confirmés indépendamment.
 - [Vidéo YouTube fournie — fqsxg3aJ1XE](https://www.youtube.com/watch?v=fqsxg3aJ1XE) — lien à examiner ; titre et contenu non confirmés indépendamment.
 
