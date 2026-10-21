@@ -53,6 +53,8 @@ Avant d'interpréter une courbe, documenter : définition de l'objectif, décala
 
 ## Questions de contrôle
 
+[Accéder à l'espace d'exercices associé](exercises.qmd#fondations) — les exercices détaillés seront ajoutés séparément.
+
 Les formes des scores, des cibles et des lots sont détaillées dans la page sur les [tenseurs](tensors.qmd).
 
 1. Pourquoi le dénominateur doit-il compter les cibles valides plutôt que tous les tokens si certains sont ignorés ?
