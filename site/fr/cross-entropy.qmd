@@ -14,7 +14,7 @@ $$
 H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
 $$
 
-Ici, $q_i\geq0$, $\sum_iq_i=1$, et $p$ est une distribution normalisée. Pour une cible one-hot de classe $y$, $q_y=1$ et les autres valeurs sont nulles :
+Ici, $q_i\geq0$, $\sum_iq_i=1$, et $p$ est une distribution normalisée. Sauf mention contraire, $\log$ désigne le logarithme naturel : les valeurs sont donc en nats ; utiliser $\log_2$ donne des bits. Pour une cible one-hot de classe $y$, $q_y=1$ et les autres valeurs sont nulles :
 
 $$
 H(q,p)=-\log p_y.
@@ -59,13 +59,13 @@ Pour une cible fixe, minimiser la cross-entropie par rapport à $p$ revient donc
 
 ## Interprétation par le codage
 
-Si les événements suivent réellement la loi $q$, mais que le code est construit à partir de probabilités $p$, la longueur idéale attribuée à l'issue $i$ est $-\log_2 p_i$ bits. La longueur moyenne attendue sous $q$ est donc l'entropie croisée :
+Si les événements suivent réellement la loi $q$, mais que le code est construit à partir de probabilités $p$, la longueur idéale attribuée à l'issue $i$ est $-\ln p_i$ nats. La longueur moyenne attendue sous $q$ est donc l'entropie croisée :
 
-$$
-H(q,p)=-\sum_i q_i\log_2 p_i.
-$$
+$
+H(q,p)=-\sum_i q_i\ln p_i.
+$
 
-Avec des logarithmes naturels, la même expression est exprimée en nats. La base du logarithme fixe l'unité, mais ne change pas les conclusions qualitatives. Si $p_i=0$ pour une issue ayant $q_i>0$, le coût est infini : le modèle exclut un événement qui peut se produire.
+Avec des logarithmes en base 2, la même expression est exprimée en bits. La base du logarithme fixe l'unité, mais ne change pas les conclusions qualitatives. Si $p_i=0$ pour une issue ayant $q_i>0$, le coût est infini : le modèle exclut un événement qui peut se produire.
 
 ## Pourquoi la direction de KL compte
 
