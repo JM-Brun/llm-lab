@@ -16,6 +16,8 @@ Un **Transformer** est un réseau neuronal qui traite des tokens à l'aide de ve
 
 ## Les concepts, dans l'ordre du calcul
 
+Pour lire les dimensions des tenseurs dans les formules, voir aussi [Tenseurs](tensors.qmd).
+
 1. **[Requêtes, clés et valeurs](queries-keys-values.qmd)** — chaque représentation est transformée en trois vecteurs. Les requêtes et les clés servent à calculer les poids d'attention ; ces poids servent à combiner les valeurs.
 2. **[Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd)** — les produits $QK^\top$ donnent les scores ; le *softmax* les transforme en poids.
 3. **[Masque causal](causal-masking.qmd)** — les scores des positions futures sont exclus avant le *softmax*.
@@ -57,6 +59,9 @@ Le dépôt ne contient pas encore de module d'attention réutilisable dans **src
 Un test important devra vérifier la propriété de bout en bout : modifier un token futur ne doit pas changer les sorties aux positions précédentes. Tester seulement la matrice du masque ne suffit pas à démontrer cette propriété.
 
 ## Ressources complémentaires
+
+- [Espace des embeddings](embedding-space.qmd) : comment les tokens sont représentés par des vecteurs.
+- [Encodage positionnel et RoPE](positional-encoding.qmd) : comment le modèle utilise l'ordre des tokens.
 
 - [Glossaire des termes](glossary.qmd) et [historique des Transformers](transformer-history.qmd).
 - [Raschka — *Build a Large Language Model (From Scratch)*](https://www.sebastianraschka.com/llms-from-scratch/) et [son dépôt de code](https://github.com/rasbt/LLMs-from-scratch) : explications, code et exercices.
