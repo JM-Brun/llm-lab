@@ -5,7 +5,7 @@ lang: en
 ---
 
 ::: {.chapter-lead}
-Cross-entropy compares a target distribution $q$ with a predicted distribution $p$. It measures the average cost of using $p$ to encode events distributed according to $q$. Understanding that cost requires connecting it to [Shannon entropy](../fr/entropy.qmd) and KL divergence without conflating them.
+Cross-entropy compares a target distribution $q$ with a predicted distribution $p$. It measures the average cost of using $p$ to encode events distributed according to $q$. Understanding that cost requires connecting it to [Shannon entropy](entropy.qmd) and KL divergence without conflating them.
 :::
 
 ## Definition
