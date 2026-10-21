@@ -12,16 +12,16 @@ La vraisemblance mesure, pour des paramètres fixés, la probabilité des donné
 
 Pour une séquence $x_{1:T}$ :
 
-$
+$$
 P_\theta(x_{1:T})=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}).
-$
+$$
 
 Pour plusieurs séquences indépendantes de l'ensemble de données, la vraisemblance totale est le produit des probabilités de chaque séquence. Les produits de nombreux nombres inférieurs ou égaux à un deviennent rapidement minuscules ; on travaille donc avec la log-vraisemblance :
 
-$
+$$
 \log P_\theta(x_{1:T})=
 \sum_{t=1}^{T}\log P_\theta(x_t\mid x_{<t}).
-$
+$$
 
 La log transforme le produit en somme, plus stable et plus pratique pour les calculs.
 
@@ -29,9 +29,9 @@ La log transforme le produit en somme, plus stable et plus pratique pour les cal
 
 La négative log-vraisemblance $\operatorname{NLL}$ est :
 
-$
+$$
 \operatorname{NLL}(\theta)=-\log P_\theta(x_{1:T}).
-$
+$$
 
 Pour des séquences fixes et les mêmes positions prises en compte, maximiser la log-vraisemblance équivaut à minimiser la NLL. La moyenne par token est une mise à l'échelle courante, utile pour comparer des séquences de longueurs différentes, mais elle n'est pas identique à la somme brute.
 
