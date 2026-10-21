@@ -77,5 +77,5 @@ Ces dimensions ne disent pas si les représentations sont pertinentes, si le mas
 - [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch).
 
 ::: {.language-switch}
-**Langue :** [Français](tensors.qmd) · [English](../en/index.qmd)
+**Langue :** [Français](tensors.qmd) · [English home — no equivalent page yet](../en/index.qmd)
 :::
