@@ -12,10 +12,10 @@ Le softmax convertit les logits en une distribution catégorielle sur le vocabul
 
 Pour des logits $z\in\mathbb{R}^{V}$ :
 
-$
+$$
 p_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}},\qquad
 p_i\geq0,\qquad \sum_{i=1}^{V}p_i=1.
-$
+$$
 
 Le vecteur $p$ appartient au simplexe des distributions discrètes. Pour un token cible $y$, $p_y$ est la probabilité prédite à cette position.
 
@@ -29,10 +29,10 @@ La température peut changer la calibration, mais son effet doit être mesuré s
 
 Un modèle autorégressif factorise la probabilité d'une séquence :
 
-$
+$$
 P_\theta(x_1,\ldots,x_T)=\prod_{t=1}^{T}
 P_\theta(x_t\mid x_{<t}).
-$
+$$
 
 Chaque distribution est conditionnée par le préfixe. La probabilité d'un token ne doit donc pas être interprétée comme une propriété indépendante du contexte.
 
