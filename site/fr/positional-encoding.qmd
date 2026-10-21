@@ -68,6 +68,10 @@ Cette page décrit le mécanisme sans ajouter d'implémentation avant que les co
 - [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) : scores et softmax.
 - [Espace des embeddings](embedding-space.qmd) : vecteur initial et représentation contextualisée.
 
+## Vidéo complémentaire
+
+- [Vidéo fournie pour approfondir ce sujet](https://www.youtube.com/watch?v=fqsxg3aJ1XE) — lien transmis, mais titre et contenu non vérifiés indépendamment.
+
 ## Références
 
 - [Vaswani et al. (2017), Attention Is All You Need](https://arxiv.org/abs/1706.03762) — encodages positionnels sinusoïdaux.
