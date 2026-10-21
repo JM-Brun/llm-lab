@@ -14,11 +14,11 @@ This distinction matters. A metric cannot be interpreted independently of **the 
 
 For two non-zero vectors $x,y\in\mathbb{R}^d$,
 
-\[
+$
 \operatorname{cos}(x,y)=\frac{x^\top y}{\|x\|_2\,\|y\|_2}.
-\]
+$
 
-The score lies in \([-1,1]\). A high value means the vectors point in similar directions. It does not, by itself, mean that two texts are equivalent, imply the same answer, or are interchangeable in a search system.
+The score lies in $[-1,1]$. A high value means the vectors point in similar directions. It does not, by itself, mean that two texts are equivalent, imply the same answer, or are interchangeable in a search system.
 
 Normalization removes information carried by vector magnitude. This is useful when magnitude is a nuisance; it may discard a useful signal if the model encodes one in the norm. Steck, Ekanadham, and Kallus analytically show that, for some families of regularized linear models, cosine similarities can be arbitrary, non-unique, or controlled by regularization. Their result cautions against automatic use of the metric; it does not prove that cosine fails for every modern encoder.
 
