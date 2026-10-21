@@ -10,24 +10,24 @@ L'attention à produit scalaire transforme des compatibilités apprises entre re
 
 ## Calcul en quatre étapes
 
-Pour une tête, (Q,K\in\mathbb{R}^{T\times d_k}) et (V\in\mathbb{R}^{T\times d_v}).
+Pour une tête, $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$.
 
-1. **Scores :** (S=QK^\top), de forme (T\times T).
-2. **Mise à l'échelle :** (S/\sqrt{d_k}).
-3. **Normalisation :** (A=\operatorname{softmax}(S/\sqrt{d_k}+M)), ligne par ligne.
-4. **Agrégation :** (O=AV), de forme (T\times d_v).
+1. **Scores :** $S=QK^\top$, de forme $T\times T$.
+2. **Mise à l'échelle :** $S/\sqrt{d_k}$.
+3. **Normalisation :** $A=\operatorname{softmax}(S/\sqrt{d_k}+M)$, ligne par ligne.
+4. **Agrégation :** $O=AV$, de forme $T\times d_v$.
 
 Ainsi,
 
-[
+$$
 O=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
-]
+$$
 
-Le masque (M) est facultatif selon le type d'attention. Pour une attention causale, les positions futures reçoivent (-\infty) avant le softmax.
+Le masque $M$ est facultatif selon le type d'attention. Pour une attention causale, les positions futures reçoivent $-\infty$ avant le softmax.
 
-## Pourquoi diviser par (sqrt{d_k}) ?
+## Pourquoi diviser par $\sqrt{d_k}$ ?
 
-Sous l'hypothèse simplificatrice que les composantes des vecteurs de requête et de clé sont indépendantes, centrées et de variance unitaire, la variance d'un produit scalaire somme d'environ (d_k) termes croît avec (d_k). Diviser par (sqrt{d_k}) aide à maintenir l'échelle des scores plus stable lorsque la dimension augmente, ce qui limite des softmax trop saturés et des gradients faibles. C'est une motivation de mise à l'échelle, pas une garantie que les scores auront toujours une variance exactement égale à un dans un réseau entraîné.
+Sous l'hypothèse simplificatrice que les composantes des vecteurs de requête et de clé sont indépendantes, centrées et de variance unitaire, la variance d'un produit scalaire somme d'environ $d_k$ termes croît avec $d_k$. Diviser par $\sqrt{d_k}$ aide à maintenir l'échelle des scores plus stable lorsque la dimension augmente, ce qui limite des softmax trop saturés et des gradients faibles. C'est une motivation de mise à l'échelle, pas une garantie que les scores auront toujours une variance exactement égale à un dans un réseau entraîné.
 
 ## Provenance et intérêt
 
@@ -42,14 +42,14 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 
 ## Liens avec les autres concepts
 
-- Les entrées (Q,K,V) sont détaillées dans [requêtes, clés et valeurs](queries-keys-values.qmd).
+- Les entrées $Q,K,V$ sont détaillées dans [requêtes, clés et valeurs](queries-keys-values.qmd).
 - L'exclusion des tokens futurs est définie dans le [masque causal](causal-masking.qmd).
 - La fonction softmax est liée aux [probabilités](probabilites.qmd), mais une distribution normalisée n'est pas nécessairement calibrée.
 - La [synthèse Transformer](transformer.qmd) remet le calcul dans le flux du modèle.
 
 ## Code, implémentation et vérification
 
-Il n'existe pas encore d'implémentation réutilisable de l'attention dans `src/llm_lab/`. La formule de cette page doit devenir le contrat de référence : formes attendues, normalisation par ligne, somme des poids égale à un sur les positions autorisées, sorties finies et gradients valides.
+Il n'existe pas encore d'implémentation réutilisable de l'attention dans **src/llm_lab/**. La formule de cette page doit devenir le contrat de référence : formes attendues, normalisation par ligne, somme des poids égale à un sur les positions autorisées, sorties finies et gradients valides.
 
 - [Code source](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab)
 - [Tests](https://github.com/JM-Brun/llm-lab/tree/main/tests)
