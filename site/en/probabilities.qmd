@@ -12,10 +12,10 @@ Softmax converts logits into a categorical distribution over the vocabulary. Pro
 
 For logits $z\in\mathbb{R}^{V}$:
 
-$
+$$
 p_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}},\qquad
 p_i\geq0,\qquad \sum_{i=1}^{V}p_i=1.
-$
+$$
 
 The vector $p$ belongs to the simplex of discrete distributions. For target token $y$, $p_y$ is the probability predicted at that position.
 
@@ -29,10 +29,10 @@ Temperature may affect calibration, but its effect must be measured on held-out 
 
 An autoregressive model factorizes a sequence probability:
 
-$
+$$
 P_\theta(x_1,\ldots,x_T)=\prod_{t=1}^{T}
 P_\theta(x_t\mid x_{<t}).
-$
+$$
 
 Each distribution is conditioned on the prefix. A token probability should therefore not be interpreted as a context-independent property.
 
