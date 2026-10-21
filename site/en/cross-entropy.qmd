@@ -53,7 +53,7 @@ For a fixed target, minimizing cross-entropy with respect to \(p\) therefore als
 
 ::: {.callout-warning title="Misconceptions"}
 - **“Cross-entropy is a symmetric distance between distributions.”** No: it is not symmetric and is not a distance in the usual sense.
-- **“Cross-entropy must lie between 0 and 1.”** No: it can grow arbitrarily large if \(p_y\) approaches zero.
+- **“Cross-entropy must lie between 0 and 1.”** No: it can grow arbitrarily large if \\(p_y\) approaches zero.
 - **“CrossEntropyLoss expects probabilities.”** In the usual PyTorch class-index API, it expects unnormalized logits and applies an operation equivalent to log-softmax followed by NLL.
 :::
 
