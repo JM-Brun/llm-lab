@@ -64,7 +64,7 @@ Mutual information measures the average reduction in uncertainty about $Y$ provi
 
 $$
 I(X;Y)=H(Y)-H(Y\mid X)
-=\sum_{x,y}p(x,y)\log\frac{p(x,y)}{p(x)p(y)}.
+=\sum_{x,y}p(x,y)\log_2\frac{p(x,y)}{p(x)p(y)}.
 $$
 
 It is symmetric and non-negative; $I(X;Y)=0$ if and only if $X$ and $Y$ are independent (for the distributions considered). Statistical dependence alone does not establish causation.
@@ -90,7 +90,7 @@ $$
 S=-k_B\sum_i p_i\ln p_i,
 $$
 
-where $k_B$ is Boltzmann's constant. With microstate probabilities and natural logarithms, $S=k_B H_{\mathrm{nats}}$. The factor $k_B$ gives thermodynamic entropy physical units.
+where $k_B$ is Boltzmann's constant. Let $H_{\mathrm{nats}}=-\sum_i p_i\ln p_i$ be information entropy computed with natural logarithms; then $S=k_B H_{\mathrm{nats}}$. The factor $k_B$ gives thermodynamic entropy physical units.
 
 The shared formula reflects a common probabilistic structure, but the interpretations are not interchangeable. Information theory studies, among other things, message distributions and coding cost. Statistical physics uses probabilities over microstates in a physical ensemble, and entropy enters thermodynamic laws under assumptions about the ensemble and constraints. “Disorder” can be a rough intuition, but it is not a substitute for the definition or physical conditions.
 
