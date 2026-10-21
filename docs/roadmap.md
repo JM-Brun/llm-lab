@@ -46,8 +46,8 @@ Tasks:
 2. Check internal links, external source links, image loading, alternative text, headings, and rendered mathematics.
 3. Fix notation inconsistencies in the mathematical foundations and attention self-checks.
 4. Link the website, learning path, reference list, and this roadmap consistently.
-5. Generate and commit `uv.lock`, then change CI to install with `uv sync --locked --dev`; document Quarto as a separate system dependency.
-6. Add tests for the causal-mask helper, including input validation and preservation of the input array; then add a full-attention future-token invariance test when attention code exists.
+5. Record reproducibility and accessibility defects found during review, but defer dependency-locking changes and new test helpers until the knowledge-validation gate is met.
+6. Do not add a causal-mask helper or attention implementation as part of this priority; first validate the existing explanation of causality and its failure cases.
 
 **Acceptance criteria**
 - `quarto render site` succeeds from a clean checkout.
