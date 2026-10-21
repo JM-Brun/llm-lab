@@ -14,15 +14,15 @@ At one position, $z=(z_1,\ldots,z_V)$, where $V$ is the vocabulary size. No logi
 
 Softmax turns these scores into a distribution:
 
-$
+$$
 p_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}}.
-$
+$$
 
 Differences between logits determine probability ratios:
 
-$
+$$
 \frac{p_i}{p_j}=e^{z_i-z_j}.
-$
+$$
 
 A logit gap of $\log 2$ therefore implies a probability ratio of 2, all else equal.
 
