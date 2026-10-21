@@ -12,6 +12,8 @@ The project includes a bilingual Quarto website organized into three layers: ove
 - English introduction: `site/en/index.qmd`
 - Transformer overview: `site/fr/transformer.qmd` and `site/en/transformer.qmd` (high-level synthesis, not a detailed concept chapter)
 - Dedicated attention concepts: Q/K/V, scaled dot-product attention, and causal masking, each with French and English pages under `site/fr/` and `site/en/`
+- Entropy, uncertainty, and compression: `site/fr/entropy.qmd` and `site/en/entropy.qmd`
+- Cross-entropy and KL divergence: `site/fr/cross-entropy.qmd` and `site/en/cross-entropy.qmd`
 - Critical notes on cosine similarity: `site/fr/cosine-similarity.qmd` and `site/en/cosine-similarity.qmd`
 - Critical notes on embedding linearity: `site/fr/linearite-embeddings.qmd` and `site/en/embedding-linearity.qmd`
 - Visual references and image provenance: `site/references.qmd`
