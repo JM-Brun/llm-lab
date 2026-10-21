@@ -15,7 +15,7 @@ Un modèle autorégressif produit des **logits** pour le token suivant. Le softm
 1. **[Logits](logits.qmd)** — scores réels non normalisés produits par le modèle.
 2. **[Probabilités](probabilites.qmd)** — distribution sur le vocabulaire obtenue par softmax.
 3. **[Vraisemblance](vraisemblance.qmd)** — probabilité attribuée aux tokens effectivement observés, ou son logarithme.
-4. **[Cross-entropie](cross-entropy.qmd)** — pénalité associée à une cible et à une distribution prédite.
+4. **[Cross-entropie](cross-entropy.qmd)** — pénalité associée à une cible et à une distribution prédite ; voir aussi l'[entropie de Shannon](entropy.qmd) pour distinguer incertitude de la cible et coût de prédiction.
 5. **[Loss / fonction de perte](loss.qmd)** — agrégation scalaire optimisée sur les tokens et exemples retenus.
 6. **[Gradients](gradients.qmd)** — dérivées qui indiquent comment la perte varie localement avec les logits et les paramètres.
 
