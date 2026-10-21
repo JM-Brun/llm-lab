@@ -10,28 +10,28 @@ En théorie de l'information, l'entropie de Shannon quantifie l'incertitude moye
 
 ## 1. De l'information d'un événement à l'entropie d'une variable
 
-Un événement rare apporte davantage de surprise que le résultat d'un événement presque certain. Pour une issue $x$ de probabilité $p$x$>0$, sa quantité d'information — ou surprisal — est :
+Un événement rare apporte davantage de surprise que le résultat d'un événement presque certain. Pour une issue $x$ de probabilité $p(x)>0$, sa quantité d'information — ou surprisal — est :
 
 $$
-I$x$=-\log_2 p$x$.
+I$x$=-\log_2 p(x).
 $$
 
 Elle est exprimée en bits. Un événement de probabilité $1/2$ apporte 1 bit ; un événement de probabilité $1/8$ apporte 3 bits. Cette quantité dépend de la distribution de référence : « surprise » n'est pas une propriété absolue de l'événement.
 
-Pour une variable discrète $X$ de loi $p$x$$, l'entropie est l'espérance de cette surprise :
+Pour une variable discrète $X$ de loi $p(x)$, l'entropie est l'espérance de cette surprise :
 
 $$
-H$X$=\mathbb{E}_{X\sim p}[-\log_2 p$X$]
-=-\sum_{x:p$x$>0}p$x$\log_2 p$x$.
+H(X)=\mathbb{E}_{X\sim p}[-\log_2 p(X)]
+=-\sum_{x:p(x)>0}p(x)\log_2 p(x).
 $$
 
 On adopte la convention $0\log 0=0$ par continuité. L'entropie décrit une distribution, non la surprise de l'issue déjà observée.
 
 ## 2. Lire la formule et ses limites
 
-- **Entropie nulle :** si une issue est certaine, (H$X$=0). Il n'y a aucune incertitude à lever.
-- **Loi uniforme :** si $X$ a $n$ issues équiprobables, (H$X$=\log_2 n). Pour 8 issues, l'entropie vaut 3 bits.
-- **Maximum :** sur un alphabet fini de taille $n$, (H$X$\leq\log_2 n), avec égalité pour la loi uniforme.
+- **Entropie nulle :** si une issue est certaine, $H(X)=0$. Il n'y a aucune incertitude à lever.
+- **Loi uniforme :** si $X$ a $n$ issues équiprobables, $H(X)=\log_2 n$. Pour 8 issues, l'entropie vaut 3 bits.
+- **Maximum :** sur un alphabet fini de taille $n$, $H(X)\leq\log_2 n$, avec égalité pour la loi uniforme.
 - **Distribution concentrée :** l'entropie diminue généralement quand la masse se concentre sur quelques issues, mais elle ne dit pas si une prédiction particulière est correcte.
 - **Unités :** logarithme en base 2 → bits ; logarithme naturel → nats. Changer de base change l'unité et multiplie la valeur par une constante.
 
@@ -40,7 +40,7 @@ On adopte la convention $0\log 0=0$ par continuité. L'entropie décrit une dist
 Pour $p=(1/2,1/4,1/4)$,
 
 $$
-H$X$=-\left(\frac12\log_2\frac12
+H(X)=-\left(\frac12\log_2\frac12
 +2\cdot\frac14\log_2\frac14\right)=1.5\text{ bits}.
 $$
 
@@ -48,30 +48,30 @@ L'entropie est une moyenne pondérée : les issues rares ont une surprise élev�
 
 ## 3. Entropie conjointe, conditionnelle et information mutuelle
 
-Pour deux variables discrètes $X,Y$, l'entropie conjointe (H$X,Y$) décrit l'incertitude du couple. L'entropie conditionnelle décrit l'incertitude restante sur $Y$ après observation de $X$ :
+Pour deux variables discrètes $X,Y$, l'entropie conjointe $H(X,Y)$ décrit l'incertitude du couple. L'entropie conditionnelle décrit l'incertitude restante sur $Y$ après observation de $X$ :
 
 $$
-H(Y\mid X)=\sum_x p$x$H(Y\mid X=x).
+H(Y\mid X)=\sum_x p(x)H(Y\mid X=x).
 $$
 
 La règle de chaîne de l'entropie donne :
 
 $$
-H$X,Y$=H$X$+H(Y\mid X).
+H(X,Y)=H(X)+H(Y\mid X).
 $$
 
 L'information mutuelle mesure la réduction moyenne d'incertitude sur $Y$ apportée par $X$ :
 
 $$
-I$X;Y$=H$Y$-H(Y\mid X)
-=\sum_{x,y}p(x,y)\log\frac{p(x,y)}{p$x$p(y)}.
+I(X;Y)=H(Y)-H(Y\mid X)
+=\sum_{x,y}p(x,y)\log\frac{p(x,y)}{p(x)p(y)}.
 $$
 
-Elle est symétrique et non négative ; $I$X;Y$=0$ si et seulement si $X$ et $Y$ sont indépendantes (pour les distributions considérées). Attention : une dépendance statistique n'établit pas à elle seule une relation causale.
+Elle est symétrique et non négative ; $I(X;Y)=0$ si et seulement si $X$ et $Y$ sont indépendantes (pour les distributions considérées). Attention : une dépendance statistique n'établit pas à elle seule une relation causale.
 
 ## 4. Pourquoi l'entropie est liée à la compression
 
-Dans un code sans perte, les symboles fréquents peuvent recevoir des codes plus courts et les symboles rares des codes plus longs. Pour une source discrète sans mémoire, l'entropie de Shannon est une borne inférieure sur la longueur moyenne d'un code préfixe ; des codes adaptés peuvent approcher cette borne sur de longues séquences. Il ne s'agit pas d'une garantie que toute méthode de compression atteigne exactement (H$X$) sur un petit échantillon.
+Dans un code sans perte, les symboles fréquents peuvent recevoir des codes plus courts et les symboles rares des codes plus longs. Pour une source discrète sans mémoire, l'entropie de Shannon est une borne inférieure sur la longueur moyenne d'un code préfixe ; des codes adaptés peuvent approcher cette borne sur de longues séquences. Il ne s'agit pas d'une garantie que toute méthode de compression atteigne exactement $H(X)$ sur un petit échantillon.
 
 Pour une séquence, la probabilité factorisée en conditionnelles permet de convertir les probabilités en longueur de code idéale :
 
@@ -102,7 +102,7 @@ $$
 h$X$=-\int f$x$\ln f$x$\,dx.
 $$
 
-Contrairement à l'entropie discrète, elle peut être négative et dépend du changement d'échelle ou de coordonnées. Elle ne se lit donc pas comme une longueur de code absolue sans préciser la quantification ou la référence. Il ne faut pas transposer sans précaution les propriétés de (H$X$) à (h$X$).
+Contrairement à l'entropie discrète, elle peut être négative et dépend du changement d'échelle ou de coordonnées. Elle ne se lit donc pas comme une longueur de code absolue sans préciser la quantification ou la référence. Il ne faut pas transposer sans précaution les propriétés de $H(X)$ à (h$X$).
 
 ## 7. Ce que l'entropie ne dit pas
 
