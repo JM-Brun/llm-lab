@@ -1,0 +1,61 @@
+---
+title: "Logits: scores before normalization"
+subtitle: "Why a model does not directly output probabilities"
+lang: en
+---
+
+::: {.chapter-lead}
+A **logit** is an unnormalized real-valued score associated with a class or vocabulary token. In an LLM, the final projection usually produces a vector (z\in\mathbb{R}^{V}) at each prediction position.
+:::
+
+## Definition and shapes
+
+At one position, (z=(z_1,\ldots,z_V)), where (V) is the vocabulary size. No logit is constrained to ([0,1]), and the logits do not need to sum to one.
+
+Softmax turns these scores into a distribution:
+
+\[
+p_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}}.
+\]
+
+Differences between logits determine probability ratios:
+
+\[
+\frac{p_i}{p_j}=e^{z_i-z_j}.
+\]
+
+A logit gap of \(\log 2\) therefore implies a probability ratio of 2, all else equal.
+
+## Two-class example
+
+For (z=(0,\log 3)), softmax gives (p=(1/4,3/4)). Logits are not probabilities; softmax performs the normalization.
+
+## Useful properties
+
+- **Translation invariance:** (operatorname{softmax}(z+c\mathbf{1})=\operatorname{softmax}(z)). Only differences matter.
+- **Order is preserved:** if (z_i>z_j), then (p_i>p_j).
+- **Scale and temperature:** multiplying logits generally changes distribution concentration; it is not a translation.
+
+For numerical stability, implementations subtract the maximum before exponentiation: (e^{z_i-m}/\sum_j e^{z_j-m}), where (m=\max_j z_j).
+
+::: {.callout-warning title="Misconceptions"}
+- **“A positive logit means high probability.”** No: the sign depends on the score reference level. A logit of 10 can be less probable than another logit of 12.
+- **“The largest logit measures the confidence gap.”** The maximum determines the argmax, but uncertainty depends on all logits and their scale.
+- **“Logits are directly comparable across models.”** Not necessarily: architectures, temperatures, and training can produce different scales.
+:::
+
+## In an LLM
+
+At each position (t), the output head provides (z_t\in\mathbb{R}^{V}). The model then selects or samples a token from the associated distribution. During training, logits are compared with the target token ID using a loss such as [cross-entropy](cross-entropy.qmd).
+
+## Self-check
+
+1. Why does adding a constant to all logits leave probabilities unchanged?
+2. Can two logit vectors have the same argmax but very different distributions?
+3. Why does a stable implementation subtract the maximum before exponentiation?
+
+**Next:** [Probabilities](probabilities.qmd) · [Overview](mathematical-foundations.qmd)
+
+:::: {.language-switch}
+[Français](../fr/logits.qmd) · [English](logits.qmd)
+::::
