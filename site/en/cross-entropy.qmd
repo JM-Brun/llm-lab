@@ -103,6 +103,35 @@ If the target is class 2 and $p_2=0.8$, then $\ell=-\log(0.8)\approx0.223$. If $
 - [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU).
 - [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html).
 
+## Check your understanding
+
+1. Why does the loss approach zero when the target receives probability 1?
+
+<details>
+<summary>Show answer</summary>
+
+For target probability $p_y$, the loss is $-\log p_y$. As $p_y\to1$, $\log p_y\to0$, so the loss approaches zero. It is exactly zero when $p_y=1$.
+
+</details>
+
+2. Why is cross-entropy not symmetric?
+
+<details>
+<summary>Show answer</summary>
+
+Cross-entropy $H(q,p)=-\sum_i q_i\log p_i$ averages costs under target distribution $q$ while evaluating probabilities from $p$. Swapping the distributions changes the average; generally $H(q,p)\ne H(p,q)$, and KL divergence is also asymmetric.
+
+</details>
+
+3. How does the mathematical formula differ from the PyTorch API?
+
+<details>
+<summary>Show answer</summary>
+
+`torch.nn.CrossEntropyLoss` normally expects unnormalized logits and combines log-softmax with negative log-likelihood. Passing probabilities that have already been softmaxed changes the computation. Also check target shapes, `ignore_index`, and the selected reduction.
+
+</details>
+
 :::: {.language-switch}
 [Français](../fr/cross-entropy.qmd) · [English](cross-entropy.qmd)
 ::::
