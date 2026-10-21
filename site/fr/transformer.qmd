@@ -17,21 +17,27 @@ Un **Transformer** est un réseau neuronal qui traite des tokens à l'aide de ve
 ## Les concepts, dans l'ordre du calcul
 
 1. **[Requêtes, clés et valeurs](queries-keys-values.qmd)** — chaque représentation est transformée en trois vecteurs. Les requêtes et les clés servent à calculer les poids d'attention ; ces poids servent à combiner les valeurs.
-2. **[Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd)** — les produits (QK^\top) donnent les scores ; le *softmax* les transforme en poids.
+2. **[Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd)** — les produits $QK^\top$ donnent les scores ; le *softmax* les transforme en poids.
 3. **[Masque causal](causal-masking.qmd)** — les scores des positions futures sont exclus avant le *softmax*.
 4. **[Fondations mathématiques](mathematical-foundations.qmd)** — les logits de sortie sont reliés aux probabilités, à la vraisemblance et à la fonction de perte (*loss*) d'entraînement.
 5. **[Similarité cosinus](cosine-similarity.qmd)** — un point de comparaison utile, même si les scores d'attention ne sont pas une mesure universelle de similarité sémantique.
 
+## Voir comment Q, K et V travaillent ensemble
+
+Les requêtes et les clés déterminent les poids ; ces poids servent à calculer une somme pondérée des valeurs. Le [schéma des requêtes, clés et valeurs](queries-keys-values.qmd) détaille ces deux étapes.
+
+![Schéma des projections Q, K et V : Q et K calculent les poids d'attention, qui servent à combiner les valeurs V.](images/queries-keys-values.svg){fig-alt="Les représentations d'entrée sont projetées en requêtes, clés et valeurs. Les requêtes sont comparées aux clés ; les poids obtenus pondèrent les valeurs pour produire une représentation contextualisée." width=100%}
+
 ## Vue mathématique minimale
 
-Pour une séquence de longueur (T), on note (X\in\mathbb{R}^{T\times d_{model}}) la matrice des représentations d'entrée. Les projections apprises produisent (Q), (K) et (V). Pour une tête d'attention :
+Pour une séquence de longueur $T$, on note $X\in\mathbb{R}^{T\times d_{model}}$ la matrice des représentations d'entrée. Les projections apprises produisent $Q$, $K$ et $V$. Pour une tête d'attention :
 
 $$
 \operatorname{Attention}(Q,K,V)
 =\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
 $$
 
-Ici, (M) est un masque additif : les positions interdites reçoivent la valeur (-\infty). La formule rassemble plusieurs opérations ; les pages conceptuelles détaillent les dimensions, les hypothèses et les cas limites.
+Ici, $M$ est un masque additif : les positions interdites reçoivent la valeur $-\infty$. La formule rassemble plusieurs opérations ; les pages conceptuelles détaillent les dimensions, les hypothèses et les cas limites.
 
 ## Intuition, utilité et limites
 
