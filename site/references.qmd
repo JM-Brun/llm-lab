@@ -128,7 +128,7 @@ Ces ressources ont été consultées pour comparer les explications, repérer le
 - Utiliser l'article ACM pour une formulation plus compacte de l'auto-attention et du bloc Transformer, en vérifiant les hypothèses de chaque version.
 - Revenir aux équations et à [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762) pour les définitions formelles. Une animation, un schéma ou une analogie ne constitue pas à elle seule une preuve mathématique.
 
-Les schémas originaux [flux de données GPT](images/gpt-data-flow.svg) et [calcul d'attention](images/attention-calculation-flow.svg) ont été créés pour ce dépôt. Ils ne sont pas des captures d'écran ni des adaptations pixel à pixel des images des auteurs cités.
+Les schémas originaux [flux de données GPT](images/gpt-data-flow.svg), [calcul d'attention](images/attention-calculation-flow.svg) et [auto-attention comparée au MLP](images/attention-vs-mlp.svg) ont été créés pour ce dépôt. Ils synthétisent des concepts présentés dans les références ci-dessus, mais ne sont ni des captures d'écran ni des adaptations pixel à pixel des images des auteurs cités.
 
 ## Politique de citation
 
