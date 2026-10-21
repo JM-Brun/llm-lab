@@ -60,15 +60,11 @@ Les pages distinguent le code réellement présent, les tests qui le couvrent et
 
 Ce parcours décrit l'organisation pédagogique, pas l'état d'avancement de toutes les implémentations. Le [parcours détaillé](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) et la [feuille de route](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md) précisent les critères de validation.
 
-## Principes éditoriaux
+## Pour aller plus loin
 
-- **Une notion, une page de référence.** Les pages de synthèse renvoient à la définition approfondie au lieu de la recopier partout.
-- **Intuition et provenance.** Expliquer le problème qui a motivé le concept, son origine et les raisons de son adoption.
-- **Hypothèses explicites.** Donner les conditions d'application, les idées reçues et les contre-exemples discriminants.
-- **Mathématiques et code reliés.** Chaque page indique l'implémentation et les tests disponibles, ou signale clairement leur absence.
-- **Références traçables.** Distinguer article original, documentation officielle, explication pédagogique et illustration.
-
-Les pages existent en français et en anglais. Les ressources externes sont attribuées dans la [page des références](references.qmd), et l'accès à une image ou à une URL ne constitue pas une autorisation de réutilisation.
+- [Glossaire des termes](fr/glossary.qmd) — les définitions essentielles, de « token » à « Transformer autorégressif ».
+- [Historique des Transformers](fr/transformer-history.qmd) — les étapes marquantes, des premiers mécanismes d'attention aux LLM modernes.
+- Les ressources externes sont recensées dans la [page des références](references.qmd).
 
 :::: {.language-switch}
 **Choisir la langue :** [Français](index.qmd) · [English](en/index.qmd)
