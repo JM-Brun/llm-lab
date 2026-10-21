@@ -10,7 +10,7 @@ The gradient \(\nabla_\theta\mathcal{L}\) collects partial derivatives of the lo
 
 ## Gradient with respect to logits
 
-For a one-hot target (y) and cross-entropy computed from softmax:
+For a one-hot target \(y\) and cross-entropy computed from softmax:
 
 \[
 \frac{\partial\ell}{\partial z_i}=p_i-\mathbb{1}[i=y].
@@ -60,7 +60,7 @@ Compare this with the analytical gradient using absolute and relative tolerances
 
 ## Self-check
 
-1. Why does the cross-entropy derivative with respect to logits simplify to (p_i-\mathbb{1}[i=y])?
+1. Why does the cross-entropy derivative with respect to logits simplify to \(p_i-\mathbb{1}[i=y]\)?
 2. What does disagreement between analytical and finite-difference gradients reveal?
 3. Why can a gradient-descent step fail to reduce loss if the update is too large?
 
