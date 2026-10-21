@@ -14,9 +14,9 @@ This distinction matters. A metric cannot be interpreted independently of **the 
 
 For two non-zero vectors $x,y\in\mathbb{R}^d$,
 
-$
+$$
 \operatorname{cos}(x,y)=\frac{x^\top y}{\|x\|_2\,\|y\|_2}.
-$
+$$
 
 The score lies in $[-1,1]$. A high value means the vectors point in similar directions. It does not, by itself, mean that two texts are equivalent, imply the same answer, or are interchangeable in a search system.
 
