@@ -124,6 +124,11 @@ La cross-entropie $H(q,p)=-\sum_i q_i\log p_i$ moyenne le coût selon la distrib
 - [Entropie de Shannon](entropy.qmd) : incertitude moyenne sous la distribution cible.
 - [Vraisemblance](vraisemblance.qmd) : lien entre probabilité des tokens observés et objectif d'entraînement.
 
+## Pour poursuivre
+
+- [Entropie de Shannon](entropy.qmd) : incertitude moyenne sous la distribution cible.
+- [Vraisemblance](vraisemblance.qmd) : lien entre probabilité des tokens observés et objectif d'entraînement.
+
 ## Références complémentaires
 
 - Claude E. Shannon (1948), [A Mathematical Theory of Communication](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf).
