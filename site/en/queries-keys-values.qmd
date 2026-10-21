@@ -14,15 +14,15 @@ Imagine a collection of index cards. A **query** expresses what a position is lo
 
 ## Definition and dimensions
 
-For (X\in\mathbb{R}^{T\times d_{model}}), the projections for one head are:
+For $X\in\mathbb{R}^{T\times d_{model}}$, the projections for one head are:
 
-[
+$$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
-]
+$$
 
-With (W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}) and (W_V\in\mathbb{R}^{d_{model}\times d_v}), we obtain (Q,K\in\mathbb{R}^{T\times d_k}) and (V\in\mathbb{R}^{T\times d_v}). Optional biases are omitted for clarity.
+With $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ and $W_V\in\mathbb{R}^{d_{model}\times d_v}$, we obtain $Q,K\in\mathbb{R}^{T\times d_k}$ and $V\in\mathbb{R}^{T\times d_v}$. Optional biases are omitted for clarity.
 
-The scores (QK^\top) compare every query with every key. After scaling and applying any mask, the weights determine the combination of rows of (V). In standard dot-product attention, values therefore do not directly determine the scores.
+The scores $QK^\top$ compare every query with every key. After scaling and applying any mask, the weights determine the combination of rows of $V$. In standard dot-product attention, values therefore do not directly determine the scores.
 
 ## Provenance and purpose
 
@@ -47,7 +47,7 @@ Attention mechanisms appeared in neural encoder-decoder translation models, nota
 
 ## Code and tests
 
-No reusable Q/K/V implementation is currently present in `src/llm_lab/`. This page therefore defines mathematical contracts to test before writing the module: tensor shapes, projections, gradient flow, and multi-head behavior.
+No reusable Q/K/V implementation is currently present in **src/llm_lab/**. This page therefore defines mathematical contracts to test before writing the module: tensor shapes, projections, gradient flow, and multi-head behavior.
 
 - [Existing source code](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab)
 - [Existing tests](https://github.com/JM-Brun/llm-lab/tree/main/tests)
