@@ -1,0 +1,82 @@
+---
+title: "Fondations mathématiques des LLM"
+subtitle: "Une chaîne cohérente, des scores du modèle à l'apprentissage"
+lang: fr
+---
+
+::: {.chapter-lead}
+Un modèle autorégressif produit des **logits** pour le token suivant. Le softmax les transforme en probabilités ; la cible observée définit une vraisemblance et une perte ; la dérivation de cette perte fournit les gradients qui modifient les paramètres. Ces notions sont liées, mais ne sont pas interchangeables.
+:::
+
+![Schéma original de la chaîne mathématique : logits, probabilités, vraisemblance, perte et gradients.](../images/math-training-pipeline.svg){fig-alt="Chaîne du calcul : logits z, softmax vers p, probabilité du token cible, log-vraisemblance négative, puis gradient de la perte vers les paramètres." width=100%}
+
+## La chaîne en un coup d'œil
+
+1. **[Logits](logits.qmd)** — scores réels non normalisés produits par le modèle.
+2. **[Probabilités](probabilites.qmd)** — distribution sur le vocabulaire obtenue par softmax.
+3. **[Vraisemblance](vraisemblance.qmd)** — probabilité attribuée aux tokens effectivement observés, ou son logarithme.
+4. **[Cross-entropie](cross-entropy.qmd)** — pénalité associée à une cible et à une distribution prédite.
+5. **[Loss / fonction de perte](loss.qmd)** — agrégation scalaire optimisée sur les tokens et exemples retenus.
+6. **[Gradients](gradients.qmd)** — dérivées qui indiquent comment la perte varie localement avec les logits et les paramètres.
+
+## Notation commune
+
+On note :
+
+- (B) : taille du batch ; (T) : nombre de positions prédites ; (V) : taille du vocabulaire.
+- (z_{b,t,v}\in\mathbb{R}) : logit du token (v), pour l'exemple (b) et la position (t).
+- (p_{b,t,v}\in[0,1]) : probabilité correspondante, avec \(\sum_{v=1}^{V}p_{b,t,v}=1\).
+- (y_{b,t}\in\{1,\ldots,V\}) : identifiant du token cible à prédire.
+- \(\theta\) : ensemble des paramètres appris du modèle.
+- \(\mathcal{M}\) : ensemble des positions de cible prises en compte dans la perte ; les positions ignorées (par exemple padding) n'en font pas partie.
+
+Pour une position donnée, on omet parfois les indices (b,t). Les logits (z\in\mathbb{R}^{V}) sont transformés en probabilités par :
+
+\[
+p_v=\frac{\exp(z_v)}{\sum_{j=1}^{V}\exp(z_j)}.
+\]
+
+La perte négative pour une cible (y) est :
+
+\[
+\ell(z,y)=-\log p_y
+= -z_y+\log\sum_{j=1}^{V}\exp(z_j).
+\]
+
+Sur un ensemble de positions valides, une convention courante est la moyenne :
+
+\[
+\mathcal{L}(\theta)=-\frac{1}{|\mathcal{M}|}
+\sum_{(b,t)\in\mathcal{M}}\log p_{b,t,y_{b,t}}.
+\]
+
+**Important :** somme et moyenne sont toutes deux possibles, mais changent l'échelle du gradient. Toute comparaison doit indiquer la réduction et le traitement des tokens ignorés.
+
+## Ce que ces équations impliquent — et n'impliquent pas
+
+::: {.callout-warning title="Idées reçues à éviter"}
+- **« Les logits sont des probabilités. »** Faux : ils peuvent être négatifs, positifs et non bornés. Ajouter la même constante à tous les logits ne change pas le softmax.
+- **« Une probabilité élevée prouve que le modèle a raison. »** Faux : elle exprime la confiance relative du modèle, pas une garantie de vérité ni une calibration correcte.
+- **« La cross-entropie et la loss sont toujours exactement la même chose. »** Faux : la cross-entropie peut être une perte par token ; la loss d'entraînement peut en faire la moyenne, ajouter une régularisation ou agréger plusieurs objectifs.
+- **« Maximiser la vraisemblance est différent de minimiser la perte. »** Pour une même donnée et une même convention, la log-vraisemblance négative est l'opposé de la log-vraisemblance ; minimiser l'une revient à maximiser l'autre.
+- **« Un gradient négatif signifie que le paramètre est mauvais. »** Faux : le signe décrit une variation locale par rapport à une coordonnée et à une convention donnée, pas une qualité intrinsèque.
+:::
+
+## Comment lire le parcours
+
+Les pages individuelles dérivent chaque étape, donnent un exemple calculable et explicitent les hypothèses. Les liens ne signifient pas que les concepts sont maîtrisés : les dérivations doivent être refaites et confrontées à des cas limites.
+
+- Commencer par [les logits](logits.qmd), puis [les probabilités](probabilites.qmd).
+- Relier les probabilités observées à la [vraisemblance](vraisemblance.qmd) et à la [cross-entropie](cross-entropy.qmd).
+- Distinguer la perte par token de la [loss agrégée](loss.qmd).
+- Terminer par les [gradients](gradients.qmd), la règle de chaîne et la vérification numérique.
+
+## Références de base
+
+- Goodfellow, Bengio & Courville, [*Deep Learning*, chapitre 6 — Deep Feedforward Networks](https://www.deeplearningbook.org/contents/mlp.html), pour les fonctions de coût et leur optimisation.
+- Bishop, [*Pattern Recognition and Machine Learning*](https://www.microsoft.com/en-us/research/people/cmbishop/prml-book/), pour les probabilités, la vraisemblance et l'estimation.
+- Documentation [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html), qui précise la convention des logits, des cibles et de la réduction.
+
+:::: {.language-switch}
+**Langue :** [Français](mathematical-foundations.qmd) · [English](../en/mathematical-foundations.qmd)
+::::
