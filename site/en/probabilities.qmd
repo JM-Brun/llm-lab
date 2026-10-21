@@ -52,6 +52,8 @@ Each distribution is conditioned on the prefix. A token probability should there
 
 ## Check your understanding
 
+[Open the related exercise space](exercises.qmd#foundations) — detailed exercises will be authored separately.
+
 1. What is the difference between normalization and calibration?
 
 <details>
