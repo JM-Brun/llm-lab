@@ -1,11 +1,11 @@
 ---
-title: "Cross-entropy: penalizing predictions"
+title: "Cross-entropy and KL divergence"
 subtitle: "Deriving the objective from target distributions to logits"
 lang: en
 ---
 
 ::: {.chapter-lead}
-Cross-entropy compares a target distribution $q$ with a predicted distribution $p$. For a one-hot target — a single correct token — it becomes the negative log-probability of the target token.
+Cross-entropy compares a target distribution $q$ with a predicted distribution $p$. It measures the average cost of using $p$ to encode events distributed according to $q$. Understanding that cost requires connecting it to [Shannon entropy](../fr/entropy.qmd) and KL divergence without conflating them.
 :::
 
 ## Definition
@@ -57,6 +57,38 @@ For a fixed target, minimizing cross-entropy with respect to $p$ therefore also 
 - **“CrossEntropyLoss expects probabilities.”** In the usual PyTorch class-index API, it expects unnormalized logits and applies an operation equivalent to log-softmax followed by NLL.
 :::
 
+## Interpretation through coding
+
+If events actually follow distribution $q$, but a code is built from probabilities $p$, the ideal length assigned to outcome $i$ is $-\log_2 p_i$ bits. Its expected length under $q$ is therefore cross-entropy:
+
+$
+H(q,p)=-\sum_i q_i\log_2 p_i.
+$
+
+With natural logarithms, the same expression is measured in nats. The logarithm base sets the unit but does not change the qualitative conclusions. If $p_i=0$ for an outcome with $q_i>0$, the cost is infinite: the model rules out an event that can occur.
+
+## Why the KL direction matters
+
+KL divergence is:
+
+$
+D_{\mathrm{KL}}(q\Vert p)=\sum_i q_i\log\frac{q_i}{p_i}.
+$
+
+It compares target distribution $q$ with approximation $p$ and satisfies $D_{\mathrm{KL}}(q\Vert p)=H(q,p)-H(q)$. Since $H(q)$ is constant when the target is fixed, minimizing cross-entropy is equivalent to minimizing KL in the direction $q\Vert p$.
+
+KL is not symmetric. In general, $D_{\mathrm{KL}}(q\Vert p)\neq D_{\mathrm{KL}}(p\Vert q)$; reversing the arguments changes what is penalized. For example, if $q=(1,0)$ and $p=(0.9,0.1)$, then $H(q,p)=-\log(0.9)$ and $D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)$ because $H(q)=0$. The reverse divergence is finite for this example but has a different value. A KL divergence becomes infinite when its first distribution assigns positive mass to an outcome that has zero probability under its second distribution.
+
+## One-hot targets and general target distributions
+
+For a one-hot target of class $y$, the sum reduces to $H(q,p)=-\log p_y$. This is the usual next-token prediction case where one observed token is the target. For a soft target (for example, label smoothing or a teacher distribution), several terms $-q_i\log p_i$ contribute; the loss is no longer just the negative log-probability of one class.
+
+Empirical cross-entropy computed on a corpus is an average over observed targets. It equals the source's true entropy only under ideal conditions, notably when the predictive distribution matches the true conditional distribution. Lower training cross-entropy does not guarantee better generalization: evaluate on separate validation/test data.
+
+## Connection to perplexity
+
+For average cross-entropy in nats $\bar{H}$, perplexity is $\exp(\bar{H})$. If the average is in bits, use $2^{\bar{H}}$. Comparisons require the log base, included token positions, tokenizer, and reduction (sum or mean) to be specified. Perplexity is not a direct measure of factual truth or overall assistant quality.
+
 ## Numerical example
 
 If the target is class 2 and $p_2=0.8$, then $\ell=-\log(0.8)\approx0.223$. If $p_2=0.01$, the loss is about $4.605$. A wrong but highly confident prediction is strongly penalized.
@@ -68,6 +100,14 @@ If the target is class 2 and $p_2=0.8$, then $\ell=-\log(0.8)\approx0.223$. If $
 3. How does the mathematical formula differ from the PyTorch API?
 
 **Next:** [Loss](loss.qmd) · [Gradients](gradients.qmd)
+
+
+## Further references
+
+- Claude E. Shannon (1948), [A Mathematical Theory of Communication](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf).
+- Cover & Thomas, [Elements of Information Theory](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X).
+- [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU).
+- [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html).
 
 :::: {.language-switch}
 [Français](../fr/cross-entropy.qmd) · [English](cross-entropy.qmd)
