@@ -61,9 +61,9 @@ Pour une cible fixe, minimiser la cross-entropie par rapport à $p$ revient donc
 
 Si les événements suivent réellement la loi $q$, mais que le code est construit à partir de probabilités $p$, la longueur idéale attribuée à l'issue $i$ est $-\ln p_i$ nats. La longueur moyenne attendue sous $q$ est donc l'entropie croisée :
 
-$
+$$
 H(q,p)=-\sum_i q_i\ln p_i.
-$
+$$
 
 Avec des logarithmes en base 2, la même expression est exprimée en bits. La base du logarithme fixe l'unité, mais ne change pas les conclusions qualitatives. Si $p_i=0$ pour une issue ayant $q_i>0$, le coût est infini : le modèle exclut un événement qui peut se produire.
 
