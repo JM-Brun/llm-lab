@@ -5,7 +5,7 @@ lang: fr
 ---
 
 ::: {.chapter-lead}
-Un modèle autorégressif produit des **logits** pour le token suivant. Le softmax les transforme en probabilités ; la cible observée définit une vraisemblance et une perte ; la dérivation de cette perte fournit les gradients qui modifient les paramètres. Ces notions sont liées, mais ne sont pas interchangeables.
+Un modèle autorégressif produit des **logits** pour le token suivant. Le softmax les transforme en probabilités ; le token observé détermine la vraisemblance et la perte ; le gradient de cette perte indique comment ajuster les paramètres. Ces étapes sont liées, mais chacune a un rôle précis.
 :::
 
 ![Schéma original de la chaîne mathématique : logits, probabilités, vraisemblance, perte et gradients.](../images/math-training-pipeline.svg){fig-alt="Chaîne du calcul : logits z, softmax vers p, probabilité du token cible, log-vraisemblance négative, puis gradient de la perte vers les paramètres." width=100%}
@@ -71,12 +71,17 @@ Les pages individuelles dérivent chaque étape, donnent un exemple calculable e
 - Distinguer la perte par token de la [loss agrégée](loss.qmd).
 - Terminer par les [gradients](gradients.qmd), la règle de chaîne et la vérification numérique.
 
+## Pour poursuivre
+
+- [Tenseurs](tensors.qmd) : formes et opérations utilisées dans les calculs.
+- [Espace des embeddings](embedding-space.qmd) : représentations vectorielles des tokens.
+
 ## Références de base
 
 - Goodfellow, Bengio & Courville, [*Deep Learning*, chapitre 6 — Deep Feedforward Networks](https://www.deeplearningbook.org/contents/mlp.html), pour les fonctions de coût et leur optimisation.
 - Bishop, [*Pattern Recognition and Machine Learning*](https://www.microsoft.com/en-us/research/people/cmbishop/prml-book/), pour les probabilités, la vraisemblance et l'estimation.
 - Documentation [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html), qui précise la convention des logits, des cibles et de la réduction.
 
-:::: {.language-switch}
+::: {.language-switch}
 **Langue :** [Français](mathematical-foundations.qmd) · [English](../en/mathematical-foundations.qmd)
-::::
+:::
