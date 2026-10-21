@@ -62,6 +62,8 @@ Les mécanismes d'attention ont notamment été étudiés dans les modèles de t
 
 ## Code et tests
 
+Pour comprendre les formes des matrices et des vecteurs utilisés ici, voir [Tenseurs](tensors.qmd).
+
 Le dépôt ne contient pas encore d'implémentation Q/K/V réutilisable dans **src/llm_lab/**. Avant d'en ajouter une, il faudra notamment vérifier les dimensions des tenseurs, les projections, la propagation des gradients et le comportement en attention multi-têtes.
 
 - [Code source existant](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab)
