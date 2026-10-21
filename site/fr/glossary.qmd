@@ -1,0 +1,56 @@
+---
+title: "Glossaire des LLM et des Transformers"
+subtitle: "Les termes essentiels, définis au premier niveau et reliés aux pages de référence"
+lang: fr
+---
+
+Ce glossaire donne une définition courte des termes rencontrés dans le site. Il ne remplace pas les pages de référence : chaque lien renvoie vers une explication plus approfondie lorsqu'elle existe.
+
+## Texte et données
+
+- **Token** — unité discrète manipulée par le modèle ; elle peut correspondre à un mot, une partie de mot, un caractère ou un autre segment.
+- **Tokenisation** — transformation du texte en une séquence d'identifiants de tokens.
+- **Vocabulaire** — ensemble des tokens que le tokenizer peut représenter.
+- **Préfixe** — partie déjà disponible d'une séquence, utilisée pour conditionner la prédiction suivante.
+- **Fenêtre de contexte** — quantité de tokens que le modèle peut prendre en compte dans une entrée donnée.
+
+## Probabilités et apprentissage
+
+- **Logit** — score réel non normalisé associé à une classe ou à un token. Voir [Logits](logits.qmd).
+- **Softmax** — transformation de scores en probabilités positives dont la somme vaut un. Voir [Probabilités](probabilites.qmd).
+- **Vraisemblance** — probabilité attribuée aux observations par un modèle paramétré, considérée comme fonction des paramètres. Voir [Vraisemblance](vraisemblance.qmd).
+- **Entropie de Shannon** — mesure de l'incertitude moyenne d'une variable discrète, relativement à sa distribution. Voir [Entropie](entropy.qmd).
+- **Cross-entropie** — coût moyen associé à une distribution cible et à une distribution prédictive. Voir [Cross-entropie et divergence KL](cross-entropy.qmd).
+- **Divergence KL** — mesure de la différence entre deux distributions, généralement non symétrique. Voir [Cross-entropie et divergence KL](cross-entropy.qmd).
+- **Loss / fonction de perte** — objectif numérique optimisé pendant l'entraînement ; ce n'est pas une mesure universelle de qualité. Voir [Loss](loss.qmd).
+- **Gradient** — dérivée de l'objectif par rapport à une variable ou à un paramètre. Voir [Gradients](gradients.qmd).
+- **Calibration** — accord empirique entre les probabilités annoncées et les fréquences observées d'événements comparables.
+
+## Architecture Transformer
+
+- **Transformer** — architecture neuronale fondée sur l'attention et des transformations de représentations, introduite par Vaswani et ses collègues en 2017. Voir [synthèse du Transformer](transformer.qmd) et [historique](transformer-history.qmd).
+- **Attention** — mécanisme qui calcule des poids à partir de requêtes et de clés, puis agrège les valeurs correspondantes. Voir [Q, K et V](queries-keys-values.qmd).
+- **Requête (Q)** — projection utilisée pour calculer les compatibilités avec les clés.
+- **Clé (K)** — projection comparée à une requête pour obtenir un score.
+- **Valeur (V)** — projection dont les représentations sont agrégées avec les poids d'attention.
+- **Attention auto-référentielle (*self-attention*)** — attention dans laquelle les requêtes, clés et valeurs proviennent des représentations de la même séquence.
+- **Attention multi-têtes** — plusieurs mécanismes d'attention calculés en parallèle, puis combinés.
+- **Masque causal** — contrainte qui empêche une position de consulter les positions futures. Voir [Masque causal](causal-masking.qmd).
+- **Transformer autorégressif** — Transformer entraîné à modéliser la séquence de gauche à droite : il estime chaque token conditionnellement aux tokens précédents. « Autorégressif » décrit l'objectif de prédiction, pas une obligation de générer un seul token à la fois pendant l'entraînement.
+- **Encodeur** — partie qui construit des représentations contextualisées d'une entrée ; dans BERT, par exemple, l'attention peut exploiter le contexte des deux côtés.
+- **Décodeur** — partie conçue pour produire des sorties à partir d'un contexte ; dans un décodeur autorégressif, le masque causal interdit l'accès aux tokens futurs.
+- **Embedding / plongement** — vecteur appris représentant un token ou un autre élément.
+- **Position encoding / information de position** — signal permettant au modèle de distinguer l'ordre des tokens.
+- **Paramètre** — valeur apprise pendant l'entraînement.
+- **Fine-tuning** — poursuite de l'entraînement d'un modèle pré-entraîné sur un objectif ou un jeu de données particulier.
+
+## Voir aussi
+
+- [Parcours des fondations mathématiques](mathematical-foundations.qmd)
+- [Synthèse du Transformer](transformer.qmd)
+- [Historique des Transformers](transformer-history.qmd)
+- [Références et provenance](../references.qmd)
+
+:::: {.language-switch}
+[Français](glossary.qmd) · [English](../en/glossary.qmd)
+::::
