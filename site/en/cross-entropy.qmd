@@ -69,9 +69,9 @@ With natural logarithms, the same expression is measured in nats. The logarithm 
 
 ## Why the KL direction matters
 
-The definition of $D_{\\mathrm{KL}}(q\\Vert p)$ and its relationship to $H(q,p)$ are given above. The direction is not decorative: in general, $D_{\\mathrm{KL}}(q\\Vert p)\\neq D_{\\mathrm{KL}}(p\\Vert q)$ because the expectation is taken under the first distribution. Reversing the arguments therefore changes the penalty.
+The definition of $D_{\mathrm{KL}}(q\Vert p)$ and its relationship to $H(q,p)$ are given above. The direction is not decorative: in general, $D_{\mathrm{KL}}(q\Vert p)\neq D_{\mathrm{KL}}(p\Vert q)$ because the expectation is taken under the first distribution. Reversing the arguments therefore changes the penalty.
 
-For example, if $q=(1,0)$ and $p=(0.9,0.1)$, then $H(q,p)=-\\log(0.9)$ and $D_{\\mathrm{KL}}(q\\Vert p)=-\\log(0.9)$ because $H(q)=0$. The reverse divergence $D_{\\mathrm{KL}}(p\\Vert q)$ is infinite: $p$ assigns positive mass to the second category while $q$ assigns it zero probability. More generally, $D_{\\mathrm{KL}}(q\\Vert p)=+\\infty$ whenever $q$ assigns positive mass to an outcome that $p$ assigns zero probability.
+For example, if $q=(1,0)$ and $p=(0.9,0.1)$, then $H(q,p)=-\log(0.9)$ and $D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)$ because $H(q)=0$. The reverse divergence $D_{\mathrm{KL}}(p\Vert q)$ is infinite: $p$ assigns positive mass to the second category while $q$ assigns it zero probability. More generally, $D_{\mathrm{KL}}(q\Vert p)=+\infty$ whenever $q$ assigns positive mass to an outcome that $p$ assigns zero probability.
 
 ## One-hot targets and general target distributions
 
