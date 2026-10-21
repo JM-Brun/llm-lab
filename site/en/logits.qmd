@@ -10,7 +10,7 @@ A **logit** is an unnormalized real-valued score associated with a class or voca
 
 ## Definition and shapes
 
-At one position, (z=(z_1,\ldots,z_V)), where \(V\) is the vocabulary size. No logit is constrained to \([0,1]\), and the logits do not need to sum to one.
+At one position, \(z=(z_1,\ldots,z_V)\), where \(V\) is the vocabulary size. No logit is constrained to \([0,1]\), and the logits do not need to sum to one.
 
 Softmax turns these scores into a distribution:
 
@@ -32,11 +32,11 @@ For \(z=(0,\log 3)\), softmax gives \(p=(1/4,3/4)\). Logits are not probabilitie
 
 ## Useful properties
 
-- **Translation invariance:** (operatorname{softmax}(z+c\mathbf{1})=\operatorname{softmax}\(z\)). Only differences matter.
-- **Order is preserved:** if (z_i>z_j), then (p_i>p_j).
+- **Translation invariance:** \(\operatorname{softmax}(z+c\mathbf{1})=\operatorname{softmax}(z)\). Only differences matter.
+- **Order is preserved:** if \(z_i>z_j\), then \(p_i>p_j\).
 - **Scale and temperature:** multiplying logits generally changes distribution concentration; it is not a translation.
 
-For numerical stability, implementations subtract the maximum before exponentiation: \(e^{z_i-m}/\sum_j e^{z_j-m}\), where (m=\max_j z_j).
+For numerical stability, implementations subtract the maximum before exponentiation: \(e^{z_i-m}/\sum_j e^{z_j-m}\), where \(m=\max_j z_j\).
 
 ::: {.callout-warning title="Misconceptions"}
 - **“A positive logit means high probability.”** No: the sign depends on the score reference level. A logit of 10 can be less probable than another logit of 12.
@@ -46,7 +46,7 @@ For numerical stability, implementations subtract the maximum before exponentiat
 
 ## In an LLM
 
-At each position \(t\), the output head provides (z_t\in\mathbb{R}^{V}). The model then selects or samples a token from the associated distribution. During training, logits are compared with the target token ID using a loss such as [cross-entropy](cross-entropy.qmd).
+At each position \(t\), the output head provides \(z_t\in\mathbb{R}^{V}\). The model then selects or samples a token from the associated distribution. During training, logits are compared with the target token ID using a loss such as [cross-entropy](cross-entropy.qmd).
 
 ## Self-check
 
