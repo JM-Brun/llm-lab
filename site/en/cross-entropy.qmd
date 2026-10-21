@@ -14,7 +14,7 @@ $$
 H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
 $$
 
-Here, $q_i\geq0$, $\sum_iq_i=1$, and $p$ is a normalized distribution. For a one-hot target class $y$, $q_y=1$ and all other entries are zero:
+Here, $q_i\geq0$, $\sum_iq_i=1$, and $p$ is a normalized distribution. Unless stated otherwise, $\log$ denotes the natural logarithm, so values are in nats; using $\log_2$ gives bits. For a one-hot target class $y$, $q_y=1$ and all other entries are zero:
 
 $$
 H(q,p)=-\log p_y.
@@ -59,13 +59,13 @@ For a fixed target, minimizing cross-entropy with respect to $p$ therefore also 
 
 ## Interpretation through coding
 
-If events actually follow distribution $q$, but a code is built from probabilities $p$, the ideal length assigned to outcome $i$ is $-\log_2 p_i$ bits. Its expected length under $q$ is therefore cross-entropy:
+If events actually follow distribution $q$, but a code is built from probabilities $p$, the ideal length assigned to outcome $i$ is $-\ln p_i$ nats. Its expected length under $q$ is therefore cross-entropy:
 
-$$
-H(q,p)=-\sum_i q_i\log_2 p_i.
-$$
+$
+H(q,p)=-\sum_i q_i\ln p_i.
+$
 
-With natural logarithms, the same expression is measured in nats. The logarithm base sets the unit but does not change the qualitative conclusions. If $p_i=0$ for an outcome with $q_i>0$, the cost is infinite: the model rules out an event that can occur.
+With base-2 logarithms, the same expression is measured in bits. The logarithm base sets the unit but does not change the qualitative conclusions. If $p_i=0$ for an outcome with $q_i>0$, the cost is infinite: the model rules out an event that can occur.
 
 ## Why the KL direction matters
 
