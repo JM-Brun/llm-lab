@@ -102,7 +102,7 @@ $$
 h(X)=-\int f(x)\ln f(x)\,dx.
 $$
 
-Unlike discrete entropy, it can be negative and depends on changes of scale or coordinates. It should not be read as an absolute code length without specifying quantization or a reference. Properties of $H(X)$ cannot be transferred to (h(X)) without care.
+Unlike discrete entropy, it can be negative and depends on changes of scale or coordinates. It should not be read as an absolute code length without specifying quantization or a reference. Properties of $H(X)$ cannot be transferred to $h(X)$ without care.
 
 ## 7. What entropy does not tell us
 
