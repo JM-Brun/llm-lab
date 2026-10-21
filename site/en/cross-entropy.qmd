@@ -77,7 +77,7 @@ $
 
 It compares target distribution $q$ with approximation $p$ and satisfies $D_{\mathrm{KL}}(q\Vert p)=H(q,p)-H(q)$. Since $H(q)$ is constant when the target is fixed, minimizing cross-entropy is equivalent to minimizing KL in the direction $q\Vert p$.
 
-KL is not symmetric. In general, $D_{\mathrm{KL}}(q\Vert p)\neq D_{\mathrm{KL}}(p\Vert q)$; reversing the arguments changes what is penalized. For example, if $q=(1,0)$ and $p=(0.9,0.1)$, then $H(q,p)=-\log(0.9)$ and $D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)$ because $H(q)=0$. The reverse divergence is finite for this example but has a different value. A KL divergence becomes infinite when its first distribution assigns positive mass to an outcome that has zero probability under its second distribution.
+KL is not symmetric. In general, $D_{\mathrm{KL}}(q\Vert p)\neq D_{\mathrm{KL}}(p\Vert q)$; reversing the arguments changes what is penalized. For example, if $q=(1,0)$ and $p=(0.9,0.1)$, then $H(q,p)=-\log(0.9)$ and $D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)$ because $H(q)=0$. The reverse divergence, $D_{\\mathrm{KL}}(p\\Vert q)$, is infinite here: $p$ assigns positive mass to the second category while $q$ assigns it zero probability. This asymmetry is directly related to the distributions' supports.
 
 ## One-hot targets and general target distributions
 
