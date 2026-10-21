@@ -1,0 +1,74 @@
+---
+title: "Masque causal"
+subtitle: "Empêcher l'accès aux tokens futurs dans un modèle autorégressif"
+lang: fr
+---
+
+::: {.chapter-lead}
+Le masque causal est une contrainte d'information : pour prédire le token à la position (t+1), le calcul associé à la position (t) ne doit dépendre que du préfixe disponible. Il ne s'agit pas simplement d'une convention de visualisation.
+:::
+
+## Intuition
+
+Lorsqu'on entraîne un modèle à prédire le token suivant, toutes les positions d'une séquence peuvent être calculées en parallèle. Sans masque, cependant, la représentation d'une position pourrait utiliser des tokens qui ne seraient pas encore connus au moment de la génération. Le masque rend donc l'entraînement parallèle compatible avec l'objectif autorégressif.
+
+## Définition
+
+Pour une séquence de longueur (T), la position (i) peut accéder aux positions (j\leq i). On peut définir un masque booléen supérieur strict ou un masque additif (M) :
+
+[
+M_{ij}=\begin{cases}
+0 & j\leq i,\\
+-\infty & j>i.
+\end{cases}
+]
+
+Le masque additif est appliqué aux scores **avant** softmax :
+
+[
+A=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right).
+]
+
+Les positions futures reçoivent alors un poids nul en arithmétique idéale. En pratique, les bibliothèques peuvent représenter le masque sous forme booléenne ou employer une primitive d'attention qui intègre cette contrainte.
+
+![Masque causal à quatre positions.](images/causal-attention-mask.svg){fig-alt="Matrice triangulaire inférieure : chaque position accède à elle-même et aux positions précédentes" width=100%}
+
+## Provenance et utilité
+
+Le masque causal est un moyen de réaliser une factorisation autorégressive de la distribution de séquence :
+
+[
+P(x_1,\ldots,x_T)=\prod_{t=1}^{T}P(x_t\mid x_{<t}).
+]
+
+Les Transformers décodeurs comme GPT utilisent cette contrainte pour apprendre à prédire le prochain token tout en calculant en parallèle les positions d'un batch d'entraînement. Le papier [*Attention Is All You Need* (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762) décrit le masquage de l'attention du décodeur.
+
+## Idées reçues et contre-exemples
+
+- **« Les données sont déjà dans le bon ordre, donc le masque est inutile. »** Faux : l'ordre des tokens n'empêche pas une opération d'attention non masquée de lire les représentations des positions futures.
+- **« Mettre les poids futurs à zéro après softmax est équivalent. »** Faux : les poids restants peuvent ne plus sommer à un. Le masque doit agir sur les scores avant softmax, ou être appliqué par une primitive équivalente.
+- **« Tester uniquement la matrice du masque prouve l'absence de fuite. »** Faux : un autre chemin de calcul pourrait laisser passer l'information future.
+- **« Causal signifie que l'attention ne regarde que le token précédent. »** Faux : elle peut regarder toutes les positions antérieures, sauf si une autre restriction (par exemple une fenêtre glissante) est imposée.
+
+## Test conceptuel décisif
+
+Pour une implémentation complète, gardez les tokens jusqu'à (t) identiques, modifiez un token situé après (t), puis vérifiez que les sorties des positions jusqu'à (t) restent identiques à la tolérance numérique près. Il faut aussi tester les formes, les lignes entièrement masquées, les gradients et la stabilité numérique.
+
+## Liens avec les autres concepts
+
+- [Requêtes, clés et valeurs](queries-keys-values.qmd) définit les projections qui produisent les scores.
+- [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) explique l'ordre score → masque → softmax → agrégation.
+- [Objectif et fondations mathématiques](mathematical-foundations.qmd) relie la contrainte au prochain-token et à la loss.
+- [Synthèse Transformer](transformer.qmd) replace le masque dans l'architecture globale.
+
+## Code et état d'implémentation
+
+Le dépôt ne contient pas encore d'implémentation d'attention réutilisable ni de test d'invariance de bout en bout. Le masque illustré est une spécification conceptuelle, pas la preuve que l'architecture entière est causale.
+
+- [Code Python disponible](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab)
+- [Tests disponibles](https://github.com/JM-Brun/llm-lab/tree/main/tests)
+- [Critères d'acceptation prévus](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+
+:::: {.language-switch}
+**Langue :** [Français](causal-masking.qmd) · [English](../en/causal-masking.qmd)
+::::
