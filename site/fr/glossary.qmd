@@ -39,18 +39,25 @@ Ce glossaire donne une définition courte des termes rencontrés dans le site. I
 - **Transformer autorégressif** — Transformer entraîné à modéliser la séquence de gauche à droite : il estime chaque token conditionnellement aux tokens précédents. « Autorégressif » décrit l'objectif de prédiction, pas une obligation de générer un seul token à la fois pendant l'entraînement.
 - **Encodeur** — partie qui construit des représentations contextualisées d'une entrée ; dans BERT, par exemple, l'attention peut exploiter le contexte des deux côtés.
 - **Décodeur** — partie conçue pour produire des sorties à partir d'un contexte ; dans un décodeur autorégressif, le masque causal interdit l'accès aux tokens futurs.
-- **Embedding / plongement** — vecteur appris représentant un token ou un autre élément.
-- **Position encoding / information de position** — signal permettant au modèle de distinguer l'ordre des tokens.
+- **Embedding / plongement** — vecteur appris représentant un token ou un autre élément. Voir [l'espace des embeddings](embedding-space.qmd).
+- **Espace des embeddings** — espace vectoriel dans lequel les objets sont représentés par des vecteurs ; la géométrie observée dépend du modèle et de la tâche.
+- **Tenseur** — tableau de nombres organisé selon plusieurs axes. Sa forme indique la taille de chaque axe ; elle ne suffit pas à préciser le sens des données. Voir [Tenseurs](tensors.qmd).
+- **Encodage positionnel** — mécanisme qui fournit au modèle une information sur l'ordre des tokens. Les approches comprennent les encodages absolus, les biais relatifs et RoPE. Voir [Encodage positionnel et RoPE](positional-encoding.qmd).
+- **RoPE (*Rotary Position Embedding*)** — encodage positionnel qui applique des rotations dépendant de la position aux paires de coordonnées des requêtes et des clés.
 - **Paramètre** — valeur apprise pendant l'entraînement.
 - **Fine-tuning** — poursuite de l'entraînement d'un modèle pré-entraîné sur un objectif ou un jeu de données particulier.
 
 ## Voir aussi
+
+- [Tenseurs](tensors.qmd)
+- [Espace des embeddings](embedding-space.qmd)
+- [Encodage positionnel et RoPE](positional-encoding.qmd)
 
 - [Parcours des fondations mathématiques](mathematical-foundations.qmd)
 - [Synthèse du Transformer](transformer.qmd)
 - [Historique des Transformers](transformer-history.qmd)
 - [Références et provenance](../references.qmd)
 
-:::: {.language-switch}
+::: {.language-switch}
 [Français](glossary.qmd) · [English](../en/glossary.qmd)
 ::::
