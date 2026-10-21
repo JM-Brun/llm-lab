@@ -1,0 +1,58 @@
+---
+title: "Évaluer un modèle : du score au protocole expérimental"
+subtitle: "Exercices de transfert — sans nouveau code"
+lang: fr
+---
+
+## Objectif
+
+Cette page relie les fondations du laboratoire LLM à une compétence plus générale de Data Science : concevoir une comparaison dont les conclusions sont défendables. Elle complète les exercices de calcul ; elle ne remplace pas la fiche canonique de validation statistique du dépôt [Wiki Knowledge](https://github.com/JM-Brun/wiki-knowledge).
+
+## Avant de commencer
+
+Revoir, si nécessaire :
+
+- [Fondations mathématiques](mathematical-foundations.qmd) — objectifs, probabilités et hypothèses ;
+- [Cross-entropy](cross-entropy.qmd) — fonction de perte et interprétation de l'objectif optimisé ;
+- [Exercices](exercises.qmd) — rappel actif ;
+- [Évaluation des LLM et conception expérimentale dans Wiki Knowledge](https://github.com/JM-Brun/wiki-knowledge/blob/main/wiki/concepts/conception-experimentale-et-evaluation-llm.md).
+
+Ne consulte les références qu'après une première tentative autonome.
+
+## Cas de transfert
+
+Une équipe compare 40 systèmes pour classer des passages scientifiques comme pertinents ou non pour une question. La prévalence des passages pertinents est faible. Plusieurs passages proviennent du même article. L'équipe rapporte le meilleur score AP obtenu en validation croisée aléatoire par passage.
+
+### Questions
+
+1. **Cible et unité.** Quelle population d'usage doit être représentée ? Si le système doit traiter de nouveaux articles, quelle unité doit rester séparée entre les partitions ?
+2. **Fuite.** Pourquoi répartir aléatoirement les passages peut-il surestimer la généralisation ? Où ajuster toute transformation ou sélection apprise ?
+3. **Sélection.** Pourquoi le meilleur score parmi 40 configurations est-il potentiellement optimiste ? Décrire un protocole de sélection et d'estimation finale.
+4. **Métriques.** Que mesure AP ? Pourquoi sa valeur dépend-elle de la prévalence ? Pourquoi AP ne suffit-elle pas à évaluer la calibration des probabilités ?
+5. **Incertitude.** Comment comparer deux systèmes évalués sur les mêmes questions/articles sans supposer à tort que chaque passage est indépendant ?
+6. **Interprétation.** Quels résultats, artefacts et limites faut-il conserver pour rendre la comparaison reproductible ?
+
+## Ce qu'une bonne réponse doit distinguer
+
+- **Objectif d'entraînement** : quantité que la fonction de perte optimise.
+- **Métrique de sélection** : critère utilisé pour choisir une configuration.
+- **Estimation finale** : mesure produite par des données ou une procédure qui n'a pas servi à choisir le gagnant.
+- **Discrimination / classement** : capacité à ordonner positifs et négatifs.
+- **Calibration** : accord entre probabilités annoncées et fréquences observées.
+- **Incertitude** : variabilité de l'estimation compte tenu du plan d'échantillonnage et des dépendances.
+- **Reproductibilité** : possibilité de reconstruire le protocole, les données/splits autorisés, les versions, les configurations et les résultats.
+
+Ces notions sont liées mais ne sont pas interchangeables. Une loss finie, une AP élevée ou des tests qui passent ne suffisent pas, séparément, à prouver que le système généralise.
+
+## Critères d'auto-évaluation
+
+Pour chacune des six questions, note **0** (incorrect/absent), **1** (partiel) ou **2** (justifié avec une limite). Ajoute ton niveau de confiance avant de consulter les références. Une réponse qui ne nomme pas ses hypothèses ou son unité statistique reste partielle.
+
+## Références et limites
+
+- [HELM — Holistic Evaluation of Language Models](https://arxiv.org/abs/2211.09110)
+- [Dror et al. — The Hitchhiker's Guide to Testing Statistical Significance in NLP](https://aclanthology.org/P18-1128/)
+- [Wiki Knowledge — Validation expérimentale et fuites](https://github.com/JM-Brun/wiki-knowledge/blob/main/wiki/concepts/validation-experimentale-et-fuites-de-donnees.md)
+- [Wiki Knowledge — Inférence statistique et incertitude](https://github.com/JM-Brun/wiki-knowledge/blob/main/wiki/concepts/inference-statistique-et-incertitude.md)
+
+Ce cas est un exercice pédagogique, pas un benchmark ni un résultat de recherche. Il n'introduit pas d'implémentation et ne constitue pas une preuve d'acquisition personnelle.
