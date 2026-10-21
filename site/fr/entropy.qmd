@@ -12,7 +12,7 @@ En théorie de l'information, l'entropie de Shannon quantifie l'incertitude moye
 
 Un événement rare apporte davantage de surprise que le résultat d'un événement presque certain. Pour une issue $x$ de probabilité $p(x)>0$, sa quantité d'information — ou surprisal — est :
 
-$
+$$
 I(x)=-\log_2 p(x).
 $$
 
