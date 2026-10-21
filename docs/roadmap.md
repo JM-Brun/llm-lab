@@ -171,14 +171,27 @@ Tasks:
 
 This schedule is a prioritization aid, not a guarantee. If acceptance criteria fail, extend the module instead of advancing on calendar time.
 
-## Definition of done for any new chapter
+## Content architecture and definition of done
 
-- [ ] A precise question and scope statement.
-- [ ] Equations with defined symbols, dimensions, and assumptions.
-- [ ] A small illustrative example or diagram with provenance.
-- [ ] A primary paper or official technical source plus accessible explanation.
-- [ ] Runnable code or a clear reason why the page is literature-only.
-- [ ] Tests or a reproducible protocol linked from the page.
-- [ ] Counterexamples, limitations, and common misinterpretations.
-- [ ] French and English versions reviewed for equivalent meaning.
-- [ ] Internal links and rendered mathematics checked.
+Use the same hierarchy as the site grows:
+
+- **Home page:** orientation, learning path, current status, and how to navigate; do not repeat chapter content.
+- **Synthesis page:** explain how multiple concepts interact and link to their canonical concept pages. Keep only the equations needed to understand the relationship.
+- **Concept page:** one canonical explanation of one concept. Other pages should link to it instead of copying its full definition.
+- **Code and evidence:** link to the existing implementation, tests, and experiment/report where they exist. If none exists, say so explicitly and link to the planned acceptance criteria. Never imply that illustrative pseudocode is production code or that planned work already exists.
+
+Every new or substantially revised concept page should meet these criteria:
+
+- [ ] State the question, scope, prerequisites, and an intuitive explanation before formal notation.
+- [ ] Explain the concept's provenance: original paper or technical source, historical context where known, and distinguish it from later variants.
+- [ ] Explain what problem it solves and why it is useful; state assumptions and trade-offs.
+- [ ] Define symbols, tensor dimensions, conventions, and equations precisely.
+- [ ] Give a small worked example or diagram with clear provenance.
+- [ ] Explain misconceptions and at least one discriminating counterexample where it improves understanding.
+- [ ] Link to related concepts and other disciplines when the connection is substantive; explain the mapping and its limits instead of adding a bare link. For example, an entropy connection should distinguish Shannon information entropy, statistical mechanics, and informal uses of the word.
+- [ ] Link to code, tests, and experiments when present, or explicitly state that they do not yet exist.
+- [ ] Include a primary paper or official technical source plus an accessible explanation where useful.
+- [ ] Keep French and English versions equivalent in claims, caveats, notation, and references.
+- [ ] Check internal links, rendered equations, mobile readability, and source attribution.
+
+Passing a render or test establishes only the property that was checked. It does not by itself establish conceptual mastery, general model quality, or an empirical claim.
