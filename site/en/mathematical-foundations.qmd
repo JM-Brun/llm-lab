@@ -32,23 +32,23 @@ We use:
 
 For one position, we sometimes omit $b,t$. Logits $z\in\mathbb{R}^{V}$ are converted to probabilities by:
 
-$
+$$
 p_v=\frac{\exp(z_v)}{\sum_{j=1}^{V}\exp(z_j)}.
-$
+$$
 
 The negative log-probability of target $y$ is:
 
-$
+$$
 \ell(z,y)=-\log p_y
 = -z_y+\log\sum_{j=1}^{V}\exp(z_j).
-$
+$$
 
 For a set of valid target positions, a common convention is the mean:
 
-$
+$$
 \mathcal{L}(\theta)=-\frac{1}{|\mathcal{M}|}
 \sum_{(b,t)\in\mathcal{M}}\log p_{b,t,y_{b,t}}.
-$
+$$
 
 **Important:** both sum and mean reductions are possible, but they change gradient scale. Any comparison should state the reduction and how ignored tokens are handled.
 
