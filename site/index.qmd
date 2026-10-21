@@ -64,6 +64,8 @@ Ce parcours décrit l'organisation pédagogique, pas l'état d'avancement de tou
 
 ## Pour aller plus loin
 
+- [Espace d’exercices](fr/exercises.qmd) — collections séparées du cours pour s’entraîner et vérifier les acquis.
+
 - [Glossaire des termes](fr/glossary.qmd) — les définitions essentielles, de « token » à « Transformer autorégressif ».
 - [Historique des Transformers](fr/transformer-history.qmd) — les étapes marquantes, des premiers mécanismes d'attention aux LLM modernes.
 - [Tenseurs](fr/tensors.qmd), [espace des embeddings](fr/embedding-space.qmd) et [encodage positionnel avec RoPE](fr/positional-encoding.qmd) — les notions nécessaires pour lire les équations et les représentations.

@@ -1,0 +1,100 @@
+---
+title: "Espace d’exercices"
+subtitle: "Un espace séparé du cours pour vérifier et transférer les connaissances"
+lang: fr
+---
+
+Cette page est le point d’entrée des exercices. **Les collections ci-dessous sont une structure de navigation, pas des exercices déjà rédigés.** Elles seront alimentées après validation des notions préalables et revue du plan de couverture.
+
+## Comment utiliser cet espace
+
+- Commencer par la page de cours indiquée dans les prérequis.
+- Répondre sans consulter le corrigé, puis expliquer les hypothèses et les cas où la réponse ne tient plus.
+- Utiliser les exercices de transfert pour vérifier qu’une notion est comprise au-delà de l’exemple vu en cours.
+- Les corrigés futurs seront masqués par défaut. Un résultat juste sans raisonnement ne suffit pas à établir la maîtrise.
+
+## Collections prévues
+
+| Collection | Périmètre | Statut |
+|---|---|---|
+| [Fondations mathématiques](#fondations) | Tenseurs, probabilités, logits, entropie, cross-entropie, vraisemblance, gradients, stabilité numérique | Structure à compléter |
+| [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Structure à compléter |
+| [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Structure à compléter |
+| [Transformer](#transformer) | Embeddings, position, résidus, normalisation, MLP et variantes d’architecture | Structure à compléter |
+| [Préentraînement](#preentrainement) | Objectif, entraînement/validation, perplexité, checkpoints et reproductibilité | Structure à compléter |
+| [Génération](#generation) | Décodage, température, top-k/top-p, arrêt, contexte et cache KV | Structure à compléter |
+| [Fine-tuning](#fine-tuning) | Classification, SFT, masquage de loss, qualité des données et surapprentissage | Structure à compléter |
+| [Évaluation](#evaluation) | Baselines, métriques, contamination, incertitude et analyse d’erreurs | Structure à compléter |
+| [Efficacité](#efficacite) | LoRA/QLoRA, mémoire, coût et compromis | Structure à compléter |
+| [Sujets avancés](#avances) | DPO, variantes d’attention, lecture critique et conception d’expériences | Structure à compléter |
+
+## Registre des collections
+
+### Fondations mathématiques {#fondations}
+
+**Notions préalables :** [fondations mathématiques](mathematical-foundations.qmd), [tenseurs](tensors.qmd), [logits](logits.qmd), [probabilités](probabilites.qmd), [entropie](entropy.qmd), [cross-entropie](cross-entropy.qmd), [vraisemblance](vraisemblance.qmd), [gradients](gradients.qmd).
+
+**À préparer :** calculs sur papier, analyse de contre-exemples, formes de tenseurs et vérification numérique. Aucun énoncé n’est ajouté dans cette étape.
+
+### Données textuelles {#donnees-textuelles}
+
+**Notions préalables :** à relier aux futures pages canoniques sur la tokenisation, les données et le décalage entrée-cible.
+
+**À préparer :** découpage de séquences, alignement entrée-cible, gestion des tokens spéciaux et contrôle des recouvrements entre partitions.
+
+### Attention {#attention}
+
+**Notions préalables :** [Q/K/V](queries-keys-values.qmd), [attention à produit scalaire mise à l’échelle](scaled-dot-product-attention.qmd), [masque causal](causal-masking.qmd), [tenseurs](tensors.qmd).
+
+**À préparer :** calculs de scores et de poids, vérification des dimensions, interprétation prudente des poids et raisonnement sur l’invariance causale.
+
+### Transformer {#transformer}
+
+**Notions préalables :** [synthèse Transformer](transformer.qmd), [espace des embeddings](embedding-space.qmd), [position et RoPE](positional-encoding.qmd).
+
+**À préparer :** suivre les représentations à travers un bloc, comparer les rôles de l’attention et du MLP, distinguer architectures et variantes.
+
+### Préentraînement {#preentrainement}
+
+**Notions préalables :** fondations mathématiques, données textuelles, attention et Transformer.
+
+**À préparer :** lecture de courbes, interprétation de la loss de validation, perplexité, reproductibilité et limites des petits corpus.
+
+### Génération {#generation}
+
+**Notions préalables :** logits, probabilités, Transformer et objectif autorégressif.
+
+**À préparer :** comparer des stratégies de décodage et expliquer leurs effets sans confondre probabilité du prochain token et vérité.
+
+### Fine-tuning {#fine-tuning}
+
+**Notions préalables :** préentraînement, données et évaluation.
+
+**À préparer :** alignement des cibles, masquage de la loss, qualité des exemples, surapprentissage et analyse des régressions.
+
+### Évaluation {#evaluation}
+
+**Notions préalables :** statistiques, partitions de données et protocole expérimental.
+
+**À préparer :** choix de baselines, contamination, incertitude, métriques adaptées et limites des juges automatiques.
+
+### Efficacité {#efficacite}
+
+**Notions préalables :** paramètres, gradients, entraînement, quantification et mémoire.
+
+**À préparer :** ordres de grandeur de mémoire, compromis qualité/coût et distinction entre adaptation de rang faible et quantification.
+
+### Sujets avancés {#avances}
+
+**Notions préalables :** maîtrise des modules précédents et lecture critique de travaux de recherche.
+
+**À préparer :** comparaison d’objectifs, hypothèses, ablations, biais de données de préférence et limites de généralisation.
+
+## Langue
+
+[Français](exercises.qmd) · [English](../en/exercises.qmd)
+
+## Références structurantes
+
+- [Raschka — dépôt du livre et exercices officiels](https://github.com/rasbt/LLMs-from-scratch) : utiliser comme index de thèmes, sans recopier les énoncés ni les corrigés.
+- [Plan complet et matrice de couverture](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md).
