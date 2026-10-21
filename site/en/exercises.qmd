@@ -1,0 +1,100 @@
+---
+title: "Exercise space"
+subtitle: "A separate place to test and transfer knowledge"
+lang: en
+---
+
+This page is the entry point for exercises. **The collections below are navigation scaffolding, not exercises that have already been written.** They will be populated only after prerequisite concepts have been validated and the coverage plan reviewed.
+
+## How to use this space
+
+- Start with the linked course page and prerequisites.
+- Attempt each exercise before opening its solution; explain assumptions and conditions under which the answer would fail.
+- Use transfer questions to check whether a concept generalizes beyond the example shown in the lesson.
+- Future answer keys will be collapsed by default. A correct result without reasoning is not sufficient evidence of mastery.
+
+## Planned collections
+
+| Collection | Scope | Status |
+|---|---|---|
+| [Mathematical foundations](#foundations) | Tensors, probability, logits, entropy, cross-entropy, likelihood, gradients, numerical stability | Structure to be filled |
+| [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Structure to be filled |
+| [Attention](#attention) | Q/K/V, scores, scaling, causal masks, multi-head attention, invariants | Structure to be filled |
+| [Transformer](#transformer) | Embeddings, position, residuals, normalization, MLP and architecture variants | Structure to be filled |
+| [Pretraining](#pretraining) | Objective, train/validation, perplexity, checkpoints and reproducibility | Structure to be filled |
+| [Generation](#generation) | Decoding, temperature, top-k/top-p, stopping, context and KV cache | Structure to be filled |
+| [Fine-tuning](#fine-tuning) | Classification, SFT, loss masking, data quality and overfitting | Structure to be filled |
+| [Evaluation](#evaluation) | Baselines, metrics, contamination, uncertainty and error analysis | Structure to be filled |
+| [Efficiency](#efficiency) | LoRA/QLoRA, memory, cost and trade-offs | Structure to be filled |
+| [Advanced topics](#advanced) | DPO, attention variants, critical reading and experimental design | Structure to be filled |
+
+## Collection registry
+
+### Mathematical foundations {#foundations}
+
+**Prerequisites:** [mathematical foundations](mathematical-foundations.qmd), [tensors](../fr/tensors.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd), [entropy](entropy.qmd), [cross-entropy](cross-entropy.qmd), [likelihood](likelihood.qmd), [gradients](gradients.qmd).
+
+**Planned formats:** hand calculations, counterexample analysis, tensor shapes and numerical checks. No exercise statements are added in this planning step.
+
+### Text data {#text-data}
+
+**Prerequisites:** future canonical pages on tokenization, text data and input-target shifting.
+
+**Planned focus:** sequence windows, input-target alignment, special tokens and train/validation overlap.
+
+### Attention {#attention}
+
+**Prerequisites:** [Q/K/V](queries-keys-values.qmd), [scaled dot-product attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd), [tensors](../fr/tensors.qmd).
+
+**Planned focus:** score and weight calculations, shape checks, cautious interpretation of attention weights and causal-invariance reasoning.
+
+### Transformer {#transformer}
+
+**Prerequisites:** [Transformer overview](transformer.qmd), [embedding space](../fr/embedding-space.qmd), [position and RoPE](../fr/positional-encoding.qmd).
+
+**Planned focus:** trace representations through a block, compare attention and MLP roles, and distinguish architecture families.
+
+### Pretraining {#pretraining}
+
+**Prerequisites:** mathematical foundations, text data, attention and Transformer.
+
+**Planned focus:** training curves, validation loss, perplexity, reproducibility and the limitations of small corpora.
+
+### Generation {#generation}
+
+**Prerequisites:** logits, probabilities, Transformer and the autoregressive objective.
+
+**Planned focus:** compare decoding strategies without conflating next-token probability with factual truth.
+
+### Fine-tuning {#fine-tuning}
+
+**Prerequisites:** pretraining, data handling and evaluation.
+
+**Planned focus:** target alignment, loss masking, example quality, overfitting and regression analysis.
+
+### Evaluation {#evaluation}
+
+**Prerequisites:** statistics, data splits and experimental protocol.
+
+**Planned focus:** baselines, contamination, uncertainty, suitable metrics and limitations of automatic judges.
+
+### Efficiency {#efficiency}
+
+**Prerequisites:** parameters, gradients, training, quantization and memory.
+
+**Planned focus:** memory estimates, quality/cost trade-offs and the distinction between low-rank adaptation and quantization.
+
+### Advanced topics {#advanced}
+
+**Prerequisites:** validated understanding of the previous modules and critical reading of research papers.
+
+**Planned focus:** compare objectives, assumptions, ablations, preference-data bias and generalization limits.
+
+## Language
+
+[Français](../fr/exercises.qmd) · [English](exercises.qmd)
+
+## Foundational references
+
+- [Raschka — book repository and official exercises](https://github.com/rasbt/LLMs-from-scratch): use as a topic index; do not copy exercise statements or solutions.
+- [Full curriculum and coverage matrix](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md).
