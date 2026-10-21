@@ -5,7 +5,7 @@ lang: fr
 toc: false
 ---
 
-::: {.hero-intro}
+:::: {.hero-intro}
 <p class="eyebrow">MATHS · PYTHON · EXPÉRIENCES</p>
 
 ## Comprendre les modèles de langage, un mécanisme à la fois
@@ -16,11 +16,11 @@ Un parcours progressif pour relier intuition, mathématiques, code et preuves ex
 [Explorer le parcours](fr/transformer.qmd){.btn .btn-primary}
 [Explorer le code source](https://github.com/JM-Brun/llm-lab){.btn .btn-outline-primary}
 </div>
-:::
+::::
 
 ## Comment naviguer
 
-::: {.learning-grid}
+:::: {.learning-grid}
 ::: {.learning-card}
 <span class="step">01 / SYNTHÈSES</span>
 
@@ -50,7 +50,7 @@ Les pages distinguent le code réellement présent, les tests qui le couvrent et
 
 [Consulter le dépôt](https://github.com/JM-Brun/llm-lab)
 :::
-:::
+::::
 
 ## Parcours conseillé
 
