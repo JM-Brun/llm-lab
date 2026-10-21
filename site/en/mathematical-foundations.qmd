@@ -24,13 +24,13 @@ An autoregressive model produces **logits** for the next token. Softmax turns th
 We use:
 
 - \(B\): batch size; \(T\): number of prediction positions; \(V\): vocabulary size.
-- (z_{b,t,v}\in\mathbb{R}): logit for vocabulary token \(v\), example \(b\), and position \(t\).
-- (p_{b,t,v}\in[0,1]): corresponding probability, with \(\sum_{v=1}^{V}p_{b,t,v}=1\).
-- (y_{b,t}\in\{1,\ldots,V\}): target token ID at the prediction position.
+- \(z_{b,t,v}\in\mathbb{R}\): logit for vocabulary token \(v\), example \(b\), and position \(t\).
+- \(p_{b,t,v}\in[0,1]\): corresponding probability, with \(\sum_{v=1}^{V}p_{b,t,v}=1\).
+- \(y_{b,t}\in\{1,\ldots,V\}\): target token ID at the prediction position.
 - \(\theta\): all learned model parameters.
 - \(\mathcal{M}\): set of target positions included in the loss; ignored positions (such as padding) are excluded.
 
-For one position, we sometimes omit (b,t). Logits \(z\in\mathbb{R}^{V}\) are converted to probabilities by:
+For one position, we sometimes omit \(b,t\). Logits \(z\in\mathbb{R}^{V}\) are converted to probabilities by:
 
 \[
 p_v=\frac{\exp(z_v)}{\sum_{j=1}^{V}\exp(z_j)}.
