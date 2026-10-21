@@ -32,7 +32,7 @@ Understand logits, probabilities, cross-entropy, and gradients.
 
 **Outcome:** a loss function and its gradient checked numerically.
 
-[Explore the foundations](https://github.com/JM-Brun/llm-lab/blob/main/docs/mathematical-foundations.md){.card-link}
+[Explore the foundations](mathematical-foundations.qmd){.card-link}
 :::
 ::: {.learning-card}
 <span class="step">01 / DATA</span>
