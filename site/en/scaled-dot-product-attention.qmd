@@ -1,0 +1,60 @@
+---
+title: "Scaled dot-product attention"
+subtitle: "From position-to-position scores to a weighted aggregation of values"
+lang: en
+---
+
+::: {.chapter-lead}
+Scaled dot-product attention turns learned compatibility scores between queries and keys into weights, then uses those weights to aggregate values. Softmax normalizes scores over accessible positions; it does not prove semantic relevance or causality.
+:::
+
+## Four computation steps
+
+For one head, (Q,K\in\mathbb{R}^{T\times d_k}) and (V\in\mathbb{R}^{T\times d_v}).
+
+1. **Scores:** (S=QK^\top), with shape (T\times T).
+2. **Scaling:** (S/\sqrt{d_k}).
+3. **Normalization:** (A=\operatorname{softmax}(S/\sqrt{d_k}+M)), row-wise.
+4. **Aggregation:** (O=AV), with shape (T\times d_v).
+
+Thus,
+
+[
+O=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
+]
+
+The mask (M) is optional depending on the attention type. For causal attention, future positions receive (-\infty) before softmax.
+
+## Why divide by (sqrt{d_k})?
+
+Under the simplifying assumption that query and key components are independent, zero-mean, and unit-variance, the variance of a dot product—the sum of about (d_k) terms—grows with (d_k). Dividing by (sqrt{d_k}) helps keep score scale more stable as dimensionality increases, limiting overly saturated softmax outputs and weak gradients. This is a motivation for scaling, not a guarantee that trained-network scores always have exactly unit variance.
+
+## Provenance and purpose
+
+The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762), which compares additive and dot-product attention and introduces the scaling factor. It supports efficient matrix computation and naturally fits multi-head mechanisms.
+
+## Misconceptions and counterexamples
+
+- **“Softmax measures absolute similarity.”** No: it produces a distribution relative to the scores in a row. Adding the same constant to every score in a row leaves the weights unchanged.
+- **“A weight of 0.8 means 80% semantic relevance.”** No: it is a weight in this aggregation, conditional on the other scores and learned projections.
+- **“The scale factor is an empirical constant with no rationale.”** It follows from reasoning about dot-product scale; the assumptions are simplified, but the factor addresses a specific numerical issue.
+- **“Softmax alone makes attention causal.”** No: without a causal mask, a position can still assign weight to future tokens.
+
+## Connections to other concepts
+
+- Inputs (Q,K,V) are explained in [queries, keys, and values](queries-keys-values.qmd).
+- Excluding future tokens is defined in [causal masking](causal-masking.qmd).
+- Softmax connects to [probabilities](probabilities.qmd), but a normalized distribution is not necessarily calibrated.
+- The [Transformer overview](transformer.qmd) places this computation in the model's data flow.
+
+## Code, implementation, and verification
+
+A reusable attention implementation does not yet exist in `src/llm_lab/`. This page's equation should become the reference contract: expected shapes, row-wise normalization, weights summing to one over allowed positions, finite outputs, and valid gradients.
+
+- [Source code](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab)
+- [Tests](https://github.com/JM-Brun/llm-lab/tree/main/tests)
+- [Planned verification criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+
+:::: {.language-switch}
+**Language:** [Français](../fr/scaled-dot-product-attention.qmd) · [English](scaled-dot-product-attention.qmd)
+::::
