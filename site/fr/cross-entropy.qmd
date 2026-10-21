@@ -77,7 +77,7 @@ $$
 
 Elle compare la loi cible $q$ à l'approximation $p$ et vérifie $D_{\mathrm{KL}}(q\Vert p)=H(q,p)-H(q)$. Comme $H(q)$ est constant lorsque la cible est fixée, minimiser la cross-entropie revient alors à minimiser cette KL dans la direction $q\Vert p$.
 
-La KL n'est pas symétrique. En général, $D_{\mathrm{KL}}(q\Vert p)\neq D_{\mathrm{KL}}(p\Vert q)$ ; inverser les arguments change ce qui est pénalisé. Exemple : si $q=(1,0)$ et $p=(0.9,0.1)$, alors $H(q,p)=-\log(0.9)$, tandis que $D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)$ car $H(q)=0$. Mais la KL dans l'autre sens n'est pas finie si $p$ attribue une masse positive à une catégorie à laquelle $q$ attribue zéro ? Non : pour cet exemple précis, elle est finie ; l'asymétrie reste visible dans la valeur, et elle peut devenir infinie lorsque le second argument attribue une probabilité nulle à un événement de probabilité positive sous le premier.
+La KL n'est pas symétrique. En général, $D_{\\mathrm{KL}}(q\\Vert p)\\neq D_{\\mathrm{KL}}(p\\Vert q)$ ; inverser les arguments change ce qui est pénalisé. Exemple : si $q=(1,0)$ et $p=(0.9,0.1)$, alors $H(q,p)=-\\log(0.9)$ et $D_{\\mathrm{KL}}(q\\Vert p)=-\\log(0.9)$ car $H(q)=0$. La divergence inverse $D_{\\mathrm{KL}}(p\\Vert q)$ est infinie ici : $p$ attribue une masse positive à la deuxième catégorie alors que $q$ lui attribue une probabilité nulle. Cette asymétrie est liée au support des distributions.
 
 ## Cibles one-hot et distributions cibles générales
 
