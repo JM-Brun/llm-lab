@@ -29,7 +29,7 @@ La forme décrit l'organisation des données, pas leur signification complète. 
 | Matrice | 2 | \((T,D)\) | représentations d'une séquence |
 | Tenseur de rang 3 | 3 | \((B,T,D)\) | représentations d'un lot |
 
-Ici, le **rang** désigne le nombre d'axes. En algèbre linéaire, le rang d'une matrice désigne autre chose : le nombre maximal de colonnes ou de lignes linéairement indépendantes. Le contexte permet de distinguer les deux notions.
+Dans les bibliothèques de machine learning, le mot *tenseur* désigne couramment un tableau multidimensionnel de nombres. En mathématiques et en physique, un tenseur est un objet plus structuré, dont les composantes suivent des règles de transformation précises. Ces deux usages sont liés, mais ils ne sont pas strictement équivalents. Ici, le **rang** désigne le nombre d'axes du tableau ; le rang d'une matrice au sens de l'algèbre linéaire est une autre notion.
 
 ## Lire les dimensions d'une opération
 
@@ -72,6 +72,7 @@ Ces dimensions ne disent pas si les représentations sont pertinentes, si le mas
 
 ## Références
 
+- [udiprod — *Visualization of tensors, part 1*](https://www.youtube.com/watch?v=YxXyN2ifK8A) : visualisation du sens mathématique et physique du mot *tenseur*. À regarder en gardant à l'esprit que les bibliothèques de deep learning emploient souvent le terme dans un sens informatique plus simple.
 - [PyTorch — Tensors](https://docs.pytorch.org/tutorials/beginner/introyt/tensors_deeper_tutorial.html).
 - [PyTorch — Documentation des tenseurs](https://docs.pytorch.org/docs/stable/tensors.html).
 - [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch).
