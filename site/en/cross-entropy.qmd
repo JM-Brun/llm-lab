@@ -61,9 +61,9 @@ For a fixed target, minimizing cross-entropy with respect to $p$ therefore also 
 
 If events actually follow distribution $q$, but a code is built from probabilities $p$, the ideal length assigned to outcome $i$ is $-\ln p_i$ nats. Its expected length under $q$ is therefore cross-entropy:
 
-$
+$$
 H(q,p)=-\sum_i q_i\ln p_i.
-$
+$$
 
 With base-2 logarithms, the same expression is measured in bits. The logarithm base sets the unit but does not change the qualitative conclusions. If $p_i=0$ for an outcome with $q_i>0$, the cost is infinite: the model rules out an event that can occur.
 
