@@ -1,6 +1,6 @@
 # Repository roadmap
 
-This roadmap separates **current evidence**, **next implementation work**, and **later research extensions**. A topic is not considered complete merely because a page describes it: completion requires runnable code where appropriate, tests, a documented experiment, and explicit limits on the conclusions.
+This roadmap prioritizes **validating and improving the knowledge already present**. Do not add implementations, modules, pages, or experiments merely to advance a roadmap. A topic is not complete because it is documented, because tests pass, or because an experiment runs: it requires accurate explanations, explicit assumptions and counterexamples, and demonstrated understanding recorded in the private `career-knowledge` inventory. Code is justified only when it resolves a specific conceptual gap and the prerequisite knowledge has been validated.
 
 ## Current state (reviewed 2026-10-20)
 
@@ -21,7 +21,24 @@ This roadmap separates **current evidence**, **next implementation work**, and *
 
 ## Prioritized plan
 
-### P0 — Make the current learning experience dependable
+### P0 — Audit and validate existing knowledge (current priority)
+**Goal:** improve the quality and teachability of existing material without increasing the repository's scope.
+
+Tasks:
+1. Review each existing explanation for factual accuracy, hidden assumptions, scope conditions, and claims stronger than the cited evidence supports.
+2. Identify the most plausible misconception for each core concept and correct it in the existing explanation rather than adding a separate page.
+3. Add or sharpen a counterexample only where it distinguishes two explanations that otherwise sound equally plausible.
+4. Check whether French and English versions preserve the same qualifications and limits.
+5. Use short, unfamiliar transfer questions to assess understanding; record mastery evidence privately in `career-knowledge`, not in the public portfolio.
+6. Fix only defects found by this audit. Do not start new implementation work while relevant prerequisite knowledge remains unvalidated.
+
+**Exit criteria**
+- Important claims have a clear scope and support from relevant sources.
+- Common misconceptions and at least one discriminating counterexample are addressed where useful.
+- The learner can explain the concept, identify when it does not apply, and transfer it to a new case.
+- `career-knowledge` records the evidence needed for mastery; a passing test or a polished page alone is insufficient.
+
+### P1 — Keep the existing learning experience dependable
 **Goal:** ensure the existing site and numerical exercise are correct, navigable, and easy to reproduce.
 
 Tasks:
@@ -38,7 +55,7 @@ Tasks:
 - No known broken internal links; externally hosted images have a text alternative and source attribution.
 - The site distinguishes existing implementations from planned work.
 
-### P1 — Finish the mathematical and numerical foundations
+### Deferred — Mathematical and numerical foundations
 **Goal:** build a small reference implementation with reliable numerical checks before model complexity grows.
 
 Tasks:
@@ -53,7 +70,7 @@ Tasks:
 - Tests explain what each property establishes and what it does not.
 - The implementation remains NumPy-only and CPU-friendly.
 
-### P2 — Implement and test causal attention
+### Deferred — Causal attention implementation
 **Goal:** turn the current explanatory chapter into an executable, tested component.
 
 Tasks:
@@ -69,7 +86,7 @@ Tasks:
 - Reference-vs-framework differences are explained, not hidden behind loose tolerances.
 - No performance claim is made without a benchmark.
 
-### P3 — Tokenization, data windows, and a tiny Transformer
+### Deferred — Tokenization, data windows, and a tiny Transformer
 **Goal:** build the smallest end-to-end autoregressive model whose data flow can be inspected.
 
 Tasks:
@@ -85,7 +102,7 @@ Tasks:
 - A tiny batch can be overfit as a pipeline check; this is not presented as evidence of language quality.
 - A clean command reproduces the smoke test.
 
-### P4 — Controlled experiments on representation geometry
+### Deferred — Controlled experiments on representation geometry
 **Goal:** move the cosine and linearity notes from literature review to evidence-producing investigations.
 
 **Experiment A — Embedding metrics**
