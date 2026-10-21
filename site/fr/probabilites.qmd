@@ -45,8 +45,31 @@ Chaque distribution est conditionnée par le préfixe. La probabilité d'un toke
 ## Questions de contrôle
 
 1. Quelle différence entre normalisation et calibration ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+La normalisation est une propriété mathématique : les probabilités somment à un. La calibration est empirique : parmi les prédictions annoncées à environ 0,8, par exemple, l'événement devrait survenir environ 80 % du temps sur une population pertinente.
+
+</details>
+
 2. Pourquoi $P_\theta(x_t\mid x_{<t})$ dépend-il du préfixe ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Le modèle conditionne la distribution du token suivant sur les tokens précédents. Un même token peut donc avoir des probabilités différentes selon le contexte.
+
+</details>
+
 3. Que change la température, et que ne peut-elle pas garantir ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Diviser les logits par une température positive modifie la concentration de la distribution : température plus basse, distribution généralement plus pointue ; plus élevée, distribution plus plate. Cela ne garantit ni vérité factuelle ni calibration correcte.
+
+</details>
 
 **Suite :** [Vraisemblance](vraisemblance.qmd) · [Cross-entropie](cross-entropy.qmd)
 
