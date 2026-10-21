@@ -52,4 +52,4 @@ Exercises will be grouped by module, use stable identifiers, and link to the can
 
 A lesson question will link to a stable identifier in this section (for example `#foundations`) rather than duplicating the exercise prompt in the lesson. Future exercises should specify prerequisites, difficulty, expected deliverable, success criteria, and references. Hints and solutions will be separated from prompts.
 
-[Back to the course](../en/index.qmd) · [References](../references.qmd) · [Espace d'exercices en français](exercises.qmd)
+[Back to the course](../en/index.qmd) · [References](../references.qmd) · [Espace d'exercices en français](../fr/exercises.qmd)
