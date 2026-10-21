@@ -101,6 +101,14 @@ Ce fragment explicite la définition et le cas limite des vecteurs nuls ; il ne 
 
 La documentation d'une bibliothèque décrit un comportement d'implémentation ; elle ne remplace pas une évaluation scientifique. Les articles cités portent sur des modèles, des objectifs et des protocoles différents : leurs résultats ne doivent pas être fusionnés en une conclusion unique sans tenir compte de ces différences.
 
+## Vérifications qui discriminent les interprétations
+
+- **Idée reçue :** « Un cosinus élevé prouve que deux textes ont le même sens. » Contre-exemple : « le traitement fonctionne » et « le traitement ne fonctionne pas » peuvent rester proches dans un espace dominé par le vocabulaire partagé.
+- **Idée reçue :** « Le produit scalaire est toujours une alternative différente. » Si les deux vecteurs sont normalisés, produit scalaire et cosinus donnent le même score ; sinon, la norme peut changer le classement.
+- **Limite à préserver :** l'anisotropie ou la *hubness* sont des diagnostics possibles, pas des explications automatiques de toute erreur de retrieval. Il faut les mesurer sur les représentations et la tâche concernées.
+
+Pour auditer une conclusion, demander : quelle hypothèse sur l'encodeur et la normalisation est nécessaire ? Quel contre-exemple réfuterait l'interprétation sémantique ? Quelle métrique de tâche cible permettrait de départager les choix ?
+
 ## À retenir
 
-Le cosinus est une **métrique géométrique**, pas une définition universelle de la sémantique. Le bon réflexe est de traiter toute métrique comme une hypothèse expérimentale : choisir un modèle adapté, établir une baseline, mesurer le classement sur une tâche cible et analyser les erreurs.
+Le cosinus est une **métrique géométrique**, pas une définition universelle de la sémantique. Il constitue une hypothèse à confronter à une baseline et à des erreurs concrètes sur la tâche cible ; aucune propriété géométrique isolée ne garantit la pertinence du système.
