@@ -14,15 +14,15 @@ Pour une position, $z=(z_1,\ldots,z_V)$, où $V$ est la taille du vocabulaire. A
 
 Le softmax transforme ces scores en une distribution :
 
-$
+$$
 p_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}}.
-$
+$$
 
 Les différences entre logits déterminent les rapports de probabilités :
 
-$
+$$
 \frac{p_i}{p_j}=e^{z_i-z_j}.
-$
+$$
 
 Un écart de logit de $\log 2$ implique donc un rapport de probabilités égal à 2, toutes choses égales par ailleurs.
 
