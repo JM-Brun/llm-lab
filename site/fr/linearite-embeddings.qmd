@@ -115,3 +115,8 @@ Pour auditer une affirmation, demander : quelle couche et quelle activation sont
 Pour replacer ces expériences dans la géométrie des vecteurs, voir aussi la page sur l'[espace des embeddings](embedding-space.qmd).
 
 La linéarité est une hypothèse utile et testable, pas une loi universelle. Toute affirmation rigoureuse doit préciser la représentation, le concept, le critère de décodage et la distribution d'évaluation. **L'absence de décodabilité linéaire n'implique pas l'absence d'information ; la décodabilité linéaire n'établit pas à elle seule une causalité.**
+
+
+::: {.language-switch}
+**Langue :** [Français](linearite-embeddings.qmd) · [English](../en/embedding-linearity.qmd)
+:::
