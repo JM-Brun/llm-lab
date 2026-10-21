@@ -1,0 +1,77 @@
+---
+title: "L'espace des embeddings"
+subtitle: "Comment les tokens deviennent des vecteurs — et ce que leur géométrie permet de dire"
+lang: fr
+---
+
+::: {.chapter-lead}
+Un **embedding** est un vecteur numérique associé à un objet, par exemple un token. L'ensemble de ces vecteurs forme un espace de représentation. On peut comparer leurs directions, leurs distances ou leurs voisins, mais leur interprétation dépend du modèle, de son entraînement et de la tâche : la géométrie n'est pas un dictionnaire universel du sens.
+:::
+
+## Une carte de représentations
+
+![Projection schématique d'un espace d'embeddings.](../images/embedding-space-fr.svg){fig-alt="Points regroupés dans un plan abstrait. Les regroupements sont illustratifs et les axes ne correspondent pas nécessairement à des concepts humains." width=100%}
+
+Cette image est une illustration conceptuelle en deux dimensions. Les embeddings réels ont souvent des centaines ou des milliers de coordonnées ; une projection 2D peut déformer les distances et les voisinages.
+
+## D'où viennent les vecteurs ?
+
+Un tokenizer découpe le texte en tokens et associe généralement chaque token à un identifiant entier. Une matrice d'embedding \(E\in\mathbb{R}^{V\times d}\) contient un vecteur par identifiant : \(V\) est la taille du vocabulaire et \(d\) la dimension de l'embedding. Pour le token d'identifiant \(i\), son embedding initial est la ligne \(E_i\).
+
+Dans un Transformer, cette représentation est ensuite transformée par les couches du réseau. Il faut distinguer trois objets :
+
+- **Embedding de token :** vecteur initial récupéré dans la matrice du vocabulaire.
+- **Représentation contextualisée :** vecteur produit après traitement du contexte, notamment par l'attention.
+- **Embedding de phrase ou de document :** vecteur calculé par un modèle et une méthode d'agrégation conçus pour représenter un texte plus long.
+
+Ces objets ne sont pas interchangeables. Une méthode adaptée aux embeddings de phrases pour la recherche documentaire ne se transfère pas automatiquement aux activations internes d'un LLM.
+
+## Que signifie la proximité ?
+
+On peut comparer deux vecteurs par produit scalaire, distance euclidienne ou similarité cosinus. Le cosinus compare leurs directions :
+
+\[
+\operatorname{cos}(x,y)=\frac{x^\top y}{\|x\|_2\|y\|_2}.
+\]
+
+Un score élevé signifie que les directions sont proches. Il ne prouve pas que les textes sont équivalents, qu'ils impliquent la même conclusion ou qu'un document répond correctement à une question.
+
+Par exemple, « le traitement est efficace » et « le traitement n'est pas efficace » partagent presque tous leurs mots, alors que la négation change le sens décisif. À l'inverse, deux formulations très différentes peuvent exprimer la même information.
+
+## Une géométrie apprise, pas universelle
+
+Les dimensions d'un embedding n'ont généralement pas d'étiquettes humaines stables. Une transformation qui mélange les coordonnées peut préserver des relations utiles à la tâche tout en modifiant l'interprétation de chaque axe. Éviter de lire une dimension isolée comme « le sentiment » ou « la causalité » sans expérience qui étaye cette interprétation.
+
+La géométrie dépend notamment de l'objectif d'entraînement, des données, de la couche observée, de la normalisation, de la métrique et de la tâche. L'**anisotropie** (vecteurs concentrés dans certaines directions) et la **hubness** (points qui deviennent voisins d'un grand nombre d'autres points) peuvent dégrader la recherche par similarité. Ce sont des phénomènes à mesurer, pas des explications à supposer systématiquement.
+
+## Une projection 2D peut-elle tromper ?
+
+Oui. UMAP, t-SNE et les autres méthodes de réduction de dimension cherchent à préserver certaines relations, pas toute la géométrie originale. Les distances sur l'image ne doivent pas être interprétées comme si elles étaient les distances exactes de l'espace initial. Une séparation visuelle nette ne prouve pas non plus que le modèle distingue correctement les catégories sur de nouvelles données.
+
+Pour évaluer un espace d'embeddings, revenir à la tâche réelle : recherche documentaire, similarité annotée, classification, etc. Mesurer par exemple Recall@k, MRR ou nDCG pour une tâche de recherche, ou une corrélation adaptée lorsque les scores de similarité sont annotés. Inspecter également les faux positifs et les exemples hors distribution.
+
+## Idées reçues
+
+- **« Chaque dimension correspond à un concept. »** Rien ne le garantit ; une caractéristique peut être distribuée entre plusieurs dimensions.
+- **« Deux vecteurs proches représentent toujours des sens proches. »** La négation, les contradictions et les usages hors distribution peuvent déjouer cette intuition.
+- **« Une belle visualisation démontre la qualité des embeddings. »** Elle illustre une projection ; une évaluation adaptée mesure l'utilité pour la tâche.
+- **« Tous les embeddings doivent être comparés au cosinus. »** Le choix dépend du modèle et de son objectif. Produit scalaire et cosinus donnent le même classement lorsque les vecteurs sont normalisés.
+
+## Pour poursuivre
+
+- [Similarité cosinus](cosine-similarity.qmd) : métriques et limites.
+- [Linéarité des représentations](linearite-embeddings.qmd) : décodabilité, linéarité et interprétation.
+- [Tenseurs](tensors.qmd) : organisation des vecteurs dans les calculs du réseau.
+- [Encodage positionnel et RoPE](positional-encoding.qmd) : information de position dans le traitement des tokens.
+
+## Références
+
+- [Mikolov et al. (2013), Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781).
+- [Ethayarajh (2019), How Contextual are Contextualized Word Representations?](https://arxiv.org/abs/1909.00512).
+- [Li et al. (2020), On the Sentence Embeddings from Pre-trained Language Models](https://aclanthology.org/2020.emnlp-main.733/).
+- [Steck, Ekanadham & Kallus (2024), Is Cosine-Similarity of Embeddings Really About Similarity?](https://arxiv.org/abs/2403.05440).
+- [Sentence Transformers — Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html).
+
+::: {.language-switch}
+**Langue :** [Français](embedding-space.qmd) · [English](../en/index.qmd)
+:::
