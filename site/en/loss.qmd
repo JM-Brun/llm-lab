@@ -61,6 +61,8 @@ Before interpreting a curve, document the objective, input/target shift, ignore 
 
 ## Check your understanding
 
+[Open the related exercise space](exercises.qmd#foundations) — detailed exercises will be authored separately.
+
 1. Why should the denominator count valid targets rather than all tokens when some are ignored?
 
 <details>
