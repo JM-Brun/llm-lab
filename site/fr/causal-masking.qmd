@@ -5,7 +5,7 @@ lang: fr
 ---
 
 ::: {.chapter-lead}
-Le masque causal est une contrainte d'information : pour prédire le token à la position (t+1), le calcul associé à la position (t) ne doit dépendre que du préfixe disponible. Il ne s'agit pas simplement d'une convention de visualisation.
+Le masque causal est une contrainte d'information : pour prédire le token à la position $t+1$, le calcul associé à la position $t$ ne doit dépendre que du préfixe disponible. Il ne s'agit pas simplement d'une convention de visualisation.
 :::
 
 ## Intuition
@@ -14,20 +14,21 @@ Lorsqu'on entraîne un modèle à prédire le token suivant, toutes les position
 
 ## Définition
 
-Pour une séquence de longueur (T), la position (i) peut accéder aux positions (j\leq i). On peut définir un masque booléen supérieur strict ou un masque additif (M) :
+Pour une séquence de longueur $T$, la position $i$ peut accéder aux positions $j\leq i$. On peut définir un masque booléen supérieur strict ou un masque additif $M$ :
 
-[
-M_{ij}=\begin{cases}
+$$
+M_{ij}=
+\begin{cases}
 0 & j\leq i,\\
 -\infty & j>i.
 \end{cases}
-]
+$$
 
 Le masque additif est appliqué aux scores **avant** softmax :
 
-[
+$$
 A=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right).
-]
+$$
 
 Les positions futures reçoivent alors un poids nul en arithmétique idéale. En pratique, les bibliothèques peuvent représenter le masque sous forme booléenne ou employer une primitive d'attention qui intègre cette contrainte.
 
@@ -37,9 +38,9 @@ Les positions futures reçoivent alors un poids nul en arithmétique idéale. En
 
 Le masque causal est un moyen de réaliser une factorisation autorégressive de la distribution de séquence :
 
-[
+$$
 P(x_1,\ldots,x_T)=\prod_{t=1}^{T}P(x_t\mid x_{<t}).
-]
+$$
 
 Les Transformers décodeurs comme GPT utilisent cette contrainte pour apprendre à prédire le prochain token tout en calculant en parallèle les positions d'un batch d'entraînement. Le papier [*Attention Is All You Need* (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762) décrit le masquage de l'attention du décodeur.
 
@@ -52,7 +53,7 @@ Les Transformers décodeurs comme GPT utilisent cette contrainte pour apprendre 
 
 ## Test conceptuel décisif
 
-Pour une implémentation complète, gardez les tokens jusqu'à (t) identiques, modifiez un token situé après (t), puis vérifiez que les sorties des positions jusqu'à (t) restent identiques à la tolérance numérique près. Il faut aussi tester les formes, les lignes entièrement masquées, les gradients et la stabilité numérique.
+Pour une implémentation complète, gardez les tokens jusqu'à $t$ identiques, modifiez un token situé après $t$, puis vérifiez que les sorties des positions jusqu'à $t$ restent identiques à la tolérance numérique près. Il faut aussi tester les formes, les lignes entièrement masquées, les gradients et la stabilité numérique.
 
 ## Liens avec les autres concepts
 
