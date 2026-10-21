@@ -44,6 +44,8 @@ Chaque distribution est conditionnée par le préfixe. La probabilité d'un toke
 
 ## Questions de contrôle
 
+[Accéder à l'espace d'exercices associé](exercises.qmd#fondations) — les exercices détaillés seront ajoutés séparément.
+
 Le lien entre ces probabilités et la perte d'entraînement est détaillé dans [Entropie croisée et divergence KL](cross-entropy.qmd).
 
 1. Quelle différence entre normalisation et calibration ?

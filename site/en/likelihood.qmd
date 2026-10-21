@@ -47,6 +47,8 @@ If the probabilities assigned to three observed tokens are $(0.5, 0.25, 0.8)$, t
 
 ## Self-check
 
+[Open the related exercise space](exercises.qmd#foundations) — detailed exercises will be authored separately.
+
 1. Why use log-likelihood rather than the direct product?
 2. What justifies factorizing a sequence into conditional probabilities?
 3. Why document the tokenizer and NLL reduction when comparing models?

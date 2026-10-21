@@ -47,6 +47,8 @@ Si les probabilités attribuées à trois tokens observés sont $(0.5, 0.25, 0.8
 
 ## Questions de contrôle
 
+[Accéder à l'espace d'exercices associé](exercises.qmd#fondations) — les exercices détaillés seront ajoutés séparément.
+
 Pour voir comment la vraisemblance devient une fonction de perte, lire [Entropie croisée](cross-entropy.qmd) et [Loss](loss.qmd).
 
 1. Pourquoi utiliser la log-vraisemblance plutôt que le produit direct ?
