@@ -4,6 +4,8 @@ This roadmap prioritizes **validating and improving the knowledge already presen
 
 ## Current state (reviewed 2026-10-21)
 
+The learning budget is capped at **five focused hours per week, with no session longer than 60 minutes**. Calendar estimates below are sequencing aids, not deadlines; a module remains open until its evidence criteria are met. Do not compensate for missed sessions by extending another day.
+
 ### Implemented in the repository
 - A Quarto site in French and English, with canonical pages for mathematical foundations, entropy/cross-entropy, attention, cosine similarity, and the embedding-linearity hypothesis.
 - A bilingual glossary and a sourced, selective history of the Transformer architecture.
@@ -159,19 +161,20 @@ Tasks:
 - Every claimed feature is either implemented or labelled planned.
 - The repository clearly states licence and external asset provenance.
 
-## Suggested sequence at 10 hours per week
+## Suggested sequence at five hours per week
 
-| Timebox | Focus | Deliverable |
+Use five sessions of at most 60 minutes. A missed session is skipped or rescheduled into another available day; never exceed the daily cap. Keep the audit/retrieval loop active throughout rather than treating it as a one-time first week.
+
+| Approximate timebox | Focus | Deliverable |
 | --- | --- | --- |
-| Week 1 | P0 site and documentation QA | Clean render, checked navigation, notation fixes |
-| Weeks 2–3 | P1 numerical foundations | Property tests and gradient diagnostics |
-| Weeks 4–5 | P2 causal attention | Tested NumPy reference and framework comparison |
-| Weeks 6–7 | P3 tokenization and tiny Transformer | Deterministic data path and CPU smoke test |
-| Weeks 8–9 | P4 representation experiments | Reproducible metric and geometry reports |
-| Weeks 10–11 | P5 choose one: pre-training or SFT/LoRA | One bounded, well-evaluated run |
-| Week 12 | P6 portfolio review | Final report, limitations, reproducibility check |
+| Weeks 1–2 | P0 audit existing explanations and bilingual parity | Corrections to existing pages only, source/caveat review, unfamiliar transfer questions |
+| Weeks 3–4 | P1 numerical foundations, only where the audit exposes a real gap | Reviewed derivation or property-test plan; implementation only after the prerequisite knowledge gate |
+| Weeks 5–6 | Causal attention concepts and invariance reasoning | Written causal-invariance argument and counterexample; no implementation unless mastery evidence warrants it |
+| Weeks 7–8 | Representation geometry: critically audit existing cosine/linearity claims | Source-backed claim review and explicit limitations; no experiment until its question and protocol are justified |
+| Weeks 9–10 | Select one bounded experiment or one existing-page gap | One protocol with baseline, metrics, split policy, uncertainty and stop criteria |
+| Weeks 11–12 | Reproducibility, report, transfer test and public-site review | Reviewed evidence report, limitations, links and accessibility/render check |
 
-This schedule is a prioritization aid, not a guarantee. If acceptance criteria fail, extend the module instead of advancing on calendar time.
+At five hours per week, the plan intentionally narrows throughput rather than weakening quality gates. Tokenizer, Transformer, pretraining, SFT/LoRA, preference optimization, and advanced architecture work remain deferred until the relevant concepts and the chosen project justify them. If acceptance criteria fail, extend the module instead of advancing on calendar time.
 
 ## Content architecture and definition of done
 
