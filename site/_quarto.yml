@@ -4,6 +4,8 @@ project:
   render:
     - index.qmd
     - en/index.qmd
+    - fr/exercises.qmd
+    - en/exercises.qmd
     - fr/mathematical-foundations.qmd
     - en/mathematical-foundations.qmd
     - fr/logits.qmd
@@ -73,6 +75,7 @@ website:
       - section: "Français"
         contents:
           - index.qmd
+          - fr/exercises.qmd
           - section: "Fondations mathématiques"
             contents:
               - fr/mathematical-foundations.qmd
@@ -99,6 +102,7 @@ website:
       - section: "English"
         contents:
           - en/index.qmd
+          - en/exercises.qmd
           - section: "Mathematical foundations"
             contents:
               - en/mathematical-foundations.qmd
