@@ -10,34 +10,34 @@ Likelihood measures the probability of observed data for fixed parameters. In au
 
 ## Autoregressive factorization
 
-For a sequence \(x_{1:T}\):
+For a sequence $x_{1:T}$:
 
-\[
+$
 P_\theta(x_{1:T})=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}).
-\]
+$
 
 For multiple independent dataset sequences, total likelihood is the product of each sequence probability. Products of many numbers at most one become tiny quickly, so we use log-likelihood:
 
-\[
+$
 \log P_\theta(x_{1:T})=
 \sum_{t=1}^{T}\log P_\theta(x_t\mid x_{<t}).
-\]
+$
 
 The logarithm turns products into sums, which are more stable and convenient to compute.
 
 ## From likelihood to loss
 
-Negative log-likelihood \(\operatorname{NLL}\) is:
+Negative log-likelihood $\operatorname{NLL}$ is:
 
-\[
+$
 \operatorname{NLL}(\theta)=-\log P_\theta(x_{1:T}).
-\]
+$
 
 For fixed sequences and the same included positions, maximizing log-likelihood is equivalent to minimizing NLL. Averaging per token is a common scaling, useful for comparing sequences of different lengths, but it is not the same as the raw sum.
 
 ## Example
 
-If the probabilities assigned to three observed tokens are \((0.5, 0.25, 0.8)\), then the sequence likelihood (under the model and prefix) is \(0.1\), and NLL is \(-\log(0.1)\approx2.303\). Log-likelihood is approximately \(-2.303\).
+If the probabilities assigned to three observed tokens are $(0.5, 0.25, 0.8)$, then the sequence likelihood (under the model and prefix) is $0.1$, and NLL is $-\log(0.1)\approx2.303$. Log-likelihood is approximately $-2.303$.
 
 ::: {.callout-warning title="Misconceptions"}
 - **“High likelihood proves the model is true.”** No: it indicates probabilistic fit to selected observations relative to a model, tokenizer, and data distribution.
