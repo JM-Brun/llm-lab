@@ -95,6 +95,23 @@ Pin links to the most specific upstream file where useful, and record the date r
 ### Visual policy
 Prefer original SVG diagrams that clarify tensor flow, shapes, masking, train-vs-inference differences, or competing architecture choices. Each figure needs alt text and a nearby explanation of what it does **not** show. External images should be embedded only when reuse terms allow it; otherwise link to the original source. Keep a provenance entry for every external visual actually embedded.
 
+## 4a. Existing-page audit: high-value additions before new lessons
+
+This is a targeted gap analysis, not an instruction to add all the material now. Review each item against the current page and add only information that resolves a real omission or misconception.
+
+| Existing canonical page(s) | Useful complementary material | Proposed treatment |
+|---|---|---|
+| `site/fr/transformer.qmd`, `site/en/transformer.qmd` | Raschka Ch. 1 and Ch. 4; Alammar's original encoder–decoder diagram and GPT-2 walk-through; ACM's modern-block explanation | Keep the overview concise. Add or link a clear architecture comparison (encoder-only, encoder–decoder, decoder-only), explain what changes between the original Transformer and GPT, and label the schematic as one family rather than a universal architecture. |
+| `queries-keys-values.qmd` (FR/EN) | Raschka Ch. 3; ACM's interpretation of attention as cross-position information mixing | Check notation and tensor shapes end-to-end; distinguish learned projections from human-readable semantic labels; make clear that Q/K/V dimensions need not all match. Add shape tables only if they clarify the existing derivation. |
+| `scaled-dot-product-attention.qmd` (FR/EN) | Raschka Ch. 3; ACM's weighted-sum derivation; 3Blue1Brown's animated intuition | Ensure the sequence scores → scale → mask where applicable → softmax → weighted sum is explicit, with the axis of softmax and shapes stated. Explain that weights are relative and do not constitute causal explanations of model output. |
+| `causal-masking.qmd` / existing causal-mask illustration | Raschka Ch. 3–5; ACM's separation of position-mixing and position-wise operations | Preserve the distinction between a mask matrix and an end-to-end causal invariant. Make the future-token perturbation test the conceptual acceptance criterion; do not add code before knowledge is validated. |
+| `tensors.qmd` (currently FR) | Raschka's notebook shapes and PyTorch appendix; Alammar's visual tensor flow | Plan an English counterpart before declaring bilingual coverage complete. Add shape annotations at key operations and distinguish batch, sequence, feature, head and vocabulary axes. |
+| `embedding-space.qmd`, `positional-encoding.qmd` (currently FR) | Raschka Ch. 2/4 and the repository's architecture examples; Alammar's embedding/position visuals | Plan English counterparts. Distinguish token embedding lookup, contextual hidden states, learned absolute positions and rotary position mechanisms; avoid implying RoPE is an additive position embedding. |
+| `mathematical-foundations.qmd`, logits, probabilities, likelihood, loss, gradients (FR/EN) | Raschka Ch. 5 objective and training code; official PyTorch loss conventions | Link the mathematical objective to shifted targets, ignored tokens, reduction conventions, and the reported validation loss. Keep notation consistent and do not conflate token loss with aggregate training loss. |
+| `cross-entropy.qmd`, `entropy.qmd` (FR/EN) | Raschka's pretraining objective; 3Blue1Brown and Shannon/Cover–Thomas references | Preserve the distinction between entropy, cross-entropy, KL divergence, negative log-likelihood and perplexity. Add a compact relation diagram only if it prevents a specific misconception. |
+| Existing glossary and Transformer history | Raschka Ch. 1 and upstream model-family examples; Alammar's original-versus-GPT-2 distinction | Add terms only when they appear in the course; date/version claims and link to primary sources. Avoid treating GPT-2 as representative of every current architecture. |
+| Existing public course generally | Raschka chapters 2, 5, 6, 7 and appendices D/E | Main coverage gaps: text data/tokenization; complete training/pretraining flow; classification fine-tuning; instruction fine-tuning; evaluation; training-loop details; LoRA. Do not fill these gaps with broad summaries until prerequisite knowledge and page ownership are clear. |
+
 ## 5. Suggested sequencing and gates
 
 1. **Inventory first:** map every existing page to the plan; identify duplicates, gaps, language asymmetry, and missing cross-links.
