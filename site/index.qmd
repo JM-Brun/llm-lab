@@ -5,7 +5,7 @@ lang: fr
 toc: false
 ---
 
-:::: {.hero-intro}
+::: {.hero-intro}
 <p class="eyebrow">MATHS · PYTHON · EXPÉRIENCES</p>
 
 ## Comprendre les modèles de langage, un mécanisme à la fois
@@ -16,11 +16,11 @@ Un parcours progressif pour relier intuition, mathématiques, code et preuves ex
 [Explorer le parcours](fr/transformer.qmd){.btn .btn-primary}
 [Explorer le code source](https://github.com/JM-Brun/llm-lab){.btn .btn-outline-primary}
 </div>
-::::
+:::
 
 ## Comment naviguer
 
-:::: {.learning-grid}
+::: {.learning-grid}
 ::: {.learning-card}
 <span class="step">01 / SYNTHÈSES</span>
 
@@ -38,6 +38,8 @@ Des pages de haut niveau relient les composants : attention dans un Transformer,
 Chaque concept dispose d'une page dédiée : intuition, provenance, équations, hypothèses, contre-exemples, liens vers les notions voisines et références.
 
 [Explorer les fondations mathématiques](fr/mathematical-foundations.qmd){.card-link}
+
+[Découvrir les tenseurs](fr/tensors.qmd) · [Les espaces d'embeddings](fr/embedding-space.qmd)
 :::
 ::: {.learning-card}
 <span class="step">03 / CODE ET PREUVES</span>
@@ -48,12 +50,12 @@ Les pages distinguent le code réellement présent, les tests qui le couvrent et
 
 [Consulter le dépôt](https://github.com/JM-Brun/llm-lab)
 :::
-::::
+:::
 
 ## Parcours conseillé
 
 1. **Fondations mathématiques** — logits, probabilités, vraisemblance, cross-entropie, loss et gradients.
-2. **Attention et Transformer** — requêtes, clés, valeurs, scores, softmax et masque causal.
+2. **Attention et Transformer** — requêtes, clés, valeurs, scores, softmax, information de position et masque causal.
 3. **Données et objectif autorégressif** — tokenisation, décalage entrée-cible et prédiction du prochain token.
 4. **Modèle et entraînement** — blocs, optimisation, validation, génération et évaluation.
 5. **Notes critiques** — examiner les hypothèses, les contre-exemples et les limites des métriques et des représentations.
@@ -64,8 +66,9 @@ Ce parcours décrit l'organisation pédagogique, pas l'état d'avancement de tou
 
 - [Glossaire des termes](fr/glossary.qmd) — les définitions essentielles, de « token » à « Transformer autorégressif ».
 - [Historique des Transformers](fr/transformer-history.qmd) — les étapes marquantes, des premiers mécanismes d'attention aux LLM modernes.
+- [Tenseurs](fr/tensors.qmd), [espace des embeddings](fr/embedding-space.qmd) et [encodage positionnel avec RoPE](fr/positional-encoding.qmd) — les notions nécessaires pour lire les équations et les représentations.
 - Les ressources externes sont recensées dans la [page des références](references.qmd).
 
-:::: {.language-switch}
+::: {.language-switch}
 **Choisir la langue :** [Français](index.qmd) · [English](en/index.qmd)
-::::
+:::
