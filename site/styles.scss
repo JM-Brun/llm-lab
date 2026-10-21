@@ -84,3 +84,25 @@ code { font-size: .91em; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+/* Native disclosure controls keep answer keys collapsed until requested. */
+details {
+  margin: .8rem 0 1.1rem;
+  padding: .75rem 1rem;
+  border: 1px solid var(--llm-line);
+  border-radius: .75rem;
+  background: #fff;
+}
+details > summary {
+  color: var(--llm-teal);
+  cursor: pointer;
+  font-weight: 750;
+  line-height: 1.5;
+}
+details > summary:focus-visible {
+  outline: 2px solid var(--llm-teal);
+  outline-offset: 3px;
+  border-radius: .2rem;
+}
+details[open] > summary { margin-bottom: .7rem; }
+details > :last-child { margin-bottom: .15rem; }
