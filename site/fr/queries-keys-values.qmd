@@ -1,0 +1,58 @@
+---
+title: "Requêtes, clés et valeurs (Q, K, V)"
+subtitle: "Trois rôles appris pour comparer des positions et agréger de l'information"
+lang: fr
+---
+
+::: {.chapter-lead}
+Les requêtes, clés et valeurs ne sont pas trois types de tokens : ce sont trois **projections apprises** des représentations d'entrée, utilisées pour calculer quelles positions contribuent à une représentation contextualisée.
+:::
+
+## Intuition
+
+Imagine un ensemble de fiches. La **requête** exprime ce qu'une position cherche ; la **clé** décrit comment une position peut être reconnue comme pertinente ; la **valeur** porte l'information qui sera effectivement agrégée. Cette analogie aide à distinguer les rôles, mais n'implique pas que le modèle effectue une recherche symbolique explicite.
+
+## Définition et dimensions
+
+Pour (X\in\mathbb{R}^{T\times d_{model}}), les projections d'une tête sont :
+
+[
+Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
+]
+
+Avec (W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}) et (W_V\in\mathbb{R}^{d_{model}\times d_v}), on obtient (Q,K\in\mathbb{R}^{T\times d_k}) et (V\in\mathbb{R}^{T\times d_v}). Les biais éventuels sont omis ici pour alléger la notation.
+
+Les scores (QK^\top) comparent chaque requête à chaque clé. Après normalisation et application du masque éventuel, les poids déterminent la combinaison des lignes de (V). Les valeurs ne servent donc pas directement à calculer les scores dans l'attention à produit scalaire standard.
+
+## Provenance et intérêt
+
+Les mécanismes d'attention sont apparus dans les modèles encodeur-décodeur de traduction neuronale, notamment chez Bahdanau, Cho et Bengio (2014). *Attention Is All You Need* (Vaswani et al., 2017) a placé l'auto-attention au centre de l'architecture Transformer et formalisé l'attention à produit scalaire mise à l'échelle.
+
+- [Bahdanau et al. (2014), *Neural Machine Translation by Jointly Learning to Align and Translate*](https://arxiv.org/abs/1409.0473)
+- [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762)
+
+## Idées reçues et contre-exemples
+
+- **« Une clé est un identifiant sémantique lisible. »** Non : ses coordonnées sont apprises conjointement avec l'objectif ; elles ne correspondent généralement pas à des étiquettes humaines interprétables.
+- **« La valeur la plus proche est forcément la plus utile. »** Les scores dépendent des requêtes et des clés projetées, pas d'une distance universelle entre les représentations d'origine.
+- **« Q, K et V doivent toujours avoir la même dimension. »** Pas nécessairement : les dimensions des clés et des valeurs peuvent différer ; les architectures multi-têtes imposent toutefois des contraintes de forme précises.
+- **« Une forte pondération révèle la cause d'une prédiction. »** Elle décrit une étape de l'agrégation, pas à elle seule l'effet causal sur la sortie finale.
+
+## Liens avec les autres concepts
+
+- Suivre les scores et le softmax dans [l'attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd).
+- Comprendre la contrainte temporelle dans le [masque causal](causal-masking.qmd).
+- Replacer ces opérations dans la [synthèse du Transformer](transformer.qmd).
+- Relier le softmax aux [probabilités](probabilites.qmd).
+
+## Code et tests
+
+Aucune implémentation Q/K/V réutilisable n'est encore présente dans `src/llm_lab/`. Cette page définit donc les contrats mathématiques à vérifier avant d'écrire le module : formes de tenseurs, projections, propagation des gradients et comportement avec plusieurs têtes.
+
+- [Code source existant](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab)
+- [Tests existants](https://github.com/JM-Brun/llm-lab/tree/main/tests)
+- [Critères prévus pour l'attention causale](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+
+:::: {.language-switch}
+**Langue :** [Français](queries-keys-values.qmd) · [English](../en/queries-keys-values.qmd)
+::::
