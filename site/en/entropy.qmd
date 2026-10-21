@@ -13,7 +13,7 @@ In information theory, Shannon entropy quantifies the average uncertainty of a d
 A rare event is more surprising than an almost certain one. For an outcome $x$ with probability $p(x)>0$, its information content, or surprisal, is:
 
 $$
-I$x$=-\log_2 p(x).
+$I(x)$=-\log_2 p(x).
 $$
 
 It is measured in bits. An event with probability $1/2$ carries 1 bit; an event with probability $1/8$ carries 3 bits. This depends on the reference distribution: surprise is not an absolute property of an event.
@@ -90,19 +90,19 @@ $$
 S=-k_B\sum_i p_i\ln p_i,
 $$
 
-where (k_B) is Boltzmann's constant. With microstate probabilities and natural logarithms, $S=k_B H_{\mathrm{nats}}$. The factor (k_B) gives thermodynamic entropy physical units.
+where $k_B$ is Boltzmann's constant. With microstate probabilities and natural logarithms, $S=k_B H_{\mathrm{nats}}$. The factor $k_B$ gives thermodynamic entropy physical units.
 
 The shared formula reflects a common probabilistic structure, but the interpretations are not interchangeable. Information theory studies, among other things, message distributions and coding cost. Statistical physics uses probabilities over microstates in a physical ensemble, and entropy enters thermodynamic laws under assumptions about the ensemble and constraints. “Disorder” can be a rough intuition, but it is not a substitute for the definition or physical conditions.
 
 ## 6. Continuous variables: an additional caveat
 
-For a continuous density (f$x$), differential entropy is sometimes defined as:
+For a continuous density $f(x)$, differential entropy is sometimes defined as:
 
 $$
-h$X$=-\int f$x$\ln f$x$\,dx.
+h(X)=-\int f(x)\ln f(x)\,dx.
 $$
 
-Unlike discrete entropy, it can be negative and depends on changes of scale or coordinates. It should not be read as an absolute code length without specifying quantization or a reference. Properties of $H(X)$ cannot be transferred to (h$X$) without care.
+Unlike discrete entropy, it can be negative and depends on changes of scale or coordinates. It should not be read as an absolute code length without specifying quantization or a reference. Properties of $H(X)$ cannot be transferred to (h(X)) without care.
 
 ## 7. What entropy does not tell us
 
