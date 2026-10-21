@@ -1,0 +1,61 @@
+---
+title: "Logits : les scores avant normalisation"
+subtitle: "Pourquoi un modèle ne produit pas directement des probabilités"
+lang: fr
+---
+
+::: {.chapter-lead}
+Un **logit** est un score réel non normalisé associé à une classe ou à un token du vocabulaire. Dans un LLM, la dernière projection produit généralement un vecteur (z\in\mathbb{R}^{V}) pour chaque position à prédire.
+:::
+
+## Définition et dimensions
+
+Pour une position, (z=(z_1,\ldots,z_V)), où (V) est la taille du vocabulaire. Aucun logit n'est contraint à l'intervalle ([0,1]), et leur somme n'a pas à valoir un.
+
+Le softmax transforme ces scores en une distribution :
+
+\[
+p_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}}.
+\]
+
+Les différences entre logits déterminent les rapports de probabilités :
+
+\[
+\frac{p_i}{p_j}=e^{z_i-z_j}.
+\]
+
+Un écart de logit de \(\log 2\) implique donc un rapport de probabilités égal à 2, toutes choses égales par ailleurs.
+
+## Exemple à deux classes
+
+Pour (z=(0,\log 3)), on obtient (p=(1/4,3/4)). Les logits ne sont pas les probabilités : c'est le softmax qui les normalise.
+
+## Propriétés utiles
+
+- **Invariance par translation :** (operatorname{softmax}(z+c\mathbf{1})=\operatorname{softmax}(z)). Seules les différences comptent.
+- **Ordre conservé :** si (z_i>z_j), alors (p_i>p_j).
+- **Échelle et température :** multiplier les logits change généralement la concentration de la distribution ; ce n'est pas une simple translation.
+
+Pour éviter le débordement numérique, le softmax est calculé en pratique après soustraction du maximum : (e^{z_i-m}/\sum_j e^{z_j-m}), avec (m=\max_j z_j).
+
+::: {.callout-warning title="Idées reçues"}
+- **« Un logit positif est une probabilité élevée. »** Non : le signe dépend du niveau de référence des scores. Un logit de 10 peut encore être moins probable qu'un autre logit de 12.
+- **« Le plus grand logit mesure l'écart de confiance. »** Le classement du maximum donne l'argmax, mais l'incertitude dépend de l'ensemble des logits et de leur échelle.
+- **« Les logits sont comparables entre modèles sans précaution. »** Pas nécessairement : architectures, températures et entraînements peuvent produire des échelles différentes.
+:::
+
+## Dans un LLM
+
+Pour chaque position (t), la tête de sortie fournit (z_t\in\mathbb{R}^{V}). Le modèle choisit ou échantillonne ensuite un token à partir de la distribution associée. Pendant l'entraînement, les logits sont comparés à l'identifiant du token cible par une perte telle que la [cross-entropie](cross-entropy.qmd).
+
+## Questions de contrôle
+
+1. Pourquoi ajouter une constante à tous les logits ne change-t-il pas les probabilités ?
+2. Deux vecteurs de logits peuvent-ils avoir le même argmax et des distributions très différentes ?
+3. Pourquoi une implémentation stable soustrait-elle le maximum avant l'exponentiation ?
+
+**Suite :** [Probabilités](probabilites.qmd) · [Vue d'ensemble](mathematical-foundations.qmd)
+
+:::: {.language-switch}
+[Français](logits.qmd) · [English](../en/logits.qmd)
+::::
