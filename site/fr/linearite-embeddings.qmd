@@ -4,7 +4,7 @@ subtitle: "Représentation, décodabilité, superposition et généralisation"
 lang: fr
 ---
 
-## De quelle linéarité parle-t-on ?
+## Que signifie « linéaire » ici ?
 
 En interprétabilité des réseaux de neurones, on suppose souvent qu'un concept — le sentiment, le genre grammatical, une propriété factuelle ou une direction de contrôle — correspond à une direction dans l'espace d'activations. Cette idée est utile, mais l'expression « le concept est représenté linéairement » recouvre plusieurs affirmations distinctes.
 
@@ -111,5 +111,7 @@ Ne pas présenter une différence de performance entre probes comme une preuve q
 Pour auditer une affirmation, demander : quelle couche et quelle activation sont étudiées ? Quelle capacité possède le probe ? Quelle tâche de contrôle est utilisée ? Les résultats tiennent-ils sur des combinaisons inédites, et existe-t-il une intervention qui teste l'usage causal ?
 
 ## À retenir
+
+Pour replacer ces expériences dans la géométrie des vecteurs, voir aussi la page sur l'[espace des embeddings](embedding-space.qmd).
 
 La linéarité est une hypothèse utile et testable, pas une loi universelle. Toute affirmation rigoureuse doit préciser la représentation, le concept, le critère de décodage et la distribution d'évaluation. **L'absence de décodabilité linéaire n'implique pas l'absence d'information ; la décodabilité linéaire n'établit pas à elle seule une causalité.**
