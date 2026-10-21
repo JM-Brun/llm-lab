@@ -10,6 +10,15 @@ Cette page distingue les **ressources pédagogiques recommandées** des **illust
 
 Le diagramme du masque causal affiché dans le chapitre est créé pour ce projet et stocké dans `site/images/causal-attention-mask.svg`. Il est réutilisable avec le code du dépôt, sous réserve de la licence du dépôt lorsqu'elle sera explicitement définie.
 
+## Schémas originaux du dépôt
+
+### Chaîne mathématique de l'entraînement
+
+- **Création :** schéma original dessiné pour LLM Lab et versionné dans `site/images/math-training-pipeline.svg`.
+- **Utilisation :** vue d'ensemble des fondations mathématiques en français et en anglais.
+- **Contenu :** logits → softmax/probabilités → log-vraisemblance négative → loss agrégée → gradient.
+- **Provenance :** illustration originale, sans image externe incorporée.
+
 ## Illustrations intégrées
 
 ::: {.reference-card}
