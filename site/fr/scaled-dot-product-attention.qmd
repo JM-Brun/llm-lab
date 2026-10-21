@@ -25,6 +25,10 @@ $$
 
 Le masque $M$ est facultatif selon le type d'attention. Pour une attention causale, les positions futures reçoivent $-\infty$ avant le softmax.
 
+![Vue visuelle du calcul : scores, masque causal, softmax et somme pondérée des valeurs.](../images/attention-calculation-flow.svg){fig-alt="Les requêtes et les clés produisent des scores. Après mise à l'échelle et application éventuelle du masque, le softmax crée des poids qui combinent les valeurs." width=100%}
+
+Le schéma montre aussi pourquoi trois objets ne doivent pas être confondus : **scores** (compatibilités brutes), **poids** (normalisés relativement aux positions accessibles) et **sorties** (combinaisons pondérées des valeurs). Dans une attention non causale, le masque peut être absent ou exprimer une autre contrainte. La normalisation du softmax ne transforme pas les poids en mesure universelle de pertinence sémantique.
+
 ## Pourquoi diviser par $\sqrt{d_k}$ ?
 
 Sous l'hypothèse simplificatrice que les composantes des vecteurs de requête et de clé sont indépendantes, centrées et de variance unitaire, la variance d'un produit scalaire somme d'environ $d_k$ termes croît avec $d_k$. Diviser par $\sqrt{d_k}$ aide à maintenir l'échelle des scores plus stable lorsque la dimension augmente, ce qui limite des softmax trop saturés et des gradients faibles. C'est une motivation de mise à l'échelle, pas une garantie que les scores auront toujours une variance exactement égale à un dans un réseau entraîné.
