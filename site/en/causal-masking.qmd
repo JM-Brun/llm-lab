@@ -5,7 +5,7 @@ lang: en
 ---
 
 ::: {.chapter-lead}
-Causal masking is an information constraint: to predict the token at position (t+1), the computation at position (t) must depend only on the available prefix. It is not merely a visualization convention.
+Causal masking is an information constraint: to predict the token at position $t+1$, the computation at position $t$ must depend only on the available prefix. It is not merely a visualization convention.
 :::
 
 ## Intuition
@@ -14,20 +14,21 @@ When training a model to predict the next token, all positions in a sequence can
 
 ## Definition
 
-For a sequence of length (T), position (i) can access positions (j\leq i). One can define a strict upper-triangular boolean mask or an additive mask (M):
+For a sequence of length $T$, position $i$ can access positions $j\leq i$. One can define a strict upper-triangular boolean mask or an additive mask $M$:
 
-[
-M_{ij}=\begin{cases}
+$$
+M_{ij}=
+\begin{cases}
 0 & j\leq i,\\
 -\infty & j>i.
 \end{cases}
-]
+$$
 
 The additive mask is applied to scores **before** softmax:
 
-[
+$$
 A=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right).
-]
+$$
 
 Future positions then receive zero weight in ideal arithmetic. In practice, libraries may represent the mask as a boolean tensor or use an attention primitive that incorporates the constraint.
 
@@ -37,9 +38,9 @@ Future positions then receive zero weight in ideal arithmetic. In practice, libr
 
 Causal masking supports an autoregressive factorization of the sequence distribution:
 
-[
+$$
 P(x_1,\ldots,x_T)=\prod_{t=1}^{T}P(x_t\mid x_{<t}).
-]
+$$
 
 Decoder-only Transformers such as GPT use this constraint to learn next-token prediction while computing positions in a training batch in parallel. [*Attention Is All You Need* (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762) describes masking decoder attention.
 
@@ -52,7 +53,7 @@ Decoder-only Transformers such as GPT use this constraint to learn next-token pr
 
 ## A decisive conceptual test
 
-For a complete implementation, keep tokens through position (t) unchanged, alter a token after (t), and verify that outputs through (t) remain unchanged within numerical tolerance. Also test shapes, fully masked rows, gradients, and numerical stability.
+For a complete implementation, keep tokens through position $t$ unchanged, alter a token after $t$, and verify that outputs through $t$ remain unchanged within numerical tolerance. Also test shapes, fully masked rows, gradients, and numerical stability.
 
 ## Connections to other concepts
 
