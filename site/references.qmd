@@ -96,3 +96,30 @@ Les liens ci-dessus servent de bibliographie de départ, pas de preuve automatiq
 Pour chaque figure externe, indiquer près de l'image : l'auteur ou le détenteur des droits, le titre ou la page source, un lien direct vers la ressource, et toute licence connue. Une URL accessible n'implique pas que l'image soit libre de réutilisation.
 
 Priorité est donnée aux schémas originaux créés dans le dépôt, aux ressources explicitement sous licence ouverte et aux intégrations depuis les sites des auteurs. Les ressources externes doivent enrichir les explications, sans remplacer les dérivations mathématiques, le code et les tests du projet.
+
+## Entropie, compression et divergence KL
+
+### Références mathématiques et scientifiques
+
+- Claude E. Shannon (1948), [A Mathematical Theory of Communication](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf) — définitions et résultats fondateurs sur l'information, l'entropie et le codage.
+- Thomas M. Cover & Joy A. Thomas, [Elements of Information Theory](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X) — entropie, entropie conditionnelle, information mutuelle, codage et divergence KL.
+- Edwin T. Jaynes (1957), [Information Theory and Statistical Mechanics](https://doi.org/10.1103/PhysRev.106.620) — relation entre entropie informationnelle et physique statistique.
+- [3Blue1Brown — Reinventing Entropy](https://www.youtube.com/watch?v=l6DKRf-fAAM) — intuition visuelle sur la surprise, l'entropie et la compression.
+- [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU) — coût de codage avec une distribution prédictive, entropie croisée et lien avec les objectifs des LLM.
+- [3Blue1Brown — lesson on cross-entropy](https://www.3blue1brown.com/lessons/cross-entropy/) — page de la leçon et ressources associées.
+- [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) — convention d'API pour les logits, les cibles et les réductions.
+- [Hugging Face — Perplexity of fixed-length models](https://huggingface.co/docs/transformers/perplexity) — lien entre log-vraisemblance, cross-entropie moyenne et perplexité.
+
+### Vidéos complémentaires proposées pour l'étude
+
+Les deux vidéos 3Blue1Brown ci-dessus sont les références pédagogiques principales utilisées dans les pages. Les liens suivants sont conservés comme ressources complémentaires fournies pour ce parcours ; leur titre exact et leur contenu doivent être vérifiés avant de les citer comme preuve d'une affirmation précise.
+
+- [Vidéo YouTube — ID nlxyZ4gKHGA, à vérifier](https://www.youtube.com/watch?v=nlxyZ4gKHGA&t=602s)
+- [Vidéo YouTube — ID VJ61CF9sxm4, à vérifier](https://www.youtube.com/watch?v=VJ61CF9sxm4)
+- [Vidéo YouTube — ID H71WR50stm4, à vérifier](https://www.youtube.com/watch?v=H71WR50stm4)
+- [Vidéo YouTube — ID kD5DHGbkYz0, à vérifier](https://www.youtube.com/watch?v=kD5DHGbkYz0&t=279s)
+- [Vidéo YouTube — ID ZBp-uFwYlQg, à vérifier](https://www.youtube.com/watch?v=ZBp-uFwYlQg)
+- [Vidéo YouTube — ID Pwgpl9mKars, à vérifier](https://www.youtube.com/watch?v=Pwgpl9mKars)
+- [Short YouTube — ID jd02NxCuCxA, à vérifier](https://www.youtube.com/shorts/jd02NxCuCxA)
+
+Une référence pédagogique aide à construire l'intuition, mais ne remplace pas une source primaire lorsqu'une page énonce un résultat mathématique ou physique. Les liens vidéo sont donc distingués des références formelles.
