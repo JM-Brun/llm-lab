@@ -71,6 +71,12 @@ Référence complémentaire pour une présentation progressive de l'architecture
 Ressource vidéo et animée pour l'intuition mathématique. Ce dépôt ne téléverse ni ne republie les vidéos. Pour toute utilisation d'images fixes ou d'extraits, suivre les conditions publiées par [3Blue1Brown](https://www.3blue1brown.com/about/), notamment l'attribution visible et les limites annoncées.
 :::
 
+## Ressources pédagogiques vidéo
+
+Ces liens sont proposés pour compléter la lecture. Ils servent d'appui pédagogique ; les affirmations historiques et mathématiques de référence restent reliées aux articles originaux ou à la documentation correspondante.
+
+- [Vidéo pédagogique recommandée](https://www.youtube.com/watch?v=oikbkiHtGP0) — lien fourni pour ce parcours ; le titre et les métadonnées n'ont pas été confirmés indépendamment.
+
 ## Références techniques
 
 - [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch)
