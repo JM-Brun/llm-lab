@@ -43,6 +43,37 @@ def test_loss_is_stable_for_large_logits() -> None:
     assert loss >= 0.0
 
 
+def test_cross_entropy_is_invariant_to_rowwise_constant_shift() -> None:
+    logits = np.array([[2.0, -1.0, 0.5], [-3.0, 0.0, 4.0]], dtype=np.float64)
+    targets = np.array([0, 2], dtype=np.int64)
+    shifted = logits + np.array([[1000.0], [-250.0]])
+
+    original_loss = cross_entropy_from_logits(logits, targets)
+    shifted_loss = cross_entropy_from_logits(shifted, targets)
+
+    assert shifted_loss == pytest.approx(original_loss, abs=1e-12)
+
+
+def test_gradient_rows_sum_to_zero() -> None:
+    logits = np.array([[0.2, -0.4, 1.1], [1.0, 0.0, -0.5]], dtype=np.float64)
+    targets = np.array([2, 0], dtype=np.int64)
+
+    gradient = cross_entropy_gradient(logits, targets)
+
+    np.testing.assert_allclose(gradient.sum(axis=1), np.zeros(logits.shape[0]), atol=1e-15)
+
+
+def test_loss_and_gradient_do_not_mutate_logits() -> None:
+    logits = np.array([[0.2, -0.4, 1.1], [1.0, 0.0, -0.5]], dtype=np.float64)
+    original = logits.copy()
+    targets = np.array([2, 0], dtype=np.int64)
+
+    cross_entropy_from_logits(logits, targets)
+    cross_entropy_gradient(logits, targets)
+
+    np.testing.assert_array_equal(logits, original)
+
+
 @pytest.mark.parametrize(
     ("logits", "targets"),
     [
@@ -52,6 +83,8 @@ def test_loss_is_stable_for_large_logits() -> None:
         (np.zeros((1, 3)), np.array([3])),
         (np.zeros((1, 3)), np.array([-1])),
         (np.zeros((1, 3)), np.array([0.5])),
+        (np.array([[np.nan, 0.0, 1.0]]), np.array([0])),
+        (np.array([[np.inf, 0.0, 1.0]]), np.array([0])),
     ],
 )
 def test_invalid_inputs_raise_value_error(
@@ -71,6 +104,8 @@ def test_invalid_inputs_raise_value_error(
         (np.zeros((1, 3)), np.array([3])),
         (np.zeros((1, 3)), np.array([-1])),
         (np.zeros((1, 3)), np.array([0.5])),
+        (np.array([[np.nan, 0.0, 1.0]]), np.array([0])),
+        (np.array([[np.inf, 0.0, 1.0]]), np.array([0])),
     ],
 )
 def test_gradient_invalid_inputs_raise_value_error(

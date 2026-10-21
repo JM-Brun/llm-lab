@@ -136,6 +136,35 @@ _Figure 1 — Illustration by Jay Alammar, embedded from [The Illustrated GPT-2]
 
 [Open the chapter: causal attention and masks →](transformer.qmd)
 
+## Beyond default assumptions
+
+Some common assumptions deserve to be tested rather than repeated. These notes connect mathematics, research literature, and reproducible experiments.
+
+:::: {.learning-grid}
+::: {.learning-card}
+<span class="step">06 / METRICS</span>
+
+### Cosine similarity
+
+When does the angle between two embeddings reflect the similarity we care about? Anisotropy, *hubness*, alternative metrics, and evaluation protocols.
+
+[Read the critical note](cosine-similarity.qmd){.card-link}
+:::
+::: {.learning-card}
+<span class="step">07 / REPRESENTATIONS</span>
+
+### The linearity hypothesis
+
+Distinguish representation, decodability, and causal use; understand XOR, superposition, and the limits of probes.
+
+[Read the critical note](embedding-linearity.qmd){.card-link}
+:::
+::::
+
+## Follow project progress
+
+The [repository roadmap](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md) distinguishes implemented features, priority work, and the acceptance criteria required to mark a module complete. It avoids treating a published explanation as proof that an implementation or experiment has been verified.
+
 ## Project principles
 
 :::: {.principle-grid}

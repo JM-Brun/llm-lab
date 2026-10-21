@@ -1,6 +1,6 @@
 # Learning path
 
-This plan is a sequence of evidence-producing modules, not a promise of mastery after a fixed number of hours. Each module is complete only when its implementation, tests, experiment notes, and limitations are available.
+This plan is a sequence of evidence-producing modules, not a promise of mastery after a fixed number of hours. Each module is complete only when its implementation, tests, experiment notes, and limitations are available. The repository's current status, priorities, and acceptance criteria are tracked in the [roadmap](roadmap.md).
 
 ## Module 0 — Mathematical and numerical foundations
 
@@ -73,6 +73,10 @@ This plan is a sequence of evidence-producing modules, not a promise of mastery 
 **Build:** an evaluation harness with versioned tasks and machine-readable outputs.
 
 **Exit criteria:** report baseline and ablations, uncertainty or run-to-run variability, data provenance, limitations, and representative errors. Never infer real-world utility from one benchmark score.
+
+## Critical reading: test default assumptions
+
+The bilingual notes on [cosine similarity](../site/fr/cosine-similarity.qmd) and the [linearity hypothesis](../site/fr/linearite-embeddings.qmd) are cross-cutting modules, not replacements for the implementation sequence above. Use them to practise stating assumptions, finding counterexamples, designing controls, and distinguishing decodability from causal use. Their proposed experiments should be considered complete only when the protocol and results are committed under `experiments/` and summarized under `reports/`.
 
 ## Suggested 12-week cadence
 

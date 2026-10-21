@@ -11,7 +11,10 @@ The project includes a bilingual Quarto website that explains concepts step by s
 - French introduction: `site/index.qmd`
 - English introduction: `site/en/index.qmd`
 - Attention and causal masking: `site/fr/transformer.qmd` and `site/en/transformer.qmd`
+- Critical notes on cosine similarity: `site/fr/cosine-similarity.qmd` and `site/en/cosine-similarity.qmd`
+- Critical notes on embedding linearity: `site/fr/linearite-embeddings.qmd` and `site/en/embedding-linearity.qmd`
 - Visual references and image provenance: `site/references.qmd`
+- Prioritized roadmap and acceptance criteria: [`docs/roadmap.md`](docs/roadmap.md)
 
 The site uses carefully attributed illustrations embedded from their original source when suitable. It does not mirror or redistribute external image files. An accessible URL is not a licence: check reuse terms before copying or modifying a figure. The site can be rendered locally with the [Quarto CLI](https://quarto.org/docs/get-started/).
 
@@ -46,7 +49,7 @@ The path is deliberately incremental. Modules can be revisited when tests or exp
 | 7 | Preference optimization | Controlled experiment distinguishing SFT from preference learning |
 | 8 | Evaluation, efficiency, and robustness | Baselines, ablations, uncertainty, limitations, and failure analysis |
 
-See [the learning path](docs/learning-path.md) for module-level objectives and [the experiment protocol](docs/experiment-protocol.md) for reporting requirements.
+See [the learning path](docs/learning-path.md) for module-level objectives, the [roadmap](docs/roadmap.md) for priorities and acceptance criteria, and the [experiment protocol](docs/experiment-protocol.md) for reporting requirements.
 
 ## Repository layout
 
@@ -55,7 +58,7 @@ See [the learning path](docs/learning-path.md) for module-level objectives and [
 - `notebooks/`: optional explanatory notebooks; core logic should remain importable from `src`.
 - `experiments/`: versioned configurations and runnable experiment entry points.
 - `reports/`: concise, evidence-backed results and limitations.
-- `docs/`: learning path, foundations, experiment protocol, and references.
+- `docs/`: learning path, mathematical foundations, experiment protocol, annotated references, and roadmap.
 - `site/`: Quarto website sources in French and English.
 
 ## Quick start
@@ -95,7 +98,7 @@ The project builds on existing educational work rather than presenting establish
 
 ## Status
 
-Initial repository scaffold with a first numerical exercise and a bilingual Quarto learning-site foundation. Model components and chapters will be added incrementally; a successful site render and clean CI run still need to be verified.
+Current scope: a bilingual Quarto learning site, a tested NumPy cross-entropy implementation, and automated Python/Quarto checks. Transformer and training modules remain planned; see [`docs/roadmap.md`](docs/roadmap.md) for verified status, priorities, and completion criteria. Passing CI verifies configured checks, not research claims or visual quality.
 
 ## License
 

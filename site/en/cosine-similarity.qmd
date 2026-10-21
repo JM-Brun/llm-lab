@@ -1,0 +1,115 @@
+---
+title: "Does cosine similarity measure semantic similarity?"
+subtitle: "Geometry, anisotropy, nearest-neighbour rankings, and metric choice"
+lang: en
+---
+
+## The question behind the default metric
+
+Cosine similarity is widely used to compare sentence, document, and query embeddings. It is simple, inexpensive, and invariant to vector magnitude. But it does not directly measure “semantic similarity”: it measures angular alignment between representations produced by a particular model.
+
+This distinction matters. A metric cannot be interpreted independently of **the task, encoder, data distribution, and training objective**.
+
+## 1. Definition and assumptions
+
+For two non-zero vectors $x,y\in\mathbb{R}^d$,
+
+\[
+\operatorname{cos}(x,y)=\frac{x^\top y}{\|x\|_2\,\|y\|_2}.
+\]
+
+The score lies in \([-1,1]\). A high value means the vectors point in similar directions. It does not, by itself, mean that two texts are equivalent, imply the same answer, or are interchangeable in a search system.
+
+Normalization removes information carried by vector magnitude. This is useful when magnitude is a nuisance; it may discard a useful signal if the model encodes one in the norm. Steck, Ekanadham, and Kallus analytically show that, for some families of regularized linear models, cosine similarities can be arbitrary, non-unique, or controlled by regularization. Their result cautions against automatic use of the metric; it does not prove that cosine fails for every modern encoder.
+
+## 2. Why cosine can mislead
+
+### Anisotropy and concentrated scores
+
+An embedding space is anisotropic when vectors are not distributed uniformly across directions. In such spaces, unrelated sentence pairs can still receive high cosine scores. Li et al. (EMNLP 2020) analyse anisotropy in pretrained BERT sentence embeddings and report that it harms semantic similarity in their experiments. Ethayarajh (2019) also finds non-isotropic contextual representations in BERT, ELMo, and GPT-2.
+
+**Practical consequence:** inspecting a few scores is not enough. Examine score distributions for positive, negative, and random pairs, and measure whether the metric separates the classes relevant to the task.
+
+### The *hubness* phenomenon
+
+In high-dimensional spaces, some points can become nearest neighbours of a large number of other points. These “hubs” may appear repeatedly in results without being good matches for every query. Local rankings can therefore be biased even when the distance formula is implemented correctly.
+
+### Closeness is not relevance
+
+Two texts can be lexically or topically close while expressing opposite facts (“the treatment works” / “the treatment does not work”). Conversely, very different formulations can answer the same question. Representation similarity is therefore not automatically equivalent to logical equivalence, document relevance, or usefulness in RAG.
+
+### The metric depends on the model and its training objective
+
+Sentence Transformers models do not all target the same scoring function: some are trained or recommended for dot product, others for cosine. Sentence Transformers documentation explains that dot product between normalized vectors is equivalent to cosine, while dot product on unnormalized vectors retains magnitude information. Respect the assumptions of the chosen model instead of replacing its default metric without evaluation.
+
+## 3. When cosine is a reasonable choice
+
+Cosine is a reasonable baseline when:
+
+- the encoder is designed and evaluated for semantic similarity;
+- normalization matches the model's training and recommended use;
+- the goal is to compare directions rather than representation magnitudes;
+- the system is validated on queries and documents representative of real use;
+- nearest-neighbour rankings, not just absolute scores, are evaluated.
+
+It is less reliable as a stand-alone signal when the encoder was not adapted to the task, scores are concentrated in a narrow range, data are out of distribution, or the task requires fine-grained logical distinctions.
+
+## 4. Reproducible experiment to add to the repository
+
+The experiment should isolate the metric from the rest of the system.
+
+1. Choose a documented evaluation set (for example, STS Benchmark for sentence similarity, plus a retrieval dataset relevant to the intended use case).
+2. Compare several encoders: a sentence model trained for similarity, a retrieval embedding model, and, if possible, raw BERT embeddings as a control.
+3. Compare cosine, dot product, Euclidean distance, and rank-based retrieval. Document whether vectors are normalized.
+4. Report task-appropriate metrics: Spearman/Pearson for annotated similarity scores, Recall@k / MRR / nDCG for retrieval.
+5. Inspect false positives, hubs, and score distributions; report uncertainty intervals when the protocol supports them.
+
+Do not compare metrics across models trained with different objectives and attribute every difference to the formula alone. When comparing cosine and dot product, explicitly include the normalized-vector case, where they induce the same ranking.
+
+```python
+import numpy as np
+
+def cosine_similarity(x: np.ndarray, y: np.ndarray) -> float:
+    """Cosine similarity for two non-zero vectors."""
+    x_norm = np.linalg.norm(x)
+    y_norm = np.linalg.norm(y)
+    if x_norm == 0 or y_norm == 0:
+        raise ValueError("Cosine similarity is undefined for zero vectors.")
+    return float(np.dot(x, y) / (x_norm * y_norm))
+```
+
+This snippet makes the definition and zero-vector edge case explicit; it is not, by itself, a benchmark.
+
+## 5. Critical reading list
+
+### Research papers
+
+- **Steck, Ekanadham & Kallus (2024).** [Is Cosine-Similarity of Embeddings Really About Similarity? — arXiv:2403.05440](https://arxiv.org/abs/2403.05440), also published in the *WWW 2024 Companion* proceedings ([DOI](https://doi.org/10.1145/3589335.3651526)). Theoretical analysis of how regularization affects embedding similarities.
+- **Li et al. (2020).** [On the Sentence Embeddings from Pre-trained Language Models — EMNLP 2020](https://aclanthology.org/2020.emnlp-main.733/). Studies anisotropy in BERT sentence embeddings and proposes BERT-flow.
+- **Ethayarajh (2019).** [How Contextual are Contextualized Word Representations? — arXiv:1909.00512](https://arxiv.org/abs/1909.00512). Compares the geometry of BERT, ELMo, and GPT-2 representations.
+- **Nastase & Merlo (2025).** [Testing the assumptions about the geometry of sentence embedding spaces: the cosine measure need not apply — arXiv:2509.01606](https://arxiv.org/abs/2509.01606). Investigates whether sentence embedding geometry predicts performance across linguistic tasks; read its empirical findings without treating them as a universal theorem.
+
+### Additional research and visual explanations
+
+- **Zhelezniak et al. (2019).** [Correlation Coefficients and Semantic Textual Similarity — arXiv:1905.07790](https://arxiv.org/abs/1905.07790). Shows that cosine and Pearson correlation are closely related for some representations, and evaluates cases where rank correlations are more suitable. Useful evidence that the metric must be validated for the task and vector type.
+- **Nielsen & Hansen (2024).** [Hubness Reduction Improves Sentence-BERT Semantic Spaces — PMLR](https://proceedings.mlr.press/v233/nielsen24a.html) ([arXiv](https://arxiv.org/abs/2311.18364)). Studies hubness and mitigation methods in Sentence-BERT spaces.
+- **Interactive illustration.** [A Fifth of Your Corpus Is Unreachable. It Isn’t the Dimensions](https://sugeerth.github.io/blog/hubness/). A browser-based, reproducible simulation illustrates how nearest-neighbour hubness can emerge from geometry alone. Its synthetic Gaussian corpus is a teaching model, not an estimate of real retrieval-system performance.
+
+### Technical documentation and explanations
+
+- **Sentence Transformers.** [Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html) and [available similarity functions](https://sbert.net/docs/package_reference/util/similarity.html). Practical reference for library metrics and the distinction between cosine, dot product, and distances.
+- **Sentence Transformers.** [Pretrained models](https://sbert.net/docs/sentence_transformer/pretrained_models.html). Examples of retrieval models designed for dot product: metric choice can be part of a model's usage contract.
+
+Library documentation describes implementation behaviour; it does not replace scientific evaluation. The cited papers study different models, objectives, and protocols, so their results should not be collapsed into one conclusion without considering those differences.
+
+## Checks that distinguish competing interpretations
+
+- **Misconception:** “A high cosine proves that two texts mean the same thing.” Counterexample: “the treatment works” and “the treatment does not work” may remain close in an embedding space dominated by shared vocabulary.
+- **Misconception:** “Dot product is always a different alternative.” For normalized vectors, dot product and cosine give the same score; without normalization, vector norms can change the ranking.
+- **Qualification:** anisotropy and *hubness* are possible diagnostics, not automatic explanations for every retrieval error. Measure them on the representations and task in question.
+
+When auditing a conclusion, ask: what assumptions about the encoder and normalization are required? What counterexample would falsify the semantic interpretation? Which target-task metric would distinguish the options?
+
+## Takeaway
+
+Cosine is a **geometric metric**, not a universal definition of semantics. Treat it as a hypothesis to test against a baseline and concrete errors on the target task; no isolated geometric property guarantees system relevance.

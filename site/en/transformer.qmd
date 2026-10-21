@@ -110,7 +110,7 @@ These are complementary learning resources, not implementation specifications. I
 ## 6. Self-check
 
 ::: {.callout-question title="Check your understanding"}
-1. Why are scores divided by (sqrt{d_k})?
+1. Why are scores divided by $\\sqrt{d_k}$?
 2. At which point in the computation is the causal mask applied?
 3. Why is the mask needed even when training examples are ordered correctly?
 4. Which test would demonstrate that a future token cannot affect an earlier position's output?

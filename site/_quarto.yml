@@ -6,6 +6,10 @@ project:
     - en/index.qmd
     - fr/transformer.qmd
     - en/transformer.qmd
+    - fr/cosine-similarity.qmd
+    - en/cosine-similarity.qmd
+    - fr/linearite-embeddings.qmd
+    - en/embedding-linearity.qmd
     - references.qmd
 
 website:
@@ -37,10 +41,14 @@ website:
         contents:
           - index.qmd
           - fr/transformer.qmd
+          - fr/cosine-similarity.qmd
+          - fr/linearite-embeddings.qmd
       - section: "English"
         contents:
           - en/index.qmd
           - en/transformer.qmd
+          - en/cosine-similarity.qmd
+          - en/embedding-linearity.qmd
       - references.qmd
   page-footer:
     left: "LLM Lab · Mathématiques, code et expériences reproductibles"

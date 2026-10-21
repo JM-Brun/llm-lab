@@ -110,7 +110,7 @@ Ces ressources sont complémentaires, pas des spécifications d'implémentation.
 ## 6. Questions de contrôle
 
 ::: {.callout-question title="Vérifier sa compréhension"}
-1. Pourquoi diviser les scores par (sqrt{d_k}) ?
+1. Pourquoi diviser les scores par $\\sqrt{d_k}$ ?
 2. À quel endroit du calcul applique-t-on le masque causal ?
 3. Pourquoi le masque est-il nécessaire même si les exemples d'entraînement contiennent déjà les tokens dans le bon ordre ?
 4. Quel test démontre qu'un token futur ne peut pas influencer la sortie à une position précédente ?
