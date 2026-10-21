@@ -54,8 +54,31 @@ Avant d'interpréter une courbe, documenter : définition de l'objectif, décala
 ## Questions de contrôle
 
 1. Pourquoi le dénominateur doit-il compter les cibles valides plutôt que tous les tokens si certains sont ignorés ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Sinon les positions ignorées, par exemple le padding, modifieraient artificiellement la moyenne. Le dénominateur doit correspondre aux positions réellement incluses dans l'objectif.
+
+</details>
+
 2. Pourquoi la baisse de la loss d'entraînement ne prouve-t-elle pas une meilleure généralisation ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+La loss d'entraînement mesure l'ajustement aux données optimisées. Elle peut baisser pendant que le modèle surapprend, exploite une fuite de données ou reste mal évalué ; il faut des données de validation indépendantes et, pour le bilan final, un test séparé.
+
+</details>
+
 3. Dans quelles conditions la perplexité est-elle comparable ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Il faut notamment une même convention de logarithme et de réduction, un tokenizer comparable, un traitement identique des cibles ignorées, et des corpus/contextes d'évaluation compatibles. Sinon les valeurs ne mesurent pas exactement la même chose.
+
+</details>
 
 **Suite :** [Gradients](gradients.qmd) · [Vraisemblance](vraisemblance.qmd)
 
