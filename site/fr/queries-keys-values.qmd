@@ -14,15 +14,15 @@ Imagine un ensemble de fiches. La **requête** exprime ce qu'une position cherch
 
 ## Définition et dimensions
 
-Pour (X\in\mathbb{R}^{T\times d_{model}}), les projections d'une tête sont :
+Pour $X\in\mathbb{R}^{T\times d_{model}}$, les projections d'une tête sont :
 
-[
+$$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
-]
+$$
 
-Avec (W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}) et (W_V\in\mathbb{R}^{d_{model}\times d_v}), on obtient (Q,K\in\mathbb{R}^{T\times d_k}) et (V\in\mathbb{R}^{T\times d_v}). Les biais éventuels sont omis ici pour alléger la notation.
+Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model}\times d_v}$, on obtient $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$. Les biais éventuels sont omis ici pour alléger la notation.
 
-Les scores (QK^\top) comparent chaque requête à chaque clé. Après normalisation et application du masque éventuel, les poids déterminent la combinaison des lignes de (V). Les valeurs ne servent donc pas directement à calculer les scores dans l'attention à produit scalaire standard.
+Les scores $QK^\top$ comparent chaque requête à chaque clé. Après normalisation et application du masque éventuel, les poids déterminent la combinaison des lignes de $V$. Les valeurs ne servent donc pas directement à calculer les scores dans l'attention à produit scalaire standard.
 
 ## Provenance et intérêt
 
@@ -47,7 +47,7 @@ Les mécanismes d'attention sont apparus dans les modèles encodeur-décodeur de
 
 ## Code et tests
 
-Aucune implémentation Q/K/V réutilisable n'est encore présente dans `src/llm_lab/`. Cette page définit donc les contrats mathématiques à vérifier avant d'écrire le module : formes de tenseurs, projections, propagation des gradients et comportement avec plusieurs têtes.
+Aucune implémentation Q/K/V réutilisable n'est encore présente dans **src/llm_lab/**. Cette page définit donc les contrats mathématiques à vérifier avant d'écrire le module : formes de tenseurs, projections, propagation des gradients et comportement avec plusieurs têtes.
 
 - [Code source existant](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab)
 - [Tests existants](https://github.com/JM-Brun/llm-lab/tree/main/tests)
