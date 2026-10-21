@@ -5,12 +5,12 @@ lang: fr
 ---
 
 ::: {.chapter-lead}
-Un **logit** est un score réel non normalisé associé à une classe ou à un token du vocabulaire. Dans un LLM, la dernière projection produit généralement un vecteur (z\in\mathbb{R}^{V}) pour chaque position à prédire.
+Un **logit** est un score réel non normalisé associé à une classe ou à un token du vocabulaire. Dans un LLM, la dernière projection produit généralement un vecteur \(z\in\mathbb{R}^{V}\) pour chaque position à prédire.
 :::
 
 ## Définition et dimensions
 
-Pour une position, (z=(z_1,\ldots,z_V)), où (V) est la taille du vocabulaire. Aucun logit n'est contraint à l'intervalle ([0,1]), et leur somme n'a pas à valoir un.
+Pour une position, (z=(z_1,\ldots,z_V)), où \(V\) est la taille du vocabulaire. Aucun logit n'est contraint à l'intervalle \([0,1]\), et leur somme n'a pas à valoir un.
 
 Le softmax transforme ces scores en une distribution :
 
@@ -28,15 +28,15 @@ Un écart de logit de \(\log 2\) implique donc un rapport de probabilités égal
 
 ## Exemple à deux classes
 
-Pour (z=(0,\log 3)), on obtient (p=(1/4,3/4)). Les logits ne sont pas les probabilités : c'est le softmax qui les normalise.
+Pour \(z=(0,\log 3)\), on obtient \(p=(1/4,3/4)\). Les logits ne sont pas les probabilités : c'est le softmax qui les normalise.
 
 ## Propriétés utiles
 
-- **Invariance par translation :** (operatorname{softmax}(z+c\mathbf{1})=\operatorname{softmax}(z)). Seules les différences comptent.
+- **Invariance par translation :** (operatorname{softmax}(z+c\mathbf{1})=\operatorname{softmax}\(z\)). Seules les différences comptent.
 - **Ordre conservé :** si (z_i>z_j), alors (p_i>p_j).
 - **Échelle et température :** multiplier les logits change généralement la concentration de la distribution ; ce n'est pas une simple translation.
 
-Pour éviter le débordement numérique, le softmax est calculé en pratique après soustraction du maximum : (e^{z_i-m}/\sum_j e^{z_j-m}), avec (m=\max_j z_j).
+Pour éviter le débordement numérique, le softmax est calculé en pratique après soustraction du maximum : \(e^{z_i-m}/\sum_j e^{z_j-m}\), avec (m=\max_j z_j).
 
 ::: {.callout-warning title="Idées reçues"}
 - **« Un logit positif est une probabilité élevée. »** Non : le signe dépend du niveau de référence des scores. Un logit de 10 peut encore être moins probable qu'un autre logit de 12.
@@ -46,7 +46,7 @@ Pour éviter le débordement numérique, le softmax est calculé en pratique apr
 
 ## Dans un LLM
 
-Pour chaque position (t), la tête de sortie fournit (z_t\in\mathbb{R}^{V}). Le modèle choisit ou échantillonne ensuite un token à partir de la distribution associée. Pendant l'entraînement, les logits sont comparés à l'identifiant du token cible par une perte telle que la [cross-entropie](cross-entropy.qmd).
+Pour chaque position \(t\), la tête de sortie fournit (z_t\in\mathbb{R}^{V}). Le modèle choisit ou échantillonne ensuite un token à partir de la distribution associée. Pendant l'entraînement, les logits sont comparés à l'identifiant du token cible par une perte telle que la [cross-entropie](cross-entropy.qmd).
 
 ## Questions de contrôle
 
