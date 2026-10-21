@@ -1,72 +1,85 @@
 ---
-title: "Attention causale dans un Transformer"
-subtitle: "Comment les positions échangent de l'information sans regarder le futur"
+title: "GPT et Transformer : architecture et flux des données"
+subtitle: "Des tokens aux probabilités du prochain token"
 lang: fr
 ---
 
 ::: {.chapter-lead}
-Un **Transformer** est un réseau neuronal qui traite des tokens à l'aide de vecteurs qui les représentent. Son mécanisme d'attention permet à chaque position de combiner de l'information provenant d'autres positions. Dans un modèle **autorégressif**, un masque causal interdit l'accès aux tokens futurs : le modèle apprend ainsi à prédire le prochain token à partir du contexte précédent. Les termes sont définis dans le [glossaire](glossary.qmd), et l'[historique des Transformers](transformer-history.qmd) présente les principaux jalons.
+Un **GPT** est un modèle de langage fondé sur un Transformer autorégressif : à partir d'un contexte de tokens, il estime une distribution sur le token suivant. Pour comprendre le système, il faut distinguer le flux des données, les paramètres appris et la boucle de génération. Cette page donne la vue d'ensemble ; les pages liées détaillent chaque opération.
 :::
 
-## Le rôle de l'attention
+## Le parcours complet, en un schéma
 
-À chaque position, le modèle utilise le contexte déjà disponible pour construire une représentation mise à jour. L'attention attribue des poids aux positions accessibles ; le masque causal empêche d'utiliser celles qui viennent plus tard dans la séquence.
+![Flux simplifié d'un GPT autorégressif, des tokens à la sélection du prochain token.](../images/gpt-data-flow.svg){fig-alt="Pipeline conceptuel : texte, tokenisation, embeddings et position, blocs Transformer répétés, logits, softmax, choix du prochain token puis ajout au contexte." width=100%}
 
-![Masque causal : chaque position peut accéder aux positions précédentes et à elle-même, mais pas aux positions futures.](../images/causal-attention-mask.svg){fig-alt="Matrice du masque causal à quatre positions. Les cases vertes indiquent les positions accessibles ; les cases corail indiquent les positions futures masquées." width=100%}
+Le schéma montre le chemin conceptuel d'une génération. Il omet volontairement certains détails d'implémentation, notamment les connexions résiduelles, la normalisation, le cache des clés et valeurs (*KV cache*) et les variantes d'échantillonnage.
 
-## Les concepts, dans l'ordre du calcul
+## 1. Du texte aux représentations
 
-Pour lire les dimensions des tenseurs dans les formules, voir aussi [Tenseurs](tensors.qmd).
+Le tokenizer transforme le texte en identifiants de tokens. Une matrice d'embedding associe à chaque identifiant un vecteur appris. Une information de position est également fournie, par exemple par un encodage ajouté aux vecteurs ou par une méthode intégrée au calcul d'attention comme [RoPE](positional-encoding.qmd).
 
-1. **[Requêtes, clés et valeurs](queries-keys-values.qmd)** — chaque représentation est transformée en trois vecteurs. Les requêtes et les clés servent à calculer les poids d'attention ; ces poids servent à combiner les valeurs.
-2. **[Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd)** — les produits $QK^\top$ donnent les scores ; le *softmax* les transforme en poids.
-3. **[Masque causal](causal-masking.qmd)** — les scores des positions futures sont exclus avant le *softmax*.
-4. **[Fondations mathématiques](mathematical-foundations.qmd)** — les logits de sortie sont reliés aux probabilités, à la vraisemblance et à la fonction de perte (*loss*) d'entraînement.
-5. **[Similarité cosinus](cosine-similarity.qmd)** — un point de comparaison utile, même si les scores d'attention ne sont pas une mesure universelle de similarité sémantique.
+Il faut distinguer l'embedding initial d'un token de sa représentation **contextualisée** : les couches du Transformer mettent progressivement à jour les vecteurs en tenant compte du contexte. Voir [l'espace des embeddings](embedding-space.qmd) et les [tenseurs](tensors.qmd).
 
-## Voir comment Q, K et V travaillent ensemble
+## 2. Les blocs Transformer
 
-Les requêtes et les clés déterminent les poids ; ces poids servent à calculer une somme pondérée des valeurs. Le [schéma des requêtes, clés et valeurs](queries-keys-values.qmd) détaille ces deux étapes.
+Un bloc combine principalement deux opérations :
 
-![Schéma des projections Q, K et V : Q et K calculent les poids d'attention, qui servent à combiner les valeurs V.](../images/queries-keys-values.svg){fig-alt="Les représentations d'entrée sont projetées en requêtes, clés et valeurs. Les requêtes sont comparées aux clés ; les poids obtenus pondèrent les valeurs pour produire une représentation contextualisée." width=100%}
+- **Auto-attention :** chaque position combine de l'information venant des positions autorisées. Dans GPT, le masque causal empêche de lire les tokens futurs.
+- **Réseau feed-forward (MLP) :** applique la même transformation apprise à chaque position, indépendamment des autres positions à cette étape.
 
-## Vue mathématique minimale
+Les blocs incluent aussi des connexions résiduelles et des normalisations. Leur ordre précis dépend de l'architecture : le schéma de cette page est une abstraction, pas une spécification d'un modèle particulier.
 
-Pour une séquence de longueur $T$, on note $X\in\mathbb{R}^{T\times d_{model}}$ la matrice des représentations d'entrée. Les projections apprises produisent $Q$, $K$ et $V$. Pour une tête d'attention :
+### Comprendre le calcul d'attention
 
-$$
-\operatorname{Attention}(Q,K,V)
-=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
-$$
+![Étapes du calcul d'attention : scores, mise à l'échelle, masque, softmax et agrégation des valeurs.](../images/attention-calculation-flow.svg){fig-alt="Q et K produisent des scores qui sont mis à l'échelle et masqués avant le softmax. Les poids obtenus combinent les valeurs V pour produire les vecteurs de sortie." width=100%}
 
-Ici, $M$ est un masque additif : les positions interdites reçoivent la valeur $-\infty$. La formule rassemble plusieurs opérations ; les pages conceptuelles détaillent les dimensions, les hypothèses et les cas limites.
+1. [**Requêtes, clés et valeurs (Q, K, V)**](queries-keys-values.qmd) — trois projections apprises donnent des rôles distincts aux représentations.
+2. [**Attention à produit scalaire mise à l'échelle**](scaled-dot-product-attention.qmd) — les scores issus de $QK^\top$ sont normalisés par $\sqrt{d_k}$ puis convertis en poids par le *softmax*.
+3. [**Masque causal**](causal-masking.qmd) — exclut les positions futures avant le *softmax*.
+4. [**Encodage positionnel et RoPE**](positional-encoding.qmd) — introduit l'information sur l'ordre des tokens.
 
-## Intuition, utilité et limites
+Les poids d'attention ne sont pas une explication complète d'une prédiction. Ils décrivent une étape d'agrégation ; les projections, les valeurs, les autres têtes, les couches suivantes et la sortie finale interviennent également.
 
-- **Intuition :** chaque position compare sa requête aux clés accessibles, puis combine les valeurs en fonction des poids obtenus.
-- **Utilité :** dans l'attention dense standard, chaque position peut exploiter de l'information venant de nombreuses positions précédentes, pas seulement de ses voisines immédiates.
-- **Limite :** les poids d'attention ne suffisent pas à expliquer pourquoi le modèle produit une prédiction donnée.
-- **Exemple à garder en tête :** un poids élevé indique qu'une valeur contribue fortement à cette étape de l'agrégation. Il ne prouve pas que le token correspondant est le facteur le plus important dans la prédiction finale : les projections, les connexions résiduelles, les autres têtes et les autres couches interviennent aussi.
+## 3. Des représentations aux probabilités
 
-## Code et état de vérification
+Après les blocs, une projection de sortie produit des **logits** — des scores non normalisés associés au vocabulaire. Le *softmax* les transforme en une distribution de probabilité. Ces probabilités ne signifient pas automatiquement que le modèle est bien calibré : voir [logits](logits.qmd), [probabilités](probabilites.qmd) et [calibration](../en/index.qmd).
 
-Le dépôt ne contient pas encore de module d'attention réutilisable dans **src/llm_lab/**. La priorité est de valider les concepts et les tests avant d'ajouter ce module.
+Pendant la génération, une règle de sélection choisit le token suivant : maximum, échantillonnage ou méthode plus élaborée. Ce token est ajouté au contexte, puis le modèle recommence. La génération est donc **autorégressive** ; elle ne consiste pas en une seule prédiction de toute la réponse.
 
-- [État et critères prévus pour l'attention causale](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
-- [Répertoire des implémentations Python](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab)
-- [Répertoire des tests](https://github.com/JM-Brun/llm-lab/tree/main/tests)
+## Entraînement et génération : deux modes à ne pas confondre
 
-Un test important devra vérifier la propriété de bout en bout : modifier un token futur ne doit pas changer les sorties aux positions précédentes. Tester seulement la matrice du masque ne suffit pas à démontrer cette propriété.
+Pendant l'entraînement d'un modèle autorégressif, les positions d'une séquence peuvent être calculées en parallèle grâce au décalage entre entrées et cibles et au masque causal. Lors de la génération ordinaire, le prochain token dépend du contexte effectivement disponible : le modèle avance étape par étape. Des optimisations comme le cache KV évitent de recalculer certaines clés et valeurs déjà produites.
 
-## Ressources complémentaires
+Cette distinction explique pourquoi « le modèle prédit le prochain token » reste vrai dans les deux cas, alors que l'organisation des calculs diffère.
 
-- [Espace des embeddings](embedding-space.qmd) : comment les tokens sont représentés par des vecteurs.
-- [Encodage positionnel et RoPE](positional-encoding.qmd) : comment le modèle utilise l'ordre des tokens.
+## Limites et idées reçues
 
-- [Glossaire des termes](glossary.qmd) et [historique des Transformers](transformer-history.qmd).
-- [Raschka — *Build a Large Language Model (From Scratch)*](https://www.sebastianraschka.com/llms-from-scratch/) et [son dépôt de code](https://github.com/rasbt/LLMs-from-scratch) : explications, code et exercices.
-- [Jay Alammar — The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) : visualisation de l'architecture et de l'attention masquée.
-- [3Blue1Brown — Transformers, the tech behind LLMs](https://www.3blue1brown.com/lessons/gpt/) : intuition visuelle complémentaire, à distinguer d'une spécification technique.
+- **« Un GPT est seulement une couche d'attention. »** Non : il s'agit d'une architecture comprenant des embeddings, des blocs répétés, des transformations feed-forward, des connexions résiduelles, des normalisations et une tête de sortie.
+- **« Les tokens sont des mots. »** Pas nécessairement : un token peut être un mot, un morceau de mot, un signe de ponctuation ou un autre fragment.
+- **« Une probabilité élevée garantit une réponse vraie. »** Non : la distribution est apprise pour prédire les tokens observés dans les données ; vérité factuelle et calibration nécessitent d'autres évaluations.
+- **« Les poids d'attention révèlent à eux seuls le raisonnement du modèle. »** Non : ils ne suffisent pas à établir l'influence causale d'une information sur la sortie.
+- **« Tous les Transformers sont des GPT. »** Non : l'architecture originale de 2017 utilisait un encodeur et un décodeur ; GPT est une famille autorégressive de type décodeur seul.
+
+## Pour poursuivre
+
+- [Tenseurs](tensors.qmd) — lire les formes et les axes des données.
+- [Espace des embeddings](embedding-space.qmd) — distinguer vecteurs initiaux et représentations contextualisées.
+- [Requêtes, clés et valeurs](queries-keys-values.qmd) — comprendre les projections de l'attention.
+- [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) — suivre les opérations mathématiques.
+- [Masque causal](causal-masking.qmd) — comprendre l'accès au contexte précédent.
+- [Fondations mathématiques](mathematical-foundations.qmd) — relier logits, probabilités, vraisemblance et loss.
+- [Historique des Transformers](transformer-history.qmd) — replacer les choix architecturaux dans leur contexte.
+
+## Lectures et visualisations complémentaires
+
+- [3Blue1Brown — *Transformers, the tech behind LLMs*](https://www.3blue1brown.com/lessons/gpt/) : vue animée des embeddings, des blocs, des logits et de la génération.
+- [3Blue1Brown — *Attention in transformers, step by step*](https://www.3blue1brown.com/lessons/attention/) : attention, masquage, têtes multiples et cross-attention.
+- [Jay Alammar — *The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/) : visualisation pas à pas de l'architecture originale encodeur-décodeur.
+- [Jay Alammar — *The Illustrated GPT-2*](https://jalammar.github.io/illustrated-gpt2/) : architecture GPT et attention masquée.
+- [The Illustrated Transformer From Scratch](https://idtjo.hosting.acm.org/wordpress/the-illustrated-transformer/) : perspective alternative centrée sur l'opération d'auto-attention, les blocs modernes et les variantes architecturales.
+- [Raschka — *Build a Large Language Model (From Scratch)*](https://www.sebastianraschka.com/llms-from-scratch/) et [dépôt de code](https://github.com/rasbt/LLMs-from-scratch) : explications accompagnées de code.
+
+Ces ressources sont des supports pédagogiques de nature différente. Les illustrations et analogies aident à construire une intuition ; les formules, les hypothèses et les références primaires restent nécessaires pour vérifier les affirmations techniques.
 
 ::: {.language-switch}
 **Langue :** [Français](transformer.qmd) · [English](../en/transformer.qmd)
