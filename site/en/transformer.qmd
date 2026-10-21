@@ -29,6 +29,10 @@ A block combines two main operations:
 
 Blocks also include residual connections and normalization. Their exact order depends on the architecture: the diagram is an abstraction, not a specification of any particular model.
 
+![Comparaison des rôles de l'auto-attention et du réseau feed-forward dans un bloc Transformer.](../images/attention-vs-mlp.svg){fig-alt="Self-attention allows information to flow between allowed positions; the same feed-forward network is applied independently at each position." width=100%}
+
+The important distinction is not that attention “understands” tokens while the MLP does not: both transformations are learned. Attention mixes information across positions; the MLP transforms each representation locally, with shared weights across positions.
+
 ### Follow the attention calculation
 
 ![Visual steps of attention: scores, causal mask, softmax and weighted sum of values.](../images/attention-calculation-flow.svg){fig-alt="Queries and keys produce scores. After scaling and optional masking, softmax creates weights that combine values into output vectors." width=100%}
