@@ -36,6 +36,9 @@ project:
     - en/cosine-similarity.qmd
     - fr/linearite-embeddings.qmd
     - en/embedding-linearity.qmd
+    - fr/tensors.qmd
+    - fr/embedding-space.qmd
+    - fr/positional-encoding.qmd
     - references.qmd
 
 website:
@@ -87,9 +90,14 @@ website:
               - fr/queries-keys-values.qmd
               - fr/scaled-dot-product-attention.qmd
               - fr/causal-masking.qmd
+              - fr/tensors.qmd
+              - fr/positional-encoding.qmd
           - fr/glossary.qmd
           - fr/cosine-similarity.qmd
           - fr/linearite-embeddings.qmd
+          - fr/embedding-space.qmd
+          - fr/tensors.qmd
+          - fr/positional-encoding.qmd
       - section: "English"
         contents:
           - en/index.qmd
