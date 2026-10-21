@@ -12,7 +12,7 @@ In information theory, Shannon entropy quantifies the average uncertainty of a d
 
 A rare event is more surprising than an almost certain one. For an outcome $x$ with probability $p(x)>0$, its information content, or surprisal, is:
 
-$
+$$
 I(x)=-\log_2 p(x).
 $$
 
