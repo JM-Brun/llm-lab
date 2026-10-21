@@ -105,6 +105,8 @@ If the target is class 2 and $p_2=0.8$, then $\ell=-\log(0.8)\approx0.223$. If $
 
 ## Check your understanding
 
+[Open the related exercise space](exercises.qmd#foundations) — detailed exercises will be authored separately.
+
 1. Why does the loss approach zero when the target receives probability 1?
 
 <details>
