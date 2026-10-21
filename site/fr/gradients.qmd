@@ -10,7 +10,7 @@ Le gradient \(\nabla_\theta\mathcal{L}\) regroupe les dérivées partielles de l
 
 ## Gradient par rapport aux logits
 
-Pour une cible one-hot (y) et une cross-entropie calculée depuis le softmax :
+Pour une cible one-hot \(y\) et une cross-entropie calculée depuis le softmax :
 
 \[
 \frac{\partial\ell}{\partial z_i}=p_i-\mathbb{1}[i=y].
@@ -60,7 +60,7 @@ Comparer ce résultat au gradient analytique avec des tolérances absolue et rel
 
 ## Questions de contrôle
 
-1. Pourquoi la dérivée de la cross-entropie par rapport aux logits se simplifie-t-elle en (p_i-\mathbb{1}[i=y]) ?
+1. Pourquoi la dérivée de la cross-entropie par rapport aux logits se simplifie-t-elle en \(p_i-\mathbb{1}[i=y]\) ?
 2. Que révèle un désaccord entre gradient analytique et différence finie ?
 3. Pourquoi une descente de gradient peut-elle ne pas réduire la loss après une mise à jour trop grande ?
 
