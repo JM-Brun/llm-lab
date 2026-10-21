@@ -17,21 +17,21 @@ Cette page décrit **comment les composants s'articulent** dans un Transformer a
 ## Les concepts, dans l'ordre du calcul
 
 1. **[Requêtes, clés et valeurs](queries-keys-values.qmd)** — trois projections apprises donnent aux représentations des rôles différents : rechercher, être comparé et fournir l'information agrégée.
-2. **[Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd)** — les produits (QK^\top) deviennent des scores ; après mise à l'échelle et softmax, ils pondèrent les valeurs.
+2. **[Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd)** — les produits $QK^\top$ deviennent des scores ; après mise à l'échelle et softmax, ils pondèrent les valeurs.
 3. **[Masque causal](causal-masking.qmd)** — les scores correspondant aux positions futures sont exclus avant le softmax.
 4. **[Fondations mathématiques](mathematical-foundations.qmd)** — le softmax réutilise les probabilités ; les logits de sortie sont ensuite liés à la vraisemblance et à la loss d'entraînement.
 5. **[Similarité cosinus](cosine-similarity.qmd)** — point de comparaison utile, mais les scores d'attention ne sont pas simplement une mesure universelle de similarité sémantique.
 
 ## Vue mathématique minimale
 
-Pour une séquence de longueur (T), on note (X\in\mathbb{R}^{T\times d_{model}}) les représentations d'entrée. Des projections apprises produisent (Q), (K) et (V). Pour une tête d'attention :
+Pour une séquence de longueur $T$, on note $X\in\mathbb{R}^{T\times d_{model}}$ les représentations d'entrée. Des projections apprises produisent $Q$, $K$ et $V$. Pour une tête d'attention :
 
-[
+$$
 \operatorname{Attention}(Q,K,V)
 =\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
-]
+$$
 
-Ici, (M) désigne un masque additif : les positions interdites reçoivent (-\infty). Cette formule résume plusieurs choix distincts ; consulter les pages conceptuelles pour les dimensions, les hypothèses et les cas limites.
+Ici, $M$ désigne un masque additif : les positions interdites reçoivent $-\infty$. Cette formule résume plusieurs choix distincts ; consulter les pages conceptuelles pour les dimensions, les hypothèses et les cas limites.
 
 ## Intuition, utilité et limites
 
@@ -42,7 +42,7 @@ Ici, (M) désigne un masque additif : les positions interdites reçoivent (-\inf
 
 ## Code et état de vérification
 
-Le dépôt ne contient pas encore de module réutilisable d'attention dans `src/llm_lab/`. Le petit extrait NumPy de la version précédente de ce chapitre ne constituait pas une implémentation complète : il masquait seulement une matrice de scores. La priorité est de valider les concepts et les tests avant d'ajouter le module.
+Le dépôt ne contient pas encore de module réutilisable d'attention dans **src/llm_lab/**. Le petit extrait NumPy de la version précédente de ce chapitre ne constituait pas une implémentation complète : il masquait seulement une matrice de scores. La priorité est de valider les concepts et les tests avant d'ajouter le module.
 
 - [État et critères prévus pour l'attention causale](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
 - [Répertoire des implémentations Python](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab)
