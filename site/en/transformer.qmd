@@ -17,21 +17,21 @@ At each position, an autoregressive model must build a representation from the a
 ## Concepts in computation order
 
 1. **[Queries, keys, and values](queries-keys-values.qmd)** — three learned projections give representations distinct roles: searching, being matched, and providing aggregated information.
-2. **[Scaled dot-product attention](scaled-dot-product-attention.qmd)** — products (QK^\top) become scores; after scaling and softmax, they weight the values.
+2. **[Scaled dot-product attention](scaled-dot-product-attention.qmd)** — products $QK^\top$ become scores; after scaling and softmax, they weight the values.
 3. **[Causal masking](causal-masking.qmd)** — scores for future positions are excluded before softmax.
 4. **[Mathematical foundations](mathematical-foundations.qmd)** — softmax reuses probability concepts; output logits then connect to likelihood and the training loss.
 5. **[Cosine similarity](cosine-similarity.qmd)** — a useful comparison, but attention scores are not simply a universal measure of semantic similarity.
 
 ## Minimal mathematical view
 
-For a sequence of length (T), let (X\in\mathbb{R}^{T\times d_{model}}) be the input representations. Learned projections produce (Q), (K), and (V). For one attention head:
+For a sequence of length $T$, let $X\in\mathbb{R}^{T\times d_{model}}$ be the input representations. Learned projections produce $Q$, $K$, and $V$. For one attention head:
 
-[
+$$
 \operatorname{Attention}(Q,K,V)
 =\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
-]
+$$
 
-Here, (M) is an additive mask: forbidden positions receive (-\infty). This formula combines several distinct choices; see the concept pages for dimensions, assumptions, and edge cases.
+Here, $M$ is an additive mask: forbidden positions receive $-\infty$. This formula combines several distinct choices; see the concept pages for dimensions, assumptions, and edge cases.
 
 ## Intuition, purpose, and limits
 
@@ -42,7 +42,7 @@ Here, (M) is an additive mask: forbidden positions receive (-\infty). This formu
 
 ## Code and verification status
 
-The repository does not yet contain a reusable attention module in `src/llm_lab/`. The small NumPy snippet in the previous version of this chapter was not a complete implementation: it only masked a score matrix. The priority is to validate the concepts and tests before adding the module.
+The repository does not yet contain a reusable attention module in **src/llm_lab/**. The small NumPy snippet in the previous version of this chapter was not a complete implementation: it only masked a score matrix. The priority is to validate the concepts and tests before adding the module.
 
 - [Planned status and acceptance criteria for causal attention](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
 - [Python implementation directory](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab)
