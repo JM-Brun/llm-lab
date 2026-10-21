@@ -20,6 +20,8 @@ A progressive path connecting intuition, mathematics, code, and experimental evi
 
 ## How to navigate
 
+[Open the separate exercise space](exercises.qmd) — concept checks, mathematics, code reading, and experimental design (structure in preparation).
+
 :::: {.learning-grid}
 ::: {.learning-card}
 <span class="step">01 / SYNTHESIS</span>
