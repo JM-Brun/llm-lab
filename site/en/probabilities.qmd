@@ -17,11 +17,11 @@ p_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}},\qquad
 p_i\geq0,\qquad \sum_{i=1}^{V}p_i=1.
 \]
 
-The vector \(p\) belongs to the simplex of discrete distributions. For target token \(y\), \\(p_y\) is the probability predicted at that position.
+The vector \(p\) belongs to the simplex of discrete distributions. For target token \(y\), \(p_y\) is the probability predicted at that position.
 
 ## Example and temperature
 
-For \(z=(0,\log 3)\), \(p=(0.25,0.75)\). With temperature (\tau>0), define \(p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i\). Higher temperature tends to flatten the distribution; lower temperature tends to concentrate it. This changes probabilities without changing the ordering of logits.
+For \(z=(0,\log 3)\), \(p=(0.25,0.75)\). With temperature \(\tau>0\), define \(p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i\). Higher temperature tends to flatten the distribution; lower temperature tends to concentrate it. This changes probabilities without changing the ordering of logits.
 
 Temperature may affect calibration, but its effect must be measured on held-out data. A more concentrated distribution is not automatically more accurate.
 
@@ -45,7 +45,7 @@ Each distribution is conditioned on the prefix. A token probability should there
 ## Self-check
 
 1. What is the difference between normalization and calibration?
-2. Why does (P(x_t\mid x_{<t})) depend on the prefix?
+2. Why does \(P_\theta(x_t\mid x_{<t})\) depend on the prefix?
 3. What does temperature change, and what can it not guarantee?
 
 **Next:** [Likelihood](likelihood.qmd) · [Cross-entropy](cross-entropy.qmd)
