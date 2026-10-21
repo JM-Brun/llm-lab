@@ -12,8 +12,8 @@ In information theory, Shannon entropy quantifies the average uncertainty of a d
 
 A rare event is more surprising than an almost certain one. For an outcome $x$ with probability $p(x)>0$, its information content, or surprisal, is:
 
-$$
-$I(x)$=-\log_2 p(x).
+$
+I(x)=-\log_2 p(x).
 $$
 
 It is measured in bits. An event with probability $1/2$ carries 1 bit; an event with probability $1/8$ carries 3 bits. This depends on the reference distribution: surprise is not an absolute property of an event.
