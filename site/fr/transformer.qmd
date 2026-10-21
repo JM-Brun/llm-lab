@@ -29,6 +29,10 @@ Un bloc combine principalement deux opérations :
 
 Les blocs incluent aussi des connexions résiduelles et des normalisations. Leur ordre précis dépend de l'architecture : le schéma de cette page est une abstraction, pas une spécification d'un modèle particulier.
 
+![Comparaison des rôles de l'auto-attention et du réseau feed-forward dans un bloc Transformer.](../images/attention-vs-mlp.svg){fig-alt="L'auto-attention permet des échanges entre positions autorisées ; le même réseau feed-forward est appliqué séparément à chaque position." width=100%}
+
+La distinction importante n'est pas que l'attention « comprend » les tokens et que le MLP ne le fait pas : les deux transformations sont apprises. L'attention mélange l'information entre positions ; le MLP transforme chaque représentation localement, avec des poids partagés entre les positions.
+
 ### Comprendre le calcul d'attention
 
 ![Étapes du calcul d'attention : scores, mise à l'échelle, masque, softmax et agrégation des valeurs.](../images/attention-calculation-flow.svg){fig-alt="Q et K produisent des scores qui sont mis à l'échelle et masqués avant le softmax. Les poids obtenus combinent les valeurs V pour produire les vecteurs de sortie." width=100%}
