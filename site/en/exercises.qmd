@@ -1,0 +1,55 @@
+---
+title: "Exercises"
+subtitle: "A separate space for checking understanding and transferring concepts"
+lang: en
+---
+
+::: {.chapter-lead}
+This space is separate from the lessons. It will collect exercises linked from the course's control questions. **The structure is being prepared: this version does not define new prompts or solutions.**
+:::
+
+## Planned organization
+
+Exercises will be grouped by module, use stable identifiers, and link to the canonical lesson page.
+
+- [Mathematical and computational foundations](#foundations)
+- [Text, tokenization, and data](#text)
+- [Attention and tensors](#attention)
+- [GPT architecture and generation](#gpt)
+- [Pretraining and evaluation](#training)
+- [Fine-tuning and LoRA/QLoRA](#finetuning)
+- [Critical evaluation and advanced topics](#advanced)
+
+## Mathematical and computational foundations {#foundations}
+
+**Status: planned — prompts not written.** Scope: logits, probabilities, entropy, cross-entropy, likelihood, loss, gradients, derivatives, and numerical stability.
+
+## Text, tokenization, and data {#text}
+
+**Status: planned — prompts not written.** Scope: token IDs, vocabulary, BPE, windows, padding, truncation, input-target shifts, and dataset leakage.
+
+## Attention and tensors {#attention}
+
+**Status: planned — prompts not written.** Scope: dimensions, Q/K/V, matrix products, softmax, masks, multi-head attention, RoPE, and information flow across positions.
+
+## GPT architecture and generation {#gpt}
+
+**Status: planned — prompts not written.** Scope: Transformer blocks, residuals, normalization, MLP, logits, autoregressive decoding, sampling strategies, and KV cache.
+
+## Pretraining and evaluation {#training}
+
+**Status: planned — prompts not written.** Scope: objectives, training loops, validation, perplexity, loss curves, metrics, comparison protocols, and reproducibility.
+
+## Fine-tuning and LoRA/QLoRA {#finetuning}
+
+**Status: planned — prompts not written.** Scope: classification, target masking, SFT, overfitting, trainable parameters, LoRA rank, and memory/performance trade-offs.
+
+## Critical evaluation and advanced topics {#advanced}
+
+**Status: planned — prompts not written.** Scope: counterexamples, error analysis, contamination, calibration, RAG, attention variants, and limits of experimental conclusions.
+
+## Linking convention
+
+A lesson question will link to a stable identifier in this section (for example `#foundations`) rather than duplicating the exercise prompt in the lesson. Future exercises should specify prerequisites, difficulty, expected deliverable, success criteria, and references. Hints and solutions will be separated from prompts.
+
+[Back to the course](../en/index.qmd) · [References](../references.qmd) · [Espace d'exercices en français](exercises.qmd)
