@@ -50,6 +50,8 @@ Pour chaque position $t$, la tête de sortie fournit $z_t\in\mathbb{R}^{V}$. Le 
 
 ## Questions de contrôle
 
+[Accéder à l'espace d'exercices associé](exercises.qmd#fondations) — les exercices détaillés seront ajoutés séparément.
+
 Pour suivre la forme des vecteurs et des matrices manipulés dans ces calculs, voir [Tenseurs](tensors.qmd).
 
 1. Pourquoi ajouter une constante à tous les logits ne change-t-il pas les probabilités ?
