@@ -102,6 +102,14 @@ Do not treat a performance difference between probes as proof that information i
 - **Hewitt.** [Designing and Interpreting Probes with Control Tasks](https://nlp.stanford.edu/~johnhew/probe-control/). Supplementary educational material on probe selectivity.
 - **Distill.** [A Mathematical Framework for Transformer Circuits](https://transformer-circuits.pub/2021/framework/index.html). A visual introduction to analysing linear and nonlinear transformations in Transformers.
 
+## Checks that distinguish competing interpretations
+
+- **Misconception:** “An accurate linear probe proves that the model uses the feature.” No: a probe establishes accessibility under its protocol; a functional claim requires additional evidence, such as controlled interventions.
+- **Misconception:** “A failed linear probe proves that the information is absent.” No: the code may be distributed, superposed, or accessible only after a nonlinear transformation. State what the protocol can actually detect.
+- **Counterexample to overgeneralization:** XOR is not linearly separable in its original input coordinates, but becomes linearly separable after adding the product feature. The conclusion is about the chosen representation, not an absolute impossibility.
+
+When auditing a claim, ask: which layer and activation are studied? What capacity does the probe have? Which control task is used? Does performance hold on unseen combinations, and is there an intervention testing causal use?
+
 ## Takeaway
 
 Linearity is a useful, testable hypothesis, not a universal law. A rigorous claim must specify the representation, concept, decoding criterion, and evaluation distribution. **Failure of linear decodability does not imply absence of information; linear decodability alone does not establish causality.**
