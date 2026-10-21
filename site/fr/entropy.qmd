@@ -64,7 +64,7 @@ L'information mutuelle mesure la réduction moyenne d'incertitude sur $Y$ apport
 
 $$
 I(X;Y)=H(Y)-H(Y\mid X)
-=\sum_{x,y}p(x,y)\log\frac{p(x,y)}{p(x)p(y)}.
+=\sum_{x,y}p(x,y)\log_2\frac{p(x,y)}{p(x)p(y)}.
 $$
 
 Elle est symétrique et non négative ; $I(X;Y)=0$ si et seulement si $X$ et $Y$ sont indépendantes (pour les distributions considérées). Attention : une dépendance statistique n'établit pas à elle seule une relation causale.
@@ -90,7 +90,7 @@ $$
 S=-k_B\sum_i p_i\ln p_i,
 $$
 
-où $k_B$ est la constante de Boltzmann. Avec des probabilités de microétats et un logarithme naturel, $S=k_B H_{\mathrm{nats}}$. Le facteur $k_B$ donne à l'entropie thermodynamique ses unités physiques.
+où $k_B$ est la constante de Boltzmann. En notant $H_{\mathrm{nats}}=-\sum_i p_i\ln p_i$ l'entropie informationnelle calculée avec le logarithme naturel, on obtient $S=k_B H_{\mathrm{nats}}$. Le facteur $k_B$ donne à l'entropie thermodynamique ses unités physiques.
 
 La formule commune reflète une structure probabiliste partagée, mais les interprétations ne sont pas interchangeables. En théorie de l'information, on étudie notamment les distributions de messages et le coût de codage. En physique statistique, les probabilités décrivent des microétats dans un ensemble physique et l'entropie intervient dans des lois thermodynamiques, avec des hypothèses sur l'ensemble et les contraintes. « Désordre » peut servir d'intuition grossière, mais ne remplace pas la définition ni les conditions physiques.
 
