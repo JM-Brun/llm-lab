@@ -20,6 +20,8 @@ The project includes a bilingual Quarto website organized into three layers: ove
 - Critical notes on embedding linearity: `site/fr/linearite-embeddings.qmd` and `site/en/embedding-linearity.qmd`
 - Visual references and image provenance: `site/references.qmd`
 - Prioritized roadmap and acceptance criteria: [`docs/roadmap.md`](docs/roadmap.md)
+- Full bilingual curriculum plan and coverage map against Raschka's book, including optional extensions: [`docs/full-curriculum-plan.md`](docs/full-curriculum-plan.md)
+- Separate exercise-space entry points (navigation scaffolding only; exercises not yet written): [French](site/fr/exercises.qmd) · [English](site/en/exercises.qmd)
 
 The site uses carefully attributed illustrations embedded from their original source when suitable. It does not mirror or redistribute external image files. An accessible URL is not a licence: check reuse terms before copying or modifying a figure. The site can be rendered locally with the [Quarto CLI](https://quarto.org/docs/get-started/).
 
@@ -52,6 +54,8 @@ These are repository-maintenance guidelines, not reader-facing lessons; they bel
 - **Use public, appropriately licensed data:** document provenance and avoid committing datasets, model weights, credentials, or generated artifacts.
 
 ## Learning path
+
+The public site has a separate exercise-space entry point in French and English. The current pages define planned collections only; they do not claim that exercises or answer keys have been authored. The [full curriculum plan](docs/full-curriculum-plan.md) maps the intended scope to Raschka's book and distinguishes existing coverage from gaps.
 
 The path is deliberately incremental. Modules can be revisited when tests or experiments expose gaps.
 
