@@ -12,9 +12,9 @@ Le gradient $\nabla_\theta\mathcal{L}$ regroupe les dérivées partielles de la 
 
 Pour une cible one-hot $y$ et une cross-entropie calculée depuis le softmax :
 
-$
+$$
 \frac{\partial\ell}{\partial z_i}=p_i-\mathbb{1}[i=y].
-$
+$$
 
 La formule est un résultat de la combinaison softmax + cross-entropie. Elle ne signifie pas que les paramètres du réseau sont directement les logits : les logits dépendent des paramètres via de nombreuses opérations différentiables.
 
@@ -22,11 +22,11 @@ La formule est un résultat de la combinaison softmax + cross-entropie. Elle ne 
 
 Si les logits dépendent des paramètres $z=z(\theta)$, alors :
 
-$
+$$
 \nabla_\theta\mathcal{L}
 =\left(\frac{\partial z}{\partial\theta}\right)^\top
 \nabla_z\mathcal{L}.
-$
+$$
 
 Dans un réseau profond, la rétropropagation applique efficacement cette règle de chaîne à travers le graphe de calcul. Les dimensions doivent être cohérentes : les dérivées sont des vecteurs ou tenseurs de même forme que les variables différentiées.
 
@@ -34,9 +34,9 @@ Dans un réseau profond, la rétropropagation applique efficacement cette règle
 
 Une mise à jour SGD élémentaire est :
 
-$
+$$
 \theta_{k+1}=\theta_k-\eta\nabla_\theta\mathcal{L}(\theta_k),
-$
+$$
 
 où $\eta>0$ est le taux d'apprentissage. Le signe moins suit la direction de plus forte décroissance locale pour une petite mise à jour dans un espace euclidien. Des optimiseurs adaptatifs, le momentum, le clipping et la régularisation modifient la dynamique effective.
 
@@ -44,11 +44,11 @@ où $\eta>0$ est le taux d'apprentissage. Le signe moins suit la direction de pl
 
 Pour une coordonnée $\theta_i$ :
 
-$
+$$
 g_i^{\mathrm{num}}=
 \frac{\mathcal{L}(\theta_i+\epsilon)-\mathcal{L}(\theta_i-\epsilon)}
 {2\epsilon}.
-$
+$$
 
 Comparer ce résultat au gradient analytique avec des tolérances absolue et relative. La vérification doit être faite en précision suffisante, sur une fonction déterministe et avec un $\epsilon$ adapté à l'échelle des paramètres. Trop petit, il amplifie les erreurs d'arrondi ; trop grand, il approxime mal la dérivée locale.
 
