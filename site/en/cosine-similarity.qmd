@@ -102,6 +102,14 @@ This snippet makes the definition and zero-vector edge case explicit; it is not,
 
 Library documentation describes implementation behaviour; it does not replace scientific evaluation. The cited papers study different models, objectives, and protocols, so their results should not be collapsed into one conclusion without considering those differences.
 
+## Checks that distinguish competing interpretations
+
+- **Misconception:** “A high cosine proves that two texts mean the same thing.” Counterexample: “the treatment works” and “the treatment does not work” may remain close in an embedding space dominated by shared vocabulary.
+- **Misconception:** “Dot product is always a different alternative.” For normalized vectors, dot product and cosine give the same score; without normalization, vector norms can change the ranking.
+- **Qualification:** anisotropy and *hubness* are possible diagnostics, not automatic explanations for every retrieval error. Measure them on the representations and task in question.
+
+When auditing a conclusion, ask: what assumptions about the encoder and normalization are required? What counterexample would falsify the semantic interpretation? Which target-task metric would distinguish the options?
+
 ## Takeaway
 
-Cosine is a **geometric metric**, not a universal definition of semantics. Treat metric choice as an empirical hypothesis: choose an appropriate model, establish a baseline, evaluate rankings on a target task, and inspect errors.
+Cosine is a **geometric metric**, not a universal definition of semantics. Treat it as a hypothesis to test against a baseline and concrete errors on the target task; no isolated geometric property guarantees system relevance.
