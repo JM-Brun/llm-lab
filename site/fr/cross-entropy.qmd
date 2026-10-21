@@ -5,7 +5,7 @@ lang: fr
 ---
 
 ::: {.chapter-lead}
-La cross-entropie compare une distribution cible $q$ à une distribution prédite $p$. Elle mesure le coût moyen associé à l'utilisation de $p$ pour coder des événements distribués selon $q$. Pour comprendre ce coût, il faut la relier à l'[entropie de Shannon](entropy.qmd) et à la divergence KL, sans les confondre.
+L'entropie croisée (*cross-entropie*) compare une distribution cible $q$ à une distribution prédite $p$. Elle mesure le coût moyen lorsque les événements suivent $q$ mais que l'on évalue leur code à partir de $p$. Elle est liée à l'[entropie de Shannon](entropy.qmd) et à la divergence KL, mais ces trois notions ne sont pas identiques.
 :::
 
 ## Définition
@@ -119,6 +119,11 @@ La cross-entropie $H(q,p)=-\sum_i q_i\log p_i$ moyenne le coût selon la distrib
 **Suite :** [Loss](loss.qmd) · [Gradients](gradients.qmd)
 
 
+## Pour poursuivre
+
+- [Entropie de Shannon](entropy.qmd) : incertitude moyenne sous la distribution cible.
+- [Vraisemblance](vraisemblance.qmd) : lien entre probabilité des tokens observés et objectif d'entraînement.
+
 ## Références complémentaires
 
 - Claude E. Shannon (1948), [A Mathematical Theory of Communication](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf).
@@ -126,6 +131,6 @@ La cross-entropie $H(q,p)=-\sum_i q_i\log p_i$ moyenne le coût selon la distrib
 - [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU).
 - [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html).
 
-:::: {.language-switch}
+::: {.language-switch}
 [Français](cross-entropy.qmd) · [English](../en/cross-entropy.qmd)
-::::
+:::
