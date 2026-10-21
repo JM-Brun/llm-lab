@@ -12,8 +12,8 @@ En théorie de l'information, l'entropie de Shannon quantifie l'incertitude moye
 
 Un événement rare apporte davantage de surprise que le résultat d'un événement presque certain. Pour une issue $x$ de probabilité $p(x)>0$, sa quantité d'information — ou surprisal — est :
 
-$$
-$I(x)$=-\log_2 p(x).
+$
+I(x)=-\log_2 p(x).
 $$
 
 Elle est exprimée en bits. Un événement de probabilité $1/2$ apporte 1 bit ; un événement de probabilité $1/8$ apporte 3 bits. Cette quantité dépend de la distribution de référence : « surprise » n'est pas une propriété absolue de l'événement.
