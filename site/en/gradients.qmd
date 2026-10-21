@@ -68,6 +68,8 @@ Compare this with the analytical gradient using absolute and relative tolerances
 
 ## Check your understanding
 
+[Open the related exercise space](exercises.qmd#foundations) — detailed exercises will be authored separately.
+
 1. Why does the derivative of cross-entropy with respect to logits simplify to $p_i-\mathbb{1}[i=y]$?
 
 <details>
