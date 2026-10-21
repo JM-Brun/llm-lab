@@ -5,10 +5,10 @@ lang: fr
 ---
 
 ::: {.chapter-lead}
-Le masque causal est une contrainte d'information : pour prédire le token à la position $t+1$, le calcul associé à la position $t$ ne doit dépendre que du préfixe disponible. Il ne s'agit pas simplement d'une convention de visualisation.
+Pour prédire le token suivant à la position $t+1$, le modèle ne doit utiliser que les tokens déjà disponibles. Le masque causal impose cette règle dans le calcul de l'attention : ce n'est pas seulement un repère graphique.
 :::
 
-## Intuition
+## Pourquoi ce masque est nécessaire
 
 Lorsqu'on entraîne un modèle à prédire le token suivant, toutes les positions d'une séquence peuvent être calculées en parallèle. Sans masque, cependant, la représentation d'une position pourrait utiliser des tokens qui ne seraient pas encore connus au moment de la génération. Le masque rend donc l'entraînement parallèle compatible avec l'objectif autorégressif.
 
@@ -32,7 +32,7 @@ $$
 
 Les positions futures reçoivent alors un poids nul en arithmétique idéale. En pratique, les bibliothèques peuvent représenter le masque sous forme booléenne ou employer une primitive d'attention qui intègre cette contrainte.
 
-![Masque causal à quatre positions.](images/causal-attention-mask.svg){fig-alt="Matrice triangulaire inférieure : chaque position accède à elle-même et aux positions précédentes" width=100%}
+![Masque causal à quatre positions.](../images/causal-attention-mask.svg){fig-alt="Matrice triangulaire inférieure : chaque position accède à elle-même et aux positions précédentes" width=100%}
 
 ## Provenance et utilité
 
@@ -51,7 +51,7 @@ Les Transformers décodeurs comme GPT utilisent cette contrainte pour apprendre 
 - **« Tester uniquement la matrice du masque prouve l'absence de fuite. »** Faux : un autre chemin de calcul pourrait laisser passer l'information future.
 - **« Causal signifie que l'attention ne regarde que le token précédent. »** Faux : elle peut regarder toutes les positions antérieures, sauf si une autre restriction (par exemple une fenêtre glissante) est imposée.
 
-## Test conceptuel décisif
+## Un test qui détecte les fuites
 
 Pour une implémentation complète, gardez les tokens jusqu'à $t$ identiques, modifiez un token situé après $t$, puis vérifiez que les sorties des positions jusqu'à $t$ restent identiques à la tolérance numérique près. Il faut aussi tester les formes, les lignes entièrement masquées, les gradients et la stabilité numérique.
 
@@ -70,6 +70,6 @@ Le dépôt ne contient pas encore d'implémentation d'attention réutilisable ni
 - [Tests disponibles](https://github.com/JM-Brun/llm-lab/tree/main/tests)
 - [Critères d'acceptation prévus](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
 
-:::: {.language-switch}
+::: {.language-switch}
 **Langue :** [Français](causal-masking.qmd) · [English](../en/causal-masking.qmd)
-::::
+:::

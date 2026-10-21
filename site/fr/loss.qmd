@@ -5,7 +5,7 @@ lang: fr
 ---
 
 ::: {.chapter-lead}
-Le mot *loss* désigne une fonction objectif scalaire que l'entraînement cherche à minimiser. Elle est souvent construite à partir de cross-entropies par token, mais son agrégation exacte fait partie de la définition de l'expérience.
+La *loss* (fonction de perte) est un nombre que l'entraînement cherche à minimiser. Elle est souvent calculée à partir de l'entropie croisée pour chaque token, puis agrégée. La manière de faire cette agrégation fait partie du protocole et doit être documentée.
 :::
 
 ## De la perte locale à la loss du batch
@@ -53,6 +53,8 @@ Avant d'interpréter une courbe, documenter : définition de l'objectif, décala
 
 ## Questions de contrôle
 
+Les formes des scores, des cibles et des lots sont détaillées dans la page sur les [tenseurs](tensors.qmd).
+
 1. Pourquoi le dénominateur doit-il compter les cibles valides plutôt que tous les tokens si certains sont ignorés ?
 
 <details>
@@ -82,6 +84,6 @@ Il faut notamment une même convention de logarithme et de réduction, un tokeni
 
 **Suite :** [Gradients](gradients.qmd) · [Vraisemblance](vraisemblance.qmd)
 
-:::: {.language-switch}
+::: {.language-switch}
 [Français](loss.qmd) · [English](../en/loss.qmd)
-::::
+:::

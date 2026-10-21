@@ -18,19 +18,19 @@ Le Transformer n'est pas apparu sans précurseurs. Son histoire combine les méc
 7. **2022 — Alignement par retours humains et interfaces conversationnelles.** InstructGPT étudie le réglage par instructions, notamment avec apprentissage par préférences humaines. ChatGPT rend une interface conversationnelle largement accessible ; il s'agit d'un jalon de diffusion, pas de l'invention de l'architecture Transformer. [InstructGPT](https://arxiv.org/abs/2203.02155) · [annonce de ChatGPT](https://openai.com/index/chatgpt/).
 
 
-## Ce que la chronologie ne doit pas laisser croire
+## Quelques précautions de lecture
 
 - **Le Transformer n'est pas synonyme de LLM autorégressif.** L'article de 2017 présente une architecture encodeur-décodeur pour la traduction ; BERT utilise un encodeur et un objectif de prédiction masquée.
 - **L'attention précède le Transformer.** Le papier de 2017 rassemble et réorganise des idées existantes en une architecture cohérente ; il ne crée pas à lui seul toute la famille des mécanismes d'attention.
 - **L'échelle n'explique pas tout.** Données, objectifs, tokenisation, architecture, procédure d'entraînement et évaluation influencent aussi les capacités observées.
 - **Une date de publication n'est pas une preuve de priorité absolue.** Cette page choisit quelques jalons pédagogiques et ne prétend pas recenser toutes les contributions parallèles.
 
-## Comment approfondir
+## Pour approfondir
 
 - Lire d'abord le papier original [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
 - Comparer les objectifs avec les pages [masque causal](causal-masking.qmd), [attention](scaled-dot-product-attention.qmd) et [fondations mathématiques](mathematical-foundations.qmd).
 - Consulter le [glossaire](glossary.qmd) pour les termes utilisés dans cette chronologie.
 
-:::: {.language-switch}
+::: {.language-switch}
 [Français](transformer-history.qmd) · [English](../en/transformer-history.qmd)
-::::
+:::

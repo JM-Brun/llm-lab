@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="660" viewBox="0 0 1200 660" role="img" aria-labelledby="title desc">
+<title id="title">Requêtes, clés et valeurs dans l'attention</title>
+<desc id="desc">Les représentations d'entrée sont transformées en requêtes, clés et valeurs. Les requêtes sont comparées aux clés pour calculer les poids d'attention, puis ces poids servent à combiner les valeurs.</desc>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eef8f8"/><stop offset="1" stop-color="#fff5ef"/></linearGradient><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#60758b"/></marker></defs>
+<rect width="1200" height="660" rx="26" fill="url(#bg)"/>
+<text x="52" y="52" font-family="Inter,Arial,sans-serif" font-size="16" font-weight="800" letter-spacing="2" fill="#087f8c">AUTO-ATTENTION</text>
+<text x="52" y="91" font-family="Inter,Arial,sans-serif" font-size="30" font-weight="750" fill="#10233f">Q et K calculent les poids ; V fournit l'information</text>
+<text x="52" y="121" font-family="Inter,Arial,sans-serif" font-size="16" fill="#51627a">Schéma simplifié pour une position ; les vecteurs et les poids numériques sont omis.</text>
+<rect x="52" y="180" width="200" height="112" rx="16" fill="#fff" stroke="#cbd9e3" stroke-width="2"/>
+<text x="152" y="213" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="750" fill="#10233f">Entrée X</text>
+<text x="152" y="243" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="16" fill="#51627a">représentations</text>
+<text x="152" y="267" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#51627a">une par position</text>
+<path d="M252 236 H296 V190 H330 M296 236 V336 H330 M296 236 V482 H330" fill="none" stroke="#60758b" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="336" y="150" width="224" height="86" rx="15" fill="#dff2f1" stroke="#087f8c" stroke-width="2"/>
+<text x="448" y="184" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="22" font-weight="800" fill="#075d65">Requête · Q</text>
+<text x="448" y="212" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#24545a">ce que je cherche</text>
+<rect x="336" y="293" width="224" height="86" rx="15" fill="#e7edff" stroke="#617bc5" stroke-width="2"/>
+<text x="448" y="327" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="22" font-weight="800" fill="#29478e">Clé · K</text>
+<text x="448" y="355" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#334c7d">ce qui est à comparer</text>
+<rect x="336" y="439" width="224" height="86" rx="15" fill="#fff0e8" stroke="#df8b67" stroke-width="2"/>
+<text x="448" y="473" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="22" font-weight="800" fill="#9b4e3c">Valeur · V</text>
+<text x="448" y="501" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#7c5143">l'information à récupérer</text>
+<path d="M560 193 H620 V263 H650 M560 336 H620 V263" fill="none" stroke="#60758b" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="656" y="207" width="212" height="112" rx="16" fill="#fff" stroke="#a9b9c8" stroke-width="2"/>
+<text x="762" y="239" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="19" font-weight="750" fill="#10233f">1. Comparer</text>
+<text x="762" y="270" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" fill="#51627a">QKᵀ → scores</text>
+<text x="762" y="295" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#51627a">puis softmax</text>
+<path d="M868 263 H907" fill="none" stroke="#60758b" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="913" y="207" width="235" height="112" rx="16" fill="#dff2f1" stroke="#087f8c" stroke-width="2"/>
+<text x="1030" y="239" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="750" fill="#075d65">Poids d'attention</text>
+<text x="1030" y="269" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#24545a">quelles positions</text><text x="1030" y="291" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#24545a">regarder davantage ?</text>
+<path d="M560 482 H620 V418 H762 V344" fill="none" stroke="#df8b67" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M1030 319 V388" fill="none" stroke="#60758b" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="656" y="394" width="492" height="128" rx="16" fill="#fff" stroke="#a9b9c8" stroke-width="2"/>
+<text x="902" y="427" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="19" font-weight="750" fill="#10233f">2. Combiner les valeurs</text>
+<text x="902" y="458" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="17" fill="#51627a">somme pondérée des vecteurs V</text>
+<text x="902" y="488" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#51627a">→ représentation enrichie par le contexte</text>
+<rect x="52" y="578" width="1096" height="48" rx="12" fill="#10233f"/>
+<text x="600" y="608" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="16" font-weight="650" fill="#fff">Les poids viennent de Q et K ; les informations agrégées viennent de V.</text>
+</svg>

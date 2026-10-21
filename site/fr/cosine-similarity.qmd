@@ -4,9 +4,9 @@ subtitle: "Géométrie, anisotropie, classement des voisins et choix de métriqu
 lang: fr
 ---
 
-## La question derrière la métrique par défaut
+## Que mesure vraiment le cosinus ?
 
-La similarité cosinus est souvent utilisée pour comparer des embeddings de phrases, de documents ou de requêtes. Elle est simple, peu coûteuse et invariante à la norme des vecteurs. Mais elle ne mesure pas directement la « similarité sémantique » : elle mesure l'alignement angulaire de deux représentations produites par un modèle donné.
+La similarité cosinus compare souvent des embeddings de phrases, de documents ou de requêtes. Elle est simple à calculer et ne dépend pas de la norme des vecteurs. Elle mesure toutefois l'angle entre deux représentations produites par un modèle donné, pas directement leur « similarité sémantique ».
 
 Cette distinction compte. La métrique ne peut être interprétée indépendamment de **la tâche, de l'encodeur, de la distribution des données et de l'objectif d'entraînement**.
 
@@ -111,4 +111,11 @@ Pour auditer une conclusion, demander : quelle hypothèse sur l'encodeur et la n
 
 ## À retenir
 
+Pour comprendre ce que ces vecteurs représentent et comment ils sont construits, voir aussi l'[espace des embeddings](embedding-space.qmd).
+
 Le cosinus est une **métrique géométrique**, pas une définition universelle de la sémantique. Il constitue une hypothèse à confronter à une baseline et à des erreurs concrètes sur la tâche cible ; aucune propriété géométrique isolée ne garantit la pertinence du système.
+
+
+::: {.language-switch}
+**Langue :** [Français](cosine-similarity.qmd) · [English](../en/cosine-similarity.qmd)
+:::

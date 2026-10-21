@@ -1,0 +1,82 @@
+---
+title: "Tenseurs : représenter les données d'un modèle"
+subtitle: "Scalaires, vecteurs, matrices et dimensions dans un LLM"
+lang: fr
+---
+
+::: {.chapter-lead}
+Un **tenseur** est un tableau de nombres organisé selon plusieurs axes. Il peut représenter un score, les activations d'une couche, un lot de séquences ou les paramètres d'un réseau. Pour lire le code d'un modèle, il faut comprendre ce que chaque dimension représente — pas seulement compter le nombre d'axes.
+:::
+
+## L'idée en une image
+
+![Tenseur d'activations organisé selon trois axes : lot, positions et caractéristiques.](../images/tensors-fr.svg){fig-alt="Tenseur de forme B × T × D : B indexe les exemples, T les positions de chaque séquence et D les caractéristiques de chaque position." width=100%}
+
+Pour un lot de textes, le modèle traite plusieurs séquences à la fois. Chaque séquence contient plusieurs positions et chaque position est décrite par un vecteur. On peut organiser ces données dans un tenseur de forme \(B\times T\times D\) :
+
+- \(B\) : nombre d'exemples du lot (*batch size*) ;
+- \(T\) : nombre de positions par séquence, souvent après remplissage (*padding*) ;
+- \(D\) : nombre de caractéristiques par position, par exemple la dimension d'un embedding.
+
+La forme décrit l'organisation des données, pas leur signification complète. Il faut savoir ce que chaque axe indexe.
+
+## Du nombre au tenseur
+
+| Objet | Nombre d'axes | Exemple de forme | Exemple |
+|---|---:|---|---|
+| Scalaire | 0 | \(()\) | une perte moyenne |
+| Vecteur | 1 | \((D,)\) | représentation d'un token |
+| Matrice | 2 | \((T,D)\) | représentations d'une séquence |
+| Tenseur de rang 3 | 3 | \((B,T,D)\) | représentations d'un lot |
+
+Dans les bibliothèques de machine learning, le mot *tenseur* désigne couramment un tableau multidimensionnel de nombres. En mathématiques et en physique, un tenseur est un objet plus structuré, dont les composantes suivent des règles de transformation précises. Ces deux usages sont liés, mais ils ne sont pas strictement équivalents. Ici, le **rang** désigne le nombre d'axes du tableau ; le rang d'une matrice au sens de l'algèbre linéaire est une autre notion.
+
+## Lire les dimensions d'une opération
+
+Supposons que \(X\) ait la forme \((B,T,D)\), et qu'une matrice de projection \(W\) ait la forme \((D,H)\). La projection transforme les caractéristiques de chaque position :
+
+\[
+Y=XW,\qquad \operatorname{shape}(Y)=(B,T,H).
+\]
+
+Les axes du lot et des positions sont conservés ; le dernier axe passe de \(D\) à \(H\). Vérifier les formes permet de détecter des erreurs avant l'exécution, mais ne garantit pas que les axes ont la bonne signification.
+
+Dans l'attention, les requêtes, clés et valeurs sont elles aussi des tenseurs. Selon la convention de la bibliothèque, les axes du lot, des têtes, des positions et des caractéristiques peuvent être rangés dans un ordre différent. Il faut donc lire la forme attendue par l'opération plutôt que supposer une convention universelle.
+
+## Opérations courantes et pièges
+
+- **Indexation :** sélectionner un exemple ou une position peut supprimer un axe.
+- **Permutation :** changer l'ordre des axes change la façon dont les opérations suivantes les interprètent.
+- **Broadcasting :** une dimension de taille 1 peut être étendue implicitement. Pratique, mais susceptible de masquer une erreur d'alignement.
+- **Reshape :** modifier la forme ne donne pas automatiquement une nouvelle signification aux valeurs.
+- **Masques :** un masque peut être diffusé sur les scores d'attention. Le fait que le calcul s'exécute ne garantit pas que les bonnes positions sont autorisées.
+
+## Exemple
+
+Pour \(B=2\), \(T=4\) et \(D=8\), le tenseur d'entrée a la forme \((2,4,8)\) : deux séquences, quatre positions chacune et huit nombres par position. Une projection vers \(H=16\) caractéristiques donne \((2,4,16)\).
+
+Ces dimensions ne disent pas si les représentations sont pertinentes, si le masque est correct ou si les gradients sont valides. Elles ne vérifient que la cohérence structurelle.
+
+## Idées reçues
+
+- **« Un tenseur est forcément un cube. »** Non : il peut avoir zéro, un, deux ou plusieurs axes.
+- **« Même forme signifie même signification. »** Deux tenseurs de forme \((B,T,D)\) peuvent représenter des objets différents.
+- **« Des dimensions compatibles prouvent que le calcul est juste. »** Non : des axes peuvent être mélangés tout en donnant une sortie de forme plausible.
+
+## Pour poursuivre
+
+- [Requêtes, clés et valeurs](queries-keys-values.qmd) : projections et produits entre tenseurs.
+- [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) : calcul des scores et normalisation.
+- [Espace des embeddings](embedding-space.qmd) : rôle des vecteurs associés aux tokens.
+- [Fondations mathématiques](mathematical-foundations.qmd) : lien entre calculs, perte et gradients.
+
+## Références
+
+- [udiprod — *Visualization of tensors, part 1*](https://www.youtube.com/watch?v=YxXyN2ifK8A) : visualisation du sens mathématique et physique du mot *tenseur*. À regarder en gardant à l'esprit que les bibliothèques de deep learning emploient souvent le terme dans un sens informatique plus simple.
+- [PyTorch — Tensors](https://docs.pytorch.org/tutorials/beginner/introyt/tensors_deeper_tutorial.html).
+- [PyTorch — Documentation des tenseurs](https://docs.pytorch.org/docs/stable/tensors.html).
+- [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch).
+
+::: {.language-switch}
+**Langue :** [Français](tensors.qmd) · [English home — no equivalent page yet](../en/index.qmd)
+:::

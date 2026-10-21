@@ -5,7 +5,7 @@ lang: fr
 ---
 
 ::: {.chapter-lead}
-L'attention à produit scalaire transforme des compatibilités apprises entre requêtes et clés en poids, puis utilise ces poids pour agréger les valeurs. Le softmax normalise les scores sur les positions accessibles ; il ne prouve ni pertinence sémantique ni causalité.
+L'attention à produit scalaire compare les requêtes aux clés pour calculer des scores, puis transforme ces scores en poids qui servent à combiner les valeurs. Le softmax normalise les poids sur les positions accessibles ; il ne prouve ni pertinence sémantique ni causalité.
 :::
 
 ## Calcul en quatre étapes
@@ -25,11 +25,15 @@ $$
 
 Le masque $M$ est facultatif selon le type d'attention. Pour une attention causale, les positions futures reçoivent $-\infty$ avant le softmax.
 
+![Vue visuelle du calcul : scores, masque causal, softmax et somme pondérée des valeurs.](../images/attention-calculation-flow.svg){fig-alt="Les requêtes et les clés produisent des scores. Après mise à l'échelle et application éventuelle du masque, le softmax crée des poids qui combinent les valeurs." width=100%}
+
+Le schéma montre aussi pourquoi trois objets ne doivent pas être confondus : **scores** (compatibilités brutes), **poids** (normalisés relativement aux positions accessibles) et **sorties** (combinaisons pondérées des valeurs). Dans une attention non causale, le masque peut être absent ou exprimer une autre contrainte. La normalisation du softmax ne transforme pas les poids en mesure universelle de pertinence sémantique.
+
 ## Pourquoi diviser par $\sqrt{d_k}$ ?
 
 Sous l'hypothèse simplificatrice que les composantes des vecteurs de requête et de clé sont indépendantes, centrées et de variance unitaire, la variance d'un produit scalaire somme d'environ $d_k$ termes croît avec $d_k$. Diviser par $\sqrt{d_k}$ aide à maintenir l'échelle des scores plus stable lorsque la dimension augmente, ce qui limite des softmax trop saturés et des gradients faibles. C'est une motivation de mise à l'échelle, pas une garantie que les scores auront toujours une variance exactement égale à un dans un réseau entraîné.
 
-## Provenance et intérêt
+## Origine et rôle
 
 La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762), qui compare l'attention additive et l'attention par produit scalaire et introduit le facteur de mise à l'échelle. Elle permet des calculs matriciels efficaces et s'intègre naturellement aux mécanismes multi-têtes.
 
@@ -47,7 +51,9 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 - La fonction softmax est liée aux [probabilités](probabilites.qmd), mais une distribution normalisée n'est pas nécessairement calibrée.
 - La [synthèse Transformer](transformer.qmd) remet le calcul dans le flux du modèle.
 
-## Code, implémentation et vérification
+## Implémentation et vérification
+
+Les dimensions des entrées et des sorties sont aussi importantes que la formule : voir [Tenseurs](tensors.qmd).
 
 Il n'existe pas encore d'implémentation réutilisable de l'attention dans **src/llm_lab/**. La formule de cette page doit devenir le contrat de référence : formes attendues, normalisation par ligne, somme des poids égale à un sur les positions autorisées, sorties finies et gradients valides.
 
@@ -55,6 +61,6 @@ Il n'existe pas encore d'implémentation réutilisable de l'attention dans **src
 - [Tests](https://github.com/JM-Brun/llm-lab/tree/main/tests)
 - [Critères de vérification prévus](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
 
-:::: {.language-switch}
+::: {.language-switch}
 **Langue :** [Français](scaled-dot-product-attention.qmd) · [English](../en/scaled-dot-product-attention.qmd)
-::::
+:::

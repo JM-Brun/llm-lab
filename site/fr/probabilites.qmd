@@ -5,7 +5,7 @@ lang: fr
 ---
 
 ::: {.chapter-lead}
-Le softmax convertit les logits en une distribution catégorielle sur le vocabulaire. Les probabilités décrivent ce que le modèle attribue aux alternatives, pas une certitude sur la vérité du texte généré.
+Le softmax transforme les logits en une distribution de probabilités sur le vocabulaire. Une probabilité décrit le poids attribué par le modèle à une possibilité ; elle ne garantit pas que le texte généré soit vrai.
 :::
 
 ## Définition
@@ -44,6 +44,8 @@ Chaque distribution est conditionnée par le préfixe. La probabilité d'un toke
 
 ## Questions de contrôle
 
+Le lien entre ces probabilités et la perte d'entraînement est détaillé dans [Entropie croisée et divergence KL](cross-entropy.qmd).
+
 1. Quelle différence entre normalisation et calibration ?
 
 <details>
@@ -73,6 +75,6 @@ Diviser les logits par une température positive modifie la concentration de la 
 
 **Suite :** [Vraisemblance](vraisemblance.qmd) · [Cross-entropie](cross-entropy.qmd)
 
-:::: {.language-switch}
+::: {.language-switch}
 [Français](probabilites.qmd) · [English](../en/probabilities.qmd)
-::::
+:::

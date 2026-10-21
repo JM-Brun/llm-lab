@@ -5,7 +5,7 @@ lang: fr
 ---
 
 ::: {.chapter-lead}
-La vraisemblance mesure, pour des paramètres fixés, la probabilité des données observées. En langage autorégressif, elle se construit à partir des probabilités conditionnelles de chaque token cible.
+Pour des paramètres fixés, la vraisemblance indique la probabilité que le modèle attribue aux données observées. Dans un modèle autorégressif, elle se calcule à partir des probabilités conditionnelles des tokens cibles successifs.
 :::
 
 ## Factorisation autorégressive
@@ -47,12 +47,14 @@ Si les probabilités attribuées à trois tokens observés sont $(0.5, 0.25, 0.8
 
 ## Questions de contrôle
 
+Pour voir comment la vraisemblance devient une fonction de perte, lire [Entropie croisée](cross-entropy.qmd) et [Loss](loss.qmd).
+
 1. Pourquoi utiliser la log-vraisemblance plutôt que le produit direct ?
 2. Quelle hypothèse permet d'écrire la séquence comme un produit de conditionnelles ?
 3. Pourquoi documenter le tokenizer et la réduction de la NLL lors d'une comparaison ?
 
 **Suite :** [Cross-entropie](cross-entropy.qmd) · [Loss](loss.qmd)
 
-:::: {.language-switch}
+::: {.language-switch}
 [Français](vraisemblance.qmd) · [English](../en/likelihood.qmd)
-::::
+:::
