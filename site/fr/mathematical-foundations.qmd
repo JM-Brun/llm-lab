@@ -32,23 +32,23 @@ On note :
 
 Pour une position donnée, on omet parfois les indices $b,t$. Les logits $z\in\mathbb{R}^{V}$ sont transformés en probabilités par :
 
-$
+$$
 p_v=\frac{\exp(z_v)}{\sum_{j=1}^{V}\exp(z_j)}.
-$
+$$
 
 La perte négative pour une cible $y$ est :
 
-$
+$$
 \ell(z,y)=-\log p_y
 = -z_y+\log\sum_{j=1}^{V}\exp(z_j).
-$
+$$
 
 Sur un ensemble de positions valides, une convention courante est la moyenne :
 
-$
+$$
 \mathcal{L}(\theta)=-\frac{1}{|\mathcal{M}|}
 \sum_{(b,t)\in\mathcal{M}}\log p_{b,t,y_{b,t}}.
-$
+$$
 
 **Important :** somme et moyenne sont toutes deux possibles, mais changent l'échelle du gradient. Toute comparaison doit indiquer la réduction et le traitement des tokens ignorés.
 
