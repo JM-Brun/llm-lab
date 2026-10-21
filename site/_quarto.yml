@@ -56,6 +56,8 @@ website:
         href: en/index.qmd
       - text: "Fondations / Foundations"
         href: fr/mathematical-foundations.qmd
+      - text: "Glossaire / Glossary"
+        href: fr/glossary.qmd
       - text: "Références / References"
         href: references.qmd
     right:
@@ -82,10 +84,10 @@ website:
             contents:
               - fr/transformer.qmd
               - fr/transformer-history.qmd
-              - fr/glossary.qmd
               - fr/queries-keys-values.qmd
               - fr/scaled-dot-product-attention.qmd
               - fr/causal-masking.qmd
+          - fr/glossary.qmd
           - fr/cosine-similarity.qmd
           - fr/linearite-embeddings.qmd
       - section: "English"
@@ -105,10 +107,10 @@ website:
             contents:
               - en/transformer.qmd
               - en/transformer-history.qmd
-              - en/glossary.qmd
               - en/queries-keys-values.qmd
               - en/scaled-dot-product-attention.qmd
               - en/causal-masking.qmd
+          - en/glossary.qmd
           - en/cosine-similarity.qmd
           - en/embedding-linearity.qmd
       - references.qmd
