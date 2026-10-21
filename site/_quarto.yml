@@ -22,6 +22,10 @@ project:
     - en/gradients.qmd
     - fr/transformer.qmd
     - en/transformer.qmd
+    - fr/glossary.qmd
+    - en/glossary.qmd
+    - fr/transformer-history.qmd
+    - en/transformer-history.qmd
     - fr/queries-keys-values.qmd
     - en/queries-keys-values.qmd
     - fr/scaled-dot-product-attention.qmd
@@ -77,6 +81,8 @@ website:
           - section: "Attention et Transformer"
             contents:
               - fr/transformer.qmd
+              - fr/transformer-history.qmd
+              - fr/glossary.qmd
               - fr/queries-keys-values.qmd
               - fr/scaled-dot-product-attention.qmd
               - fr/causal-masking.qmd
@@ -98,6 +104,8 @@ website:
           - section: "Attention and Transformer"
             contents:
               - en/transformer.qmd
+              - en/transformer-history.qmd
+              - en/glossary.qmd
               - en/queries-keys-values.qmd
               - en/scaled-dot-product-attention.qmd
               - en/causal-masking.qmd
