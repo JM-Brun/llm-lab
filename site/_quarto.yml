@@ -12,6 +12,8 @@ project:
     - en/probabilities.qmd
     - fr/vraisemblance.qmd
     - en/likelihood.qmd
+    - fr/entropy.qmd
+    - en/entropy.qmd
     - fr/cross-entropy.qmd
     - en/cross-entropy.qmd
     - fr/loss.qmd
@@ -67,6 +69,7 @@ website:
               - fr/mathematical-foundations.qmd
               - fr/logits.qmd
               - fr/probabilites.qmd
+              - fr/entropy.qmd
               - fr/cross-entropy.qmd
               - fr/loss.qmd
               - fr/vraisemblance.qmd
@@ -87,6 +90,7 @@ website:
               - en/mathematical-foundations.qmd
               - en/logits.qmd
               - en/probabilities.qmd
+              - en/entropy.qmd
               - en/cross-entropy.qmd
               - en/loss.qmd
               - en/likelihood.qmd
