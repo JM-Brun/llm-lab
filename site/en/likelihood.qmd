@@ -12,16 +12,16 @@ Likelihood measures the probability of observed data for fixed parameters. In au
 
 For a sequence $x_{1:T}$:
 
-$
+$$
 P_\theta(x_{1:T})=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}).
-$
+$$
 
 For multiple independent dataset sequences, total likelihood is the product of each sequence probability. Products of many numbers at most one become tiny quickly, so we use log-likelihood:
 
-$
+$$
 \log P_\theta(x_{1:T})=
 \sum_{t=1}^{T}\log P_\theta(x_t\mid x_{<t}).
-$
+$$
 
 The logarithm turns products into sums, which are more stable and convenient to compute.
 
@@ -29,9 +29,9 @@ The logarithm turns products into sums, which are more stable and convenient to 
 
 Negative log-likelihood $\operatorname{NLL}$ is:
 
-$
+$$
 \operatorname{NLL}(\theta)=-\log P_\theta(x_{1:T}).
-$
+$$
 
 For fixed sequences and the same included positions, maximizing log-likelihood is equivalent to minimizing NLL. Averaging per token is a common scaling, useful for comparing sequences of different lengths, but it is not the same as the raw sum.
 
