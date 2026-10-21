@@ -13,7 +13,7 @@ En théorie de l'information, l'entropie de Shannon quantifie l'incertitude moye
 Un événement rare apporte davantage de surprise que le résultat d'un événement presque certain. Pour une issue $x$ de probabilité $p(x)>0$, sa quantité d'information — ou surprisal — est :
 
 $$
-I$x$=-\log_2 p(x).
+$I(x)$=-\log_2 p(x).
 $$
 
 Elle est exprimée en bits. Un événement de probabilité $1/2$ apporte 1 bit ; un événement de probabilité $1/8$ apporte 3 bits. Cette quantité dépend de la distribution de référence : « surprise » n'est pas une propriété absolue de l'événement.
@@ -90,19 +90,19 @@ $$
 S=-k_B\sum_i p_i\ln p_i,
 $$
 
-où (k_B) est la constante de Boltzmann. Avec des probabilités de microétats et un logarithme naturel, $S=k_B H_{\mathrm{nats}}$. Le facteur (k_B) donne à l'entropie thermodynamique ses unités physiques.
+où $k_B$ est la constante de Boltzmann. Avec des probabilités de microétats et un logarithme naturel, $S=k_B H_{\mathrm{nats}}$. Le facteur $k_B$ donne à l'entropie thermodynamique ses unités physiques.
 
 La formule commune reflète une structure probabiliste partagée, mais les interprétations ne sont pas interchangeables. En théorie de l'information, on étudie notamment les distributions de messages et le coût de codage. En physique statistique, les probabilités décrivent des microétats dans un ensemble physique et l'entropie intervient dans des lois thermodynamiques, avec des hypothèses sur l'ensemble et les contraintes. « Désordre » peut servir d'intuition grossière, mais ne remplace pas la définition ni les conditions physiques.
 
 ## 6. Variables continues : une précaution supplémentaire
 
-Pour une densité continue (f$x$), on définit parfois l'entropie différentielle :
+Pour une densité continue $f(x)$, on définit parfois l'entropie différentielle :
 
 $$
-h$X$=-\int f$x$\ln f$x$\,dx.
+h(X)=-\int f(x)\ln f(x)\,dx.
 $$
 
-Contrairement à l'entropie discrète, elle peut être négative et dépend du changement d'échelle ou de coordonnées. Elle ne se lit donc pas comme une longueur de code absolue sans préciser la quantification ou la référence. Il ne faut pas transposer sans précaution les propriétés de $H(X)$ à (h$X$).
+Contrairement à l'entropie discrète, elle peut être négative et dépend du changement d'échelle ou de coordonnées. Elle ne se lit donc pas comme une longueur de code absolue sans préciser la quantification ou la référence. Il ne faut pas transposer sans précaution les propriétés de $H(X)$ à (h(X)).
 
 ## 7. Ce que l'entropie ne dit pas
 
