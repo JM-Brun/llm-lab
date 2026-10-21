@@ -60,6 +60,8 @@ Comparer ce résultat au gradient analytique avec des tolérances absolue et rel
 
 ## Questions de contrôle
 
+Pour des exercices complémentaires séparés du cours, voir l’[espace d’exercices — fondations mathématiques](exercises.qmd#fondations).
+
 1. Pourquoi la dérivée de la cross-entropie par rapport aux logits se simplifie-t-elle en $p_i-\mathbb{1}[i=y]$ ?
 
 <details>
