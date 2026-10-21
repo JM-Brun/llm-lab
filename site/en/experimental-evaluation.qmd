@@ -1,0 +1,58 @@
+---
+title: "Evaluating a model: from score to experimental protocol"
+subtitle: "Transfer exercises — no new implementation"
+lang: en
+---
+
+## Goal
+
+This page connects the lab's LLM foundations to a general Data Science skill: designing a comparison whose conclusions are defensible. It complements the mathematical exercises; it does not replace the canonical statistical-validation notes in [Wiki Knowledge](https://github.com/JM-Brun/wiki-knowledge).
+
+## Before starting
+
+Review if needed:
+
+- [Mathematical foundations](mathematical-foundations.qmd) — objectives, probabilities, and assumptions;
+- [Cross-entropy](cross-entropy.qmd) — loss functions and the objective being optimized;
+- [Exercises](exercises.qmd) — active recall;
+- [LLM evaluation and experimental design in Wiki Knowledge](https://github.com/JM-Brun/wiki-knowledge/blob/main/wiki/concepts/conception-experimentale-et-evaluation-llm.md).
+
+Attempt the questions independently before consulting references.
+
+## Transfer case
+
+A team compares 40 systems that classify scientific passages as relevant or irrelevant to a query. Relevant passages are rare, and multiple passages can come from the same paper. The team reports the best average-precision (AP) score obtained from random passage-level cross-validation.
+
+### Questions
+
+1. **Target and unit.** Which deployment population should the evaluation represent? If the system must process unseen papers, which unit should be kept separate across partitions?
+2. **Leakage.** Why can random passage-level splitting overestimate generalization? Where should every learned transformation or feature-selection step be fitted?
+3. **Selection.** Why may the best score among 40 configurations be optimistic? Describe a selection procedure and a separate final-estimation procedure.
+4. **Metrics.** What does AP measure? Why does its value depend on prevalence? Why is AP insufficient to evaluate probability calibration?
+5. **Uncertainty.** How would you compare two systems evaluated on the same queries/papers without incorrectly treating every passage as independent?
+6. **Interpretation.** Which results, artifacts, and limitations must be retained to make the comparison reproducible?
+
+## Distinctions a strong answer must preserve
+
+- **Training objective:** the quantity optimized by the loss function.
+- **Selection metric:** the criterion used to choose a configuration.
+- **Final estimate:** a result from data or a procedure not used to select the winner.
+- **Discrimination/ranking:** the ability to order positives above negatives.
+- **Calibration:** agreement between predicted probabilities and observed frequencies.
+- **Uncertainty:** estimate variability under the sampling design and dependence structure.
+- **Reproducibility:** ability to reconstruct the protocol, permitted data/splits, versions, configurations, and results.
+
+These concepts are related but not interchangeable. A finite loss, a high AP score, or passing tests does not independently establish generalization.
+
+## Self-assessment criteria
+
+Score each of the six questions **0** (incorrect/absent), **1** (partial), or **2** (justified with a limitation). Record confidence before consulting references. An answer that omits its assumptions or statistical unit is incomplete.
+
+## References and limitations
+
+- [HELM — Holistic Evaluation of Language Models](https://arxiv.org/abs/2211.09110)
+- [Dror et al. — The Hitchhiker's Guide to Testing Statistical Significance in NLP](https://aclanthology.org/P18-1128/)
+- [Wiki Knowledge — Experimental validation and data leakage](https://github.com/JM-Brun/wiki-knowledge/blob/main/wiki/concepts/validation-experimentale-et-fuites-de-donnees.md)
+- [Wiki Knowledge — Statistical inference and uncertainty](https://github.com/JM-Brun/wiki-knowledge/blob/main/wiki/concepts/inference-statistique-et-incertitude.md)
+
+This is a teaching exercise, not a benchmark or research result. It adds no implementation and is not evidence of personal mastery.
