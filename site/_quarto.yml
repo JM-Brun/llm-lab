@@ -39,6 +39,8 @@ project:
     - fr/tensors.qmd
     - fr/embedding-space.qmd
     - fr/positional-encoding.qmd
+    - fr/exercises.qmd
+    - en/exercises.qmd
     - references.qmd
 
 website:
@@ -61,6 +63,8 @@ website:
         href: fr/mathematical-foundations.qmd
       - text: "Glossaire / Glossary"
         href: fr/glossary.qmd
+      - text: "Exercices / Exercises"
+        href: fr/exercises.qmd
       - text: "Références / References"
         href: references.qmd
     right:
@@ -92,6 +96,7 @@ website:
               - fr/scaled-dot-product-attention.qmd
               - fr/causal-masking.qmd
               - fr/positional-encoding.qmd
+          - fr/exercises.qmd
           - fr/glossary.qmd
           - fr/cosine-similarity.qmd
           - fr/linearite-embeddings.qmd
@@ -116,6 +121,7 @@ website:
               - en/queries-keys-values.qmd
               - en/scaled-dot-product-attention.qmd
               - en/causal-masking.qmd
+          - en/exercises.qmd
           - en/glossary.qmd
           - en/cosine-similarity.qmd
           - en/embedding-linearity.qmd
