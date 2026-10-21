@@ -1,11 +1,11 @@
 ---
-title: "Cross-entropie : pénaliser les prédictions"
+title: "Entropie croisée et divergence KL"
 subtitle: "Dérivation depuis la distribution cible jusqu'aux logits"
 lang: fr
 ---
 
 ::: {.chapter-lead}
-La cross-entropie compare une distribution cible $q$ à une distribution prédite $p$. Pour une cible one-hot — un seul token correct — elle devient la négative log-probabilité du token cible.
+La cross-entropie compare une distribution cible $q$ à une distribution prédite $p$. Elle mesure le coût moyen associé à l'utilisation de $p$ pour coder des événements distribués selon $q$. Pour comprendre ce coût, il faut la relier à l'[entropie de Shannon](entropy.qmd) et à la divergence KL, sans les confondre.
 :::
 
 ## Définition
@@ -57,6 +57,38 @@ Pour une cible fixe, minimiser la cross-entropie par rapport à $p$ revient donc
 - **« CrossEntropyLoss attend des probabilités. »** Dans l'API usuelle de PyTorch pour les classes, elle attend des logits non normalisés et applique une opération équivalente à log-softmax puis NLL.
 :::
 
+## Interprétation par le codage
+
+Si les événements suivent réellement la loi $q$, mais que le code est construit à partir de probabilités $p$, la longueur idéale attribuée à l'issue $i$ est $-\log_2 p_i$ bits. La longueur moyenne attendue sous $q$ est donc l'entropie croisée :
+
+$
+H(q,p)=-\sum_i q_i\log_2 p_i.
+$
+
+Avec des logarithmes naturels, la même expression est exprimée en nats. La base du logarithme fixe l'unité, mais ne change pas les conclusions qualitatives. Si $p_i=0$ pour une issue ayant $q_i>0$, le coût est infini : le modèle exclut un événement qui peut se produire.
+
+## Pourquoi la direction de KL compte
+
+La divergence KL est :
+
+$
+D_{\mathrm{KL}}(q\Vert p)=\sum_i q_i\log\frac{q_i}{p_i}.
+$
+
+Elle compare la loi cible $q$ à l'approximation $p$ et vérifie $D_{\mathrm{KL}}(q\Vert p)=H(q,p)-H(q)$. Comme $H(q)$ est constant lorsque la cible est fixée, minimiser la cross-entropie revient alors à minimiser cette KL dans la direction $q\Vert p$.
+
+La KL n'est pas symétrique. En général, $D_{\mathrm{KL}}(q\Vert p)\neq D_{\mathrm{KL}}(p\Vert q)$ ; inverser les arguments change ce qui est pénalisé. Exemple : si $q=(1,0)$ et $p=(0.9,0.1)$, alors $H(q,p)=-\log(0.9)$, tandis que $D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)$ car $H(q)=0$. Mais la KL dans l'autre sens n'est pas finie si $p$ attribue une masse positive à une catégorie à laquelle $q$ attribue zéro ? Non : pour cet exemple précis, elle est finie ; l'asymétrie reste visible dans la valeur, et elle peut devenir infinie lorsque le second argument attribue une probabilité nulle à un événement de probabilité positive sous le premier.
+
+## Cibles one-hot et distributions cibles générales
+
+Pour une cible one-hot de classe $y$, la somme se réduit à $H(q,p)=-\log p_y$. C'est le cas usuel de la prédiction du prochain token lorsqu'un seul token observé est la cible. Pour une cible souple (par exemple du label smoothing ou une distribution enseignante), plusieurs termes $-q_i\log p_i$ contribuent ; la perte n'est plus seulement la négative log-probabilité d'une classe.
+
+La cross-entropie empirique calculée sur un corpus est une moyenne selon les cibles observées. Elle n'est égale à l'entropie réelle de la source que dans des conditions idéales, notamment si la distribution prédictive correspond à la vraie distribution conditionnelle. Une baisse de cross-entropie sur un jeu d'entraînement ne garantit pas une meilleure généralisation : il faut examiner des données de validation/test séparées.
+
+## Lien avec la perplexité
+
+Pour une cross-entropie moyenne en nats $\bar{H}$, la perplexité correspondante est $\exp(\bar{H})$. Si la moyenne est en bits, on utilise $2^{\bar{H}}$. Il faut préciser la base du logarithme, les positions de tokens incluses, le tokenizer et la réduction (somme ou moyenne) pour comparer des résultats. La perplexité ne constitue pas une mesure directe de vérité factuelle ou de qualité globale d'un assistant.
+
 ## Exemple numérique
 
 Si la cible est la classe 2 et $p_2=0.8$, alors $\ell=-\log(0.8)\approx0.223$. Si $p_2=0.01$, la perte vaut environ $4.605$. Une prédiction fausse mais très confiante est donc fortement pénalisée.
@@ -68,6 +100,14 @@ Si la cible est la classe 2 et $p_2=0.8$, alors $\ell=-\log(0.8)\approx0.223$. S
 3. Quelle différence entre la formule mathématique et l'API de PyTorch ?
 
 **Suite :** [Loss](loss.qmd) · [Gradients](gradients.qmd)
+
+
+## Références complémentaires
+
+- Claude E. Shannon (1948), [A Mathematical Theory of Communication](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf).
+- Cover & Thomas, [Elements of Information Theory](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X).
+- [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU).
+- [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html).
 
 :::: {.language-switch}
 [Français](cross-entropy.qmd) · [English](../en/cross-entropy.qmd)
