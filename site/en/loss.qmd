@@ -53,6 +53,8 @@ Before interpreting a curve, document the objective, input/target shift, ignore 
 
 ## Self-check
 
+For additional practice outside the lesson, see the [exercise space — mathematical foundations](exercises.qmd#foundations).
+
 1. Why should the denominator count valid targets rather than all tokens when some are ignored?
 2. Why does decreasing training loss not prove better generalization?
 3. Under what conditions is perplexity comparable?
