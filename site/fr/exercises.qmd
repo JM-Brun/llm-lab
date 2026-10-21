@@ -1,0 +1,55 @@
+---
+title: "Exercices"
+subtitle: "Un espace séparé pour vérifier la compréhension et transférer les concepts"
+lang: fr
+---
+
+::: {.chapter-lead}
+Cet espace est distinct des leçons. Il recensera les exercices reliés aux questions de contrôle du cours. **La structure est en préparation : aucun nouvel énoncé ni corrigé n'est défini dans cette version.**
+:::
+
+## Organisation prévue
+
+Les exercices seront classés par module, avec des identifiants stables et des liens vers la page de cours canonique.
+
+- [Fondations mathématiques et calcul](#fondations)
+- [Texte, tokenisation et données](#texte)
+- [Attention et tenseurs](#attention)
+- [Architecture GPT et génération](#gpt)
+- [Pré-entraînement et évaluation](#training)
+- [Fine-tuning et LoRA/QLoRA](#finetuning)
+- [Évaluation critique et sujets avancés](#advanced)
+
+## Fondations mathématiques et calcul {#fondations}
+
+**Statut : planifié — énoncés non rédigés.** Cible : logits, probabilités, entropie, cross-entropie, vraisemblance, loss, gradients, dérivées et stabilité numérique.
+
+## Texte, tokenisation et données {#texte}
+
+**Statut : planifié — énoncés non rédigés.** Cible : IDs de tokens, vocabulaire, BPE, fenêtres, padding, troncature, décalage entrée-cible et fuites entre ensembles.
+
+## Attention et tenseurs {#attention}
+
+**Statut : planifié — énoncés non rédigés.** Cible : dimensions, Q/K/V, produits matriciels, softmax, masques, attention multi-têtes, RoPE et flux d'information entre positions.
+
+## Architecture GPT et génération {#gpt}
+
+**Statut : planifié — énoncés non rédigés.** Cible : blocs Transformer, résidus, normalisation, MLP, logits, décodage autorégressif, stratégies d'échantillonnage et cache KV.
+
+## Pré-entraînement et évaluation {#training}
+
+**Statut : planifié — énoncés non rédigés.** Cible : objectifs, boucles d'entraînement, validation, perplexité, courbes de loss, métriques, protocoles de comparaison et reproductibilité.
+
+## Fine-tuning et LoRA/QLoRA {#finetuning}
+
+**Statut : planifié — énoncés non rédigés.** Cible : classification, masquage des cibles, SFT, surapprentissage, paramètres entraînables, rang LoRA et compromis mémoire/performance.
+
+## Évaluation critique et sujets avancés {#advanced}
+
+**Statut : planifié — énoncés non rédigés.** Cible : contre-exemples, analyse d'erreurs, contamination, calibration, RAG, variantes d'attention et limites des conclusions expérimentales.
+
+## Convention des liens
+
+Une question du cours renverra vers un identifiant stable dans cette section (par exemple `#fondations`), et non vers une copie de l'énoncé dans la leçon. Les futurs exercices devront inclure prérequis, difficulté, livrable attendu, critères de réussite et références. Les indices et corrigés seront séparés de l'énoncé.
+
+[Retour au parcours du cours](../index.qmd) · [Références](../references.qmd) · [English exercise space](../en/exercises.qmd)
