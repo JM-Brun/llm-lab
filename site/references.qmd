@@ -76,6 +76,16 @@ Ressource vidéo et animée pour l'intuition mathématique. Ce dépôt ne télé
 Ces liens sont proposés pour compléter la lecture. Ils servent d'appui pédagogique ; les affirmations historiques et mathématiques de référence restent reliées aux articles originaux ou à la documentation correspondante.
 
 - [Vidéo pédagogique recommandée](https://www.youtube.com/watch?v=oikbkiHtGP0) — lien fourni pour ce parcours ; le titre et les métadonnées n'ont pas été confirmés indépendamment.
+- [Vidéo YouTube fournie — YxXyN2ifK8A](https://www.youtube.com/watch?v=YxXyN2ifK8A) — lien à examiner ; titre et contenu non confirmés indépendamment.
+- [Vidéo YouTube fournie — Hwr9OpeO9fM](https://www.youtube.com/watch?v=Hwr9OpeO9fM) — lien à examiner ; titre et contenu non confirmés indépendamment.
+- [Vidéo YouTube fournie — fqsxg3aJ1XE](https://www.youtube.com/watch?v=fqsxg3aJ1XE) — lien à examiner ; titre et contenu non confirmés indépendamment.
+
+## Tenseurs, embeddings et information de position
+
+- [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — architecture Transformer et encodages positionnels sinusoïdaux.
+- [Su et al. (2021), *RoFormer: Enhanced Transformer with Rotary Position Embedding*](https://arxiv.org/abs/2104.09864) — formulation de RoPE.
+- [Mikolov et al. (2013), *Efficient Estimation of Word Representations in Vector Space*](https://arxiv.org/abs/1301.3781) — embeddings de mots.
+- [PyTorch — Tensors](https://docs.pytorch.org/tutorials/beginner/introyt/tensors_deeper_tutorial.html) — formes et opérations sur les tenseurs.
 
 ## Références techniques
 
