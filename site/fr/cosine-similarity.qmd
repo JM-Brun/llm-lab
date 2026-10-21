@@ -14,11 +14,11 @@ Cette distinction compte. La métrique ne peut être interprétée indépendamme
 
 Pour deux vecteurs non nuls $x,y\in\mathbb{R}^d$,
 
-\[
+$$
 \operatorname{cos}(x,y)=\frac{x^\top y}{\|x\|_2\,\|y\|_2}.
-\]
+$$
 
-Le score appartient à \([-1,1]\). Une valeur élevée signifie que les vecteurs pointent dans des directions proches. Il ne signifie pas, à lui seul, que les textes sont équivalents, qu'ils impliquent la même réponse ou qu'ils sont interchangeables dans un système de recherche.
+Le score appartient à $[-1,1]$. Une valeur élevée signifie que les vecteurs pointent dans des directions proches. Il ne signifie pas, à lui seul, que les textes sont équivalents, qu'ils impliquent la même réponse ou qu'ils sont interchangeables dans un système de recherche.
 
 La normalisation retire l'information portée par la norme. C'est souhaitable si cette norme est un facteur parasite ; c'est potentiellement dommageable si le modèle a appris à y encoder un signal utile. Steck, Ekanadham et Kallus montrent analytiquement que, pour certaines familles de modèles linéaires régularisés, les similarités cosinus peuvent être arbitraires, non uniques ou dépendantes de la régularisation. Leur résultat invite à éviter l'usage automatique de la métrique, mais ne prouve pas que le cosinus échoue pour tous les encodeurs modernes.
 

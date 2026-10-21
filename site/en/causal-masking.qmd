@@ -1,0 +1,75 @@
+---
+title: "Causal masking"
+subtitle: "Preventing access to future tokens in an autoregressive model"
+lang: en
+---
+
+::: {.chapter-lead}
+Causal masking is an information constraint: to predict the token at position $t+1$, the computation at position $t$ must depend only on the available prefix. It is not merely a visualization convention.
+:::
+
+## Intuition
+
+When training a model to predict the next token, all positions in a sequence can be computed in parallel. Without a mask, however, a position's representation could use tokens that would not yet be known during generation. The mask makes parallel training compatible with the autoregressive objective.
+
+## Definition
+
+For a sequence of length $T$, position $i$ can access positions $j\leq i$. One can define a strict upper-triangular boolean mask or an additive mask $M$:
+
+$$
+M_{ij}=
+\begin{cases}
+0 & j\leq i,\\
+-\infty & j>i.
+\end{cases}
+$$
+
+The additive mask is applied to scores **before** softmax:
+
+$$
+A=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right).
+$$
+
+Future positions then receive zero weight in ideal arithmetic. In practice, libraries may represent the mask as a boolean tensor or use an attention primitive that incorporates the constraint.
+
+![Four-position causal mask.](images/causal-attention-mask.svg){fig-alt="Lower-triangular matrix: each position can access itself and all earlier positions" width=100%}
+
+## Provenance and purpose
+
+Causal masking supports an autoregressive factorization of the sequence distribution:
+
+$$
+P(x_1,\ldots,x_T)=\prod_{t=1}^{T}P(x_t\mid x_{<t}).
+$$
+
+Decoder-only Transformers such as GPT use this constraint to learn next-token prediction while computing positions in a training batch in parallel. [*Attention Is All You Need* (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762) describes masking decoder attention.
+
+## Misconceptions and counterexamples
+
+- **“The data are already ordered, so masking is unnecessary.”** False: token order does not stop an unmasked attention operation from reading representations at future positions.
+- **“Zeroing future weights after softmax is equivalent.”** False: the remaining weights may no longer sum to one. Mask the scores before softmax or use an equivalent primitive.
+- **“Testing only the mask matrix proves there is no leakage.”** False: another computation path could still pass future information.
+- **“Causal means attention sees only the previous token.”** False: it can see all earlier positions unless another restriction, such as a sliding window, is imposed.
+
+## A decisive conceptual test
+
+For a complete implementation, keep tokens through position $t$ unchanged, alter a token after $t$, and verify that outputs through $t$ remain unchanged within numerical tolerance. Also test shapes, fully masked rows, gradients, and numerical stability.
+
+## Connections to other concepts
+
+- [Queries, keys, and values](queries-keys-values.qmd) defines the projections that produce scores.
+- [Scaled dot-product attention](scaled-dot-product-attention.qmd) explains the score → mask → softmax → aggregation sequence.
+- [Objective and mathematical foundations](mathematical-foundations.qmd) connects the constraint to next-token prediction and loss.
+- The [Transformer overview](transformer.qmd) places masking in the full architecture.
+
+## Code and implementation status
+
+The repository does not yet contain a reusable attention implementation or an end-to-end invariance test. The mask shown here is a conceptual specification, not proof that the full architecture is causal.
+
+- [Available Python code](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab)
+- [Available tests](https://github.com/JM-Brun/llm-lab/tree/main/tests)
+- [Planned acceptance criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+
+:::: {.language-switch}
+**Language:** [Français](../fr/causal-masking.qmd) · [English](causal-masking.qmd)
+::::

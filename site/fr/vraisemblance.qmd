@@ -10,34 +10,34 @@ La vraisemblance mesure, pour des paramètres fixés, la probabilité des donné
 
 ## Factorisation autorégressive
 
-Pour une séquence \(x_{1:T}\) :
+Pour une séquence $x_{1:T}$ :
 
-\[
+$$
 P_\theta(x_{1:T})=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}).
-\]
+$$
 
 Pour plusieurs séquences indépendantes de l'ensemble de données, la vraisemblance totale est le produit des probabilités de chaque séquence. Les produits de nombreux nombres inférieurs ou égaux à un deviennent rapidement minuscules ; on travaille donc avec la log-vraisemblance :
 
-\[
+$$
 \log P_\theta(x_{1:T})=
 \sum_{t=1}^{T}\log P_\theta(x_t\mid x_{<t}).
-\]
+$$
 
 La log transforme le produit en somme, plus stable et plus pratique pour les calculs.
 
 ## De la vraisemblance à la perte
 
-La négative log-vraisemblance \(\operatorname{NLL}\) est :
+La négative log-vraisemblance $\operatorname{NLL}$ est :
 
-\[
+$$
 \operatorname{NLL}(\theta)=-\log P_\theta(x_{1:T}).
-\]
+$$
 
 Pour des séquences fixes et les mêmes positions prises en compte, maximiser la log-vraisemblance équivaut à minimiser la NLL. La moyenne par token est une mise à l'échelle courante, utile pour comparer des séquences de longueurs différentes, mais elle n'est pas identique à la somme brute.
 
 ## Exemple
 
-Si les probabilités attribuées à trois tokens observés sont \((0.5, 0.25, 0.8)\), alors la vraisemblance de cette séquence (selon le modèle et le préfixe) vaut \(0.1\), et la NLL vaut \(-\log(0.1)\approx2.303\). La log-vraisemblance vaut environ \(-2.303\).
+Si les probabilités attribuées à trois tokens observés sont $(0.5, 0.25, 0.8)$, alors la vraisemblance de cette séquence (selon le modèle et le préfixe) vaut $0.1$, et la NLL vaut $-\log(0.1)\approx2.303$. La log-vraisemblance vaut environ $-2.303$.
 
 ::: {.callout-warning title="Idées reçues"}
 - **« Une vraisemblance élevée prouve que le modèle est vrai. »** Non : elle indique l'adéquation probabiliste aux observations choisies, relativement à un modèle, un tokenizer et une distribution de données.

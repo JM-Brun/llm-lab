@@ -1,119 +1,61 @@
 ---
-title: "Attention et masque causal"
-subtitle: "De l'intuition aux équations, puis à une implémentation testable"
+title: "Attention causale dans un Transformer"
+subtitle: "Une synthèse des composants, avec des liens vers leurs pages de référence"
 lang: fr
 ---
 
 ::: {.chapter-lead}
-L'attention permet à chaque token de construire une représentation contextualisée. Le masque causal impose la contrainte fondamentale d'un modèle autorégressif : **aucune position ne peut utiliser un token futur**.
+Cette page décrit **comment les composants s'articulent** dans un Transformer autorégressif. Elle sert de carte d'ensemble ; les définitions, dérivations et contre-exemples détaillés vivent dans des pages dédiées.
 :::
 
-## 1. Le problème : contextualiser chaque token
+## Le rôle de l'attention
 
-Un modèle de langage autorégressif prédit le prochain token à partir du préfixe déjà observé. Une représentation indépendante de chaque token ne suffit pas : le sens de « banque » dépend, par exemple, du contexte.
+À chaque position, un modèle autorégressif doit construire une représentation qui dépend du préfixe disponible, sans consulter les tokens futurs. L'attention fournit une manière apprise de pondérer l'information d'autres positions ; le masque causal impose la contrainte d'ordre.
 
-L'attention calcule une combinaison pondérée des représentations disponibles. Pour une séquence de longueur \(T\), on représente les entrées par une matrice \(X \in \mathbb{R}^{T \times d_{model}}\).
+![Masque causal original : chaque ligne peut accéder à sa propre position et aux précédentes.](images/causal-attention-mask.svg){fig-alt="Matrice à quatre positions ; les positions précédentes et actuelles sont visibles, les positions futures sont masquées" width=100%}
 
-::: {.callout-note title="Intuition"}
-Chaque position construit une question (query), compare cette question aux clés (keys) des positions disponibles, puis combine les valeurs (values) selon les poids obtenus. Le masque détermine quelles positions peuvent contribuer à cette combinaison.
-:::
+## Les concepts, dans l'ordre du calcul
 
-## 2. Construire les requêtes, clés et valeurs
+1. **[Requêtes, clés et valeurs](queries-keys-values.qmd)** — trois projections apprises donnent aux représentations des rôles différents : rechercher, être comparé et fournir l'information agrégée.
+2. **[Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd)** — les produits $QK^\top$ deviennent des scores ; après mise à l'échelle et softmax, ils pondèrent les valeurs.
+3. **[Masque causal](causal-masking.qmd)** — les scores correspondant aux positions futures sont exclus avant le softmax.
+4. **[Fondations mathématiques](mathematical-foundations.qmd)** — le softmax réutilise les probabilités ; les logits de sortie sont ensuite liés à la vraisemblance et à la loss d'entraînement.
+5. **[Similarité cosinus](cosine-similarity.qmd)** — point de comparaison utile, mais les scores d'attention ne sont pas simplement une mesure universelle de similarité sémantique.
 
-Trois projections apprises transforment chaque représentation :
+## Vue mathématique minimale
 
-$$
-Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
-$$
-
-- **Query (\(Q\))** : ce que la position cherche dans le contexte.
-- **Key (\(K\))** : les caractéristiques utilisées pour comparer les positions.
-- **Value (\(V\))** : l'information qui sera agrégée.
-
-L'attention à produit scalaire mise à l'échelle s'écrit :
+Pour une séquence de longueur $T$, on note $X\in\mathbb{R}^{T\times d_{model}}$ les représentations d'entrée. Des projections apprises produisent $Q$, $K$ et $V$. Pour une tête d'attention :
 
 $$
 \operatorname{Attention}(Q,K,V)
-=\operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
+=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
 $$
 
-Le facteur \(\sqrt{d_k}\) limite l'amplitude des scores avant softmax. \(M\) est le masque : pour les positions futures, on ajoute \(-\infty\), ce qui donne une probabilité nulle après softmax.
+Ici, $M$ désigne un masque additif : les positions interdites reçoivent $-\infty$. Cette formule résume plusieurs choix distincts ; consulter les pages conceptuelles pour les dimensions, les hypothèses et les cas limites.
 
-::: {.callout-important title="Point de vigilance"}
-Le masque s'applique aux **scores avant softmax**. Mettre à zéro des poids après softmax n'est pas équivalent : les poids restants ne sont alors plus nécessairement normalisés.
-:::
+## Intuition, utilité et limites
 
-## 3. Visualiser le masque causal
+- **Intuition :** chaque position pose une question, compare les clés accessibles, puis agrège les valeurs correspondantes.
+- **Utilité :** les interactions entre positions dépendent du contenu appris, plutôt que d'une fenêtre de voisinage fixe dans l'attention dense standard.
+- **Limite :** l'attention n'est pas, à elle seule, une explication causale de la décision du modèle ni une carte garantie de l'importance sémantique.
+- **Contre-exemple à une intuition trop simple :** un poids d'attention élevé signifie qu'une valeur contribue fortement à cette agrégation, pas que le token source est nécessairement le plus important pour la prédiction finale. Les projections, résidus, autres têtes et couches interviennent aussi.
 
-![Masque causal original : chaque ligne ne peut accéder qu'à sa propre position et aux précédentes.](images/causal-attention-mask.svg){fig-alt="Matrice de masque causal à quatre positions : les cases turquoise sont visibles, les cases corail sont masquées" width=100%}
+## Code et état de vérification
 
-_Ce schéma original du dépôt résume la contrainte d'accès. Les illustrations de Jay Alammar ci-dessous apportent un contexte complémentaire._
+Le dépôt ne contient pas encore de module réutilisable d'attention dans **src/llm_lab/**. Le petit extrait NumPy de la version précédente de ce chapitre ne constituait pas une implémentation complète : il masquait seulement une matrice de scores. La priorité est de valider les concepts et les tests avant d'ajouter le module.
 
-![Exemple de fenêtres d'entraînement et de cibles décalées d'un token.](https://jalammar.github.io/images/gpt2/transformer-decoder-attention-mask-dataset.png){fig-alt="Les tokens futurs sont masqués pour chaque préfixe ; les cibles correspondent au token suivant" width=100%}
+- [État et critères prévus pour l'attention causale](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+- [Répertoire des implémentations Python](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab)
+- [Répertoire des tests](https://github.com/JM-Brun/llm-lab/tree/main/tests)
 
-_Figure 1 — Illustration de Jay Alammar, issue de [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/). La figure est intégrée depuis la source originale et n'est pas redistribuée dans ce dépôt._
+Un test déterminant devra vérifier l'invariance causale de bout en bout : modifier un token futur ne doit pas changer les sorties aux positions précédentes. Le simple test d'une matrice de masque ne suffit pas à établir cette propriété.
 
-Dans la matrice de scores, une position \(i\) ne peut regarder que les positions \(j \leq i\). Les cases interdites sont masquées avec \(-\infty\) **avant** le softmax ; leur probabilité devient alors nulle.
+## Ressources complémentaires
 
-### Complément visuel : l'attention transforme les représentations
+- [Raschka — *Build a Large Language Model (From Scratch)*](https://www.sebastianraschka.com/llms-from-scratch/) et [son dépôt de code](https://github.com/rasbt/LLMs-from-scratch) : parcours reliant explications, implémentation et exercices.
+- [Jay Alammar — The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) : visualisation de l'architecture et de l'attention masquée.
+- [3Blue1Brown — Transformers, the tech behind LLMs](https://www.3blue1brown.com/lessons/gpt/) : intuition visuelle complémentaire, à distinguer d'une spécification technique.
 
-![Illustration du bloc d'attention : les représentations des tokens sont mises à jour par le contexte.](https://storage.googleapis.com/3blue1brown-website-bucket/lessons/2024/gpt/attent.jpg){fig-alt="Schéma de 3Blue1Brown montrant un bloc d'attention qui modifie les représentations selon le contexte" width=100%}
-
-_Figure 2 — Image de [3Blue1Brown, « Transformers, the tech behind LLMs »](https://www.3blue1brown.com/lessons/gpt/). Intégrée depuis la source originale avec attribution ; consulter les [conditions de réutilisation de 3Blue1Brown](https://www.3blue1brown.com/about/) avant toute autre utilisation._
-
-## 4. Code minimal avec NumPy
-
-Cette fonction illustre uniquement l'application d'un masque à des scores déjà calculés. Elle n'implémente pas les projections, le calcul des scores, ni les têtes multiples.
-
-~~~python
-import numpy as np
-from numpy.typing import NDArray
-
-
-def apply_causal_mask(scores: NDArray[np.float64]) -> NDArray[np.float64]:
-    """Mask future positions in a square attention-score matrix."""
-    if scores.ndim != 2 or scores.shape[0] != scores.shape[1]:
-        raise ValueError("scores must be a square 2D matrix")
-
-    masked = scores.copy()
-    future = np.triu(np.ones(scores.shape, dtype=bool), k=1)
-    masked[future] = -np.inf
-    return masked
-~~~
-
-Exemple de vérification :
-
-~~~python
-scores = np.zeros((4, 4), dtype=np.float64)
-masked = apply_causal_mask(scores)
-
-assert np.isneginf(masked[0, 1:]).all()
-assert np.isfinite(masked[3, :]).all()
-~~~
-
-::: {.callout-tip title="Ce que le test prouve — et ne prouve pas"}
-Le test vérifie que les scores des positions futures sont masqués et que la dernière ligne reste finie. Il ne prouve pas à lui seul que toute l'implémentation d'attention est exempte de fuite d'information : il faut aussi tester le calcul complet et l'invariance des sorties précédentes quand on modifie un token futur.
-:::
-
-Pour une implémentation complète, il faut aussi tester les dimensions, la stabilité numérique, les gradients et l'absence de fuite d'information depuis les tokens futurs. Dans un modèle de production, préférer les primitives d'attention éprouvées de PyTorch et mesurer leurs résultats sur le matériel cible.
-
-## 5. Apprendre visuellement
-
-::: {.resource-list}
-- **[Jay Alammar — The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/)** — parcours illustré des blocs GPT-2, des embeddings et de l'attention masquée.
-- **[Sara Ravi — GPT-2 Architecture Demystified](https://sararavi14.medium.com/gpt-2-architecture-demystified-a-step-by-step-breakdown-74b1c5c80d17)** — autre lecture pas à pas de l'architecture.
-- **[3Blue1Brown — Transformers, the tech behind LLMs](https://www.3blue1brown.com/lessons/gpt/)** — explication visuelle et animée des mécanismes fondamentaux.
-:::
-
-Ces ressources sont complémentaires, pas des spécifications d'implémentation. En cas de divergence, vérifier les équations dans l'article original, la documentation du framework et les tests du dépôt.
-
-## 6. Questions de contrôle
-
-::: {.callout-question title="Vérifier sa compréhension"}
-1. Pourquoi diviser les scores par $\\sqrt{d_k}$ ?
-2. À quel endroit du calcul applique-t-on le masque causal ?
-3. Pourquoi le masque est-il nécessaire même si les exemples d'entraînement contiennent déjà les tokens dans le bon ordre ?
-4. Quel test démontre qu'un token futur ne peut pas influencer la sortie à une position précédente ?
-:::
-
-Répondre à ces questions et écrire les tests avant de passer à l'attention multi-tête.
+:::: {.language-switch}
+**Langue :** [Français](transformer.qmd) · [English](../en/transformer.qmd)
+::::

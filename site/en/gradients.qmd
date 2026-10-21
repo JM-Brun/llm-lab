@@ -5,28 +5,28 @@ lang: en
 ---
 
 ::: {.chapter-lead}
-The gradient \(\nabla_\theta\mathcal{L}\) collects partial derivatives of the loss with respect to learned parameters. It describes local objective variation; by itself, it does not guarantee global improvement.
+The gradient $\nabla_\theta\mathcal{L}$ collects partial derivatives of the loss with respect to learned parameters. It describes local objective variation; by itself, it does not guarantee global improvement.
 :::
 
 ## Gradient with respect to logits
 
-For a one-hot target \(y\) and cross-entropy computed from softmax:
+For a one-hot target $y$ and cross-entropy computed from softmax:
 
-\[
+$$
 \frac{\partial\ell}{\partial z_i}=p_i-\mathbb{1}[i=y].
-\]
+$$
 
 This formula follows from combining softmax and cross-entropy. It does not mean the network parameters are the logits directly: logits depend on parameters through many differentiable operations.
 
 ## Chain rule
 
-If logits depend on parameters \(z=z(\theta)\), then:
+If logits depend on parameters $z=z(\theta)$, then:
 
-\[
+$$
 \nabla_\theta\mathcal{L}
 =\left(\frac{\partial z}{\partial\theta}\right)^\top
 \nabla_z\mathcal{L}.
-\]
+$$
 
 In a deep network, backpropagation applies this chain rule efficiently through the computation graph. Shapes must agree: derivatives are vectors or tensors with the same shape as the variable being differentiated.
 
@@ -34,23 +34,23 @@ In a deep network, backpropagation applies this chain rule efficiently through t
 
 An elementary SGD update is:
 
-\[
+$$
 \theta_{k+1}=\theta_k-\eta\nabla_\theta\mathcal{L}(\theta_k),
-\]
+$$
 
-where \(\eta>0\) is the learning rate. The minus sign follows the direction of steepest local decrease for a small update in Euclidean space. Adaptive optimizers, momentum, clipping, and regularization alter the effective dynamics.
+where $\eta>0$ is the learning rate. The minus sign follows the direction of steepest local decrease for a small update in Euclidean space. Adaptive optimizers, momentum, clipping, and regularization alter the effective dynamics.
 
 ## Finite-difference verification
 
-For parameter coordinate \(\theta_i\):
+For parameter coordinate $\theta_i$:
 
-\[
+$$
 g_i^{\mathrm{num}}=
 \frac{\mathcal{L}(\theta_i+\epsilon)-\mathcal{L}(\theta_i-\epsilon)}
 {2\epsilon}.
-\]
+$$
 
-Compare this with the analytical gradient using absolute and relative tolerances. Verification should use sufficient precision, a deterministic function, and an \(\epsilon\) appropriate to parameter scale. Too small, and rounding error dominates; too large, and the estimate poorly approximates the local derivative.
+Compare this with the analytical gradient using absolute and relative tolerances. Verification should use sufficient precision, a deterministic function, and an $\epsilon$ appropriate to parameter scale. Too small, and rounding error dominates; too large, and the estimate poorly approximates the local derivative.
 
 ::: {.callout-warning title="Misconceptions"}
 - **“A zero gradient means the model is optimal.”** It may indicate a stationary point, saturation, a broken gradient path, or an implementation error.
@@ -60,7 +60,7 @@ Compare this with the analytical gradient using absolute and relative tolerances
 
 ## Self-check
 
-1. Why does the cross-entropy derivative with respect to logits simplify to \(p_i-\mathbb{1}[i=y]\)?
+1. Why does the cross-entropy derivative with respect to logits simplify to $p_i-\mathbb{1}[i=y]$?
 2. What does disagreement between analytical and finite-difference gradients reveal?
 3. Why can a gradient-descent step fail to reduce loss if the update is too large?
 

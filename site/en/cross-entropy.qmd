@@ -1,65 +1,91 @@
 ---
-title: "Cross-entropy: penalizing predictions"
+title: "Cross-entropy and KL divergence"
 subtitle: "Deriving the objective from target distributions to logits"
 lang: en
 ---
 
 ::: {.chapter-lead}
-Cross-entropy compares a target distribution \(q\) with a predicted distribution \(p\). For a one-hot target — a single correct token — it becomes the negative log-probability of the target token.
+Cross-entropy compares a target distribution $q$ with a predicted distribution $p$. It measures the average cost of using $p$ to encode events distributed according to $q$. Understanding that cost requires connecting it to [Shannon entropy](entropy.qmd) and KL divergence without conflating them.
 :::
 
 ## Definition
 
-\[
+$$
 H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
-\]
+$$
 
-Here, \(q_i\geq0\), \(\sum_iq_i=1\), and \(p\) is a normalized distribution. For a one-hot target class \(y\), \(q_y=1\) and all other entries are zero:
+Here, $q_i\geq0$, $\sum_iq_i=1$, and $p$ is a normalized distribution. Unless stated otherwise, $\log$ denotes the natural logarithm, so values are in nats; using $\log_2$ gives bits. For a one-hot target class $y$, $q_y=1$ and all other entries are zero:
 
-\[
+$$
 H(q,p)=-\log p_y.
-\]
+$$
 
-In next-token prediction, \(y\) is the observed target token ID at that position. The loss increases when the model assigns a low probability to that token.
+In next-token prediction, $y$ is the observed target token ID at that position. The loss increases when the model assigns a low probability to that token.
 
 ## Derivative with respect to logits
 
-With \(p_i=\operatorname{softmax}(z)_i\), the one-hot loss is:
+With $p_i=\operatorname{softmax}(z)_i$, the one-hot loss is:
 
-\[
+$$
 \ell(z,y)=-z_y+\log\sum_{j=1}^{V}e^{z_j}.
-\]
+$$
 
 Differentiating gives:
 
-\[
+$$
 \frac{\partial\ell}{\partial z_i}
 = -\mathbb{1}[i=y]+\frac{e^{z_i}}{\sum_j e^{z_j}}
 = p_i-\mathbb{1}[i=y].
-\]
+$$
 
 The gradient pushes the target logit upward relative to the others and reduces alternative logits according to their probabilities. This formula is for one unweighted position; class weights, label smoothing, and batch reduction change the formula or its scale.
 
 ## Cross-entropy, entropy, and KL divergence
 
-Target entropy is \(H(q)=-\sum_iq_i\log q_i\). Kullback–Leibler divergence satisfies:
+Target entropy is $H(q)=-\sum_iq_i\log q_i$. Kullback–Leibler divergence satisfies:
 
-\[
+$$
 D_{\mathrm{KL}}(q\Vert p)=\sum_iq_i\log\frac{q_i}{p_i}
 =H(q,p)-H(q).
-\]
+$$
 
-For a fixed target, minimizing cross-entropy with respect to \(p\) therefore also minimizes \(D_{\mathrm{KL}}(q\Vert p)\). For a one-hot target, \(H(q)=0\), so the two quantities are equal.
+For a fixed target, minimizing cross-entropy with respect to $p$ therefore also minimizes $D_{\mathrm{KL}}(q\Vert p)$. For a one-hot target, $H(q)=0$, so the two quantities are equal.
 
 ::: {.callout-warning title="Misconceptions"}
 - **“Cross-entropy is a symmetric distance between distributions.”** No: it is not symmetric and is not a distance in the usual sense.
-- **“Cross-entropy must lie between 0 and 1.”** No: it can grow arbitrarily large if \(p_y\) approaches zero.
+- **“Cross-entropy must lie between 0 and 1.”** No: it can grow arbitrarily large if $p_y$ approaches zero.
 - **“CrossEntropyLoss expects probabilities.”** In the usual PyTorch class-index API, it expects unnormalized logits and applies an operation equivalent to log-softmax followed by NLL.
 :::
 
+## Interpretation through coding
+
+If events actually follow distribution $q$, but a code is built from probabilities $p$, the ideal length assigned to outcome $i$ is $-\ln p_i$ nats. Its expected length under $q$ is therefore cross-entropy:
+
+$$
+H(q,p)=-\sum_i q_i\ln p_i.
+$$
+
+With base-2 logarithms, the same expression is measured in bits. The logarithm base sets the unit but does not change the qualitative conclusions. If $p_i=0$ for an outcome with $q_i>0$, the cost is infinite: the model rules out an event that can occur.
+
+## Why the KL direction matters
+
+The definition of $D_{\mathrm{KL}}(q\Vert p)$ and its relationship to $H(q,p)$ are given above. The direction is not decorative: in general, $D_{\mathrm{KL}}(q\Vert p)\neq D_{\mathrm{KL}}(p\Vert q)$ because the expectation is taken under the first distribution. Reversing the arguments therefore changes the penalty.
+
+For example, if $q=(1,0)$ and $p=(0.9,0.1)$, then $H(q,p)=-\log(0.9)$ and $D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)$ because $H(q)=0$. The reverse divergence $D_{\mathrm{KL}}(p\Vert q)$ is infinite: $p$ assigns positive mass to the second category while $q$ assigns it zero probability. More generally, $D_{\mathrm{KL}}(q\Vert p)=+\infty$ whenever $q$ assigns positive mass to an outcome that $p$ assigns zero probability.
+
+## One-hot targets and general target distributions
+
+For a one-hot target of class $y$, the sum reduces to $H(q,p)=-\log p_y$. This is the usual next-token prediction case where one observed token is the target. For a soft target (for example, label smoothing or a teacher distribution), several terms $-q_i\log p_i$ contribute; the loss is no longer just the negative log-probability of one class.
+
+Empirical cross-entropy computed on a corpus is an average over observed targets. It equals the source's true entropy only under ideal conditions, notably when the predictive distribution matches the true conditional distribution. Lower training cross-entropy does not guarantee better generalization: evaluate on separate validation/test data.
+
+## Connection to perplexity
+
+For average cross-entropy in nats $\bar{H}$, perplexity is $\exp(\bar{H})$. If the average is in bits, use $2^{\bar{H}}$. Comparisons require the log base, included token positions, tokenizer, and reduction (sum or mean) to be specified. Perplexity is not a direct measure of factual truth or overall assistant quality.
+
 ## Numerical example
 
-If the target is class 2 and \(p_2=0.8\), then \(\ell=-\log(0.8)\approx0.223\). If \(p_2=0.01\), the loss is about \(4.605\). A wrong but highly confident prediction is strongly penalized.
+If the target is class 2 and $p_2=0.8$, then $\ell=-\log(0.8)\approx0.223$. If $p_2=0.01$, the loss is about $4.605$. A wrong but highly confident prediction is strongly penalized.
 
 ## Self-check
 
@@ -68,6 +94,14 @@ If the target is class 2 and \(p_2=0.8\), then \(\ell=-\log(0.8)\approx0.223\). 
 3. How does the mathematical formula differ from the PyTorch API?
 
 **Next:** [Loss](loss.qmd) · [Gradients](gradients.qmd)
+
+
+## Further references
+
+- Claude E. Shannon (1948), [A Mathematical Theory of Communication](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf).
+- Cover & Thomas, [Elements of Information Theory](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X).
+- [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU).
+- [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html).
 
 :::: {.language-switch}
 [Français](../fr/cross-entropy.qmd) · [English](cross-entropy.qmd)

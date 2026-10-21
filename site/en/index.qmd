@@ -10,190 +10,66 @@ toc: false
 
 ## Understand language models, one mechanism at a time
 
-From numerical foundations to a tiny GPT: each idea is explained, translated into readable code, and then tested through reproducible checks and experiments.
+A progressive path connecting intuition, mathematics, code, and experimental evidence. High-level pages explain how components work together; concept pages go deeper into one idea and link to its equations, references, and implementation status.
 
 <div class="hero-actions">
-[Start with causal attention](transformer.qmd){.btn .btn-primary}
+[Explore the learning path](transformer.qmd){.btn .btn-primary}
 [Explore the source code](https://github.com/JM-Brun/llm-lab){.btn .btn-outline-primary}
 </div>
 ::::
 
-## A laboratory, not a black box
-
-LLM Lab is a hands-on path to understanding modern language models, starting with vectors, probabilities, loss functions, and gradients. The goal is **not** to train a production model from scratch: it is to build small, inspectable components and compare their behavior with trustworthy references.
+## How to navigate
 
 :::: {.learning-grid}
 ::: {.learning-card}
-<span class="step">00 / FOUNDATIONS</span>
+<span class="step">01 / SYNTHESIS</span>
 
-### Numerical foundations
+### Understand the system
 
-Understand logits, probabilities, cross-entropy, and gradients.
+High-level pages connect components: attention in a Transformer, autoregressive prediction, training, and generation.
 
-**Outcome:** a loss function and its gradient checked numerically.
-
-[Explore the foundations](mathematical-foundations.qmd){.card-link}
+[Open the Transformer overview](transformer.qmd){.card-link}
 :::
 ::: {.learning-card}
-<span class="step">01 / DATA</span>
+<span class="step">02 / CONCEPTS</span>
 
-### Text and tokenization
+### Study one concept deeply
 
-Map text to token IDs and build training windows.
+Each concept has a dedicated page covering intuition, provenance, equations, assumptions, counterexamples, related concepts, and references.
 
-**Outcome:** tested encode/decode behavior and inspectable examples.
-:::
-::: {.learning-card learning-card-featured}
-<span class="step">02 / ATTENTION</span>
-
-### Causal attention
-
-Understand queries, keys, values, and the mask that blocks access to future tokens.
-
-**Outcome:** causal attention with shape and mask tests.
-
-[Read the first chapter](transformer.qmd){.card-link}
+[Explore mathematical foundations](mathematical-foundations.qmd){.card-link}
 :::
 ::: {.learning-card}
-<span class="step">03 / MODEL</span>
+<span class="step">03 / CODE AND EVIDENCE</span>
 
-### Build a tiny GPT
+### Verify rather than assume
 
-Connect embeddings, Transformer blocks, next-token prediction, and generation.
+Pages distinguish code that exists, tests that cover it, and work that is still planned. An explanation or isolated test is not enough to establish mastery or overall model quality.
 
-**Outcome:** an observable training loop, validation, and generation.
-:::
-::: {.learning-card}
-<span class="step">04 / ADAPTATION</span>
-
-### Fine-tuning and SFT
-
-Establish a baseline, adapt a model to a task, and analyze errors.
-
-**Outcome:** a documented experimental protocol and comparable results.
-:::
-::: {.learning-card}
-<span class="step">05 / EVALUATION</span>
-
-### Efficiency and reliability
-
-Measure quality, memory, and latency trade-offs without overinterpreting one metric.
-
-**Outcome:** ablations, uncertainty estimates, and explicit limitations.
+[Browse the repository](https://github.com/JM-Brun/llm-lab)
 :::
 ::::
 
-The [detailed learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) defines exit criteria for each module. Python implementations live in `src/llm_lab/`; Quarto pages explain the mathematics, show minimal code, and link to executable tests.
+## Suggested path
 
-## A six-step learning loop
+1. **Mathematical foundations** — logits, probabilities, likelihood, cross-entropy, loss, and gradients.
+2. **Attention and Transformers** — queries, keys, values, scores, softmax, and causal masking.
+3. **Data and the autoregressive objective** — tokenization, input-target shifting, and next-token prediction.
+4. **Model and training** — blocks, optimization, validation, generation, and evaluation.
+5. **Critical notes** — examine assumptions, counterexamples, and the limitations of metrics and representations.
 
-:::: {.method-grid}
-::: {.method-step}
-<span>01</span>
-**Intuition**
+This path describes the learning structure, not the implementation status of every component. The [detailed learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) and [roadmap](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md) define validation criteria.
 
-Start with a small example and a precise question.
-:::
-::: {.method-step}
-<span>02</span>
-**Mathematics**
+## Editorial principles
 
-State equations, dimensions, and assumptions.
-:::
-::: {.method-step}
-<span>03</span>
-**Implementation**
+- **One concept, one canonical page.** Synthesis pages link to deeper definitions rather than duplicating them.
+- **Intuition and provenance.** Explain the problem that motivated the concept, its origin, and why it became useful.
+- **Explicit assumptions.** State scope conditions, misconceptions, and discriminating counterexamples.
+- **Connect maths to code.** Each page identifies the implementation and tests available, or clearly states that they are absent.
+- **Traceable references.** Distinguish original papers, official documentation, educational explanations, and illustrations.
 
-Write a readable Python reference implementation.
-:::
-::: {.method-step}
-<span>04</span>
-**Tests**
-
-Check numerical properties and edge cases.
-:::
-::: {.method-step}
-<span>05</span>
-**Experiment**
-
-Compare against a baseline with controlled data and configuration.
-:::
-::: {.method-step}
-<span>06</span>
-**Analysis**
-
-Report results, failures, and limitations.
-:::
-::::
-
-## First chapter: causal attention
-
-Attention builds a context-aware representation for each token. In an autoregressive model such as GPT, a causal mask prevents a position from using future tokens.
-
-![GPT-2 decoder block stack.](https://jalammar.github.io/images/gpt2/gpt2-transformer-block-vectors-2.png){fig-alt="Stack of decoder blocks with masked self-attention and a feed-forward network" width=100%}
-
-_Figure 1 — Illustration by Jay Alammar, embedded from [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/). The image remains hosted by its author; consult the source page for context and applicable rights._
-
-[Open the chapter: causal attention and masks →](transformer.qmd)
-
-## Beyond default assumptions
-
-Some common assumptions deserve to be tested rather than repeated. These notes connect mathematics, research literature, and reproducible experiments.
-
-:::: {.learning-grid}
-::: {.learning-card}
-<span class="step">06 / METRICS</span>
-
-### Cosine similarity
-
-When does the angle between two embeddings reflect the similarity we care about? Anisotropy, *hubness*, alternative metrics, and evaluation protocols.
-
-[Read the critical note](cosine-similarity.qmd){.card-link}
-:::
-::: {.learning-card}
-<span class="step">07 / REPRESENTATIONS</span>
-
-### The linearity hypothesis
-
-Distinguish representation, decodability, and causal use; understand XOR, superposition, and the limits of probes.
-
-[Read the critical note](embedding-linearity.qmd){.card-link}
-:::
-::::
-
-## Follow project progress
-
-The [repository roadmap](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md) distinguishes implemented features, priority work, and the acceptance criteria required to mark a module complete. It avoids treating a published explanation as proof that an implementation or experiment has been verified.
-
-## Project principles
-
-:::: {.principle-grid}
-::: {.principle}
-**Reproducibility**
-
-Fix data, configuration, and random seeds where relevant.
-:::
-::: {.principle}
-**Scientific rigor**
-
-Keep training, validation, and test data separate; avoid single-metric conclusions.
-:::
-::: {.principle}
-**Verification**
-
-Check gradients with finite differences when appropriate.
-:::
-::: {.principle}
-**Provenance**
-
-Cite external work, figures, datasets, and implementations.
-:::
-::::
-
-External illustrations remain attributed to their authors. A working URL does not imply a reuse licence: see the [references page](../references.qmd).
+Pages are available in French and English. External resources are attributed on the [references page](../references.qmd); an accessible image or URL is not permission to reuse it.
 
 :::: {.language-switch}
 **Choose a language:** [Français](../index.qmd) · [English](index.qmd)
 ::::
-
-The site is built with [Quarto](https://quarto.org/). Pages are versioned alongside the code so explanations can evolve with tests and experiments.

@@ -10,18 +10,18 @@ Le softmax convertit les logits en une distribution catégorielle sur le vocabul
 
 ## Définition
 
-Pour des logits \(z\in\mathbb{R}^{V}\) :
+Pour des logits $z\in\mathbb{R}^{V}$ :
 
-\[
+$$
 p_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}},\qquad
 p_i\geq0,\qquad \sum_{i=1}^{V}p_i=1.
-\]
+$$
 
-Le vecteur \(p\) appartient au simplexe des distributions discrètes. Pour un token cible \(y\), \(p_y\) est la probabilité prédite à cette position.
+Le vecteur $p$ appartient au simplexe des distributions discrètes. Pour un token cible $y$, $p_y$ est la probabilité prédite à cette position.
 
 ## Exemple et température
 
-Avec \(z=(0,\log 3)\), \(p=(0.25,0.75)\). Avec une température \(\tau>0\), on peut définir \(p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i\). Une température plus élevée tend à aplatir la distribution ; une plus faible tend à la concentrer. Cela modifie les probabilités sans modifier l'ordre des logits.
+Avec $z=(0,\log 3)$, $p=(0.25,0.75)$. Avec une température $\tau>0$, on peut définir $p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i$. Une température plus élevée tend à aplatir la distribution ; une plus faible tend à la concentrer. Cela modifie les probabilités sans modifier l'ordre des logits.
 
 La température peut changer la calibration, mais son effet doit être mesuré sur des données tenues à part. Une distribution plus concentrée n'est pas automatiquement plus exacte.
 
@@ -29,10 +29,10 @@ La température peut changer la calibration, mais son effet doit être mesuré s
 
 Un modèle autorégressif factorise la probabilité d'une séquence :
 
-\[
+$$
 P_\theta(x_1,\ldots,x_T)=\prod_{t=1}^{T}
 P_\theta(x_t\mid x_{<t}).
-\]
+$$
 
 Chaque distribution est conditionnée par le préfixe. La probabilité d'un token ne doit donc pas être interprétée comme une propriété indépendante du contexte.
 
@@ -45,7 +45,7 @@ Chaque distribution est conditionnée par le préfixe. La probabilité d'un toke
 ## Questions de contrôle
 
 1. Quelle différence entre normalisation et calibration ?
-2. Pourquoi \(P_\theta(x_t\mid x_{<t})\) dépend-il du préfixe ?
+2. Pourquoi $P_\theta(x_t\mid x_{<t})$ dépend-il du préfixe ?
 3. Que change la température, et que ne peut-elle pas garantir ?
 
 **Suite :** [Vraisemblance](vraisemblance.qmd) · [Cross-entropie](cross-entropy.qmd)

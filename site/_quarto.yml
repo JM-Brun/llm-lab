@@ -12,6 +12,8 @@ project:
     - en/probabilities.qmd
     - fr/vraisemblance.qmd
     - en/likelihood.qmd
+    - fr/entropy.qmd
+    - en/entropy.qmd
     - fr/cross-entropy.qmd
     - en/cross-entropy.qmd
     - fr/loss.qmd
@@ -20,6 +22,12 @@ project:
     - en/gradients.qmd
     - fr/transformer.qmd
     - en/transformer.qmd
+    - fr/queries-keys-values.qmd
+    - en/queries-keys-values.qmd
+    - fr/scaled-dot-product-attention.qmd
+    - en/scaled-dot-product-attention.qmd
+    - fr/causal-masking.qmd
+    - en/causal-masking.qmd
     - fr/cosine-similarity.qmd
     - en/cosine-similarity.qmd
     - fr/linearite-embeddings.qmd
@@ -61,11 +69,17 @@ website:
               - fr/mathematical-foundations.qmd
               - fr/logits.qmd
               - fr/probabilites.qmd
+              - fr/entropy.qmd
               - fr/cross-entropy.qmd
               - fr/loss.qmd
               - fr/vraisemblance.qmd
               - fr/gradients.qmd
-          - fr/transformer.qmd
+          - section: "Attention et Transformer"
+            contents:
+              - fr/transformer.qmd
+              - fr/queries-keys-values.qmd
+              - fr/scaled-dot-product-attention.qmd
+              - fr/causal-masking.qmd
           - fr/cosine-similarity.qmd
           - fr/linearite-embeddings.qmd
       - section: "English"
@@ -76,11 +90,17 @@ website:
               - en/mathematical-foundations.qmd
               - en/logits.qmd
               - en/probabilities.qmd
+              - en/entropy.qmd
               - en/cross-entropy.qmd
               - en/loss.qmd
               - en/likelihood.qmd
               - en/gradients.qmd
-          - en/transformer.qmd
+          - section: "Attention and Transformer"
+            contents:
+              - en/transformer.qmd
+              - en/queries-keys-values.qmd
+              - en/scaled-dot-product-attention.qmd
+              - en/causal-masking.qmd
           - en/cosine-similarity.qmd
           - en/embedding-linearity.qmd
       - references.qmd

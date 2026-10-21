@@ -1,0 +1,138 @@
+---
+title: "Entropie : information, incertitude et compression"
+subtitle: "Une même structure mathématique, plusieurs contextes qu'il faut distinguer"
+lang: fr
+---
+
+::: {.chapter-lead}
+En théorie de l'information, l'entropie de Shannon quantifie l'incertitude moyenne d'une variable aléatoire discrète, ou de façon équivalente la longueur moyenne idéale d'un code optimal dans des conditions précises. Elle ne mesure pas directement le « désordre », la vérité, la complexité universelle ou l'ignorance d'une personne.
+:::
+
+## 1. De l'information d'un événement à l'entropie d'une variable
+
+Un événement rare apporte davantage de surprise que le résultat d'un événement presque certain. Pour une issue $x$ de probabilité $p(x)>0$, sa quantité d'information — ou surprisal — est :
+
+$$
+I(x)=-\log_2 p(x).
+$$
+
+Elle est exprimée en bits. Un événement de probabilité $1/2$ apporte 1 bit ; un événement de probabilité $1/8$ apporte 3 bits. Cette quantité dépend de la distribution de référence : « surprise » n'est pas une propriété absolue de l'événement.
+
+Pour une variable discrète $X$ de loi $p(x)$, l'entropie est l'espérance de cette surprise :
+
+$$
+H(X)=\mathbb{E}_{X\sim p}[-\log_2 p(X)]
+=-\sum_{x:p(x)>0}p(x)\log_2 p(x).
+$$
+
+On adopte la convention $0\log 0=0$ par continuité. L'entropie décrit une distribution, non la surprise de l'issue déjà observée.
+
+## 2. Lire la formule et ses limites
+
+- **Entropie nulle :** si une issue est certaine, $H(X)=0$. Il n'y a aucune incertitude à lever.
+- **Loi uniforme :** si $X$ a $n$ issues équiprobables, $H(X)=\log_2 n$. Pour 8 issues, l'entropie vaut 3 bits.
+- **Maximum :** sur un alphabet fini de taille $n$, $H(X)\leq\log_2 n$, avec égalité pour la loi uniforme.
+- **Distribution concentrée :** l'entropie diminue généralement quand la masse se concentre sur quelques issues, mais elle ne dit pas si une prédiction particulière est correcte.
+- **Unités :** logarithme en base 2 → bits ; logarithme naturel → nats. Changer de base change l'unité et multiplie la valeur par une constante.
+
+### Exemple calculé
+
+Pour $p=(1/2,1/4,1/4)$,
+
+$$
+H(X)=-\left(\frac12\log_2\frac12
++2\cdot\frac14\log_2\frac14\right)=1.5\text{ bits}.
+$$
+
+L'entropie est une moyenne pondérée : les issues rares ont une surprise élevée, mais contribuent selon leur probabilité.
+
+## 3. Entropie conjointe, conditionnelle et information mutuelle
+
+Pour deux variables discrètes $X,Y$, l'entropie conjointe $H(X,Y)$ décrit l'incertitude du couple. L'entropie conditionnelle décrit l'incertitude restante sur $Y$ après observation de $X$ :
+
+$$
+H(Y\mid X)=\sum_x p(x)H(Y\mid X=x).
+$$
+
+La règle de chaîne de l'entropie donne :
+
+$$
+H(X,Y)=H(X)+H(Y\mid X).
+$$
+
+L'information mutuelle mesure la réduction moyenne d'incertitude sur $Y$ apportée par $X$ :
+
+$$
+I(X;Y)=H(Y)-H(Y\mid X)
+=\sum_{x,y}p(x,y)\log_2\frac{p(x,y)}{p(x)p(y)}.
+$$
+
+Elle est symétrique et non négative ; $I(X;Y)=0$ si et seulement si $X$ et $Y$ sont indépendantes (pour les distributions considérées). Attention : une dépendance statistique n'établit pas à elle seule une relation causale.
+
+## 4. Pourquoi l'entropie est liée à la compression
+
+Dans un code sans perte, les symboles fréquents peuvent recevoir des codes plus courts et les symboles rares des codes plus longs. Pour une source discrète sans mémoire, l'entropie de Shannon est une borne inférieure sur la longueur moyenne d'un code préfixe ; des codes adaptés peuvent approcher cette borne sur de longues séquences. Il ne s'agit pas d'une garantie que toute méthode de compression atteigne exactement $H(X)$ sur un petit échantillon.
+
+Pour une séquence, la probabilité factorisée en conditionnelles permet de convertir les probabilités en longueur de code idéale :
+
+$$
+-\log_2 p(x_{1:T})
+=-\sum_{t=1}^{T}\log_2 p(x_t\mid x_{<t}).
+$$
+
+Une bonne prédiction attribue des probabilités élevées aux événements qui se produisent et réduit ainsi la longueur de code idéale moyenne. C'est le lien utile entre compression, prédiction du prochain token et objectifs d'entraînement des modèles de langage. Ce lien ne justifie pas l'affirmation générale que « l'intelligence est simplement de la compression ».
+
+## 5. Entropie de Shannon et entropie en physique statistique
+
+La physique statistique utilise une expression mathématiquement apparentée, l'entropie de Gibbs :
+
+$$
+S=-k_B\sum_i p_i\ln p_i,
+$$
+
+où $k_B$ est la constante de Boltzmann. En notant $H_{\mathrm{nats}}=-\sum_i p_i\ln p_i$ l'entropie informationnelle calculée avec le logarithme naturel, on obtient $S=k_B H_{\mathrm{nats}}$. Le facteur $k_B$ donne à l'entropie thermodynamique ses unités physiques.
+
+La formule commune reflète une structure probabiliste partagée, mais les interprétations ne sont pas interchangeables. En théorie de l'information, on étudie notamment les distributions de messages et le coût de codage. En physique statistique, les probabilités décrivent des microétats dans un ensemble physique et l'entropie intervient dans des lois thermodynamiques, avec des hypothèses sur l'ensemble et les contraintes. « Désordre » peut servir d'intuition grossière, mais ne remplace pas la définition ni les conditions physiques.
+
+## 6. Variables continues : une précaution supplémentaire
+
+Pour une densité continue $f(x)$, on définit parfois l'entropie différentielle :
+
+$$
+h(X)=-\int f(x)\ln f(x)\,dx.
+$$
+
+Contrairement à l'entropie discrète, elle peut être négative et dépend du changement d'échelle ou de coordonnées. Elle ne se lit donc pas comme une longueur de code absolue sans préciser la quantification ou la référence. Il ne faut pas transposer sans précaution les propriétés de $H(X)$ à $h(X)$.
+
+## 7. Ce que l'entropie ne dit pas
+
+::: {.callout-warning title="Idées reçues"}
+- **« Entropie = désordre. »** C'est une analogie limitée ; la définition dépend d'une distribution et d'un cadre précis.
+- **« Une forte entropie signifie que le résultat est faux. »** Non : elle indique une distribution plus incertaine, pas une erreur factuelle.
+- **« L'entropie mesure la complexité intrinsèque d'un texte. »** Elle dépend du modèle probabiliste, de la représentation et du contexte de prédiction.
+- **« Shannon et thermodynamique parlent exactement de la même grandeur. »** Les formules sont liées, mais les interprétations, les unités et les hypothèses diffèrent.
+- **« L'entropie différentielle est toujours positive. »** Faux ; elle peut être négative et dépend de l'échelle.
+:::
+
+## 8. Lien avec les autres concepts du site
+
+- [Probabilités](probabilites.qmd) : définit la distribution qui sert à calculer l'entropie.
+- [Vraisemblance](vraisemblance.qmd) : relie les probabilités des observations à leur log-probabilité.
+- [Entropie croisée et divergence KL](cross-entropy.qmd) : compare une distribution cible à une distribution prédite ; c'est le pont direct vers les objectifs des LLM.
+- [Fondations mathématiques](mathematical-foundations.qmd) : replace ces quantités dans la chaîne logits → probabilités → objectif → gradients.
+
+## Références et parcours vidéo
+
+### Sources de référence
+
+- Claude E. Shannon (1948), [*A Mathematical Theory of Communication*](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf) — source fondatrice de la théorie mathématique de l'information.
+- Thomas M. Cover & Joy A. Thomas, [*Elements of Information Theory*](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X) — entropie, information mutuelle et codage.
+- Edwin T. Jaynes (1957), [*Information Theory and Statistical Mechanics*](https://doi.org/10.1103/PhysRev.106.620) — lien entre information et physique statistique.
+- [3Blue1Brown — Reinventing Entropy](https://www.youtube.com/watch?v=l6DKRf-fAAM) — explication visuelle de l'entropie et de la compression.
+- [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU) — suite consacrée à l'entropie croisée et aux objectifs des LLM.
+
+Les autres vidéos proposées sont répertoriées dans la [bibliographie du projet](../references.qmd). Elles sont des ressources pédagogiques complémentaires ; les définitions et affirmations formelles ci-dessus s'appuient d'abord sur les références mathématiques et physiques.
+
+:::: {.language-switch}
+[Français](entropy.qmd) · [English](../en/entropy.qmd)
+::::

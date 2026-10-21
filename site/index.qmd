@@ -10,190 +10,66 @@ toc: false
 
 ## Comprendre les modèles de langage, un mécanisme à la fois
 
-Des fondations numériques à un petit GPT : chaque idée est expliquée, traduite en code lisible, puis mise à l'épreuve par des tests et des expériences reproductibles.
+Un parcours progressif pour relier intuition, mathématiques, code et preuves expérimentales. Les pages de synthèse expliquent comment les composants coopèrent ; les pages conceptuelles approfondissent une notion précise et renvoient vers ses équations, ses références et son statut d'implémentation.
 
 <div class="hero-actions">
-[Commencer par l'attention causale](fr/transformer.qmd){.btn .btn-primary}
+[Explorer le parcours](fr/transformer.qmd){.btn .btn-primary}
 [Explorer le code source](https://github.com/JM-Brun/llm-lab){.btn .btn-outline-primary}
 </div>
 ::::
 
-## Un laboratoire, pas une boîte noire
-
-LLM Lab propose un parcours pratique pour comprendre les modèles de langage modernes à partir de vecteurs, de probabilités, de fonctions de perte et de gradients. Le but n'est **pas** d'entraîner un modèle de production depuis zéro : il s'agit de construire des composants réduits et inspectables, puis de confronter leurs résultats à des références fiables.
+## Comment naviguer
 
 :::: {.learning-grid}
 ::: {.learning-card}
-<span class="step">00 / FONDATIONS</span>
+<span class="step">01 / SYNTHÈSES</span>
 
-### Fondations numériques
+### Comprendre le système
 
-Comprendre les logits, les probabilités, la cross-entropie et les gradients.
+Des pages de haut niveau relient les composants : attention dans un Transformer, prédiction autorégressive, entraînement et génération.
 
-**Résultat :** une fonction de perte et son gradient vérifiés numériquement.
-
-[Explorer les fondations](fr/mathematical-foundations.qmd){.card-link}
+[Voir la synthèse Transformer](fr/transformer.qmd){.card-link}
 :::
 ::: {.learning-card}
-<span class="step">01 / DONNÉES</span>
+<span class="step">02 / CONCEPTS</span>
 
-### Texte et tokenisation
+### Approfondir une notion
 
-Passer du texte à une suite d'identifiants, puis construire des fenêtres d'entraînement.
+Chaque concept dispose d'une page dédiée : intuition, provenance, équations, hypothèses, contre-exemples, liens vers les notions voisines et références.
 
-**Résultat :** un encodeur/décodeur testé et des exemples inspectables.
-:::
-::: {.learning-card learning-card-featured}
-<span class="step">02 / ATTENTION</span>
-
-### Attention causale
-
-Comprendre les requêtes, clés, valeurs et le masque qui interdit l'accès aux tokens futurs.
-
-**Résultat :** une attention causale avec tests de forme et de masque.
-
-[Lire le premier chapitre](fr/transformer.qmd){.card-link}
+[Explorer les fondations mathématiques](fr/mathematical-foundations.qmd){.card-link}
 :::
 ::: {.learning-card}
-<span class="step">03 / MODÈLE</span>
+<span class="step">03 / CODE ET PREUVES</span>
 
-### Construire un petit GPT
+### Vérifier plutôt que supposer
 
-Relier embeddings, blocs Transformer, prédiction du token suivant et génération.
+Les pages distinguent le code réellement présent, les tests qui le couvrent et les éléments encore planifiés. Une explication ou un test isolé ne suffit pas à prouver la maîtrise ni la qualité générale d'un modèle.
 
-**Résultat :** une boucle d'entraînement, une validation et une génération observables.
-:::
-::: {.learning-card}
-<span class="step">04 / ADAPTATION</span>
-
-### Fine-tuning et SFT
-
-Établir une baseline, adapter un modèle à une tâche et analyser les erreurs.
-
-**Résultat :** un protocole d'expérience documenté et des résultats comparables.
-:::
-::: {.learning-card}
-<span class="step">05 / ÉVALUATION</span>
-
-### Efficacité et fiabilité
-
-Mesurer les compromis entre qualité, mémoire et latence sans surinterpréter une métrique.
-
-**Résultat :** des ablations, des mesures d'incertitude et des limites explicites.
+[Consulter le dépôt](https://github.com/JM-Brun/llm-lab)
 :::
 ::::
 
-Le [parcours détaillé](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) définit les critères de sortie de chaque module. Les implémentations Python vivent dans le répertoire `src/llm_lab/` ; les pages Quarto expliquent les mathématiques, présentent des extraits minimaux et renvoient aux tests exécutables.
+## Parcours conseillé
 
-## Une méthode en six temps
+1. **Fondations mathématiques** — logits, probabilités, vraisemblance, cross-entropie, loss et gradients.
+2. **Attention et Transformer** — requêtes, clés, valeurs, scores, softmax et masque causal.
+3. **Données et objectif autorégressif** — tokenisation, décalage entrée-cible et prédiction du prochain token.
+4. **Modèle et entraînement** — blocs, optimisation, validation, génération et évaluation.
+5. **Notes critiques** — examiner les hypothèses, les contre-exemples et les limites des métriques et des représentations.
 
-:::: {.method-grid}
-::: {.method-step}
-<span>01</span>
-**Intuition**
+Ce parcours décrit l'organisation pédagogique, pas l'état d'avancement de toutes les implémentations. Le [parcours détaillé](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) et la [feuille de route](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md) précisent les critères de validation.
 
-Partir d'un exemple réduit et d'une question précise.
-:::
-::: {.method-step}
-<span>02</span>
-**Mathématiques**
+## Principes éditoriaux
 
-Expliciter les équations, dimensions et hypothèses.
-:::
-::: {.method-step}
-<span>03</span>
-**Implémentation**
+- **Une notion, une page de référence.** Les pages de synthèse renvoient à la définition approfondie au lieu de la recopier partout.
+- **Intuition et provenance.** Expliquer le problème qui a motivé le concept, son origine et les raisons de son adoption.
+- **Hypothèses explicites.** Donner les conditions d'application, les idées reçues et les contre-exemples discriminants.
+- **Mathématiques et code reliés.** Chaque page indique l'implémentation et les tests disponibles, ou signale clairement leur absence.
+- **Références traçables.** Distinguer article original, documentation officielle, explication pédagogique et illustration.
 
-Écrire une version de référence lisible en Python.
-:::
-::: {.method-step}
-<span>04</span>
-**Tests**
-
-Vérifier les propriétés numériques et les cas limites.
-:::
-::: {.method-step}
-<span>05</span>
-**Expérience**
-
-Comparer à une baseline avec données et configuration contrôlées.
-:::
-::: {.method-step}
-<span>06</span>
-**Analyse**
-
-Documenter résultats, échecs et limites.
-:::
-::::
-
-## Premier chapitre : attention causale
-
-L'attention construit une représentation contextualisée de chaque token. Dans un modèle autorégressif comme GPT, un masque causal interdit à une position de consulter les tokens futurs.
-
-![Schéma de la pile de blocs décodeurs GPT-2.](https://jalammar.github.io/images/gpt2/gpt2-transformer-block-vectors-2.png){fig-alt="Pile de blocs décodeurs avec attention auto-régressive masquée et réseau feed-forward" width=100%}
-
-_Figure 1 — Illustration de Jay Alammar, intégrée depuis [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/). L'image reste hébergée par son auteur ; voir la page source pour le contexte et les droits applicables._
-
-[Ouvrir le chapitre : attention et masque causal →](fr/transformer.qmd)
-
-## Au-delà des méthodes par défaut
-
-Certaines hypothèses courantes méritent d'être testées plutôt que simplement reprises. Ces notes relient mathématiques, littérature scientifique et expériences reproductibles.
-
-:::: {.learning-grid}
-::: {.learning-card}
-<span class="step">06 / MÉTRIQUES</span>
-
-### Similarité cosinus
-
-Quand l'angle entre deux embeddings reflète-t-il la similarité recherchée ? Anisotropie, *hubness*, métriques alternatives et protocole d'évaluation.
-
-[Lire la note critique](fr/cosine-similarity.qmd){.card-link}
-:::
-::: {.learning-card}
-<span class="step">07 / REPRÉSENTATIONS</span>
-
-### L'hypothèse de linéarité
-
-Distinguer représentation, décodabilité et usage causal ; comprendre XOR, superposition et limites des probes.
-
-[Lire la note critique](fr/linearite-embeddings.qmd){.card-link}
-:::
-::::
-
-## Suivre la progression
-
-Le [plan de développement du dépôt](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md) distingue les fonctionnalités déjà présentes, les travaux prioritaires et les critères permettant de considérer un module comme terminé. Il évite de confondre une explication publiée avec une implémentation ou une expérience réellement vérifiée.
-
-## Les principes qui guident le projet
-
-:::: {.principle-grid}
-::: {.principle}
-**Reproductibilité**
-
-Fixer les données, la configuration et les seeds quand c'est pertinent.
-:::
-::: {.principle}
-**Rigueur scientifique**
-
-Séparer entraînement, validation et test ; ne pas conclure à partir d'une seule métrique.
-:::
-::: {.principle}
-**Vérification**
-
-Contrôler les gradients par différences finies lorsque c'est pertinent.
-:::
-::: {.principle}
-**Provenance**
-
-Citer les travaux, figures, jeux de données et implémentations externes.
-:::
-::::
-
-Les illustrations externes restent attribuées à leurs auteurs. Une URL accessible n'implique pas une licence de réutilisation : voir la [page des références](references.qmd).
+Les pages existent en français et en anglais. Les ressources externes sont attribuées dans la [page des références](references.qmd), et l'accès à une image ou à une URL ne constitue pas une autorisation de réutilisation.
 
 :::: {.language-switch}
 **Choisir la langue :** [Français](index.qmd) · [English](en/index.qmd)
 ::::
-
-Le site est construit avec [Quarto](https://quarto.org/). Les pages sont versionnées avec le code afin que les explications puissent évoluer en même temps que les tests et les expériences.

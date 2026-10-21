@@ -10,24 +10,24 @@ lang: en
 
 ## From local penalty to batch loss
 
-For each valid target position \((b,t)\in\mathcal{M}\), let:
+For each valid target position $(b,t)\in\mathcal{M}$, let:
 
-\[
+$$
 \ell_{b,t}=-\log p_{b,t,y_{b,t}}.
-\]
+$$
 
 The mean over valid positions is:
 
-\[
+$$
 \mathcal{L}(\theta)=\frac{1}{|\mathcal{M}|}
 \sum_{(b,t)\in\mathcal{M}}\ell_{b,t}.
-\]
+$$
 
 A sum, per-sequence mean, or weighted mean is also possible. These do not define exactly the same objective and can change gradient scale or the relative weight of sequences.
 
 ## Masking and shifted targets
 
-In causal language modeling, logits at position \(t\) usually predict the token at position \(t+1\). The loss must compare logits with the correctly shifted target token. Padding tokens or explicitly ignored positions must be excluded from both the numerator **and** denominator of a mean over valid targets.
+In causal language modeling, logits at position $t$ usually predict the token at position $t+1$. The loss must compare logits with the correctly shifted target token. Padding tokens or explicitly ignored positions must be excluded from both the numerator **and** denominator of a mean over valid targets.
 
 A one-token alignment error can produce a finite, decreasing loss while training the wrong task.
 
@@ -35,9 +35,9 @@ A one-token alignment error can produce a finite, decreasing loss while training
 
 Loss is the differentiable objective being optimized. A metric such as accuracy, response quality, or calibration can matter without being directly optimized by that loss. For language modeling, perplexity is related to mean per-token NLL:
 
-\[
+$$
 \operatorname{PPL}=\exp(\operatorname{NLL}_{\mathrm{mean}}).
-\]
+$$
 
 This relationship assumes the same logarithm base and aggregation convention. Perplexity also depends on the tokenizer and evaluated corpus.
 
