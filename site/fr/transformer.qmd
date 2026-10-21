@@ -5,7 +5,7 @@ lang: fr
 ---
 
 ::: {.chapter-lead}
-Cette page décrit **comment les composants s'articulent** dans un Transformer autorégressif. Elle sert de carte d'ensemble ; les définitions, dérivations et contre-exemples détaillés vivent dans des pages dédiées.
+Un **Transformer** est une architecture de réseau neuronal qui transforme une séquence de représentations, notamment grâce à l'attention. Un Transformer **autorégressif** est entraîné à prédire le prochain token à partir des tokens précédents ; pendant l'entraînement, plusieurs positions peuvent pourtant être calculées en parallèle. Cette page montre comment l'attention causale rend cette organisation possible. Les termes sont définis dans le [glossaire](glossary.qmd), et l'[historique des Transformers](transformer-history.qmd) présente les principaux jalons.
 :::
 
 ## Le rôle de l'attention
@@ -52,6 +52,7 @@ Un test déterminant devra vérifier l'invariance causale de bout en bout : modi
 
 ## Ressources complémentaires
 
+- [Glossaire des termes](glossary.qmd) et [historique des Transformers](transformer-history.qmd).
 - [Raschka — *Build a Large Language Model (From Scratch)*](https://www.sebastianraschka.com/llms-from-scratch/) et [son dépôt de code](https://github.com/rasbt/LLMs-from-scratch) : parcours reliant explications, implémentation et exercices.
 - [Jay Alammar — The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) : visualisation de l'architecture et de l'attention masquée.
 - [3Blue1Brown — Transformers, the tech behind LLMs](https://www.3blue1brown.com/lessons/gpt/) : intuition visuelle complémentaire, à distinguer d'une spécification technique.
