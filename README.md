@@ -6,11 +6,12 @@ The goal is not to train a production-scale LLM from scratch. It is to implement
 
 ## Learn through the Quarto site
 
-The project includes a bilingual Quarto website that explains concepts step by step in **French and English**, connecting intuition, mathematical notation, readable Python examples, tests, and experimental limitations.
+The project includes a bilingual Quarto website organized into three layers: overview pages that connect concepts, dedicated concept pages that explain one idea in depth, and implementation/tests referenced when they exist. Pages explicitly distinguish verified code from planned work.
 
 - French introduction: `site/index.qmd`
 - English introduction: `site/en/index.qmd`
-- Attention and causal masking: `site/fr/transformer.qmd` and `site/en/transformer.qmd`
+- Transformer overview: `site/fr/transformer.qmd` and `site/en/transformer.qmd` (high-level synthesis, not a detailed concept chapter)
+- Dedicated attention concepts: Q/K/V, scaled dot-product attention, and causal masking, each with French and English pages under `site/fr/` and `site/en/`
 - Critical notes on cosine similarity: `site/fr/cosine-similarity.qmd` and `site/en/cosine-similarity.qmd`
 - Critical notes on embedding linearity: `site/fr/linearite-embeddings.qmd` and `site/en/embedding-linearity.qmd`
 - Visual references and image provenance: `site/references.qmd`
