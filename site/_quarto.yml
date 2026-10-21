@@ -41,6 +41,8 @@ project:
     - fr/positional-encoding.qmd
     - fr/exercises.qmd
     - en/exercises.qmd
+    - fr/evaluation-experimentale.qmd
+    - en/experimental-evaluation.qmd
     - references.qmd
 
 website:
@@ -97,6 +99,7 @@ website:
               - fr/causal-masking.qmd
               - fr/positional-encoding.qmd
           - fr/exercises.qmd
+          - fr/evaluation-experimentale.qmd
           - fr/glossary.qmd
           - fr/cosine-similarity.qmd
           - fr/linearite-embeddings.qmd
@@ -122,6 +125,7 @@ website:
               - en/scaled-dot-product-attention.qmd
               - en/causal-masking.qmd
           - en/exercises.qmd
+          - en/experimental-evaluation.qmd
           - en/glossary.qmd
           - en/cosine-similarity.qmd
           - en/embedding-linearity.qmd
