@@ -10,15 +10,15 @@ La cross-entropie compare une distribution cible $q$ à une distribution prédit
 
 ## Définition
 
-$
+$$
 H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
-$
+$$
 
 Ici, $q_i\geq0$, $\sum_iq_i=1$, et $p$ est une distribution normalisée. Pour une cible one-hot de classe $y$, $q_y=1$ et les autres valeurs sont nulles :
 
-$
+$$
 H(q,p)=-\log p_y.
-$
+$$
 
 Dans la prédiction du prochain token, $y$ est l'identifiant du token observé à la position cible. La perte augmente quand le modèle attribue une faible probabilité à ce token.
 
@@ -26,17 +26,17 @@ Dans la prédiction du prochain token, $y$ est l'identifiant du token observé �
 
 Avec $p_i=\operatorname{softmax}(z)_i$, la perte pour une cible one-hot s'écrit :
 
-$
+$$
 \ell(z,y)=-z_y+\log\sum_{j=1}^{V}e^{z_j}.
-$
+$$
 
 En dérivant :
 
-$
+$$
 \frac{\partial\ell}{\partial z_i}
 = -\mathbb{1}[i=y]+\frac{e^{z_i}}{\sum_j e^{z_j}}
 = p_i-\mathbb{1}[i=y].
-$
+$$
 
 Le gradient pousse donc le logit cible vers le haut relativement aux autres, et réduit les logits des alternatives selon leurs probabilités. Cette formule porte sur une seule position et une perte non pondérée ; les poids, le lissage de cible et la réduction par batch changent la formule ou son échelle.
 
@@ -44,10 +44,10 @@ Le gradient pousse donc le logit cible vers le haut relativement aux autres, et 
 
 L'entropie de la cible est $H(q)=-\sum_iq_i\log q_i$. La divergence de Kullback–Leibler vérifie :
 
-$
+$$
 D_{\mathrm{KL}}(q\Vert p)=\sum_iq_i\log\frac{q_i}{p_i}
 =H(q,p)-H(q).
-$
+$$
 
 Pour une cible fixe, minimiser la cross-entropie par rapport à $p$ revient donc à minimiser $D_{\mathrm{KL}}(q\Vert p)$. Pour une cible one-hot, $H(q)=0$ et les deux quantités sont égales.
 
@@ -61,9 +61,9 @@ Pour une cible fixe, minimiser la cross-entropie par rapport à $p$ revient donc
 
 Si les événements suivent réellement la loi $q$, mais que le code est construit à partir de probabilités $p$, la longueur idéale attribuée à l'issue $i$ est $-\log_2 p_i$ bits. La longueur moyenne attendue sous $q$ est donc l'entropie croisée :
 
-$
+$$
 H(q,p)=-\sum_i q_i\log_2 p_i.
-$
+$$
 
 Avec des logarithmes naturels, la même expression est exprimée en nats. La base du logarithme fixe l'unité, mais ne change pas les conclusions qualitatives. Si $p_i=0$ pour une issue ayant $q_i>0$, le coût est infini : le modèle exclut un événement qui peut se produire.
 
@@ -71,9 +71,9 @@ Avec des logarithmes naturels, la même expression est exprimée en nats. La bas
 
 La divergence KL est :
 
-$
+$$
 D_{\mathrm{KL}}(q\Vert p)=\sum_i q_i\log\frac{q_i}{p_i}.
-$
+$$
 
 Elle compare la loi cible $q$ à l'approximation $p$ et vérifie $D_{\mathrm{KL}}(q\Vert p)=H(q,p)-H(q)$. Comme $H(q)$ est constant lorsque la cible est fixée, minimiser la cross-entropie revient alors à minimiser cette KL dans la direction $q\Vert p$.
 
