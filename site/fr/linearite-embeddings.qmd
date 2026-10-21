@@ -102,6 +102,14 @@ Ne pas présenter une différence de performance entre probes comme une preuve q
 - **Hewitt.** [Designing and Interpreting Probes with Control Tasks](https://nlp.stanford.edu/~johnhew/probe-control/). Matériel pédagogique complémentaire sur la sélectivité des probes.
 - **Distill.** [A Mathematical Framework for Transformer Circuits](https://transformer-circuits.pub/2021/framework/index.html). Une introduction visuelle à l'analyse mécaniste des transformations linéaires et non linéaires dans les Transformers.
 
+## Vérifications qui discriminent les interprétations
+
+- **Idée reçue :** « Un probe linéaire performant prouve que le modèle utilise la caractéristique. » Non : le probe établit une accessibilité selon son protocole ; une affirmation fonctionnelle demande des preuves supplémentaires, par exemple des interventions contrôlées.
+- **Idée reçue :** « Un probe linéaire qui échoue prouve que l'information est absente. » Non : le code peut être distribué, superposé ou accessible seulement après une transformation non linéaire. Il faut préciser ce que le protocole permet de détecter.
+- **Contre-exemple à la généralisation :** XOR n'est pas séparé par une droite dans les coordonnées d'entrée, mais devient linéairement séparable après ajout de la caractéristique produit. La conclusion porte donc sur la représentation choisie, pas sur une impossibilité absolue.
+
+Pour auditer une affirmation, demander : quelle couche et quelle activation sont étudiées ? Quelle capacité possède le probe ? Quelle tâche de contrôle est utilisée ? Les résultats tiennent-ils sur des combinaisons inédites, et existe-t-il une intervention qui teste l'usage causal ?
+
 ## À retenir
 
 La linéarité est une hypothèse utile et testable, pas une loi universelle. Toute affirmation rigoureuse doit préciser la représentation, le concept, le critère de décodage et la distribution d'évaluation. **L'absence de décodabilité linéaire n'implique pas l'absence d'information ; la décodabilité linéaire n'établit pas à elle seule une causalité.**
