@@ -102,7 +102,7 @@ $$
 h(X)=-\int f(x)\ln f(x)\,dx.
 $$
 
-Contrairement à l'entropie discrète, elle peut être négative et dépend du changement d'échelle ou de coordonnées. Elle ne se lit donc pas comme une longueur de code absolue sans préciser la quantification ou la référence. Il ne faut pas transposer sans précaution les propriétés de $H(X)$ à (h(X)).
+Contrairement à l'entropie discrète, elle peut être négative et dépend du changement d'échelle ou de coordonnées. Elle ne se lit donc pas comme une longueur de code absolue sans préciser la quantification ou la référence. Il ne faut pas transposer sans précaution les propriétés de $H(X)$ à $h(X)$.
 
 ## 7. Ce que l'entropie ne dit pas
 
