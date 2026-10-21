@@ -51,8 +51,31 @@ Pour chaque position $t$, la tête de sortie fournit $z_t\in\mathbb{R}^{V}$. Le 
 ## Questions de contrôle
 
 1. Pourquoi ajouter une constante à tous les logits ne change-t-il pas les probabilités ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Dans le softmax, chaque exponentielle est multipliée par $e^c$ ; ce facteur commun s'annule entre numérateur et dénominateur.
+
+</details>
+
 2. Deux vecteurs de logits peuvent-ils avoir le même argmax et des distributions très différentes ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Oui. Par exemple, $(2,1)$ et $(20,10)$ ont le même indice maximal, mais les différences d'échelle rendent la seconde distribution beaucoup plus concentrée après softmax.
+
+</details>
+
 3. Pourquoi une implémentation stable soustrait-elle le maximum avant l'exponentiation ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Cela réduit le risque de débordement numérique. Soustraire le même maximum à chaque logit ne change pas la distribution softmax, grâce à son invariance par translation.
+
+</details>
 
 **Suite :** [Probabilités](probabilites.qmd) · [Vue d'ensemble](mathematical-foundations.qmd)
 

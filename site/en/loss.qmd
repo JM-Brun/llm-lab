@@ -59,6 +59,35 @@ Before interpreting a curve, document the objective, input/target shift, ignore 
 
 **Next:** [Gradients](gradients.qmd) · [Likelihood](likelihood.qmd)
 
+## Check your understanding
+
+1. Why should the denominator count valid targets rather than all tokens when some are ignored?
+
+<details>
+<summary>Show answer</summary>
+
+Otherwise ignored positions, such as padding, would artificially change the average. The denominator should match the positions actually included in the objective.
+
+</details>
+
+2. Why does lower training loss not prove better generalization?
+
+<details>
+<summary>Show answer</summary>
+
+Training loss measures fit to the optimized data. It can decrease while the model overfits, exploits leakage, or remains poorly evaluated; use independent validation data and a separate test set for final assessment.
+
+</details>
+
+3. When is perplexity comparable across runs?
+
+<details>
+<summary>Show answer</summary>
+
+At minimum, use compatible logarithm and reduction conventions, tokenizer, ignored-target handling, and evaluation corpora/context settings. Otherwise the values do not measure exactly the same quantity.
+
+</details>
+
 :::: {.language-switch}
 [Français](../fr/loss.qmd) · [English](loss.qmd)
 ::::

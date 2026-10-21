@@ -56,6 +56,35 @@ At each position $t$, the output head provides $z_t\in\mathbb{R}^{V}$. The model
 
 **Next:** [Probabilities](probabilities.qmd) · [Overview](mathematical-foundations.qmd)
 
+## Check your understanding
+
+1. Why does adding a constant to every logit leave probabilities unchanged?
+
+<details>
+<summary>Show answer</summary>
+
+In softmax, every exponential is multiplied by $e^c$; the common factor cancels between numerator and denominator.
+
+</details>
+
+2. Can two logit vectors have the same argmax but very different distributions?
+
+<details>
+<summary>Show answer</summary>
+
+Yes. For example, $(2,1)$ and $(20,10)$ have the same maximal index, but the larger scale makes the second softmax distribution much more concentrated.
+
+</details>
+
+3. Why does a numerically stable implementation subtract the maximum before exponentiation?
+
+<details>
+<summary>Show answer</summary>
+
+This reduces the risk of numerical overflow. Subtracting the same maximum from every logit leaves softmax unchanged because softmax is translation-invariant.
+
+</details>
+
 :::: {.language-switch}
 [Français](../fr/logits.qmd) · [English](logits.qmd)
 ::::

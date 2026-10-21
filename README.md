@@ -10,7 +10,9 @@ The project includes a bilingual Quarto website organized into three layers: ove
 
 - French introduction: `site/index.qmd`
 - English introduction: `site/en/index.qmd`
-- Transformer overview: `site/fr/transformer.qmd` and `site/en/transformer.qmd` (high-level synthesis, not a detailed concept chapter)
+- Transformer overview: `site/fr/transformer.qmd` and `site/en/transformer.qmd`
+- Glossary: `site/fr/glossary.qmd` and `site/en/glossary.qmd`
+- Transformer history and timeline: `site/fr/transformer-history.qmd` and `site/en/transformer-history.qmd`
 - Dedicated attention concepts: Q/K/V, scaled dot-product attention, and causal masking, each with French and English pages under `site/fr/` and `site/en/`
 - Entropy, uncertainty, and compression: `site/fr/entropy.qmd` and `site/en/entropy.qmd`
 - Cross-entropy and KL divergence: `site/fr/cross-entropy.qmd` and `site/en/cross-entropy.qmd`
@@ -26,6 +28,19 @@ quarto render site
 ```
 
 The rendered site is written to `site/_site/`. The Quarto CLI is a separate system dependency; it is not installed by `uv`.
+
+## Editorial and content principles
+
+These are repository-maintenance guidelines, not reader-facing lessons; they belong here rather than on the public site homepages.
+
+- **One concept, one canonical page.** Synthesis pages link to deeper definitions rather than duplicating them.
+- **Introduce terms before relying on them.** Define unfamiliar vocabulary on first use or link directly to the glossary.
+- **Intuition with provenance.** Explain the problem a concept addresses and distinguish original research, official documentation, pedagogical explanations, and illustrations.
+- **State assumptions and limits.** Use counterexamples to distinguish plausible but incorrect interpretations.
+- **Connect mathematics to code carefully.** Identify existing implementations and tests, or state clearly when they do not exist.
+- **Keep French and English equivalent.** Preserve the same claims, qualifications, examples, and references in both versions.
+- **Prefer links over duplication.** A page should explain its own concept and link to canonical explanations of adjacent concepts.
+- **Hide answer keys by default.** Control-question answers should be revealed only when the reader expands them.
 
 ## Learning principles
 

@@ -1,0 +1,56 @@
+---
+title: "LLM and Transformer glossary"
+subtitle: "Essential terms, introduced plainly and linked to canonical explanations"
+lang: en
+---
+
+This glossary gives a concise first definition for terms used across the site. It does not replace canonical concept pages: follow the links for deeper explanations where available.
+
+## Text and data
+
+- **Token** — a discrete unit processed by a model; it may be a word, subword, character, or another segment.
+- **Tokenization** — converting text into a sequence of token IDs.
+- **Vocabulary** — the set of tokens a tokenizer can represent.
+- **Prefix** — the part of a sequence already available to condition the next prediction.
+- **Context window** — the amount of token context a model can process in a given input.
+
+## Probability and learning
+
+- **Logit** — an unnormalized real-valued score for a class or token. See [Logits](logits.qmd).
+- **Softmax** — a transformation of scores into positive probabilities that sum to one. See [Probabilities](probabilities.qmd).
+- **Likelihood** — the probability assigned to observations by a parameterized model, viewed as a function of its parameters. See [Likelihood](likelihood.qmd).
+- **Shannon entropy** — the average uncertainty of a discrete variable under its distribution. See [Entropy](entropy.qmd).
+- **Cross-entropy** — the average cost associated with a target distribution and a predictive distribution. See [Cross-entropy and KL divergence](cross-entropy.qmd).
+- **KL divergence** — a measure of discrepancy between distributions that is generally asymmetric. See [Cross-entropy and KL divergence](cross-entropy.qmd).
+- **Loss function** — the numerical objective optimized during training; it is not a universal measure of quality. See [Loss](loss.qmd).
+- **Gradient** — a derivative of an objective with respect to a variable or parameter. See [Gradients](gradients.qmd).
+- **Calibration** — empirical agreement between predicted probabilities and observed frequencies for comparable events.
+
+## Transformer architecture
+
+- **Transformer** — a neural architecture built around attention and representation transformations, introduced by Vaswani and colleagues in 2017. See the [Transformer overview](transformer.qmd) and [history](transformer-history.qmd).
+- **Attention** — a mechanism that computes weights from queries and keys, then aggregates the corresponding values. See [Q, K, and V](queries-keys-values.qmd).
+- **Query (Q)** — a projection used to compute compatibility scores with keys.
+- **Key (K)** — a projection compared with a query to produce a score.
+- **Value (V)** — a projection whose representations are aggregated using attention weights.
+- **Self-attention** — attention where queries, keys, and values are derived from representations of the same sequence.
+- **Multi-head attention** — several attention mechanisms computed in parallel and then combined.
+- **Causal mask** — a constraint preventing a position from accessing future positions. See [Causal masking](causal-masking.qmd).
+- **Autoregressive Transformer** — a Transformer trained to model a sequence from left to right, predicting each token conditioned on earlier tokens. “Autoregressive” describes the prediction objective; it does not require generating only one token at a time during training.
+- **Encoder** — a component that builds contextual representations of an input; in BERT, for example, attention can use context from both directions.
+- **Decoder** — a component designed to produce outputs from context; in an autoregressive decoder, a causal mask prevents access to future tokens.
+- **Embedding** — a learned vector representation of a token or other item.
+- **Positional encoding / position information** — a signal that lets the model distinguish token order.
+- **Parameter** — a value learned during training.
+- **Fine-tuning** — continuing training of a pretrained model on a particular objective or dataset.
+
+## Related pages
+
+- [Mathematical foundations](mathematical-foundations.qmd)
+- [Transformer overview](transformer.qmd)
+- [History of Transformers](transformer-history.qmd)
+- [References and provenance](../references.qmd)
+
+:::: {.language-switch}
+[Français](../fr/glossary.qmd) · [English](glossary.qmd)
+::::

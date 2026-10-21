@@ -90,8 +90,31 @@ Si la cible est la classe 2 et $p_2=0.8$, alors $\ell=-\log(0.8)\approx0.223$. S
 ## Questions de contrôle
 
 1. Pourquoi la perte est-elle nulle à la limite où la cible reçoit une probabilité de 1 ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Pour une cible de probabilité $p_y$, la perte vaut $-\log p_y$. Lorsque $p_y\to1$, $\log p_y\to0$, donc la perte tend vers zéro. Elle est nulle exactement si $p_y=1$.
+
+</details>
+
 2. Pourquoi la cross-entropie n'est-elle pas une métrique symétrique ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+La cross-entropie $H(q,p)=-\sum_i q_i\log p_i$ moyenne le coût selon la distribution cible $q$ tout en évaluant les probabilités de $p$. Inverser les distributions change cette moyenne ; en général $H(q,p)\ne H(p,q)$, et la divergence KL est elle aussi asymétrique.
+
+</details>
+
 3. Quelle différence entre la formule mathématique et l'API de PyTorch ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+`torch.nn.CrossEntropyLoss` attend normalement des logits non normalisés et combine log-softmax et perte négative de vraisemblance. Lui fournir des probabilités déjà passées par softmax change le calcul. Il faut aussi vérifier la forme des cibles, `ignore_index` et la réduction choisie.
+
+</details>
 
 **Suite :** [Loss](loss.qmd) · [Gradients](gradients.qmd)
 

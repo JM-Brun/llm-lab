@@ -2,10 +2,12 @@
 
 This roadmap prioritizes **validating and improving the knowledge already present**. Do not add implementations, modules, pages, or experiments merely to advance a roadmap. A topic is not complete because it is documented, because tests pass, or because an experiment runs: it requires accurate explanations, explicit assumptions and counterexamples, and demonstrated understanding recorded in the private `career-knowledge` inventory. Code is justified only when it resolves a specific conceptual gap and the prerequisite knowledge has been validated.
 
-## Current state (reviewed 2026-10-20)
+## Current state (reviewed 2026-10-21)
 
 ### Implemented in the repository
-- A Quarto site in French and English, with a chapter on causal attention and notes on cosine similarity and the linearity hypothesis.
+- A Quarto site in French and English, with canonical pages for mathematical foundations, entropy/cross-entropy, attention, cosine similarity, and the embedding-linearity hypothesis.
+- A bilingual glossary and a sourced, selective history of the Transformer architecture.
+- Control questions in the core probability/loss/gradient pages with answers hidden behind native disclosure controls.
 - A small NumPy cross-entropy implementation and analytical gradient, with unit tests including finite-difference comparison.
 - CI checks for Ruff formatting/lint, mypy, pytest, and a separate Quarto render workflow.
 - Written conventions for the learning path, experiment protocol, mathematical foundations, and reference provenance.

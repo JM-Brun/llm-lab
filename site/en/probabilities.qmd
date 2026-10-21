@@ -50,6 +50,35 @@ Each distribution is conditioned on the prefix. A token probability should there
 
 **Next:** [Likelihood](likelihood.qmd) · [Cross-entropy](cross-entropy.qmd)
 
+## Check your understanding
+
+1. What is the difference between normalization and calibration?
+
+<details>
+<summary>Show answer</summary>
+
+Normalization is an algebraic property: probabilities sum to one. Calibration is empirical: among predictions made at about 0.8 confidence, for example, the event should occur about 80% of the time on a relevant population.
+
+</details>
+
+2. Why does $P_\theta(x_t\mid x_{<t})$ depend on the prefix?
+
+<details>
+<summary>Show answer</summary>
+
+The model conditions the next-token distribution on preceding tokens. The same token can therefore receive different probabilities in different contexts.
+
+</details>
+
+3. What does temperature change, and what can it not guarantee?
+
+<details>
+<summary>Show answer</summary>
+
+Dividing logits by a positive temperature changes distribution concentration: lower temperature usually sharpens it; higher temperature flattens it. This guarantees neither factual truth nor correct calibration.
+
+</details>
+
 :::: {.language-switch}
 [Français](../fr/probabilites.qmd) · [English](probabilities.qmd)
 ::::

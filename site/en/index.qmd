@@ -60,15 +60,11 @@ Pages distinguish code that exists, tests that cover it, and work that is still 
 
 This path describes the learning structure, not the implementation status of every component. The [detailed learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) and [roadmap](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md) define validation criteria.
 
-## Editorial principles
+## Explore further
 
-- **One concept, one canonical page.** Synthesis pages link to deeper definitions rather than duplicating them.
-- **Intuition and provenance.** Explain the problem that motivated the concept, its origin, and why it became useful.
-- **Explicit assumptions.** State scope conditions, misconceptions, and discriminating counterexamples.
-- **Connect maths to code.** Each page identifies the implementation and tests available, or clearly states that they are absent.
-- **Traceable references.** Distinguish original papers, official documentation, educational explanations, and illustrations.
-
-Pages are available in French and English. External resources are attributed on the [references page](../references.qmd); an accessible image or URL is not permission to reuse it.
+- [Glossary](glossary.qmd) — concise definitions from “token” to “autoregressive Transformer”.
+- [History of Transformers](transformer-history.qmd) — key milestones from early attention mechanisms to modern LLMs.
+- External resources are listed on the [references page](../references.qmd).
 
 :::: {.language-switch}
 **Choose a language:** [Français](../index.qmd) · [English](index.qmd)
