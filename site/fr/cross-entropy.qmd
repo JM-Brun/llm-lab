@@ -24,7 +24,7 @@ Dans la prédiction du prochain token, \(y\) est l'identifiant du token observé
 
 ## Dérivation par rapport aux logits
 
-Avec (p_i=\operatorname{softmax}\(z\)_i), la perte pour une cible one-hot s'écrit :
+Avec \(p_i=\operatorname{softmax}(z)_i\), la perte pour une cible one-hot s'écrit :
 
 \[
 \ell(z,y)=-z_y+\log\sum_{j=1}^{V}e^{z_j}.
@@ -42,14 +42,14 @@ Le gradient pousse donc le logit cible vers le haut relativement aux autres, et 
 
 ## Cross-entropie, entropie et divergence KL
 
-L'entropie de la cible est (H\(q\)=-\sum_iq_i\log q_i). La divergence de Kullback–Leibler vérifie :
+L'entropie de la cible est \(H(q)=-\sum_iq_i\log q_i\). La divergence de Kullback–Leibler vérifie :
 
 \[
 D_{\mathrm{KL}}(q\Vert p)=\sum_iq_i\log\frac{q_i}{p_i}
-=H(q,p)-H\(q\).
+=H(q,p)-H(q).
 \]
 
-Pour une cible fixe, minimiser la cross-entropie par rapport à \(p\) revient donc à minimiser \(D_{\mathrm{KL}}(q\Vert p)\). Pour une cible one-hot, (H\(q\)=0) et les deux quantités sont égales.
+Pour une cible fixe, minimiser la cross-entropie par rapport à \(p\) revient donc à minimiser \(D_{\mathrm{KL}}(q\Vert p)\). Pour une cible one-hot, \(H(q)=0\) et les deux quantités sont égales.
 
 ::: {.callout-warning title="Idées reçues"}
 - **« La cross-entropie mesure la distance symétrique entre deux distributions. »** Non : elle n'est pas symétrique et n'est pas une distance au sens usuel.
@@ -59,7 +59,7 @@ Pour une cible fixe, minimiser la cross-entropie par rapport à \(p\) revient do
 
 ## Exemple numérique
 
-Si la cible est la classe 2 et \(p_2=0.8\), alors \(\ell=-\log(0.8)\approx0.223\). Si \(p_2=0.01\), la perte vaut environ (4.605). Une prédiction fausse mais très confiante est donc fortement pénalisée.
+Si la cible est la classe 2 et \(p_2=0.8\), alors \(\ell=-\log(0.8)\approx0.223\). Si \(p_2=0.01\), la perte vaut environ \(4.605\). Une prédiction fausse mais très confiante est donc fortement pénalisée.
 
 ## Questions de contrôle
 
