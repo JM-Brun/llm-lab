@@ -114,3 +114,8 @@ Pour auditer une conclusion, demander : quelle hypothèse sur l'encodeur et la n
 Pour comprendre ce que ces vecteurs représentent et comment ils sont construits, voir aussi l'[espace des embeddings](embedding-space.qmd).
 
 Le cosinus est une **métrique géométrique**, pas une définition universelle de la sémantique. Il constitue une hypothèse à confronter à une baseline et à des erreurs concrètes sur la tâche cible ; aucune propriété géométrique isolée ne garantit la pertinence du système.
+
+
+::: {.language-switch}
+**Langue :** [Français](cosine-similarity.qmd) · [English](../en/cosine-similarity.qmd)
+:::
