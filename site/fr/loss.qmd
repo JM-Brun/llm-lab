@@ -1,0 +1,64 @@
+---
+title: "Loss : de la perte par token à l'objectif"
+subtitle: "Réduction, masquage des cibles et interprétation d'une courbe"
+lang: fr
+---
+
+::: {.chapter-lead}
+Le mot *loss* désigne une fonction objectif scalaire que l'entraînement cherche à minimiser. Elle est souvent construite à partir de cross-entropies par token, mais son agrégation exacte fait partie de la définition de l'expérience.
+:::
+
+## De la perte locale à la loss du batch
+
+Pour chaque position cible valide ((b,t)\in\mathcal{M}), soit :
+
+\[
+\ell_{b,t}=-\log p_{b,t,y_{b,t}}.
+\]
+
+La moyenne sur les positions valides est :
+
+\[
+\mathcal{L}(\theta)=\frac{1}{|\mathcal{M}|}
+\sum_{(b,t)\in\mathcal{M}}\ell_{b,t}.
+\]
+
+La somme, la moyenne par séquence ou une moyenne pondérée sont également possibles. Elles ne définissent pas exactement le même objectif et peuvent modifier l'échelle des gradients ou le poids relatif des séquences.
+
+## Masquage et cibles décalées
+
+En langage causal, les logits à la position (t) prédisent généralement le token à la position (t+1). La perte doit comparer les logits au bon token cible décalé. Les tokens de padding ou les positions explicitement ignorées doivent être exclus du numérateur **et** du dénominateur d'une moyenne sur les cibles valides.
+
+Une erreur d'alignement d'un token peut donner une loss finie et décroissante tout en entraînant la mauvaise tâche.
+
+## Loss d'entraînement et métriques
+
+La loss est l'objectif différentiable optimisé. Une métrique comme l'exactitude, la qualité d'une réponse ou la calibration peut être importante sans être directement optimisée par cette loss. Pour la modélisation du langage, la perplexité est liée à la NLL moyenne par token :
+
+\[
+\operatorname{PPL}=\exp(\operatorname{NLL}_{\mathrm{moyenne}}).
+\]
+
+Cette relation suppose la même base logarithmique et la même convention d'agrégation. La perplexité dépend aussi du tokenizer et du corpus évalué.
+
+::: {.callout-warning title="Idées reçues"}
+- **« Une loss plus basse prouve que les réponses sont meilleures. »** Elle indique une meilleure valeur de l'objectif mesuré, pas nécessairement une amélioration de toutes les capacités ou de l'utilité réelle.
+- **« Une courbe d'entraînement qui baisse suffit. »** Elle ne détecte pas à elle seule les fuites de données, le surapprentissage ou une évaluation mal alignée.
+- **« La loss moyenne est toujours comparable entre expériences. »** Il faut vérifier tokenizer, données, masques, longueur des séquences, réduction et objectif exact.
+:::
+
+## Diagnostic minimal
+
+Avant d'interpréter une courbe, documenter : définition de l'objectif, décalage entrée/cible, masque d'ignorance, réduction, split train/validation, et éventuels termes de régularisation. Vérifier qu'un mini-batch peut être surappris est un test de pipeline utile, mais pas une validation de la généralisation.
+
+## Questions de contrôle
+
+1. Pourquoi le dénominateur doit-il compter les cibles valides plutôt que tous les tokens si certains sont ignorés ?
+2. Pourquoi la baisse de la loss d'entraînement ne prouve-t-elle pas une meilleure généralisation ?
+3. Dans quelles conditions la perplexité est-elle comparable ?
+
+**Suite :** [Gradients](gradients.qmd) · [Vraisemblance](vraisemblance.qmd)
+
+:::: {.language-switch}
+[Français](loss.qmd) · [English](../en/loss.qmd)
+::::
