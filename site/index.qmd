@@ -20,6 +20,8 @@ Un parcours progressif pour relier intuition, mathématiques, code et preuves ex
 
 ## Comment naviguer
 
+[Ouvrir l'espace séparé des exercices](fr/exercises.qmd) — questions de compréhension, mathématiques, analyse de code et conception d'expériences (structure en préparation).
+
 :::: {.learning-grid}
 ::: {.learning-card}
 <span class="step">01 / SYNTHÈSES</span>
