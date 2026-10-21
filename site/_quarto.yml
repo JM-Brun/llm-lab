@@ -83,6 +83,7 @@ website:
               - fr/loss.qmd
               - fr/vraisemblance.qmd
               - fr/gradients.qmd
+              - fr/tensors.qmd
           - section: "Attention et Transformer"
             contents:
               - fr/transformer.qmd
@@ -90,14 +91,11 @@ website:
               - fr/queries-keys-values.qmd
               - fr/scaled-dot-product-attention.qmd
               - fr/causal-masking.qmd
-              - fr/tensors.qmd
               - fr/positional-encoding.qmd
           - fr/glossary.qmd
           - fr/cosine-similarity.qmd
           - fr/linearite-embeddings.qmd
           - fr/embedding-space.qmd
-          - fr/tensors.qmd
-          - fr/positional-encoding.qmd
       - section: "English"
         contents:
           - en/index.qmd
