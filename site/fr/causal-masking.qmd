@@ -32,7 +32,7 @@ $$
 
 Les positions futures reçoivent alors un poids nul en arithmétique idéale. En pratique, les bibliothèques peuvent représenter le masque sous forme booléenne ou employer une primitive d'attention qui intègre cette contrainte.
 
-![Masque causal à quatre positions.](images/causal-attention-mask.svg){fig-alt="Matrice triangulaire inférieure : chaque position accède à elle-même et aux positions précédentes" width=100%}
+![Masque causal à quatre positions.](../images/causal-attention-mask.svg){fig-alt="Matrice triangulaire inférieure : chaque position accède à elle-même et aux positions précédentes" width=100%}
 
 ## Provenance et utilité
 
