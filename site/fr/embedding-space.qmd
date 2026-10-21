@@ -73,5 +73,5 @@ Pour évaluer un espace d'embeddings, revenir à la tâche réelle : recherche d
 - [Sentence Transformers — Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html).
 
 ::: {.language-switch}
-**Langue :** [Français](embedding-space.qmd) · [English](../en/index.qmd)
+**Langue :** [Français](embedding-space.qmd) · [English home — no equivalent page yet](../en/index.qmd)
 :::
