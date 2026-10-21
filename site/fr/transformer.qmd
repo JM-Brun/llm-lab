@@ -42,7 +42,7 @@ Les poids d'attention ne sont pas une explication complète d'une prédiction. I
 
 ## 3. Des représentations aux probabilités
 
-Après les blocs, une projection de sortie produit des **logits** — des scores non normalisés associés au vocabulaire. Le *softmax* les transforme en une distribution de probabilité. Ces probabilités ne signifient pas automatiquement que le modèle est bien calibré : voir [logits](logits.qmd), [probabilités](probabilites.qmd) et [calibration](../en/index.qmd).
+Après les blocs, une projection de sortie produit des **logits** — des scores non normalisés associés au vocabulaire. Le *softmax* les transforme en une distribution de probabilité. Ces probabilités ne signifient pas automatiquement que le modèle est bien calibré : voir [logits](logits.qmd), [probabilités](probabilites.qmd) et [vraisemblance](vraisemblance.qmd).
 
 Pendant la génération, une règle de sélection choisit le token suivant : maximum, échantillonnage ou méthode plus élaborée. Ce token est ajouté au contexte, puis le modèle recommence. La génération est donc **autorégressive** ; elle ne consiste pas en une seule prédiction de toute la réponse.
 
