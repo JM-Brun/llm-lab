@@ -12,7 +12,7 @@ Un **Transformer** est un réseau neuronal qui traite des tokens à l'aide de ve
 
 À chaque position, le modèle utilise le contexte déjà disponible pour construire une représentation mise à jour. L'attention attribue des poids aux positions accessibles ; le masque causal empêche d'utiliser celles qui viennent plus tard dans la séquence.
 
-![Masque causal : chaque position peut accéder aux positions précédentes et à elle-même, mais pas aux positions futures.](images/causal-attention-mask.svg){fig-alt="Matrice du masque causal à quatre positions. Les cases vertes indiquent les positions accessibles ; les cases corail indiquent les positions futures masquées." width=100%}
+![Masque causal : chaque position peut accéder aux positions précédentes et à elle-même, mais pas aux positions futures.](../images/causal-attention-mask.svg){fig-alt="Matrice du masque causal à quatre positions. Les cases vertes indiquent les positions accessibles ; les cases corail indiquent les positions futures masquées." width=100%}
 
 ## Les concepts, dans l'ordre du calcul
 
@@ -28,7 +28,7 @@ Pour lire les dimensions des tenseurs dans les formules, voir aussi [Tenseurs](t
 
 Les requêtes et les clés déterminent les poids ; ces poids servent à calculer une somme pondérée des valeurs. Le [schéma des requêtes, clés et valeurs](queries-keys-values.qmd) détaille ces deux étapes.
 
-![Schéma des projections Q, K et V : Q et K calculent les poids d'attention, qui servent à combiner les valeurs V.](images/queries-keys-values.svg){fig-alt="Les représentations d'entrée sont projetées en requêtes, clés et valeurs. Les requêtes sont comparées aux clés ; les poids obtenus pondèrent les valeurs pour produire une représentation contextualisée." width=100%}
+![Schéma des projections Q, K et V : Q et K calculent les poids d'attention, qui servent à combiner les valeurs V.](../images/queries-keys-values.svg){fig-alt="Les représentations d'entrée sont projetées en requêtes, clés et valeurs. Les requêtes sont comparées aux clés ; les poids obtenus pondèrent les valeurs pour produire une représentation contextualisée." width=100%}
 
 ## Vue mathématique minimale
 
