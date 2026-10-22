@@ -1,58 +1,68 @@
 ---
 title: "Evaluating a model: from score to experimental protocol"
-subtitle: "Transfer exercises — no new implementation"
+subtitle: "Transfer exercise — no new implementation"
 lang: en
 ---
 
 ## Goal
 
-This page connects the lab's LLM foundations to a general Data Science skill: designing a comparison whose conclusions are defensible. It complements the mathematical exercises; it does not replace the canonical statistical-validation notes in [Wiki Knowledge](https://github.com/JM-Brun/wiki-knowledge).
+Practice designing a defensible evaluation for a scientific-passage ranker. The exercise focuses on the estimand, dependence between observations, leakage, selection bias, metric interpretation, and uncertainty. It adds no model implementation and is not a benchmark result.
 
 ## Before starting
 
-Review if needed:
-
 - [Mathematical foundations](mathematical-foundations.qmd) — objectives, probabilities, and assumptions;
-- [Cross-entropy](cross-entropy.qmd) — loss functions and the objective being optimized;
+- [Cross-entropy](cross-entropy.qmd) — the training objective;
 - [Exercises](exercises.qmd) — active recall;
-- [LLM evaluation and experimental design in Wiki Knowledge](https://github.com/JM-Brun/wiki-knowledge/blob/main/wiki/concepts/conception-experimentale-et-evaluation-llm.md).
+- [Scikit-learn: average precision](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html);
+- [Scikit-learn: grouped cross-validation](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators-for-grouped-data);
+- [Scikit-learn: nested versus non-nested cross-validation](https://scikit-learn.org/stable/auto_examples/model_selection/plot_nested_cross_validation_iris.html);
+- [Dror et al., statistical significance testing in NLP](https://aclanthology.org/P18-1128/).
 
-Attempt the questions independently before consulting references.
+Attempt the questions before consulting references.
 
-## Transfer case
+## Concrete case
 
-A team compares 40 systems that classify scientific passages as relevant or irrelevant to a query. Relevant passages are rare, and multiple passages can come from the same paper. The team reports the best average-precision (AP) score obtained from random passage-level cross-validation.
+A team wants to rank scientific passages for a fixed, pre-specified distribution of research questions. Its intended deployment is on **papers not present in the development corpus**.
 
-### Questions
+The corpus contains 200 papers and approximately 20 passages per paper (about 4,000 passages). A passage is labelled relevant or not relevant to a query. Around **5% of passages are relevant**—roughly one in twenty. Multiple passages can come from the same paper and therefore share wording, topic, authors, and source-specific artefacts.
 
-1. **Target and unit.** Which deployment population should the evaluation represent? If the system must process unseen papers, which unit should be kept separate across partitions?
-2. **Leakage.** Why can random passage-level splitting overestimate generalization? Where should every learned transformation or feature-selection step be fitted?
-3. **Selection.** Why may the best score among 40 configurations be optimistic? Describe a selection procedure and a separate final-estimation procedure.
-4. **Metrics.** What does AP measure? Why does its value depend on prevalence? Why is AP insufficient to evaluate probability calibration?
-5. **Uncertainty.** How would you compare two systems evaluated on the same queries/papers without incorrectly treating every passage as independent?
-6. **Interpretation.** Which results, artifacts, and limitations must be retained to make the comparison reproducible?
+The team compares **40 configurations** and reports the highest average-precision (AP) score from random passage-level cross-validation. No separate final evaluation is described.
 
-## Distinctions a strong answer must preserve
+For this exercise, assume labels and paper IDs are available, but do **not** assume that papers are independent of queries. If deployment must also generalize to unseen queries, state how the design would change.
 
-- **Training objective:** the quantity optimized by the loss function.
-- **Selection metric:** the criterion used to choose a configuration.
-- **Final estimate:** a result from data or a procedure not used to select the winner.
-- **Discrimination/ranking:** the ability to order positives above negatives.
-- **Calibration:** agreement between predicted probabilities and observed frequencies.
-- **Uncertainty:** estimate variability under the sampling design and dependence structure.
-- **Reproducibility:** ability to reconstruct the protocol, permitted data/splits, versions, configurations, and results.
+## Questions — answer before reading the checklist
 
-These concepts are related but not interchangeable. A finite loss, a high AP score, or passing tests does not independently establish generalization.
+1. **Target and estimand.** State the target population and the quantity the reported score is supposed to estimate. What is the independent sampling unit for the stated deployment target?
+2. **Split design.** Explain why random passage-level splitting can overstate performance on unseen papers. What additional grouping issue arises if the target includes unseen queries?
+3. **Leakage-safe pipeline.** Where must learned preprocessing, feature selection, threshold choice, and hyperparameter tuning occur? What may the final test set be used for?
+4. **Selection bias.** Why is the maximum score among 40 configurations optimistic as a final estimate, even if every individual cross-validation procedure is implemented correctly? Propose either a locked test protocol or a nested/grouped evaluation design.
+5. **Metric interpretation.** Define AP in plain language. What does the 5% prevalence imply for a random ranking's expected AP, approximately? What does AP not tell us about predicted probabilities?
+6. **Uncertainty and comparison.** If two systems score the same held-out papers, how would you compare them while preserving pairing and dependence? Which unit(s) would you resample, and what limitation would you report if there are few independent papers or queries?
+7. **Reproducibility and scope.** What must be recorded to reproduce the comparison? What conclusion would remain unjustified even if the selected system achieved a high AP?
 
-## Self-assessment criteria
+## Checklist for correction
 
-Score each of the six questions **0** (incorrect/absent), **1** (partial), or **2** (justified with a limitation). Record confidence before consulting references. An answer that omits its assumptions or statistical unit is incomplete.
+- **AP (Average Precision)** summarizes precision at the points where recall increases as the ranking is traversed. Precision is TP/(TP+FP); recall is TP/(TP+FN). AP is a ranking metric, not a calibration metric.
+- With a random ranking, expected AP is approximately the positive prevalence under common definitions; at 5% prevalence, that reference level is about **0.05**. This is a rough baseline, not a universal finite-sample identity. AP also changes with prevalence, so scores from populations with different positive rates are not directly interchangeable.
+- **Calibration** asks whether predictions assigned probability *p* are positive about *p* of the time. AP alone cannot answer this. A system can rank well while its probabilities are systematically too high or too low.
+- If deployment is to unseen papers, keep all passages from a paper in one partition. If unseen queries are also part of the target, paper grouping alone may be insufficient: the split and estimand must reflect the query/document sampling structure, potentially with query-level or crossed-group holdouts.
+- Every learned operation must be fitted using only the relevant training fold. Validation data can guide model selection; a locked final test must not be used to tune, select, calibrate, or repeatedly revise the system.
+- Selecting the maximum among 40 noisy estimates creates winner's-curse optimism. More metrics do not remove this selection bias. Use a locked test that is untouched by all 40 choices, or a nested evaluation whose outer folds estimate the full selection procedure.
+- Compare systems on the same held-out units with paired differences. Resampling should follow the target sampling design (for example, papers when papers are the independent target units). If queries and papers are crossed or dependence is more complex, a simple paper bootstrap may be inadequate. Few clusters yield unstable uncertainty estimates; state that limitation rather than implying precision.
+- Record corpus/version and licence, query and paper IDs, label definition, inclusion rules, split assignments, random seeds, code and dependency versions, all 40 configurations, selection metric, final metric, uncertainty method, exclusions, and error analysis.
 
-## References and limitations
+## Self-assessment
+
+Score each answer **0** (incorrect/absent), **1** (partially correct), or **2** (justified and includes a relevant limitation). Record confidence **before** consulting the checklist. A correct term without the assumptions, independent unit, or consequence for the protocol is only partial evidence.
+
+The score is a learning diagnostic, not a certification of mastery.
+
+## References
 
 - [HELM — Holistic Evaluation of Language Models](https://arxiv.org/abs/2211.09110)
+- [Scikit-learn: average precision](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html)
+- [Scikit-learn: grouped cross-validation](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators-for-grouped-data)
+- [Scikit-learn: nested versus non-nested cross-validation](https://scikit-learn.org/stable/auto_examples/model_selection/plot_nested_cross_validation_iris.html)
 - [Dror et al. — The Hitchhiker's Guide to Testing Statistical Significance in NLP](https://aclanthology.org/P18-1128/)
-- [Wiki Knowledge — Experimental validation and data leakage](https://github.com/JM-Brun/wiki-knowledge/blob/main/wiki/concepts/validation-experimentale-et-fuites-de-donnees.md)
-- [Wiki Knowledge — Statistical inference and uncertainty](https://github.com/JM-Brun/wiki-knowledge/blob/main/wiki/concepts/inference-statistique-et-incertitude.md)
 
-This is a teaching exercise, not a benchmark or research result. It adds no implementation and is not evidence of personal mastery.
+This is a teaching exercise, not a benchmark or research result.
