@@ -65,6 +65,7 @@ Ce parcours décrit l'organisation pédagogique, pas l'état d'avancement de tou
 ## Pour aller plus loin
 
 - [Espace d’exercices](fr/exercises.qmd) — collections séparées du cours pour s’entraîner et vérifier les acquis.
+- [Exercice d'évaluation expérimentale](fr/evaluation-experimentale.qmd) — transférer les notions de métriques, fuites, sélection et incertitude à un cas de recherche documentaire.
 
 - [Glossaire des termes](fr/glossary.qmd) — les définitions essentielles, de « token » à « Transformer autorégressif ».
 - [Historique des Transformers](fr/transformer-history.qmd) — les étapes marquantes, des premiers mécanismes d'attention aux LLM modernes.

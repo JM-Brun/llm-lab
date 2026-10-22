@@ -1,0 +1,68 @@
+---
+title: "Évaluer un modèle : du score au protocole expérimental"
+subtitle: "Exercice de transfert — sans nouvelle implémentation"
+lang: fr
+---
+
+## Objectif
+
+S'entraîner à concevoir une évaluation défendable pour un système de classement de passages scientifiques. L'exercice porte sur l'estimande, les dépendances entre observations, les fuites, le biais de sélection, l'interprétation des métriques et l'incertitude. Il n'ajoute aucune implémentation et ne constitue pas un résultat de benchmark.
+
+## Avant de commencer
+
+- [Fondations mathématiques](mathematical-foundations.qmd) — objectifs, probabilités et hypothèses ;
+- [Cross-entropy](cross-entropy.qmd) — objectif d'entraînement ;
+- [Exercices](exercises.qmd) — rappel actif ;
+- [Scikit-learn : Average Precision](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html) ;
+- [Scikit-learn : validation croisée par groupes](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators-for-grouped-data) ;
+- [Scikit-learn : validation croisée imbriquée ou non imbriquée](https://scikit-learn.org/stable/auto_examples/model_selection/plot_nested_cross_validation_iris.html) ;
+- [Dror et al. : tests de significativité en NLP](https://aclanthology.org/P18-1128/).
+
+Réponds aux questions avant de consulter la grille de correction.
+
+## Cas concret
+
+Une équipe veut classer des passages scientifiques pour une distribution de questions de recherche définie à l'avance. En production, le système devra traiter des **articles absents du corpus de développement**.
+
+Le corpus contient 200 articles et environ 20 passages par article (environ 4 000 passages). Chaque passage est annoté comme pertinent ou non pour une question. Environ **5 % des passages sont pertinents** — à peu près un sur vingt. Plusieurs passages peuvent provenir du même article et partager formulation, sujet, auteurs ou artefacts propres à la source.
+
+L'équipe compare **40 configurations** et rapporte le meilleur score d'Average Precision (AP) obtenu par validation croisée aléatoire au niveau du passage. Aucune évaluation finale séparée n'est décrite.
+
+Pour l'exercice, suppose que les étiquettes et les identifiants d'articles sont disponibles, mais **ne suppose pas que les articles sont indépendants des questions**. Si le déploiement doit aussi généraliser à des questions jamais vues, explique comment le protocole doit changer.
+
+## Questions — réponds avant de lire la grille
+
+1. **Cible et estimande.** Définis la population cible et la quantité que le score doit estimer. Quelle est l'unité d'échantillonnage indépendante pour le déploiement décrit ?
+2. **Choix du split.** Pourquoi un split aléatoire par passage peut-il surestimer la performance sur de nouveaux articles ? Quel problème supplémentaire apparaît si la cible inclut aussi de nouvelles questions ?
+3. **Pipeline sans fuite.** Où doivent être ajustés les prétraitements appris, la sélection de variables, le seuil de décision et les hyperparamètres ? À quoi le jeu de test final peut-il servir ?
+4. **Biais de sélection.** Pourquoi le meilleur score parmi 40 configurations est-il optimiste comme estimation finale, même si chaque validation croisée est correctement implémentée ? Propose un test verrouillé ou une évaluation imbriquée/groupée.
+5. **Interprétation des métriques.** Définis l'AP avec des mots simples. Que suggère une prévalence de 5 % pour l'AP attendue d'un classement aléatoire ? Que ne nous apprend pas l'AP sur les probabilités prédites ?
+6. **Incertitude et comparaison.** Si deux systèmes sont évalués sur les mêmes articles tenus à l'écart, comment les comparer en conservant l'appariement et les dépendances ? Quelle(s) unité(s) rééchantillonnerais-tu, et quelle limite signalerais-tu s'il y a peu d'articles ou de questions indépendants ?
+7. **Reproductibilité et portée.** Que faut-il enregistrer pour reproduire la comparaison ? Quelle conclusion resterait injustifiée même si le système retenu obtenait une AP élevée ?
+
+## Grille de correction
+
+- **AP (Average Precision)** résume la précision aux points où le rappel augmente quand on parcourt le classement. La précision vaut TP/(TP+FP) ; le rappel vaut TP/(TP+FN). L'AP évalue le classement, pas la calibration.
+- Pour un classement aléatoire, l'AP attendue est approximativement égale à la prévalence sous les définitions usuelles ; à 5 %, le niveau de référence est donc d'environ **0,05**. C'est une approximation, pas une identité universelle en échantillon fini. L'AP varie aussi avec la prévalence : des scores obtenus sur des populations dont les taux de positifs diffèrent ne sont pas directement interchangeables.
+- La **calibration** demande si, parmi les prédictions auxquelles le modèle attribue une probabilité *p*, environ une fraction *p* est positive. L'AP ne répond pas à cette question. Un système peut bien classer tout en surestimant ou sous-estimant systématiquement ses probabilités.
+- Pour une cible composée de nouveaux articles, tous les passages d'un article doivent rester dans une même partition. Si les questions sont également nouvelles, grouper seulement par article peut être insuffisant : le split et l'estimande doivent refléter la structure d'échantillonnage des questions et des documents, éventuellement avec des groupes croisés.
+- Toute opération apprise doit être ajustée uniquement sur le fold d'entraînement concerné. Les données de validation peuvent guider la sélection ; le test final verrouillé ne doit pas servir à régler, sélectionner, calibrer ou réviser de façon répétée le système.
+- Sélectionner le maximum de 40 estimations bruitées crée un optimisme de type *winner's curse*. Ajouter des métriques ne corrige pas ce biais. Utiliser un test final non consulté lors des 40 choix, ou une procédure imbriquée dont les folds externes estiment toute la procédure de sélection.
+- Comparer les systèmes sur les mêmes unités tenues à l'écart avec des différences appariées. Le rééchantillonnage doit respecter le plan d'échantillonnage cible (par exemple, les articles si ce sont les unités indépendantes visées). Si questions et articles sont croisés ou si la dépendance est plus complexe, un bootstrap simple par article peut être inadéquat. Avec peu de groupes, les estimations d'incertitude sont instables : signaler cette limite au lieu de suggérer une précision artificielle.
+- Enregistrer la version et la licence du corpus, les identifiants de questions et d'articles, la définition des labels, les règles d'inclusion, les splits, les graines aléatoires, les versions du code et des dépendances, les 40 configurations, la métrique de sélection, la métrique finale, la méthode d'incertitude, les exclusions et l'analyse d'erreurs.
+
+## Auto-évaluation
+
+Note chaque réponse **0** (incorrecte/absente), **1** (partielle) ou **2** (justifiée avec une limite pertinente). Note ton niveau de confiance **avant** de consulter la grille. Employer le bon terme sans préciser les hypothèses, l'unité indépendante ou la conséquence sur le protocole ne constitue qu'une preuve partielle.
+
+Ce score est un outil de diagnostic pédagogique, pas une certification de maîtrise.
+
+## Références
+
+- [HELM — Holistic Evaluation of Language Models](https://arxiv.org/abs/2211.09110)
+- [Scikit-learn : Average Precision](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html)
+- [Scikit-learn : validation croisée par groupes](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators-for-grouped-data)
+- [Scikit-learn : validation croisée imbriquée ou non imbriquée](https://scikit-learn.org/stable/auto_examples/model_selection/plot_nested_cross_validation_iris.html)
+- [Dror et al. — The Hitchhiker's Guide to Testing Statistical Significance in NLP](https://aclanthology.org/P18-1128/)
+
+Cet exercice est pédagogique : ce n'est ni un benchmark ni un résultat de recherche.
