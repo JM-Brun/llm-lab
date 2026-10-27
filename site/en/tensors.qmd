@@ -37,10 +37,10 @@ Hidden activations often have shape \((B,T,D)\), logits \((B,T,V)\), and multi-h
 Suppose \(X\) has shape \((B,T,D)\) and projection matrix \(W\) has shape \((D,D')\), where \(D'\) is the output feature dimension. The projection applies the same transformation at every position:
 
 \[
-Y=XW,\qquad \operatorname{shape}(Y)=(B,T,H).
+Y=XW,\qquad \operatorname{shape}(Y)=(B,T,D').
 \]
 
-The batch and position axes are preserved; the final axis changes from \(D\) to \(H\). Shape checks catch some errors but do not guarantee that axes have the intended meaning.
+The batch and position axes are preserved; the final axis changes from \(D\) to \(D'\). This notation avoids confusing the output dimension with \(H\), which denotes the number of attention heads below. Shape checks catch some errors but do not guarantee that axes have the intended meaning.
 
 ## Axes carry meaning
 
