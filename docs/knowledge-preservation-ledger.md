@@ -210,7 +210,7 @@ This review does not mark either concept as mastered, prove every cited source s
 ### Probabilities
 
 - **Parity:** French and English versions align on softmax normalization, the two-logit example, autoregressive factorization, tokenization caveat, temperature, decoding versus training, and the distinction between normalization, calibration, and factual truth.
-- **Mathematical checks:** the example \\(z=(0,\\log 3)\\) gives \\(p=(0.25,0.75)\\); for positive temperature, dividing logits by temperature preserves their order while changing their distribution.
+- **Mathematical checks:** the example \(z=(0,\log 3)\) gives \(p=(0.25,0.75)\); for positive temperature, dividing logits by temperature preserves their order while changing their distribution.
 - **Disposition:** no further source-text correction identified in this pass.
 - **Remaining verification:** rendered-page review and live external-reference check.
 
@@ -225,15 +225,15 @@ The fix is not yet merged and this connector workflow did not run Quarto or CI. 
 ### Likelihood
 
 - **Parity:** both pages state the autoregressive chain-rule factorization, log-likelihood sum, NLL relationship, same-positions qualification, a numerical example, and tokenizer/model-fit caveats.
-- **Mathematical check:** (0.5\times0.25\times0.8=0.1), so the sequence NLL is (-\log(0.1)\approx2.303) nats when natural logarithms are used.
+- **Mathematical check:** `0.5 × 0.25 × 0.8 = 0.1`, so the sequence NLL is `-ln(0.1) ≈ 2.303` nats when natural logarithms are used.
 - **Disposition:** no source-text correction identified in this pass. The assumption of independent dataset sequences is stated for the product of sequence likelihoods; keep that qualification.
 
 ### Loss
 
 - **Parity defect found:** the English page repeated its three self-check questions in a second section. It also lacked the explicit tensor-shape navigation present in French.
 - **Correction made on this branch:** consolidated the English page to one answered self-check, restored a link to the tensor lesson, and kept the next-page navigation after the answers.
-- **Notation clarification:** both language versions now define the predicted distribution (p_{b,t,:}) and target-token ID (y_{b,t}) before using them in the per-position loss.
-- **Perplexity correction:** both pages now state explicitly that (operatorname{PPL}=\exp(\operatorname{NLL}_{\mathrm{mean}})) assumes natural-log NLL (nats), and give the base-2 equivalent when NLL is measured in bits. The previous wording could be read as though the exponential formula applied regardless of log base.
+- **Notation clarification:** both language versions now define the predicted distribution `p[b,t,:]` and target-token ID `y[b,t]` before using them in the per-position loss.
+- **Perplexity correction:** both pages now state explicitly that `PPL = exp(NLL_mean)` assumes natural-log NLL (nats), and give the base-2 equivalent `PPL = 2^NLL_mean` when NLL is measured in bits. The previous wording could be read as though the exponential formula applied regardless of log base.
 - **Remaining verification:** render the modified equations, inspect the full bilingual pages, and run CI/Quarto. The edits are not yet merged.
 
 ### What this audit does not establish
