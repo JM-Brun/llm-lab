@@ -105,7 +105,7 @@ The original bilingual pages include:
 | Self-checks and local navigation | **KEEP PUBLIC** | Preserve learning support and update links. |
 | Public references | **KEEP PUBLIC** | New PyTorch references are appropriate for implementation details; the mathematical statement must remain understandable without them. |
 
-**Initial assessment:** this page was already LLM-specific in the baseline. It should be an application-focused refinement, not a removal of the core probability explanation. No Wiki dependency is necessary for this page.
+**Follow-up changes on this branch:** the old two-logit example, conditional sequence factorization, temperature transformation, calibration caveat, normalization-versus-truth distinction, self-check answers, references, and exercise-space navigation are retained or strengthened. The calibration statement now explicitly calls for relevant held-out data; temperature is described as changing the decoding distribution, not model parameters. The old simplex terminology is not required for the application lesson; the page explicitly defines normalization and probability output locally.
 
 ## 4. Tensors and shapes — `site/fr/tensors.qmd`, `site/en/tensors.qmd`
 
@@ -138,7 +138,7 @@ The baseline had no `site/en/tensors.qmd` counterpart. The proposed branch adds 
 | New English page and translated SVG | **KEEP PUBLIC** | Fixes a pre-existing bilingual gap; verify equivalent technical coverage, links and alt text. |
 | Video and Raschka reference | **VERIFY** | Keep if they provide distinct value; do not remove provenance without checking. PyTorch and NumPy docs support API-specific statements. |
 
-**Follow-up changes on this branch:** the new English page and translated SVG provide language parity; both pages retain scalar/vector/matrix examples, array-rank versus matrix-rank terminology, the mathematical-tensor caveat, shape semantics, axis permutation, broadcasting, reshape, masks, dtype, gradients, and misconceptions. The indexing pitfall (selecting an item can remove an axis) was explicitly restored. Projection notation uses \(D'\) to avoid overloading \(H\), the number of attention heads. Rendered diagram/alt-text and full reference review remain open.
+**Follow-up changes on this branch:** the new English page and translated SVG provide language parity; both pages retain scalar/vector/matrix examples, array-rank versus matrix-rank terminology, the mathematical-tensor caveat, shape semantics, axis permutation, indexing, broadcasting, reshape, masks, dtype, gradients, and misconceptions. Projection notation uses \(D'\) to avoid overloading \(H\), the number of attention heads. PyTorch, NumPy, Raschka, and the tensor-visualization reference are present in both language versions. Rendered diagram/alt-text and external-reference review remain open.
 
 ## 5. Contributor-guidance audit
 
@@ -156,9 +156,9 @@ At commit `39d439078b585802b926c52681e6cd0d87dcfa3b`, a path-existence check cov
 - [x] Inspect key equations and content for entropy, cross-entropy and tensors; review identified and corrected the target-indexing ambiguity, added explicit zero-probability conventions, restored the algebraic derivation of the cross-entropy/KL identity, and restored the one-hot softmax-cross-entropy logit-gradient derivation in both languages. [ ] Complete a passage-level comparison against the full baseline diff for all four concepts, including probabilities/softmax.
 - [x] Textual review: the new entropy pages distinguish predictive entropy from observed-token surprisal and sequence NLL, state the finite-vocabulary bound in nats, include a numerical example/self-check, and state the (0\log 0=0) convention. [ ] Verify the rendered page and ensure any perplexity statements remain convention-aware.
 - [x] Textual review: cross-entropy pages state and derive the KL identity, state its direction, cover one-hot/soft-target cases, zero-mass terms and zero-support caveat, distinguish target-position from input-position indexing, and derive the one-hot logit gradient. [ ] Verify rendered output and the exact formulas/assumptions.
-- [ ] Verify the probabilities/softmax old/new diff, including the simplex statement, numerical example, conditional factorization, calibration caveat, self-check answers, references, and navigation.
+- [x] Verify the probabilities/softmax old/new diff: numerical example, conditional factorization, temperature, calibration/truth distinctions, self-check answers, references, and exercise-space navigation are present. The general simplex term was replaced by a direct explanation of normalization.
 - [x] Textual review: tensor pages distinguish output feature dimension (D') from attention-head count (H), explain array rank versus matrix rank, and preserve key misconceptions in both languages. [ ] Verify tensor shapes, diagram rendering/alt text, links, and FR/EN parity.
-- [ ] Check the new Wiki concepts and their draft lifecycle, registry synchronization and links; treat them as supplementary only.
+- [ ] Check the Wiki concept registry/generator synchronization, sources metadata, and draft lifecycle. The four pages exist in `main`, but all remain `status: draft`, with empty `sources` metadata; they are supplementary only and are not treated as scientifically approved destinations.
 - [x] Path-existence audit for 44 local Markdown/image references across the eight affected pages; all targets exist at the recorded commit.
 - [ ] Inspect rendered Quarto pages in both languages, including anchors, figures, alt text, navigation, and visual quality.
 - [x] CI passes on reviewed head `a4bd0d378e7f42ec72af9fe699c6ddcf83509a16`: [CI run](https://github.com/JM-Brun/llm-lab/actions/runs/40538171509).
