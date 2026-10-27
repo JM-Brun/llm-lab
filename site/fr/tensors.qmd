@@ -91,6 +91,8 @@ Dans les bibliothèques de deep learning, le mot « tenseur » désigne couramme
 - [PyTorch — Tensors](https://docs.pytorch.org/tutorials/beginner/introyt/tensors_deeper_tutorial.html).
 - [PyTorch — Tensor documentation](https://docs.pytorch.org/docs/stable/tensors.html).
 - [NumPy — N-dimensional array](https://numpy.org/doc/stable/reference/arrays.ndarray.html).
+- [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch) — référence complémentaire orientée implémentation.
+- [Visualisation des tenseurs, partie 1](https://www.youtube.com/watch?v=YxXyN2ifK8A) — point de vue mathématique et physique, à distinguer de l'usage plus simple de « tenseur » dans les bibliothèques de deep learning.
 
 ::: {.language-switch}
 [Français](tensors.qmd) · [English](../en/tensors.qmd)
