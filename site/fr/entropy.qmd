@@ -27,6 +27,10 @@ Une distribution concentrée sur quelques tokens a généralement une entropie p
 
 L'entropie dépend du contexte et de la distribution effectivement considérée. Le même préfixe peut conduire à des distributions différentes selon le modèle, le tokenizer ou la température appliquée aux logits.
 
+### Exemple numérique
+
+Pour deux tokens de probabilités \((0.5,0.5)\), l'entropie vaut 1 bit, soit \(\log 2\) nats. Pour \((0.9,0.1)\), elle vaut environ \(0.469\) bit, soit \(0.325\) nat. La seconde distribution est plus concentrée, mais cela ne prouve pas que son token le plus probable soit correct.
+
 ## Entropie prédictive et token observé : deux questions différentes
 
 L'entropie moyenne décrit l'incertitude *avant* de connaître le token suivant. Une fois le token cible \(x_t\) observé, sa surprise sous le modèle est :
@@ -54,13 +58,13 @@ Cette somme de log-probabilités négatives est le lien direct entre la prédict
 
 ## Entropie, température et génération
 
-La température \(T>0\) transforme les logits \(z\) en une distribution :
+La température \(\tau>0\) transforme les logits \(z\) en une distribution :
 
 \[
-p_i^{(T)}=\operatorname{softmax}(z/T)_i.
+p_i^{(\tau)}=\operatorname{softmax}(z/T)_i.
 \]
 
-Une température plus faible tend à concentrer la distribution ; une température plus élevée tend à l'aplatir. Pour \(T>0\), l'ordre des logits et l'argmax restent inchangés, mais les probabilités et donc l'entropie changent. L'entropie de la distribution après température ne doit pas être présentée comme une mesure de l'incertitude calibrée du modèle sans évaluation empirique.
+Une température plus faible tend à concentrer la distribution ; une température plus élevée tend à l'aplatir. Pour \(\tau>0\), l'ordre des logits et l'argmax restent inchangés, mais les probabilités et donc l'entropie changent. L'entropie de la distribution après température ne doit pas être présentée comme une mesure de l'incertitude calibrée du modèle sans évaluation empirique.
 
 ## Ce que l'entropie ne permet pas de conclure
 
@@ -69,6 +73,21 @@ Une température plus faible tend à concentrer la distribution ; une températu
 - Les probabilités normalisées ne garantissent pas la calibration.
 - Une entropie ou une perplexité calculée avec un tokenizer différent n'est pas directement comparable sans précautions.
 - L'entropie moyenne observée sous un modèle n'est pas automatiquement l'entropie vraie de la source des données.
+
+## Questions de contrôle
+
+1. Une entropie faible garantit-elle que le token le plus probable est correct ?
+2. En quoi l'entropie diffère-t-elle de la surprise du token observé ?
+3. Pourquoi faut-il préciser le tokenizer et la convention de comptage des tokens pour comparer des perplexités ?
+
+<details>
+<summary>Afficher les réponses</summary>
+
+1. Non. L'entropie décrit la dispersion de la distribution, pas la correction factuelle.
+2. L'entropie moyenne la surprise sur tous les tokens possibles selon la distribution prédite ; la surprise observée utilise la probabilité attribuée à la cible réelle.
+3. Les tokenizers segmentent différemment le texte, ce qui change les unités et les positions sur lesquelles la moyenne est calculée.
+
+</details>
 
 ## Pour poursuivre
 
