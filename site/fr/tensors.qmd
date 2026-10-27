@@ -8,6 +8,10 @@ lang: fr
 Dans un Transformer, les tenseurs transportent les représentations des tokens, les logits, les masques et les gradients. Lire correctement leurs axes est indispensable : une opération peut s'exécuter sans erreur tout en portant sur le mauvais axe.
 :::
 
+![Tenseur d'activations organisé selon trois axes : lot, positions et caractéristiques.](../images/tensors-fr.svg){fig-alt="Tenseur de forme B × T × D : B indexe les exemples, T les positions de chaque séquence et D les caractéristiques de chaque position." width=100%}
+
+Pour un lot de textes, chaque position d'une séquence est décrite par un vecteur. Le tenseur d'activations est donc souvent organisé selon les axes batch, positions et caractéristiques.
+
 ## Formes courantes dans un LLM
 
 On utilise souvent les conventions suivantes :
