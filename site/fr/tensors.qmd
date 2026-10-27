@@ -25,6 +25,23 @@ On utilise souvent les conventions suivantes :
 
 Les activations cachées ont souvent la forme \((B,T,D)\), les logits \((B,T,V)\), et les représentations d'attention multi-tête peuvent prendre la forme \((B,H,T,d_h)\). Ces conventions sont fréquentes mais ne sont pas universelles : il faut lire les contrats des fonctions et vérifier les formes réelles.
 
+| Objet dans le modèle | Forme typique | Interprétation |
+|---|---|---|
+| Perte moyenne scalaire | `()` | un objectif agrégé |
+| Embedding d'un token | `(D,)` | un vecteur de caractéristiques |
+| États cachés d'une séquence | `(T,D)` | un vecteur par position |
+| États cachés d'un batch | `(B,T,D)` | exemples, positions, caractéristiques |
+
+## Lire les dimensions d'une projection
+
+Supposons que \(X\) ait la forme \((B,T,D)\) et que la matrice de projection \(W\) ait la forme \((D,H)\). La projection applique la même transformation à chaque position :
+
+\[
+Y=XW,\qquad \operatorname{shape}(Y)=(B,T,H).
+\]
+
+Les axes du batch et des positions sont conservés ; le dernier axe passe de \(D\) à \(H\). Vérifier les formes permet de détecter certaines erreurs, mais ne garantit pas que les axes ont la bonne signification.
+
 ## Les axes ont une signification
 
 Une forme donne les tailles des axes, pas leur sémantique. Deux tenseurs de forme \((B,T,D)\) peuvent représenter des objets différents.
