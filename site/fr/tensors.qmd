@@ -58,6 +58,10 @@ Pour \(B=2\), \(T=4\) et \(D=8\), les états cachés ont la forme \((2,4,8)\). U
 
 La compatibilité des formes ne garantit pas que la projection, le masque, le décalage causal ou la réduction soient corrects. Il faut également vérifier le sens des axes et la sémantique des cibles.
 
+## Précision terminologique : rang d'un tableau et tenseur mathématique
+
+Dans les bibliothèques de deep learning, le mot « tenseur » désigne couramment un tableau numérique multidimensionnel. En mathématiques et en physique, un tenseur est un objet plus structuré, dont les composantes suivent des règles de transformation précises. Les deux usages sont liés, mais pas strictement équivalents. Ici, le **rang du tableau** désigne le nombre d'axes : un scalaire a le rang 0, un vecteur le rang 1 et une matrice le rang 2. Ce sens diffère du rang d'une matrice en algèbre linéaire.
+
 ## Pièges fréquents
 
 - **Permutation d'axes :** changer l'ordre des axes change la manière dont les opérations les interprètent.
