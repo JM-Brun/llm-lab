@@ -48,11 +48,12 @@ A textual, bilingual review of `site/fr/entropy.qmd`, `site/en/entropy.qmd`, `si
 
 - **Entropy:** the two language versions preserve the same core claims: finite-vocabulary bound in nats, the \(0\log 0=0\) convention, a checkable numerical example, predictive entropy versus observed-token surprisal, sequence NLL, temperature, and limits concerning truth/calibration and tokenizer-dependent comparisons.
 - **Cross-entropy:** the two versions preserve the one-hot token objective, normalized soft-target formulation, KL identity and direction, zero-support caveat, target/logit alignment, masking and reduction semantics, perplexity convention, and the one-hot logit-gradient derivation.
-- **Logits/probabilities:** the paired pages were audited next. A duplicated set of self-check questions in the English logits page was removed on the current documentation branch; no mathematical correction was justified by the textual review of either page pair.
-- **No scientific correction was justified by this textual pass except the documented pedagogical duplication fix.** In particular, the KL derivation remains because the page uses it to explain soft targets and the relationship between cross-entropy and KL; this is not a claim that the entire treatment has passed independent scientific review.
+- **Logits/probabilities:** a duplicated set of self-check questions in the English logits page was removed on this branch; no mathematical correction was identified in those page pairs.
+- **Likelihood/loss:** the likelihood pages remain aligned. The loss pages had duplicated English self-checks, a missing tensor-navigation link, and an ambiguous perplexity/log-base caveat. The branch consolidates the self-check, restores the link, defines the loss notation, and states the natural-log and base-2 perplexity formulas explicitly.
+- **Corrections so far are editorial/mathematical clarification, not mastery evidence.** In particular, the KL derivation remains because the page uses it to explain soft targets and the relationship between cross-entropy and KL; this is not a claim that the entire treatment has passed independent scientific review.
 - **Still open:** actual browser review of MathJax and responsive layout; external-reference availability/relevance; private knowledge-transfer questions and evidence. Do not mark these concepts acquired from this audit alone.
 
-**Next audit slice:** review likelihood and loss together, then gradients. Check shared notation and target-position conventions across the chain; fix only evidenced defects, and keep French/English claims and caveats aligned.
+**Next audit slice:** review gradients, especially the path from token loss through logits to parameters, assumptions behind derivatives, and the limits of finite-difference checks. Then run the full Quarto/CI and rendered-page checks for the corrected pages.
 
 ### P1 — Keep the existing learning experience dependable
 **Goal:** ensure the existing site and numerical exercise are correct, navigable, and easy to reproduce.
