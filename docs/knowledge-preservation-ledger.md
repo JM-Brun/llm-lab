@@ -153,15 +153,15 @@ At commit `39d439078b585802b926c52681e6cd0d87dcfa3b`, a path-existence check cov
 
 ## 7. Open checks before PR #17 can be approved
 
-- [ ] Inspect the full old/new diffs for the four concepts, including all equations and details not visible in section headings.
-- [x] Textual review: the new entropy pages distinguish predictive entropy from observed-token surprisal and sequence NLL, state the finite-vocabulary bound in nats, and include a numerical example/self-check. [ ] Verify the rendered page and ensure any perplexity statements remain convention-aware.
-- [x] Textual review: cross-entropy pages state the KL identity/direction, one-hot/soft-target cases, and zero-support caveat. [ ] Verify rendered output and the exact formulas/assumptions.
+- [x] Inspect key equations and content for entropy, cross-entropy and tensors; review identified and corrected the target-indexing ambiguity and added explicit zero-probability conventions. [ ] Complete a passage-level comparison against the full baseline diff for all four concepts, including probabilities/softmax.
+- [x] Textual review: the new entropy pages distinguish predictive entropy from observed-token surprisal and sequence NLL, state the finite-vocabulary bound in nats, include a numerical example/self-check, and state the (0\log 0=0) convention. [ ] Verify the rendered page and ensure any perplexity statements remain convention-aware.
+- [x] Textual review: cross-entropy pages state the KL identity/direction, one-hot/soft-target cases, zero-mass-term convention, and zero-support caveat. A review found ambiguity between target-position and input-position indexing; both language pages now explicitly distinguish the conventions and require consistent logit/label shifting. [ ] Verify rendered output and the exact formulas/assumptions.
 - [ ] Verify softmax examples, temperature claims, and normalization/calibration/truth distinctions.
 - [x] Textual review: tensor pages distinguish output feature dimension (D') from attention-head count (H), explain array rank versus matrix rank, and preserve key misconceptions in both languages. [ ] Verify tensor shapes, diagram rendering/alt text, links, and FR/EN parity.
 - [ ] Check the new Wiki concepts and their draft lifecycle, registry synchronization and links; treat them as supplementary only.
 - [x] Path-existence audit for 44 local Markdown/image references across the eight affected pages; all targets exist at the recorded commit.
 - [ ] Inspect rendered Quarto pages in both languages, including anchors, figures, alt text, navigation, and visual quality.
-- [ ] Re-run CI and Quarto workflows on the latest head.
+- [ ] Re-run CI and Quarto workflows on the latest head after the latest mathematical clarification commits.
 - [ ] Review the final PR diff against this ledger; update this document if a disposition changes.
 - [ ] Do not merge PR #17 until the checks above are completed.
 
