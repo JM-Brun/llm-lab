@@ -10,7 +10,7 @@ For a one-hot target, cross-entropy at one position is the negative log-probabil
 
 ## Objective for one token
 
-At position \(t\), the model produces logits \(z_t\) over the vocabulary. After softmax, the target-token probability is \(p_\theta(x_t\mid x_{<t})\). For a one-hot target, the loss is:
+Here, \(t\) indexes the **target token**: the logits are aligned with \(x_t\) and represent \(p_\theta(x_t\mid x_{<t})\). Some implementations instead index logits by the input position; then the row at input position \(t\) predicts \(x_{t+1}\). These conventions are equivalent only when the logits and labels are shifted consistently. For a one-hot target, the loss is:
 
 \[
 \ell_t=-\log p_\theta(x_t\mid x_{<t}).
