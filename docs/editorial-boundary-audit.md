@@ -1,6 +1,6 @@
 # Editorial boundary audit: general foundations vs LLM applications
 
-**Status:** first-pass inventory, reviewed 2026-10-27. This is an editorial audit, not a claim that all pages have already been rewritten or that the private wiki content has been verified. No model implementation or experiment is authorized by this document.
+**Status:** first-pass inventory, reviewed 2026-10-27. This is an editorial audit, not a claim that all pages have already been rewritten or that the private wiki content has been verified. The passage-level record for the current four-concept slice is in the [knowledge-preservation ledger](knowledge-preservation-ledger.md). No model implementation or experiment is authorized by this document.
 
 ## Decision rule
 
