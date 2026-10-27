@@ -240,6 +240,19 @@ The fix is not yet merged and this connector workflow did not run Quarto or CI. 
 
 This source-text audit does not replace a rendered-site review, test the implementation against the documented loss convention, or establish learner mastery.
 
-## 11. Scope of this ledger
+## 11. Focused bilingual textual audit — gradients (2026-10-27)
+
+**Scope:** current French/English pages `site/fr/gradients.qmd` and `site/en/gradients.qmd`. Compared equations, assumptions, numerical-check guidance, self-checks, and navigation.
+
+- **Mathematical review:** the one-hot softmax-cross-entropy logit derivative, chain-rule relationship between logit and parameter gradients, SGD update, and central finite-difference expression are consistent under the stated conventions. The text appropriately limits what one finite-difference check establishes and notes the trade-off in choosing epsilon.
+- **Defect found:** the English page presented the same three self-check questions twice, first without answers and then with answers.
+- **Correction made on this branch:** consolidated the English page to one answered self-check, preserving the exercise link and return navigation.
+- **Remaining verification:** compare the documented derivative and finite-difference convention with the implementation/tests, render the corrected equations, and run CI/Quarto. No implementation or new test was added in this audit.
+
+### What this audit does not establish
+
+The textual review does not prove that the current implementation tests all stated edge cases, and it does not establish learner mastery.
+
+## 12. Scope of this ledger
 
 This is a traceable first-pass preservation record, not a claim that every line has passed scientific review. It deliberately records several items as **VERIFY**. A future review must resolve those statuses using the actual text and rendered pages rather than treating the inventory as a rubber stamp.
