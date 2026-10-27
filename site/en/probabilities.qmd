@@ -58,7 +58,7 @@ Selecting the argmax token at each position is not equivalent to globally search
 - **Calibration:** the empirical property that, over a relevant population, events assigned a given probability occur at a compatible frequency.
 - **Factual truth:** a property of the output relative to the world and available evidence; it does not follow from either of the preceding properties.
 
-A probability of 0.9 therefore does not automatically mean “a 90% chance that the answer is true.” Calibration must be evaluated on relevant data, and good overall calibration does not guarantee that each individual answer is reliable.
+A probability of 0.9 therefore does not automatically mean “a 90% chance that the answer is true.” Calibration must be evaluated on relevant held-out data, and good overall calibration does not guarantee that each individual answer is reliable.
 
 ## Self-check
 
