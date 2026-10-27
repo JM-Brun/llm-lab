@@ -196,6 +196,28 @@ At commit `e3d80d65569afbc0e2c85b4e8fcb020ecb070497`, a path-existence check cov
 
 This review does not mark either concept as mastered, prove every cited source supports every claim, or replace a full-site Quarto render and visual inspection. Update status only when those separate checks have evidence.
 
-## 9. Scope of this ledger
+## 9. Focused bilingual textual audit — logits and probabilities (2026-10-27)
+
+**Scope:** current French/English source pairs `site/fr/logits.qmd`, `site/en/logits.qmd`, `site/fr/probabilites.qmd`, and `site/en/probabilities.qmd`. Compared definitions, formulas, examples, caveats, self-checks, and local navigation. This was a source-text review, not a rendered-browser or external-link check.
+
+### Logits
+
+- **Mathematical checks:** the softmax definition, probability-ratio identity, translation invariance, two-class example, and max-subtraction stability explanation are consistent.
+- **Defect found:** the English page repeated the same three self-check questions twice. The first copy had no answers and interrupted the exercise/tensor links; the second copy repeated the questions with answers.
+- **Correction made on this branch:** consolidated the English page to one answered self-check, restored the exercise and tensor links before it, and kept the next-page links after it. This brings its structure closer to the French page without adding content.
+- **Remaining verification:** render and inspect the page; confirm the local links and displayed equations in the deployed HTML.
+
+### Probabilities
+
+- **Parity:** French and English versions align on softmax normalization, the two-logit example, autoregressive factorization, tokenization caveat, temperature, decoding versus training, and the distinction between normalization, calibration, and factual truth.
+- **Mathematical checks:** the example \\(z=(0,\\log 3)\\) gives \\(p=(0.25,0.75)\\); for positive temperature, dividing logits by temperature preserves their order while changing their distribution.
+- **Disposition:** no further source-text correction identified in this pass.
+- **Remaining verification:** rendered-page review and live external-reference check.
+
+### What this audit does not establish
+
+The fix is not yet merged and this connector workflow did not run Quarto or CI. The review does not certify every source claim, live link availability, or learner mastery.
+
+## 10. Scope of this ledger
 
 This is a traceable first-pass preservation record, not a claim that every line has passed scientific review. It deliberately records several items as **VERIFY**. A future review must resolve those statuses using the actual text and rendered pages rather than treating the inventory as a rubber stamp.
