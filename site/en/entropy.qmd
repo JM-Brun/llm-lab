@@ -61,7 +61,7 @@ This sum of negative log-probabilities directly connects token-by-token predicti
 Temperature \(\tau>0\) transforms logits \(z\) into a distribution:
 
 \[
-p_i^{(\tau)}=\operatorname{softmax}(z/T)_i.
+p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i.
 \]
 
 Lower temperature tends to concentrate the distribution; higher temperature tends to flatten it. For \(\tau>0\), logit ordering and argmax remain unchanged, but probabilities and entropy change. Entropy after temperature scaling should not be presented as calibrated model uncertainty without empirical evaluation.
