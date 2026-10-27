@@ -40,6 +40,12 @@
 6. The README and home pages should describe the public course as an LLM application lab, not as a second canonical mathematics wiki.
 7. A private Wiki URL is never sufficient support for public readers. Each applied page must teach the prerequisites needed for independent comprehension, including definitions, assumptions, derivations and examples as required, plus accessible public references.
 
+## Current implementation status — 2026-10-27
+
+The entropy and cross-entropy pages have already been refocused in `main`; do not treat them as unstarted refactors. The current versions retain the LLM-specific definitions and caveats identified in the inventory above. A textual bilingual pass found no correction that could be justified from the current source alone. Browser-rendered MathJax/layout and live external-reference checks remain open; see the [knowledge-preservation ledger](knowledge-preservation-ledger.md).
+
+The next content-review slice is **logits and probabilities**, followed by **likelihood and loss**, then **gradients**. Review these as connected parts of the autoregressive objective rather than independent rewrite projects. Preserve current scope and only edit where a specific claim, mismatch, missing assumption, broken link, or pedagogical defect is demonstrated.
+
 ## Ordered work
 
 ### P0 — Clarify the public information architecture
@@ -49,11 +55,10 @@
 - Keep all existing URLs stable while changing titles and navigation.
 
 ### P1 — Refactor the highest-duplication pages
-1. Entropy: retain next-token uncertainty and useful links to cross-entropy/perplexity; remove broad general-information-theory exposition from the public course after its replacement is reviewed.
-2. Cross-entropy: focus on autoregressive token NLL, target formats, masking, reduction, and perplexity.
-3. Gradients: focus on the loss-to-logits-to-parameters path and numerical verification.
-4. Logits/probabilities: tighten definitions to the exact statements needed for the applied examples.
-5. Likelihood/loss: validate that target shift, padding masks, reduction, and perplexity are described consistently.
+1. **Logits/probabilities:** audit the paired pages for exact meaning of logits, vocabulary dimension, conditional distributions, temperature, calibration versus truth, and bilingual parity.
+2. **Likelihood/loss:** validate sequence factorization, target shift, padding/ignored positions, reduction, and perplexity conventions across the paired pages.
+3. **Gradients:** audit the loss-to-logits-to-parameters path, assumptions behind derivatives, and numerical-verification claims.
+4. **Entropy/cross-entropy:** the first-pass refactor is already in `main`; retain the current focused scope and resolve only the outstanding browser/external-reference checks or defects found by later evidence.
 
 ### P2 — Validate and connect
 - Compare French and English claims, caveats, examples, and references page by page.
