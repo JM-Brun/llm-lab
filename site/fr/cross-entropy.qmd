@@ -87,7 +87,7 @@ Pour retrouver ce résultat, on dérive l'expression de la perte en fonction des
 \end{aligned}
 \]
 
-Cette dérivation concerne une position et une cible one-hot sans pondération. Le masquage, la pondération et la réduction changent les gradients agrégés ou leur échelle. Le lien entre ce gradient local et les paramètres du réseau est détaillé dans [Gradients](gradients.qmd).
+Cette dérivation concerne une position et une cible one-hot sans pondération. En descente de gradient, le gradient négatif du logit cible conduit à l'augmenter, tandis que les gradients positifs des alternatives conduisent à les diminuer. Le masquage, la pondération et la réduction changent les gradients agrégés ou leur échelle. Le lien entre ce gradient local et les paramètres du réseau est détaillé dans [Gradients](gradients.qmd).
 
 ## Exemple numérique
 
