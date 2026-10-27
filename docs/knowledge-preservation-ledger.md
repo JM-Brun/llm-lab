@@ -161,7 +161,9 @@ At commit `39d439078b585802b926c52681e6cd0d87dcfa3b`, a path-existence check cov
 - [ ] Check the new Wiki concepts and their draft lifecycle, registry synchronization and links; treat them as supplementary only.
 - [x] Path-existence audit for 44 local Markdown/image references across the eight affected pages; all targets exist at the recorded commit.
 - [ ] Inspect rendered Quarto pages in both languages, including anchors, figures, alt text, navigation, and visual quality.
-- [ ] Re-run CI and Quarto workflows on the latest head after the latest mathematical clarification commits.
+- [x] CI passes on reviewed head `a4bd0d378e7f42ec72af9fe699c6ddcf83509a16`: [CI run](https://github.com/JM-Brun/llm-lab/actions/runs/40538171509).
+- [x] Quarto site render passes on reviewed head `a4bd0d378e7f42ec72af9fe699c6ddcf83509a16`: [site workflow](https://github.com/JM-Brun/llm-lab/actions/runs/40538171519).
+- [ ] Inspect the rendered output visually; successful render is not visual/scientific approval.
 - [ ] Review the final PR diff against this ledger; update this document if a disposition changes.
 - [ ] Do not merge PR #17 until the checks above are completed.
 
