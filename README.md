@@ -4,6 +4,10 @@ A reproducible, code-first lab for understanding how language models work—from
 
 The goal is not to train a production-scale LLM from scratch. It is to implement small, inspectable components, test their mathematical properties, run controlled experiments, and document what the evidence does and does not show.
 
+## Contributing
+
+Contributions can improve concept explanations, French/English parity, reference implementations, numerical tests, reproducible experiments, critical reviews, figures/references, or developer tooling. Each mode has its own acceptance criteria; see [CONTRIBUTING.md](CONTRIBUTING.md) and use the PR template to state which mode your change follows.
+
 ## Learn through the Quarto site
 
 The project includes a bilingual Quarto website organized around LLM-specific explanations: overview pages connect mechanisms, applied concept pages explain how the mathematics is used in language models, and implementation/tests are linked when they exist. General mathematical foundations belong in the separate `wiki-knowledge` knowledge base; because that wiki is private, public lessons retain only the prerequisite statements needed to understand the LLM application and cite public references. Pages explicitly distinguish verified code from planned work.
