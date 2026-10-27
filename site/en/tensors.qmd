@@ -64,6 +64,7 @@ In deep-learning libraries, “tensor” commonly means a multidimensional numer
 
 ## Common pitfalls
 
+- **Indexing:** selecting one example or sequence position can remove an axis; check whether a later operation expects that dimension to remain.
 - **Axis permutation:** changing axis order changes how subsequent operations interpret the data.
 - **Broadcasting:** a size-one dimension may be expanded implicitly and hide an alignment bug.
 - **Reshape:** changing shape does not automatically give values a new meaning.
