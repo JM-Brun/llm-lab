@@ -26,7 +26,7 @@ The cost increases when the model assigns low probability to the observed token.
 
 ## One-hot targets, soft targets, and KL divergence
 
-For a target distribution \(q\) and predicted distribution \(p\), cross-entropy is:
+For a target distribution \(q\) and predicted distribution \(p\), cross-entropy is (terms with zero target mass contribute zero):
 
 \[
 H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
