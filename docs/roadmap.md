@@ -42,7 +42,7 @@ Tasks:
 - The learner can explain the concept, identify when it does not apply, and transfer it to a new case.
 - `career-knowledge` records the evidence needed for mastery; a passing test or a polished page alone is insufficient.
 
-#### Latest focused audit — entropy and cross-entropy (2026-10-27)
+#### Latest focused audit — core probability and loss chain (2026-10-27)
 
 A textual, bilingual review of `site/fr/entropy.qmd`, `site/en/entropy.qmd`, `site/fr/cross-entropy.qmd`, and `site/en/cross-entropy.qmd` has been completed against the current public files. This is not a browser-render, external-link, or mastery review.
 
@@ -50,10 +50,11 @@ A textual, bilingual review of `site/fr/entropy.qmd`, `site/en/entropy.qmd`, `si
 - **Cross-entropy:** the two versions preserve the one-hot token objective, normalized soft-target formulation, KL identity and direction, zero-support caveat, target/logit alignment, masking and reduction semantics, perplexity convention, and the one-hot logit-gradient derivation.
 - **Logits/probabilities:** a duplicated set of self-check questions in the English logits page was removed on this branch; no mathematical correction was identified in those page pairs.
 - **Likelihood/loss:** the likelihood pages remain aligned. The loss pages had duplicated English self-checks, a missing tensor-navigation link, and an ambiguous perplexity/log-base caveat. The branch consolidates the self-check, restores the link, defines the loss notation, and states the natural-log and base-2 perplexity formulas explicitly.
+- **Gradients:** the English page also duplicated its self-check. The branch consolidates it; the textual review found no justified change to the chain-rule or finite-difference equations.
 - **Corrections so far are editorial/mathematical clarification, not mastery evidence.** In particular, the KL derivation remains because the page uses it to explain soft targets and the relationship between cross-entropy and KL; this is not a claim that the entire treatment has passed independent scientific review.
 - **Still open:** actual browser review of MathJax and responsive layout; external-reference availability/relevance; private knowledge-transfer questions and evidence. Do not mark these concepts acquired from this audit alone.
 
-**Next audit slice:** review gradients, especially the path from token loss through logits to parameters, assumptions behind derivatives, and the limits of finite-difference checks. Then run the full Quarto/CI and rendered-page checks for the corrected pages.
+**Next step:** run the full Quarto/CI checks and inspect the corrected pages in a browser at desktop and mobile widths. Verify local links and rendered equations, then compare the documented loss/gradient conventions with the implementation and tests. Do not mark the content complete until these checks and private transfer questions have evidence.
 
 ### P1 — Keep the existing learning experience dependable
 **Goal:** ensure the existing site and numerical exercise are correct, navigable, and easy to reproduce.
