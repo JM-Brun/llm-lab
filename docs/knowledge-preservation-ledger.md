@@ -5,7 +5,7 @@
 **Comparison baseline:** `main` as inspected on 2026-10-27.  
 **Rule:** no item is considered “moved” merely because a similarly named Wiki page exists. The public page must still teach every prerequisite needed for its LLM-specific objective.
 
-This ledger records section-level dispositions for the first four concepts. A final content review must check the actual diff, equations, links, and rendered output before PR #17 is mergeable in substance. If a claim or useful teaching element is found missing, restore it to LLM Lab or explicitly decide—on pedagogical grounds—that it is not needed by the public book.
+This ledger records section-level dispositions for the first four concepts. PR #17 has been integrated, but that does not certify every claim as scientifically reviewed. If a claim or useful teaching element is found missing, restore it to LLM Lab or explicitly decide—on pedagogical grounds—that it is not needed by the public book.
 
 ## Decision vocabulary
 
@@ -138,35 +138,39 @@ The baseline had no `site/en/tensors.qmd` counterpart. The proposed branch adds 
 | New English page and translated SVG | **KEEP PUBLIC** | Fixes a pre-existing bilingual gap; verify equivalent technical coverage, links and alt text. |
 | Video and Raschka reference | **KEEP PUBLIC** | Both references are retained in the French and English tensor lessons; PyTorch and NumPy docs support API-specific statements. External URL availability still needs a separate check. |
 
-**Follow-up changes on this branch:** the new English page and translated SVG provide language parity; both pages retain scalar/vector/matrix examples, array-rank versus matrix-rank terminology, the mathematical-tensor caveat, shape semantics, axis permutation, indexing, broadcasting, reshape, masks, dtype, gradients, and misconceptions. Projection notation uses \(D'\) to avoid overloading \(H\), the number of attention heads. PyTorch, NumPy, Raschka, and the tensor-visualization reference are present in both language versions. Rendered diagram/alt-text and external-reference review remain open.
+**Follow-up changes:** the new English page and translated SVG provide language parity; both pages retain scalar/vector/matrix examples, array-rank versus matrix-rank terminology, the mathematical-tensor caveat, shape semantics, axis permutation, indexing, broadcasting, reshape, masks, dtype, gradients, and misconceptions. Projection notation uses \(D'\) to avoid overloading \(H\), the number of attention heads. PyTorch, NumPy, Raschka, and the tensor-visualization reference are present in both language versions. The deployed tensor diagrams have now been visually inspected and are legible; their non-empty alt text and local asset paths were verified. External-reference availability remains open.
 
 ## 5. Contributor-guidance audit
 
 - `llm-lab/CONTRIBUTING.md` previously said to include “only the concise general definition” and “do not duplicate a full Wiki chapter”. This wording could incorrectly encourage removal of teaching material needed by the public book. The PR branch now clarifies that LLM Lab is a self-contained book, that intentional overlap is allowed, and that no page may depend on private Wiki content. It now also explicitly keeps private Wiki URLs/IDs out of public lesson content and directs maintainer traceability to the private `career-knowledge` repository.
-- `wiki-knowledge/CONTRIBUTING.md` previously said to link to one canonical page “instead of copying its definition into another page” without delimiting that rule to the Wiki. The proposed Wiki contributor-doc change clarifies that canonical uniqueness applies within the Wiki, not across independent books or applications.
-- The Wiki concept pages added under `CONCEPT-020`–`CONCEPT-023` are marked draft per PR #23. Their existence is not evidence that their claims are scientifically reviewed, and they do not justify a public content deletion.
-- The Wiki contributor-boundary change was merged via [wiki-knowledge PR #24](https://github.com/JM-Brun/wiki-knowledge/pull/24) on 2026-10-27. The corresponding `llm-lab/CONTRIBUTING.md` clarification remains on PR #17's branch and is not yet in `llm-lab/main`.
+- `wiki-knowledge/CONTRIBUTING.md` previously said to link to one canonical page “instead of copying its definition into another page” without delimiting that rule to the Wiki. The merged Wiki contributor guidance in PR #24 clarifies that canonical uniqueness applies within the Wiki, not across independent books or applications.
+- The Wiki concept pages added under `CONCEPT-020`–`CONCEPT-023` remain marked draft. Their existence is not evidence that their claims are scientifically reviewed, and they do not justify a public content deletion.
+- The Wiki contributor-boundary change was merged via [wiki-knowledge PR #24](https://github.com/JM-Brun/wiki-knowledge/pull/24), and the corresponding public-book clarification was merged via [llm-lab PR #17](https://github.com/JM-Brun/llm-lab/pull/17), both on 2026-10-27.
 
 ## 6. Link-audit evidence
 
 At commit `e3d80d65569afbc0e2c85b4e8fcb020ecb070497`, a path-existence check covered 50 local Markdown/image references across the eight affected French/English concept pages (entropy, cross-entropy, probabilities, tensors): all 25 unique targets existed in the branch tree. The four explicit fragment links to the planned exercise collections (`#foundations` and `#fondations`) were also checked against their target pages. The check exposed one invalid English tensor-page link to a not-yet-translated embedding-space page; it was changed to an explicit link to the existing French page with the translation gap labelled. These checks verify target paths/fragments only, not rendered appearance, accessibility, or external URL availability.
 
-## 7. Open checks before PR #17 can be approved
+## 7. Post-merge validation and remaining checks
 
 - [x] Complete a passage-level disposition review of all four affected concepts. The public pages retain the definitions, assumptions, derivations, numerical examples, interpretation limits, navigation, and references needed for the LLM application. Broad general entropy/coding/physics material is retained in Wiki concepts `CONCEPT-020`/`CONCEPT-021` (still draft); this is a content disposition, not scientific approval of the Wiki drafts.
-- [x] Textual review: the new entropy pages distinguish predictive entropy from observed-token surprisal and sequence NLL, state the finite-vocabulary bound in nats, include a numerical example/self-check, and state the (0\log 0=0) convention. [ ] Verify the rendered page and ensure any perplexity statements remain convention-aware.
-- [x] Textual review: cross-entropy pages state and derive the KL identity, state its direction, cover one-hot/soft-target cases, zero-mass terms and zero-support caveat, distinguish target-position from input-position indexing, and derive the one-hot logit gradient. [ ] Verify rendered output and the exact formulas/assumptions.
+- [x] Textual review: the entropy pages distinguish predictive entropy from observed-token surprisal and sequence NLL, state the finite-vocabulary bound in nats, include a numerical example/self-check, and state the convention 0 log 0 = 0. The deployed artifact contains the expected HTML and MathJax source; actual equation typesetting still needs a browser-level visual check.
+- [x] Textual review: cross-entropy pages state and derive the KL identity, state its direction, cover one-hot/soft-target cases, zero-mass terms and zero-support caveat, distinguish target-position from input-position indexing, and derive the one-hot logit gradient. Rendered HTML contains the expected MathJax source and no missing local links; actual equation typesetting still needs a browser-level visual check.
 - [x] Verify the probabilities/softmax old/new diff: numerical example, conditional factorization, temperature, calibration/truth distinctions, self-check answers, references, and exercise-space navigation are present. The general simplex term was replaced by a direct explanation of normalization.
-- [x] Textual review: tensor pages distinguish output feature dimension (D') from attention-head count (H), explain array rank versus matrix rank, and preserve key misconceptions in both languages. [ ] Verify tensor shapes, diagram rendering/alt text, links, and FR/EN parity.
+- [x] Textual review: tensor pages distinguish output feature dimension (D') from attention-head count (H), explain array rank versus matrix rank, and preserve key misconceptions in both languages. Both deployed diagrams were visually inspected; alt text, local asset paths, FR/EN page structure, and local links/fragments were checked.
 - [ ] Check the Wiki concept registry/generator synchronization, sources metadata, and draft lifecycle. The four pages exist in `main`, but all remain `status: draft`, with empty `sources` metadata; they are supplementary only and are not treated as scientifically approved destinations.
 - [x] Path-existence audit for 50 local Markdown/image references and four explicit local fragments across the eight affected pages; all targets/fragments resolve at the recorded commit.
-- [ ] Inspect rendered Quarto pages in both languages, including anchors, figures, alt text, navigation, and visual quality.
+- [x] Inspect the deployed HTML artifact for the four affected cross-entropy/tensor pages: each has exactly one main H1, no duplicate HTML IDs, and no broken local file or fragment links. Both tensor diagrams were visually inspected and have meaningful non-empty alt text.
+- [ ] Full-page browser review of the four pages and actual MathJax typesetting remains open: the available browser runtime blocked local HTTP/file navigation and could not load the external MathJax CDN. This limitation is not a Quarto build failure.
 - [x] CI and Quarto site render passed on earlier reviewed heads after mathematical corrections. [CI](https://github.com/JM-Brun/llm-lab/actions/runs/40538171509) · [Quarto](https://github.com/JM-Brun/llm-lab/actions/runs/40538171519).
 - [x] CI passes on reviewed head `b97475304533c76712dff180c68693d0482cb401`: [CI run](https://github.com/JM-Brun/llm-lab/actions/runs/40540506554).
 - [x] Quarto bilingual site render passes on the same head: [site workflow](https://github.com/JM-Brun/llm-lab/actions/runs/40540504668). The render succeeded after the latest content, reference, navigation, and contributor-guidance changes.
-- [ ] Inspect the rendered output visually; successful render is not visual/scientific approval. Confirm diagram rendering, alt text, bilingual navigation, and that new derivation blocks display as intended.
-- [ ] Review the final PR diff against this ledger; update this document if a disposition changes.
-- [ ] Do not merge PR #17 until the checks above are completed.
+- [x] Visually inspect both tensor SVG diagrams from the deployed artifact; they are legible, correctly labelled, and equivalent across languages. Check alt text and local links.
+- [ ] Verify actual browser typesetting of the MathJax equations and full-page responsive layout in a normal browser.
+- [x] PR #17 was merged on 2026-10-27; merge commit: `f215226bf995ab32d41fddf6a20e50979049cb96`. The merge records integration, not scientific approval of every claim.
+- [x] CI, Quarto build, and GitHub Pages deployment succeeded on the merge commit: [CI](https://github.com/JM-Brun/llm-lab/actions/runs/40541155717) · [Quarto](https://github.com/JM-Brun/llm-lab/actions/runs/40541156190) · [Publish](https://github.com/JM-Brun/llm-lab/actions/runs/40541156248).
+- [ ] Check external references for availability and relevance; no live external-URL validation was performed in this artifact audit.
+- [ ] Review and merge this post-merge audit update separately.
 
 ## 8. Scope of this ledger
 
