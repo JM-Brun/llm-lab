@@ -37,6 +37,7 @@ project:
     - fr/linearite-embeddings.qmd
     - en/embedding-linearity.qmd
     - fr/tensors.qmd
+    - en/tensors.qmd
     - fr/embedding-space.qmd
     - fr/positional-encoding.qmd
     - fr/exercises.qmd
@@ -117,6 +118,7 @@ website:
               - en/loss.qmd
               - en/likelihood.qmd
               - en/gradients.qmd
+              - en/tensors.qmd
           - section: "Attention and Transformer"
             contents:
               - en/transformer.qmd
