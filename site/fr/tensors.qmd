@@ -37,10 +37,10 @@ Les activations cachées ont souvent la forme \((B,T,D)\), les logits \((B,T,V)\
 Supposons que \(X\) ait la forme \((B,T,D)\) et que la matrice de projection \(W\) ait la forme \((D,D')\), où \(D'\) est la dimension de sortie. La projection applique la même transformation à chaque position :
 
 \[
-Y=XW,\qquad \operatorname{shape}(Y)=(B,T,H).
+Y=XW,\qquad \operatorname{shape}(Y)=(B,T,D').
 \]
 
-Les axes du batch et des positions sont conservés ; le dernier axe passe de \(D\) à \(H\). Vérifier les formes permet de détecter certaines erreurs, mais ne garantit pas que les axes ont la bonne signification.
+Les axes du batch et des positions sont conservés ; le dernier axe passe de \(D\) à \(D'\). Cette notation évite de confondre la dimension de sortie avec \(H\), qui désigne plus loin le nombre de têtes d'attention. Vérifier les formes permet de détecter certaines erreurs, mais ne garantit pas que les axes ont la bonne signification.
 
 ## Les axes ont une signification
 
