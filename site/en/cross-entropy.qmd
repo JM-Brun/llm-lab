@@ -77,7 +77,17 @@ For a one-hot target \(y\) and \(p=\operatorname{softmax}(z)\), the derivative w
 \frac{\partial\ell}{\partial z_i}=p_i-\mathbb{1}[i=y].
 \]
 
-This formula applies to one position and an unweighted one-hot target. Masking, weighting, and reduction change aggregated gradients or their scale. The link from this local gradient to network parameters is covered in [Gradients](gradients.qmd).
+To see the result, differentiate the logit form of the loss:
+
+\[
+\begin{aligned}
+\frac{\partial\ell}{\partial z_i}
+&=-\mathbb{1}[i=y]+\frac{e^{z_i}}{\sum_j e^{z_j}}\\
+&=p_i-\mathbb{1}[i=y].
+\end{aligned}
+\]
+
+This derivation applies to one position and an unweighted one-hot target. Masking, weighting, and reduction change aggregated gradients or their scale. The link from this local gradient to network parameters is covered in [Gradients](gradients.qmd).
 
 ## Numerical example
 
