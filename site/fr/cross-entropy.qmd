@@ -1,137 +1,104 @@
 ---
-title: "Entropie croisée et divergence KL"
-subtitle: "Dérivation depuis la distribution cible jusqu'aux logits"
+title: "Entropie croisée : l'objectif de prédiction des tokens"
+subtitle: "Des logits à la perte, avec masques et réduction explicites"
 lang: fr
 ---
 
 ::: {.chapter-lead}
-L'entropie croisée (*cross-entropie*) compare une distribution cible $q$ à une distribution prédite $p$. Elle mesure le coût moyen lorsque les événements suivent $q$ mais que l'on évalue leur code à partir de $p$. Elle est liée à l'[entropie de Shannon](entropy.qmd) et à la divergence KL, mais ces trois notions ne sont pas identiques.
+Pour une cible one-hot, la cross-entropie d'une position est la négative log-probabilité du token observé. En entraînement autorégressif, cette quantité est calculée pour les positions cibles autorisées, puis agrégée selon une convention qu'il faut expliciter.
 :::
 
-## Définition
+## Objectif pour un token
 
-$$
-H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
-$$
+À la position \(t\), le modèle produit des logits \(z_t\) sur le vocabulaire. Après softmax, la probabilité du token cible \(x_t\) est \(p_\theta(x_t\mid x_{<t})\). Pour une cible one-hot, la perte vaut :
 
-Ici, $q_i\geq0$, $\sum_iq_i=1$, et $p$ est une distribution normalisée. Sauf mention contraire, $\log$ désigne le logarithme naturel : les valeurs sont donc en nats ; utiliser $\log_2$ donne des bits. Pour une cible one-hot de classe $y$, $q_y=1$ et les autres valeurs sont nulles :
+\[
+\ell_t=-\log p_\theta(x_t\mid x_{<t}).
+\]
 
-$$
-H(q,p)=-\log p_y.
-$$
+Si \(y\) est l'indice du token cible et \(p=\operatorname{softmax}(z)\), on peut écrire :
 
-Dans la prédiction du prochain token, $y$ est l'identifiant du token observé à la position cible. La perte augmente quand le modèle attribue une faible probabilité à ce token.
-
-## Dérivation par rapport aux logits
-
-Avec $p_i=\operatorname{softmax}(z)_i$, la perte pour une cible one-hot s'écrit :
-
-$$
+\[
 \ell(z,y)=-z_y+\log\sum_{j=1}^{V}e^{z_j}.
-$$
+\]
 
-En dérivant :
+Le coût augmente lorsque le modèle attribue une faible probabilité au token observé. Une prédiction incorrecte mais très confiante est donc fortement pénalisée.
 
-$$
-\frac{\partial\ell}{\partial z_i}
-= -\mathbb{1}[i=y]+\frac{e^{z_i}}{\sum_j e^{z_j}}
-= p_i-\mathbb{1}[i=y].
-$$
+## Cible one-hot, cible souple et divergence KL
 
-Le gradient pousse donc le logit cible vers le haut relativement aux autres, et réduit les logits des alternatives selon leurs probabilités. Cette formule porte sur une seule position et une perte non pondérée ; les poids, le lissage de cible et la réduction par batch changent la formule ou son échelle.
+Pour une distribution cible \(q\) et une distribution prédite \(p\), l'entropie croisée est :
 
-## Cross-entropie, entropie et divergence KL
+\[
+H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
+\]
 
-L'entropie de la cible est $H(q)=-\sum_iq_i\log q_i$. La divergence de Kullback–Leibler vérifie :
+Avec une cible one-hot, la somme se réduit à \(-\log p_y\). Avec une cible souple — par exemple un lissage de cible ou une distribution enseignante — plusieurs catégories contribuent.
 
-$$
-D_{\mathrm{KL}}(q\Vert p)=\sum_iq_i\log\frac{q_i}{p_i}
-=H(q,p)-H(q).
-$$
+La relation \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\) explique pourquoi, pour une cible fixe, minimiser la cross-entropie revient à minimiser la divergence KL vers la distribution prédite. La divergence KL est directionnelle ; l'entropie croisée n'est ni symétrique ni une distance métrique.
 
-Pour une cible fixe, minimiser la cross-entropie par rapport à $p$ revient donc à minimiser $D_{\mathrm{KL}}(q\Vert p)$. Pour une cible one-hot, $H(q)=0$ et les deux quantités sont égales.
+## Plusieurs positions : décalage causal et masques
 
-::: {.callout-warning title="Idées reçues"}
-- **« La cross-entropie mesure la distance symétrique entre deux distributions. »** Non : elle n'est pas symétrique et n'est pas une distance au sens usuel.
-- **« La cross-entropie doit être comprise entre 0 et 1. »** Non : elle peut être arbitrairement grande si $p_y$ est très proche de zéro.
-- **« CrossEntropyLoss attend des probabilités. »** Dans l'API usuelle de PyTorch pour les classes, elle attend des logits non normalisés et applique une opération équivalente à log-softmax puis NLL.
-:::
+Dans un modèle autorégressif, la représentation à la position \(t\) sert à prédire le token suivant. Selon la convention du code, les logits et les labels doivent donc être décalés de manière cohérente : le modèle ne doit pas recevoir le token cible comme contexte non masqué pour prédire ce même token.
 
-## Interprétation par le codage
+Pour un batch, les logits ont souvent la forme \((B,T,V)\) et les labels \((B,T)\). Avant d'interpréter la loss, vérifier :
 
-Si les événements suivent réellement la loi $q$, mais que le code est construit à partir de probabilités $p$, la longueur idéale attribuée à l'issue $i$ est $-\ln p_i$ nats. La longueur moyenne attendue sous $q$ est donc l'entropie croisée :
-
-$$
-H(q,p)=-\sum_i q_i\ln p_i.
-$$
-
-Avec des logarithmes en base 2, la même expression est exprimée en bits. La base du logarithme fixe l'unité, mais ne change pas les conclusions qualitatives. Si $p_i=0$ pour une issue ayant $q_i>0$, le coût est infini : le modèle exclut un événement qui peut se produire.
-
-## Pourquoi la direction de KL compte
-
-La définition de $D_{\mathrm{KL}}(q\Vert p)$ et sa relation avec $H(q,p)$ sont données plus haut. La direction n'est pas décorative : en général, $D_{\mathrm{KL}}(q\Vert p)\neq D_{\mathrm{KL}}(p\Vert q)$, car l'espérance est prise sous la première distribution. Inverser les arguments change donc la pénalité.
-
-Exemple : si $q=(1,0)$ et $p=(0.9,0.1)$, alors $H(q,p)=-\log(0.9)$ et $D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)$ puisque $H(q)=0$. La divergence inverse $D_{\mathrm{KL}}(p\Vert q)$ est infinie : $p$ attribue une masse positive à la deuxième catégorie alors que $q$ lui attribue une probabilité nulle. Plus généralement, $D_{\mathrm{KL}}(q\Vert p)=+\infty$ dès que $q$ attribue une masse positive à un événement auquel $p$ attribue une probabilité nulle.
-
-## Cibles one-hot et distributions cibles générales
-
-Pour une cible one-hot de classe $y$, la somme se réduit à $H(q,p)=-\log p_y$. C'est le cas usuel de la prédiction du prochain token lorsqu'un seul token observé est la cible. Pour une cible souple (par exemple du label smoothing ou une distribution enseignante), plusieurs termes $-q_i\log p_i$ contribuent ; la perte n'est plus seulement la négative log-probabilité d'une classe.
-
-La cross-entropie empirique calculée sur un corpus est une moyenne selon les cibles observées. Elle n'est égale à l'entropie réelle de la source que dans des conditions idéales, notamment si la distribution prédictive correspond à la vraie distribution conditionnelle. Une baisse de cross-entropie sur un jeu d'entraînement ne garantit pas une meilleure généralisation : il faut examiner des données de validation/test séparées.
+- **Décalage des cibles :** chaque logit est comparé au token qui doit être prédit, pas au token d'entrée par erreur.
+- **Padding et masques :** les positions ignorées ne doivent pas contribuer à la somme ni au dénominateur de la moyenne.
+- **Réduction :** une somme, une moyenne par token valide et une moyenne par séquence n'ont pas la même échelle.
+- **Pondération :** poids de classes, label smoothing ou pertes auxiliaires modifient l'objectif par rapport au cas one-hot non pondéré.
+- **Comparaison :** préciser le tokenizer, les positions incluses et la convention de moyenne avant de comparer deux valeurs.
 
 ## Lien avec la perplexité
 
-Pour une cross-entropie moyenne en nats $\bar{H}$, la perplexité correspondante est $\exp(\bar{H})$. Si la moyenne est en bits, on utilise $2^{\bar{H}}$. Il faut préciser la base du logarithme, les positions de tokens incluses, le tokenizer et la réduction (somme ou moyenne) pour comparer des résultats. La perplexité ne constitue pas une mesure directe de vérité factuelle ou de qualité globale d'un assistant.
+Si \(\bar{\ell}\) est la cross-entropie moyenne en nats sur les tokens valides, la perplexité est :
+
+\[
+\operatorname{PPL}=\exp(\bar{\ell}).
+\]
+
+Avec une moyenne en bits, la formule devient \(2^{\bar{\ell}}\). La perplexité dépend donc de la base du logarithme et de la convention d'évaluation. Elle mesure la performance probabiliste sur les tokens évalués ; elle n'est pas une mesure directe de vérité factuelle ou de qualité globale d'un assistant.
+
+## Gradient par rapport aux logits
+
+Pour une cible one-hot \(y\) et \(p=\operatorname{softmax}(z)\), la dérivée par logit est :
+
+\[
+\frac{\partial\ell}{\partial z_i}=p_i-\mathbb{1}[i=y].
+\]
+
+Cette formule concerne une position et une cible one-hot sans pondération. Le masquage, la pondération et la réduction changent les gradients agrégés ou leur échelle. Le lien entre ce gradient local et les paramètres du réseau est détaillé dans [Gradients](gradients.qmd).
 
 ## Exemple numérique
 
-Si la cible est la classe 2 et $p_2=0.8$, alors $\ell=-\log(0.8)\approx0.223$. Si $p_2=0.01$, la perte vaut environ $4.605$. Une prédiction fausse mais très confiante est donc fortement pénalisée.
+Si le token cible reçoit une probabilité \(0.8\), la perte en nats est \(-\log(0.8)\approx0.223\). Si sa probabilité est \(0.01\), elle vaut environ \(4.605\). Une faible probabilité pour le token observé entraîne donc une pénalité importante.
+
+## Idées reçues
+
+- **« La cross-entropie est comprise entre 0 et 1. »** Faux : elle peut être arbitrairement grande si le modèle attribue une probabilité proche de zéro à la cible.
+- **« PyTorch CrossEntropyLoss attend des probabilités. »** Pour la classification catégorielle usuelle, l'API attend des logits non normalisés et combine une opération de type log-softmax avec la NLL. Vérifier les formes, ignore_index, les cibles et la réduction.
+- **« Une loss d'entraînement qui baisse prouve que le modèle s'améliore. »** Non : il faut examiner la validation, les fuites, les baselines et la généralisation.
+- **« La perplexité compare directement n'importe quels modèles. »** Non sans contrôler le tokenizer, les données et les conventions d'évaluation.
 
 ## Questions de contrôle
 
-Pour des exercices complémentaires séparés du cours, voir l’[espace d’exercices — fondations mathématiques](exercises.qmd#fondations).
-
-1. Pourquoi la perte est-elle nulle à la limite où la cible reçoit une probabilité de 1 ?
+1. Pourquoi une probabilité cible égale à 1 donne-t-elle une perte nulle ?
+2. Pourquoi faut-il préciser le dénominateur de la moyenne lorsque des tokens sont masqués ?
+3. Pourquoi la perplexité ne suffit-elle pas à mesurer la qualité globale d'un assistant ?
 
 <details>
-<summary>Afficher la réponse</summary>
+<summary>Afficher les réponses</summary>
 
-Pour une cible de probabilité $p_y$, la perte vaut $-\log p_y$. Lorsque $p_y\to1$, $\log p_y\to0$, donc la perte tend vers zéro. Elle est nulle exactement si $p_y=1$.
+1. La perte vaut \(-\log p_y\), donc elle est nulle lorsque \(p_y=1\).
+2. Si les positions masquées sont comptées dans le dénominateur, la moyenne ne correspond plus à la moyenne sur les tokens valides et devient difficile à comparer.
+3. La perplexité mesure l'attribution de probabilité aux tokens d'un jeu donné ; elle ne mesure pas directement la vérité, l'utilité, la sécurité ou la calibration.
 
 </details>
 
-2. Pourquoi la cross-entropie n'est-elle pas une métrique symétrique ?
+## Références
 
-<details>
-<summary>Afficher la réponse</summary>
-
-La cross-entropie $H(q,p)=-\sum_i q_i\log p_i$ moyenne le coût selon la distribution cible $q$ tout en évaluant les probabilités de $p$. Inverser les distributions change cette moyenne ; en général $H(q,p)\ne H(p,q)$, et la divergence KL est elle aussi asymétrique.
-
-</details>
-
-3. Quelle différence entre la formule mathématique et l'API de PyTorch ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-`torch.nn.CrossEntropyLoss` attend normalement des logits non normalisés et combine log-softmax et perte négative de vraisemblance. Lui fournir des probabilités déjà passées par softmax change le calcul. Il faut aussi vérifier la forme des cibles, `ignore_index` et la réduction choisie.
-
-</details>
-
-**Suite :** [Loss](loss.qmd) · [Gradients](gradients.qmd)
-
-
-## Pour poursuivre
-
-- [Entropie de Shannon](entropy.qmd) : incertitude moyenne sous la distribution cible.
-- [Vraisemblance](vraisemblance.qmd) : lien entre probabilité des tokens observés et objectif d'entraînement.
-
-## Références complémentaires
-
-- Claude E. Shannon (1948), [A Mathematical Theory of Communication](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf).
-- Cover & Thomas, [Elements of Information Theory](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X).
-- [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU).
-- [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html).
+- [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) — comportement de l'API, pas définition générale de la cross-entropie.
+- C. E. Shannon (1948), [*A Mathematical Theory of Communication*](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf).
+- Cover & Thomas, [*Elements of Information Theory*](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X).
 
 ::: {.language-switch}
 [Français](cross-entropy.qmd) · [English](../en/cross-entropy.qmd)
