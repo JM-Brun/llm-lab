@@ -71,6 +71,12 @@ Dans les bibliothèques de deep learning, le mot « tenseur » désigne couramme
 - **Type numérique :** float32, bfloat16 et d'autres types n'ont pas les mêmes compromis de précision, mémoire et performance.
 - **Gradients :** une variable doit être reliée au graphe de calcul pour recevoir un gradient automatique attendu.
 
+## Idées reçues à éviter
+
+- **« Un tenseur doit être un cube. »** Non : dans les API de deep learning, un scalaire, un vecteur, une matrice ou un tableau de dimension supérieure peut être appelé tenseur.
+- **« Même forme signifie même signification. »** Non : des axes de même taille peuvent représenter des quantités différentes, et la forme ne code pas leur sémantique.
+- **« Des dimensions compatibles prouvent que l'opération est correcte. »** Non : une opération peut s'exécuter en utilisant le mauvais axe, le mauvais alignement de cible ou le mauvais masque.
+
 ## Pour poursuivre
 
 - [Requêtes, clés et valeurs](queries-keys-values.qmd).
