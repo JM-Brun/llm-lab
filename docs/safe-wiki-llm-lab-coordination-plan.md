@@ -83,7 +83,7 @@ The current PR concerns entropy, probabilities/softmax, cross-entropy, and tenso
 
 - Compare the original public versions with PR #17 line by line.
 - Verify that general information-theory explanations removed from public pages are not needed to understand the retained LLM material.
-- Preserve a concise definition and assumptions locally even when a deeper derivation is in the private wiki.
+- Preserve the complete explanation locally: all definitions, assumptions, derivations, examples, caveats, and exercises needed for the LLM learning objective. A deeper general treatment in the private Wiki is supplementary and never justifies shortening the public lesson.
 - Check the probability page for numerical stability and the distinction between logits, probabilities, confidence, calibration, and truth.
 - Check cross-entropy for target alignment, ignored positions, reduction, and the exact conditions linking token NLL and perplexity.
 - Check tensors for shape/axis semantics, framework-array terminology, masking/broadcasting pitfalls, and both-language parity.
