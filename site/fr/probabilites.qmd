@@ -24,8 +24,6 @@ Les probabilités sont positives et leur somme vaut un. Cette normalisation ne p
 
 Avec deux logits \(z=(0,\log 3)\), la softmax donne \(p=(0.25,0.75)\). Le second token est plus probable, mais cette distribution ne signifie pas qu'il est trois fois plus vrai : elle reflète les scores du modèle dans ce contexte.
 
-
-
 ## Probabilité conditionnelle dans un modèle autorégressif
 
 La distribution du token suivant dépend du préfixe :
@@ -50,7 +48,7 @@ Pour une température \(\tau>0\), la distribution devient :
 p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i.
 \]
 
-Une température plus faible tend à rendre la distribution plus concentrée ; une température plus élevée tend à l'aplatir. Pour \(\tau>0\), l'ordre des logits et l'argmax restent inchangés, mais les probabilités changent. La température modifie donc le comportement d'échantillonnage, pas les connaissances du modèle ni la vérité des sorties.
+Une température plus faible tend à rendre la distribution plus concentrée ; une température plus élevée tend à l'aplatir. Pour \(\tau>0\), l'ordre des logits et l'argmax restent inchangés, mais les probabilités changent. La température modifie la distribution utilisée pour le décodage, pas les paramètres du modèle ; elle ne peut pas établir la vérité d'une sortie.
 
 Choisir le token argmax à chaque position n'est pas équivalent à rechercher globalement la meilleure séquence, et peut donner un texte différent de l'échantillonnage. La stratégie de décodage est un choix distinct de l'entraînement.
 
