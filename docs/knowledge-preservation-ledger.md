@@ -5,7 +5,7 @@
 **Comparison baseline:** `main` as inspected on 2026-10-27.  
 **Rule:** no item is considered “moved” merely because a similarly named Wiki page exists. The public page must still teach every prerequisite needed for its LLM-specific objective.
 
-This ledger records section-level dispositions for the first four concepts. A final content review must check the actual diff, equations, links, and rendered output before PR #17 is mergeable in substance. If a claim or useful teaching element is found missing, restore it to LLM Lab or explicitly decide—on pedagogical grounds—that it is not needed by the public book.
+This ledger records section-level dispositions for the first four concepts. PR #17 has been integrated, but that does not certify every claim as scientifically reviewed. If a claim or useful teaching element is found missing, restore it to LLM Lab or explicitly decide—on pedagogical grounds—that it is not needed by the public book.
 
 ## Decision vocabulary
 
