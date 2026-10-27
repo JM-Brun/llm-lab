@@ -81,7 +81,7 @@ In deep-learning libraries, “tensor” commonly means a multidimensional numer
 
 - [Queries, keys, and values](queries-keys-values.qmd).
 - [Scaled dot-product attention](scaled-dot-product-attention.qmd).
-- [Embedding space](embedding-space.qmd).
+- [Embedding space (French page; English translation pending)](../fr/embedding-space.qmd).
 - [Loss](loss.qmd) and [Gradients](gradients.qmd).
 
 ## References
