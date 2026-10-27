@@ -371,3 +371,14 @@ The first-pass inventory is recorded in [`docs/editorial-boundary-audit.md`](edi
 5. The tensor lesson now has French and English versions, including a translated diagram. English counterparts for embedding space and positional encoding remain outstanding.
 6. Render Quarto, check internal links and image alternatives, and inspect both language paths. Do not add model implementations or experiments until their conceptual prerequisites are validated.
 7. For every retained chapter, ask whether it explains an LLM-specific mechanism and whether it contributes directly or indirectly to implementing, testing, training, generating with, or evaluating a small decoder-only LLM. Neither general-mathematics duplication nor an unmotivated code dump is sufficient.
+
+
+## 10. Safe coordination with the private wiki
+
+The detailed process is maintained in [Safe, staged coordination plan](safe-wiki-llm-lab-coordination-plan.md). This plan takes precedence over any simplistic “canonical concept lives in the wiki, therefore remove it from LLM Lab” interpretation.
+
+**Public autonomy rule:** `llm-lab` must remain understandable and usable without access to `wiki-knowledge`. A concept may appear in both repositories: the wiki can contain the deeper cross-domain treatment while LLM Lab keeps the definitions, assumptions, equations, examples, caveats, and public references needed to understand its LLM-specific application.
+
+No removal or condensation is accepted without a preservation ledger recording the original item, destination/disposition, and verification. Uncertain content stays public until reviewed. Private links are supplementary only and must never be build dependencies.
+
+The current math-page PR is to be reviewed in bounded steps: inventory original public content; compare it with the proposed public edits and merged wiki concepts; validate scientific correctness; inspect French/English parity and the rendered public site; then decide merge readiness. Green CI is necessary but is not scientific review. Do not start another broad rewrite until the current slice is closed.
