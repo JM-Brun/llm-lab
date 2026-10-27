@@ -82,6 +82,7 @@ Une probabilité de 0,9 ne signifie donc pas automatiquement « 90 % de chances 
 - [Entropie](entropy.qmd) — incertitude de la distribution du prochain token.
 - [Vraisemblance](vraisemblance.qmd) — probabilité des tokens observés et des séquences.
 - [Entropie croisée](cross-entropy.qmd) — objectif d'entraînement.
+- [Espace d'exercices — fondations mathématiques](exercises.qmd#fondations) — structure de pratique prévue ; les exercices détaillés ne sont pas encore rédigés.
 
 ## Références
 
