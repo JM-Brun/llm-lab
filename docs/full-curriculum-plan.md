@@ -326,8 +326,12 @@ Example: the wiki page on maximum likelihood should establish the general estima
 
 ### 9.5 Immediate work order
 
-1. Inventory current LLM Lab pages and identify which are general foundations, which are LLM-specific applications, and which already duplicate canonical wiki material.
-2. Add links to the canonical wiki concepts where the repository's privacy/access constraints permit; public LLM Lab pages must remain understandable and buildable without access to the private wiki.
-3. Keep public explanations self-contained enough for a reader, but do not duplicate long general derivations. If a private wiki link is unavailable to public readers, include a concise statement of the required result and assumptions, plus a public bibliography reference; do not expose private content.
-4. Choose the first chapter based on reader dependencies and the current state of the repository—not because it is "Chapter 1" in another book. A useful starting point is the concrete training objective: tokens and targets → autoregressive factorization → likelihood/NLL/cross-entropy, with links back to the wiki's general probability and estimation concepts.
-5. Audit every chapter against two acceptance criteria: **does it explain something specifically about LLMs that the wiki should not own?** and **does it contribute to the ability to implement, test, train, or evaluate a small LLM from scratch?** Chapters may satisfy one criterion directly and support the other indirectly, but neither general-mathematics duplication nor an unmotivated code dump is sufficient.
+The first-pass inventory is recorded in [`docs/editorial-boundary-audit.md`](editorial-boundary-audit.md). It identifies the broad entropy pages as the clearest duplication risk, the cross-entropy and gradients pages as mixed-content pages, and the likelihood/loss pages as already strongly aligned with LLM-specific application.
+
+1. Keep the public information architecture self-contained, but label its mathematical section as **maths applied to LLMs**, not as the canonical home of general foundations.
+2. Refactor in this order: entropy → cross-entropy → gradients → logits/probabilities → consistency review of likelihood/loss. Preserve stable URLs while titles and content evolve.
+3. For each page, preserve the smallest general statement needed to follow the application, state assumptions, give a token/model-specific example, explain limits, and cite public sources. The private wiki may be linked as a canonical internal dependency, but public readers must not need access to it.
+4. Check the wiki destination before claiming that any general treatment has been migrated. The audit is a proposed disposition, not proof that migration is complete.
+5. Validate French/English parity explicitly; the current tree has no English counterpart for the tensors, embedding-space, and positional-encoding pages.
+6. After the content refactor, render Quarto, check internal links and image alternatives, and inspect both language paths. Do not add model implementations or experiments until their conceptual prerequisites are validated.
+7. For every retained chapter, ask whether it explains an LLM-specific mechanism and whether it contributes directly or indirectly to implementing, testing, training, generating with, or evaluating a small decoder-only LLM. Neither general-mathematics duplication nor an unmotivated code dump is sufficient.
