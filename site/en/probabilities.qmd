@@ -24,7 +24,7 @@ Probabilities are positive and sum to one. This normalization does not prove tha
 
 With two logits \(z=(0,\log 3)\), softmax gives \(p=(0.25,0.75)\). The second token is more probable, but this distribution does not mean that it is three times more true: it reflects the model's scores in this context.
 
-For temperature \(\tau>0\), use \(p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i\). Higher temperature tends to flatten the distribution, while lower temperature tends to concentrate it. Temperature scaling can affect calibration; its effect must be measured on held-out data.
+
 
 ## Conditional probability in an autoregressive model
 
@@ -44,10 +44,10 @@ This is not an independence assumption: each factor depends on preceding tokens.
 
 ## Temperature and decoding strategy
 
-For temperature \(T>0\), the distribution becomes:
+For temperature \(\tau>0\), the distribution becomes:
 
 \[
-p_i^{(T)}=\operatorname{softmax}(z/T)_i.
+p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i.
 \]
 
 Lower temperature tends to make the distribution more concentrated; higher temperature tends to flatten it. For \(T>0\), logit ordering and argmax remain unchanged, but probabilities change. Temperature therefore changes sampling behaviour, not the model's knowledge or the truth of its outputs.
