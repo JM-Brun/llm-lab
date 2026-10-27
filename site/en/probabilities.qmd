@@ -50,7 +50,7 @@ For temperature \(\tau>0\), the distribution becomes:
 p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i.
 \]
 
-Lower temperature tends to make the distribution more concentrated; higher temperature tends to flatten it. For \(T>0\), logit ordering and argmax remain unchanged, but probabilities change. Temperature therefore changes sampling behaviour, not the model's knowledge or the truth of its outputs.
+Lower temperature tends to make the distribution more concentrated; higher temperature tends to flatten it. For \(\tau>0\), logit ordering and argmax remain unchanged, but probabilities change. Temperature therefore changes sampling behaviour, not the model's knowledge or the truth of its outputs.
 
 Selecting the argmax token at each position is not equivalent to globally searching for the best sequence, and can produce text different from sampling. Decoding strategy is distinct from training.
 
