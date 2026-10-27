@@ -10,7 +10,7 @@ Pour une cible one-hot, la cross-entropie d'une position est la négative log-pr
 
 ## Objectif pour un token
 
-À la position \(t\), le modèle produit des logits \(z_t\) sur le vocabulaire. Après softmax, la probabilité du token cible \(x_t\) est \(p_\theta(x_t\mid x_{<t})\). Pour une cible one-hot, la perte vaut :
+Ici, \(t\) indexe le **token cible** : les logits sont alignés sur \(x_t\) et représentent \(p_\theta(x_t\mid x_{<t})\). Certaines implémentations indexent plutôt les logits par la position d'entrée ; la ligne correspondant à l'entrée \(t\) prédit alors \(x_{t+1}\). Ces conventions ne sont équivalentes que si les logits et les labels sont décalés de manière cohérente. Pour une cible one-hot, la perte vaut :
 
 \[
 \ell_t=-\log p_\theta(x_t\mid x_{<t}).
