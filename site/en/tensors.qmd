@@ -1,0 +1,64 @@
+---
+title: "Tensors in a Transformer: shapes and axes"
+subtitle: "Read dimensions without confusing shape compatibility with correctness"
+lang: en
+---
+
+::: {.chapter-lead}
+In a Transformer, tensors carry token representations, logits, masks, and gradients. Reading their axes correctly is essential: an operation can run without an error while acting on the wrong axis.
+:::
+
+## Common shapes in an LLM
+
+These conventions are common:
+
+- \(B\): batch size;
+- \(T\): sequence length;
+- \(D\): hidden dimension;
+- \(V\): vocabulary size;
+- \(H\): number of attention heads;
+- \(d_h\): dimension per head, often with \(D=H d_h\).
+
+Hidden activations often have shape \((B,T,D)\), logits \((B,T,V)\), and multi-head attention representations may have shape \((B,H,T,d_h)\). These conventions are common but not universal: read function contracts and verify actual shapes.
+
+## Axes carry meaning
+
+A shape gives axis sizes, not semantics. Two tensors with shape \((B,T,D)\) can represent different objects.
+
+- **Linear projection:** typically transforms the final feature axis, for example \((B,T,D)\to(B,T,V)\) to produce logits.
+- **Softmax:** for a distribution over the vocabulary, normalization must operate on axis \(V\), not axis \(T\).
+- **Attention:** scores relate query and key positions; the causal mask must prevent access to future positions.
+- **Loss:** logits and labels must align on positions and the expected target token.
+- **Reduction:** a mean over valid tokens is not equivalent to a mean over the batch or all positions including padding.
+
+## Reading dimensions in an example
+
+For \(B=2\), \(T=4\), and \(D=8\), hidden states have shape \((2,4,8)\). A projection to a vocabulary of \(V=1000\) tokens produces logits of shape \((2,4,1000)\). The final axis corresponds to candidate tokens; each batch-position pair therefore has a distribution after softmax over that axis.
+
+Shape compatibility does not guarantee that the projection, mask, causal shift, or reduction is correct. Axis meaning and target semantics must also be checked.
+
+## Common pitfalls
+
+- **Axis permutation:** changing axis order changes how subsequent operations interpret the data.
+- **Broadcasting:** a size-one dimension may be expanded implicitly and hide an alignment bug.
+- **Reshape:** changing shape does not automatically give values a new meaning.
+- **Masks:** a mask broadcast over attention scores may have a compatible shape while allowing the wrong positions.
+- **Numeric dtype:** float32, bfloat16, and other types have different precision, memory, and performance trade-offs.
+- **Gradients:** a variable must be connected to the computation graph to receive the expected automatic gradient.
+
+## Further reading
+
+- [Queries, keys, and values](queries-keys-values.qmd).
+- [Scaled dot-product attention](scaled-dot-product-attention.qmd).
+- [Embedding space](embedding-space.qmd).
+- [Loss](loss.qmd) and [Gradients](gradients.qmd).
+
+## References
+
+- [PyTorch — Tensors](https://docs.pytorch.org/tutorials/beginner/introyt/tensors_deeper_tutorial.html).
+- [PyTorch — Tensor documentation](https://docs.pytorch.org/docs/stable/tensors.html).
+- [NumPy — N-dimensional array](https://numpy.org/doc/stable/reference/arrays.ndarray.html).
+
+:::: {.language-switch}
+[Français](../fr/tensors.qmd) · [English](tensors.qmd)
+::::
