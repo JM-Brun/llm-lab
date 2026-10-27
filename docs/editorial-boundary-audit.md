@@ -44,7 +44,7 @@
 
 The entropy and cross-entropy pages have already been refocused in `main`; do not treat them as unstarted refactors. The current versions retain the LLM-specific definitions and caveats identified in the inventory above. A textual bilingual pass found no correction that could be justified from the current source alone. Browser-rendered MathJax/layout and live external-reference checks remain open; see the [knowledge-preservation ledger](knowledge-preservation-ledger.md).
 
-The next content-review slice is **logits and probabilities**, followed by **likelihood and loss**, then **gradients**. Review these as connected parts of the autoregressive objective rather than independent rewrite projects. Preserve current scope and only edit where a specific claim, mismatch, missing assumption, broken link, or pedagogical defect is demonstrated.
+The logits/probabilities source-text audit is now recorded in the [knowledge-preservation ledger](knowledge-preservation-ledger.md); it found and corrected a duplicated English self-check on the current branch. The next content-review slice is **likelihood and loss**, followed by **gradients**. Review these as connected parts of the autoregressive objective rather than independent rewrite projects. Preserve current scope and only edit where a specific claim, mismatch, missing assumption, broken link, or pedagogical defect is demonstrated.
 
 ## Ordered work
 
@@ -55,9 +55,9 @@ The next content-review slice is **logits and probabilities**, followed by **lik
 - Keep all existing URLs stable while changing titles and navigation.
 
 ### P1 — Refactor the highest-duplication pages
-1. **Logits/probabilities:** audit the paired pages for exact meaning of logits, vocabulary dimension, conditional distributions, temperature, calibration versus truth, and bilingual parity.
-2. **Likelihood/loss:** validate sequence factorization, target shift, padding/ignored positions, reduction, and perplexity conventions across the paired pages.
-3. **Gradients:** audit the loss-to-logits-to-parameters path, assumptions behind derivatives, and numerical-verification claims.
+1. **Likelihood/loss:** validate sequence factorization, target shift, padding/ignored positions, reduction, and perplexity conventions across the paired pages.
+2. **Gradients:** audit the loss-to-logits-to-parameters path, assumptions behind derivatives, and numerical-verification claims.
+3. **Logits/probabilities:** source-text review is recorded in the ledger; inspect the corrected English logits page after rendering and check local/external links.
 4. **Entropy/cross-entropy:** the first-pass refactor is already in `main`; retain the current focused scope and resolve only the outstanding browser/external-reference checks or defects found by later evidence.
 
 ### P2 — Validate and connect
