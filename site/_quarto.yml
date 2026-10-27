@@ -61,7 +61,7 @@ website:
         href: index.qmd
       - text: "English"
         href: en/index.qmd
-      - text: "Fondations / Foundations"
+      - text: "Applications maths / Maths applications"
         href: fr/mathematical-foundations.qmd
       - text: "Glossaire / Glossary"
         href: fr/glossary.qmd
@@ -79,7 +79,7 @@ website:
       - section: "Français"
         contents:
           - index.qmd
-          - section: "Fondations mathématiques"
+          - section: "Mathématiques appliquées aux LLM"
             contents:
               - fr/mathematical-foundations.qmd
               - fr/logits.qmd
@@ -107,7 +107,7 @@ website:
       - section: "English"
         contents:
           - en/index.qmd
-          - section: "Mathematical foundations"
+          - section: "Maths applied to LLMs"
             contents:
               - en/mathematical-foundations.qmd
               - en/logits.qmd

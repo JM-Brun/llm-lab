@@ -6,7 +6,7 @@ The goal is not to train a production-scale LLM from scratch. It is to implement
 
 ## Learn through the Quarto site
 
-The project includes a bilingual Quarto website organized into three layers: overview pages that connect concepts, dedicated concept pages that explain one idea in depth, and implementation/tests referenced when they exist. Pages explicitly distinguish verified code from planned work.
+The project includes a bilingual Quarto website organized around LLM-specific explanations: overview pages connect mechanisms, applied concept pages explain how the mathematics is used in language models, and implementation/tests are linked when they exist. General mathematical foundations belong in the separate `wiki-knowledge` knowledge base; because that wiki is private, public lessons retain only the prerequisite statements needed to understand the LLM application and cite public references. Pages explicitly distinguish verified code from planned work.
 
 - French introduction: `site/index.qmd`
 - English introduction: `site/en/index.qmd`
@@ -14,13 +14,14 @@ The project includes a bilingual Quarto website organized into three layers: ove
 - Glossary: `site/fr/glossary.qmd` and `site/en/glossary.qmd`
 - Transformer history and timeline: `site/fr/transformer-history.qmd` and `site/en/transformer-history.qmd`
 - Dedicated attention concepts: Q/K/V, scaled dot-product attention, and causal masking, each with French and English pages under `site/fr/` and `site/en/`
-- Entropy, uncertainty, and compression: `site/fr/entropy.qmd` and `site/en/entropy.qmd`
+- Applied mathematical chain (logits → probabilities → token likelihood/loss → gradients): `site/fr/mathematical-foundations.qmd` and `site/en/mathematical-foundations.qmd`
 - Cross-entropy and KL divergence: `site/fr/cross-entropy.qmd` and `site/en/cross-entropy.qmd`
 - Critical notes on cosine similarity: `site/fr/cosine-similarity.qmd` and `site/en/cosine-similarity.qmd`
 - Critical notes on embedding linearity: `site/fr/linearite-embeddings.qmd` and `site/en/embedding-linearity.qmd`
 - Visual references and image provenance: `site/references.qmd`
 - Prioritized roadmap and acceptance criteria: [`docs/roadmap.md`](docs/roadmap.md)
-- Full bilingual curriculum plan and coverage map against Raschka's book, including optional extensions: [`docs/full-curriculum-plan.md`](docs/full-curriculum-plan.md)
+- Full curriculum plan and source-coverage audit (Raschka is a source, not the table-of-contents authority): [`docs/full-curriculum-plan.md`](docs/full-curriculum-plan.md)
+- First-pass audit separating general foundations from LLM-specific applications: [`docs/editorial-boundary-audit.md`](docs/editorial-boundary-audit.md)
 - Separate exercise-space entry points (navigation scaffolding only; exercises not yet written): [French](site/fr/exercises.qmd) · [English](site/en/exercises.qmd)
 
 The site uses carefully attributed illustrations embedded from their original source when suitable. It does not mirror or redistribute external image files. An accessible URL is not a licence: check reuse terms before copying or modifying a figure. The site can be rendered locally with the [Quarto CLI](https://quarto.org/docs/get-started/).
@@ -35,13 +36,13 @@ The rendered site is written to `site/_site/`. The Quarto CLI is a separate syst
 
 These are repository-maintenance guidelines, not reader-facing lessons; they belong here rather than on the public site homepages.
 
-- **One concept, one canonical page.** Synthesis pages link to deeper definitions rather than duplicating them.
+- **One concept, one canonical owner.** General mathematical definitions and derivations belong in `wiki-knowledge`; `llm-lab` owns the LLM-specific application and links to deeper explanations where possible.
 - **Introduce terms before relying on them.** Define unfamiliar vocabulary on first use or link directly to the glossary.
 - **Intuition with provenance.** Explain the problem a concept addresses and distinguish original research, official documentation, pedagogical explanations, and illustrations.
 - **State assumptions and limits.** Use counterexamples to distinguish plausible but incorrect interpretations.
 - **Connect mathematics to code carefully.** Identify existing implementations and tests, or state clearly when they do not exist.
 - **Keep French and English equivalent.** Preserve the same claims, qualifications, examples, and references in both versions.
-- **Prefer links over duplication.** A page should explain its own concept and link to canonical explanations of adjacent concepts.
+- **Prefer application over duplication.** A public lesson should explain what a concept does in an LLM, retain only the general result needed locally, state assumptions, and cite public references. It must remain understandable without private-wiki access.
 - **Hide answer keys by default.** Control-question answers should be revealed only when the reader expands them.
 
 ## Learning principles

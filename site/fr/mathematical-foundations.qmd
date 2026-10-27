@@ -1,5 +1,5 @@
 ---
-title: "Fondations mathématiques des LLM"
+title: "La chaîne mathématique de l’entraînement d’un LLM"
 subtitle: "Une chaîne cohérente, des scores du modèle à l'apprentissage"
 lang: fr
 ---
