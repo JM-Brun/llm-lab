@@ -34,7 +34,7 @@ Les activations cachées ont souvent la forme \((B,T,D)\), les logits \((B,T,V)\
 
 ## Lire les dimensions d'une projection
 
-Supposons que \(X\) ait la forme \((B,T,D)\) et que la matrice de projection \(W\) ait la forme \((D,H)\). La projection applique la même transformation à chaque position :
+Supposons que \(X\) ait la forme \((B,T,D)\) et que la matrice de projection \(W\) ait la forme \((D,D')\), où \(D'\) est la dimension de sortie. La projection applique la même transformation à chaque position :
 
 \[
 Y=XW,\qquad \operatorname{shape}(Y)=(B,T,H).
