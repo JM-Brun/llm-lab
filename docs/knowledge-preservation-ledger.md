@@ -45,7 +45,7 @@ The original French and English pages include:
 | References | **KEEP PUBLIC** | Retain accessible sources that support the claims made in the public page. The Shannon and Cover–Thomas references remain; Jaynes can be Wiki-only if no statistical-physics claim remains public. |
 | Navigation links and self-checks | **KEEP PUBLIC** | Update to current page names; ensure links work in both languages. |
 
-**Initial assessment:** the new page is more focused on LLMs and retains the key interpretation limits, temperature, and links to adjacent concepts. It is shorter than the original (FR: 139 → 89 lines; EN: 139 → 89 lines). That size reduction is not itself a problem, but the disposition above must be checked before declaring the reduction safe.
+**Follow-up changes on this branch:** added a numerical comparison — ‎(0.5, 0.5) versus (0.9, 0.1)‎ — and self-check questions to both language versions. The new page retains the key interpretation limits, temperature, and links to adjacent concepts. The broad information-theory sections are present in Wiki concept `CONCEPT-020`, which remains draft and is not a public dependency. Final rendered-page review is still required.
 
 ## 2. Cross-entropy and KL — `site/fr/cross-entropy.qmd`, `site/en/cross-entropy.qmd`
 
@@ -77,7 +77,7 @@ The original pages include:
 | Numerical example, misconceptions and exercises | **KEEP PUBLIC** | Keep a small independently checkable example and self-checks for the intended learner. |
 | References | **KEEP PUBLIC** | PyTorch documentation supports API behaviour; public mathematical references support the definitions. |
 
-**Initial assessment:** the new pages retain the LLM-specific objective, target alignment, masking, reduction, perplexity, gradient, examples and practical misconceptions. They are shorter (FR: 139 → 106 lines; EN: 140 → 106 lines). The key unresolved check is that the KL identity/direction and zero-support caveat remain explicit enough for a self-contained book, and that no general formula needed by the soft-target discussion was compressed away.
+**Follow-up changes on this branch:** the English and French pages now explicitly state the support condition for the identity and that cross-entropy/KL are infinite when (q_i>0) but (p_i=0). The LLM-specific objective, target alignment, masking, reduction, perplexity, gradient, examples and practical misconceptions remain public. The final check must still verify the exact formula, target assumptions, and rendered page.
 
 ## 3. Probabilities and softmax — `site/fr/probabilites.qmd`, `site/en/probabilities.qmd`
 
@@ -150,10 +150,10 @@ The baseline had no `site/en/tensors.qmd` counterpart. The proposed branch adds 
 ## 6. Open checks before PR #17 can be approved
 
 - [ ] Inspect the full old/new diffs for the four concepts, including all equations and details not visible in section headings.
-- [ ] Verify the new entropy page distinguishes entropy, surprisal, NLL and perplexity with correct units and aggregation.
-- [ ] Verify the cross-entropy page explicitly states the KL identity/direction and assumptions, one-hot/soft-target cases, and zero-support caveat where needed.
+- [x] Textual review: the new entropy pages distinguish predictive entropy from observed-token surprisal and sequence NLL, state the finite-vocabulary bound in nats, and include a numerical example/self-check. [ ] Verify the rendered page and ensure any perplexity statements remain convention-aware.
+- [x] Textual review: cross-entropy pages state the KL identity/direction, one-hot/soft-target cases, and zero-support caveat. [ ] Verify rendered output and the exact formulas/assumptions.
 - [ ] Verify softmax examples, temperature claims, and normalization/calibration/truth distinctions.
-- [ ] Verify tensor shapes, axis semantics, diagram alt text, and FR/EN parity.
+- [x] Textual review: tensor pages distinguish output feature dimension (D') from attention-head count (H), explain array rank versus matrix rank, and preserve key misconceptions in both languages. [ ] Verify tensor shapes, diagram rendering/alt text, links, and FR/EN parity.
 - [ ] Check the new Wiki concepts and their draft lifecycle, registry synchronization and links; treat them as supplementary only.
 - [ ] Render Quarto and inspect both language versions and all local links.
 - [ ] Re-run CI and Quarto workflows on the latest head.
