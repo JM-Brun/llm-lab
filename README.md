@@ -19,6 +19,7 @@ The project includes a bilingual Quarto website organized around LLM-specific ex
 - Transformer history and timeline: `site/fr/transformer-history.qmd` and `site/en/transformer-history.qmd`
 - Dedicated attention concepts: Q/K/V, scaled dot-product attention, and causal masking, each with French and English pages under `site/fr/` and `site/en/`
 - Applied mathematical chain (logits → probabilities → token likelihood/loss → gradients): `site/fr/mathematical-foundations.qmd` and `site/en/mathematical-foundations.qmd`
+- Transformer tensor shapes and axes, in French and English: `site/fr/tensors.qmd` and `site/en/tensors.qmd`
 - Cross-entropy and KL divergence: `site/fr/cross-entropy.qmd` and `site/en/cross-entropy.qmd`
 - Critical notes on cosine similarity: `site/fr/cosine-similarity.qmd` and `site/en/cosine-similarity.qmd`
 - Critical notes on embedding linearity: `site/fr/linearite-embeddings.qmd` and `site/en/embedding-linearity.qmd`
