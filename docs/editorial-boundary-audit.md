@@ -44,7 +44,7 @@
 
 The entropy and cross-entropy pages have already been refocused in `main`; do not treat them as unstarted refactors. The current versions retain the LLM-specific definitions and caveats identified in the inventory above. A textual bilingual pass found no correction that could be justified from the current source alone. Browser-rendered MathJax/layout and live external-reference checks remain open; see the [knowledge-preservation ledger](knowledge-preservation-ledger.md).
 
-The logits/probabilities source-text audit is now recorded in the [knowledge-preservation ledger](knowledge-preservation-ledger.md); it found and corrected a duplicated English self-check on the current branch. The likelihood/loss source-text audit is now recorded in the [knowledge-preservation ledger](knowledge-preservation-ledger.md). It found duplicate English self-checks, missing tensor navigation, and an ambiguous perplexity/log-base statement; the branch corrects these. The next content-review slice is **gradients**. Review the loss-to-logits-to-parameters chain rather than treating pages as independent rewrite projects. Preserve current scope and only edit where a specific claim, mismatch, missing assumption, broken link, or pedagogical defect is demonstrated.
+The logits/probabilities source-text audit is now recorded in the [knowledge-preservation ledger](knowledge-preservation-ledger.md); it found and corrected a duplicated English self-check on the current branch. The likelihood/loss source-text audit is now recorded in the [knowledge-preservation ledger](knowledge-preservation-ledger.md). It found duplicate English self-checks, missing tensor navigation, and an ambiguous perplexity/log-base statement; the branch corrects these. The gradients source-text audit is also recorded in the [knowledge-preservation ledger](knowledge-preservation-ledger.md). It found and corrected a duplicated English self-check without changing the mathematical content. The next step is to validate the corrected page set through Quarto/CI, rendered-browser inspection, and comparison against the implementation/tests. Preserve current scope and only edit where a specific claim, mismatch, missing assumption, broken link, or pedagogical defect is demonstrated.
 
 ## Ordered work
 
@@ -55,8 +55,8 @@ The logits/probabilities source-text audit is now recorded in the [knowledge-pre
 - Keep all existing URLs stable while changing titles and navigation.
 
 ### P1 — Refactor the highest-duplication pages
-1. **Gradients:** audit the loss-to-logits-to-parameters path, assumptions behind derivatives, and numerical-verification claims.
-2. **Likelihood/loss:** source-text review is recorded in the ledger; verify the corrected perplexity convention against the implementation and inspect both language versions after rendering.
+1. **Render and CI:** render the full Quarto site and inspect the corrected pages in French and English, including MathJax, navigation, mobile layout, and links.
+2. **Loss/gradients implementation correspondence:** verify that code and tests support the documented target alignment, ignored positions, reduction, perplexity convention, analytical gradient, and finite-difference claims.
 3. **Logits/probabilities:** source-text review is recorded in the ledger; inspect the corrected English logits page after rendering and check local/external links.
 4. **Entropy/cross-entropy:** the first-pass refactor is already in `main`; retain the current focused scope and resolve only the outstanding browser/external-reference checks or defects found by later evidence.
 
