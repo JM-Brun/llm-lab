@@ -26,7 +26,7 @@ Le coût augmente lorsque le modèle attribue une faible probabilité au token o
 
 ## Cible one-hot, cible souple et divergence KL
 
-Pour une distribution cible \(q\) et une distribution prédite \(p\), l'entropie croisée est :
+Pour une distribution cible \(q\) et une distribution prédite \(p\), l'entropie croisée est (les termes de masse cible nulle contribuent zéro) :
 
 \[
 H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
