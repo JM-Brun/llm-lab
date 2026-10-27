@@ -84,6 +84,7 @@ Dans les bibliothèques de deep learning, le mot « tenseur » désigne couramme
 - [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd).
 - [Espace des embeddings](embedding-space.qmd).
 - [Loss](loss.qmd) et [Gradients](gradients.qmd).
+- [Fondations mathématiques](mathematical-foundations.qmd) — chaîne logits → perte → gradients.
 
 ## Références
 
