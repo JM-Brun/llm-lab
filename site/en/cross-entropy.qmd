@@ -87,7 +87,7 @@ To see the result, differentiate the logit form of the loss:
 \end{aligned}
 \]
 
-This derivation applies to one position and an unweighted one-hot target. Masking, weighting, and reduction change aggregated gradients or their scale. The link from this local gradient to network parameters is covered in [Gradients](gradients.qmd).
+This derivation applies to one position and an unweighted one-hot target. Under gradient descent, the negative gradient on the target logit raises it, while positive gradients on alternatives lower them. Masking, weighting, and reduction change aggregated gradients or their scale. The link from this local gradient to network parameters is covered in [Gradients](gradients.qmd).
 
 ## Numerical example
 
