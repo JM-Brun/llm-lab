@@ -27,6 +27,10 @@ A distribution concentrated on a few tokens generally has lower entropy than a s
 
 Entropy depends on the context and on the distribution being measured. The same prefix can lead to different distributions depending on the model, tokenizer, or temperature applied to the logits.
 
+### Numerical example
+
+For two candidate tokens with probabilities \((0.5,0.5)\), entropy is 1 bit, or \(\log 2\) nats. For \((0.9,0.1)\), entropy is approximately \(0.469\) bit, or \(0.325\) nats. The second distribution is more concentrated, but this does not establish that its most likely token is correct.
+
 ## Predictive entropy and the observed token are different questions
 
 Average entropy describes uncertainty *before* the next token is known. Once the target token \(x_t\) is observed, its surprisal under the model is:
@@ -54,13 +58,13 @@ This sum of negative log-probabilities directly connects token-by-token predicti
 
 ## Entropy, temperature, and generation
 
-Temperature \(T>0\) transforms logits \(z\) into a distribution:
+Temperature \(\tau>0\) transforms logits \(z\) into a distribution:
 
 \[
-p_i^{(T)}=\operatorname{softmax}(z/T)_i.
+p_i^{(\tau)}=\operatorname{softmax}(z/T)_i.
 \]
 
-Lower temperature tends to concentrate the distribution; higher temperature tends to flatten it. For \(T>0\), logit ordering and argmax remain unchanged, but probabilities and entropy change. Entropy after temperature scaling should not be presented as calibrated model uncertainty without empirical evaluation.
+Lower temperature tends to concentrate the distribution; higher temperature tends to flatten it. For \(\tau>0\), logit ordering and argmax remain unchanged, but probabilities and entropy change. Entropy after temperature scaling should not be presented as calibrated model uncertainty without empirical evaluation.
 
 ## What entropy does not establish
 
@@ -69,6 +73,21 @@ Lower temperature tends to concentrate the distribution; higher temperature tend
 - Normalized probabilities do not guarantee calibration.
 - Entropy or perplexity computed with different tokenizers is not directly comparable without care.
 - The average entropy observed under a model is not automatically the true entropy of the data source.
+
+## Self-check
+
+1. Does low entropy guarantee that the most likely token is correct?
+2. How does entropy differ from the surprisal of the observed token?
+3. Why must the tokenizer and token-counting convention be specified when comparing perplexity?
+
+<details>
+<summary>Show answers</summary>
+
+1. No. Entropy describes the spread of the distribution, not factual correctness.
+2. Entropy averages surprisal over all possible tokens under the predicted distribution; observed-token surprisal uses the probability assigned to the actual target.
+3. Tokenizers segment text differently, changing the units and positions over which the average is computed.
+
+</details>
 
 ## Further reading
 
