@@ -71,6 +71,12 @@ In deep-learning libraries, “tensor” commonly means a multidimensional numer
 - **Numeric dtype:** float32, bfloat16, and other types have different precision, memory, and performance trade-offs.
 - **Gradients:** a variable must be connected to the computation graph to receive the expected automatic gradient.
 
+## Misconceptions to avoid
+
+- **“A tensor must be a cube.”** No: a scalar, vector, matrix, or higher-dimensional array can be called a tensor by common deep-learning APIs.
+- **“The same shape means the same meaning.”** No: axes of equal size may represent different quantities, and shape alone does not encode their semantics.
+- **“Compatible dimensions prove the operation is correct.”** No: an operation may run while using the wrong axis, target alignment, or mask.
+
 ## Further reading
 
 - [Queries, keys, and values](queries-keys-values.qmd).
