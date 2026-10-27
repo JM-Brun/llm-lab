@@ -1,6 +1,6 @@
 # Knowledge-preservation ledger — LLM Lab math-page slice
 
-**Status:** first-pass inventory; not yet a final approval to merge.  
+**Status:** first-pass preservation inventory with a focused textual audit of the entropy and cross-entropy page pairs recorded below; not a full browser, external-link, or scientific sign-off.  
 **Public branch under review:** `docs/llm-application-math-refactor` (PR #17).  
 **Comparison baseline:** `main` as inspected on 2026-10-27.  
 **Rule:** no item is considered “moved” merely because a similarly named Wiki page exists. The public page must still teach every prerequisite needed for its LLM-specific objective.
@@ -172,6 +172,30 @@ At commit `e3d80d65569afbc0e2c85b4e8fcb020ecb070497`, a path-existence check cov
 - [ ] Check external references for availability and relevance; no live external-URL validation was performed in this artifact audit.
 - [ ] Review and merge this post-merge audit update separately.
 
-## 8. Scope of this ledger
+## 8. Focused bilingual textual audit — 2026-10-27
+
+**Scope:** current `main` versions of the four page files listed in sections 1–2. Compared French and English wording, formulas, assumptions, examples, limitations, and navigation. This pass did not execute Quarto, inspect a browser-rendered page, validate external URLs live, or assess the learner's mastery.
+
+### Entropy
+
+- **Parity:** the French and English pages cover the same core concepts and carry matching caveats.
+- **Mathematical checks:** \\(H(p)=-\\sum_i p_i\\log p_i\\) is bounded by \\(0\\le H(p)\\le\\log V\\) for a normalized categorical distribution on a finite vocabulary; the two-token examples are consistent in bits and nats; the sequence factorization and negative log-likelihood relation are aligned.
+- **Interpretation checks:** predictive entropy is distinguished from observed-token surprisal; temperature is a transformation of logits for decoding, not a parameter update; low entropy is not evidence of truth or calibration.
+- **Disposition:** no textual correction identified in this pass. Keep the chapter focused on the LLM application rather than restoring the broad general-information-theory sections.
+- **Remaining verification:** browser-level equation/layout review and live external-reference check.
+
+### Cross-entropy
+
+- **Parity:** the French and English pages preserve the same equations, assumptions, practical cautions, and learning checks.
+- **Mathematical checks:** the one-hot loss, soft-target cross-entropy, \\(H(q,p)=H(q)+D_{\\mathrm{KL}}(q\\Vert p)\\), directionality/support example, and one-hot logit gradient are internally consistent under the stated normalized-distribution and finite-value assumptions.
+- **Implementation semantics:** both pages distinguish target-position and input-position indexing, and explicitly cover causal shifting, ignored/padding positions, reduction conventions, and perplexity from mean token NLL.
+- **Disposition:** retain the local KL derivation for now: it directly explains the soft-target case and avoids making the public lesson depend on a private general-mathematics source. Do not remove it merely to reduce overlap. No textual correction identified in this pass.
+- **Remaining verification:** browser-level equation/layout review, live external-reference check, and a follow-up check that the implementation page and tests support any code-specific wording.
+
+### What this audit does not establish
+
+This review does not mark either concept as mastered, prove every cited source supports every claim, or replace a full-site Quarto render and visual inspection. Update status only when those separate checks have evidence.
+
+## 9. Scope of this ledger
 
 This is a traceable first-pass preservation record, not a claim that every line has passed scientific review. It deliberately records several items as **VERIFY**. A future review must resolve those statuses using the actual text and rendered pages rather than treating the inventory as a rubber stamp.
