@@ -294,7 +294,7 @@ Before a lesson's implementation work begins, its French and English theory page
 
 **Working order:** audit sources and concepts → choose the next lesson based on reader prerequisites and explanatory value → write/review its theory in both languages → render and inspect → only then implement or extend code, tests, and experiments when prerequisites are marked acquired in the private knowledge inventory. Do not draft all lessons in one bulk change.
 
-## 9. Editorial boundary with wiki-knowledge: apply foundations, do not duplicate them
+## 9. Editorial boundary with wiki-knowledge: general foundations and complete public application
 
 This section refines and takes precedence over any earlier wording in this plan that could imply LLM Lab must reproduce a general mathematics course or follow a fixed mapping between external-book chapters and this project's chapters.
 
