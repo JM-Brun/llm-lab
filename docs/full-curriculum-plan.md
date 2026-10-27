@@ -256,3 +256,78 @@ For the supplied video, playlist, Medium post, AlgoMonster course, and PDF mirro
 4. Write one complete bilingual chapter at a time. Verify equations, assumptions, numerical examples, references, and internal links before moving to the next.
 5. Only after review and private knowledge validation, connect the chapter to code and tests. Public pages must not depend on the private career-knowledge repository.
 6. Run Quarto rendering, link checks where available, French/English parity review, and scientific review before marking a chapter complete.
+
+
+## 9. Editorial boundary with wiki-knowledge: apply foundations, do not duplicate them
+
+This section refines and takes precedence over any earlier wording in this plan that could imply LLM Lab must reproduce a general mathematics course or follow a fixed mapping between external-book chapters and this project's chapters.
+
+### 9.1 Separate responsibilities
+
+**`wiki-knowledge` owns the reusable foundations.** It should contain the general mathematical concepts and their rigorous treatment: definitions, hypotheses, derivations, proofs where appropriate, and general examples that apply beyond LLMs. Examples include entropy as a general information-theoretic quantity, maximum likelihood as a general estimation principle, gradients and optimization, linear algebra, and probability.
+
+**`llm-lab` owns the LLM-specific application and synthesis.** It should explain why and how those foundations matter for language models and Transformers: how next-token prediction induces a likelihood objective; how cross-entropy is used in training; how logits and softmax define a categorical distribution; how causal attention changes information flow; how tensor shapes and masking implement the mathematics; and what the resulting training objective does and does not guarantee.
+
+A short local recap is appropriate only when needed to make an application intelligible. It should state the relevant result, assumptions, and a direct link to the canonical wiki concept—not reproduce its full derivation. If the foundation itself is missing or disputed, record that as a dependency to address in the wiki rather than quietly creating a competing canonical explanation in LLM Lab.
+
+| Question | Canonical home | Role in the other project |
+|---|---|---|
+| What is entropy, in general, and which identities hold? | `wiki-knowledge` | Explain how entropy relates to uncertainty in token distributions; demonstrate with language-model examples |
+| What is maximum likelihood estimation, and under which assumptions? | `wiki-knowledge` | Derive why autoregressive language-model training uses sequence/token log-likelihood and when the equivalence with cross-entropy holds |
+| What is a gradient or the chain rule? | `wiki-knowledge` | Trace gradients through embeddings, attention, logits, and the training loss |
+| What is a vector space or linear map? | `wiki-knowledge` | Explain embedding tables, projections, Q/K/V, MLP layers, and their tensor dimensions |
+| What is generalization or statistical leakage? | `wiki-knowledge` for the general concept | Apply it to corpus deduplication, pretraining/evaluation contamination, benchmark design, and model comparison |
+| How does a Transformer block work in code? | `llm-lab` | Link back to the mathematical concepts and to the corresponding implementation/tests |
+
+This boundary is conceptual, not a requirement that every cross-link be one-to-one. A chapter can draw on many wiki concepts; a wiki concept can support many LLM Lab chapters.
+
+### 9.2 The book is organized by explanation, not by external source or wiki page
+
+There is **no mandatory mapping** between a chapter of Raschka's book, a part of this book, a module in the existing learning path, or a page in `wiki-knowledge`. These are different organizational systems with different purposes:
+
+- The book's structure should optimize the reader's understanding of LLMs.
+- The wiki's structure should optimize the reusable knowledge graph of concepts and prerequisites.
+- The implementation path should optimize the ability to build, inspect, test, and train a small LLM from scratch.
+- External books, articles, courses, videos, and repositories are source material and coverage checks—not templates that dictate our table of contents.
+
+Maintain traceability through links and a concept/source ledger, not chapter-number equivalence. A source may inform several chapters, and a chapter may synthesize several sources and viewpoints. If an existing chapter order or module is useful, keep it only when it serves the reader's learning path.
+
+### 9.3 Two integrated outcomes: understanding and building from scratch
+
+LLM Lab must ultimately enable a reader to implement a small decoder-only language model from scratch. "From scratch" should be defined explicitly: the reader writes and understands the main model components and training/generation loop, while using a tensor/autodiff library such as PyTorch for low-level tensor operations and automatic differentiation. Reimplementing all of PyTorch or GPU kernels is a separate advanced track, not a hidden prerequisite.
+
+The implementation should grow as a set of demonstrable milestones rather than a chapter-number checklist:
+
+1. Inspect and prepare a small text corpus; document splits, tokenization, and reproducibility.
+2. Implement and test token-to-input/target alignment and a simple baseline.
+3. Build a minimal language model and establish the forward pass, tensor shapes, logits, probability distribution, and loss.
+4. Train a tiny baseline and validate that loss/overfitting behaviour is consistent with expectations.
+5. Implement a decoder-only Transformer block incrementally: embeddings and positions, causal self-attention, multi-head attention, residual paths, normalization, MLP, and output head.
+6. Train the complete small model with checkpoints, validation, and reproducible configuration.
+7. Generate text with several decoding strategies; distinguish training objective from generation policy.
+8. Run controlled tests and ablations that verify causal masking, dimensions, loss calculations, gradient flow, overfitting on a tiny dataset, checkpoint round-trips, and deterministic paths where expected.
+9. Compare variants using explicit baselines, resource measurements, and appropriately scoped conclusions.
+
+These milestones can be split across chapters or revisited in several places. Each implementation must be preceded by the concepts needed to understand it, but the book does not need to mirror the implementation sequence exactly. Keep mathematical explanations, code, and tests linked at the concept level.
+
+### 9.4 Applied-foundations chapter pattern
+
+For every mathematical foundation used in LLM Lab:
+
+1. Link to the canonical `wiki-knowledge` page.
+2. State only the minimum general result needed locally, with its assumptions and notation.
+3. Translate the result into the LLM setting: define the tokens, context, parameters, tensors, objective, or computational step.
+4. Work through a small LLM-specific example, including dimensions and/or numeric values.
+5. Explain what the concept predicts about behaviour and what it does not imply.
+6. Connect to an implementation and a test, when available.
+7. Record any unresolved general-mathematics issue as a wiki dependency rather than duplicating a full treatment.
+
+Example: the wiki page on maximum likelihood should establish the general estimation principle. LLM Lab should then derive the likelihood of a token sequence under an autoregressive model, show how teacher-forced next-token targets produce the summed negative log-likelihood, explain token averaging and padding masks, and test the implementation against a hand-calculated tiny example.
+
+### 9.5 Immediate work order
+
+1. Inventory current LLM Lab pages and identify which are general foundations, which are LLM-specific applications, and which already duplicate canonical wiki material.
+2. Add links to the canonical wiki concepts where the repository's privacy/access constraints permit; public LLM Lab pages must remain understandable and buildable without access to the private wiki.
+3. Keep public explanations self-contained enough for a reader, but do not duplicate long general derivations. If a private wiki link is unavailable to public readers, include a concise statement of the required result and assumptions, plus a public bibliography reference; do not expose private content.
+4. Choose the first chapter based on reader dependencies and the current state of the repository—not because it is "Chapter 1" in another book. A useful starting point is the concrete training objective: tokens and targets → autoregressive factorization → likelihood/NLL/cross-entropy, with links back to the wiki's general probability and estimation concepts.
+5. Audit every chapter against two acceptance criteria: **does it explain something specifically about LLMs that the wiki should not own?** and **does it contribute to the ability to implement, test, train, or evaluate a small LLM from scratch?** Chapters may satisfy one criterion directly and support the other indirectly, but neither general-mathematics duplication nor an unmotivated code dump is sufficient.
