@@ -82,6 +82,7 @@ A probability of 0.9 therefore does not automatically mean “a 90% chance that 
 - [Entropy](entropy.qmd) — uncertainty in the next-token distribution.
 - [Likelihood](likelihood.qmd) — probability of observed tokens and sequences.
 - [Cross-entropy](cross-entropy.qmd) — the training objective.
+- [Mathematical foundations exercise collection](exercises.qmd#foundations) — planned practice structure; detailed exercises are not yet written.
 
 ## References
 
