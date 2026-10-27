@@ -145,38 +145,230 @@ A topic is **not** covered merely because it appears in a heading, a diagram, a 
 - [3Blue1Brown — Transformers, the tech behind LLMs](https://www.3blue1brown.com/lessons/gpt/).
 
 
-## 5. Chapter-by-chapter theory-first workflow
+## 8. Original editorial architecture: principles first, not book-chapter parity
 
-This crosswalk makes the existing **book chapters** and the lab's **learning stages** explicit. They are related but not interchangeable: the seven book chapters provide the main reading sequence; the nine lab stages add mathematical prerequisites, reference comparisons, evaluation, efficiency, and advanced extensions.
+**Editorial decision:** LLM Lab is an original, source-synthesizing learning book. No single external book determines its chapter order. Raschka is one practical implementation path and coverage reference among several, not the book's table of contents. Organize the book around scientific questions, mathematical objects, mechanisms, and evidence; compare sources where they disagree or emphasize different aspects.
 
-| Reading unit | Main theoretical questions to answer before coding | LLM Lab stage(s) | Planned theory destination / status |
+### 8.1 The central explanatory chain
+
+1. **Uncertainty and information:** probability distributions, entropy, conditional entropy, cross-entropy, KL divergence, and mutual information.
+2. **Statistical estimation:** likelihood, log-likelihood, maximum likelihood estimation (MLE), empirical risk, sampling assumptions, and generalization.
+3. **Predictive language modeling:** sequence probabilities, autoregressive factorization, conditional next-token prediction, and the training objective.
+4. **Optimization and representation learning:** logits, softmax, negative log-likelihood, gradients, backpropagation, optimization, and numerical stability.
+5. **Architectural inductive biases:** tokenization, embeddings, positional information, attention, residual paths, normalization, and feed-forward blocks as design choices with trade-offs.
+6. **Training and inference:** teacher-forced training versus autoregressive generation, shifted targets, causal constraints, decoding, caching, latency, and memory.
+7. **Adaptation and evaluation:** classification fine-tuning, instruction tuning, preference optimization, retrieval-augmented systems, tools, and the limits of each technique.
+8. **Evidence and limitations:** held-out data, baselines, calibration, ablations, uncertainty, contamination, robustness, and resource accounting.
+
+This is a dependency graph rather than a rigid linear syllabus: information theory supports the statistical objective; the objective motivates training; the architecture parameterizes the distribution; evaluation tests claims about the resulting system. Each chapter should make these connections explicit.
+
+### 8.2 The mathematical bridge: entropy, likelihood, cross-entropy and LLM training
+
+For a token sequence x₁:T, an autoregressive model defines:
+
+\[
+p_\theta(x_{1:T}) = \prod_{t=1}^{T} p_\theta(x_t \mid x_{<t}).
+\]
+
+Maximum likelihood chooses parameters that maximize the log probabilities assigned to observed sequences. Equivalently, it minimizes negative log-likelihood (NLL). The usual next-token cross-entropy loss is an empirical average of negative log probabilities assigned to the observed next tokens.
+
+These quantities must not be conflated:
+
+- **Entropy:** H(P) = −Eₚ[log P(x)] measures uncertainty under a distribution.
+- **Cross-entropy:** H(P,Q) = −Eₚ[log Q(x)] evaluates the expected negative log score when data follow P and predictions use Q.
+- **KL divergence:** Dₖₗ(P‖Q) = Eₚ[log(P/Q)]. Under standard assumptions, H(P,Q) = H(P) + Dₖₗ(P‖Q). Because H(P) is fixed with respect to model parameters, minimizing cross-entropy over Qθ is equivalent to minimizing this KL divergence when the distributions and objective are consistently defined.
+- **MLE and cross-entropy minimization** are equivalent only when data weighting, masking, and reduction conventions align. Token averaging, sequence averaging, padding masks, label smoothing, auxiliary losses, and regularization can change the exact objective.
+- **Perplexity** is the exponential of average token-level NLL under a specified tokenization and evaluation convention. It is not a tokenizer-independent universal measure of quality.
+- **Low training NLL does not establish understanding, factuality, calibration, or downstream usefulness.** These require separate evidence and suitable evaluations.
+
+Every derivation must define its random variables, distributions, support, conditioning context, log base where relevant, and averaging convention. Include a hand-computable numerical example and a counterexample that distinguishes commonly confused quantities.
+
+### 8.3 A reusable scientific chapter template
+
+Each substantial chapter should adapt the following structure:
+
+1. Question and motivation; prerequisites and learning outcomes.
+2. Intuition and, where useful, competing viewpoints (statistical, information-theoretic, geometric, computational).
+3. Formal setup: notation, assumptions, dimensions, and the object being modeled.
+4. Derivation with each step justified and assumptions made explicit.
+5. Worked numerical example before large-model complexity.
+6. Original visual schema with alt text and an explanation of what the diagram omits.
+7. Code and tests linked only after prerequisites are validated; tests should check mathematical invariants, not just successful execution.
+8. Misconceptions, counterexamples, failure cases, alternatives, and trade-offs.
+9. References, self-checks, and transfer questions that require applying the idea in a new context.
+10. French/English parity in claims, notation, caveats, examples, and links.
+
+### 8.4 Source synthesis and provenance
+
+Multiple sources repeating a claim do not automatically validate it. For each important claim, track source type, version/date, claims supported, assumptions, caveats, and license constraints.
+
+- **Primary research:** original papers, proceedings, technical reports, official model cards; use for methods and reported results.
+- **Textbooks and lecture notes:** definitions, derivations, and broader context; check edition and assumptions.
+- **Official implementations and documentation:** API behavior and implementation details, not universal scientific claims.
+- **Pedagogical visualizations, videos, and blogs:** alternative explanations and intuition; verify equations against stronger sources.
+- **Independent replications and critiques:** limitations, sensitivity, disagreements, and external validity.
+- **Community commentary:** useful for discovering questions, not sole support for consequential claims.
+
+Distinguish consensus, empirical result, interpretation, hypothesis, and open question. Write original explanations, diagrams, and exercises; cite sources without reproducing their prose or visuals. Treat third-party mirrors of books as discovery leads, not publication sources, and check reuse rights before embedding material.
+
+### 8.5 Proposed book-level structure
+
+| Part | Guiding question | Core concepts |
+|---|---|---|
+| 0. Orientation and evidence | What is an LLM, and what can we conclude about it? | terminology, model/system distinction, training vs inference |
+| 1. Uncertainty and information | How do we quantify uncertainty and predictive mismatch? | probability, entropy, cross-entropy, KL, mutual information |
+| 2. Statistical learning | What does it mean to fit a model to observations? | likelihood, MLE, empirical risk, generalization |
+| 3. Text as a prediction problem | What is predicted from what? | tokenization, context windows, target shift, autoregressive factorization |
+| 4. Neural conditional distributions | How do parameters turn context into probabilities? | tensors, embeddings, linear maps, logits, softmax |
+| 5. Optimization and learning dynamics | How does the model improve? | derivatives, gradients, backpropagation, optimizers, numerical stability |
+| 6. Attention and context mixing | How can positions use information from other positions? | Q/K/V, scaled dot-product, masks, heads, invariants |
+| 7. Transformer design | Why this block structure? | positional methods, residuals, normalization, MLP, architecture variants |
+| 8. Pretraining | How is a model trained reproducibly? | corpora, batching, schedules, checkpoints, validation, compute/data scaling |
+| 9. Generation | How does a distribution become a sequence? | decoding, temperature, top-k/top-p, stopping, KV cache |
+| 10. Adaptation | How can an existing model be adapted, and at what cost? | classification fine-tuning, SFT, LoRA/QLoRA, preferences, DPO |
+| 11. Evaluation and failure | What can benchmarks and tests establish? | metrics, baselines, contamination, calibration, hallucination, robustness |
+| 12. LLM systems | What changes when retrieval, tools, and orchestration are added? | RAG, retrieval evaluation, tool use, system boundaries |
+| 13. Research frontiers and responsibility | What remains uncertain, and what are the trade-offs? | interpretability, scaling, efficiency, data governance, impact |
+
+Appendices can cover linear algebra, probability, calculus and optimization, PyTorch/autograd, tokenizer internals, parameter/memory/FLOP accounting, paper-reading methods, glossary, and exercises.
+
+### 8.6 Initial cross-source research anchors
+
+These are starting points, not an exhaustive bibliography or automatic authority for every claim:
+
+- Shannon, *A Mathematical Theory of Communication* (1948), and Cover & Thomas, *Elements of Information Theory*, for information-theoretic foundations.
+- Bishop, *Pattern Recognition and Machine Learning*, and Murphy, *Probabilistic Machine Learning*, for probabilistic modeling and estimation.
+- Goodfellow, Bengio & Courville, *Deep Learning*, especially probability, information theory, optimization and sequence modeling: https://www.deeplearningbook.org/
+- Vaswani et al. (2017), [Attention Is All You Need](https://arxiv.org/abs/1706.03762), for the original Transformer; distinguish encoder–decoder from decoder-only GPT.
+- Radford et al. (2019), [Language Models are Unsupervised Multitask Learners](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf), for GPT-2-era language modeling.
+- Kaplan et al. (2020), [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361), and Hoffmann et al. (2022), [Training Compute-Optimal Large Language Models](https://arxiv.org/abs/2203.15556), to compare scaling claims and their differing compute-budget conclusions.
+- Raschka, [LLMs-from-scratch](https://github.com/rasbt/LLMs-from-scratch), for a practical implementation path and coverage audit, not the book's organizing authority.
+- Alammar, [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) and [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/), as visual perspectives to complement primary sources.
+- Official PyTorch documentation, paired with mathematical derivations, for exact implementation semantics.
+
+For the supplied video, playlist, Medium post, AlgoMonster course, and PDF mirror, assess expertise, provenance, date, technical depth, and licensing before using them as substantive evidence.
+
+### 8.7 Immediate execution order
+
+1. Treat the Raschka chapter map as a secondary coverage audit, not the table of contents.
+2. Inventory existing French/English pages and map them to the proposed parts, concepts, and prerequisites; identify duplicates and missing language counterparts.
+3. Start by auditing the existing entropy, cross-entropy, likelihood, loss, and probability pages. Build the first complete chapter around uncertainty and information, followed by statistical estimation.
+4. Write one complete bilingual chapter at a time. Verify equations, assumptions, numerical examples, references, and internal links before moving to the next.
+5. Only after review and private knowledge validation, connect the chapter to code and tests. Public pages must not depend on the private career-knowledge repository.
+6. Run Quarto rendering, link checks where available, French/English parity review, and scientific review before marking a chapter complete.
+
+
+
+### 8.8 Non-binding source-coverage crosswalk
+
+The following crosswalk is an **audit aid only**. It helps check whether major topics from Raschka's book and appendices have been considered. It does not define LLM Lab's table of contents, require one-to-one chapter mapping, or determine the order in which the reader must study topics. The book's own sequence should be chosen from the explanatory needs of LLM Lab; stages may cut across source chapters, and one source chapter may inform several parts.
+
+| External source unit (coverage check only) | Questions and topics worth accounting for | Related LLM Lab themes (not a chapter mapping) | Current gap / caution |
 |---|---|---|---|
-| Book Ch. 1 — Understanding LLMs | What is a language model? What is next-token prediction? How do pretraining and fine-tuning differ? What does decoder-only GPT mean, and what does it not represent? | Stage 0 orientation; context for Stages 1–3 | Existing overview and history pages are partial; consolidate links, do not duplicate canonical concept definitions. |
-| Book Ch. 2 — Working with text data | Unicode and preprocessing; tokenization trade-offs; BPE; special tokens; token IDs; embeddings; position information; sliding windows and input-target alignment | Stage 1 | **Priority theory gap.** Create/complete a bilingual chapter synthesis linking to canonical tensor/embedding/position pages. Distinguish algorithmic explanation from tokenizer-specific behavior. |
-| Book Ch. 3 — Coding attention mechanisms | Q/K/V projections; score scaling; softmax axis; causal masking; weighted sums; multi-head splitting/merging; tensor shapes and invariants | Stage 2 | Concept pages exist in part. Audit and connect them before introducing a complete implementation. |
-| Book Ch. 4 — Implementing a GPT model | How embeddings, positional information, attention, MLP/FFN, residual paths, normalization, and output head compose; parameterization and forward pass | Stage 2 → Stage 3 | Overview exists; full architecture coverage remains partial. Theory first, then compare against code only when present. |
-| Book Ch. 5 — Pretraining on unlabeled data | Autoregressive objective; cross-entropy; batches; optimizer and schedules; validation; perplexity; checkpointing; sampling and generation | Stage 3, with Stage 4 for reference comparison | Mathematical foundations exist partially; a coherent theory chapter and reproducible training evidence remain gaps. |
-| Book Ch. 6 — Fine-tuning for classification | Task head; label space; loss; freezing/unfreezing; class balance; held-out evaluation; overfitting and forgetting | Stage 5 | Public bilingual theory and validated implementation are not yet complete. |
-| Book Ch. 7 — Fine-tuning to follow instructions | Instruction examples; prompt/response formats; target masking; SFT objective; data quality; evaluation and regressions | Stage 5; Stage 8 for evaluation | Public coverage is partial. Link to existing canonical loss/evaluation concepts; do not imply that instruction tuning alone guarantees reliable behavior. |
-| Appendix A — Introduction to PyTorch | Tensors, autograd, modules, datasets/dataloaders, device and reproducibility basics | Prerequisites for Stages 0–3 | Add only the framework concepts required by a lesson; prefer official PyTorch documentation. |
-| Appendix B — References and further reading | How to trace claims to primary literature and technical docs | All stages | Maintain in `docs/references.md`; a bibliography entry is not evidence that a claim was reproduced. |
-| Appendix C — Exercise solutions | How to self-check understanding without reading solutions first | Separate exercise space, all stages | Exercise navigation exists; exercise collections and answer keys are not yet authored. |
-| Appendix D — Training-loop improvements | Learning-rate schedules, gradient clipping, logging, checkpointing and related trade-offs | Stage 3, optionally Stage 8 | Advanced extension after the baseline training loop is understood. |
-| Appendix E — LoRA | Low-rank adaptation, target modules, rank/alpha, trainable parameters and limitations | Stage 6 | Advanced extension after SFT foundations; distinguish LoRA from quantization and QLoRA. |
-| Beyond the book — evaluation and efficiency | Baselines, uncertainty, leakage/contamination, ablations, resource measurements, DPO and architecture variants | Stage 7–8 | Explicit LLM Lab extensions; label as such and use current primary sources rather than attributing them to the book. |
+| Understanding LLMs | Language modeling, next-token prediction, pretraining vs fine-tuning, decoder-only GPT | Orientation, autoregressive objective, architecture | Overview/history are partial; link concepts rather than duplicate definitions. |
+| Working with text data | Unicode, normalization, tokenization, BPE, special tokens, token IDs, embeddings, position, windows and target alignment | Data, representations, training objective | High-value theory gap: explain algorithmic principles separately from tokenizer-specific behaviour. |
+| Coding attention mechanisms | Q/K/V, scaling, softmax axis, causal masks, weighted sums, multi-head shapes and invariants | Attention and tensor computation | Pages exist in part; connect them and test invariants before claiming a complete implementation. |
+| Implementing a GPT model | Embeddings, positions, attention, MLP, residual paths, normalization, output head, parameterization | Architecture and forward pass | Overview exists; full architecture coverage remains partial. |
+| Pretraining on unlabeled data | Autoregressive objective, token loss, batching, optimization, validation, perplexity, checkpoints, generation | Training, inference, evaluation | General math ownership must be clarified with the private wiki; reproducible training evidence is not yet complete. |
+| Fine-tuning for classification | Task head, label space, loss, freezing, class balance, held-out evaluation, overfitting and forgetting | Adaptation and evaluation | Public bilingual theory and validated implementation remain incomplete. |
+| Instruction fine-tuning | Prompt/response formats, target masking, SFT objective, data quality, evaluation and regressions | SFT, data pipeline, evaluation | Coverage is partial; instruction tuning does not by itself guarantee reliable behaviour. |
+| PyTorch and appendices | Tensors, autograd, modules, data loading, devices, references and exercises | Prerequisites, source provenance, exercise space | Add framework explanations only when a lesson needs them; exercise navigation is not evidence that exercises exist. |
+| Training improvements and LoRA | Schedules, clipping, checkpointing, low-rank adaptation and limitations | Training, efficiency, adaptation | Advanced extensions, not prerequisites for understanding a small baseline. |
+| Beyond the book | Baselines, uncertainty, leakage/contamination, ablations, resource measurements, DPO and architecture variants | Evaluation, efficiency, research frontiers | Explicit LLM Lab extensions; do not attribute them to the source book. |
 
-### Theory-first definition of done for each chapter
+For each planned lesson, the theory-first review criteria below apply to the lesson itself, regardless of how many external source chapters informed it. A source crosswalk entry is not evidence that the corresponding LLM Lab lesson exists or is complete.
 
-Before a chapter's implementation work begins, its French and English theory pages should:
+### Theory-first definition of done for each lesson
 
-1. State scope, prerequisites, learning objectives, and the book sections covered (paraphrased; do not reproduce copyrighted text).
+Before a lesson's implementation work begins, its French and English theory pages should:
+
+1. State scope, prerequisites, learning objectives, and relevant source sections (paraphrased; do not reproduce copyrighted text).
 2. Define the objects and notation, including tensor shapes and conventions wherever applicable.
-3. Derive the central equations step by step and state assumptions, edge cases, and numerical limitations.
-4. Include at least one worked example and one misconception/counterexample that distinguishes nearby concepts.
+3. Derive the central LLM-specific equations step by step and state assumptions, edge cases, and numerical limitations; link general derivations to the canonical wiki where they exist.
+4. Include at least one worked LLM-specific example and one misconception/counterexample that distinguishes nearby concepts.
 5. Link to canonical concept pages rather than duplicate them; link to implementation/tests only when they exist, otherwise state that they are planned.
-6. Cite a primary paper or official technical reference for substantive claims and a pedagogical source for intuition when useful.
+6. Cite primary papers or official technical references for substantive claims and pedagogical sources for intuition where useful.
 7. Include self-check questions without immediately visible answers; keep solutions in the separate exercise space.
-8. Preserve claim-level parity between French and English.
+8. Preserve claim-level parity between French and English, or explicitly track a missing language counterpart.
 9. Pass the configured Quarto render and link checks; visual inspection and scientific review remain separate checks.
 
-**Working order:** audit and map the sources → write theory for the next chapter in French and English → review equations, assumptions, and citations → render and inspect both languages → only then implement or extend code, tests, and experiments when prerequisites are marked acquired in the private knowledge inventory. Do not draft all chapters in one bulk change.
+**Working order:** audit sources and concepts → choose the next lesson based on reader prerequisites and explanatory value → write/review its theory in both languages → render and inspect → only then implement or extend code, tests, and experiments when prerequisites are marked acquired in the private knowledge inventory. Do not draft all lessons in one bulk change.
+
+## 9. Editorial boundary with wiki-knowledge: apply foundations, do not duplicate them
+
+This section refines and takes precedence over any earlier wording in this plan that could imply LLM Lab must reproduce a general mathematics course or follow a fixed mapping between external-book chapters and this project's chapters.
+
+### 9.1 Separate responsibilities
+
+**`wiki-knowledge` owns the reusable foundations.** It should contain the general mathematical concepts and their rigorous treatment: definitions, hypotheses, derivations, proofs where appropriate, and general examples that apply beyond LLMs. Examples include entropy as a general information-theoretic quantity, maximum likelihood as a general estimation principle, gradients and optimization, linear algebra, and probability.
+
+**`llm-lab` owns the LLM-specific application and synthesis.** It should explain why and how those foundations matter for language models and Transformers: how next-token prediction induces a likelihood objective; how cross-entropy is used in training; how logits and softmax define a categorical distribution; how causal attention changes information flow; how tensor shapes and masking implement the mathematics; and what the resulting training objective does and does not guarantee.
+
+A short local recap is appropriate only when needed to make an application intelligible. It should state the relevant result, assumptions, and a direct link to the canonical wiki concept—not reproduce its full derivation. If the foundation itself is missing or disputed, record that as a dependency to address in the wiki rather than quietly creating a competing canonical explanation in LLM Lab.
+
+| Question | Canonical home | Role in the other project |
+|---|---|---|
+| What is entropy, in general, and which identities hold? | `wiki-knowledge` | Explain how entropy relates to uncertainty in token distributions; demonstrate with language-model examples |
+| What is maximum likelihood estimation, and under which assumptions? | `wiki-knowledge` | Derive why autoregressive language-model training uses sequence/token log-likelihood and when the equivalence with cross-entropy holds |
+| What is a gradient or the chain rule? | `wiki-knowledge` | Trace gradients through embeddings, attention, logits, and the training loss |
+| What is a vector space or linear map? | `wiki-knowledge` | Explain embedding tables, projections, Q/K/V, MLP layers, and their tensor dimensions |
+| What is generalization or statistical leakage? | `wiki-knowledge` for the general concept | Apply it to corpus deduplication, pretraining/evaluation contamination, benchmark design, and model comparison |
+| How does a Transformer block work in code? | `llm-lab` | Link back to the mathematical concepts and to the corresponding implementation/tests |
+
+This boundary is conceptual, not a requirement that every cross-link be one-to-one. A chapter can draw on many wiki concepts; a wiki concept can support many LLM Lab chapters.
+
+### 9.2 The book is organized by explanation, not by external source or wiki page
+
+There is **no mandatory mapping** between a chapter of Raschka's book, a part of this book, a module in the existing learning path, or a page in `wiki-knowledge`. These are different organizational systems with different purposes:
+
+- The book's structure should optimize the reader's understanding of LLMs.
+- The wiki's structure should optimize the reusable knowledge graph of concepts and prerequisites.
+- The implementation path should optimize the ability to build, inspect, test, and train a small LLM from scratch.
+- External books, articles, courses, videos, and repositories are source material and coverage checks—not templates that dictate our table of contents.
+
+Maintain traceability through links and a concept/source ledger, not chapter-number equivalence. A source may inform several chapters, and a chapter may synthesize several sources and viewpoints. If an existing chapter order or module is useful, keep it only when it serves the reader's learning path.
+
+### 9.3 Two integrated outcomes: understanding and building from scratch
+
+LLM Lab must ultimately enable a reader to implement a small decoder-only language model from scratch. "From scratch" should be defined explicitly: the reader writes and understands the main model components and training/generation loop, while using a tensor/autodiff library such as PyTorch for low-level tensor operations and automatic differentiation. Reimplementing all of PyTorch or GPU kernels is a separate advanced track, not a hidden prerequisite.
+
+The implementation should grow as a set of demonstrable milestones rather than a chapter-number checklist:
+
+1. Inspect and prepare a small text corpus; document splits, tokenization, and reproducibility.
+2. Implement and test token-to-input/target alignment and a simple baseline.
+3. Build a minimal language model and establish the forward pass, tensor shapes, logits, probability distribution, and loss.
+4. Train a tiny baseline and validate that loss/overfitting behaviour is consistent with expectations.
+5. Implement a decoder-only Transformer block incrementally: embeddings and positions, causal self-attention, multi-head attention, residual paths, normalization, MLP, and output head.
+6. Train the complete small model with checkpoints, validation, and reproducible configuration.
+7. Generate text with several decoding strategies; distinguish training objective from generation policy.
+8. Run controlled tests and ablations that verify causal masking, dimensions, loss calculations, gradient flow, overfitting on a tiny dataset, checkpoint round-trips, and deterministic paths where expected.
+9. Compare variants using explicit baselines, resource measurements, and appropriately scoped conclusions.
+
+These milestones can be split across chapters or revisited in several places. Each implementation must be preceded by the concepts needed to understand it, but the book does not need to mirror the implementation sequence exactly. Keep mathematical explanations, code, and tests linked at the concept level.
+
+### 9.4 Applied-foundations chapter pattern
+
+For every mathematical foundation used in LLM Lab:
+
+1. Link to the canonical `wiki-knowledge` page.
+2. State only the minimum general result needed locally, with its assumptions and notation.
+3. Translate the result into the LLM setting: define the tokens, context, parameters, tensors, objective, or computational step.
+4. Work through a small LLM-specific example, including dimensions and/or numeric values.
+5. Explain what the concept predicts about behaviour and what it does not imply.
+6. Connect to an implementation and a test, when available.
+7. Record any unresolved general-mathematics issue as a wiki dependency rather than duplicating a full treatment.
+
+Example: the wiki page on maximum likelihood should establish the general estimation principle. LLM Lab should then derive the likelihood of a token sequence under an autoregressive model, show how teacher-forced next-token targets produce the summed negative log-likelihood, explain token averaging and padding masks, and test the implementation against a hand-calculated tiny example.
+
+### 9.5 Immediate work order
+
+The first-pass inventory is recorded in [`docs/editorial-boundary-audit.md`](editorial-boundary-audit.md). It identifies the broad entropy pages as the clearest duplication risk, the cross-entropy and gradients pages as mixed-content pages, and the likelihood/loss pages as already strongly aligned with LLM-specific application.
+
+1. Keep the public information architecture self-contained, but label its mathematical section as **maths applied to LLMs**, not as the canonical home of general foundations.
+2. Before removing general treatments from public pages, create and verify canonical wiki pages for the missing general concepts. The current wiki has maximum likelihood and derivatives/gradients, but the inspected concept tree does not yet show standalone pages for probability distributions/softmax, entropy, cross-entropy/KL, or tensors.
+3. Once those destinations exist, refactor in this order: entropy → cross-entropy → gradients → logits/probabilities → consistency review of likelihood/loss. Preserve stable public URLs while titles and content evolve.
+4. For each page, preserve the smallest general statement needed to follow the application, state assumptions, give a token/model-specific example, explain limits, and cite public sources. The private wiki may be linked as a canonical internal dependency, but public readers must not need access to it.
+5. Check the wiki destination before claiming that any general treatment has been migrated. The audit is a proposed disposition, not proof that migration is complete.
+6. Validate French/English parity explicitly; the current tree has no English counterpart for the tensors, embedding-space, and positional-encoding pages.
+7. After the content refactor, render Quarto, check internal links and image alternatives, and inspect both language paths. Do not add model implementations or experiments until their conceptual prerequisites are validated.
+8. For every retained chapter, ask whether it explains an LLM-specific mechanism and whether it contributes directly or indirectly to implementing, testing, training, generating with, or evaluating a small decoder-only LLM. Neither general-mathematics duplication nor an unmotivated code dump is sufficient.

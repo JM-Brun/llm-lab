@@ -1,6 +1,6 @@
 ---
-title: "Mathematical foundations of LLMs"
-subtitle: "One consistent chain, from model scores to learning"
+title: "The mathematical chain of LLM training"
+subtitle: "From logits to next-token probabilities, loss, and gradients"
 lang: en
 ---
 

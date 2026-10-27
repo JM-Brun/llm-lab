@@ -37,7 +37,7 @@ Des pages de haut niveau relient les composants : attention dans un Transformer,
 
 Chaque concept dispose d'une page dédiée : intuition, provenance, équations, hypothèses, contre-exemples, liens vers les notions voisines et références.
 
-[Explorer les fondations mathématiques](fr/mathematical-foundations.qmd){.card-link}
+[Suivre la chaîne mathématique d’un LLM](fr/mathematical-foundations.qmd){.card-link}
 
 [Découvrir les tenseurs](fr/tensors.qmd) · [Les espaces d'embeddings](fr/embedding-space.qmd)
 :::
@@ -54,7 +54,7 @@ Les pages distinguent le code réellement présent, les tests qui le couvrent et
 
 ## Parcours conseillé
 
-1. **Fondations mathématiques** — logits, probabilités, vraisemblance, cross-entropie, loss et gradients.
+1. **Mathématiques appliquées aux LLM** — suivre les logits jusqu’à la perte d’entraînement et aux gradients, sans refaire un cours général de mathématiques.
 2. **Attention et Transformer** — requêtes, clés, valeurs, scores, softmax, information de position et masque causal.
 3. **Données et objectif autorégressif** — tokenisation, décalage entrée-cible et prédiction du prochain token.
 4. **Modèle et entraînement** — blocs, optimisation, validation, génération et évaluation.
