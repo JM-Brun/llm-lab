@@ -16,7 +16,7 @@ Given a prefix \(x_{<t}\), the model produces a categorical distribution over it
 p_\theta(v\mid x_{<t}),\qquad v\in\mathcal V.
 \]
 
-Its entropy, using natural logarithms, is:
+Its entropy, using natural logarithms, is (with the convention \(0\log 0=0\)):
 
 \[
 H_t=-\sum_{v\in\mathcal V}p_\theta(v\mid x_{<t})
