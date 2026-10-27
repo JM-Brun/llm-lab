@@ -149,7 +149,7 @@ The baseline had no `site/en/tensors.qmd` counterpart. The proposed branch adds 
 
 ## 6. Link-audit evidence
 
-At commit `e3d80d65569afbc0e2c85b4e8fcb020ecb070497`, a path-existence check covered 50 local Markdown/image references across the eight affected French/English concept pages (entropy, cross-entropy, probabilities, tensors): all 25 unique targets existed in the branch tree. The check exposed one invalid English tensor-page link to a not-yet-translated embedding-space page; it was changed to an explicit link to the existing French page with the translation gap labelled. This check verifies target paths only, not anchors, rendered appearance, accessibility, or external URL availability.
+At commit `e3d80d65569afbc0e2c85b4e8fcb020ecb070497`, a path-existence check covered 50 local Markdown/image references across the eight affected French/English concept pages (entropy, cross-entropy, probabilities, tensors): all 25 unique targets existed in the branch tree. The four explicit fragment links to the planned exercise collections (`#foundations` and `#fondations`) were also checked against their target pages. The check exposed one invalid English tensor-page link to a not-yet-translated embedding-space page; it was changed to an explicit link to the existing French page with the translation gap labelled. These checks verify target paths/fragments only, not rendered appearance, accessibility, or external URL availability.
 
 ## 7. Open checks before PR #17 can be approved
 
@@ -159,11 +159,11 @@ At commit `e3d80d65569afbc0e2c85b4e8fcb020ecb070497`, a path-existence check cov
 - [x] Verify the probabilities/softmax old/new diff: numerical example, conditional factorization, temperature, calibration/truth distinctions, self-check answers, references, and exercise-space navigation are present. The general simplex term was replaced by a direct explanation of normalization.
 - [x] Textual review: tensor pages distinguish output feature dimension (D') from attention-head count (H), explain array rank versus matrix rank, and preserve key misconceptions in both languages. [ ] Verify tensor shapes, diagram rendering/alt text, links, and FR/EN parity.
 - [ ] Check the Wiki concept registry/generator synchronization, sources metadata, and draft lifecycle. The four pages exist in `main`, but all remain `status: draft`, with empty `sources` metadata; they are supplementary only and are not treated as scientifically approved destinations.
-- [x] Path-existence audit for 50 local Markdown/image references across the eight affected pages; all 25 unique targets exist at the recorded commit.
+- [x] Path-existence audit for 50 local Markdown/image references and four explicit local fragments across the eight affected pages; all targets/fragments resolve at the recorded commit.
 - [ ] Inspect rendered Quarto pages in both languages, including anchors, figures, alt text, navigation, and visual quality.
 - [x] CI and Quarto site render passed on earlier reviewed heads after mathematical corrections. [CI](https://github.com/JM-Brun/llm-lab/actions/runs/40538171509) · [Quarto](https://github.com/JM-Brun/llm-lab/actions/runs/40538171519).
 - [ ] Re-run CI and Quarto on the current head after the later reference/navigation and contributor-guidance clarifications.
-- [ ] Inspect the rendered output visually; successful render is not visual/scientific approval.
+- [ ] Inspect the rendered output visually; successful render is not visual/scientific approval. Confirm diagram rendering, alt text, bilingual navigation, and that new derivation blocks display as intended.
 - [ ] Review the final PR diff against this ledger; update this document if a disposition changes.
 - [ ] Do not merge PR #17 until the checks above are completed.
 
