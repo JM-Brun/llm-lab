@@ -143,3 +143,116 @@ A topic is **not** covered merely because it appears in a heading, a diagram, a 
 - Alammar, [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/).
 - [The Illustrated Transformer From Scratch (ACM-hosted article)](https://idtjo.hosting.acm.org/wordpress/the-illustrated-transformer/).
 - [3Blue1Brown — Transformers, the tech behind LLMs](https://www.3blue1brown.com/lessons/gpt/).
+
+
+## 8. Original editorial architecture: principles first, not book-chapter parity
+
+**Editorial decision:** LLM Lab is an original, source-synthesizing learning book. No single external book determines its chapter order. Raschka is one practical implementation path and coverage reference among several, not the book's table of contents. Organize the book around scientific questions, mathematical objects, mechanisms, and evidence; compare sources where they disagree or emphasize different aspects.
+
+### 8.1 The central explanatory chain
+
+1. **Uncertainty and information:** probability distributions, entropy, conditional entropy, cross-entropy, KL divergence, and mutual information.
+2. **Statistical estimation:** likelihood, log-likelihood, maximum likelihood estimation (MLE), empirical risk, sampling assumptions, and generalization.
+3. **Predictive language modeling:** sequence probabilities, autoregressive factorization, conditional next-token prediction, and the training objective.
+4. **Optimization and representation learning:** logits, softmax, negative log-likelihood, gradients, backpropagation, optimization, and numerical stability.
+5. **Architectural inductive biases:** tokenization, embeddings, positional information, attention, residual paths, normalization, and feed-forward blocks as design choices with trade-offs.
+6. **Training and inference:** teacher-forced training versus autoregressive generation, shifted targets, causal constraints, decoding, caching, latency, and memory.
+7. **Adaptation and evaluation:** classification fine-tuning, instruction tuning, preference optimization, retrieval-augmented systems, tools, and the limits of each technique.
+8. **Evidence and limitations:** held-out data, baselines, calibration, ablations, uncertainty, contamination, robustness, and resource accounting.
+
+This is a dependency graph rather than a rigid linear syllabus: information theory supports the statistical objective; the objective motivates training; the architecture parameterizes the distribution; evaluation tests claims about the resulting system. Each chapter should make these connections explicit.
+
+### 8.2 The mathematical bridge: entropy, likelihood, cross-entropy and LLM training
+
+For a token sequence x₁:T, an autoregressive model defines:
+
+\[
+p_\theta(x_{1:T}) = \prod_{t=1}^{T} p_\theta(x_t \mid x_{<t}).
+\]
+
+Maximum likelihood chooses parameters that maximize the log probabilities assigned to observed sequences. Equivalently, it minimizes negative log-likelihood (NLL). The usual next-token cross-entropy loss is an empirical average of negative log probabilities assigned to the observed next tokens.
+
+These quantities must not be conflated:
+
+- **Entropy:** H(P) = −Eₚ[log P(x)] measures uncertainty under a distribution.
+- **Cross-entropy:** H(P,Q) = −Eₚ[log Q(x)] evaluates the expected negative log score when data follow P and predictions use Q.
+- **KL divergence:** Dₖₗ(P‖Q) = Eₚ[log(P/Q)]. Under standard assumptions, H(P,Q) = H(P) + Dₖₗ(P‖Q). Because H(P) is fixed with respect to model parameters, minimizing cross-entropy over Qθ is equivalent to minimizing this KL divergence when the distributions and objective are consistently defined.
+- **MLE and cross-entropy minimization** are equivalent only when data weighting, masking, and reduction conventions align. Token averaging, sequence averaging, padding masks, label smoothing, auxiliary losses, and regularization can change the exact objective.
+- **Perplexity** is the exponential of average token-level NLL under a specified tokenization and evaluation convention. It is not a tokenizer-independent universal measure of quality.
+- **Low training NLL does not establish understanding, factuality, calibration, or downstream usefulness.** These require separate evidence and suitable evaluations.
+
+Every derivation must define its random variables, distributions, support, conditioning context, log base where relevant, and averaging convention. Include a hand-computable numerical example and a counterexample that distinguishes commonly confused quantities.
+
+### 8.3 A reusable scientific chapter template
+
+Each substantial chapter should adapt the following structure:
+
+1. Question and motivation; prerequisites and learning outcomes.
+2. Intuition and, where useful, competing viewpoints (statistical, information-theoretic, geometric, computational).
+3. Formal setup: notation, assumptions, dimensions, and the object being modeled.
+4. Derivation with each step justified and assumptions made explicit.
+5. Worked numerical example before large-model complexity.
+6. Original visual schema with alt text and an explanation of what the diagram omits.
+7. Code and tests linked only after prerequisites are validated; tests should check mathematical invariants, not just successful execution.
+8. Misconceptions, counterexamples, failure cases, alternatives, and trade-offs.
+9. References, self-checks, and transfer questions that require applying the idea in a new context.
+10. French/English parity in claims, notation, caveats, examples, and links.
+
+### 8.4 Source synthesis and provenance
+
+Multiple sources repeating a claim do not automatically validate it. For each important claim, track source type, version/date, claims supported, assumptions, caveats, and license constraints.
+
+- **Primary research:** original papers, proceedings, technical reports, official model cards; use for methods and reported results.
+- **Textbooks and lecture notes:** definitions, derivations, and broader context; check edition and assumptions.
+- **Official implementations and documentation:** API behavior and implementation details, not universal scientific claims.
+- **Pedagogical visualizations, videos, and blogs:** alternative explanations and intuition; verify equations against stronger sources.
+- **Independent replications and critiques:** limitations, sensitivity, disagreements, and external validity.
+- **Community commentary:** useful for discovering questions, not sole support for consequential claims.
+
+Distinguish consensus, empirical result, interpretation, hypothesis, and open question. Write original explanations, diagrams, and exercises; cite sources without reproducing their prose or visuals. Treat third-party mirrors of books as discovery leads, not publication sources, and check reuse rights before embedding material.
+
+### 8.5 Proposed book-level structure
+
+| Part | Guiding question | Core concepts |
+|---|---|---|
+| 0. Orientation and evidence | What is an LLM, and what can we conclude about it? | terminology, model/system distinction, training vs inference |
+| 1. Uncertainty and information | How do we quantify uncertainty and predictive mismatch? | probability, entropy, cross-entropy, KL, mutual information |
+| 2. Statistical learning | What does it mean to fit a model to observations? | likelihood, MLE, empirical risk, generalization |
+| 3. Text as a prediction problem | What is predicted from what? | tokenization, context windows, target shift, autoregressive factorization |
+| 4. Neural conditional distributions | How do parameters turn context into probabilities? | tensors, embeddings, linear maps, logits, softmax |
+| 5. Optimization and learning dynamics | How does the model improve? | derivatives, gradients, backpropagation, optimizers, numerical stability |
+| 6. Attention and context mixing | How can positions use information from other positions? | Q/K/V, scaled dot-product, masks, heads, invariants |
+| 7. Transformer design | Why this block structure? | positional methods, residuals, normalization, MLP, architecture variants |
+| 8. Pretraining | How is a model trained reproducibly? | corpora, batching, schedules, checkpoints, validation, compute/data scaling |
+| 9. Generation | How does a distribution become a sequence? | decoding, temperature, top-k/top-p, stopping, KV cache |
+| 10. Adaptation | How can an existing model be adapted, and at what cost? | classification fine-tuning, SFT, LoRA/QLoRA, preferences, DPO |
+| 11. Evaluation and failure | What can benchmarks and tests establish? | metrics, baselines, contamination, calibration, hallucination, robustness |
+| 12. LLM systems | What changes when retrieval, tools, and orchestration are added? | RAG, retrieval evaluation, tool use, system boundaries |
+| 13. Research frontiers and responsibility | What remains uncertain, and what are the trade-offs? | interpretability, scaling, efficiency, data governance, impact |
+
+Appendices can cover linear algebra, probability, calculus and optimization, PyTorch/autograd, tokenizer internals, parameter/memory/FLOP accounting, paper-reading methods, glossary, and exercises.
+
+### 8.6 Initial cross-source research anchors
+
+These are starting points, not an exhaustive bibliography or automatic authority for every claim:
+
+- Shannon, *A Mathematical Theory of Communication* (1948), and Cover & Thomas, *Elements of Information Theory*, for information-theoretic foundations.
+- Bishop, *Pattern Recognition and Machine Learning*, and Murphy, *Probabilistic Machine Learning*, for probabilistic modeling and estimation.
+- Goodfellow, Bengio & Courville, *Deep Learning*, especially probability, information theory, optimization and sequence modeling: https://www.deeplearningbook.org/
+- Vaswani et al. (2017), [Attention Is All You Need](https://arxiv.org/abs/1706.03762), for the original Transformer; distinguish encoder–decoder from decoder-only GPT.
+- Radford et al. (2019), [Language Models are Unsupervised Multitask Learners](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf), for GPT-2-era language modeling.
+- Kaplan et al. (2020), [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361), and Hoffmann et al. (2022), [Training Compute-Optimal Large Language Models](https://arxiv.org/abs/2203.15556), to compare scaling claims and their differing compute-budget conclusions.
+- Raschka, [LLMs-from-scratch](https://github.com/rasbt/LLMs-from-scratch), for a practical implementation path and coverage audit, not the book's organizing authority.
+- Alammar, [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) and [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/), as visual perspectives to complement primary sources.
+- Official PyTorch documentation, paired with mathematical derivations, for exact implementation semantics.
+
+For the supplied video, playlist, Medium post, AlgoMonster course, and PDF mirror, assess expertise, provenance, date, technical depth, and licensing before using them as substantive evidence.
+
+### 8.7 Immediate execution order
+
+1. Treat the Raschka chapter map as a secondary coverage audit, not the table of contents.
+2. Inventory existing French/English pages and map them to the proposed parts, concepts, and prerequisites; identify duplicates and missing language counterparts.
+3. Start by auditing the existing entropy, cross-entropy, likelihood, loss, and probability pages. Build the first complete chapter around uncertainty and information, followed by statistical estimation.
+4. Write one complete bilingual chapter at a time. Verify equations, assumptions, numerical examples, references, and internal links before moving to the next.
+5. Only after review and private knowledge validation, connect the chapter to code and tests. Public pages must not depend on the private career-knowledge repository.
+6. Run Quarto rendering, link checks where available, French/English parity review, and scientific review before marking a chapter complete.
