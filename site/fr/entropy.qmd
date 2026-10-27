@@ -16,7 +16,7 @@ Pour un préfixe \(x_{<t}\), le modèle produit une distribution catégorielle s
 p_\theta(v\mid x_{<t}),\qquad v\in\mathcal V.
 \]
 
-Son entropie, avec le logarithme naturel, vaut :
+Son entropie, avec le logarithme naturel, vaut (avec la convention \(0\log 0=0\)) :
 
 \[
 H_t=-\sum_{v\in\mathcal V}p_\theta(v\mid x_{<t})
