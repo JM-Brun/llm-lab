@@ -77,7 +77,7 @@ The original pages include:
 | Numerical example, misconceptions and exercises | **KEEP PUBLIC** | Keep a small independently checkable example and self-checks for the intended learner. |
 | References | **KEEP PUBLIC** | PyTorch documentation supports API behaviour; public mathematical references support the definitions. |
 
-**Follow-up changes on this branch:** the English and French pages now explicitly state the support condition for the identity and that cross-entropy/KL are infinite when (q_i>0) but (p_i=0). The LLM-specific objective, target alignment, masking, reduction, perplexity, gradient, examples and practical misconceptions remain public. The final check must still verify the exact formula, target assumptions, and rendered page.
+**Follow-up changes on this branch:** the English and French pages now explicitly state normalized-distribution and log-base assumptions, zero-mass and zero-support conventions, and the distinction between target-position and input-position indexing. The algebraic derivation of the KL identity is restored locally, with the target entropy defined in the page; a concrete KL direction/support counterexample is included. The one-hot logit-gradient derivation and the direction of the resulting gradient-descent update are also explicit. The LLM-specific objective, target alignment, masking, reduction, perplexity, examples and practical misconceptions remain public. The rendered page and final line-by-line baseline comparison still require review.
 
 ## 3. Probabilities and softmax — `site/fr/probabilites.qmd`, `site/en/probabilities.qmd`
 
@@ -138,7 +138,7 @@ The baseline had no `site/en/tensors.qmd` counterpart. The proposed branch adds 
 | New English page and translated SVG | **KEEP PUBLIC** | Fixes a pre-existing bilingual gap; verify equivalent technical coverage, links and alt text. |
 | Video and Raschka reference | **VERIFY** | Keep if they provide distinct value; do not remove provenance without checking. PyTorch and NumPy docs support API-specific statements. |
 
-**Initial assessment:** this is a strong application-focused improvement and fixes English parity. The new page adds LLM-specific shape semantics such as the vocabulary axis (V), attention heads, softmax axis, causal masks and logits/label alignment. Ensure that the basic scalar/vector/matrix explanation and the distinction between array rank and algebraic rank are still taught somewhere in the public book before considering them redundant.
+**Follow-up changes on this branch:** the new English page and translated SVG provide language parity; both pages retain scalar/vector/matrix examples, array-rank versus matrix-rank terminology, the mathematical-tensor caveat, shape semantics, axis permutation, broadcasting, reshape, masks, dtype, gradients, and misconceptions. The indexing pitfall (selecting an item can remove an axis) was explicitly restored. Projection notation uses \(D'\) to avoid overloading \(H\), the number of attention heads. Rendered diagram/alt-text and full reference review remain open.
 
 ## 5. Contributor-guidance audit
 
@@ -156,7 +156,7 @@ At commit `39d439078b585802b926c52681e6cd0d87dcfa3b`, a path-existence check cov
 - [x] Inspect key equations and content for entropy, cross-entropy and tensors; review identified and corrected the target-indexing ambiguity, added explicit zero-probability conventions, restored the algebraic derivation of the cross-entropy/KL identity, and restored the one-hot softmax-cross-entropy logit-gradient derivation in both languages. [ ] Complete a passage-level comparison against the full baseline diff for all four concepts, including probabilities/softmax.
 - [x] Textual review: the new entropy pages distinguish predictive entropy from observed-token surprisal and sequence NLL, state the finite-vocabulary bound in nats, include a numerical example/self-check, and state the (0\log 0=0) convention. [ ] Verify the rendered page and ensure any perplexity statements remain convention-aware.
 - [x] Textual review: cross-entropy pages state and derive the KL identity, state its direction, cover one-hot/soft-target cases, zero-mass terms and zero-support caveat, distinguish target-position from input-position indexing, and derive the one-hot logit gradient. [ ] Verify rendered output and the exact formulas/assumptions.
-- [ ] Verify softmax examples, temperature claims, and normalization/calibration/truth distinctions.
+- [ ] Verify the probabilities/softmax old/new diff, including the simplex statement, numerical example, conditional factorization, calibration caveat, self-check answers, references, and navigation.
 - [x] Textual review: tensor pages distinguish output feature dimension (D') from attention-head count (H), explain array rank versus matrix rank, and preserve key misconceptions in both languages. [ ] Verify tensor shapes, diagram rendering/alt text, links, and FR/EN parity.
 - [ ] Check the new Wiki concepts and their draft lifecycle, registry synchronization and links; treat them as supplementary only.
 - [x] Path-existence audit for 44 local Markdown/image references across the eight affected pages; all targets exist at the recorded commit.
