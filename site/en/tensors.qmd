@@ -58,6 +58,10 @@ For \(B=2\), \(T=4\), and \(D=8\), hidden states have shape \((2,4,8)\). A proje
 
 Shape compatibility does not guarantee that the projection, mask, causal shift, or reduction is correct. Axis meaning and target semantics must also be checked.
 
+## A terminology caveat: array rank and mathematical tensors
+
+In deep-learning libraries, “tensor” commonly means a multidimensional numerical array. In mathematics and physics, a tensor is a more structured object whose components obey specific transformation rules. The uses are related but not identical. Here, **array rank** means the number of axes: a scalar has rank 0, a vector rank 1, and a matrix rank 2. This is different from matrix rank in linear algebra.
+
 ## Common pitfalls
 
 - **Axis permutation:** changing axis order changes how subsequent operations interpret the data.
@@ -79,6 +83,7 @@ Shape compatibility does not guarantee that the projection, mask, causal shift, 
 - [PyTorch — Tensors](https://docs.pytorch.org/tutorials/beginner/introyt/tensors_deeper_tutorial.html).
 - [PyTorch — Tensor documentation](https://docs.pytorch.org/docs/stable/tensors.html).
 - [NumPy — N-dimensional array](https://numpy.org/doc/stable/reference/arrays.ndarray.html).
+- [Visualization of tensors, part 1](https://www.youtube.com/watch?v=YxXyN2ifK8A) — a mathematical/physical perspective on tensor terminology; distinguish it from the simpler array usage common in deep-learning libraries.
 
 :::: {.language-switch}
 [Français](../fr/tensors.qmd) · [English](tensors.qmd)
