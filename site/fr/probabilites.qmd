@@ -20,6 +20,12 @@ p_i=\operatorname{softmax}(z)_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}}.
 
 Les probabilités sont positives et leur somme vaut un. Cette normalisation ne prouve ni que les valeurs sont calibrées, ni que le token le plus probable est factuellement correct. Les implémentations numériques utilisent des formes stables de softmax/log-softmax pour limiter les débordements.
 
+### Exemple numérique
+
+Avec deux logits \(z=(0,\log 3)\), la softmax donne \(p=(0.25,0.75)\). Le second token est plus probable, mais cette distribution ne signifie pas qu'il est trois fois plus vrai : elle reflète les scores du modèle dans ce contexte.
+
+Pour une température \(\tau>0\), on utilise \(p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i\). Une température plus élevée tend à aplatir la distribution et une température plus faible à la concentrer. Le changement de température peut affecter la calibration ; son effet doit être mesuré sur des données tenues à part.
+
 ## Probabilité conditionnelle dans un modèle autorégressif
 
 La distribution du token suivant dépend du préfixe :
