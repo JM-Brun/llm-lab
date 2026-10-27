@@ -2,7 +2,7 @@
 
 This roadmap prioritizes **validating and improving the knowledge already present**. Do not add implementations, modules, pages, or experiments merely to advance a roadmap. A topic is not complete because it is documented, because tests pass, or because an experiment runs: it requires accurate explanations, explicit assumptions and counterexamples, and demonstrated understanding recorded in the private `career-knowledge` inventory. Code is justified only when it resolves a specific conceptual gap and the prerequisite knowledge has been validated.
 
-## Current state (reviewed 2026-10-21)
+## Current state (reviewed 2026-10-27)
 
 The learning budget is capped at **five focused hours per week, with no session longer than 60 minutes**. Calendar estimates below are sequencing aids, not deadlines; a module remains open until its evidence criteria are met. Do not compensate for missed sessions by extending another day.
 
@@ -41,6 +41,17 @@ Tasks:
 - Common misconceptions and at least one discriminating counterexample are addressed where useful.
 - The learner can explain the concept, identify when it does not apply, and transfer it to a new case.
 - `career-knowledge` records the evidence needed for mastery; a passing test or a polished page alone is insufficient.
+
+#### Latest focused audit — entropy and cross-entropy (2026-10-27)
+
+A textual, bilingual review of `site/fr/entropy.qmd`, `site/en/entropy.qmd`, `site/fr/cross-entropy.qmd`, and `site/en/cross-entropy.qmd` has been completed against the current public files. This is not a browser-render, external-link, or mastery review.
+
+- **Entropy:** the two language versions preserve the same core claims: finite-vocabulary bound in nats, the \\(0\\log 0=0\\) convention, a checkable numerical example, predictive entropy versus observed-token surprisal, sequence NLL, temperature, and limits concerning truth/calibration and tokenizer-dependent comparisons.
+- **Cross-entropy:** the two versions preserve the one-hot token objective, normalized soft-target formulation, KL identity and direction, zero-support caveat, target/logit alignment, masking and reduction semantics, perplexity convention, and the one-hot logit-gradient derivation.
+- **No scientific correction was justified by this textual pass.** In particular, the KL derivation remains because the page uses it to explain soft targets and the relationship between cross-entropy and KL; this is not a claim that the entire treatment has passed independent scientific review.
+- **Still open:** actual browser review of MathJax and responsive layout; external-reference availability/relevance; private knowledge-transfer questions and evidence. Do not mark these concepts acquired from this audit alone.
+
+**Next audit slice:** review logits and probabilities together, then likelihood and loss, then gradients. Check shared notation and target-position conventions across the chain; fix only evidenced defects, and keep French/English claims and caveats aligned.
 
 ### P1 — Keep the existing learning experience dependable
 **Goal:** ensure the existing site and numerical exercise are correct, navigable, and easy to reproduce.
