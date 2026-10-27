@@ -34,7 +34,18 @@ H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
 
 Avec une cible one-hot, la somme se réduit à \(-\log p_y\). Avec une cible souple — par exemple un lissage de cible ou une distribution enseignante — plusieurs catégories contribuent.
 
-La relation \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\) explique pourquoi, pour une cible fixe, minimiser la cross-entropie revient à minimiser la divergence KL vers la distribution prédite. La divergence KL est directionnelle ; l'entropie croisée n'est ni symétrique ni une distance métrique. Ces expressions supposent des distributions normalisées valides et adoptent la convention usuelle des valeurs étendues : si \(q_i>0\) mais \(p_i=0\), la cross-entropie et \(D_{\mathrm{KL}}(q\Vert p)\) sont infinies. En pratique, un calcul log-softmax stable aide à éviter un sous-débordement accidentel, sans modifier cette condition mathématique.
+La relation \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\) explique pourquoi, pour une cible fixe, minimiser la cross-entropie revient à minimiser la divergence KL vers la distribution prédite. Elle se déduit directement des définitions :
+
+\[
+\begin{aligned}
+D_{\mathrm{KL}}(q\Vert p)
+&=\sum_i q_i\log\frac{q_i}{p_i}\\
+&=\sum_i q_i\log q_i-\sum_i q_i\log p_i\\
+&=-H(q)+H(q,p).
+\end{aligned}
+\]
+
+Donc \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\). Ici, \(q\) et \(p\) sont des distributions normalisées et les termes de masse nulle contribuent zéro ; si \(q_i>0\) mais \(p_i=0\), la cross-entropie et \(D_{\mathrm{KL}}(q\Vert p)\) sont infinies selon la convention usuelle des valeurs étendues. La divergence KL est directionnelle ; l'entropie croisée n'est ni symétrique ni une distance métrique. En pratique, un calcul log-softmax stable aide à éviter un sous-débordement accidentel, sans modifier cette condition mathématique.
 
 ## Plusieurs positions : décalage causal et masques
 
