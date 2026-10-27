@@ -1,81 +1,93 @@
 ---
-title: "Probabilités : la distribution prédite"
-subtitle: "Normalisation, incertitude et limites de l'interprétation"
+title: "Probabilités de sortie : des logits aux tokens"
+subtitle: "Distribution conditionnelle, température et calibration"
 lang: fr
 ---
 
 ::: {.chapter-lead}
-Le softmax transforme les logits en une distribution de probabilités sur le vocabulaire. Une probabilité décrit le poids attribué par le modèle à une possibilité ; elle ne garantit pas que le texte généré soit vrai.
+Un LLM ne produit pas directement des faits ni des probabilités de vérité. À chaque position, il produit des scores qui sont transformés en une distribution sur les tokens possibles, conditionnée par le préfixe.
 :::
 
-## Définition
+## Des logits à une distribution catégorielle
 
-Pour des logits $z\in\mathbb{R}^{V}$ :
+À une position donnée, le modèle produit un logit \(z_i\) pour chaque token \(i\) du vocabulaire. Les logits sont des scores non normalisés : ils peuvent être négatifs ou positifs et ne somment pas à un.
 
-$$
-p_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}},\qquad
-p_i\geq0,\qquad \sum_{i=1}^{V}p_i=1.
-$$
+La softmax transforme ces scores en probabilités :
 
-Le vecteur $p$ appartient au simplexe des distributions discrètes. Pour un token cible $y$, $p_y$ est la probabilité prédite à cette position.
+\[
+p_i=\operatorname{softmax}(z)_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}}.
+\]
 
-## Exemple et température
+Les probabilités sont positives et leur somme vaut un. Cette normalisation ne prouve ni que les valeurs sont calibrées, ni que le token le plus probable est factuellement correct. Les implémentations numériques utilisent des formes stables de softmax/log-softmax pour limiter les débordements.
 
-Avec $z=(0,\log 3)$, $p=(0.25,0.75)$. Avec une température $\tau>0$, on peut définir $p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i$. Une température plus élevée tend à aplatir la distribution ; une plus faible tend à la concentrer. Cela modifie les probabilités sans modifier l'ordre des logits.
+### Exemple numérique
 
-La température peut changer la calibration, mais son effet doit être mesuré sur des données tenues à part. Une distribution plus concentrée n'est pas automatiquement plus exacte.
+Avec deux logits \(z=(0,\log 3)\), la softmax donne \(p=(0.25,0.75)\). Le second token est plus probable, mais cette distribution ne signifie pas qu'il est trois fois plus vrai : elle reflète les scores du modèle dans ce contexte.
 
-## Probabilité conditionnelle dans un LLM
+## Probabilité conditionnelle dans un modèle autorégressif
 
-Un modèle autorégressif factorise la probabilité d'une séquence :
+La distribution du token suivant dépend du préfixe :
 
-$$
-P_\theta(x_1,\ldots,x_T)=\prod_{t=1}^{T}
-P_\theta(x_t\mid x_{<t}).
-$$
+\[
+p_\theta(x_t\mid x_{<t}).
+\]
 
-Chaque distribution est conditionnée par le préfixe. La probabilité d'un token ne doit donc pas être interprétée comme une propriété indépendante du contexte.
+La probabilité d'une séquence se factorise en produit de ces probabilités conditionnelles :
 
-::: {.callout-warning title="Idées reçues"}
-- **« 90 % signifie 90 % de chances que la réponse soit vraie. »** Pas en général. C'est une probabilité du modèle sur une sortie selon son contexte et son tokenizer ; la calibration et la vérité factuelle sont des questions distinctes.
-- **« La somme vaut 1, donc la distribution est bien calibrée. »** La normalisation est une propriété algébrique, la calibration est une propriété empirique.
-- **« Le token le plus probable est toujours le meilleur texte. »** L'argmax local peut produire une séquence différente de celle obtenue par recherche globale ou échantillonnage ; les critères de qualité sont plus larges.
-:::
+\[
+p_\theta(x_{1:T})=\prod_{t=1}^{T}p_\theta(x_t\mid x_{<t}).
+\]
+
+Il ne s'agit pas d'une hypothèse d'indépendance : chaque facteur dépend des tokens précédents. Un même token peut donc recevoir des probabilités différentes selon le contexte. Le tokenizer compte également : la probabilité est attribuée aux unités tokenisées, pas directement aux mots ou aux propositions sémantiques.
+
+## Température et stratégie de génération
+
+Pour une température \(\tau>0\), la distribution devient :
+
+\[
+p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i.
+\]
+
+Une température plus faible tend à rendre la distribution plus concentrée ; une température plus élevée tend à l'aplatir. Pour \(\tau>0\), l'ordre des logits et l'argmax restent inchangés, mais les probabilités changent. La température modifie la distribution utilisée pour le décodage, pas les paramètres du modèle ; elle ne peut pas établir la vérité d'une sortie.
+
+Choisir le token argmax à chaque position n'est pas équivalent à rechercher globalement la meilleure séquence, et peut donner un texte différent de l'échantillonnage. La stratégie de décodage est un choix distinct de l'entraînement.
+
+## Normalisation, calibration et vérité
+
+- **Normalisation :** propriété algébrique selon laquelle les probabilités somment à un.
+- **Calibration :** propriété empirique selon laquelle, sur une population pertinente, les événements annoncés avec une probabilité donnée surviennent à une fréquence compatible.
+- **Vérité factuelle :** propriété de la sortie par rapport au monde et aux preuves disponibles ; elle ne découle pas des deux propriétés précédentes.
+
+Une probabilité de 0,9 ne signifie donc pas automatiquement « 90 % de chances que la réponse soit vraie ». La calibration doit être évaluée sur des données pertinentes tenues à l'écart de l'ajustement, et une bonne calibration globale ne garantit pas la fiabilité de chaque réponse individuelle.
 
 ## Questions de contrôle
 
-[Accéder à l'espace d'exercices associé](exercises.qmd#fondations) — les exercices détaillés seront ajoutés séparément.
-
-Le lien entre ces probabilités et la perte d'entraînement est détaillé dans [Entropie croisée et divergence KL](cross-entropy.qmd).
-
-1. Quelle différence entre normalisation et calibration ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-La normalisation est une propriété mathématique : les probabilités somment à un. La calibration est empirique : parmi les prédictions annoncées à environ 0,8, par exemple, l'événement devrait survenir environ 80 % du temps sur une population pertinente.
-
-</details>
-
-2. Pourquoi $P_\theta(x_t\mid x_{<t})$ dépend-il du préfixe ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Le modèle conditionne la distribution du token suivant sur les tokens précédents. Un même token peut donc avoir des probabilités différentes selon le contexte.
-
-</details>
-
+1. Pourquoi les logits ne sont-ils pas des probabilités ?
+2. Pourquoi \(p_\theta(x_t\mid x_{<t})\) dépend-il du préfixe ?
 3. Que change la température, et que ne peut-elle pas garantir ?
+4. Quelle différence entre normalisation, calibration et vérité factuelle ?
 
 <details>
-<summary>Afficher la réponse</summary>
+<summary>Afficher les réponses</summary>
 
-Diviser les logits par une température positive modifie la concentration de la distribution : température plus basse, distribution généralement plus pointue ; plus élevée, distribution plus plate. Cela ne garantit ni vérité factuelle ni calibration correcte.
+1. Les logits sont des scores non normalisés ; la softmax les transforme en valeurs positives qui somment à un.
+2. Le modèle conditionne le token suivant sur les tokens déjà présents. Un même token peut donc avoir une probabilité différente dans deux contextes.
+3. La température change la concentration de la distribution et donc l'échantillonnage, mais ne garantit ni vérité ni calibration correcte.
+4. La normalisation est mathématique, la calibration est empirique et la vérité dépend des faits et des preuves.
 
 </details>
 
-**Suite :** [Vraisemblance](vraisemblance.qmd) · [Cross-entropie](cross-entropy.qmd)
+## Pour poursuivre
+
+- [Entropie](entropy.qmd) — incertitude de la distribution du prochain token.
+- [Vraisemblance](vraisemblance.qmd) — probabilité des tokens observés et des séquences.
+- [Entropie croisée](cross-entropy.qmd) — objectif d'entraînement.
+- [Espace d'exercices — fondations mathématiques](exercises.qmd#fondations) — structure de pratique prévue ; les exercices détaillés ne sont pas encore rédigés.
+
+## Références
+
+- [PyTorch — Softmax](https://docs.pytorch.org/docs/stable/generated/torch.nn.Softmax.html) et [LogSoftmax](https://docs.pytorch.org/docs/stable/generated/torch.nn.LogSoftmax.html).
+- [PyTorch — Numerical accuracy](https://docs.pytorch.org/docs/stable/notes/numerical_accuracy.html).
 
 ::: {.language-switch}
 [Français](probabilites.qmd) · [English](../en/probabilities.qmd)

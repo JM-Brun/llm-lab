@@ -1,85 +1,93 @@
 ---
-title: "Probabilities: the predicted distribution"
-subtitle: "Normalization, uncertainty, and limits of interpretation"
+title: "Output probabilities: from logits to tokens"
+subtitle: "Conditional distributions, temperature, and calibration"
 lang: en
 ---
 
 ::: {.chapter-lead}
-Softmax converts logits into a categorical distribution over the vocabulary. Probabilities describe how the model scores alternatives, not certainty about the truth of generated text.
+An LLM does not directly produce facts or probabilities of truth. At each position, it produces scores that are transformed into a distribution over possible tokens, conditioned on the prefix.
 :::
 
-## Definition
+## From logits to a categorical distribution
 
-For logits $z\in\mathbb{R}^{V}$:
+At a given position, the model produces a logit \(z_i\) for each vocabulary token \(i\). Logits are unnormalized scores: they may be positive or negative and do not sum to one.
 
-$$
-p_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}},\qquad
-p_i\geq0,\qquad \sum_{i=1}^{V}p_i=1.
-$$
+Softmax transforms these scores into probabilities:
 
-The vector $p$ belongs to the simplex of discrete distributions. For target token $y$, $p_y$ is the probability predicted at that position.
+\[
+p_i=\operatorname{softmax}(z)_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}}.
+\]
 
-## Example and temperature
+Probabilities are positive and sum to one. This normalization does not prove that the values are calibrated or that the most probable token is factually correct. Numerical implementations use stable softmax/log-softmax forms to reduce overflow risk.
 
-For $z=(0,\log 3)$, $p=(0.25,0.75)$. With temperature $\tau>0$, define $p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i$. Higher temperature tends to flatten the distribution; lower temperature tends to concentrate it. This changes probabilities without changing the ordering of logits.
+### Numerical example
 
-Temperature may affect calibration, but its effect must be measured on held-out data. A more concentrated distribution is not automatically more accurate.
+With two logits \(z=(0,\log 3)\), softmax gives \(p=(0.25,0.75)\). The second token is more probable, but this distribution does not mean that it is three times more true: it reflects the model's scores in this context.
 
-## Conditional probability in an LLM
+## Conditional probability in an autoregressive model
 
-An autoregressive model factorizes a sequence probability:
+The next-token distribution depends on the prefix:
 
-$$
-P_\theta(x_1,\ldots,x_T)=\prod_{t=1}^{T}
-P_\theta(x_t\mid x_{<t}).
-$$
+\[
+p_\theta(x_t\mid x_{<t}).
+\]
 
-Each distribution is conditioned on the prefix. A token probability should therefore not be interpreted as a context-independent property.
+The probability of a sequence factorizes into a product of these conditional probabilities:
 
-::: {.callout-warning title="Misconceptions"}
-- **“90% means a 90% chance that the answer is true.”** Not in general. It is the model's probability for an output given its context and tokenizer; calibration and factual truth are distinct questions.
-- **“The probabilities sum to 1, so the distribution is calibrated.”** Normalization is algebraic; calibration is empirical.
-- **“The most probable token always gives the best text.”** Local argmax can produce a different sequence from global search or sampling; quality involves more than one local choice.
-:::
+\[
+p_\theta(x_{1:T})=\prod_{t=1}^{T}p_\theta(x_t\mid x_{<t}).
+\]
+
+This is not an independence assumption: each factor depends on preceding tokens. The same token can therefore receive different probabilities in different contexts. Tokenization also matters: probability is assigned to tokenized units, not directly to words or semantic propositions.
+
+## Temperature and decoding strategy
+
+For temperature \(\tau>0\), the distribution becomes:
+
+\[
+p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i.
+\]
+
+Lower temperature tends to make the distribution more concentrated; higher temperature tends to flatten it. For \(\tau>0\), logit ordering and argmax remain unchanged, but probabilities change. Temperature changes the distribution used for decoding, not the model parameters; it cannot establish the truth of an output.
+
+Selecting the argmax token at each position is not equivalent to globally searching for the best sequence, and can produce text different from sampling. Decoding strategy is distinct from training.
+
+## Normalization, calibration, and truth
+
+- **Normalization:** the algebraic property that probabilities sum to one.
+- **Calibration:** the empirical property that, over a relevant population, events assigned a given probability occur at a compatible frequency.
+- **Factual truth:** a property of the output relative to the world and available evidence; it does not follow from either of the preceding properties.
+
+A probability of 0.9 therefore does not automatically mean “a 90% chance that the answer is true.” Calibration must be evaluated on relevant held-out data, and good overall calibration does not guarantee that each individual answer is reliable.
 
 ## Self-check
 
-1. What is the difference between normalization and calibration?
-2. Why does $P_\theta(x_t\mid x_{<t})$ depend on the prefix?
+1. Why are logits not probabilities?
+2. Why does \(p_\theta(x_t\mid x_{<t})\) depend on the prefix?
 3. What does temperature change, and what can it not guarantee?
-
-**Next:** [Likelihood](likelihood.qmd) · [Cross-entropy](cross-entropy.qmd)
-
-## Check your understanding
-
-[Open the related exercise space](exercises.qmd#foundations) — detailed exercises will be authored separately.
-
-1. What is the difference between normalization and calibration?
+4. What is the difference between normalization, calibration, and factual truth?
 
 <details>
-<summary>Show answer</summary>
+<summary>Show answers</summary>
 
-Normalization is an algebraic property: probabilities sum to one. Calibration is empirical: among predictions made at about 0.8 confidence, for example, the event should occur about 80% of the time on a relevant population.
+1. Logits are unnormalized scores; softmax turns them into positive values that sum to one.
+2. The model conditions the next token on preceding tokens. The same token can therefore have different probabilities in different contexts.
+3. Temperature changes distribution concentration and sampling, but guarantees neither truth nor correct calibration.
+4. Normalization is mathematical, calibration is empirical, and truth depends on facts and evidence.
 
 </details>
 
-2. Why does $P_\theta(x_t\mid x_{<t})$ depend on the prefix?
+## Further reading
 
-<details>
-<summary>Show answer</summary>
+- [Entropy](entropy.qmd) — uncertainty in the next-token distribution.
+- [Likelihood](likelihood.qmd) — probability of observed tokens and sequences.
+- [Cross-entropy](cross-entropy.qmd) — the training objective.
+- [Mathematical foundations exercise collection](exercises.qmd#foundations) — planned practice structure; detailed exercises are not yet written.
 
-The model conditions the next-token distribution on preceding tokens. The same token can therefore receive different probabilities in different contexts.
+## References
 
-</details>
-
-3. What does temperature change, and what can it not guarantee?
-
-<details>
-<summary>Show answer</summary>
-
-Dividing logits by a positive temperature changes distribution concentration: lower temperature usually sharpens it; higher temperature flattens it. This guarantees neither factual truth nor correct calibration.
-
-</details>
+- [PyTorch — Softmax](https://docs.pytorch.org/docs/stable/generated/torch.nn.Softmax.html) and [LogSoftmax](https://docs.pytorch.org/docs/stable/generated/torch.nn.LogSoftmax.html).
+- [PyTorch — Numerical accuracy](https://docs.pytorch.org/docs/stable/notes/numerical_accuracy.html).
 
 :::: {.language-switch}
 [Français](../fr/probabilites.qmd) · [English](probabilities.qmd)

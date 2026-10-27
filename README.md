@@ -10,7 +10,7 @@ Contributions can improve concept explanations, French/English parity, reference
 
 ## Learn through the Quarto site
 
-The project includes a bilingual Quarto website organized around LLM-specific explanations: overview pages connect mechanisms, applied concept pages explain how the mathematics is used in language models, and implementation/tests are linked when they exist. General mathematical foundations belong in the separate `wiki-knowledge` knowledge base; because that wiki is private, public lessons retain only the prerequisite statements needed to understand the LLM application and cite public references. Pages explicitly distinguish verified code from planned work.
+The project includes a bilingual Quarto website organized around LLM-specific explanations: overview pages connect mechanisms, applied concept pages explain how the mathematics is used in language models, and implementation/tests are linked when they exist. General mathematical foundations belong in the separate `wiki-knowledge` knowledge base; because that wiki is private, public lessons retain all definitions, assumptions, derivations, examples, and caveats needed to understand the LLM application, and cite accessible public references. Pages explicitly distinguish verified code from planned work.
 
 - French introduction: `site/index.qmd`
 - English introduction: `site/en/index.qmd`
@@ -19,6 +19,7 @@ The project includes a bilingual Quarto website organized around LLM-specific ex
 - Transformer history and timeline: `site/fr/transformer-history.qmd` and `site/en/transformer-history.qmd`
 - Dedicated attention concepts: Q/K/V, scaled dot-product attention, and causal masking, each with French and English pages under `site/fr/` and `site/en/`
 - Applied mathematical chain (logits → probabilities → token likelihood/loss → gradients): `site/fr/mathematical-foundations.qmd` and `site/en/mathematical-foundations.qmd`
+- Transformer tensor shapes and axes, in French and English: `site/fr/tensors.qmd` and `site/en/tensors.qmd`
 - Cross-entropy and KL divergence: `site/fr/cross-entropy.qmd` and `site/en/cross-entropy.qmd`
 - Critical notes on cosine similarity: `site/fr/cosine-similarity.qmd` and `site/en/cosine-similarity.qmd`
 - Critical notes on embedding linearity: `site/fr/linearite-embeddings.qmd` and `site/en/embedding-linearity.qmd`
@@ -40,13 +41,13 @@ The rendered site is written to `site/_site/`. The Quarto CLI is a separate syst
 
 These are repository-maintenance guidelines, not reader-facing lessons; they belong here rather than on the public site homepages.
 
-- **One concept, one canonical owner.** General mathematical definitions and derivations belong in `wiki-knowledge`; `llm-lab` owns the LLM-specific application and links to deeper explanations where possible.
-- **Introduce terms before relying on them.** Define unfamiliar vocabulary on first use or link directly to the glossary.
+- **Separate canonical scope from reader-facing completeness.** The private Wiki owns reusable, domain-general treatments; the public LLM Lab book must teach all mathematics needed for its LLM learning path. Intentional overlap is expected and is not a defect.
+- **Introduce terms before relying on them.** Define unfamiliar vocabulary on first use or link to another public page in this book. Private Wiki links are never a substitute for a necessary explanation.
 - **Intuition with provenance.** Explain the problem a concept addresses and distinguish original research, official documentation, pedagogical explanations, and illustrations.
 - **State assumptions and limits.** Use counterexamples to distinguish plausible but incorrect interpretations.
 - **Connect mathematics to code carefully.** Identify existing implementations and tests, or state clearly when they do not exist.
 - **Keep French and English equivalent.** Preserve the same claims, qualifications, examples, and references in both versions.
-- **Prefer application over duplication.** A public lesson should explain what a concept does in an LLM, retain only the general result needed locally, state assumptions, and cite public references. It must remain understandable without private-wiki access.
+- **Prefer application, not artificial brevity.** Focus examples and interpretation on LLMs, but retain every definition, assumption, derivation, example, caveat, and exercise needed for the reader to understand the application. Repeat general material when necessary; never shorten a lesson solely to eliminate overlap with the private Wiki.
 - **Hide answer keys by default.** Control-question answers should be revealed only when the reader expands them.
 
 ## Learning principles
