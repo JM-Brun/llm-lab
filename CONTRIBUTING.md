@@ -1,12 +1,12 @@
 # Contributing
 
-This is a learning and experimentation repository. Prefer small, testable changes that make the reasoning, implementation, and evidence inspectable. The Wiki is the canonical home for general mathematical and machine-learning concepts; LLM Lab owns the LLM-specific learning path and its demonstrations.
+This is a learning and experimentation repository. Prefer small, testable changes that make the reasoning, implementation, and evidence inspectable. The Wiki is the canonical home for general mathematical and machine-learning concepts; LLM Lab owns the LLM-specific learning path and its demonstrations. The Wiki is currently private, so public pages must not send readers to inaccessible Wiki URLs. Use accessible primary/public sources and a concise, self-contained explanation for the local application; do not duplicate a full canonical chapter.
 
 ## Contribution modes
 
 Choose the mode that matches the change and identify it in the PR.
 
-1. **Concept teaching page or synthesis** — explain an LLM-specific concept, connect it to prerequisites, cite sources, state assumptions and limits, and include counterexamples where they clarify likely misconceptions. Link to canonical Wiki definitions for general concepts instead of duplicating them.
+1. **Concept teaching page or synthesis** — explain an LLM-specific concept, connect it to prerequisites, cite sources, state assumptions and limits, and include counterexamples where they clarify likely misconceptions. Use the private canonical concept ID for internal traceability where useful. For the public page, cite accessible sources and include only the concise general definition needed to understand the LLM-specific explanation; do not link readers to a private Wiki page or duplicate a full Wiki chapter.
 2. **French/English parity and navigation** — improve translations, glossary, cross-links, learning sequence, accessibility, or site structure. Keep substantive claims, caveats, examples, and references equivalent in both languages; do not translate a claim into a stronger one.
 3. **Reference implementation and numerical tests** — add or revise reusable code under `src/llm_lab`, with typed interfaces and tests for shapes, masks, gradients, numerical edge cases, or known values. Notebooks may explain the code but must not be its only implementation.
 4. **Controlled experiment and evaluation** — define a hypothesis, baseline, data provenance, configuration, seed, split strategy, metrics, compute budget, and limitations. Preserve runnable entry points/configuration and report negative or inconclusive results as well as positive ones.
