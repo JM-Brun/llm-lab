@@ -147,7 +147,11 @@ The baseline had no `site/en/tensors.qmd` counterpart. The proposed branch adds 
 - The Wiki concept pages added under `CONCEPT-020`–`CONCEPT-023` are marked draft per PR #23. Their existence is not evidence that their claims are scientifically reviewed, and they do not justify a public content deletion.
 - Both contributor-doc changes require their own review and merge. They should not be treated as already merged into either repository's `main`.
 
-## 6. Open checks before PR #17 can be approved
+## 6. Link-audit evidence
+
+At commit `39d439078b585802b926c52681e6cd0d87dcfa3b`, a path-existence check covered 44 local Markdown/image references across the eight affected French/English concept pages (entropy, cross-entropy, probabilities, tensors): all targets existed in the branch tree. The check exposed one invalid English tensor-page link to a not-yet-translated embedding-space page; it was changed to an explicit link to the existing French page with the translation gap labelled. This check verifies target paths only, not anchors, rendered appearance, accessibility, or external URL availability.
+
+## 7. Open checks before PR #17 can be approved
 
 - [ ] Inspect the full old/new diffs for the four concepts, including all equations and details not visible in section headings.
 - [x] Textual review: the new entropy pages distinguish predictive entropy from observed-token surprisal and sequence NLL, state the finite-vocabulary bound in nats, and include a numerical example/self-check. [ ] Verify the rendered page and ensure any perplexity statements remain convention-aware.
@@ -155,11 +159,12 @@ The baseline had no `site/en/tensors.qmd` counterpart. The proposed branch adds 
 - [ ] Verify softmax examples, temperature claims, and normalization/calibration/truth distinctions.
 - [x] Textual review: tensor pages distinguish output feature dimension (D') from attention-head count (H), explain array rank versus matrix rank, and preserve key misconceptions in both languages. [ ] Verify tensor shapes, diagram rendering/alt text, links, and FR/EN parity.
 - [ ] Check the new Wiki concepts and their draft lifecycle, registry synchronization and links; treat them as supplementary only.
-- [ ] Render Quarto and inspect both language versions and all local links.
+- [x] Path-existence audit for 44 local Markdown/image references across the eight affected pages; all targets exist at the recorded commit.
+- [ ] Inspect rendered Quarto pages in both languages, including anchors, figures, alt text, navigation, and visual quality.
 - [ ] Re-run CI and Quarto workflows on the latest head.
 - [ ] Review the final PR diff against this ledger; update this document if a disposition changes.
 - [ ] Do not merge PR #17 until the checks above are completed.
 
-## 7. Scope of this ledger
+## 8. Scope of this ledger
 
 This is a traceable first-pass preservation record, not a claim that every line has passed scientific review. It deliberately records several items as **VERIFY**. A future review must resolve those statuses using the actual text and rendered pages rather than treating the inventory as a rubber stamp.
