@@ -15,7 +15,7 @@ An autoregressive model produces **logits** for the next token. Softmax turns th
 1. **[Logits](logits.qmd)** — unnormalized real-valued scores produced by the model.
 2. **[Probabilities](probabilities.qmd)** — a distribution over the vocabulary obtained with softmax.
 3. **[Likelihood](likelihood.qmd)** — the probability assigned to the observed target tokens, or its logarithm.
-4. **[Cross-entropy](cross-entropy.qmd)** — the penalty associated with a target and a predicted distribution.
+4. **[Cross-entropy](cross-entropy.qmd)** — the probabilistic cost assigned to an observed target token by the predicted distribution; compare [Shannon entropy](entropy.qmd), which describes uncertainty in the predicted distribution.
 5. **[Loss function](loss.qmd)** — the scalar objective aggregated over selected tokens and examples.
 6. **[Gradients](gradients.qmd)** — derivatives describing how the loss locally changes with logits and parameters.
 
