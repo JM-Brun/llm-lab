@@ -45,7 +45,7 @@ D_{\mathrm{KL}}(q\Vert p)
 \end{aligned}
 \]
 
-Donc \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\). Ici, \(q\) et \(p\) sont des distributions normalisées et les termes de masse nulle contribuent zéro ; si \(q_i>0\) mais \(p_i=0\), la cross-entropie et \(D_{\mathrm{KL}}(q\Vert p)\) sont infinies selon la convention usuelle des valeurs étendues. La divergence KL est directionnelle ; l'entropie croisée n'est ni symétrique ni une distance métrique. En pratique, un calcul log-softmax stable aide à éviter un sous-débordement accidentel, sans modifier cette condition mathématique.
+Donc \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\). Ici, \(q\) et \(p\) sont des distributions normalisées et les termes de masse nulle contribuent zéro ; si \(q_i>0\) mais \(p_i=0\), la cross-entropie et \(D_{\mathrm{KL}}(q\Vert p)\) sont infinies selon la convention usuelle des valeurs étendues. La divergence KL est directionnelle ; l'entropie croisée n'est ni symétrique ni une distance métrique. Par exemple, avec \(q=(1,0)\) et \(p=(0.9,0.1)\), \(D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)\approx0.105\) nat, tandis que \(D_{\mathrm{KL}}(p\Vert q)=+\infty\), car \(p\) attribue une masse positive à une catégorie à laquelle \(q\) attribue une masse nulle. En pratique, un calcul log-softmax stable aide à éviter un sous-débordement accidentel, sans modifier cette condition mathématique.
 
 ## Plusieurs positions : décalage causal et masques
 
