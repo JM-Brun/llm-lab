@@ -25,6 +25,23 @@ These conventions are common:
 
 Hidden activations often have shape \((B,T,D)\), logits \((B,T,V)\), and multi-head attention representations may have shape \((B,H,T,d_h)\). These conventions are common but not universal: read function contracts and verify actual shapes.
 
+| Model object | Typical shape | Interpretation |
+|---|---|---|
+| Scalar mean loss | `()` | one aggregated objective |
+| Token embedding | `(D,)` | one feature vector |
+| Sequence hidden states | `(T,D)` | one vector per position |
+| Batch hidden states | `(B,T,D)` | examples, positions, features |
+
+## Reading projection dimensions
+
+Suppose \(X\) has shape \((B,T,D)\) and projection matrix \(W\) has shape \((D,H)\). The projection applies the same transformation at every position:
+
+\[
+Y=XW,\qquad \operatorname{shape}(Y)=(B,T,H).
+\]
+
+The batch and position axes are preserved; the final axis changes from \(D\) to \(H\). Shape checks catch some errors but do not guarantee that axes have the intended meaning.
+
 ## Axes carry meaning
 
 A shape gives axis sizes, not semantics. Two tensors with shape \((B,T,D)\) can represent different objects.
