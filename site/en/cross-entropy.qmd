@@ -115,6 +115,10 @@ If the target token receives probability \(0.8\), the loss in nats is \(-\log(0.
 
 </details>
 
+## Further practice
+
+The [mathematical foundations exercise collection](exercises.qmd#foundations) is planned navigation scaffolding; detailed exercises are not yet written.
+
 ## References
 
 - [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) — API behaviour, not the general mathematical definition.
