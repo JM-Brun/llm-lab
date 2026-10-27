@@ -284,7 +284,7 @@ Before a lesson's implementation work begins, its French and English theory page
 
 1. State scope, prerequisites, learning objectives, and relevant source sections (paraphrased; do not reproduce copyrighted text).
 2. Define the objects and notation, including tensor shapes and conventions wherever applicable.
-3. Derive the central LLM-specific equations step by step and state assumptions, edge cases, and numerical limitations; link general derivations to the canonical wiki where they exist.
+3. Derive the central LLM-specific equations step by step and state assumptions, edge cases, and numerical limitations. Cite accessible public sources; keep private Wiki links and concept IDs out of reader-facing content.
 4. Include at least one worked LLM-specific example and one misconception/counterexample that distinguishes nearby concepts.
 5. Link to canonical concept pages rather than duplicate them; link to implementation/tests only when they exist, otherwise state that they are planned.
 6. Cite primary papers or official technical references for substantive claims and pedagogical sources for intuition where useful.
@@ -350,7 +350,7 @@ These milestones can be split across chapters or revisited in several places. Ea
 
 For every mathematical foundation used in LLM Lab:
 
-1. Identify the corresponding Wiki concept ID for internal traceability where useful; never make the private link a reader prerequisite.
+1. If cross-repository traceability is useful, record the Wiki concept ID in the private `career-knowledge` repository; do not add private URLs or IDs to public lesson content or make them a reader/build dependency.
 2. Teach all mathematical prerequisites needed locally, including definitions, assumptions, notation, and derivations necessary to follow the application.
 3. Translate the result into the LLM setting: define tokens, context, parameters, tensors, objectives, and computational steps.
 4. Work through a small LLM-specific example, including dimensions and/or numeric values.
