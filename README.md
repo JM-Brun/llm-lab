@@ -10,7 +10,7 @@ Contributions can improve concept explanations, French/English parity, reference
 
 ## Learn through the Quarto site
 
-The project includes a bilingual Quarto website organized around LLM-specific explanations: overview pages connect mechanisms, applied concept pages explain how the mathematics is used in language models, and implementation/tests are linked when they exist. General mathematical foundations belong in the separate `wiki-knowledge` knowledge base; because that wiki is private, public lessons retain only the prerequisite statements needed to understand the LLM application and cite public references. Pages explicitly distinguish verified code from planned work.
+The project includes a bilingual Quarto website organized around LLM-specific explanations: overview pages connect mechanisms, applied concept pages explain how the mathematics is used in language models, and implementation/tests are linked when they exist. General mathematical foundations belong in the separate `wiki-knowledge` knowledge base; because that wiki is private, public lessons retain all definitions, assumptions, derivations, examples, and caveats needed to understand the LLM application, and cite accessible public references. Pages explicitly distinguish verified code from planned work.
 
 - French introduction: `site/index.qmd`
 - English introduction: `site/en/index.qmd`
