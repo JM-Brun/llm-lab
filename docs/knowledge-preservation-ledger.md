@@ -179,7 +179,7 @@ At commit `e3d80d65569afbc0e2c85b4e8fcb020ecb070497`, a path-existence check cov
 ### Entropy
 
 - **Parity:** the French and English pages cover the same core concepts and carry matching caveats.
-- **Mathematical checks:** \\(H(p)=-\\sum_i p_i\\log p_i\\) is bounded by \\(0\\le H(p)\\le\\log V\\) for a normalized categorical distribution on a finite vocabulary; the two-token examples are consistent in bits and nats; the sequence factorization and negative log-likelihood relation are aligned.
+- **Mathematical checks:** \(H(p)=-\sum_i p_i\log p_i\) is bounded by \(0\le H(p)\le\log V\) for a normalized categorical distribution on a finite vocabulary; the two-token examples are consistent in bits and nats; the sequence factorization and negative log-likelihood relation are aligned.
 - **Interpretation checks:** predictive entropy is distinguished from observed-token surprisal; temperature is a transformation of logits for decoding, not a parameter update; low entropy is not evidence of truth or calibration.
 - **Disposition:** no textual correction identified in this pass. Keep the chapter focused on the LLM application rather than restoring the broad general-information-theory sections.
 - **Remaining verification:** browser-level equation/layout review and live external-reference check.
@@ -187,7 +187,7 @@ At commit `e3d80d65569afbc0e2c85b4e8fcb020ecb070497`, a path-existence check cov
 ### Cross-entropy
 
 - **Parity:** the French and English pages preserve the same equations, assumptions, practical cautions, and learning checks.
-- **Mathematical checks:** the one-hot loss, soft-target cross-entropy, \\(H(q,p)=H(q)+D_{\\mathrm{KL}}(q\\Vert p)\\), directionality/support example, and one-hot logit gradient are internally consistent under the stated normalized-distribution and finite-value assumptions.
+- **Mathematical checks:** the one-hot loss, soft-target cross-entropy, \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\), directionality/support example, and one-hot logit gradient are internally consistent under the stated normalized-distribution and finite-value assumptions.
 - **Implementation semantics:** both pages distinguish target-position and input-position indexing, and explicitly cover causal shifting, ignored/padding positions, reduction conventions, and perplexity from mean token NLL.
 - **Disposition:** retain the local KL derivation for now: it directly explains the soft-target case and avoids making the public lesson depend on a private general-mathematics source. Do not remove it merely to reduce overlap. No textual correction identified in this pass.
 - **Remaining verification:** browser-level equation/layout review, live external-reference check, and a follow-up check that the implementation page and tests support any code-specific wording.
