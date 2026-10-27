@@ -34,7 +34,7 @@ H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
 
 For a one-hot target, the sum reduces to \(-\log p_y\). With a soft target—such as label smoothing or a teacher distribution—multiple categories contribute. Assume \(q_i\geq0\), \(\sum_i q_i=1\), and that \(p\) is also normalized. Unless stated otherwise, \(\log\) is the natural logarithm, so losses are measured in nats; using \(\log_2\) gives bits.
 
-The identity \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\) explains why, for a fixed target, minimizing cross-entropy is equivalent to minimizing KL divergence toward the predicted distribution. Its derivation follows directly from the definitions:
+Define the target entropy as \(H(q)=-\sum_i q_i\log q_i\). The identity \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\) explains why, for a fixed target, minimizing cross-entropy is equivalent to minimizing KL divergence toward the predicted distribution. Its derivation follows directly from the definitions:
 
 \[
 \begin{aligned}
