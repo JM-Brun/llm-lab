@@ -218,6 +218,28 @@ This review does not mark either concept as mastered, prove every cited source s
 
 The fix is not yet merged and this connector workflow did not run Quarto or CI. The review does not certify every source claim, live link availability, or learner mastery.
 
-## 10. Scope of this ledger
+## 10. Focused bilingual textual audit — likelihood and loss (2026-10-27)
+
+**Scope:** current French/English source pairs `site/fr/vraisemblance.qmd`, `site/en/likelihood.qmd`, `site/fr/loss.qmd`, and `site/en/loss.qmd`. Compared sequence factorization, examples, loss definitions, target alignment, masks/reduction, perplexity conventions, self-checks, and navigation.
+
+### Likelihood
+
+- **Parity:** both pages state the autoregressive chain-rule factorization, log-likelihood sum, NLL relationship, same-positions qualification, a numerical example, and tokenizer/model-fit caveats.
+- **Mathematical check:** (0.5\times0.25\times0.8=0.1), so the sequence NLL is (-\log(0.1)\approx2.303) nats when natural logarithms are used.
+- **Disposition:** no source-text correction identified in this pass. The assumption of independent dataset sequences is stated for the product of sequence likelihoods; keep that qualification.
+
+### Loss
+
+- **Parity defect found:** the English page repeated its three self-check questions in a second section. It also lacked the explicit tensor-shape navigation present in French.
+- **Correction made on this branch:** consolidated the English page to one answered self-check, restored a link to the tensor lesson, and kept the next-page navigation after the answers.
+- **Notation clarification:** both language versions now define the predicted distribution (p_{b,t,:}) and target-token ID (y_{b,t}) before using them in the per-position loss.
+- **Perplexity correction:** both pages now state explicitly that (operatorname{PPL}=\exp(\operatorname{NLL}_{\mathrm{mean}})) assumes natural-log NLL (nats), and give the base-2 equivalent when NLL is measured in bits. The previous wording could be read as though the exponential formula applied regardless of log base.
+- **Remaining verification:** render the modified equations, inspect the full bilingual pages, and run CI/Quarto. The edits are not yet merged.
+
+### What this audit does not establish
+
+This source-text audit does not replace a rendered-site review, test the implementation against the documented loss convention, or establish learner mastery.
+
+## 11. Scope of this ledger
 
 This is a traceable first-pass preservation record, not a claim that every line has passed scientific review. It deliberately records several items as **VERIFY**. A future review must resolve those statuses using the actual text and rendered pages rather than treating the inventory as a rubber stamp.
