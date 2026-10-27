@@ -45,7 +45,7 @@ D_{\mathrm{KL}}(q\Vert p)
 \end{aligned}
 \]
 
-Thus \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\). Here \(q\) and \(p\) are normalized distributions and zero-mass terms contribute zero; if \(q_i>0\) but \(p_i=0\), cross-entropy and \(D_{\mathrm{KL}}(q\Vert p)\) are infinite under the usual extended-value convention. KL divergence is directional; cross-entropy is neither symmetric nor a metric distance. Stable log-softmax calculations help avoid accidental underflow in numerical implementations, but they do not change this mathematical condition.
+Thus \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\). Here \(q\) and \(p\) are normalized distributions and zero-mass terms contribute zero; if \(q_i>0\) but \(p_i=0\), cross-entropy and \(D_{\mathrm{KL}}(q\Vert p)\) are infinite under the usual extended-value convention. KL divergence is directional; cross-entropy is neither symmetric nor a metric distance. For example, with \(q=(1,0)\) and \(p=(0.9,0.1)\), \(D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)\approx0.105\) nats, whereas \(D_{\mathrm{KL}}(p\Vert q)=+\infty\) because \(p\) assigns positive mass where \(q\) assigns zero. Stable log-softmax calculations help avoid accidental underflow in numerical implementations, but they do not change this mathematical condition.
 
 ## Multiple positions: causal shift and masks
 
