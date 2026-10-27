@@ -64,6 +64,7 @@ Dans les bibliothèques de deep learning, le mot « tenseur » désigne couramme
 
 ## Pièges fréquents
 
+- **Indexation :** sélectionner un exemple ou une position de séquence peut supprimer un axe ; vérifier si l'opération suivante attend encore cette dimension.
 - **Permutation d'axes :** changer l'ordre des axes change la manière dont les opérations les interprètent.
 - **Broadcasting :** une dimension de taille 1 peut être étendue implicitement et masquer une erreur d'alignement.
 - **Reshape :** changer la forme ne donne pas automatiquement une nouvelle signification aux valeurs.
