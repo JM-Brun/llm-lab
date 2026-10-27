@@ -10,7 +10,7 @@ Choose one or more: teaching/synthesis · FR/EN parity/navigation · implementat
 
 ## Evidence and reproducibility
 
-- [ ] General concepts link to canonical Wiki explanations rather than duplicating them.
+- [ ] General concepts use accessible public sources; no reader-facing link targets the private Wiki. Any local explanation is concise and application-scoped rather than a duplicate canonical chapter.
 - [ ] Claims, assumptions, counterexamples, limitations, and source provenance are explicit.
 - [ ] Numerical/model changes include relevant tests; experiments record data provenance, splits, configuration, seed, metrics, hardware/cost, and limitations.
 - [ ] French and English versions remain substantively equivalent where applicable.
