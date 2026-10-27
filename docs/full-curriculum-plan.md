@@ -304,15 +304,15 @@ This section refines and takes precedence over any earlier wording in this plan 
 
 **`llm-lab` owns the LLM-specific application and synthesis.** It should explain why and how those foundations matter for language models and Transformers: how next-token prediction induces a likelihood objective; how cross-entropy is used in training; how logits and softmax define a categorical distribution; how causal attention changes information flow; how tensor shapes and masking implement the mathematics; and what the resulting training objective does and does not guarantee.
 
-A short local recap is appropriate only when needed to make an application intelligible. It should state the relevant result, assumptions, and a direct link to the canonical wiki concept—not reproduce its full derivation. If the foundation itself is missing or disputed, record that as a dependency to address in the wiki rather than quietly creating a competing canonical explanation in LLM Lab.
+LLM Lab is a standalone public book, not a thin client of the Wiki. Each chapter must teach every prerequisite needed to understand its LLM application, including the relevant definitions, notation, assumptions, derivations, worked examples, caveats, and checks. A deeper general treatment may also live in the Wiki, so deliberate overlap is expected. The public page must cite accessible sources and must not require a private Wiki link. If a general foundation is missing or disputed, preserve the local explanation needed by the book and separately record the Wiki gap; do not leave the public reader blocked.
 
 | Question | Canonical home | Role in the other project |
 |---|---|---|
-| What is entropy, in general, and which identities hold? | `wiki-knowledge` | Explain how entropy relates to uncertainty in token distributions; demonstrate with language-model examples |
-| What is maximum likelihood estimation, and under which assumptions? | `wiki-knowledge` | Derive why autoregressive language-model training uses sequence/token log-likelihood and when the equivalence with cross-entropy holds |
-| What is a gradient or the chain rule? | `wiki-knowledge` | Trace gradients through embeddings, attention, logits, and the training loss |
-| What is a vector space or linear map? | `wiki-knowledge` | Explain embedding tables, projections, Q/K/V, MLP layers, and their tensor dimensions |
-| What is generalization or statistical leakage? | `wiki-knowledge` for the general concept | Apply it to corpus deduplication, pretraining/evaluation contamination, benchmark design, and model comparison |
+| What is entropy, in general, and which identities hold? | `wiki-knowledge` for the transversal treatment | Teach the entropy definitions and identities needed for next-token distributions locally, with LLM examples and interpretation limits |
+| What is maximum likelihood estimation, and under which assumptions? | `wiki-knowledge` for the general estimation treatment | Derive locally why autoregressive training uses sequence/token log-likelihood and when the equivalence with cross-entropy holds |
+| What is a gradient or the chain rule? | `wiki-knowledge` for general mathematics | Explain and derive locally how gradients flow through embeddings, attention, logits, and the training loss |
+| What is a vector space or linear map? | `wiki-knowledge` for the transversal treatment | Teach the linear algebra needed to understand embedding tables, projections, Q/K/V, MLP layers, and tensor dimensions |
+| What is generalization or statistical leakage? | `wiki-knowledge` for the transversal treatment | Teach the relevant concepts locally and apply them to corpus deduplication, pretraining/evaluation contamination, benchmark design, and model comparison |
 | How does a Transformer block work in code? | `llm-lab` | Link back to the mathematical concepts and to the corresponding implementation/tests |
 
 This boundary is conceptual, not a requirement that every cross-link be one-to-one. A chapter can draw on many wiki concepts; a wiki concept can support many LLM Lab chapters.
@@ -350,13 +350,13 @@ These milestones can be split across chapters or revisited in several places. Ea
 
 For every mathematical foundation used in LLM Lab:
 
-1. Link to the canonical `wiki-knowledge` page.
-2. State only the minimum general result needed locally, with its assumptions and notation.
-3. Translate the result into the LLM setting: define the tokens, context, parameters, tensors, objective, or computational step.
+1. Identify the corresponding Wiki concept ID for internal traceability where useful; never make the private link a reader prerequisite.
+2. Teach all mathematical prerequisites needed locally, including definitions, assumptions, notation, and derivations necessary to follow the application.
+3. Translate the result into the LLM setting: define tokens, context, parameters, tensors, objectives, and computational steps.
 4. Work through a small LLM-specific example, including dimensions and/or numeric values.
-5. Explain what the concept predicts about behaviour and what it does not imply.
-6. Connect to an implementation and a test, when available.
-7. Record any unresolved general-mathematics issue as a wiki dependency rather than duplicating a full treatment.
+5. Explain what the concept predicts about behaviour and what it does not imply; include counterexamples to likely misconceptions.
+6. Connect to an implementation and a test, when available, and cite accessible public sources.
+7. Record any unresolved general-mathematics issue as a Wiki improvement item while preserving the explanation needed by the public book.
 
 Example: the wiki page on maximum likelihood should establish the general estimation principle. LLM Lab should then derive the likelihood of a token sequence under an autoregressive model, show how teacher-forced next-token targets produce the summed negative log-likelihood, explain token averaging and padding masks, and test the implementation against a hand-calculated tiny example.
 
@@ -365,9 +365,9 @@ Example: the wiki page on maximum likelihood should establish the general estima
 The first-pass inventory is recorded in [`docs/editorial-boundary-audit.md`](editorial-boundary-audit.md). It identifies the broad entropy pages as the clearest duplication risk, the cross-entropy and gradients pages as mixed-content pages, and the likelihood/loss pages as already strongly aligned with LLM-specific application.
 
 1. Keep the public information architecture self-contained, labelled as **maths applied to LLMs**, not as the canonical home of general foundations.
-2. The general concept destinations are drafted in [wiki-knowledge PR #23](https://github.com/JM-Brun/wiki-knowledge/pull/23). Do not merge this public-page refactor before that PR is reviewed and merged; the registry must be regenerated and validation must pass.
+2. General concepts were added in [wiki-knowledge PR #23](https://github.com/JM-Brun/wiki-knowledge/pull/23), but their pages remain draft and need scientific/registry follow-up. This is not a prerequisite for the public book, and their existence does not authorize deleting or shortening its explanations.
 3. The application pages have been refocused in this branch: entropy → next-token distribution; cross-entropy → token objective, target shift, masks, reduction, perplexity; probabilities → logits, temperature and calibration; tensors → Transformer shapes and axes. Stable URLs are preserved.
-4. Each public page retains the minimum definitions and assumptions needed to understand its LLM application, a model-specific example, limits, and public references. It does not require access to the private wiki.
+4. Each public page retains the full set of definitions, assumptions, derivations, examples, limits, and public references needed to understand its LLM application independently. The Wiki may carry a broader cross-domain treatment in parallel.
 5. The tensor lesson now has French and English versions, including a translated diagram. English counterparts for embedding space and positional encoding remain outstanding.
 6. Render Quarto, check internal links and image alternatives, and inspect both language paths. Do not add model implementations or experiments until their conceptual prerequisites are validated.
 7. For every retained chapter, ask whether it explains an LLM-specific mechanism and whether it contributes directly or indirectly to implementing, testing, training, generating with, or evaluating a small decoder-only LLM. Neither general-mathematics duplication nor an unmotivated code dump is sufficient.
