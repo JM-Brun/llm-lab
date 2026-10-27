@@ -59,7 +59,7 @@ To follow the vector and matrix shapes used in these calculations, see [Tensors]
 <details>
 <summary>Show answer</summary>
 
-In softmax, every exponential is multiplied by `e^c`; the common factor cancels between numerator and denominator.
+In softmax, every exponential is multiplied by $e^c$; the common factor cancels between numerator and denominator.
 
 </details>
 
@@ -68,7 +68,7 @@ In softmax, every exponential is multiplied by `e^c`; the common factor cancels 
 <details>
 <summary>Show answer</summary>
 
-Yes. For example, `(2,1)` and `(20,10)` have the same maximal index, but the larger scale makes the second softmax distribution much more concentrated.
+Yes. For example, $(2,1)$ and $(20,10)$ have the same maximal index, but the larger scale makes the second softmax distribution much more concentrated.
 
 </details>
 
