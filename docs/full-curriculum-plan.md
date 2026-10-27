@@ -258,6 +258,42 @@ For the supplied video, playlist, Medium post, AlgoMonster course, and PDF mirro
 6. Run Quarto rendering, link checks where available, French/English parity review, and scientific review before marking a chapter complete.
 
 
+
+### 8.8 Non-binding source-coverage crosswalk
+
+The following crosswalk is an **audit aid only**. It helps check whether major topics from Raschka's book and appendices have been considered. It does not define LLM Lab's table of contents, require one-to-one chapter mapping, or determine the order in which the reader must study topics. The book's own sequence should be chosen from the explanatory needs of LLM Lab; stages may cut across source chapters, and one source chapter may inform several parts.
+
+| External source unit (coverage check only) | Questions and topics worth accounting for | Related LLM Lab themes (not a chapter mapping) | Current gap / caution |
+|---|---|---|---|
+| Understanding LLMs | Language modeling, next-token prediction, pretraining vs fine-tuning, decoder-only GPT | Orientation, autoregressive objective, architecture | Overview/history are partial; link concepts rather than duplicate definitions. |
+| Working with text data | Unicode, normalization, tokenization, BPE, special tokens, token IDs, embeddings, position, windows and target alignment | Data, representations, training objective | High-value theory gap: explain algorithmic principles separately from tokenizer-specific behaviour. |
+| Coding attention mechanisms | Q/K/V, scaling, softmax axis, causal masks, weighted sums, multi-head shapes and invariants | Attention and tensor computation | Pages exist in part; connect them and test invariants before claiming a complete implementation. |
+| Implementing a GPT model | Embeddings, positions, attention, MLP, residual paths, normalization, output head, parameterization | Architecture and forward pass | Overview exists; full architecture coverage remains partial. |
+| Pretraining on unlabeled data | Autoregressive objective, token loss, batching, optimization, validation, perplexity, checkpoints, generation | Training, inference, evaluation | General math ownership must be clarified with the private wiki; reproducible training evidence is not yet complete. |
+| Fine-tuning for classification | Task head, label space, loss, freezing, class balance, held-out evaluation, overfitting and forgetting | Adaptation and evaluation | Public bilingual theory and validated implementation remain incomplete. |
+| Instruction fine-tuning | Prompt/response formats, target masking, SFT objective, data quality, evaluation and regressions | SFT, data pipeline, evaluation | Coverage is partial; instruction tuning does not by itself guarantee reliable behaviour. |
+| PyTorch and appendices | Tensors, autograd, modules, data loading, devices, references and exercises | Prerequisites, source provenance, exercise space | Add framework explanations only when a lesson needs them; exercise navigation is not evidence that exercises exist. |
+| Training improvements and LoRA | Schedules, clipping, checkpointing, low-rank adaptation and limitations | Training, efficiency, adaptation | Advanced extensions, not prerequisites for understanding a small baseline. |
+| Beyond the book | Baselines, uncertainty, leakage/contamination, ablations, resource measurements, DPO and architecture variants | Evaluation, efficiency, research frontiers | Explicit LLM Lab extensions; do not attribute them to the source book. |
+
+For each planned lesson, the theory-first review criteria below apply to the lesson itself, regardless of how many external source chapters informed it. A source crosswalk entry is not evidence that the corresponding LLM Lab lesson exists or is complete.
+
+### Theory-first definition of done for each lesson
+
+Before a lesson's implementation work begins, its French and English theory pages should:
+
+1. State scope, prerequisites, learning objectives, and relevant source sections (paraphrased; do not reproduce copyrighted text).
+2. Define the objects and notation, including tensor shapes and conventions wherever applicable.
+3. Derive the central LLM-specific equations step by step and state assumptions, edge cases, and numerical limitations; link general derivations to the canonical wiki where they exist.
+4. Include at least one worked LLM-specific example and one misconception/counterexample that distinguishes nearby concepts.
+5. Link to canonical concept pages rather than duplicate them; link to implementation/tests only when they exist, otherwise state that they are planned.
+6. Cite primary papers or official technical references for substantive claims and pedagogical sources for intuition where useful.
+7. Include self-check questions without immediately visible answers; keep solutions in the separate exercise space.
+8. Preserve claim-level parity between French and English, or explicitly track a missing language counterpart.
+9. Pass the configured Quarto render and link checks; visual inspection and scientific review remain separate checks.
+
+**Working order:** audit sources and concepts → choose the next lesson based on reader prerequisites and explanatory value → write/review its theory in both languages → render and inspect → only then implement or extend code, tests, and experiments when prerequisites are marked acquired in the private knowledge inventory. Do not draft all lessons in one bulk change.
+
 ## 9. Editorial boundary with wiki-knowledge: apply foundations, do not duplicate them
 
 This section refines and takes precedence over any earlier wording in this plan that could imply LLM Lab must reproduce a general mathematics course or follow a fixed mapping between external-book chapters and this project's chapters.
