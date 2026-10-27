@@ -34,7 +34,7 @@ Hidden activations often have shape \((B,T,D)\), logits \((B,T,V)\), and multi-h
 
 ## Reading projection dimensions
 
-Suppose \(X\) has shape \((B,T,D)\) and projection matrix \(W\) has shape \((D,H)\). The projection applies the same transformation at every position:
+Suppose \(X\) has shape \((B,T,D)\) and projection matrix \(W\) has shape \((D,D')\), where \(D'\) is the output feature dimension. The projection applies the same transformation at every position:
 
 \[
 Y=XW,\qquad \operatorname{shape}(Y)=(B,T,H).
