@@ -58,7 +58,7 @@ Choisir le token argmax à chaque position n'est pas équivalent à rechercher g
 - **Calibration :** propriété empirique selon laquelle, sur une population pertinente, les événements annoncés avec une probabilité donnée surviennent à une fréquence compatible.
 - **Vérité factuelle :** propriété de la sortie par rapport au monde et aux preuves disponibles ; elle ne découle pas des deux propriétés précédentes.
 
-Une probabilité de 0,9 ne signifie donc pas automatiquement « 90 % de chances que la réponse soit vraie ». La calibration doit être évaluée sur des données pertinentes, et une bonne calibration globale ne garantit pas la fiabilité de chaque réponse individuelle.
+Une probabilité de 0,9 ne signifie donc pas automatiquement « 90 % de chances que la réponse soit vraie ». La calibration doit être évaluée sur des données pertinentes tenues à l'écart de l'ajustement, et une bonne calibration globale ne garantit pas la fiabilité de chaque réponse individuelle.
 
 ## Questions de contrôle
 
