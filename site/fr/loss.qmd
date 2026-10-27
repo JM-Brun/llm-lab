@@ -10,7 +10,7 @@ La *loss* (fonction de perte) est un nombre que l'entraînement cherche à minim
 
 ## De la perte locale à la loss du batch
 
-Pour chaque position cible valide $(b,t)\in\mathcal{M}$, soit :
+Notons $p_{b,t,:}$ la distribution prédite pour la position $(b,t)$ et $y_{b,t}$ l'identifiant du token cible. Pour chaque position cible valide $(b,t)\in\mathcal{M}$, la perte est :
 
 $$
 \ell_{b,t}=-\log p_{b,t,y_{b,t}}.
@@ -39,7 +39,7 @@ $$
 \operatorname{PPL}=\exp(\operatorname{NLL}_{\mathrm{moyenne}}).
 $$
 
-Cette relation suppose la même base logarithmique et la même convention d'agrégation. La perplexité dépend aussi du tokenizer et du corpus évalué.
+La formule avec $\exp$ suppose que la NLL moyenne est calculée avec le logarithme naturel (perte en nats). Si elle est calculée en bits avec $\log_2$, utiliser $2^{\operatorname{NLL}_{\mathrm{moyenne}}}$. Dans les deux cas, la convention d'agrégation doit être identique. La perplexité dépend aussi du tokenizer et du corpus évalué.
 
 ::: {.callout-warning title="Idées reçues"}
 - **« Une loss plus basse prouve que les réponses sont meilleures. »** Elle indique une meilleure valeur de l'objectif mesuré, pas nécessairement une amélioration de toutes les capacités ou de l'utilité réelle.
