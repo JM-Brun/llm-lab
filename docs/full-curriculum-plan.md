@@ -143,3 +143,40 @@ A topic is **not** covered merely because it appears in a heading, a diagram, a 
 - Alammar, [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/).
 - [The Illustrated Transformer From Scratch (ACM-hosted article)](https://idtjo.hosting.acm.org/wordpress/the-illustrated-transformer/).
 - [3Blue1Brown — Transformers, the tech behind LLMs](https://www.3blue1brown.com/lessons/gpt/).
+
+
+## 5. Chapter-by-chapter theory-first workflow
+
+This crosswalk makes the existing **book chapters** and the lab's **learning stages** explicit. They are related but not interchangeable: the seven book chapters provide the main reading sequence; the nine lab stages add mathematical prerequisites, reference comparisons, evaluation, efficiency, and advanced extensions.
+
+| Reading unit | Main theoretical questions to answer before coding | LLM Lab stage(s) | Planned theory destination / status |
+|---|---|---|---|
+| Book Ch. 1 — Understanding LLMs | What is a language model? What is next-token prediction? How do pretraining and fine-tuning differ? What does decoder-only GPT mean, and what does it not represent? | Stage 0 orientation; context for Stages 1–3 | Existing overview and history pages are partial; consolidate links, do not duplicate canonical concept definitions. |
+| Book Ch. 2 — Working with text data | Unicode and preprocessing; tokenization trade-offs; BPE; special tokens; token IDs; embeddings; position information; sliding windows and input-target alignment | Stage 1 | **Priority theory gap.** Create/complete a bilingual chapter synthesis linking to canonical tensor/embedding/position pages. Distinguish algorithmic explanation from tokenizer-specific behavior. |
+| Book Ch. 3 — Coding attention mechanisms | Q/K/V projections; score scaling; softmax axis; causal masking; weighted sums; multi-head splitting/merging; tensor shapes and invariants | Stage 2 | Concept pages exist in part. Audit and connect them before introducing a complete implementation. |
+| Book Ch. 4 — Implementing a GPT model | How embeddings, positional information, attention, MLP/FFN, residual paths, normalization, and output head compose; parameterization and forward pass | Stage 2 → Stage 3 | Overview exists; full architecture coverage remains partial. Theory first, then compare against code only when present. |
+| Book Ch. 5 — Pretraining on unlabeled data | Autoregressive objective; cross-entropy; batches; optimizer and schedules; validation; perplexity; checkpointing; sampling and generation | Stage 3, with Stage 4 for reference comparison | Mathematical foundations exist partially; a coherent theory chapter and reproducible training evidence remain gaps. |
+| Book Ch. 6 — Fine-tuning for classification | Task head; label space; loss; freezing/unfreezing; class balance; held-out evaluation; overfitting and forgetting | Stage 5 | Public bilingual theory and validated implementation are not yet complete. |
+| Book Ch. 7 — Fine-tuning to follow instructions | Instruction examples; prompt/response formats; target masking; SFT objective; data quality; evaluation and regressions | Stage 5; Stage 8 for evaluation | Public coverage is partial. Link to existing canonical loss/evaluation concepts; do not imply that instruction tuning alone guarantees reliable behavior. |
+| Appendix A — Introduction to PyTorch | Tensors, autograd, modules, datasets/dataloaders, device and reproducibility basics | Prerequisites for Stages 0–3 | Add only the framework concepts required by a lesson; prefer official PyTorch documentation. |
+| Appendix B — References and further reading | How to trace claims to primary literature and technical docs | All stages | Maintain in `docs/references.md`; a bibliography entry is not evidence that a claim was reproduced. |
+| Appendix C — Exercise solutions | How to self-check understanding without reading solutions first | Separate exercise space, all stages | Exercise navigation exists; exercise collections and answer keys are not yet authored. |
+| Appendix D — Training-loop improvements | Learning-rate schedules, gradient clipping, logging, checkpointing and related trade-offs | Stage 3, optionally Stage 8 | Advanced extension after the baseline training loop is understood. |
+| Appendix E — LoRA | Low-rank adaptation, target modules, rank/alpha, trainable parameters and limitations | Stage 6 | Advanced extension after SFT foundations; distinguish LoRA from quantization and QLoRA. |
+| Beyond the book — evaluation and efficiency | Baselines, uncertainty, leakage/contamination, ablations, resource measurements, DPO and architecture variants | Stage 7–8 | Explicit LLM Lab extensions; label as such and use current primary sources rather than attributing them to the book. |
+
+### Theory-first definition of done for each chapter
+
+Before a chapter's implementation work begins, its French and English theory pages should:
+
+1. State scope, prerequisites, learning objectives, and the book sections covered (paraphrased; do not reproduce copyrighted text).
+2. Define the objects and notation, including tensor shapes and conventions wherever applicable.
+3. Derive the central equations step by step and state assumptions, edge cases, and numerical limitations.
+4. Include at least one worked example and one misconception/counterexample that distinguishes nearby concepts.
+5. Link to canonical concept pages rather than duplicate them; link to implementation/tests only when they exist, otherwise state that they are planned.
+6. Cite a primary paper or official technical reference for substantive claims and a pedagogical source for intuition when useful.
+7. Include self-check questions without immediately visible answers; keep solutions in the separate exercise space.
+8. Preserve claim-level parity between French and English.
+9. Pass the configured Quarto render and link checks; visual inspection and scientific review remain separate checks.
+
+**Working order:** audit and map the sources → write theory for the next chapter in French and English → review equations, assumptions, and citations → render and inspect both languages → only then implement or extend code, tests, and experiments when prerequisites are marked acquired in the private knowledge inventory. Do not draft all chapters in one bulk change.

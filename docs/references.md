@@ -94,3 +94,32 @@ Read the corresponding [cosine-similarity note](../site/fr/cosine-similarity.qmd
 - Cite upstream work in reports and notebook introductions.
 - Do not treat a tutorial's results as independently reproduced until the experiment has been run and checked here.
 - Review licenses before reusing code, figures, datasets, model weights, or substantial text.
+
+
+## Chapter-by-chapter study resources for Raschka's book
+
+Use these resources as complementary explanations and study aids, not as substitutes for the book's formal definitions, primary papers, official documentation, or tests. Their content may change; verify details before relying on them for a technical claim.
+
+11. **Sebastian Raschka — reading and study method**
+    - Article: https://sebastianraschka.com/blog/2025/reading-books.html
+    - Book companion hub and chapter map: https://sebastianraschka.com/llms-from-scratch/
+    - **Use for:** a reading-first workflow: read a chapter for context, use videos as a second explanation, work through the source code, then attempt the chapter exercises before checking solutions.
+
+12. **Sebastian Raschka — Build a Large Language Model (From Scratch)**
+    - Publisher/book page: https://www.manning.com/books/build-a-large-language-model-from-scratch
+    - Official companion repository: https://github.com/rasbt/LLMs-from-scratch
+    - Chapter-by-chapter video playlist: https://www.youtube.com/playlist?list=PLQRyiBCWmqp5twpd8Izmaxu5XRkxd5yC-
+    - Additional video supplied for this course: https://www.youtube.com/watch?v=kPGTx4wcm_w
+    - **Use for:** the primary chapter sequence (Chapters 1–7), source-code reference, and an optional second explanation. The book is the scope baseline, not text or exercises to reproduce. Confirm the exact title and topic of individual videos before citing them for specific claims.
+
+13. **Solomon Eshun — Building LLMs From Scratch, Part 2: Tokenization**
+    - Article: https://soloshun.medium.com/building-llms-from-scratch-part-2-tokenization-e0bf05d24094
+    - **Use for:** an accessible secondary explanation of word-, character-, and subword-tokenization trade-offs, special tokens, BPE, and the use of a pretrained tokenizer. Cross-check BPE details and implementation behavior against the official tokenizer documentation and Raschka's chapter/repository; this article is pedagogical, not a primary specification.
+
+14. **AlgoMonster — LLM course introduction**
+    - Course page: https://algo.monster/courses/llm/llm_course_introduction
+    - **Use for:** an optional alternative course structure or recap. Review current contents and access requirements before assigning it to a specific chapter; it does not define the canonical LLM Lab sequence.
+
+15. **Third-party PDF mirror of the Raschka book — provenance not verified**
+    - URL supplied for review: https://dl.tehrandata.org/book/Build-a-large-language-models.pdf
+    - **Use policy:** do not treat this mirror as the canonical edition, redistribute it, or assume it is authorized. Prefer the publisher page and the author's official repository/video materials. This reference is recorded for provenance transparency only; no copied book text, figures, or exercises should enter LLM Lab.

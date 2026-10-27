@@ -162,3 +162,18 @@ Les deux vidéos 3Blue1Brown ci-dessus sont les références pédagogiques princ
 - [Short YouTube — ID jd02NxCuCxA, à vérifier](https://www.youtube.com/shorts/jd02NxCuCxA)
 
 Une référence pédagogique aide à construire l'intuition, mais ne remplace pas une source primaire lorsqu'une page énonce un résultat mathématique ou physique. Les liens vidéo sont donc distingués des références formelles.
+
+
+## Parcours d'étude chapitre par chapitre — Sebastian Raschka
+
+Ces ressources complètent le parcours principal. L'ordre recommandé est : **lire la théorie → regarder une vidéo si nécessaire → examiner le code de référence → répondre aux questions sans consulter les solutions → seulement ensuite implémenter et tester dans LLM Lab**. Les explications pédagogiques ne remplacent ni les sources primaires ni les tests.
+
+- **Méthode de lecture :** Sebastian Raschka, [Reading Books](https://sebastianraschka.com/blog/2025/reading-books.html) — conseils pour lire un chapitre avant de coder.
+- **Carte des chapitres et ressources :** [Raschka — Build a Large Language Model (From Scratch)](https://sebastianraschka.com/llms-from-scratch/).
+- **Livre de référence :** [Manning — Build a Large Language Model (From Scratch)](https://www.manning.com/books/build-a-large-language-model-from-scratch).
+- **Code officiel :** [rasbt/LLMs-from-scratch](https://github.com/rasbt/LLMs-from-scratch).
+- **Vidéos chapitre par chapitre :** [playlist YouTube](https://www.youtube.com/playlist?list=PLQRyiBCWmqp5twpd8Izmaxu5XRkxd5yC-) ; [vidéo complémentaire fournie](https://www.youtube.com/watch?v=kPGTx4wcm_w). Vérifier le titre et le contenu exact de chaque vidéo avant de la citer pour une affirmation technique.
+- **Tokenisation :** Solomon Eshun, [Building LLMs From Scratch (Part 2): Tokenization](https://soloshun.medium.com/building-llms-from-scratch-part-2-tokenization-e0bf05d24094). Explication secondaire des compromis de tokenisation et de BPE ; vérifier les détails avec le livre, le code de référence et la documentation officielle du tokenizer concerné.
+- **Cours complémentaire :** [AlgoMonster — LLM course introduction](https://algo.monster/courses/llm/llm_course_introduction). À utiliser en supplément après vérification de son contenu actuel et de ses conditions d'accès.
+
+Un [PDF miroir tiers fourni pour examen](https://dl.tehrandata.org/book/Build-a-large-language-models.pdf) n'a pas de provenance ni de statut de licence vérifiés. Préférer la page de l'éditeur et les ressources officielles ; ne pas redistribuer ce fichier ni en recopier le contenu.
