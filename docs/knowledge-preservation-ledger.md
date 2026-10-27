@@ -145,7 +145,7 @@ The baseline had no `site/en/tensors.qmd` counterpart. The proposed branch adds 
 - `llm-lab/CONTRIBUTING.md` previously said to include “only the concise general definition” and “do not duplicate a full Wiki chapter”. This wording could incorrectly encourage removal of teaching material needed by the public book. The PR branch now clarifies that LLM Lab is a self-contained book, that intentional overlap is allowed, and that no page may depend on private Wiki content. It now also explicitly keeps private Wiki URLs/IDs out of public lesson content and directs maintainer traceability to the private `career-knowledge` repository.
 - `wiki-knowledge/CONTRIBUTING.md` previously said to link to one canonical page “instead of copying its definition into another page” without delimiting that rule to the Wiki. The proposed Wiki contributor-doc change clarifies that canonical uniqueness applies within the Wiki, not across independent books or applications.
 - The Wiki concept pages added under `CONCEPT-020`–`CONCEPT-023` are marked draft per PR #23. Their existence is not evidence that their claims are scientifically reviewed, and they do not justify a public content deletion.
-- Both contributor-doc changes require their own review and merge. They should not be treated as already merged into either repository's `main`.
+- The Wiki contributor-boundary change was merged via [wiki-knowledge PR #24](https://github.com/JM-Brun/wiki-knowledge/pull/24) on 2026-10-27. The corresponding `llm-lab/CONTRIBUTING.md` clarification remains on PR #17's branch and is not yet in `llm-lab/main`.
 
 ## 6. Link-audit evidence
 
