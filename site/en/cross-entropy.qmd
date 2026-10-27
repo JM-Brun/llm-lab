@@ -34,7 +34,7 @@ H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
 
 For a one-hot target, the sum reduces to \(-\log p_y\). With a soft target—such as label smoothing or a teacher distribution—multiple categories contribute.
 
-The identity \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\) explains why, for a fixed target, minimizing cross-entropy is equivalent to minimizing KL divergence toward the predicted distribution. KL divergence is directional; cross-entropy is neither symmetric nor a metric distance.
+The identity \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\) explains why, for a fixed target, minimizing cross-entropy is equivalent to minimizing KL divergence toward the predicted distribution. KL divergence is directional; cross-entropy is neither symmetric nor a metric distance. These expressions assume valid normalized distributions and use the usual extended-value convention: if \(q_i>0\) but \(p_i=0\), cross-entropy and \(D_{\mathrm{KL}}(q\Vert p)\) are infinite. Stable log-softmax calculations help avoid accidental underflow in numerical implementations, but they do not change this mathematical condition.
 
 ## Multiple positions: causal shift and masks
 
