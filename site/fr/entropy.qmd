@@ -61,7 +61,7 @@ Cette somme de log-probabilités négatives est le lien direct entre la prédict
 La température \(\tau>0\) transforme les logits \(z\) en une distribution :
 
 \[
-p_i^{(\tau)}=\operatorname{softmax}(z/T)_i.
+p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i.
 \]
 
 Une température plus faible tend à concentrer la distribution ; une température plus élevée tend à l'aplatir. Pour \(\tau>0\), l'ordre des logits et l'argmax restent inchangés, mais les probabilités et donc l'entropie changent. L'entropie de la distribution après température ne doit pas être présentée comme une mesure de l'incertitude calibrée du modèle sans évaluation empirique.
