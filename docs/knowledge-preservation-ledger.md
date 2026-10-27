@@ -162,7 +162,8 @@ At commit `e3d80d65569afbc0e2c85b4e8fcb020ecb070497`, a path-existence check cov
 - [x] Path-existence audit for 50 local Markdown/image references and four explicit local fragments across the eight affected pages; all targets/fragments resolve at the recorded commit.
 - [ ] Inspect rendered Quarto pages in both languages, including anchors, figures, alt text, navigation, and visual quality.
 - [x] CI and Quarto site render passed on earlier reviewed heads after mathematical corrections. [CI](https://github.com/JM-Brun/llm-lab/actions/runs/40538171509) · [Quarto](https://github.com/JM-Brun/llm-lab/actions/runs/40538171519).
-- [ ] Re-run CI and Quarto on the current head after the later reference/navigation and contributor-guidance clarifications.
+- [x] CI passes on reviewed head `b97475304533c76712dff180c68693d0482cb401`: [CI run](https://github.com/JM-Brun/llm-lab/actions/runs/40540506554).
+- [x] Quarto bilingual site render passes on the same head: [site workflow](https://github.com/JM-Brun/llm-lab/actions/runs/40540504668). The render succeeded after the latest content, reference, navigation, and contributor-guidance changes.
 - [ ] Inspect the rendered output visually; successful render is not visual/scientific approval. Confirm diagram rendering, alt text, bilingual navigation, and that new derivation blocks display as intended.
 - [ ] Review the final PR diff against this ledger; update this document if a disposition changes.
 - [ ] Do not merge PR #17 until the checks above are completed.
