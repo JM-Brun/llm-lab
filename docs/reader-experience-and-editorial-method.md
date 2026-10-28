@@ -138,7 +138,7 @@ Before a page is considered ready, check the following applicable items:
 
 Not every page needs a full derivation, code sample, counterexample, or exercise. It must either include what its purpose requires or link clearly to the relevant material. Do not remove a caveat or a needed explanation merely to make a page shorter.
 
-## 5. Review workflow for a page, concept, or learning stage
+## 6. Review workflow for a page, concept, or learning stage
 
 Use this workflow for both new material and revisions:
 
@@ -153,7 +153,7 @@ Use this workflow for both new material and revisions:
 9. **Record status and remaining uncertainty.** Mark content, code, and experiments as planned, illustrative, implemented, tested, or experimentally evaluated as appropriate. Do not imply mastery from publication or CI.
 10. **Only then advance the roadmap.** New implementations and experiments remain gated by validated prerequisite knowledge as specified in the roadmap.
 
-## 6. What this method deliberately avoids
+## 7. What this method deliberately avoids
 
 - A compulsory, chapter-by-chapter reading order.
 - Treating every concept as equally important to every reader.
