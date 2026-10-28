@@ -1,0 +1,138 @@
+---
+title: "Du texte aux tokens : représenter le langage"
+subtitle: "Unicode, octets, tokenisation et premières décisions de conception"
+lang: fr
+---
+
+::: {.chapter-lead}
+Un modèle de langage reçoit une séquence d'identifiants numériques, pas du texte brut. La tokenisation définit comment le texte est converti en identifiants et comment ceux-ci sont décodés. Elle est distincte du réseau neuronal, mais conditionne son vocabulaire, la longueur des séquences, le coût de calcul et certains comportements observables.
+:::
+
+## Objectifs
+
+- Distinguer texte Unicode, octets, tokens, identifiants et embeddings.
+- Expliquer pourquoi un découpage par espaces ne suffit pas.
+- Décrire l'intuition de BPE et distinguer son apprentissage de l'encodage à l'inférence.
+- Choisir des ressources complémentaires : intuition visuelle, code pédagogique et documentation technique.
+- Identifier ce que la tokenisation ne permet pas de conclure sur le sens ou les capacités du modèle.
+
+## 1. Du texte à une entrée numérique
+
+Une chaîne Python représente du texte Unicode. Son encodage UTF-8 produit une séquence d'octets. Un tokenizer applique ensuite des règles de découpage et un vocabulaire pour produire des tokens, puis des identifiants entiers.
+
+```{mermaid}
+flowchart LR
+    A["Texte Unicode"] --> B["Prétraitement éventuel"]
+    B --> C["Découpage initial"]
+    C --> D["Tokens / fragments"]
+    D --> E["Identifiants entiers"]
+    E --> F["Table d'embeddings"]
+    F --> G["Vecteurs d'entrée"]
+```
+
+Ce pipeline est conceptuel : les tokenizers varient par leur normalisation, leurs unités de base, leur pré-découpage, leur vocabulaire et leurs tokens spéciaux.
+
+La chaîne `"ChatGPT apprend."` peut être découpée en mots, sous-mots, caractères ou fragments d'octets selon le tokenizer. Il n'existe pas un découpage unique qui serait le découpage linguistique « vrai ». Les identifiants sont des étiquettes discrètes : l'identifiant 314 n'est pas intrinsèquement plus proche en sens de 315. Un identifiant n'est pas un embedding ; le modèle apprend un vecteur associé à chaque entrée de la table d'embeddings.
+
+### Quatre objets à ne pas confondre
+
+- **Unicode** définit un répertoire de caractères et des propriétés associées ; il ne fixe pas la segmentation en tokens.
+- **UTF-8** encode les points de code Unicode en octets ; un caractère peut occuper plusieurs octets.
+- **Tokenisation** convertit le texte en unités du vocabulaire choisi.
+- **Embedding** est un vecteur appris associé à un identifiant, et non une autre forme de cet identifiant.
+
+## 2. Pourquoi le découpage par espaces ne suffit pas
+
+Il gère mal la ponctuation, les contractions, les langues sans espaces entre les mots, les variantes orthographiques, les noms rares et les chaînes techniques. Un vocabulaire contenant chaque mot possible serait immense et resterait fragile face aux formes nouvelles.
+
+Les méthodes sous-mots réutilisent des unités fréquentes tout en représentant des formes moins fréquentes. Mais cette segmentation est une décision d'ingénierie, pas une analyse morphologique parfaite.
+
+## 3. L'intuition de Byte Pair Encoding (BPE)
+
+Dans une version pédagogique simplifiée, BPE part d'unités de base, compte les paires adjacentes, fusionne une paire selon une règle définie et répète l'opération jusqu'à atteindre un critère d'arrêt.
+
+```{mermaid}
+flowchart TD
+    A["Corpus d'entraînement"] --> B["Unités de base"]
+    B --> C["Compter les paires adjacentes"]
+    C --> D["Choisir une paire selon la règle"]
+    D --> E["Ajouter la fusion au vocabulaire"]
+    E --> F{"Critère d'arrêt atteint ?"}
+    F -- Non --> C
+    F -- Oui --> G["Vocabulaire et règles appris"]
+    G --> H["Encodage d'un nouveau texte"]
+```
+
+Le schéma est simplifié : les tokenizers réels peuvent utiliser un pré-découpage par expressions régulières, travailler au niveau des octets et réserver des tokens spéciaux. Deux tokenizers appelés BPE ne sont donc pas nécessairement compatibles.
+
+Il faut distinguer :
+
+1. **Entraînement du tokenizer** : apprend le vocabulaire, l'ordre des fusions et les règles à partir d'un corpus.
+2. **Encodage** : applique le tokenizer déjà appris ; il ne réapprend pas le vocabulaire à chaque requête.
+
+Un tokenizer BPE au niveau des octets peut représenter des entrées textuelles arbitraires grâce à ses unités de base. Tous les tokenizers BPE ne sont toutefois pas byte-level, et le résultat dépend aussi du pré-découpage et du vocabulaire.
+
+## 4. Conséquences pour le modèle
+
+- **Longueur du contexte :** un même texte peut devenir un nombre différent de tokens selon le tokenizer.
+- **Coût de calcul :** à architecture donnée, des séquences plus longues augmentent généralement le coût de l'attention et la mémoire.
+- **Vocabulaire de sortie :** sa taille détermine notamment la dimension de la distribution des logits.
+- **Robustesse :** le texte multilingue, le code, les nombres et les caractères inhabituels peuvent être segmentés différemment.
+- **Compatibilité :** les identifiants ne sont interprétables qu'avec le vocabulaire et les règles correspondants. Changer de tokenizer sans adapter les poids n'est pas une substitution neutre.
+
+La tokenisation ne garantit ni compréhension sémantique, ni vérité, ni calibration. Elle définit la représentation discrète sur laquelle le modèle apprend.
+
+## 5. Bibliothèque de ressources commentées
+
+Les ressources sont complémentaires. Une progression efficace consiste à construire l'intuition, lire une implémentation, puis vérifier les détails dans la documentation technique.
+
+### Intuition, visualisations et cours
+
+- [Andrej Karpathy — *Let's build the GPT Tokenizer*](https://www.youtube.com/watch?v=zduSFxRajkE) : vidéo longue et illustrée, d'Unicode/UTF-8 aux fusions BPE, tokens spéciaux et pièges pratiques.
+- [Sebastian Raschka — *Build an LLM from Scratch*](https://www.sebastianraschka.com/llms-from-scratch/) : le chapitre 2 situe les tokens dans le pipeline données → embeddings → exemples entrée-cible.
+- [Hugging Face — cours sur les tokenizers](https://huggingface.co/learn/llm-course/chapter6/1) : panorama didactique des algorithmes et compromis ; vérifier la version actuelle du cours.
+
+### Code pédagogique
+
+- [OpenAI `tiktoken` — module éducatif](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) : version simplifiée de BPE pour inspecter les fusions ; ne pas la prendre pour le chemin optimisé en production.
+- [Andrej Karpathy — `minbpe`](https://github.com/karpathy/minbpe) : code compact pour suivre entraînement et encodage ; comparer les conventions avant de conclure à une compatibilité.
+- [Sebastian Raschka — BPE from scratch](https://sebastianraschka.com/blog/2025/bpe-from-scratch.html) : notebook explicatif complémentaire.
+- [Raschka — dépôt, chapitre 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) : implémentations et préparation des données textuelles.
+
+### Références techniques et alternatives
+
+- [OpenAI — `tiktoken`](https://github.com/openai/tiktoken) : bibliothèque BPE rapide pour les encodages pris en charge par les modèles OpenAI.
+- [Google — SentencePiece](https://github.com/google/sentencepiece) : apprentissage depuis du texte brut ; propose notamment BPE et le modèle unigramme. Ce n'est pas un simple alias de tiktoken.
+- [Hugging Face — Tokenizers](https://github.com/huggingface/tokenizers) : implémentations performantes de plusieurs algorithmes.
+- [Gage (1994), *A New Algorithm for Data Compression*](https://dl.acm.org/doi/10.5555/177910.177914) : référence historique de la compression par paires d'octets. Les tokenizers modernes de LLM ajoutent des conventions ; le papier historique ne spécifie pas à lui seul tous les détails de GPT BPE.
+
+### Ordre de lecture conseillé
+
+1. Regarder Karpathy pour l'intuition des octets, des fusions et des tokens spéciaux.
+2. Lire `minbpe` ou `tiktoken/_educational.py` pour suivre l'algorithme.
+3. Comparer avec la documentation de tiktoken, SentencePiece et Hugging Face.
+4. Revenir au chapitre 2 de Raschka pour voir comment les identifiants alimentent le reste du pipeline.
+5. Tester des textes multilingues, du code, des nombres, des espaces et des caractères Unicode inhabituels.
+
+Cette page référence les ressources sans recopier leurs illustrations. Les dépôts évoluent : leur disponibilité ne valide pas automatiquement chacune de leurs affirmations.
+
+## 6. Contre-exemples et erreurs fréquentes
+
+- **« Un token est un mot. »** Faux : il peut s'agir d'un sous-mot, de ponctuation, d'un fragment avec espace, d'octets ou d'un token spécial.
+- **« BPE reconnaît les racines et suffixes. »** Pas nécessairement : il fusionne selon une procédure statistique, sans analyse morphologique garantie.
+- **« Deux tokenizers BPE produisent les mêmes identifiants. »** Faux en général : vocabulaire, pré-découpage et règles peuvent différer.
+- **« L'identifiant contient du sens. »** Pas en soi : c'est une étiquette discrète ; les vecteurs sont appris.
+- **« Une chaîne inconnue ne peut pas être encodée. »** Pas nécessairement : un tokenizer byte-level dispose d'unités de base couvrant les octets, sous réserve de ses règles d'encodage.
+- **« Le tokenizer est une couche du Transformer. »** C'est une étape distincte, même si modèle et tokenizer doivent être compatibles.
+
+## Pour poursuivre
+
+- [GPT et Transformer : architecture et flux des données](transformer.qmd)
+- [Tenseurs](tensors.qmd)
+- [Espace des embeddings](embedding-space.qmd)
+- [Fondations mathématiques](mathematical-foundations.qmd)
+- [Plan de couverture du programme et des sources](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md)
+
+::: {.language-switch}
+**Langue :** [Français](text-data.qmd) · [English](../en/text-data.qmd)
+:::
