@@ -1,8 +1,6 @@
 """Regression tests for the bilingual site's page-aware language switch."""
 
-from __future__ import annotations
-
-import pathlib
+import pathlib  # noqa: I001
 import re
 
 
