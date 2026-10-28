@@ -343,3 +343,12 @@ This is a traceable first-pass preservation record, not a claim that every line 
 **Correction:** add the equivalent English link to `site/en/embedding-space.qmd`, preserving direct navigation between the language-matched concepts.
 
 **Scope / limits:** this is a small navigation-parity correction discovered during the semantic FR/EN audit. It does not validate the scientific claims or references in either lesson, nor does it replace Quarto render, local-link CI, external-link checks, or browser/mobile review.
+
+
+## 23. Embedding-linearity lesson — XOR inline-math delimiters — 2026-10-28
+
+**Finding:** the French and English XOR examples contained mathematical expressions in ordinary prose parentheses rather than supported inline-math delimiters. This affected the variable domain, XOR definition, point coordinates, feature map, and the added product feature in the experiment instructions.
+
+**Correction:** wrap those expressions in explicit Quarto inline math delimiters in both language versions. The mathematical content is unchanged.
+
+**Scope / limits:** source-level markup correction only. Quarto render and local-link CI must confirm rendered output; this does not independently validate every scientific reference or establish browser/mobile visual quality.

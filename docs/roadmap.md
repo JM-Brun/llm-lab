@@ -225,3 +225,8 @@ A source-level review of the English and French causal-masking pages found that 
 ### Focused bilingual audit — cosine-similarity navigation (2026-10-28)
 
 The source comparison found one small parity gap: the French cosine-similarity lesson linked to the embedding-space concept from its takeaway, while the English lesson did not. The English link has been added. This is a targeted navigation fix, not completion of the full semantic bilingual audit; rendered-site, external-reference, and responsive visual checks remain open.
+
+
+### Focused math-rendering audit — XOR example (2026-10-28)
+
+The bilingual embedding-linearity lessons used ordinary parentheses around several XOR expressions instead of inline-math delimiters. Both versions now use explicit Quarto-supported inline math for the variable domain, XOR function, coordinates, feature map, and product feature. The mathematical statements are unchanged; render validation remains required.

@@ -22,9 +22,9 @@ Park, Choe et Veitch formalisent différentes versions de l'hypothèse de repré
 
 ## 2. Le contre-exemple pédagogique : XOR
 
-Considérons (x_1,x_2\in\{0,1\}) et (y=x_1\oplus x_2). Les points de classe positive sont ((0,1)) et ((1,0)) ; ceux de classe négative sont ((0,0)) et ((1,1)). Aucune droite ne sépare parfaitement ces deux classes dans les coordonnées d'entrée d'origine.
+Considérons \(x_1,x_2\in\{0,1\}\) et \(y=x_1\oplus x_2\). Les points de classe positive sont \((0,1)\) et \((1,0)\) ; ceux de classe négative sont \((0,0)\) et \((1,1)\). Aucune droite ne sépare parfaitement ces deux classes dans les coordonnées d'entrée d'origine.
 
-Mais XOR n'est pas « impossible à représenter linéairement » dans l'absolu. Avec une transformation de caractéristiques, par exemple (\phi(x_1,x_2)=(x_1,x_2,x_1x_2)), la séparation devient linéaire dans l'espace transformé. La leçon est que **la séparabilité linéaire dépend de la représentation et des caractéristiques choisies**.
+Mais XOR n'est pas « impossible à représenter linéairement » dans l'absolu. Avec une transformation de caractéristiques, par exemple \(\phi(x_1,x_2)=(x_1,x_2,x_1x_2)\), la séparation devient linéaire dans l'espace transformé. La leçon est que **la séparabilité linéaire dépend de la représentation et des caractéristiques choisies**.
 
 C'est pourquoi un échec de probe linéaire ne prouve pas automatiquement l'absence d'information, et une réussite ne suffit pas à prouver un mécanisme interne.
 
@@ -66,7 +66,7 @@ Un probe plus puissant peut récupérer davantage d'information, mais il devient
 
 1. Générer les quatre points XOR.
 2. Évaluer un classifieur linéaire sur les coordonnées originales.
-3. Ajouter la caractéristique (x_1x_2) et réévaluer le même type de classifieur.
+3. Ajouter la caractéristique \(x_1x_2\) et réévaluer le même type de classifieur.
 4. Comparer à un MLP, en séparant clairement capacité du modèle et qualité de représentation.
 
 Résultat attendu : le classifieur linéaire échoue dans l'espace d'origine mais réussit après transformation. Ce résultat illustre une propriété géométrique, pas une affirmation directe sur les représentations des LLM.
