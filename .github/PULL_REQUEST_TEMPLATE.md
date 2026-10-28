@@ -10,7 +10,8 @@ Choose one or more: teaching/synthesis · FR/EN parity/navigation · implementat
 
 ## Evidence and reproducibility
 
-- [ ] General concepts use accessible public sources; no reader-facing link targets the private Wiki. Any local explanation is concise and application-scoped rather than a duplicate canonical chapter.
+- [ ] The page follows the [reader-experience method](../docs/reader-experience-and-editorial-method.md): its purpose and essential explanation come first, with optional depth clearly linked.
+- [ ] General concepts use accessible public sources; no reader-facing link targets the private Wiki. Explain every prerequisite needed for this LLM application locally; avoid unrelated textbook expansion, but do not omit a needed definition or derivation merely to avoid overlap.
 - [ ] Claims, assumptions, counterexamples, limitations, and source provenance are explicit.
 - [ ] Numerical/model changes include relevant tests; experiments record data provenance, splits, configuration, seed, metrics, hardware/cost, and limitations.
 - [ ] French and English versions remain substantively equivalent where applicable.
