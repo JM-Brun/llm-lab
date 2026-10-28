@@ -39,10 +39,10 @@ Input and target have equal lengths. The target is shifted one position in the s
 
 Stride is the number of positions by which the window start moves between examples. It is distinct from context length.
 
-| Context length | Stride | Consequence |
+| Input-window length | Stride | Consequence for input windows |
 |---:|---:|---|
 | 4 | 4 | Adjacent input windows do not overlap |
-| 4 | 2 | Windows overlap and reuse context |
+| 4 | 2 | Input windows overlap and reuse context |
 | 4 | 5 | Some positions may be skipped |
 
 ```{mermaid}
@@ -52,6 +52,8 @@ flowchart LR
     A --> D["Stride 2: [0 1 2 3]"]
     D --> E["Then [2 3 4 5]"]
 ```
+
+The table describes **input windows only**. For next-token training, each window also needs a one-token-shifted target; the last input token therefore needs a successor in the source stream. The corpus tail must be handled explicitly (for example, by dropping an incomplete example or using a deliberate end-of-sequence convention).
 
 A smaller stride generally increases the number of examples and overlap. There is no universally optimal stride: the choice depends on the pipeline, compute budget, and handling of the corpus tail. A pedagogical sliding window does not necessarily represent a production pipeline.
 
