@@ -57,7 +57,8 @@ Les pages distinguent le code réellement présent, les tests qui le couvrent et
 
 ## Parcours conseillé
 
-1. **Mathématiques appliquées aux LLM** — suivre les logits jusqu’à la perte d’entraînement et aux gradients, sans refaire un cours général de mathématiques.
+1. **Du texte aux tokens** — Unicode, encodage, tokenisation, BPE et ressources de référence. Commencer par [la page Texte et données](fr/text-data.qmd).
+2. **Mathématiques appliquées aux LLM** — suivre les logits jusqu’à la perte d’entraînement et aux gradients, sans refaire un cours général de mathématiques.
 2. **Attention et Transformer** — requêtes, clés, valeurs, scores, softmax, information de position et masque causal.
 3. **Données et objectif autorégressif** — tokenisation, décalage entrée-cible et prédiction du prochain token.
 4. **Modèle et entraînement** — blocs, optimisation, validation, génération et évaluation.
