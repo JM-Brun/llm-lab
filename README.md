@@ -25,6 +25,7 @@ The project includes a bilingual Quarto website organized around LLM-specific ex
 - Critical notes on embedding linearity: `site/fr/linearite-embeddings.qmd` and `site/en/embedding-linearity.qmd`
 - Visual references and image provenance: `site/references.qmd`
 - Prioritized roadmap and acceptance criteria: [`docs/roadmap.md`](docs/roadmap.md)
+- Shared reader-experience and editorial method: [`docs/reader-experience-and-editorial-method.md`](docs/reader-experience-and-editorial-method.md) — progressive disclosure, non-linear navigation, page types, and review criteria.
 - Full curriculum plan and source-coverage audit (Raschka is a source, not the table-of-contents authority): [`docs/full-curriculum-plan.md`](docs/full-curriculum-plan.md)
 - First-pass audit separating general foundations from LLM-specific applications: [`docs/editorial-boundary-audit.md`](docs/editorial-boundary-audit.md)
 - Separate exercise-space entry points (navigation scaffolding only; exercises not yet written): [French](site/fr/exercises.qmd) · [English](site/en/exercises.qmd)
@@ -44,6 +45,7 @@ These are repository-maintenance guidelines, not reader-facing lessons; they bel
 - **Separate canonical scope from reader-facing completeness.** The private Wiki owns reusable, domain-general treatments; the public LLM Lab book must teach all mathematics needed for its LLM learning path. Intentional overlap is expected and is not a defect.
 - **Introduce terms before relying on them.** Define unfamiliar vocabulary on first use or link to another public page in this book. Private Wiki links are never a substitute for a necessary explanation.
 - **Intuition with provenance.** Explain the problem a concept addresses and distinguish original research, official documentation, pedagogical explanations, and illustrations.
+- **Progressive disclosure, non-linear navigation.** Lead with the question and mental model; let readers choose whether to follow a derivation, implementation, or research branch. Related links form a learning graph, not a mandatory chain. Apply the shared [reader-experience method](docs/reader-experience-and-editorial-method.md).
 - **State assumptions and limits.** Use counterexamples to distinguish plausible but incorrect interpretations.
 - **Connect mathematics to code carefully.** Identify existing implementations and tests, or state clearly when they do not exist.
 - **Keep French and English equivalent.** Preserve the same claims, qualifications, examples, and references in both versions.
