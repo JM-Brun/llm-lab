@@ -1,6 +1,7 @@
 <script>
 (() => {
-  const siteRoot = new URL("/llm-lab/", window.location.origin);
+  const basePath = window.location.pathname.startsWith("/llm-lab/") ? "/llm-lab/" : "/";
+  const siteRoot = new URL(basePath, window.location.origin);
   const pathname = window.location.pathname;
   if (!pathname.startsWith(siteRoot.pathname)) return;
 
