@@ -215,3 +215,8 @@ Every new or substantially revised concept page should meet these criteria:
 - [ ] Use Quarto-supported inline math (`$...$`) and display math (`$$...$$`) delimiters consistently; check that display delimiters are paired and inspect the rendered output in both languages.
 
 Passing a render or test establishes only the property that was checked. It does not by itself establish conceptual mastery, general model quality, or an empirical claim.
+
+
+### Focused audit — causal-mask API semantics (2026-10-28)
+
+A source-level review of the English and French causal-masking pages found that both correctly described the additive causal mask and stated that no reusable attention implementation or end-to-end invariance test exists. One practical caveat was missing: boolean-mask polarity is not uniform across attention APIs. The official PyTorch `scaled_dot_product_attention` API treats `True` as allowed, while `MultiheadAttention.attn_mask` treats `True` as masked out. The proposed correction adds matching warnings and links to both official references. This does not establish end-to-end causality or replace rendered/browser review; Quarto and local-link CI must pass.
