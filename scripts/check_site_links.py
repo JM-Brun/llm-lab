@@ -17,9 +17,7 @@ class LinkParser(HTMLParser):
         self.links: list[str] = []
         self.anchors: set[str] = set()
 
-    def handle_starttag(
-        self, tag: str, attrs: list[tuple[str, str | None]]
-    ) -> None:
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = dict(attrs)
         href = attributes.get("href")
         if href is not None:
@@ -49,9 +47,7 @@ def resolve_target(site_root: Path, source: Path, href: str) -> Path | None:
     if not path:
         return source
 
-    target = (site_root / path.lstrip("/")) if path.startswith("/") else (
-        source.parent / path
-    )
+    target = (site_root / path.lstrip("/")) if path.startswith("/") else (source.parent / path)
     target = target.resolve()
 
     if target.is_dir():
@@ -89,9 +85,7 @@ def check_site(site_root: Path) -> list[str]:
             if target is None:
                 continue
             if not target.is_file():
-                errors.append(
-                    f"{source.relative_to(root)}: missing target for {href!r}"
-                )
+                errors.append(f"{source.relative_to(root)}: missing target for {href!r}")
                 continue
             fragment = unquote(parsed.fragment)
             if fragment and target.suffix.lower() == ".html":
