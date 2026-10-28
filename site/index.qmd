@@ -2,6 +2,7 @@
 title: "Comprendre les LLM, du calcul au code"
 subtitle: "Un laboratoire pédagogique bilingue, reproductible et orienté expériences"
 lang: fr
+sidebar: fr
 toc: false
 ---
 

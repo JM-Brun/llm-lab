@@ -1,0 +1,80 @@
+<script>
+(() => {
+  const basePath = window.location.pathname.startsWith("/llm-lab/") ? "/llm-lab/" : "/";
+  const siteRoot = new URL(basePath, window.location.origin);
+  const pathname = window.location.pathname;
+  if (!pathname.startsWith(siteRoot.pathname)) return;
+
+  const relativePath = pathname.slice(siteRoot.pathname.length);
+  const frenchToEnglish = {
+    "mathematical-foundations": "mathematical-foundations",
+    "logits": "logits",
+    "probabilites": "probabilities",
+    "vraisemblance": "likelihood",
+    "entropy": "entropy",
+    "cross-entropy": "cross-entropy",
+    "loss": "loss",
+    "gradients": "gradients",
+    "transformer": "transformer",
+    "glossary": "glossary",
+    "transformer-history": "transformer-history",
+    "queries-keys-values": "queries-keys-values",
+    "scaled-dot-product-attention": "scaled-dot-product-attention",
+    "causal-masking": "causal-masking",
+    "cosine-similarity": "cosine-similarity",
+    "linearite-embeddings": "embedding-linearity",
+    "tensors": "tensors",
+    "embedding-space": "embedding-space",
+    "positional-encoding": "positional-encoding",
+    "exercises": "exercises",
+    "evaluation-experimentale": "experimental-evaluation"
+  };
+  const englishToFrench = Object.fromEntries(
+    Object.entries(frenchToEnglish).map(([fr, en]) => [en, fr])
+  );
+
+  let target;
+  let label;
+  if (relativePath === "" || relativePath === "index.html") {
+    target = "en/index.html";
+    label = "English";
+  } else if (relativePath === "en/" || relativePath === "en/index.html") {
+    target = "index.html";
+    label = "Français";
+  } else if (relativePath === "references.html") {
+    target = "en/index.html";
+    label = "English";
+  } else if (relativePath.startsWith("fr/")) {
+    const slug = relativePath.slice(3).replace(/\.html$/, "");
+    target = frenchToEnglish[slug]
+      ? `en/${frenchToEnglish[slug]}.html`
+      : "en/index.html";
+    label = "English";
+  } else if (relativePath.startsWith("en/")) {
+    const slug = relativePath.slice(3).replace(/\.html$/, "");
+    target = englishToFrench[slug]
+      ? `fr/${englishToFrench[slug]}.html`
+      : "index.html";
+    label = "Français";
+  } else {
+    return;
+  }
+
+  const navbar = document.querySelector("#quarto-header .navbar .navbar-nav.ms-auto");
+  if (!navbar) return;
+
+  const item = document.createElement("li");
+  item.className = "nav-item language-toggle";
+  const link = document.createElement("a");
+  link.className = "nav-link";
+  link.href = new URL(target, siteRoot).href;
+  link.textContent = label;
+  link.setAttribute("aria-label", label === "English" ? "Switch to English" : "Passer en français");
+  link.setAttribute("lang", label === "English" ? "en" : "fr");
+  item.appendChild(link);
+
+  const githubItem = navbar.querySelector('a[href="https://github.com/JM-Brun/llm-lab"]')?.closest("li");
+  if (githubItem) navbar.insertBefore(item, githubItem);
+  else navbar.appendChild(item);
+})();
+</script>
