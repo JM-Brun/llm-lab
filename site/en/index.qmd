@@ -57,11 +57,11 @@ Pages distinguish code that exists, tests that cover it, and work that is still 
 ## Suggested path
 
 1. **From text to tokens** — Unicode, encoding, tokenization, BPE, and reference resources. Start with [Text and data](text-data.qmd).
-2. **Maths applied to LLMs** — follow logits through the training loss and gradients without duplicating a general mathematics course.
-2. **Attention and Transformers** — queries, keys, values, scores, softmax, positional information (including RoPE), and causal masking.
-3. **Data and the autoregressive objective** — tokenization, input-target shifting, and next-token prediction.
-4. **Model and training** — blocks, optimization, validation, generation, and evaluation.
-5. **Critical notes** — examine assumptions, counterexamples, and the limitations of metrics and representations.
+3. **Maths applied to LLMs** — follow logits through the training loss and gradients without duplicating a general mathematics course.
+4. **Attention and Transformers** — queries, keys, values, scores, softmax, positional information (including RoPE), and causal masking.
+2. **Data and the autoregressive objective** — tokenization, input-target shifting, and next-token prediction.
+5. **Model and training** — blocks, optimization, validation, generation, and evaluation.
+6. **Critical notes** — examine assumptions, counterexamples, and the limitations of metrics and representations.
 
 This path describes the learning structure, not the implementation status of every component. The [detailed learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md), [full curriculum and source-coverage plan](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md), and [roadmap](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md) define the learning stages, how sources fit the project, and validation criteria respectively.
 
