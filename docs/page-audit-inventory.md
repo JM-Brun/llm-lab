@@ -52,11 +52,22 @@ This pass inspected the bilingual page structure and existing reference links; i
 
 The new references were selected for a specific role: official API docs specify implementation conventions; Goodfellow et al. provide the general mathematical foundation for maximum likelihood. Neither type replaces the local explanation.
 
+## Third slice: text/data and training-example resource curation
+
+This pass inspected the bilingual source sections and page structure, not every claim in the full lessons and not the rendered site.
+
+| Page pair | What the source inspection found | Remaining work |
+|---|---|---|
+| `text-data.qmd` (FR/EN) | Both pages separate intuition, interactive visualizations, educational code, technical references/alternatives, and a suggested reading order. The resource set covers Karpathy's tokenizer walkthrough, Raschka, Hugging Face, BPE visualizers, `tiktoken` educational code, `minbpe`, SentencePiece, and the historical BPE paper. Both versions warn that teaching demonstrations and historical descriptions do not fully specify production tokenizer behavior. | Verify links and dates/versions; check the factual distinctions between BPE, WordPiece, SentencePiece, and production tokenizers; review the multilingual/equity claims and mini-lab instructions; inspect figures and responsive layout. |
+| `training-examples.qmd` (FR/EN) | Both pages cover input-target shift, windows/stride, document boundaries/packing, padding/loss masks, tensor shapes, and a debugging checklist. Resource roles are explicit: worked examples, objective interpretation, educational code, batching API, visual model overview, and attention explanation. The pages avoid prescribing one universal packing or cross-document masking policy. | Verify local links to math/attention concepts; check all examples and masks; make sure packing, attention masks, and loss masks remain distinct; inspect rendered Mermaid diagrams and bilingual parity. |
+
+The text/data resource library is already more than a list of links: it tells readers what each resource is useful for, what it does not establish, and how to progress from intuition to code to technical references. Preserve this pattern when curating other modules; do not add more sources unless they contribute a distinct role or resolve a gap.
+
 ## Next audit steps
 
 1. Finish source and rendered-page review of this vertical slice; check local links and bilingual meaning, not just literal wording.
 2. Finish the mathematical-chain audit: verify equations, worked examples, notation consistency, rendering, and bilingual meaning; the source-coverage pass above is not a full scientific review.
-3. Review text and data: tokenization, corpus boundaries, context windows, shifted targets, packing, padding, and loss masks.
+3. Finish the text/data and training-example audit: verify external/local links, scientific claims, worked examples, masks, diagrams, and responsive rendering.
 4. Review the remaining pages (tensors, embedding space, evaluation, critical notes, glossary, history, references, exercises) and record missing counterparts or artifacts explicitly.
 5. Prioritize concrete defects by reader impact. Do not bulk-rewrite pages that already satisfy the contract.
 6. Do not add implementations or experiments until their prerequisites pass the existing knowledge-validation gate.
