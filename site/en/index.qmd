@@ -15,7 +15,8 @@ A progressive path connecting intuition, mathematics, code, and experimental evi
 The long-term goal is to understand and build a small decoder-only autoregressive language model, using inspectable components and tests. Sebastian Raschka's repository is a major source and comparison point, not a table of contents to copy or evidence that the corresponding steps are already implemented here.
 
 <div class="hero-actions">
-[Explore the learning path](transformer.qmd){.btn .btn-primary}
+[Start with text and tokens](text-data.qmd){.btn .btn-primary}
+[Inspect training examples](training-examples.qmd){.btn .btn-outline-primary}
 [Explore the source code](https://github.com/JM-Brun/llm-lab){.btn .btn-outline-primary}
 </div>
 ::::
