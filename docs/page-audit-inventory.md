@@ -182,3 +182,15 @@ A targeted inspection of the linked arXiv HTML source found that the existing �
 | SMDS figure links in EN/FR | The source HTML caption identifies Figure 2 as “Feature Manifold Discovery and the Limitations of Previous Methods”; Figure 3 presents retrieved feature manifolds. | Updated both language pages to point to Figure 3 and revised the link label to describe the broader set of feature geometries rather than implying Figure 2 itself is a circular-feature example. | Confirm the anchor in the rendered browser and continue the full external-link sweep; this was a targeted link/content check, not a full visual audit. |
 
 Source inspected: [arXiv HTML v1](https://arxiv.org/html/2510.01025v1). The official SMDS repository still labels its software experimental; no code or data were executed and no reproduction is claimed.
+
+
+## Eleventh slice: update the supplementary probe-control resource link
+
+A targeted external-link sweep found that the supplementary “Designing and Interpreting Probes with Control Tasks” link used an older Stanford-hosted path that could not be verified. The author's current page on the same topic is available at Columbia and explains probing, the probe-confounder problem, control tasks, and selectivity. The authoritative ACL Anthology paper link remains in the reference list.
+
+| Area | Finding | Change | Remaining work |
+|---|---|---|---|
+| Supplementary probe-control resource (EN/FR) | The old `nlp.stanford.edu/~johnhew/probe-control/` URL could not be verified in this check. The author's current `Designing and Interpreting Probes` explainer is available at Columbia. | Replaced the supplementary link in both language pages with the current author-hosted explainer. The ACL Anthology paper remains the primary bibliographic reference. | Check the updated link in rendered pages; continue checking other external links. A failed retrieval from one tool is not, by itself, proof that the old URL is universally unavailable. |
+| Other sources checked in this pass | The ICLR proceedings record, ACL Anthology record, relevant arXiv abstract pages, PMLR proceedings page, SMDS repository, and Transformer Circuits framework resource resolve or have searchable records matching their cited works. The arXiv v2 corrigendum page was not directly retrievable by the browser tool, but search results for arXiv:2603.28744v2 expose the updated abstract and corrigendum note. | No additional citation changes made in this pass. | This is a targeted availability/identity check, not a comprehensive automated HTTP status sweep. |
+
+Sources checked: [author's current probing explainer](https://www.cs.columbia.edu/~johnhew/interpreting-probes.html), [ACL Anthology paper](https://aclanthology.org/D19-1275/), [ICLR 2025 paper](https://proceedings.iclr.cc/paper_files/paper/2025/hash/d3221cdb27e49d9c1cd35ad254feccfe-Abstract-Conference.html), [SMDS paper HTML](https://arxiv.org/html/2510.01025v1), and [official SMDS repository](https://github.com/UKPLab/tmlr2026-manifold-analysis).
