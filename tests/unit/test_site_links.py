@@ -1,6 +1,6 @@
 """Tests for the rendered-site local link checker."""
 
-import pathlib
+import pathlib  # noqa: I001
 import subprocess
 import sys
 
