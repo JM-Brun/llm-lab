@@ -20,6 +20,17 @@ The long-term goal is to understand and build a small decoder-only autoregressiv
 </div>
 ::::
 
+## Start here
+
+Follow the sequence below before branching into the reference library. Each step connects an idea to a mechanism that can be inspected; external resources supplement rather than replace worked examples.
+
+1. **Represent text** — [tokens, token IDs, and BPE](text-data.qmd).
+2. **Build the objective** — [shift inputs and targets; inspect windows and masks](training-examples.qmd).
+3. **Follow the numbers** — [mathematical foundations](mathematical-foundations.qmd), [logits](logits.qmd), and [cross-entropy](cross-entropy.qmd).
+4. **Connect the components** — [Transformer overview](transformer.qmd), then attention and causal masking.
+
+The learning order does not imply that every implementation already exists. Use the roadmap to distinguish explanatory content, tested code, and planned work.
+
 ## How to navigate
 
 :::: {.learning-grid}
@@ -56,8 +67,8 @@ Pages distinguish code that exists, tests that cover it, and work that is still 
 
 ## Suggested path
 
-1. **From text to tokens** — Unicode, encoding, tokenization, BPE, and reference resources. Start with [Text and data](text-data.qmd).
-2. **Data and the autoregressive objective** — build context windows, shift inputs and targets, then understand batching and loss masking.
+1. **From text to tokens** — Unicode, encoding, tokenization, BPE, and reference resources. [Open the lesson](text-data.qmd).
+2. **Data and the autoregressive objective** — context windows, input-target shifting, batching, and loss masking. [Open the lesson](training-examples.qmd).
 3. **Maths applied to LLMs** — follow logits through the training loss and gradients without duplicating a general mathematics course.
 4. **Attention and Transformers** — queries, keys, values, scores, softmax, positional information (including RoPE), and causal masking.
 5. **Model and training** — blocks, optimization, validation, generation, and evaluation.
