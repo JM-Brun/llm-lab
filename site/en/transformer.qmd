@@ -40,7 +40,7 @@ The important distinction is not that attention “understands” tokens while t
 1. [**Queries, keys, and values (Q, K, V)**](queries-keys-values.qmd) — three learned projections give representations distinct roles.
 2. [**Scaled dot-product attention**](scaled-dot-product-attention.qmd) — scores from $QK^\top$ are scaled by $\sqrt{d_k}$ and converted into weights by softmax.
 3. [**Causal masking**](causal-masking.qmd) — excludes future positions before softmax.
-4. [**Positional information**](positional-encoding.qmd) — supplies information about token order; the English [positional encoding and RoPE lesson](positional-encoding.qmd) explains the mechanism in detail.
+4. [**Positional information**](positional-encoding.qmd) — supplies information about token order; the [positional encoding and RoPE lesson](positional-encoding.qmd) explains the mechanism in detail.
 
 Attention weights are not a complete explanation of a prediction. They describe one aggregation step; projections, values, other heads, later layers, and the output projection also contribute.
 
@@ -66,6 +66,8 @@ The objective—predicting the next token—remains the same, but the computatio
 
 ## Continue learning
 
+- [Tensors](tensors.qmd) — read data shapes and axes.
+- [Embedding space](embedding-space.qmd) — distinguish initial vectors from contextual representations.
 - [Queries, keys, and values](queries-keys-values.qmd) — understand attention projections.
 - [Scaled dot-product attention](scaled-dot-product-attention.qmd) — follow the mathematical operations.
 - [Causal masking](causal-masking.qmd) — understand access to the preceding context.
@@ -78,10 +80,12 @@ The objective—predicting the next token—remains the same, but the computatio
 - [3Blue1Brown — *Attention in transformers, step by step*](https://www.3blue1brown.com/lessons/attention/): attention, masking, multiple heads, and cross-attention.
 - [Jay Alammar — *The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/): step-by-step visualization of the original encoder-decoder architecture.
 - [Jay Alammar — *The Illustrated GPT-2*](https://jalammar.github.io/illustrated-gpt2/): GPT architecture and masked attention.
-- [The Illustrated Transformer From Scratch](https://idtjo.hosting.acm.org/wordpress/the-illustrated-transformer/): an alternative perspective centered on self-attention, modern blocks, and architecture variants.
 - [Raschka — *Build a Large Language Model (From Scratch)*](https://www.sebastianraschka.com/llms-from-scratch/) and [code repository](https://github.com/rasbt/LLMs-from-scratch): explanations alongside code.
+- [Raschka — reading recommendations](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch01/reading-recommendations.md): first read for the big picture, second read with code, then reuse the ideas in a project.
+- [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762): the original Transformer formulation; its encoder-decoder architecture should not be confused with GPT.
+- [PyTorch — Scaled dot-product attention](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html): official API reference for comparing the equations with a concrete implementation.
 
-These resources serve different pedagogical purposes. Illustrations and analogies help build intuition; equations, assumptions, and primary references are still needed to verify technical claims.
+These resources are complementary, not interchangeable: animations help build intuition, the primary paper documents the original formulation, and official documentation specifies an API contract. Equations, assumptions, and tests are still needed to verify technical claims.
 
 :::: {.language-switch}
 **Language:** [Français](../fr/transformer.qmd) · [English](transformer.qmd)
