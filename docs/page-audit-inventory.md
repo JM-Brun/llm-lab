@@ -76,6 +76,22 @@ This source-level pass checked the stated numerical example and compared the Eng
 | Autoregressive shift | Input [t0,t1,t2,t3] maps to target [t1,t2,t3,t4]; the causal mask allows the diagonal because the input at position i contains x_i, while the target is x_(i+1). | The explanation is aligned with next-token prediction. The boundary convention for beginning/end tokens is noted. | Add an executable example only after the prerequisite concept gate; test final-token handling and padding/loss-mask alignment. |
 | Windows, document packing, and masks | Reviewed distinctions among stride, context length, packing, separators, cross-document attention, attention masks, and loss masks. | Both language versions correctly avoid presenting one packing or cross-document policy as universal. A separator token alone is not described as blocking attention. | Validate all diagrams after render and later add tests that demonstrate intended boundary and loss-mask behavior in a concrete pipeline. |
 
+
+## Fifth slice: numerical and algebraic checks for the mathematical chain
+
+This is a bounded source-level check of representative identities and worked examples in the EN/FR pages. Calculations were independently checked; this is not a full derivation-by-derivation review, and no new code tests were executed in this pass.
+
+| Concept | Independent check | Result | Remaining work |
+|---|---|---|---|
+| Logits → softmax | For z = (0, ln 3), softmax gives (1/(1+3), 3/(1+3)) = (0.25, 0.75). Adding the same constant to all logits preserves the distribution; a logit difference ln 2 gives a probability ratio of 2. | Examples and stated invariances in the EN/FR logits/probability pages are consistent. | Inspect rendered equations; add automated examples only if they add coverage beyond the existing loss unit tests. |
+| Entropy | H(0.5, 0.5) = ln 2 nats = 1 bit. H(0.9, 0.1) = −0.9 ln 0.9 − 0.1 ln 0.1 ≈ 0.32508 nats ≈ 0.468996 bits. | Both language versions' rounded values (0.325 nats, 0.469 bit) are consistent. The stated 0 ≤ H ≤ ln V bound assumes a normalized discrete distribution over a finite vocabulary, as noted. | Verify rendered units and equations; review whether the distinction between predictive entropy and observed-token surprisal is consistently used across all linked pages. |
+| Sequence likelihood → NLL | 0.5 × 0.25 × 0.8 = 0.1; −ln(0.1) ≈ 2.302585, and log-likelihood is the negative of NLL. | EN/FR example is arithmetically consistent. The text correctly attributes factorization to conditional probability/chain rule, not independence among tokens. | Verify the exact scope of the independent-sequences statement and the averaging conventions used when comparing corpus results. |
+| Cross-entropy and KL | H(q,p) = H(q) + D_KL(q∥p) follows by expanding definitions for normalized q,p, with the usual zero-mass conventions. For q=(1,0), p=(0.9,0.1), D_KL(q∥p)=−ln 0.9≈0.10536 nats, while D_KL(p∥q)=∞. | The example and directionality caveat are consistent in both languages. | Inspect full derivation rendering and check terminology parity for “cross-entropy”, “entropie croisée”, and “divergence KL”. |
+| Cross-entropy gradient | For one-hot target y and p=softmax(z), ∂ℓ/∂z_i = p_i − 1[i=y]. This is a derivative with respect to logits, not directly with respect to network parameters. | The gradients pages state the correct scoped identity and distinguish the later chain-rule step. | Check tensor/Jacobian notation in rendered equations; the existing NumPy reference tests have a deliberately limited row-wise scope and do not test sequence masks or target shifting. |
+| Perplexity convention | If mean NLL uses natural logarithms, PPL = exp(mean NLL); if using log base 2, PPL = 2^(mean NLL). | The EN/FR loss pages correctly state the logarithm-base dependence and note tokenizer/reduction comparability limits. | Ensure future benchmark/report templates record tokenizer, evaluated tokens, ignored targets, and reduction protocol. |
+
+The checked examples are mutually consistent across the relevant pages at source level. This does **not** imply all equations, diagrams, external links, or rendered math have been reviewed. The text pages already describe the reference NumPy loss tests and their limits; this audit did not rerun those tests.
+
 ## Next audit steps
 
 1. Finish source and rendered-page review of this vertical slice; check local links and bilingual meaning, not just literal wording.
