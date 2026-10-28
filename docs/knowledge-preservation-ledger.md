@@ -267,3 +267,14 @@ This is a traceable first-pass preservation record, not a claim that every line 
 - **Boundary made explicit in both public languages:** the reference is not a token-sequence loss. It does not implement target shifting, token masks or `ignore_index`, soft targets, class weighting, perplexity, or gradients with respect to model parameters. Those are conceptual concerns described by the lesson, but must not be inferred to exist in this small implementation.
 - **Disposition:** add direct links to the implementation and tests and describe their scope in both cross-entropy pages. Keep token-level alignment/masking as caller responsibilities; do not expand the code until a separate, justified implementation task has validated prerequisites.
 - **Still open:** Quarto/CI validation of these edits, rendered-browser review of equations and responsive layout, internal/external link checking, and learner transfer questions. The source audit alone does not establish those outcomes or learner mastery.
+
+## 14. Rendered-site local link checker — 2026-10-28
+
+**Scope:** verified the implementation and CI integration introduced by PR [#21](https://github.com/JM-Brun/llm-lab/pull/21), merged into `main` at commit `a641203c5df922bdd29007d26db6191fe9ee0f73`.
+
+- **Behavior:** after `quarto render site`, CI runs `scripts/check_site_links.py site/_site`. The dependency-free checker validates local rendered-HTML targets and fragment identifiers. It supports root-relative links, directory `index.html` targets, extensionless `.html` targets, and URL decoding.
+- **Unit coverage:** tests cover valid local files/fragments and external URLs, missing local targets, and missing fragments.
+- **Scope boundary:** external URLs are intentionally ignored to keep CI deterministic and avoid third-party outages. A successful check establishes local link/fragment integrity for that rendered artifact; it does not establish external reference availability, visual equation rendering, responsive layout, accessibility, or learner mastery.
+- **Post-merge evidence:** on merge commit `a641203c5df922bdd29007d26db6191fe9ee0f73`, the Python CI workflow and Quarto site workflow both completed successfully. The separate publish workflow was still running at the time of this record.
+- **Remaining validation:** browser inspection of MathJax and responsive layouts, review of external-reference relevance/availability, and private transfer-question evidence remain open.
+
