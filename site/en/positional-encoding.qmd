@@ -35,10 +35,18 @@ R(\theta)=
 \sin\theta & \cos\theta
 \end{pmatrix},
 \qquad
-R(\theta)\begin{pmatrix}x_1\\x_2\end{pmatrix}.
-$$
+x'=R(\theta)x.
+$
 
-RoPE associates each position $m$ with an angle that depends on the frequency of the coordinate pair. Queries and keys receive rotations corresponding to their respective positions. Their dot product then depends on the difference between those positions, so the attention score carries relative-position information.
+To see why relative-position information appears, consider one coordinate pair at a fixed frequency. Let $q$ and $k$ be the query and key components before rotation; at positions $m$ and $n$, they become $q_m=R(m\theta)q$ and $k_n=R(n\theta)k$. Since rotations satisfy $R(\alpha)^\top=R(-\alpha)$ and $R(\alpha)R(\beta)=R(\alpha+\beta)$, we obtain:
+
+$
+q_m^\top k_n
+= q^\top R(m\theta)^\top R(n\theta)k
+= q^\top R((n-m)\theta)k.
+$
+
+Thus, for this pair and frequency, the score depends on the offset $n-m$, rather than on the absolute positions separately. RoPE applies this reasoning pair by pair, with a different frequency for each pair.
 
 In an attention head, rotations are applied to $Q$ and $K$ before computing $QK^\top$. In standard RoPE, the values $V$ are not directly rotated.
 
