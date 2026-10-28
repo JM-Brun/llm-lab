@@ -44,6 +44,8 @@ $$
 P(x_1,\ldots,x_T)=\prod_{t=1}^{T}P(x_t\mid x_{<t}).
 $$
 
+Dans la convention d'entraînement courante, la sortie calculée à la position $i$ est comparée à la cible $x_{i+1}$ : les entrées et les cibles sont donc décalées d'un token. Le masque autorise la diagonale $j=i$ parce que l'entrée à cette position contient $x_i$, et non la cible future $x_{i+1}$. Le traitement des bornes dépend notamment des conventions choisies pour les tokens de début et de fin de séquence.
+
 Les Transformers décodeurs comme GPT utilisent cette contrainte pour apprendre à prédire le prochain token tout en calculant en parallèle les positions d'un batch d'entraînement. Le papier [*Attention Is All You Need* (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762) décrit le masquage de l'attention du décodeur.
 
 ## Idées reçues et contre-exemples
