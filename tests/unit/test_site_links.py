@@ -1,15 +1,15 @@
 """Tests for the rendered-site local link checker."""
 
+import pathlib
+import subprocess
 import sys
-from pathlib import Path
-from subprocess import CompletedProcess, run
 
 
-SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "check_site_links.py"
+SCRIPT = pathlib.Path(__file__).resolve().parents[2] / "scripts" / "check_site_links.py"
 
 
-def run_checker(site: pathlib.Path) -> CompletedProcess[str]:
-    return run(
+def run_checker(site: pathlib.Path) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
         [sys.executable, str(SCRIPT), str(site)],
         capture_output=True,
         check=False,
