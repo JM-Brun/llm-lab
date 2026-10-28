@@ -2,7 +2,7 @@
 
 This roadmap prioritizes **validating and improving the knowledge already present**. Do not add implementations, modules, pages, or experiments merely to advance a roadmap. A topic is not complete because it is documented, because tests pass, or because an experiment runs: it requires accurate explanations, explicit assumptions and counterexamples, and demonstrated understanding recorded in the private `career-knowledge` inventory. Code is justified only when it resolves a specific conceptual gap and the prerequisite knowledge has been validated.
 
-## Current state (reviewed 2026-10-27)
+## Current state (reviewed 2026-10-28)
 
 The learning budget is capped at **five focused hours per week, with no session longer than 60 minutes**. Calendar estimates below are sequencing aids, not deadlines; a module remains open until its evidence criteria are met. Do not compensate for missed sessions by extending another day.
 
@@ -11,7 +11,7 @@ The learning budget is capped at **five focused hours per week, with no session 
 - A bilingual glossary and a sourced, selective history of the Transformer architecture.
 - Control questions in the core probability/loss/gradient pages with answers hidden behind native disclosure controls.
 - A small NumPy cross-entropy implementation and analytical gradient, with unit tests including finite-difference comparison.
-- CI checks for Ruff formatting/lint, mypy, pytest, and a separate Quarto render workflow.
+- CI checks for Ruff formatting/lint, mypy, pytest, and a separate Quarto render workflow; the rendered-site workflow also checks local HTML links and fragment identifiers.
 - Written conventions for the learning path, experiment protocol, mathematical foundations, and reference provenance.
 
 ### Not yet demonstrated
@@ -19,7 +19,7 @@ The learning budget is capped at **five focused hours per week, with no session 
 - A training run with a saved configuration, validation curves, generated examples, and error analysis.
 - End-to-end invariance tests for causal attention.
 - Reproducible experiments behind the cosine-similarity and feature-linearity articles.
-- Browser-based visual/accessibility review and automated link checking for the site.
+- Browser-based visual/accessibility review and external-reference availability/relevance checks. Local rendered-site file and fragment links are now checked in CI.
 - A committed `uv.lock` at the reviewed base snapshot; the current setup can resolve dependencies during CI, but it does not yet guarantee the same locked dependency graph across runs.
 - An explicit repository licence. Do not infer permission to reuse the code or content.
 
@@ -54,14 +54,14 @@ A textual, bilingual review of `site/fr/entropy.qmd`, `site/en/entropy.qmd`, `si
 - **Corrections so far are editorial/mathematical clarification, not mastery evidence.** In particular, the KL derivation remains because the page uses it to explain soft targets and the relationship between cross-entropy and KL; this is not a claim that the entire treatment has passed independent scientific review.
 - **Still open:** actual browser review of MathJax and responsive layout; external-reference availability/relevance; private knowledge-transfer questions and evidence. Do not mark these concepts acquired from this audit alone.
 
-**Next step:** run the full Quarto/CI checks and inspect the corrected pages in a browser at desktop and mobile widths. Verify local links, rendered equations, and external references, then collect the private transfer-question evidence. The source-level loss/gradient correspondence check is now recorded in the knowledge-preservation ledger, and the public cross-entropy pages explicitly distinguish the row-wise NumPy reference from token-level shifting/masking. Do not mark the content complete until the remaining checks have evidence.
+**Next step:** the local rendered-site link checker is now part of CI. Inspect the corrected pages in a browser at desktop and mobile widths; verify rendered equations and external references; then collect private transfer-question evidence. The source-level loss/gradient correspondence check is now recorded in the knowledge-preservation ledger, and the public cross-entropy pages explicitly distinguish the row-wise NumPy reference from token-level shifting/masking. Do not mark the content complete until the remaining checks have evidence.
 
 ### P1 — Keep the existing learning experience dependable
 **Goal:** ensure the existing site and numerical exercise are correct, navigable, and easy to reproduce.
 
 Tasks:
 1. Render the full Quarto site and inspect both languages at desktop and mobile widths.
-2. Check internal links, external source links, image loading, alternative text, headings, and rendered mathematics.
+2. Rely on the rendered-site CI checker for local file/fragment links; manually inspect external references, image loading, alternative text, headings, and rendered mathematics.
 3. Fix notation inconsistencies in the mathematical foundations and attention self-checks.
 4. Link the website, learning path, reference list, and this roadmap consistently.
 5. Record reproducibility and accessibility defects found during review, but defer dependency-locking changes and new test helpers until the knowledge-validation gate is met.
@@ -70,7 +70,7 @@ Tasks:
 **Acceptance criteria**
 - `quarto render site` succeeds from a clean checkout.
 - `uv sync --locked --dev`, Ruff, mypy, and pytest pass.
-- No known broken internal links; externally hosted images have a text alternative and source attribution.
+- The rendered-site local-link check passes with no known broken local file or fragment links; externally hosted images have a text alternative and source attribution.
 - The site distinguishes existing implementations from planned work.
 
 ### Deferred — Mathematical and numerical foundations
@@ -164,7 +164,7 @@ Order:
 
 Tasks:
 1. Add a concise project status page and one-command quick-start for each completed experiment.
-2. Add a CI link checker or equivalent internal-link validation, while treating external-site outages separately.
+2. **Implemented:** CI checks local file and fragment links in rendered HTML. Continue reviewing external-reference availability/relevance separately; external URLs are intentionally excluded from this deterministic check.
 3. Perform an accessibility and mobile visual pass on the rendered site.
 4. Choose and add an explicit licence only after deciding the intended reuse terms for code and content.
 5. Publish reports with plots, exact commands, source links, and known limitations.
@@ -212,16 +212,20 @@ Every new or substantially revised concept page should meet these criteria:
 - [ ] Include a primary paper or official technical source plus an accessible explanation where useful.
 - [ ] Keep French and English versions equivalent in claims, caveats, notation, and references.
 - [ ] Check internal links, rendered equations, mobile readability, and source attribution.
-- [ ] Use Quarto-supported `$...# Repository roadmap
+- [ ] Use Quarto-supported inline math (`$...# Repository roadmap
 
 This roadmap prioritizes **validating and improving the knowledge already present**. Do not add implementations, modules, pages, or experiments merely to advance a roadmap. A topic is not complete because it is documented, because tests pass, or because an experiment runs: it requires accurate explanations, explicit assumptions and counterexamples, and demonstrated understanding recorded in the private `career-knowledge` inventory. Code is justified only when it resolves a specific conceptual gap and the prerequisite knowledge has been validated.
 
-## Current state (reviewed 2026-10-20)
+## Current state (reviewed 2026-10-28)
+
+The learning budget is capped at **five focused hours per week, with no session longer than 60 minutes**. Calendar estimates below are sequencing aids, not deadlines; a module remains open until its evidence criteria are met. Do not compensate for missed sessions by extending another day.
 
 ### Implemented in the repository
-- A Quarto site in French and English, with a chapter on causal attention and notes on cosine similarity and the linearity hypothesis.
+- A Quarto site in French and English, with canonical pages for mathematical foundations, entropy/cross-entropy, attention, cosine similarity, and the embedding-linearity hypothesis.
+- A bilingual glossary and a sourced, selective history of the Transformer architecture.
+- Control questions in the core probability/loss/gradient pages with answers hidden behind native disclosure controls.
 - A small NumPy cross-entropy implementation and analytical gradient, with unit tests including finite-difference comparison.
-- CI checks for Ruff formatting/lint, mypy, pytest, and a separate Quarto render workflow.
+- CI checks for Ruff formatting/lint, mypy, pytest, and a separate Quarto render workflow; the rendered-site workflow also checks local HTML links and fragment identifiers.
 - Written conventions for the learning path, experiment protocol, mathematical foundations, and reference provenance.
 
 ### Not yet demonstrated
@@ -229,7 +233,7 @@ This roadmap prioritizes **validating and improving the knowledge already presen
 - A training run with a saved configuration, validation curves, generated examples, and error analysis.
 - End-to-end invariance tests for causal attention.
 - Reproducible experiments behind the cosine-similarity and feature-linearity articles.
-- Browser-based visual/accessibility review and automated link checking for the site.
+- Browser-based visual/accessibility review and external-reference availability/relevance checks. Local rendered-site file and fragment links are now checked in CI.
 - A committed `uv.lock` at the reviewed base snapshot; the current setup can resolve dependencies during CI, but it does not yet guarantee the same locked dependency graph across runs.
 - An explicit repository licence. Do not infer permission to reuse the code or content.
 
@@ -252,12 +256,26 @@ Tasks:
 - The learner can explain the concept, identify when it does not apply, and transfer it to a new case.
 - `career-knowledge` records the evidence needed for mastery; a passing test or a polished page alone is insufficient.
 
+#### Latest focused audit — core probability and loss chain (2026-10-27)
+
+A textual, bilingual review of `site/fr/entropy.qmd`, `site/en/entropy.qmd`, `site/fr/cross-entropy.qmd`, and `site/en/cross-entropy.qmd` has been completed against the current public files. This is not a browser-render, external-link, or mastery review.
+
+- **Entropy:** the two language versions preserve the same core claims: finite-vocabulary bound in nats, the \(0\log 0=0\) convention, a checkable numerical example, predictive entropy versus observed-token surprisal, sequence NLL, temperature, and limits concerning truth/calibration and tokenizer-dependent comparisons.
+- **Cross-entropy:** the two versions preserve the one-hot token objective, normalized soft-target formulation, KL identity and direction, zero-support caveat, target/logit alignment, masking and reduction semantics, perplexity convention, and the one-hot logit-gradient derivation.
+- **Logits/probabilities:** a duplicated set of self-check questions in the English logits page was removed on this branch; no mathematical correction was identified in those page pairs.
+- **Likelihood/loss:** the likelihood pages remain aligned. The loss pages had duplicated English self-checks, a missing tensor-navigation link, and an ambiguous perplexity/log-base caveat. The branch consolidates the self-check, restores the link, defines the loss notation, and states the natural-log and base-2 perplexity formulas explicitly.
+- **Gradients:** the English page also duplicated its self-check. The branch consolidates it; the textual review found no justified change to the chain-rule or finite-difference equations.
+- **Corrections so far are editorial/mathematical clarification, not mastery evidence.** In particular, the KL derivation remains because the page uses it to explain soft targets and the relationship between cross-entropy and KL; this is not a claim that the entire treatment has passed independent scientific review.
+- **Still open:** actual browser review of MathJax and responsive layout; external-reference availability/relevance; private knowledge-transfer questions and evidence. Do not mark these concepts acquired from this audit alone.
+
+**Next step:** the local rendered-site link checker is now part of CI. Inspect the corrected pages in a browser at desktop and mobile widths; verify rendered equations and external references; then collect private transfer-question evidence. The source-level loss/gradient correspondence check is now recorded in the knowledge-preservation ledger, and the public cross-entropy pages explicitly distinguish the row-wise NumPy reference from token-level shifting/masking. Do not mark the content complete until the remaining checks have evidence.
+
 ### P1 — Keep the existing learning experience dependable
 **Goal:** ensure the existing site and numerical exercise are correct, navigable, and easy to reproduce.
 
 Tasks:
 1. Render the full Quarto site and inspect both languages at desktop and mobile widths.
-2. Check internal links, external source links, image loading, alternative text, headings, and rendered mathematics.
+2. Rely on the rendered-site CI checker for local file/fragment links; manually inspect external references, image loading, alternative text, headings, and rendered mathematics.
 3. Fix notation inconsistencies in the mathematical foundations and attention self-checks.
 4. Link the website, learning path, reference list, and this roadmap consistently.
 5. Record reproducibility and accessibility defects found during review, but defer dependency-locking changes and new test helpers until the knowledge-validation gate is met.
@@ -266,7 +284,7 @@ Tasks:
 **Acceptance criteria**
 - `quarto render site` succeeds from a clean checkout.
 - `uv sync --locked --dev`, Ruff, mypy, and pytest pass.
-- No known broken internal links; externally hosted images have a text alternative and source attribution.
+- The rendered-site local-link check passes with no known broken local file or fragment links; externally hosted images have a text alternative and source attribution.
 - The site distinguishes existing implementations from planned work.
 
 ### Deferred — Mathematical and numerical foundations
@@ -360,7 +378,7 @@ Order:
 
 Tasks:
 1. Add a concise project status page and one-command quick-start for each completed experiment.
-2. Add a CI link checker or equivalent internal-link validation, while treating external-site outages separately.
+2. **Implemented:** CI checks local file and fragment links in rendered HTML. Continue reviewing external-reference availability/relevance separately; external URLs are intentionally excluded from this deterministic check.
 3. Perform an accessibility and mobile visual pass on the rendered site.
 4. Choose and add an explicit licence only after deciding the intended reuse terms for code and content.
 5. Publish reports with plots, exact commands, source links, and known limitations.
@@ -371,19 +389,20 @@ Tasks:
 - Every claimed feature is either implemented or labelled planned.
 - The repository clearly states licence and external asset provenance.
 
-## Suggested sequence at 10 hours per week
+## Suggested sequence at five hours per week
 
-| Timebox | Focus | Deliverable |
+Use five sessions of at most 60 minutes. A missed session is skipped or rescheduled into another available day; never exceed the daily cap. Keep the audit/retrieval loop active throughout rather than treating it as a one-time first week.
+
+| Approximate timebox | Focus | Deliverable |
 | --- | --- | --- |
-| Week 1 | P0 site and documentation QA | Clean render, checked navigation, notation fixes |
-| Weeks 2–3 | P1 numerical foundations | Property tests and gradient diagnostics |
-| Weeks 4–5 | P2 causal attention | Tested NumPy reference and framework comparison |
-| Weeks 6–7 | P3 tokenization and tiny Transformer | Deterministic data path and CPU smoke test |
-| Weeks 8–9 | P4 representation experiments | Reproducible metric and geometry reports |
-| Weeks 10–11 | P5 choose one: pre-training or SFT/LoRA | One bounded, well-evaluated run |
-| Week 12 | P6 portfolio review | Final report, limitations, reproducibility check |
+| Weeks 1–2 | P0 audit existing explanations and bilingual parity | Corrections to existing pages only, source/caveat review, unfamiliar transfer questions |
+| Weeks 3–4 | P1 numerical foundations, only where the audit exposes a real gap | Reviewed derivation or property-test plan; implementation only after the prerequisite knowledge gate |
+| Weeks 5–6 | Causal attention concepts and invariance reasoning | Written causal-invariance argument and counterexample; no implementation unless mastery evidence warrants it |
+| Weeks 7–8 | Representation geometry: critically audit existing cosine/linearity claims | Source-backed claim review and explicit limitations; no experiment until its question and protocol are justified |
+| Weeks 9–10 | Select one bounded experiment or one existing-page gap | One protocol with baseline, metrics, split policy, uncertainty and stop criteria |
+| Weeks 11–12 | Reproducibility, report, transfer test and public-site review | Reviewed evidence report, limitations, links and accessibility/render check |
 
-This schedule is a prioritization aid, not a guarantee. If acceptance criteria fail, extend the module instead of advancing on calendar time.
+At five hours per week, the plan intentionally narrows throughput rather than weakening quality gates. Tokenizer, Transformer, pretraining, SFT/LoRA, preference optimization, and advanced architecture work remain deferred until the relevant concepts and the chosen project justify them. If acceptance criteria fail, extend the module instead of advancing on calendar time.
 
 ## Content architecture and definition of done
 
@@ -406,6 +425,5 @@ Every new or substantially revised concept page should meet these criteria:
 - [ ] Link to code, tests, and experiments when present, or explicitly state that they do not yet exist.
 - [ ] Include a primary paper or official technical source plus an accessible explanation where useful.
 - [ ] Keep French and English versions equivalent in claims, caveats, notation, and references.
- inline and `$...$` display math delimiters consistently; check that display delimiters are paired and inspect the rendered output in both languages. Do not assume a successful build alone proves equations are visually legible.
-
-Passing a render or test establishes only the property that was checked. It does not by itself establish conceptual mastery, general model quality, or an empirical claim.
+- [ ] Check internal links, rendered equations, mobile readability, and source attribution.
+) and display math (`$...$`) delimiters consistently; check that display delimiters are paired and inspect the rendered output in both languages....
