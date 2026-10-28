@@ -334,3 +334,12 @@ This is a traceable first-pass preservation record, not a claim that every line 
 **Correction proposed in this change:** add the same caveat to both language versions and link directly to the official API documentation. The text distinguishes API mask polarity from the invariant causal requirement that future key positions remain inaccessible.
 
 **Scope / limits:** this is a source-backed clarification, not an implementation or end-to-end proof of causal invariance. The repository still has no reusable attention implementation or future-token perturbation test. Quarto rendering, local-link checks, and source-level FR/EN review remain required.
+
+
+## 21. Cosine-similarity lesson — related-concept link parity — 2026-10-28
+
+**Finding:** the French cosine-similarity lesson linked to the embedding-space lesson in its takeaway, while the English counterpart ended without that cross-link. The target lesson exists in both languages.
+
+**Correction:** add the equivalent English link to `site/en/embedding-space.qmd`, preserving direct navigation between the language-matched concepts.
+
+**Scope / limits:** this is a small navigation-parity correction discovered during the semantic FR/EN audit. It does not validate the scientific claims or references in either lesson, nor does it replace Quarto render, local-link CI, external-link checks, or browser/mobile review.
