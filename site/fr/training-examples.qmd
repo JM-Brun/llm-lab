@@ -39,10 +39,10 @@ Entrée et cible ont la même longueur. La cible est décalée d’une position 
 
 Le stride est le nombre de positions dont on décale le début de la fenêtre entre deux exemples. Il est distinct de la longueur de contexte.
 
-| Longueur | Stride | Conséquence |
+| Longueur de la fenêtre d’entrée | Stride | Conséquence pour les fenêtres d’entrée |
 |---:|---:|---|
 | 4 | 4 | Les fenêtres d’entrée sont adjacentes, sans recouvrement |
-| 4 | 2 | Les fenêtres se recouvrent ; du contexte est réutilisé |
+| 4 | 2 | Les fenêtres d’entrée se recouvrent ; du contexte est réutilisé |
 | 4 | 5 | Certaines positions peuvent être sautées |
 
 ```{mermaid}
@@ -52,6 +52,8 @@ flowchart LR
     A --> D["Stride 2 : [0 1 2 3]"]
     D --> E["Puis [2 3 4 5]"]
 ```
+
+Le tableau décrit **uniquement les fenêtres d’entrée**. Pour l’entraînement à la prédiction du prochain token, chaque fenêtre a aussi besoin d’une cible décalée d’un token ; le dernier token d’entrée doit donc avoir un successeur dans le flux source. La fin du corpus doit être traitée explicitement (par exemple en supprimant un exemple incomplet ou en appliquant une convention de fin de séquence définie).
 
 Un stride plus petit augmente généralement le nombre d’exemples et le recouvrement. Il n’existe pas de stride universellement optimal : les choix dépendent du pipeline, du budget de calcul et du traitement de la fin du corpus. Une fenêtre pédagogique glissante n’est pas nécessairement représentative d’un pipeline industriel.
 
