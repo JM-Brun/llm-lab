@@ -235,3 +235,8 @@ The bilingual embedding-linearity lessons used ordinary parentheses around sever
 ### Focused numerical-scope audit — cosine reference snippet (2026-10-28)
 
 The bilingual cosine-similarity pages now distinguish the mathematical definition and zero-vector guard from production-grade numerical robustness. The illustrative direct NumPy norm/dot-product snippet can overflow or underflow on extreme finite magnitudes. No replacement implementation or benchmark was added; any future implementation should be accompanied by edge-case tests and an explicit dtype/tolerance contract.
+
+
+### Focused bilingual audit — embedding-space language link (2026-10-28)
+
+A stale note in the English embedding-space lesson claimed that positional encoding/RoPE was available only in French, despite the English counterpart already existing. The lesson now links directly to its English counterpart. This is a targeted navigation correction; the full bilingual semantic and rendered-page reviews remain open.

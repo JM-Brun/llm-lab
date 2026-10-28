@@ -361,3 +361,12 @@ This is a traceable first-pass preservation record, not a claim that every line 
 **Correction:** both language versions now state that the snippet is a pedagogical reference, not a production-hardened implementation, and recommend a tested implementation with documented numerical behaviour for production use.
 
 **Scope / limits:** this is a caveat about numerical robustness, not a replacement implementation or a claim that every library implementation is stable for every dtype/input. No numerical benchmark or new code has been added.
+
+
+## 22. Embedding-space lesson — stale language-availability note — 2026-10-28
+
+**Finding:** the English embedding-space lesson stated that the positional-encoding/RoPE lesson was available only in French and linked to `../fr/positional-encoding.qmd`. An English counterpart now exists at `site/en/positional-encoding.qmd`, so the note and primary navigation were stale.
+
+**Correction:** replace the stale note with a direct link to the English positional-encoding/RoPE lesson. The French lesson already linked to its language-matched counterpart.
+
+**Scope / limits:** source-level navigation correction only. Quarto render and local-link CI must verify the rendered target; this does not validate the technical completeness of the RoPE explanation or visual/mobile layout.
