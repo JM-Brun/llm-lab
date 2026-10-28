@@ -2,15 +2,15 @@
 
 from __future__ import annotations
 
+import pathlib
 import subprocess
 import sys
-from pathlib import Path
 
 
-SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "check_site_links.py"
+SCRIPT = pathlib.Path(__file__).resolve().parents[2] / "scripts" / "check_site_links.py"
 
 
-def run_checker(site: Path) -> subprocess.CompletedProcess[str]:
+def run_checker(site: pathlib.Path) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         [sys.executable, str(SCRIPT), str(site)],
         capture_output=True,
@@ -19,7 +19,7 @@ def run_checker(site: Path) -> subprocess.CompletedProcess[str]:
     )
 
 
-def test_accepts_existing_files_fragments_and_external_links(tmp_path: Path) -> None:
+def test_accepts_existing_files_fragments_and_external_links(tmp_path: pathlib.Path) -> None:
     (tmp_path / "index.html").write_text(
         '<a href="guide.html#intro">Guide</a><a href="https://example.com/docs">External</a>',
         encoding="utf-8",
@@ -35,7 +35,7 @@ def test_accepts_existing_files_fragments_and_external_links(tmp_path: Path) -> 
     assert "passed" in result.stdout
 
 
-def test_reports_missing_local_file(tmp_path: Path) -> None:
+def test_reports_missing_local_file(tmp_path: pathlib.Path) -> None:
     (tmp_path / "index.html").write_text(
         '<a href="missing.html">Missing</a>',
         encoding="utf-8",
@@ -47,7 +47,7 @@ def test_reports_missing_local_file(tmp_path: Path) -> None:
     assert "missing target" in result.stdout
 
 
-def test_reports_missing_fragment(tmp_path: Path) -> None:
+def test_reports_missing_fragment(tmp_path: pathlib.Path) -> None:
     (tmp_path / "index.html").write_text(
         '<a href="guide.html#absent">Guide</a>',
         encoding="utf-8",
