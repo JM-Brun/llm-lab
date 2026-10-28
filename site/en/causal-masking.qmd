@@ -44,6 +44,8 @@ $$
 P(x_1,\ldots,x_T)=\prod_{t=1}^{T}P(x_t\mid x_{<t}).
 $$
 
+In a common training convention, the output computed at position $i$ is compared with target $x_{i+1}$: inputs and targets are shifted by one token. The mask allows the diagonal $j=i$ because the input at that position contains $x_i$, not the future target $x_{i+1}$. Boundary handling depends, among other things, on the chosen beginning-of-sequence and end-of-sequence token conventions.
+
 Decoder-only Transformers such as GPT use this constraint to learn next-token prediction while computing positions in a training batch in parallel. [*Attention Is All You Need* (Vaswani et al., 2017)](https://arxiv.org/abs/1706.03762) describes masking decoder attention.
 
 ## Misconceptions and counterexamples
