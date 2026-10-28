@@ -94,7 +94,34 @@ Where relevant, identify these relationships:
 
 Do not label a concept as a prerequisite merely because it is related. Make essential dependencies few and explain why they are essential. A reader following an overview should not have to understand every linked concept before the overview itself makes sense.
 
-## 4. Shared quality contract for every public page
+## 4. Source synthesis: curate and combine the best explanations
+
+LLM Lab aims to be a **more complete, more teachable synthesis of the strongest existing material**, not a summary of one book and not a pile of links. “Best” is question-dependent: a visual explanation may be best for first intuition, a primary paper for the original claim, official documentation for an API contract, and a controlled experiment for a measured performance claim. No single source is authoritative for every kind of question.
+
+For each important topic, use a lightweight source map when it improves the explanation:
+
+- **Core claim:** what exactly needs to be understood or established?
+- **Primary evidence:** which paper, formal derivation, standard, or official documentation supports the technical claim?
+- **Pedagogical explanation:** which existing explanation communicates the idea particularly well, and what does it leave implicit?
+- **Alternative perspective:** does another source use different notation, assumptions, architecture, or emphasis?
+- **Open limitations:** what is simplified, implementation-dependent, disputed, or not demonstrated?
+- **LLM-specific bridge:** what must be added so the reader can connect the general idea to an actual language-model mechanism?
+
+Then synthesize rather than concatenate:
+
+1. Identify the reader's question and the minimum correct mental model.
+2. Compare the strongest relevant sources for accuracy, scope, clarity, and omissions; do not rank sources by popularity alone.
+3. Write an original explanation with consistent notation and a worked example that serves the learning objective.
+4. Add the important caveats and counterexamples that a single source may omit.
+5. Link to the best complementary source for readers who want a different presentation or more detail.
+6. Record provenance for factual claims, figures, and borrowed framing; attribute specific ideas, and never reproduce substantial prose, exercises, code, or illustrations without a clear legal basis.
+7. Recheck living sources and version-sensitive claims before treating a coverage item as current.
+
+A source matrix is useful for a major topic or contested claim; it is unnecessary overhead for every small paragraph. Preserve disagreement where sources genuinely differ instead of silently blending incompatible conventions. When an explanation is simplified, state what it abstracts away and link to the fuller treatment.
+
+**The output should be better than any single source for this learning goal** because it combines clear intuition, rigorous definitions, consistent notation, the right depth, counterexamples, current evidence, and links to further reading. It should not claim to be universally superior or exhaustive: define the scope, state what remains uncovered, and keep references inspectable.
+
+## 5. Shared quality contract for every public page
 
 Before a page is considered ready, check the following applicable items:
 
