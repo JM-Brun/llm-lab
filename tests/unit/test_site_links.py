@@ -1,7 +1,5 @@
 """Tests for the rendered-site local link checker."""
 
-from __future__ import annotations
-
 import pathlib
 import subprocess
 import sys
