@@ -41,6 +41,25 @@ The string `"ChatGPT is learning."` may be split into words, subwords, character
 - **Tokenization** maps text to units from a chosen vocabulary.
 - An **embedding** is a learned vector associated with an ID, not another representation of the ID itself.
 
+
+### Same text, potentially different segmentations
+
+The diagram compares two **hypothetical** outputs to illustrate the principle; these are not the outputs of a real tokenizer. Exact boundaries and IDs depend on the chosen encoder.
+
+```{mermaid}
+flowchart TB
+    A["Same Unicode string"] --> B["Tokenizer A"]
+    A --> C["Tokenizer B"]
+    B --> D["[fragment 1] [fragment 2] [fragment 3]"]
+    C --> E["[fragment 1] [fragment 2]"]
+    D --> F["IDs under vocabulary A"]
+    E --> G["IDs under vocabulary B"]
+    F --> H["Model trained with A"]
+    G --> I["Model trained with B"]
+```
+
+What this diagram shows: the same string can yield different sequence lengths and IDs. What it does not show: that one tokenizer is universally better, or that its fragments correspond to units of meaning.
+
 ## 2. Why whitespace splitting is not enough
 
 It handles punctuation, contractions, languages without spaces between words, spelling variants, rare names, and technical strings poorly. A vocabulary containing every possible word would be huge and still fragile for novel forms.
@@ -92,6 +111,13 @@ The resources are complementary. A useful progression is to build intuition, rea
 - [Sebastian Raschka — *Build an LLM from Scratch*](https://www.sebastianraschka.com/llms-from-scratch/): Chapter 2 places tokens in the pipeline from text data to embeddings and input-target examples.
 - [Hugging Face — Tokenizers course](https://huggingface.co/learn/llm-course/chapter6/1): structured explanations of algorithms and trade-offs; check the current course version.
 
+### Interactive visualizations and comparisons
+
+- [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/) : step-by-step interactive visualization for observing pair merges and vocabulary growth. Treat it as an educational demonstration, then compare its conventions with a production tokenizer.
+- [Cornell CS4782 — Interactive Tokenization Visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/) : interactive comparison of BPE and WordPiece. Useful for isolating algorithm-family differences, although its teaching examples do not cover every production variant.
+- [Hugging Face — BPE, French course](https://huggingface.co/learn/llm-course/fr/chapter6/5?fw=tf) : structured explanation of BPE training that complements the visual intuition with a more systematic account.
+- [Saurav Prateek — visualizing BPE encoding with Hugging Face](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize) : example of visualizing a text's merge path. This is a community article; check current code and dependency compatibility before running it.
+
 ### Educational code
 
 - [OpenAI `tiktoken` — educational module](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py): simplified BPE code that makes merges inspectable; do not treat it as the optimized production path.
@@ -116,7 +142,22 @@ The resources are complementary. A useful progression is to build intuition, rea
 
 This page links to resources rather than copying their illustrations. Repositories evolve; availability does not automatically validate every claim.
 
-## 6. Counterexamples and common misconceptions
+## 6. Mini-lab: compare tokenizers
+
+Use the visualizers above with the same strings and record the differences. Do not compare raw IDs across vocabularies as if they shared a meaning.
+
+| Input to test | Learning question | What to inspect |
+|---|---|---|
+| `Hello world` and ` Hello world` | Does a leading space matter? | Pre-tokenization rules and tokens that include a space |
+| `ChatGPT`, `chatgpt`, `CHATGPT` | Does casing change segmentation? | Segmentation and any normalization |
+| `2026-10-28` and `123456789` | Are digits always one token? | Number segmentation varies by tokenizer and string |
+| `café` and `cafe\u0301` | Are visually similar strings identical? | Composed/decomposed Unicode and possible normalization |
+| A sentence in French, English, and a language that does not typically separate words with spaces | Is token cost uniform? | Sequence length and language dependence |
+| A code snippet | Are names and symbols segmented intuitively? | Partial tokens, punctuation, and effects on sequence length |
+
+**Minimal lab record:** for each string, record tokenizer/version, visible tokens, token count, and one interpretation limit. Token count alone measures neither linguistic nor model quality.
+
+## 7. Counterexamples and common misconceptions
 
 - **“A token is a word.”** False: it may be a subword, punctuation, a fragment with a space, bytes, or a special token.
 - **“BPE identifies roots and suffixes.”** Not necessarily: it merges statistically and does not guarantee morphological analysis.
