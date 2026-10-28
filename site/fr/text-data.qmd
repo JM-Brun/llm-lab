@@ -41,6 +41,25 @@ La chaîne `"ChatGPT apprend."` peut être découpée en mots, sous-mots, caract
 - **Tokenisation** convertit le texte en unités du vocabulaire choisi.
 - **Embedding** est un vecteur appris associé à un identifiant, et non une autre forme de cet identifiant.
 
+
+### Même texte, segmentations possibles différentes
+
+Le schéma compare deux sorties **hypothétiques** pour illustrer le principe ; ce ne sont pas les résultats d'un tokenizer réel. Les frontières et les IDs exacts dépendent de l'encodeur choisi.
+
+```{mermaid}
+flowchart TB
+    A["Même chaîne Unicode"] --> B["Tokenizer A"]
+    A --> C["Tokenizer B"]
+    B --> D["[fragment 1] [fragment 2] [fragment 3]"]
+    C --> E["[fragment 1] [fragment 2]"]
+    D --> F["IDs selon le vocabulaire A"]
+    E --> G["IDs selon le vocabulaire B"]
+    F --> H["Modèle entraîné avec A"]
+    G --> I["Modèle entraîné avec B"]
+```
+
+Ce que le schéma aide à voir : la même chaîne peut produire des longueurs de séquence et des IDs différents. Ce qu'il ne dit pas : qu'un tokenizer est universellement meilleur, ni que ses fragments correspondent à des unités de sens.
+
 ## 2. Pourquoi le découpage par espaces ne suffit pas
 
 Il gère mal la ponctuation, les contractions, les langues sans espaces entre les mots, les variantes orthographiques, les noms rares et les chaînes techniques. Un vocabulaire contenant chaque mot possible serait immense et resterait fragile face aux formes nouvelles.
@@ -92,6 +111,13 @@ Les ressources sont complémentaires. Une progression efficace consiste à const
 - [Sebastian Raschka — *Build an LLM from Scratch*](https://www.sebastianraschka.com/llms-from-scratch/) : le chapitre 2 situe les tokens dans le pipeline données → embeddings → exemples entrée-cible.
 - [Hugging Face — cours sur les tokenizers](https://huggingface.co/learn/llm-course/chapter6/1) : panorama didactique des algorithmes et compromis ; vérifier la version actuelle du cours.
 
+### Visualisations interactives et comparaison
+
+- [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/) : visualisation interactive pas à pas, utile pour observer quelles paires sont fusionnées et comment le vocabulaire évolue. À utiliser comme démonstration pédagogique, puis comparer les conventions avec un tokenizer de production.
+- [Cornell CS4782 — Interactive Tokenization Visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/) : comparaison interactive de BPE et WordPiece. Intéressant pour isoler ce qui relève de la famille d'algorithmes, mais ses exemples didactiques ne couvrent pas toutes les variantes industrielles.
+- [Hugging Face — BPE, cours en français](https://huggingface.co/learn/llm-course/fr/chapter6/5?fw=tf) : explication structurée de l'entraînement BPE, complétant la visualisation par une formulation plus systématique.
+- [Saurav Prateek — visualiser l'encodage BPE avec Hugging Face](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize) : exemple de visualisation du chemin de fusion d'un texte. Article communautaire ; vérifier la compatibilité actuelle du code et des dépendances avant de l'exécuter.
+
 ### Code pédagogique
 
 - [OpenAI `tiktoken` — module éducatif](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) : version simplifiée de BPE pour inspecter les fusions ; ne pas la prendre pour le chemin optimisé en production.
@@ -116,7 +142,22 @@ Les ressources sont complémentaires. Une progression efficace consiste à const
 
 Cette page référence les ressources sans recopier leurs illustrations. Les dépôts évoluent : leur disponibilité ne valide pas automatiquement chacune de leurs affirmations.
 
-## 6. Contre-exemples et erreurs fréquentes
+## 6. Mini-laboratoire de comparaison
+
+Utiliser les visualiseurs ci-dessus avec les mêmes chaînes et noter les différences. Ne pas comparer les IDs bruts entre vocabulaires comme s'ils avaient une signification commune.
+
+| Entrée à tester | Question pédagogique | Ce qu'il faut observer |
+|---|---|---|
+| `Hello world` puis ` Hello world` | L'espace initial compte-t-il ? | Les règles de pré-découpage et les tokens incluant un espace |
+| `ChatGPT`, `chatgpt`, `CHATGPT` | La casse change-t-elle le découpage ? | Segmentation et normalisation éventuelle |
+| `2026-10-28` et `123456789` | Les chiffres sont-ils toujours un token ? | Le découpage des nombres varie selon les tokenizers et les chaînes |
+| `café` et `cafe\u0301` | Deux chaînes visuellement proches sont-elles identiques ? | Unicode composé/décomposé et éventuelle normalisation |
+| Une phrase en français, anglais et une langue sans espaces usuels entre mots | Le coût en tokens est-il uniforme ? | Longueur de séquence et dépendance à la langue |
+| Un extrait de code | Les noms et symboles sont-ils segmentés intuitivement ? | Tokens partiels, ponctuation et effets sur la longueur |
+
+**Compte rendu minimal :** pour chaque chaîne, noter le tokenizer/version, les tokens visibles, le nombre de tokens et une limite d'interprétation. Le nombre de tokens seul ne mesure ni la qualité linguistique ni la qualité du modèle.
+
+## 7. Contre-exemples et erreurs fréquentes
 
 - **« Un token est un mot. »** Faux : il peut s'agir d'un sous-mot, de ponctuation, d'un fragment avec espace, d'octets ou d'un token spécial.
 - **« BPE reconnaît les racines et suffixes. »** Pas nécessairement : il fusionne selon une procédure statistique, sans analyse morphologique garantie.
