@@ -230,3 +230,8 @@ The source comparison found one small parity gap: the French cosine-similarity l
 ### Focused math-rendering audit — XOR example (2026-10-28)
 
 The bilingual embedding-linearity lessons used ordinary parentheses around several XOR expressions instead of inline-math delimiters. Both versions now use explicit Quarto-supported inline math for the variable domain, XOR function, coordinates, feature map, and product feature. The mathematical statements are unchanged; render validation remains required.
+
+
+### Focused numerical-scope audit — cosine reference snippet (2026-10-28)
+
+The bilingual cosine-similarity pages now distinguish the mathematical definition and zero-vector guard from production-grade numerical robustness. The illustrative direct NumPy norm/dot-product snippet can overflow or underflow on extreme finite magnitudes. No replacement implementation or benchmark was added; any future implementation should be accompanied by edge-case tests and an explicit dtype/tolerance contract.

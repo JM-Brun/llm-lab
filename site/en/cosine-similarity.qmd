@@ -78,7 +78,7 @@ def cosine_similarity(x: np.ndarray, y: np.ndarray) -> float:
     return float(np.dot(x, y) / (x_norm * y_norm))
 ```
 
-This snippet makes the definition and zero-vector edge case explicit; it is not, by itself, a benchmark.
+This snippet assumes equal-shaped, one-dimensional, finite arrays and makes the definition and zero-vector edge case explicit; it does not validate those input contracts. It is not, by itself, a benchmark or a production-hardened numerical implementation. Direct norms and dot products can overflow for extremely large finite values or underflow for extremely small ones; production code should use a tested implementation with documented numerical behaviour.
 
 ## 5. Critical reading list
 

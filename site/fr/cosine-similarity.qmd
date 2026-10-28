@@ -78,7 +78,7 @@ def cosine_similarity(x: np.ndarray, y: np.ndarray) -> float:
     return float(np.dot(x, y) / (x_norm * y_norm))
 ```
 
-Ce fragment explicite la définition et le cas limite des vecteurs nuls ; il ne constitue pas, à lui seul, un benchmark.
+Ce fragment suppose des tableaux finis, unidimensionnels et de même forme ; il explicite la définition et le cas limite des vecteurs nuls, mais ne valide pas ces préconditions. Il ne constitue ni un benchmark ni une implémentation numérique durcie pour la production. Les normes et produits scalaires directs peuvent déborder pour des valeurs finies extrêmement grandes ou sous-déborder pour des valeurs extrêmement petites ; un code de production doit s'appuyer sur une implémentation testée dont le comportement numérique est documenté.
 
 ## 5. Lecture critique des sources
 

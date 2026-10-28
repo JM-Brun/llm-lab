@@ -352,3 +352,12 @@ This is a traceable first-pass preservation record, not a claim that every line 
 **Correction:** wrap those expressions in explicit Quarto inline math delimiters in both language versions. The mathematical content is unchanged.
 
 **Scope / limits:** source-level markup correction only. Quarto render and local-link CI must confirm rendered output; this does not independently validate every scientific reference or establish browser/mobile visual quality.
+
+
+## 21. Cosine-similarity reference snippet — numerical stability scope — 2026-10-28
+
+**Finding:** the bilingual cosine-similarity lessons presented a direct NumPy norm/dot-product implementation and explicitly called out zero vectors, but did not state the snippet's numerical-stability limits. With extreme finite magnitudes, direct norm or dot-product calculations can overflow or underflow; a non-zero vector can even have a computed norm of zero after underflow.
+
+**Correction:** both language versions now state that the snippet is a pedagogical reference, not a production-hardened implementation, and recommend a tested implementation with documented numerical behaviour for production use.
+
+**Scope / limits:** this is a caveat about numerical robustness, not a replacement implementation or a claim that every library implementation is stable for every dtype/input. No numerical benchmark or new code has been added.
