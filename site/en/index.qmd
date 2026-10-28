@@ -86,4 +86,12 @@ Formal references and further resources are collected in the [annotated bibliogr
 
 :::: {.language-switch}
 **Choose a language:** [Français](../index.qmd) · [English](index.qmd)
-::::
+:::## Suggested path
+
+1. **From text to tokens** — Unicode, encoding, tokenization, BPE, and reference resources. Start with [Text and data](text-data.qmd).
+2. **Data and the autoregressive objective** — build context windows, shift inputs and targets, then understand batching and loss masking.
+3. **Maths applied to LLMs** — follow logits through the training loss and gradients without duplicating a general mathematics course.
+4. **Attention and Transformers** — queries, keys, values, scores, softmax, positional information (including RoPE), and causal masking.
+5. **Model and training** — blocks, optimization, validation, generation, and evaluation.
+6. **Critical notes** — examine assumptions, counterexamples, and the limitations of metrics and representations.
+:
