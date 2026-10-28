@@ -93,6 +93,7 @@ Ce fragment explicite la définition et le cas limite des vecteurs nuls ; il ne 
 
 - **Zhelezniak et al. (2019).** [Correlation Coefficients and Semantic Textual Similarity — arXiv:1905.07790](https://arxiv.org/abs/1905.07790). Montre que cosinus et corrélation de Pearson sont liés pour certaines représentations, et évalue des cas où les corrélations de rang sont plus adaptées. Utile pour rappeler que la métrique doit être validée sur la tâche et le type de vecteurs.
 - **Nielsen & Hansen (2024).** [Hubness Reduction Improves Sentence-BERT Semantic Spaces — PMLR](https://proceedings.mlr.press/v233/nielsen24a.html) ([arXiv](https://arxiv.org/abs/2311.18364)). Étudie le phénomène de *hubness* et des méthodes pour le réduire dans des espaces Sentence-BERT.
+- **Illustration interactive.** [A Fifth of Your Corpus Is Unreachable. It Isn’t the Dimensions](https://sugeerth.github.io/blog/hubness/). Simulation reproductible dans le navigateur montrant comment la *hubness* des plus proches voisins peut émerger de la géométrie seule. Le corpus gaussien synthétique est un modèle pédagogique, pas une estimation des performances d’un système de recherche réel.
 
 ### Documentation et explications techniques
 
