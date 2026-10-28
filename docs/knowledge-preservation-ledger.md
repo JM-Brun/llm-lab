@@ -305,3 +305,12 @@ This is a traceable first-pass preservation record, not a claim that every line 
 **Correction in this change:** translate the existing explanation into `site/en/positional-encoding.qmd`, create a matching English-labelled RoPE diagram, add the page to the render list and English navigation, connect both language versions, and update the English Transformer overview to link to the English lesson. The translation retains the source page's scope, caveats about long-context extrapolation, implementation checks, and the warning that the suggested video has not been independently verified. No RoPE implementation is added.
 
 **Limits / remaining validation:** this is a bilingual content/navigation repair, not independent scientific review of all RoPE variants or a second-reviewer translation audit. Quarto rendering and local-link CI must pass; visual review of the diagram, equations, and mobile layout remains open.
+
+
+## 18. Follow-up navigation check — English Transformer overview — 2026-10-28
+
+**Finding:** after the English positional-encoding/RoPE lesson was added, the attention walkthrough in `site/en/transformer.qmd` still linked first to the French page (`../fr/positional-encoding.qmd`) and then to the English page. The English page was available, so the French link was a stale cross-language navigation choice rather than a missing target.
+
+**Correction:** make the primary positional-information link point directly to `positional-encoding.qmd` and keep the explanation and language switch consistent with the English lesson. The French counterpart remains available through the page's language switch.
+
+**Scope / limits:** this is a targeted source-level navigation correction discovered during the post-merge check of PR #26. It does not constitute a complete scan of all rendered pages, external URLs, translation semantics, or browser/mobile presentation. Validate the full Quarto render and local-link checker on this change.
