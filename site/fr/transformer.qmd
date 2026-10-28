@@ -80,10 +80,12 @@ Cette distinction explique pourquoi « le modèle prédit le prochain token » r
 - [3Blue1Brown — *Attention in transformers, step by step*](https://www.3blue1brown.com/lessons/attention/) : attention, masquage, têtes multiples et cross-attention.
 - [Jay Alammar — *The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/) : visualisation pas à pas de l'architecture originale encodeur-décodeur.
 - [Jay Alammar — *The Illustrated GPT-2*](https://jalammar.github.io/illustrated-gpt2/) : architecture GPT et attention masquée.
-- [The Illustrated Transformer From Scratch](https://idtjo.hosting.acm.org/wordpress/the-illustrated-transformer/) : perspective alternative centrée sur l'opération d'auto-attention, les blocs modernes et les variantes architecturales.
 - [Raschka — *Build a Large Language Model (From Scratch)*](https://www.sebastianraschka.com/llms-from-scratch/) et [dépôt de code](https://github.com/rasbt/LLMs-from-scratch) : explications accompagnées de code.
+- [Raschka — conseils pour étudier le livre](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch01/reading-recommendations.md) : lecture globale d'abord, puis lecture avec code, avant de réutiliser les idées dans un projet.
+- [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762) : article fondateur pour la formulation du Transformer original ; son architecture encodeur-décodeur ne doit pas être confondue avec GPT.
+- [PyTorch — Scaled dot-product attention](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html) : référence d'API pour confronter les équations à une implémentation concrète.
 
-Ces ressources sont des supports pédagogiques de nature différente. Les illustrations et analogies aident à construire une intuition ; les formules, les hypothèses et les références primaires restent nécessaires pour vérifier les affirmations techniques.
+Les ressources sont complémentaires, mais non interchangeables : les animations aident à construire une intuition, l'article primaire documente la formulation originale et la documentation officielle précise le contrat d'une API. Les équations, les hypothèses et les tests restent nécessaires pour vérifier les affirmations techniques.
 
 ::: {.language-switch}
 **Langue :** [Français](transformer.qmd) · [English](../en/transformer.qmd)
