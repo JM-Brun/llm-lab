@@ -40,7 +40,7 @@ For example, “the treatment is effective” and “the treatment is not effect
 
 ## Learned geometry, not universal geometry
 
-Embedding dimensions generally do not have stable human-readable labels. A transformation that mixes coordinates can preserve task-relevant relationships while changing the interpretation of each axis. Do not interpret an individual dimension as “sentiment” or “causality” without experiments supporting that interpretation.
+Embedding dimensions generally do not have stable human-readable labels. For example, an orthogonal change of coordinates can mix dimensions while preserving dot products, distances, and cosine similarities; the same geometry is then expressed along different axes. This illustrates why an individual axis has no guaranteed human-readable meaning. Do not interpret a dimension as “sentiment” or “causality” without experiments supporting that interpretation.
 
 Geometry depends on the training objective, data, observed layer, normalization, metric, and task. **Anisotropy** (vectors concentrated in certain directions) and **hubness** (points becoming neighbours of many other points) can degrade similarity search. These are phenomena to measure, not explanations to assume automatically.
 

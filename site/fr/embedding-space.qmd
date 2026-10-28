@@ -40,7 +40,7 @@ Par exemple, « le traitement est efficace » et « le traitement n'est pas effi
 
 ## Une géométrie apprise, pas universelle
 
-Les dimensions d'un embedding n'ont généralement pas d'étiquettes humaines stables. Une transformation qui mélange les coordonnées peut préserver des relations utiles à la tâche tout en modifiant l'interprétation de chaque axe. Éviter de lire une dimension isolée comme « le sentiment » ou « la causalité » sans expérience qui étaye cette interprétation.
+Les dimensions d'un embedding n'ont généralement pas d'étiquettes humaines stables. Par exemple, un changement orthogonal de coordonnées peut mélanger les dimensions tout en préservant les produits scalaires, les distances et les similarités cosinus ; la même géométrie s'exprime alors selon d'autres axes. Cela illustre pourquoi un axe isolé n'a pas de signification humaine garantie. Ne pas interpréter une dimension comme « le sentiment » ou « la causalité » sans expérience qui étaye cette interprétation.
 
 La géométrie dépend notamment de l'objectif d'entraînement, des données, de la couche observée, de la normalisation, de la métrique et de la tâche. L'**anisotropie** (vecteurs concentrés dans certaines directions) et la **hubness** (points qui deviennent voisins d'un grand nombre d'autres points) peuvent dégrader la recherche par similarité. Ce sont des phénomènes à mesurer, pas des explications à supposer systématiquement.
 
