@@ -34,7 +34,7 @@ Les *Toy Models of Superposition* d'Elhage et al. (Anthropic, 2022) étudient co
 
 C'est un point important : « linéaire » ne signifie ni « une caractéristique par neurone », ni « facilement décodable par un classifieur linéaire », ni « interprétable sans ambiguïté ».
 
-Le travail de Barin-Pacela et al. (UAI 2026) étudie les limites des probes linéaires et des autoencodeurs parcimonieux pour la généralisation compositionnelle hors distribution. Les auteurs montrent, dans leur cadre expérimental et théorique, que la représentation linéaire n'implique pas l'accessibilité linéaire ; ils examinent également les limites de l'inférence amortie des autoencodeurs parcimonieux. Il faut interpréter ces conclusions dans le périmètre de leurs hypothèses, et non comme une preuve que tous les probes ou tous les SAE échouent.
+Le travail de Barin-Pacela et al. (UAI 2026) étudie la généralisation compositionnelle hors distribution pour les probes linéaires et les autoencodeurs parcimonieux. La distinction centrale reste pertinente : la représentation linéaire n'implique pas l'accessibilité linéaire. **Note sur les versions :** la page des actes PMLR décrit une explication fondée sur l'écart d'inférence amortie, mais la version arXiv v2 ultérieure des auteurs (qui inclut un corrigendum) révise cette interprétation : dans les expériences rapportées, l'apprentissage du dictionnaire est la contrainte déterminante, et remplacer l'encodeur du SAE par une inférence itérative par exemple sur le même dictionnaire appris ne comble pas l'écart. Il ne faut donc pas résumer ce travail comme démontrant que l'inférence amortie, à elle seule, cause les échecs compositionnels des SAE ; préciser la version citée.
 
 ## 3 bis. Les caractéristiques ne sont pas toujours unidimensionnelles
 
@@ -94,7 +94,7 @@ Ne pas présenter une différence de performance entre probes comme une preuve q
 - **Elhage et al. (2022).** [Toy Models of Superposition](https://transformer-circuits.pub/2022/toy_model/). Article technique illustré sur la superposition de caractéristiques et ses conséquences pour l'interprétabilité.
 - **Hewitt & Liang (2019).** [Designing and Interpreting Probes with Control Tasks — EMNLP 2019](https://aclanthology.org/D19-1275/). Propose des tâches de contrôle pour distinguer la structure des représentations de ce que le probe apprend lui-même.
 - **Garg, Kleinberg & Peng (2026).** [How Many Features Can a Language Model Store Under the Linear Representation Hypothesis? — arXiv:2602.11246](https://arxiv.org/abs/2602.11246). Analyse théorique de la différence entre représentation linéaire et accessibilité linéaire sous des hypothèses de parcimonie.
-- **Barin-Pacela et al. (2026).** [Stop Probing, Start Coding: Why Linear Probes and Sparse Autoencoders Fail at Compositional Generalization — UAI 2026, PMLR 337](https://proceedings.mlr.press/v337/barin-pacela26a.html). Étudie les échecs de généralisation compositionnelle et les limites de l'inférence amortie dans le cadre considéré.
+- **Barin-Pacela et al. (2026).** [Version publiée à UAI 2026, PMLR 337](https://proceedings.mlr.press/v337/barin-pacela26a.html) ; à comparer avec la [version arXiv v2 des auteurs, qui inclut un corrigendum](https://arxiv.org/abs/2603.28744v2). Les versions diffèrent sur l'explication des échecs compositionnels des SAE : la version ultérieure identifie l'apprentissage du dictionnaire, plutôt que la seule inférence amortie, comme contrainte déterminante dans les expériences rapportées.
 
 ### Explications accessibles
 

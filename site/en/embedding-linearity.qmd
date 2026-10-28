@@ -34,7 +34,7 @@ Elhage et al.'s *Toy Models of Superposition* (Anthropic, 2022) studies how a ne
 
 This matters: “linear” does not mean “one feature per neuron,” “easy to decode with a linear classifier,” or “unambiguously interpretable.”
 
-Barin-Pacela et al. (UAI 2026) study limitations of linear probes and sparse autoencoders for out-of-distribution compositional generalization. Within their theoretical and experimental setup, they show that linear representation does not imply linear accessibility; they also investigate limitations of amortized inference in sparse autoencoders. These conclusions should be interpreted within the scope of their assumptions, not as proof that every probe or SAE fails.
+Barin-Pacela et al. (UAI 2026) study out-of-distribution compositional generalization for linear probes and sparse autoencoders. Their central distinction remains relevant: linear representation does not imply linear accessibility. **Version note:** the PMLR proceedings page describes an amortization-gap explanation, but the authors' later arXiv v2 (which includes a corrigendum) revises that interpretation: in the reported experiments, dictionary learning is the binding constraint, and replacing the SAE encoder with per-example iterative inference on the same learned dictionary does not close the gap. Do not summarize the work as establishing that amortized inference alone causes SAE compositional failures; cite the version being discussed.
 
 ## 3 bis. Features are not always one-dimensional
 
@@ -94,7 +94,7 @@ Do not treat a performance difference between probes as proof that information i
 - **Elhage et al. (2022).** [Toy Models of Superposition](https://transformer-circuits.pub/2022/toy_model/). Illustrated technical article on feature superposition and its implications for interpretability.
 - **Hewitt & Liang (2019).** [Designing and Interpreting Probes with Control Tasks — EMNLP 2019](https://aclanthology.org/D19-1275/). Proposes control tasks to distinguish representation structure from what the probe learns.
 - **Garg, Kleinberg & Peng (2026).** [How Many Features Can a Language Model Store Under the Linear Representation Hypothesis? — arXiv:2602.11246](https://arxiv.org/abs/2602.11246). Theoretical analysis of the gap between linear representation and linear accessibility under sparsity assumptions.
-- **Barin-Pacela et al. (2026).** [Stop Probing, Start Coding: Why Linear Probes and Sparse Autoencoders Fail at Compositional Generalization — UAI 2026, PMLR 337](https://proceedings.mlr.press/v337/barin-pacela26a.html). Studies compositional generalization failures and limitations of amortized inference in the setting considered.
+- **Barin-Pacela et al. (2026).** [Published UAI 2026 version, PMLR 337](https://proceedings.mlr.press/v337/barin-pacela26a.html); compare with the [author-updated arXiv v2, including corrigendum](https://arxiv.org/abs/2603.28744v2). The versions differ in their explanation of SAE compositional failures: the later version identifies dictionary learning, rather than amortized inference alone, as the binding constraint in the reported experiments.
 
 ### Accessible explanations
 
