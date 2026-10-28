@@ -61,7 +61,7 @@ For a batch, logits often have shape \((B,T,V)\) and labels shape \((B,T)\). Bef
 
 ## Reference implementation and its scope
 
-The [NumPy reference implementation](../../src/llm_lab/foundations/losses.py) and its [unit tests](../../tests/unit/test_losses.py) cover a deliberately small case: logits with shape \((B,C)\), one integer target per row, and the **unweighted mean over rows**. The loss uses natural logarithms, so its value is in nats. The gradient function returns the derivative of that same mean loss with respect to the logits; it is not a gradient with respect to a model's parameters.
+The [NumPy reference implementation](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/losses.py) and its [unit tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_losses.py) cover a deliberately small case: logits with shape \((B,C)\), one integer target per row, and the **unweighted mean over rows**. The loss uses natural logarithms, so its value is in nats. The gradient function returns the derivative of that same mean loss with respect to the logits; it is not a gradient with respect to a model's parameters.
 
 This reference does **not** implement sequence-level input/target shifting, token masks or `ignore_index`, soft targets, class weights, or perplexity. For token-level language modeling, callers must align logits and targets and select valid target positions before using this row-wise function. The implementation should not be mistaken for a complete LLM training loss.
 
