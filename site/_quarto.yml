@@ -6,6 +6,8 @@ project:
     - en/index.qmd
     - fr/text-data.qmd
     - en/text-data.qmd
+    - fr/training-examples.qmd
+    - en/training-examples.qmd
     - fr/mathematical-foundations.qmd
     - en/mathematical-foundations.qmd
     - fr/logits.qmd
@@ -77,6 +79,7 @@ website:
         - section: "Texte et données"
           contents:
             - fr/text-data.qmd
+            - fr/training-examples.qmd
         - section: "Mathématiques appliquées aux LLM"
           contents:
             - fr/mathematical-foundations.qmd
@@ -110,6 +113,7 @@ website:
         - section: "Text and data"
           contents:
             - en/text-data.qmd
+            - en/training-examples.qmd
         - section: "Maths applied to LLMs"
           contents:
             - en/mathematical-foundations.qmd
