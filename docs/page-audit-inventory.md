@@ -92,6 +92,16 @@ This is a bounded source-level check of representative identities and worked exa
 
 The checked examples are mutually consistent across the relevant pages at source level. This does **not** imply all equations, diagrams, external links, or rendered math have been reviewed. The text pages already describe the reference NumPy loss tests and their limits; this audit did not rerun those tests.
 
+## Eighth slice: reproducibility status of the SMDS research repository
+
+A targeted README review of the linked project repository found that it describes itself as experimental software. The repository provides code and scripts relevant to inspecting the method, but the source review did not execute the code, download and validate the data, or reproduce the paper's results.
+
+| Area | Finding | Change | Remaining work |
+|---|---|---|---|
+| SMDS project resource link (EN/FR linearity pages) | Repository README describes the software as experimental. Linking to the repository is not evidence of independent reproduction. | PR #67 adds this caveat in both languages and explicitly limits the link's purpose to inspection and attempting a reproduction. | Render both pages, check link validity and bilingual parity; any actual reproduction must have a separately documented environment, data provenance, commands, outputs, and deviations. |
+
+Source inspected: [official project repository README](https://github.com/UKPLab/tmlr2026-manifold-analysis). This is a repository-metadata/source inspection only, not an execution or reproduction audit.
+
 ## Next audit steps
 
 1. Finish source and rendered-page review of this vertical slice; check local links and bilingual meaning, not just literal wording.
