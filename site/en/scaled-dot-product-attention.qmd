@@ -25,7 +25,7 @@ $$
 
 The mask $M$ is optional depending on the attention type. For causal attention, future positions receive $-\infty$ before softmax.
 
-![Visual overview of attention: scores, causal mask, softmax, and weighted sum of values.](../images/attention-calculation-flow.svg){fig-alt="Queries and keys produce scores. After scaling and optional masking, softmax creates weights that combine the values." width=100%}
+![Visual overview of attention: scores, causal mask, softmax, and weighted sum of values.](../images/attention-calculation-flow-en.svg){fig-alt="Queries and keys produce scores. After scaling and optional masking, softmax creates weights that combine the values." width=100%}
 
 The diagram also shows why three objects must not be conflated: **scores** (raw compatibility values), **weights** (normalized relative to accessible positions), and **outputs** (weighted combinations of values). In non-causal attention, the mask may be absent or encode another constraint. Softmax normalization does not turn the weights into a universal measure of semantic relevance.
 
