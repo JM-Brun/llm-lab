@@ -1,6 +1,6 @@
 # Repository roadmap
 
-This roadmap prioritizes **validating and improving the knowledge already present**. Do not add implementations, modules, pages, or experiments merely to advance a roadmap. A topic is not complete because it is documented, because tests pass, or because an experiment runs: it requires accurate explanations, explicit assumptions and counterexamples, and demonstrated understanding recorded in the private `career-knowledge` inventory. Code is justified only when it resolves a specific conceptual gap and the prerequisite knowledge has been validated.
+This roadmap prioritizes **validating and improving the knowledge already present**. Public-page structure and review should follow the shared [reader-experience and editorial method](reader-experience-and-editorial-method.md), which defines progressive disclosure and non-linear navigation. Do not add implementations, modules, pages, or experiments merely to advance a roadmap. A topic is not complete because it is documented, because tests pass, or because an experiment runs: it requires accurate explanations, explicit assumptions and counterexamples, and demonstrated understanding recorded in the private `career-knowledge` inventory. Code is justified only when it resolves a specific conceptual gap and the prerequisite knowledge has been validated.
 
 ## Current state (reviewed 2026-10-28)
 
