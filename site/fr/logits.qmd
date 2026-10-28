@@ -83,6 +83,10 @@ Cela réduit le risque de débordement numérique. Soustraire le même maximum �
 
 **Suite :** [Probabilités](probabilites.qmd) · [Vue d'ensemble](mathematical-foundations.qmd)
 
+## Pour approfondir
+
+- [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) : précise que la fonction de perte accepte des logits non normalisés et documente les conventions d'entrée et de cible. C'est une référence d'implémentation, pas un remplacement de la définition mathématique ci-dessus.
+
 ::: {.language-switch}
 [Français](logits.qmd) · [English](../en/logits.qmd)
 :::
