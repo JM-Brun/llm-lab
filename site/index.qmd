@@ -57,11 +57,12 @@ Les pages distinguent le code réellement présent, les tests qui le couvrent et
 
 ## Parcours conseillé
 
-1. **Mathématiques appliquées aux LLM** — suivre les logits jusqu’à la perte d’entraînement et aux gradients, sans refaire un cours général de mathématiques.
-2. **Attention et Transformer** — requêtes, clés, valeurs, scores, softmax, information de position et masque causal.
-3. **Données et objectif autorégressif** — tokenisation, décalage entrée-cible et prédiction du prochain token.
-4. **Modèle et entraînement** — blocs, optimisation, validation, génération et évaluation.
-5. **Notes critiques** — examiner les hypothèses, les contre-exemples et les limites des métriques et des représentations.
+1. **Du texte aux tokens** — Unicode, encodage, tokenisation, BPE et ressources de référence. Commencer par [la page Texte et données](fr/text-data.qmd).
+2. **Données et objectif autorégressif** — construire des fenêtres de contexte, décaler entrées et cibles, puis comprendre le batching et le masquage de la perte.
+3. **Mathématiques appliquées aux LLM** — suivre les logits jusqu’à la perte d’entraînement et aux gradients, sans refaire un cours général de mathématiques.
+4. **Attention et Transformer** — requêtes, clés, valeurs, scores, softmax, information de position et masque causal.
+5. **Modèle et entraînement** — blocs, optimisation, validation, génération et évaluation.
+6. **Notes critiques** — examiner les hypothèses, les contre-exemples et les limites des métriques et des représentations.
 
 Ce parcours décrit l'organisation pédagogique, pas l'état d'avancement de toutes les implémentations. Le [parcours détaillé](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md), le [plan de couverture du programme](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) et la [feuille de route](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md) précisent respectivement les étapes d'apprentissage, l'articulation avec les sources et les critères de validation.
 
