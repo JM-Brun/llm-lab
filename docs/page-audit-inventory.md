@@ -171,3 +171,14 @@ A targeted source check compared the paper's published PMLR page with the author
 | Bibliographic links | PMLR page is the published proceedings record; arXiv v2 is linked separately as the author-updated version. | Version provenance is visible beside the claim and in the reference list. | Confirm rendered links and the wording after Quarto render; this audit did not establish which version the authors intend readers to treat as definitive beyond the stated corrigendum. |
 
 Sources checked: [PMLR proceedings version](https://proceedings.mlr.press/v337/barin-pacela26a.html) and [arXiv v2 including corrigendum](https://arxiv.org/abs/2603.28744v2). No implementation or experiment was added. Rendered review and external-link validation remain open.
+
+
+## Tenth slice: SMDS figure-link accuracy in the bilingual linearity pages
+
+A targeted inspection of the linked arXiv HTML source found that the existing “Figure 2” link was described as an example of a discovered circular feature, but Figure 2 is the method-comparison overview. Figure 3 presents the recovered feature geometries and is the appropriate target for the explanation mentioning circles.
+
+| Area | Finding | Change | Remaining work |
+|---|---|---|---|
+| SMDS figure links in EN/FR | The source HTML caption identifies Figure 2 as “Feature Manifold Discovery and the Limitations of Previous Methods”; Figure 3 presents retrieved feature manifolds. | Updated both language pages to point to Figure 3 and revised the link label to describe the broader set of feature geometries rather than implying Figure 2 itself is a circular-feature example. | Confirm the anchor in the rendered browser and continue the full external-link sweep; this was a targeted link/content check, not a full visual audit. |
+
+Source inspected: [arXiv HTML v1](https://arxiv.org/html/2510.01025v1). The official SMDS repository still labels its software experimental; no code or data were executed and no reproduction is claimed.

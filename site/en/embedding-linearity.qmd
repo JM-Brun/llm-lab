@@ -44,7 +44,7 @@ Tiblias et al. extend this line of work with *Supervised Multi-Dimensional Scali
 
 **Visual explanations and code:**
 
-- [Figure 1 — overview of SMDS and feature geometries](https://arxiv.org/html/2510.01025v1#S0.F1); [Figure 2 — example of a discovered circular structure](https://arxiv.org/html/2510.01025v1#S3.F2).
+- [Figure 1 — overview of SMDS and feature geometries](https://arxiv.org/html/2510.01025v1#S0.F1); [Figure 3 — examples of discovered feature geometries, including circles](https://arxiv.org/html/2510.01025v1#S5.F3).
 - [Project code and data (repository now named `tmlr2026-manifold-analysis`)](https://github.com/UKPLab/tmlr2026-manifold-analysis) for inspecting the protocol and attempting a reproduction. The repository describes the software as experimental; this is not evidence that the results have been independently reproduced.
 - [*Toy Models of Superposition*](https://transformer-circuits.pub/2022/toy_model/) for interactive visualizations and geometric intuitions about superposition.
 
