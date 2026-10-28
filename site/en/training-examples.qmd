@@ -18,22 +18,22 @@ An autoregressive model learns to predict the next token from the available cont
 
 ## 1. Shift inputs and targets
 
-Suppose the tokenizer produced IDs \`[t0, t1, t2, t3, t4]\`. With input length 4:
+Suppose the tokenizer produced IDs `[t0, t1, t2, t3, t4]`. With input length 4:
 
-- input: \`x = [t0, t1, t2, t3]\`
-- target: \`y = [t1, t2, t3, t4]\`
+- input: `x = [t0, t1, t2, t3]`
+- target: `y = [t1, t2, t3, t4]`
 
-\`\`\`{mermaid}
+```{mermaid}
 flowchart TB
     A["Stream: t0 t1 t2 t3 t4"] --> B["Input x: t0 t1 t2 t3"]
     A --> C["Target y: t1 t2 t3 t4"]
     B --> D["Prediction at each position"]
     D --> C
-\`\`\`
+```
 
 Input and target have equal lengths. The target is shifted one position in the source stream: each position predicts the following token. The final input token provides context; it is not its own target.
 
-**Try before reading on:** for stream \`[8, 3, 3, 9, 2, 7]\` with length 3, write the first two input-target pairs. Check that each target is exactly the next token in the stream.
+**Try before reading on:** for stream `[8, 3, 3, 9, 2, 7]` with length 3, write the first two input-target pairs. Check that each target is exactly the next token in the stream.
 
 ## 2. Sliding windows and stride
 
@@ -45,13 +45,13 @@ Stride is the number of positions by which the window start moves between exampl
 | 4 | 2 | Windows overlap and reuse context |
 | 4 | 5 | Some positions may be skipped |
 
-\`\`\`{mermaid}
+```{mermaid}
 flowchart LR
     A["Stream: 0 1 2 3 4 5 6 7"] --> B["Stride 4: [0 1 2 3]"]
     B --> C["Then [4 5 6 7]"]
     A --> D["Stride 2: [0 1 2 3]"]
     D --> E["Then [2 3 4 5]"]
-\`\`\`
+```
 
 A smaller stride generally increases the number of examples and overlap. There is no universally optimal stride: the choice depends on the pipeline, compute budget, and handling of the corpus tail. A pedagogical sliding window does not necessarily represent a production pipeline.
 
@@ -63,13 +63,13 @@ Concatenating documents can create windows that cross document boundaries. Keep 
 - **Boundary marker:** insert an end-of-document or separator token.
 - **Cross-document masking:** decide whether attention may cross the boundary.
 
-\`\`\`{mermaid}
+```{mermaid}
 flowchart LR
     A["Document A"] --> B["Optional separator"]
     B --> C["Document B"]
     C --> D["Packed sequence"]
     D --> E["Check targets and masks"]
-\`\`\`
+```
 
 An end-of-document token does not by itself block attention. Cross-document masking is an implementation choice, not a universal rule. Inspect the actual mask and check that transitions between documents match the intended objective.
 
@@ -77,31 +77,31 @@ An end-of-document token does not by itself block attention. Cross-document mask
 
 Padding makes sequences of different lengths compatible with a rectangular tensor. Padding positions should generally not contribute to next-token loss unless the objective explicitly requires it.
 
-\`\`\`{mermaid}
+```{mermaid}
 flowchart TB
     A["Targets: 12 8 4 PAD PAD"] --> C["Compute loss"]
     B["Loss mask: 1 1 1 0 0"] --> C
     C --> D["Only valid positions contribute"]
-\`\`\`
+```
 
 The **attention mask** determines which positions may be attended to. The **loss mask** determines which targets contribute to the optimization objective. They have distinct roles and are not interchangeable.
 
 ## 5. Tensor shapes
 
-Let \`B\` be batch size, \`L\` sequence length, and \`V\` vocabulary size.
+Let `B` be batch size, `L` sequence length, and `V` vocabulary size.
 
-\`\`\`{mermaid}
+```{mermaid}
 flowchart LR
     A["input_ids: [B, L]"] --> C["Causal model"]
     C --> D["logits: [B, L, V]"]
     B["targets: [B, L]"] --> E["Loss on valid targets"]
     D --> E
-\`\`\`
+```
 
-- \`input_ids\`: \`[B, L]\`, input token IDs.
-- \`targets\`: \`[B, L]\`, expected IDs shifted by one token.
-- \`logits\`: \`[B, L, V]\`, unnormalized scores for every vocabulary token at every position.
-- \`loss\`: often a scalar after reduction over valid positions.
+- `input_ids`: `[B, L]`, input token IDs.
+- `targets`: `[B, L]`, expected IDs shifted by one token.
+- `logits`: `[B, L, V]`, unnormalized scores for every vocabulary token at every position.
+- `loss`: often a scalar after reduction over valid positions.
 
 The model produces logits at each position, not one prediction for the entire sequence. Flattening and reduction must preserve alignment among logits, targets, and masks.
 
@@ -115,7 +115,7 @@ When loss is unexpectedly low, high, or unstable, check:
 4. Are padding positions excluded from loss as intended?
 5. Do causal, padding, and loss masks have distinct roles?
 6. Are cross-document transitions intentional?
-7. Do axes \`B\`, \`L\`, and \`V\` match the loss function’s expectations?
+7. Do axes `B`, `L`, and `V` match the loss function’s expectations?
 8. Can a future target be accessed by the context used to predict it?
 
 ## 7. Further resources
@@ -123,7 +123,7 @@ When loss is unexpectedly low, high, or unstable, check:
 - **Worked examples:** [Sebastian Raschka — constructing input-target examples](https://www.sebastianraschka.com/faq/docs/input-target-pretraining-examples.html).
 - **Interpreting the objective:** [Raschka — what pretraining on unlabeled text teaches](https://www.sebastianraschka.com/faq/docs/what-pretraining-teaches.html).
 - **Educational code:** [Raschka, *LLMs-from-scratch*, Chapter 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02). Check conventions in the version you inspect.
-- **Batching API:** [PyTorch documentation — \`torch.utils.data\`](https://docs.pytorch.org/docs/stable/data.html). API reference, not a complete tutorial on the autoregressive objective.
+- **Batching API:** [PyTorch documentation — `torch.utils.data`](https://docs.pytorch.org/docs/stable/data.html). API reference, not a complete tutorial on the autoregressive objective.
 - **Visual bridge to the model:** [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) and [Transformer Explainer](https://poloclub.github.io/transformer-explainer/).
 - **Attention:** [3Blue1Brown — Attention in Transformers](https://www.3blue1brown.com/lessons/attention/), best consulted after understanding data preparation.
 
