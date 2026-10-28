@@ -47,6 +47,13 @@ Attention mechanisms appeared in neural encoder-decoder translation models, nota
 - **“Q, K, and V must always have the same dimension.”** Not necessarily: key and value dimensions may differ, although multi-head architectures impose precise shape constraints.
 - **“A high weight reveals the cause of a prediction.”** It describes one aggregation step, not by itself the causal effect on the final output.
 
+## Historical context
+
+Attention mechanisms were studied in neural encoder–decoder translation models, notably by Bahdanau, Cho, and Bengio (2014). *Attention Is All You Need* (Vaswani et al., 2017) made self-attention central to the Transformer architecture and formalized scaled dot-product attention. This distinction matters: attention predates the Transformer, while the Transformer combined self-attention with a specific architecture and efficient multi-head computation.
+
+- [Bahdanau et al. (2014), *Neural Machine Translation by Jointly Learning to Align and Translate*](https://arxiv.org/abs/1409.0473)
+- [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762)
+
 ## Connections to other concepts
 
 - Follow scores and softmax in [scaled dot-product attention](scaled-dot-product-attention.qmd).
