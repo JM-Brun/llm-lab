@@ -1,6 +1,6 @@
 # Knowledge-preservation ledger — LLM Lab math-page slice
 
-**Status:** first-pass inventory; not yet a final approval to merge.  
+**Status:** first-pass preservation inventory with a focused textual audit of the entropy and cross-entropy page pairs recorded below; not a full browser, external-link, or scientific sign-off.  
 **Public branch under review:** `docs/llm-application-math-refactor` (PR #17).  
 **Comparison baseline:** `main` as inspected on 2026-10-27.  
 **Rule:** no item is considered “moved” merely because a similarly named Wiki page exists. The public page must still teach every prerequisite needed for its LLM-specific objective.
@@ -172,6 +172,87 @@ At commit `e3d80d65569afbc0e2c85b4e8fcb020ecb070497`, a path-existence check cov
 - [ ] Check external references for availability and relevance; no live external-URL validation was performed in this artifact audit.
 - [ ] Review and merge this post-merge audit update separately.
 
-## 8. Scope of this ledger
+## 8. Focused bilingual textual audit — 2026-10-27
+
+**Scope:** current `main` versions of the four page files listed in sections 1–2. Compared French and English wording, formulas, assumptions, examples, limitations, and navigation. This pass did not execute Quarto, inspect a browser-rendered page, validate external URLs live, or assess the learner's mastery.
+
+### Entropy
+
+- **Parity:** the French and English pages cover the same core concepts and carry matching caveats.
+- **Mathematical checks:** \(H(p)=-\sum_i p_i\log p_i\) is bounded by \(0\le H(p)\le\log V\) for a normalized categorical distribution on a finite vocabulary; the two-token examples are consistent in bits and nats; the sequence factorization and negative log-likelihood relation are aligned.
+- **Interpretation checks:** predictive entropy is distinguished from observed-token surprisal; temperature is a transformation of logits for decoding, not a parameter update; low entropy is not evidence of truth or calibration.
+- **Disposition:** no textual correction identified in this pass. Keep the chapter focused on the LLM application rather than restoring the broad general-information-theory sections.
+- **Remaining verification:** browser-level equation/layout review and live external-reference check.
+
+### Cross-entropy
+
+- **Parity:** the French and English pages preserve the same equations, assumptions, practical cautions, and learning checks.
+- **Mathematical checks:** the one-hot loss, soft-target cross-entropy, \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\), directionality/support example, and one-hot logit gradient are internally consistent under the stated normalized-distribution and finite-value assumptions.
+- **Implementation semantics:** both pages distinguish target-position and input-position indexing, and explicitly cover causal shifting, ignored/padding positions, reduction conventions, and perplexity from mean token NLL.
+- **Disposition:** retain the local KL derivation for now: it directly explains the soft-target case and avoids making the public lesson depend on a private general-mathematics source. Do not remove it merely to reduce overlap. No textual correction identified in this pass.
+- **Remaining verification:** browser-level equation/layout review, live external-reference check, and a follow-up check that the implementation page and tests support any code-specific wording.
+
+### What this audit does not establish
+
+This review does not mark either concept as mastered, prove every cited source supports every claim, or replace a full-site Quarto render and visual inspection. Update status only when those separate checks have evidence.
+
+## 9. Focused bilingual textual audit — logits and probabilities (2026-10-27)
+
+**Scope:** current French/English source pairs `site/fr/logits.qmd`, `site/en/logits.qmd`, `site/fr/probabilites.qmd`, and `site/en/probabilities.qmd`. Compared definitions, formulas, examples, caveats, self-checks, and local navigation. This was a source-text review, not a rendered-browser or external-link check.
+
+### Logits
+
+- **Mathematical checks:** the softmax definition, probability-ratio identity, translation invariance, two-class example, and max-subtraction stability explanation are consistent.
+- **Defect found:** the English page repeated the same three self-check questions twice. The first copy had no answers and interrupted the exercise/tensor links; the second copy repeated the questions with answers.
+- **Correction made on this branch:** consolidated the English page to one answered self-check, restored the exercise and tensor links before it, and kept the next-page links after it. This brings its structure closer to the French page without adding content.
+- **Remaining verification:** render and inspect the page; confirm the local links and displayed equations in the deployed HTML.
+
+### Probabilities
+
+- **Parity:** French and English versions align on softmax normalization, the two-logit example, autoregressive factorization, tokenization caveat, temperature, decoding versus training, and the distinction between normalization, calibration, and factual truth.
+- **Mathematical checks:** the example \(z=(0,\log 3)\) gives \(p=(0.25,0.75)\); for positive temperature, dividing logits by temperature preserves their order while changing their distribution.
+- **Disposition:** no further source-text correction identified in this pass.
+- **Remaining verification:** rendered-page review and live external-reference check.
+
+### What this audit does not establish
+
+The fix is not yet merged and this connector workflow did not run Quarto or CI. The review does not certify every source claim, live link availability, or learner mastery.
+
+## 10. Focused bilingual textual audit — likelihood and loss (2026-10-27)
+
+**Scope:** current French/English source pairs `site/fr/vraisemblance.qmd`, `site/en/likelihood.qmd`, `site/fr/loss.qmd`, and `site/en/loss.qmd`. Compared sequence factorization, examples, loss definitions, target alignment, masks/reduction, perplexity conventions, self-checks, and navigation.
+
+### Likelihood
+
+- **Parity:** both pages state the autoregressive chain-rule factorization, log-likelihood sum, NLL relationship, same-positions qualification, a numerical example, and tokenizer/model-fit caveats.
+- **Mathematical check:** `0.5 × 0.25 × 0.8 = 0.1`, so the sequence NLL is `-ln(0.1) ≈ 2.303` nats when natural logarithms are used.
+- **Disposition:** no source-text correction identified in this pass. The assumption of independent dataset sequences is stated for the product of sequence likelihoods; keep that qualification.
+
+### Loss
+
+- **Parity defect found:** the English page repeated its three self-check questions in a second section. It also lacked the explicit tensor-shape navigation present in French.
+- **Correction made on this branch:** consolidated the English page to one answered self-check, restored a link to the tensor lesson, and kept the next-page navigation after the answers.
+- **Notation clarification:** both language versions now define the predicted distribution `p[b,t,:]` and target-token ID `y[b,t]` before using them in the per-position loss.
+- **Perplexity correction:** both pages now state explicitly that `PPL = exp(NLL_mean)` assumes natural-log NLL (nats), and give the base-2 equivalent `PPL = 2^NLL_mean` when NLL is measured in bits. The previous wording could be read as though the exponential formula applied regardless of log base.
+- **Remaining verification:** render the modified equations, inspect the full bilingual pages, and run CI/Quarto. The edits are not yet merged.
+
+### What this audit does not establish
+
+This source-text audit does not replace a rendered-site review, test the implementation against the documented loss convention, or establish learner mastery.
+
+## 11. Focused bilingual textual audit — gradients (2026-10-27)
+
+**Scope:** current French/English pages `site/fr/gradients.qmd` and `site/en/gradients.qmd`. Compared equations, assumptions, numerical-check guidance, self-checks, and navigation.
+
+- **Mathematical review:** the one-hot softmax-cross-entropy logit derivative, chain-rule relationship between logit and parameter gradients, SGD update, and central finite-difference expression are consistent under the stated conventions. The text appropriately limits what one finite-difference check establishes and notes the trade-off in choosing epsilon.
+- **Defect found:** the English page presented the same three self-check questions twice, first without answers and then with answers.
+- **Correction made on this branch:** consolidated the English page to one answered self-check, preserving the exercise link and return navigation.
+- **Remaining verification:** compare the documented derivative and finite-difference convention with the implementation/tests, render the corrected equations, and run CI/Quarto. No implementation or new test was added in this audit.
+
+### What this audit does not establish
+
+The textual review does not prove that the current implementation tests all stated edge cases, and it does not establish learner mastery.
+
+## 12. Scope of this ledger
 
 This is a traceable first-pass preservation record, not a claim that every line has passed scientific review. It deliberately records several items as **VERIFY**. A future review must resolve those statuses using the actual text and rendered pages rather than treating the inventory as a rubber stamp.

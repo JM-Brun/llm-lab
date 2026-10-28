@@ -10,7 +10,7 @@ lang: en
 
 ## From local penalty to batch loss
 
-For each valid target position $(b,t)\in\mathcal{M}$, let:
+Let $p_{b,t,:}$ be the predicted distribution at position $(b,t)$ and $y_{b,t}$ the target-token ID. For each valid target position $(b,t)\in\mathcal{M}$, the loss is:
 
 $$
 \ell_{b,t}=-\log p_{b,t,y_{b,t}}.
@@ -39,7 +39,7 @@ $$
 \operatorname{PPL}=\exp(\operatorname{NLL}_{\mathrm{mean}}).
 $$
 
-This relationship assumes the same logarithm base and aggregation convention. Perplexity also depends on the tokenizer and evaluated corpus.
+The formula with $\exp$ assumes mean NLL is computed with the natural logarithm (loss in nats). If it is computed in bits using $\log_2$, use $2^{\operatorname{NLL}_{\mathrm{mean}}}$. In either case, the aggregation convention must match. Perplexity also depends on the tokenizer and evaluated corpus.
 
 ::: {.callout-warning title="Misconceptions"}
 - **“Lower loss proves better answers.”** It indicates a better value of the measured objective, not necessarily improvement in every capability or real-world usefulness.
@@ -55,13 +55,7 @@ Before interpreting a curve, document the objective, input/target shift, ignore 
 
 For additional practice outside the lesson, see the [exercise space — mathematical foundations](exercises.qmd#foundations).
 
-1. Why should the denominator count valid targets rather than all tokens when some are ignored?
-2. Why does decreasing training loss not prove better generalization?
-3. Under what conditions is perplexity comparable?
-
-**Next:** [Gradients](gradients.qmd) · [Likelihood](likelihood.qmd)
-
-## Check your understanding
+To review the shapes of scores, targets, and batches, see [Tensors](tensors.qmd).
 
 1. Why should the denominator count valid targets rather than all tokens when some are ignored?
 
@@ -89,6 +83,8 @@ Training loss measures fit to the optimized data. It can decrease while the mode
 At minimum, use compatible logarithm and reduction conventions, tokenizer, ignored-target handling, and evaluation corpora/context settings. Otherwise the values do not measure exactly the same quantity.
 
 </details>
+
+**Next:** [Gradients](gradients.qmd) · [Likelihood](likelihood.qmd)
 
 :::: {.language-switch}
 [Français](../fr/loss.qmd) · [English](loss.qmd)

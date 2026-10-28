@@ -40,6 +40,12 @@
 6. The README and home pages should describe the public course as an LLM application lab, not as a second canonical mathematics wiki.
 7. A private Wiki URL is never sufficient support for public readers. Each applied page must teach the prerequisites needed for independent comprehension, including definitions, assumptions, derivations and examples as required, plus accessible public references.
 
+## Current implementation status — 2026-10-27
+
+The entropy and cross-entropy pages have already been refocused in `main`; do not treat them as unstarted refactors. The current versions retain the LLM-specific definitions and caveats identified in the inventory above. A textual bilingual pass found no correction that could be justified from the current source alone. Browser-rendered MathJax/layout and live external-reference checks remain open; see the [knowledge-preservation ledger](knowledge-preservation-ledger.md).
+
+The logits/probabilities source-text audit is now recorded in the [knowledge-preservation ledger](knowledge-preservation-ledger.md); it found and corrected a duplicated English self-check on the current branch. The likelihood/loss source-text audit is now recorded in the [knowledge-preservation ledger](knowledge-preservation-ledger.md). It found duplicate English self-checks, missing tensor navigation, and an ambiguous perplexity/log-base statement; the branch corrects these. The gradients source-text audit is also recorded in the [knowledge-preservation ledger](knowledge-preservation-ledger.md). It found and corrected a duplicated English self-check without changing the mathematical content. The next step is to validate the corrected page set through Quarto/CI, rendered-browser inspection, and comparison against the implementation/tests. Preserve current scope and only edit where a specific claim, mismatch, missing assumption, broken link, or pedagogical defect is demonstrated.
+
 ## Ordered work
 
 ### P0 — Clarify the public information architecture
@@ -49,11 +55,10 @@
 - Keep all existing URLs stable while changing titles and navigation.
 
 ### P1 — Refactor the highest-duplication pages
-1. Entropy: retain next-token uncertainty and useful links to cross-entropy/perplexity; remove broad general-information-theory exposition from the public course after its replacement is reviewed.
-2. Cross-entropy: focus on autoregressive token NLL, target formats, masking, reduction, and perplexity.
-3. Gradients: focus on the loss-to-logits-to-parameters path and numerical verification.
-4. Logits/probabilities: tighten definitions to the exact statements needed for the applied examples.
-5. Likelihood/loss: validate that target shift, padding masks, reduction, and perplexity are described consistently.
+1. **Render and CI:** render the full Quarto site and inspect the corrected pages in French and English, including MathJax, navigation, mobile layout, and links.
+2. **Loss/gradients implementation correspondence:** verify that code and tests support the documented target alignment, ignored positions, reduction, perplexity convention, analytical gradient, and finite-difference claims.
+3. **Logits/probabilities:** source-text review is recorded in the ledger; inspect the corrected English logits page after rendering and check local/external links.
+4. **Entropy/cross-entropy:** the first-pass refactor is already in `main`; retain the current focused scope and resolve only the outstanding browser/external-reference checks or defects found by later evidence.
 
 ### P2 — Validate and connect
 - Compare French and English claims, caveats, examples, and references page by page.

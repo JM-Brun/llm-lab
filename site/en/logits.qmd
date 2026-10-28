@@ -50,17 +50,11 @@ At each position $t$, the output head provides $z_t\in\mathbb{R}^{V}$. The model
 
 ## Self-check
 
-1. Why does adding a constant to all logits leave probabilities unchanged?
-2. Can two logit vectors have the same argmax but very different distributions?
-3. Why does a stable implementation subtract the maximum before exponentiation?
-
-**Next:** [Probabilities](probabilities.qmd) · [Overview](mathematical-foundations.qmd)
-
-## Check your understanding
-
 [Open the related exercise space](exercises.qmd#foundations) — detailed exercises will be authored separately.
 
-1. Why does adding a constant to every logit leave probabilities unchanged?
+To follow the vector and matrix shapes used in these calculations, see [Tensors](tensors.qmd).
+
+1. Why does adding a constant to all logits leave probabilities unchanged?
 
 <details>
 <summary>Show answer</summary>
@@ -86,6 +80,8 @@ Yes. For example, $(2,1)$ and $(20,10)$ have the same maximal index, but the lar
 This reduces the risk of numerical overflow. Subtracting the same maximum from every logit leaves softmax unchanged because softmax is translation-invariant.
 
 </details>
+
+**Next:** [Probabilities](probabilities.qmd) · [Overview](mathematical-foundations.qmd)
 
 :::: {.language-switch}
 [Français](../fr/logits.qmd) · [English](logits.qmd)
