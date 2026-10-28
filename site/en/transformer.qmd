@@ -40,7 +40,7 @@ The important distinction is not that attention “understands” tokens while t
 1. [**Queries, keys, and values (Q, K, V)**](queries-keys-values.qmd) — three learned projections give representations distinct roles.
 2. [**Scaled dot-product attention**](scaled-dot-product-attention.qmd) — scores from $QK^\top$ are scaled by $\sqrt{d_k}$ and converted into weights by softmax.
 3. [**Causal masking**](causal-masking.qmd) — excludes future positions before softmax.
-4. [**Positional information**](../fr/positional-encoding.qmd) — supplies information about token order; see the English [positional encoding and RoPE lesson](positional-encoding.qmd).
+4. [**Positional information**](positional-encoding.qmd) — supplies information about token order; the English [positional encoding and RoPE lesson](positional-encoding.qmd) explains the mechanism in detail.
 
 Attention weights are not a complete explanation of a prediction. They describe one aggregation step; projections, values, other heads, later layers, and the output projection also contribute.
 
