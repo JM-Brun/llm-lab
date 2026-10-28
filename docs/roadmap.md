@@ -54,7 +54,7 @@ A textual, bilingual review of `site/fr/entropy.qmd`, `site/en/entropy.qmd`, `si
 - **Corrections so far are editorial/mathematical clarification, not mastery evidence.** In particular, the KL derivation remains because the page uses it to explain soft targets and the relationship between cross-entropy and KL; this is not a claim that the entire treatment has passed independent scientific review.
 - **Still open:** actual browser review of MathJax and responsive layout; external-reference availability/relevance; private knowledge-transfer questions and evidence. Do not mark these concepts acquired from this audit alone.
 
-**Next step:** run the full Quarto/CI checks and inspect the corrected pages in a browser at desktop and mobile widths. Verify local links and rendered equations, then compare the documented loss/gradient conventions with the implementation and tests. Do not mark the content complete until these checks and private transfer questions have evidence.
+**Next step:** run the full Quarto/CI checks and inspect the corrected pages in a browser at desktop and mobile widths. Verify local links, rendered equations, and external references, then collect the private transfer-question evidence. The source-level loss/gradient correspondence check is now recorded in the knowledge-preservation ledger, and the public cross-entropy pages explicitly distinguish the row-wise NumPy reference from token-level shifting/masking. Do not mark the content complete until the remaining checks have evidence.
 
 ### P1 — Keep the existing learning experience dependable
 **Goal:** ensure the existing site and numerical exercise are correct, navigable, and easy to reproduce.
