@@ -287,3 +287,12 @@ This is a traceable first-pass preservation record, not a claim that every line 
 - **Correction proposed:** add a French-language description of the same demonstration, including the limitation that its synthetic Gaussian corpus is illustrative and is not evidence of real retrieval-system performance.
 - **Other parity check:** the extracted external URL sets now differ only by this newly identified item before the correction; the bilingual feature-linearity pages had matching extracted external URL sets. This is a source-level URL/heading comparison, not a full semantic translation review or a claim that every external resource has been validated.
 - **Remaining verification:** render and run CI; manually verify the external page's continued availability and inspect the lessons in a browser. The link checker intentionally does not probe external hosts.
+
+
+## 16. Bilingual parity — embedding-space lesson — 2026-10-28
+
+**Finding:** `site/fr/embedding-space.qmd` had no English counterpart, and its language switch pointed to the English home page rather than an equivalent lesson. The Quarto render list and English sidebar also omitted the topic.
+
+**Correction in this change:** translate the existing conceptual lesson into `site/en/embedding-space.qmd`, add a matching English-language schematic rather than reusing a French-labelled figure, include the page in the Quarto render list and English sidebar, and connect the two language versions directly. The translation preserves the original scope, caveats, references, and the explicit warning that the suggested video has not been independently verified. The positional-encoding page remains French-only and is identified as such rather than implying English parity.
+
+**Limits / remaining validation:** this is a content and navigation parity repair, not independent scientific validation of every cited paper, a semantic line-by-line audit by a second reviewer, or browser-based visual/accessibility sign-off. Quarto rendering and local-link CI must pass before the change is considered validated.
