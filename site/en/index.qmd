@@ -15,10 +15,20 @@ A progressive path connecting intuition, mathematics, code, and experimental evi
 The long-term goal is to understand and build a small decoder-only autoregressive language model, using inspectable components and tests. Sebastian Raschka's repository is a major source and comparison point, not a table of contents to copy or evidence that the corresponding steps are already implemented here.
 
 <div class="hero-actions">
-[Explore the learning path](transformer.qmd){.btn .btn-primary}
+[Start with text and tokens](text-data.qmd){.btn .btn-primary}
+[Inspect training examples](training-examples.qmd){.btn .btn-outline-primary}
 [Explore the source code](https://github.com/JM-Brun/llm-lab){.btn .btn-outline-primary}
 </div>
 ::::
+
+## Start here
+
+For a first pass, read these two lessons in order:
+
+1. **Represent text** — [tokens, token IDs, and BPE](text-data.qmd).
+2. **Understand the objective** — [input-target shifting, windows, and masks](training-examples.qmd).
+
+Then continue with the suggested path below. Pages connect intuition, equations, and code; the roadmap distinguishes available explanations from implementations that have actually been tested.
 
 ## How to navigate
 
@@ -56,8 +66,8 @@ Pages distinguish code that exists, tests that cover it, and work that is still 
 
 ## Suggested path
 
-1. **From text to tokens** — Unicode, encoding, tokenization, BPE, and reference resources. Start with [Text and data](text-data.qmd).
-2. **Data and the autoregressive objective** — build context windows, shift inputs and targets, then understand batching and loss masking.
+1. **From text to tokens** — Unicode, encoding, tokenization, BPE, and reference resources. [Open the lesson](text-data.qmd).
+2. **Data and the autoregressive objective** — context windows, input-target shifting, batching, and loss masking. [Open the lesson](training-examples.qmd).
 3. **Maths applied to LLMs** — follow logits through the training loss and gradients without duplicating a general mathematics course.
 4. **Attention and Transformers** — queries, keys, values, scores, softmax, positional information (including RoPE), and causal masking.
 5. **Model and training** — blocks, optimization, validation, generation, and evaluation.

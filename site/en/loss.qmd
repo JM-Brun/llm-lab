@@ -8,6 +8,8 @@ lang: en
 *Loss* refers to a scalar objective that training seeks to minimize. It is often built from per-token cross-entropies, but its exact aggregation is part of the experiment's definition.
 :::
 
+Before interpreting the loss, check how [training inputs and targets are constructed](training-examples.qmd): a correct formula cannot fix a token-shift error.
+
 ## From local penalty to batch loss
 
 Let $p_{b,t,:}$ be the predicted distribution at position $(b,t)$ and $y_{b,t}$ the target-token ID. For each valid target position $(b,t)\in\mathcal{M}$, the loss is:
