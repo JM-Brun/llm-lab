@@ -99,7 +99,7 @@ Ne pas présenter une différence de performance entre probes comme une preuve q
 ### Explications accessibles
 
 - **Transformer Circuits / Anthropic.** [Toy Models of Superposition](https://transformer-circuits.pub/2022/toy_model/). Les sections *Features as Directions* et *The Geometry of Superposition* sont particulièrement utiles pour relier intuition, géométrie et expériences.
-- **Hewitt.** [Designing and Interpreting Probes with Control Tasks](https://nlp.stanford.edu/~johnhew/probe-control/). Matériel pédagogique complémentaire sur la sélectivité des probes.
+- **Hewitt.** [Designing and Interpreting Probes with Control Tasks](https://www.cs.columbia.edu/~johnhew/interpreting-probes.html). Matériel pédagogique complémentaire sur la sélectivité des probes.
 - **Distill.** [A Mathematical Framework for Transformer Circuits](https://transformer-circuits.pub/2021/framework/index.html). Une introduction visuelle à l'analyse mécaniste des transformations linéaires et non linéaires dans les Transformers.
 
 ## Vérifications qui discriminent les interprétations
