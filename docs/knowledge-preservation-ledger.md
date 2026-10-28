@@ -314,3 +314,12 @@ This is a traceable first-pass preservation record, not a claim that every line 
 **Correction:** make the primary positional-information link point directly to `positional-encoding.qmd` and keep the explanation and language switch consistent with the English lesson. The French counterpart remains available through the page's language switch.
 
 **Scope / limits:** this is a targeted source-level navigation correction discovered during the post-merge check of PR #26. It does not constitute a complete scan of all rendered pages, external URLs, translation semantics, or browser/mobile presentation. Validate the full Quarto render and local-link checker on this change.
+
+
+## 19. Homepage bilingual parity — 2026-10-28
+
+**Finding:** comparing the French root homepage (`site/index.qmd`) with `site/en/index.qmd` showed a small content-parity gap. The French homepage explicitly linked tensors, embedding space, and positional encoding/RoPE in its “further reading” section, while the English homepage omitted that cluster. The English suggested path also omitted the explicit mention of positional information present in the French attention/Transformer path.
+
+**Correction:** add equivalent English links to the tensor, embedding-space, and positional-encoding lessons, and mention positional information (including RoPE) in the suggested attention path. This reuses existing pages and does not expand the scientific scope.
+
+**Scope / limits:** this is a targeted homepage parity check, not a complete semantic translation audit. Quarto render and rendered-site local-link validation are required; external resource availability and responsive visual presentation are not established by those checks.
