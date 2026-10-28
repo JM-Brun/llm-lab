@@ -35,7 +35,7 @@ The scores $QK^\top$ compare every query with every key. After scaling and apply
 
 ## Why separate these roles?
 
-- **Q and K determine where to look.** The scores $QK^\\top$ compare each query with each key. In an autoregressive Transformer, a causal mask excludes future positions before softmax.
+- **Q and K determine where to look.** The scores $QK^\top$ compare each query with each key. In an autoregressive Transformer, a causal mask excludes future positions before softmax.
 - **V determines what information is transmitted.** Once the weights have been computed, they combine the value vectors.
 - **All three are learned jointly.** The model learns transformations suited to its objective; these are not manually assigned fields.
 
