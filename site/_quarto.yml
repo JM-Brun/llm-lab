@@ -39,6 +39,7 @@ project:
     - fr/tensors.qmd
     - en/tensors.qmd
     - fr/embedding-space.qmd
+    - en/embedding-space.qmd
     - fr/positional-encoding.qmd
     - fr/exercises.qmd
     - en/exercises.qmd
@@ -119,6 +120,7 @@ website:
               - en/likelihood.qmd
               - en/gradients.qmd
               - en/tensors.qmd
+              - en/embedding-space.qmd
           - section: "Attention and Transformer"
             contents:
               - en/transformer.qmd
