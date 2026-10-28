@@ -21,8 +21,7 @@ def run_checker(site: Path) -> subprocess.CompletedProcess[str]:
 
 def test_accepts_existing_files_fragments_and_external_links(tmp_path: Path) -> None:
     (tmp_path / "index.html").write_text(
-        '<a href="guide.html#intro">Guide</a>'
-        '<a href="https://example.com/docs">External</a>',
+        '<a href="guide.html#intro">Guide</a><a href="https://example.com/docs">External</a>',
         encoding="utf-8",
     )
     (tmp_path / "guide.html").write_text(
