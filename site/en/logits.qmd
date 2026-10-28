@@ -83,6 +83,10 @@ This reduces the risk of numerical overflow. Subtracting the same maximum from e
 
 **Next:** [Probabilities](probabilities.qmd) · [Overview](mathematical-foundations.qmd)
 
+## Further reading
+
+- [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html): documents that the loss accepts unnormalized logits and defines its input/target conventions. This is an implementation reference, not a replacement for the mathematical definition above.
+
 :::: {.language-switch}
 [Français](../fr/logits.qmd) · [English](logits.qmd)
 ::::
