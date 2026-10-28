@@ -26,9 +26,9 @@ Ces approches injectent l'information positionnelle à des endroits différents 
 
 ## L'intuition mathématique de RoPE
 
-Pour une paire de coordonnées \((x_1,x_2)\), une rotation d'angle \(\theta\) s'écrit :
+Pour une paire de coordonnées $(x_1,x_2)$, une rotation d'angle $\theta$ s'écrit :
 
-\[
+$$
 R(\theta)=
 \begin{pmatrix}
 \cos\theta & -\sin\theta\\
@@ -36,11 +36,11 @@ R(\theta)=
 \end{pmatrix},
 \qquad
 R(\theta)\begin{pmatrix}x_1\\x_2\end{pmatrix}.
-\]
+$$
 
-RoPE associe à chaque position \(m\) un angle dépendant de la fréquence de la paire considérée. Les requêtes et les clés reçoivent des rotations correspondant à leurs positions respectives. Leur produit scalaire dépend alors de la différence entre ces positions : le score d'attention contient une information relative.
+RoPE associe à chaque position $m$ un angle dépendant de la fréquence de la paire considérée. Les requêtes et les clés reçoivent des rotations correspondant à leurs positions respectives. Leur produit scalaire dépend alors de la différence entre ces positions : le score d'attention contient une information relative.
 
-Dans une tête d'attention, les rotations sont appliquées à \(Q\) et \(K\) avant le calcul de \(QK^\top\). Les valeurs \(V\) ne sont pas directement tournées par la version standard de RoPE.
+Dans une tête d'attention, les rotations sont appliquées à $Q$ et $K$ avant le calcul de $QK^\top$. Les valeurs $V$ ne sont pas directement tournées par la version standard de RoPE.
 
 ## Ce que RoPE apporte — et ce qu'il ne garantit pas
 
@@ -53,7 +53,7 @@ Le comportement à grande longueur dépend aussi de la base de fréquences, de l
 - **« L'attention sait naturellement quel token vient en premier. »** L'ordre doit être fourni par un mécanisme positionnel ou une structure équivalente.
 - **« RoPE ajoute simplement un vecteur de position aux embeddings. »** Non : dans sa forme courante, RoPE fait tourner des paires de coordonnées des requêtes et des clés.
 - **« RoPE garantit les longues fenêtres de contexte. »** Non : les performances au-delà de la longueur d'entraînement dépendent de plusieurs choix et doivent être évaluées.
-- **« RoPE tourne aussi les valeurs \(V\). »** Dans la version standard, l'opération agit sur \(Q\) et \(K\), puis l'attention agrège les valeurs selon les poids calculés.
+- **« RoPE tourne aussi les valeurs $V$. »** Dans la version standard, l'opération agit sur $Q$ et $K$, puis l'attention agrège les valeurs selon les poids calculés.
 
 ## Comment vérifier une implémentation
 
