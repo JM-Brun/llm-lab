@@ -1,8 +1,8 @@
 """Tests for the rendered-site local link checker."""
 
 import pathlib
-import sys
 import subprocess
+import sys
 
 
 SCRIPT = pathlib.Path(__file__).resolve().parents[2] / "scripts" / "check_site_links.py"
