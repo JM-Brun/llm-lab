@@ -62,7 +62,7 @@ To evaluate an embedding space, return to the actual task: document retrieval, a
 - [Cosine similarity](cosine-similarity.qmd): metrics and limitations.
 - [Representation linearity](embedding-linearity.qmd): decodability, linearity, and interpretation.
 - [Tensors](tensors.qmd): how vectors are organized in network computations.
-- Positional encoding and RoPE: information about token positions. The dedicated page is currently available in French only ([encodage positionnel et RoPE](../fr/positional-encoding.qmd)).
+- [Positional encoding and RoPE](positional-encoding.qmd): information about token positions.
 
 ## Further video
 
