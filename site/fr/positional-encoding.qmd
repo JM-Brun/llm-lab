@@ -79,5 +79,5 @@ Cette page décrit le mécanisme sans ajouter d'implémentation avant que les co
 - [Hugging Face Transformers — documentation](https://huggingface.co/docs/transformers/) — détails d'implémentation selon les architectures.
 
 ::: {.language-switch}
-**Langue :** [Français](positional-encoding.qmd) · [English home — no equivalent page yet](../en/index.qmd)
+**Langue :** [Français](positional-encoding.qmd) · [English](../en/positional-encoding.qmd)
 :::
