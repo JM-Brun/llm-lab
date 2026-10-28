@@ -12,6 +12,15 @@ Queries, keys, and values are not three kinds of tokens. They are three **learne
 
 Imagine a collection of index cards. A **query** expresses what a position is looking for; a **key** describes how a position can be matched as relevant; a **value** carries the information that will actually be aggregated. This analogy separates the roles, but does not imply that the model performs explicit symbolic search.
 
+![Diagram of query, key, and value projections: Q and K determine attention weights, which are used to aggregate V.](../images/queries-keys-values-en.svg){fig-alt="Input representations are projected into queries, keys, and values. Queries and keys determine attention weights; the weights combine values into a context-enriched representation." width=100%}
+
+The computation has two distinct stages:
+
+1. **Match.** A position's query is compared with the keys of positions it is allowed to access. The resulting scores are transformed into weights by softmax, after scaling and any required mask.
+2. **Aggregate.** The weights form a weighted sum of value vectors. Positions with larger weights contribute more to that output representation.
+
+Q and K therefore determine the weights, while V supplies the content being aggregated. These are learned vector roles, not human-readable labels.
+
 ## Definition and dimensions
 
 For $X\in\mathbb{R}^{T\times d_{model}}$, the projections for one head are:
