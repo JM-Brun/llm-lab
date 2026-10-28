@@ -10,7 +10,7 @@ A **GPT** is a language model based on an autoregressive Transformer: given a co
 
 ## The full path, at a glance
 
-![Simplified data flow of an autoregressive GPT, from tokens to next-token selection.](../images/gpt-data-flow.svg){fig-alt="Conceptual pipeline: text, tokenization, embeddings and position, repeated Transformer blocks, logits, softmax, next-token selection, then adding the token to the context." width=100%}
+![Simplified data flow of an autoregressive GPT, from tokens to next-token selection.](../images/gpt-data-flow-en.svg){fig-alt="Conceptual pipeline: text, tokenization, embeddings and position, repeated Transformer blocks, logits, softmax, next-token selection, then adding the token to the context." width=100%}
 
 The diagram shows the conceptual path of generation. It intentionally omits implementation details such as residual connections, normalization, the key-value cache (KV cache), and sampling variants.
 
@@ -29,13 +29,13 @@ A block combines two main operations:
 
 Blocks also include residual connections and normalization. Their exact order depends on the architecture: the diagram is an abstraction, not a specification of any particular model.
 
-![Comparaison des rôles de l'auto-attention et du réseau feed-forward dans un bloc Transformer.](../images/attention-vs-mlp.svg){fig-alt="Self-attention allows information to flow between allowed positions; the same feed-forward network is applied independently at each position." width=100%}
+![Comparison of the roles of self-attention and the feed-forward network in a Transformer block.](../images/attention-vs-mlp-en.svg){fig-alt="Self-attention allows information to flow between allowed positions; the same feed-forward network is applied independently at each position." width=100%}
 
 The important distinction is not that attention “understands” tokens while the MLP does not: both transformations are learned. Attention mixes information across positions; the MLP transforms each representation locally, with shared weights across positions.
 
 ### Follow the attention calculation
 
-![Visual steps of attention: scores, causal mask, softmax and weighted sum of values.](../images/attention-calculation-flow.svg){fig-alt="Queries and keys produce scores. After scaling and optional masking, softmax creates weights that combine values into output vectors." width=100%}
+![Visual steps of attention: scores, optional mask, softmax and weighted sum of values.](../images/attention-calculation-flow-en.svg){fig-alt="Queries and keys produce scores. After scaling and optional masking, softmax creates weights that combine values into output vectors." width=100%}
 
 1. [**Queries, keys, and values (Q, K, V)**](queries-keys-values.qmd) — three learned projections give representations distinct roles.
 2. [**Scaled dot-product attention**](scaled-dot-product-attention.qmd) — scores from $QK^\top$ are scaled by $\sqrt{d_k}$ and converted into weights by softmax.
