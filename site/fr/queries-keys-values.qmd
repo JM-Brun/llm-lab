@@ -14,7 +14,7 @@ lang: fr
 
 Le calcul se déroule en deux étapes :
 
-1. **Comparer.** La requête d'une position est comparée aux clés des positions auxquelles elle a le droit d'accéder. Ces comparaisons donnent des scores, transformés en poids par le *softmax*.
+1. **Comparer.** La requête d'une position est comparée aux clés des positions auxquelles elle a le droit d'accéder. Ces comparaisons donnent des scores, mis à l'échelle puis éventuellement masqués avant d'être transformés en poids par le *softmax*. Le masque dépend du type d'attention ; il n'est pas nécessairement causal.
 2. **Combiner.** Le modèle calcule une somme pondérée des valeurs. Les positions qui reçoivent un poids plus élevé contribuent davantage à cette nouvelle représentation.
 
 Le vocabulaire vient d'une analogie avec la recherche d'information : une requête indique ce qu'on cherche, une clé permet de comparer les éléments disponibles, et une valeur contient l'information à récupérer. Dans un réseau neuronal, ces rôles sont portés par des vecteurs appris ; ils ne sont pas des étiquettes lisibles par un humain.
@@ -27,7 +27,7 @@ $$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
 $$
 
-Les matrices $W_Q$, $W_K$ et $W_V$ sont apprises pendant l'entraînement. Elles transforment chaque représentation d'entrée pour lui donner un rôle différent dans le calcul de l'attention.
+Les matrices $W_Q$, $W_K$ et $W_V$ sont apprises pendant l'entraînement. Elles transforment chaque représentation d'entrée pour lui donner un rôle différent dans le calcul de l'attention. Dans l'attention à produit scalaire standard, les valeurs $V$ ne déterminent pas directement les scores : ceux-ci sont calculés à partir de $Q$ et $K$.
 
 Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model}\times d_v}$, les formes obtenues sont $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$. Les biais éventuels sont omis ici.
 
