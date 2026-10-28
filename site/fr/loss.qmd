@@ -88,6 +88,10 @@ Il faut notamment une même convention de logarithme et de réduction, un tokeni
 
 **Suite :** [Gradients](gradients.qmd) · [Vraisemblance](vraisemblance.qmd)
 
+## Pour approfondir
+
+- [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) : documente la perte appliquée aux logits non normalisés, les cibles ignorées, les poids de classes et les modes de réduction. Ces conventions doivent être consignées pour comparer des pertes rapportées.
+
 ::: {.language-switch}
 [Français](loss.qmd) · [English](../en/loss.qmd)
 :::
