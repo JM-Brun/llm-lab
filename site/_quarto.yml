@@ -4,6 +4,8 @@ project:
   render:
     - index.qmd
     - en/index.qmd
+    - fr/text-data.qmd
+    - en/text-data.qmd
     - fr/mathematical-foundations.qmd
     - en/mathematical-foundations.qmd
     - fr/logits.qmd
@@ -72,6 +74,9 @@ website:
       style: "docked"
       contents:
         - index.qmd
+        - section: "Texte et données"
+          contents:
+            - fr/text-data.qmd
         - section: "Mathématiques appliquées aux LLM"
           contents:
             - fr/mathematical-foundations.qmd
@@ -102,6 +107,9 @@ website:
       style: "docked"
       contents:
         - en/index.qmd
+        - section: "Text and data"
+          contents:
+            - en/text-data.qmd
         - section: "Maths applied to LLMs"
           contents:
             - en/mathematical-foundations.qmd
