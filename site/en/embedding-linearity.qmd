@@ -22,9 +22,9 @@ Park, Choe, and Veitch formalize different versions of the linear representation
 
 ## 2. A teaching counterexample: XOR
 
-Let (x_1,x_2\in\{0,1\}) and (y=x_1\oplus x_2). The positive examples are ((0,1)) and ((1,0)); the negative examples are ((0,0)) and ((1,1)). No line perfectly separates the two classes in the original input coordinates.
+Let \(x_1,x_2\in\{0,1\}\) and \(y=x_1\oplus x_2\). The positive examples are \((0,1)\) and \((1,0)\); the negative examples are \((0,0)\) and \((1,1)\). No line perfectly separates the two classes in the original input coordinates.
 
-But XOR is not “impossible to represent linearly” in an absolute sense. With a feature transformation, for example (\phi(x_1,x_2)=(x_1,x_2,x_1x_2)), separation becomes linear in the transformed space. The lesson is that **linear separability depends on the representation and the chosen features**.
+But XOR is not “impossible to represent linearly” in an absolute sense. With a feature transformation, for example \(\phi(x_1,x_2)=(x_1,x_2,x_1x_2)\), separation becomes linear in the transformed space. The lesson is that **linear separability depends on the representation and the chosen features**.
 
 This is why a failed linear probe does not automatically prove that information is absent, and a successful probe does not establish a particular internal mechanism.
 
@@ -66,7 +66,7 @@ A more powerful probe may recover more information, but then it becomes harder t
 
 1. Generate the four XOR points.
 2. Evaluate a linear classifier on the original coordinates.
-3. Add the feature (x_1x_2) and evaluate the same type of classifier again.
+3. Add the feature \(x_1x_2\) and evaluate the same type of classifier again.
 4. Compare against an MLP, clearly separating model capacity from representation quality.
 
 Expected result: the linear classifier fails in the original space but succeeds after the transformation. This demonstrates a geometric property; it is not direct evidence about LLM representations.
