@@ -279,3 +279,11 @@ This is a traceable first-pass preservation record, not a claim that every line 
 - **Focused external-reference spot-check (not a complete bibliography audit):** the Shannon 1948 PDF and Cover–Thomas Wiley book page are accessible and match their cited works; the Hugging Face perplexity documentation is accessible and discusses tokenization/context-window effects; the official PyTorch `CrossEntropyLoss` page is accessible and documents logits, targets, ignored labels, and reduction; the two linked 3Blue1Brown entropy/cross-entropy videos resolve with matching titles. The Deep Learning Book page could not be fetched by the browsing tool because its response exceeded the tool's content limit; this is inconclusive, not evidence of a broken link.
 - **Remaining validation:** browser inspection of MathJax and responsive layouts, a broader external-reference audit beyond this focused core slice, and private transfer-question evidence remain open.
 
+## 15. Bilingual link parity — cosine similarity lessons — 2026-10-28
+
+**Scope:** compared the external URLs and section structure in `site/fr/cosine-similarity.qmd` and `site/en/cosine-similarity.qmd` on the reviewed `main` snapshot.
+
+- **Finding:** the English lesson linked an interactive synthetic demonstration of nearest-neighbour hubness (`A Fifth of Your Corpus Is Unreachable. It Isn’t the Dimensions`) that was not linked from the French lesson. The scientific concept and the Nielsen & Hansen paper were already covered in both languages; the difference was a supplementary teaching resource, not a missing core claim.
+- **Correction proposed:** add a French-language description of the same demonstration, including the limitation that its synthetic Gaussian corpus is illustrative and is not evidence of real retrieval-system performance.
+- **Other parity check:** the extracted external URL sets now differ only by this newly identified item before the correction; the bilingual feature-linearity pages had matching extracted external URL sets. This is a source-level URL/heading comparison, not a full semantic translation review or a claim that every external resource has been validated.
+- **Remaining verification:** render and run CI; manually verify the external page's continued availability and inspect the lessons in a browser. The link checker intentionally does not probe external hosts.
