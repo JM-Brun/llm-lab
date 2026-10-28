@@ -33,9 +33,7 @@ def language_mapping() -> dict[str, str]:
 
 def test_language_mapping_covers_all_french_pages() -> None:
     mapping = language_mapping()
-    french_slugs = {
-        page.stem for page in (SITE / "fr").glob("*.qmd")
-    }
+    french_slugs = {page.stem for page in (SITE / "fr").glob("*.qmd")}
 
     assert set(mapping) == french_slugs, (
         "Every French page must have an explicit language-switch mapping. "
@@ -46,11 +44,7 @@ def test_language_mapping_covers_all_french_pages() -> None:
 
 def test_language_mapping_covers_all_english_pages_except_homepage() -> None:
     mapping = language_mapping()
-    english_slugs = {
-        page.stem
-        for page in (SITE / "en").glob("*.qmd")
-        if page.stem != "index"
-    }
+    english_slugs = {page.stem for page in (SITE / "en").glob("*.qmd") if page.stem != "index"}
 
     assert set(mapping.values()) == english_slugs, (
         "Every English content page must have exactly one French counterpart. "
