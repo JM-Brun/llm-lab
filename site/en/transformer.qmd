@@ -16,7 +16,7 @@ The diagram shows the conceptual path of generation. It intentionally omits impl
 
 ## 1. From text to representations
 
-A tokenizer maps text to token IDs. An embedding matrix maps each ID to a learned vector. Positional information is also supplied, for example by adding a positional vector or by integrating position into attention as in [RoPE](../fr/positional-encoding.qmd).
+A tokenizer maps text to token IDs. An embedding matrix maps each ID to a learned vector. Positional information is also supplied, for example by adding a positional vector or by integrating position into attention as in [RoPE](positional-encoding.qmd).
 
 An initial token embedding is not the same as a **contextual representation**: Transformer layers progressively update vectors using context. See [embedding space](../fr/embedding-space.qmd) and [tensors](../fr/tensors.qmd).
 
