@@ -20,7 +20,7 @@ Un modèle de langage reçoit une séquence d'identifiants numériques, pas du t
 
 Une chaîne Python représente du texte Unicode. Son encodage UTF-8 produit une séquence d'octets. Un tokenizer applique ensuite des règles de découpage et un vocabulaire pour produire des tokens, puis des identifiants entiers.
 
-```mermaid
+```{mermaid}
 flowchart LR
     A["Texte Unicode"] --> B["Prétraitement éventuel"]
     B --> C["Découpage initial"]
@@ -51,7 +51,7 @@ Les méthodes sous-mots réutilisent des unités fréquentes tout en représenta
 
 Dans une version pédagogique simplifiée, BPE part d'unités de base, compte les paires adjacentes, fusionne une paire selon une règle définie et répète l'opération jusqu'à atteindre un critère d'arrêt.
 
-```mermaid
+```{mermaid}
 flowchart TD
     A["Corpus d'entraînement"] --> B["Unités de base"]
     B --> C["Compter les paires adjacentes"]
