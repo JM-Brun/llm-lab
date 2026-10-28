@@ -20,7 +20,7 @@ A language model receives a sequence of numerical IDs, not raw text. Tokenizatio
 
 A Python string represents Unicode text. UTF-8 encoding produces bytes. A tokenizer then applies splitting rules and a vocabulary to produce tokens and integer IDs.
 
-```mermaid
+```{mermaid}
 flowchart LR
     A["Unicode text"] --> B["Optional preprocessing"]
     B --> C["Initial splitting"]
@@ -51,7 +51,7 @@ Subword methods reuse frequent units while retaining a way to represent less fre
 
 In a simplified educational version, BPE starts from base units, counts adjacent pairs, merges a selected pair according to a defined rule, and repeats until a stopping criterion is met.
 
-```mermaid
+```{mermaid}
 flowchart TD
     A["Training corpus"] --> B["Base units"]
     B --> C["Count adjacent pairs"]
