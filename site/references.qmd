@@ -93,7 +93,7 @@ Ces liens sont proposés pour compléter la lecture. Ils servent d'appui pédago
 - [Hugging Face — LLM Course en français](https://huggingface.co/learn/llm-course/fr)
 - [PyTorch — Transformer building blocks](https://docs.pytorch.org/tutorials/intermediate/transformer_building_blocks.html)
 - [PyTorch — Scaled dot-product attention](https://docs.pytorch.org/tutorials/intermediate/scaled_dot_product_attention_tutorial)
-- [Quarto — documentation officielle](https://quarto.org/docs/)
+- [Quarto — documentation officielle](https://quarto.org/docs/guide/)
 
 ## Références de recherche : géométrie des représentations
 
