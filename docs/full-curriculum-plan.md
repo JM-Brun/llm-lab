@@ -8,6 +8,8 @@
 
 ## 1. Editorial contract
 
+The first-pass status of existing pages is tracked in the [public page audit inventory](page-audit-inventory.md). It is deliberately partial: source inspection, rendered-page review, scientific validation, and learner mastery are tracked separately.
+
 The shared [reader-experience and editorial method](reader-experience-and-editorial-method.md) defines progressive disclosure, non-linear navigation, page types, and review criteria. This curriculum document defines topic coverage and dependencies; where wording could imply that every reader must follow one fixed sequence, use the shared method as the reader-experience rule.
 
 - Keep the course bilingual (French and English) and the concept pages canonical: explain one concept deeply, then link to it instead of duplicating it.
