@@ -8,8 +8,11 @@
 
 ## 1. Editorial contract
 
+The shared [reader-experience and editorial method](reader-experience-and-editorial-method.md) defines progressive disclosure, non-linear navigation, page types, and review criteria. This curriculum document defines topic coverage and dependencies; where wording could imply that every reader must follow one fixed sequence, use the shared method as the reader-experience rule.
+
 - Keep the course bilingual (French and English) and the concept pages canonical: explain one concept deeply, then link to it instead of duplicating it.
 - Separate overview pages, concept pages, exercises, implementations/tests, experiment reports, and private mastery evidence.
+- Treat the curriculum as a navigable concept graph with a suggested route, not a mandatory linear book. Each overview should work without requiring mastery of every linked deep dive; each deep dive should connect back to the system-level question.
 - Explain intuition, notation, tensor shapes, assumptions, numerical issues, misconceptions, counterexamples, failure modes, and limits—not just the happy path.
 - Cite research papers and official documentation for technical claims. Attribute external diagrams and link to their original pages. Do not copy an illustration merely because it is publicly accessible.
 - State clearly what exists, what has been validated, and what is only planned. A passing test, rendered page, low training loss, or completed exercise does not by itself demonstrate mastery.
