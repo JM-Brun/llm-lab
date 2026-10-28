@@ -112,4 +112,6 @@ When auditing a conclusion, ask: what assumptions about the encoder and normaliz
 
 ## Takeaway
 
+For how these vectors are represented and constructed, see also [Embedding space](embedding-space.qmd).
+
 Cosine is a **geometric metric**, not a universal definition of semantics. Treat it as a hypothesis to test against a baseline and concrete errors on the target task; no isolated geometric property guarantees system relevance.
