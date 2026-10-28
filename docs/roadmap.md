@@ -220,3 +220,8 @@ Passing a render or test establishes only the property that was checked. It does
 ### Focused audit — causal-mask API semantics (2026-10-28)
 
 A source-level review of the English and French causal-masking pages found that both correctly described the additive causal mask and stated that no reusable attention implementation or end-to-end invariance test exists. One practical caveat was missing: boolean-mask polarity is not uniform across attention APIs. The official PyTorch `scaled_dot_product_attention` API treats `True` as allowed, while `MultiheadAttention.attn_mask` treats `True` as masked out. The proposed correction adds matching warnings and links to both official references. This does not establish end-to-end causality or replace rendered/browser review; Quarto and local-link CI must pass.
+
+
+### Focused bilingual audit — cosine-similarity navigation (2026-10-28)
+
+The source comparison found one small parity gap: the French cosine-similarity lesson linked to the embedding-space concept from its takeaway, while the English lesson did not. The English link has been added. This is a targeted navigation fix, not completion of the full semantic bilingual audit; rendered-site, external-reference, and responsive visual checks remain open.
