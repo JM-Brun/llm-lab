@@ -62,7 +62,7 @@ This path describes the learning structure, not the implementation status of eve
 
 ## Explore further
 
-- [Exercise space](en/exercises.qmd) — separate collections for practice and knowledge transfer.
+- [Exercise space](exercises.qmd) — separate collections for practice and knowledge transfer.
 - [Experimental evaluation exercise](experimental-evaluation.qmd) — transfer metric, leakage, selection, and uncertainty concepts to a scientific-document retrieval case.
 
 - [Glossary](glossary.qmd) — concise definitions from “token” to “autoregressive Transformer”.
