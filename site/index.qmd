@@ -58,9 +58,9 @@ Les pages distinguent le code réellement présent, les tests qui le couvrent et
 ## Parcours conseillé
 
 1. **Du texte aux tokens** — Unicode, encodage, tokenisation, BPE et ressources de référence. Commencer par [la page Texte et données](fr/text-data.qmd).
+2. **Données et objectif autorégressif** — construire des fenêtres de contexte, décaler entrées et cibles, puis comprendre le batching et le masquage de la perte.
 3. **Mathématiques appliquées aux LLM** — suivre les logits jusqu’à la perte d’entraînement et aux gradients, sans refaire un cours général de mathématiques.
 4. **Attention et Transformer** — requêtes, clés, valeurs, scores, softmax, information de position et masque causal.
-2. **Données et objectif autorégressif** — tokenisation, décalage entrée-cible et prédiction du prochain token.
 5. **Modèle et entraînement** — blocs, optimisation, validation, génération et évaluation.
 6. **Notes critiques** — examiner les hypothèses, les contre-exemples et les limites des métriques et des représentations.
 
