@@ -45,7 +45,7 @@ Tiblias et al. étendent cette piste avec *Supervised Multi-Dimensional Scaling*
 **Illustrations et code :**
 
 - [Figure 1 — aperçu de SMDS et des géométries de caractéristiques](https://arxiv.org/html/2510.01025v1#S0.F1) ; [Figure 2 — exemple de découverte d'une structure circulaire](https://arxiv.org/html/2510.01025v1#S3.F2).
-- [Code et données du projet (dépôt actuellement nommé `tmlr2026-manifold-analysis`)](https://github.com/UKPLab/tmlr2026-manifold-analysis) pour examiner le protocole et tenter de le reproduire.
+- [Code et données du projet (dépôt actuellement nommé `tmlr2026-manifold-analysis`)](https://github.com/UKPLab/tmlr2026-manifold-analysis) pour examiner le protocole et tenter de le reproduire. Le dépôt qualifie le logiciel d’expérimental ; cela ne prouve pas que les résultats ont été reproduits indépendamment.
 - [*Toy Models of Superposition*](https://transformer-circuits.pub/2022/toy_model/) : visualisations interactives et intuitions géométriques sur la superposition.
 
 ## 4. Pourquoi les probes peuvent donner une fausse impression
