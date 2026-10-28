@@ -91,6 +91,11 @@ Le gradient décrit une variation locale. Un pas trop grand peut dépasser la r�
 
 **Retour :** [Vue d'ensemble](mathematical-foundations.qmd) · [Loss](loss.qmd)
 
+## Pour approfondir
+
+- [PyTorch — Mécanismes d'autograd](https://docs.pytorch.org/docs/stable/notes/autograd.html) : explique la différentiation automatique en mode inverse et le graphe de calcul.
+- [PyTorch — `gradcheck`](https://docs.pytorch.org/docs/stable/generated/torch.autograd.gradcheck.gradcheck.html) : documente la vérification numérique des gradients analytiques par différences finies.
+
 ::: {.language-switch}
 [Français](gradients.qmd) · [English](../en/gradients.qmd)
 :::
