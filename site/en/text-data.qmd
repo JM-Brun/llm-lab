@@ -101,7 +101,34 @@ A byte-level BPE tokenizer can represent arbitrary text inputs using byte-level 
 
 Tokenization guarantees neither semantic understanding, truth, nor calibration. It defines the discrete representation on which the model learns.
 
-## 5. A curated resource library
+## 5. Beyond compression: language equity and evaluation
+
+Token count is a useful measure of **representation cost**, not a sufficient measure of quality. A tokenizer may compress a corpus efficiently overall while representing some languages, scripts, morphological forms, or text types less efficiently. Conversely, reducing token count does not by itself guarantee better downstream performance.
+
+```{mermaid}
+flowchart LR
+    A["Multilingual text"] --> B["Intrinsic measurements"]
+    B --> C["Fertility and token length"]
+    B --> D["Compression and coverage"]
+    C --> E["Cost: context, memory, throughput"]
+    D --> E
+    E --> F["Downstream evaluation by language and task"]
+    F --> G["Decision with explicit trade-offs"]
+```
+
+This diagram represents a **sequence of evaluation questions**, not a causal law or measured result. Tokenizers should be compared on controlled text, versions, normalization rules, and budgets, followed by evaluation on relevant downstream tasks.
+
+Research resources for this complementary perspective:
+
+- [Ahia et al. (2023) — *Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/): studies tokenization cost differences across 22 languages and their implications for APIs.
+- [Ali et al. (2024) — *Tokenizer Choice For LLM Training: Negligible or Crucial?*](https://aclanthology.org/2024.findings-naacl.247/): shows why tokenizer choice can affect cost and downstream performance, while noting that intrinsic metrics do not always predict downstream results.
+- [Wegmann et al. (2025) — *Tokenization is Sensitive to Language Variation*](https://aclanthology.org/2025.findings-acl.572/): a complementary perspective on linguistic variation and the role of the pre-tokenizer.
+- [Arnett et al. (2025) — *Explaining and Mitigating Crosslingual Tokenizer Inequities*](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html): analyzes cross-language cost differences and design factors such as vocabulary size and pre-tokenization.
+- [TokLens (ACL 2026 SRW)](https://aclanthology.org/2026.acl-srw.18/): a recent toolkit for multilingual comparisons. Treat it as a tool and study to inspect, not as evidence that a single intrinsic metric is sufficient.
+
+**Critical-reading question:** if tokenizer A uses 20% fewer tokens than B on one text, what has been demonstrated? Only a sequence-length difference for that text and those versions. A quality claim requires additional measurements and appropriate evaluations.
+
+## 6. A curated resource library
 
 The resources are complementary. A useful progression is to build intuition, read an implementation, and then verify details in technical documentation.
 
@@ -142,7 +169,7 @@ The resources are complementary. A useful progression is to build intuition, rea
 
 This page links to resources rather than copying their illustrations. Repositories evolve; availability does not automatically validate every claim.
 
-## 6. Mini-lab: compare tokenizers
+## 7. Mini-lab: compare tokenizers
 
 Use the visualizers above with the same strings and record the differences. Do not compare raw IDs across vocabularies as if they shared a meaning.
 
@@ -157,7 +184,7 @@ Use the visualizers above with the same strings and record the differences. Do n
 
 **Minimal lab record:** for each string, record tokenizer/version, visible tokens, token count, and one interpretation limit. Token count alone measures neither linguistic nor model quality.
 
-## 7. Counterexamples and common misconceptions
+## 8. Counterexamples and common misconceptions
 
 - **“A token is a word.”** False: it may be a subword, punctuation, a fragment with a space, bytes, or a special token.
 - **“BPE identifies roots and suffixes.”** Not necessarily: it merges statistically and does not guarantee morphological analysis.
