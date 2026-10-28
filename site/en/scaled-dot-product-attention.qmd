@@ -25,6 +25,23 @@ $$
 
 Here $M$ denotes an additive hard mask: $M_{ij}=0$ for an allowed query-key pair and $M_{ij}=-\infty$ for a disallowed pair. If no mask is needed, omit $M$ (equivalently, use an all-zero matrix). For causal attention, future positions are disallowed and therefore receive $-\infty$ before softmax. Each query row must retain at least one allowed key; a row in which every score is masked to $-\infty$ makes the ordinary softmax undefined and needs explicit handling.
 
+## Worked numerical example
+
+Consider one query and two accessible keys, with no mask:
+
+$
+q=(1,0),\quad k_1=(1,0),\quad k_2=(0,1),\quad
+v_1=(10,0),\quad v_2=(0,20).
+$
+
+Here $d_k=2$. The raw scores are $qk_1^\top=1$ and $qk_2^\top=0$. After scaling, the scores are $(1/\sqrt{2},0)\approx(0.707,0)$. Applying softmax gives weights approximately $(0.67,0.33)$, which sum to one. The output is their weighted sum of the values:
+
+$
+o\approx0.67(10,0)+0.33(0,20)=(6.7,6.6).
+$
+
+This small example separates the roles: the query and keys determine the weights; the values determine what is combined. The weights are relative to the keys available in this row, not a measure of semantic relevance.
+
 ![Visual overview of attention: scores, optional mask, softmax, and weighted sum of values.](../images/attention-calculation-flow-en.svg){fig-alt="Queries and keys produce scores. After scaling and optional masking, softmax creates weights that combine the values." width=100%}
 
 The diagram also shows why three objects must not be conflated: **scores** (raw compatibility values), **weights** (normalized relative to accessible positions), and **outputs** (weighted combinations of values). In non-causal attention, the mask may be absent or encode another constraint. Softmax normalization does not turn the weights into a universal measure of semantic relevance.
