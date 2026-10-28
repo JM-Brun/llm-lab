@@ -25,6 +25,10 @@ $$
 
 The mask $M$ is optional depending on the attention type. For causal attention, future positions receive $-\infty$ before softmax.
 
+![Visual overview of attention: scores, causal mask, softmax, and weighted sum of values.](../images/attention-calculation-flow.svg){fig-alt="Queries and keys produce scores. After scaling and optional masking, softmax creates weights that combine the values." width=100%}
+
+The diagram also shows why three objects must not be conflated: **scores** (raw compatibility values), **weights** (normalized relative to accessible positions), and **outputs** (weighted combinations of values). In non-causal attention, the mask may be absent or encode another constraint. Softmax normalization does not turn the weights into a universal measure of semantic relevance.
+
 ## Why divide by $\sqrt{d_k}$?
 
 Under the simplifying assumption that query and key components are independent, zero-mean, and unit-variance, the variance of a dot product—the sum of about $d_k$ terms—grows with $d_k$. Dividing by $\sqrt{d_k}$ helps keep score scale more stable as dimensionality increases, limiting overly saturated softmax outputs and weak gradients. This is a motivation for scaling, not a guarantee that trained-network scores always have exactly unit variance.
@@ -50,6 +54,8 @@ The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Ne
 ## Code, implementation, and verification
 
 A reusable attention implementation does not yet exist in **src/llm_lab/**. This page's equation should become the reference contract: expected shapes, row-wise normalization, weights summing to one over allowed positions, finite outputs, and valid gradients.
+
+Input and output dimensions matter as much as the formula; see [tensors](tensors.qmd).
 
 - [Source code](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab)
 - [Tests](https://github.com/JM-Brun/llm-lab/tree/main/tests)
