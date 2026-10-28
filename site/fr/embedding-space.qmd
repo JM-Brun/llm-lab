@@ -16,7 +16,7 @@ Cette image est une illustration conceptuelle en deux dimensions. Les embeddings
 
 ## D'où viennent les vecteurs ?
 
-Un tokenizer découpe le texte en tokens et associe généralement chaque token à un identifiant entier. Une matrice d'embedding \(E\in\mathbb{R}^{V\times d}\) contient un vecteur par identifiant : \(V\) est la taille du vocabulaire et \(d\) la dimension de l'embedding. Pour le token d'identifiant \(i\), son embedding initial est la ligne \(E_i\).
+Un tokenizer découpe le texte en tokens et associe généralement chaque token à un identifiant entier. Une matrice d'embedding $E\in\mathbb{R}^{V\times d}$ contient un vecteur par identifiant : $V$ est la taille du vocabulaire et $d$ la dimension de l'embedding. Pour le token d'identifiant $i$, son embedding initial est la ligne $E_i$.
 
 Dans un Transformer, cette représentation est ensuite transformée par les couches du réseau. Il faut distinguer trois objets :
 
@@ -30,9 +30,9 @@ Ces objets ne sont pas interchangeables. Une méthode adaptée aux embeddings de
 
 On peut comparer deux vecteurs par produit scalaire, distance euclidienne ou similarité cosinus. Le cosinus compare leurs directions :
 
-\[
+$$
 \operatorname{cos}(x,y)=\frac{x^\top y}{\|x\|_2\|y\|_2}.
-\]
+$$
 
 Un score élevé signifie que les directions sont proches. Il ne prouve pas que les textes sont équivalents, qu'ils impliquent la même conclusion ou qu'un document répond correctement à une question.
 
