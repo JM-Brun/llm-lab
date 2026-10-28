@@ -60,16 +60,6 @@ website:
     background: "#10233f"
     foreground: "#f8fafc"
     left:
-      - text: "Français"
-        href: index.qmd
-      - text: "English"
-        href: en/index.qmd
-      - text: "Applications maths / Maths applications"
-        href: fr/mathematical-foundations.qmd
-      - text: "Glossaire / Glossary"
-        href: fr/glossary.qmd
-      - text: "Exercices / Exercises"
-        href: fr/exercises.qmd
       - text: "Références / References"
         href: references.qmd
     right:
@@ -77,65 +67,66 @@ website:
         href: https://github.com/JM-Brun/llm-lab
         aria-label: "GitHub repository"
   sidebar:
-    style: "docked"
-    contents:
-      - section: "Français"
-        contents:
-          - index.qmd
-          - section: "Mathématiques appliquées aux LLM"
-            contents:
-              - fr/mathematical-foundations.qmd
-              - fr/logits.qmd
-              - fr/probabilites.qmd
-              - fr/entropy.qmd
-              - fr/cross-entropy.qmd
-              - fr/loss.qmd
-              - fr/vraisemblance.qmd
-              - fr/gradients.qmd
-              - fr/tensors.qmd
-          - section: "Attention et Transformer"
-            contents:
-              - fr/transformer.qmd
-              - fr/transformer-history.qmd
-              - fr/queries-keys-values.qmd
-              - fr/scaled-dot-product-attention.qmd
-              - fr/causal-masking.qmd
-              - fr/positional-encoding.qmd
-          - fr/exercises.qmd
-          - fr/evaluation-experimentale.qmd
-          - fr/glossary.qmd
-          - fr/cosine-similarity.qmd
-          - fr/linearite-embeddings.qmd
-          - fr/embedding-space.qmd
-      - section: "English"
-        contents:
-          - en/index.qmd
-          - section: "Maths applied to LLMs"
-            contents:
-              - en/mathematical-foundations.qmd
-              - en/logits.qmd
-              - en/probabilities.qmd
-              - en/entropy.qmd
-              - en/cross-entropy.qmd
-              - en/loss.qmd
-              - en/likelihood.qmd
-              - en/gradients.qmd
-              - en/tensors.qmd
-              - en/embedding-space.qmd
-          - section: "Attention and Transformer"
-            contents:
-              - en/transformer.qmd
-              - en/transformer-history.qmd
-              - en/queries-keys-values.qmd
-              - en/scaled-dot-product-attention.qmd
-              - en/causal-masking.qmd
-              - en/positional-encoding.qmd
-          - en/exercises.qmd
-          - en/experimental-evaluation.qmd
-          - en/glossary.qmd
-          - en/cosine-similarity.qmd
-          - en/embedding-linearity.qmd
-      - references.qmd
+    - id: fr
+      title: "LLM Lab · Français"
+      style: "docked"
+      contents:
+        - index.qmd
+        - section: "Mathématiques appliquées aux LLM"
+          contents:
+            - fr/mathematical-foundations.qmd
+            - fr/logits.qmd
+            - fr/probabilites.qmd
+            - fr/entropy.qmd
+            - fr/cross-entropy.qmd
+            - fr/loss.qmd
+            - fr/vraisemblance.qmd
+            - fr/gradients.qmd
+            - fr/tensors.qmd
+        - section: "Attention et Transformer"
+          contents:
+            - fr/transformer.qmd
+            - fr/transformer-history.qmd
+            - fr/queries-keys-values.qmd
+            - fr/scaled-dot-product-attention.qmd
+            - fr/causal-masking.qmd
+            - fr/positional-encoding.qmd
+        - fr/exercises.qmd
+        - fr/evaluation-experimentale.qmd
+        - fr/glossary.qmd
+        - fr/cosine-similarity.qmd
+        - fr/linearite-embeddings.qmd
+        - fr/embedding-space.qmd
+    - id: en
+      title: "LLM Lab · English"
+      style: "docked"
+      contents:
+        - en/index.qmd
+        - section: "Maths applied to LLMs"
+          contents:
+            - en/mathematical-foundations.qmd
+            - en/logits.qmd
+            - en/probabilities.qmd
+            - en/entropy.qmd
+            - en/cross-entropy.qmd
+            - en/loss.qmd
+            - en/likelihood.qmd
+            - en/gradients.qmd
+            - en/tensors.qmd
+            - en/embedding-space.qmd
+        - section: "Attention and Transformer"
+          contents:
+            - en/transformer.qmd
+            - en/transformer-history.qmd
+            - en/queries-keys-values.qmd
+            - en/scaled-dot-product-attention.qmd
+            - en/causal-masking.qmd
+            - en/positional-encoding.qmd
+        - en/exercises.qmd
+        - en/experimental-evaluation.qmd
+        - en/glossary.qmd
+        - en/cosine-similarity.qmd
+        - en/embedding-linearity.qmd
   page-footer:
     left: "LLM Lab · Mathématiques, code et expériences reproductibles"
     right:
@@ -147,6 +138,7 @@ format:
     theme:
       - cosmo
       - styles.scss
+    include-after-body: includes/language-switch.html
     toc: true
     toc-depth: 3
     code-copy: true
