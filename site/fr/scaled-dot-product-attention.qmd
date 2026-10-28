@@ -23,7 +23,7 @@ $$
 O=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
 $$
 
-Le masque $M$ est facultatif selon le type d'attention. Pour une attention causale, les positions futures reçoivent $-\infty$ avant le softmax. Chaque ligne de requête doit conserver au moins une clé autorisée ; si tous les scores d'une ligne sont masqués à $-\infty$, le softmax usuel n'est pas défini et ce cas doit être traité explicitement.
+Ici, $M$ désigne un masque additif strict : $M_{ij}=0$ pour un couple requête-clé autorisé et $M_{ij}=-\infty$ pour un couple interdit. Si aucun masque n'est nécessaire, on omet $M$ (ce qui revient à utiliser une matrice nulle). Pour une attention causale, les positions futures sont interdites et reçoivent donc $-\infty$ avant le softmax. Chaque ligne de requête doit conserver au moins une clé autorisée ; si tous les scores d'une ligne sont masqués à $-\infty$, le softmax usuel n'est pas défini et ce cas doit être traité explicitement.
 
 ![Vue visuelle du calcul : scores, masque éventuel, softmax et somme pondérée des valeurs.](../images/attention-calculation-flow.svg){fig-alt="Les requêtes et les clés produisent des scores. Après mise à l'échelle et application éventuelle du masque, le softmax crée des poids qui combinent les valeurs." width=100%}
 
