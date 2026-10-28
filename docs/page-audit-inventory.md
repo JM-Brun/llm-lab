@@ -137,3 +137,15 @@ This pass compared English and French source pages for tensors, embedding space,
 | Evaluation exercise | The case states its deployment target (unseen papers), explains paper-level grouping, raises unseen-query dependence, warns about selecting the best of 40 configurations, and distinguishes AP from calibration. The random-ranking baseline is explicitly approximate, not a finite-sample identity. | Independently verify metric references and ensure future revisions keep the estimand aligned with the split and uncertainty unit. |
 
 This is a bounded source-level review, not a complete scientific certification. No model implementation or experiment was added. Rendered equations/figures and external-link validity remain separate checks.
+
+
+## Seventh slice: version-sensitive claim in the linearity / SAE reading list
+
+A targeted source check compared the paper's published PMLR page with the authors' later arXiv v2, which includes a corrigendum. The published PMLR abstract attributes the reported compositional generalization failures to an amortization gap; the later arXiv v2 states that dictionary learning, not the inference procedure alone, is the binding constraint, and that replacing the encoder with per-example iterative inference on the same SAE-learned dictionary does not close the gap. This is a material version difference, not a cosmetic citation update.
+
+| Area | Finding | Change | Remaining work |
+|---|---|---|---|
+| EN/FR discussion of Barin-Pacela et al. (2026) | The previous prose treated limitations of amortized inference as a stable conclusion without noting the later corrigendum. | Both language pages now preserve the shared conclusion (linear representation does not imply linear accessibility) while explicitly distinguishing the PMLR proceedings abstract from the author-updated arXiv v2. | Re-read the corrigendum and paper details before any deeper technical summary; do not collapse the two versions into one claim. |
+| Bibliographic links | PMLR page is the published proceedings record; arXiv v2 is linked separately as the author-updated version. | Version provenance is visible beside the claim and in the reference list. | Confirm rendered links and the wording after Quarto render; this audit did not establish which version the authors intend readers to treat as definitive beyond the stated corrigendum. |
+
+Sources checked: [PMLR proceedings version](https://proceedings.mlr.press/v337/barin-pacela26a.html) and [arXiv v2 including corrigendum](https://arxiv.org/abs/2603.28744v2). No implementation or experiment was added. Rendered review and external-link validation remain open.
