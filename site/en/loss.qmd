@@ -88,6 +88,10 @@ At minimum, use compatible logarithm and reduction conventions, tokenizer, ignor
 
 **Next:** [Gradients](gradients.qmd) · [Likelihood](likelihood.qmd)
 
+## Further reading
+
+- [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html): documents the loss for unnormalized logits, ignored targets, optional class weights, and reduction modes. These conventions must be recorded when comparing reported losses.
+
 :::: {.language-switch}
 [Français](../fr/loss.qmd) · [English](loss.qmd)
 ::::
