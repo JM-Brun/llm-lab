@@ -55,6 +55,10 @@ If the probabilities assigned to three observed tokens are $(0.5, 0.25, 0.8)$, t
 
 **Next:** [Cross-entropy](cross-entropy.qmd) · [Loss](loss.qmd)
 
+## Further reading
+
+- [Goodfellow, Bengio, and Courville — *Deep Learning*, §5.5: Maximum Likelihood Estimation](https://www.deeplearningbook.org/contents/ml.html): a general mathematical treatment of likelihood, log-likelihood, and maximum-likelihood estimation. The autoregressive factorization above applies that general framework to token sequences.
+
 :::: {.language-switch}
 [Français](../fr/vraisemblance.qmd) · [English](likelihood.qmd)
 ::::

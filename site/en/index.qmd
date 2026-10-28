@@ -10,9 +10,9 @@ toc: false
 
 ## Understand language models, one mechanism at a time
 
-A progressive path connecting intuition, mathematics, code, and experimental evidence. High-level pages explain how components work together; concept pages go deeper into one idea and link to its equations, references, and implementation status.
+A navigable learning map that synthesizes strong explanations from research papers, rigorous books, official documentation, and visual teaching resources. Start with the whole system, then follow only the concepts or details that answer your current question. High-level pages explain how components work together; concept pages offer deeper explanations without making every derivation a prerequisite.
 
-The long-term goal is to understand and build a small decoder-only autoregressive language model, using inspectable components and tests. Sebastian Raschka's repository is a major source and comparison point, not a table of contents to copy or evidence that the corresponding steps are already implemented here.
+The long-term goal is to understand and build a small decoder-only autoregressive language model, using inspectable components and tests. The goal is a coherent, original synthesis—not a copy of any one book: sources are selected for what they establish or explain well, then connected through consistent notation, explicit assumptions, counterexamples, and evidence. Sebastian Raschka's repository is a major source and comparison point, not a table of contents to copy or evidence that the corresponding steps are already implemented here.
 
 <div class="hero-actions">
 [Start with text and tokens](text-data.qmd){.btn .btn-primary}
@@ -64,6 +64,12 @@ Pages distinguish code that exists, tests that cover it, and work that is still 
 :::
 ::::
 
+## Choose your depth
+
+You do not have to read every page in order. Use the overview to understand a mechanism's role; open a concept page when you want its details; follow implementation, tests, or papers when you want to verify or investigate it. Essential prerequisites are signposted, while related topics are optional routes.
+
+For example, you can understand why a Transformer needs positional information without deriving **RoPE**. The [positional-encoding page](positional-encoding.qmd) offers the geometry, derivation, implementation considerations, and limitations when those details become useful.
+
 ## Suggested path
 
 1. **From text to tokens** — Unicode, encoding, tokenization, BPE, and reference resources. [Open the lesson](text-data.qmd).
@@ -94,14 +100,6 @@ Formal references and further resources are collected in the [annotated bibliogr
 - [History of Transformers](transformer-history.qmd) — key milestones from early attention mechanisms to modern LLMs.
 - [Tensors](tensors.qmd), [embedding space](embedding-space.qmd), and [positional encoding with RoPE](positional-encoding.qmd) — concepts needed to follow the equations and representations.
 
-:::: {.language-switch}
+::: {.language-switch}
 **Choose a language:** [Français](../index.qmd) · [English](index.qmd)
-:::## Suggested path
-
-1. **From text to tokens** — Unicode, encoding, tokenization, BPE, and reference resources. Start with [Text and data](text-data.qmd).
-2. **Data and the autoregressive objective** — build context windows, shift inputs and targets, then understand batching and loss masking.
-3. **Maths applied to LLMs** — follow logits through the training loss and gradients without duplicating a general mathematics course.
-4. **Attention and Transformers** — queries, keys, values, scores, softmax, positional information (including RoPE), and causal masking.
-5. **Model and training** — blocks, optimization, validation, generation, and evaluation.
-6. **Critical notes** — examine assumptions, counterexamples, and the limitations of metrics and representations.
-:
+:::

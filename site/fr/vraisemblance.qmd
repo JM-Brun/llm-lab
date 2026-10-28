@@ -57,6 +57,10 @@ Pour voir comment la vraisemblance devient une fonction de perte, lire [Entropie
 
 **Suite :** [Cross-entropie](cross-entropy.qmd) · [Loss](loss.qmd)
 
+## Pour approfondir
+
+- [Goodfellow, Bengio et Courville — *Deep Learning*, §5.5 : Maximum Likelihood Estimation](https://www.deeplearningbook.org/contents/ml.html) : traitement mathématique général de la vraisemblance, de la log-vraisemblance et de l'estimation par maximum de vraisemblance. La factorisation autorégressive présentée ici applique ce cadre aux séquences de tokens.
+
 ::: {.language-switch}
 [Français](vraisemblance.qmd) · [English](../en/likelihood.qmd)
 :::

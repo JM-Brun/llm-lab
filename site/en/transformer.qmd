@@ -74,19 +74,30 @@ The objective—predicting the next token—remains the same, but the computatio
 - [Mathematical foundations](mathematical-foundations.qmd) — connect logits, probabilities, likelihood, and loss.
 - [History of Transformers](transformer-history.qmd) — place architecture choices in context.
 
-## Further reading and visual explanations
+## Further reading, selected by purpose
 
-- [3Blue1Brown — *Transformers, the tech behind LLMs*](https://www.3blue1brown.com/lessons/gpt/): animated overview of embeddings, blocks, logits, and generation.
-- [3Blue1Brown — *Attention in transformers, step by step*](https://www.3blue1brown.com/lessons/attention/): attention, masking, multiple heads, and cross-attention.
-- [Jay Alammar — *The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/): step-by-step visualization of the original encoder-decoder architecture.
-- [Jay Alammar — *The Illustrated GPT-2*](https://jalammar.github.io/illustrated-gpt2/): GPT architecture and masked attention.
-- [Raschka — *Build a Large Language Model (From Scratch)*](https://www.sebastianraschka.com/llms-from-scratch/) and [code repository](https://github.com/rasbt/LLMs-from-scratch): explanations alongside code.
-- [Raschka — reading recommendations](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch01/reading-recommendations.md): first read for the big picture, second read with code, then reuse the ideas in a project.
-- [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762): the original Transformer formulation; its encoder-decoder architecture should not be confused with GPT.
-- [PyTorch — Scaled dot-product attention](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html): official API reference for comparing the equations with a concrete implementation.
+You do not need to consume every resource. Choose one that answers your current question; return to the others when you want a different explanation or more technical depth.
 
-These resources are complementary, not interchangeable: animations help build intuition, the primary paper documents the original formulation, and official documentation specifies an API contract. Equations, assumptions, and tests are still needed to verify technical claims.
+### Build intuition with visuals
 
+- [3Blue1Brown — *Transformers, the tech behind LLMs*](https://www.3blue1brown.com/lessons/gpt/): an animated system-level explanation of embeddings, Transformer blocks, logits, and generation.
+- [3Blue1Brown — *Attention in transformers, step by step*](https://www.3blue1brown.com/lessons/attention/): a focused visual explanation of attention, masking, multiple heads, and cross-attention.
+- [Jay Alammar — *The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/): a step-by-step visual explanation of the **original encoder–decoder Transformer**. Use it to understand the 2017 design, not as a diagram of every modern GPT.
+- [Jay Alammar — *The Illustrated GPT-2*](https://jalammar.github.io/illustrated-gpt2/): a more directly relevant visual walkthrough of a decoder-only GPT-style model.
+
+### Connect equations to an implementation
+
+- [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762): the primary paper for the original Transformer formulation. It describes an encoder–decoder architecture; GPT is a later decoder-only family.
+- [Harvard NLP — *The Annotated Transformer*](https://nlp.seas.harvard.edu/annotated-transformer/): an annotated, executable implementation aligned with the original paper. It is valuable for connecting equations to code, but its architecture and training choices should not be treated as a specification for all modern LLMs.
+- [PyTorch — Scaled dot-product attention](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html): the API contract for one operation, not a full explanation or implementation of a Transformer.
+
+### Follow a structured learning path
+
+- [Sebastian Raschka — *Build a Large Language Model (From Scratch)*](https://www.sebastianraschka.com/llms-from-scratch/) and [the source repository](https://github.com/rasbt/LLMs-from-scratch): a book-and-code path through data, attention, GPT implementation, pretraining, and fine-tuning. Use it as a substantial reference, not as the mandatory order of this site.
+- [Raschka — reading recommendations](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch01/reading-recommendations.md): advice on first building a big-picture understanding, then reading alongside code.
+- [DeepLearning.AI — *How Transformer LLMs Work*](https://www.deeplearning.ai/courses/how-transformer-llms-work): a compact video course by Jay Alammar and Maarten Grootendorst, including tokenization, embeddings, attention, modern block components, and selected efficiency variants. Course access and terms may change.
+
+These sources have different jobs: visual resources build intuition, the primary paper records the original formulation, annotated code exposes implementation choices, and API documentation specifies one library contract. They are complementary, not interchangeable. Where an explanation simplifies or an implementation makes a convention-specific choice, check the assumptions and scope before generalizing it.
 :::: {.language-switch}
 **Language:** [Français](../fr/transformer.qmd) · [English](transformer.qmd)
 ::::

@@ -8,8 +8,13 @@
 
 ## 1. Editorial contract
 
+The first-pass status of existing pages is tracked in the [public page audit inventory](page-audit-inventory.md). It is deliberately partial: source inspection, rendered-page review, scientific validation, and learner mastery are tracked separately.
+
+The shared [reader-experience and editorial method](reader-experience-and-editorial-method.md) defines progressive disclosure, non-linear navigation, page types, and review criteria. This curriculum document defines topic coverage and dependencies; where wording could imply that every reader must follow one fixed sequence, use the shared method as the reader-experience rule.
+
 - Keep the course bilingual (French and English) and the concept pages canonical: explain one concept deeply, then link to it instead of duplicating it.
 - Separate overview pages, concept pages, exercises, implementations/tests, experiment reports, and private mastery evidence.
+- Treat the curriculum as a navigable concept graph with a suggested route, not a mandatory linear book. Each overview should work without requiring mastery of every linked deep dive; each deep dive should connect back to the system-level question.
 - Explain intuition, notation, tensor shapes, assumptions, numerical issues, misconceptions, counterexamples, failure modes, and limits—not just the happy path.
 - Cite research papers and official documentation for technical claims. Attribute external diagrams and link to their original pages. Do not copy an illustration merely because it is publicly accessible.
 - State clearly what exists, what has been validated, and what is only planned. A passing test, rendered page, low training loss, or completed exercise does not by itself demonstrate mastery.
@@ -85,6 +90,14 @@ Use for visual intuition about embeddings, positional information, encoder–dec
 ### ACM — The Illustrated Transformer From Scratch
 Use as a complementary modern-architecture explanation: self-attention as the operation that mixes information across sequence positions; position-wise MLP as a per-vector operation; residual connections and normalization; and a comparison of modern model families. Explain that this framing is an abstraction: convolutional, recurrent, cross-attention, or other interactions can exist in broader architectures, and details vary across implementations.
 
+### Harvard NLP — The Annotated Transformer
+
+Use [the maintained annotated implementation](https://nlp.seas.harvard.edu/annotated-transformer/) to connect the original paper's equations to code and to see implementation choices made explicit. It is a bridge between paper and executable reference, not a current universal GPT blueprint: it follows the original encoder–decoder Transformer and has version-specific software and training conventions. Prefer the current version over the older 2018 URL when linking, and state which version is being discussed.
+
+### DeepLearning.AI — How Transformer LLMs Work
+
+Use [this course by Jay Alammar and Maarten Grootendorst](https://www.deeplearning.ai/courses/how-transformer-llms-work) as a compact, modern visual/video treatment of tokenization, embeddings, attention, Transformer blocks, and selected efficiency variants. It complements rather than replaces written derivations, primary papers, or runnable code. Course access and terms may change; do not make core learning dependent on enrollment or availability.
+
 ### Raschka's source repository
 Use its chapter README files, notebooks, bonus folders, and code as a living index of topics, not as text to copy. At review time, distinguish:
 - book core chapters and appendices;
@@ -101,7 +114,7 @@ This is a targeted gap analysis, not an instruction to add all the material now.
 
 | Existing canonical page(s) | Useful complementary material | Proposed treatment |
 |---|---|---|
-| `site/fr/transformer.qmd`, `site/en/transformer.qmd` | Raschka Ch. 1 and Ch. 4; Alammar's original encoder–decoder diagram and GPT-2 walk-through; ACM's modern-block explanation | Keep the overview concise. Add or link a clear architecture comparison (encoder-only, encoder–decoder, decoder-only), explain what changes between the original Transformer and GPT, and label the schematic as one family rather than a universal architecture. |
+| `site/fr/transformer.qmd`, `site/en/transformer.qmd` | Raschka Ch. 1 and Ch. 4; Alammar's original encoder–decoder diagram and GPT-2 walk-through; 3Blue1Brown's animated intuition; Harvard NLP's annotated implementation; DeepLearning.AI's modern visual course; ACM's modern-block explanation | Keep the overview concise. Curate resources by role (intuition, original formulation, code, modern overview), explain the scope of each, and avoid implying that one architecture or implementation represents all GPT/LLM families. |
 | `queries-keys-values.qmd` (FR/EN) | Raschka Ch. 3; ACM's interpretation of attention as cross-position information mixing | Check notation and tensor shapes end-to-end; distinguish learned projections from human-readable semantic labels; make clear that Q/K/V dimensions need not all match. Add shape tables only if they clarify the existing derivation. |
 | `scaled-dot-product-attention.qmd` (FR/EN) | Raschka Ch. 3; ACM's weighted-sum derivation; 3Blue1Brown's animated intuition | Ensure the sequence scores → scale → mask where applicable → softmax → weighted sum is explicit, with the axis of softmax and shapes stated. Explain that weights are relative and do not constitute causal explanations of model output. |
 | `causal-masking.qmd` / existing causal-mask illustration | Raschka Ch. 3–5; ACM's separation of position-mixing and position-wise operations | Preserve the distinction between a mask matrix and an end-to-end causal invariant. Make the future-token perturbation test the conceptual acceptance criterion; do not add code before knowledge is validated. |
