@@ -16,9 +16,9 @@ The diagram shows the conceptual path of generation. It intentionally omits impl
 
 ## 1. From text to representations
 
-A tokenizer maps text to token IDs. An embedding matrix maps each ID to a learned vector. Positional information is also supplied, for example by adding a positional vector or by integrating position into attention as in [RoPE](../fr/positional-encoding.qmd).
+A tokenizer maps text to token IDs. An embedding matrix maps each ID to a learned vector. Positional information is also supplied, for example by adding a positional vector or by integrating position into attention as in [RoPE](positional-encoding.qmd).
 
-An initial token embedding is not the same as a **contextual representation**: Transformer layers progressively update vectors using context. See [embedding space](../fr/embedding-space.qmd) and [tensors](../fr/tensors.qmd).
+An initial token embedding is not the same as a **contextual representation**: Transformer layers progressively update vectors using context. See [embedding space](embedding-space.qmd) and [tensors](tensors.qmd).
 
 ## 2. Transformer blocks
 
@@ -40,7 +40,7 @@ The important distinction is not that attention “understands” tokens while t
 1. [**Queries, keys, and values (Q, K, V)**](queries-keys-values.qmd) — three learned projections give representations distinct roles.
 2. [**Scaled dot-product attention**](scaled-dot-product-attention.qmd) — scores from $QK^\top$ are scaled by $\sqrt{d_k}$ and converted into weights by softmax.
 3. [**Causal masking**](causal-masking.qmd) — excludes future positions before softmax.
-4. [**Positional information**](../fr/positional-encoding.qmd) — supplies information about token order; the linked page currently provides the French explanation of RoPE.
+4. [**Positional information**](../fr/positional-encoding.qmd) — supplies information about token order; see the English [positional encoding and RoPE lesson](positional-encoding.qmd).
 
 Attention weights are not a complete explanation of a prediction. They describe one aggregation step; projections, values, other heads, later layers, and the output projection also contribute.
 

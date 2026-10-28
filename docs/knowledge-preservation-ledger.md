@@ -296,3 +296,12 @@ This is a traceable first-pass preservation record, not a claim that every line 
 **Correction in this change:** translate the existing conceptual lesson into `site/en/embedding-space.qmd`, add a matching English-language schematic rather than reusing a French-labelled figure, include the page in the Quarto render list and English sidebar, and connect the two language versions directly. The translation preserves the original scope, caveats, references, and the explicit warning that the suggested video has not been independently verified. The positional-encoding page remains French-only and is identified as such rather than implying English parity.
 
 **Limits / remaining validation:** this is a content and navigation parity repair, not independent scientific validation of every cited paper, a semantic line-by-line audit by a second reviewer, or browser-based visual/accessibility sign-off. Quarto rendering and local-link CI must pass before the change is considered validated.
+
+
+## 17. Bilingual parity — positional encoding and RoPE — 2026-10-28
+
+**Finding:** the positional-encoding lesson existed only in French, its language switch pointed to the English home page, and the English Transformer overview linked directly to the French lesson. The English Quarto render list and sidebar had no corresponding entry.
+
+**Correction in this change:** translate the existing explanation into `site/en/positional-encoding.qmd`, create a matching English-labelled RoPE diagram, add the page to the render list and English navigation, connect both language versions, and update the English Transformer overview to link to the English lesson. The translation retains the source page's scope, caveats about long-context extrapolation, implementation checks, and the warning that the suggested video has not been independently verified. No RoPE implementation is added.
+
+**Limits / remaining validation:** this is a bilingual content/navigation repair, not independent scientific review of all RoPE variants or a second-reviewer translation audit. Quarto rendering and local-link CI must pass; visual review of the diagram, equations, and mobile layout remains open.

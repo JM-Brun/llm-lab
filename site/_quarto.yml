@@ -41,6 +41,7 @@ project:
     - fr/embedding-space.qmd
     - en/embedding-space.qmd
     - fr/positional-encoding.qmd
+    - en/positional-encoding.qmd
     - fr/exercises.qmd
     - en/exercises.qmd
     - fr/evaluation-experimentale.qmd
@@ -128,6 +129,7 @@ website:
               - en/queries-keys-values.qmd
               - en/scaled-dot-product-attention.qmd
               - en/causal-masking.qmd
+              - en/positional-encoding.qmd
           - en/exercises.qmd
           - en/experimental-evaluation.qmd
           - en/glossary.qmd
