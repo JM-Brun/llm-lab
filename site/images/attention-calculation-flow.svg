@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="590" viewBox="0 0 1200 590" role="img" aria-labelledby="title desc">
 <title id="title">Les étapes du calcul d'attention</title>
-<desc id="desc">Q et K produisent les scores, mise à l'échelle puis masque causal, softmax ligne par ligne, poids qui combinent les valeurs V pour produire les sorties.</desc>
+<desc id="desc">Q et K produisent les scores, qui sont mis à l'échelle puis éventuellement masqués avant le softmax ligne par ligne. Les poids obtenus combinent les valeurs V pour produire les sorties.</desc>
 <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#344054"/></marker></defs>
 <rect width="1200" height="590" rx="22" fill="#fbfcfe"/>
 <text x="600" y="42" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#172b4d">De Q, K et V à une représentation contextualisée</text>
