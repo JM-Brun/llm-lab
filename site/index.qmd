@@ -24,14 +24,12 @@ L'objectif à terme est de comprendre puis de construire un petit modèle de lan
 
 ## Commencer ici
 
-Le parcours est conçu pour être suivi dans l’ordre. Chaque étape relie une idée à un mécanisme vérifiable ; les liens de référence servent à approfondir, pas à remplacer les exemples.
+Pour une première lecture, suivez ces deux étapes dans l’ordre :
 
 1. **Représenter le texte** — [tokens, identifiants et BPE](fr/text-data.qmd).
-2. **Construire l’objectif** — [décaler les entrées et les cibles, gérer fenêtres et masques](fr/training-examples.qmd).
-3. **Suivre les nombres** — [fondements mathématiques](fr/mathematical-foundations.qmd), [logits](fr/logits.qmd) et [cross-entropie](fr/cross-entropy.qmd).
-4. **Relier les composants** — [synthèse Transformer](fr/transformer.qmd), puis attention et masquage causal.
+2. **Comprendre l’objectif** — [décalage entrée-cible, fenêtres et masques](fr/training-examples.qmd).
 
-L’ordre pédagogique ne signifie pas que toutes les implémentations sont déjà présentes : consultez la feuille de route pour distinguer contenu, code testé et travaux planifiés.
+Continuez ensuite avec le parcours conseillé ci-dessous. Les pages relient intuition, équations et code ; la feuille de route distingue les explications disponibles des implémentations réellement testées.
 
 ## Comment naviguer
 
