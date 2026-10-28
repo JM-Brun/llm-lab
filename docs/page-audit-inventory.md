@@ -102,6 +102,18 @@ A targeted README review of the linked project repository found that it describe
 
 Source inspected: [official project repository README](https://github.com/UKPLab/tmlr2026-manifold-analysis). This is a repository-metadata/source inspection only, not an execution or reproduction audit.
 
+## Ninth slice: primary-source check of multidimensional-feature and probe-selectivity claims
+
+A targeted check compared the wording in the EN/FR linearity pages with the ICLR 2025 paper on multidimensional features and the ACL Anthology record for Hewitt & Liang's control-task paper. The source abstracts support the claims below; this was not a full reproduction or a line-by-line review of either paper.
+
+| Claim area | Primary-source support | Result and scope |
+|---|---|---|
+| Multidimensional features and circular representations | Engels et al., [ICLR 2025 proceedings](https://proceedings.iclr.cc/paper_files/paper/2025/hash/d3221cdb27e49d9c1cd35ad254feccfe-Abstract-Conference.html) describe irreducible multidimensional features, circular day/month representations, modular-arithmetic tasks, and interventions on Mistral 7B and Llama 3 8B. | The page's summary is supported. Keep model names and task scope explicit; do not generalize to all features or models. |
+| Probe control tasks and selectivity | Hewitt & Liang, [ACL Anthology record](https://aclanthology.org/D19-1275/) describes random-label control tasks that probe models can learn independently of the linguistic structure, and defines selectivity to contextualize task accuracy. | The page's recommendation to use control tasks and avoid interpreting probe accuracy in isolation is supported. The paper's experiments concern specific linguistic tasks and ELMo representations, so the general methodological lesson should not be presented as a universal empirical result for every probe family. |
+| SMDS scope | The TMLR paper's abstract identifies temporal reasoning as the case study and reports lines, circles, and clusters; the official repository describes itself as experimental software. | The page appropriately limits generalization and labels the repository caveat. No code or dataset was executed. |
+
+**Remaining validation:** inspect rendered EN/FR equations, figures, and navigation; verify all external links from the complete page; and review the detailed methods/results before making stronger claims about causal interventions or generalization across model families.
+
 ## Next audit steps
 
 1. Finish source and rendered-page review of this vertical slice; check local links and bilingual meaning, not just literal wording.
