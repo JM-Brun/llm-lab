@@ -256,3 +256,14 @@ The textual review does not prove that the current implementation tests all stat
 ## 12. Scope of this ledger
 
 This is a traceable first-pass preservation record, not a claim that every line has passed scientific review. It deliberately records several items as **VERIFY**. A future review must resolve those statuses using the actual text and rendered pages rather than treating the inventory as a rubber stamp.
+
+
+## 13. Reference loss implementation correspondence — 2026-10-28
+
+**Scope:** compared the current public cross-entropy lesson pair with `src/llm_lab/foundations/losses.py` and `tests/unit/test_losses.py`. This was a source-level audit; it did not execute tests locally or inspect the rendered site.
+
+- **What the implementation does:** accepts logits of shape `(B, C)` and one integer class target per row; computes the unweighted mean multiclass cross-entropy using natural logarithms; returns the gradient of that same mean objective with respect to logits.
+- **What the tests support:** a known loss value, central finite-difference agreement for the logit gradient, stability for large finite logits, invariance to row-wise constant shifts, zero-sum gradient rows, no mutation of the input logits, and rejection of invalid shapes/targets/non-finite logits.
+- **Boundary made explicit in both public languages:** the reference is not a token-sequence loss. It does not implement target shifting, token masks or `ignore_index`, soft targets, class weighting, perplexity, or gradients with respect to model parameters. Those are conceptual concerns described by the lesson, but must not be inferred to exist in this small implementation.
+- **Disposition:** add direct links to the implementation and tests and describe their scope in both cross-entropy pages. Keep token-level alignment/masking as caller responsibilities; do not expand the code until a separate, justified implementation task has validated prerequisites.
+- **Still open:** Quarto/CI validation of these edits, rendered-browser review of equations and responsive layout, internal/external link checking, and learner transfer questions. The source audit alone does not establish those outcomes or learner mastery.
