@@ -102,18 +102,18 @@ def check_site(site_root: Path) -> list[str]:
 
 def main() -> int:
     if len(sys.argv) != 2:
-        print("Usage: check_site_links.py <rendered-site-directory>", file=sys.stderr)
+        sys.stderr.write("Usage: check_site_links.py <rendered-site-directory>\n")
         return 2
 
     site_root = Path(sys.argv[1])
     errors = check_site(site_root)
     if errors:
-        print("Rendered-site link check failed:")
+        sys.stdout.write("Rendered-site link check failed:\n")
         for error in errors:
-            print(f"- {error}")
+            sys.stdout.write(f"- {error}\n")
         return 1
 
-    print(f"Rendered-site link check passed for {site_root}.")
+    sys.stdout.write(f"Rendered-site link check passed for {site_root}.\n")
     return 0
 
 
