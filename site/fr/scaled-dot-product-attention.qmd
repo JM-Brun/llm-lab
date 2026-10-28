@@ -25,6 +25,23 @@ $$
 
 Ici, $M$ désigne un masque additif strict : $M_{ij}=0$ pour un couple requête-clé autorisé et $M_{ij}=-\infty$ pour un couple interdit. Si aucun masque n'est nécessaire, on omet $M$ (ce qui revient à utiliser une matrice nulle). Pour une attention causale, les positions futures sont interdites et reçoivent donc $-\infty$ avant le softmax. Chaque ligne de requête doit conserver au moins une clé autorisée ; si tous les scores d'une ligne sont masqués à $-\infty$, le softmax usuel n'est pas défini et ce cas doit être traité explicitement.
 
+## Exemple numérique détaillé
+
+Considérons une requête et deux clés accessibles, sans masque :
+
+$
+q=(1,0),\quad k_1=(1,0),\quad k_2=(0,1),\quad
+v_1=(10,0),\quad v_2=(0,20).
+$
+
+Ici, $d_k=2$. Les scores bruts sont $qk_1^\top=1$ et $qk_2^\top=0$. Après mise à l'échelle, ils valent $(1/\sqrt{2},0)\approx(0{,}707,0)$. Le softmax donne des poids approximatifs $(0{,}67,0{,}33)$, dont la somme vaut un. La sortie est la somme pondérée des valeurs :
+
+$
+o\approx0{,}67(10,0)+0{,}33(0,20)=(6{,}7,6{,}6).
+$
+
+Cet exemple distingue les rôles : la requête et les clés déterminent les poids ; les valeurs déterminent ce qui est combiné. Les poids sont relatifs aux clés accessibles dans cette ligne ; ils ne mesurent pas la pertinence sémantique.
+
 ![Vue visuelle du calcul : scores, masque éventuel, softmax et somme pondérée des valeurs.](../images/attention-calculation-flow.svg){fig-alt="Les requêtes et les clés produisent des scores. Après mise à l'échelle et application éventuelle du masque, le softmax crée des poids qui combinent les valeurs." width=100%}
 
 Le schéma montre aussi pourquoi trois objets ne doivent pas être confondus : **scores** (compatibilités brutes), **poids** (normalisés relativement aux positions accessibles) et **sorties** (combinaisons pondérées des valeurs). Dans une attention non causale, le masque peut être absent ou exprimer une autre contrainte. La normalisation du softmax ne transforme pas les poids en mesure universelle de pertinence sémantique.
