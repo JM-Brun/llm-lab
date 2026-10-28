@@ -23,14 +23,12 @@ The long-term goal is to understand and build a small decoder-only autoregressiv
 
 ## Start here
 
-Follow the sequence below before branching into the reference library. Each step connects an idea to a mechanism that can be inspected; external resources supplement rather than replace worked examples.
+For a first pass, read these two lessons in order:
 
 1. **Represent text** — [tokens, token IDs, and BPE](text-data.qmd).
-2. **Build the objective** — [shift inputs and targets; inspect windows and masks](training-examples.qmd).
-3. **Follow the numbers** — [mathematical foundations](mathematical-foundations.qmd), [logits](logits.qmd), and [cross-entropy](cross-entropy.qmd).
-4. **Connect the components** — [Transformer overview](transformer.qmd), then attention and causal masking.
+2. **Understand the objective** — [input-target shifting, windows, and masks](training-examples.qmd).
 
-The learning order does not imply that every implementation already exists. Use the roadmap to distinguish explanatory content, tested code, and planned work.
+Then continue with the suggested path below. Pages connect intuition, equations, and code; the roadmap distinguishes available explanations from implementations that have actually been tested.
 
 ## How to navigate
 
