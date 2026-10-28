@@ -11,9 +11,9 @@ toc: false
 
 ## Comprendre les modèles de langage, un mécanisme à la fois
 
-Une carte d’apprentissage navigable reliant intuition, mathématiques, code et preuves expérimentales. Comprenez d’abord le système dans son ensemble, puis suivez les concepts ou détails techniques utiles à votre question du moment. Les synthèses expliquent le rôle des composants ; les pages conceptuelles permettent d’approfondir sans rendre chaque dérivation obligatoire.
+Une carte d’apprentissage navigable qui synthétise les meilleures explications utiles issues d’articles de recherche, de livres rigoureux, de documentations officielles et de ressources visuelles. Comprenez d’abord le système dans son ensemble, puis suivez les concepts ou détails utiles à votre question. Les synthèses expliquent le rôle des composants ; les pages conceptuelles permettent d’approfondir sans rendre chaque dérivation obligatoire.
 
-L'objectif à terme est de comprendre puis de construire un petit modèle de langage autorégressif à décodeur seul, avec des composants inspectables et des tests. Le dépôt de Sebastian Raschka est une source structurante et un point de comparaison, pas un plan à recopier ni une preuve que les étapes correspondantes sont déjà implémentées ici.
+L'objectif à terme est de comprendre puis de construire un petit modèle de langage autorégressif à décodeur seul, avec des composants inspectables et des tests. Le but est une synthèse originale et cohérente, pas la copie d’un livre : les sources sont choisies pour ce qu’elles établissent ou expliquent bien, puis reliées par une notation cohérente, des hypothèses explicites, des contre-exemples et des éléments de preuve. Le dépôt de Sebastian Raschka est une source structurante et un point de comparaison, pas un plan à recopier ni une preuve que les étapes correspondantes sont déjà implémentées ici.
 
 <div class="hero-actions">
 [Commencer par le texte](fr/text-data.qmd){.btn .btn-primary}
