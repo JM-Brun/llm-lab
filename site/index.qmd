@@ -11,7 +11,7 @@ toc: false
 
 ## Comprendre les modèles de langage, un mécanisme à la fois
 
-Un parcours progressif pour relier intuition, mathématiques, code et preuves expérimentales. Les pages de synthèse expliquent comment les composants coopèrent ; les pages conceptuelles approfondissent une notion précise et renvoient vers ses équations, ses références et son statut d'implémentation.
+Une carte d’apprentissage navigable reliant intuition, mathématiques, code et preuves expérimentales. Comprenez d’abord le système dans son ensemble, puis suivez les concepts ou détails techniques utiles à votre question du moment. Les synthèses expliquent le rôle des composants ; les pages conceptuelles permettent d’approfondir sans rendre chaque dérivation obligatoire.
 
 L'objectif à terme est de comprendre puis de construire un petit modèle de langage autorégressif à décodeur seul, avec des composants inspectables et des tests. Le dépôt de Sebastian Raschka est une source structurante et un point de comparaison, pas un plan à recopier ni une preuve que les étapes correspondantes sont déjà implémentées ici.
 
@@ -64,6 +64,12 @@ Les pages distinguent le code réellement présent, les tests qui le couvrent et
 [Consulter le dépôt](https://github.com/JM-Brun/llm-lab)
 :::
 ::::
+
+## Choisir son niveau d’approfondissement
+
+Il n’est pas nécessaire de lire toutes les pages dans l’ordre. Utilisez une synthèse pour comprendre le rôle d’un mécanisme, ouvrez une page conceptuelle pour en étudier le fonctionnement, puis consultez le code, les tests ou les articles si vous souhaitez le vérifier ou l’étudier plus en détail. Les prérequis réellement indispensables sont signalés ; les notions connexes restent des chemins facultatifs.
+
+Par exemple, on peut comprendre pourquoi un Transformer a besoin d’une information de position sans dériver **RoPE**. La [page sur l’encodage positionnel](fr/positional-encoding.qmd) propose la géométrie, la dérivation, les points d’attention d’implémentation et les limites lorsque ces détails deviennent utiles.
 
 ## Parcours conseillé
 
