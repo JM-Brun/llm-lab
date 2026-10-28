@@ -32,6 +32,8 @@ $$
 
 Les positions futures reçoivent alors un poids nul en arithmétique idéale. En pratique, les bibliothèques peuvent représenter le masque sous forme booléenne ou employer une primitive d'attention qui intègre cette contrainte.
 
+En code, **la polarité d'un masque booléen dépend de l'API**. Par exemple, dans [l'attention à produit scalaire mise à l'échelle de PyTorch](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html), `True` signifie qu'une position peut participer à l'attention ; dans [PyTorch MultiheadAttention](https://docs.pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html), `True` dans `attn_mask` signifie que la position est masquée. Ne transférez pas un masque booléen d'une API à l'autre sans vérifier la convention documentée. Cela ne change pas la règle causale elle-même : les couples requête-clé autorisés doivent toujours exclure les clés futures.
+
 ![Masque causal à quatre positions.](../images/causal-attention-mask.svg){fig-alt="Matrice triangulaire inférieure : chaque position accède à elle-même et aux positions précédentes" width=100%}
 
 ## Provenance et utilité

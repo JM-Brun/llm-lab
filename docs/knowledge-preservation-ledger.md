@@ -323,3 +323,14 @@ This is a traceable first-pass preservation record, not a claim that every line 
 **Correction:** add equivalent English links to the tensor, embedding-space, and positional-encoding lessons, and mention positional information (including RoPE) in the suggested attention path. This reuses existing pages and does not expand the scientific scope.
 
 **Scope / limits:** this is a targeted homepage parity check, not a complete semantic translation audit. Quarto render and rendered-site local-link validation are required; external resource availability and responsive visual presentation are not established by those checks.
+
+
+## 20. Causal masking — API-specific boolean-mask polarity — 2026-10-28
+
+**Finding:** the English and French causal-masking lessons described additive and boolean masks but did not call out a practical source of implementation errors: boolean-mask polarity differs across common PyTorch attention APIs.
+
+**Source check:** the official [scaled_dot_product_attention documentation](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html) states that boolean `True` entries participate in attention; the official [MultiheadAttention documentation](https://docs.pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html) documents `True` in `attn_mask` as a position to mask out.
+
+**Correction proposed in this change:** add the same caveat to both language versions and link directly to the official API documentation. The text distinguishes API mask polarity from the invariant causal requirement that future key positions remain inaccessible.
+
+**Scope / limits:** this is a source-backed clarification, not an implementation or end-to-end proof of causal invariance. The repository still has no reusable attention implementation or future-token perturbation test. Quarto rendering, local-link checks, and source-level FR/EN review remain required.
