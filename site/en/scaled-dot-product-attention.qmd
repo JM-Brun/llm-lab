@@ -23,7 +23,7 @@ $$
 O=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
 $$
 
-The mask $M$ is optional depending on the attention type. For causal attention, future positions receive $-\infty$ before softmax. Each query row must retain at least one allowed key; a row in which every score is masked to $-\infty$ makes the ordinary softmax undefined and needs explicit handling.
+Here $M$ denotes an additive hard mask: $M_{ij}=0$ for an allowed query-key pair and $M_{ij}=-\infty$ for a disallowed pair. If no mask is needed, omit $M$ (equivalently, use an all-zero matrix). For causal attention, future positions are disallowed and therefore receive $-\infty$ before softmax. Each query row must retain at least one allowed key; a row in which every score is masked to $-\infty$ makes the ordinary softmax undefined and needs explicit handling.
 
 ![Visual overview of attention: scores, optional mask, softmax, and weighted sum of values.](../images/attention-calculation-flow-en.svg){fig-alt="Queries and keys produce scores. After scaling and optional masking, softmax creates weights that combine the values." width=100%}
 
