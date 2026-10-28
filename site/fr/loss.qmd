@@ -8,6 +8,8 @@ lang: fr
 La *loss* (fonction de perte) est un nombre que l'entraînement cherche à minimiser. Elle est souvent calculée à partir de l'entropie croisée pour chaque token, puis agrégée. La manière de faire cette agrégation fait partie du protocole et doit être documentée.
 :::
 
+Avant d’interpréter la perte, vérifier la construction des [entrées et cibles d’entraînement](training-examples.qmd) : une formule correcte ne corrige pas un décalage de tokens erroné.
+
 ## De la perte locale à la loss du batch
 
 Notons $p_{b,t,:}$ la distribution prédite pour la position $(b,t)$ et $y_{b,t}$ l'identifiant du token cible. Pour chaque position cible valide $(b,t)\in\mathcal{M}$, la perte est :
