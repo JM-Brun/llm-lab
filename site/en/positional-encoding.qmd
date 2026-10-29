@@ -76,10 +76,6 @@ This page describes the mechanism without adding an implementation before the re
 - [Scaled dot-product attention](scaled-dot-product-attention.qmd): scores and softmax.
 - [Embedding space](embedding-space.qmd): initial vectors and contextualized representations.
 
-## Further video
-
-- [Video suggested for further study](https://www.youtube.com/watch?v=fqsxg3aJ1XE) — the link was supplied, but its title and content have not been independently verified.
-
 ## References
 
 - [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — sinusoidal positional encodings.
