@@ -338,4 +338,4 @@ The successful #120 runs supersede earlier comments that said the embedded examp
 2. Inspect the published EN/FR embedding-space pages and SVGs at desktop and mobile widths. Text extraction and a successful Quarto build do not establish responsive visual quality.
 3. The Li et al. sentence-embedding abstract is now checked; audit the relevant cells of the Raschka Chapter 2 notebook only where they support a specific public claim.
 4. If the HF community visualization is considered for recommendation, check its package provenance, versioning, dependency chain and current execution before promoting it beyond an optional link.
-4. Keep browser review and learner mastery open in #82; do not close it based on source review or CI alone.
+5. Keep browser review and learner mastery open in #82; do not close it based on source review or CI alone.
