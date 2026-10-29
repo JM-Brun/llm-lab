@@ -158,11 +158,11 @@ Pour manipuler des exemples et observer un algorithme interactif, ouvrir le [BPE
 
 Cette illustration est originale et conceptuelle. Pour les résultats scientifiques, lire [Ahia et al. (2023), *Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/) ; [le PDF original](https://aclanthology.org/2023.emnlp-main.614.pdf) est disponible séparément. La figure 1 de l'article n'est pas copiée dans ce dépôt.
 
-#### GPT tokenizer : aperçu vidéo
+#### Pipeline de tokenisation : une illustration publiée
 
-[![Vignette de la vidéo « Let's build the GPT Tokenizer » d'Andrej Karpathy](https://img.youtube.com/vi/zduSFxRajkE/hqdefault.jpg)](https://www.youtube.com/watch?v=zduSFxRajkE)
+![Pipeline de tokenisation du cours Hugging Face, montrant les étapes qui transforment le texte en tokens utilisables par le modèle.](https://huggingface.co/datasets/huggingface-course/documentation-images/resolve/main/en/chapter6/tokenization_pipeline.svg){fig-alt="Pipeline de tokenisation : normalisation, pré-tokenisation, modèle de tokenisation et post-traitement." width=100%}
 
-La vignette ci-dessus est affichée comme une image et mène à [la vidéo originale sur YouTube](https://www.youtube.com/watch?v=zduSFxRajkE).
+Cette illustration provient du [cours Hugging Face, « Building a tokenizer, block by block »](https://huggingface.co/docs/course/chapter6/8). Ce n'est pas une vignette vidéo : elle complète les schémas originaux ci-dessus par une vue d'ensemble publiée du pipeline. L'image est chargée depuis les ressources documentaires publiques du cours ; elle n'est pas copiée dans ce dépôt.
 
 
 **Droits et provenance :** les figures externes sont citées et liées à leur source, mais ne sont pas copiées dans le dépôt sans autorisation établie. Les SVG ci-dessus sont des illustrations originales et schématiques de LLM Lab ; elles ne prétendent pas reproduire les résultats d'une publication.nes sont citées et liées à leur source, mais ne sont ni copiées ni intégrées localement. La citation d'une illustration ne vaut pas autorisation de la redistribuer ; le dépôt conserve ses propres schémas originaux.
