@@ -22,6 +22,9 @@ Actively look for ideas on how to explain the topic—not just sources that ment
 
 This is a quality prompt, not a requirement to add a figure to every page or to cite a fixed number of resources. A visual should answer a concrete learner question and remain useful alongside the text. Do not copy prose, exercises, code, diagrams, or animations without a clear legal basis. Check the specific licence and attribution requirements, record provenance in `site/references.qmd`, and provide captions and alt text. A publicly accessible asset is not automatically reusable.
 
+For substantial revisions, use the library's [repeatable improvement loop](docs/pedagogical-resource-library.md#a-repeatable-improvement-loop). Record the learner problem, source roles, design decision, limitations, checks actually run, and remaining work in docs/page-audit-inventory.md or the PR description. Start with a small number of complementary sources rather than collecting links indefinitely. A decision to retain an existing explanation or not add a visual is acceptable when supported by the learner need and evidence. Do not report source inspection as rendered review, and do not report planned validation as completed.
+
+
 ## Local setup
 
 Install Python 3.12 and uv, then run:
