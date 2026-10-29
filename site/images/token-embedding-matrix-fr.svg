@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
+<title id="title">Taille du vocabulaire et dimension des embeddings</title>
+<desc id="desc">Les identifiants sélectionnent des lignes dans une matrice d'embeddings de forme V par d. Une séquence de longueur L produit une matrice L par d. La projection de sortie produit des logits de dimension V par position.</desc>
+<defs>
+  <style>
+    .bg{fill:#f8fafc}.panel{fill:#fff;stroke:#cbd5e1;stroke-width:2}.ink{fill:#172033;font-family:Arial,Helvetica,sans-serif}.muted{fill:#475569;font-family:Arial,Helvetica,sans-serif}.label{font-size:23px;font-weight:700}.body{font-size:19px}.small{font-size:16px}.math{font-size:24px;font-weight:700}.accent{fill:#dbeafe;stroke:#2563eb;stroke-width:2}.accent2{fill:#dcfce7;stroke:#15803d;stroke-width:2}.cell{fill:#e2e8f0;stroke:#94a3b8;stroke-width:1}.line{stroke:#64748b;stroke-width:3;fill:none}.arrow{fill:#64748b}
+  </style>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" class="arrow"/></marker>
+</defs>
+<rect class="bg" width="1200" height="640" rx="22"/>
+<text x="40" y="48" class="ink label">Deux dimensions différentes, deux rôles différents</text>
+<rect x="35" y="76" width="245" height="190" rx="14" class="panel"/>
+<text x="55" y="110" class="ink label">Séquence d'IDs</text>
+<rect x="55" y="132" width="58" height="52" rx="8" class="accent"/><text x="84" y="165" text-anchor="middle" class="ink math">17</text>
+<rect x="125" y="132" width="58" height="52" rx="8" class="accent2"/><text x="154" y="165" text-anchor="middle" class="ink math">42</text>
+<rect x="195" y="132" width="58" height="52" rx="8" class="accent"/><text x="224" y="165" text-anchor="middle" class="ink math">17</text>
+<text x="55" y="216" class="muted body">Longueur L = 3</text>
+<text x="55" y="242" class="muted small">IDs = indices, pas vecteurs</text>
+<path d="M280 170 H325" class="line" marker-end="url(#arrow)"/>
+<rect x="340" y="76" width="425" height="350" rx="14" class="panel"/>
+<text x="365" y="110" class="ink label">Matrice d'embeddings E</text>
+<text x="365" y="142" class="ink math">E ∈ ℝ^(V × d)</text>
+<text x="365" y="166" class="muted small">V lignes : une par ID du vocabulaire</text>
+<text x="365" y="188" class="muted small">d colonnes : largeur du vecteur</text>
+<g transform="translate(365 210)">
+  <rect x="0" y="0" width="350" height="34" rx="5" class="cell"/><rect x="0" y="42" width="350" height="34" rx="5" class="accent2"/><rect x="0" y="84" width="350" height="34" rx="5" class="cell"/><rect x="0" y="126" width="350" height="34" rx="5" class="cell"/>
+  <path d="M70 0 V160 M140 0 V160 M210 0 V160 M280 0 V160" stroke="#94a3b8" stroke-width="1.2"/>
+  <text x="175" y="24" text-anchor="middle" class="ink small">…</text><text x="175" y="66" text-anchor="middle" class="ink small">ligne i = 42</text><text x="175" y="108" text-anchor="middle" class="ink small">…</text><text x="175" y="150" text-anchor="middle" class="ink small">…</text>
+</g>
+<text x="365" y="399" class="muted small">Schéma : seules quelques lignes/colonnes sont montrées.</text>
+<path d="M765 250 H800" class="line" marker-end="url(#arrow)"/>
+<rect x="815" y="76" width="350" height="190" rx="14" class="panel"/>
+<text x="840" y="110" class="ink label">Lookup : X = E[IDs]</text>
+<text x="840" y="143" class="ink math">X ∈ ℝ^(L × d)</text>
+<rect x="840" y="160" width="300" height="26" rx="5" class="accent"/><rect x="840" y="192" width="300" height="26" rx="5" class="accent2"/><rect x="840" y="224" width="300" height="26" rx="5" class="accent"/>
+<text x="990" y="179" text-anchor="middle" class="ink small">E[17]</text><text x="990" y="211" text-anchor="middle" class="ink small">E[42]</text><text x="990" y="243" text-anchor="middle" class="ink small">E[17]</text>
+<text x="815" y="300" class="muted body">Chaque position reçoit d nombres.</text>
+<path d="M990 320 V360" class="line" marker-end="url(#arrow)"/>
+<rect x="815" y="375" width="350" height="115" rx="14" class="panel"/>
+<text x="840" y="410" class="ink label">Projection de sortie</text>
+<text x="840" y="444" class="ink math">logits ∈ ℝ^(L × V)</text>
+<text x="840" y="472" class="muted small">Un score par token possible et position</text>
+<rect x="35" y="520" width="1130" height="82" rx="14" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="58" y="553" class="ink body"><tspan font-weight="700">V — taille du vocabulaire :</tspan> nombre d'IDs disponibles, fixé par le tokenizer/modèle.</text>
+<text x="58" y="582" class="ink body"><tspan font-weight="700">d — dimension d'embedding :</tspan> nombre de composantes par vecteur, choisi comme hyperparamètre d'architecture.</text>
+</svg>
