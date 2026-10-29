@@ -254,3 +254,15 @@ This is a targeted source-level review of the bilingual Q/K/V concept pair, chos
 | `site/en/tensors.qmd` + FR counterpart | Batch/sequence/feature and vocabulary shapes, head dimension notation, axis pitfalls. | Add no duplicate general tensor lesson. The multi-head reshape/transpose contract belongs in #98 or #80 once scope is agreed. |
 
 **Upstream scope checked:** Raschka Chapter 3 README and main notebook; the bonus folders for efficient multi-head variants and PyTorch buffers were also inspected. No dedicated multi-head or dropout page was found among the candidate paths checked. This is a bounded source audit, not a full browser/render review. The Quarto workflow for merged PR #110 passed both site rendering and rendered local-link checks; visual/mobile review remains separate.
+
+## Chapter 4 source pass: GPT model architecture (2026-10-29)
+
+| Page / pair | Confirmed in source | Remaining work |
+|---|---|---|
+| site/en/transformer.qmd + FR counterpart | System-level GPT data flow, block roles, residual paths/MLP at overview level, logits and autoregressive generation. | Keep as a concise canonical overview. Improve links to focused concepts; do not expand it into an implementation manual. |
+| Q/K/V, scaled attention and causal masking pages + FR counterparts | Single-head attention mechanics and causal access constraints are explained conceptually. | Architecture-level multi-head split/transpose/concatenate/output projection remains partial and is owned by #98; single-head invariants and leakage tests remain #80/#81. |
+| Embedding-space and positional-encoding pages + FR counterparts | Learned representations and positional mechanisms are discussed as concepts. | Explicit GPT-style token-embedding plus learned absolute-position-embedding shape contract remains partial; #82 owns the concept-level treatment. |
+| site/en/tensors.qmd + FR counterpart | General batch, sequence, feature and vocabulary axis literacy. | No full GPT forward-pass trace or parameter-count derivation found in the checked pages. Avoid repeating general tensor material. |
+| Architecture configuration, parameter tying, dropout/train-eval semantics | Upstream Chapter 4 notebook includes these topics; no complete tested public contract found in the candidate pages. | Record as gaps for a future prerequisite-gated implementation. Distinguish dropout from masking and architecture-specific choices from universal Transformer properties. |
+
+**Upstream scope checked:** [Raschka Chapter 4](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch04), its [main-code folder](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch04/01_main-chapter-code), and [main notebook](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch04/01_main-chapter-code/ch04.ipynb). This is a bounded source audit, not a browser/render review or evidence of learner mastery. Optional KV cache, performance comparisons, MoE, GQA and MLA remain outside the baseline path.
