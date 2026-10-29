@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 330" role="img" aria-labelledby="title desc">
+  <title id="title">Target probability and cross-entropy loss</title>
+  <desc id="desc">Two cases for the same observed target: probability 0.9 gives loss 0.105 nats; probability 0.1 gives loss 2.303 nats. Lower probability assigned to the observed target produces a much larger negative log loss.</desc>
+  <rect x="1" y="1" width="898" height="328" rx="14" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="32" y="38" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#172554">Observed target y</text>
+  <text x="32" y="64" font-family="Arial, sans-serif" font-size="14" fill="#475569">Same target; different probability assigned by the model</text>
+  <line x1="450" y1="82" x2="450" y2="295" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="42" y="103" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#166534">Higher target probability</text>
+  <text x="488" y="103" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#9f1239">Lower target probability</text>
+  <text x="42" y="132" font-family="Arial, sans-serif" font-size="15" fill="#334155">p(y) = 0.9</text>
+  <rect x="42" y="145" width="300" height="24" rx="4" fill="#e2e8f0"/>
+  <rect x="42" y="145" width="270" height="24" rx="4" fill="#16a34a"/>
+  <text x="42" y="197" font-family="Arial, sans-serif" font-size="15" fill="#334155">Loss = −ln p(y) ≈ 0.105 nats</text>
+  <rect x="42" y="210" width="300" height="24" rx="4" fill="#e2e8f0"/>
+  <rect x="42" y="210" width="14" height="24" rx="4" fill="#16a34a"/>
+  <text x="42" y="262" font-family="Arial, sans-serif" font-size="14" fill="#475569">The observed token was expected.</text>
+  <text x="488" y="132" font-family="Arial, sans-serif" font-size="15" fill="#334155">p(y) = 0.1</text>
+  <rect x="488" y="145" width="300" height="24" rx="4" fill="#e2e8f0"/>
+  <rect x="488" y="145" width="30" height="24" rx="4" fill="#e11d48"/>
+  <text x="488" y="197" font-family="Arial, sans-serif" font-size="15" fill="#334155">Loss = −ln p(y) ≈ 2.303 nats</text>
+  <rect x="488" y="210" width="300" height="24" rx="4" fill="#e2e8f0"/>
+  <rect x="488" y="210" width="294" height="24" rx="4" fill="#e11d48"/>
+  <text x="488" y="262" font-family="Arial, sans-serif" font-size="14" fill="#475569">The observed token was surprising.</text>
+  <text x="32" y="306" font-family="Arial, sans-serif" font-size="13" fill="#64748b">Bars are scaled separately within each row; compare the numeric labels, not bar lengths across rows.</text>
+</svg>
