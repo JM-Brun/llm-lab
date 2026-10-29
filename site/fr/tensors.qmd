@@ -63,13 +63,13 @@ position 1 : [0, 1, 2]
 forme       : (B=1, T=2, V=3)
 ```
 
-Pour chaque position, on veut une distribution sur les **tokens candidats**. La softmax doit donc agir sur l'axe (V), le dernier axe dans cette convention :
+Pour chaque position, on veut une distribution sur les **tokens candidats**. La softmax doit donc agir sur l'axe \(V\), le dernier axe dans cette convention :
 
 ```python
 probs = logits.softmax(dim=-1)  # normalise les 3 tokens, pour chaque position
 ```
 
-La somme des probabilités sur (V) vaut alors 1 à chaque position. En revanche :
+La somme des probabilités sur \(V\) vaut alors 1 à chaque position. En revanche :
 
 ```python
 wrong = logits.softmax(dim=1)  # normalise les 2 positions, token par token
@@ -77,7 +77,7 @@ wrong = logits.softmax(dim=1)  # normalise les 2 positions, token par token
 
 est une opération mathématiquement valide et compatible avec la forme, mais elle répond à une autre question : pour chaque token candidat, elle répartit la masse entre les positions. Les lignes ne sont généralement plus des distributions sur le vocabulaire.
 
-**Invariant de débogage :** si la sortie est censée représenter (p(\text{token}\mid\text{contexte à cette position})), vérifier que la somme sur l'axe du vocabulaire vaut 1 pour chaque couple batch-position. Une forme correcte ne suffit pas ; l'invariant dépend de l'interprétation attendue.
+**Invariant de débogage :** si la sortie est censée représenter \(p(\text{token}\mid\text{contexte à cette position})\), vérifier que la somme sur l'axe du vocabulaire vaut 1 pour chaque couple batch-position. Une forme correcte ne suffit pas ; l'invariant dépend de l'interprétation attendue.
 
 ## Exemple de lecture des dimensions
 
@@ -90,7 +90,7 @@ La compatibilité des formes ne garantit pas que la projection, le masque, le d�
 
 Les axes ne sont pas de simples indices : ils définissent la question posée aux données. Cette idée se retrouve ailleurs, avec des nuances importantes.
 
-- **Traitement du signal :** un tableau ((T,C)) peut représenter le temps et les canaux d'un capteur. Réduire sur (T) calcule une statistique temporelle ; réduire sur (C) combine des canaux. Même opération, sens différent. [NumPy — dimensions et tableaux](https://numpy.org/doc/stable/user/basics.creation.html) présente les bases de cette représentation.
+- **Traitement du signal :** un tableau \((T,C)\) peut représenter le temps et les canaux d'un capteur. Réduire sur \(T\) calcule une statistique temporelle ; réduire sur \(C\) combine des canaux. Même opération, sens différent. [NumPy — dimensions et tableaux](https://numpy.org/doc/stable/user/basics.creation.html) présente les bases de cette représentation.
 - **Bases de données et analyse tabulaire :** lignes et colonnes ont un schéma sémantique. Permuter deux colonnes sans mettre à jour leur interprétation peut conserver un tableau valide tout en corrompant l'analyse. Les dimensions d'un tenseur jouent un rôle analogue, mais les axes numériques peuvent aussi être réordonnés et diffusés implicitement.
 - **Physique et géométrie :** dans un tenseur mathématique au sens strict, les composantes suivent des lois de transformation sous un changement de coordonnées. Un tableau PyTorch de rang élevé n'est pas automatiquement un tel tenseur. Cette distinction devient utile lorsqu'on aborde vecteurs, bases, changements de coordonnées et invariance.
 - **Probabilités et théorie de l'information :** une softmax définit une distribution seulement relativement à un ensemble de catégories précis. Dans un LLM, cet ensemble est souvent le vocabulaire ; normaliser sur les positions produit une autre quantité, pas une distribution de tokens.
