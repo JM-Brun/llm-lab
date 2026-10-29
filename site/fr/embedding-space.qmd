@@ -152,6 +152,34 @@ Cette addition n'est **pas universelle**. Par exemple, [RoPE](positional-encodin
 Pendant l'entraînement, les gradients peuvent modifier les lignes de la table d'embeddings utilisées par les exemples. La sélection par indice ne rend pas, à elle seule, un vecteur contextuel : la contextualisation intervient dans les couches suivantes du réseau. Voir les [tenseurs](tensors.qmd) pour les conventions de dimensions et [du texte aux tokens](text-data.qmd) pour l'étape précédente du tokenizer.
 
 
+## Vérifier la compréhension : transférer, pas réciter
+
+Essayez de répondre avant d'ouvrir chaque explication. Ces questions vérifient si le parcours peut être appliqué à une situation nouvelle ; elles ne suffisent pas, à elles seules, à établir une maîtrise.
+
+<details>
+<summary>1. Le même ID de token apparaît deux fois dans une séquence. Son embedding initial doit-il différer aux deux positions ?</summary>
+
+Non. Les deux opérations de lookup sélectionnent la même ligne de la matrice d'embeddings. Dans une architecture avec embeddings positionnels absolus appris, l'ajout de vecteurs de position différents peut rendre les entrées combinées différentes. Le traitement ultérieur par le Transformer peut aussi produire des états contextualisés différents.
+</details>
+
+<details>
+<summary>2. Si deux tokenizers attribuent des IDs différents à la même chaîne visible, peut-on comparer ces IDs numériquement ?</summary>
+
+Non. Un ID est un indice dans le vocabulaire d'un tokenizer donné, pas une étiquette universelle ni une coordonnée sémantique. Il faut comparer les tokens visibles et la configuration du tokenizer ; les IDs de chaque modèle doivent indexer le vocabulaire et les poids avec lesquels il a été construit.
+</details>
+
+<details>
+<summary>3. Un lot a la forme [B, L] avant le lookup. Quelle forme produit une table d'embeddings standard, et que ne fait pas le lookup ?</summary>
+
+Les embeddings des tokens ont la forme [B, L, d], où d est la dimension d'embedding. Le lookup sélectionne une ligne par ID ; il ne mélange pas l'information entre positions et ne crée pas, à lui seul, des états contextualisés.
+</details>
+
+<details>
+<summary>4. RoPE ajoute-t-il un vecteur de position à chaque embedding initial de token ?</summary>
+
+Non, pas dans la formulation standard présentée ici. RoPE applique des rotations dépendant de la position aux vecteurs requête et clé dans l'attention. C'est différent des embeddings positionnels absolus appris, qui sont ajoutés aux embeddings des tokens dans les architectures qui utilisent cette méthode.
+</details>
+
 ## Que signifie la proximité ?
 
 On peut comparer deux vecteurs par produit scalaire, distance euclidienne ou similarité cosinus. Le cosinus compare leurs directions :
