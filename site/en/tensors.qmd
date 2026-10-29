@@ -69,7 +69,9 @@ At each position, we want a distribution over **candidate tokens**. Softmax must
 probs = logits.softmax(dim=-1)  # normalize the 3 tokens at each position
 ```
 
-The probabilities sum to 1 over \(V\) at each position. By contrast:
+The probabilities sum to 1 over \(V\) at each position. For these logits, the rows are approximately `[0.665, 0.245, 0.090]` and `[0.090, 0.245, 0.665]`.
+
+By contrast:
 
 ```python
 wrong = logits.softmax(dim=1)  # normalize the 2 positions, separately for each token
