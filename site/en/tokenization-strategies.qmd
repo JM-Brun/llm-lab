@@ -35,6 +35,24 @@ A token is the discrete unit produced by the system, not necessarily a linguisti
 
 These are idealized categories. Real systems may combine pre-tokenization, subwords, and byte-level representation. “Character” must be defined precisely: Unicode code points, code units, and grapheme clusters are not interchangeable.
 
+## 3. Components of a tokenizer pipeline
+
+A production tokenizer is not just a segmentation algorithm. Libraries can expose several components whose effects should be distinguished. The [Hugging Face Tokenizers component documentation](https://huggingface.co/docs/tokenizers/components) describes these stages; [SentencePiece](https://github.com/google/sentencepiece) provides another example of tokenizer models and conventions.
+
+| Component | Role | Check |
+|---|---|---|
+| **Normalization** | May transform text before segmentation (for example, casing or Unicode normalization rules) | Are visually similar strings normalized in the same way? |
+| **Pre-tokenization** | Splits text into candidate segments before the subword algorithm | Do whitespace, punctuation, or numbers create boundaries? |
+| **Tokenization model** | Applies the vocabulary and BPE, WordPiece, or unigram rules | Which base units, vocabulary, and rules are used? |
+| **Post-processing** | May add special tokens or prepare sequences for the model | Are BOS, EOS, separators, or task tokens added? |
+| **Decoder** | Converts tokens/IDs back to text according to implementation conventions | Are whitespace, bytes, and characters reconstructed as expected? |
+
+Not every tokenizer exposes or uses these stages in the same way. An algorithm name alone is therefore insufficient to reproduce a segmentation: the configuration and versions also matter.
+
+### Example of a whitespace marker
+
+Some SentencePiece outputs display a marker such as `▁` to represent a whitespace boundary under that tokenizer's convention. It is not a universal symbol used by all tokenizers, nor does it mean that a literal space is always stored in this form. Interpret output using the documentation for the exact model.
+
 ## 3. BPE, WordPiece, and unigram
 
 | Family | Core idea | Limitation to remember |
