@@ -190,9 +190,6 @@ To evaluate an embedding space, return to the actual task: document retrieval, a
 - [Tensors](tensors.qmd): how vectors are organized in network computations.
 - [Positional encoding and RoPE](positional-encoding.qmd): information about token positions.
 
-## Further video
-
-- [Video suggested for further study](https://www.youtube.com/watch?v=Hwr9OpeO9fM) — the link was supplied, but its title and content have not been independently verified.
 
 ## References
 
