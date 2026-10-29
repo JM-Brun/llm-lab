@@ -60,6 +60,23 @@ flowchart TB
 
 Ce que le schéma aide à voir : la même chaîne peut produire des longueurs de séquence et des IDs différents. Ce qu'il ne dit pas : qu'un tokenizer est universellement meilleur, ni que ses fragments correspondent à des unités de sens.
 
+
+### De la chaîne à l'embedding : les transformations
+
+```{mermaid}
+flowchart TD
+    A["Texte Unicode"] --> B["Normalisation éventuelle"]
+    B --> C["Pré-tokenisation"]
+    C --> D["Algorithme + vocabulaire appris"]
+    D --> E["Tokens : fragments de texte ou d'octets"]
+    E --> F["IDs entiers : indices du vocabulaire"]
+    F --> G["Lookup dans la matrice E"]
+    G --> H["Vecteurs : E[id]"]
+    H --> I["Réseau neuronal : représentations contextualisées"]
+```
+
+Pour une matrice d'embeddings E de forme (V, d), l'ID i sélectionne la ligne E[i], un vecteur de dimension d. V est la taille du vocabulaire. Cette lookup n'est pas encore, en général, la représentation contextualisée après les blocs Transformer. Les IDs sont des indices arbitraires : la différence numérique entre deux IDs n'a pas d'interprétation sémantique. Normalisation, pré-tokenisation, unités de base et tokens spéciaux dépendent du tokenizer.
+
 ## 2. Pourquoi le découpage par espaces ne suffit pas
 
 Il gère mal la ponctuation, les contractions, les langues sans espaces entre les mots, les variantes orthographiques, les noms rares et les chaînes techniques. Un vocabulaire contenant chaque mot possible serait immense et resterait fragile face aux formes nouvelles.
@@ -90,6 +107,35 @@ Il faut distinguer :
 2. **Encodage** : applique le tokenizer déjà appris ; il ne réapprend pas le vocabulaire à chaque requête.
 
 Un tokenizer BPE au niveau des octets peut représenter des entrées textuelles arbitraires grâce à ses unités de base. Tous les tokenizers BPE ne sont toutefois pas byte-level, et le résultat dépend aussi du pré-découpage et du vocabulaire.
+
+
+### Exemple concret : fusions BPE sur un petit corpus
+
+Convention pédagogique : les mots sont initialement découpés en caractères, avec un marqueur de fin `</w>`. Le corpus contient une occurrence de `low`, `lower` et `lowest`.
+
+| Mot | Unités initiales |
+|---|---|
+| `low` | `l · o · w · </w>` |
+| `lower` | `l · o · w · e · r · </w>` |
+| `lowest` | `l · o · w · e · s · t · </w>` |
+
+À chaque itération, BPE compte les paires adjacentes et fusionne une paire selon sa règle de sélection. Supposons que le départage choisisse d'abord `l + o → lo`, puis `lo + w → low`.
+
+| Étape | `low` | `lower` | `lowest` |
+|---|---|---|---|
+| 0 | `l · o · w · </w>` | `l · o · w · e · r · </w>` | `l · o · w · e · s · t · </w>` |
+| 1 : fusion `l + o` | `lo · w · </w>` | `lo · w · e · r · </w>` | `lo · w · e · s · t · </w>` |
+| 2 : fusion `lo + w` | `low · </w>` | `low · e · r · </w>` | `low · e · s · t · </w>` |
+
+```{mermaid}
+flowchart LR
+    A["l · o · w"] -->|"fusion 1 : l + o"| B["lo · w"]
+    B -->|"fusion 2 : lo + w"| C["low"]
+    C --> D["Le token low reçoit un ID dans le vocabulaire"]
+    D --> E["L'ID sélectionne une ligne de la matrice d'embeddings"]
+```
+
+C'est un exemple de suivi des fusions, pas une sortie universelle : les fréquences, le pré-découpage, le traitement des fins de mots et le départage influencent l'ordre réel. D'autres fusions pourraient ensuite créer `er` ou `est`, mais ce n'est pas garanti. À l'encodage, le tokenizer applique les règles apprises ; il ne recompte pas les fréquences du texte soumis. L'ID est attribué dans le vocabulaire final, il ne constitue pas la fusion elle-même.
 
 ## 4. Conséquences pour le modèle
 
@@ -192,6 +238,10 @@ Utiliser les visualiseurs ci-dessus avec les mêmes chaînes et noter les diffé
 - **« L'identifiant contient du sens. »** Pas en soi : c'est une étiquette discrète ; les vecteurs sont appris.
 - **« Une chaîne inconnue ne peut pas être encodée. »** Pas nécessairement : un tokenizer byte-level dispose d'unités de base couvrant les octets, sous réserve de ses règles d'encodage.
 - **« Le tokenizer est une couche du Transformer. »** C'est une étape distincte, même si modèle et tokenizer doivent être compatibles.
+
+## Pour approfondir : stratégies de tokenisation
+
+Le guide [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.qmd) compare mots, caractères, octets, sous-mots, BPE, WordPiece et unigramme.
 
 ## Pour poursuivre
 
