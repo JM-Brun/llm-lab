@@ -207,7 +207,7 @@ This is a targeted source-level review of the bilingual Q/K/V concept pair, chos
 
 | Area | Finding | Change made | Remaining validation |
 |---|---|---|---|
-| Intuition | The existing page derived the loss and mentioned confident errors, but did not give a visual comparison for the same target under different predicted probabilities. | Added an original SVG comparing \(p(y)=0.9\) and \(p(y)=0.1\), with losses about 0.105 and 2.303 nats, to both language pages. | Verify the numerical labels, visual scaling, and responsive rendering. |
+| Intuition | The existing page derived the loss and mentioned confident errors, but did not give a visual comparison for the same target under different predicted probabilities. | Added separate original English and French SVGs comparing \(p(y)=0.9\) and \(p(y)=0.1\), with losses about 0.105 and 2.303 nats, to the matching language pages. | Verify the numerical labels, visual scaling, and responsive rendering. |
 | Complementary angle | Cross-entropy is not the entropy of the model distribution and does not tell us whether a target is factually true. It scores the probability assigned to a target distribution/token. | The text says explicitly that the figure concerns one token with a one-hot target and does not depict the full vocabulary distribution, valid-token reduction, or full training objective. | Check the text does not duplicate or contradict the separate entropy page; add a contextual cross-link if useful. |
 | Provenance | An external video provides teaching inspiration but the diagram is authored for this repository. | Recorded the original SVG and its intended scope in the references page. | Check the relative path and the generated HTML figure. |
 
