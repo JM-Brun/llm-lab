@@ -531,3 +531,33 @@ LLM Lab should **subsume the learning objectives and useful technical scope**, n
 7. **Validate the result:** bilingual parity, Quarto render and local links, rendered visual review, external references, tests and reproducibility; keep mastery evidence separate in the private knowledge inventory.
 
 **Current conclusion (2026-10-29):** the repository already has a chapter-level plan and a strong editorial contract, but this is not yet evidence of complete coverage. The current evidence supports **partial core coverage**, with substantial unverified or missing areas around end-to-end text data/tokenization, a tested GPT and training workflow, classification fine-tuning, instruction tuning, PyTorch-specific prerequisites, exercises, and LoRA. The upstream bonus catalogue is broader and changes over time; it needs explicit tracking rather than an assumption that covering the seven chapters covers the repository.
+
+
+## 10. Chapter-by-chapter coverage audit backlog (2026-10-29)
+
+The following issues operationalize §9. They are **audit tasks**, not a commitment to implement every upstream bonus. Each audit must map concepts to current public pages or create narrowly scoped follow-up issues for verified gaps. Check existing work before creating follow-ups; do not duplicate owned deliverables. Chapter 2 explicitly coordinates with the existing token-data issues.
+
+| Source unit | Audit task |
+|---|---|
+| Chapter 1 — Understanding LLMs | [#95 — audit LLM concepts and system overview](https://github.com/JM-Brun/llm-lab/issues/95) |
+| Chapter 2 — Working with Text Data | [#96 — audit text, tokenization, and training examples](https://github.com/JM-Brun/llm-lab/issues/96); coordinate with [#58](https://github.com/JM-Brun/llm-lab/issues/58) and [#83](https://github.com/JM-Brun/llm-lab/issues/83) rather than duplicating them |
+| Chapter 3 — Coding Attention Mechanisms | [#97](https://github.com/JM-Brun/llm-lab/issues/97) |
+| Chapter 4 — Implementing a GPT Model | [#98](https://github.com/JM-Brun/llm-lab/issues/98) |
+| Chapter 5 — Pretraining on Unlabeled Data | [#99](https://github.com/JM-Brun/llm-lab/issues/99) |
+| Chapter 6 — Fine-Tuning for Text Classification | [#100](https://github.com/JM-Brun/llm-lab/issues/100) |
+| Chapter 7 — Fine-Tuning to Follow Instructions | [#101](https://github.com/JM-Brun/llm-lab/issues/101) |
+| Appendix A — PyTorch | [#102](https://github.com/JM-Brun/llm-lab/issues/102) |
+| Appendix B — References and Further Reading | [#103](https://github.com/JM-Brun/llm-lab/issues/103); coordinate with [#86 source curation](https://github.com/JM-Brun/llm-lab/issues/86) |
+| Appendix C — Exercise Solutions | [#104](https://github.com/JM-Brun/llm-lab/issues/104) |
+| Appendix D — Training-Loop Improvements | [#105](https://github.com/JM-Brun/llm-lab/issues/105) |
+| Appendix E — LoRA | [#106](https://github.com/JM-Brun/llm-lab/issues/106) |
+
+### Execution order
+
+1. Start with #95 and #96; these establish the core overview and text-data foundations.
+2. During the Chapter 2 audit, reconcile #58/#83 and tokenizer-related issues; update/close duplicates rather than creating parallel implementation work.
+3. Continue with #97–#99 (attention → architecture → pretraining), then #100–#101 and #102–#106.
+4. For every audit, create gap issues only after inspecting actual pages, open/merged PRs, tests and existing issues. Link them back to the audit and update §9's coverage status with evidence.
+5. Treat the upstream bonus list as a living catalogue: new bonus items require triage and an explicit disposition, not automatic issue proliferation or implementation.
+
+**Completion rule:** the audit issue may close when the source-to-site mapping, gap links, bilingual checks, source review date, and curriculum-plan updates are recorded. It must not close merely because follow-up issues were created.
