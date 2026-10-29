@@ -602,3 +602,25 @@ This section separates candidate content additions from sources that are merely 
 3. Add the vocabulary-size trade-off in a concise, qualified form, grounded in the primary study.
 4. Add the tokenizer-comparison checklist only if it complements rather than duplicates the current mini-lab.
 5. Do not import third-party figures from these sources without an explicit compatible license or permission. Prefer a small original table or original plot generated from reproducible tokenizer outputs.
+
+
+## 6. Reconciliation against the current learning pages (2026-10-29)
+
+Before turning the source inventory into lesson changes, the current `main` pages were re-read. Several proposed ideas are already present; adding them again would create duplication.
+
+| Candidate knowledge | Current status on `main` | Decision |
+|---|---|---|
+| Leading whitespace can affect segmentation | The English and French `text-data.qmd` mini-labs already compare `Hello world` with ` Hello world`; the strategy page contains a pinned-tokenizer probe | Do not add a second example. Improve the existing probe only if a rendered, version-pinned output is needed. |
+| Multilingual tokenization cost and fairness | Both strategy pages already include an evaluation section, multilingual equity, metric caveats, and an empirical comparison protocol; they link primary research including Ahia et al. and newer work | Do not duplicate a general fairness section. Verify source-specific claims and strengthen citations only where there is a real evidence gap. |
+| Token count, fertility, characters/bytes per token | Existing bilingual metric tables already define these and warn about denominators | No extra metric table. Potential follow-up: add a concrete, sourced example of how the denominator changes the interpretation, if it materially improves comprehension. |
+| Fewer tokens does not imply a better model | Already explicit in both the overview and strategy pages | Preserve this as a misconception check; no new prose needed. |
+| Vocabulary-size / sequence-length trade-off | Already covered at a conceptual level; the audit's new source inventory adds more precise systems implications (input embedding rows and output projection/softmax dimension; training-budget assumptions) | This is the most plausible substantive addition, but first verify the primary research cited by the secondary article. If added, keep it to one short paragraph and a compact equation/example. |
+| Compare tokenizers on representative text | The mini-lab already lists whitespace, casing, numbers, Unicode normalization, multilingual text and code | No second lab. Consider adding a single test only if the current one misses a specific failure mode. |
+| External figures from tutorials | Existing pages already include original diagrams and candidate external research figures | No further figures from the reviewed blogs without explicit compatible reuse rights. Prefer measured, repository-owned results. |
+
+### Next source-driven work
+
+1. Check the primary paper behind the vocabulary-size article and confirm the precise relationship between vocabulary size, embedding/output parameterization, and the stated training-budget comparison. Do not rely on a secondary summary for quantitative claims.
+2. Inspect the exact definitions and experimental scope of the multilingual-fairness studies already cited on the page. The phrase “up to 15×” must be tied to the paper's tested conditions and should not be presented as a universal language penalty.
+3. If the primary evidence supports it, add the vocabulary-size systems trade-off to both language versions in the existing section, rather than creating a new section or new page.
+4. After any lesson edit, render the site and verify bilingual parity, links, figures, and code examples. No such render or CI success is claimed by this audit update.
