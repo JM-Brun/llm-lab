@@ -90,6 +90,27 @@ La page principale reste centrée sur le parcours. Les détails techniques sont 
 - [Unicode, UTF-8 et normalisation](unicode-text.qmd) : points de code, octets et chaînes visuellement identiques.
 - [Espace des embeddings](embedding-space.qmd) et [tenseurs](tensors.qmd) : dimensions, tables de poids et formes des représentations.
 
+## 2 bis. Évaluer un tokenizer : plusieurs questions, pas un score unique
+
+Le nombre de tokens est utile, mais il ne suffit pas à établir qu'un tokenizer est « meilleur ». Une comparaison sérieuse sépare au moins quatre dimensions :
+
+![Quatre angles complémentaires pour évaluer un tokenizer : efficacité de représentation, comportement en aval, robustesse selon les langues et reproductibilité.](../images/tokenizer-evaluation-dimensions-fr.svg){fig-alt="Quatre dimensions distinctes : compression et longueur de séquence ; résultats sur des tâches en aval ; écarts entre langues et types de texte ; protocole reproductible avec tokenizer, version et corpus identifiés." fig-cap="Cadre de lecture, non résultat expérimental : ces dimensions répondent à des questions différentes et ne se réduisent pas nécessairement à un classement unique." width=100%}
+
+- **Efficacité de représentation** : combien de tokens ou d'octets représentent le même texte ? La compression est informative, mais n'est pas une preuve suffisante de qualité.
+- **Résultats en aval** : les choix de segmentation peuvent modifier l'apprentissage et les performances, avec des effets dépendant de la tâche, des données et de la taille du modèle.
+- **Équité multilingue** : un même contenu comparable peut produire des longueurs de séquence très différentes selon la langue et le tokenizer. Cela affecte le budget de contexte et peut modifier les coûts d'entraînement ou d'inférence ; cela ne prouve pas, à lui seul, une différence de qualité de génération.
+- **Reproductibilité** : une comparaison interprétable indique le tokenizer exact, sa version ou sa configuration, le corpus, les langues, la métrique et la tâche évaluée.
+
+Cette distinction est importante dans la littérature. Goldman et al. (2024) rapportent une association entre compression et résultats en aval dans leurs expériences, tandis que Schmidt et al. (2024) montrent que réduire le nombre de tokens n'est pas, à lui seul, une règle suffisante pour choisir une stratégie. Les résultats ne sont pas contradictoires : ils invitent à ne pas confondre un indicateur intrinsèque avec l'objectif final.
+
+Pour le volet multilingue, Arnett et al. (2025) étudient les écarts de coût entre langues et les facteurs de conception associés ; Chiu (2026) propose un cadre d'évaluation multilingue à plusieurs métriques. Ces travaux motivent des comparaisons contrôlées, pas un classement universel valable pour toutes les tâches et toutes les langues.
+
+**Ressources complémentaires**
+- [Unpacking Tokenization: Evaluating Text Compression and its Correlation with Model Performance (Goldman et al., 2024)](https://aclanthology.org/2024.findings-acl.134/) — compression et association observée avec les résultats en aval.
+- [Tokenization Is More Than Compression (Schmidt et al., 2024)](https://aclanthology.org/2024.emnlp-main.40/) — contrepoint à l'idée « moins de tokens = meilleur tokenizer ».
+- [Explaining and Mitigating Crosslingual Tokenizer Inequities (Arnett et al., NeurIPS 2025)](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html) — facteurs de conception liés aux écarts entre langues.
+- [TokLens: A Multilingual Lens on Tokenizer Quality (Chiu, ACL 2026)](https://aclanthology.org/2026.acl-srw.18/) — métriques intrinsèques multilingues et comparaison sur plusieurs langues.
+
 ## 3. Mini-laboratoire de comparaison
 
 Comparer les mêmes chaînes avec au moins deux tokenizers, en s'appuyant sur les exemples et outils présentés dans la [page sur les stratégies de tokenisation](tokenization-strategies.qmd). Noter les différences ; ne pas comparer les IDs bruts entre vocabulaires comme s'ils avaient une signification commune.
