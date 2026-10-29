@@ -24,6 +24,13 @@ This is a quality prompt, not a requirement to add a figure to every page or to 
 
 For substantial revisions, use the library's [repeatable improvement loop](docs/pedagogical-resource-library.md#a-repeatable-improvement-loop). Record the learner problem, source roles, design decision, limitations, checks actually run, and remaining work in docs/page-audit-inventory.md or the PR description. Start with a small number of complementary sources rather than collecting links indefinitely. A decision to retain an existing explanation or not add a visual is acceptable when supported by the learner need and evidence. Do not report source inspection as rendered review, and do not report planned validation as completed.
 
+For a substantial visual or explanatory revision, also state:
+- the second perspective it adds (e.g. numeric example, counterexample, geometric view, algorithm steps), not just the source it came from;
+- the analogy's useful mapping and where it breaks;
+- why the selected medium is better than a simpler alternative for this specific learner question;
+- how the figure is grounded, referenced, captioned, described with alt text, and distinguished from empirical evidence.
+
+
 
 ## Local setup
 

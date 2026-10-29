@@ -8,7 +8,7 @@ lang: fr
 Pour une cible one-hot, la cross-entropie d'une position est la négative log-probabilité du token observé. En entraînement autorégressif, cette quantité est calculée pour les positions cibles autorisées, puis agrégée selon une convention qu'il faut expliciter.
 :::
 
-Pour relier cette formule à l’entraînement, voir aussi la construction des [exemples entrée-cible](training-examples.qmd) et les règles de masquage de la perte.
+Pour relier cette formule à l’entraînement, voir aussi la construction des [exemples entrée-cible](training-examples.qmd) et les règles de masquage de la perte. À ne pas confondre avec l'[entropie de la distribution prédite](entropy.qmd) : l'entropie décrit la dispersion des probabilités avant de connaître le token suivant ; la perte de cross-entropie évalue la probabilité donnée à la cible observée (ou à une distribution cible).
 
 ## Objectif pour un token
 
@@ -25,6 +25,14 @@ Si \(y\) est l'indice du token cible et \(p=\operatorname{softmax}(z)\), on peut
 \]
 
 Le coût augmente lorsque le modèle attribue une faible probabilité au token observé. Une prédiction incorrecte mais très confiante est donc fortement pénalisée.
+
+## Intuition visuelle : la perte mesure la surprise du token observé
+
+![Pour un même token cible, une probabilité prédite de 0,9 produit une perte de 0,105 nat, tandis qu'une probabilité de 0,1 produit une perte de 2,303 nats.](../images/cross-entropy-target-probability-fr.svg){fig-alt="Deux cas pour le même token observé : p(y)=0,9 donne −ln p(y)≈0,105 nat ; p(y)=0,1 donne −ln p(y)≈2,303 nats. Une probabilité cible plus faible entraîne une perte beaucoup plus grande." width=100%}
+
+Les deux cas concernent **le même token cible** : seul le poids de probabilité que le modèle lui attribue change. Quand \(p(y)=0{,}9\), la perte vaut environ \(0{,}105\) nat ; quand \(p(y)=0{,}1\), elle vaut environ \(2{,}303\) nats. La seconde perte est près de 22 fois plus grande. La fonction \(-\log p(y)\) rend donc les erreurs confiantes coûteuses, sans pour autant dire si le token observé est vrai ou utile dans un sens plus large.
+
+Cette image illustre la perte d'un token avec une cible one-hot ; elle ne représente ni la distribution complète du vocabulaire, ni la moyenne sur les positions valides, ni l'ensemble de l'objectif d'entraînement.
 
 ## Cible one-hot, cible souple et divergence KL
 

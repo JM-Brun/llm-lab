@@ -8,7 +8,7 @@ lang: en
 For a one-hot target, cross-entropy at one position is the negative log-probability of the observed token. During autoregressive training, this quantity is computed for allowed target positions and then aggregated using a convention that must be stated explicitly.
 :::
 
-To connect this formula to training, also inspect how [input-target examples](training-examples.qmd) are built and how loss masking is applied.
+To connect this formula to training, also inspect how [input-target examples](training-examples.qmd) are built and how loss masking is applied. Do not confuse it with the [entropy of the predicted distribution](entropy.qmd): entropy describes the spread of probabilities before the next token is observed, while cross-entropy loss scores the probability assigned to the observed target (or a target distribution).
 
 ## Objective for one token
 
@@ -25,6 +25,14 @@ If \(y\) is the target-token index and \(p=\operatorname{softmax}(z)\), this can
 \]
 
 The cost increases when the model assigns low probability to the observed token. A wrong but highly confident prediction is therefore strongly penalized.
+
+## Visual intuition: the loss measures the surprise of the observed token
+
+![For the same target token, predicted probability 0.9 gives loss 0.105 nats, while probability 0.1 gives loss 2.303 nats.](../images/cross-entropy-target-probability.svg){fig-alt="Two cases for the same observed token: p(y)=0.9 gives −ln p(y)≈0.105 nats; p(y)=0.1 gives −ln p(y)≈2.303 nats. Lower target probability produces a much larger loss." width=100%}
+
+Both cases concern **the same target token**: only the probability assigned to it changes. When \(p(y)=0.9\), the loss is about \(0.105\) nats; when \(p(y)=0.1\), it is about \(2.303\) nats. The second loss is nearly 22 times larger. The function \(-\log p(y)\) makes confident errors costly, but it does not tell us whether the observed token is true or useful in a broader sense.
+
+This figure illustrates the loss for one token with a one-hot target. It does not show the full vocabulary distribution, the averaging over valid positions, or the entire training objective.
 
 ## One-hot targets, soft targets, and KL divergence
 
