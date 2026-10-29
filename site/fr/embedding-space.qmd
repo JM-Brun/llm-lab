@@ -120,7 +120,7 @@ Voici comment lire cette trace :
 3. Les IDs indexent les lignes de `E`. Les deux vecteurs sont des valeurs **inventées**, pas les embeddings du GPT-2 préentraîné ; la table utilise seulement la même plage d'indices de vocabulaire pour que les IDs réels puissent sélectionner des lignes.
 4. `P` illustre l'ajout de vecteurs positionnels dans une architecture donnée. `Z` garde la forme `[L,d]` ; cet exemple n'exécute pas de bloc Transformer et ne calcule donc pas les états cachés contextualisés.
 
-Les IDs exacts dépendent de l'encodage et du comportement de la bibliothèque ; un autre tokenizer peut produire des fragments et IDs différents. Les assertions rendent ces changements visibles au lieu de présenter la tokenisation comme universelle. Voir le [dépôt officiel de tiktoken](https://github.com/openai/tiktoken) et ses [tests d'encodage](https://github.com/openai/tiktoken/blob/main/tests/test_encoding.py) pour la sortie de référence.
+Les IDs exacts dépendent de l'encodage et du comportement de la bibliothèque ; un autre tokenizer peut produire des fragments et IDs différents. Les assertions rendent ces changements visibles au lieu de présenter la tokenisation comme universelle. Voir le [dépôt officiel de tiktoken](https://github.com/openai/tiktoken) et ses [tests d'encodage](https://github.com/openai/tiktoken/blob/0.14.0/tests/test_encoding.py) pour la sortie de référence.
 
 ## Des embeddings de tokens aux représentations contextualisées
 
