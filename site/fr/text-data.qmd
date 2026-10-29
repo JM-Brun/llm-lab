@@ -30,10 +30,13 @@ flowchart LR
     B --> C["Tokeniseur"]
     C --> D["Tokens"]
     D --> E["IDs entiers"]
-    E --> F["Vecteurs d'embedding"]
-    F --> G["Transformer"]
-    G --> H["Représentations contextualisées"]
+    E --> F["Lookup dans la table d'embeddings"]
+    F --> G["Embeddings des tokens"]
+    G --> H["Transformer et mécanisme positionnel"]
+    H --> I["Représentations contextualisées"]
 ```
+
+Le dernier bloc regroupe volontairement le traitement positionnel et le Transformer. Les architectures n'introduisent pas toutes la position de la même manière : des vecteurs positionnels absolus appris peuvent être ajoutés aux embeddings des tokens, tandis que RoPE fait tourner les vecteurs requête et clé dans l'attention. La position n'est donc pas un vecteur supplémentaire universellement ajouté au moment du lookup ; voir [encodage positionnel et RoPE](positional-encoding.qmd).
 
 - **Texte source** : une chaîne pouvant contenir ponctuation, espaces, nombres, code ou plusieurs langues.
 - **Prétraitement** : certaines chaînes sont normalisées ou pré-découpées ; ces opérations dépendent du tokeniseur.
@@ -115,13 +118,11 @@ Comparer les mêmes chaînes avec au moins deux tokenizers, en s'appuyant sur le
 
 Le guide [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.qmd) compare mots, caractères, octets, sous-mots, BPE, WordPiece et unigramme.
 
-## Pour poursuivre
+## Étape suivante
 
-- [GPT et Transformer : architecture et flux des données](transformer.qmd)
-- [Tenseurs](tensors.qmd)
-- [Espace des embeddings](embedding-space.qmd)
-- [Fondations mathématiques](mathematical-foundations.qmd)
-- [Plan de couverture du programme et des sources](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md)
+Poursuivez avec [l'espace des embeddings](embedding-space.qmd) pour voir comment les IDs sélectionnent des lignes dans une matrice d'embeddings, comment évoluent les formes des tenseurs et comment les couches suivantes du réseau produisent des représentations contextualisées.
+
+Pour le langage mathématique utilisé dans le modèle, consultez les pages [tenseurs](tensors.qmd) et [fondations mathématiques](mathematical-foundations.qmd). Le [plan complet du programme et de couverture des sources](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) présente le parcours plus large.
 
 ::: {.language-switch}
 **Langue :** [Français](text-data.qmd) · [English](../en/text-data.qmd)
