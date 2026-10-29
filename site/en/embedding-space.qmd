@@ -152,6 +152,34 @@ This addition is **not universal**. For example, [RoPE](positional-encoding.qmd)
 During training, gradients can update the embedding-table rows used by the examples. The lookup operation itself does not make a vector context-aware; contextualization happens in the subsequent network layers. See [tensors](tensors.qmd) for axis conventions and [from text to tokens](text-data.qmd) for the preceding tokenizer stage.
 
 
+## Check your understanding: transfer, not recall
+
+Try answering before opening each explanation. These questions test whether the pipeline can be applied to a new situation; they do not by themselves establish mastery.
+
+<details>
+<summary>1. The same token ID occurs twice in a sequence. Must its initial token embedding differ at the two positions?</summary>
+
+No. Both lookups select the same row of the embedding matrix. In an architecture with learned absolute position embeddings, adding different position vectors can make the resulting inputs differ. Later Transformer processing can also produce different contextualized states.
+</details>
+
+<details>
+<summary>2. If two tokenizers assign different IDs to the same visible string, can those IDs be compared numerically?</summary>
+
+No. An ID is an index within a particular tokenizer vocabulary, not a universal token label or semantic coordinate. Compare token strings and the tokenizer configuration; each model's IDs must index the vocabulary and weights it was built for.
+</details>
+
+<details>
+<summary>3. A batch has shape [B, L] before lookup. What shape does a standard embedding table produce, and what does lookup not do?</summary>
+
+The token embeddings have shape [B, L, d], where d is the embedding dimension. Lookup selects one row per ID; it does not mix information across positions or create contextualized states by itself.
+</details>
+
+<details>
+<summary>4. Does RoPE add a position vector to each initial token embedding?</summary>
+
+Not in the standard formulation described here. RoPE applies position-dependent rotations to query and key vectors inside attention. This differs from learned absolute position embeddings, which are added to token embeddings in architectures that use that method.
+</details>
+
 ## What does proximity mean?
 
 Two vectors can be compared using a dot product, Euclidean distance, or cosine similarity. Cosine compares their directions:
