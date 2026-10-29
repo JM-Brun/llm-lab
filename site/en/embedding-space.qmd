@@ -28,6 +28,14 @@ In a Transformer, this representation is then transformed by the network's layer
 
 These objects are not interchangeable. A method suited to sentence embeddings for document retrieval does not automatically transfer to a language model's internal activations.
 
+### Same token, different contexts
+
+![The same token can receive different contextualized representations depending on the sentence.](../images/contextualized-embeddings-en.svg){fig-alt="Two sentences use bank in different contexts. Assuming the same ID, both occurrences share the initial embedding, then may produce different contextualized states." width=100%}
+
+This original illustration is motivated by [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). It illustrates the principle, not measured vectors: it assumes `bank` maps to the same token in both sentences. Depending on the tokenizer, a visible word may consist of multiple tokens.
+
+The initial embedding is retrieved from the ID; the contextualized representation then depends on other tokens, the architecture, and the layer considered. This does not mean every occurrence must have a wholly different vector at every layer, or that vectors always separate according to human-expected meanings.
+
 ## From token IDs to vectors: a worked lookup
 
 Let the vocabulary contain five IDs and let each token embedding have dimension two. A tiny illustrative embedding matrix is:

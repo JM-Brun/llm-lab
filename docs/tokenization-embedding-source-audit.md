@@ -362,7 +362,7 @@ For the research papers below, the lesson currently captures the high-level prin
 | Embedding lookup matrix (E\in\mathbb{R}^{V\times d}) | `text-data.qmd` | Explained | Keep shape and ID semantics explicit |
 | Token embedding vs contextualized state vs sentence embedding | `embedding-space.qmd` | Explained | Avoid conflating their evaluation methods |
 | Word/character/byte/subword trade-offs | `tokenization-strategies.qmd` | Explained at overview level | Do not add more diagrams unless needed |
-| BPE merge procedure | `text-data.qmd` | Explained with text table | Fix duplicate prose in English page |
+| BPE merge procedure | `text-data.qmd` | Explained with text table | Keep FR/EN examples aligned and validate rendering |
 | BPE vs WordPiece vs Unigram | `tokenization-strategies.qmd` | Explained at overview level | Keep algorithm/library distinctions |
 | Normalization and pre-tokenization | `tokenization-strategies.qmd` | Mentioned/explained briefly | Expand only with an example that changes output |
 | Special tokens and compatibility | `text-data.qmd` | Partial | Clarify special-token handling is implementation/API-specific |
@@ -386,7 +386,7 @@ For the research papers below, the lesson currently captures the high-level prin
 
 ## 7. Concrete corrections and next steps
 
-1. Remove the duplicated introductory BPE explanation in `site/en/text-data.qmd` (the paragraph beginning “In an educational version, BPE starts…” appears twice).
+1. **Completed in PR #115:** removed the repeated sentence in the English BPE introduction.
 2. Verify FR/EN parity after edits; the pages should share concepts and caveats, not necessarily word-for-word translation.
 3. Recheck Cornell's live demo before recommending it as a dependable comparison tool.
 4. Clarify the distinction between historical compression BPE, byte-level BPE, and a complete production tokenizer pipeline (normalization, pre-tokenization, learned ranks/merges, special tokens and decoding).
@@ -397,3 +397,24 @@ For the research papers below, the lesson currently captures the high-level prin
 ## Scope and limits
 
 This is a first source-by-source content map based on the cited source pages and the current repository files. It does not claim that every research paper has undergone a full methods/statistics replication, that every external link has been exhaustively tested, or that browser-level visual inspection has occurred. Before adding detailed quantitative claims from research papers, verify the paper's methods, datasets, baselines, metrics and stated limitations directly.
+
+
+## 8. Follow-up implemented in PR #117
+
+The first audit's actionable gaps have been addressed in the bilingual lessons:
+
+- **Unicode / UTF-8 worked example:** added an original FR/EN SVG comparing precomposed `é` (U+00E9, UTF-8 `C3 A9`) with decomposed `e` + combining acute (U+0065 U+0301, UTF-8 `65 CC 81`). The accompanying Python example verifies code points, byte sequences and NFC normalization. Sources: [RFC 3629](https://www.rfc-editor.org/rfc/rfc3629) and [Unicode UAX #15](https://www.unicode.org/reports/tr15/). The lesson explicitly states that the figure does not predict tokenizer output.
+- **Tokenizer components:** added a bilingual table separating normalization, pre-tokenization, tokenization model, post-processing and decoding. Added a caution on SentencePiece's visible whitespace marker `▁`, with links to the [Hugging Face Tokenizers component documentation](https://huggingface.co/docs/tokenizers/python/latest/components.html) and [SentencePiece](https://github.com/google/sentencepiece).
+- **Embedding vs contextualization:** added an original FR/EN SVG showing the same assumed token ID in two contexts and the possible difference between the initial embedding and contextualized states. The caption links to [Ethayarajh (2019)](https://arxiv.org/abs/1909.00512), and explicitly says the vectors are illustrative rather than measured.
+- **Tokenizer evaluation metrics:** defined token count, fertility, characters/bytes per token, vocabulary coverage and downstream quality, with caveats about denominators and comparability. Linked to [Ahia et al. (2023)](https://aclanthology.org/2023.emnlp-main.614/) and [TokLens (ACL 2026 SRW)](https://aclanthology.org/2026.acl-srw.18/).
+
+### Visual decisions after implementation
+
+| Asset | Status | Reason |
+|---|---|---|
+| Unicode/UTF-8 SVG | Added locally in FR/EN | Explains a hidden encoding difference that is difficult to infer from prose alone; cites normative technical references |
+| Contextualized-embedding SVG | Added locally in FR/EN | Clarifies the difference between lookup and context-dependent states; cites the research motivating the concept |
+| BPE merge visualization | Remains an external link | Interactive state changes are more informative than a copied static image; reuse rights are not verified |
+| Existing 2D embedding-space SVG | Retained | Useful conceptual overview with explicit warning about projection distortion |
+
+**Validation still required:** render the bilingual Quarto site, run the repository's link checks and inspect the rendered pages in a browser. CI has not yet returned a run/status for the current PR head; this is not evidence of a successful render.
