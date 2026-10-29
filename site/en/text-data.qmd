@@ -1,6 +1,6 @@
 ---
 title: "From text to tokens: representing language"
-subtitle: "Unicode, bytes, tokenization, and early design choices"
+subtitle: "The conceptual path from text to model representations"
 lang: en
 ---
 
@@ -20,55 +20,44 @@ A language model receives a sequence of numerical IDs, not raw text. Tokenizatio
 - Select complementary resources: visual intuition, educational code, and technical documentation.
 - Identify what tokenization does not establish about a model's meaning representations or capabilities.
 
-## 1. From text to numerical input
+## 1. The path from text to model
 
-A Python string represents Unicode text. UTF-8 encoding produces bytes. A tokenizer then applies splitting rules and a vocabulary to produce tokens and integer IDs.
+At this stage, the useful perspective is the **pipeline**: what transformations does text go through before the neural network processes it?
 
-The complete pipeline is detailed in the “From a string to an embedding” diagram below, which distinguishes pre-tokenization, vocabulary, tokens, IDs, embedding lookup, and contextual representations.
-
-This pipeline is conceptual: tokenizers differ in normalization, base units, pre-tokenization, vocabulary, and special-token handling.
-
-The string `"ChatGPT is learning."` may be split into words, subwords, characters, or byte fragments depending on the tokenizer. There is no unique segmentation that is the linguistically “correct” one. Token IDs are discrete labels: ID 314 is not inherently closer in meaning to ID 315. An ID is not an embedding; the model learns a vector associated with each embedding-table entry.
-
-### Four objects to keep distinct
-
-- **Unicode** defines a character repertoire and related properties; it does not determine token segmentation.
-- **UTF-8** encodes Unicode code points as bytes; one character can occupy multiple bytes.
-- **Tokenization** maps text to units from a chosen vocabulary.
-- An **embedding** is a learned vector associated with an ID, not another representation of the ID itself.
-
-
-### Unicode and UTF-8: an invisible difference that matters
-
-![Two visually similar forms of “é” with different code points and UTF-8 bytes.](../images/unicode-utf8-tokenization-en.svg){fig-alt="Comparison of precomposed é (U+00E9, bytes C3 A9) and e followed by a combining acute accent (U+0065 U+0301, bytes 65 CC 81). Normalization may reconcile them before tokenization." width=100%}
-
-This original LLM Lab figure is based on the encoding rules in [UTF-8 (RFC 3629)](https://www.rfc-editor.org/rfc/rfc3629) and the normalization forms described in [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/). It illustrates encoding, not the output of a particular tokenizer.
-
-```python
-import unicodedata
-
-composed = "é"
-decomposed = "e\u0301"
-
-print([f"U+{ord(char):04X}" for char in composed])
-# ['U+00E9']
-print(composed.encode("utf-8"))
-# b'\xc3\xa9'
-
-print([f"U+{ord(char):04X}" for char in decomposed])
-# ['U+0065', 'U+0301']
-print(decomposed.encode("utf-8"))
-# b'e\xcc\x81'
-
-print(unicodedata.normalize("NFC", composed) == unicodedata.normalize("NFC", decomposed))
-# True
+```{mermaid}
+flowchart LR
+    A["Source text"] --> B["Optional preprocessing"]
+    B --> C["Tokenizer"]
+    C --> D["Tokens"]
+    D --> E["Integer IDs"]
+    E --> F["Embedding vectors"]
+    F --> G["Transformer"]
+    G --> H["Contextual representations"]
 ```
 
-The two strings can look identical while their Unicode sequences and UTF-8 bytes differ before normalization. A tokenizer may apply normalization, but its exact policy depends on the implementation. **Do not infer tokens or IDs from this figure**: inspect the actual tokenizer and version.
+- **Source text:** a string that may contain punctuation, whitespace, numbers, code, or multiple languages.
+- **Preprocessing:** some inputs are normalized or pre-split; these operations depend on the tokenizer.
+- **Tokenizer:** applies rules and a learned vocabulary to convert text into units called *tokens*.
+- **IDs:** each token maps to an integer used as an index in the vocabulary. The integer is a label, not a measure of meaning.
+- **Embeddings:** IDs select learned vectors. The Transformer then turns them into context-dependent representations.
 
-### Same text, potentially different segmentations
+This is a conceptual diagram. Real tokenizers differ in base units, normalization, pre-tokenization, vocabulary, and special tokens.
 
-The same string can produce different fragments and IDs with different tokenizers. This table is schematic; it does not claim to reproduce any real encoder's output.
+### Essential vocabulary
+
+| Term | Role in the pipeline |
+|---|---|
+| **Text** | Human-readable input. |
+| **Token** | A discrete unit defined by a tokenizer: a word, subword, punctuation, byte fragment, or special token. |
+| **ID** | An integer identifying a token within a particular vocabulary. |
+| **Embedding** | A vector associated with an ID and used as an initial numerical representation. |
+| **Contextual representation** | A vector after neural-network processing, influenced by the other tokens in the sequence. |
+
+Low-level details are not required to follow this pipeline. To understand why visually identical strings can be encoded differently, see the [deep dive on Unicode, UTF-8, and normalization](unicode-text.qmd). For segmentation algorithms and their trade-offs, see [tokenization strategies](tokenization-strategies.qmd). Matrix dimensions and the precise role of embeddings are covered in [embedding space](embedding-space.qmd) and [tensors](tensors.qmd).
+
+### The same text can be segmented differently
+
+A string can produce different fragments and IDs with different tokenizers. This table is schematic; it does not claim to reproduce a real encoder's output.
 
 | Stage | Tokenizer A | Tokenizer B |
 |---|---|---|
@@ -76,60 +65,8 @@ The same string can produce different fragments and IDs with different tokenizer
 | IDs | Depend on vocabulary A | Depend on vocabulary B |
 | Compatible model | Weights trained with A | Weights trained with B |
 
-This comparison only illustrates that segmentation and sequence length can change. It does not show that one tokenizer is better or that its fragments correspond to units of meaning.
+This only illustrates that segmentation and length can change. It does not show that one tokenizer is better, or that its fragments correspond to units of meaning. IDs are comparable only within the vocabulary that defines them.
 
-
-
-### From a string to an embedding: the transformations
-
-```{mermaid}
-flowchart TD
-    A["Unicode text"] --> B["Optional normalization"]
-    B --> C["Pre-tokenization"]
-    C --> D["Algorithm + learned vocabulary"]
-    D --> E["Tokens: text or byte fragments"]
-    E --> F["Integer IDs: vocabulary indices"]
-    F --> G["Lookup in matrix E"]
-    G --> H["Vectors: E[id]"]
-    H --> I["Neural network: contextual representations"]
-```
-
-### Vocabulary size ≠ embedding dimension
-
-Here, **vocabulary** means the finite set of tokens the tokenizer can emit, not a list of linguistic words. Its size, denoted $V$, is the number of vocabulary entries/IDs. A token may be a word, subword, byte fragment, punctuation mark, or special token.
-
-The **embedding dimension**, denoted $d$, is the number of components in the vector associated with each ID. It is chosen when designing the model architecture; it is **not computed from $V$**. In many GPT-style models it matches the Transformer's hidden width, but that is an architectural convention rather than a universal law.
-
-![Original diagram: vocabulary size V determines the number of rows in the embedding matrix, while d determines the number of components per vector; output logits have dimension V at each position.](../images/token-embedding-matrix-en.svg){fig-alt="IDs select rows in E with shape V by d. A sequence of length L becomes a matrix L by d; the output projection produces logits of shape L by V." width=100%}
-
-::: {.callout-note}
-**Dimensions to remember**
-
-- **$V$**: number of vocabulary tokens/IDs — tied to tokenizer design.
-- **$d$**: number of components per embedding — an architecture hyperparameter.
-- **$L$**: number of tokens in a given sequence.
-- **$B$**: number of sequences in a batch.
-:::
-
-For a sequence of IDs $[i_1,\ldots,i_L]$, the embedding matrix is $E\in\mathbb{R}^{V\times d}$ and lookup selects the corresponding rows:
-
-$
-X = E_{[i_1,\ldots,i_L]}\in\mathbb{R}^{L\times d}.
-$
-
-For a batch, the shape is typically $[B,L,d]$. **Lookup does not yet compute meaning in context**: it selects learned vectors; Transformer blocks subsequently produce contextual representations.
-
-### How are these dimensions chosen?
-
-- **$V$ is determined by the tokenizer**: corpus and preprocessing, algorithm (for example BPE or unigram), rules and target vocabulary size, plus special-token handling. The exact size is a design choice and may differ from a requested target depending on the implementation.
-- **$d$ is determined by the architecture**: it is a hyperparameter chosen alongside depth, number of attention heads, compute budget, and training goals. There is no universal formula that derives $d$ from $V$.
-- **Parameter count depends on both**: the embedding table contains $Vd$ parameters. If the output projection has its own weight matrix, it typically adds about $dV$ parameters (plus a possible bias). Some models share input and output weights (*weight tying*), so do not automatically count both matrices without checking the architecture. The $V$ used by the matrix must match the IDs actually supported by the model, including the special tokens it recognizes.
-
-::: {.callout-warning}
-**Changing the tokenizer is not a drop-in replacement.** IDs do not retain the same meaning across vocabularies. The embedding-table and output-projection weights were learned for specific IDs; changing $V$ or the ID assignment requires an explicit adaptation or retraining strategy.
-:::
-
-Logits have one component per possible token; the [cross-entropy page](cross-entropy.qmd) explains how these scores are compared with the target during training. For tensor shapes and batch operations, see [the tensors page](tensors.qmd). To distinguish initial token embeddings from post-attention representations, see [embedding space](embedding-space.qmd); the rest of the pipeline is covered in [the Transformer page](transformer.qmd).
 
 ### Four complementary visual perspectives
 
@@ -138,7 +75,7 @@ The diagram above gives the overall pipeline. These external resources illuminat
 - **Algorithm, step by step —** [BPE Explainer by Philip Müller and Peter Steinbach](https://philipmueller.dev/bpe-visualization/): an interactive view of candidate pairs, merges, and vocabulary growth. It is the most useful complement for understanding BPE mechanics; keep the demo's conventions distinct from those of a production tokenizer.
 - **End-to-end pipeline —** [Raschka, *Build a Large Language Model (From Scratch)*, Chapter 2](https://livebook.manning.com/book/build-a-large-language-model-from-scratch/chapter-2): look in particular at Figure 2.4 on text processing. It provides the broader LLM context, while the local diagram above makes normalization, pre-tokenization, and embedding-table lookup more explicit.
 - **Multilingual consequences —** [Ahia et al. (2023), PDF, Figure 1](https://aclanthology.org/2023.emnlp-main.614.pdf) ([paper page](https://aclanthology.org/2023.emnlp-main.614/)): places English and Greek examples side by side and connects tokenization to usage cost. It adds a socio-technical perspective that the pipeline alone cannot show; the figure illustrates a problem but does not summarize the paper's full analysis.
-- **Unicode and normalization —** the [official Unicode normalization charts](https://www.unicode.org/charts/normalization/) are a technical reference for exploring normalized forms, complementing the original “é” figure above.
+- **Unicode and normalization —** the [Unicode, UTF-8, and normalization deep dive](unicode-text.qmd) explains code points, bytes, and normalized forms with a reproducible example.
 
 For a narrated, code-oriented walkthrough, [Karpathy's *Let's build the GPT Tokenizer*](https://www.youtube.com/watch?v=zduSFxRajkE) covers Unicode/UTF-8, BPE, pre-tokenization, and special tokens.
 
