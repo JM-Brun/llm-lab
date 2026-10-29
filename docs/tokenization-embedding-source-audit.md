@@ -449,3 +449,53 @@ The first audit's actionable gaps have been addressed in the bilingual lessons:
 **Visual placement:** relocate the use of the original four-dimension conceptual SVG from the introductory overview to the evaluation section of the strategy page. It is a framework, not empirical data. Keep the overview pipeline diagram and token-segmentation illustration focused on their own learning questions.
 
 **Validation still required:** Quarto render; verify generated anchor IDs and local links; check both SVGs and image paths; compare FR/EN scope and tables; run link checker; inspect responsive layout. No render/browser/CI pass is claimed by this source edit.
+
+
+## 3. Candidate-source review: tokenization and embedding visuals (2026-10-29)
+
+### 3.1 Chitransha Agarwal — [Tokenization in Large Language Models (LLMs): A Complete Guide from Beginner to Advanced](https://medium.com/@chitranshaagarwal/tokenization-in-large-language-models-llms-a-complete-guide-from-beginner-to-advanced-47d0c013c2f4)
+
+**Decision: do not use as a technical authority or copy its figures.**
+
+The article is a secondary overview and can be useful for discovering beginner questions, but several formulations are too broad to reuse as written:
+
+- The claim that tokenizers always select the longest possible vocabulary token is not a general description of tokenization. Actual behavior depends on the tokenizer family, pre-tokenization, normalization, merge ranks or learned segmentation procedure, and configuration.
+- A larger vocabulary can reduce token count in some settings, but does not guarantee universally shorter encodings, lower end-to-end cost, or better model quality.
+- Saying that an LLM reasons purely on token IDs skips the learned embedding lookup and subsequent contextual transformations. IDs are discrete indices, not semantic coordinates.
+
+The article's figures have no reuse license established by this review. Link only if a future learner-facing resource list has a clear reason to include it; otherwise omit it to avoid elevating a weak secondary source.
+
+### 3.2 Search candidates for the text → token → ID → embedding pipeline
+
+The image search surfaced the following candidates. None is currently approved for direct incorporation:
+
+| Candidate | Potential instructional value | Decision / unresolved issue |
+|---|---|---|
+| [Raschka / Manning — tokenization and vocabulary figure](https://drek4537l1klr.cloudfront.net/raschka/v-8/Figures/ch02__image013.png) | A compact view of text fragments and vocabulary IDs; closely aligned with the book used as a project reference | Do not copy without explicit reuse permission. Prefer linking to the book/chapter and retain the repository's own explanation. |
+| [Stanford / Jurafsky — Speech and Language Processing, Chapter 10](https://web.stanford.edu/~jurafsky/slp3/ed3bookfeb3_2024.pdf) | Figure 10.10 illustrates a one-hot vector selecting a row from an embedding matrix; Figure 10.11 extends the idea to sequences | Strong technical teaching source. Check the book's current license and figure-specific terms before reproducing. The existing embedding-space page already provides a worked lookup, so a second static figure may be redundant. |
+| [Novamai — Embeddings summary](https://novamai.com/1Concepts/Embeddings/Embeddings_summary.png) | A compact text-to-embedding overview | Provenance, technical precision, and reuse terms have not been established. Do not embed pending review. |
+| [DigitalOcean — tokenizer overview figure](https://doimages.nyc3.cdn.digitaloceanspaces.com/010AI-ML/2026/Shaoni/Adrien/31-mar/Image_1.png) | May help introduce the tokenizer pipeline | Verify the source article, accuracy, and image reuse terms before considering it. |
+| Medium-hosted diagrams returned by image search | Potentially accessible summaries of embedding lookup and tokenization | Author ownership and reuse terms are unclear; no demonstrated advantage over the original diagrams in this repository. |
+
+### 3.3 Placement decision
+
+The existing pages already provide distinct visual explanations:
+
+- `text-data.qmd`: a pipeline diagram and an original segmentation illustration. Keep this page focused on the conceptual sequence and avoid adding another generic end-to-end infographic.
+- `embedding-space.qmd`: a hand-checkable matrix lookup, a reproducible tokenizer-to-ID trace, and original illustrations of contextualization and embedding geometry. These explain the ID-to-vector operation more precisely than a generic external infographic.
+- `tokenization-strategies.qmd`: reserve external empirical figures for evaluation questions such as multilingual tokenization costs, tokenizer fertility, and downstream performance. These are the visuals with the greatest potential to add evidence rather than repeat the pipeline.
+
+**Conclusion:** no new third-party image is integrated from this search. This is an intentional editorial decision, not an unfinished image insertion. The candidate figures either have unresolved reuse terms or duplicate explanations already supplied by original, version-controlled diagrams and worked examples. If a future page needs a visual for embedding lookup, create a small original diagram from the repository's own mathematical example, or obtain explicit permission for a source figure.
+
+### 3.4 Image-integration acceptance checklist
+
+Before adding an external figure, record:
+
+1. The exact concept it teaches and the gap in the current page it fills.
+2. The original source page and direct image URL, with author/rights holder.
+3. An explicit reuse license or written permission covering the intended use; public accessibility alone is insufficient.
+4. Whether modification, local hosting, and bilingual captions are allowed.
+5. A technically accurate alt text and a caption that distinguishes illustration from measured result.
+6. Successful loading in the built site, including narrow-screen layout and both language versions.
+7. A fallback or local copy strategy if the remote host is unstable, but only where the license permits copying.
+
