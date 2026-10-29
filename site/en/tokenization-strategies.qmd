@@ -18,21 +18,9 @@ A tokenizer is a representation and engineering choice. It must cover expected i
 
 ## 1. Concept map
 
-```{mermaid}
-flowchart TD
-    A["Unicode text"] --> B["Optional normalization"]
-    B --> C["Pre-tokenization"]
-    C --> D["Base units"]
-    D --> E["Algorithm + learned vocabulary"]
-    E --> F["Tokens"]
-    F --> G["Integer IDs"]
-    G --> H["Embedding lookup"]
-    H --> I["Input vectors"]
-    J["Corpus + constraints"] --> E
-    K["Cost / languages / tasks"] --> L["Comparative evaluation"]
-    F --> L
-    L --> M["Documented choice, not universal"]
-```
+The full pipeline—from Unicode text through IDs to embedding lookup—is illustrated on the [overview page](text-data.qmd). This page focuses on segmentation choices and their trade-offs rather than repeating the same diagram.
+
+To inspect BPE merges directly, open the [original interactive BPE Explainer by Müller and Steinbach](https://philipmueller.dev/bpe-visualization/). It shows the corpus as it is segmented, candidate pairs, and vocabulary growth. The resource is linked rather than copied because the reuse terms for its figures have not been established here.
 
 A token is the discrete unit produced by the system, not necessarily a linguistic unit. Initial boundaries, whitespace, normalization, and special-token rules can change outputs as much as the algorithm's name.
 
