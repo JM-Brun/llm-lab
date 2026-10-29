@@ -185,6 +185,13 @@ La comparaison des algorithmes ne suffit pas à établir qu'un tokenizer est ada
 - **Équité multilingue** : un contenu comparable peut produire des longueurs de séquence différentes selon la langue et le tokenizer. Cela peut affecter le budget de contexte et les coûts d'entraînement ou d'inférence ; cela ne prouve pas, à lui seul, une différence de qualité de génération.
 - **Reproductibilité** : documenter tokenizer et révision exacts, prétraitement, corpus, langues, métriques, tâche, budgets et versions logicielles.
 
+
+#### Figure de recherche externe : la fertilité varie selon la langue
+
+![Distributions de fertilité des tokenizers pour l’anglais, le français, l’allemand, l’italien, le polonais et l’espagnol dans les expériences de Catherine Arnett.](https://cdn-uploads.huggingface.co/production/uploads/6384d424ac61472e5e92d403/yZnGPoBwKK4d19aCR7Ypo.png){fig-alt="Six graphiques présentent la fertilité des tokenizers pour l’anglais, le français, l’allemand, l’italien, le polonais et l’espagnol ; la barre rouge représente le tokenizer de l’autrice et les barres grises les alternatives." width=100%}
+
+*Source : Catherine Arnett, [« wHy DoNt YoU jUsT uSe ThE lLaMa ToKeNiZeR?? »](https://huggingface.co/blog/catherinearnett/dangers-of-tokenizer-recycling), 2024. Il s’agit d’une comparaison propre à cette étude, pas d’un classement universel : la fertilité dépend des textes, de la définition du mot et des tokenizers comparés. L’image est intégrée depuis l’article de l’autrice, sans modification ni redistribution dans ce dépôt.*
+
 ### Ce que montrent — et ne montrent pas — les études
 
 Les publications ci-dessous sont complémentaires : elles ne mesurent pas toutes le même objet et ne doivent pas être lues comme un classement direct des tokenizers.
@@ -197,6 +204,13 @@ Les publications ci-dessous sont complémentaires : elles ne mesurent pas toutes
 | **Chiu (ACL 2026)**, [*TokLens: A Multilingual Lens on Tokenizer Quality for LLMs*](https://aclanthology.org/2026.acl-srw.18/) | Comment comparer les tokenizers sur plusieurs langues et plusieurs dimensions ? | Propose six métriques intrinsèques pour comparer 24 tokenizers sur 15 langues. L'étude ne trouve pas de métrique intrinsèque prédictive des résultats anglais après contrôle de la taille du modèle ; certaines métriques, notamment le taux de rétention en token unique, sont associées aux résultats par langue sur un benchmark multilingue. | Un tableau de métriques intrinsèques ne remplace pas l'évaluation sur les tâches et contraintes de déploiement visées. |
 
 Goldman et al. et Schmidt et al. ne conduisent pas à une opposition simpliste. Le premier étudie des associations empiriques entre compression et résultats en aval ; le second rappelle que la compression ne résume pas toutes les propriétés pertinentes. La conclusion méthodologique est de **mesurer séparément les dimensions qui correspondent à la décision à prendre**.
+
+
+#### Figure de recherche externe : longueur de représentation et temps d’exécution
+
+![Longueur de tokenisation du corpus parallèle FLORES-200 en fonction du temps d’exécution de RoBERTa, selon les langues et familles d’écriture.](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/featured_hu3a085884cc9c15c3954ff8e09a76a4a3_251753_720x2500_fit_q75_h2_lanczos.webp){fig-alt="Nuage de points représentant la longueur de tokenisation et le temps d’exécution de RoBERTa pour les langues de FLORES-200, avec une couleur par famille d’écriture." width=80%}
+
+*Source : Petrov, La Malfa, Torr et Bibi, [« Language Model Tokenizers Introduce Unfairness Between Languages »](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/), NeurIPS 2023. Le graphique illustre une association dans le protocole étudié, pas une loi causale universelle ni une mesure directe de la qualité de génération. La page de l’auteur indique une licence CC BY-NC-ND 4.0 ; la figure est intégrée sans modification et reliée à sa source.*
 
 ### Construire un protocole de comparaison
 

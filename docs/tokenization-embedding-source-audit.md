@@ -449,3 +449,15 @@ The first audit's actionable gaps have been addressed in the bilingual lessons:
 **Visual placement:** relocate the use of the original four-dimension conceptual SVG from the introductory overview to the evaluation section of the strategy page. It is a framework, not empirical data. Keep the overview pipeline diagram and token-segmentation illustration focused on their own learning questions.
 
 **Validation still required:** Quarto render; verify generated anchor IDs and local links; check both SVGs and image paths; compare FR/EN scope and tables; run link checker; inspect responsive layout. No render/browser/CI pass is claimed by this source edit.
+
+
+## Follow-up: external research figures for tokenizer evaluation (2026-10-29)
+
+**Decision:** add two source-linked, remotely embedded research visuals to the evaluation section in both languages, not to the introductory text-data page. Each visual answers a different question:
+
+- **Tokenizer fertility by language:** Catherine Arnett's author-hosted Hugging Face article compares fertility across six European languages and multiple tokenizers. Use it to demonstrate that comparisons must be broken down by language; do not infer a universal ranking from this sample. Source page: https://huggingface.co/blog/catherinearnett/dangers-of-tokenizer-recycling; image asset: https://cdn-uploads.huggingface.co/production/uploads/6384d424ac61472e5e92d403/yZnGPoBwKK4d19aCR7Ypo.png. The article's explicit image-reuse terms were not found during this review, so the image remains a remote embed with attribution rather than a locally copied asset; confirm terms if a later change downloads/rehosts it.
+- **Tokenization length versus RoBERTa execution time:** Petrov et al. (NeurIPS 2023) plot for FLORES-200 shows a study-specific relationship between sequence length and runtime across languages. Source page: https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/; image asset is embedded unchanged. The author page states CC BY-NC-ND 4.0. Keep attribution, link to source, do not alter the figure, and do not imply causality or direct task-quality measurement.
+
+Both figures are repeated in the FR/EN strategy pages with translated alt text and captions. They are placed in the evaluation deep dive: the fertility plot after the dimensions are introduced, and the runtime plot after the papers are interpreted. They do not replace the original four-dimension conceptual SVG. The first figure's source terms remain a limitation; remote embedding is not a substitute for an explicit licence. If terms cannot be confirmed, replace it with a permissively licensed or original plot based on verifiable data.
+
+**Validation still required:** verify both external image URLs render in the deployed Quarto site; inspect image scaling and mobile layout; check the FR/EN captions and source links; run Quarto render and link checks. No rendered-site validation is claimed by this change.
