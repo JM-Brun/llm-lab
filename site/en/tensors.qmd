@@ -88,6 +88,10 @@ For \(B=2\), \(T=4\), and \(D=8\), hidden states have shape \((2,4,8)\). A proje
 Shape compatibility does not guarantee that the projection, mask, causal shift, or reduction is correct. Axis meaning and target semantics must also be checked.
 
 
+## General foundations
+
+This page applies tensors to Transformers. For reusable concepts beyond LLMs—shapes, axes, indexing, reductions, broadcasting, and the distinction between software arrays and mathematical tensors—see the canonical [Wiki Knowledge page on tensors and multidimensional arrays](https://github.com/JM-Brun/wiki-knowledge/blob/main/wiki/concepts/tenseurs-et-tableaux-multidimensionnels.md). This chapter keeps the (B,T,D,V,H) conventions, language-model-specific shapes, and common mistakes in that context.
+
 ## Connections to other fields
 
 Axes are not just indices: they define the question being asked of the data. The same idea appears elsewhere, with important differences.
