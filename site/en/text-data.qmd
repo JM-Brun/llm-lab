@@ -44,21 +44,16 @@ The string `"ChatGPT is learning."` may be split into words, subwords, character
 
 ### Same text, potentially different segmentations
 
-The diagram compares two **hypothetical** outputs to illustrate the principle; these are not the outputs of a real tokenizer. Exact boundaries and IDs depend on the chosen encoder.
+The same string can produce different fragments and IDs with different tokenizers. This table is schematic; it does not claim to reproduce any real encoder's output.
 
-```{mermaid}
-flowchart TB
-    A["Same Unicode string"] --> B["Tokenizer A"]
-    A --> C["Tokenizer B"]
-    B --> D["[fragment 1] [fragment 2] [fragment 3]"]
-    C --> E["[fragment 1] [fragment 2]"]
-    D --> F["IDs under vocabulary A"]
-    E --> G["IDs under vocabulary B"]
-    F --> H["Model trained with A"]
-    G --> I["Model trained with B"]
-```
+| Stage | Tokenizer A | Tokenizer B |
+|---|---|---|
+| Fragments | `[fragment 1]`, `[fragment 2]`, `[fragment 3]` | `[fragment 1]`, `[fragment 2]` |
+| IDs | Depend on vocabulary A | Depend on vocabulary B |
+| Compatible model | Weights trained with A | Weights trained with B |
 
-What this diagram shows: the same string can yield different sequence lengths and IDs. What it does not show: that one tokenizer is universally better, or that its fragments correspond to units of meaning.
+This comparison only illustrates that segmentation and sequence length can change. It does not show that one tokenizer is better or that its fragments correspond to units of meaning.
+
 
 
 ### From a string to an embedding: the transformations
@@ -87,19 +82,9 @@ Subword methods reuse frequent units while retaining a way to represent less fre
 
 In a simplified educational version, BPE starts from base units, counts adjacent pairs, merges a selected pair according to a defined rule, and repeats until a stopping criterion is met.
 
-```{mermaid}
-flowchart TD
-    A["Training corpus"] --> B["Base units"]
-    B --> C["Count adjacent pairs"]
-    C --> D["Choose a pair by the rule"]
-    D --> E["Add merge to vocabulary"]
-    E --> F{"Stopping criterion reached?"}
-    F -- No --> C
-    F -- Yes --> G["Learned vocabulary and rules"]
-    G --> H["Encode new text"]
-```
+In an educational version, BPE starts from base units, counts adjacent pairs, merges a selected pair according to a defined rule, and repeats until a stopping criterion is met. To inspect merges and vocabulary growth step by step, use the [original interactive BPE Explainer by Müller and Steinbach](https://philipmueller.dev/bpe-visualization/). It visualizes frequent pairs, merges, and the growing vocabulary.
 
-This diagram is simplified: real tokenizers may use regex-based pre-tokenization, operate at the byte level, and reserve special tokens. Two tokenizers called BPE are therefore not necessarily compatible.
+The pipeline is still simplified: real tokenizers may use regex-based pre-tokenization, operate at the byte level, and reserve special tokens. Two tokenizers called BPE are therefore not necessarily compatible.
 
 Distinguish:
 
@@ -127,13 +112,7 @@ At each iteration, BPE counts adjacent pairs and merges a pair according to its 
 | 1: merge `l + o` | `lo · w · </w>` | `lo · w · e · r · </w>` | `lo · w · e · s · t · </w>` |
 | 2: merge `lo + w` | `low · </w>` | `low · e · r · </w>` | `low · e · s · t · </w>` |
 
-```{mermaid}
-flowchart LR
-    A["l · o · w"] -->|"merge 1: l + o"| B["lo · w"]
-    B -->|"merge 2: lo + w"| C["low"]
-    C --> D["The token low receives an ID in the vocabulary"]
-    D --> E["The ID selects a row in the embedding matrix"]
-```
+**For a step-by-step visual trace of merges**, see the [BPE Explainer by Müller and Steinbach](https://philipmueller.dev/bpe-visualization/). The table above remains the local, reproducible textual trace used in this guide; the external interactive visualization adds a richer view without repeating a third flowchart here.
 
 This traces merges; it is not a universal output. Frequencies, pre-tokenization, end-of-word handling, and tie-breaking affect the actual order. Later merges might create `er` or `est`, but that is not guaranteed. During encoding, the tokenizer applies learned rules; it does not recount frequencies from the input. An ID is assigned in the final vocabulary; it is not the merge operation itself.
 
