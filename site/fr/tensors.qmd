@@ -77,7 +77,7 @@ En revanche :
 wrong = logits.softmax(dim=1)  # normalise les 2 positions, token par token
 ```
 
-est une opération mathématiquement valide et compatible avec la forme, mais elle répond à une autre question : pour chaque token candidat, elle répartit la masse entre les positions. Les lignes ne sont généralement plus des distributions sur le vocabulaire.
+Pour cet exemple, les lignes deviennent approximativement `[0.881, 0.500, 0.119]` et `[0.119, 0.500, 0.881]` ; chacune somme à 1,5 et non à 1. Cette opération est mathématiquement valide et compatible avec la forme, mais elle répond à une autre question : pour chaque token candidat, elle répartit la masse entre les positions. Les lignes ne sont généralement plus des distributions sur le vocabulaire.
 
 **Invariant de débogage :** si la sortie est censée représenter \(p(\text{token}\mid\text{contexte à cette position})\), vérifier que la somme sur l'axe du vocabulaire vaut 1 pour chaque couple batch-position. Une forme correcte ne suffit pas ; l'invariant dépend de l'interprétation attendue.
 
