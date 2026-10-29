@@ -362,7 +362,7 @@ For the research papers below, the lesson currently captures the high-level prin
 | Embedding lookup matrix (E\in\mathbb{R}^{V\times d}) | `text-data.qmd` | Explained | Keep shape and ID semantics explicit |
 | Token embedding vs contextualized state vs sentence embedding | `embedding-space.qmd` | Explained | Avoid conflating their evaluation methods |
 | Word/character/byte/subword trade-offs | `tokenization-strategies.qmd` | Explained at overview level | Do not add more diagrams unless needed |
-| BPE merge procedure | `text-data.qmd` | Explained with text table | Fix duplicate prose in English page |
+| BPE merge procedure | `text-data.qmd` | Explained with text table | Keep FR/EN examples aligned and validate rendering |
 | BPE vs WordPiece vs Unigram | `tokenization-strategies.qmd` | Explained at overview level | Keep algorithm/library distinctions |
 | Normalization and pre-tokenization | `tokenization-strategies.qmd` | Mentioned/explained briefly | Expand only with an example that changes output |
 | Special tokens and compatibility | `text-data.qmd` | Partial | Clarify special-token handling is implementation/API-specific |
@@ -386,7 +386,7 @@ For the research papers below, the lesson currently captures the high-level prin
 
 ## 7. Concrete corrections and next steps
 
-1. Remove the duplicated introductory BPE explanation in `site/en/text-data.qmd` (the paragraph beginning “In an educational version, BPE starts…” appears twice).
+1. **Completed in PR #115:** removed the repeated sentence in the English BPE introduction.
 2. Verify FR/EN parity after edits; the pages should share concepts and caveats, not necessarily word-for-word translation.
 3. Recheck Cornell's live demo before recommending it as a dependable comparison tool.
 4. Clarify the distinction between historical compression BPE, byte-level BPE, and a complete production tokenizer pipeline (normalization, pre-tokenization, learned ranks/merges, special tokens and decoding).
