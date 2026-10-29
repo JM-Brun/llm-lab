@@ -640,3 +640,61 @@ The following issues operationalize §9. They are **audit tasks**, not a commitm
 **Upstream evidence checked (2026-10-29):** [Raschka Chapter 4 README](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch04), [main-code README and standalone GPT code](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch04/01_main-chapter-code), and [Chapter 4 notebook](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch04/01_main-chapter-code/ch04.ipynb). These cover a GPT-2-style baseline with learned token/position embeddings, LayerNorm, residual paths, feed-forward sublayers, repeated blocks, final normalization, vocabulary output, weight-tying discussion, dropout/eval behavior and generation. Optional bonus material is not part of the core baseline.
 
 **Disposition:** no new implementation or duplicate issue created in this audit. Keep #98 as the owner for architecture-level multi-head shape flow, block ordering and GPT configuration/accounting gaps. Use #80/#81/#82 for their established concept-specific responsibilities.
+
+
+## 8. Upstream repository inventory refresh (2026-10-29)
+
+This section records a fresh review of the upstream repository's current root README on 2026-10-29. It supplements the chapter-level audits above, which remain valid for their stated scope and dates. The upstream repository is a living code companion: this inventory is a dated snapshot, not a permanent guarantee that its README lists every file or future addition.
+
+**Source checked:** [Raschka — LLMs-from-scratch README](https://github.com/rasbt/LLMs-from-scratch/blob/main/README.md), including its chapter table, prerequisites, exercise guidance and Bonus Material catalogue. The README describes the core purpose as developing, pretraining and fine-tuning a GPT-like LLM, including both training a small model for education and loading larger pretrained weights for fine-tuning.
+
+### Core book scope: required coverage baseline
+
+| Upstream component | LLM Lab learning outcome | Existing public coverage (2026-10-29) | Gap / rule |
+|---|---|---|---|
+| Ch. 1 — Understanding LLMs | Explain what an LLM is, its lifecycle and the role of its main components. | Transformer overview, landing pages, glossary and history. | Partial. Expand beyond a single GPT data-flow sketch: model families, pretraining versus adaptation, inference, capabilities and limits. |
+| Ch. 2 — Working with text data | Go from raw Unicode text through tokenization, token IDs, embeddings, batches, context windows and next-token targets. | Text/data, Unicode, tokenization, training examples, tensors and embedding-space pages. | Partial. Preserve the distinction between teaching tokenizer, production tokenizer, BPE training and applying a pretrained tokenizer; connect embeddings to the model input path. |
+| Ch. 3 — Coding attention mechanisms | Explain and implement attention, causal masking, dropout, batching and multi-head attention. | Q/K/V, scaled dot-product attention, causal masking and tensor pages. | Partial. Multi-head reshape/split/merge/projection, dropout train/eval behavior, buffers and batched shape contracts remain explicit gaps. |
+| Ch. 4 — Implementing a GPT model from scratch | Assemble a GPT-2-style decoder-only model from inspectable components and understand its configuration and parameterization. | Transformer overview and related representation/attention concept pages. | Partial. No complete tested GPT contract yet: configuration, parameter accounting, block ordering, residual paths, normalization, FFN, output head, weight tying, dropout semantics and end-to-end tensor-shape trace. |
+| Ch. 5 — Pretraining on unlabeled data | Train a randomly initialized small GPT, validate it, checkpoint it and generate text. | Loss/likelihood/gradient concepts and training-example pages. | Major gap. A complete reproducible pretraining loop, data split, optimizer/schedule, checkpointing, validation, generation and reported run are not yet evidenced. This is the core from-scratch completion criterion. |
+| Ch. 6 — Finetuning for text classification | Adapt a pretrained GPT for sequence classification and evaluate it against a baseline. | No dedicated complete public bilingual module identified. | Gap. Must cover classification head, supervised dataset, training/evaluation split, metrics, baselines and error analysis. |
+| Ch. 7 — Finetuning to follow instructions | Prepare instruction data, perform supervised instruction tuning, mask targets correctly and evaluate responses. | No complete public bilingual module identified. | Gap. Include data format/quality, prompt-target masking, batching/packing where relevant, SFT loop, held-out evaluation and limitations. |
+| Appendix A — Introduction to PyTorch | Understand tensors, autograd, modules, datasets/dataloaders and device-aware execution needed by the build path. | Mathematical and tensor concept pages. | Partial. These are not a substitute for a practical PyTorch foundation; add only the required PyTorch concepts and tests, without duplicating general math unnecessarily. |
+| Appendix B — References and further reading | Navigate primary papers, implementation references and further study. | Public annotated references and figure provenance. | Partial. Keep source roles and version/date explicit. |
+| Appendix C — Exercise solutions | Practise and verify each chapter's learning objectives. | EN/FR exercise entry pages are navigation scaffolding. | Gap. Do not imply exercises or solutions exist until authored, checked and bilingual. |
+| Appendix D — Training-loop improvements | Understand and measure learning-rate scheduling, clipping, logging/checkpointing and related training improvements. | No dedicated public module identified. | Gap/advanced extension. Distinguish baseline training loop from optional improvements and measure rather than repeat performance claims. |
+| Appendix E — Parameter-efficient finetuning with LoRA | Explain low-rank adapters and implement/evaluate parameter-efficient adaptation. | No complete public bilingual module identified. | Gap/advanced extension. Keep separate from full fine-tuning and from quantization; report quality and resource trade-offs. |
+
+### Upstream bonus catalogue: optional extensions, not prerequisites for the first GPT
+
+The following topics are present in the README's current Bonus Material list. They belong in the long-term coverage map, but should be organized as optional branches after the core concepts they depend on. Their presence upstream does not make every item mandatory for a learner's first end-to-end GPT.
+
+| Upstream bonus cluster | Topics to account for | LLM Lab treatment |
+|---|---|---|
+| Setup and reproducibility | Python/package setup, Docker environment | Developer setup documentation, not a conceptual course chapter. Keep environment instructions reproducible and separate from model theory. |
+| Ch. 2 — tokenizer/data extensions | BPE tokenizer from scratch, comparisons of BPE implementations, embedding layer versus linear layer, dataloader intuition, SimpleTokenizerV3 | Optional deep dives attached to text/data and representation pages. Explain what is a core tokenizer contract versus an implementation-specific choice. |
+| Ch. 3 — attention implementation extensions | Efficient multi-head-attention implementations; PyTorch buffers | Optional implementation/performance branch after a correct transparent baseline. Include device, version, shape and benchmark conditions for performance claims. |
+| Ch. 4 — architecture and inference extensions | FLOPs analysis, KV cache, GQA, MLA, sliding-window attention, Gated DeltaNet, DeepSeek Sparse Attention, cross-layer KV sharing, MoE | Advanced architecture/inference branches. Compare each against the baseline and state which assumptions or data-flow contracts change. |
+| Ch. 5 — pretraining, loading and model-family extensions | Alternative weight loading, Gutenberg pretraining, training-loop improvements, CPU/MPS discrepancies, hyperparameter tuning, UI, GPT-to-Llama conversion, memory-efficient weight loading, tokenizer extension, training performance, Llama/Qwen/Gemma/Olmo/Tiny Aya/Qwen3.5/Gemma 4 implementations, other pretrained LLM drop-in replacements | Separate into (a) reproducibility and performance, (b) checkpoint/tokenizer interoperability, and (c) architecture-family comparisons. A GPT-2-style implementation must not be presented as a universal LLM architecture. UI work is optional and not a core learning outcome. |
+| Ch. 6 — classification extensions | Experiments across layers/model sizes, IMDb dataset, classifier UI | Optional experiments only after the baseline classification path exists. UI is not a substitute for evaluation. |
+| Ch. 7 — instruction-tuning extensions | Dataset utilities for near-duplicate detection and passive-voice entries; instruction-model evaluation; instruction dataset generation/improvement; preference-data generation; DPO; UI | Split into data quality, SFT, evaluation and preference optimization. DPO is a distinct preference-optimization stage, not synonymous with SFT. Keep dataset-generation provenance and evaluator limitations explicit. |
+| Exercises and self-assessment | Chapter exercises, code solutions, external chapter quiz resource | LLM Lab should author original exercises with stable bilingual IDs and hidden answer keys; link external exercises rather than copying protected material. |
+
+### Related but separate sequel: Reasoning From Scratch
+
+The upstream README also links to the separate [Reasoning From Scratch repository](https://github.com/rasbt/reasoning-from-scratch). Its listed topics include verifier-based evaluation (MATH-500), multiple-choice/leaderboard/LLM-as-a-judge evaluation, self-consistency, self-refinement and RLVR/GRPO.
+
+These are **not part of the core LLMs-from-scratch book baseline**. Track them as a separate advanced extension for reasoning, inference-time scaling and reinforcement learning. Do not silently expand the definition of core parity to include the sequel; do not omit the sequel from the wider research/extension map either.
+
+### Definition of complete coverage
+
+LLM Lab should be considered a complete pedagogical companion to the reviewed upstream scope only when:
+
+1. Every core chapter and appendix above has a clear public destination, with bilingual parity and a status backed by page/code/test evidence.
+2. A learner can follow one coherent, executable path from raw text to a GPT trained from random initialization, validation and text generation on a manageable corpus.
+3. Pretrained checkpoint loading, text-classification fine-tuning, instruction SFT and LoRA are taught as distinct stages with their own data, objectives and evaluation.
+4. Every bonus cluster is either mapped to an optional destination, explicitly deferred with rationale, or marked out of scope; no item is accidentally lost because it lives in a bonus directory.
+5. The separate reasoning sequel remains clearly classified as an extension rather than being conflated with the core book.
+6. “Covered” is not inferred from a link or heading alone: it requires a sufficient explanation, assumptions and limitations, appropriate examples, and—where implementation is claimed—code and tests. Rendering, browser review and learner mastery remain separate evidence states.
+
+**Scope discipline:** this inventory does not authorize bulk lesson creation or implementation. Continue with the existing prioritized issues and prerequisite review; use the inventory to prevent omissions and duplicated ownership.
