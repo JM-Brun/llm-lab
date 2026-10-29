@@ -120,7 +120,7 @@ Read the trace carefully:
 3. The IDs index rows in `E`. The two vectors are **invented** values, not the pretrained GPT-2 embeddings; the table has the same vocabulary index range only so the real IDs can select rows.
 4. `P` illustrates one architecture's position-vector addition. `Z` remains shape `[L,d]`; this example does not run a Transformer block and therefore does not compute contextualized hidden states.
 
-The exact IDs are specific to the named encoding and library behaviour; another tokenizer may produce different fragments and IDs. The assertions make changes visible rather than silently treating tokenization as universal. See the [official tiktoken repository](https://github.com/openai/tiktoken) and its [encoding tests](https://github.com/openai/tiktoken/blob/main/tests/test_encoding.py) for the reference output.
+The exact IDs are specific to the named encoding and library behaviour; another tokenizer may produce different fragments and IDs. The assertions make changes visible rather than silently treating tokenization as universal. See the [official tiktoken repository](https://github.com/openai/tiktoken) and its [encoding tests](https://github.com/openai/tiktoken/blob/0.14.0/tests/test_encoding.py) for the reference output.
 
 ## From token embeddings to contextualized states
 
