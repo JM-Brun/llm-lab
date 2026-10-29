@@ -553,3 +553,88 @@ No new external image is added. The most useful contribution from these sources 
 This activity substantially overlaps with the reproducible trace already present in `embedding-space.qmd`. Before implementing another copy, assess whether the existing trace should be linked from `text-data.qmd` or whether a smaller interactive exercise would address a specific gap. Avoid repeating the same full explanation across pages.
 
 **Overall source ranking for this project:** Mike X Cohen is the best candidate for an optional code-backed reading; Rohan Paul is useful for identifying vocabulary-size trade-off questions but should lead to primary papers; Yael Gomez and the broader tutorials are secondary beginner-oriented perspectives. None of these links, as reviewed here, establishes permission to republish its images.
+
+
+## 5. Ranked inventory of useful new information (2026-10-29)
+
+This section separates candidate content additions from sources that are merely alternative explanations. A source is not considered a reason to duplicate an existing page. Recommendations are based on the sources inspected and should be checked against primary research before quantitative claims are published.
+
+### Priority 1 — Tokenizer efficiency is not language-neutral
+
+**Source:** Petrov et al., *Language Model Tokenizers Introduce Unfairness Between Languages* (NeurIPS 2023), [paper](https://arxiv.org/abs/2305.15425), [author project page](https://aleksandarpetrov.github.io/tokenization-fairness/).
+
+**New information worth adding**
+- Tokenization can create unequal sequence lengths for translations with comparable meaning. The paper reports disparities reaching up to 15× for some language pairs and also finds substantial differences for character- and byte-level approaches.
+- This creates a chain of practical effects before the Transformer runs: token-based API cost, latency/throughput, and how much source text fits into a fixed context window can differ by language.
+- “Supports a language” is therefore not equivalent to “represents that language with comparable token efficiency.” Tokenizer quality should be evaluated across languages, not inferred from vocabulary size or a model's advertised multilinguality.
+
+**Recommended destination:** 'site/{fr,en}/tokenization-strategies.qmd', in a compact subsection on multilingual evaluation and fairness, with a link to the paper and an explicit note that the reported maxima are results for the paper's tested language/model combinations—not a universal ratio.
+
+**Suggested measurable concept:** *fertility*, commonly measured as average number of tokens per word. Pair it with characters-per-token or bytes-per-token where appropriate, because “word” is not a language-neutral unit and tokenizers may normalize text differently. Avoid presenting one metric as a complete quality score.
+
+**Verification needed:** reproduce or cite the paper's exact experimental setup before quoting the maximum ratio in the learning page; distinguish observed token-length disparity from downstream quality disparity.
+
+### Priority 2 — Leading whitespace can change token identity
+
+**Sources:** Mike X Cohen, [*LLM breakdown 1/6: Tokenization (words to integers)*](https://mikexcohen.substack.com/p/llm-breakdown-16-tokenization-words); Yael Gomez, [*How LLMs See the World: The Magic of Tokenization (Part 1)*](https://yaelgomez.substack.com/p/how-llms-see-the-world-the-magic).
+
+**New information worth adding**
+- In tokenizers such as GPT-2's byte-level BPE, leading whitespace is not necessarily discarded or represented as an independent token. A token can encode a leading space together with the following character sequence.
+- Consequently, the same visible word in different positions—e.g. at the beginning of a string versus after a space—may map to different token IDs or token boundaries. Token IDs must be inspected in context, not guessed from word boundaries.
+- This is a useful debugging lesson for prompt construction, decoding, code/text boundaries, and tests that assert exact token sequences.
+
+**Recommended destination:** 'site/{fr,en}/text-data.qmd', as a short practical note linked to the existing tokenizer mini-lab, or as an additional test case in that mini-lab. Use a named tokenizer and display actual output; do not state that every tokenizer uses GPT-2's convention.
+
+**Verification needed:** execute the example against the named tokenizer version and include the exact input string (including whitespace) in the test.
+
+### Priority 3 — Vocabulary size is a coupled systems trade-off, not a “bigger is better” knob
+
+**Sources:** Rohan Paul, [*Balancing Vocabulary Size in Modern LLMs*](https://www.rohan-paul.com/p/tutorial-balancing-vocabulary-size); research preprint linked from that article: [arXiv:2406.16508](https://arxiv.org/abs/2406.16508).
+
+**New information worth adding**
+- A larger vocabulary may shorten a text's token sequence, but increases the number of rows in the input embedding matrix and usually the output vocabulary projection/softmax dimension. This affects parameter count, memory, and per-step scoring cost.
+- Comparisons depend on the training budget: under a fixed token budget, a tokenizer producing fewer tokens per corpus may allow more corpus passes; under a fixed epoch/data-pass budget, it may change total processed tokens and compute. “More compact” does not by itself establish better quality or lower end-to-end cost.
+- Rare vocabulary entries may be seen infrequently; a smaller vocabulary can improve compositional reuse but lengthen sequences. The useful choice is an empirical trade-off under a specified data distribution, language mix, model architecture, and compute budget.
+
+**Recommended destination:** 'site/{fr,en}/tokenization-strategies.qmd' for the concise conceptual trade-off, linking to the primary study; keep detailed vocabulary/parameter arithmetic on the relevant model-architecture page if present.
+
+**Verification needed:** use the primary paper for all numeric/model-specific claims. Treat the blog's examples about specific production models as secondary and potentially time-sensitive; do not repeat them without a primary source.
+
+### Priority 4 — Compare tokenizers empirically rather than judging segmentation by appearance
+
+**Sources:** Mike X Cohen's GPT-2 tokenizer walkthrough and notebook (linked from the article above); Petrov et al. (2023).
+
+**Useful addition**
+- A compact evaluation protocol: select a representative set of texts (languages, diacritics, rare words, numbers, punctuation, code, and leading whitespace); encode them with explicitly named/versioned tokenizers; report token count and normalized measures such as tokens per word or bytes per token; then inspect failures qualitatively.
+- Separate coverage/representability, sequence efficiency, and downstream model quality. A tokenizer that produces fewer tokens on a small example is not automatically better.
+- Record tokenizer name, version/configuration, normalization and pre-tokenization behavior, and exact input bytes so results can be reproduced.
+
+**Recommended destination:** a short “How to compare tokenizers” checklist in 'site/{fr,en}/tokenization-strategies.qmd', or a link to an existing mini-lab rather than a second notebook.
+
+### Priority 5 — Tokenization is a pipeline of algorithm-specific stages
+
+**Sources:** Yael Gomez (beginner overview); the project's existing tokenizer strategy references and Karpathy's GPT tokenizer walkthrough.
+
+**Useful clarification**
+- The observed segmentation may depend on normalization, pre-tokenization, and the learned segmentation algorithm. “Choose the longest possible token” is not a universal rule for BPE, WordPiece, or Unigram.
+- BPE-style merging, WordPiece scoring, and Unigram segmentation are different procedures. Explanations should not describe them as interchangeable ways of greedily matching the longest vocabulary entries.
+- Some tokenizers use deterministic segmentation; some Unigram implementations can sample alternative segmentations during training. Do not generalize this distinction to all tokenizers without naming the implementation and mode.
+
+**Recommended destination:** 'site/{fr,en}/tokenization-strategies.qmd', but first check the existing explanations; add only corrections or missing distinctions rather than a second algorithm overview.
+
+### Lower-priority sources: useful as reading leads, not new factual authorities
+
+- **Mike X Cohen:** strongest practical companion because the explanation is paired with inspectable GPT-2 tokenizer code. Correct its loose “optimal” wording and its simplified token/character compression example before reusing those claims.
+- **Rohan Paul:** useful for framing vocabulary-size trade-offs, but follow the linked primary research for evidence and numerical claims.
+- **Yael Gomez:** readable beginner overview; several claims about quadratic attention cost, normalization, and tokenizer families need architectural or implementation-specific scope.
+- **Towards AI / MLWhiz / Network Times / Abdul Moiz / Vinay Kumar / Chitransha Agarwal:** may offer alternate beginner explanations, but largely overlap the existing learning path. Do not add them all to the references page; choose at most one optional reading if a specific gap remains.
+- **Instagram post:** content and provenance could not be independently inspected in this audit. Do not cite its claims or reuse its slides until the original content, author, and rights are verified.
+- **Amit Kharche Medium article:** content could not be reliably inspected; no claim of coverage or image reuse is made.
+
+### Recommended implementation order
+
+1. Add the multilingual-efficiency/fairness insight with a primary-paper citation.
+2. Add one reproducible leading-whitespace test to the existing tokenizer mini-lab.
+3. Add the vocabulary-size trade-off in a concise, qualified form, grounded in the primary study.
+4. Add the tokenizer-comparison checklist only if it complements rather than duplicates the current mini-lab.
+5. Do not import third-party figures from these sources without an explicit compatible license or permission. Prefer a small original table or original plot generated from reproducible tokenizer outputs.
