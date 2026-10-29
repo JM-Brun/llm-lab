@@ -190,9 +190,6 @@ Pour évaluer un espace d'embeddings, revenir à la tâche réelle : recherche d
 - [Tenseurs](tensors.qmd) : organisation des vecteurs dans les calculs du réseau.
 - [Encodage positionnel et RoPE](positional-encoding.qmd) : information de position dans le traitement des tokens.
 
-## Vidéo complémentaire
-
-- [Vidéo fournie pour approfondir ce sujet](https://www.youtube.com/watch?v=Hwr9OpeO9fM) — lien transmis, mais titre et contenu non vérifiés indépendamment.
 
 ## Références
 
