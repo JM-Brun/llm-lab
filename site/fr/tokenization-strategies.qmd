@@ -157,6 +157,16 @@ Pour une comparaison équitable, rapportez les métriques par langue et type de 
 Les liens externes sont privilégiés plutôt que de recopier des figures dont la licence n'a pas été vérifiée. Pour le pipeline global, le schéma original ci-dessus est la figure de référence de cette page.
 
 
+
+### Ordre de lecture conseillé
+
+1. Regarder la vidéo de Karpathy pour construire l'intuition sur les octets, les fusions et les tokens spéciaux.
+2. Lire le [BPE Explainer](https://philipmueller.dev/bpe-visualization/) et suivre les fusions sur un petit exemple.
+3. Lire \`minbpe\` ou le [module éducatif de tiktoken](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) pour inspecter le code.
+4. Comparer avec la documentation de tiktoken, SentencePiece et Hugging Face pour distinguer les conventions.
+5. Revenir au [chapitre 2 de Raschka](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) pour relier les IDs au pipeline des embeddings et aux exemples entrée-cible.
+6. Tester des textes multilingues, du code, des nombres, des espaces initiaux et des formes Unicode inhabituelles.
+
 ### Illustration externe du pipeline
 
 ![Pipeline de tokenisation du cours Hugging Face, montrant les étapes qui transforment le texte en tokens utilisables par le modèle.](https://huggingface.co/datasets/huggingface-course/documentation-images/resolve/main/en/chapter6/tokenization_pipeline.svg){fig-alt="Pipeline de tokenisation : normalisation, pré-tokenisation, modèle de tokenisation et post-traitement." width=100%}
