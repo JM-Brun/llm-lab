@@ -18,7 +18,7 @@ Le schéma montre le chemin conceptuel d'une génération. Il omet volontairemen
 
 Le tokenizer transforme le texte en identifiants de tokens. Une matrice d'embedding associe à chaque identifiant un vecteur appris. Une information de position est également fournie, par exemple par un encodage ajouté aux vecteurs ou par une méthode intégrée au calcul d'attention comme [RoPE](positional-encoding.qmd).
 
-Il faut distinguer l'embedding initial d'un token de sa représentation **contextualisée** : les couches du Transformer mettent progressivement à jour les vecteurs en tenant compte du contexte. Voir [l'espace des embeddings](embedding-space.qmd) et les [tenseurs](tensors.qmd).
+Il faut distinguer l'embedding initial d'un token de sa représentation **contextualisée** : les couches du Transformer mettent progressivement à jour les vecteurs en tenant compte du contexte. Voir [l'espace des embeddings](embedding-space.qmd) pour comprendre les représentations, puis le parcours [Géométrie et interprétabilité des représentations](embedding-space.qmd) : [similarité cosinus](cosine-similarity.qmd) et [hypothèse de linéarité](linearite-embeddings.qmd). Les [tenseurs](tensors.qmd) détaillent leur organisation dans les calculs.
 
 ## 2. Les blocs Transformer
 

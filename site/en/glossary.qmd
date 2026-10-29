@@ -14,6 +14,16 @@ This glossary gives a concise first definition for terms used across the site. I
 - **Prefix** — the part of a sequence already available to condition the next prediction.
 - **Context window** — the amount of token context a model can process in a given input.
 
+## Representations and geometry
+
+- **Embedding** — a vector associated with a token, text, or other object, depending on the model. See [embedding space](embedding-space.qmd).
+- **Cosine similarity** — the cosine of the angle between two non-zero vectors; see its [definition, assumptions, and limitations](cosine-similarity.qmd).
+- **Anisotropy** — a vector distribution that favours some directions in the space; it can affect scores and nearest-neighbour rankings.
+- **Hubness** — a phenomenon in which some points become the nearest neighbours of many other points.
+- **Linear representation hypothesis** — a family of hypotheses that features may correspond to directions or subspaces in activations; see [representation linearity](embedding-linearity.qmd).
+
+These topics are grouped in the [Representation geometry and interpretability](embedding-space.qmd) path.
+
 ## Probability and learning
 
 - **Logit** — an unnormalized real-valued score for a class or token. See [Logits](logits.qmd).

@@ -4,6 +4,8 @@ subtitle: "Géométrie, anisotropie, classement des voisins et choix de métriqu
 lang: fr
 ---
 
+Ce sujet s’inscrit dans le parcours [Géométrie et interprétabilité des représentations](embedding-space.qmd). Commencez par [l’espace des embeddings](embedding-space.qmd) pour distinguer les types de représentations, puis poursuivez avec l’[hypothèse de linéarité](linearite-embeddings.qmd), qui porte sur une autre question : comment les caractéristiques sont-elles représentées et décodables ?
+
 ## Que mesure vraiment le cosinus ?
 
 La similarité cosinus compare souvent des embeddings de phrases, de documents ou de requêtes. Elle est simple à calculer et ne dépend pas de la norme des vecteurs. Elle mesure toutefois l'angle entre deux représentations produites par un modèle donné, pas directement leur « similarité sémantique ».

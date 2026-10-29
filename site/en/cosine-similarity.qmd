@@ -4,6 +4,8 @@ subtitle: "Geometry, anisotropy, nearest-neighbour rankings, and metric choice"
 lang: en
 ---
 
+This topic belongs to the [Representation geometry and interpretability](embedding-space.qmd) path. Start with [embedding space](embedding-space.qmd) to distinguish representation types, then continue to the [linearity hypothesis](embedding-linearity.qmd), which asks a different question: how are features represented and decoded?
+
 ## The question behind the default metric
 
 Cosine similarity is widely used to compare sentence, document, and query embeddings. It is simple, inexpensive, and invariant to vector magnitude. But it does not directly measure “semantic similarity”: it measures angular alignment between representations produced by a particular model.

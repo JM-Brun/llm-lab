@@ -8,6 +8,8 @@ lang: fr
 Un **embedding** est un vecteur numérique associé à un objet, par exemple un token. L'ensemble de ces vecteurs forme un espace de représentation. On peut comparer leurs directions, leurs distances ou leurs voisins, mais leur interprétation dépend du modèle, de son entraînement et de la tâche : la géométrie n'est pas un dictionnaire universel du sens.
 :::
 
+Cette page introduit le parcours **Géométrie et interprétabilité des représentations** : comprendre l'espace, examiner les métriques de proximité, puis questionner les hypothèses sur la forme des représentations. Elle sert de point d'entrée ; les pages liées approfondissent chaque question.
+
 ## Une carte de représentations
 
 ![Projection schématique d'un espace d'embeddings.](../images/embedding-space-fr.svg){fig-alt="Points regroupés dans un plan abstrait. Les regroupements sont illustratifs et les axes ne correspondent pas nécessairement à des concepts humains." width=100%}

@@ -92,6 +92,11 @@ website:
             - fr/vraisemblance.qmd
             - fr/gradients.qmd
             - fr/tensors.qmd
+        - section: "Géométrie et interprétabilité des représentations"
+          contents:
+            - fr/embedding-space.qmd
+            - fr/cosine-similarity.qmd
+            - fr/linearite-embeddings.qmd
         - section: "Attention et Transformer"
           contents:
             - fr/transformer.qmd
@@ -103,9 +108,6 @@ website:
         - fr/exercises.qmd
         - fr/evaluation-experimentale.qmd
         - fr/glossary.qmd
-        - fr/cosine-similarity.qmd
-        - fr/linearite-embeddings.qmd
-        - fr/embedding-space.qmd
     - id: en
       title: "LLM Lab · English"
       style: "docked"
@@ -127,7 +129,11 @@ website:
             - en/likelihood.qmd
             - en/gradients.qmd
             - en/tensors.qmd
+        - section: "Representation geometry and interpretability"
+          contents:
             - en/embedding-space.qmd
+            - en/cosine-similarity.qmd
+            - en/embedding-linearity.qmd
         - section: "Attention and Transformer"
           contents:
             - en/transformer.qmd
@@ -139,8 +145,6 @@ website:
         - en/exercises.qmd
         - en/experimental-evaluation.qmd
         - en/glossary.qmd
-        - en/cosine-similarity.qmd
-        - en/embedding-linearity.qmd
   page-footer:
     left: "LLM Lab · Mathématiques, code et expériences reproductibles"
     right:

@@ -4,6 +4,8 @@ subtitle: "Représentation, décodabilité, superposition et généralisation"
 lang: fr
 ---
 
+Cette page appartient au parcours [Géométrie et interprétabilité des représentations](embedding-space.qmd). L’[espace des embeddings](embedding-space.qmd) en présente les objets géométriques ; la page sur la [similarité cosinus](cosine-similarity.qmd) examine une métrique souvent utilisée sur ces objets, sans la confondre avec une mesure directe du sens.
+
 ## Que signifie « linéaire » ici ?
 
 En interprétabilité des réseaux de neurones, on suppose souvent qu'un concept — le sentiment, le genre grammatical, une propriété factuelle ou une direction de contrôle — correspond à une direction dans l'espace d'activations. Cette idée est utile, mais l'expression « le concept est représenté linéairement » recouvre plusieurs affirmations distinctes.

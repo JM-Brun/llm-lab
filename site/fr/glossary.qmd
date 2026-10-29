@@ -14,6 +14,16 @@ Ce glossaire donne une définition courte des termes rencontrés dans le site. I
 - **Préfixe** — partie déjà disponible d'une séquence, utilisée pour conditionner la prédiction suivante.
 - **Fenêtre de contexte** — quantité de tokens que le modèle peut prendre en compte dans une entrée donnée.
 
+## Représentations et géométrie
+
+- **Embedding / plongement** — vecteur associé à un token, un texte ou un autre objet selon le modèle. Voir [l'espace des embeddings](embedding-space.qmd).
+- **Similarité cosinus** — cosinus de l'angle entre deux vecteurs non nuls ; voir [définition, hypothèses et limites](cosine-similarity.qmd).
+- **Anisotropie** — distribution des vecteurs privilégiant certaines directions de l'espace ; elle peut affecter les scores et le classement des voisins.
+- **Hubness** — phénomène où certains points deviennent les plus proches voisins d'un grand nombre d'autres points.
+- **Hypothèse de représentation linéaire** — famille d'hypothèses selon lesquelles des caractéristiques peuvent correspondre à des directions ou sous-espaces dans les activations ; voir [linéarité des représentations](linearite-embeddings.qmd).
+
+Ces notions sont regroupées dans le parcours [Géométrie et interprétabilité des représentations](embedding-space.qmd).
+
 ## Probabilités et apprentissage
 
 - **Logit** — score réel non normalisé associé à une classe ou à un token. Voir [Logits](logits.qmd).
