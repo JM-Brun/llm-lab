@@ -62,6 +62,15 @@ The same text can be split into different numbers of tokens by different tokeniz
 Remember: tokens are representation units, not necessarily words or units of meaning. A real comparison must identify the tokenizer and its version, then measure the resulting sequence.
 
 
+| Stage | Tokenizer A | Tokenizer B |
+|---|---|---|
+| Fragments (schematic example) | \`[fragment 1]\`, \`[fragment 2]\`, \`[fragment 3]\` | \`[fragment 1]\`, \`[fragment 2]\` |
+| IDs | Depend on vocabulary A | Depend on vocabulary B |
+| Compatible model | Weights associated with A | Weights associated with B |
+
+This table only illustrates that segmentation and sequence length can change. It does not reproduce any real encoder output or show that one tokenizer is better. IDs are labels: the numerical gap between 314 and 315, for example, does not mean the corresponding tokens are close in meaning.
+
+
 ## 2. Why tokenization matters
 
 Whitespace splitting is insufficient: punctuation, contractions, rare names, code, and writing systems that do not consistently separate words pose different challenges. Tokenizers therefore segment text into reusable units according to rules and a vocabulary associated with a model.
