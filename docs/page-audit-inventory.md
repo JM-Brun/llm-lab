@@ -196,6 +196,23 @@ This is a targeted source-level review of the bilingual Q/K/V concept pair, chos
 
 **Scope of this pass:** source-level review and proposed text changes only. No Quarto render, browser-based responsive review, or numerical test has been run in this step. Do not mark the page pair fully audited until those checks pass.
 
+## Fourteenth slice: add a complementary visual perspective to cross-entropy
+
+**Learner problem:** readers can manipulate the formula \(-\log p(y)\) without developing an intuition for how strongly the loss reacts to a lower probability assigned to the observed token.
+
+**Resources and roles**
+- [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU): visual intuition and narrative pacing.
+- [PyTorch CrossEntropyLoss documentation](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html): implementation-specific behavior; not a substitute for the mathematical definition.
+- Shannon (1948) and Cover & Thomas: information-theoretic context for entropy and cross-entropy.
+
+| Area | Finding | Change made | Remaining validation |
+|---|---|---|---|
+| Intuition | The existing page derived the loss and mentioned confident errors, but did not give a visual comparison for the same target under different predicted probabilities. | Added an original SVG comparing \(p(y)=0.9\) and \(p(y)=0.1\), with losses about 0.105 and 2.303 nats, to both language pages. | Verify the numerical labels, visual scaling, and responsive rendering. |
+| Complementary angle | Cross-entropy is not the entropy of the model distribution and does not tell us whether a target is factually true. It scores the probability assigned to a target distribution/token. | The text says explicitly that the figure concerns one token with a one-hot target and does not depict the full vocabulary distribution, valid-token reduction, or full training objective. | Check the text does not duplicate or contradict the separate entropy page; add a contextual cross-link if useful. |
+| Provenance | An external video provides teaching inspiration but the diagram is authored for this repository. | Recorded the original SVG and its intended scope in the references page. | Check the relative path and the generated HTML figure. |
+
+**Validation status:** source-level review only. No Quarto render, screenshot review, or automated SVG accessibility check has been run for this change.
+
 ## Next audit steps
 
 1. Finish source and rendered-page review of this vertical slice; check local links and bilingual meaning, not just literal wording.
