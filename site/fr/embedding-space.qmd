@@ -125,16 +125,15 @@ Les IDs exacts dépendent de l'encodage et du comportement de la bibliothèque ;
 
 ## Taille du vocabulaire, dimension et paramètres
 
-La taille du vocabulaire (V) et la dimension d'embedding (d) sont deux choix distincts. La matrice d'embeddings (Ein\mathbb{R}^{V\times d}) contient (V) lignes — une par ID — et (d) composantes par ligne. Pour une séquence de longueur (L), le lookup produit une matrice de forme (L\times d) ; pour un lot de (B) séquences, la forme usuelle est (B\times L\times d).
+La taille du vocabulaire \(V\) et la dimension d'embedding \(d\) sont deux choix distincts. La matrice d'embeddings \(E\in\mathbb{R}^{V\times d}\) contient \(V\) lignes — une par ID — et \(d\) composantes par ligne. Pour une séquence de longueur \(L\), le lookup produit une matrice de forme \(L\times d\) ; pour un lot de \(B\) séquences, la forme usuelle est \(B\times L\times d\).
 
-- (V) dépend du tokenizer et du vocabulaire qu'il définit, y compris les tokens spéciaux.
-- (d) est un hyperparamètre de l'architecture, choisi avec la profondeur, les têtes d'attention et le budget de calcul ; il n'est pas déduit de (V).
-- La table d'embeddings contient (Vd) paramètres.
-- Si la projection de sortie possède une matrice distincte, elle ajoute typiquement (dV) paramètres, éventuellement plus un biais. Certains modèles partagent les poids d'entrée et de sortie (*weight tying*) : il faut vérifier l'architecture avant d'additionner les deux matrices.
-- Les IDs et les poids associés sont couplés. Modifier le vocabulaire, l'ordre des IDs ou (V) exige une stratégie explicite d'adaptation ou de réentraînement ; ce n'est pas une substitution neutre.
+- **\(V\)** dépend du tokenizer et du vocabulaire qu'il définit, y compris les tokens spéciaux.
+- **\(d\)** est un hyperparamètre de l'architecture, choisi avec la profondeur, les têtes d'attention et le budget de calcul ; il n'est pas déduit de \(V\).
+- La table d'embeddings contient \(Vd\) paramètres.
+- Si la projection de sortie possède une matrice distincte, elle ajoute typiquement \(dV\) paramètres, éventuellement plus un biais. Certains modèles partagent les poids d'entrée et de sortie (*weight tying*) : il faut vérifier l'architecture avant d'additionner les deux matrices.
+- Les IDs et les poids associés sont couplés. Modifier le vocabulaire, l'ordre des IDs ou \(V\) exige une stratégie explicite d'adaptation ou de réentraînement ; ce n'est pas une substitution neutre.
 
-À chaque position, la distribution de sortie comporte en général (V) logits. La [page sur les tenseurs](tensors.qmd) explique comment lire les axes et les formes ; la [page sur les logits](logits.qmd) approfondit les scores de sortie. Cette section complète la vue d'ensemble [du texte aux tokens](text-data.qmd), sans confondre lookup initial et contextualisation par le Transformer.
-
+À chaque position, la distribution de sortie comporte en général \(V\) logits. La [page sur les tenseurs](tensors.qmd) explique comment lire les axes et les formes ; la [page sur les logits](logits.qmd) approfondit les scores de sortie. Cette section complète la vue d'ensemble [du texte aux tokens](text-data.qmd), sans confondre lookup initial et contextualisation par le Transformer.
 
 ## Des embeddings de tokens aux représentations contextualisées
 
