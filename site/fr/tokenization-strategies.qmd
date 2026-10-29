@@ -63,6 +63,48 @@ Certaines sorties SentencePiece affichent un marqueur visible tel que `▁` pour
 
 **SentencePiece** est une bibliothèque pouvant entraîner BPE ou unigramme à partir de texte brut ; ce n'est pas un algorithme unique. **Hugging Face Tokenizers** est une bibliothèque de plusieurs modèles et composants. **tiktoken** est une implémentation BPE avec des encodages précis. Ces noms ne se situent donc pas tous au même niveau de comparaison.
 
+
+### Exemple pas à pas : fusions BPE sur un petit corpus
+
+Cet exemple schématique conserve une trace explicite des fusions. Convention pédagogique : chaque mot est initialement découpé en caractères, suivis du marqueur de fin de mot `</w>`. Le mini-corpus contient une occurrence de `low`, `lower` et `lowest`.
+
+| Mot | Unités initiales |
+|---|---|
+| `low` | `l · o · w · </w>` |
+| `lower` | `l · o · w · e · r · </w>` |
+| `lowest` | `l · o · w · e · s · t · </w>` |
+
+Supposons que la règle de départage sélectionne d'abord `l + o → lo`, puis `lo + w → low`.
+
+| Étape | `low` | `lower` | `lowest` |
+|---|---|---|---|
+| 0 | `l · o · w · </w>` | `l · o · w · e · r · </w>` | `l · o · w · e · s · t · </w>` |
+| 1 : fusion `l + o` | `lo · w · </w>` | `lo · w · e · r · </w>` | `lo · w · e · s · t · </w>` |
+| 2 : fusion `lo + w` | `low · </w>` | `low · e · r · </w>` | `low · e · s · t · </w>` |
+
+Ce tableau illustre la mécanique, pas la sortie universelle d'un tokenizer. Le pré-découpage, les unités initiales, les fréquences, le traitement des fins de mots et le départage influencent l'ordre réel. Des fusions ultérieures pourraient créer `er` ou `est`, mais ce n'est pas garanti. Pour manipuler les paires candidates, utiliser le [BPE Explainer de Müller et Steinbach](https://philipmueller.dev/bpe-visualization/).
+
+### Apprentissage du tokenizer et encodage à l'inférence
+
+Il faut distinguer deux processus :
+
+1. **Apprentissage du tokenizer** : à partir d'un corpus, construit un vocabulaire et, selon l'algorithme, des règles ou un ordre de fusion.
+2. **Encodage d'un nouveau texte** : applique les règles déjà apprises pour produire tokens et IDs ; il ne recompte pas les fréquences et ne réapprend pas le vocabulaire à chaque requête.
+
+```{mermaid}
+flowchart LR
+    A["Corpus d'apprentissage"] --> B["Pré-découpage et unités de base"]
+    B --> C["Apprentissage des fusions / du vocabulaire"]
+    C --> D["Tokenizer sauvegardé"]
+    E["Nouveau texte"] --> F["Règles apprises"]
+    D -. "réutilisé" .-> F
+    F --> G["Tokens puis IDs"]
+    G --> H["Modèle compatible"]
+```
+
+Ce schéma ne décrit pas l'entraînement du réseau neuronal : celui-ci est distinct et apprend ses paramètres à partir de séquences d'IDs. Un tokenizer byte-level peut couvrir les octets d'entrées textuelles arbitraires, mais tous les tokenizers BPE ne sont pas byte-level.
+
+
 ## 5. Exemples qui révèlent les compromis
 
 Un exemple de normalisation Unicode est traité dans [la page d'introduction](text-data.qmd) : `é` précomposé et `e\u0301` peuvent sembler identiques, tout en ayant des séquences de points de code différentes. Le tokenizer peut normaliser ces formes avant de les segmenter ; il faut vérifier sa configuration.
