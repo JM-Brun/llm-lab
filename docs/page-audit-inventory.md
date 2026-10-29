@@ -268,24 +268,25 @@ This is a targeted source-level review of the bilingual Q/K/V concept pair, chos
 **Upstream scope checked:** [Raschka Chapter 4](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch04), its [main-code folder](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch04/01_main-chapter-code), and [main notebook](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch04/01_main-chapter-code/ch04.ipynb). This is a bounded source audit, not a browser/render review or evidence of learner mastery. Optional KV cache, performance comparisons, MoE, GQA and MLA remain outside the baseline path.
 
 
-## Active text-to-embedding slice: PR #118 validation
+## Active text-to-embedding slice: PR #118 and #120 validation
 
-**Scope:** [#82](https://github.com/JM-Brun/llm-lab/issues/82), coordinated by [roadmap #78](https://github.com/JM-Brun/llm-lab/issues/78). This is still the active slice; later attention, model and training implementations remain deferred.
+**Scope:** [#82](https://github.com/JM-Brun/llm-lab/issues/82), coordinated by [roadmap #78](https://github.com/JM-Brun/llm-lab/issues/78). This remains the active slice; later attention, model and training implementations remain deferred.
 
 | Check | Evidence | Status / limitation |
 |---|---|---|
 | One consistent input across text, tokenizer IDs and embedding lookup | [PR #118](https://github.com/JM-Brun/llm-lab/pull/118), merged at `50734b1f74bc1778431ec255861489223be4c2d0`; EN and FR embedding-space pages trace `hello world` through UTF-8, GPT-2 `tiktoken` IDs `[31373, 995]`, token byte fragments, synthetic embedding rows and illustrative absolute-position addition. | Source content present. Real tokenizer IDs are distinguished from synthetic embedding/position values; no claim is made that the example loads GPT-2 weights or computes contextual states. |
-| Python CI on the merged revision | [Run 40897933771](https://github.com/JM-Brun/llm-lab/actions/runs/40897933771), on the merge commit. | Passed: dependency installation, formatting, lint, type check and tests. This does not execute the documentation's `tiktoken` snippet. |
-| Quarto render and publication | [Run 40897934138](https://github.com/JM-Brun/llm-lab/actions/runs/40897934138), on the merge commit. The generated GitHub Pages artifact was inspected to confirm both `en/embedding-space.html` and `fr/embedding-space.html` contain the trace and pinned install instruction. | Render and deploy passed; artifact content checked. Artifact inspection is not a substitute for browser-based visual/responsive review. |
-| Exact tokenizer behavior | Expected IDs and fragments were cross-checked against the official [tiktoken encoding tests](https://github.com/openai/tiktoken/blob/main/tests/test_encoding.py). NumPy lookup and position-value assertions were tested separately. | The complete example was **not** executed in an environment with `tiktoken==0.14.0`; this remains open. |
-| Browser / responsive review | Attempts to open the deployed EN/FR pages were not accessible through the available browser retrieval. | **Not verified.** Inspect both languages at desktop and mobile widths when a browser session is available. |
-| Mastery | No learner diagnostic has been administered for this slice. | Not assessed; do not infer mastery from content, CI or publication. |
+| Exact bilingual snippet execution | [PR #120](https://github.com/JM-Brun/llm-lab/pull/120), merged at `28ae31a075f8318705933e262bf6bbd944e9a6d9`. `scripts/check_embedding_trace.py` extracts the real fenced Python blocks from both Quarto sources, compares their executable ASTs (allowing translated comments), and executes both. | **Passed** in [Python CI run 40899831246](https://github.com/JM-Brun/llm-lab/actions/runs/40899831246), using the docs-only pin `tiktoken==0.14.0`. No runtime dependency was added. |
+| Python quality checks | [Run 40899831246](https://github.com/JM-Brun/llm-lab/actions/runs/40899831246). | Passed: documentation dependency installation, execution of both examples, formatting, lint, type checking and tests; the complete job concluded successfully. |
+| Quarto render and local links | [Run 40899831524](https://github.com/JM-Brun/llm-lab/actions/runs/40899831524). | **Passed**: bilingual site render and rendered local-link check. This is not a browser-based visual/responsive review. |
+| Exact tokenizer behavior and assumptions | The example executes against the pinned `tiktoken` release; expected IDs/fragments were also cross-checked against the official [tiktoken encoding tests](https://github.com/openai/tiktoken/blob/main/tests/test_encoding.py). | The code proves the documented GPT-2 encoding for this exact input in the pinned environment. It does not validate every tokenizer family, Unicode normalization policy, or model embedding weights. |
+| Browser / responsive review | Attempts to retrieve the deployed EN/FR pages through the available browser route were not successful. | **Not verified.** Inspect both languages and figures at desktop and mobile widths when browser access is available. |
+| External-reference audit | The official tiktoken test source was checked for the expected encoding; the page includes the pinned package version and upstream references. | A complete link-by-link/version audit of all tokenizer references remains open. |
+| Learner mastery | No learner diagnostic has been administered for this slice. | Not assessed; do not infer mastery from content, CI or publication. |
 
 ### Remaining checks before closing #82
 
-- [ ] Execute the complete embedded example with `tiktoken==0.14.0` in a reproducible Python environment, or explicitly disposition the example as documentation-only and explain why execution adds no distinct value.
 - [ ] Inspect deployed EN/FR pages and figures at desktop/mobile widths.
-- [ ] Spot-check the external tokenizer references and version-specific claims.
+- [ ] Finish a targeted external-reference and version-claim audit for tokenizer/Unicode/embedding material.
 - [ ] Keep technical correctness, code execution, CI/render, browser review and learner mastery as separate statuses.
 
-The latest merge-commit CI/render evidence supersedes earlier comments that said final-revision workflows were unconfirmed. This does not close #82 or authorize work on later curriculum slices.
+The successful #120 runs supersede earlier comments that said the embedded example had not been executed. Do not mark browser review or learner mastery complete based on these runs, and do not advance later curriculum slices until the active chain has been reviewed and its remaining acceptance criteria are met.
