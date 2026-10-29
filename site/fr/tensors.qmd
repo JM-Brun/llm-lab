@@ -88,6 +88,10 @@ Pour \(B=2\), \(T=4\) et \(D=8\), les états cachés ont la forme \((2,4,8)\). U
 La compatibilité des formes ne garantit pas que la projection, le masque, le décalage causal ou la réduction soient corrects. Il faut également vérifier le sens des axes et la sémantique des cibles.
 
 
+## Pour les fondations générales
+
+Cette page applique les tenseurs au contexte des Transformers. Pour les notions réutilisables hors LLM — formes, axes, indexation, réductions, broadcasting et distinction entre tableaux logiciels et tenseurs mathématiques — voir la page canonique de [Wiki Knowledge : tenseurs et tableaux multidimensionnels](https://github.com/JM-Brun/wiki-knowledge/blob/main/wiki/concepts/tenseurs-et-tableaux-multidimensionnels.md). Le présent chapitre conserve ici les conventions (B,T,D,V,H), les formes propres aux modèles de langue et les erreurs de manipulation fréquentes dans ce contexte.
+
 ## Ouvertures vers d'autres domaines
 
 Les axes ne sont pas de simples indices : ils définissent la question posée aux données. Cette idée se retrouve ailleurs, avec des nuances importantes.
