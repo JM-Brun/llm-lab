@@ -28,7 +28,7 @@ Dans un Transformer, cette représentation est ensuite transformée par les couc
 
 Ces objets ne sont pas interchangeables. Une méthode adaptée aux embeddings de phrases pour la recherche documentaire ne se transfère pas automatiquement aux activations internes d'un LLM.
 
-## Des identifiants aux vecteurs : un lookup calculable à la main
+## Des identifiants aux vecteurs : une sélection par indice calculable à la main
 
 Supposons que le vocabulaire contienne cinq identifiants et que chaque embedding ait deux coordonnées. Voici une petite matrice illustrative :
 
@@ -44,7 +44,7 @@ E =
 \in \mathbb{R}^{5\times 2}.
 \]
 
-Pour les identifiants \([2,0,3]\), le lookup sélectionne les lignes \(E_2\), \(E_0\) et \(E_3\) :
+Pour les identifiants \([2,0,3]\), la sélection par indice choisit les lignes \(E_2\), \(E_0\) et \(E_3\) :
 
 \[
 X =
@@ -80,7 +80,7 @@ Les deux termes ont la dimension \(d\), donc l'entrée combinée a la forme \([B
 
 Cette addition n'est **pas universelle**. Par exemple, [RoPE](positional-encoding.qmd) applique des rotations dépendant de la position aux vecteurs requête et clé dans l'attention, au lieu d'ajouter un vecteur de position aux embeddings initiaux. Il faut identifier l'architecture avant de fixer le pipeline exact.
 
-Pendant l'entraînement, les gradients peuvent modifier les lignes de la table d'embeddings utilisées par les exemples. L'opération de lookup ne rend pas, à elle seule, un vecteur contextuel : la contextualisation intervient dans les couches suivantes du réseau. Voir les [tenseurs](tensors.qmd) pour les conventions de dimensions et [du texte aux tokens](text-data.qmd) pour l'étape précédente du tokenizer.
+Pendant l'entraînement, les gradients peuvent modifier les lignes de la table d'embeddings utilisées par les exemples. La sélection par indice ne rend pas, à elle seule, un vecteur contextuel : la contextualisation intervient dans les couches suivantes du réseau. Voir les [tenseurs](tensors.qmd) pour les conventions de dimensions et [du texte aux tokens](text-data.qmd) pour l'étape précédente du tokenizer.
 
 
 ## Que signifie la proximité ?
