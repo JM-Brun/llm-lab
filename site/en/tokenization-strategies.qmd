@@ -1,0 +1,113 @@
+---
+title: "Tokenization strategies: granularity, algorithms, and trade-offs"
+subtitle: "Choosing a discrete representation without conflating compression, linguistics, and quality"
+lang: en
+---
+
+::: {.chapter-lead}
+A tokenizer is a representation and engineering choice. It must cover expected inputs while managing vocabulary size and sequence cost. No segmentation—word, character, byte, or subword—is optimal for every corpus and task.
+:::
+
+## Key takeaways
+
+- **Granularity**: word, character, byte, or learned fragment.
+- **Algorithm**: BPE, WordPiece, unigram, and variants are not interchangeable.
+- **Pipeline**: normalization, pre-tokenization, vocabulary, and special-token handling affect outputs.
+- **Compatibility**: IDs have operational meaning only with the associated tokenizer and model weights.
+- **Evaluation**: fewer tokens may reduce cost, but do not prove better downstream quality.
+
+## 1. Concept map
+
+```{mermaid}
+flowchart TD
+    A["Unicode text"] --> B["Optional normalization"]
+    B --> C["Pre-tokenization"]
+    C --> D["Base units"]
+    D --> E["Algorithm + learned vocabulary"]
+    E --> F["Tokens"]
+    F --> G["Integer IDs"]
+    G --> H["Embedding lookup"]
+    H --> I["Input vectors"]
+    J["Corpus + constraints"] --> E
+    K["Cost / languages / tasks"] --> L["Comparative evaluation"]
+    F --> L
+    L --> M["Documented choice, not universal"]
+```
+
+A token is the discrete unit produced by the system, not necessarily a linguistic unit. Initial boundaries, whitespace, normalization, and special-token rules can change outputs as much as the algorithm's name.
+
+## 2. Compare granularity
+
+| Approach | Strengths | Limitations / risks | Typical use |
+|---|---|---|---|
+| **Words** | Readable; short sequences if vocabulary covers the corpus | Very large vocabulary; unknown words; inflections and rare names | Teaching baselines, closed corpora |
+| **Characters** | Small vocabulary; unseen words can be composed | Long sequences; code points, code units, and graphemes differ | Specialized models, orthography-sensitive tasks |
+| **Bytes** | General byte-level coverage; no word-level OOV | Multiple bytes per character; long sequences; patterns can be harder to learn | Byte-level approaches, heterogeneous inputs |
+| **Learned subwords** | Trade-off between vocabulary and length; rare forms remain decomposable if base units cover them | Sometimes arbitrary boundaries; language/script-dependent cost; no guaranteed morphology | Many modern LLMs |
+
+These are idealized categories. Real systems may combine pre-tokenization, subwords, and byte-level representation. “Character” must be defined precisely: Unicode code points, code units, and grapheme clusters are not interchangeable.
+
+## 3. BPE, WordPiece, and unigram
+
+| Family | Core idea | Limitation to remember |
+|---|---|---|
+| **BPE** | Iteratively merge adjacent pairs according to a frequency/priority rule | Variants differ in base units, pre-tokenization, markers, and conventions |
+| **WordPiece** | Select units using a likelihood-related criterion, then encode with implementation-specific rules | Not simply BPE under another name; some systems mark continuations with `##` |
+| **Unigram** | Probabilistic model over candidate subwords, often reduced by pruning | Output depends on model, candidates, and conventions |
+
+**SentencePiece** is a library that can train BPE or unigram models from raw text; it is not one algorithm. **Hugging Face Tokenizers** is a library of models and pipeline components. **tiktoken** is a BPE implementation with specific encodings. These names therefore do not all belong at the same comparison level.
+
+## 4. Examples that expose trade-offs
+
+| Input | Question to ask | Naive-approach risk |
+|---|---|---|
+| `unbelievable`, `unbelievably` | Do fragments reuse frequent substrings? | Boundaries do not guarantee morphological analysis |
+| `café` and `cafe\u0301` | Which Unicode normalization is applied? | Same appearance, different code-point sequences |
+| `2026-10-29`, `123456789` | How are digits and separators split? | One token need not be a whole number |
+| `你好` | Does the system depend on spaces between words? | Whitespace splitting may yield no useful boundaries |
+| `def predict_next(x): return x + 1` | How are whitespace, identifiers, and operators handled? | Segmentation can look arbitrary |
+| Emoji and rare symbols | What coverage and sequence length result? | Coverage does not mean uniform efficiency |
+
+This table poses questions to test, not exact outputs. To report a result, record tokenizer/version, input string, visible tokens, and token count.
+
+## 5. Reproducible comparison
+
+1. Fix the texts, encoding, cleaning, and document handling.
+2. Record the exact tokenizer, package version, encoding identifier, and parameters.
+3. Compare visible tokens and sequence lengths; do not compare IDs across vocabularies as common semantic values.
+4. Report distributions by language, script, and text type, not only a global average.
+5. Check vocabulary size, special tokens, coverage, and truncation.
+6. Evaluate downstream quality separately from latency, memory, throughput, and cost.
+7. Report limitations: corpus, versions, normalization, covered languages, and uncertainty.
+
+### Recommended visual resources
+
+1. [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/): interactive merge manipulation; best first intuition.
+2. [Hugging Face — BPE course in French](https://huggingface.co/learn/llm-course/fr/chapter6/5?fw=tf): structured account of training.
+3. [Cornell CS4782 — Tokenization Visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/): educational BPE/WordPiece comparison.
+4. [Andrej Karpathy — Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE): Unicode, UTF-8, BPE, whitespace, and special tokens.
+5. [Hugging Face — visualizing BPE encoding](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize): complementary visualization; verify community code before execution.
+
+These are external links rather than copied figures whose licences have not been checked. For the overall pipeline, the original diagram above is this page's reference figure.
+
+## 6. Counterexamples
+
+- **Fewer tokens = a better model.** No: it first demonstrates a length difference, not quality.
+- **BPE discovers morphemes.** No: linguistic analysis is not guaranteed.
+- **The vocabulary is the tokenizer.** No: pre-tokenization, merge rules, normalization, and special tokens also matter.
+- **SentencePiece = unigram.** No: it can train multiple families, including BPE.
+- **IDs transfer between models.** Generally not: the same ID can denote different fragments.
+- **Byte-level = language-independent.** No: coverage guarantees neither uniform cost nor uniform quality.
+
+## Continue learning
+
+- [Overview and BPE example](text-data.qmd)
+- [Training examples, windows, and shifted targets](training-examples.qmd)
+- [Embedding space](embedding-space.qmd)
+- [Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/index)
+- [SentencePiece](https://github.com/google/sentencepiece)
+- [tiktoken](https://github.com/openai/tiktoken)
+
+::: {.language-switch}
+**Language:** [Français](../fr/tokenization-strategies.qmd) · [English](tokenization-strategies.qmd)
+:::
