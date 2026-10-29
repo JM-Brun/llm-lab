@@ -318,6 +318,7 @@ The latest merge-commit CI/render evidence supersedes earlier comments that said
 ### Visuals and reuse decision
 
 - The Unicode/UTF-8, BPE trace, embedding-space and contextualized-embedding figures in LLM Lab are project-authored SVGs. Their alt text describes the intended lesson and identifies illustrative rather than measured content where relevant.
+- The English tokenization-strategies page previously linked to the French Hugging Face BPE lesson. It now links to the English lesson; the French page continues to link to the French counterpart. This is a language-navigation correction, not a change to the technical explanation.
 - The external sources above are linked for learning and attribution; this pass did **not** copy external diagrams or code assets into the site.
 - The Müller–Steinbach BPE Explainer and Cornell CS4782 visualizer have now been inspected at the content/output level. Prefer the BPE Explainer as an external optional resource for BPE training mechanics; link only because reuse rights were not verified. Treat Cornell's visualizer as provisional because the displayed merge frequency is inconsistent in the current page snapshot. Neither inspection is a responsive-browser review.
 - A live link being reachable is not the same as confirming its scientific support for every nearby sentence. The rows above explicitly separate those statuses.
