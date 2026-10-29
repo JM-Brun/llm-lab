@@ -35,6 +35,19 @@ A token is the discrete unit produced by the system, not necessarily a linguisti
 
 These are idealized categories. Real systems may combine pre-tokenization, subwords, and byte-level representation. “Character” must be defined precisely: Unicode code points, code units, and grapheme clusters are not interchangeable.
 
+### Vocabulary size is also an architecture and budget choice
+
+A larger subword vocabulary can represent some texts with fewer tokens, but it changes more than sequence length. With hidden dimension \\(d\\) and vocabulary size \\(V\\), an input embedding table has \\(Vd\\) parameters. A separate output projection over the vocabulary commonly has another \\(Vd\\) parameters; this second count does not apply in the same way when input and output weights are tied. A larger \\(V\\) can therefore increase parameter and memory costs even as it shortens sequences.
+
+The training budget also changes what a comparison means:
+
+- **Fixed token budget:** models process the same number of token positions, but not necessarily the same number of passes over the same raw corpus.
+- **Fixed data passes (epochs):** models see the same corpus passes, but a tokenizer that produces longer sequences creates more training tokens and may require more computation.
+
+Takase et al. studied SentencePiece unigram vocabularies from 5k to 500k on English and Japanese, under both a fixed-token and a fixed-epoch setup. Larger vocabularies performed better in those experiments; with a fixed epoch, the smaller vocabularies produced substantially more training tokens, especially for Japanese. This is evidence about those models, languages, datasets, and training protocols—not a universal rule that the largest vocabulary is always best. See [Takase et al. (Findings of ACL 2025)](https://aclanthology.org/2025.findings-acl.57/).
+
+**Practical rule:** choose vocabulary size jointly with model architecture, language mix, data distribution, and compute budget. Compare both model quality and total system cost; token count alone is not enough.
+
 ## 3. Components of a tokenizer pipeline
 
 A production tokenizer is not just a segmentation algorithm. Libraries can expose several components whose effects should be distinguished. The [Hugging Face Tokenizers component documentation](https://huggingface.co/docs/tokenizers/python/latest/components.html) describes these stages; [SentencePiece](https://github.com/google/sentencepiece) provides another example of tokenizer models and conventions.

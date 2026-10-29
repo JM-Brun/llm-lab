@@ -35,6 +35,19 @@ Pour observer concrètement les fusions BPE, ouvrez la [visualisation interactiv
 
 Ces catégories sont des idéaux-types. Les systèmes réels peuvent combiner pré-tokenisation, sous-mots et représentation byte-level. « Caractère » doit être défini précisément : point de code Unicode, unité de code et graphème ne sont pas interchangeables.
 
+### La taille du vocabulaire est aussi un choix d'architecture et de budget
+
+Un vocabulaire de sous-mots plus grand peut représenter certains textes avec moins de tokens, mais son effet ne se limite pas à la longueur des séquences. Avec une dimension cachée \\(d\\) et un vocabulaire de taille \\(V\\), la matrice d'embeddings d'entrée contient \\(Vd\\) paramètres. Une projection de sortie distincte sur le vocabulaire en contient couramment autant ; ce second terme ne s'applique pas de la même manière lorsque les poids d'entrée et de sortie sont partagés. Augmenter \\(V\\) peut donc accroître le nombre de paramètres et la mémoire, même si les séquences raccourcissent.
+
+Le budget d'entraînement change également le sens de la comparaison :
+
+- **Budget fixe en tokens :** les modèles traitent le même nombre de positions-token, mais ne parcourent pas nécessairement le corpus brut le même nombre de fois.
+- **Nombre de passes sur les données fixé (époques) :** les modèles parcourent le même corpus, mais un tokenizer qui produit des séquences plus longues génère davantage de tokens d'entraînement et peut demander plus de calcul.
+
+Takase et al. ont étudié des vocabulaires unigrammes SentencePiece de 5 000 à 500 000 unités en anglais et en japonais, avec un budget fixé en tokens puis un budget fixé en époques. Les vocabulaires plus grands ont obtenu de meilleurs résultats dans ces expériences ; à nombre d'époques fixé, les petits vocabulaires produisaient beaucoup plus de tokens d'entraînement, particulièrement en japonais. Ces résultats concernent les modèles, langues, données et protocoles étudiés : ils ne prouvent pas que le vocabulaire le plus grand est toujours préférable. Voir [Takase et al. (Findings of ACL 2025)](https://aclanthology.org/2025.findings-acl.57/).
+
+**Règle pratique :** choisir la taille du vocabulaire conjointement avec l'architecture du modèle, le mélange de langues, la distribution des données et le budget de calcul. Comparer la qualité du modèle et le coût total du système ; le seul nombre de tokens ne suffit pas.
+
 ## 3. Les composants d'un tokenizer
 
 Un tokenizer de production n'est pas seulement un algorithme de segmentation. Les bibliothèques peuvent exposer plusieurs composants, dont les effets doivent être distingués. La [documentation Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/python/latest/components.html) décrit ces étapes ; [SentencePiece](https://github.com/google/sentencepiece) fournit un autre exemple de conventions et de modèles.
