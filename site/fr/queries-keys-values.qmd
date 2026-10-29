@@ -8,6 +8,8 @@ lang: fr
 À chaque position, le Transformer calcule trois vecteurs à partir de la représentation du token : une **requête** (Q), une **clé** (K) et une **valeur** (V). Les requêtes et les clés servent à calculer les poids d'attention ; ces poids déterminent ensuite comment combiner les valeurs.
 :::
 
+Imagine une collection de fiches. Une **requête** exprime ce qu'une position cherche ; une **clé** aide à comparer les positions disponibles ; une **valeur** porte l'information qui sera agrégée. Cette analogie distingue les rôles, mais ne signifie pas que le modèle effectue une recherche symbolique explicite.
+
 ## L'idée en un schéma
 
 ![Schéma des projections Q, K et V : Q et K calculent les poids d'attention, qui servent à combiner les valeurs V.](../images/queries-keys-values.svg){fig-alt="Les représentations d'entrée sont projetées en requêtes, clés et valeurs. Les requêtes sont comparées aux clés ; les poids obtenus pondèrent les valeurs pour produire une représentation contextualisée." width=100%}
