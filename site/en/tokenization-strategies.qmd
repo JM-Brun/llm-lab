@@ -157,6 +157,16 @@ For fair comparison, report metrics by language and text type, and keep **repres
 These are external links rather than copied figures whose licences have not been checked. For the overall pipeline, the original diagram above is this page's reference figure.
 
 
+
+### Suggested reading order
+
+1. Watch Karpathy's video to build intuition about bytes, merges, and special tokens.
+2. Use the [BPE Explainer](https://philipmueller.dev/bpe-visualization/) to follow merges on a small example.
+3. Read \`minbpe\` or the [educational tiktoken module](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) to inspect the code.
+4. Compare with tiktoken, SentencePiece, and Hugging Face documentation to distinguish implementation conventions.
+5. Return to [Raschka's Chapter 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) to connect IDs to embeddings and input-target examples.
+6. Test multilingual text, code, numbers, leading spaces, and unusual Unicode forms.
+
 ### An external illustration of the tokenizer pipeline
 
 ![Tokenization pipeline from the Hugging Face course, showing the stages that transform text into model-ready tokens.](https://huggingface.co/datasets/huggingface-course/documentation-images/resolve/main/en/chapter6/tokenization_pipeline.svg){fig-alt="Tokenization pipeline: normalization, pre-tokenization, tokenization model, and post-processing." width=100%}
