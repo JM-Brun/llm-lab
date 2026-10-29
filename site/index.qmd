@@ -1,106 +1,109 @@
 ---
-title: "Comprendre les LLM, du calcul au code"
-subtitle: "Un laboratoire pédagogique bilingue, reproductible et orienté expériences"
+title: "Comprendre les LLM, du texte aux mécanismes"
+subtitle: "Un parcours bilingue, visuel et expérimental pour comprendre — puis construire — un petit modèle de langage"
 lang: fr
 sidebar: fr
 toc: false
 ---
 
 :::: {.hero-intro}
-<p class="eyebrow">MATHS · PYTHON · EXPÉRIENCES</p>
+<p class="eyebrow">COMPRENDRE · EXPLORER · EXPÉRIMENTER</p>
 
-## Comprendre les modèles de langage, un mécanisme à la fois
+## Comment un modèle de langage apprend-il à écrire ?
 
-Une carte d’apprentissage navigable qui synthétise les meilleures explications utiles issues d’articles de recherche, de livres rigoureux, de documentations officielles et de ressources visuelles. Comprenez d’abord le système dans son ensemble, puis suivez les concepts ou détails utiles à votre question. Les synthèses expliquent le rôle des composants ; les pages conceptuelles permettent d’approfondir sans rendre chaque dérivation obligatoire.
+Un LLM transforme du texte en nombres, traite ces représentations, puis estime quel token pourrait venir ensuite. Derrière cette idée simple se cachent des choix de données, des opérations mathématiques et une architecture que l’on peut comprendre pas à pas.
 
-L'objectif à terme est de comprendre puis de construire un petit modèle de langage autorégressif à décodeur seul, avec des composants inspectables et des tests. Le but est une synthèse originale et cohérente, pas la copie d’un livre : les sources sont choisies pour ce qu’elles établissent ou expliquent bien, puis reliées par une notation cohérente, des hypothèses explicites, des contre-exemples et des éléments de preuve. Le dépôt de Sebastian Raschka est une source structurante et un point de comparaison, pas un plan à recopier ni une preuve que les étapes correspondantes sont déjà implémentées ici.
+**LLM Lab vous aide à relier ces idées à des équations, du code et des expériences vérifiables.** Le parcours s’appuie sur des travaux de recherche, des ouvrages, des documentations et des ressources pédagogiques soigneusement croisés. Il ne reproduit pas un livre : il construit une explication cohérente, avec ses hypothèses, ses limites et des contre-exemples.
 
 <div class="hero-actions">
 [Commencer par le texte](fr/text-data.qmd){.btn .btn-primary}
-[Voir les exemples d’entraînement](fr/training-examples.qmd){.btn .btn-outline-primary}
-[Explorer le code source](https://github.com/JM-Brun/llm-lab){.btn .btn-outline-primary}
+[Voir le système d’ensemble](fr/transformer.qmd){.btn .btn-outline-primary}
+[Explorer le code](https://github.com/JM-Brun/llm-lab){.btn .btn-outline-primary}
 </div>
 ::::
 
-## Commencer ici
+## Choisissez votre point de départ
 
-Pour une première lecture, suivez ces deux étapes dans l’ordre :
-
-1. **Représenter le texte** — [tokens, identifiants et BPE](fr/text-data.qmd).
-2. **Comprendre l’objectif** — [décalage entrée-cible, fenêtres et masques](fr/training-examples.qmd).
-
-Continuez ensuite avec le parcours conseillé ci-dessous. Les pages relient intuition, équations et code ; la feuille de route distingue les explications disponibles des implémentations réellement testées.
-
-## Comment naviguer
+Vous pouvez commencer ici, revenir plus tard ou suivre directement la question qui vous intéresse. Aucun parcours unique n’est imposé.
 
 :::: {.learning-grid}
 ::: {.learning-card}
-<span class="step">01 / SYNTHÈSES</span>
+<span class="step">POUR DÉBUTER</span>
 
-### Comprendre le système
+### Du texte aux prédictions
 
-Des pages de haut niveau relient les composants : attention dans un Transformer, prédiction autorégressive, entraînement et génération.
+Découvrez comment un texte devient une suite de tokens, puis comment les exemples d’entraînement apprennent au modèle à prédire le token suivant.
 
-[Voir la synthèse Transformer](fr/transformer.qmd){.card-link}
+[Représenter le texte](fr/text-data.qmd){.card-link}
+
+[Construire les exemples d’entraînement](fr/training-examples.qmd)
 :::
 ::: {.learning-card}
-<span class="step">02 / CONCEPTS</span>
+<span class="step">POUR COMPRENDRE</span>
 
-### Approfondir une notion
+### Voir comment les pièces s’assemblent
 
-Chaque concept dispose d'une page dédiée : intuition, provenance, équations, hypothèses, contre-exemples, liens vers les notions voisines et références.
+Partez d’une vue d’ensemble du Transformer, puis ouvrez les notions utiles : attention, tenseurs, embeddings ou information de position.
 
-[Suivre la chaîne mathématique d’un LLM](fr/mathematical-foundations.qmd){.card-link}
+[Explorer le Transformer](fr/transformer.qmd){.card-link}
 
-[Découvrir les tenseurs](fr/tensors.qmd) · [Les espaces d'embeddings](fr/embedding-space.qmd)
+[Suivre la chaîne mathématique](fr/mathematical-foundations.qmd)
 :::
 ::: {.learning-card}
-<span class="step">03 / CODE ET PREUVES</span>
+<span class="step">POUR APPROFONDIR</span>
 
-### Vérifier plutôt que supposer
+### Relier les idées aux preuves
 
-Les pages distinguent le code réellement présent, les tests qui le couvrent et les éléments encore planifiés. Une explication ou un test isolé ne suffit pas à prouver la maîtrise ni la qualité générale d'un modèle.
+Étudiez une notion en détail, vérifiez les dimensions et les hypothèses, puis consultez les implémentations, tests et sources lorsqu’ils existent.
 
-[Consulter le dépôt](https://github.com/JM-Brun/llm-lab)
+[Explorer les tenseurs](fr/tensors.qmd){.card-link}
+
+[Lire les notes critiques](fr/cosine-similarity.qmd)
 :::
 ::::
 
-## Choisir son niveau d’approfondissement
+## Une carte, plusieurs niveaux de lecture
 
-Il n’est pas nécessaire de lire toutes les pages dans l’ordre. Utilisez une synthèse pour comprendre le rôle d’un mécanisme, ouvrez une page conceptuelle pour en étudier le fonctionnement, puis consultez le code, les tests ou les articles si vous souhaitez le vérifier ou l’étudier plus en détail. Les prérequis réellement indispensables sont signalés ; les notions connexes restent des chemins facultatifs.
+Pour chaque sujet, avancez aussi loin que votre question le demande :
 
-Par exemple, on peut comprendre pourquoi un Transformer a besoin d’une information de position sans dériver **RoPE**. La [page sur l’encodage positionnel](fr/positional-encoding.qmd) propose la géométrie, la dérivation, les points d’attention d’implémentation et les limites lorsque ces détails deviennent utiles.
+1. **Se repérer** — comprendre le rôle de la notion dans un LLM.
+2. **Relier** — voir ce qui entre dans le mécanisme et ce qu’il produit.
+3. **Comprendre** — étudier l’intuition, les équations et un exemple vérifiable.
+4. **Enquêter** — examiner les détails d’implémentation, les tests, les variantes, les limites et les références.
 
-## Parcours conseillé
+Ce sont des niveaux de profondeur, pas des étapes obligatoires. Une synthèse doit rester compréhensible sans lire toutes les pages liées ; une page détaillée doit expliquer les éléments nécessaires à son objectif. Les prérequis essentiels sont signalés, les approfondissements restent facultatifs.
 
-1. **Du texte aux tokens** — Unicode, encodage, tokenisation, BPE et ressources de référence. [Ouvrir la leçon](fr/text-data.qmd).
-2. **Données et objectif autorégressif** — fenêtres de contexte, décalage entrée-cible, batching et masquage de la perte. [Ouvrir la leçon](fr/training-examples.qmd).
-3. **Mathématiques appliquées aux LLM** — suivre les logits jusqu’à la perte d’entraînement et aux gradients, sans refaire un cours général de mathématiques.
-4. **Attention et Transformer** — requêtes, clés, valeurs, scores, softmax, information de position et masque causal.
-5. **Modèle et entraînement** — blocs, optimisation, validation, génération et évaluation.
-6. **Notes critiques** — examiner les hypothèses, les contre-exemples et les limites des métriques et des représentations.
+## Le fil conducteur
 
-Ce parcours décrit l'organisation pédagogique, pas l'état d'avancement de toutes les implémentations. Le [parcours détaillé](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md), le [plan de couverture du programme](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) et la [feuille de route](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md) précisent respectivement les étapes d'apprentissage, l'articulation avec les sources et les critères de validation.
+Le projet vise, à terme, à comprendre puis construire un petit modèle autorégressif à décodeur seul, avec des composants inspectables et des tests. Le parcours relie progressivement :
 
-## Utiliser les sources efficacement
+- **Texte et données** — tokenisation, fenêtres de contexte, entrées et cibles.
+- **Objectif d’apprentissage** — logits, probabilités, vraisemblance, perte et gradients.
+- **Mécanismes du Transformer** — attention, masque causal, embeddings et information de position.
+- **Modèle et entraînement** — blocs, optimisation, validation et génération.
+- **Évaluation critique** — métriques, fuites de données, incertitude et limites des représentations.
 
-Les ressources n'ont pas toutes la même fonction : une animation aide à construire l'intuition, un article de recherche établit la formulation d'origine, une documentation officielle précise le comportement d'une API et le code testé vérifie une propriété déterminée. Il faut les croiser plutôt que les traiter comme interchangeables.
+Ce fil conducteur aide à s’orienter, mais ne signifie pas que toutes les étapes sont déjà implémentées. Les explications disponibles, le code testé et les travaux planifiés sont distingués explicitement.
 
-- [Sebastian Raschka — conseils de lecture](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch01/reading-recommendations.md) : première lecture pour comprendre l'ensemble, deuxième lecture avec le code, puis réutilisation critique dans un projet.
-- [3Blue1Brown — Transformers, the tech behind LLMs](https://www.3blue1brown.com/lessons/gpt/) : intuition visuelle sur le flux de données et les composants d'un LLM.
-- [Jay Alammar — The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) et [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) : suivre visuellement les architectures, en distinguant le Transformer encodeur-décodeur historique d'un GPT à décodeur seul.
-- [Hugging Face — cours LLM en français](https://huggingface.co/learn/llm-course/fr) : complément structuré pour les concepts, les outils et les modèles.
+## Apprendre avec des sources complémentaires
 
-Les références formelles et les sources supplémentaires sont recensées dans la [bibliographie commentée](references.qmd). Pour chaque page, les affirmations mathématiques ou techniques doivent être reliées à une source appropriée ; les liens pédagogiques servent à faciliter la compréhension, pas à remplacer les définitions, les hypothèses ou les dérivations.
+Chaque ressource a un rôle différent : les visualisations donnent une intuition, les articles établissent les formulations d’origine, les documentations précisent le comportement des outils, et les tests vérifient des propriétés ciblées.
 
-## Pour aller plus loin
+- [3Blue1Brown — Transformers](https://www.3blue1brown.com/lessons/gpt/) pour une première intuition visuelle.
+- [Jay Alammar — The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) et [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) pour suivre le flux des représentations.
+- [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch) comme référence d’implémentation et de couverture, pas comme plan à recopier.
+- [Hugging Face — cours LLM en français](https://huggingface.co/learn/llm-course/fr) comme ressource complémentaire.
 
-- [Espace d’exercices](fr/exercises.qmd) — collections séparées du cours pour s’entraîner et vérifier les acquis.
-- [Exercice d'évaluation expérimentale](fr/evaluation-experimentale.qmd) — transférer les notions de métriques, fuites, sélection et incertitude à un cas de recherche documentaire.
-- [Glossaire des termes](fr/glossary.qmd) — les définitions essentielles, de « token » à « Transformer autorégressif ».
-- [Historique des Transformers](fr/transformer-history.qmd) — les étapes marquantes, des premiers mécanismes d'attention aux LLM modernes.
-- [Tenseurs](fr/tensors.qmd), [espace des embeddings](fr/embedding-space.qmd) et [encodage positionnel avec RoPE](fr/positional-encoding.qmd) — les notions nécessaires pour lire les équations et les représentations.
+Les sources formelles et leurs rôles sont documentés dans la [bibliographie commentée](references.qmd). Les figures externes restent attribuées à leur source ; un lien public ne vaut pas autorisation de réutilisation.
+
+## Explorer selon vos besoins
+
+- [Espace d’exercices](fr/exercises.qmd) — s’entraîner séparément du cours.
+- [Glossaire](fr/glossary.qmd) — retrouver rapidement un terme.
+- [Historique des Transformers](fr/transformer-history.qmd) — replacer les architectures dans leur contexte.
+- [Évaluation expérimentale](fr/evaluation-experimentale.qmd) — appliquer les notions de métriques, de fuite et d’incertitude.
+- [Parcours détaillé](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) · [Plan du programme](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) · [État et priorités](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md)
 
 ::: {.language-switch}
-**Choisir la langue :** [Français](index.qmd) · [English](en/index.qmd)
+**Langue :** [Français](index.qmd) · [English](en/index.qmd)
 :::
