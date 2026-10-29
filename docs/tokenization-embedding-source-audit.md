@@ -499,3 +499,57 @@ Before adding an external figure, record:
 6. Successful loading in the built site, including narrow-screen layout and both language versions.
 7. A fallback or local copy strategy if the remote host is unstable, but only where the license permits copying.
 
+## 4. Additional candidate-source review supplied by the project owner (2026-10-29)
+
+These links were reviewed as possible sources of ideas, explanations, or figures for the introductory chain. **A link being useful for reading does not grant permission to reproduce its images.** The decisions below distinguish pedagogical value from authority and reuse rights.
+
+### 4.1 Highest-value explanatory reference: Mike X Cohen
+
+[Mike X Cohen, *LLM breakdown 1/6: Tokenization (words to integers)*](https://mikexcohen.substack.com/p/llm-breakdown-16-tokenization-words) (2025) combines explanatory figures with code and a linked notebook. It is the strongest candidate in this batch for inspiring a reproducible, inspection-first learning activity: inspect the GPT-2 tokenizer, examine vocabulary entries, and compare the segmentation of strings with and without leading spaces.
+
+**Use:** recommend as optional further reading or use it to inspire a repository-owned exercise. The post itself describes BPE too loosely when it calls the procedure an “optimal” way to chunk text and frames token count as a simple compression ratio. Any adaptation should explicitly scope the claims to the tokenizer and example, and distinguish character count from byte count and token count.
+
+**Images:** do not copy the post's figures without explicit permission or a clear applicable license. A notebook/code link is more reusable pedagogically than a screenshot, provided its code and dependencies are checked.
+
+### 4.2 Vocabulary-size trade-offs: Rohan Paul
+
+[Rohan Paul, *Balancing Vocabulary Size in Modern LLMs (GPT-4, LLaMA, Mistral)*](https://www.rohan-paul.com/p/tutorial-balancing-vocabulary-size) (2025) is a useful secondary reading lead because it explicitly discusses vocabulary size, sequence length, embedding/output matrix costs, and the distinction between fixed-token-budget and fixed-epoch comparisons. It links to research papers, which should be treated as the primary sources for quantitative conclusions.
+
+**Caveats:** the post mixes general trade-offs with model-specific claims and simplified statements. For example, “larger vocabulary → fewer tokens” is a tendency for some text/tokenizer combinations, not a universal guarantee; GPT-4's tokenizer details are not all public. Do not copy model-specific numbers or generalize its comparisons without checking the linked primary sources and matching the training-budget assumptions.
+
+**Images:** no figure has been approved for reuse. Use the article as a route to its cited papers, not as an image source.
+
+### 4.3 Accessible overview: Yael Gomez
+
+[Yael Gomez, *How LLMs See the World: The Magic of Tokenization (Part 1)*](https://yaelgomez.substack.com/p/how-llms-see-the-world-the-magic) (2025) is useful for discovering beginner questions, especially whitespace, token boundaries, and the fact that tokenization differs between models.
+
+**Caveats:** metaphors such as “the first gate between human expression and machine reasoning” should not become literal technical descriptions. The article's statement that computational needs increase quadratically with input length needs architectural scope: standard full self-attention's pairwise attention computation has a quadratic sequence-length term, but end-to-end runtime and memory depend on implementation, architecture, sequence lengths, and inference/training regime. Its worked BPE examples should be checked against the stated algorithm before being reused.
+
+**Images:** no reuse terms established; do not embed its figures.
+
+### 4.4 Broad tutorials: Towards AI, MLWhiz, and Medium articles
+
+- [Towards AI, *Tokens & Embeddings: How LLMs Turn Text into Numbers*](https://pub.towardsai.net/tokens-embeddings-how-llms-turn-text-into-numbers-explained-so-a-first-timer-actually-gets-it-c53437ccb6b2) (2025) covers tokens, IDs, lookup tables, static versus contextualized representations, and common misconceptions. It can be a supplementary reading lead, but its beginner-friendly simplifications should not replace the project's explicit distinctions. In particular, a token ID is an index used to retrieve a vector; the integer itself is not an embedding. Its illustrations are not approved for reuse.
+- [MLWhiz, *What is an LLM? Tokens, Embeddings, and the Big Picture*](https://www.mlwhiz.com/p/what-is-an-llm-tokens-embeddings) (2026) provides a broad narrative from text to next-token prediction and discusses bytes and BPE. It is a paid secondary article and includes sweeping claims (for example, that every modern LLM uses subwords) that should be qualified for model families and modalities. It is not necessary as a dependency for the project and its images are not approved for reuse.
+- [Abdul Moiz, *How LLMs Work: Tokens, Embeddings, and Transformers*](https://medium.com/@iam-abdulmoiz/how-llms-work-tokens-embeddings-and-transformers-a54d0468b42e) (2026) has a clear beginner-oriented section structure, but overlaps heavily with the existing learning path. Treat it as a reading lead only; do not duplicate its pipeline or copy figures without rights confirmation.
+- [Vinay Kumar, *LLM building blocks — Tokens and Embeddings*](https://vinaykuma201.medium.com/llm-building-blocks-tokens-and-embeddings-part-2-a18a531b4bdc) (2024) gives simple token and ID examples. These are illustrative rather than universal tokenization outputs, so any example borrowed conceptually must identify the tokenizer or clearly label the segmentation as hypothetical. No image reuse permission established.
+- [Amit Kharche, *Natural Language Processing Basics: From Tokenization to Word Embeddings*](https://medium.com/@amitkharche/natural-language-processing-basics-from-tokenization-to-word-embeddings-14e4f7d2bb20) could not be reliably fetched in this review. Do not make claims about its detailed contents or approve any figure based on the URL alone.
+- [The Network Times, *Large Language Models (LLM) — Part 1/2: Word Embedding*](https://nwktimes.blogspot.com/2025/02/large-language-models-llm-part-12-word.html) offers an accessible word-level lookup-table analogy. Its author explicitly simplifies examples to whole words after discussing subwords; this can be useful if the simplification is clearly marked, but it should not visually imply that modern LLM tokenizers assign one token per word or that initial token embeddings alone encode contextual meaning. No figure reuse terms established.
+
+### 4.5 Instagram carousel
+
+[Instagram post supplied for review](https://www.instagram.com/p/DeqTCdSmOVJ/?img_index=1) could not be inspected through the available page retrieval. Its author, slide content, provenance, technical accuracy, and reuse rights therefore remain **unverified**. Do not cite it as a technical source or reuse any slide unless the source and rights are independently checked.
+
+### 4.6 Integration decision after this batch
+
+No new external image is added. The most useful contribution from these sources is a **learning-activity idea**, not another static infographic:
+
+1. Take a short string with punctuation, leading whitespace, an accented character, and a rare word.
+2. Run it through a named tokenizer (for example, GPT-2 byte-level BPE).
+3. Display the original string, token IDs, and decoded token fragments side by side.
+4. Explain that IDs are categorical indices, then show a tiny synthetic embedding matrix and select the corresponding rows.
+5. Change the tokenizer and compare outputs without claiming one segmentation is universally optimal.
+
+This activity substantially overlaps with the reproducible trace already present in `embedding-space.qmd`. Before implementing another copy, assess whether the existing trace should be linked from `text-data.qmd` or whether a smaller interactive exercise would address a specific gap. Avoid repeating the same full explanation across pages.
+
+**Overall source ranking for this project:** Mike X Cohen is the best candidate for an optional code-backed reading; Rohan Paul is useful for identifying vocabulary-size trade-off questions but should lead to primary papers; Yael Gomez and the broader tutorials are secondary beginner-oriented perspectives. None of these links, as reviewed here, establishes permission to republish its images.
