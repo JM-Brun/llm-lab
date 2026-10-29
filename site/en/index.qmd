@@ -1,105 +1,103 @@
 ---
-title: "Understanding LLMs, from maths to code"
-subtitle: "A bilingual, reproducible, experiment-driven learning lab"
+title: "LLM Lab — understand by exploring"
+subtitle: "A learning laboratory for observing, experimenting with, and understanding language models, from the big picture to mathematical mechanisms."
 lang: en
 toc: false
 ---
 
 :::: {.hero-intro}
-<p class="eyebrow">MATHS · PYTHON · EXPERIMENTS</p>
+<p class="eyebrow">OBSERVE · EXPERIMENT · UNDERSTAND</p>
 
-## Understand language models, one mechanism at a time
+## How does a large language model work?
 
-A navigable learning map that synthesizes strong explanations from research papers, rigorous books, official documentation, and visual teaching resources. Start with the whole system, then follow only the concepts or details that answer your current question. High-level pages explain how components work together; concept pages offer deeper explanations without making every derivation a prerequisite.
+A language model transforms text into numerical representations and learns to predict what comes next. Understanding the mechanism means connecting data, probability, algebra, architecture, and training.
 
-The long-term goal is to understand and build a small decoder-only autoregressive language model, using inspectable components and tests. The goal is a coherent, original synthesis—not a copy of any one book: sources are selected for what they establish or explain well, then connected through consistent notation, explicit assumptions, counterexamples, and evidence. Sebastian Raschka's repository is a major source and comparison point, not a table of contents to copy or evidence that the corresponding steps are already implemented here.
+**LLM Lab is a learning laboratory, not just a course to read.** It builds understanding through explanations, diagrams, visualizations, reproducible experiments, code, and tests. Each level should stand on its own while opening paths to deeper detail.
 
 <div class="hero-actions">
-[Start with text and tokens](text-data.qmd){.btn .btn-primary}
-[Inspect training examples](training-examples.qmd){.btn .btn-outline-primary}
-[Explore the source code](https://github.com/JM-Brun/llm-lab){.btn .btn-outline-primary}
+[Watch a short big-picture overview](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s){.btn .btn-primary}
+[Follow a model-building path](https://github.com/rasbt/LLMs-from-scratch/){.btn .btn-outline-primary}
+[Explore the concepts](transformer.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
-## Start here
+## Three ways to explore
 
-For a first pass, read these two lessons in order:
-
-1. **Represent text** — [tokens, token IDs, and BPE](text-data.qmd).
-2. **Understand the objective** — [input-target shifting, windows, and masks](training-examples.qmd).
-
-Then continue with the suggested path below. Pages connect intuition, equations, and code; the roadmap distinguishes available explanations from implementations that have actually been tested.
-
-## How to navigate
+The site offers three complementary depths, not three isolated tracks. Follow the main thread, start with a specific question, or jump straight into an experiment.
 
 :::: {.learning-grid}
 ::: {.learning-card}
-<span class="step">01 / SYNTHESIS</span>
+<span class="step">LEVEL 1 · BIG PICTURE</span>
 
-### Understand the system
+### Understand the whole system
 
-High-level pages connect components: attention in a Transformer, autoregressive prediction, training, and generation.
+A short, visual overview: what an LLM predicts, how data flows, the main stages of learning, and how they fit together. No need to master all the mathematics up front.
 
-[Open the Transformer overview](transformer.qmd){.card-link}
+[Start with the system overview](transformer.qmd){.card-link}
 :::
 ::: {.learning-card}
-<span class="step">02 / CONCEPTS</span>
+<span class="step">LEVEL 2 · GUIDED PATH</span>
 
-### Study one concept deeply
+### Understand how to build one
 
-Each concept has a dedicated page covering intuition, provenance, equations, assumptions, counterexamples, related concepts, and references.
+A moderately detailed route: prepare data, form training examples, assemble the model, train, generate, and evaluate. Mathematics appears when useful; code and tests connect explanations to actual behaviour.
 
-[Follow the mathematical chain in an LLM](mathematical-foundations.qmd){.card-link}
+[Start with text and data](text-data.qmd){.card-link}
 
-[Explore tensors](tensors.qmd) · [Embedding spaces](embedding-space.qmd)
+[Understand training examples](training-examples.qmd)
 :::
 ::: {.learning-card}
-<span class="step">03 / CODE AND EVIDENCE</span>
+<span class="step">LEVEL 3 · DEEP DIVE</span>
 
-### Verify rather than assume
+### Investigate a mechanism
 
-Pages distinguish code that exists, tests that cover it, and work that is still planned. An explanation or isolated test is not enough to establish mastery or overall model quality.
+Explore a concept freely: definitions, derivations, tensor shapes, assumptions, counterexamples, variants, code, tests, and scientific references. You can skip steps in the guided path; necessary prerequisites should be clearly identified and accessible.
 
-[Browse the repository](https://github.com/JM-Brun/llm-lab)
+[Explore mathematical foundations](mathematical-foundations.qmd){.card-link}
+
+[Study tensors](tensors.qmd)
 :::
 ::::
 
-## Choose your depth
+## A laboratory: visualize, manipulate, verify
 
-You do not have to read every page in order. Use the overview to understand a mechanism's role; open a concept page when you want its details; follow implementation, tests, or papers when you want to verify or investigate it. Essential prerequisites are signposted, while related topics are optional routes.
+Difficult concepts should not rely only on long paragraphs. Where it genuinely improves understanding, pages should offer:
 
-For example, you can understand why a Transformer needs positional information without deriving **RoPE**. The [positional-encoding page](positional-encoding.qmd) offers the geometry, derivation, implementation considerations, and limitations when those details become useful.
+- **Flow diagrams** to trace data, tensor shapes, and dependencies between components.
+- **Figures and animations** to reveal sequential operations or phenomena that are hard to observe in code.
+- **Interactive visualizations** to change a parameter, observe its effect, and compare cases.
+- **Reproducible experiments** with a precise question, reference case, method, observable results, and explicit limitations.
+- **Tests and counterexamples** to check claims and show where an intuition breaks down.
 
-## Suggested path
+An illustrative animation is not proof; a single experiment does not establish a general property. Distinguish intuition, computed results, tested behaviour, and claims supported by sources. Prefer a static figure over an animation with no explanatory benefit; add interaction only when manipulation reveals a useful relationship.
 
-1. **From text to tokens** — Unicode, encoding, tokenization, BPE, and reference resources. [Open the lesson](text-data.qmd).
-2. **Data and the autoregressive objective** — context windows, input-target shifting, batching, and loss masking. [Open the lesson](training-examples.qmd).
-3. **Maths applied to LLMs** — follow logits through the training loss and gradients without duplicating a general mathematics course.
-4. **Attention and Transformers** — queries, keys, values, scores, softmax, positional information (including RoPE), and causal masking.
-5. **Model and training** — blocks, optimization, validation, generation, and evaluation.
-6. **Critical notes** — examine assumptions, counterexamples, and the limitations of metrics and representations.
+## The system map
 
-This path describes the learning structure, not the implementation status of every component. The [detailed learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md), [full curriculum and source-coverage plan](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md), and [roadmap](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md) define the learning stages, how sources fit the project, and validation criteria respectively.
+The main thread connects:
 
-## How to use the sources
+1. **Text and data** — tokens, context windows, inputs, and targets.
+2. **Prediction** — tensors, embeddings, logits, and probabilities.
+3. **Learning objective** — likelihood, cross-entropy, loss, and gradients.
+4. **Context and architecture** — attention, causal masking, positional information, and Transformer blocks.
+5. **Training and generation** — optimization, validation, decoding, and evaluation.
+6. **Limits and robustness** — data leakage, metrics, uncertainty, ablations, and counterexamples.
 
-Different resources serve different purposes: an animation can build intuition, a research paper establishes the original formulation, official documentation specifies API behaviour, and tested code checks a defined property. Cross-check them rather than treating them as interchangeable.
+Overviews should explain component roles and relationships before linking to deep dives. Each deep dive should explain local prerequisites, link back to the system map, and support exploration across related concepts. The guided path is recommended, not a prerequisite for accessing other topics.
 
-- [Sebastian Raschka — reading recommendations](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch01/reading-recommendations.md): first read for the big picture, second read with code, then critical reuse in a project.
-- [3Blue1Brown — Transformers, the tech behind LLMs](https://www.3blue1brown.com/lessons/gpt/): visual intuition for data flow and LLM components.
-- [Jay Alammar — The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) and [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/): visual walkthroughs of architectures; distinguish the original encoder-decoder Transformer from a decoder-only GPT.
-- [Hugging Face — LLM Course](https://huggingface.co/learn/llm-course/): a structured supplement for concepts, tools, and models.
+The long-term goal is a small decoder-only autoregressive model whose components and behaviour can be inspected and tested. **Available content, code that has actually been tested, and planned work must always be distinguished.**
 
-Formal references and further resources are collected in the [annotated bibliography](../references.qmd). For each page, mathematical and technical claims should be connected to an appropriate source; pedagogical links support understanding but do not replace definitions, assumptions, or derivations.
+## Complementary resources
 
-## Explore further
+- [3Blue1Brown — Transformers](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s) for a visual overview.
+- [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch/) for a detailed model-building path.
+- [Jay Alammar — The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) and [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) to follow representations and operations.
+- [Annotated bibliography](../references.qmd) for scientific, technical, and teaching sources, including their roles and limitations.
 
-- [Exercise space](exercises.qmd) — separate collections for practice and knowledge transfer.
-- [Experimental evaluation exercise](experimental-evaluation.qmd) — transfer metric, leakage, selection, and uncertainty concepts to a scientific-document retrieval case.
-- [Glossary](glossary.qmd) — concise definitions from “token” to “autoregressive Transformer”.
-- [History of Transformers](transformer-history.qmd) — key milestones from early attention mechanisms to modern LLMs.
-- [Tensors](tensors.qmd), [embedding space](embedding-space.qmd), and [positional encoding with RoPE](positional-encoding.qmd) — concepts needed to follow the equations and representations.
+## Explore by question
+
+- [Glossary](glossary.qmd) · [Exercises](exercises.qmd) · [Transformer history](transformer-history.qmd) · [Experimental evaluation](experimental-evaluation.qmd)
+- [Detailed curriculum plan](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) · [Learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) · [Roadmap](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md)
 
 ::: {.language-switch}
-**Choose a language:** [Français](../index.qmd) · [English](index.qmd)
+[Français](../index.qmd) · [English](index.qmd)
 :::
