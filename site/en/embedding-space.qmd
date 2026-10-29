@@ -28,6 +28,61 @@ In a Transformer, this representation is then transformed by the network's layer
 
 These objects are not interchangeable. A method suited to sentence embeddings for document retrieval does not automatically transfer to a language model's internal activations.
 
+## From token IDs to vectors: a worked lookup
+
+Let the vocabulary contain five IDs and let each token embedding have dimension two. A tiny illustrative embedding matrix is:
+
+\[
+E =
+\begin{bmatrix}
+0.1 & 0.0 \\
+0.0 & 0.2 \\
+0.8 & -0.1 \\
+-0.2 & 0.5 \\
+0.3 & 0.7
+\end{bmatrix}
+\in \mathbb{R}^{5\times 2}.
+\]
+
+For token IDs \([2,0,3]\), the lookup selects rows \(E_2\), \(E_0\), and \(E_3\):
+
+\[
+X =
+\begin{bmatrix}
+0.8 & -0.1 \\
+0.1 & 0.0 \\
+-0.2 & 0.5
+\end{bmatrix}
+\in \mathbb{R}^{3\times 2}.
+\]
+
+The IDs are row indices; the resulting vectors are learned parameters. The values above are invented solely to make the lookup hand-checkable. They do not encode real semantic relationships, and ID 3 is not “more similar” to ID 2 because the integers are close.
+
+For a batch, the common shape transition is:
+
+\[
+\text{token IDs }[B,L]
+\;\longrightarrow\;
+\text{token embeddings }[B,L,d],
+\]
+
+where \(B\) is batch size, \(L\) sequence length, and \(d\) embedding dimension. Lookup does not mix information across positions: two occurrences of the same token ID retrieve the same row before positional information and contextual processing are applied.
+
+## From token embeddings to contextualized states
+
+The next step depends on the architecture. In a GPT-2-style model with learned absolute position embeddings, a position-specific vector is added to each token embedding:
+
+\[
+X_{b,t}=E_{\text{token}_{b,t}}+P_t.
+\]
+
+Both terms have dimension \(d\), so the combined input has shape \([B,L,d]\). Transformer blocks then contextualize each position using the sequence; for a standard width-preserving block, the hidden-state shape remains \([B,L,d]\), although the values change as information from the context is incorporated.
+
+This addition is **not universal**. For example, [RoPE](positional-encoding.qmd) applies position-dependent rotations to query and key vectors inside attention rather than adding a position vector directly to the initial token embeddings. Always identify the architecture before drawing a precise pipeline.
+
+During training, gradients can update the embedding-table rows used by the examples. The lookup operation itself does not make a vector context-aware; contextualization happens in the subsequent network layers. See [tensors](tensors.qmd) for axis conventions and [from text to tokens](text-data.qmd) for the preceding tokenizer stage.
+
+
 ## What does proximity mean?
 
 Two vectors can be compared using a dot product, Euclidean distance, or cosine similarity. Cosine compares their directions:
