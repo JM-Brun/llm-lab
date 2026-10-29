@@ -1,5 +1,7 @@
 # Contributing
 
+**Start here:** [Contributor guiding principles](docs/contributor-guiding-principles.md) — the short decision-making rules for teaching quality, scientific rigour, code, experiments, accessibility, design, and bilingual parity.
+
 This is a learning and experimentation repository. Prefer small, testable changes that make the reasoning, implementation, and evidence inspectable. Follow the shared [reader-experience and editorial method](docs/reader-experience-and-editorial-method.md): the site is a navigable learning graph with progressive depth, not a mandatory linear book. The Wiki is the canonical home for reusable, domain-general concepts; LLM Lab is a separate public, bilingual learning site whose explanations must be complete without access to the private Wiki. The repositories have different purposes, not a shared runtime or reading dependency. Reusing a concept in both is intentional when LLM Lab needs to teach it to explain language models. Public readers must never need a Wiki URL, private definition, or private file to understand a page or render the site. Cite accessible public sources and include all definitions, assumptions, derivations, examples, caveats, and exercises needed by the LLM Lab learning experience—even when that creates deliberate overlap with the Wiki.
 
 ## Contribution modes
