@@ -1,0 +1,64 @@
+---
+title: "Unicode, UTF-8, and text normalization"
+subtitle: "An optional technical deep dive into string representation"
+lang: en
+---
+
+This page is a **technical companion** to the [overview of the text-to-token path](text-data.qmd). It is not required to understand the general pipeline; it becomes useful when text looks identical on screen but produces different encodings or tokenization.
+
+## Three distinct layers
+
+- **Unicode** defines code points and properties for representing text. A code point can be written, for example, as `U+00E9`.
+- **UTF-8** is an encoding that represents code points as bytes. A code point may require multiple bytes.
+- **Unicode normalization** transforms some sequences into a canonical or compatibility form. It can bring equivalent strings into a common form, but must not be assumed: the policy depends on the preprocessing and tokenizer.
+
+Unicode does not define token segmentation; UTF-8 does not choose the vocabulary; normalization is not universally applied in the same way.
+
+## Example: two encodings of “é”
+
+![Two visually similar forms of “é” with different code points and UTF-8 bytes.](../images/unicode-utf8-tokenization-en.svg){fig-alt="Comparison of precomposed é (U+00E9, bytes C3 A9) and e followed by a combining accent (U+0065 U+0301, bytes 65 CC 81). Normalization may bring them together before tokenization." width=100%}
+
+The precomposed form contains one code point (`U+00E9`). The decomposed form contains `e` (`U+0065`) followed by a combining accent (`U+0301`). The visual rendering may be identical, but the code-point and byte sequences differ.
+
+```python
+import unicodedata
+
+composed = "é"
+decomposed = "e\u0301"
+
+print([f"U+{ord(char):04X}" for char in composed])
+# ['U+00E9']
+print(composed.encode("utf-8"))
+# b'\xc3\xa9'
+
+print([f"U+{ord(char):04X}" for char in decomposed])
+# ['U+0065', 'U+0301']
+print(decomposed.encode("utf-8"))
+# b'e\xcc\x81'
+
+print(unicodedata.normalize("NFC", composed) == unicodedata.normalize("NFC", decomposed))
+# True
+```
+
+NFC normalization makes these two strings equal in this example. This does not prove that a particular tokenizer applies NFC: check its documentation and test the exact version in use.
+
+## What this implies—and what it does not
+
+1. Visually identical strings can have different representations before normalization.
+2. UTF-8 bytes are neither tokens nor vocabulary IDs.
+3. A tokenizer may normalize and pre-split text before applying segmentation rules; the exact steps depend on the implementation.
+4. The figure illustrates Unicode and UTF-8, **not** the output of a particular tokenizer. To inspect real tokens and IDs, run the exact tokenizer with its version and configuration.
+
+## Technical references
+
+- [UTF-8, RFC 3629](https://www.rfc-editor.org/rfc/rfc3629) — specification of UTF-8 encoding.
+- [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/) — Unicode normalization forms.
+- [Official Unicode normalization charts](https://www.unicode.org/charts/normalization/) — visual examples of normalized forms.
+
+## Return to the overview
+
+The [From text to tokens](text-data.qmd) page returns to the conceptual level. [Tokenization strategies](tokenization-strategies.qmd) compares algorithm families and their trade-offs.
+
+:::: {.language-switch}
+**Language:** [Français](../fr/unicode-text.qmd) · [English](../en/unicode-text.qmd)
+::::

@@ -63,6 +63,48 @@ Some SentencePiece outputs display a marker such as `▁` to represent a whitesp
 
 **SentencePiece** is a library that can train BPE or unigram models from raw text; it is not one algorithm. **Hugging Face Tokenizers** is a library of models and pipeline components. **tiktoken** is a BPE implementation with specific encodings. These names therefore do not all belong at the same comparison level.
 
+
+### Worked example: BPE merges on a tiny corpus
+
+This schematic example preserves an explicit trace of the merges. Teaching convention: each word starts as characters followed by an end-of-word marker `</w>`. The tiny corpus contains one occurrence each of `low`, `lower`, and `lowest`.
+
+| Word | Initial units |
+|---|---|
+| `low` | `l · o · w · </w>` |
+| `lower` | `l · o · w · e · r · </w>` |
+| `lowest` | `l · o · w · e · s · t · </w>` |
+
+Suppose tie-breaking selects `l + o → lo` first, then `lo + w → low`.
+
+| Step | `low` | `lower` | `lowest` |
+|---|---|---|---|
+| 0 | `l · o · w · </w>` | `l · o · w · e · r · </w>` | `l · o · w · e · s · t · </w>` |
+| 1: merge `l + o` | `lo · w · </w>` | `lo · w · e · r · </w>` | `lo · w · e · s · t · </w>` |
+| 2: merge `lo + w` | `low · </w>` | `low · e · r · </w>` | `low · e · s · t · </w>` |
+
+This table illustrates the mechanics, not a universal tokenizer output. Pre-tokenization, base units, frequencies, end-of-word handling, and tie-breaking affect the actual order. Later merges might create `er` or `est`, but that is not guaranteed. To manipulate candidate pairs, use the [BPE Explainer by Müller and Steinbach](https://philipmueller.dev/bpe-visualization/).
+
+### Tokenizer training versus encoding at inference
+
+Two processes must be distinguished:
+
+1. **Tokenizer training**: builds a vocabulary and, depending on the algorithm, rules or a merge order from a corpus.
+2. **Encoding new text**: applies the already learned rules to produce tokens and IDs; it does not recount frequencies or relearn the vocabulary for every request.
+
+```{mermaid}
+flowchart LR
+    A["Training corpus"] --> B["Pre-tokenization and base units"]
+    B --> C["Learn merges / vocabulary"]
+    C --> D["Saved tokenizer"]
+    E["New text"] --> F["Previously learned rules"]
+    D -. "reused" .-> F
+    F --> G["Tokens then IDs"]
+    G --> H["Compatible model"]
+```
+
+This diagram does not describe neural-network training, which is distinct and learns model parameters from sequences of token IDs. A byte-level tokenizer can cover arbitrary text input at the byte level, but not every BPE tokenizer is byte-level.
+
+
 ## 5. Examples that expose trade-offs
 
 The [overview page](text-data.qmd) illustrates Unicode normalization with precomposed `é` and decomposed `e\u0301`: they may look identical while having different code-point sequences. A tokenizer may normalize them before segmentation; inspect its configuration rather than assuming the outputs match.
@@ -113,6 +155,44 @@ For fair comparison, report metrics by language and text type, and keep **repres
 5. [Hugging Face — visualizing BPE encoding](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize): complementary visualization; verify community code before execution.
 
 These are external links rather than copied figures whose licences have not been checked. For the overall pipeline, the original diagram above is this page's reference figure.
+
+
+
+### Suggested reading order
+
+1. Watch Karpathy's video to build intuition about bytes, merges, and special tokens.
+2. Use the [BPE Explainer](https://philipmueller.dev/bpe-visualization/) to follow merges on a small example.
+3. Read `minbpe` or the [educational tiktoken module](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) to inspect the code.
+4. Compare with tiktoken, SentencePiece, and Hugging Face documentation to distinguish implementation conventions.
+5. Return to [Raschka's Chapter 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) to connect IDs to embeddings and input-target examples.
+6. Test multilingual text, code, numbers, leading spaces, and unusual Unicode forms.
+
+### An external illustration of the tokenizer pipeline
+
+![Tokenization pipeline from the Hugging Face course, showing the stages that transform text into model-ready tokens.](https://huggingface.co/datasets/huggingface-course/documentation-images/resolve/main/en/chapter6/tokenization_pipeline.svg){fig-alt="Tokenization pipeline: normalization, pre-tokenization, tokenization model, and post-processing." width=100%}
+
+This published illustration comes from the [Hugging Face course, “Building a tokenizer, block by block”](https://huggingface.co/docs/course/chapter6/8). It complements the conceptual diagram on the [overview page](text-data.qmd) with the components of a tokenizer. The image is served from the course's public documentation assets rather than copied locally; citation does not itself grant redistribution rights.
+
+### Additional research references
+
+- [Ali et al. (2024), *Tokenizer Choice For LLM Training: Negligible or Crucial?*](https://aclanthology.org/2024.findings-naacl.247/): examines tokenizer choice effects on cost and performance, noting that intrinsic metrics do not always predict downstream results.
+- [Wegmann et al. (2025), *Tokenization is Sensitive to Language Variation*](https://aclanthology.org/2025.findings-acl.572/): analyses linguistic variation and the role of the pre-tokenizer.
+- [Arnett et al. (2025), *Explaining and Mitigating Crosslingual Tokenizer Inequities*](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html): studies cross-language cost differences and design factors such as vocabulary size and pre-tokenization.
+- [Ahia et al. (2023), *Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/): compares tokenization cost across 22 languages and discusses API implications.
+- [TokLens (ACL 2026 SRW)](https://aclanthology.org/2026.acl-srw.18/): a multilingual measurement toolkit to inspect as a method and software, not as evidence that one intrinsic metric is sufficient.
+
+### Educational code and historical reference
+
+- [Sebastian Raschka — *Build a Large Language Model (From Scratch)*, Chapter 2](https://livebook.manning.com/book/build-a-large-language-model-from-scratch/chapter-2): guided reading on text processing in the LLM pipeline.
+- [Hugging Face — tokenizer course](https://huggingface.co/learn/llm-course/chapter6/1): introduction to the tokenizer chapter; course URLs and content may evolve.
+
+
+- [OpenAI `tiktoken` — educational module](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py): simplified BPE code for inspecting merges; it is not the optimized production path.
+- [Andrej Karpathy — `minbpe`](https://github.com/karpathy/minbpe): compact code for tracing training and encoding; compare conventions before assuming compatibility.
+- [Sebastian Raschka — BPE from scratch](https://sebastianraschka.com/blog/2025/bpe-from-scratch.html): an explanatory notebook.
+- [Raschka — repository, Chapter 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02): implementations and text-data preparation.
+- [Gage (1994), *A New Algorithm for Data Compression*](https://dl.acm.org/doi/10.5555/177910.177914): historical reference for byte-pair compression. Modern LLM tokenizers add conventions not fully specified by that paper alone.
+
 
 ## 7. Counterexamples
 

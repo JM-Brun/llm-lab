@@ -1,0 +1,64 @@
+---
+title: "Unicode, UTF-8 et normalisation du texte"
+subtitle: "Un approfondissement technique facultatif sur la représentation des chaînes"
+lang: fr
+---
+
+Cette page est un **complément technique** à la [vue d'ensemble du parcours texte → tokens](text-data.qmd). Elle n'est pas nécessaire pour comprendre le pipeline général ; elle devient utile lorsqu'un texte semble identique à l'écran mais produit un encodage ou une tokenisation différents.
+
+## Trois niveaux distincts
+
+- **Unicode** définit des points de code et des propriétés pour représenter le texte. Un point de code s'écrit par exemple `U+00E9`.
+- **UTF-8** est un encodage qui représente les points de code sous forme d'octets. Un point de code peut nécessiter plusieurs octets.
+- **Normalisation Unicode** transforme certaines séquences en une forme canonique ou compatible. Elle peut rapprocher des chaînes équivalentes, mais ne doit pas être supposée : la politique dépend du prétraitement et du tokeniseur utilisés.
+
+Unicode ne définit pas le découpage en tokens ; UTF-8 ne choisit pas le vocabulaire ; la normalisation n'est pas universellement appliquée de la même manière.
+
+## Exemple : deux écritures de « é »
+
+![Deux formes visuellement semblables de « é », mais des points de code et octets UTF-8 différents.](../images/unicode-utf8-tokenization-fr.svg){fig-alt="Comparaison de é précomposé (U+00E9, octets C3 A9) et de e suivi d'un accent combinant (U+0065 U+0301, octets 65 CC 81). La normalisation peut les rapprocher avant la tokenisation." width=100%}
+
+La forme précomposée contient un point de code (`U+00E9`). La forme décomposée contient `e` (`U+0065`) suivi d'un accent combinant (`U+0301`). Le rendu visuel peut être identique, mais les séquences de points de code et d'octets diffèrent.
+
+```python
+import unicodedata
+
+composed = "é"
+decomposed = "e\u0301"
+
+print([f"U+{ord(char):04X}" for char in composed])
+# ['U+00E9']
+print(composed.encode("utf-8"))
+# b'\xc3\xa9'
+
+print([f"U+{ord(char):04X}" for char in decomposed])
+# ['U+0065', 'U+0301']
+print(decomposed.encode("utf-8"))
+# b'e\xcc\x81'
+
+print(unicodedata.normalize("NFC", composed) == unicodedata.normalize("NFC", decomposed))
+# True
+```
+
+La normalisation NFC rend ces deux chaînes égales dans cet exemple. Cela ne prouve pas qu'un tokeniseur donné applique NFC : il faut vérifier sa documentation et tester la version réellement utilisée.
+
+## Ce que cela implique — et n'implique pas
+
+1. Des chaînes visuellement identiques peuvent être représentées différemment avant normalisation.
+2. Les octets UTF-8 ne sont ni les tokens ni les IDs du vocabulaire.
+3. Un tokeniseur peut normaliser et pré-découper le texte avant la segmentation ; les étapes exactes dépendent de l'implémentation.
+4. La figure illustre Unicode et UTF-8, **pas** la sortie d'un tokeniseur particulier. Pour connaître les tokens et IDs réels, exécutez le tokeniseur exact avec sa version et sa configuration.
+
+## Références techniques
+
+- [UTF-8, RFC 3629](https://www.rfc-editor.org/rfc/rfc3629) — définition de l'encodage UTF-8.
+- [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/) — formes de normalisation Unicode.
+- [Graphiques officiels de normalisation Unicode](https://www.unicode.org/charts/normalization/) — exemples visuels des formes normalisées.
+
+## Revenir au parcours général
+
+La page [Du texte aux tokens](text-data.qmd) revient au niveau conceptuel. La page [Stratégies de tokenisation](tokenization-strategies.qmd) compare les familles d'algorithmes et leurs compromis.
+
+:::: {.language-switch}
+**Langue :** [Français](../fr/unicode-text.qmd) · [English](../en/unicode-text.qmd)
+::::
