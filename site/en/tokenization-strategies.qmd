@@ -63,6 +63,48 @@ Some SentencePiece outputs display a marker such as `▁` to represent a whitesp
 
 **SentencePiece** is a library that can train BPE or unigram models from raw text; it is not one algorithm. **Hugging Face Tokenizers** is a library of models and pipeline components. **tiktoken** is a BPE implementation with specific encodings. These names therefore do not all belong at the same comparison level.
 
+
+### Worked example: BPE merges on a tiny corpus
+
+This schematic example preserves an explicit trace of the merges. Teaching convention: each word starts as characters followed by an end-of-word marker `</w>`. The tiny corpus contains one occurrence each of `low`, `lower`, and `lowest`.
+
+| Word | Initial units |
+|---|---|
+| `low` | `l · o · w · </w>` |
+| `lower` | `l · o · w · e · r · </w>` |
+| `lowest` | `l · o · w · e · s · t · </w>` |
+
+Suppose tie-breaking selects `l + o → lo` first, then `lo + w → low`.
+
+| Step | `low` | `lower` | `lowest` |
+|---|---|---|---|
+| 0 | `l · o · w · </w>` | `l · o · w · e · r · </w>` | `l · o · w · e · s · t · </w>` |
+| 1: merge `l + o` | `lo · w · </w>` | `lo · w · e · r · </w>` | `lo · w · e · s · t · </w>` |
+| 2: merge `lo + w` | `low · </w>` | `low · e · r · </w>` | `low · e · s · t · </w>` |
+
+This table illustrates the mechanics, not a universal tokenizer output. Pre-tokenization, base units, frequencies, end-of-word handling, and tie-breaking affect the actual order. Later merges might create `er` or `est`, but that is not guaranteed. To manipulate candidate pairs, use the [BPE Explainer by Müller and Steinbach](https://philipmueller.dev/bpe-visualization/).
+
+### Tokenizer training versus encoding at inference
+
+Two processes must be distinguished:
+
+1. **Tokenizer training**: builds a vocabulary and, depending on the algorithm, rules or a merge order from a corpus.
+2. **Encoding new text**: applies the already learned rules to produce tokens and IDs; it does not recount frequencies or relearn the vocabulary for every request.
+
+```{mermaid}
+flowchart LR
+    A["Training corpus"] --> B["Pre-tokenization and base units"]
+    B --> C["Learn merges / vocabulary"]
+    C --> D["Saved tokenizer"]
+    E["New text"] --> F["Previously learned rules"]
+    D -. "reused" .-> F
+    F --> G["Tokens then IDs"]
+    G --> H["Compatible model"]
+```
+
+This diagram does not describe neural-network training, which is distinct and learns model parameters from sequences of token IDs. A byte-level tokenizer can cover arbitrary text input at the byte level, but not every BPE tokenizer is byte-level.
+
+
 ## 5. Examples that expose trade-offs
 
 The [overview page](text-data.qmd) illustrates Unicode normalization with precomposed `é` and decomposed `e\u0301`: they may look identical while having different code-point sequences. A tokenizer may normalize them before segmentation; inspect its configuration rather than assuming the outputs match.
