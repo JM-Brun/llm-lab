@@ -81,6 +81,10 @@ Pour cet exemple, les lignes deviennent approximativement `[0.881, 0.500, 0.119]
 
 **Invariant de débogage :** si la sortie est censée représenter \(p(\text{token}\mid\text{contexte à cette position})\), vérifier que la somme sur l'axe du vocabulaire vaut 1 pour chaque couple batch-position. Une forme correcte ne suffit pas ; l'invariant dépend de l'interprétation attendue.
 
+![Comparaison entre la softmax sur l’axe du vocabulaire V, qui produit une distribution par position, et sur l’axe de séquence T, qui donne ici des sommes de ligne égales à 1,5.](../images/softmax-axis-comparison-fr.svg){fig-alt="La matrice de gauche, normalisée sur V, a des sommes de ligne égales à un. La matrice de droite, normalisée sur T, a des sommes de ligne égales à 1,5 : l’opération est compatible avec la forme mais incorrecte pour représenter les probabilités du prochain token." width=100%}
+
+*Figure — Les mêmes logits prennent un sens différent selon l’axe de normalisation.*
+
 ## Exemple de lecture des dimensions
 
 Pour \(B=2\), \(T=4\) et \(D=8\), les états cachés ont la forme \((2,4,8)\). Une projection vers un vocabulaire de \(V=1000\) tokens produit des logits de forme \((2,4,1000)\). Le dernier axe correspond aux tokens candidats ; chaque couple batch-position porte ainsi une distribution après softmax sur cet axe.
