@@ -163,3 +163,135 @@ details > :last-child { margin-bottom: .15rem; }
 @media (prefers-reduced-motion: reduce) {
   .llm-flow .flow-node rect { transition: none; }
 }
+
+
+/* --- Visual-system refinement: consistent hierarchy, focus states, and reading surfaces. */
+:root {
+  --llm-ink: #183c2a;
+  --llm-teal: #176b45;
+  --llm-coral: #a96f19;
+  --llm-mist: #e8efdc;
+  --llm-line: #d2d9c8;
+  --llm-paper: #fbfbf3;
+  --llm-green-dark: #123d2a;
+  --llm-green-bright: #a6d96a;
+  --llm-soft-shadow: 0 8px 24px rgba(18, 61, 42, .07);
+}
+
+/* Keep the palette coherent: green is the interaction color; amber is an accent. */
+.quarto-title .subtitle { color: #52665a; }
+.eyebrow, .step { color: var(--llm-teal); }
+.method-step span { color: #8a5a13; }
+.principle { background: #edf4e7; }
+.chapter-lead { background: #f8f2df; border-left-color: #b98528; }
+.resource-list, .reference-card { background: var(--llm-paper); }
+.page-footer { color: #52665a; }
+
+/* Keyboard users should always see where focus is, including links and custom cards. */
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+.sidebar a:focus-visible,
+.navbar a:focus-visible {
+  outline: 3px solid #b98528;
+  outline-offset: 3px;
+  border-radius: .2rem;
+}
+.learning-card:focus-within {
+  outline: 2px solid var(--llm-teal);
+  outline-offset: 3px;
+}
+
+/* A restrained visual rhythm for technical content. */
+main.content h2 { scroll-margin-top: 5rem; }
+main.content h3 { scroll-margin-top: 5rem; }
+main.content blockquote {
+  margin: 1.4rem 0;
+  padding: .85rem 1.15rem;
+  border-left: 4px solid var(--llm-teal);
+  border-radius: 0 .45rem .45rem 0;
+  background: #edf4e7;
+  color: #30483a;
+}
+main.content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  border-color: var(--llm-line);
+  font-size: .95rem;
+}
+main.content table thead {
+  background: #e8efdc;
+  color: var(--llm-ink);
+}
+main.content table th,
+main.content table td {
+  padding: .65rem .8rem;
+  border-color: var(--llm-line);
+}
+main.content :not(pre) > code {
+  padding: .12em .32em;
+  border: 1px solid #d9e1d1;
+  border-radius: .3rem;
+  background: #edf2e7;
+  color: #214d35;
+  overflow-wrap: anywhere;
+}
+pre {
+  border-color: #cbd7c3;
+  background: #f9faf3;
+}
+pre code { color: #26352b; }
+.callout {
+  background-color: var(--llm-paper);
+}
+.callout.callout-note { border-left-color: var(--llm-teal); }
+.callout.callout-warning { border-left-color: #b98528; }
+.callout.callout-important,
+.callout.callout-caution { border-left-color: #9b4b35; }
+
+/* More deliberate card hover states without motion-dependent information. */
+.learning-card,
+.method-step,
+.reference-card,
+.resource-list {
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+.learning-card:hover,
+.reference-card:hover {
+  border-color: #91ae83;
+  box-shadow: var(--llm-soft-shadow);
+}
+.hero-intro .btn:focus-visible {
+  outline-color: #f0ce7a;
+  outline-offset: 4px;
+}
+.hero-intro .btn-primary:hover {
+  background: #c4ec8f;
+  border-color: #c4ec8f;
+}
+.hero-intro .btn-outline-primary {
+  background: rgba(5, 24, 15, .12);
+}
+
+/* Better responsive behavior for cards and dense technical figures. */
+@media (max-width: 900px) {
+  .learning-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main.content { padding-left: clamp(.75rem, 2vw, 1.25rem); padding-right: clamp(.75rem, 2vw, 1.25rem); }
+}
+@media (max-width: 700px) {
+  .learning-grid, .principle-grid, .method-grid { grid-template-columns: 1fr; }
+  .learning-card { padding: 1rem 1.05rem; }
+  main.content h2 { margin-top: 2.1rem; }
+  .hero-actions { align-items: stretch; }
+  .hero-actions .btn { width: 100%; text-align: center; }
+  .llm-flow-figure { overflow-x: auto; }
+  .llm-flow { min-width: 640px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .learning-card, .method-step, .reference-card, .resource-list {
+    transition: none;
+  }
+  .learning-card:hover { transform: none; }
+}
