@@ -52,11 +52,50 @@ A shape gives axis sizes, not semantics. Two tensors with shape \((B,T,D)\) can 
 - **Loss:** logits and labels must align on positions and the expected target token.
 - **Reduction:** a mean over valid tokens is not equivalent to a mean over the batch or all positions including padding.
 
+
+## Counterexample: softmax over the wrong axis
+
+Consider logits for one example, two positions, and three candidate tokens:
+
+```text
+position 0 : [2, 1, 0]
+position 1 : [0, 1, 2]
+shape       : (B=1, T=2, V=3)
+```
+
+At each position, we want a distribution over **candidate tokens**. Softmax must therefore operate on axis (V), the final axis in this convention:
+
+```python
+probs = logits.softmax(dim=-1)  # normalize the 3 tokens at each position
+```
+
+The probabilities sum to 1 over (V) at each position. By contrast:
+
+```python
+wrong = logits.softmax(dim=1)  # normalize the 2 positions, separately for each token
+```
+
+is mathematically valid and shape-compatible, but answers a different question: for each candidate token, it distributes mass across positions. The rows are generally no longer distributions over the vocabulary.
+
+**Debugging invariant:** if the output is intended to represent (p(\text{token}\mid\text{context at this position})), check that probabilities sum to 1 over the vocabulary axis for every batch-position pair. Correct shape is not enough; the invariant depends on the intended interpretation.
+
 ## Reading dimensions in an example
 
 For \(B=2\), \(T=4\), and \(D=8\), hidden states have shape \((2,4,8)\). A projection to a vocabulary of \(V=1000\) tokens produces logits of shape \((2,4,1000)\). The final axis corresponds to candidate tokens; each batch-position pair therefore has a distribution after softmax over that axis.
 
 Shape compatibility does not guarantee that the projection, mask, causal shift, or reduction is correct. Axis meaning and target semantics must also be checked.
+
+
+## Connections to other fields
+
+Axes are not just indices: they define the question being asked of the data. The same idea appears elsewhere, with important differences.
+
+- **Signal processing:** an array of shape ((T,C)) may represent time and sensor channels. Reducing over (T) computes a temporal statistic; reducing over (C) combines channels. Same operation, different meaning. [NumPy — array creation and dimensions](https://numpy.org/doc/stable/user/basics.creation.html) introduces the underlying array model.
+- **Databases and tabular analysis:** rows and columns have a semantic schema. Swapping columns without updating their interpretation can preserve a valid table while corrupting the analysis. Tensor dimensions play a similar role, although numeric axes can also be reordered and implicitly broadcast.
+- **Physics and geometry:** a mathematical tensor in the strict sense has components that follow transformation laws under a change of coordinates. A high-rank PyTorch array is not automatically such a tensor. The distinction matters when studying vectors, bases, coordinate changes, and invariance.
+- **Probability and information theory:** softmax defines a distribution only relative to a specific set of categories. In an LLM, that set is often the vocabulary; normalizing over positions produces a different quantity, not a token distribution.
+
+These connections are optional reading paths, not prerequisites. They could become standalone pages in a broader knowledge base; the LLM Lab learning path should remain understandable without those deeper dives.
 
 ## A terminology caveat: array rank and mathematical tensors
 
