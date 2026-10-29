@@ -156,6 +156,30 @@ Pour une comparaison équitable, rapportez les métriques par langue et type de 
 
 Les liens externes sont privilégiés plutôt que de recopier des figures dont la licence n'a pas été vérifiée. Pour le pipeline global, le schéma original ci-dessus est la figure de référence de cette page.
 
+
+### Illustration externe du pipeline
+
+![Pipeline de tokenisation du cours Hugging Face, montrant les étapes qui transforment le texte en tokens utilisables par le modèle.](https://huggingface.co/datasets/huggingface-course/documentation-images/resolve/main/en/chapter6/tokenization_pipeline.svg){fig-alt="Pipeline de tokenisation : normalisation, pré-tokenisation, modèle de tokenisation et post-traitement." width=100%}
+
+Cette illustration publiée provient du [cours Hugging Face, « Building a tokenizer, block by block »](https://huggingface.co/docs/course/chapter6/8). Elle complète le schéma conceptuel de la [page d'introduction](text-data.qmd) avec les composants d'un tokenizer. L'image est chargée depuis les ressources documentaires publiques du cours, sans copie locale ; la citation ne constitue pas une autorisation de redistribution.
+
+### Références de recherche complémentaires
+
+- [Ali et al. (2024), *Tokenizer Choice For LLM Training: Negligible or Crucial?*](https://aclanthology.org/2024.findings-naacl.247/) : examine les effets du choix du tokenizer sur les coûts et les performances, en rappelant que les métriques intrinsèques ne prédisent pas toujours les résultats en aval.
+- [Wegmann et al. (2025), *Tokenization is Sensitive to Language Variation*](https://aclanthology.org/2025.findings-acl.572/) : analyse les variations linguistiques et le rôle du pré-tokenizer.
+- [Arnett et al. (2025), *Explaining and Mitigating Crosslingual Tokenizer Inequities*](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html) : étudie les écarts de coût entre langues et des facteurs de conception tels que la taille du vocabulaire et le pré-tokenizer.
+- [Ahia et al. (2023), *Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/) : compare le coût de tokenisation entre 22 langues et discute ses implications pour les API.
+- [TokLens (ACL 2026 SRW)](https://aclanthology.org/2026.acl-srw.18/) : outil de mesure comparative multilingue à examiner comme méthode et logiciel, pas comme preuve qu'une seule métrique intrinsèque suffit.
+
+### Code pédagogique et références historiques
+
+- [OpenAI \`tiktoken\` — module éducatif](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) : implémentation simplifiée de BPE pour inspecter les fusions ; elle n'est pas le chemin optimisé de production.
+- [Andrej Karpathy — \`minbpe\`](https://github.com/karpathy/minbpe) : code compact pour suivre apprentissage et encodage ; comparer les conventions avant de conclure à la compatibilité.
+- [Sebastian Raschka — BPE from scratch](https://sebastianraschka.com/blog/2025/bpe-from-scratch.html) : notebook explicatif.
+- [Raschka — dépôt, chapitre 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) : implémentations et préparation des données textuelles.
+- [Gage (1994), *A New Algorithm for Data Compression*](https://dl.acm.org/doi/10.5555/177910.177914) : référence historique de la compression par paires d'octets. Les tokenizers modernes de LLM ajoutent des conventions que ce papier ne spécifie pas à lui seul.
+
+
 ## 7. Contre-exemples
 
 - **Moins de tokens = meilleur modèle.** Non : cela démontre d'abord une différence de longueur, pas de qualité.
