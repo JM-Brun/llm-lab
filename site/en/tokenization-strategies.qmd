@@ -90,6 +90,20 @@ This table poses questions to test, not exact outputs. To report a result, recor
 6. Evaluate downstream quality separately from latency, memory, throughput, and cost.
 7. Report limitations: corpus, versions, normalization, covered languages, and uncertainty.
 
+### Measuring a tokenizer without reducing quality to token count
+
+Research on multilingual tokenization costs does not always use the same metrics or denominators. Read each metric's operational definition before comparing results. See [Ahia et al. (2023)](https://aclanthology.org/2023.emnlp-main.614/) and the multilingual measurement work [TokLens (ACL 2026 SRW)](https://aclanthology.org/2026.acl-srw.18/).
+
+| Metric | Interpretation | Limitation |
+|---|---|---|
+| **Token count** | Sequence length produced for a given text | Depends on text, tokenizer, version, and normalization |
+| **Fertility** | Often, the average number of subword tokens per reference word | “Word” boundaries and punctuation handling can vary; state the denominator |
+| **Characters or bytes per token** | Ratio between source-text length and token count | Unicode characters, code points, and UTF-8 bytes are different units |
+| **Vocabulary coverage** | Ability to represent input units without an unknown token, depending on the system | Complete coverage does not imply efficient segmentation or downstream quality |
+| **Downstream quality** | Result on a defined task, by language and text type | Requires comparable budgets and evaluation conditions; cannot be inferred from an intrinsic metric |
+
+For fair comparison, report metrics by language and text type, and keep **representation cost**, **system cost**, and **task quality** separate. A shorter sequence is a real result, but it does not by itself demonstrate an overall improvement.
+
 ### Recommended visual resources
 
 1. [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/): interactive merge manipulation; best first intuition.
