@@ -44,21 +44,16 @@ La chaîne `"ChatGPT apprend."` peut être découpée en mots, sous-mots, caract
 
 ### Même texte, segmentations possibles différentes
 
-Le schéma compare deux sorties **hypothétiques** pour illustrer le principe ; ce ne sont pas les résultats d'un tokenizer réel. Les frontières et les IDs exacts dépendent de l'encodeur choisi.
+Une chaîne peut produire des fragments et des IDs différents selon le tokenizer. Le tableau est volontairement schématique : il ne prétend pas reproduire la sortie d'un encodeur réel.
 
-```{mermaid}
-flowchart TB
-    A["Même chaîne Unicode"] --> B["Tokenizer A"]
-    A --> C["Tokenizer B"]
-    B --> D["[fragment 1] [fragment 2] [fragment 3]"]
-    C --> E["[fragment 1] [fragment 2]"]
-    D --> F["IDs selon le vocabulaire A"]
-    E --> G["IDs selon le vocabulaire B"]
-    F --> H["Modèle entraîné avec A"]
-    G --> I["Modèle entraîné avec B"]
-```
+| Étape | Tokenizer A | Tokenizer B |
+|---|---|---|
+| Fragments | `[fragment 1]`, `[fragment 2]`, `[fragment 3]` | `[fragment 1]`, `[fragment 2]` |
+| Identifiants | Dépendent du vocabulaire A | Dépendent du vocabulaire B |
+| Modèle compatible | Poids entraînés avec A | Poids entraînés avec B |
 
-Ce que le schéma aide à voir : la même chaîne peut produire des longueurs de séquence et des IDs différents. Ce qu'il ne dit pas : qu'un tokenizer est universellement meilleur, ni que ses fragments correspondent à des unités de sens.
+Cette comparaison illustre seulement que la segmentation et la longueur peuvent changer. Elle ne démontre pas qu'un tokenizer est meilleur, ni que ses fragments correspondent à des unités de sens.
+
 
 
 ### De la chaîne à l'embedding : les transformations
@@ -87,19 +82,9 @@ Les méthodes sous-mots réutilisent des unités fréquentes tout en représenta
 
 Dans une version pédagogique simplifiée, BPE part d'unités de base, compte les paires adjacentes, fusionne une paire selon une règle définie et répète l'opération jusqu'à atteindre un critère d'arrêt.
 
-```{mermaid}
-flowchart TD
-    A["Corpus d'entraînement"] --> B["Unités de base"]
-    B --> C["Compter les paires adjacentes"]
-    C --> D["Choisir une paire selon la règle"]
-    D --> E["Ajouter la fusion au vocabulaire"]
-    E --> F{"Critère d'arrêt atteint ?"}
-    F -- Non --> C
-    F -- Oui --> G["Vocabulaire et règles appris"]
-    G --> H["Encodage d'un nouveau texte"]
-```
+Dans une version pédagogique, BPE part d'unités de base, compte les paires adjacentes, fusionne une paire selon une règle définie et répète l'opération jusqu'à atteindre un critère d'arrêt. Pour voir les fusions et l'évolution du vocabulaire pas à pas, utilisez la [visualisation interactive originale de Müller et Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/). Elle montre les paires fréquentes, les fusions et le vocabulaire qui se construit.
 
-Le schéma est simplifié : les tokenizers réels peuvent utiliser un pré-découpage par expressions régulières, travailler au niveau des octets et réserver des tokens spéciaux. Deux tokenizers appelés BPE ne sont donc pas nécessairement compatibles.
+Le pipeline reste simplifié : les tokenizers réels peuvent utiliser un pré-découpage par expressions régulières, travailler au niveau des octets et réserver des tokens spéciaux. Deux tokenizers appelés BPE ne sont donc pas nécessairement compatibles.
 
 Il faut distinguer :
 
@@ -127,13 +112,7 @@ Convention pédagogique : les mots sont initialement découpés en caractères, 
 | 1 : fusion `l + o` | `lo · w · </w>` | `lo · w · e · r · </w>` | `lo · w · e · s · t · </w>` |
 | 2 : fusion `lo + w` | `low · </w>` | `low · e · r · </w>` | `low · e · s · t · </w>` |
 
-```{mermaid}
-flowchart LR
-    A["l · o · w"] -->|"fusion 1 : l + o"| B["lo · w"]
-    B -->|"fusion 2 : lo + w"| C["low"]
-    C --> D["Le token low reçoit un ID dans le vocabulaire"]
-    D --> E["L'ID sélectionne une ligne de la matrice d'embeddings"]
-```
+**Pour une visualisation pas à pas des fusions**, consultez le [BPE Explainer de Müller et Steinbach](https://philipmueller.dev/bpe-visualization/). L'exemple tabulaire ci-dessus reste la trace locale, reproductible et textuelle utilisée dans ce guide ; la visualisation interactive externe apporte une vue plus riche sans répéter ici un troisième schéma de flux.
 
 C'est un exemple de suivi des fusions, pas une sortie universelle : les fréquences, le pré-découpage, le traitement des fins de mots et le départage influencent l'ordre réel. D'autres fusions pourraient ensuite créer `er` ou `est`, mais ce n'est pas garanti. À l'encodage, le tokenizer applique les règles apprises ; il ne recompte pas les fréquences du texte soumis. L'ID est attribué dans le vocabulaire final, il ne constitue pas la fusion elle-même.
 
