@@ -59,17 +59,7 @@ Les détails de bas niveau ne sont pas nécessaires pour suivre ce parcours. Pou
 
 Un même texte peut être découpé en un nombre différent de tokens selon le tokenizer. Les fragments et les IDs exacts dépendent de son vocabulaire et de sa configuration ; il n'existe pas de découpage universel à déduire du texte seul.
 
-À retenir : les tokens sont des unités de représentation, pas nécessairement des mots ni des unités de sens. Pour une comparaison réelle, il faut indiquer le tokenizer et sa version, puis mesurer la séquence obtenue.
-
-
-| Étape | Tokenizer A | Tokenizer B |
-|---|---|---|
-| Fragments (exemple schématique) | `[fragment 1]`, `[fragment 2]`, `[fragment 3]` | `[fragment 1]`, `[fragment 2]` |
-| IDs | Dépendent du vocabulaire A | Dépendent du vocabulaire B |
-| Modèle compatible | Poids associés à A | Poids associés à B |
-
-Ce tableau illustre seulement que la segmentation et la longueur peuvent changer. Il ne reproduit la sortie d'aucun encodeur réel et ne démontre pas qu'un tokenizer est meilleur. Les IDs sont des étiquettes : l'écart numérique entre 314 et 315, par exemple, ne signifie pas que les tokens correspondants sont proches en sens.
-
+À retenir : les tokens sont des unités de représentation, pas nécessairement des mots ni des unités de sens. La figure ci-dessous donne un exemple schématique de segmentation ; elle ne prétend pas reproduire la sortie d'un tokenizer réel. Pour une comparaison réelle, il faut indiquer le tokenizer et sa version, puis mesurer la séquence obtenue.
 
 ## 2. Pourquoi la tokenisation compte
 
@@ -96,7 +86,6 @@ La page principale reste centrée sur le parcours. Les détails techniques sont 
 - [Stratégies de tokenisation](tokenization-strategies.qmd) : pré-tokenisation, BPE, WordPiece, unigramme, exemples, comparaisons et limites.
 - [Unicode, UTF-8 et normalisation](unicode-text.qmd) : points de code, octets et chaînes visuellement identiques.
 - [Espace des embeddings](embedding-space.qmd) et [tenseurs](tensors.qmd) : dimensions, tables de poids et formes des représentations.
-
 
 ## 3. Mini-laboratoire de comparaison
 
