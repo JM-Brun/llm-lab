@@ -129,9 +129,9 @@ La taille du vocabulaire \(V\) et la dimension d'embedding \(d\) sont deux choix
 
 - **\(V\)** dépend du tokenizer et du vocabulaire qu'il définit, y compris les tokens spéciaux.
 - **\(d\)** est un hyperparamètre de l'architecture, choisi avec la profondeur, les têtes d'attention et le budget de calcul ; il n'est pas déduit de \(V\).
-- La table d'embeddings contient \\(Vd\\) paramètres.
+- La table d'embeddings contient \(Vd\) paramètres.
 
-**Ordre de grandeur calculable :** avec \\(V=50\,000\\) tokens et \\(d=768\\), la table contient \\(50\,000\times768=38\,400\,000\\) paramètres. En précision 32 bits, les poids seuls occupent environ 153,6 MB en unités décimales (ou 146,5 MiB), hors gradients, états de l'optimiseur et autres paramètres. C'est une estimation du coût de la table, pas la description d'un modèle particulier.
+**Ordre de grandeur calculable :** avec \(V=50\,000\) tokens et \(d=768\), la table contient \(50\,000\times768=38\,400\,000\) paramètres. En précision 32 bits, les poids seuls occupent environ 153,6 MB en unités décimales (ou 146,5 MiB), hors gradients, états de l'optimiseur et autres paramètres. C'est une estimation du coût de la table, pas la description d'un modèle particulier.
 - Si la projection de sortie possède une matrice distincte, elle ajoute typiquement \(dV\) paramètres, éventuellement plus un biais. Certains modèles partagent les poids d'entrée et de sortie (*weight tying*) : il faut vérifier l'architecture avant d'additionner les deux matrices.
 - Les IDs et les poids associés sont couplés. Modifier le vocabulaire, l'ordre des IDs ou \(V\) exige une stratégie explicite d'adaptation ou de réentraînement ; ce n'est pas une substitution neutre.
 
