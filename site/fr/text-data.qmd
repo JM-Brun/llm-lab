@@ -20,15 +20,7 @@ Un modèle de langage reçoit une séquence d'identifiants numériques, pas du t
 
 Une chaîne Python représente du texte Unicode. Son encodage UTF-8 produit une séquence d'octets. Un tokenizer applique ensuite des règles de découpage et un vocabulaire pour produire des tokens, puis des identifiants entiers.
 
-```{mermaid}
-flowchart LR
-    A["Texte Unicode"] --> B["Prétraitement éventuel"]
-    B --> C["Découpage initial"]
-    C --> D["Tokens / fragments"]
-    D --> E["Identifiants entiers"]
-    E --> F["Table d'embeddings"]
-    F --> G["Vecteurs d'entrée"]
-```
+Le pipeline complet est détaillé dans le schéma « De la chaîne à l'embedding » ci-dessous, qui distingue pré-tokenisation, vocabulaire, tokens, IDs, lookup d'embeddings et représentations contextualisées.
 
 Ce pipeline est conceptuel : les tokenizers varient par leur normalisation, leurs unités de base, leur pré-découpage, leur vocabulaire et leurs tokens spéciaux.
 
@@ -44,21 +36,33 @@ La chaîne `"ChatGPT apprend."` peut être découpée en mots, sous-mots, caract
 
 ### Même texte, segmentations possibles différentes
 
-Le schéma compare deux sorties **hypothétiques** pour illustrer le principe ; ce ne sont pas les résultats d'un tokenizer réel. Les frontières et les IDs exacts dépendent de l'encodeur choisi.
+Une chaîne peut produire des fragments et des IDs différents selon le tokenizer. Le tableau est volontairement schématique : il ne prétend pas reproduire la sortie d'un encodeur réel.
+
+| Étape | Tokenizer A | Tokenizer B |
+|---|---|---|
+| Fragments | `[fragment 1]`, `[fragment 2]`, `[fragment 3]` | `[fragment 1]`, `[fragment 2]` |
+| Identifiants | Dépendent du vocabulaire A | Dépendent du vocabulaire B |
+| Modèle compatible | Poids entraînés avec A | Poids entraînés avec B |
+
+Cette comparaison illustre seulement que la segmentation et la longueur peuvent changer. Elle ne démontre pas qu'un tokenizer est meilleur, ni que ses fragments correspondent à des unités de sens.
+
+
+
+### De la chaîne à l'embedding : les transformations
 
 ```{mermaid}
-flowchart TB
-    A["Même chaîne Unicode"] --> B["Tokenizer A"]
-    A --> C["Tokenizer B"]
-    B --> D["[fragment 1] [fragment 2] [fragment 3]"]
-    C --> E["[fragment 1] [fragment 2]"]
-    D --> F["IDs selon le vocabulaire A"]
-    E --> G["IDs selon le vocabulaire B"]
-    F --> H["Modèle entraîné avec A"]
-    G --> I["Modèle entraîné avec B"]
+flowchart TD
+    A["Texte Unicode"] --> B["Normalisation éventuelle"]
+    B --> C["Pré-tokenisation"]
+    C --> D["Algorithme + vocabulaire appris"]
+    D --> E["Tokens : fragments de texte ou d'octets"]
+    E --> F["IDs entiers : indices du vocabulaire"]
+    F --> G["Lookup dans la matrice E"]
+    G --> H["Vecteurs : E[id]"]
+    H --> I["Réseau neuronal : représentations contextualisées"]
 ```
 
-Ce que le schéma aide à voir : la même chaîne peut produire des longueurs de séquence et des IDs différents. Ce qu'il ne dit pas : qu'un tokenizer est universellement meilleur, ni que ses fragments correspondent à des unités de sens.
+Pour une matrice d'embeddings E de forme (V, d), l'ID i sélectionne la ligne E[i], un vecteur de dimension d. V est la taille du vocabulaire. Cette lookup n'est pas encore, en général, la représentation contextualisée après les blocs Transformer. Les IDs sont des indices arbitraires : la différence numérique entre deux IDs n'a pas d'interprétation sémantique. Normalisation, pré-tokenisation, unités de base et tokens spéciaux dépendent du tokenizer.
 
 ## 2. Pourquoi le découpage par espaces ne suffit pas
 
@@ -70,19 +74,9 @@ Les méthodes sous-mots réutilisent des unités fréquentes tout en représenta
 
 Dans une version pédagogique simplifiée, BPE part d'unités de base, compte les paires adjacentes, fusionne une paire selon une règle définie et répète l'opération jusqu'à atteindre un critère d'arrêt.
 
-```{mermaid}
-flowchart TD
-    A["Corpus d'entraînement"] --> B["Unités de base"]
-    B --> C["Compter les paires adjacentes"]
-    C --> D["Choisir une paire selon la règle"]
-    D --> E["Ajouter la fusion au vocabulaire"]
-    E --> F{"Critère d'arrêt atteint ?"}
-    F -- Non --> C
-    F -- Oui --> G["Vocabulaire et règles appris"]
-    G --> H["Encodage d'un nouveau texte"]
-```
+Dans une version pédagogique, BPE part d'unités de base, compte les paires adjacentes, fusionne une paire selon une règle définie et répète l'opération jusqu'à atteindre un critère d'arrêt. Pour voir les fusions et l'évolution du vocabulaire pas à pas, utilisez la [visualisation interactive originale de Müller et Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/). Elle montre les paires fréquentes, les fusions et le vocabulaire qui se construit.
 
-Le schéma est simplifié : les tokenizers réels peuvent utiliser un pré-découpage par expressions régulières, travailler au niveau des octets et réserver des tokens spéciaux. Deux tokenizers appelés BPE ne sont donc pas nécessairement compatibles.
+Le pipeline reste simplifié : les tokenizers réels peuvent utiliser un pré-découpage par expressions régulières, travailler au niveau des octets et réserver des tokens spéciaux. Deux tokenizers appelés BPE ne sont donc pas nécessairement compatibles.
 
 Il faut distinguer :
 
@@ -90,6 +84,29 @@ Il faut distinguer :
 2. **Encodage** : applique le tokenizer déjà appris ; il ne réapprend pas le vocabulaire à chaque requête.
 
 Un tokenizer BPE au niveau des octets peut représenter des entrées textuelles arbitraires grâce à ses unités de base. Tous les tokenizers BPE ne sont toutefois pas byte-level, et le résultat dépend aussi du pré-découpage et du vocabulaire.
+
+
+### Exemple concret : fusions BPE sur un petit corpus
+
+Convention pédagogique : les mots sont initialement découpés en caractères, avec un marqueur de fin `</w>`. Le corpus contient une occurrence de `low`, `lower` et `lowest`.
+
+| Mot | Unités initiales |
+|---|---|
+| `low` | `l · o · w · </w>` |
+| `lower` | `l · o · w · e · r · </w>` |
+| `lowest` | `l · o · w · e · s · t · </w>` |
+
+À chaque itération, BPE compte les paires adjacentes et fusionne une paire selon sa règle de sélection. Supposons que le départage choisisse d'abord `l + o → lo`, puis `lo + w → low`.
+
+| Étape | `low` | `lower` | `lowest` |
+|---|---|---|---|
+| 0 | `l · o · w · </w>` | `l · o · w · e · r · </w>` | `l · o · w · e · s · t · </w>` |
+| 1 : fusion `l + o` | `lo · w · </w>` | `lo · w · e · r · </w>` | `lo · w · e · s · t · </w>` |
+| 2 : fusion `lo + w` | `low · </w>` | `low · e · r · </w>` | `low · e · s · t · </w>` |
+
+**Pour une visualisation pas à pas des fusions**, consultez le [BPE Explainer de Müller et Steinbach](https://philipmueller.dev/bpe-visualization/). L'exemple tabulaire ci-dessus reste la trace locale, reproductible et textuelle utilisée dans ce guide ; la visualisation interactive externe apporte une vue plus riche sans répéter ici un troisième schéma de flux.
+
+C'est un exemple de suivi des fusions, pas une sortie universelle : les fréquences, le pré-découpage, le traitement des fins de mots et le départage influencent l'ordre réel. D'autres fusions pourraient ensuite créer `er` ou `est`, mais ce n'est pas garanti. À l'encodage, le tokenizer applique les règles apprises ; il ne recompte pas les fréquences du texte soumis. L'ID est attribué dans le vocabulaire final, il ne constitue pas la fusion elle-même.
 
 ## 4. Conséquences pour le modèle
 
@@ -105,18 +122,13 @@ La tokenisation ne garantit ni compréhension sémantique, ni vérité, ni calib
 
 Le nombre de tokens est une mesure utile de **coût de représentation**, pas une mesure suffisante de qualité. Un tokenizer peut compresser efficacement un corpus global tout en représentant moins efficacement certaines langues, écritures, formes morphologiques ou types de texte. Inversement, réduire le nombre de tokens ne garantit pas à lui seul de meilleures performances en aval.
 
-```{mermaid}
-flowchart LR
-    A["Texte multilingue"] --> B["Mesures intrinsèques"]
-    B --> C["Fertilité et longueur en tokens"]
-    B --> D["Compression et couverture"]
-    C --> E["Coût : contexte, mémoire, débit"]
-    D --> E
-    E --> F["Évaluation en aval par langue et par tâche"]
-    F --> G["Décision avec compromis explicites"]
-```
+Les compromis doivent être évalués sur plusieurs axes, sans supposer une relation causale simple :
 
-Ce schéma représente une **chaîne de questions d'évaluation**, pas une loi causale ni des résultats mesurés. Pour comparer des tokenizers, il faut contrôler les textes, les versions, les règles de normalisation et les budgets ; puis vérifier les performances sur des tâches pertinentes.
+- **Mesures intrinsèques** : fertilité, longueur en tokens, compression et couverture.
+- **Coût système** : contexte consommé, mémoire, latence et débit.
+- **Résultats en aval** : qualité par langue et par tâche, sous des budgets comparables.
+
+Pour comparer des tokenizers, contrôlez les textes, les versions, les règles de normalisation et les budgets ; puis vérifiez les performances sur des tâches pertinentes.
 
 Ressources de recherche pour approfondir ce point de vue :
 
@@ -192,6 +204,10 @@ Utiliser les visualiseurs ci-dessus avec les mêmes chaînes et noter les diffé
 - **« L'identifiant contient du sens. »** Pas en soi : c'est une étiquette discrète ; les vecteurs sont appris.
 - **« Une chaîne inconnue ne peut pas être encodée. »** Pas nécessairement : un tokenizer byte-level dispose d'unités de base couvrant les octets, sous réserve de ses règles d'encodage.
 - **« Le tokenizer est une couche du Transformer. »** C'est une étape distincte, même si modèle et tokenizer doivent être compatibles.
+
+## Pour approfondir : stratégies de tokenisation
+
+Le guide [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.qmd) compare mots, caractères, octets, sous-mots, BPE, WordPiece et unigramme.
 
 ## Pour poursuivre
 

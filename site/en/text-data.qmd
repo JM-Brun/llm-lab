@@ -20,15 +20,7 @@ A language model receives a sequence of numerical IDs, not raw text. Tokenizatio
 
 A Python string represents Unicode text. UTF-8 encoding produces bytes. A tokenizer then applies splitting rules and a vocabulary to produce tokens and integer IDs.
 
-```{mermaid}
-flowchart LR
-    A["Unicode text"] --> B["Optional preprocessing"]
-    B --> C["Initial splitting"]
-    C --> D["Tokens / fragments"]
-    D --> E["Integer IDs"]
-    E --> F["Embedding table"]
-    F --> G["Input vectors"]
-```
+The complete pipeline is detailed in the “From a string to an embedding” diagram below, which distinguishes pre-tokenization, vocabulary, tokens, IDs, embedding lookup, and contextual representations.
 
 This pipeline is conceptual: tokenizers differ in normalization, base units, pre-tokenization, vocabulary, and special-token handling.
 
@@ -44,21 +36,33 @@ The string `"ChatGPT is learning."` may be split into words, subwords, character
 
 ### Same text, potentially different segmentations
 
-The diagram compares two **hypothetical** outputs to illustrate the principle; these are not the outputs of a real tokenizer. Exact boundaries and IDs depend on the chosen encoder.
+The same string can produce different fragments and IDs with different tokenizers. This table is schematic; it does not claim to reproduce any real encoder's output.
+
+| Stage | Tokenizer A | Tokenizer B |
+|---|---|---|
+| Fragments | `[fragment 1]`, `[fragment 2]`, `[fragment 3]` | `[fragment 1]`, `[fragment 2]` |
+| IDs | Depend on vocabulary A | Depend on vocabulary B |
+| Compatible model | Weights trained with A | Weights trained with B |
+
+This comparison only illustrates that segmentation and sequence length can change. It does not show that one tokenizer is better or that its fragments correspond to units of meaning.
+
+
+
+### From a string to an embedding: the transformations
 
 ```{mermaid}
-flowchart TB
-    A["Same Unicode string"] --> B["Tokenizer A"]
-    A --> C["Tokenizer B"]
-    B --> D["[fragment 1] [fragment 2] [fragment 3]"]
-    C --> E["[fragment 1] [fragment 2]"]
-    D --> F["IDs under vocabulary A"]
-    E --> G["IDs under vocabulary B"]
-    F --> H["Model trained with A"]
-    G --> I["Model trained with B"]
+flowchart TD
+    A["Unicode text"] --> B["Optional normalization"]
+    B --> C["Pre-tokenization"]
+    C --> D["Algorithm + learned vocabulary"]
+    D --> E["Tokens: text or byte fragments"]
+    E --> F["Integer IDs: vocabulary indices"]
+    F --> G["Lookup in matrix E"]
+    G --> H["Vectors: E[id]"]
+    H --> I["Neural network: contextual representations"]
 ```
 
-What this diagram shows: the same string can yield different sequence lengths and IDs. What it does not show: that one tokenizer is universally better, or that its fragments correspond to units of meaning.
+For an embedding matrix E with shape (V, d), ID i selects row E[i], a vector of dimension d. V is vocabulary size. This lookup is not generally the contextual representation produced after Transformer blocks. IDs are arbitrary indices: the numerical difference between two IDs has no semantic interpretation. Normalization, pre-tokenization, base units, and special tokens depend on the tokenizer.
 
 ## 2. Why whitespace splitting is not enough
 
@@ -70,19 +74,9 @@ Subword methods reuse frequent units while retaining a way to represent less fre
 
 In a simplified educational version, BPE starts from base units, counts adjacent pairs, merges a selected pair according to a defined rule, and repeats until a stopping criterion is met.
 
-```{mermaid}
-flowchart TD
-    A["Training corpus"] --> B["Base units"]
-    B --> C["Count adjacent pairs"]
-    C --> D["Choose a pair by the rule"]
-    D --> E["Add merge to vocabulary"]
-    E --> F{"Stopping criterion reached?"}
-    F -- No --> C
-    F -- Yes --> G["Learned vocabulary and rules"]
-    G --> H["Encode new text"]
-```
+In an educational version, BPE starts from base units, counts adjacent pairs, merges a selected pair according to a defined rule, and repeats until a stopping criterion is met. To inspect merges and vocabulary growth step by step, use the [original interactive BPE Explainer by Müller and Steinbach](https://philipmueller.dev/bpe-visualization/). It visualizes frequent pairs, merges, and the growing vocabulary.
 
-This diagram is simplified: real tokenizers may use regex-based pre-tokenization, operate at the byte level, and reserve special tokens. Two tokenizers called BPE are therefore not necessarily compatible.
+The pipeline is still simplified: real tokenizers may use regex-based pre-tokenization, operate at the byte level, and reserve special tokens. Two tokenizers called BPE are therefore not necessarily compatible.
 
 Distinguish:
 
@@ -90,6 +84,29 @@ Distinguish:
 2. **Encoding** applies the already learned tokenizer; it does not relearn the vocabulary for every request.
 
 A byte-level BPE tokenizer can represent arbitrary text inputs using byte-level base units. Not every BPE tokenizer is byte-level, and segmentation also depends on pre-tokenization and the learned vocabulary.
+
+
+### Worked example: BPE merges on a tiny corpus
+
+Educational convention: words start as characters plus an end-of-word marker `</w>`. The corpus contains one occurrence each of `low`, `lower`, and `lowest`.
+
+| Word | Initial units |
+|---|---|
+| `low` | `l · o · w · </w>` |
+| `lower` | `l · o · w · e · r · </w>` |
+| `lowest` | `l · o · w · e · s · t · </w>` |
+
+At each iteration, BPE counts adjacent pairs and merges a pair according to its selection rule. Suppose tie-breaking selects `l + o → lo` first, then `lo + w → low`.
+
+| Step | `low` | `lower` | `lowest` |
+|---|---|---|---|
+| 0 | `l · o · w · </w>` | `l · o · w · e · r · </w>` | `l · o · w · e · s · t · </w>` |
+| 1: merge `l + o` | `lo · w · </w>` | `lo · w · e · r · </w>` | `lo · w · e · s · t · </w>` |
+| 2: merge `lo + w` | `low · </w>` | `low · e · r · </w>` | `low · e · s · t · </w>` |
+
+**For a step-by-step visual trace of merges**, see the [BPE Explainer by Müller and Steinbach](https://philipmueller.dev/bpe-visualization/). The table above remains the local, reproducible textual trace used in this guide; the external interactive visualization adds a richer view without repeating a third flowchart here.
+
+This traces merges; it is not a universal output. Frequencies, pre-tokenization, end-of-word handling, and tie-breaking affect the actual order. Later merges might create `er` or `est`, but that is not guaranteed. During encoding, the tokenizer applies learned rules; it does not recount frequencies from the input. An ID is assigned in the final vocabulary; it is not the merge operation itself.
 
 ## 4. Consequences for the model
 
@@ -105,18 +122,13 @@ Tokenization guarantees neither semantic understanding, truth, nor calibration. 
 
 Token count is a useful measure of **representation cost**, not a sufficient measure of quality. A tokenizer may compress a corpus efficiently overall while representing some languages, scripts, morphological forms, or text types less efficiently. Conversely, reducing token count does not by itself guarantee better downstream performance.
 
-```{mermaid}
-flowchart LR
-    A["Multilingual text"] --> B["Intrinsic measurements"]
-    B --> C["Fertility and token length"]
-    B --> D["Compression and coverage"]
-    C --> E["Cost: context, memory, throughput"]
-    D --> E
-    E --> F["Downstream evaluation by language and task"]
-    F --> G["Decision with explicit trade-offs"]
-```
+Trade-offs should be evaluated along several axes without assuming a simple causal relationship:
 
-This diagram represents a **sequence of evaluation questions**, not a causal law or measured result. Tokenizers should be compared on controlled text, versions, normalization rules, and budgets, followed by evaluation on relevant downstream tasks.
+- **Intrinsic measurements**: fertility, token length, compression, and coverage.
+- **System cost**: context consumed, memory, latency, and throughput.
+- **Downstream results**: quality by language and task under comparable budgets.
+
+Compare tokenizers on controlled text, versions, normalization rules, and budgets, followed by evaluation on relevant downstream tasks.
 
 Research resources for this complementary perspective:
 
@@ -192,6 +204,10 @@ Use the visualizers above with the same strings and record the differences. Do n
 - **“The ID contains meaning.”** Not by itself: it is a discrete label; vectors are learned.
 - **“An unknown string cannot be encoded.”** Not necessarily: byte-level tokenizers have base units that cover bytes, subject to their encoding rules.
 - **“The tokenizer is a Transformer layer.”** It is a separate stage, although the tokenizer and model must be compatible.
+
+## Go deeper: tokenization strategies
+
+The guide [Tokenization strategies: granularity, algorithms, and trade-offs](tokenization-strategies.qmd) compares word, character, byte, subword, BPE, WordPiece, and unigram approaches.
 
 ## Continue learning
 
