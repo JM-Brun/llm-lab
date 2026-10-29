@@ -86,7 +86,7 @@ Cette figure illustre la dépendance du découpage aux règles et au vocabulaire
 
 Le nombre de tokens est un indicateur de longueur, pas un score global de qualité. Une évaluation rigoureuse distingue l'efficacité de représentation, les performances sur des tâches en aval, les écarts entre langues et la reproductibilité du protocole. Les résultats dépendent du corpus, de la tâche, du modèle et des budgets comparés.
 
-Pour comprendre ces dimensions et examiner les travaux scientifiques associés, consultez **[Évaluer un tokenizer : métriques, performances et équité multilingue](tokenization-strategies.qmd#evaluer-un-tokenizer-metriques-performances-et-equite-multilingue)**.
+Pour comprendre ces dimensions et examiner les travaux scientifiques associés, consultez **[Évaluer un tokenizer : métriques, performances et équité multilingue](tokenization-strategies.qmd#tokenizer-evaluation)**.
 
 ### Pour approfondir les mécanismes
 
