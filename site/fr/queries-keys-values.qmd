@@ -8,6 +8,8 @@ lang: fr
 À chaque position, le Transformer calcule trois vecteurs à partir de la représentation du token : une **requête** (Q), une **clé** (K) et une **valeur** (V). Les requêtes et les clés servent à calculer les poids d'attention ; ces poids déterminent ensuite comment combiner les valeurs.
 :::
 
+Imagine une collection de fiches. Une **requête** exprime ce qu'une position cherche ; une **clé** aide à comparer les positions disponibles ; une **valeur** porte l'information qui sera agrégée. Cette analogie distingue les rôles, mais ne signifie pas que le modèle effectue une recherche symbolique explicite.
+
 ## L'idée en un schéma
 
 ![Schéma des projections Q, K et V : Q et K calculent les poids d'attention, qui servent à combiner les valeurs V.](../images/queries-keys-values.svg){fig-alt="Les représentations d'entrée sont projetées en requêtes, clés et valeurs. Les requêtes sont comparées aux clés ; les poids obtenus pondèrent les valeurs pour produire une représentation contextualisée." width=100%}
@@ -18,6 +20,16 @@ Le calcul se déroule en deux étapes :
 2. **Combiner.** Le modèle calcule une somme pondérée des valeurs. Les positions qui reçoivent un poids plus élevé contribuent davantage à cette nouvelle représentation.
 
 Le vocabulaire vient d'une analogie avec la recherche d'information : une requête indique ce qu'on cherche, une clé permet de comparer les éléments disponibles, et une valeur contient l'information à récupérer. Dans un réseau neuronal, ces rôles sont portés par des vecteurs appris ; ils ne sont pas des étiquettes lisibles par un humain.
+
+## Un exemple numérique : les poids ne sont pas les valeurs
+
+Considérons une requête qui produit deux scores d'attention, \(s=(0,\ln 3)\). Après *softmax*, les poids valent \((0{,}25, 0{,}75)\). Si les deux vecteurs de valeur sont ici de simples scalaires \(v_1=2\) et \(v_2=10\), la sortie agrégée est :
+
+\[
+o=0{,}25\times 2+0{,}75\times 10=8.
+\]
+
+Cet exemple sépare les deux rôles : les scores issus de Q et K déterminent **les poids** ; les valeurs V fournissent **les contenus agrégés**. Il ne signifie pas que les valeurs sont toujours scalaires, ni que les poids révèlent à eux seuls une explication de la prédiction. Dans un vrai modèle, les scores et les valeurs sont des vecteurs calculés par des projections apprises.
 
 ## D'où viennent Q, K et V ?
 
