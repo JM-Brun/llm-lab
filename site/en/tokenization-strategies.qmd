@@ -141,7 +141,8 @@ from importlib.metadata import version
 from transformers import AutoTokenizer
 
 model_id = "gpt2"
-tokenizer = AutoTokenizer.from_pretrained(model_id)
+revision = "YOUR_COMMIT_SHA"  # Replace with the exact model commit SHA
+tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision)
 text = " Hello world — café"
 
 ids = tokenizer.encode(text, add_special_tokens=False)
