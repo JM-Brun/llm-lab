@@ -42,6 +42,25 @@ Use this small record in the audit inventory or PR description; do not create a 
 
 **Stop condition:** do not keep searching once the learner problem is addressed, the technical claim is grounded, and the remaining uncertainty is documented. If those conditions are not met, state the gap instead of disguising it with more links or decorative graphics.
 
+### Choosing complementary angles and media
+
+Do not assume every difficult concept needs an animation. Choose a representation based on the learning question, and consider whether a second angle reveals something the first hides.
+
+| Angle | Useful medium | Question it should answer | Common risk |
+|---|---|---|---|
+| Big picture / causal flow | System diagram or sequence diagram | Where does this quantity come from and what uses it next? | Hiding tensor axes, branching, or implementation conditions. |
+| Geometry / spatial intuition | Original figure or animation | What changes direction, distance, projection, or shape? | Suggesting that a geometric picture is the full mathematical object. |
+| Numerical behaviour | Worked example, table, or plotted curve | How does the output change when one input changes? | Choosing values that hide edge cases or nonlinear behaviour. |
+| Algorithm / time evolution | Animation or step-by-step frames | What changes at each step, and what stays fixed? | Decoration, cognitive overload, or implying continuous dynamics where there are discrete steps. |
+| Counterexample / failure mode | Side-by-side cases | When does the intuition fail or become misleading? | Treating one example as a universal theorem. |
+| Empirical evidence | Plot with data, uncertainty, and baseline | What was observed, under which conditions? | Presenting an illustrative sketch as measured evidence. |
+| Alternative analogy | Short analogy plus explicit mapping/limits | What familiar structure helps explain the unfamiliar one? | Reifying the analogy or carrying its irrelevant properties into the model. |
+
+For important concepts, look for at least two **complementary angles**, not simply two sources repeating the same explanation. A strong combination is often: (a) a mental model, (b) a numerical or counterexample check, and (c) a primary/official source that grounds the formal claim. Add an animation only when the order or evolution of operations matters.
+
+When using an analogy, write down both the mapping and the break point. Example: “cross-entropy is a penalty for the probability assigned to the observed target” is useful; “cross-entropy tells us whether the answer is true” is a false extension of the analogy. If no distinct learning question is served by a second visual, retain the simpler page.
+
+
 
 ## Visual explainers and technical diagrams
 
