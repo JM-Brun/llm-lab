@@ -158,11 +158,11 @@ To experiment with editable examples in an interactive tool, open the [BPE Expla
 
 This is an original conceptual illustration. For scientific results, read [Ahia et al. (2023), *Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/); [the original PDF](https://aclanthology.org/2023.emnlp-main.614.pdf) is linked separately. Figure 1 from the paper is not copied into this repository.
 
-#### GPT tokenizer: video thumbnail
+#### Tokenization pipeline: a published illustration
 
-[![Thumbnail for Andrej Karpathy's video “Let's build the GPT Tokenizer”](https://img.youtube.com/vi/zduSFxRajkE/hqdefault.jpg)](https://www.youtube.com/watch?v=zduSFxRajkE)
+![Tokenization pipeline from the Hugging Face course, showing the stages that transform text into model-ready tokens.](https://huggingface.co/datasets/huggingface-course/documentation-images/resolve/main/en/chapter6/tokenization_pipeline.svg){fig-alt="Tokenization pipeline: normalization, pre-tokenization, tokenization model, and post-processing." width=100%}
 
-The thumbnail above is displayed as an image and links to [the original YouTube video](https://www.youtube.com/watch?v=zduSFxRajkE).
+This is an illustration from the [Hugging Face course, “Building a tokenizer, block by block”](https://huggingface.co/docs/course/chapter6/8), not a video thumbnail. It complements the original diagrams above with a published overview of the tokenizer pipeline. The image is served from the course's public documentation assets rather than copied into this repository.
 
 
 **Rights and provenance:** external figures are cited and linked, but are not copied into the repository without established permission. The SVGs above are original, schematic LLM Lab illustrations; they do not claim to reproduce a publication's results.
