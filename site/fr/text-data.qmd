@@ -85,6 +85,10 @@ Cette décision de représentation a plusieurs conséquences :
 
 La segmentation n'est ni une analyse linguistique parfaite, ni une mesure du sens. Une segmentation plus courte n'implique pas à elle seule un meilleur modèle.
 
+![Illustration conceptuelle : un même contenu peut être représenté par un nombre différent de tokens selon le système de tokenisation.](../images/tokenization-language-cost-fr.svg){fig-alt="Illustration schématique comparant une phrase découpée en cinq tokens et une autre représentation découpée en davantage de fragments. Les fragments ne sont pas des sorties réelles de tokenizers." fig-cap="Le coût en tokens peut varier selon la langue et le tokenizer. Les fragments sont fictifs : cette figure ne présente ni une traduction exacte ni des mesures expérimentales." width=100%}
+
+Cette figure sert à formuler une hypothèse à tester, pas à prédire un résultat. Pour une comparaison empirique, utilisez les mêmes contenus, consignez le tokenizer et sa version, puis rapportez les mesures par langue et type de texte. Voir notamment [Ahia et al. (2023)](https://aclanthology.org/2023.emnlp-main.614/) ; leurs résultats ne sont pas représentés par cette illustration.
+
 ### Pour approfondir les mécanismes
 
 La page principale reste centrée sur le parcours. Les détails techniques sont traités dans des pages dédiées :
