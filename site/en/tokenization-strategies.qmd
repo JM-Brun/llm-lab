@@ -53,7 +53,7 @@ Not every tokenizer exposes or uses these stages in the same way. An algorithm n
 
 Some SentencePiece outputs display a marker such as `▁` to represent a whitespace boundary under that tokenizer's convention. It is not a universal symbol used by all tokenizers, nor does it mean that a literal space is always stored in this form. Interpret output using the documentation for the exact model.
 
-## 3. BPE, WordPiece, and unigram
+## 4. BPE, WordPiece, and unigram
 
 | Family | Core idea | Limitation to remember |
 |---|---|---|
@@ -63,7 +63,7 @@ Some SentencePiece outputs display a marker such as `▁` to represent a whitesp
 
 **SentencePiece** is a library that can train BPE or unigram models from raw text; it is not one algorithm. **Hugging Face Tokenizers** is a library of models and pipeline components. **tiktoken** is a BPE implementation with specific encodings. These names therefore do not all belong at the same comparison level.
 
-## 4. Examples that expose trade-offs
+## 5. Examples that expose trade-offs
 
 The [overview page](text-data.qmd) illustrates Unicode normalization with precomposed `é` and decomposed `e\u0301`: they may look identical while having different code-point sequences. A tokenizer may normalize them before segmentation; inspect its configuration rather than assuming the outputs match.
 
@@ -80,7 +80,7 @@ The [overview page](text-data.qmd) illustrates Unicode normalization with precom
 
 This table poses questions to test, not exact outputs. To report a result, record tokenizer/version, input string, visible tokens, and token count.
 
-## 5. Reproducible comparison
+## 6. Reproducible comparison
 
 1. Fix the texts, encoding, cleaning, and document handling.
 2. Record the exact tokenizer, package version, encoding identifier, and parameters.
@@ -114,7 +114,7 @@ For fair comparison, report metrics by language and text type, and keep **repres
 
 These are external links rather than copied figures whose licences have not been checked. For the overall pipeline, the original diagram above is this page's reference figure.
 
-## 6. Counterexamples
+## 7. Counterexamples
 
 - **Fewer tokens = a better model.** No: it first demonstrates a length difference, not quality.
 - **BPE discovers morphemes.** No: linguistic analysis is not guaranteed.
