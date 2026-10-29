@@ -90,27 +90,6 @@ This overview stays focused on the pipeline. Technical details live on dedicated
 - [Unicode, UTF-8, and normalization](unicode-text.qmd): code points, bytes, and visually identical strings.
 - [Embedding space](embedding-space.qmd) and [tensors](tensors.qmd): dimensions, weight tables, and representation shapes.
 
-## 2 bis. Evaluating a tokenizer: several questions, not one score
-
-Token count is useful, but it cannot establish that a tokenizer is “better”. A careful comparison separates at least four dimensions:
-
-![Four complementary angles for evaluating a tokenizer: representation efficiency, downstream behaviour, variation across languages, and reproducibility.](../images/tokenizer-evaluation-dimensions.svg){fig-alt="Four distinct dimensions: compression and sequence length; downstream task results; variation across languages and text types; and a reproducible protocol identifying tokenizer, version, and corpus." fig-cap="A reading framework, not an experimental result: these dimensions answer different questions and do not necessarily collapse into one ranking." width=100%}
-
-- **Representation efficiency**: how many tokens or bytes represent the same text? Compression is informative, but is not sufficient evidence of quality.
-- **Downstream results**: segmentation choices can affect learning and task performance, with effects depending on the task, data, and model scale.
-- **Multilingual equity**: comparable content can produce very different sequence lengths across languages and tokenizers. This affects context budgets and may change training or inference costs; by itself, it does not prove a difference in generation quality.
-- **Reproducibility**: an interpretable comparison identifies the tokenizer, version or configuration, corpus, languages, metric, and evaluated task.
-
-This distinction matters in the literature. Goldman et al. (2024) report an association between compression and downstream results in their experiments, whereas Schmidt et al. (2024) show that reducing token count alone is not a sufficient rule for choosing a strategy. These findings are not contradictory: they warn against confusing an intrinsic indicator with the final objective.
-
-For the multilingual perspective, Arnett et al. (2025) study cross-lingual cost differences and associated design factors; Chiu (2026) proposes a multi-metric framework for multilingual evaluation. These studies motivate controlled comparisons, not a universal ranking for every task and language.
-
-**Complementary resources**
-- [Unpacking Tokenization: Evaluating Text Compression and its Correlation with Model Performance (Goldman et al., 2024)](https://aclanthology.org/2024.findings-acl.134/) — compression and its observed association with downstream results.
-- [Tokenization Is More Than Compression (Schmidt et al., 2024)](https://aclanthology.org/2024.emnlp-main.40/) — counterpoint to “fewer tokens = a better tokenizer”.
-- [Explaining and Mitigating Crosslingual Tokenizer Inequities (Arnett et al., NeurIPS 2025)](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html) — design factors associated with cross-lingual disparities.
-- [TokLens: A Multilingual Lens on Tokenizer Quality (Chiu, ACL 2026)](https://aclanthology.org/2026.acl-srw.18/) — multilingual intrinsic metrics and evaluation across languages.
-
 ## 3. Mini-lab: compare tokenizers
 
 Compare the same strings with at least two tokenizers, using the examples and tools introduced in the [tokenization strategies page](tokenization-strategies.qmd). Record differences; do not compare raw IDs across vocabularies as if they shared a meaning.
