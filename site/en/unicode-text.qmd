@@ -14,6 +14,8 @@ This page is a **technical companion** to the [overview of the text-to-token pat
 
 Unicode does not define token segmentation; UTF-8 does not choose the vocabulary; normalization is not universally applied in the same way.
 
+Also distinguish a **code point** from a **grapheme**. A grapheme is roughly a unit perceived as one character by a reader; it can contain multiple code points (for example, a letter plus a combining accent, or an emoji sequence joined by a joiner character). In Python, `len(string)` counts code points, not necessarily the characters a person visually perceives.
+
 ## Example: two encodings of “é”
 
 ![Two visually similar forms of “é” with different code points and UTF-8 bytes.](../images/unicode-utf8-tokenization-en.svg){fig-alt="Comparison of precomposed é (U+00E9, bytes C3 A9) and e followed by a combining accent (U+0065 U+0301, bytes 65 CC 81). Normalization may bring them together before tokenization." width=100%}
@@ -41,6 +43,8 @@ print(unicodedata.normalize("NFC", composed) == unicodedata.normalize("NFC", dec
 ```
 
 NFC normalization makes these two strings equal in this example. This does not prove that a particular tokenizer applies NFC: check its documentation and test the exact version in use.
+
+NFC/NFD concern canonical forms; NFKC/NFKD also apply certain compatibility equivalences. The latter can erase distinctions that matter in some domains (for example, typographic symbols or full-width forms). Do not choose a “stronger” normalization without checking the text requirements and the model's contract.
 
 ## What this implies—and what it does not
 

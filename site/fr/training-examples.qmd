@@ -35,6 +35,16 @@ Entrée et cible ont la même longueur. La cible est décalée d’une position 
 
 **À faire avant de lire la suite :** pour le flux `[8, 3, 3, 9, 2, 7]` avec une longueur de 3, écrivez les deux premières paires entrée-cible. Vérifiez que chaque cible est exactement le token suivant dans le flux.
 
+<details>
+<summary>Correction et vérification de l'alignement</summary>
+
+- Exemple 1 : entrée `[8, 3, 3]`, cible `[3, 3, 9]`.
+- Exemple 2, avec un stride de 1 : entrée `[3, 3, 9]`, cible `[3, 9, 2]`.
+
+À la position 0 du premier exemple, le modèle reçoit le token `8` et doit prédire `3` ; à la position 2, il reçoit le contexte `[8, 3, 3]` et prédit `9`. Le même identifiant peut se répéter : l'alignement dépend de la position dans le flux, pas de l'unicité des valeurs.
+
+</details>
+
 ## 2. Fenêtres glissantes et stride
 
 Le stride est le nombre de positions dont on décale le début de la fenêtre entre deux exemples. Il est distinct de la longueur de contexte.

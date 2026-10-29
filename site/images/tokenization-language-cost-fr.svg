@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" role="img" aria-labelledby="title desc">
+<title id="title">Une chaîne, plusieurs segmentations possibles</title>
+<desc id="desc">Exemple schématique : le mot anglais unbelievable est découpé en deux fragments dans une segmentation possible et en trois dans une autre. Ce ne sont pas les sorties d'un tokenizer réel identifié.</desc>
+<rect width="1000" height="360" rx="18" fill="#f8fafc"/>
+<text x="36" y="42" font-family="Arial,sans-serif" font-size="26" font-weight="700" fill="#172554">Une chaîne, plusieurs segmentations</text>
+<text x="36" y="72" font-family="Arial,sans-serif" font-size="16" fill="#475569">Exemple schématique — pas la sortie d'un tokenizer réel identifié.</text>
+<text x="40" y="124" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#334155">Texte d'entrée</text>
+<rect x="40" y="142" width="260" height="52" rx="9" fill="#e2e8f0" stroke="#94a3b8"/>
+<text x="170" y="175" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#0f172a">unbelievable</text>
+<text x="40" y="235" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#334155">Segmentation schématique A · 2 fragments</text>
+<rect x="40" y="252" width="170" height="48" rx="8" fill="#dbeafe" stroke="#60a5fa"/><text x="125" y="282" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#1e3a8a">un</text>
+<rect x="224" y="252" width="220" height="48" rx="8" fill="#dbeafe" stroke="#60a5fa"/><text x="334" y="282" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#1e3a8a">believable</text>
+<text x="520" y="235" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#334155">Segmentation schématique B · 3 fragments</text>
+<rect x="520" y="252" width="110" height="48" rx="8" fill="#ffedd5" stroke="#fb923c"/><text x="575" y="282" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#9a3412">un</text>
+<rect x="644" y="252" width="130" height="48" rx="8" fill="#ffedd5" stroke="#fb923c"/><text x="709" y="282" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#9a3412">believ</text>
+<rect x="788" y="252" width="110" height="48" rx="8" fill="#ffedd5" stroke="#fb923c"/><text x="843" y="282" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#9a3412">able</text>
+<text x="40" y="333" font-family="Arial,sans-serif" font-size="14" fill="#475569">Moins de tokens ne prouve pas, à lui seul, une meilleure qualité du modèle.</text>
+</svg>

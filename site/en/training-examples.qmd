@@ -35,6 +35,16 @@ Input and target have equal lengths. The target is shifted one position in the s
 
 **Try before reading on:** for stream `[8, 3, 3, 9, 2, 7]` with length 3, write the first two input-target pairs. Check that each target is exactly the next token in the stream.
 
+<details>
+<summary>Solution and alignment check</summary>
+
+- Example 1: input `[8, 3, 3]`, target `[3, 3, 9]`.
+- Example 2, with stride 1: input `[3, 3, 9]`, target `[3, 9, 2]`.
+
+At position 0 of the first example, the model receives token `8` and must predict `3`; at position 2, it receives context `[8, 3, 3]` and predicts `9`. An ID can repeat: alignment depends on position in the stream, not on the uniqueness of token values.
+
+</details>
+
 ## 2. Sliding windows and stride
 
 Stride is the number of positions by which the window start moves between examples. It is distinct from context length.

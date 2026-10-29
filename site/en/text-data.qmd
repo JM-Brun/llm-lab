@@ -59,17 +59,7 @@ Low-level details are not required to follow this pipeline. To understand why vi
 
 The same text can be split into different numbers of tokens by different tokenizers. Exact fragments and IDs depend on the vocabulary and configuration; there is no universal segmentation that can be inferred from the text alone.
 
-Remember: tokens are representation units, not necessarily words or units of meaning. A real comparison must identify the tokenizer and its version, then measure the resulting sequence.
-
-
-| Stage | Tokenizer A | Tokenizer B |
-|---|---|---|
-| Fragments (schematic example) | `[fragment 1]`, `[fragment 2]`, `[fragment 3]` | `[fragment 1]`, `[fragment 2]` |
-| IDs | Depend on vocabulary A | Depend on vocabulary B |
-| Compatible model | Weights associated with A | Weights associated with B |
-
-This table only illustrates that segmentation and sequence length can change. It does not reproduce any real encoder output or show that one tokenizer is better. IDs are labels: the numerical gap between 314 and 315, for example, does not mean the corresponding tokens are close in meaning.
-
+Remember: tokens are representation units, not necessarily words or units of meaning. The figure below gives a schematic segmentation example; it does not claim to reproduce a real tokenizer's output. A real comparison must identify the tokenizer and its version, then measure the resulting sequence.
 
 ## 2. Why tokenization matters
 
@@ -85,6 +75,10 @@ This representation choice has several consequences:
 
 Segmentation is neither perfect linguistic analysis nor a measure of meaning. A shorter segmentation does not, by itself, imply a better model.
 
+![Schematic example of one string split differently by different tokenizers.](../images/tokenization-language-cost.svg){fig-alt="The English word unbelievable is shown as two pieces in one illustrative segmentation and three pieces in another. These are not outputs from a named real tokenizer." fig-cap="A string can have multiple possible segmentations. This figure is illustrative: it does not reproduce a real tokenizer output or an experimental measurement." width=100%}
+
+The figure illustrates that segmentation depends on a tokenizer’s rules and vocabulary; it does not show that one segmentation is better. For an empirical comparison, use the same texts, record tokenizer and version, and report measurements by language and text type. See [Ahia et al. (2023)](https://aclanthology.org/2023.emnlp-main.614/) for a study of tokenization costs across languages.
+
 ### Where to explore the mechanisms
 
 This overview stays focused on the pipeline. Technical details live on dedicated pages:
@@ -92,7 +86,6 @@ This overview stays focused on the pipeline. Technical details live on dedicated
 - [Tokenization strategies](tokenization-strategies.qmd): pre-tokenization, BPE, WordPiece, unigram, examples, comparisons, and limitations.
 - [Unicode, UTF-8, and normalization](unicode-text.qmd): code points, bytes, and visually identical strings.
 - [Embedding space](embedding-space.qmd) and [tensors](tensors.qmd): dimensions, weight tables, and representation shapes.
-
 
 ## 3. Mini-lab: compare tokenizers
 

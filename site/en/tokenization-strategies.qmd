@@ -132,6 +132,32 @@ This table poses questions to test, not exact outputs. To report a result, recor
 6. Evaluate downstream quality separately from latency, memory, throughput, and cost.
 7. Report limitations: corpus, versions, normalization, covered languages, and uncertainty.
 
+### A reproducible Python probe
+
+The example below inspects a specific Hugging Face tokenizer. The first load may require network access; for a reproducible experiment, record library versions and pin a model revision rather than relying on a moving default branch.
+
+```python
+from importlib.metadata import version
+from transformers import AutoTokenizer
+
+model_id = "gpt2"
+revision = "YOUR_COMMIT_SHA"  # Replace with the exact model commit SHA
+tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision)
+text = " Hello world — café"
+
+ids = tokenizer.encode(text, add_special_tokens=False)
+tokens = tokenizer.convert_ids_to_tokens(ids)
+
+print("transformers:", version("transformers"))
+print("tokenizer:", model_id)
+print("tokens:", tokens)
+print("IDs:", ids)
+print("count:", len(ids))
+print("decoded:", tokenizer.decode(ids))
+```
+
+The displayed IDs and fragments belong to the loaded tokenizer. To compare two tokenizers, run the same protocol on the same text, record their revision/version identifiers, and compare fragments and token counts—not numeric ID values across vocabularies. Decoding can also depend on cleanup conventions and special tokens.
+
 ### Measuring a tokenizer without reducing quality to token count
 
 Research on multilingual tokenization costs does not always use the same metrics or denominators. Read each metric's operational definition before comparing results. See [Ahia et al. (2023)](https://aclanthology.org/2023.emnlp-main.614/) and the multilingual measurement work [TokLens (ACL 2026 SRW)](https://aclanthology.org/2026.acl-srw.18/).

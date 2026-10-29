@@ -130,6 +130,8 @@ Vocabulary size \(V\) and embedding dimension \(d\) are separate design choices.
 - **\(V\)** depends on the tokenizer and its vocabulary, including special tokens.
 - **\(d\)** is an architectural hyperparameter chosen alongside depth, attention heads, and compute budget; it is not derived from \(V\).
 - The embedding table contains \(Vd\) parameters.
+
+**A hand-checkable scale estimate:** with \(V=50\,000\) tokens and \(d=768\), the table contains \(50\,000\times768=38\,400\,000\) parameters. At 32-bit precision, the weights alone occupy about 153.6 MB in decimal units (or 146.5 MiB), excluding gradients, optimizer states, and other parameters. This estimates the table's cost; it does not describe a particular model.
 - If the output projection has a separate weight matrix, it typically adds \(dV\) parameters, possibly plus a bias. Some models share input and output weights (*weight tying*), so check the architecture before counting both matrices.
 - IDs and their associated weights are coupled. Changing the vocabulary, ID assignments, or \(V\) requires an explicit adaptation or retraining strategy; it is not a neutral substitution.
 
