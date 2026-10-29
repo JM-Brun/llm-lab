@@ -129,7 +129,6 @@ website:
             - en/likelihood.qmd
             - en/gradients.qmd
             - en/tensors.qmd
-            - en/embedding-space.qmd
         - section: "Representation geometry and interpretability"
           contents:
             - en/embedding-space.qmd
