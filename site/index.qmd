@@ -1,103 +1,100 @@
 ---
 title: "LLM Lab — comprendre en explorant"
-subtitle: "Un laboratoire pédagogique pour observer, expérimenter et comprendre les modèles de langage, du panorama général aux mécanismes mathématiques."
+subtitle: "Comprendre les modèles de langage en reliant intuition, mathématiques, code et expériences vérifiables."
 lang: fr
 sidebar: fr
 toc: false
 ---
 
 :::: {.hero-intro}
-<p class="eyebrow">OBSERVER · EXPÉRIMENTER · COMPRENDRE</p>
+<p class="eyebrow">OBSERVER · EXPLIQUER · VÉRIFIER</p>
 
-## Comment fonctionne un grand modèle de langage ?
+## Comment un modèle de langage produit-il le prochain token ?
 
-Un modèle de langage transforme du texte en représentations numériques et apprend à prédire la suite. Comprendre ce mécanisme demande de relier données, probabilités, algèbre, architecture et entraînement.
+Un grand modèle de langage (LLM) reçoit une séquence de tokens et calcule une distribution de probabilités pour prédire la suite. Cette opération apparemment simple mobilise des données, des représentations numériques, des mécanismes d’attention et un objectif d’apprentissage.
 
-**LLM Lab est un laboratoire d’apprentissage, pas seulement un cours à lire.** L’objectif est de construire une compréhension progressive grâce à des explications, des schémas, des visualisations, des expériences reproductibles, du code et des tests. Chaque niveau doit être utile seul et ouvrir des chemins vers les détails.
+**LLM Lab relie ces mécanismes à leurs explications mathématiques et à leur comportement observable.** Le but n’est pas de croire une intuition parce qu’un schéma paraît convaincant : c’est de comprendre ce qu’un composant calcule, de vérifier ce qu’on peut tester et d’identifier ce qui reste une hypothèse ou une limite.
 
 <div class="hero-actions">
-[Voir le panorama en quelques minutes](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s){.btn .btn-primary}
-[Suivre un parcours de construction](https://github.com/rasbt/LLMs-from-scratch/){.btn .btn-outline-primary}
-[Explorer les concepts](fr/transformer.qmd){.btn .btn-outline-primary}
+[Voir le panorama visuel](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s){.btn .btn-primary}
+[Suivre la construction pas à pas](https://github.com/rasbt/LLMs-from-scratch/){.btn .btn-outline-primary}
+[Explorer les concepts du site](fr/transformer.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
-## Trois façons d’explorer
+## Choisir son point d’entrée
 
-Le site propose trois profondeurs complémentaires, pas trois parcours isolés. Suivez le fil principal, commencez par une question précise ou passez directement à une expérience.
+Ces trois approches sont complémentaires, pas des étapes obligatoires. Vous pouvez suivre le fil principal, partir d’une question précise ou approfondir un mécanisme sans avoir lu toutes les pages précédentes.
 
 :::: {.learning-grid}
 ::: {.learning-card}
-<span class="step">NIVEAU 1 · PANORAMA</span>
+<span class="step">01 · VUE D’ENSEMBLE</span>
 
-### Comprendre l’ensemble
+### Comprendre le système avant les détails
 
-Une vue courte et visuelle : que prédit un LLM, comment les données circulent, quelles sont les grandes étapes de l’apprentissage et comment elles s’articulent. Pas besoin de maîtriser d’emblée toutes les mathématiques.
+Suivez le trajet général des données : du texte aux tokens, des représentations à la prédiction, puis de l’erreur de prédiction à l’apprentissage. Cette première vue privilégie les rôles et les relations, pas les dérivations.
 
-[Commencer par la vue d’ensemble](fr/transformer.qmd){.card-link}
+**Pour commencer :** une vidéo visuelle, puis la [vue d’ensemble du Transformer](fr/transformer.qmd).
 :::
 ::: {.learning-card}
-<span class="step">NIVEAU 2 · PARCOURS GUIDÉ</span>
+<span class="step">02 · CONSTRUCTION GUIDÉE</span>
 
-### Comprendre comment le construire
+### Suivre les étapes d’un petit modèle
 
-Un chemin modérément détaillé : préparer les données, former les exemples, assembler le modèle, entraîner, générer et évaluer. Les notions mathématiques sont introduites quand elles deviennent utiles ; code et tests relient les explications au comportement réel.
+Partez des données et des exemples d’entraînement, puis reliez progressivement représentation, attention, fonction de perte, optimisation et génération. Les pages de code et les tests servent à confronter l’explication au calcul effectif.
 
-[Partir du texte et des données](fr/text-data.qmd){.card-link}
-
-[Comprendre les exemples d’entraînement](fr/training-examples.qmd)
+**Pour commencer :** [texte et données](fr/text-data.qmd), puis [exemples d’entraînement](fr/training-examples.qmd).
 :::
 ::: {.learning-card}
-<span class="step">NIVEAU 3 · DEEP DIVE</span>
+<span class="step">03 · APPROFONDISSEMENT</span>
 
-### Enquêter sur un mécanisme
+### Enquêter sur une question précise
 
-Approfondir librement une notion : définitions, dérivations, dimensions des tenseurs, hypothèses, contre-exemples, variantes, code, tests et références scientifiques. On peut sauter des étapes du parcours guidé ; les prérequis nécessaires doivent être clairement identifiés et accessibles.
+Explorez une définition, une dérivation, les dimensions des tenseurs, une hypothèse, un contre-exemple ou une implémentation. Chaque détour devrait préciser ses prérequis et permettre de revenir à la vue d’ensemble.
 
-[Explorer les fondements mathématiques](fr/mathematical-foundations.qmd){.card-link}
-
-[Étudier les tenseurs](fr/tensors.qmd)
+**Pour commencer :** [fondements mathématiques appliqués](fr/mathematical-foundations.qmd) ou [tenseurs et dimensions](fr/tensors.qmd).
 :::
 ::::
 
-## Un laboratoire : visualiser, manipuler, vérifier
+## Une même notion, plusieurs façons de la vérifier
 
-Les notions difficiles ne devraient pas reposer uniquement sur de longs paragraphes. Lorsque cela améliore réellement la compréhension, les pages doivent proposer :
+Selon le sujet, une page peut associer explication intuitive, notation mathématique, exemple calculé à la main, schéma, code exécutable, test numérique ou expérience reproductible. Ces formats ne sont pas interchangeables :
 
-- **Schémas de flux** pour suivre les données, les dimensions et les dépendances entre composants.
-- **Figures et animations** pour rendre visibles des opérations successives ou des phénomènes difficiles à observer dans le code.
-- **Visualisations interactives** pour modifier un paramètre, observer son effet et comparer des cas.
-- **Expériences reproductibles** avec une question précise, un cas de référence, une méthode, des résultats observables et des limites explicites.
-- **Tests et contre-exemples** pour vérifier les propriétés annoncées et montrer où une intuition cesse d’être valable.
+- **Un schéma** aide à suivre les données et les dimensions ; il ne démontre pas une propriété.
+- **Une dérivation** établit un résultat sous des hypothèses explicites.
+- **Un test** vérifie un comportement sur les cas qu’il couvre ; il ne prouve pas à lui seul une propriété générale.
+- **Une expérience** permet de comparer des configurations, à condition de préciser protocole, références, métriques et limites.
+- **Un contre-exemple** révèle où une règle intuitive ou une affirmation trop générale échoue.
 
-Une animation illustrative n’est pas une preuve ; une expérience isolée ne démontre pas une propriété générale. Le site doit distinguer intuition, résultat calculé, comportement testé et affirmation étayée par une source. Une figure statique vaut mieux qu’une animation sans bénéfice explicatif ; une interaction n’est justifiée que si la manipulation révèle une relation utile.
+Les visualisations interactives et les animations sont utiles lorsqu’une manipulation rend une relation plus compréhensible. Elles ne sont pas une fin en soi. Le contenu disponible, le code effectivement testé et les travaux encore planifiés doivent être distingués explicitement.
 
-## La carte d’ensemble
+## La carte mentale du parcours
 
-Le fil principal relie :
+Le fil conducteur relie six questions :
 
-1. **Texte et données** — tokens, fenêtres de contexte, entrées et cibles.
-2. **Prédiction** — tenseurs, embeddings, logits et probabilités.
-3. **Objectif d’apprentissage** — vraisemblance, cross-entropie, perte et gradients.
-4. **Contexte et architecture** — attention, masque causal, information de position et blocs Transformer.
-5. **Entraînement et génération** — optimisation, validation, décodage et évaluation.
-6. **Limites et robustesse** — fuites de données, métriques, incertitude, ablations et contre-exemples.
+1. **Que reçoit le modèle ?** Texte, tokenisation, fenêtres de contexte, entrées et cibles.
+2. **Que calcule-t-il ?** Tenseurs, embeddings, logits et probabilités.
+3. **Comment apprend-il ?** Vraisemblance, cross-entropie, fonction de perte et gradients.
+4. **Comment utilise-t-il le contexte ?** Attention, masque causal, information de position et blocs Transformer.
+5. **Comment produit-il du texte ?** Entraînement, validation, décodage et évaluation.
+6. **Quand se trompe-t-il ou généralise-t-il mal ?** Fuites de données, métriques, incertitude, ablations et limites.
 
-Chaque vue d’ensemble doit expliquer le rôle des composants et leurs relations avant d’ouvrir les pages détaillées. Chaque deep dive doit expliquer ses prérequis locaux, renvoyer vers la carte générale et permettre d’explorer des concepts liés dans plusieurs directions. Le parcours guidé est un itinéraire conseillé, pas une condition d’accès aux autres notions.
+Cette carte est une orientation, pas une chaîne de prérequis absolus. Les pages détaillées doivent expliquer les prérequis locaux et relier les concepts voisins dans plusieurs directions. Les mathématiques sont introduites au moment où elles éclairent le mécanisme, puis approfondies à la demande.
 
-Le projet vise à terme un petit modèle autorégressif à décodeur seul, dont les composants et les comportements peuvent être inspectés et testés. **Le contenu disponible, le code effectivement testé et les travaux planifiés doivent toujours être distingués.**
+Le projet vise à terme un petit modèle autorégressif à décodeur seul dont les composants peuvent être inspectés et testés. L’ambition pédagogique est plus importante que la taille du modèle : rendre les calculs et les limites compréhensibles, reproductibles et discutables.
 
-## Ressources complémentaires
+## Ressources pour aller plus loin
 
-- [3Blue1Brown — Transformers](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s) pour une vue d’ensemble visuelle.
-- [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch/) pour un parcours détaillé de construction.
-- [Jay Alammar — The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) et [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) pour suivre les représentations et les opérations.
-- [Bibliographie commentée](references.qmd) pour les sources scientifiques, techniques et pédagogiques, avec leur rôle et leurs limites.
+- [3Blue1Brown — Transformers](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s) : intuition visuelle et panorama.
+- [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch/) : parcours détaillé de construction et code associé.
+- [Jay Alammar — The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) et [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) : représentations visuelles des mécanismes.
+- [Bibliographie commentée](references.qmd) : sources scientifiques, documentations techniques et ressources pédagogiques, avec leurs rôles et leurs limites.
 
 ## Explorer par question
 
-- [Glossaire](fr/glossary.qmd) · [Exercices](fr/exercises.qmd) · [Historique des Transformers](fr/transformer-history.qmd) · [Évaluation expérimentale](fr/evaluation-experimentale.qmd)
-- [Plan détaillé du programme](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) · [Parcours d’apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) · [Feuille de route](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md)
+[Glossaire](fr/glossary.qmd) · [Exercices](fr/exercises.qmd) · [Histoire des Transformers](fr/transformer-history.qmd) · [Évaluation expérimentale](fr/evaluation-experimentale.qmd)
+
+Pour le détail du programme : [carte complète du curriculum](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) · [parcours d’apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) · [feuille de route](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md)
 
 ::: {.language-switch}
 [Français](index.qmd) · [English](en/index.qmd)
