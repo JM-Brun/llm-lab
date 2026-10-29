@@ -90,6 +90,19 @@ flowchart TD
     H --> I["Neural network: contextual representations"]
 ```
 
+### Four complementary visual perspectives
+
+The diagram above gives the overall pipeline. These external resources illuminate different aspects without copying their figures into this repository:
+
+- **Algorithm, step by step —** [BPE Explainer by Philip Müller and Peter Steinbach](https://philipmueller.dev/bpe-visualization/): an interactive view of candidate pairs, merges, and vocabulary growth. It is the most useful complement for understanding BPE mechanics; keep the demo's conventions distinct from those of a production tokenizer.
+- **End-to-end pipeline —** [Raschka, *Build a Large Language Model (From Scratch)*, Chapter 2](https://livebook.manning.com/book/build-a-large-language-model-from-scratch/chapter-2): look in particular at Figure 2.4 on text processing. It provides the broader LLM context, while the local diagram above makes normalization, pre-tokenization, and embedding-table lookup more explicit.
+- **Multilingual consequences —** [Ahia et al. (2023), PDF, Figure 1](https://aclanthology.org/2023.emnlp-main.614.pdf) ([paper page](https://aclanthology.org/2023.emnlp-main.614/)): places English and Greek examples side by side and connects tokenization to usage cost. It adds a socio-technical perspective that the pipeline alone cannot show; the figure illustrates a problem but does not summarize the paper's full analysis.
+- **Unicode and normalization —** the [official Unicode normalization charts](https://www.unicode.org/charts/normalization/) are a technical reference for exploring normalized forms, complementing the original “é” figure above.
+
+For a narrated, code-oriented walkthrough, [Karpathy's *Let's build the GPT Tokenizer*](https://www.youtube.com/watch?v=zduSFxRajkE) covers Unicode/UTF-8, BPE, pre-tokenization, and special tokens.
+
+**Rights and provenance:** external figures are cited and linked to their sources, but are neither copied nor embedded locally. Citing an illustration does not itself grant permission to redistribute it; the repository retains its own original diagrams.
+
 For an embedding matrix E with shape (V, d), ID i selects row E[i], a vector of dimension d. V is vocabulary size. This lookup is not generally the contextual representation produced after Transformer blocks. IDs are arbitrary indices: the numerical difference between two IDs has no semantic interpretation. Normalization, pre-tokenization, base units, and special tokens depend on the tokenizer.
 
 For a hand-checkable row-by-row example and the next shape transitions, see [the embedding-space lesson](embedding-space.qmd). The positional step depends on the architecture; [positional encoding and RoPE](positional-encoding.qmd) explains the main distinction.
