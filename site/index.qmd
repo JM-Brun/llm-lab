@@ -137,7 +137,9 @@ Le fil conducteur relie six questions :
 
 Cette carte est une orientation, pas une chaîne de prérequis absolus. Les pages détaillées doivent expliquer les prérequis locaux et relier les concepts voisins dans plusieurs directions. Les mathématiques sont introduites au moment où elles éclairent le mécanisme, puis approfondies à la demande.
 
-Le projet vise à terme un petit modèle autorégressif à décodeur seul dont les composants peuvent être inspectés et testés. L’ambition pédagogique est plus importante que la taille du modèle : rendre les calculs et les limites compréhensibles, reproductibles et discutables.
+L'objectif de construction est un petit GPT autorégressif à décodeur seul, entraîné depuis une initialisation aléatoire sur un corpus maîtrisé : partir du texte brut, préparer les exemples, implémenter le modèle et sa boucle d'entraînement, suivre la validation, puis générer du texte. Charger des poids pré-entraînés et adapter un modèle (classification, instruction tuning, LoRA ou quantification) constituent des étapes distinctes, en aval.
+
+Le périmètre pédagogique visé couvre aussi ces étapes avancées, ainsi que l'évaluation, l'efficacité et les limites. **Le menu reflète les pages actuellement disponibles, pas encore l'intégralité de ce programme** : les modules absents restent à construire et à valider. L'ambition pédagogique est plus importante que la taille du modèle : rendre les calculs et les limites compréhensibles, reproductibles et discutables.
 
 ## Ressources pour aller plus loin
 
