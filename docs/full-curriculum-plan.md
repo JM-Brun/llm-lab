@@ -24,23 +24,75 @@ The shared [reader-experience and editorial method](reader-experience-and-editor
 
 ## 2. Target information architecture
 
-### Public course
-1. **Orientation and map** — what an LLM is, learning prerequisites, reading paths, scope and limitations.
-2. **Mathematical and numerical foundations** — vectors/matrices/tensors, probability, logits/softmax, information theory, likelihood, losses, derivatives, optimization, numerical stability.
-3. **Text and datasets** — Unicode, normalization, tokenization, vocabularies, BPE, special tokens, encoding/decoding, windows, batching, input-target shift, data leakage.
-4. **Attention** — Q/K/V, score scaling, masking, softmax, weighted values, multi-head attention, tensor shapes, causal invariants.
-5. **Transformer architecture** — embeddings, positional information, residual paths, normalization, MLP/FFN, block ordering, output head, parameter tying, decoder-only versus encoder/decoder and encoder-only.
-6. **GPT implementation concepts** — configuration, parameter count, initialization, forward pass, loss, generation; code links only after prerequisites are validated.
-7. **Pretraining** — autoregressive objective, data splits, batching, optimizer, schedules, clipping, validation, checkpointing, perplexity, reproducibility and resource costs.
-8. **Inference and decoding** — greedy decoding, sampling, temperature, top-k/top-p, stopping, prompt/context limits, KV cache, latency/memory trade-offs.
-9. **Fine-tuning** — classification fine-tuning, instruction formats, supervised fine-tuning (SFT), target masking, packing, dataset quality, overfitting and catastrophic forgetting.
-10. **Evaluation** — task-specific metrics, baselines, held-out sets, contamination, leakage, uncertainty, error analysis, LLM-as-judge limitations, calibration when appropriate.
-11. **Efficiency and architecture variants** — LoRA, quantization/QLoRA, memory accounting, efficient attention, GQA, MLA, sliding windows, MoE, KV sharing; mark advanced/optional.
-12. **Preference optimization and alignment** — preference pairs, reward models at conceptual level, DPO, preference-data bias, evaluation and regressions; mark advanced/optional.
-13. **Critical reading and research methods** — representation geometry, cosine similarity, linearity hypotheses, ablations, causal claims, reproducibility, evidence quality and limitations.
-14. **Glossary, reference library and cross-cutting visual atlas**.
+The curriculum should be organized around **what a learner needs to understand and do**, not around matching a source book chapter by chapter. Keep the full topic inventory below, but expose it through a small number of reader-facing layers.
+
+### Layer A — Orientation: understand the whole task
+
+A newcomer should be able to answer, without reading a long prerequisite chapter:
+
+- What does an autoregressive language model do?
+- What are its inputs and outputs?
+- What does training try to optimize?
+- What are the main components, and how do they interact?
+- What does this learning lab currently explain, test, or merely plan?
+
+The homepage and system overview should provide this mental model and several entry points. Do not place the full curriculum, implementation status ledger, or editorial rules on the homepage.
+
+### Layer B — The core learning spine
+
+Use a short suggested route that builds the smallest coherent explanation of a decoder-only LLM:
+
+1. **Text becomes tokens** — text normalization, tokenization, token IDs and special tokens.
+2. **Tokens become training examples** — context windows, shifted inputs/targets, batching, padding and loss masks.
+3. **The model predicts a distribution** — tensor shapes, embeddings, logits, softmax, likelihood and cross-entropy.
+4. **Context changes representations** — queries, keys, values, scaled dot-product attention, causal masking and positional information.
+5. **The Transformer composes operations** — multi-head attention, residual paths, normalization, MLP/FFN and output head.
+6. **Training changes parameters** — gradients, optimization, validation, checkpoints and reproducibility.
+7. **The model generates and is evaluated** — decoding strategies, task-appropriate evaluation, baselines and failure analysis.
+
+This is a recommended route, not a gatekeeping sequence. Each overview must link to the relevant detailed concepts; each concept page must link back to the system-level purpose.
+
+### Layer C — Canonical concept pages
+
+Organize deep dives by the question they answer rather than by source chapter. Each page should explain the LLM-specific application locally, including the definitions, notation, assumptions, worked example, caveats and references needed to understand it. Link to related pages instead of repeating whole derivations, but do not omit essential material merely to avoid overlap with the private wiki.
+
+Concept groups:
+
+- **Data and representation:** Unicode/normalization, tokenization/BPE, special tokens, context windows, batching, data leakage, embeddings and positional information.
+- **Numerical and probabilistic chain:** tensors and axes, logits, softmax, likelihood, entropy, cross-entropy, KL divergence, loss reduction, gradients and numerical stability.
+- **Attention and architecture:** Q/K/V, score scaling, attention masks, multi-head attention, residual connections, normalization, MLP/FFN, output head and architecture families.
+- **Learning and use:** optimization, pretraining, validation, perplexity, generation, KV cache, fine-tuning, SFT, LoRA/QLoRA and preference optimization.
+- **Evaluation and critical reading:** metrics, calibration where relevant, contamination, leakage, uncertainty, ablations, representation geometry, cosine similarity, linearity hypotheses and reproducibility.
+
+Advanced topics such as MoE, GQA/MLA, quantization, preference optimization and multimodal models remain optional extensions. They should not obscure the minimum path to understanding a small decoder-only model.
+
+### Layer D — Evidence and practice
+
+Keep these distinct from explanatory pages:
+
+- **Implementation and tests:** what code exists, its interface and conventions, what properties are tested, and what is not covered.
+- **Experiments and reports:** question, baseline, data provenance, configuration, metrics, uncertainty, compute budget, limitations and negative results.
+- **Exercises:** stable exercise IDs across French and English; links from the relevant lesson; answers hidden by default.
+- **Glossary and reference library:** fast lookup and source provenance.
+
+A link to code is shown only when the target exists and has been checked. A lesson snippet, a passing test, a successful site build and demonstrated learner understanding are different kinds of evidence and must not be conflated.
+
+### Dependency graph and implementation order
+
+Keep the conceptual dependencies explicit:
+
+`text/tokens → windows and targets → logits/probabilities → loss/gradients`
+
+`tensor shapes → Q/K/V and attention → causal masking → Transformer block`
+
+`embeddings + positional information → context-dependent representations → generation`
+
+`training/validation discipline → fine-tuning → evaluation and robustness`
+
+These are useful dependency paths, not a rigid graph: concepts may be introduced intuitively before their full derivation. Do not implement a downstream mechanism until its required concepts have been reviewed and marked acquired in the private knowledge inventory. Where a prerequisite is not yet acquired, improve or test understanding first rather than adding more pages or code.
 
 ### Separate exercise space
+
 Use a distinct `site/exercises/` area, with a bilingual landing page and one future exercise collection per module. Exercise IDs should remain stable across languages. Each course question links to the relevant collection or exercise anchor; the collection links back to the canonical concept page. Keep the answer key collapsed by default and do not put exercise solutions into lesson prose.
 
 Planned collections (structure only; exercises are not written yet):
@@ -52,10 +104,8 @@ Planned collections (structure only; exercises are not written yet):
 - `generation`: next-token distributions, decoding settings, stopping and KV-cache trade-offs.
 - `fine-tuning`: classification, SFT, loss masking, split integrity, overfitting and error analysis.
 - `evaluation`: baselines, leakage/contamination, uncertainty, metrics and limitations.
-- `efficiency`: LoRA/QLoRA concepts, parameter/memory accounting and trade-offs.
-- `advanced`: DPO, architecture variants, critical-reading and research-design prompts.
-
-Every future exercise should declare: stable ID, language parity, prerequisites, target concept, format (conceptual / derivation / paper-and-pencil / code / debugging / experimental design), difficulty, expected evidence, hint(s), optional collapsed solution, and relevant references. Do not copy the book's exercise statements or solutions.
+- `efficiency`: LoRA/QLoRA concepts, parameter/memory accounting and measured trade-offs.
+- `alignment`: preference data, DPO concepts, bias and regression analysis.
 
 ## 3. Coverage map against Raschka
 
