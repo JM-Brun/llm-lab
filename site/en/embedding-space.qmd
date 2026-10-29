@@ -76,6 +76,52 @@ For a batch, the common shape transition is:
 
 where \(B\) is batch size, \(L\) sequence length, and \(d\) embedding dimension. Lookup does not mix information across positions: two occurrences of the same token ID retrieve the same row before positional information and contextual processing are applied.
 
+### One reproducible trace: text → token IDs → embedding rows
+
+The next example connects a real, named tokenizer encoding to a **synthetic** embedding table. It uses the GPT-2 byte-level BPE encoding distributed by `tiktoken`; the IDs below are asserted against the library's public tests. Install the pinned tokenizer version with `python -m pip install tiktoken==0.14.0`. NumPy is already a project dependency.
+
+```python
+import numpy as np
+import tiktoken
+
+text = "hello world"  # a Python Unicode string
+utf8_bytes = text.encode("utf-8")
+encoding = tiktoken.get_encoding("gpt2")
+token_ids = encoding.encode(text)
+token_bytes = [encoding.decode_single_token_bytes(i) for i in token_ids]
+token_strings = [part.decode("utf-8") for part in token_bytes]
+
+assert utf8_bytes == b"hello world"
+assert token_ids == [31373, 995]
+assert token_strings == ["hello", " world"]
+assert encoding.decode(token_ids) == text
+
+# Synthetic weights: real GPT-2 uses a different embedding dimension and learned values.
+vocab_size, d = 50_257, 2
+E = np.zeros((vocab_size, d), dtype=np.float32)
+E[31373] = [0.1, 0.2]
+E[995] = [-0.3, 0.4]
+X = E[token_ids]
+
+assert X.shape == (2, 2)
+assert np.array_equal(X, [[0.1, 0.2], [-0.3, 0.4]])
+
+# Illustrative learned absolute-position vectors, not GPT-2's real parameters.
+P = np.array([[0.01, 0.02], [0.03, 0.04]], dtype=np.float32)
+Z = X + P
+assert Z.shape == (2, 2)
+assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
+```
+
+Read the trace carefully:
+
+1. `text` is Unicode text; UTF-8 gives its bytes.
+2. The selected `gpt2` encoding maps the text to token IDs `[31373, 995]`; their byte fragments decode to `"hello"` and `" world"`. The leading space belongs to the second token.
+3. The IDs index rows in `E`. The two vectors are **invented** values, not the pretrained GPT-2 embeddings; the table has the same vocabulary index range only so the real IDs can select rows.
+4. `P` illustrates one architecture's position-vector addition. `Z) remains shape `[L,d]`; this example does not run a Transformer block and therefore does not compute contextualized hidden states.
+
+The exact IDs are specific to the named encoding and library behaviour; another tokenizer may produce different fragments and IDs. The assertions make changes visible rather than silently treating tokenization as universal. See the [official tiktoken repository](https://github.com/openai/tiktoken) and its [encoding tests](https://github.com/openai/tiktoken/blob/main/tests/test_encoding.py) for the reference output.
+
 ## From token embeddings to contextualized states
 
 The next step depends on the architecture. In a GPT-2-style model with learned absolute position embeddings, a position-specific vector is added to each token embedding:
