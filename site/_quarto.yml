@@ -6,6 +6,8 @@ project:
     - en/index.qmd
     - fr/text-data.qmd
     - en/text-data.qmd
+    - fr/unicode-text.qmd
+    - en/unicode-text.qmd
     - fr/tokenization-strategies.qmd
     - fr/training-examples.qmd
     - en/tokenization-strategies.qmd
@@ -82,6 +84,7 @@ website:
         - section: "Texte et données"
           contents:
             - fr/text-data.qmd
+            - fr/unicode-text.qmd
             - fr/tokenization-strategies.qmd
             - fr/training-examples.qmd
         - section: "Mathématiques appliquées aux LLM"
@@ -120,6 +123,7 @@ website:
         - section: "Text and data"
           contents:
             - en/text-data.qmd
+            - en/unicode-text.qmd
             - en/tokenization-strategies.qmd
             - en/training-examples.qmd
         - section: "Maths applied to LLMs"
