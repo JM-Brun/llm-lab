@@ -36,15 +36,15 @@ R(\theta)=
 \end{pmatrix},
 \qquad
 x'=R(\theta)x.
-$
+$$
 
 To see why relative-position information appears, consider one coordinate pair at a fixed frequency. Let $q$ and $k$ be the query and key components before rotation; at positions $m$ and $n$, they become $q_m=R(m\theta)q$ and $k_n=R(n\theta)k$. Since rotations satisfy $R(\alpha)^\top=R(-\alpha)$ and $R(\alpha)R(\beta)=R(\alpha+\beta)$, we obtain:
 
-$
+$$
 q_m^\top k_n
 = q^\top R(m\theta)^\top R(n\theta)k
 = q^\top R((n-m)\theta)k.
-$
+$$
 
 Thus, for this pair and frequency, the score depends on the offset $n-m$, rather than on the absolute positions separately. RoPE applies this reasoning pair by pair, with a different frequency for each pair.
 
