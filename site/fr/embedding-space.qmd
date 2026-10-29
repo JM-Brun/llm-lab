@@ -104,7 +104,7 @@ E[995] = [-0.3, 0.4]
 X = E[token_ids]
 
 assert X.shape == (2, 2)
-assert np.array_equal(X, [[0.1, 0.2], [-0.3, 0.4]])
+assert np.allclose(X, [[0.1, 0.2], [-0.3, 0.4]])
 
 # Vecteurs positionnels absolus illustratifs, pas les paramètres réels de GPT-2.
 P = np.array([[0.01, 0.02], [0.03, 0.04]], dtype=np.float32)
