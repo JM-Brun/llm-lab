@@ -15,6 +15,34 @@ For each important concept:
 
 Do not add a diagram or animation merely for decoration. It should answer a specific question more clearly than prose alone. Keep figures accessible with captions, alt text, readable labels, and an explanation of what the figure does not show.
 
+## A repeatable improvement loop
+
+Use this lightweight loop for a substantial concept-page revision. The goal is not to research every resource on every page; it is to make a defensible pedagogical decision with minimal overhead.
+
+1. **Name the learner problem.** Write one sentence in the form: “A learner may confuse X with Y; this page should make the distinction observable.”
+2. **Select sources by role, not by popularity.** Usually start with one pedagogical/visual source and one primary paper or official technical reference. Add an interactive tool only if manipulating an input can reveal something static prose cannot. Use at most three sources initially; expand the search only when a key claim or design choice remains unresolved.
+3. **Compare, do not collect.** Record the useful teaching move, its simplification or omission, and whether it transfers to this page. Do not treat a source's presence in this library as proof that it is current, correct, accessible, or reusable.
+4. **Choose an explicit outcome.** Keep the existing page; clarify prose; add a worked example; improve an original diagram; add an interaction; or defer a visual because it would add complexity without learning value. “No visual change” is a valid outcome when justified.
+5. **Make the smallest useful change.** Prefer a focused edit that can be evaluated over a page-wide rewrite. For bilingual pages, apply the same learning objective and evidence to both languages; literal translations are not the acceptance criterion.
+6. **Validate against the claim.** Check arithmetic or executable examples where relevant, verify technical statements against primary/official sources, check links and image provenance, render the page, inspect responsive layout/accessibility, and compare the language versions.
+7. **Record evidence and remaining work.** For a substantial change, add a short entry to page-audit-inventory.md: learner problem, resources consulted and their roles, decision made, files changed, validation actually run, and checks still outstanding. Never label a check as passed unless it was run.
+
+### Compact decision record
+
+Use this small record in the audit inventory or PR description; do not create a separate report for a trivial typo.
+
+| Field | Prompt |
+|---|---|
+| Learner problem | What likely misconception or difficult step are we addressing? |
+| Evidence roles | Which pedagogical source and which primary/official source were useful? |
+| Design decision | What changed, and why is it better than the previous version? If nothing changed, why? |
+| Risk/limitation | What might the visual, analogy, example, or source cause readers to misunderstand? |
+| Validation | What was actually rendered, calculated, tested, or checked? |
+| Follow-up | What remains unverified, including the other language or responsive display? |
+
+**Stop condition:** do not keep searching once the learner problem is addressed, the technical claim is grounded, and the remaining uncertainty is documented. If those conditions are not met, state the gap instead of disguising it with more links or decorative graphics.
+
+
 ## Visual explainers and technical diagrams
 
 | Resource | Best use | Notes |
