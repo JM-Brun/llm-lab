@@ -183,7 +183,7 @@ The resources are complementary. A useful progression is to build intuition, rea
 ### Interactive visualizations and comparisons
 
 - [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/) : step-by-step interactive visualization for observing pair merges and vocabulary growth. Treat it as an educational demonstration, then compare its conventions with a production tokenizer.
-- [Cornell CS4782 — Interactive Tokenization Visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/) : interactive comparison of BPE and WordPiece. Useful for isolating algorithm-family differences, although its teaching examples do not cover every production variant.
+- [Cornell CS4782 — Interactive Tokenization Visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/) : interactive comparison of BPE and WordPiece. Useful for isolating algorithm-family differences, although its teaching examples do not cover every production variant. **UI caveat (checked 2026-10-29):** the selected-merge panel displayed “Frequency: undefined” while the candidate-pair list showed counts; treat that selected value as unreliable unless the page has since been fixed.
 - [Hugging Face — BPE, French course](https://huggingface.co/learn/llm-course/fr/chapter6/5?fw=tf) : structured explanation of BPE training that complements the visual intuition with a more systematic account.
 - [Saurav Prateek — visualizing BPE encoding with Hugging Face](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize) : example of visualizing a text's merge path. This is a community article; check current code and dependency compatibility before running it.
 
