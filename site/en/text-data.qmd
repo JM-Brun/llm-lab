@@ -85,9 +85,9 @@ This overview stays focused on the pipeline. Technical details live on dedicated
 - [Embedding space](embedding-space.qmd) and [tensors](tensors.qmd): dimensions, weight tables, and representation shapes.
 
 
-## 7. Mini-lab: compare tokenizers
+## 3. Mini-lab: compare tokenizers
 
-Use the visualizers above with the same strings and record the differences. Do not compare raw IDs across vocabularies as if they shared a meaning.
+Compare the same strings with at least two tokenizers, using the examples and tools introduced in the [tokenization strategies page](tokenization-strategies.qmd). Record differences; do not compare raw IDs across vocabularies as if they shared a meaning.
 
 | Input to test | Learning question | What to inspect |
 |---|---|---|
@@ -100,7 +100,7 @@ Use the visualizers above with the same strings and record the differences. Do n
 
 **Minimal lab record:** for each string, record tokenizer/version, visible tokens, token count, and one interpretation limit. Token count alone measures neither linguistic nor model quality.
 
-## 8. Counterexamples and common misconceptions
+## 4. Counterexamples and common misconceptions
 
 - **“A token is a word.”** False: it may be a subword, punctuation, a fragment with a space, bytes, or a special token.
 - **“BPE identifies roots and suffixes.”** Not necessarily: it merges statistically and does not guarantee morphological analysis.
