@@ -142,6 +142,30 @@ Le schéma ci-dessus donne une vue d'ensemble du pipeline. Ces ressources extern
 
 Pour une explication orale et codée, la vidéo [Karpathy — *Let's build the GPT Tokenizer*](https://www.youtube.com/watch?v=zduSFxRajkE) parcourt Unicode/UTF-8, BPE, la pré-tokenisation et les tokens spéciaux.
 
+### Aperçus visuels intégrés
+
+Les liens ci-dessus restent les sources de référence. Les aperçus ci-dessous chargent les contenus depuis leurs sites d'origine : ils nécessitent une connexion et peuvent être bloqués par le navigateur ou le fournisseur. Les liens directs restent disponibles en cas d'échec.
+
+#### BPE : observer les fusions en direct
+
+<iframe src="https://philipmueller.dev/bpe-visualization/" title="Visualisation interactive de Byte Pair Encoding (BPE)" loading="lazy" style="width:100%; height:620px; border:1px solid #cbd5e1; border-radius:8px;" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+
+<small>Source externe : [BPE Explainer de Philip Müller et Peter Steinbach](https://philipmueller.dev/bpe-visualization/). Utilisez cette démonstration pour suivre les fusions ; ses règles pédagogiques ne sont pas nécessairement celles d'un tokenizer de production.</small>
+
+#### Exemple de disparité entre langues
+
+L'aperçu du PDF ci-dessous affiche la première page de l'article d'Ahia et al. (2023), où se trouve la figure 1. Il est chargé depuis ACL Anthology ; aucune copie du PDF ou de la figure n'est stockée dans ce dépôt.
+
+<iframe src="https://aclanthology.org/2023.emnlp-main.614.pdf#page=1&view=FitH" title="Première page de l'article Do All Languages Cost the Same? avec la figure 1" loading="lazy" style="width:100%; height:560px; border:1px solid #cbd5e1; border-radius:8px;"></iframe>
+
+<small>[Ouvrir le PDF original](https://aclanthology.org/2023.emnlp-main.614.pdf) · [Page de l'article et licence ACL](https://aclanthology.org/2023.emnlp-main.614/). La figure illustre une différence de segmentation et de coût entre exemples linguistiques ; elle ne résume pas l'ensemble des résultats de l'article.</small>
+
+#### Tokenizer GPT : aperçu vidéo
+
+[![Aperçu vidéo : Let's build the GPT Tokenizer, par Andrej Karpathy](https://img.youtube.com/vi/zduSFxRajkE/hqdefault.jpg)](https://www.youtube.com/watch?v=zduSFxRajkE)
+
+<small>La vignette est chargée depuis YouTube. [Regarder la vidéo originale](https://www.youtube.com/watch?v=zduSFxRajkE) pour l'explication commentée et les démonstrations de code.</small>
+
 **Droits et provenance :** les figures externes sont citées et liées à leur source, mais ne sont ni copiées ni intégrées localement. La citation d'une illustration ne vaut pas autorisation de la redistribuer ; le dépôt conserve ses propres schémas originaux.
 
 Les identifiants sont des indices de ligne, pas des coordonnées sémantiques : la différence numérique entre deux IDs n'a pas de signification intrinsèque. L'étape positionnelle dépend de l'architecture ; [l'encodage positionnel et RoPE](positional-encoding.qmd) explique la distinction principale.

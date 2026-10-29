@@ -142,6 +142,30 @@ The diagram above gives the overall pipeline. These external resources illuminat
 
 For a narrated, code-oriented walkthrough, [Karpathy's *Let's build the GPT Tokenizer*](https://www.youtube.com/watch?v=zduSFxRajkE) covers Unicode/UTF-8, BPE, pre-tokenization, and special tokens.
 
+### Embedded visual previews
+
+The links above remain the authoritative sources. The previews below load content from the original websites; they require a network connection and may be blocked by a browser or provider. Direct source links remain available if an embed fails.
+
+#### BPE: watch merges happen
+
+<iframe src="https://philipmueller.dev/bpe-visualization/" title="Interactive Byte Pair Encoding (BPE) visualization" loading="lazy" style="width:100%; height:620px; border:1px solid #cbd5e1; border-radius:8px;" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+
+<small>External source: [BPE Explainer by Philip Müller and Peter Steinbach](https://philipmueller.dev/bpe-visualization/). Use it to follow the merges; its educational conventions may differ from those of a production tokenizer.</small>
+
+#### An example of cross-language disparities
+
+The PDF preview below displays the first page of Ahia et al. (2023), which contains Figure 1. It is loaded from ACL Anthology; neither the PDF nor the figure is stored in this repository.
+
+<iframe src="https://aclanthology.org/2023.emnlp-main.614.pdf#page=1&view=FitH" title="First page of Do All Languages Cost the Same? including Figure 1" loading="lazy" style="width:100%; height:560px; border:1px solid #cbd5e1; border-radius:8px;"></iframe>
+
+<small>[Open the original PDF](https://aclanthology.org/2023.emnlp-main.614.pdf) · [Paper page and ACL license](https://aclanthology.org/2023.emnlp-main.614/). The figure illustrates differences in tokenization and cost across language examples; it does not summarize the paper's full results.</small>
+
+#### GPT tokenizer: video preview
+
+[![Video preview: Let's build the GPT Tokenizer, by Andrej Karpathy](https://img.youtube.com/vi/zduSFxRajkE/hqdefault.jpg)](https://www.youtube.com/watch?v=zduSFxRajkE)
+
+<small>The thumbnail is loaded from YouTube. [Watch the original video](https://www.youtube.com/watch?v=zduSFxRajkE) for the narrated explanation and code demonstrations.</small>
+
 **Rights and provenance:** external figures are cited and linked to their sources, but are neither copied nor embedded locally. Citing an illustration does not itself grant permission to redistribute it; the repository retains its own original diagrams.
 
 Token IDs are row indices, not semantic coordinates: the numerical difference between two IDs has no intrinsic meaning. The positional step depends on the architecture; [positional encoding and RoPE](positional-encoding.qmd) explains the main distinction.
