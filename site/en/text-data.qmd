@@ -64,7 +64,7 @@ Remember: tokens are representation units, not necessarily words or units of mea
 
 | Stage | Tokenizer A | Tokenizer B |
 |---|---|---|
-| Fragments (schematic example) | \`[fragment 1]\`, \`[fragment 2]\`, \`[fragment 3]\` | \`[fragment 1]\`, \`[fragment 2]\` |
+| Fragments (schematic example) | `[fragment 1]`, `[fragment 2]`, `[fragment 3]` | `[fragment 1]`, `[fragment 2]` |
 | IDs | Depend on vocabulary A | Depend on vocabulary B |
 | Compatible model | Weights associated with A | Weights associated with B |
 
