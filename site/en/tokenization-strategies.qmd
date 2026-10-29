@@ -107,8 +107,8 @@ For fair comparison, report metrics by language and text type, and keep **repres
 ### Recommended visual resources
 
 1. [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/): interactive merge manipulation; best first intuition.
-2. [Hugging Face — BPE course in French](https://huggingface.co/learn/llm-course/fr/chapter6/5?fw=tf): structured account of training.
-3. [Cornell CS4782 — Tokenization Visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/): educational BPE/WordPiece comparison.
+2. [Hugging Face — Byte-Pair Encoding tokenization](https://huggingface.co/learn/llm-course/en/chapter6/5): English-language explanation of BPE training, paired with the French course linked from the French page.
+3. [Cornell CS4782 — Tokenization Visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/): educational BPE/WordPiece comparison. **UI caveat (checked 2026-10-29):** the selected-merge panel displayed “Frequency: undefined” while the candidate-pair list showed counts. Treat that selected value as unreliable unless the page has since been fixed.
 4. [Andrej Karpathy — Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE): Unicode, UTF-8, BPE, whitespace, and special tokens.
 5. [Hugging Face — visualizing BPE encoding](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize): complementary visualization; verify community code before execution.
 
