@@ -8,6 +8,10 @@ lang: en
 A language model receives a sequence of numerical IDs, not raw text. Tokenization defines how text becomes IDs and how IDs are decoded. It is separate from the neural network, but affects vocabulary, sequence length, compute cost, and some observable behaviours.
 :::
 
+::: {.callout-tip}
+**The key chain:** Unicode text → tokens → IDs → embedding vectors → contextual representations. Each arrow is a distinct transformation; in particular, do not confuse **vocabulary size** ($V$) with **embedding dimension** ($d$).
+:::
+
 ## Learning objectives
 
 - Distinguish Unicode text, bytes, tokens, token IDs, and embeddings.
@@ -90,6 +94,43 @@ flowchart TD
     H --> I["Neural network: contextual representations"]
 ```
 
+### Vocabulary size ≠ embedding dimension
+
+Here, **vocabulary** means the finite set of tokens the tokenizer can emit, not a list of linguistic words. Its size, denoted $V$, is the number of vocabulary entries/IDs. A token may be a word, subword, byte fragment, punctuation mark, or special token.
+
+The **embedding dimension**, denoted $d$, is the number of components in the vector associated with each ID. It is chosen when designing the model architecture; it is **not computed from $V$**. In many GPT-style models it matches the Transformer's hidden width, but that is an architectural convention rather than a universal law.
+
+![Original diagram: vocabulary size V determines the number of rows in the embedding matrix, while d determines the number of components per vector; output logits have dimension V at each position.](../images/token-embedding-matrix-en.svg){fig-alt="IDs select rows in E with shape V by d. A sequence of length L becomes a matrix L by d; the output projection produces logits of shape L by V." width=100%}
+
+::: {.callout-note}
+**Dimensions to remember**
+
+- **$V$**: number of vocabulary tokens/IDs — tied to tokenizer design.
+- **$d$**: number of components per embedding — an architecture hyperparameter.
+- **$L$**: number of tokens in a given sequence.
+- **$B$**: number of sequences in a batch.
+:::
+
+For a sequence of IDs $[i_1,\ldots,i_L]$, the embedding matrix is $E\in\mathbb{R}^{V\times d}$ and lookup selects the corresponding rows:
+
+$
+X = E_{[i_1,\ldots,i_L]}\in\mathbb{R}^{L\times d}.
+$
+
+For a batch, the shape is typically $[B,L,d]$. **Lookup does not yet compute meaning in context**: it selects learned vectors; Transformer blocks subsequently produce contextual representations.
+
+### How are these dimensions chosen?
+
+- **$V$ is determined by the tokenizer**: corpus and preprocessing, algorithm (for example BPE or unigram), rules and target vocabulary size, plus special-token handling. The exact size is a design choice and may differ from a requested target depending on the implementation.
+- **$d$ is determined by the architecture**: it is a hyperparameter chosen alongside depth, number of attention heads, compute budget, and training goals. There is no universal formula that derives $d$ from $V$.
+- **Parameter count depends on both**: the embedding table contains $Vd$ parameters. If the output projection has its own weight matrix, it typically adds about $dV$ parameters (plus a possible bias). Some models share input and output weights (*weight tying*), so do not automatically count both matrices without checking the architecture.
+
+::: {.callout-warning}
+**Changing the tokenizer is not a drop-in replacement.** IDs do not retain the same meaning across vocabularies. The embedding-table and output-projection weights were learned for specific IDs; changing $V$ or the ID assignment requires an explicit adaptation or retraining strategy.
+:::
+
+For tensor shapes and batch operations, see [the tensors page](tensors.qmd). To distinguish initial token embeddings from post-attention representations, see [embedding space](embedding-space.qmd); the rest of the pipeline is covered in [the Transformer page](transformer.qmd).
+
 ### Four complementary visual perspectives
 
 The diagram above gives the overall pipeline. These external resources illuminate different aspects without copying their figures into this repository:
@@ -103,9 +144,7 @@ For a narrated, code-oriented walkthrough, [Karpathy's *Let's build the GPT Toke
 
 **Rights and provenance:** external figures are cited and linked to their sources, but are neither copied nor embedded locally. Citing an illustration does not itself grant permission to redistribute it; the repository retains its own original diagrams.
 
-For an embedding matrix E with shape (V, d), ID i selects row E[i], a vector of dimension d. V is vocabulary size. This lookup is not generally the contextual representation produced after Transformer blocks. IDs are arbitrary indices: the numerical difference between two IDs has no semantic interpretation. Normalization, pre-tokenization, base units, and special tokens depend on the tokenizer.
-
-For a hand-checkable row-by-row example and the next shape transitions, see [the embedding-space lesson](embedding-space.qmd). The positional step depends on the architecture; [positional encoding and RoPE](positional-encoding.qmd) explains the main distinction.
+Token IDs are row indices, not semantic coordinates: the numerical difference between two IDs has no intrinsic meaning. The positional step depends on the architecture; [positional encoding and RoPE](positional-encoding.qmd) explains the main distinction.
 
 ## 2. Why whitespace splitting is not enough
 
