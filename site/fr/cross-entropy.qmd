@@ -26,6 +26,14 @@ Si \(y\) est l'indice du token cible et \(p=\operatorname{softmax}(z)\), on peut
 
 Le coût augmente lorsque le modèle attribue une faible probabilité au token observé. Une prédiction incorrecte mais très confiante est donc fortement pénalisée.
 
+## Intuition visuelle : la perte mesure la surprise du token observé
+
+![Pour un même token cible, une probabilité prédite de 0,9 produit une perte de 0,105 nat, tandis qu'une probabilité de 0,1 produit une perte de 2,303 nats.](../images/cross-entropy-target-probability.svg){fig-alt="Deux cas pour le même token observé : p(y)=0,9 donne −ln p(y)≈0,105 nat ; p(y)=0,1 donne −ln p(y)≈2,303 nats. Une probabilité cible plus faible entraîne une perte beaucoup plus grande." width=100%}
+
+Les deux cas concernent **le même token cible** : seul le poids de probabilité que le modèle lui attribue change. Quand \(p(y)=0{,}9\), la perte vaut environ \(0{,}105\) nat ; quand \(p(y)=0{,}1\), elle vaut environ \(2{,}303\) nats. La seconde perte est près de 22 fois plus grande. La fonction \(-\log p(y)\) rend donc les erreurs confiantes coûteuses, sans pour autant dire si le token observé est vrai ou utile dans un sens plus large.
+
+Cette image illustre la perte d'un token avec une cible one-hot ; elle ne représente ni la distribution complète du vocabulaire, ni la moyenne sur les positions valides, ni l'ensemble de l'objectif d'entraînement.
+
 ## Cible one-hot, cible souple et divergence KL
 
 Pour une distribution cible \(q\) et une distribution prédite \(p\), l'entropie croisée est (les termes de masse cible nulle contribuent zéro) :
