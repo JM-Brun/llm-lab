@@ -47,6 +47,10 @@ Ces catégories sont des idéaux-types. Les systèmes réels peuvent combiner pr
 
 ## 4. Exemples qui révèlent les compromis
 
+Un exemple de normalisation Unicode est traité dans [la page d'introduction](text-data.qmd) : `é` précomposé et `e\u0301` peuvent sembler identiques, tout en ayant des séquences de points de code différentes. Le tokenizer peut normaliser ces formes avant de les segmenter ; il faut vérifier sa configuration.
+
+
+
 | Entrée | Question à poser | Risque naïf |
 |---|---|---|
 | `unbelievable`, `unbelievably` | Les fragments réutilisent-ils des sous-chaînes fréquentes ? | Les frontières ne garantissent pas une analyse morphologique |
