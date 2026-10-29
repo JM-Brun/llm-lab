@@ -36,15 +36,15 @@ R(\theta)=
 \end{pmatrix},
 \qquad
 x'=R(\theta)x.
-$
+$$
 
 Pour voir pourquoi une information relative apparaît, considérons une paire de coordonnées et une fréquence fixées. Si $q$ et $k$ sont les composantes d'une requête et d'une clé avant rotation, leurs versions aux positions $m$ et $n$ sont $q_m=R(m\theta)q$ et $k_n=R(n\theta)k$. Comme une rotation vérifie $R(\alpha)^\top=R(-\alpha)$ et $R(\alpha)R(\beta)=R(\alpha+\beta)$, on obtient :
 
-$
+$$
 q_m^\top k_n
 = q^\top R(m\theta)^\top R(n\theta)k
 = q^\top R((n-m)\theta)k.
-$
+$$
 
 Le score dépend donc du décalage $n-m$ pour cette paire et cette fréquence, plutôt que des positions absolues prises séparément. Dans RoPE, ce raisonnement s'applique paire par paire, avec une fréquence propre à chaque paire.
 
