@@ -47,6 +47,10 @@ These are idealized categories. Real systems may combine pre-tokenization, subwo
 
 ## 4. Examples that expose trade-offs
 
+The [overview page](text-data.qmd) illustrates Unicode normalization with precomposed `é` and decomposed `e\u0301`: they may look identical while having different code-point sequences. A tokenizer may normalize them before segmentation; inspect its configuration rather than assuming the outputs match.
+
+
+
 | Input | Question to ask | Naive-approach risk |
 |---|---|---|
 | `unbelievable`, `unbelievably` | Do fragments reuse frequent substrings? | Boundaries do not guarantee morphological analysis |
