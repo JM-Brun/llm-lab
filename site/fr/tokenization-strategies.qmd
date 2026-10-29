@@ -162,7 +162,7 @@ Les liens externes sont privilégiés plutôt que de recopier des figures dont l
 
 1. Regarder la vidéo de Karpathy pour construire l'intuition sur les octets, les fusions et les tokens spéciaux.
 2. Lire le [BPE Explainer](https://philipmueller.dev/bpe-visualization/) et suivre les fusions sur un petit exemple.
-3. Lire \`minbpe\` ou le [module éducatif de tiktoken](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) pour inspecter le code.
+3. Lire `minbpe` ou le [module éducatif de tiktoken](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) pour inspecter le code.
 4. Comparer avec la documentation de tiktoken, SentencePiece et Hugging Face pour distinguer les conventions.
 5. Revenir au [chapitre 2 de Raschka](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) pour relier les IDs au pipeline des embeddings et aux exemples entrée-cible.
 6. Tester des textes multilingues, du code, des nombres, des espaces initiaux et des formes Unicode inhabituelles.
@@ -183,8 +183,8 @@ Cette illustration publiée provient du [cours Hugging Face, « Building a token
 
 ### Code pédagogique et références historiques
 
-- [OpenAI \`tiktoken\` — module éducatif](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) : implémentation simplifiée de BPE pour inspecter les fusions ; elle n'est pas le chemin optimisé de production.
-- [Andrej Karpathy — \`minbpe\`](https://github.com/karpathy/minbpe) : code compact pour suivre apprentissage et encodage ; comparer les conventions avant de conclure à la compatibilité.
+- [OpenAI `tiktoken` — module éducatif](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) : implémentation simplifiée de BPE pour inspecter les fusions ; elle n'est pas le chemin optimisé de production.
+- [Andrej Karpathy — `minbpe`](https://github.com/karpathy/minbpe) : code compact pour suivre apprentissage et encodage ; comparer les conventions avant de conclure à la compatibilité.
 - [Sebastian Raschka — BPE from scratch](https://sebastianraschka.com/blog/2025/bpe-from-scratch.html) : notebook explicatif.
 - [Raschka — dépôt, chapitre 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) : implémentations et préparation des données textuelles.
 - [Gage (1994), *A New Algorithm for Data Compression*](https://dl.acm.org/doi/10.5555/177910.177914) : référence historique de la compression par paires d'octets. Les tokenizers modernes de LLM ajoutent des conventions que ce papier ne spécifie pas à lui seul.
