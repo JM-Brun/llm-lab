@@ -132,6 +132,31 @@ Ce tableau formule des questions à tester, pas des sorties exactes. Pour docume
 6. Évaluer séparément qualité en aval, latence, mémoire, débit et coût.
 7. Publier les limites : corpus, versions, normalisation, langues couvertes et incertitudes.
 
+### Petit protocole reproductible en Python
+
+L'exemple suivant inspecte un tokenizer Hugging Face précis. Le premier chargement peut nécessiter un accès réseau ; pour une expérience reproductible, consignez les versions des bibliothèques et figez la révision du modèle plutôt que d'utiliser une référence mobile.
+
+```python
+from importlib.metadata import version
+from transformers import AutoTokenizer
+
+model_id = "gpt2"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+text = " Hello world — café"
+
+ids = tokenizer.encode(text, add_special_tokens=False)
+tokens = tokenizer.convert_ids_to_tokens(ids)
+
+print("transformers:", version("transformers"))
+print("tokenizer:", model_id)
+print("tokens:", tokens)
+print("IDs:", ids)
+print("count:", len(ids))
+print("decoded:", tokenizer.decode(ids))
+```
+
+Les fragments et IDs affichés appartiennent au tokenizer chargé. Pour comparer deux tokenizers, exécutez le même protocole sur les mêmes textes, consignez leurs versions/révisions et comparez les fragments et le nombre de tokens — pas les valeurs numériques des IDs entre vocabulaires. Le décodage dépend aussi des conventions et des tokens spéciaux.
+
 ### Mesurer un tokenizer sans réduire la qualité au nombre de tokens
 
 Les études sur les coûts multilingues n'emploient pas toujours les mêmes métriques ni les mêmes dénominateurs. Il faut donc lire la définition opérationnelle de chaque mesure avant de comparer des résultats. Voir notamment [Ahia et al. (2023)](https://aclanthology.org/2023.emnlp-main.614/) et le travail sur les métriques multilingues [TokLens (ACL 2026 SRW)](https://aclanthology.org/2026.acl-srw.18/).
