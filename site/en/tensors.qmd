@@ -81,6 +81,10 @@ For this example, the rows become approximately `[0.881, 0.500, 0.119]` and `[0.
 
 **Debugging invariant:** if the output is intended to represent \(p(\text{token}\mid\text{context at this position})\), check that probabilities sum to 1 over the vocabulary axis for every batch-position pair. Correct shape is not enough; the invariant depends on the intended interpretation.
 
+![Comparison of softmax over the vocabulary axis V, which gives a distribution per position, and over the sequence axis T, which gives row sums of 1.5 in this example.](../images/softmax-axis-comparison-en.svg){fig-alt="The left matrix normalized over V has each row sum to one. The right matrix normalized over T has row sums of 1.5, showing a shape-compatible but semantically incorrect operation for next-token probabilities." width=100%}
+
+*Figure — The same logits produce different meanings depending on the normalized axis.*
+
 ## Reading dimensions in an example
 
 For \(B=2\), \(T=4\), and \(D=8\), hidden states have shape \((2,4,8)\). A projection to a vocabulary of \(V=1000\) tokens produces logits of shape \((2,4,1000)\). The final axis corresponds to candidate tokens; each batch-position pair therefore has a distribution after softmax over that axis.
