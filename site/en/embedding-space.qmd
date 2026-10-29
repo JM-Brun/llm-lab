@@ -10,12 +10,6 @@ An **embedding** is a numerical vector associated with an object, such as a toke
 
 This page opens the **Representation geometry and interpretability** path: understand the space, examine proximity metrics, then question assumptions about the structure of representations. It is the entry point; linked pages investigate each question in more depth.
 
-## A map of representations
-
-![Schematic projection of an embedding space.](../images/embedding-space-en.svg){fig-alt="Points grouped in an abstract plane. The groups are illustrative; the axes do not necessarily correspond to human concepts." width=100%}
-
-This is a conceptual illustration in two dimensions. Real embeddings often have hundreds or thousands of coordinates; a 2D projection can distort distances and neighbourhoods.
-
 ## Where do the vectors come from?
 
 A tokenizer splits text into tokens and usually maps each token to an integer ID. An embedding matrix $E\in\mathbb{R}^{V\times d}$ contains one vector per ID: $V$ is the vocabulary size and $d$ is the embedding dimension. The initial embedding for token ID $i$ is row $E_i$.
@@ -27,14 +21,6 @@ In a Transformer, this representation is then transformed by the network's layer
 - **Sentence or document embedding:** a vector computed by a model and aggregation method designed to represent a longer text.
 
 These objects are not interchangeable. A method suited to sentence embeddings for document retrieval does not automatically transfer to a language model's internal activations.
-
-### Same token, different contexts
-
-![The same token can receive different contextualized representations depending on the sentence.](../images/contextualized-embeddings-en.svg){fig-alt="Two sentences use bank in different contexts. Assuming the same ID, both occurrences share the initial embedding, then may produce different contextualized states." width=100%}
-
-This original illustration is motivated by [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). It illustrates the principle, not measured vectors: it assumes `bank` maps to the same token in both sentences. Depending on the tokenizer, a visible word may consist of multiple tokens.
-
-The initial embedding is retrieved from the ID; the contextualized representation then depends on other tokens, the architecture, and the layer considered. This does not mean every occurrence must have a wholly different vector at every layer, or that vectors always separate according to human-expected meanings.
 
 ## From token IDs to vectors: a worked lookup
 
@@ -122,7 +108,6 @@ Read the trace carefully:
 
 The exact IDs are specific to the named encoding and library behaviour; another tokenizer may produce different fragments and IDs. The assertions make changes visible rather than silently treating tokenization as universal. See the [official tiktoken repository](https://github.com/openai/tiktoken) and its [encoding tests](https://github.com/openai/tiktoken/blob/0.14.0/tests/test_encoding.py) for the reference output.
 
-
 ## Vocabulary size, dimension, and parameters
 
 Vocabulary size \(V\) and embedding dimension \(d\) are separate design choices. The embedding matrix \(E\in\mathbb{R}^{V\times d}\) has \(V\) rows—one per ID—and \(d\) components per row. For a sequence of length \(L\), lookup produces a matrix of shape \(L\times d\); for a batch of \(B\) sequences, the common shape is \(B\times L\times d\).
@@ -151,34 +136,19 @@ This addition is **not universal**. For example, [RoPE](positional-encoding.qmd)
 
 During training, gradients can update the embedding-table rows used by the examples. The lookup operation itself does not make a vector context-aware; contextualization happens in the subsequent network layers. See [tensors](tensors.qmd) for axis conventions and [from text to tokens](text-data.qmd) for the preceding tokenizer stage.
 
+### Same token, different contexts
 
-## Check your understanding: transfer, not recall
+![The same token can receive different contextualized representations depending on the sentence.](../images/contextualized-embeddings-en.svg){fig-alt="Two sentences use bank in different contexts. Assuming the same ID, both occurrences share the initial embedding, then may produce different contextualized states." width=100%}
 
-Try answering before opening each explanation. These questions test whether the pipeline can be applied to a new situation; they do not by themselves establish mastery.
+This original illustration is motivated by [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). It illustrates the principle, not measured vectors: it assumes `bank` maps to the same token in both sentences. Depending on the tokenizer, a visible word may consist of multiple tokens.
 
-<details>
-<summary>1. The same token ID occurs twice in a sequence. Must its initial token embedding differ at the two positions?</summary>
+The initial embedding is retrieved from the ID; the contextualized representation then depends on other tokens, the architecture, and the layer considered. This does not mean every occurrence must have a wholly different vector at every layer, or that vectors always separate according to human-expected meanings.
 
-No. Both lookups select the same row of the embedding matrix. In an architecture with learned absolute position embeddings, adding different position vectors can make the resulting inputs differ. Later Transformer processing can also produce different contextualized states.
-</details>
+## A map of representations
 
-<details>
-<summary>2. If two tokenizers assign different IDs to the same visible string, can those IDs be compared numerically?</summary>
+![Schematic projection of an embedding space.](../images/embedding-space-en.svg){fig-alt="Points grouped in an abstract plane. The groups are illustrative; the axes do not necessarily correspond to human concepts." width=100%}
 
-No. An ID is an index within a particular tokenizer vocabulary, not a universal token label or semantic coordinate. Compare token strings and the tokenizer configuration; each model's IDs must index the vocabulary and weights it was built for.
-</details>
-
-<details>
-<summary>3. A batch has shape [B, L] before lookup. What shape does a standard embedding table produce, and what does lookup not do?</summary>
-
-The token embeddings have shape [B, L, d], where d is the embedding dimension. Lookup selects one row per ID; it does not mix information across positions or create contextualized states by itself.
-</details>
-
-<details>
-<summary>4. Does RoPE add a position vector to each initial token embedding?</summary>
-
-Not in the standard formulation described here. RoPE applies position-dependent rotations to query and key vectors inside attention. This differs from learned absolute position embeddings, which are added to token embeddings in architectures that use that method.
-</details>
+This is a conceptual illustration in two dimensions. Real embeddings often have hundreds or thousands of coordinates; a 2D projection can distort distances and neighbourhoods.
 
 ## What does proximity mean?
 
@@ -217,7 +187,6 @@ To evaluate an embedding space, return to the actual task: document retrieval, a
 - [Representation linearity](embedding-linearity.qmd): decodability, linearity, and interpretation.
 - [Tensors](tensors.qmd): how vectors are organized in network computations.
 - [Positional encoding and RoPE](positional-encoding.qmd): information about token positions.
-
 
 ## References
 
