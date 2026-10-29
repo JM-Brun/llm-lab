@@ -266,3 +266,26 @@ This is a targeted source-level review of the bilingual Q/K/V concept pair, chos
 | Architecture configuration, parameter tying, dropout/train-eval semantics | Upstream Chapter 4 notebook includes these topics; no complete tested public contract found in the candidate pages. | Record as gaps for a future prerequisite-gated implementation. Distinguish dropout from masking and architecture-specific choices from universal Transformer properties. |
 
 **Upstream scope checked:** [Raschka Chapter 4](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch04), its [main-code folder](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch04/01_main-chapter-code), and [main notebook](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch04/01_main-chapter-code/ch04.ipynb). This is a bounded source audit, not a browser/render review or evidence of learner mastery. Optional KV cache, performance comparisons, MoE, GQA and MLA remain outside the baseline path.
+
+
+## Active text-to-embedding slice: PR #118 validation
+
+**Scope:** [#82](https://github.com/JM-Brun/llm-lab/issues/82), coordinated by [roadmap #78](https://github.com/JM-Brun/llm-lab/issues/78). This is still the active slice; later attention, model and training implementations remain deferred.
+
+| Check | Evidence | Status / limitation |
+|---|---|---|
+| One consistent input across text, tokenizer IDs and embedding lookup | [PR #118](https://github.com/JM-Brun/llm-lab/pull/118), merged at `50734b1f74bc1778431ec255861489223be4c2d0`; EN and FR embedding-space pages trace `hello world` through UTF-8, GPT-2 `tiktoken` IDs `[31373, 995]`, token byte fragments, synthetic embedding rows and illustrative absolute-position addition. | Source content present. Real tokenizer IDs are distinguished from synthetic embedding/position values; no claim is made that the example loads GPT-2 weights or computes contextual states. |
+| Python CI on the merged revision | [Run 40897933771](https://github.com/JM-Brun/llm-lab/actions/runs/40897933771), on the merge commit. | Passed: dependency installation, formatting, lint, type check and tests. This does not execute the documentation's `tiktoken` snippet. |
+| Quarto render and publication | [Run 40897934138](https://github.com/JM-Brun/llm-lab/actions/runs/40897934138), on the merge commit. The generated GitHub Pages artifact was inspected to confirm both `en/embedding-space.html` and `fr/embedding-space.html` contain the trace and pinned install instruction. | Render and deploy passed; artifact content checked. Artifact inspection is not a substitute for browser-based visual/responsive review. |
+| Exact tokenizer behavior | Expected IDs and fragments were cross-checked against the official [tiktoken encoding tests](https://github.com/openai/tiktoken/blob/main/tests/test_encoding.py). NumPy lookup and position-value assertions were tested separately. | The complete example was **not** executed in an environment with `tiktoken==0.14.0`; this remains open. |
+| Browser / responsive review | Attempts to open the deployed EN/FR pages were not accessible through the available browser retrieval. | **Not verified.** Inspect both languages at desktop and mobile widths when a browser session is available. |
+| Mastery | No learner diagnostic has been administered for this slice. | Not assessed; do not infer mastery from content, CI or publication. |
+
+### Remaining checks before closing #82
+
+- [ ] Execute the complete embedded example with `tiktoken==0.14.0` in a reproducible Python environment, or explicitly disposition the example as documentation-only and explain why execution adds no distinct value.
+- [ ] Inspect deployed EN/FR pages and figures at desktop/mobile widths.
+- [ ] Spot-check the external tokenizer references and version-specific claims.
+- [ ] Keep technical correctness, code execution, CI/render, browser review and learner mastery as separate statuses.
+
+The latest merge-commit CI/render evidence supersedes earlier comments that said final-revision workflows were unconfirmed. This does not close #82 or authorize work on later curriculum slices.
