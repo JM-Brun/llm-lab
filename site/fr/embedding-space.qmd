@@ -8,13 +8,7 @@ lang: fr
 Un **embedding** est un vecteur numérique associé à un objet, par exemple un token. L'ensemble de ces vecteurs forme un espace de représentation. On peut comparer leurs directions, leurs distances ou leurs voisins, mais leur interprétation dépend du modèle, de son entraînement et de la tâche : la géométrie n'est pas un dictionnaire universel du sens.
 :::
 
-Cette page introduit le parcours **Géométrie et interprétabilité des représentations** : comprendre l'espace, examiner les métriques de proximité, puis questionner les hypothèses sur la forme des représentations. Elle sert de point d'entrée ; les pages liées approfondissent chaque question.
-
-## Une carte de représentations
-
-![Projection schématique d'un espace d'embeddings.](../images/embedding-space-fr.svg){fig-alt="Points regroupés dans un plan abstrait. Les regroupements sont illustratifs et les axes ne correspondent pas nécessairement à des concepts humains." width=100%}
-
-Cette image est une illustration conceptuelle en deux dimensions. Les embeddings réels ont souvent des centaines ou des milliers de coordonnées ; une projection 2D peut déformer les distances et les voisinages.
+Cette page établit d'abord comment les identifiants sélectionnent des vecteurs et comment un Transformer transforme les embeddings initiaux en représentations contextualisées. Elle examine ensuite la géométrie de ces représentations, les limites des mesures de similarité et les pièges d'interprétation.
 
 ## D'où viennent les vecteurs ?
 
@@ -27,14 +21,6 @@ Dans un Transformer, cette représentation est ensuite transformée par les couc
 - **Embedding de phrase ou de document :** vecteur calculé par un modèle et une méthode d'agrégation conçus pour représenter un texte plus long.
 
 Ces objets ne sont pas interchangeables. Une méthode adaptée aux embeddings de phrases pour la recherche documentaire ne se transfère pas automatiquement aux activations internes d'un LLM.
-
-### Même token, contextes différents
-
-![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Deux phrases utilisent bank dans des contextes différents. Sous l'hypothèse d'un même ID, les deux occurrences partagent l'embedding initial, puis peuvent produire des états contextualisés différents." width=100%}
-
-Cette figure est une illustration originale, motivée par l'étude d'[Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). Elle montre le principe, pas des vecteurs mesurés : on suppose que `bank` correspond au même token dans les deux phrases. Selon le tokenizer, un mot visible peut être constitué de plusieurs tokens.
-
-L'embedding initial est récupéré à partir de l'ID ; la représentation contextualisée dépend ensuite des autres tokens, de l'architecture et de la couche considérée. Cela ne signifie pas que chaque occurrence obtient un vecteur entièrement différent à chaque couche, ni que ces vecteurs se séparent toujours selon le sens humain attendu.
 
 ## Des identifiants aux vecteurs : une sélection par indice calculable à la main
 
@@ -122,7 +108,6 @@ Voici comment lire cette trace :
 
 Les IDs exacts dépendent de l'encodage et du comportement de la bibliothèque ; un autre tokenizer peut produire des fragments et IDs différents. Les assertions rendent ces changements visibles au lieu de présenter la tokenisation comme universelle. Voir le [dépôt officiel de tiktoken](https://github.com/openai/tiktoken) et ses [tests d'encodage](https://github.com/openai/tiktoken/blob/0.14.0/tests/test_encoding.py) pour la sortie de référence.
 
-
 ## Taille du vocabulaire, dimension et paramètres
 
 La taille du vocabulaire \(V\) et la dimension d'embedding \(d\) sont deux choix distincts. La matrice d'embeddings \(E\in\mathbb{R}^{V\times d}\) contient \(V\) lignes — une par ID — et \(d\) composantes par ligne. Pour une séquence de longueur \(L\), le lookup produit une matrice de forme \(L\times d\) ; pour un lot de \(B\) séquences, la forme usuelle est \(B\times L\times d\).
@@ -151,34 +136,19 @@ Cette addition n'est **pas universelle**. Par exemple, [RoPE](positional-encodin
 
 Pendant l'entraînement, les gradients peuvent modifier les lignes de la table d'embeddings utilisées par les exemples. La sélection par indice ne rend pas, à elle seule, un vecteur contextuel : la contextualisation intervient dans les couches suivantes du réseau. Voir les [tenseurs](tensors.qmd) pour les conventions de dimensions et [du texte aux tokens](text-data.qmd) pour l'étape précédente du tokenizer.
 
+### Même token, contextes différents
 
-## Vérifier la compréhension : transférer, pas réciter
+![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Deux phrases utilisent bank dans des contextes différents. Sous l'hypothèse d'un même ID, les deux occurrences partagent l'embedding initial, puis peuvent produire des états contextualisés différents." width=100%}
 
-Essayez de répondre avant d'ouvrir chaque explication. Ces questions vérifient si le parcours peut être appliqué à une situation nouvelle ; elles ne suffisent pas, à elles seules, à établir une maîtrise.
+Cette figure est une illustration originale, motivée par l'étude d'[Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). Elle montre le principe, pas des vecteurs mesurés : on suppose que `bank` correspond au même token dans les deux phrases. Selon le tokenizer, un mot visible peut être constitué de plusieurs tokens.
 
-<details>
-<summary>1. Le même ID de token apparaît deux fois dans une séquence. Son embedding initial doit-il différer aux deux positions ?</summary>
+L'embedding initial est récupéré à partir de l'ID ; la représentation contextualisée dépend ensuite des autres tokens, de l'architecture et de la couche considérée. Cela ne signifie pas que chaque occurrence obtient un vecteur entièrement différent à chaque couche, ni que ces vecteurs se séparent toujours selon le sens humain attendu.
 
-Non. Les deux opérations de lookup sélectionnent la même ligne de la matrice d'embeddings. Dans une architecture avec embeddings positionnels absolus appris, l'ajout de vecteurs de position différents peut rendre les entrées combinées différentes. Le traitement ultérieur par le Transformer peut aussi produire des états contextualisés différents.
-</details>
+## Une carte de représentations
 
-<details>
-<summary>2. Si deux tokenizers attribuent des IDs différents à la même chaîne visible, peut-on comparer ces IDs numériquement ?</summary>
+![Projection schématique d'un espace d'embeddings.](../images/embedding-space-fr.svg){fig-alt="Points regroupés dans un plan abstrait. Les regroupements sont illustratifs et les axes ne correspondent pas nécessairement à des concepts humains." width=100%}
 
-Non. Un ID est un indice dans le vocabulaire d'un tokenizer donné, pas une étiquette universelle ni une coordonnée sémantique. Il faut comparer les tokens visibles et la configuration du tokenizer ; les IDs de chaque modèle doivent indexer le vocabulaire et les poids avec lesquels il a été construit.
-</details>
-
-<details>
-<summary>3. Un lot a la forme [B, L] avant le lookup. Quelle forme produit une table d'embeddings standard, et que ne fait pas le lookup ?</summary>
-
-Les embeddings des tokens ont la forme [B, L, d], où d est la dimension d'embedding. Le lookup sélectionne une ligne par ID ; il ne mélange pas l'information entre positions et ne crée pas, à lui seul, des états contextualisés.
-</details>
-
-<details>
-<summary>4. RoPE ajoute-t-il un vecteur de position à chaque embedding initial de token ?</summary>
-
-Non, pas dans la formulation standard présentée ici. RoPE applique des rotations dépendant de la position aux vecteurs requête et clé dans l'attention. C'est différent des embeddings positionnels absolus appris, qui sont ajoutés aux embeddings des tokens dans les architectures qui utilisent cette méthode.
-</details>
+Cette image est une illustration conceptuelle en deux dimensions. Les embeddings réels ont souvent des centaines ou des milliers de coordonnées ; une projection 2D peut déformer les distances et les voisinages.
 
 ## Que signifie la proximité ?
 
@@ -217,7 +187,6 @@ Pour évaluer un espace d'embeddings, revenir à la tâche réelle : recherche d
 - [Linéarité des représentations](linearite-embeddings.qmd) : décodabilité, linéarité et interprétation.
 - [Tenseurs](tensors.qmd) : organisation des vecteurs dans les calculs du réseau.
 - [Encodage positionnel et RoPE](positional-encoding.qmd) : information de position dans le traitement des tokens.
-
 
 ## Références
 

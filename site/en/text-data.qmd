@@ -30,10 +30,13 @@ flowchart LR
     B --> C["Tokenizer"]
     C --> D["Tokens"]
     D --> E["Integer IDs"]
-    E --> F["Embedding vectors"]
-    F --> G["Transformer"]
-    G --> H["Contextual representations"]
+    E --> F["Embedding-table lookup"]
+    F --> G["Token embeddings"]
+    G --> H["Transformer with positional mechanism"]
+    H --> I["Contextual representations"]
 ```
+
+The final box deliberately groups positional handling with Transformer processing. Architectures do not all inject position in the same way: learned absolute position vectors may be added to token embeddings, whereas RoPE rotates query and key vectors inside attention. Position is therefore not a universal extra vector added at the lookup step; see [positional encoding and RoPE](positional-encoding.qmd).
 
 - **Source text:** a string that may contain punctuation, whitespace, numbers, code, or multiple languages.
 - **Preprocessing:** some inputs are normalized or pre-split; these operations depend on the tokenizer.
@@ -115,13 +118,11 @@ Compare the same strings with at least two tokenizers, using the examples and to
 
 The guide [Tokenization strategies: granularity, algorithms, and trade-offs](tokenization-strategies.qmd) compares word, character, byte, subword, BPE, WordPiece, and unigram approaches.
 
-## Continue learning
+## Next step
 
-- [GPT and Transformers: architecture and data flow](transformer.qmd)
-- [Tensors](tensors.qmd)
-- [Embedding space](embedding-space.qmd)
-- [Mathematical foundations](mathematical-foundations.qmd)
-- [Full curriculum and source-coverage plan](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md)
+Continue with [embedding space](embedding-space.qmd) to see how token IDs select rows from an embedding matrix, how tensor shapes change, and how later network layers produce contextualized representations.
+
+For the mathematical language used throughout the model, see [tensors](tensors.qmd) and [mathematical foundations](mathematical-foundations.qmd). The [full curriculum and source-coverage plan](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) gives the wider learning path.
 
 :::: {.language-switch}
 **Language:** [Français](../fr/text-data.qmd) · [English](text-data.qmd)
