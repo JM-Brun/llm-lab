@@ -37,7 +37,7 @@ Ces catégories sont des idéaux-types. Les systèmes réels peuvent combiner pr
 
 ## 3. Les composants d'un tokenizer
 
-Un tokenizer de production n'est pas seulement un algorithme de segmentation. Les bibliothèques peuvent exposer plusieurs composants, dont les effets doivent être distingués. La [documentation Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/components) décrit ces étapes ; [SentencePiece](https://github.com/google/sentencepiece) fournit un autre exemple de conventions et de modèles.
+Un tokenizer de production n'est pas seulement un algorithme de segmentation. Les bibliothèques peuvent exposer plusieurs composants, dont les effets doivent être distingués. La [documentation Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/python/latest/components.html) décrit ces étapes ; [SentencePiece](https://github.com/google/sentencepiece) fournit un autre exemple de conventions et de modèles.
 
 | Composant | Rôle | Question de vérification |
 |---|---|---|
