@@ -561,3 +561,21 @@ The following issues operationalize §9. They are **audit tasks**, not a commitm
 5. Treat the upstream bonus list as a living catalogue: new bonus items require triage and an explicit disposition, not automatic issue proliferation or implementation.
 
 **Completion rule:** the audit issue may close when the source-to-site mapping, gap links, bilingual checks, source review date, and curriculum-plan updates are recorded. It must not close merely because follow-up issues were created.
+
+
+### Chapter 1 audit result (2026-10-29; see [audit #95](https://github.com/JM-Brun/llm-lab/issues/95))
+
+**Assessment: partial.** This is based on inspection of the current source files and the publisher's chapter outline; rendered-browser and CI validation have not been run as part of this audit.
+
+| Learning objective | Existing evidence | Assessment |
+|---|---|---|
+| GPT data flow from text/tokens through representations, Transformer blocks, logits/probabilities and next-token generation | [EN overview](../site/en/transformer.qmd), [FR overview](../site/fr/transformer.qmd) | Covered at overview level; links to canonical deep dives. |
+| Training versus autoregressive generation | Same overview pages | Covered conceptually, including parallel processing of training positions versus stepwise generation. |
+| Important misconceptions and limits (tokens are not necessarily words; probabilities do not guarantee truth; attention weights alone do not explain a prediction) | Same overview pages | Covered explicitly. |
+| Basic vocabulary | [EN glossary](../site/en/glossary.qmd), [FR glossary](../site/fr/glossary.qmd) | Partial: concise definitions exist, but no coherent model-family and lifecycle orientation. |
+| Historical context for original Transformer | [EN history](../site/en/transformer-history.qmd), [FR history](../site/fr/transformer-history.qmd) | Partial: historical milestones exist; a comparison of model families and their objectives is still needed. |
+| Applications and earlier NLP contrast; AI/ML/deep-learning hierarchy; encoder-only vs encoder–decoder vs decoder-only; BERT vs GPT; pretraining → base model → adaptation → inference; classification fine-tuning vs instruction SFT; zero-/few-shot; scale/diversity; custom-model motivations; careful meaning of “understanding” and “emergent” capabilities | No single canonical orientation page identified in the inspected files | Gap. Follow-up: [#108 — add a bilingual LLM big-picture overview](https://github.com/JM-Brun/llm-lab/issues/108). |
+
+**Source checked:** [Manning's Chapter 1 objectives](https://livebook.manning.com/learn/build-a-large-language-model-from-scratch/chapter-1) and [upstream Chapter 1 README](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch01/README.md). The upstream README lists no chapter code; the extras are reading advice and a video introducing the LLM development lifecycle.
+
+**Disposition:** do not expand the existing GPT overview into an encyclopaedia. Keep it as the canonical architecture/data-flow overview and add a concise bilingual orientation page, linked from the guided path and existing overview, under #108. Reuse canonical token, attention, loss and generation pages rather than duplicating them. Re-audit the status after #108 is implemented and rendered.
