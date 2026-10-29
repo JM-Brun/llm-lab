@@ -69,7 +69,9 @@ Pour chaque position, on veut une distribution sur les **tokens candidats**. La 
 probs = logits.softmax(dim=-1)  # normalise les 3 tokens, pour chaque position
 ```
 
-La somme des probabilités sur \(V\) vaut alors 1 à chaque position. En revanche :
+La somme des probabilités sur \(V\) vaut alors 1 à chaque position. Pour ces logits, les lignes valent approximativement `[0.665, 0.245, 0.090]` et `[0.090, 0.245, 0.665]`.
+
+En revanche :
 
 ```python
 wrong = logits.softmax(dim=1)  # normalise les 2 positions, token par token
