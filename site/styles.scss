@@ -123,32 +123,36 @@ details > :last-child { margin-bottom: .15rem; }
 .llm-flow-figure {
   margin: 1.5rem 0 2.4rem;
   padding: clamp(.6rem, 2vw, 1.2rem);
-  border: 1px solid var(--llm-line);
-  border-radius: 1rem;
-  background: linear-gradient(150deg, #fff 0%, #f5f9fb 100%);
+  border: 1px solid #c2d0b9;
+  border-radius: .55rem;
+  background-color: var(--llm-paper);
+  background-image: linear-gradient(rgba(23,107,69,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(23,107,69,.045) 1px, transparent 1px);
+  background-size: 18px 18px;
+  box-shadow: 4px 5px 0 rgba(24,60,42,.06);
 }
 .llm-flow { display: block; width: 100%; height: auto; overflow: visible; }
 .llm-flow .flow-connectors { stroke-linecap: round; stroke-linejoin: round; }
 .llm-flow .flow-node a { cursor: pointer; outline: none; }
 .llm-flow .flow-node rect {
-  fill: #fff;
-  stroke: #cbd9e4;
+  fill: #fbfbf3;
+  stroke: #aebfa5;
   stroke-width: 1.5;
   transition: fill .15s ease, stroke .15s ease, stroke-width .15s ease;
 }
 .llm-flow .flow-node:nth-of-type(2) rect,
-.llm-flow .flow-node:nth-of-type(4) rect { fill: #f0f8f8; }
+.llm-flow .flow-node:nth-of-type(4) rect,
+.llm-flow .flow-node:nth-of-type(6) rect { fill: #edf5e4; }
 .llm-flow .flow-node a:hover rect,
 .llm-flow .flow-node a:focus rect {
-  fill: #e5f5f4;
+  fill: #e3f1d7;
   stroke: var(--llm-teal);
   stroke-width: 3;
 }
 .llm-flow .flow-kicker { fill: var(--llm-teal); font-size: 11px; font-weight: 800; letter-spacing: .8px; }
 .llm-flow .flow-title { fill: var(--llm-ink); font-size: 16px; font-weight: 750; }
-.llm-flow .flow-subtitle { fill: #52677d; font-size: 12px; }
-.llm-flow .flow-note { fill: #52677d; font-size: 11px; font-style: italic; }
-.llm-flow .flow-hint { fill: #52677d; font-size: 12px; }
+.llm-flow .flow-subtitle { fill: #435a49; font-size: 12px; }
+.llm-flow .flow-note { fill: #435a49; font-size: 11px; font-style: italic; }
+.llm-flow .flow-hint { fill: #435a49; font-size: 12px; font-weight: 650; }
 .llm-flow-figure figcaption { margin: .4rem .4rem .1rem; }
 @media (max-width: 700px) {
   .llm-flow-figure { padding: .35rem; }
