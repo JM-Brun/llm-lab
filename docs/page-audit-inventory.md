@@ -7,6 +7,14 @@
 
 This file records what was actually reviewed and what remains to be checked. A page is not marked complete because it exists, is linked, or has a green CI run. Scientific review, French/English parity, rendered-page review, implementation evidence, and learner mastery are separate checks.
 
+## Status vocabulary
+
+- **Reviewed — follow-up open:** source content inspected; concrete remaining checks are recorded.
+- **Updated in PR:** source edits proposed in an open pull request; not yet merged or rendered.
+- **Not reviewed:** no claim of content review.
+- **Not applicable:** criterion does not apply to this page type.
+
+
 ## First vertical slice: Transformer → attention → position
 
 | Page / language pair | Role and reader question | What this pass confirmed in source | Remaining work |
