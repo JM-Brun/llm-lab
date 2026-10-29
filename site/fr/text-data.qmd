@@ -123,13 +123,13 @@ Avec un lot, la forme devient généralement $[B,L,d]$. **Le lookup ne calcule p
 
 - **$V$ est déterminé par le tokenizer** : corpus et prétraitement, algorithme (par exemple BPE ou unigramme), règles et objectif de taille de vocabulaire, ainsi que le traitement des tokens spéciaux. La taille exacte est un choix de conception et peut différer de la cible demandée selon l'implémentation.
 - **$d$ est déterminé par l'architecture** : c'est un hyperparamètre choisi avec la profondeur, le nombre de têtes, le budget de calcul et les objectifs d'entraînement. Il n'existe pas de formule universelle qui déduise $d$ de $V$.
-- **Le nombre de paramètres dépend des deux** : la table d'embeddings contient $Vd$ paramètres. Si la projection de sortie possède sa propre matrice de poids, elle ajoute typiquement environ $dV$ paramètres (plus éventuellement un biais). Certains modèles partagent les poids d'entrée et de sortie (*weight tying*) ; il ne faut donc pas additionner automatiquement les deux matrices sans vérifier l'architecture.
+- **Le nombre de paramètres dépend des deux** : la table d'embeddings contient $Vd$ paramètres. Si la projection de sortie possède sa propre matrice de poids, elle ajoute typiquement environ $dV$ paramètres (plus éventuellement un biais). Certains modèles partagent les poids d'entrée et de sortie (*weight tying*) ; il ne faut donc pas additionner automatiquement les deux matrices sans vérifier l'architecture. La taille $V$ utilisée par la matrice doit correspondre aux IDs réellement pris en charge par le modèle, y compris les tokens spéciaux qu'il reconnaît.
 
 ::: {.callout-warning}
 **Changer le tokenizer n'est pas une simple substitution.** Les IDs ne gardent pas le même sens d'un vocabulaire à l'autre. Les poids de la table d'embeddings et de la projection de sortie ont été appris pour des IDs précis ; changer $V$ ou l'affectation des IDs nécessite une stratégie explicite d'adaptation ou de réentraînement.
 :::
 
-Pour les dimensions des tenseurs et les opérations par lots, voir [la page sur les tenseurs](tensors.qmd). Pour distinguer l'embedding initial des représentations après attention, voir [l'espace des embeddings](embedding-space.qmd) ; la suite du pipeline est détaillée dans [la page Transformer](transformer.qmd).
+Les logits ont une composante par token possible ; la [page sur la cross-entropy](cross-entropy.qmd) explique comment les scores sont comparés à la cible pendant l'entraînement. Pour les dimensions des tenseurs et les opérations par lots, voir [la page sur les tenseurs](tensors.qmd). Pour distinguer l'embedding initial des représentations après attention, voir [l'espace des embeddings](embedding-space.qmd) ; la suite du pipeline est détaillée dans [la page Transformer](transformer.qmd).
 
 ### Trois points de vue visuels complémentaires
 
@@ -164,6 +164,24 @@ Il faut distinguer :
 2. **Encodage** : applique le tokenizer déjà appris ; il ne réapprend pas le vocabulaire à chaque requête.
 
 Un tokenizer BPE au niveau des octets peut représenter des entrées textuelles arbitraires grâce à ses unités de base. Tous les tokenizers BPE ne sont toutefois pas byte-level, et le résultat dépend aussi du pré-découpage et du vocabulaire.
+
+```{mermaid}
+flowchart LR
+    subgraph Train["Apprentissage du tokenizer"]
+        A["Corpus"] --> B["Pré-découpage et unités de base"]
+        B --> C["Comptage des paires et fusions"]
+        C --> D["Vocabulaire + ordre des fusions"]
+        D --> E["Tokenizer sauvegardé"]
+    end
+    subgraph Use["Encodage d'un nouveau texte"]
+        F["Nouveau texte"] --> G["Règles déjà apprises"]
+        E -. "réutilisé" .-> G
+        G --> H["Tokens puis IDs"]
+        H --> I["Modèle compatible"]
+    end
+```
+
+Ce schéma sépare **l'apprentissage du tokenizer** de **l'encodage**. Il ne décrit pas l'entraînement du modèle neuronal, qui est une étape distincte : le modèle apprend ses paramètres à partir de séquences d'IDs et de ses objectifs d'entraînement.
 
 
 ### Exemple concret : fusions BPE sur un petit corpus
