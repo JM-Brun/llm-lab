@@ -64,7 +64,7 @@ Un même texte peut être découpé en un nombre différent de tokens selon le t
 
 | Étape | Tokenizer A | Tokenizer B |
 |---|---|---|
-| Fragments (exemple schématique) | \`[fragment 1]\`, \`[fragment 2]\`, \`[fragment 3]\` | \`[fragment 1]\`, \`[fragment 2]\` |
+| Fragments (exemple schématique) | `[fragment 1]`, `[fragment 2]`, `[fragment 3]` | `[fragment 1]`, `[fragment 2]` |
 | IDs | Dépendent du vocabulaire A | Dépendent du vocabulaire B |
 | Modèle compatible | Poids associés à A | Poids associés à B |
 
