@@ -85,9 +85,9 @@ Cette décision de représentation a plusieurs conséquences :
 
 La segmentation n'est ni une analyse linguistique parfaite, ni une mesure du sens. Une segmentation plus courte n'implique pas à elle seule un meilleur modèle.
 
-![Illustration conceptuelle : un même contenu peut être représenté par un nombre différent de tokens selon le système de tokenisation.](../images/tokenization-language-cost-fr.svg){fig-alt="Illustration schématique comparant une phrase découpée en cinq tokens et une autre représentation découpée en davantage de fragments. Les fragments ne sont pas des sorties réelles de tokenizers." fig-cap="Le coût en tokens peut varier selon la langue et le tokenizer. Les fragments sont fictifs : cette figure ne présente ni une traduction exacte ni des mesures expérimentales." width=100%}
+![Exemple schématique d’une même chaîne découpée différemment selon le tokenizer.](../images/tokenization-language-cost-fr.svg){fig-alt="Le mot anglais unbelievable est représenté par deux fragments dans une segmentation illustrative, puis par trois fragments dans une autre. Ces découpages ne sont pas des sorties réelles d’un tokenizer identifié." fig-cap="Une chaîne peut avoir plusieurs segmentations possibles. La figure est illustrative : elle ne reproduit pas la sortie d’un tokenizer réel ni une mesure expérimentale." width=100%}
 
-Cette figure sert à formuler une hypothèse à tester, pas à prédire un résultat. Pour une comparaison empirique, utilisez les mêmes contenus, consignez le tokenizer et sa version, puis rapportez les mesures par langue et type de texte. Voir notamment [Ahia et al. (2023)](https://aclanthology.org/2023.emnlp-main.614/) ; leurs résultats ne sont pas représentés par cette illustration.
+Cette figure illustre la dépendance du découpage aux règles et au vocabulaire du tokenizer ; elle ne démontre pas qu’une segmentation est meilleure. Pour une comparaison empirique, utilisez les mêmes textes, consignez le tokenizer et sa version, puis rapportez les mesures par langue et type de texte. Voir [Ahia et al. (2023)](https://aclanthology.org/2023.emnlp-main.614/) pour une étude des coûts de tokenisation entre langues.
 
 ### Pour approfondir les mécanismes
 
