@@ -85,6 +85,10 @@ This representation choice has several consequences:
 
 Segmentation is neither perfect linguistic analysis nor a measure of meaning. A shorter segmentation does not, by itself, imply a better model.
 
+![Conceptual illustration: the same content may be represented by different numbers of tokens depending on the tokenization system.](../images/tokenization-language-cost.svg){fig-alt="Schematic comparison of one sentence represented by five tokens and another representation split into more fragments. The fragments are not outputs from real tokenizers." fig-cap="Token cost can vary by language and tokenizer. The fragments are fictional: this figure shows neither an exact translation nor experimental measurements." width=100%}
+
+Use this figure to formulate a hypothesis, not to predict an outcome. For an empirical comparison, use equivalent content, record the tokenizer and version, and report measurements by language and text type. See [Ahia et al. (2023)](https://aclanthology.org/2023.emnlp-main.614/); their results are not depicted in this illustration.
+
 ### Where to explore the mechanisms
 
 This overview stays focused on the pipeline. Technical details live on dedicated pages:
