@@ -14,6 +14,7 @@ This file records what was actually reviewed and what remains to be checked. A p
 - **Not reviewed:** no claim of content review.
 - **Not applicable:** criterion does not apply to this page type.
 
+
 ## First vertical slice: Transformer → attention → position
 
 | Page / language pair | Role and reader question | What this pass confirmed in source | Remaining work |
@@ -92,7 +93,48 @@ This is a bounded source-level check of representative identities and worked exa
 
 The checked examples are mutually consistent across the relevant pages at source level. This does **not** imply all equations, diagrams, external links, or rendered math have been reviewed. The text pages already describe the reference NumPy loss tests and their limits; this audit did not rerun those tests.
 
-## Eighth slice: reproducibility status of the SMDS research repository
+## Sixth slice: text/data and training-window alignment (source review)
+
+This pass compared the English and French source pages and checked the worked input-target example, stride table, conceptual diagrams, mask distinctions, and mini-lab parity. It did not verify every external URL or inspect rendered pages in a browser.
+
+| Area | Check performed | Result | Remaining work |
+|---|---|---|---|
+| Text → token → ID → embedding | Checked that the pipeline separates Unicode text, UTF-8 bytes, tokenization, IDs, and learned embeddings; both languages explicitly call diagrams conceptual and segmentation examples hypothetical. | Core distinctions and limitations are aligned across languages. | Verify external links and inspect rendered diagrams and mobile layout. |
+| BPE and tokenizer claims | Checked the distinction between tokenizer training and encoding, and the qualification that byte-level base units are not a property of every BPE tokenizer. | Wording avoids treating all BPE tokenizers as interchangeable or as morphological analyzers. | Independently validate the cited research claims and current resource availability; this source pass did not open every paper. |
+| Multilingual comparison mini-lab | Compared test cases for whitespace, casing, numbers, composed/decomposed Unicode, language variation, and code. | The EN/FR pages contain equivalent test categories and warn that token count alone is not a quality metric. | Run the mini-lab with named tokenizer versions before reporting empirical outcomes. |
+| Input-target shift | Checked the worked input/target example and confirmed that stride examples are input windows. | Alignment is consistent, but the original stride table could be read as describing complete training examples. This PR labels the table as input-window-only and explains the required successor/tail convention in both languages. | Later add a small executable example only after the prerequisite knowledge gate; test tail handling and padding/loss-mask alignment. |
+| Document boundaries, padding, masks, shapes | Compared the EN/FR descriptions and diagrams for packing, separators, cross-document attention, loss masks, and `[B,L,V]` logits. | The pages distinguish these concepts and do not claim that a separator token blocks attention by itself. | Validate Mermaid rendering and eventually test a concrete pipeline's mask semantics. |
+
+The edits in this slice are intentionally narrow: clarify the scope of the stride table and connect it to next-token target alignment. No model implementation was added. No Quarto render, external-link sweep, executable test, or visual browser review was performed for this slice.
+
+
+## Seventh slice: tensor shapes, embedding geometry, and evaluation exercises (source review)
+
+This pass compared English and French source pages for tensors, embedding space, and experimental evaluation. It checked stated shapes, axis semantics, embedding-type distinctions, cosine caveats, projection limitations, and the evaluation exercise's target population, grouping, selection bias, AP baseline, calibration, and uncertainty discussion. It did not verify every cited source or inspect rendered pages in a browser.
+
+| Area | Result | Remaining work |
+|---|---|---|
+| Tensor shapes and axes | Common shapes are qualified as conventions rather than universal API contracts. The projection example is dimensionally consistent: `(B,T,D) × (D,D') → (B,T,D')`; vocabulary logits have shape `(B,T,V)`. EN/FR explanations are substantively aligned. | Inspect both SVGs and rendered equations; later verify against concrete APIs when implementation examples are introduced. |
+| Embedding types and similarity | Both languages distinguish initial token embeddings, contextualized representations, and sentence/document embeddings. Both caution that cosine proximity does not prove equivalence or answer correctness and that 2D projections distort geometry. | Independently check cited papers and review the linked linearity pages in a dedicated pass. |
+| Coordinate transformation statement | The original sentence could overgeneralize by saying a coordinate-mixing transformation preserves useful relationships without specifying conditions. This PR replaces it with the precise orthogonal-change-of-coordinates example, which preserves dot products, distances, and cosine similarities while changing axis interpretation. | Inspect rendered bilingual wording and keep the example scoped to orthogonal transformations; arbitrary transformations need not preserve these quantities. |
+| Evaluation exercise | The case states its deployment target (unseen papers), explains paper-level grouping, raises unseen-query dependence, warns about selecting the best of 40 configurations, and distinguishes AP from calibration. The random-ranking baseline is explicitly approximate, not a finite-sample identity. | Independently verify metric references and ensure future revisions keep the estimand aligned with the split and uncertainty unit. |
+
+This is a bounded source-level review, not a complete scientific certification. No model implementation or experiment was added. Rendered equations/figures and external-link validity remain separate checks.
+
+
+## Eighth slice: version-sensitive claim in the linearity / SAE reading list
+
+A targeted source check compared the paper's published PMLR page with the authors' later arXiv v2, which includes a corrigendum. The published PMLR abstract attributes the reported compositional generalization failures to an amortization gap; the later arXiv v2 states that dictionary learning, not the inference procedure alone, is the binding constraint, and that replacing the encoder with per-example iterative inference on the same SAE-learned dictionary does not close the gap. This is a material version difference, not a cosmetic citation update.
+
+| Area | Finding | Change | Remaining work |
+|---|---|---|---|
+| EN/FR discussion of Barin-Pacela et al. (2026) | The previous prose treated limitations of amortized inference as a stable conclusion without noting the later corrigendum. | Both language pages now preserve the shared conclusion (linear representation does not imply linear accessibility) while explicitly distinguishing the PMLR proceedings abstract from the author-updated arXiv v2. | Re-read the corrigendum and paper details before any deeper technical summary; do not collapse the two versions into one claim. |
+| Bibliographic links | PMLR page is the published proceedings record; arXiv v2 is linked separately as the author-updated version. | Version provenance is visible beside the claim and in the reference list. | Confirm rendered links and the wording after Quarto render; this audit did not establish which version the authors intend readers to treat as definitive beyond the stated corrigendum. |
+
+Sources checked: [PMLR proceedings version](https://proceedings.mlr.press/v337/barin-pacela26a.html) and [arXiv v2 including corrigendum](https://arxiv.org/abs/2603.28744v2). No implementation or experiment was added. Rendered review and external-link validation remain open.
+
+
+## Ninth slice: reproducibility status of the SMDS research repository
 
 A targeted README review of the linked project repository found that it describes itself as experimental software. The repository provides code and scripts relevant to inspecting the method, but the source review did not execute the code, download and validate the data, or reproduce the paper's results.
 
@@ -102,7 +144,7 @@ A targeted README review of the linked project repository found that it describe
 
 Source inspected: [official project repository README](https://github.com/UKPLab/tmlr2026-manifold-analysis). This is a repository-metadata/source inspection only, not an execution or reproduction audit.
 
-## Ninth slice: primary-source check of multidimensional-feature and probe-selectivity claims
+## Tenth slice: primary-source check of multidimensional-feature and probe-selectivity claims
 
 A targeted check compared the wording in the EN/FR linearity pages with the ICLR 2025 paper on multidimensional features and the ACL Anthology record for Hewitt & Liang's control-task paper. The source abstracts support the claims below; this was not a full reproduction or a line-by-line review of either paper.
 
@@ -114,6 +156,27 @@ A targeted check compared the wording in the EN/FR linearity pages with the ICLR
 
 **Remaining validation:** inspect rendered EN/FR equations, figures, and navigation; verify all external links from the complete page; and review the detailed methods/results before making stronger claims about causal interventions or generalization across model families.
 
+## Eleventh slice: SMDS figure-link accuracy in the bilingual linearity pages
+
+A targeted inspection of the linked arXiv HTML source found that the existing “Figure 2” link was described as an example of a discovered circular feature, but Figure 2 is the method-comparison overview. Figure 3 presents the recovered feature geometries and is the appropriate target for the explanation mentioning circles.
+
+| Area | Finding | Change | Remaining work |
+|---|---|---|---|
+| SMDS figure links in EN/FR | The source HTML caption identifies Figure 2 as “Feature Manifold Discovery and the Limitations of Previous Methods”; Figure 3 presents retrieved feature manifolds. | Updated both language pages to point to Figure 3 and revised the link label to describe the broader set of feature geometries rather than implying Figure 2 itself is a circular-feature example. | Confirm the anchor in the rendered browser and continue the full external-link sweep; this was a targeted link/content check, not a full visual audit. |
+
+Source inspected: [arXiv HTML v1](https://arxiv.org/html/2510.01025v1). The official SMDS repository still labels its software experimental; no code or data were executed and no reproduction is claimed.
+
+
+## Twelfth slice: update the supplementary probe-control resource link
+
+A targeted external-link sweep found that the supplementary “Designing and Interpreting Probes with Control Tasks” link used an older Stanford-hosted path that could not be verified. The author's current page on the same topic is available at Columbia and explains probing, the probe-confounder problem, control tasks, and selectivity. The authoritative ACL Anthology paper link remains in the reference list.
+
+| Area | Finding | Change | Remaining work |
+|---|---|---|---|
+| Supplementary probe-control resource (EN/FR) | The old `nlp.stanford.edu/~johnhew/probe-control/` URL could not be verified in this check. The author's current `Designing and Interpreting Probes` explainer is available at Columbia. | Replaced the supplementary link in both language pages with the current author-hosted explainer. The ACL Anthology paper remains the primary bibliographic reference. | Check the updated link in rendered pages; continue checking other external links. A failed retrieval from one tool is not, by itself, proof that the old URL is universally unavailable. |
+| Other sources checked in this pass | The ICLR proceedings record, ACL Anthology record, relevant arXiv abstract pages, PMLR proceedings page, SMDS repository, and Transformer Circuits framework resource resolve or have searchable records matching their cited works. The arXiv v2 corrigendum page was not directly retrievable by the browser tool, but search results for arXiv:2603.28744v2 expose the updated abstract and corrigendum note. | No additional citation changes made in this pass. | This is a targeted availability/identity check, not a comprehensive automated HTTP status sweep. |
+
+Sources checked: [author's current probing explainer](https://www.cs.columbia.edu/~johnhew/interpreting-probes.html), [ACL Anthology paper](https://aclanthology.org/D19-1275/), [ICLR 2025 paper](https://proceedings.iclr.cc/paper_files/paper/2025/hash/d3221cdb27e49d9c1cd35ad254feccfe-Abstract-Conference.html), [SMDS paper HTML](https://arxiv.org/html/2510.01025v1), and [official SMDS repository](https://github.com/UKPLab/tmlr2026-manifold-analysis).
 ## Next audit steps
 
 1. Finish source and rendered-page review of this vertical slice; check local links and bilingual meaning, not just literal wording.
@@ -132,65 +195,3 @@ A targeted check compared the wording in the EN/FR linearity pages with the ICLR
 - Publication, CI, or completing an exercise does not by itself demonstrate learner mastery.
 
 
-## Fifth slice: text/data and training-window alignment (source review)
-
-This pass compared the English and French source pages and checked the worked input-target example, stride table, conceptual diagrams, mask distinctions, and mini-lab parity. It did not verify every external URL or inspect rendered pages in a browser.
-
-| Area | Check performed | Result | Remaining work |
-|---|---|---|---|
-| Text → token → ID → embedding | Checked that the pipeline separates Unicode text, UTF-8 bytes, tokenization, IDs, and learned embeddings; both languages explicitly call diagrams conceptual and segmentation examples hypothetical. | Core distinctions and limitations are aligned across languages. | Verify external links and inspect rendered diagrams and mobile layout. |
-| BPE and tokenizer claims | Checked the distinction between tokenizer training and encoding, and the qualification that byte-level base units are not a property of every BPE tokenizer. | Wording avoids treating all BPE tokenizers as interchangeable or as morphological analyzers. | Independently validate the cited research claims and current resource availability; this source pass did not open every paper. |
-| Multilingual comparison mini-lab | Compared test cases for whitespace, casing, numbers, composed/decomposed Unicode, language variation, and code. | The EN/FR pages contain equivalent test categories and warn that token count alone is not a quality metric. | Run the mini-lab with named tokenizer versions before reporting empirical outcomes. |
-| Input-target shift | Checked the worked input/target example and confirmed that stride examples are input windows. | Alignment is consistent, but the original stride table could be read as describing complete training examples. This PR labels the table as input-window-only and explains the required successor/tail convention in both languages. | Later add a small executable example only after the prerequisite knowledge gate; test tail handling and padding/loss-mask alignment. |
-| Document boundaries, padding, masks, shapes | Compared the EN/FR descriptions and diagrams for packing, separators, cross-document attention, loss masks, and `[B,L,V]` logits. | The pages distinguish these concepts and do not claim that a separator token blocks attention by itself. | Validate Mermaid rendering and eventually test a concrete pipeline's mask semantics. |
-
-The edits in this slice are intentionally narrow: clarify the scope of the stride table and connect it to next-token target alignment. No model implementation was added. No Quarto render, external-link sweep, executable test, or visual browser review was performed for this slice.
-
-
-## Sixth slice: tensor shapes, embedding geometry, and evaluation exercises (source review)
-
-This pass compared English and French source pages for tensors, embedding space, and experimental evaluation. It checked stated shapes, axis semantics, embedding-type distinctions, cosine caveats, projection limitations, and the evaluation exercise's target population, grouping, selection bias, AP baseline, calibration, and uncertainty discussion. It did not verify every cited source or inspect rendered pages in a browser.
-
-| Area | Result | Remaining work |
-|---|---|---|
-| Tensor shapes and axes | Common shapes are qualified as conventions rather than universal API contracts. The projection example is dimensionally consistent: `(B,T,D) × (D,D') → (B,T,D')`; vocabulary logits have shape `(B,T,V)`. EN/FR explanations are substantively aligned. | Inspect both SVGs and rendered equations; later verify against concrete APIs when implementation examples are introduced. |
-| Embedding types and similarity | Both languages distinguish initial token embeddings, contextualized representations, and sentence/document embeddings. Both caution that cosine proximity does not prove equivalence or answer correctness and that 2D projections distort geometry. | Independently check cited papers and review the linked linearity pages in a dedicated pass. |
-| Coordinate transformation statement | The original sentence could overgeneralize by saying a coordinate-mixing transformation preserves useful relationships without specifying conditions. This PR replaces it with the precise orthogonal-change-of-coordinates example, which preserves dot products, distances, and cosine similarities while changing axis interpretation. | Inspect rendered bilingual wording and keep the example scoped to orthogonal transformations; arbitrary transformations need not preserve these quantities. |
-| Evaluation exercise | The case states its deployment target (unseen papers), explains paper-level grouping, raises unseen-query dependence, warns about selecting the best of 40 configurations, and distinguishes AP from calibration. The random-ranking baseline is explicitly approximate, not a finite-sample identity. | Independently verify metric references and ensure future revisions keep the estimand aligned with the split and uncertainty unit. |
-
-This is a bounded source-level review, not a complete scientific certification. No model implementation or experiment was added. Rendered equations/figures and external-link validity remain separate checks.
-
-
-## Seventh slice: version-sensitive claim in the linearity / SAE reading list
-
-A targeted source check compared the paper's published PMLR page with the authors' later arXiv v2, which includes a corrigendum. The published PMLR abstract attributes the reported compositional generalization failures to an amortization gap; the later arXiv v2 states that dictionary learning, not the inference procedure alone, is the binding constraint, and that replacing the encoder with per-example iterative inference on the same SAE-learned dictionary does not close the gap. This is a material version difference, not a cosmetic citation update.
-
-| Area | Finding | Change | Remaining work |
-|---|---|---|---|
-| EN/FR discussion of Barin-Pacela et al. (2026) | The previous prose treated limitations of amortized inference as a stable conclusion without noting the later corrigendum. | Both language pages now preserve the shared conclusion (linear representation does not imply linear accessibility) while explicitly distinguishing the PMLR proceedings abstract from the author-updated arXiv v2. | Re-read the corrigendum and paper details before any deeper technical summary; do not collapse the two versions into one claim. |
-| Bibliographic links | PMLR page is the published proceedings record; arXiv v2 is linked separately as the author-updated version. | Version provenance is visible beside the claim and in the reference list. | Confirm rendered links and the wording after Quarto render; this audit did not establish which version the authors intend readers to treat as definitive beyond the stated corrigendum. |
-
-Sources checked: [PMLR proceedings version](https://proceedings.mlr.press/v337/barin-pacela26a.html) and [arXiv v2 including corrigendum](https://arxiv.org/abs/2603.28744v2). No implementation or experiment was added. Rendered review and external-link validation remain open.
-
-
-## Tenth slice: SMDS figure-link accuracy in the bilingual linearity pages
-
-A targeted inspection of the linked arXiv HTML source found that the existing “Figure 2” link was described as an example of a discovered circular feature, but Figure 2 is the method-comparison overview. Figure 3 presents the recovered feature geometries and is the appropriate target for the explanation mentioning circles.
-
-| Area | Finding | Change | Remaining work |
-|---|---|---|---|
-| SMDS figure links in EN/FR | The source HTML caption identifies Figure 2 as “Feature Manifold Discovery and the Limitations of Previous Methods”; Figure 3 presents retrieved feature manifolds. | Updated both language pages to point to Figure 3 and revised the link label to describe the broader set of feature geometries rather than implying Figure 2 itself is a circular-feature example. | Confirm the anchor in the rendered browser and continue the full external-link sweep; this was a targeted link/content check, not a full visual audit. |
-
-Source inspected: [arXiv HTML v1](https://arxiv.org/html/2510.01025v1). The official SMDS repository still labels its software experimental; no code or data were executed and no reproduction is claimed.
-
-
-## Eleventh slice: update the supplementary probe-control resource link
-
-A targeted external-link sweep found that the supplementary “Designing and Interpreting Probes with Control Tasks” link used an older Stanford-hosted path that could not be verified. The author's current page on the same topic is available at Columbia and explains probing, the probe-confounder problem, control tasks, and selectivity. The authoritative ACL Anthology paper link remains in the reference list.
-
-| Area | Finding | Change | Remaining work |
-|---|---|---|---|
-| Supplementary probe-control resource (EN/FR) | The old `nlp.stanford.edu/~johnhew/probe-control/` URL could not be verified in this check. The author's current `Designing and Interpreting Probes` explainer is available at Columbia. | Replaced the supplementary link in both language pages with the current author-hosted explainer. The ACL Anthology paper remains the primary bibliographic reference. | Check the updated link in rendered pages; continue checking other external links. A failed retrieval from one tool is not, by itself, proof that the old URL is universally unavailable. |
-| Other sources checked in this pass | The ICLR proceedings record, ACL Anthology record, relevant arXiv abstract pages, PMLR proceedings page, SMDS repository, and Transformer Circuits framework resource resolve or have searchable records matching their cited works. The arXiv v2 corrigendum page was not directly retrievable by the browser tool, but search results for arXiv:2603.28744v2 expose the updated abstract and corrigendum note. | No additional citation changes made in this pass. | This is a targeted availability/identity check, not a comprehensive automated HTTP status sweep. |
-
-Sources checked: [author's current probing explainer](https://www.cs.columbia.edu/~johnhew/interpreting-probes.html), [ACL Anthology paper](https://aclanthology.org/D19-1275/), [ICLR 2025 paper](https://proceedings.iclr.cc/paper_files/paper/2025/hash/d3221cdb27e49d9c1cd35ad254feccfe-Abstract-Conference.html), [SMDS paper HTML](https://arxiv.org/html/2510.01025v1), and [official SMDS repository](https://github.com/UKPLab/tmlr2026-manifold-analysis).
