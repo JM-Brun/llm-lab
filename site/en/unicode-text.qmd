@@ -44,6 +44,8 @@ print(unicodedata.normalize("NFC", composed) == unicodedata.normalize("NFC", dec
 
 NFC normalization makes these two strings equal in this example. This does not prove that a particular tokenizer applies NFC: check its documentation and test the exact version in use.
 
+NFC/NFD concern canonical forms; NFKC/NFKD also apply certain compatibility equivalences. The latter can erase distinctions that matter in some domains (for example, typographic symbols or full-width forms). Do not choose a “stronger” normalization without checking the text requirements and the model's contract.
+
 ## What this implies—and what it does not
 
 1. Visually identical strings can have different representations before normalization.
