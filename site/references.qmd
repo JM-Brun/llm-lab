@@ -160,7 +160,7 @@ Ces travaux sont associés à la page [Stratégies de tokenisation](fr/tokenizat
 - Goldman et al. (2024), [*Unpacking Tokenization: Evaluating Text Compression and its Correlation with Model Performance*](https://aclanthology.org/2024.findings-acl.134/) — analyse le lien empirique entre compression et performances en aval dans les expériences étudiées.
 - Schmidt et al. (2024), [*Tokenization Is More Than Compression*](https://aclanthology.org/2024.emnlp-main.40/) — explique pourquoi la compression seule ne suffit pas comme objectif de sélection.
 - Arnett et al. (NeurIPS 2025), [*Explaining and Mitigating Crosslingual Tokenizer Inequities*](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html) — étudie les écarts de coût entre langues et les facteurs de conception associés.
-- Chiu (ACL 2026), [*TokLens: A Multilingual Lens on Tokenizer Quality*](https://aclanthology.org/2026.acl-srw.18/) — cadre multi-métrique d'évaluation des tokenizers sur plusieurs langues.
+- Chiu (ACL 2026), [*TokLens: A Multilingual Lens on Tokenizer Quality for LLMs*](https://aclanthology.org/2026.acl-srw.18/) — cadre multi-métrique d'évaluation des tokenizers sur plusieurs langues.
 - Ahia et al. (2023), [*Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/) — étude des coûts de tokenisation dans 22 langues.
 - Wegmann et al. (2025), [*Tokenization is Sensitive to Language Variation*](https://aclanthology.org/2025.findings-acl.572/) — sensibilité aux variations linguistiques et au pré-tokenizer.
 
