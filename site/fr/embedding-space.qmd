@@ -76,6 +76,52 @@ Pour un lot de séquences, le changement de forme usuel est :
 
 où \(B\) est la taille du lot, \(L\) la longueur de séquence et \(d\) la dimension des embeddings. Le lookup ne mélange pas l'information entre les positions : deux occurrences du même identifiant récupèrent la même ligne avant l'ajout éventuel d'information positionnelle et le traitement contextuel.
 
+### Une trace reproductible : texte → IDs → lignes d'embedding
+
+L'exemple relie un encodage de tokenizer réel et identifié à une table d'embeddings **synthétique**. Il utilise l'encodage BPE au niveau des octets de GPT-2 fourni par `tiktoken` ; les IDs ci-dessous sont vérifiés dans les tests publics de la bibliothèque. Installez la version figée avec `python -m pip install tiktoken==0.14.0`. NumPy est déjà une dépendance du projet.
+
+```python
+import numpy as np
+import tiktoken
+
+text = "hello world"  # une chaîne Unicode Python
+utf8_bytes = text.encode("utf-8")
+encoding = tiktoken.get_encoding("gpt2")
+token_ids = encoding.encode(text)
+token_bytes = [encoding.decode_single_token_bytes(i) for i in token_ids]
+token_strings = [part.decode("utf-8") for part in token_bytes]
+
+assert utf8_bytes == b"hello world"
+assert token_ids == [31373, 995]
+assert token_strings == ["hello", " world"]
+assert encoding.decode(token_ids) == text
+
+# Poids synthétiques : GPT-2 réel utilise une autre dimension et des valeurs apprises.
+vocab_size, d = 50_257, 2
+E = np.zeros((vocab_size, d), dtype=np.float32)
+E[31373] = [0.1, 0.2]
+E[995] = [-0.3, 0.4]
+X = E[token_ids]
+
+assert X.shape == (2, 2)
+assert np.allclose(X, [[0.1, 0.2], [-0.3, 0.4]])
+
+# Vecteurs positionnels absolus illustratifs, pas les paramètres réels de GPT-2.
+P = np.array([[0.01, 0.02], [0.03, 0.04]], dtype=np.float32)
+Z = X + P
+assert Z.shape == (2, 2)
+assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
+```
+
+Voici comment lire cette trace :
+
+1. `text` est du texte Unicode ; son encodage UTF-8 produit des octets.
+2. L'encodage `gpt2` choisi transforme le texte en IDs `[31373, 995]` ; leurs fragments d'octets se décodent en `"hello"` et `" world"`. L'espace initial appartient au second token.
+3. Les IDs indexent les lignes de `E`. Les deux vecteurs sont des valeurs **inventées**, pas les embeddings du GPT-2 préentraîné ; la table utilise seulement la même plage d'indices de vocabulaire pour que les IDs réels puissent sélectionner des lignes.
+4. `P` illustre l'ajout de vecteurs positionnels dans une architecture donnée. `Z` garde la forme `[L,d]` ; cet exemple n'exécute pas de bloc Transformer et ne calcule donc pas les états cachés contextualisés.
+
+Les IDs exacts dépendent de l'encodage et du comportement de la bibliothèque ; un autre tokenizer peut produire des fragments et IDs différents. Les assertions rendent ces changements visibles au lieu de présenter la tokenisation comme universelle. Voir le [dépôt officiel de tiktoken](https://github.com/openai/tiktoken) et ses [tests d'encodage](https://github.com/openai/tiktoken/blob/main/tests/test_encoding.py) pour la sortie de référence.
+
 ## Des embeddings de tokens aux représentations contextualisées
 
 L'étape suivante dépend de l'architecture. Dans un modèle de type GPT-2 utilisant des embeddings positionnels absolus appris, un vecteur propre à la position est ajouté à chaque embedding de token :
