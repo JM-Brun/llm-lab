@@ -18,21 +18,9 @@ Un tokenizer est un choix de représentation et d'ingénierie. Il doit couvrir l
 
 ## 1. Carte conceptuelle
 
-```{mermaid}
-flowchart TD
-    A["Texte Unicode"] --> B["Normalisation éventuelle"]
-    B --> C["Pré-tokenisation"]
-    C --> D["Unités de base"]
-    D --> E["Algorithme + vocabulaire appris"]
-    E --> F["Tokens"]
-    F --> G["IDs entiers"]
-    G --> H["Lookup embeddings"]
-    H --> I["Vecteurs d'entrée"]
-    J["Corpus + contraintes"] --> E
-    K["Coût / langues / tâches"] --> L["Évaluation comparative"]
-    F --> L
-    L --> M["Choix documenté, non universel"]
-```
+Le pipeline complet — du texte Unicode aux IDs puis à la lookup dans la matrice d'embeddings — est illustré dans la [page d'introduction](text-data.qmd). Cette page se concentre sur les choix de segmentation et leurs compromis plutôt que de répéter le même schéma.
+
+Pour observer concrètement les fusions BPE, ouvrez la [visualisation interactive originale de Müller et Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/). Elle montre le corpus en cours de segmentation, les paires candidates et la croissance du vocabulaire. La ressource est liée plutôt que copiée : les conditions de réutilisation de ses figures ne sont pas établies ici.
 
 « Token » désigne l'unité discrète produite par le système, pas nécessairement une unité linguistique. Les frontières initiales, les espaces, la normalisation et les tokens spéciaux peuvent changer le résultat autant que le nom de l'algorithme.
 
