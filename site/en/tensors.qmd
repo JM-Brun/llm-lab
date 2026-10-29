@@ -85,6 +85,31 @@ For this example, the rows become approximately `[0.881, 0.500, 0.119]` and `[0.
 
 *Figure — The same logits produce different meanings depending on the normalized axis.*
 
+## Implementation: verify axis semantics with PyTorch
+
+The following minimal example is executable with PyTorch. It checks both the output shape and the invariant that each position's probabilities sum to one over the vocabulary axis. It also confirms that normalizing over the sequence axis answers a different question.
+
+```python
+import torch
+
+# Shape: (batch=1, positions=2, vocabulary=3)
+logits = torch.tensor([[[2.0, 1.0, 0.0], [0.0, 1.0, 2.0]]])
+
+probs = torch.softmax(logits, dim=-1)  # distribution over vocabulary at each position
+wrong = torch.softmax(logits, dim=1)   # distribution over positions for each token
+
+assert probs.shape == (1, 2, 3)
+torch.testing.assert_close(probs.sum(dim=-1), torch.ones((1, 2)))
+torch.testing.assert_close(wrong.sum(dim=1), torch.ones((1, 3)))
+assert not torch.allclose(wrong.sum(dim=-1), torch.ones((1, 2)))
+
+print(probs[0])  # approximately [[0.665, 0.245, 0.090], [0.090, 0.245, 0.665]]
+print(wrong[0].sum(dim=-1))  # approximately [1.5, 1.5], not a vocabulary distribution
+```
+
+The assertions make the intended semantics explicit. They are a compact teaching check, not a substitute for tests of a model's masking, target alignment, padding policy, or generation path. In production code, keep reusable operations in the project package and test them independently.
+
+
 ## Reading dimensions in an example
 
 For \(B=2\), \(T=4\), and \(D=8\), hidden states have shape \((2,4,8)\). A projection to a vocabulary of \(V=1000\) tokens produces logits of shape \((2,4,1000)\). The final axis corresponds to candidate tokens; each batch-position pair therefore has a distribution after softmax over that axis.
