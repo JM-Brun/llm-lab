@@ -62,7 +62,9 @@ flowchart TD
     H --> I["Réseau neuronal : représentations contextualisées"]
 ```
 
-Pour une matrice d'embeddings E de forme (V, d), l'ID i sélectionne la ligne E[i], un vecteur de dimension d. V est la taille du vocabulaire. Cette lookup n'est pas encore, en général, la représentation contextualisée après les blocs Transformer. Les IDs sont des indices arbitraires : la différence numérique entre deux IDs n'a pas d'interprétation sémantique. Normalisation, pré-tokenisation, unités de base et tokens spéciaux dépendent du tokenizer.
+Pour une matrice d'embeddings E de forme (V, d), l'ID i sélectionne la ligne E[i], un vecteur de dimension d. V est la taille du vocabulaire. Cet accès par indice ne donne pas encore, en général, la représentation contextualisée après les blocs Transformer. Les IDs sont des indices arbitraires : la différence numérique entre deux IDs n'a pas d'interprétation sémantique. Normalisation, pré-tokenisation, unités de base et tokens spéciaux dépendent du tokenizer.
+
+Pour un exemple calculable à la main et les changements de dimensions qui suivent, voir [la leçon sur l'espace des embeddings](embedding-space.qmd). L'étape positionnelle dépend de l'architecture ; [l'encodage positionnel et RoPE](positional-encoding.qmd) en explique la distinction principale.
 
 ## 2. Pourquoi le découpage par espaces ne suffit pas
 
@@ -72,9 +74,7 @@ Les méthodes sous-mots réutilisent des unités fréquentes tout en représenta
 
 ## 3. L'intuition de Byte Pair Encoding (BPE)
 
-Dans une version pédagogique simplifiée, BPE part d'unités de base, compte les paires adjacentes, fusionne une paire selon une règle définie et répète l'opération jusqu'à atteindre un critère d'arrêt.
-
-Dans une version pédagogique, BPE part d'unités de base, compte les paires adjacentes, fusionne une paire selon une règle définie et répète l'opération jusqu'à atteindre un critère d'arrêt. Pour voir les fusions et l'évolution du vocabulaire pas à pas, utilisez la [visualisation interactive originale de Müller et Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/). Elle montre les paires fréquentes, les fusions et le vocabulaire qui se construit.
+Dans une version pédagogique simplifiée, BPE part d'unités de base, compte les paires adjacentes, fusionne une paire selon une règle définie et répète l'opération jusqu'à atteindre un critère d'arrêt. Pour voir les fusions et l'évolution du vocabulaire pas à pas, utilisez la [visualisation interactive originale de Müller et Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/). Elle montre les paires fréquentes, les fusions et le vocabulaire qui se construit.
 
 Le pipeline reste simplifié : les tokenizers réels peuvent utiliser un pré-découpage par expressions régulières, travailler au niveau des octets et réserver des tokens spéciaux. Deux tokenizers appelés BPE ne sont donc pas nécessairement compatibles.
 
