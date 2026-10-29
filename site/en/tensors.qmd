@@ -77,7 +77,7 @@ By contrast:
 wrong = logits.softmax(dim=1)  # normalize the 2 positions, separately for each token
 ```
 
-is mathematically valid and shape-compatible, but answers a different question: for each candidate token, it distributes mass across positions. The rows are generally no longer distributions over the vocabulary.
+For this example, the rows become approximately `[0.881, 0.500, 0.119]` and `[0.119, 0.500, 0.881]`; each sums to 1.5, not 1. This operation is mathematically valid and shape-compatible, but answers a different question: for each candidate token, it distributes mass across positions. The rows are generally no longer distributions over the vocabulary.
 
 **Debugging invariant:** if the output is intended to represent \(p(\text{token}\mid\text{context at this position})\), check that probabilities sum to 1 over the vocabulary axis for every batch-position pair. Correct shape is not enough; the invariant depends on the intended interpretation.
 
