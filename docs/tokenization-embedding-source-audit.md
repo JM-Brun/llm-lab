@@ -433,3 +433,19 @@ The first audit's actionable gaps have been addressed in the bilingual lessons:
 **Design decision:** add a short bilingual section distinguishing representation efficiency, downstream task performance, multilingual variation, and reproducibility. Add original bilingual SVGs as conceptual frameworks, not as data figures. Keep the existing pipeline and segmentation illustration; avoid copying figures from papers or interactive sites.
 
 **Validation status:** source files were inspected and the source list was checked for existing matches in repository search; new figure source is authored locally. Quarto rendering, HTML/image rendering, link checking, mobile layout, and bilingual rendered-page comparison still need to be run on the PR head. No validation is claimed as passed here.
+
+
+## Editorial integration decision: tokenizer evaluation literature (2026-10-29)
+
+**Decision:** do not create a standalone page at this stage. The learner question—how to evaluate tokenizers beyond token count—belongs in the existing tokenization-strategies page, which already owns representation trade-offs, metrics, and reproducible comparisons. A separate page would fragment a coherent concept and duplicate the current measurement/protocol sections.
+
+**Page responsibilities:**
+- `text-data`: retain the introductory pipeline and a short signpost to the evaluation deep dive; do not carry the paper-by-paper discussion.
+- `tokenization-strategies`: own the substantive evaluation framework, study comparison, limitations, and protocol.
+- `references.qmd`: provide a concise bibliography/provenance index, not repeat the analysis.
+
+**Integration:** Goldman et al. (2024) and Schmidt et al. (2024) are contextualized with distinct roles (empirical compression/performance association versus limits of compression-only objectives); Arnett et al. (2025) and Chiu (ACL 2026) are contextualized for cross-lingual disparities and multi-metric evaluation. Ahia et al. (2023) and Wegmann et al. (2025), already linked in the strategy page, are retained as related work rather than presented as new discoveries.
+
+**Visual placement:** move the original four-dimension conceptual SVG from the introductory overview to the evaluation section of the strategy page. It is a framework, not empirical data. Keep the overview pipeline diagram and token-segmentation illustration focused on their own learning questions.
+
+**Validation still required:** Quarto render; verify generated anchor IDs and local links; check both SVGs and image paths; compare FR/EN scope and tables; run link checker; inspect responsive layout. No render/browser/CI pass is claimed by this source edit.
