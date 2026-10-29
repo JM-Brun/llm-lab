@@ -162,7 +162,7 @@ These are external links rather than copied figures whose licences have not been
 
 1. Watch Karpathy's video to build intuition about bytes, merges, and special tokens.
 2. Use the [BPE Explainer](https://philipmueller.dev/bpe-visualization/) to follow merges on a small example.
-3. Read \`minbpe\` or the [educational tiktoken module](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) to inspect the code.
+3. Read `minbpe` or the [educational tiktoken module](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) to inspect the code.
 4. Compare with tiktoken, SentencePiece, and Hugging Face documentation to distinguish implementation conventions.
 5. Return to [Raschka's Chapter 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) to connect IDs to embeddings and input-target examples.
 6. Test multilingual text, code, numbers, leading spaces, and unusual Unicode forms.
@@ -183,8 +183,8 @@ This published illustration comes from the [Hugging Face course, “Building a t
 
 ### Educational code and historical reference
 
-- [OpenAI \`tiktoken\` — educational module](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py): simplified BPE code for inspecting merges; it is not the optimized production path.
-- [Andrej Karpathy — \`minbpe\`](https://github.com/karpathy/minbpe): compact code for tracing training and encoding; compare conventions before assuming compatibility.
+- [OpenAI `tiktoken` — educational module](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py): simplified BPE code for inspecting merges; it is not the optimized production path.
+- [Andrej Karpathy — `minbpe`](https://github.com/karpathy/minbpe): compact code for tracing training and encoding; compare conventions before assuming compatibility.
 - [Sebastian Raschka — BPE from scratch](https://sebastianraschka.com/blog/2025/bpe-from-scratch.html): an explanatory notebook.
 - [Raschka — repository, Chapter 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02): implementations and text-data preparation.
 - [Gage (1994), *A New Algorithm for Data Compression*](https://dl.acm.org/doi/10.5555/177910.177914): historical reference for byte-pair compression. Modern LLM tokenizers add conventions not fully specified by that paper alone.
