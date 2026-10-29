@@ -12,7 +12,7 @@ Dans un Transformer, les tenseurs transportent les représentations des tokens, 
 
 Pour un lot de textes, chaque position d'une séquence est décrite par un vecteur. Le tenseur d'activations est donc souvent organisé selon les axes batch, positions et caractéristiques.
 
-La forme d’un tenseur décrit l’organisation numérique des représentations, pas leur signification. Pour le niveau conceptuel, voir [l’espace des embeddings](embedding-space.qmd), puis le parcours [Géométrie et interprétabilité des représentations](embedding-space.qmd) consacré aux métriques de proximité et aux hypothèses de représentation.
+La forme d’un tenseur décrit l’organisation numérique des représentations, pas leur signification. Pour le niveau conceptuel, voir [l’espace des embeddings](embedding-space.qmd), puis les pages dédiées à la [similarité cosinus](cosine-similarity.qmd) et à la [linéarité des représentations](linearite-embeddings.qmd) pour les questions de géométrie et d'interprétabilité.
 
 ## Formes courantes dans un LLM
 
