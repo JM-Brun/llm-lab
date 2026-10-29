@@ -20,6 +20,14 @@ Le diagramme du masque causal affiché dans le chapitre est créé pour ce proje
 - **Contenu :** logits → softmax/probabilités → log-vraisemblance négative → loss agrégée → gradient.
 - **Provenance :** illustration originale, sans image externe incorporée.
 
+## Schéma original — probabilité cible et cross-entropie
+
+- **Fichier :** \`site/images/cross-entropy-target-probability.svg\`.
+- **Utilisation :** pages française et anglaise sur la cross-entropie.
+- **Intention pédagogique :** comparer, pour un même token observé, les pertes \(-\ln p(y)\) lorsque \(p(y)=0{,}9\) et \(p(y)=0{,}1\).
+- **Provenance :** figure créée pour ce dépôt, sans image externe incorporée. L'explication visuelle de [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU) est une ressource pédagogique complémentaire, pas la source de l'illustration.
+- **Limite :** les barres illustrent la perte d'un token et ne représentent pas la distribution complète, la réduction sur les tokens valides ni un résultat expérimental.
+
 ## Schémas originaux du dépôt — Q/K/V
 
 - **Création :** schémas originaux du projet, versionnés dans \`site/images/queries-keys-values.svg\` et \`site/images/queries-keys-values-en.svg\`.
