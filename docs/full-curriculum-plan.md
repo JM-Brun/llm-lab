@@ -24,62 +24,77 @@ The shared [reader-experience and editorial method](reader-experience-and-editor
 
 ## 2. Target information architecture
 
-The curriculum should be organized around **what a learner needs to understand and do**, not around matching a source book chapter by chapter. Keep the full topic inventory below, but expose it through a small number of reader-facing layers.
+Organize the learning experience around **conceptual understanding, experimentation, and flexible navigation**, not language count or chapter-by-chapter parity with a source book. Maintain one conceptual source of truth; translations are alternate presentations of the same structure, not separate pedagogical tracks.
 
-### Layer A — Orientation: understand the whole task
+### Three complementary learning depths
 
-A newcomer should be able to answer, without reading a long prerequisite chapter:
+#### Level 1 — Big-picture overview
 
-- What does an autoregressive language model do?
-- What are its inputs and outputs?
-- What does training try to optimize?
-- What are the main components, and how do they interact?
-- What does this learning lab currently explain, test, or merely plan?
+Purpose: form a correct mental model of the complete system before studying every detail.
 
-The homepage and system overview should provide this mental model and several entry points. Do not place the full curriculum, implementation status ledger, or editorial rules on the homepage.
+- Explain what an autoregressive LLM does, its inputs and outputs, what training optimizes, and how the main components connect.
+- Prefer a coherent visual map, a small number of clear diagrams, and a concise narrative.
+- Keep mathematics light initially, but avoid misleading simplifications; link to the precise formulation.
+- Make every major component clickable or otherwise directly linked to its concept page and relevant experiment.
+- This level should be useful even to readers who do not intend to follow a complete course.
 
-### Layer B — The core learning spine
+The 3Blue1Brown video is a useful reference for the role of a visual overview, not a template to copy or a substitute for LLM Lab's own map.
 
-Use a short suggested route that builds the smallest coherent explanation of a decoder-only LLM:
+#### Level 2 — Guided model-building path
 
-1. **Text becomes tokens** — text normalization, tokenization, token IDs and special tokens.
-2. **Tokens become training examples** — context windows, shifted inputs/targets, batching, padding and loss masks.
-3. **The model predicts a distribution** — tensor shapes, embeddings, logits, softmax, likelihood and cross-entropy.
-4. **Context changes representations** — queries, keys, values, scaled dot-product attention, causal masking and positional information.
-5. **The Transformer composes operations** — multi-head attention, residual paths, normalization, MLP/FFN and output head.
-6. **Training changes parameters** — gradients, optimization, validation, checkpoints and reproducibility.
-7. **The model generates and is evaluated** — decoding strategies, task-appropriate evaluation, baselines and failure analysis.
+Purpose: provide a moderately detailed route from text to a working small language model.
 
-This is a recommended route, not a gatekeeping sequence. Each overview must link to the relevant detailed concepts; each concept page must link back to the system-level purpose.
+1. Text, tokenization, token IDs and special tokens.
+2. Context windows, shifted inputs/targets, batching and data hygiene.
+3. Tensor shapes, embeddings, logits and probability distributions.
+4. Likelihood, cross-entropy, loss, gradients and optimization.
+5. Attention, Q/K/V, score scaling, causal masking and positional information.
+6. Transformer blocks: multi-head attention, residual connections, normalization, MLP/FFN and output head.
+7. Training loop, validation, checkpoints, reproducibility and learning curves.
+8. Generation, decoding, evaluation, baselines and error analysis.
 
-### Layer C — Canonical concept pages
+Use Raschka's *LLMs from Scratch* as an important implementation and coverage reference, not as a chapter structure to mirror. Connect the build path to concept pages, experiments, mathematical explanations, critical analysis, and tests.
 
-Organize deep dives by the question they answer rather than by source chapter. Each page should explain the LLM-specific application locally, including the definitions, notation, assumptions, worked example, caveats and references needed to understand it. Link to related pages instead of repeating whole derivations, but do not omit essential material merely to avoid overlap with the private wiki.
+#### Level 3 — Deep dives and open exploration
 
-Concept groups:
+Purpose: let readers pursue a question without completing the guided path first.
 
-- **Data and representation:** Unicode/normalization, tokenization/BPE, special tokens, context windows, batching, data leakage, embeddings and positional information.
-- **Numerical and probabilistic chain:** tensors and axes, logits, softmax, likelihood, entropy, cross-entropy, KL divergence, loss reduction, gradients and numerical stability.
-- **Attention and architecture:** Q/K/V, score scaling, attention masks, multi-head attention, residual connections, normalization, MLP/FFN, output head and architecture families.
-- **Learning and use:** optimization, pretraining, validation, perplexity, generation, KV cache, fine-tuning, SFT, LoRA/QLoRA and preference optimization.
-- **Evaluation and critical reading:** metrics, calibration where relevant, contamination, leakage, uncertainty, ablations, representation geometry, cosine similarity, linearity hypotheses and reproducibility.
+- Define notation, state assumptions, explain local prerequisites, and include a worked example or derivation where appropriate.
+- Link to the big-picture component, guided-path position, prerequisite concepts, related concepts, experiments, tests and sources.
+- Support lateral exploration rather than only forward/backward navigation.
+- Explain why a prerequisite matters and, where practical, offer a short recap or expandable explanation.
+- Include counterexamples and failure conditions where they clarify the limits of an intuition or claim.
+- Keep advanced topics optional unless needed to understand the core model.
 
-Advanced topics such as MoE, GQA/MLA, quantization, preference optimization and multimodal models remain optional extensions. They should not obscure the minimum path to understanding a small decoder-only model.
+Deep-dive clusters include data/representation; tensors and probability; attention and architecture; training and generation; fine-tuning and efficiency; and critical evaluation (leakage, contamination, uncertainty, ablations, representation geometry and reproducibility).
 
-### Layer D — Evidence and practice
+### Laboratory layer — diagrams, animations, interactions, experiments
 
-Keep these distinct from explanatory pages:
+The laboratory identity must be substantive, not just branding. Visual material and interactivity should answer specific learning questions.
 
-- **Implementation and tests:** what code exists, its interface and conventions, what properties are tested, and what is not covered.
-- **Experiments and reports:** question, baseline, data provenance, configuration, metrics, uncertainty, compute budget, limitations and negative results.
-- **Exercises:** stable exercise IDs across French and English; links from the relevant lesson; answers hidden by default.
-- **Glossary and reference library:** fast lookup and source provenance.
+- **System diagrams:** component relationships, data flow, tensor shapes, and differences between training and inference.
+- **Animated explanations:** sequential operations, attention weighting, token-by-token generation, gradient updates, or other genuinely dynamic mechanisms.
+- **Interactive visualizations:** controls with visible consequences, such as sequence length, attention masks, temperature, top-k/top-p, learning rate, or embedding geometry.
+- **Runnable experiments:** a question, baseline, method, observable result, interpretation, and limitations.
+- **Tests and counterexamples:** unit/property tests and minimal examples exposing shape errors, leakage, incorrect assumptions, or cases where a heuristic fails.
 
-A link to code is shown only when the target exists and has been checked. A lesson snippet, a passing test, a successful site build and demonstrated learner understanding are different kinds of evidence and must not be conflated.
+Prioritize explanatory value over novelty. A static diagram is preferable to an animation that adds no insight. An interactive widget is justified only if manipulation reveals a relationship that a static explanation would communicate less effectively.
 
-### Dependency graph and implementation order
+Each artifact should state what it represents, assumptions, what the reader can change, what to observe, and what cannot be concluded. Provide accessible text and a non-interactive fallback. Avoid duplicating core model logic in JavaScript when Python can be reused safely; choose technologies according to portability, maintainability, reproducibility and GitHub Pages constraints.
 
-Keep the conceptual dependencies explicit:
+### Page contract and navigation
+
+Major topics should provide, as appropriate:
+- **Role in the system:** why the concept exists.
+- **Inputs → operation → outputs:** ideally a diagram, including shapes and notation when relevant.
+- **Intuition and precise formulation:** separated where useful, without contradiction.
+- **Explore:** prerequisites, related concepts, guided path and relevant experiment.
+- **Verify:** worked example, tests, implementation or source evidence where available.
+- **Limits:** assumptions, misconceptions, counterexamples and open questions.
+
+Overviews should remain concise and link outward; deep dives should own detailed explanations to avoid duplicated derivations. Not every page needs every artifact; omissions should reflect the topic's scope.
+
+### Concept dependencies and implementation gates
 
 `text/tokens → windows and targets → logits/probabilities → loss/gradients`
 
@@ -89,23 +104,13 @@ Keep the conceptual dependencies explicit:
 
 `training/validation discipline → fine-tuning → evaluation and robustness`
 
-These are useful dependency paths, not a rigid graph: concepts may be introduced intuitively before their full derivation. Do not implement a downstream mechanism until its required concepts have been reviewed and marked acquired in the private knowledge inventory. Where a prerequisite is not yet acquired, improve or test understanding first rather than adding more pages or code.
+These dependencies guide navigation but are not rigid gates to reading. Introduce concepts intuitively when useful, then link to rigorous derivations. Deep dives must also be accessible from search, glossary entries, diagrams and related-concept links.
 
-### Separate exercise space
+Before implementing a downstream mechanism, review its prerequisites against the private acquired/to-review/missing knowledge inventory. If a prerequisite is not acquired, improve or test understanding before expanding implementation scope. This gate applies to new implementations, not to explaining a high-level map.
 
-Use a distinct `site/exercises/` area, with a bilingual landing page and one future exercise collection per module. Exercise IDs should remain stable across languages. Each course question links to the relevant collection or exercise anchor; the collection links back to the canonical concept page. Keep the answer key collapsed by default and do not put exercise solutions into lesson prose.
+### Exercises
 
-Planned collections (structure only; exercises are not written yet):
-- `foundations`: vectors, tensor shapes, probability, softmax, entropy, cross-entropy, likelihood, gradients and numerical checks.
-- `text-data`: tokenization, special tokens, windows, input-target alignment, batching and data-split hygiene.
-- `attention`: Q/K/V roles, score scaling, masks, multi-head shapes and causal-invariance reasoning.
-- `transformer`: block data flow, positional information, residuals, normalization, MLP and architecture comparison.
-- `pretraining`: objective, training curves, validation, perplexity, checkpoints and reproducibility.
-- `generation`: next-token distributions, decoding settings, stopping and KV-cache trade-offs.
-- `fine-tuning`: classification, SFT, loss masking, split integrity, overfitting and error analysis.
-- `evaluation`: baselines, leakage/contamination, uncertainty, metrics and limitations.
-- `efficiency`: LoRA/QLoRA concepts, parameter/memory accounting and measured trade-offs.
-- `alignment`: preference data, DPO concepts, bias and regression analysis.
+Keep exercises distinct from lesson prose, with stable exercise IDs across translations. Each exercise links to its concept page and guided-path context; concept pages link back to relevant exercises. Hide answers by default and distinguish conceptual checks, code tasks, and experimental investigations.
 
 ## 3. Coverage map against Raschka
 
