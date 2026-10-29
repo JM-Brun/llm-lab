@@ -8,7 +8,7 @@ lang: fr
 Pour une cible one-hot, la cross-entropie d'une position est la négative log-probabilité du token observé. En entraînement autorégressif, cette quantité est calculée pour les positions cibles autorisées, puis agrégée selon une convention qu'il faut expliciter.
 :::
 
-Pour relier cette formule à l’entraînement, voir aussi la construction des [exemples entrée-cible](training-examples.qmd) et les règles de masquage de la perte.
+Pour relier cette formule à l’entraînement, voir aussi la construction des [exemples entrée-cible](training-examples.qmd) et les règles de masquage de la perte. À ne pas confondre avec l'[entropie de la distribution prédite](entropy.qmd) : l'entropie décrit la dispersion des probabilités avant de connaître le token suivant ; la perte de cross-entropie évalue la probabilité donnée à la cible observée (ou à une distribution cible).
 
 ## Objectif pour un token
 
