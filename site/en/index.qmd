@@ -136,7 +136,9 @@ The main thread connects six questions:
 
 This map provides orientation, not an absolute chain of prerequisites. Deep-dive pages should explain local prerequisites and link related concepts in multiple directions. Mathematics is introduced when it clarifies a mechanism, then explored in greater depth on demand.
 
-The long-term goal is a small decoder-only autoregressive model whose components can be inspected and tested. The educational goal matters more than model size: make computations and limitations understandable, reproducible, and open to scrutiny.
+The build objective is a small decoder-only autoregressive GPT, trained from randomly initialized parameters on a manageable corpus: start with raw text, prepare training examples, implement the model and training loop, monitor validation, then generate text. Loading pretrained weights and adapting a model (classification, instruction tuning, LoRA, or quantization) are distinct downstream stages.
+
+The intended curriculum also covers these advanced stages, together with evaluation, efficiency, and limitations. **The sidebar reflects pages currently available, not yet the full intended programme**: missing modules remain to be written and validated. The educational goal matters more than model size: make computations and limitations understandable, reproducible, and open to scrutiny.
 
 ## Further resources
 
