@@ -142,31 +142,30 @@ The diagram above gives the overall pipeline. These external resources illuminat
 
 For a narrated, code-oriented walkthrough, [Karpathy's *Let's build the GPT Tokenizer*](https://www.youtube.com/watch?v=zduSFxRajkE) covers Unicode/UTF-8, BPE, pre-tokenization, and special tokens.
 
-### Embedded visual previews
+### Images embedded in the site
 
-The links above remain the authoritative sources. The previews below load content from the original websites; they require a network connection and may be blocked by a browser or provider. Direct source links remain available if an embed fails.
+The two illustrations below are SVG files versioned in this repository. They render directly in the page, without an external document viewer. They are original, schematic illustrations; reference sources are linked separately.
 
-#### BPE: watch merges happen
+#### BPE: inspect the merges
 
-<iframe src="https://philipmueller.dev/bpe-visualization/" title="Interactive Byte Pair Encoding (BPE) visualization" loading="lazy" style="width:100%; height:620px; border:1px solid #cbd5e1; border-radius:8px;" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+![Original illustration of BPE: characters are progressively merged into longer units. This is schematic and does not represent the output of a real tokenizer.](../images/bpe-merges-en.svg){fig-alt="Schematic BPE merge steps from individual characters to longer units." width=100%}
 
-<small>External source: [BPE Explainer by Philip Müller and Peter Steinbach](https://philipmueller.dev/bpe-visualization/). Use it to follow the merges; its educational conventions may differ from those of a production tokenizer.</small>
+To experiment with editable examples in an interactive tool, open the [BPE Explainer by Philip Müller and Peter Steinbach](https://philipmueller.dev/bpe-visualization/). That demo is external; the illustration above is stored in this repository.
 
-#### An example of cross-language disparities
+#### Tokenization cost across languages
 
-The PDF preview below displays the first page of Ahia et al. (2023), which contains Figure 1. It is loaded from ACL Anthology; neither the PDF nor the figure is stored in this repository.
+![Conceptual illustration: the same information may be represented by different numbers of tokens depending on language, writing system, and tokenizer. This schematic does not reproduce measured results from the cited paper.](../images/tokenization-language-cost.svg){fig-alt="Conceptual comparison of token sequences of different lengths representing equivalent content." width=100%}
 
-<iframe src="https://aclanthology.org/2023.emnlp-main.614.pdf#page=1&view=FitH" title="First page of Do All Languages Cost the Same? including Figure 1" loading="lazy" style="width:100%; height:560px; border:1px solid #cbd5e1; border-radius:8px;"></iframe>
+This is an original conceptual illustration. For scientific results, read [Ahia et al. (2023), *Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/); [the original PDF](https://aclanthology.org/2023.emnlp-main.614.pdf) is linked separately. Figure 1 from the paper is not copied into this repository.
 
-<small>[Open the original PDF](https://aclanthology.org/2023.emnlp-main.614.pdf) · [Paper page and ACL license](https://aclanthology.org/2023.emnlp-main.614/). The figure illustrates differences in tokenization and cost across language examples; it does not summarize the paper's full results.</small>
+#### Tokenization pipeline: a published illustration
 
-#### GPT tokenizer: video preview
+![Tokenization pipeline from the Hugging Face course, showing the stages that transform text into model-ready tokens.](https://huggingface.co/datasets/huggingface-course/documentation-images/resolve/main/en/chapter6/tokenization_pipeline.svg){fig-alt="Tokenization pipeline: normalization, pre-tokenization, tokenization model, and post-processing." width=100%}
 
-[![Video preview: Let's build the GPT Tokenizer, by Andrej Karpathy](https://img.youtube.com/vi/zduSFxRajkE/hqdefault.jpg)](https://www.youtube.com/watch?v=zduSFxRajkE)
+This is an illustration from the [Hugging Face course, “Building a tokenizer, block by block”](https://huggingface.co/docs/course/chapter6/8), not a video thumbnail. It complements the original diagrams above with a published overview of the tokenizer pipeline. The image is served from the course's public documentation assets rather than copied into this repository.
 
-<small>The thumbnail is loaded from YouTube. [Watch the original video](https://www.youtube.com/watch?v=zduSFxRajkE) for the narrated explanation and code demonstrations.</small>
 
-**Rights and provenance:** external figures are cited and linked to their sources, but are neither copied nor embedded locally. Citing an illustration does not itself grant permission to redistribute it; the repository retains its own original diagrams.
+**Rights and provenance:** external figures are cited and linked, but are not copied into the repository without established permission. The SVGs above are original, schematic LLM Lab illustrations; they do not claim to reproduce a publication's results.
 
 Token IDs are row indices, not semantic coordinates: the numerical difference between two IDs has no intrinsic meaning. The positional step depends on the architecture; [positional encoding and RoPE](positional-encoding.qmd) explains the main distinction.
 
