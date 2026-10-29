@@ -185,6 +185,13 @@ Comparing algorithms is not enough to establish whether a tokenizer is suitable 
 - **Multilingual equity**: comparable content can produce different sequence lengths across languages and tokenizers. This may affect context budgets and training or inference costs; by itself, it does not prove a difference in generation quality.
 - **Reproducibility**: record the exact tokenizer and revision, preprocessing, corpus, languages, metrics, task, budgets, and software versions.
 
+
+#### External research figure: tokenizer fertility varies by language
+
+![Tokenizer fertility distributions for English, French, German, Italian, Polish, and Spanish across the tokenizers compared in Catherine Arnett's experiments.](https://cdn-uploads.huggingface.co/production/uploads/6384d424ac61472e5e92d403/yZnGPoBwKK4d19aCR7Ypo.png){fig-alt="Six small-multiple bar charts show tokenizer fertility across English, French, German, Italian, Polish, and Spanish; the red bar marks the author's tokenizer and grey bars show alternatives." width=100%}
+
+*Source: Catherine Arnett, [“wHy DoNt YoU jUsT uSe ThE lLaMa ToKeNiZeR??”](https://huggingface.co/blog/catherinearnett/dangers-of-tokenizer-recycling), 2024. This is a study-specific comparison, not a universal ranking: fertility depends on the text sample, word definition, and tokenizer set. The image is embedded from the author's hosted article and is not modified or redistributed in this repository.*
+
 ### What the studies show — and what they do not
 
 The following papers are complementary: they do not all measure the same object and should not be read as a direct tokenizer ranking.
@@ -197,6 +204,13 @@ The following papers are complementary: they do not all measure the same object 
 | **Chiu (ACL 2026)**, [*TokLens: A Multilingual Lens on Tokenizer Quality for LLMs*](https://aclanthology.org/2026.acl-srw.18/) | How can tokenizers be compared across languages and dimensions? | Proposes six intrinsic metrics and evaluates 24 tokenizers across 15 languages. The study finds no intrinsic metric predicts English benchmark results after controlling for model size; some metrics, especially single-token retention rate, are associated with per-language results on a multilingual benchmark. | A set of intrinsic metrics does not replace evaluation on the target tasks and deployment constraints. |
 
 Goldman et al. and Schmidt et al. should not be reduced to a simplistic contradiction. The former studies empirical associations between compression and downstream results; the latter reminds us that compression does not summarize every relevant property. TokLens adds a complementary finding: observed relationships differ between English and multilingual benchmarks and remain correlational, with possible confounders such as pretraining-data composition. The methodological conclusion is to **measure separately the dimensions that correspond to the decision being made**.
+
+
+#### External research figure: representation length and execution time
+
+![Tokenization length for the FLORES-200 parallel corpus versus RoBERTa execution time across languages and writing-system families.](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/featured_hu3a085884cc9c15c3954ff8e09a76a4a3_251753_720x2500_fit_q75_h2_lanczos.webp){fig-alt="Scatter plot of tokenization length against RoBERTa execution time for languages in FLORES-200, with points colored by script family." width=80%}
+
+*Source: Petrov, La Malfa, Torr, and Bibi, [“Language Model Tokenizers Introduce Unfairness Between Languages”](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/), NeurIPS 2023. The plot illustrates an association in the studied setup, not a universal causal law or a direct measure of generation quality. The author's page identifies the work as CC BY-NC-ND 4.0; the figure is embedded unchanged and linked to its source.*
 
 ### Building an interpretable comparison protocol
 
