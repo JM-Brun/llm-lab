@@ -12,7 +12,7 @@ In a Transformer, tensors carry token representations, logits, masks, and gradie
 
 For a batch of texts, each sequence position is represented by a vector. The activation tensor is therefore often organized along batch, position, and feature axes.
 
-A tensor's shape describes how representations are organised numerically, not what they mean. For the conceptual level, see [embedding space](embedding-space.qmd), then the [Representation geometry and interpretability](embedding-space.qmd) path on proximity metrics and representation hypotheses.
+A tensor's shape describes how representations are organised numerically, not what they mean. For the conceptual level, see [embedding space](embedding-space.qmd), then the dedicated pages on [cosine similarity](cosine-similarity.qmd) and [representation linearity](embedding-linearity.qmd) for geometry and interpretability questions.
 
 ## Common shapes in an LLM
 
