@@ -183,6 +183,10 @@ This published illustration comes from the [Hugging Face course, “Building a t
 
 ### Educational code and historical reference
 
+- [Sebastian Raschka — *Build a Large Language Model (From Scratch)*, Chapter 2](https://livebook.manning.com/book/build-a-large-language-model-from-scratch/chapter-2): guided reading on text processing in the LLM pipeline.
+- [Hugging Face — tokenizer course](https://huggingface.co/learn/llm-course/chapter6/1): introduction to the tokenizer chapter; course URLs and content may evolve.
+
+
 - [OpenAI `tiktoken` — educational module](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py): simplified BPE code for inspecting merges; it is not the optimized production path.
 - [Andrej Karpathy — `minbpe`](https://github.com/karpathy/minbpe): compact code for tracing training and encoding; compare conventions before assuming compatibility.
 - [Sebastian Raschka — BPE from scratch](https://sebastianraschka.com/blog/2025/bpe-from-scratch.html): an explanatory notebook.
