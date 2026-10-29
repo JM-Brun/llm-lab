@@ -41,7 +41,7 @@ Entrée et cible ont la même longueur. La cible est décalée d’une position 
 - Exemple 1 : entrée `[8, 3, 3]`, cible `[3, 3, 9]`.
 - Exemple 2, avec un stride de 1 : entrée `[3, 3, 9]`, cible `[3, 9, 2]`.
 
-À la position 0 du premier exemple, le modèle reçoit le token `8` et doit prédire `3) ; à la position 2, il reçoit le contexte `[8, 3, 3]` et prédit `9`. Le même identifiant peut se répéter : l'alignement dépend de la position dans le flux, pas de l'unicité des valeurs.
+À la position 0 du premier exemple, le modèle reçoit le token `8` et doit prédire `3` ; à la position 2, il reçoit le contexte `[8, 3, 3]` et prédit `9`. Le même identifiant peut se répéter : l'alignement dépend de la position dans le flux, pas de l'unicité des valeurs.
 
 </details>
 
