@@ -122,6 +122,20 @@ Read the trace carefully:
 
 The exact IDs are specific to the named encoding and library behaviour; another tokenizer may produce different fragments and IDs. The assertions make changes visible rather than silently treating tokenization as universal. See the [official tiktoken repository](https://github.com/openai/tiktoken) and its [encoding tests](https://github.com/openai/tiktoken/blob/0.14.0/tests/test_encoding.py) for the reference output.
 
+
+## Vocabulary size, dimension, and parameters
+
+Vocabulary size (V) and embedding dimension (d) are separate design choices. The embedding matrix (E\in\mathbb{R}^{V\times d}) has (V) rows—one per ID—and (d) components per row. For a sequence of length (L), lookup produces a matrix of shape (L\times d); for a batch of (B) sequences, the common shape is (B\times L\times d).
+
+- (V) depends on the tokenizer and its vocabulary, including special tokens.
+- (d) is an architectural hyperparameter chosen alongside depth, attention heads, and compute budget; it is not derived from (V).
+- The embedding table contains (Vd) parameters.
+- If the output projection has a separate weight matrix, it typically adds (dV) parameters, possibly plus a bias. Some models share input and output weights (*weight tying*), so check the architecture before counting both matrices.
+- IDs and their associated weights are coupled. Changing the vocabulary, ID assignments, or (V) requires an explicit adaptation or retraining strategy; it is not a neutral substitution.
+
+At each position, the output distribution generally has (V) logits. The [tensors page](tensors.qmd) explains how to read axes and shapes; the [logits page](logits.qmd) covers output scores in more depth. This section complements the [text-to-token overview](text-data.qmd) without conflating initial lookup with Transformer contextualization.
+
+
 ## From token embeddings to contextualized states
 
 The next step depends on the architecture. In a GPT-2-style model with learned absolute position embeddings, a position-specific vector is added to each token embedding:
