@@ -20,6 +20,14 @@ Le diagramme du masque causal affiché dans le chapitre est créé pour ce proje
 - **Contenu :** logits → softmax/probabilités → log-vraisemblance négative → loss agrégée → gradient.
 - **Provenance :** illustration originale, sans image externe incorporée.
 
+## Schémas originaux du dépôt — Q/K/V
+
+- **Création :** schémas originaux du projet, versionnés dans \`site/images/queries-keys-values.svg\` et \`site/images/queries-keys-values-en.svg\`.
+- **Utilisation :** pages française et anglaise sur les requêtes, clés et valeurs.
+- **Contenu :** projections apprises de l'entrée vers Q, K et V ; Q/K produisent les scores/poids d'attention, qui agrègent les valeurs V.
+- **Provenance :** illustrations originales du dépôt, sans image externe incorporée. Les ressources de Jay Alammar et de 3Blue1Brown sont des références de conception pédagogique, pas les sources graphiques de ces SVG.
+- **Limite :** le diagramme montre la structure conceptuelle ; il ne visualise pas à lui seul les dimensions exactes, les conventions de masque ou l'effet causal des poids sur la sortie finale.
+
 ## Illustrations intégrées
 
 ::: {.reference-card}
