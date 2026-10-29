@@ -81,38 +81,46 @@ website:
       collapse-level: 1
       contents:
         - index.qmd
-        - section: "Texte et données"
+        - section: "1 · Comprendre le système"
+          contents:
+            - fr/transformer.qmd
+            - fr/transformer-history.qmd
+        - section: "2 · Préparer le texte et les données"
           contents:
             - fr/text-data.qmd
             - fr/unicode-text.qmd
             - fr/tokenization-strategies.qmd
             - fr/training-examples.qmd
-        - section: "Mathématiques appliquées aux LLM"
+        - section: "3 · Construire les représentations"
           contents:
-            - fr/mathematical-foundations.qmd
-            - fr/logits.qmd
-            - fr/probabilites.qmd
-            - fr/entropy.qmd
-            - fr/cross-entropy.qmd
-            - fr/loss.qmd
-            - fr/vraisemblance.qmd
-            - fr/gradients.qmd
             - fr/tensors.qmd
-        - section: "Géométrie et interprétabilité des représentations"
-          contents:
             - fr/embedding-space.qmd
-            - fr/cosine-similarity.qmd
-            - fr/linearite-embeddings.qmd
-        - section: "Attention et Transformer"
+            - fr/positional-encoding.qmd
+        - section: "4 · Contextualiser avec le Transformer"
           contents:
-            - fr/transformer.qmd
-            - fr/transformer-history.qmd
             - fr/queries-keys-values.qmd
             - fr/scaled-dot-product-attention.qmd
             - fr/causal-masking.qmd
-            - fr/positional-encoding.qmd
-        - fr/exercises.qmd
-        - fr/evaluation-experimentale.qmd
+        - section: "5 · Prédire le prochain token"
+          contents:
+            - fr/logits.qmd
+            - fr/probabilites.qmd
+        - section: "6 · Apprendre à partir de l'erreur"
+          contents:
+            - fr/vraisemblance.qmd
+            - fr/entropy.qmd
+            - fr/cross-entropy.qmd
+            - fr/loss.qmd
+            - fr/gradients.qmd
+            - fr/mathematical-foundations.qmd
+        - section: "7 · Évaluer et mettre à l'épreuve"
+          contents:
+            - fr/evaluation-experimentale.qmd
+            - fr/exercises.qmd
+        - section: "Approfondir et prendre du recul"
+          contents:
+            - fr/cosine-similarity.qmd
+            - fr/linearite-embeddings.qmd
         - fr/glossary.qmd
     - id: en
       title: "LLM Lab · English"
@@ -120,38 +128,46 @@ website:
       collapse-level: 1
       contents:
         - en/index.qmd
-        - section: "Text and data"
+        - section: "1 · Understand the system"
+          contents:
+            - en/transformer.qmd
+            - en/transformer-history.qmd
+        - section: "2 · Prepare text and data"
           contents:
             - en/text-data.qmd
             - en/unicode-text.qmd
             - en/tokenization-strategies.qmd
             - en/training-examples.qmd
-        - section: "Maths applied to LLMs"
+        - section: "3 · Build the representations"
           contents:
-            - en/mathematical-foundations.qmd
-            - en/logits.qmd
-            - en/probabilities.qmd
-            - en/entropy.qmd
-            - en/cross-entropy.qmd
-            - en/loss.qmd
-            - en/likelihood.qmd
-            - en/gradients.qmd
             - en/tensors.qmd
-        - section: "Representation geometry and interpretability"
-          contents:
             - en/embedding-space.qmd
-            - en/cosine-similarity.qmd
-            - en/embedding-linearity.qmd
-        - section: "Attention and Transformer"
+            - en/positional-encoding.qmd
+        - section: "4 · Contextualize with the Transformer"
           contents:
-            - en/transformer.qmd
-            - en/transformer-history.qmd
             - en/queries-keys-values.qmd
             - en/scaled-dot-product-attention.qmd
             - en/causal-masking.qmd
-            - en/positional-encoding.qmd
-        - en/exercises.qmd
-        - en/experimental-evaluation.qmd
+        - section: "5 · Predict the next token"
+          contents:
+            - en/logits.qmd
+            - en/probabilities.qmd
+        - section: "6 · Learn from prediction error"
+          contents:
+            - en/likelihood.qmd
+            - en/entropy.qmd
+            - en/cross-entropy.qmd
+            - en/loss.qmd
+            - en/gradients.qmd
+            - en/mathematical-foundations.qmd
+        - section: "7 · Evaluate and challenge"
+          contents:
+            - en/experimental-evaluation.qmd
+            - en/exercises.qmd
+        - section: "Deep dives and critical perspectives"
+          contents:
+            - en/cosine-similarity.qmd
+            - en/embedding-linearity.qmd
         - en/glossary.qmd
   page-footer:
     left: "LLM Lab · Mathématiques, code et expériences reproductibles"
