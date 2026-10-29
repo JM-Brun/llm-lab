@@ -172,7 +172,7 @@ Research on multilingual tokenization costs does not always use the same metrics
 
 For fair comparison, report metrics by language and text type, and keep **representation cost**, **system cost**, and **task quality** separate. A shorter sequence is a real result, but it does not by itself demonstrate an overall improvement.
 
-## Evaluating a tokenizer: metrics, downstream performance, and multilingual equity
+## Evaluating a tokenizer: metrics, downstream performance, and multilingual equity {#tokenizer-evaluation}
 
 Comparing algorithms is not enough to establish whether a tokenizer is suitable for a use case. Several empirical questions must be separated; they do not collapse into one score.
 
