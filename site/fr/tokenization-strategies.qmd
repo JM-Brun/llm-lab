@@ -53,7 +53,7 @@ Ces étapes ne sont pas toutes présentes de la même façon dans chaque tokeniz
 
 Certaines sorties SentencePiece affichent un marqueur visible tel que `▁` pour représenter une frontière d'espace dans leur convention de tokenisation. Ce marqueur n'est pas un symbole universel de tous les tokenizers et ne signifie pas qu'un espace littéral est toujours stocké de cette manière. Pour interpréter une sortie, consultez la documentation du modèle exact.
 
-## 3. BPE, WordPiece et unigramme
+## 4. BPE, WordPiece et unigramme
 
 | Famille | Idée centrale | Limite à retenir |
 |---|---|---|
@@ -63,7 +63,7 @@ Certaines sorties SentencePiece affichent un marqueur visible tel que `▁` pour
 
 **SentencePiece** est une bibliothèque pouvant entraîner BPE ou unigramme à partir de texte brut ; ce n'est pas un algorithme unique. **Hugging Face Tokenizers** est une bibliothèque de plusieurs modèles et composants. **tiktoken** est une implémentation BPE avec des encodages précis. Ces noms ne se situent donc pas tous au même niveau de comparaison.
 
-## 4. Exemples qui révèlent les compromis
+## 5. Exemples qui révèlent les compromis
 
 Un exemple de normalisation Unicode est traité dans [la page d'introduction](text-data.qmd) : `é` précomposé et `e\u0301` peuvent sembler identiques, tout en ayant des séquences de points de code différentes. Le tokenizer peut normaliser ces formes avant de les segmenter ; il faut vérifier sa configuration.
 
@@ -80,7 +80,7 @@ Un exemple de normalisation Unicode est traité dans [la page d'introduction](te
 
 Ce tableau formule des questions à tester, pas des sorties exactes. Pour documenter un résultat, noter tokenizer/version, chaîne d'entrée, tokens visibles et nombre de tokens.
 
-## 5. Comparaison reproductible
+## 6. Comparaison reproductible
 
 1. Fixer les textes, l'encodage, le nettoyage et le traitement des documents.
 2. Enregistrer le tokenizer exact, la version du package, l'identifiant d'encodage et les paramètres.
@@ -114,7 +114,7 @@ Pour une comparaison équitable, rapportez les métriques par langue et type de 
 
 Les liens externes sont privilégiés plutôt que de recopier des figures dont la licence n'a pas été vérifiée. Pour le pipeline global, le schéma original ci-dessus est la figure de référence de cette page.
 
-## 6. Contre-exemples
+## 7. Contre-exemples
 
 - **Moins de tokens = meilleur modèle.** Non : cela démontre d'abord une différence de longueur, pas de qualité.
 - **BPE découvre les morphèmes.** Non : aucune garantie d'analyse linguistique.
