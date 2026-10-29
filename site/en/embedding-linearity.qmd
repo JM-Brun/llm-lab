@@ -4,6 +4,8 @@ subtitle: "Representation, decodability, superposition, and generalization"
 lang: en
 ---
 
+This page belongs to the [Representation geometry and interpretability](embedding-space.qmd) path. [Embedding space](embedding-space.qmd) introduces the geometric objects; the [cosine similarity](cosine-similarity.qmd) page examines a metric often applied to them, without treating it as a direct measure of meaning.
+
 ## What kind of linearity are we talking about?
 
 In neural-network interpretability, it is often assumed that a concept—sentiment, grammatical gender, a factual property, or a control direction—corresponds to a direction in activation space. This idea is useful, but the statement “the concept is represented linearly” can refer to several distinct claims.
