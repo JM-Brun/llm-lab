@@ -37,7 +37,7 @@ These are idealized categories. Real systems may combine pre-tokenization, subwo
 
 ## 3. Components of a tokenizer pipeline
 
-A production tokenizer is not just a segmentation algorithm. Libraries can expose several components whose effects should be distinguished. The [Hugging Face Tokenizers component documentation](https://huggingface.co/docs/tokenizers/components) describes these stages; [SentencePiece](https://github.com/google/sentencepiece) provides another example of tokenizer models and conventions.
+A production tokenizer is not just a segmentation algorithm. Libraries can expose several components whose effects should be distinguished. The [Hugging Face Tokenizers component documentation](https://huggingface.co/docs/tokenizers/python/latest/components.html) describes these stages; [SentencePiece](https://github.com/google/sentencepiece) provides another example of tokenizer models and conventions.
 
 | Component | Role | Check |
 |---|---|---|
