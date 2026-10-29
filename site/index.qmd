@@ -126,18 +126,21 @@ Les visualisations interactives et les animations sont utiles lorsqu’une manip
 
 ## La carte mentale du parcours
 
-Le fil conducteur relie six questions :
+Le fil conducteur suit le cycle d'un modèle autorégressif, du texte brut à l'utilisation du modèle :
 
-1. **Que reçoit le modèle ?** Texte, tokenisation, fenêtres de contexte, entrées et cibles.
-2. **Que calcule-t-il ?** Tenseurs, embeddings, logits et probabilités.
-3. **Comment apprend-il ?** Vraisemblance, cross-entropie, fonction de perte et gradients.
-4. **Comment utilise-t-il le contexte ?** Attention, masque causal, information de position et blocs Transformer.
-5. **Comment produit-il du texte ?** Entraînement, validation, décodage et évaluation.
-6. **Quand se trompe-t-il ou généralise-t-il mal ?** Fuites de données, métriques, incertitude, ablations et limites.
+1. **Que reçoit-il ?** Texte, données, Unicode et corpus.
+2. **Comment le texte devient-il une entrée numérique ?** Tokenisation, token IDs, fenêtres de contexte, tenseurs et embeddings.
+3. **Comment le modèle construit-il du contexte ?** Information de position, attention causale et blocs Transformer.
+4. **Comment produit-il une prédiction ?** États contextualisés, logits et distribution de probabilités sur le vocabulaire.
+5. **Comment apprend-il ?** Cibles décalées, vraisemblance, cross-entropie, gradients, optimisation et validation.
+6. **Comment génère-t-il du texte ?** Boucle autorégressive, choix du prochain token, décodage et arrêt.
+7. **Comment l'adapte-t-on et l'évalue-t-on ?** Chargement de poids pré-entraînés, classification, instruction tuning, méthodes d'adaptation, métriques et analyse des erreurs.
 
-Cette carte est une orientation, pas une chaîne de prérequis absolus. Les pages détaillées doivent expliquer les prérequis locaux et relier les concepts voisins dans plusieurs directions. Les mathématiques sont introduites au moment où elles éclairent le mécanisme, puis approfondies à la demande.
+Cette séquence rend visible la construction d'un GPT depuis une initialisation aléatoire. L'adaptation d'un modèle pré-entraîné est une étape distincte, qui réutilise un modèle déjà appris. Les pages détaillées expliquent les prérequis locaux et relient les concepts voisins dans plusieurs directions : cette carte guide sans imposer une lecture linéaire exhaustive. Les mathématiques sont introduites au moment où elles éclairent le mécanisme, puis approfondies à la demande.
 
-Le projet vise à terme un petit modèle autorégressif à décodeur seul dont les composants peuvent être inspectés et testés. L’ambition pédagogique est plus importante que la taille du modèle : rendre les calculs et les limites compréhensibles, reproductibles et discutables.
+L'objectif de construction est un petit GPT autorégressif à décodeur seul, entraîné depuis une initialisation aléatoire sur un corpus maîtrisé : partir du texte brut, préparer les exemples, implémenter le modèle et sa boucle d'entraînement, suivre la validation, puis générer du texte. Charger des poids pré-entraînés et adapter un modèle (classification, instruction tuning, LoRA ou quantification) constituent des étapes distinctes, en aval.
+
+Le périmètre pédagogique visé couvre aussi ces étapes avancées, ainsi que l'évaluation, l'efficacité et les limites. **Le menu reflète les pages actuellement disponibles, pas encore l'intégralité de ce programme** : les modules absents restent à construire et à valider. L'ambition pédagogique est plus importante que la taille du modèle : rendre les calculs et les limites compréhensibles, reproductibles et discutables.
 
 ## Ressources pour aller plus loin
 
