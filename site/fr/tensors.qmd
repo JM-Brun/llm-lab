@@ -52,11 +52,56 @@ Une forme donne les tailles des axes, pas leur sémantique. Deux tenseurs de for
 - **Perte :** les logits et les labels doivent aligner les positions et le token cible attendu.
 - **Réduction :** une moyenne sur les tokens valides n'est pas équivalente à une moyenne sur le batch ou sur toutes les positions avec padding.
 
+
+## Contre-exemple : softmax sur le mauvais axe
+
+Considérons, pour un seul exemple et deux positions, les logits de trois tokens candidats :
+
+```text
+position 0 : [2, 1, 0]
+position 1 : [0, 1, 2]
+forme       : (B=1, T=2, V=3)
+```
+
+Pour chaque position, on veut une distribution sur les **tokens candidats**. La softmax doit donc agir sur l'axe \(V\), le dernier axe dans cette convention :
+
+```python
+probs = logits.softmax(dim=-1)  # normalise les 3 tokens, pour chaque position
+```
+
+La somme des probabilités sur \(V\) vaut alors 1 à chaque position. Pour ces logits, les lignes valent approximativement `[0.665, 0.245, 0.090]` et `[0.090, 0.245, 0.665]`.
+
+En revanche :
+
+```python
+wrong = logits.softmax(dim=1)  # normalise les 2 positions, token par token
+```
+
+Pour cet exemple, les lignes deviennent approximativement `[0.881, 0.500, 0.119]` et `[0.119, 0.500, 0.881]` ; chacune somme à 1,5 et non à 1. Cette opération est mathématiquement valide et compatible avec la forme, mais elle répond à une autre question : pour chaque token candidat, elle répartit la masse entre les positions. Les lignes ne sont généralement plus des distributions sur le vocabulaire.
+
+**Invariant de débogage :** si la sortie est censée représenter \(p(\text{token}\mid\text{contexte à cette position})\), vérifier que la somme sur l'axe du vocabulaire vaut 1 pour chaque couple batch-position. Une forme correcte ne suffit pas ; l'invariant dépend de l'interprétation attendue.
+
 ## Exemple de lecture des dimensions
 
 Pour \(B=2\), \(T=4\) et \(D=8\), les états cachés ont la forme \((2,4,8)\). Une projection vers un vocabulaire de \(V=1000\) tokens produit des logits de forme \((2,4,1000)\). Le dernier axe correspond aux tokens candidats ; chaque couple batch-position porte ainsi une distribution après softmax sur cet axe.
 
 La compatibilité des formes ne garantit pas que la projection, le masque, le décalage causal ou la réduction soient corrects. Il faut également vérifier le sens des axes et la sémantique des cibles.
+
+
+## Pour les fondations générales
+
+Cette page applique les tenseurs au contexte des Transformers. Pour les notions réutilisables hors LLM — formes, axes, indexation, réductions, broadcasting et distinction entre tableaux logiciels et tenseurs mathématiques — voir la page canonique de [Wiki Knowledge : tenseurs et tableaux multidimensionnels](https://github.com/JM-Brun/wiki-knowledge/blob/main/wiki/concepts/tenseurs-et-tableaux-multidimensionnels.md). Le présent chapitre conserve ici les conventions (B,T,D,V,H), les formes propres aux modèles de langue et les erreurs de manipulation fréquentes dans ce contexte.
+
+## Ouvertures vers d'autres domaines
+
+Les axes ne sont pas de simples indices : ils définissent la question posée aux données. Cette idée se retrouve ailleurs, avec des nuances importantes.
+
+- **Traitement du signal :** un tableau \((T,C)\) peut représenter le temps et les canaux d'un capteur. Réduire sur \(T\) calcule une statistique temporelle ; réduire sur \(C\) combine des canaux. Même opération, sens différent. [NumPy — dimensions et tableaux](https://numpy.org/doc/stable/user/basics.creation.html) présente les bases de cette représentation.
+- **Bases de données et analyse tabulaire :** lignes et colonnes ont un schéma sémantique. Permuter deux colonnes sans mettre à jour leur interprétation peut conserver un tableau valide tout en corrompant l'analyse. Les dimensions d'un tenseur jouent un rôle analogue, mais les axes numériques peuvent aussi être réordonnés et diffusés implicitement.
+- **Physique et géométrie :** dans un tenseur mathématique au sens strict, les composantes suivent des lois de transformation sous un changement de coordonnées. Un tableau PyTorch de rang élevé n'est pas automatiquement un tel tenseur. Cette distinction devient utile lorsqu'on aborde vecteurs, bases, changements de coordonnées et invariance.
+- **Probabilités et théorie de l'information :** une softmax définit une distribution seulement relativement à un ensemble de catégories précis. Dans un LLM, cet ensemble est souvent le vocabulaire ; normaliser sur les positions produit une autre quantité, pas une distribution de tokens.
+
+Ces ponts sont des pistes de lecture, pas des prérequis. Ils peuvent devenir des pages autonomes dans une base de connaissances plus générale ; le parcours LLM Lab doit rester compréhensible sans ces approfondissements.
 
 ## Précision terminologique : rang d'un tableau et tenseur mathématique
 

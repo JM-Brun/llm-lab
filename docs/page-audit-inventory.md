@@ -231,3 +231,12 @@ This is a targeted source-level review of the bilingual Q/K/V concept pair, chos
 - Publication, CI, or completing an exercise does not by itself demonstrate learner mastery.
 
 
+
+
+## Tensor axes and cross-domain semantics
+
+| Page / language pair | Role and reader question | What this pass changed | Remaining work |
+|---|---|---|---|
+| `site/fr/tensors.qmd` + `site/en/tensors.qmd` | **Foundations / debugging invariant.** How can a tensor operation be shape-compatible but semantically wrong? | Proposed in branch `docs/tensor-axis-semantics-cross-domain`: a bilingual counterexample for softmax over vocabulary versus sequence positions; a concrete invariant (probabilities sum to one over the vocabulary axis per batch-position); optional bridges to signal processing, tabular schemas, mathematical tensors in physics/geometry, and probability/information theory. The cross-domain section explicitly marks these as optional and keeps LLM Lab self-contained. | Verify numerical statements and bilingual parity; run Quarto render and local-link checks; inspect rendered code/math and responsive behavior. Check the external NumPy link. No CI or rendered-site validation is claimed by this source edit alone. |
+
+**Editorial rule reinforced by this change:** cross-domain links should explain a transferable idea and its limits, not just name an adjacent discipline. Candidate deeper concepts can later be developed as independent knowledge pages; public LLM Lab should not depend on private notes or on those future pages.
