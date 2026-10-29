@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 330" role="img" aria-labelledby="title desc">
   <title id="title">Probabilité de la cible et perte de cross-entropie</title>
-  <desc id="desc">Deux cas pour la même cible observée : une probabilité de 0,9 donne une perte de 0,105 nat ; une probabilité de 0,1 donne une perte de 2,303 nats. Une probabilité plus faible pour la cible observée produit une perte logarithmique négative beaucoup plus élevée.</desc>
+  <desc id="desc">Deux cas pour la même cible observée : une probabilité de 0,9 donne une perte de 0,105 nat ; une probabilité de 0,1 donne une perte de 2,303 nats. Une probabilité plus faible pour la cible observée produit une perte fondée sur le logarithme négatif beaucoup plus élevée.</desc>
   <rect x="1" y="1" width="898" height="328" rx="14" fill="#ffffff" stroke="#cbd5e1"/>
   <text x="32" y="38" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#172554">Cible observée y</text>
   <text x="32" y="64" font-family="Arial, sans-serif" font-size="14" fill="#475569">Même cible ; probabilité attribuée différente</text>
