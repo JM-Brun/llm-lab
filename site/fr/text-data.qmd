@@ -82,6 +82,12 @@ La segmentation n'est ni une analyse linguistique parfaite, ni une mesure du sen
 
 Cette figure illustre la dépendance du découpage aux règles et au vocabulaire du tokenizer ; elle ne démontre pas qu’une segmentation est meilleure. Pour une comparaison empirique, utilisez les mêmes textes, consignez le tokenizer et sa version, puis rapportez les mesures par langue et type de texte. Voir [Ahia et al. (2023)](https://aclanthology.org/2023.emnlp-main.614/) pour une étude des coûts de tokenisation entre langues.
 
+### Évaluer les compromis au-delà du nombre de tokens
+
+Le nombre de tokens est un indicateur de longueur, pas un score global de qualité. Une évaluation rigoureuse distingue l'efficacité de représentation, les performances sur des tâches en aval, les écarts entre langues et la reproductibilité du protocole. Les résultats dépendent du corpus, de la tâche, du modèle et des budgets comparés.
+
+Pour comprendre ces dimensions et examiner les travaux scientifiques associés, consultez **[Évaluer un tokenizer : métriques, performances et équité multilingue](tokenization-strategies.qmd#tokenizer-evaluation)**.
+
 ### Pour approfondir les mécanismes
 
 La page principale reste centrée sur le parcours. Les détails techniques sont traités dans des pages dédiées :

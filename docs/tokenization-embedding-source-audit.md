@@ -418,3 +418,34 @@ The first audit's actionable gaps have been addressed in the bilingual lessons:
 | Existing 2D embedding-space SVG | Retained | Useful conceptual overview with explicit warning about projection distortion |
 
 **Validation still required:** render the bilingual Quarto site, run the repository's link checks and inspect the rendered pages in a browser. CI has not yet returned a run/status for the current PR head; this is not evidence of a successful render.
+
+
+## Follow-up: complementary tokenizer-evaluation perspectives (2026-10-29)
+
+**Learner problem:** the existing overview correctly warns that fewer tokens do not automatically mean a better tokenizer, but offers little structured framework for interpreting competing claims and newer multilingual evaluation work.
+
+**New sources checked against repository search:**
+- Goldman et al. (2024), [Unpacking Tokenization](https://aclanthology.org/2024.findings-acl.134/): compression and downstream-task association in the paper's experiments.
+- Schmidt et al. (2024), [Tokenization Is More Than Compression](https://aclanthology.org/2024.emnlp-main.40/): evidence against treating minimum token count as a sufficient objective.
+- Arnett et al. (NeurIPS 2025), [Explaining and Mitigating Crosslingual Tokenizer Inequities](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html): design factors associated with cross-lingual token premiums.
+- Chiu (ACL 2026), [TokLens](https://aclanthology.org/2026.acl-srw.18/): multi-metric tokenizer evaluation across languages. Treat reported relationships with downstream performance as empirical associations, not universal causal guarantees.
+
+**Design decision:** add a short bilingual section distinguishing representation efficiency, downstream task performance, multilingual variation, and reproducibility. Add original bilingual SVGs as conceptual frameworks, not as data figures. Keep the existing pipeline and segmentation illustration; avoid copying figures from papers or interactive sites.
+
+**Validation status:** source files were inspected and the source list was checked for existing matches in repository search; new figure source is authored locally. Quarto rendering, HTML/image rendering, link checking, mobile layout, and bilingual rendered-page comparison still need to be run on the PR head. No validation is claimed as passed here.
+
+
+## Editorial integration decision: tokenizer evaluation literature (2026-10-29)
+
+**Decision:** do not create a standalone page at this stage. The learner question—how to evaluate tokenizers beyond token count—belongs in the existing tokenization-strategies page, which already owns representation trade-offs, metrics, and reproducible comparisons. A separate page would fragment a coherent concept and duplicate the current measurement/protocol sections.
+
+**Page responsibilities:**
+- `text-data`: retain the introductory pipeline and a short signpost to the evaluation deep dive; do not carry the paper-by-paper discussion.
+- `tokenization-strategies`: own the substantive evaluation framework, study comparison, limitations, and protocol.
+- `references.qmd`: provide a concise bibliography/provenance index, not repeat the analysis.
+
+**Integration:** Goldman et al. (2024) and Schmidt et al. (2024) are contextualized with distinct roles (empirical compression/performance association versus limits of compression-only objectives); Arnett et al. (2025) and Chiu (ACL 2026) are contextualized for cross-lingual disparities and multi-metric evaluation. Ahia et al. (2023) and Wegmann et al. (2025), already linked in the strategy page, are retained as related work rather than presented as new discoveries.
+
+**Visual placement:** relocate the use of the original four-dimension conceptual SVG from the introductory overview to the evaluation section of the strategy page. It is a framework, not empirical data. Keep the overview pipeline diagram and token-segmentation illustration focused on their own learning questions.
+
+**Validation still required:** Quarto render; verify generated anchor IDs and local links; check both SVGs and image paths; compare FR/EN scope and tables; run link checker; inspect responsive layout. No render/browser/CI pass is claimed by this source edit.

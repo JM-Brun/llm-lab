@@ -172,6 +172,52 @@ Research on multilingual tokenization costs does not always use the same metrics
 
 For fair comparison, report metrics by language and text type, and keep **representation cost**, **system cost**, and **task quality** separate. A shorter sequence is a real result, but it does not by itself demonstrate an overall improvement.
 
+## Evaluating a tokenizer: metrics, downstream performance, and multilingual equity {#tokenizer-evaluation}
+
+Comparing algorithms is not enough to establish whether a tokenizer is suitable for a use case. Several empirical questions must be separated; they do not collapse into one score.
+
+![Four complementary dimensions for evaluating a tokenizer: representation efficiency, downstream behaviour, variation across languages, and reproducibility.](../images/tokenizer-evaluation-dimensions.svg){fig-alt="Four distinct dimensions: compression and sequence length; downstream task results; variation across languages and text types; and a reproducible protocol identifying tokenizer, version, and corpus." fig-cap="A reading framework, not an experimental result: these dimensions answer different questions and do not necessarily collapse into one ranking." width=100%}
+
+### Four dimensions to keep separate
+
+- **Representation efficiency**: how many tokens, characters, or bytes represent the same content? State the denominator explicitly: Unicode characters, code points, grapheme clusters, and UTF-8 bytes are not interchangeable.
+- **Downstream performance**: segmentation choices can affect learning and task results. Measure these under comparable conditions rather than inferring them from token count.
+- **Multilingual equity**: comparable content can produce different sequence lengths across languages and tokenizers. This may affect context budgets and training or inference costs; by itself, it does not prove a difference in generation quality.
+- **Reproducibility**: record the exact tokenizer and revision, preprocessing, corpus, languages, metrics, task, budgets, and software versions.
+
+### What the studies show — and what they do not
+
+The following papers are complementary: they do not all measure the same object and should not be read as a direct tokenizer ranking.
+
+| Study | Research question | Contribution to evaluation | Interpretive limitation |
+|---|---|---|---|
+| **Goldman et al. (2024)**, [*Unpacking Tokenization: Evaluating Text Compression and its Correlation with Model Performance*](https://aclanthology.org/2024.findings-acl.134/) | Is compression associated with model performance? | Empirically analyses the relationship between text compression and downstream results in the studied settings. | An experimental correlation does not establish a universal causal selection rule. |
+| **Schmidt et al. (2024)**, [*Tokenization Is More Than Compression*](https://aclanthology.org/2024.emnlp-main.40/) | Can a tokenizer be selected by minimizing length alone? | Highlights the limits of an objective reduced to compression and motivates other relevant properties. | This does not make length irrelevant: it answers a specific representation and cost question. |
+| **Arnett et al. (2025)**, [*Explaining and Mitigating Crosslingual Tokenizer Inequities*](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html) | Why do tokenization costs differ across languages? | Studies cross-lingual disparities and design factors that may mitigate them. | Findings depend on the languages, corpora, tokenizers, and protocols considered. |
+| **Chiu (ACL 2026)**, [*TokLens: A Multilingual Lens on Tokenizer Quality for LLMs*](https://aclanthology.org/2026.acl-srw.18/) | How can tokenizers be compared across languages and dimensions? | Proposes six intrinsic metrics and evaluates 24 tokenizers across 15 languages. The study finds no intrinsic metric predicts English benchmark results after controlling for model size; some metrics, especially single-token retention rate, are associated with per-language results on a multilingual benchmark. | A set of intrinsic metrics does not replace evaluation on the target tasks and deployment constraints. |
+
+Goldman et al. and Schmidt et al. should not be reduced to a simplistic contradiction. The former studies empirical associations between compression and downstream results; the latter reminds us that compression does not summarize every relevant property. TokLens adds a complementary finding: observed relationships differ between English and multilingual benchmarks and remain correlational, with possible confounders such as pretraining-data composition. The methodological conclusion is to **measure separately the dimensions that correspond to the decision being made**.
+
+### Building an interpretable comparison protocol
+
+To compare two tokenizers:
+
+1. Fix a corpus and document its provenance, languages, domains, and cleaning rules.
+2. Pin the exact tokenizers: name, revision, vocabulary, configuration, library versions, and special tokens.
+3. Report multiple intrinsic measures with definitions: tokens per text, characters or bytes per token, fertility if “word” is defined, coverage, and truncation.
+4. Break results down by language, script, and text type; a global average can hide substantial disparities.
+5. Evaluate downstream tasks separately, using the same data, compute/context budgets, and training or inference protocols where the comparison permits.
+6. Report relevant system costs: latency, throughput, memory, and financial cost. A shorter sequence does not mechanically imply a faster system.
+7. Publish uncertainty, limitations, and cases where results are not comparable.
+
+**Reading rule:** token count measures length under a given tokenizer; it does not directly measure linguistic quality, model quality, or total system cost.
+
+### Related work and resources
+
+- [Ahia et al. (2023), *Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/) — earlier study of tokenization costs across languages.
+- [Wegmann et al. (2025), *Tokenization is Sensitive to Language Variation*](https://aclanthology.org/2025.findings-acl.572/) — linguistic variation and the role of the pre-tokenizer.
+- [TokLens — paper and resources](https://aclanthology.org/2026.acl-srw.18/) — inspect as a tool/method, checking its metrics and protocol.
+
 ### Recommended visual resources
 
 1. [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/): interactive merge manipulation; best first intuition.
