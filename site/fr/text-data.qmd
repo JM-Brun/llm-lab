@@ -34,6 +34,34 @@ La chaîne `"ChatGPT apprend."` peut être découpée en mots, sous-mots, caract
 - **Embedding** est un vecteur appris associé à un identifiant, et non une autre forme de cet identifiant.
 
 
+### Unicode et UTF-8 : une différence invisible qui compte
+
+![Deux formes visuellement semblables de « é », mais des points de code et octets UTF-8 différents.](../images/unicode-utf8-tokenization-fr.svg){fig-alt="Comparaison de é précomposé (U+00E9, octets C3 A9) et de e suivi d'un accent combinant (U+0065 U+0301, octets 65 CC 81). La normalisation peut les rapprocher avant la tokenisation." width=100%}
+
+Cette figure est originale pour LLM Lab. Elle s'appuie sur les règles d'encodage de [UTF-8 (RFC 3629)](https://www.rfc-editor.org/rfc/rfc3629) et sur les formes de normalisation décrites dans le [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/). Elle illustre l'encodage, pas la sortie d'un tokenizer particulier.
+
+```python
+import unicodedata
+
+composed = "é"
+decomposed = "e\u0301"
+
+print([f"U+{ord(char):04X}" for char in composed])
+# ['U+00E9']
+print(composed.encode("utf-8"))
+# b'\xc3\xa9'
+
+print([f"U+{ord(char):04X}" for char in decomposed])
+# ['U+0065', 'U+0301']
+print(decomposed.encode("utf-8"))
+# b'e\xcc\x81'
+
+print(unicodedata.normalize("NFC", composed) == unicodedata.normalize("NFC", decomposed))
+# True
+```
+
+Les deux chaînes peuvent avoir le même rendu visuel, mais leurs séquences Unicode et leurs octets UTF-8 diffèrent avant normalisation. Un tokenizer peut appliquer une normalisation, mais sa politique exacte dépend de son implémentation. **Ne déduisez pas les tokens ni les IDs de cette figure** : vérifiez-les avec le tokenizer et sa version réels.
+
 ### Même texte, segmentations possibles différentes
 
 Une chaîne peut produire des fragments et des IDs différents selon le tokenizer. Le tableau est volontairement schématique : il ne prétend pas reproduire la sortie d'un encodeur réel.
