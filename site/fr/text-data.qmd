@@ -1,6 +1,6 @@
 ---
 title: "Du texte aux tokens : représenter le langage"
-subtitle: "Unicode, octets, tokenisation et premières décisions de conception"
+subtitle: "Le parcours conceptuel du texte aux représentations du modèle"
 lang: fr
 ---
 
@@ -20,116 +20,53 @@ Un modèle de langage reçoit une séquence d'identifiants numériques, pas du t
 - Choisir des ressources complémentaires : intuition visuelle, code pédagogique et documentation technique.
 - Identifier ce que la tokenisation ne permet pas de conclure sur le sens ou les capacités du modèle.
 
-## 1. Du texte à une entrée numérique
+## 1. Le parcours, du texte au modèle
 
-Une chaîne Python représente du texte Unicode. Son encodage UTF-8 produit une séquence d'octets. Un tokenizer applique ensuite des règles de découpage et un vocabulaire pour produire des tokens, puis des identifiants entiers.
+Le point de vue utile à ce stade est celui du **pipeline** : quelles transformations un texte traverse-t-il avant d'être traité par le réseau ?
 
-Le pipeline complet est détaillé dans le schéma « De la chaîne à l'embedding » ci-dessous, qui distingue pré-tokenisation, vocabulaire, tokens, IDs, lookup d'embeddings et représentations contextualisées.
-
-Ce pipeline est conceptuel : les tokenizers varient par leur normalisation, leurs unités de base, leur pré-découpage, leur vocabulaire et leurs tokens spéciaux.
-
-La chaîne `"ChatGPT apprend."` peut être découpée en mots, sous-mots, caractères ou fragments d'octets selon le tokenizer. Il n'existe pas un découpage unique qui serait le découpage linguistique « vrai ». Les identifiants sont des étiquettes discrètes : l'identifiant 314 n'est pas intrinsèquement plus proche en sens de 315. Un identifiant n'est pas un embedding ; le modèle apprend un vecteur associé à chaque entrée de la table d'embeddings.
-
-### Quatre objets à ne pas confondre
-
-- **Unicode** définit un répertoire de caractères et des propriétés associées ; il ne fixe pas la segmentation en tokens.
-- **UTF-8** encode les points de code Unicode en octets ; un caractère peut occuper plusieurs octets.
-- **Tokenisation** convertit le texte en unités du vocabulaire choisi.
-- **Embedding** est un vecteur appris associé à un identifiant, et non une autre forme de cet identifiant.
-
-
-### Unicode et UTF-8 : une différence invisible qui compte
-
-![Deux formes visuellement semblables de « é », mais des points de code et octets UTF-8 différents.](../images/unicode-utf8-tokenization-fr.svg){fig-alt="Comparaison de é précomposé (U+00E9, octets C3 A9) et de e suivi d'un accent combinant (U+0065 U+0301, octets 65 CC 81). La normalisation peut les rapprocher avant la tokenisation." width=100%}
-
-Cette figure est originale pour LLM Lab. Elle s'appuie sur les règles d'encodage de [UTF-8 (RFC 3629)](https://www.rfc-editor.org/rfc/rfc3629) et sur les formes de normalisation décrites dans le [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/). Elle illustre l'encodage, pas la sortie d'un tokenizer particulier.
-
-```python
-import unicodedata
-
-composed = "é"
-decomposed = "e\u0301"
-
-print([f"U+{ord(char):04X}" for char in composed])
-# ['U+00E9']
-print(composed.encode("utf-8"))
-# b'\xc3\xa9'
-
-print([f"U+{ord(char):04X}" for char in decomposed])
-# ['U+0065', 'U+0301']
-print(decomposed.encode("utf-8"))
-# b'e\xcc\x81'
-
-print(unicodedata.normalize("NFC", composed) == unicodedata.normalize("NFC", decomposed))
-# True
+```{mermaid}
+flowchart LR
+    A["Texte source"] --> B["Prétraitement éventuel"]
+    B --> C["Tokeniseur"]
+    C --> D["Tokens"]
+    D --> E["IDs entiers"]
+    E --> F["Vecteurs d'embedding"]
+    F --> G["Transformer"]
+    G --> H["Représentations contextualisées"]
 ```
 
-Les deux chaînes peuvent avoir le même rendu visuel, mais leurs séquences Unicode et leurs octets UTF-8 diffèrent avant normalisation. Un tokenizer peut appliquer une normalisation, mais sa politique exacte dépend de son implémentation. **Ne déduisez pas les tokens ni les IDs de cette figure** : vérifiez-les avec le tokenizer et sa version réels.
+- **Texte source** : une chaîne pouvant contenir ponctuation, espaces, nombres, code ou plusieurs langues.
+- **Prétraitement** : certaines chaînes sont normalisées ou pré-découpées ; ces opérations dépendent du tokeniseur.
+- **Tokeniseur** : applique des règles et un vocabulaire appris pour convertir le texte en unités appelées *tokens*.
+- **IDs** : chaque token est associé à un entier servant d'indice dans le vocabulaire. Cet entier est une étiquette, pas une mesure de sens.
+- **Embeddings** : les IDs sélectionnent des vecteurs appris. Le Transformer les transforme ensuite en représentations dépendant du contexte.
+
+Ce schéma est conceptuel : les tokeniseurs réels diffèrent par leurs unités de base, leur normalisation, leur pré-tokenisation, leur vocabulaire et leurs tokens spéciaux.
+
+### Le vocabulaire minimal
+
+| Terme | Rôle dans le pipeline |
+|---|---|
+| **Texte** | Entrée lisible par un humain. |
+| **Token** | Unité discrète définie par un tokeniseur : mot, sous-mot, ponctuation, fragment d'octets ou token spécial. |
+| **ID** | Entier identifiant un token dans un vocabulaire donné. |
+| **Embedding** | Vecteur associé à un ID, utilisé comme représentation numérique initiale. |
+| **Représentation contextualisée** | Vecteur après traitement par le réseau, influencé par les autres tokens de la séquence. |
+
+Les détails de bas niveau ne sont pas nécessaires pour suivre ce parcours. Pour comprendre pourquoi deux chaînes visuellement identiques peuvent être encodées différemment, consultez le [complément sur Unicode, UTF-8 et la normalisation](unicode-text.qmd). Pour les algorithmes de segmentation et leurs compromis, consultez la [page dédiée aux stratégies de tokenisation](tokenization-strategies.qmd). Les dimensions des matrices et le rôle exact des embeddings sont détaillés dans [l'espace des embeddings](embedding-space.qmd) et [la page sur les tenseurs](tensors.qmd).
 
 ### Même texte, segmentations possibles différentes
 
-Une chaîne peut produire des fragments et des IDs différents selon le tokenizer. Le tableau est volontairement schématique : il ne prétend pas reproduire la sortie d'un encodeur réel.
+Une chaîne peut produire des fragments et des IDs différents selon le tokeniseur. Le tableau est schématique et ne prétend pas reproduire la sortie d'un encodeur réel.
 
-| Étape | Tokenizer A | Tokenizer B |
+| Étape | Tokeniseur A | Tokeniseur B |
 |---|---|---|
 | Fragments | `[fragment 1]`, `[fragment 2]`, `[fragment 3]` | `[fragment 1]`, `[fragment 2]` |
 | Identifiants | Dépendent du vocabulaire A | Dépendent du vocabulaire B |
 | Modèle compatible | Poids entraînés avec A | Poids entraînés avec B |
 
-Cette comparaison illustre seulement que la segmentation et la longueur peuvent changer. Elle ne démontre pas qu'un tokenizer est meilleur, ni que ses fragments correspondent à des unités de sens.
+Cela illustre seulement que la segmentation et la longueur peuvent changer. Cela ne démontre pas qu'un tokeniseur est meilleur, ni que ses fragments correspondent à des unités de sens. Les IDs ne sont comparables qu'au sein du vocabulaire pour lequel ils ont été définis.
 
-
-
-### De la chaîne à l'embedding : les transformations
-
-```{mermaid}
-flowchart TD
-    A["Texte Unicode"] --> B["Normalisation éventuelle"]
-    B --> C["Pré-tokenisation"]
-    C --> D["Algorithme + vocabulaire appris"]
-    D --> E["Tokens : fragments de texte ou d'octets"]
-    E --> F["IDs entiers : indices du vocabulaire"]
-    F --> G["Lookup dans la matrice E"]
-    G --> H["Vecteurs : E[id]"]
-    H --> I["Réseau neuronal : représentations contextualisées"]
-```
-
-### Vocabulaire ≠ dimension d'embedding
-
-Le mot **vocabulaire** désigne ici l'ensemble fini des tokens que le tokenizer peut émettre, pas une liste de mots linguistiques. Sa taille, notée $V$, est le nombre d'entrées/IDs du vocabulaire. Un token peut être un mot, un sous-mot, un fragment d'octets, de la ponctuation ou un token spécial.
-
-La **dimension d'embedding**, notée $d$, est le nombre de composantes du vecteur associé à chaque ID. Elle est choisie lors de la conception de l'architecture du modèle ; elle n'est **pas calculée à partir de $V$**. Dans beaucoup de GPT, elle correspond à la largeur cachée du Transformer, mais cette convention dépend de l'architecture.
-
-![Schéma original : la taille du vocabulaire V détermine le nombre de lignes de la matrice d'embeddings, tandis que d détermine le nombre de composantes par vecteur ; les logits de sortie ont une dimension V par position.](../images/token-embedding-matrix-fr.svg){fig-alt="Les IDs sélectionnent des lignes dans E de forme V par d. Une séquence de longueur L devient une matrice L par d ; la projection de sortie produit des logits de forme L par V." width=100%}
-
-::: {.callout-note}
-**Les dimensions à retenir**
-
-- **$V$** : nombre de tokens/IDs du vocabulaire — lié au tokenizer et à ses choix de conception.
-- **$d$** : nombre de composantes par embedding — hyperparamètre de l'architecture.
-- **$L$** : nombre de tokens dans une séquence donnée.
-- **$B$** : nombre de séquences dans un lot (batch).
-:::
-
-Pour une séquence d'IDs $[i_1,\ldots,i_L]$, la matrice d'embeddings est $E\in\mathbb{R}^{V\times d}$ et le lookup sélectionne les lignes correspondantes :
-
-$
-X = E_{[i_1,\ldots,i_L]}\in\mathbb{R}^{L\times d}.
-$
-
-Avec un lot, la forme devient généralement $[B,L,d]$. **Le lookup ne calcule pas encore le sens en contexte** : il sélectionne les vecteurs appris ; les blocs du Transformer produisent ensuite des représentations contextualisées.
-
-### Comment ces dimensions sont-elles fixées ?
-
-- **$V$ est déterminé par le tokenizer** : corpus et prétraitement, algorithme (par exemple BPE ou unigramme), règles et objectif de taille de vocabulaire, ainsi que le traitement des tokens spéciaux. La taille exacte est un choix de conception et peut différer de la cible demandée selon l'implémentation.
-- **$d$ est déterminé par l'architecture** : c'est un hyperparamètre choisi avec la profondeur, le nombre de têtes, le budget de calcul et les objectifs d'entraînement. Il n'existe pas de formule universelle qui déduise $d$ de $V$.
-- **Le nombre de paramètres dépend des deux** : la table d'embeddings contient $Vd$ paramètres. Si la projection de sortie possède sa propre matrice de poids, elle ajoute typiquement environ $dV$ paramètres (plus éventuellement un biais). Certains modèles partagent les poids d'entrée et de sortie (*weight tying*) ; il ne faut donc pas additionner automatiquement les deux matrices sans vérifier l'architecture. La taille $V$ utilisée par la matrice doit correspondre aux IDs réellement pris en charge par le modèle, y compris les tokens spéciaux qu'il reconnaît.
-
-::: {.callout-warning}
-**Changer le tokenizer n'est pas une simple substitution.** Les IDs ne gardent pas le même sens d'un vocabulaire à l'autre. Les poids de la table d'embeddings et de la projection de sortie ont été appris pour des IDs précis ; changer $V$ ou l'affectation des IDs nécessite une stratégie explicite d'adaptation ou de réentraînement.
-:::
-
-Les logits ont une composante par token possible ; la [page sur la cross-entropy](cross-entropy.qmd) explique comment les scores sont comparés à la cible pendant l'entraînement. Pour les dimensions des tenseurs et les opérations par lots, voir [la page sur les tenseurs](tensors.qmd). Pour distinguer l'embedding initial des représentations après attention, voir [l'espace des embeddings](embedding-space.qmd) ; la suite du pipeline est détaillée dans [la page Transformer](transformer.qmd).
 
 ### Trois points de vue visuels complémentaires
 
@@ -138,7 +75,7 @@ Le schéma ci-dessus donne une vue d'ensemble du pipeline. Ces ressources extern
 - **Algorithme, étape par étape —** [BPE Explainer de Philip Müller et Peter Steinbach](https://philipmueller.dev/bpe-visualization/) : visualisation interactive des paires candidates, des fusions et de l'évolution du vocabulaire. C'est le meilleur complément pour comprendre la mécanique de BPE ; les conventions de la démonstration restent à distinguer de celles d'un tokenizer de production.
 - **Pipeline de bout en bout —** [Raschka, *Build a Large Language Model (From Scratch)*, chapitre 2](https://livebook.manning.com/book/build-a-large-language-model-from-scratch/chapter-2) : repérer notamment la figure 2.4 sur le traitement du texte. Elle donne le contexte LLM global, tandis que le schéma local ci-dessus explicite davantage la normalisation, la pré-tokenisation et le lookup dans la matrice d'embeddings.
 - **Conséquences multilingues —** [Ahia et al. (2023), PDF, figure 1](https://aclanthology.org/2023.emnlp-main.614.pdf) ([page de l'article](https://aclanthology.org/2023.emnlp-main.614/)) : met côte à côte des exemples anglais et grecs et relie la tokenisation au coût d'usage. Cette figure ouvre une perspective socio-technique que le pipeline seul ne montre pas ; elle illustre un problème, sans résumer à elle seule toutes les analyses de l'article.
-- **Unicode et normalisation —** [graphiques officiels de normalisation Unicode](https://www.unicode.org/charts/normalization/) : référence technique utile pour approfondir les différences entre formes normalisées, en complément de la figure originale sur « é » ci-dessus.
+- **Unicode et normalisation —** le [complément Unicode, UTF-8 et normalisation](unicode-text.qmd) explique les points de code, les octets et les formes normalisées, avec un exemple vérifiable.
 
 Pour une explication orale et codée, la vidéo [Karpathy — *Let's build the GPT Tokenizer*](https://www.youtube.com/watch?v=zduSFxRajkE) parcourt Unicode/UTF-8, BPE, la pré-tokenisation et les tokens spéciaux.
 
