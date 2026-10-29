@@ -74,7 +74,7 @@ Subword methods reuse frequent units while retaining a way to represent less fre
 
 In a simplified educational version, BPE starts from base units, counts adjacent pairs, merges a selected pair according to a defined rule, and repeats until a stopping criterion is met.
 
-In an educational version, BPE starts from base units, counts adjacent pairs, merges a selected pair according to a defined rule, and repeats until a stopping criterion is met. To inspect merges and vocabulary growth step by step, use the [original interactive BPE Explainer by Müller and Steinbach](https://philipmueller.dev/bpe-visualization/). It visualizes frequent pairs, merges, and the growing vocabulary.
+To inspect merges and vocabulary growth step by step, use the [original interactive BPE Explainer by Müller and Steinbach](https://philipmueller.dev/bpe-visualization/). It visualizes frequent pairs, merges, and the growing vocabulary.
 
 The pipeline is still simplified: real tokenizers may use regex-based pre-tokenization, operate at the byte level, and reserve special tokens. Two tokenizers called BPE are therefore not necessarily compatible.
 
