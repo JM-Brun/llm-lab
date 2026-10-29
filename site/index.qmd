@@ -22,6 +22,62 @@ Un grand modèle de langage (LLM) reçoit une séquence de tokens et calcule une
 </div>
 ::::
 
+
+## Le parcours du texte à la génération
+
+Explorez le schéma : chaque bloc ouvre une page du site consacrée au mécanisme correspondant. Le parcours est simplifié ; en particulier, l’apprentissage ajuste les paramètres à partir de l’erreur, tandis que la génération utilise un modèle déjà entraîné.
+
+<figure class="llm-flow-figure">
+<svg class="llm-flow" viewBox="0 0 1040 390" role="img" aria-labelledby="llm-flow-title-fr llm-flow-desc-fr" xmlns="http://www.w3.org/2000/svg">
+  <title id="llm-flow-title-fr">Du texte à la prédiction, puis à l’apprentissage et à l’évaluation</title>
+  <desc id="llm-flow-desc-fr">Six blocs cliquables montrent les données, les représentations, l’attention, les prédictions, l’apprentissage par erreur et l’évaluation ou la génération.</desc>
+  <defs><marker id="flow-arrow-fr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7b91a6"/></marker></defs>
+  <g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.5" marker-end="url(#flow-arrow-fr)">
+    <path d="M235 88 H265"/><path d="M490 88 H520"/><path d="M745 88 H775"/>
+    <path d="M885 138 V204 H635 V235"/>
+    <path d="M745 290 H775"/>
+  </g>
+  <g class="flow-node">
+    <a href="fr/text-data.html" aria-label="Ouvrir Texte et données">
+      <rect x="10" y="38" width="225" height="100" rx="15"/>
+      <text x="28" y="64" class="flow-kicker">01 · ENTRÉES</text><text x="28" y="91" class="flow-title">Texte et données</text><text x="28" y="115" class="flow-subtitle">Tokens · contexte · cibles</text>
+    </a>
+  </g>
+  <g class="flow-node">
+    <a href="fr/tensors.html" aria-label="Ouvrir Tenseurs et représentations">
+      <rect x="265" y="38" width="225" height="100" rx="15"/>
+      <text x="283" y="64" class="flow-kicker">02 · REPRÉSENTER</text><text x="283" y="91" class="flow-title">Représentations</text><text x="283" y="115" class="flow-subtitle">Tenseurs · embeddings</text>
+    </a>
+  </g>
+  <g class="flow-node">
+    <a href="fr/transformer.html" aria-label="Ouvrir le Transformer et l’attention">
+      <rect x="520" y="38" width="225" height="100" rx="15"/>
+      <text x="538" y="64" class="flow-kicker">03 · CONTEXTUALISER</text><text x="538" y="91" class="flow-title">Attention / Transformer</text><text x="538" y="115" class="flow-subtitle">Contexte · masque causal</text>
+    </a>
+  </g>
+  <g class="flow-node">
+    <a href="fr/logits.html" aria-label="Ouvrir Logits et probabilités">
+      <rect x="775" y="38" width="225" height="100" rx="15"/>
+      <text x="793" y="64" class="flow-kicker">04 · PRÉDIRE</text><text x="793" y="91" class="flow-title">Scores et probabilités</text><text x="793" y="115" class="flow-subtitle">Logits · softmax · token</text>
+    </a>
+  </g>
+  <g class="flow-node">
+    <a href="fr/cross-entropy.html" aria-label="Ouvrir la fonction de perte et l’apprentissage">
+      <rect x="520" y="235" width="225" height="110" rx="15"/>
+      <text x="538" y="261" class="flow-kicker">05 · APPRENDRE</text><text x="538" y="288" class="flow-title">Erreur et gradients</text><text x="538" y="312" class="flow-subtitle">Cross-entropie · mise à jour</text><text x="538" y="330" class="flow-note">Ajuster les paramètres</text>
+    </a>
+  </g>
+  <g class="flow-node">
+    <a href="fr/evaluation-experimentale.html" aria-label="Ouvrir l’évaluation expérimentale">
+      <rect x="775" y="235" width="225" height="110" rx="15"/>
+      <text x="793" y="261" class="flow-kicker">06 · UTILISER / ÉVALUER</text><text x="793" y="288" class="flow-title">Génération et tests</text><text x="793" y="312" class="flow-subtitle">Décodage · validation</text><text x="793" y="330" class="flow-note">Mesurer les limites</text>
+    </a>
+  </g>
+  <text x="10" y="375" class="flow-hint">Cliquez sur un bloc pour explorer le concept correspondant →</text>
+</svg>
+<figcaption>Schéma conceptuel, pas une architecture exhaustive : les détails et les variantes sont expliqués dans les pages liées. Les blocs sont accessibles au clavier.</figcaption>
+</figure>
+
 ## Choisir son point d’entrée
 
 Ces trois approches sont complémentaires, pas des étapes obligatoires. Vous pouvez suivre le fil principal, partir d’une question précise ou approfondir un mécanisme sans avoir lu toutes les pages précédentes.
