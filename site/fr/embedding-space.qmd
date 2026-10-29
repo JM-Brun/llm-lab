@@ -28,6 +28,61 @@ Dans un Transformer, cette représentation est ensuite transformée par les couc
 
 Ces objets ne sont pas interchangeables. Une méthode adaptée aux embeddings de phrases pour la recherche documentaire ne se transfère pas automatiquement aux activations internes d'un LLM.
 
+## Des identifiants aux vecteurs : un lookup calculable à la main
+
+Supposons que le vocabulaire contienne cinq identifiants et que chaque embedding ait deux coordonnées. Voici une petite matrice illustrative :
+
+\[
+E =
+\begin{bmatrix}
+0.1 & 0.0 \\
+0.0 & 0.2 \\
+0.8 & -0.1 \\
+-0.2 & 0.5 \\
+0.3 & 0.7
+\end{bmatrix}
+\in \mathbb{R}^{5\times 2}.
+\]
+
+Pour les identifiants \([2,0,3]\), le lookup sélectionne les lignes \(E_2\), \(E_0\) et \(E_3\) :
+
+\[
+X =
+\begin{bmatrix}
+0.8 & -0.1 \\
+0.1 & 0.0 \\
+-0.2 & 0.5
+\end{bmatrix}
+\in \mathbb{R}^{3\times 2}.
+\]
+
+Les identifiants sont des indices de ligne ; les vecteurs obtenus sont des paramètres appris. Les valeurs ci-dessus sont inventées uniquement pour rendre le calcul vérifiable à la main. Elles ne représentent pas de vraies relations sémantiques : l'identifiant 3 n'est pas « plus proche » du 2 parce que les entiers se suivent.
+
+Pour un lot de séquences, le changement de forme usuel est :
+
+\[
+\text{IDs des tokens }[B,L]
+\;\longrightarrow\;
+\text{embeddings des tokens }[B,L,d],
+\]
+
+où \(B\) est la taille du lot, \(L\) la longueur de séquence et \(d\) la dimension des embeddings. Le lookup ne mélange pas l'information entre les positions : deux occurrences du même identifiant récupèrent la même ligne avant l'ajout éventuel d'information positionnelle et le traitement contextuel.
+
+## Des embeddings de tokens aux représentations contextualisées
+
+L'étape suivante dépend de l'architecture. Dans un modèle de type GPT-2 utilisant des embeddings positionnels absolus appris, un vecteur propre à la position est ajouté à chaque embedding de token :
+
+\[
+X_{b,t}=E_{\text{token}_{b,t}}+P_t.
+\]
+
+Les deux termes ont la dimension \(d\), donc l'entrée combinée a la forme \([B,L,d]\). Les blocs Transformer contextualisent ensuite chaque position à partir de la séquence ; dans un bloc standard qui conserve la largeur, la forme des états cachés reste \([B,L,d]\), même si leurs valeurs changent lorsque le contexte est intégré.
+
+Cette addition n'est **pas universelle**. Par exemple, [RoPE](positional-encoding.qmd) applique des rotations dépendant de la position aux vecteurs requête et clé dans l'attention, au lieu d'ajouter un vecteur de position aux embeddings initiaux. Il faut identifier l'architecture avant de fixer le pipeline exact.
+
+Pendant l'entraînement, les gradients peuvent modifier les lignes de la table d'embeddings utilisées par les exemples. L'opération de lookup ne rend pas, à elle seule, un vecteur contextuel : la contextualisation intervient dans les couches suivantes du réseau. Voir les [tenseurs](tensors.qmd) pour les conventions de dimensions et [du texte aux tokens](text-data.qmd) pour l'étape précédente du tokenizer.
+
+
 ## Que signifie la proximité ?
 
 On peut comparer deux vecteurs par produit scalaire, distance euclidienne ou similarité cosinus. Le cosinus compare leurs directions :
