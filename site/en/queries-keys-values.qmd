@@ -21,6 +21,16 @@ The computation has two distinct stages:
 
 Q and K therefore determine the weights, while V supplies the content being aggregated. These are learned vector roles, not human-readable labels.
 
+## A numerical example: weights are not values
+
+Suppose a query produces two attention scores, \(s=(0,\ln 3)\). Applying *softmax* gives weights \((0.25, 0.75)\). If the two value vectors are, for this toy example, scalars \(v_1=2\) and \(v_2=10\), the aggregated output is:
+
+\[
+o=0.25\times 2+0.75\times 10=8.
+\]
+
+This separates the two roles: scores from Q and K determine **the weights**; values V supply **the content being aggregated**. This does not mean values are generally scalars, nor that weights alone explain a prediction. In a real model, scores and values are vectors produced by learned projections.
+
 ## Definition and dimensions
 
 For $X\in\mathbb{R}^{T\times d_{model}}$, the projections for one head are:
