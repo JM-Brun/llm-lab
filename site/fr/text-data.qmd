@@ -8,6 +8,10 @@ lang: fr
 Un modèle de langage reçoit une séquence d'identifiants numériques, pas du texte brut. La tokenisation définit comment le texte est converti en identifiants et comment ceux-ci sont décodés. Elle est distincte du réseau neuronal, mais conditionne son vocabulaire, la longueur des séquences, le coût de calcul et certains comportements observables.
 :::
 
+::: {.callout-tip}
+**Le fil conducteur :** texte Unicode → tokens → IDs → vecteurs d'embedding → représentations contextualisées. Chaque flèche est une transformation distincte ; ne confondez notamment pas **taille du vocabulaire** ($V$) et **dimension des embeddings** ($d$).
+:::
+
 ## Objectifs
 
 - Distinguer texte Unicode, octets, tokens, identifiants et embeddings.
@@ -90,6 +94,43 @@ flowchart TD
     H --> I["Réseau neuronal : représentations contextualisées"]
 ```
 
+### Vocabulaire ≠ dimension d'embedding
+
+Le mot **vocabulaire** désigne ici l'ensemble fini des tokens que le tokenizer peut émettre, pas une liste de mots linguistiques. Sa taille, notée $V$, est le nombre d'entrées/IDs du vocabulaire. Un token peut être un mot, un sous-mot, un fragment d'octets, de la ponctuation ou un token spécial.
+
+La **dimension d'embedding**, notée $d$, est le nombre de composantes du vecteur associé à chaque ID. Elle est choisie lors de la conception de l'architecture du modèle ; elle n'est **pas calculée à partir de $V$**. Dans beaucoup de GPT, elle correspond à la largeur cachée du Transformer, mais cette convention dépend de l'architecture.
+
+![Schéma original : la taille du vocabulaire V détermine le nombre de lignes de la matrice d'embeddings, tandis que d détermine le nombre de composantes par vecteur ; les logits de sortie ont une dimension V par position.](../images/token-embedding-matrix-fr.svg){fig-alt="Les IDs sélectionnent des lignes dans E de forme V par d. Une séquence de longueur L devient une matrice L par d ; la projection de sortie produit des logits de forme L par V." width=100%}
+
+::: {.callout-note}
+**Les dimensions à retenir**
+
+- **$V$** : nombre de tokens/IDs du vocabulaire — lié au tokenizer et à ses choix de conception.
+- **$d$** : nombre de composantes par embedding — hyperparamètre de l'architecture.
+- **$L$** : nombre de tokens dans une séquence donnée.
+- **$B$** : nombre de séquences dans un lot (batch).
+:::
+
+Pour une séquence d'IDs $[i_1,\ldots,i_L]$, la matrice d'embeddings est $E\in\mathbb{R}^{V\times d}$ et le lookup sélectionne les lignes correspondantes :
+
+$
+X = E_{[i_1,\ldots,i_L]}\in\mathbb{R}^{L\times d}.
+$
+
+Avec un lot, la forme devient généralement $[B,L,d]$. **Le lookup ne calcule pas encore le sens en contexte** : il sélectionne les vecteurs appris ; les blocs du Transformer produisent ensuite des représentations contextualisées.
+
+### Comment ces dimensions sont-elles fixées ?
+
+- **$V$ est déterminé par le tokenizer** : corpus et prétraitement, algorithme (par exemple BPE ou unigramme), règles et objectif de taille de vocabulaire, ainsi que le traitement des tokens spéciaux. La taille exacte est un choix de conception et peut différer de la cible demandée selon l'implémentation.
+- **$d$ est déterminé par l'architecture** : c'est un hyperparamètre choisi avec la profondeur, le nombre de têtes, le budget de calcul et les objectifs d'entraînement. Il n'existe pas de formule universelle qui déduise $d$ de $V$.
+- **Le nombre de paramètres dépend des deux** : la table d'embeddings contient $Vd$ paramètres. Si la projection de sortie possède sa propre matrice de poids, elle ajoute typiquement environ $dV$ paramètres (plus éventuellement un biais). Certains modèles partagent les poids d'entrée et de sortie (*weight tying*) ; il ne faut donc pas additionner automatiquement les deux matrices sans vérifier l'architecture.
+
+::: {.callout-warning}
+**Changer le tokenizer n'est pas une simple substitution.** Les IDs ne gardent pas le même sens d'un vocabulaire à l'autre. Les poids de la table d'embeddings et de la projection de sortie ont été appris pour des IDs précis ; changer $V$ ou l'affectation des IDs nécessite une stratégie explicite d'adaptation ou de réentraînement.
+:::
+
+Pour les dimensions des tenseurs et les opérations par lots, voir [la page sur les tenseurs](tensors.qmd). Pour distinguer l'embedding initial des représentations après attention, voir [l'espace des embeddings](embedding-space.qmd) ; la suite du pipeline est détaillée dans [la page Transformer](transformer.qmd).
+
 ### Trois points de vue visuels complémentaires
 
 Le schéma ci-dessus donne une vue d'ensemble du pipeline. Ces ressources externes éclairent des aspects différents, sans reproduire leurs figures dans le dépôt :
@@ -103,9 +144,7 @@ Pour une explication orale et codée, la vidéo [Karpathy — *Let's build the G
 
 **Droits et provenance :** les figures externes sont citées et liées à leur source, mais ne sont ni copiées ni intégrées localement. La citation d'une illustration ne vaut pas autorisation de la redistribuer ; le dépôt conserve ses propres schémas originaux.
 
-Pour une matrice d'embeddings E de forme (V, d), l'ID i sélectionne la ligne E[i], un vecteur de dimension d. V est la taille du vocabulaire. Cet accès par indice ne donne pas encore, en général, la représentation contextualisée après les blocs Transformer. Les IDs sont des indices arbitraires : la différence numérique entre deux IDs n'a pas d'interprétation sémantique. Normalisation, pré-tokenisation, unités de base et tokens spéciaux dépendent du tokenizer.
-
-Pour un exemple calculable à la main et les changements de dimensions qui suivent, voir [la leçon sur l'espace des embeddings](embedding-space.qmd). L'étape positionnelle dépend de l'architecture ; [l'encodage positionnel et RoPE](positional-encoding.qmd) en explique la distinction principale.
+Les identifiants sont des indices de ligne, pas des coordonnées sémantiques : la différence numérique entre deux IDs n'a pas de signification intrinsèque. L'étape positionnelle dépend de l'architecture ; [l'encodage positionnel et RoPE](positional-encoding.qmd) explique la distinction principale.
 
 ## 2. Pourquoi le découpage par espaces ne suffit pas
 
