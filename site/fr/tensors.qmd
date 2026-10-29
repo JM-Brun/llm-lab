@@ -85,6 +85,31 @@ Pour cet exemple, les lignes deviennent approximativement `[0.881, 0.500, 0.119]
 
 *Figure — Les mêmes logits prennent un sens différent selon l’axe de normalisation.*
 
+## Implémentation : vérifier le sens des axes avec PyTorch
+
+Cet exemple minimal est exécutable avec PyTorch. Il vérifie la forme de sortie et l'invariant selon lequel les probabilités de chaque position somment à un sur l'axe du vocabulaire. Il confirme aussi qu'une normalisation sur l'axe de séquence répond à une autre question.
+
+```python
+import torch
+
+# Forme : (batch=1, positions=2, vocabulaire=3)
+logits = torch.tensor([[[2.0, 1.0, 0.0], [0.0, 1.0, 2.0]]])
+
+probs = torch.softmax(logits, dim=-1)  # distribution sur le vocabulaire à chaque position
+wrong = torch.softmax(logits, dim=1)   # distribution sur les positions pour chaque token
+
+assert probs.shape == (1, 2, 3)
+torch.testing.assert_close(probs.sum(dim=-1), torch.ones((1, 2)))
+torch.testing.assert_close(wrong.sum(dim=1), torch.ones((1, 3)))
+assert not torch.allclose(wrong.sum(dim=-1), torch.ones((1, 2)))
+
+print(probs[0])  # environ [[0.665, 0.245, 0.090], [0.090, 0.245, 0.665]]
+print(wrong[0].sum(dim=-1))  # environ [1.5, 1.5], pas une distribution sur le vocabulaire
+```
+
+Les assertions rendent explicite la sémantique attendue. Il s'agit d'une vérification pédagogique compacte, pas d'un remplacement des tests sur les masques, l'alignement des cibles, le padding ou le chemin de génération du modèle. En production, placer les opérations réutilisables dans le paquet du projet et les tester indépendamment.
+
+
 ## Exemple de lecture des dimensions
 
 Pour \(B=2\), \(T=4\) et \(D=8\), les états cachés ont la forme \((2,4,8)\). Une projection vers un vocabulaire de \(V=1000\) tokens produit des logits de forme \((2,4,1000)\). Le dernier axe correspond aux tokens candidats ; chaque couple batch-position porte ainsi une distribution après softmax sur cet axe.
