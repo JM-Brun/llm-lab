@@ -125,16 +125,17 @@ Interactive visualizations and animations are useful when manipulation makes a r
 
 ## The learning map
 
-The main thread connects six questions:
+The main thread follows the lifecycle of an autoregressive model, from raw text to model use:
 
-1. **What does the model receive?** Text, tokenization, context windows, inputs, and targets.
-2. **What does it compute?** Tensors, embeddings, logits, and probabilities.
-3. **How does it learn?** Likelihood, cross-entropy, loss, and gradients.
-4. **How does it use context?** Attention, causal masking, positional information, and Transformer blocks.
-5. **How does it generate text?** Training, validation, decoding, and evaluation.
-6. **When does it fail or generalize poorly?** Data leakage, metrics, uncertainty, ablations, and limitations.
+1. **What does it receive?** Text, data, Unicode, and a corpus.
+2. **How does text become a numerical input?** Tokenization, token IDs, context windows, tensors, and embeddings.
+3. **How does the model build context?** Positional information, causal attention, and Transformer blocks.
+4. **How does it make a prediction?** Contextualized states, logits, and a probability distribution over the vocabulary.
+5. **How does it learn?** Shifted targets, likelihood, cross-entropy, gradients, optimization, and validation.
+6. **How does it generate text?** The autoregressive loop, next-token selection, decoding, and stopping.
+7. **How is it adapted and evaluated?** Pretrained-weight loading, classification, instruction tuning, adaptation methods, metrics, and error analysis.
 
-This map provides orientation, not an absolute chain of prerequisites. Deep-dive pages should explain local prerequisites and link related concepts in multiple directions. Mathematics is introduced when it clarifies a mechanism, then explored in greater depth on demand.
+This sequence makes the construction of a GPT from randomly initialized parameters explicit. Adapting a pretrained model is a distinct downstream stage that starts from a model that has already been trained. Deep-dive pages explain local prerequisites and connect related concepts in multiple directions: the map guides readers without imposing one exhaustive linear reading order. Mathematics is introduced when it clarifies a mechanism, then explored in greater depth on demand.
 
 The build objective is a small decoder-only autoregressive GPT, trained from randomly initialized parameters on a manageable corpus: start with raw text, prepare training examples, implement the model and training loop, monitor validation, then generate text. Loading pretrained weights and adapting a model (classification, instruction tuning, LoRA, or quantization) are distinct downstream stages.
 
