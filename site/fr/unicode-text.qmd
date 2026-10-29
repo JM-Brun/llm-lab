@@ -14,6 +14,8 @@ Cette page est un **complément technique** à la [vue d'ensemble du parcours te
 
 Unicode ne définit pas le découpage en tokens ; UTF-8 ne choisit pas le vocabulaire ; la normalisation n'est pas universellement appliquée de la même manière.
 
+Il faut aussi distinguer **point de code** et **graphème**. Un graphème correspond approximativement à une unité de texte perçue comme un caractère par une personne ; il peut contenir plusieurs points de code (par exemple une lettre et un accent combinant, ou une séquence d'émoji reliés par un caractère de jonction). En Python, `len(chaine)` compte les points de code de la chaîne, pas nécessairement les caractères visuellement perçus.
+
 ## Exemple : deux écritures de « é »
 
 ![Deux formes visuellement semblables de « é », mais des points de code et octets UTF-8 différents.](../images/unicode-utf8-tokenization-fr.svg){fig-alt="Comparaison de é précomposé (U+00E9, octets C3 A9) et de e suivi d'un accent combinant (U+0065 U+0301, octets 65 CC 81). La normalisation peut les rapprocher avant la tokenisation." width=100%}
