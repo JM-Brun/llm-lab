@@ -172,7 +172,7 @@ Les études sur les coûts multilingues n'emploient pas toujours les mêmes mét
 
 Pour une comparaison équitable, rapportez les métriques par langue et type de texte, et gardez séparés **coût de représentation**, **coût système** et **qualité de la tâche**. Une baisse de longueur est un résultat réel, mais elle ne suffit pas à démontrer une amélioration globale.
 
-## Évaluer un tokenizer : métriques, performances et équité multilingue
+## Évaluer un tokenizer : métriques, performances et équité multilingue {#tokenizer-evaluation}
 
 La comparaison des algorithmes ne suffit pas à établir qu'un tokenizer est adapté à un usage. Il faut distinguer plusieurs questions empiriques, qui ne se résument pas à un score unique.
 
