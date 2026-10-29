@@ -90,6 +90,20 @@ Ce tableau formule des questions à tester, pas des sorties exactes. Pour docume
 6. Évaluer séparément qualité en aval, latence, mémoire, débit et coût.
 7. Publier les limites : corpus, versions, normalisation, langues couvertes et incertitudes.
 
+### Mesurer un tokenizer sans réduire la qualité au nombre de tokens
+
+Les études sur les coûts multilingues n'emploient pas toujours les mêmes métriques ni les mêmes dénominateurs. Il faut donc lire la définition opérationnelle de chaque mesure avant de comparer des résultats. Voir notamment [Ahia et al. (2023)](https://aclanthology.org/2023.emnlp-main.614/) et le travail sur les métriques multilingues [TokLens (ACL 2026 SRW)](https://aclanthology.org/2026.acl-srw.18/).
+
+| Mesure | Interprétation | Limite |
+|---|---|---|
+| **Nombre de tokens** | Longueur produite pour un texte donné | Dépend du texte, du tokenizer, de sa version et de la normalisation |
+| **Fertilité** | Souvent, nombre moyen de sous-tokens par mot de référence | La définition du « mot » et le traitement de la ponctuation peuvent varier ; préciser le dénominateur |
+| **Caractères ou octets par token** | Rapport entre la longueur du texte source et le nombre de tokens | Les caractères Unicode, les points de code et les octets UTF-8 sont des unités différentes |
+| **Couverture du vocabulaire** | Capacité à représenter les unités d'entrée sans recourir à un token inconnu, selon le système | Couverture complète ne signifie pas segmentation efficace ni bonne qualité en aval |
+| **Qualité en aval** | Résultat sur une tâche définie, par langue et type de texte | Nécessite des budgets et des conditions d'évaluation comparables ; ne se déduit pas d'une métrique intrinsèque |
+
+Pour une comparaison équitable, rapportez les métriques par langue et type de texte, et gardez séparés **coût de représentation**, **coût système** et **qualité de la tâche**. Une baisse de longueur est un résultat réel, mais elle ne suffit pas à démontrer une amélioration globale.
+
 ### Ressources visuelles recommandées
 
 1. [Philip Müller & Peter Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/) : manipulation interactive des fusions, meilleure première intuition.
