@@ -14,6 +14,14 @@ Choose the mode that matches the change and identify it in the PR.
 6. **Figures and external references** — add or revise visual material with source/author attribution and a checked licence. Prefer embedding from an authorized original source to copying external assets; record provenance in the reference page.
 7. **Build, dependencies, and developer tooling** — update Quarto, Python packaging, CI, linting, or reproducibility tooling. Explain material dependency changes and keep the core exercises runnable on CPU with small inputs.
 
+## Pedagogical resource discovery
+
+Use the curated [Pedagogical Resource Library](docs/pedagogical-resource-library.md) when creating or substantially revising a concept, overview, mathematical explanation, or learning sequence. It includes visual explainers, animations, interactive tools, science communication, and primary/official references.
+
+Actively look for ideas on how to explain the topic—not just sources that mention it. Consider whether an original diagram, figure, animation, interactive experiment, analogy, or step-by-step visual sequence would make the mechanism clearer. Compare sources when the concept is important or easily misunderstood; identify what each source simplifies or omits, then produce an original synthesis with consistent notation, worked examples, counterexamples, and limitations. Use primary papers and official documentation to verify technical claims; popularity or visual polish is not evidence.
+
+This is a quality prompt, not a requirement to add a figure to every page or to cite a fixed number of resources. A visual should answer a concrete learner question and remain useful alongside the text. Do not copy prose, exercises, code, diagrams, or animations without a clear legal basis. Check the specific licence and attribution requirements, record provenance in `site/references.qmd`, and provide captions and alt text. A publicly accessible asset is not automatically reusable.
+
 ## Local setup
 
 Install Python 3.12 and uv, then run:
