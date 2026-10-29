@@ -72,9 +72,7 @@ Les méthodes sous-mots réutilisent des unités fréquentes tout en représenta
 
 ## 3. L'intuition de Byte Pair Encoding (BPE)
 
-Dans une version pédagogique simplifiée, BPE part d'unités de base, compte les paires adjacentes, fusionne une paire selon une règle définie et répète l'opération jusqu'à atteindre un critère d'arrêt.
-
-Dans une version pédagogique, BPE part d'unités de base, compte les paires adjacentes, fusionne une paire selon une règle définie et répète l'opération jusqu'à atteindre un critère d'arrêt. Pour voir les fusions et l'évolution du vocabulaire pas à pas, utilisez la [visualisation interactive originale de Müller et Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/). Elle montre les paires fréquentes, les fusions et le vocabulaire qui se construit.
+Dans une version pédagogique simplifiée, BPE part d'unités de base, compte les paires adjacentes, fusionne une paire selon une règle définie et répète l'opération jusqu'à atteindre un critère d'arrêt. Pour voir les fusions et l'évolution du vocabulaire pas à pas, utilisez la [visualisation interactive originale de Müller et Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/). Elle montre les paires fréquentes, les fusions et le vocabulaire qui se construit.
 
 Le pipeline reste simplifié : les tokenizers réels peuvent utiliser un pré-découpage par expressions régulières, travailler au niveau des octets et réserver des tokens spéciaux. Deux tokenizers appelés BPE ne sont donc pas nécessairement compatibles.
 
