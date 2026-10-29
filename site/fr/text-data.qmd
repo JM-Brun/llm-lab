@@ -20,15 +20,7 @@ Un modèle de langage reçoit une séquence d'identifiants numériques, pas du t
 
 Une chaîne Python représente du texte Unicode. Son encodage UTF-8 produit une séquence d'octets. Un tokenizer applique ensuite des règles de découpage et un vocabulaire pour produire des tokens, puis des identifiants entiers.
 
-```{mermaid}
-flowchart LR
-    A["Texte Unicode"] --> B["Prétraitement éventuel"]
-    B --> C["Découpage initial"]
-    C --> D["Tokens / fragments"]
-    D --> E["Identifiants entiers"]
-    E --> F["Table d'embeddings"]
-    F --> G["Vecteurs d'entrée"]
-```
+Le texte et le tokenizer définissent une chaîne de transformations ; le schéma plus détaillé ci-dessous distingue les tokens, les IDs, la lookup d'embeddings et les représentations contextualisées.
 
 Ce pipeline est conceptuel : les tokenizers varient par leur normalisation, leurs unités de base, leur pré-découpage, leur vocabulaire et leurs tokens spéciaux.
 
@@ -58,90 +50,13 @@ Cette comparaison illustre seulement que la segmentation et la longueur peuvent 
 
 ### De la chaîne à l'embedding : les transformations
 
-```{mermaid}
-flowchart TD
-    A["Texte Unicode"] --> B["Normalisation éventuelle"]
-    B --> C["Pré-tokenisation"]
-    C --> D["Algorithme + vocabulaire appris"]
-    D --> E["Tokens : fragments de texte ou d'octets"]
-    E --> F["IDs entiers : indices du vocabulaire"]
-    F --> G["Lookup dans la matrice E"]
-    G --> H["Vecteurs : E[id]"]
-    H --> I["Réseau neuronal : représentations contextualisées"]
-```
+Les compromis doivent être évalués sur plusieurs axes, sans supposer une relation causale simple :
 
-Pour une matrice d'embeddings E de forme (V, d), l'ID i sélectionne la ligne E[i], un vecteur de dimension d. V est la taille du vocabulaire. Cette lookup n'est pas encore, en général, la représentation contextualisée après les blocs Transformer. Les IDs sont des indices arbitraires : la différence numérique entre deux IDs n'a pas d'interprétation sémantique. Normalisation, pré-tokenisation, unités de base et tokens spéciaux dépendent du tokenizer.
+- **Mesures intrinsèques** : fertilité, longueur en tokens, compression et couverture.
+- **Coût système** : contexte consommé, mémoire, latence et débit.
+- **Résultats en aval** : qualité par langue et par tâche, sous des budgets comparables.
 
-## 2. Pourquoi le découpage par espaces ne suffit pas
-
-Il gère mal la ponctuation, les contractions, les langues sans espaces entre les mots, les variantes orthographiques, les noms rares et les chaînes techniques. Un vocabulaire contenant chaque mot possible serait immense et resterait fragile face aux formes nouvelles.
-
-Les méthodes sous-mots réutilisent des unités fréquentes tout en représentant des formes moins fréquentes. Mais cette segmentation est une décision d'ingénierie, pas une analyse morphologique parfaite.
-
-## 3. L'intuition de Byte Pair Encoding (BPE)
-
-Dans une version pédagogique simplifiée, BPE part d'unités de base, compte les paires adjacentes, fusionne une paire selon une règle définie et répète l'opération jusqu'à atteindre un critère d'arrêt.
-
-Dans une version pédagogique, BPE part d'unités de base, compte les paires adjacentes, fusionne une paire selon une règle définie et répète l'opération jusqu'à atteindre un critère d'arrêt. Pour voir les fusions et l'évolution du vocabulaire pas à pas, utilisez la [visualisation interactive originale de Müller et Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/). Elle montre les paires fréquentes, les fusions et le vocabulaire qui se construit.
-
-Le pipeline reste simplifié : les tokenizers réels peuvent utiliser un pré-découpage par expressions régulières, travailler au niveau des octets et réserver des tokens spéciaux. Deux tokenizers appelés BPE ne sont donc pas nécessairement compatibles.
-
-Il faut distinguer :
-
-1. **Entraînement du tokenizer** : apprend le vocabulaire, l'ordre des fusions et les règles à partir d'un corpus.
-2. **Encodage** : applique le tokenizer déjà appris ; il ne réapprend pas le vocabulaire à chaque requête.
-
-Un tokenizer BPE au niveau des octets peut représenter des entrées textuelles arbitraires grâce à ses unités de base. Tous les tokenizers BPE ne sont toutefois pas byte-level, et le résultat dépend aussi du pré-découpage et du vocabulaire.
-
-
-### Exemple concret : fusions BPE sur un petit corpus
-
-Convention pédagogique : les mots sont initialement découpés en caractères, avec un marqueur de fin `</w>`. Le corpus contient une occurrence de `low`, `lower` et `lowest`.
-
-| Mot | Unités initiales |
-|---|---|
-| `low` | `l · o · w · </w>` |
-| `lower` | `l · o · w · e · r · </w>` |
-| `lowest` | `l · o · w · e · s · t · </w>` |
-
-À chaque itération, BPE compte les paires adjacentes et fusionne une paire selon sa règle de sélection. Supposons que le départage choisisse d'abord `l + o → lo`, puis `lo + w → low`.
-
-| Étape | `low` | `lower` | `lowest` |
-|---|---|---|---|
-| 0 | `l · o · w · </w>` | `l · o · w · e · r · </w>` | `l · o · w · e · s · t · </w>` |
-| 1 : fusion `l + o` | `lo · w · </w>` | `lo · w · e · r · </w>` | `lo · w · e · s · t · </w>` |
-| 2 : fusion `lo + w` | `low · </w>` | `low · e · r · </w>` | `low · e · s · t · </w>` |
-
-**Pour une visualisation pas à pas des fusions**, consultez le [BPE Explainer de Müller et Steinbach](https://philipmueller.dev/bpe-visualization/). L'exemple tabulaire ci-dessus reste la trace locale, reproductible et textuelle utilisée dans ce guide ; la visualisation interactive externe apporte une vue plus riche sans répéter ici un troisième schéma de flux.
-
-C'est un exemple de suivi des fusions, pas une sortie universelle : les fréquences, le pré-découpage, le traitement des fins de mots et le départage influencent l'ordre réel. D'autres fusions pourraient ensuite créer `er` ou `est`, mais ce n'est pas garanti. À l'encodage, le tokenizer applique les règles apprises ; il ne recompte pas les fréquences du texte soumis. L'ID est attribué dans le vocabulaire final, il ne constitue pas la fusion elle-même.
-
-## 4. Conséquences pour le modèle
-
-- **Longueur du contexte :** un même texte peut devenir un nombre différent de tokens selon le tokenizer.
-- **Coût de calcul :** à architecture donnée, des séquences plus longues augmentent généralement le coût de l'attention et la mémoire.
-- **Vocabulaire de sortie :** sa taille détermine notamment la dimension de la distribution des logits.
-- **Robustesse :** le texte multilingue, le code, les nombres et les caractères inhabituels peuvent être segmentés différemment.
-- **Compatibilité :** les identifiants ne sont interprétables qu'avec le vocabulaire et les règles correspondants. Changer de tokenizer sans adapter les poids n'est pas une substitution neutre.
-
-La tokenisation ne garantit ni compréhension sémantique, ni vérité, ni calibration. Elle définit la représentation discrète sur laquelle le modèle apprend.
-
-## 5. Au-delà de la compression : équité linguistique et évaluation
-
-Le nombre de tokens est une mesure utile de **coût de représentation**, pas une mesure suffisante de qualité. Un tokenizer peut compresser efficacement un corpus global tout en représentant moins efficacement certaines langues, écritures, formes morphologiques ou types de texte. Inversement, réduire le nombre de tokens ne garantit pas à lui seul de meilleures performances en aval.
-
-```{mermaid}
-flowchart LR
-    A["Texte multilingue"] --> B["Mesures intrinsèques"]
-    B --> C["Fertilité et longueur en tokens"]
-    B --> D["Compression et couverture"]
-    C --> E["Coût : contexte, mémoire, débit"]
-    D --> E
-    E --> F["Évaluation en aval par langue et par tâche"]
-    F --> G["Décision avec compromis explicites"]
-```
-
-Ce schéma représente une **chaîne de questions d'évaluation**, pas une loi causale ni des résultats mesurés. Pour comparer des tokenizers, il faut contrôler les textes, les versions, les règles de normalisation et les budgets ; puis vérifier les performances sur des tâches pertinentes.
+Pour comparer des tokenizers, contrôlez les textes, les versions, les règles de normalisation et les budgets ; puis vérifiez les performances sur des tâches pertinentes.
 
 Ressources de recherche pour approfondir ce point de vue :
 
