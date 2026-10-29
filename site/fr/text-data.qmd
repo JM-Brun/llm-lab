@@ -85,9 +85,9 @@ La page principale reste centrée sur le parcours. Les détails techniques sont 
 - [Espace des embeddings](embedding-space.qmd) et [tenseurs](tensors.qmd) : dimensions, tables de poids et formes des représentations.
 
 
-## 7. Mini-laboratoire de comparaison
+## 3. Mini-laboratoire de comparaison
 
-Utiliser les visualiseurs ci-dessus avec les mêmes chaînes et noter les différences. Ne pas comparer les IDs bruts entre vocabulaires comme s'ils avaient une signification commune.
+Comparer les mêmes chaînes avec au moins deux tokenizers, en s'appuyant sur les exemples et outils présentés dans la [page sur les stratégies de tokenisation](tokenization-strategies.qmd). Noter les différences ; ne pas comparer les IDs bruts entre vocabulaires comme s'ils avaient une signification commune.
 
 | Entrée à tester | Question pédagogique | Ce qu'il faut observer |
 |---|---|---|
@@ -100,7 +100,7 @@ Utiliser les visualiseurs ci-dessus avec les mêmes chaînes et noter les diffé
 
 **Compte rendu minimal :** pour chaque chaîne, noter le tokenizer/version, les tokens visibles, le nombre de tokens et une limite d'interprétation. Le nombre de tokens seul ne mesure ni la qualité linguistique ni la qualité du modèle.
 
-## 8. Contre-exemples et erreurs fréquentes
+## 4. Contre-exemples et erreurs fréquentes
 
 - **« Un token est un mot. »** Faux : il peut s'agir d'un sous-mot, de ponctuation, d'un fragment avec espace, d'octets ou d'un token spécial.
 - **« BPE reconnaît les racines et suffixes. »** Pas nécessairement : il fusionne selon une procédure statistique, sans analyse morphologique garantie.
