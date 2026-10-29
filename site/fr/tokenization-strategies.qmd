@@ -35,6 +35,24 @@ Pour observer concrètement les fusions BPE, ouvrez la [visualisation interactiv
 
 Ces catégories sont des idéaux-types. Les systèmes réels peuvent combiner pré-tokenisation, sous-mots et représentation byte-level. « Caractère » doit être défini précisément : point de code Unicode, unité de code et graphème ne sont pas interchangeables.
 
+## 3. Les composants d'un tokenizer
+
+Un tokenizer de production n'est pas seulement un algorithme de segmentation. Les bibliothèques peuvent exposer plusieurs composants, dont les effets doivent être distingués. La [documentation Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/components) décrit ces étapes ; [SentencePiece](https://github.com/google/sentencepiece) fournit un autre exemple de conventions et de modèles.
+
+| Composant | Rôle | Question de vérification |
+|---|---|---|
+| **Normalisation** | Peut transformer le texte avant segmentation (par exemple, selon une règle de casse ou une normalisation Unicode) | Deux chaînes visuellement semblables sont-elles normalisées de la même façon ? |
+| **Pré-tokenisation** | Découpe le texte en segments candidats avant l'algorithme de sous-mots | Les espaces, la ponctuation ou les nombres créent-ils des frontières ? |
+| **Modèle de tokenisation** | Applique le vocabulaire et les règles de BPE, WordPiece ou unigramme | Quelle unité de base, quel vocabulaire et quelles règles sont utilisés ? |
+| **Post-traitement** | Peut ajouter des tokens spéciaux ou préparer les séquences pour le modèle | BOS, EOS, séparateurs ou tokens de tâche sont-ils ajoutés ? |
+| **Décodeur** | Convertit les tokens/IDs en texte selon les conventions de l'implémentation | Les espaces, octets et caractères sont-ils reconstruits comme prévu ? |
+
+Ces étapes ne sont pas toutes présentes de la même façon dans chaque tokenizer. Le nom de l'algorithme ne suffit donc pas à reproduire une segmentation : il faut aussi connaître la configuration et les versions.
+
+### Exemple de marqueur d'espace
+
+Certaines sorties SentencePiece affichent un marqueur visible tel que `▁` pour représenter une frontière d'espace dans leur convention de tokenisation. Ce marqueur n'est pas un symbole universel de tous les tokenizers et ne signifie pas qu'un espace littéral est toujours stocké de cette manière. Pour interpréter une sortie, consultez la documentation du modèle exact.
+
 ## 3. BPE, WordPiece et unigramme
 
 | Famille | Idée centrale | Limite à retenir |
