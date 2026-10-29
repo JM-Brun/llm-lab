@@ -74,6 +74,7 @@ website:
     - id: fr
       title: "LLM Lab · Français"
       style: "docked"
+      collapse-level: 1
       contents:
         - index.qmd
         - section: "Texte et données"
@@ -108,6 +109,7 @@ website:
     - id: en
       title: "LLM Lab · English"
       style: "docked"
+      collapse-level: 1
       contents:
         - en/index.qmd
         - section: "Text and data"

@@ -1,22 +1,25 @@
 /*-- scss:defaults --*/
-/* LLM Lab: restrained editorial style, designed for long technical reads. */
-$primary: #087f8c;
-$secondary: #51627a;
-$body-color: #243247;
-$body-bg: #f7f9fc;
-$link-color: #087f8c;
-$headings-color: #10233f;
-$border-radius: .85rem;
+/* LLM Lab: readable technical field notes with a restrained green retro-computing identity. */
+$primary: #176b45;
+$secondary: #66735f;
+$body-color: #26352b;
+$body-bg: #f5f5e9;
+$link-color: #176b45;
+$headings-color: #183c2a;
+$border-radius: .55rem;
 $font-family-sans-serif: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 $font-size-base: 1.02rem;
 
 /*-- scss:rules --*/
 :root {
-  --llm-ink: #10233f;
-  --llm-teal: #087f8c;
-  --llm-coral: #e27a5f;
-  --llm-mist: #eaf4f5;
-  --llm-line: #dce5ed;
+  --llm-ink: #183c2a;
+  --llm-teal: #176b45;
+  --llm-coral: #c58b38;
+  --llm-mist: #e8efdc;
+  --llm-line: #d2d9c8;
+  --llm-paper: #fbfbf3;
+  --llm-green-dark: #123d2a;
+  --llm-green-bright: #a6d96a;
 }
 
 body { line-height: 1.72; }
@@ -25,13 +28,14 @@ p, li { max-width: 78ch; }
 .quarto-title h1.title { font-weight: 780; letter-spacing: -.04em; line-height: 1.1; }
 .quarto-title .subtitle { color: #586a80; font-size: clamp(1.08rem, 2vw, 1.3rem); line-height: 1.45; }
 h2, h3 { letter-spacing: -.025em; font-weight: 720; }
-h2 { margin-top: 2.8rem; padding-bottom: .45rem; border-bottom: 1px solid var(--llm-line); }
+h2 { margin-top: 2.8rem; padding-bottom: .55rem; border-bottom: 2px solid var(--llm-line); }
 h3 { margin-top: 1.8rem; }
 a { text-underline-offset: .18em; text-decoration-thickness: .07em; }
 a:hover { text-decoration-thickness: .12em; }
-.navbar { box-shadow: 0 3px 18px rgba(16,35,63,.12); }
+.navbar { box-shadow: 0 3px 0 rgba(166,217,106,.7), 0 8px 22px rgba(18,61,42,.14); border-bottom: 1px solid rgba(166,217,106,.35); }
 .navbar .navbar-brand { font-weight: 800; letter-spacing: -.025em; }
 .sidebar nav[role=doc-toc] ul > li > a.active { color: var(--llm-teal); border-left-color: var(--llm-teal); }
+.sidebar .sidebar-item-container .active { font-weight: 750; }
 #quarto-content { padding-top: 1.2rem; }
 main.content { max-width: 1200px; width: 100%; }
 /* Let wide displays use their available reading area without making paragraphs excessively long. */
@@ -46,20 +50,28 @@ code { font-size: .91em; }
 .callout .callout-title { font-weight: 750; }
 .hero-intro {
   position: relative; overflow: hidden; margin: 0 0 2.5rem; padding: clamp(1.5rem, 4vw, 3.1rem);
-  border: 1px solid #d7e8ec; border-radius: 1.25rem;
-  background: radial-gradient(ellipse at 92% 8%, rgba(226,122,95,.17), transparent 30%), linear-gradient(125deg, #edf7f8 0%, #f7fafc 58%, #fff5ef 100%);
+  border: 1px solid #8ca98a; border-radius: .8rem;
+  background-color: var(--llm-green-dark);
+  background-image: linear-gradient(rgba(166,217,106,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(166,217,106,.055) 1px, transparent 1px), radial-gradient(ellipse at 88% 0%, rgba(166,217,106,.18), transparent 32%), linear-gradient(125deg, #123d2a 0%, #1b5138 65%, #244d35 100%);
+  background-size: 22px 22px, 22px 22px, auto, auto;
+  color: #f5f7e9; box-shadow: 0 10px 0 rgba(18,61,42,.08), 0 18px 38px rgba(18,61,42,.13);
 }
-.hero-intro h2 { max-width: 19ch; margin: .55rem 0 1rem; border: 0; padding: 0; font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.13; }
-.hero-intro > p:not(.eyebrow) { max-width: 68ch; font-size: 1.12rem; color: #42546b; }
+.hero-intro h2 { max-width: 21ch; margin: .55rem 0 1rem; border: 0; padding: 0; color: #f5f7e9; font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.13; text-wrap: balance; }
+.hero-intro > p:not(.eyebrow) { max-width: 68ch; font-size: 1.08rem; color: #e1ead9; }
 .eyebrow, .step { color: var(--llm-teal); font-size: .72rem; font-weight: 800; letter-spacing: .12em; }
+.hero-intro .eyebrow { display: inline-flex; align-items: center; gap: .55rem; margin: 0 0 .8rem; padding: .35rem .6rem; border: 1px solid rgba(166,217,106,.55); border-radius: .25rem; color: var(--llm-green-bright); background: rgba(5,24,15,.3); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.hero-intro .eyebrow::before { content: "▸"; color: #e5bd69; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.5rem; }
-.hero-actions .btn { border-radius: 999px; padding: .65rem 1rem; font-weight: 700; }
-.learning-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem; margin: 1.4rem 0 2rem; }
-.learning-card { min-width: 0; padding: 1.25rem 1.3rem; border: 1px solid var(--llm-line); border-radius: 1rem; background: #fff; box-shadow: 0 6px 22px rgba(16,35,63,.045); transition: transform .16s ease, box-shadow .16s ease; }
-.learning-card:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(16,35,63,.09); }
+.hero-actions .btn { border-radius: .35rem; padding: .65rem 1rem; font-weight: 750; box-shadow: 0 3px 0 rgba(0,0,0,.14); }
+.hero-actions .btn-primary { color: #132e20; background: var(--llm-green-bright); border-color: var(--llm-green-bright); }
+.hero-actions .btn-outline-primary { color: #f5f7e9; border-color: #a6d96a; }
+.hero-actions .btn-outline-primary:hover, .hero-actions .btn-outline-primary:focus { color: #123d2a; background: #e7f2d8; }
+.learning-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; margin: 1.4rem 0 2rem; }
+.learning-card { min-width: 0; padding: 1.25rem 1.3rem; border: 1px solid #c7d3bd; border-top: 4px solid var(--llm-teal); border-radius: .45rem; background: var(--llm-paper); box-shadow: 4px 5px 0 rgba(24,60,42,.07); transition: transform .16s ease, box-shadow .16s ease; }
+.learning-card:hover { transform: translateY(-3px); box-shadow: 5px 8px 0 rgba(24,60,42,.11); }
 .learning-card h3 { margin: .6rem 0 .65rem; font-size: 1.2rem; }
 .learning-card p { margin-bottom: .65rem; }
-.learning-card-featured { border-color: #9bcdd0; background: linear-gradient(145deg, #f0f9f9, #fff 72%); }
+.learning-card-featured { border-color: #9ab88e; background: linear-gradient(145deg, #edf5e4, #fff 72%); }
 .card-link { display: inline-block; margin-top: .25rem; font-weight: 750; }
 .method-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .8rem; margin: 1.2rem 0 2rem; }
 .method-step { padding: 1rem; border-radius: .8rem; background: #fff; border: 1px solid var(--llm-line); }
@@ -111,32 +123,36 @@ details > :last-child { margin-bottom: .15rem; }
 .llm-flow-figure {
   margin: 1.5rem 0 2.4rem;
   padding: clamp(.6rem, 2vw, 1.2rem);
-  border: 1px solid var(--llm-line);
-  border-radius: 1rem;
-  background: linear-gradient(150deg, #fff 0%, #f5f9fb 100%);
+  border: 1px solid #c2d0b9;
+  border-radius: .55rem;
+  background-color: var(--llm-paper);
+  background-image: linear-gradient(rgba(23,107,69,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(23,107,69,.045) 1px, transparent 1px);
+  background-size: 18px 18px;
+  box-shadow: 4px 5px 0 rgba(24,60,42,.06);
 }
 .llm-flow { display: block; width: 100%; height: auto; overflow: visible; }
 .llm-flow .flow-connectors { stroke-linecap: round; stroke-linejoin: round; }
 .llm-flow .flow-node a { cursor: pointer; outline: none; }
 .llm-flow .flow-node rect {
-  fill: #fff;
-  stroke: #cbd9e4;
+  fill: #fbfbf3;
+  stroke: #aebfa5;
   stroke-width: 1.5;
   transition: fill .15s ease, stroke .15s ease, stroke-width .15s ease;
 }
 .llm-flow .flow-node:nth-of-type(2) rect,
-.llm-flow .flow-node:nth-of-type(4) rect { fill: #f0f8f8; }
+.llm-flow .flow-node:nth-of-type(4) rect,
+.llm-flow .flow-node:nth-of-type(6) rect { fill: #edf5e4; }
 .llm-flow .flow-node a:hover rect,
 .llm-flow .flow-node a:focus rect {
-  fill: #e5f5f4;
+  fill: #e3f1d7;
   stroke: var(--llm-teal);
   stroke-width: 3;
 }
 .llm-flow .flow-kicker { fill: var(--llm-teal); font-size: 11px; font-weight: 800; letter-spacing: .8px; }
 .llm-flow .flow-title { fill: var(--llm-ink); font-size: 16px; font-weight: 750; }
-.llm-flow .flow-subtitle { fill: #52677d; font-size: 12px; }
-.llm-flow .flow-note { fill: #52677d; font-size: 11px; font-style: italic; }
-.llm-flow .flow-hint { fill: #52677d; font-size: 12px; }
+.llm-flow .flow-subtitle { fill: #435a49; font-size: 12px; }
+.llm-flow .flow-note { fill: #435a49; font-size: 11px; font-style: italic; }
+.llm-flow .flow-hint { fill: #435a49; font-size: 12px; font-weight: 650; }
 .llm-flow-figure figcaption { margin: .4rem .4rem .1rem; }
 @media (max-width: 700px) {
   .llm-flow-figure { padding: .35rem; }
