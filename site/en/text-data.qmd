@@ -123,13 +123,13 @@ For a batch, the shape is typically $[B,L,d]$. **Lookup does not yet compute mea
 
 - **$V$ is determined by the tokenizer**: corpus and preprocessing, algorithm (for example BPE or unigram), rules and target vocabulary size, plus special-token handling. The exact size is a design choice and may differ from a requested target depending on the implementation.
 - **$d$ is determined by the architecture**: it is a hyperparameter chosen alongside depth, number of attention heads, compute budget, and training goals. There is no universal formula that derives $d$ from $V$.
-- **Parameter count depends on both**: the embedding table contains $Vd$ parameters. If the output projection has its own weight matrix, it typically adds about $dV$ parameters (plus a possible bias). Some models share input and output weights (*weight tying*), so do not automatically count both matrices without checking the architecture.
+- **Parameter count depends on both**: the embedding table contains $Vd$ parameters. If the output projection has its own weight matrix, it typically adds about $dV$ parameters (plus a possible bias). Some models share input and output weights (*weight tying*), so do not automatically count both matrices without checking the architecture. The $V$ used by the matrix must match the IDs actually supported by the model, including the special tokens it recognizes.
 
 ::: {.callout-warning}
 **Changing the tokenizer is not a drop-in replacement.** IDs do not retain the same meaning across vocabularies. The embedding-table and output-projection weights were learned for specific IDs; changing $V$ or the ID assignment requires an explicit adaptation or retraining strategy.
 :::
 
-For tensor shapes and batch operations, see [the tensors page](tensors.qmd). To distinguish initial token embeddings from post-attention representations, see [embedding space](embedding-space.qmd); the rest of the pipeline is covered in [the Transformer page](transformer.qmd).
+Logits have one component per possible token; the [cross-entropy page](cross-entropy.qmd) explains how these scores are compared with the target during training. For tensor shapes and batch operations, see [the tensors page](tensors.qmd). To distinguish initial token embeddings from post-attention representations, see [embedding space](embedding-space.qmd); the rest of the pipeline is covered in [the Transformer page](transformer.qmd).
 
 ### Four complementary visual perspectives
 
@@ -166,6 +166,24 @@ Distinguish:
 2. **Encoding** applies the already learned tokenizer; it does not relearn the vocabulary for every request.
 
 A byte-level BPE tokenizer can represent arbitrary text inputs using byte-level base units. Not every BPE tokenizer is byte-level, and segmentation also depends on pre-tokenization and the learned vocabulary.
+
+```{mermaid}
+flowchart LR
+    subgraph Train["Tokenizer training"]
+        A["Corpus"] --> B["Pre-tokenization and base units"]
+        B --> C["Pair counts and merges"]
+        C --> D["Vocabulary + merge order"]
+        D --> E["Saved tokenizer"]
+    end
+    subgraph Use["Encoding new text"]
+        F["New text"] --> G["Previously learned rules"]
+        E -. "reused" .-> G
+        G --> H["Tokens then IDs"]
+        H --> I["Compatible model"]
+    end
+```
+
+This diagram separates **tokenizer training** from **encoding**. It does not depict neural-network training, which is a distinct stage: the model learns its parameters from ID sequences and its training objectives.
 
 
 ### Worked example: BPE merges on a tiny corpus
