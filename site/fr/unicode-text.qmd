@@ -44,6 +44,8 @@ print(unicodedata.normalize("NFC", composed) == unicodedata.normalize("NFC", dec
 
 La normalisation NFC rend ces deux chaînes égales dans cet exemple. Cela ne prouve pas qu'un tokeniseur donné applique NFC : il faut vérifier sa documentation et tester la version réellement utilisée.
 
+NFC/NFD concernent les formes canoniques ; NFKC/NFKD appliquent aussi certaines équivalences de compatibilité. Ces dernières peuvent modifier des distinctions qui comptent dans certains domaines (par exemple des symboles typographiques ou des formes pleine chasse). Ne choisissez donc pas une normalisation « plus forte » sans examiner les exigences du texte et le contrat du modèle.
+
 ## Ce que cela implique — et n'implique pas
 
 1. Des chaînes visuellement identiques peuvent être représentées différemment avant normalisation.
