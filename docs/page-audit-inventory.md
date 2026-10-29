@@ -177,6 +177,25 @@ A targeted external-link sweep found that the supplementary “Designing and Int
 | Other sources checked in this pass | The ICLR proceedings record, ACL Anthology record, relevant arXiv abstract pages, PMLR proceedings page, SMDS repository, and Transformer Circuits framework resource resolve or have searchable records matching their cited works. The arXiv v2 corrigendum page was not directly retrievable by the browser tool, but search results for arXiv:2603.28744v2 expose the updated abstract and corrigendum note. | No additional citation changes made in this pass. | This is a targeted availability/identity check, not a comprehensive automated HTTP status sweep. |
 
 Sources checked: [author's current probing explainer](https://www.cs.columbia.edu/~johnhew/interpreting-probes.html), [ACL Anthology paper](https://aclanthology.org/D19-1275/), [ICLR 2025 paper](https://proceedings.iclr.cc/paper_files/paper/2025/hash/d3221cdb27e49d9c1cd35ad254feccfe-Abstract-Conference.html), [SMDS paper HTML](https://arxiv.org/html/2510.01025v1), and [official SMDS repository](https://github.com/UKPLab/tmlr2026-manifold-analysis).
+## Thirteenth slice: apply the pedagogical-resource method to Q/K/V
+
+This is a targeted source-level review of the bilingual Q/K/V concept pair, chosen because it already has a custom diagram and an established visual-explanation lineage. The purpose is to use external resources as design references—not to reproduce their prose or figures.
+
+| Resource consulted as a design reference | What it can contribute | Guardrail for this page |
+|---|---|---|
+| [Jay Alammar — The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) | Stepwise visual separation of the attention operations and data flow. | Keep the diagram's roles precise; do not let the analogy imply literal symbolic search. |
+| [3Blue1Brown — Transformers](https://www.3blue1brown.com/lessons/gpt/) | Visual pacing and the distinction between scores, weights, and information flow. | Do not infer semantic meaning or causal explanation from attention weights alone. |
+| [Distill](https://distill.pub/) | How a carefully scoped interactive explanation can expose a mechanism. | No interactive widget is needed unless it answers a concrete question better than a static example. |
+| [Vaswani et al. (2017)](https://arxiv.org/abs/1706.03762) | Primary technical grounding for scaled dot-product attention. | Use the paper to check the mechanism and equations, not as evidence for every later implementation detail. |
+
+| Area | Finding | Change made | Remaining validation |
+|---|---|---|---|
+| French/English pedagogical parity | The English page had a card-index analogy while the French page did not; neither page had a small numerical example isolating weights from values. | Added a matched toy calculation in both languages: scores \((0,\ln 3)\), softmax weights \((0.25,0.75)\), values \((2,10)\), output \(8\). Explicitly labels scalar values as a toy simplification. | Render both pages; verify the math and decimal notation display correctly. |
+| Visual interpretation | Both pages already contain original diagrams. The current task did not justify replacing them with copied external assets or adding an animation. | Preserve the original diagrams and add a worked example to complement, not duplicate, the visual flow. | Inspect both SVGs at desktop/mobile widths; verify labels, contrast, alt text, and the diagram's distinction between score computation and value aggregation. |
+| Source provenance | The existing references page does not clearly catalogue the Q/K/V diagrams as original project assets. | Record the bilingual Q/K/V diagrams in the visual-provenance page. | Confirm the relative image paths and the rendered references page. |
+
+**Scope of this pass:** source-level review and proposed text changes only. No Quarto render, browser-based responsive review, or numerical test has been run in this step. Do not mark the page pair fully audited until those checks pass.
+
 ## Next audit steps
 
 1. Finish source and rendered-page review of this vertical slice; check local links and bilingual meaning, not just literal wording.
