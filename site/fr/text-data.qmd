@@ -62,6 +62,15 @@ Un même texte peut être découpé en un nombre différent de tokens selon le t
 À retenir : les tokens sont des unités de représentation, pas nécessairement des mots ni des unités de sens. Pour une comparaison réelle, il faut indiquer le tokenizer et sa version, puis mesurer la séquence obtenue.
 
 
+| Étape | Tokenizer A | Tokenizer B |
+|---|---|---|
+| Fragments (exemple schématique) | \`[fragment 1]\`, \`[fragment 2]\`, \`[fragment 3]\` | \`[fragment 1]\`, \`[fragment 2]\` |
+| IDs | Dépendent du vocabulaire A | Dépendent du vocabulaire B |
+| Modèle compatible | Poids associés à A | Poids associés à B |
+
+Ce tableau illustre seulement que la segmentation et la longueur peuvent changer. Il ne reproduit la sortie d'aucun encodeur réel et ne démontre pas qu'un tokenizer est meilleur. Les IDs sont des étiquettes : l'écart numérique entre 314 et 315, par exemple, ne signifie pas que les tokens correspondants sont proches en sens.
+
+
 ## 2. Pourquoi la tokenisation compte
 
 Le découpage par espaces ne suffit pas : la ponctuation, les contractions, les noms rares, le code et les langues dont l'écriture ne sépare pas systématiquement les mots posent des problèmes différents. Les tokeniseurs découpent donc le texte en unités réutilisables, selon des règles et un vocabulaire propres à chaque modèle.
