@@ -1,10 +1,12 @@
 # Learning path
 
+> **Editorial boundary (2026-10-30):** the public site distinguishes four reader-facing destinations: **Understand** (the conceptual course), **Build** (the guided implementation route), **Deepen** (optional mathematical/technical depth), and **Practice & experiment** (exercises and evidence-producing investigations). These are destinations, not four duplicated curricula. Build reuses the canonical concept pages and introduces only the local tensor, probability, and gradient operations needed at each milestone. Advanced mathematics is not a blanket prerequisite. The exhaustive page-by-page classification is maintained in [content-section-mapping.md](content-section-mapping.md); the four-destination navigation complements, rather than replaces, the three learning depths described below.
+
 This plan is a sequence of evidence-producing modules, not a promise of mastery after a fixed number of hours. Each module is complete only when its implementation, tests, experiment notes, and limitations are available. The repository's current status, priorities, and acceptance criteria are tracked in the [roadmap](roadmap.md).
 
-## Reader-facing map: panorama → guided build → deep dives
+## Reader-facing map: understand → guided build → deepen → practice
 
-This crosswalk connects the current public navigation to the three learning depths. It is a **status-aware map**, not a claim that every lifecycle stage already has a complete lesson or implementation. The sidebar exposes existing canonical content; planned stages remain visible here as gaps rather than as empty or misleading links. The navigation coordination is tracked in [issue #130](https://github.com/JM-Brun/llm-lab/issues/130), while this three-depth curriculum map belongs to [issue #87](https://github.com/JM-Brun/llm-lab/issues/87).
+This crosswalk connects the public conceptual course to the guided build and optional deep dives. It is a **status-aware map**, not a claim that every lifecycle stage already has a complete lesson or implementation. The sidebar separates the conceptual course, the guided build entry point, optional deep dives, and practice. It exposes existing canonical content; planned stages remain visible here as gaps rather than as empty or misleading links. The navigation coordination is tracked in [issue #130](https://github.com/JM-Brun/llm-lab/issues/130), while this three-depth curriculum map belongs to [issue #87](https://github.com/JM-Brun/llm-lab/issues/87).
 
 | Lifecycle question | Panorama / current navigation | Guided-build milestone | Existing canonical pages (FR / EN) | Status and owner |
 |---|---|---|---|---|
