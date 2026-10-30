@@ -320,3 +320,52 @@ pre code { color: #17212B; }
   .learning-route { grid-template-columns: 1fr; }
   .route-step { padding: .9rem 1rem; }
 }
+
+
+/* Historical timeline: semantic chronology, readable without color or hover. */
+.history-timeline {
+  position: relative;
+  margin: 1.5rem 0 2.5rem;
+  padding: .15rem 0 .15rem 1.7rem;
+  border-left: 3px solid var(--llm-brand);
+}
+.history-milestone {
+  position: relative;
+  margin: 0 0 1.25rem;
+  padding: 1rem 1.2rem 1.1rem;
+  border: 1px solid var(--llm-line);
+  border-radius: .55rem;
+  background: var(--llm-paper);
+}
+.history-milestone:last-child { margin-bottom: 0; }
+.history-milestone::before {
+  position: absolute;
+  top: 1.25rem;
+  left: -2.28rem;
+  width: .82rem;
+  height: .82rem;
+  border: 3px solid var(--llm-brand-dark);
+  border-radius: 50%;
+  background: var(--llm-paper);
+  content: "";
+}
+.history-milestone > p:first-child {
+  margin: 0 0 .4rem;
+  color: var(--llm-brand-dark);
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .045em;
+  text-transform: uppercase;
+}
+.history-milestone h3 {
+  margin: .15rem 0 .65rem;
+  font-size: 1.2rem;
+}
+.history-milestone p { margin-bottom: .65rem; }
+.history-milestone p:last-child { margin-bottom: 0; }
+.history-milestone a { font-weight: 650; }
+@media (max-width: 700px) {
+  .history-timeline { margin-left: .1rem; padding-left: 1.25rem; }
+  .history-milestone { padding: .85rem .95rem; }
+  .history-milestone::before { left: -1.83rem; }
+}
