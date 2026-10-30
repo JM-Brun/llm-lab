@@ -261,6 +261,12 @@ Comparing algorithms is not enough to establish whether a tokenizer is suitable 
 - **Reproducibility**: record the exact tokenizer and revision, preprocessing, corpus, languages, metrics, task, budgets, and software versions.
 
 
+#### External research figure: tokenizer fertility varies by language
+
+![Tokenizer fertility distributions for English, French, German, Italian, Polish, and Spanish across the tokenizers compared in Catherine Arnett's experiments.](https://cdn-uploads.huggingface.co/production/uploads/6384d424ac61472e5e92d403/yZnGPoBwKK4d19aCR7Ypo.png){fig-alt="Six small-multiple bar charts show tokenizer fertility across English, French, German, Italian, Polish, and Spanish; the red bar marks the author's tokenizer and grey bars show alternatives." width=100%}
+
+*Source: Catherine Arnett, [“wHy DoNt YoU jUsT uSe ThE lLaMa ToKeNiZeR??”](https://huggingface.co/blog/catherinearnett/dangers-of-tokenizer-recycling), 2024. This is a study-specific comparison, not a universal ranking: fertility depends on the text sample, word definition, and tokenizer set. The image is embedded from the author's hosted article and is not modified or redistributed in this repository. Rights review: pending in [#156](https://github.com/JM-Brun/llm-lab/issues/156); retained pending asset-level verification.*
+
 ### What the studies show — and what they do not
 
 The following papers are complementary: they do not all measure the same object and should not be read as a direct tokenizer ranking.
@@ -274,6 +280,12 @@ The following papers are complementary: they do not all measure the same object 
 
 Goldman et al. and Schmidt et al. should not be reduced to a simplistic contradiction. The former studies empirical associations between compression and downstream results; the latter reminds us that compression does not summarize every relevant property. TokLens adds a complementary finding: observed relationships differ between English and multilingual benchmarks and remain correlational, with possible confounders such as pretraining-data composition. The methodological conclusion is to **measure separately the dimensions that correspond to the decision being made**.
 
+
+#### External research figure: representation length and execution time
+
+![Tokenization length for the FLORES-200 parallel corpus versus RoBERTa execution time across languages and writing-system families.](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/featured_hu3a085884cc9c15c3954ff8e09a76a4a3_251753_720x2500_fit_q75_h2_lanczos.webp){fig-alt="Scatter plot of tokenization length against RoBERTa execution time for languages in FLORES-200, with points colored by script family." width=80%}
+
+*Source: Petrov, La Malfa, Torr, and Bibi, [“Language Model Tokenizers Introduce Unfairness Between Languages”](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/), NeurIPS 2023. The plot illustrates an association in the studied setup, not a universal causal law or a direct measure of generation quality. The author's page identifies the work as CC BY-NC-ND 4.0; the figure is embedded unchanged and linked to its source. Rights review: pending in [#156](https://github.com/JM-Brun/llm-lab/issues/156); retained pending assessment of the exact asset and intended use.*
 
 ### Building an interpretable comparison protocol
 
@@ -304,7 +316,7 @@ To compare two tokenizers:
 4. [Andrej Karpathy — Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE): Unicode, UTF-8, BPE, whitespace, and special tokens.
 5. [Hugging Face — visualizing BPE encoding](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize): complementary visualization; verify community code before execution.
 
-External visual assets are linked through their sources rather than embedded in the site. The page uses project-owned diagrams for its pipeline and evaluation framework.
+The page combines project-owned diagrams with selected external illustrations and linked resources. The provenance and reuse status of embedded assets are tracked in [the cross-site visual-asset audit](https://github.com/JM-Brun/llm-lab/issues/156).
 
 
 
@@ -316,6 +328,12 @@ External visual assets are linked through their sources rather than embedded in 
 4. Compare with tiktoken, SentencePiece, and Hugging Face documentation to distinguish implementation conventions.
 5. Return to [Raschka's Chapter 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) to connect IDs to embeddings and input-target examples.
 6. Test multilingual text, code, numbers, leading spaces, and unusual Unicode forms.
+
+### An external illustration of the tokenizer pipeline
+
+![Tokenization pipeline from the Hugging Face course, showing the stages that transform text into model-ready tokens.](https://huggingface.co/datasets/huggingface-course/documentation-images/resolve/main/en/chapter6/tokenization_pipeline.svg){fig-alt="Tokenization pipeline: normalization, pre-tokenization, tokenization model, and post-processing." width=100%}
+
+This published illustration comes from the [Hugging Face course, “Building a tokenizer, block by block”](https://huggingface.co/docs/course/chapter6/8). It complements the conceptual diagram on the [overview page](text-data.qmd) with the components of a tokenizer. The image is served from the course's public documentation assets rather than copied locally; citation does not itself establish reuse permission. Rights review: pending in [#156](https://github.com/JM-Brun/llm-lab/issues/156); retained pending asset-level verification.
 
 ### Additional research references
 
