@@ -96,6 +96,31 @@ Sources: [Training language models to follow instructions with human feedback](h
 **Explore the concept:** [experimental evaluation](experimental-evaluation.qmd). The site does not yet have a dedicated lesson on preference alignment.
 :::
 
+
+::: {.history-milestone}
+**2023 · Publications and model releases**
+
+### Multimodality, open-weight models, and new alignment methods
+
+Several directions advanced in parallel. The GPT-4 report describes a Transformer model pretrained to predict the next token, accepting text and image inputs and producing text. DPO proposes preference optimization without the explicit step of training a reward model followed by RL optimization. Llama 2 and Mistral 7B illustrate the growth of models whose weights are released for reuse; their licenses and usage terms differ, and “open weights” does not automatically mean “open source.”
+
+Sources: [GPT-4 Technical Report](https://arxiv.org/abs/2303.08774) · [Direct Preference Optimization](https://arxiv.org/abs/2305.18290) · [Llama 2](https://arxiv.org/abs/2307.09288) · [Mistral 7B](https://arxiv.org/abs/2310.06825).
+
+**Explore the concepts:** [Transformer overview](transformer.qmd) · [experimental evaluation](experimental-evaluation.qmd). The site does not yet have dedicated lessons on DPO or open-weight models.
+:::
+
+::: {.history-milestone}
+**2024 · Research publications**
+
+### Mixture of experts and extended multimodal context
+
+Mixtral 8x7B is a prominent example of a sparse mixture-of-experts model: a router selects a subset of expert subnetworks for each token instead of activating all parameters at every step. Gemini 1.5 highlights multimodal processing over very long contexts. These works illustrate two distinct directions — conditional efficiency and expanded context/modalities — rather than one new architecture replacing Transformers.
+
+Primary sources: [Mixtral of Experts](https://arxiv.org/abs/2401.04088) · [Gemini 1.5 Technical Report](https://arxiv.org/abs/2403.05530).
+
+**Explore the concept:** [Transformer overview](transformer.qmd). The site does not yet have dedicated lessons on mixture-of-experts or long-context multimodal architectures.
+:::
+
 ::::
 
 ## How to read this chronology
