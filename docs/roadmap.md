@@ -31,6 +31,8 @@ This track improves presentation and discoverability without changing scientific
 
 ### Sequence
 
+Implementation and validation are split across existing owner issues to avoid parallel/duplicated work: [#191 — validate the green design system across the rendered bilingual site](https://github.com/JM-Brun/llm-lab/issues/191), [#154 — homepage orientation and system diagram](https://github.com/JM-Brun/llm-lab/issues/154), and [#130 — high-level learning-design/navigation audit](https://github.com/JM-Brun/llm-lab/issues/130). PR [#189](https://github.com/JM-Brun/llm-lab/pull/189) establishes the tokens and written contract; it does not complete their rendered-site validation.
+
 1. **Green design tokens and theme coherence (P0).** Use the documented green palette consistently across Quarto navigation, links, primary actions, focus states, cards, diagrams, and callouts. Keep reading surfaces neutral; reserve amber/red/blue/violet for semantic states or data categories. Check contrast rather than relying on hue alone.
 2. **Homepage information hierarchy (P0).** Improve the first screen, make the learning proposition and entry routes immediately legible, and expose the existing GPT/Transformer learning map without implying planned features already exist. Preserve French/English parity.
 3. **Navigation and wayfinding (P0).** Simplify top-level navigation while retaining the detailed sidebar; add contextual routes and breadcrumbs only where supported by Quarto. Avoid duplicating the same hierarchy.
