@@ -67,7 +67,7 @@ website:
   page-navigation: true
   search: true
   navbar:
-    background: "#10233f"
+    background: "#14532D"
     foreground: "#f8fafc"
     left:
       - text: "Références / References"

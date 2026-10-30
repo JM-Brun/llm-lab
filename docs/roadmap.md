@@ -23,6 +23,44 @@ The learning budget is capped at **five focused hours per week, with no session 
 - A committed `uv.lock` at the reviewed base snapshot; the current setup can resolve dependencies during CI, but it does not yet guarantee the same locked dependency graph across runs.
 - An explicit repository licence. Do not infer permission to reuse the code or content.
 
+## UX and visual-system track — Green identity
+
+**Decision (2026-10-30):** green is the primary brand colour of LLM Lab. This evolves the existing restrained green/retro-computing palette; it does not switch to a blue-led interface. The implementation contract and rationale are documented in [the visual design system](design-system.md).
+
+This track improves presentation and discoverability without changing scientific scope, inventing implementation status, or displacing the knowledge-validation gate above.
+
+### Sequence
+
+Implementation and validation are split across existing owner issues to avoid parallel/duplicated work: [#191 — validate the green design system across the rendered bilingual site](https://github.com/JM-Brun/llm-lab/issues/191), [#154 — homepage orientation and system diagram](https://github.com/JM-Brun/llm-lab/issues/154), and [#130 — high-level learning-design/navigation audit](https://github.com/JM-Brun/llm-lab/issues/130). PR [#189](https://github.com/JM-Brun/llm-lab/pull/189) establishes the tokens and written contract; it does not complete their rendered-site validation.
+
+1. **Green design tokens and theme coherence (P0).** Use the documented green palette consistently across Quarto navigation, links, primary actions, focus states, cards, diagrams, and callouts. Keep reading surfaces neutral; reserve amber/red/blue/violet for semantic states or data categories. Check contrast rather than relying on hue alone.
+2. **Homepage information hierarchy (P0).** Improve the first screen, make the learning proposition and entry routes immediately legible, and expose the existing GPT/Transformer learning map without implying planned features already exist. Preserve French/English parity.
+3. **Navigation and wayfinding (P0).** Simplify top-level navigation while retaining the detailed sidebar; add contextual routes and breadcrumbs only where supported by Quarto. Avoid duplicating the same hierarchy.
+4. **Reusable page patterns (P1).** Refine overview, concept, mathematical derivation, implementation, experiment, and critical-review page patterns. Do not impose a universal template where it obscures the page's purpose.
+5. **One validated interactive exemplar (P1).** Select an existing, knowledge-validated concept before building an explorer. Specify the learning question, controls, computed quantities, shapes/units, expected observations, limitations, fallback, and tests. Reuse Python as the reference implementation where practical; avoid duplicate Python and JavaScript calculations without a documented reason.
+6. **Progressive expansion (P2).** Extend interactions only after the exemplar passes scientific, accessibility, responsive, performance, and maintenance review.
+
+### UX track acceptance criteria
+
+- The brand reads as green at first glance; the navbar is no longer blue-led.
+- Green is used consistently but not as a large-area reading background.
+- Text contrast meets WCAG 2.2 AA (4.5:1 body text; 3:1 qualifying large text); meaningful UI/graphic components meet applicable 3:1 requirements.
+- Colour is never the sole carrier of meaning.
+- Keyboard focus is visible; reduced-motion preferences are respected; interactive content has a static or textual fallback.
+- French and English pages retain equivalent structure, claims, and navigation.
+- Desktop, tablet, and narrow mobile layouts are inspected from rendered output.
+- Quarto rendering and existing local-link checks pass.
+- New interactions are not labelled implemented until their behavior and tests exist; diagrams are not presented as evidence of a mathematical property.
+
+### Explicitly out of scope
+
+- Replacing Quarto or rebuilding the site as a JavaScript application.
+- Copying Transformer Explainer's interface or reproducing its model-specific implementation.
+- Adding multiple interactive explorers before validating one end-to-end.
+- Reorganizing or deleting scientific content solely to simplify the menu.
+- Treating visual polish as evidence of conceptual mastery or scientific validation.
+
+
 ## Prioritized plan
 
 ### P0 — Audit and validate existing knowledge (current priority)
