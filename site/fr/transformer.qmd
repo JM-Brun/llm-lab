@@ -50,6 +50,39 @@ Après les blocs, une projection de sortie produit des **logits** — des scores
 
 Pendant la génération, une règle de sélection choisit le token suivant : maximum, échantillonnage ou méthode plus élaborée. Ce token est ajouté au contexte, puis le modèle recommence. La génération est donc **autorégressive** ; elle ne consiste pas en une seule prédiction de toute la réponse.
 
+## Observer un Transformer en fonctionnement
+
+Le projet **[Transformer Explainer](https://poloclub.github.io/transformer-explainer/)** de Georgia Tech permet d'explorer une exécution réelle de GPT-2 small dans le navigateur. Il complète les schémas statiques de cette page : saisissez un texte, puis observez comment les représentations, les calculs d'attention et la distribution du prochain token évoluent.
+
+<iframe
+  src="https://poloclub.github.io/transformer-explainer/"
+  title="Transformer Explainer — visualisation interactive de GPT-2"
+  width="100%"
+  height="820"
+  loading="lazy"
+  allow="fullscreen"
+  style="border: 1px solid #d2d9c8; border-radius: 0.6rem; background: #fff;"
+></iframe>
+
+[Ouvrir Transformer Explainer dans un nouvel onglet](https://poloclub.github.io/transformer-explainer/) si l'intégration ne s'affiche pas ou si vous préférez disposer de toute la fenêtre.
+
+### Une expérience guidée en quatre observations
+
+1. **Tokens et représentations.** Modifiez légèrement le texte d'entrée et observez sa segmentation. Reliez les tokens aux identifiants et aux embeddings décrits dans [la page sur les représentations](embedding-space.qmd).
+2. **Attention.** Sélectionnez des tokens et examinez les motifs d'attention. Reliez les scores, le masque causal et l'agrégation des valeurs aux pages [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd) et [masquage causal](causal-masking.qmd).
+3. **Prédiction.** Repérez les scores de sortie (*logits*) et la distribution sur le vocabulaire. Consultez [logits](logits.qmd) et [probabilités](probabilites.qmd) pour distinguer score et probabilité.
+4. **Décodage.** Faites varier la température et, lorsque l'interface le propose, les paramètres top-k/top-p. Une même distribution peut conduire à des sélections différentes ; le décodage ne modifie pas les poids du modèle.
+
+### Ce que cette démonstration permet — et ne permet pas — de conclure
+
+- L'outil exécute **GPT-2 small (124 millions de paramètres)** : c'est un modèle pédagogique suffisamment représentatif des opérations fondamentales, pas un substitut à l'inspection de tous les LLM récents.
+- Le modèle s'exécute côté navigateur. Le premier chargement peut nécessiter le téléchargement des ressources du modèle et solliciter la mémoire et le processeur de votre machine.
+- Une visualisation d'un poids d'attention montre une opération interne, pas à elle seule une explication causale ou fidèle de la prédiction.
+- Les paramètres de génération comme la température changent la sélection du prochain token ; ils ne réentraînent pas le modèle et ne rendent pas ses sorties factuellement fiables.
+- Cette démonstration est un outil externe. Elle n'exécute pas le code Python de LLM Lab et ne constitue pas un test de nos futures implémentations.
+
+**À retenir :** utilisez l'explorateur pour formuler des hypothèses et repérer les opérations ; revenez aux équations de ce site pour les vérifier, puis aux tests et expériences du dépôt lorsqu'une implémentation correspondante sera disponible.
+
 ## Entraînement et génération : deux modes à ne pas confondre
 
 Pendant l'entraînement d'un modèle autorégressif, les positions d'une séquence peuvent être calculées en parallèle grâce au décalage entre entrées et cibles et au masque causal. Lors de la génération ordinaire, le prochain token dépend du contexte effectivement disponible : le modèle avance étape par étape. Des optimisations comme le cache KV évitent de recalculer certaines clés et valeurs déjà produites.
