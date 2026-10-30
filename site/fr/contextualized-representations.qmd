@@ -14,8 +14,10 @@ Ce complément répond à une question précise, en marge de [la page principale
 
 Supposons que le mot visible `banque` soit représenté par le même ID dans deux phrases :
 
-- « La banque est située au bord de la rivière. »
-- « Elle a déposé de l'argent à la banque. »
+- “The river bank eroded.”
+- “The financial bank collapsed.”
+
+Le mot anglais `bank` est conservé dans cet exemple pour garder une même forme lexicale dans les deux contextes.
 
 Sous cette hypothèse explicite, les deux occurrences récupèrent le même embedding initial :
 
@@ -44,10 +46,10 @@ Les couches du Transformer traitent ensuite l'information à travers la séquenc
 \[
 h_t^{(\ell+1)}
 =
-F_\ell\big(h_1^{(\ell)},\ldots,h_L^{(\ell)}\big),
+F_\ell\big(h_1^{(\ell)},\ldots,h_t^{(\ell)}\big),
 \]
 
-où la représentation à la position \(t\) peut dépendre des autres positions via les opérations de la couche, notamment l'attention. La fonction \(F_\ell\) représente un bloc complet ; cette écriture est conceptuelle et ne spécifie pas son implémentation.
+Dans un décodeur causal comme GPT, l'état à la position \(t\) peut utiliser le token courant et son contexte précédent, mais pas les tokens futurs. D'autres architectures, comme les encodeurs bidirectionnels, utilisent des masques d'attention différents. La fonction \(F_\ell\) représente un bloc complet ; cette écriture est conceptuelle et ne spécifie pas son implémentation.
 
 Les deux occurrences peuvent donc produire des états cachés différents, même si leur lookup initial du token est identique.
 
