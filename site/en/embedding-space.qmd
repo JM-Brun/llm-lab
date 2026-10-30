@@ -8,7 +8,7 @@ lang: en
 An **embedding** is a numerical vector associated with an object, such as a token. The collection of these vectors forms a representation space. We can compare their directions, distances, or neighbours, but interpretation depends on the model, its training, and the task: geometry is not a universal dictionary of meaning.
 :::
 
-This page first establishes how token IDs select vectors and how a Transformer turns initial embeddings into contextualized states. It then examines the geometry of those representations, the limits of similarity measures, and common interpretation pitfalls.
+This page establishes how token IDs select initial vectors, then examines the geometry of learned representations and the limits of similarity measures. The distinct question of how a Transformer contextualizes an initial embedding is handled in a [focused companion](contextualized-representations.qmd).
 
 ## Where do the vectors come from?
 
@@ -136,13 +136,9 @@ This addition is **not universal**. For example, [RoPE](positional-encoding.qmd)
 
 During training, gradients can update the embedding-table rows used by the examples. The lookup operation itself does not make a vector context-aware; contextualization happens in the subsequent network layers. See [tensors](tensors.qmd) for axis conventions and [from text to tokens](text-data.qmd) for the preceding tokenizer stage.
 
-### Same token, different contexts
+### From an initial embedding to a contextualized state
 
-![The same token can receive different contextualized representations depending on the sentence.](../images/contextualized-embeddings-en.svg){fig-alt="Two sentences use bank in different contexts. Assuming the same ID, both occurrences share the initial embedding, then may produce different contextualized states." width=100%}
-
-This original illustration is motivated by [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). It illustrates the principle, not measured vectors: it assumes `bank` maps to the same token in both sentences. Depending on the tokenizer, a visible word may consist of multiple tokens.
-
-The initial embedding is retrieved from the ID; the contextualized representation then depends on other tokens, the architecture, and the layer considered. This does not mean every occurrence must have a wholly different vector at every layer, or that vectors always separate according to human-expected meanings.
+The same token ID retrieves the same initial embedding, but its representation can change as positional information and surrounding tokens are processed by the Transformer. This distinction is explored in a [focused companion lesson](contextualized-representations.qmd).
 
 ## A map of representations
 

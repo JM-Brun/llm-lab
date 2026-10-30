@@ -46,6 +46,11 @@ Le dernier bloc regroupe volontairement le traitement positionnel et le Transfor
 
 Ce schéma est conceptuel : les tokeniseurs réels diffèrent par leurs unités de base, leur normalisation, leur pré-tokenisation, leur vocabulaire et leurs tokens spéciaux.
 
+::: {.callout-note}
+**Deux sens différents du prétraitement.** La préparation du corpus (par exemple filtrer les documents, dédupliquer les quasi-copies et définir les frontières entre entraînement et validation) relève de l'ingénierie des données en amont. La normalisation et la pré-tokenisation relèvent du pipeline du tokenizer et s'appliquent au texte d'entrée. Il ne faut pas confondre ces opérations. De même, l'entraînement du tokenizer apprend un vocabulaire et des règles ; l'encodage d'une nouvelle entrée les réutilise sans réentraîner le tokenizer. Pour une évaluation avec données tenues à l'écart, ajuster le tokenizer appris sur la seule partition d'entraînement afin que le vocabulaire ne soit pas influencé par les textes de validation ou de test. Cette page se concentre sur l'étape du tokenizer ; voir les [exemples d'entraînement](training-examples.qmd) pour comprendre comment le texte encodé devient des fenêtres d'entrée et des cibles décalées.
+:::
+
+
 ### Le vocabulaire minimal
 
 | Terme | Rôle dans le pipeline |
@@ -95,6 +100,8 @@ La page principale reste centrée sur le parcours. Les détails techniques sont 
 - [Stratégies de tokenisation](tokenization-strategies.qmd) : pré-tokenisation, BPE, WordPiece, unigramme, exemples, comparaisons et limites.
 - [Unicode, UTF-8 et normalisation](unicode-text.qmd) : points de code, octets et chaînes visuellement identiques.
 - [Espace des embeddings](embedding-space.qmd) et [tenseurs](tensors.qmd) : dimensions, tables de poids et formes des représentations.
+
+Pour une vue visuelle des particularités de la tokenisation, voir [How LLMs See the World](https://blog.bytebytego.com/p/how-llms-see-the-world) de ByteByteGo. Pour une pratique guidée de BPE avec des notebooks, Vizuara propose [Tokenization from Scratch: Building Byte-Pair Encoding by Hand](https://pods.vizuara.ai/courses/build-llm/tokenization-from-scratch-building-byte-pair-encoding-by-han). Ce sont des ressources pédagogiques facultatives, pas des prérequis ni des substituts aux définitions et précautions de ce projet.
 
 ## 3. Mini-laboratoire de comparaison
 

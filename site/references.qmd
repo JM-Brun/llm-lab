@@ -36,6 +36,15 @@ Le diagramme du masque causal affiché dans le chapitre est créé pour ce proje
 - **Provenance :** illustrations originales du dépôt, sans image externe incorporée. Les ressources de Jay Alammar et de 3Blue1Brown sont des références de conception pédagogique, pas les sources graphiques de ces SVG.
 - **Limite :** le diagramme montre la structure conceptuelle ; il ne visualise pas à lui seul les dimensions exactes, les conventions de masque ou l'effet causal des poids sur la sortie finale.
 
+## Illustration externe — texte, IDs, embeddings et contextualisation
+
+- **Auteur :** Rushang Chauhan.
+- **Article source :** [*Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/), publié le 30 avril 2026.
+- **Image :** couverture/illustration de l'article, intégrée dans les pages française et anglaise sur les représentations contextualisées.
+- **Rôle pédagogique :** donner une carte visuelle du passage texte → IDs → table d'embeddings → information positionnelle → attention → représentations contextualisées. La figure est un schéma d'orientation, pas une spécification universelle de l'injection de position ; la page précise notamment le cas de RoPE.
+- **Hébergement :** image intégrée depuis le CDN LinkedIn ; aucune copie locale n'a pu être créée dans cet environnement. Le lien CDN est signé et peut évoluer ; une copie locale ne devra être ajoutée qu'après obtention d'un fichier source téléchargeable et vérification des conditions de réutilisation.
+- **Droits :** attribution fournie à titre de provenance ; elle ne constitue pas une licence de réutilisation. Vérifier les conditions applicables auprès de l'auteur avant redistribution ou modification.
+
 ## Illustrations intégrées
 
 ::: {.reference-card}
@@ -163,6 +172,48 @@ Ces travaux sont associés à la page [Stratégies de tokenisation](fr/tokenizat
 - Chiu (ACL 2026), [*TokLens: A Multilingual Lens on Tokenizer Quality for LLMs*](https://aclanthology.org/2026.acl-srw.18/) — cadre multi-métrique d'évaluation des tokenizers sur plusieurs langues.
 - Ahia et al. (2023), [*Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/) — étude des coûts de tokenisation dans 22 langues.
 - Wegmann et al. (2025), [*Tokenization is Sensitive to Language Variation*](https://aclanthology.org/2025.findings-acl.572/) — sensibilité aux variations linguistiques et au pré-tokenizer.
+
+## Ressources pédagogiques — texte, données et tokenisation
+
+::: {.reference-card}
+### ByteByteGo — *How LLMs Learn from the Internet* (1 décembre 2025)
+
+[Lire l'article](https://blog.bytebytego.com/p/how-llms-learn-from-the-internet).
+
+Vue d'ensemble de la préparation des données avant le pré-entraînement : collecte, déduplication, filtrage, contraintes de qualité et de conformité, puis tokenisation. La ressource aide à rendre visible le fait que la tokenisation intervient dans une chaîne de préparation plus large. Elle reste une présentation de vulgarisation : ne pas reprendre ses estimations d'échelle ou ses affirmations générales comme des mesures documentées.
+:::
+
+::: {.reference-card}
+### ByteByteGo — *How LLMs See the World* (4 août 2025)
+
+[Lire l'article](https://blog.bytebytego.com/p/how-llms-see-the-world).
+
+Vue d'ensemble accessible des tokens, IDs, embeddings, familles de tokenizers et exemples de segmentation de nombres, code, ponctuation et langues. À utiliser pour l'intuition et le repérage des questions, pas comme source technique de référence : certaines formulations simplifient le lien entre fragmentation et raisonnement, la portée sémantique des embeddings ou le fonctionnement de l'attention. Les pages de ce dépôt apportent les distinctions et limites nécessaires.
+:::
+
+::: {.reference-card}
+### Vizuara — *Tokenization from Scratch: Building Byte-Pair Encoding by Hand*
+
+[Consulter le parcours](https://pods.vizuara.ai/courses/build-llm/tokenization-from-scratch-building-byte-pair-encoding-by-han).
+
+Le descriptif annonce un parcours intermédiaire composé d'un article, de figures, d'équations, de neuf notebooks pratiques (environ quatre heures) et d'une étude de cas. L'intérêt pédagogique retenu pour LLM Lab est la continuité entre explication, manipulation de l'algorithme et application. Le contenu détaillé peut être soumis à accès ; ce lien n'est donc pas présenté comme une ressource libre ou un prérequis.
+:::
+
+::: {.reference-card}
+### Vizuara — *LLMs from 30,000 feet*
+
+[Consulter le micro-cours](https://mu.vizuara.ai/learn/llms-30k).
+
+Le format en courtes leçons autonomes et questions explicites est intéressant pour la progression éditoriale. Les séquences « How words become numbers » et « Why tokenizers struggle with Indian languages » sont proches des questions traitées ici. Les formulations très condensées servent d'intuition, mais ne remplacent pas les distinctions techniques entre token, ID et embedding, ni une évaluation empirique des coûts et performances multilingues.
+:::
+
+::: {.reference-card}
+### Kevin Degila — visualisations interactives autour de *Construire un LLM de zéro*
+
+[Voir la publication LinkedIn](https://fr.linkedin.com/posts/kevindegila_construire-un-llm-de-z%C3%A9ro-est-un-livre-activity-7483807443496497152-yspe).
+
+Exemple de visualisations manipulables autour des vecteurs, du produit scalaire, de fonctions à plusieurs variables et de la température. L'intérêt retenu est éditorial : placer une manipulation au moment où elle éclaire une notion, plutôt que regrouper toutes les démonstrations dans une galerie sans contexte. L'aperçu public consulté ne permet pas d'identifier un fichier image pédagogique autonome réutilisable ; aucune image de cette publication n'est copiée dans le dépôt.
+:::
 
 ## Entropie, compression et divergence KL
 

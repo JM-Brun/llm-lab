@@ -48,6 +48,8 @@ project:
     - en/tensors.qmd
     - fr/embedding-space.qmd
     - en/embedding-space.qmd
+    - fr/contextualized-representations.qmd
+    - en/contextualized-representations.qmd
     - fr/positional-encoding.qmd
     - en/positional-encoding.qmd
     - fr/exercises.qmd

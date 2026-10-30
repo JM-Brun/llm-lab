@@ -87,7 +87,17 @@ Cet exemple schématique conserve une trace explicite des fusions. Convention p�
 | `lower` | `l · o · w · e · r · </w>` |
 | `lowest` | `l · o · w · e · s · t · </w>` |
 
-Supposons que la règle de départage sélectionne d'abord `l + o → lo`, puis `lo + w → low`.
+Comptons chaque paire adjacente dans le corpus. Chaque mot apparaît une fois ici ; les fréquences sont donc :
+
+| Paire | Fréquence | Paire | Fréquence |
+|---|---:|---|---:|
+| `l + o` | 3 | `w + e` | 2 |
+| `o + w` | 3 | `w + </w>` | 1 |
+| `e + r` | 1 | `r + </w>` | 1 |
+| `e + s` | 1 | `s + t` | 1 |
+| `t + </w>` | 1 | | |
+
+La paire la plus fréquente est ex æquo : `l + o` et `o + w` apparaissent toutes deux trois fois. Supposons que la règle de départage déterministe choisisse `l + o → lo`. On remplace les occurrences non chevauchantes, puis on recompte. La paire `lo + w` apparaît alors trois fois et peut être fusionnée à son tour.
 
 | Étape | `low` | `lower` | `lowest` |
 |---|---|---|---|
@@ -95,7 +105,7 @@ Supposons que la règle de départage sélectionne d'abord `l + o → lo`, puis 
 | 1 : fusion `l + o` | `lo · w · </w>` | `lo · w · e · r · </w>` | `lo · w · e · s · t · </w>` |
 | 2 : fusion `lo + w` | `low · </w>` | `low · e · r · </w>` | `low · e · s · t · </w>` |
 
-Ce tableau illustre la mécanique, pas la sortie universelle d'un tokenizer. Le pré-découpage, les unités initiales, les fréquences, le traitement des fins de mots et le départage influencent l'ordre réel. Des fusions ultérieures pourraient créer `er` ou `est`, mais ce n'est pas garanti. Pour manipuler les paires candidates, utiliser le [BPE Explainer de Müller et Steinbach](https://philipmueller.dev/bpe-visualization/).
+Le tableau de fréquences rend visible le choix glouton ; cela ne signifie pas que BPE découvre les morphèmes ou un vocabulaire optimal. Il s'agit d'une convention pédagogique au niveau du mot avec un marqueur de fin, pas d'un tokenizer byte-level de production complet. Les sorties réelles dépendent aussi du pré-découpage, des unités initiales, des fréquences du corpus, des tokens spéciaux et du départage propre à l'implémentation. Pour manipuler les paires candidates, utiliser le [BPE Explainer de Müller et Steinbach](https://philipmueller.dev/bpe-visualization/).
 
 ### Apprentissage du tokenizer et encodage à l'inférence
 
