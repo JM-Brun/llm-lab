@@ -46,6 +46,11 @@ The final box deliberately groups positional handling with Transformer processin
 
 This is a conceptual diagram. Real tokenizers differ in base units, normalization, pre-tokenization, vocabulary, and special tokens.
 
+::: {.callout-note}
+**Two different meanings of preprocessing.** Corpus preparation (for example, filtering documents, deduplicating near-copies, and defining train/validation boundaries) is an upstream data-engineering stage. Tokenizer normalization and pre-tokenization are part of the tokenizer pipeline and operate on input text. They should not be treated as the same operation. Likewise, tokenizer training learns a vocabulary and rules; encoding a new input reuses them and does not retrain the tokenizer.
+:::
+
+
 ### Essential vocabulary
 
 | Term | Role in the pipeline |
