@@ -35,19 +35,21 @@ These events may appear on the same timeline but must be visibly distinguished f
 
 ## Initial concept and relation candidates
 
-Relations below are hypotheses to encode only after source-by-source review. They are not all direct influence claims.
+The initial hypotheses have been reviewed in [history-relation-audit.md](history-relation-audit.md). They must not be encoded as a dense directed graph. The conservative pilot decisions are:
 
-| From | To | Candidate relation | Rationale to verify |
-|---|---|---|---|
-| Neural probabilistic language modelling (2003) | Word representations (2013) | precursor_to / extends | Both use distributed representations, but the specific technical lineage and scope need careful wording. |
-| Seq2Seq LSTM (2014) | Bahdanau attention (2014) | precursor_to | Attention addresses the fixed-length context bottleneck in encoder-decoder NMT. |
-| Bahdanau attention (2014) | Transformer (2017) | precursor_to | Attention mechanisms predate Transformer; do not claim the Transformer simply reuses Bahdanau's exact mechanism. |
-| Transformer (2017) | BERT (2018) | applied_in | BERT uses a Transformer encoder with a different pretraining objective. |
-| Transformer (2017) | T5 (2019) | applied_in | T5 uses an encoder-decoder Transformer and text-to-text transfer. |
-| Scaling laws (2020) | GPT-3 (2020) | parallel_to / contextualizes | Both belong to the scaling-era discussion; do not imply that the paper alone caused GPT-3. |
-| InstructGPT (2022) | DPO (2023) | contextual relation; possible extends | DPO addresses preference optimization in a different formulation; direct methodological lineage should be documented before using influenced/extends. |
-| Transformer (2017) | FlashAttention (2022) | applied_in / optimizes | FlashAttention optimizes attention computation used in Transformer workloads; it does not replace the architecture. |
-| Transformer (2017) | Mamba (2023) | alternative_to | Mamba is presented as an alternative sequence-model backbone motivated partly by Transformer efficiency limits. |
+| Candidate pair | Decision | Editorial constraint |
+|---|---|---|
+| Neural probabilistic language modelling (2003) → word2vec (2013) | No edge yet | Shared use of distributed representations does not establish direct influence. |
+| Seq2Seq LSTM (2014) ↔ Bahdanau attention (2014) | No directed edge | Explain the shared encoder–decoder problem context without imposing an unsupported chronology or lineage. |
+| Bahdanau attention (2014) → Transformer (2017) | precursor_to | Relevant antecedent; not the same architecture or necessarily the same attention formulation. |
+| Transformer (2017) → BERT (2018) | applied_in | Architectural application; masked-language-model pretraining is a distinct contribution. |
+| Transformer (2017) → T5 (2019) | applied_in | Encoder–decoder Transformer; not part of the decoder-only GPT lineage. |
+| Scaling laws (2020) and GPT-3 (2020) | Same era; no directed edge | Contemporaneous contributions do not establish a causal relationship. |
+| InstructGPT (2022) and DPO (2023) | Shared preference-alignment concept | Do not claim direct lineage without additional primary-source evidence. |
+| FlashAttention (2022) | Attach to attention/efficiency concept | IO-aware exact attention implementation; not a new architecture or a reduction of the pairwise attention computation's quadratic sequence-length complexity. |
+| Transformer (2017) ↔ Mamba (2023) | alternative_to | Compare sequence-model backbones; do not imply universal replacement or direct succession. |
+
+The audit is a first-pass editorial decision record, not final publication approval. Full-paper review, coverage expansion, and bilingual source-backed event records remain outstanding.
 
 ## Gaps deliberately left open
 
