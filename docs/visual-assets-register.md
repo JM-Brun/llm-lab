@@ -149,3 +149,44 @@ The inspected article pages still provide source attribution but no explicit reu
 | Hugging Face pipeline | Exact repository path identified; dataset repository declares Apache-2.0 | Confirm exact-file history and any file-specific notices/exclusions |
 
 No image was removed, replaced, hidden, disabled, copied locally, or modified during this follow-up.
+
+
+## Local SVG Git provenance — 2026-10-30 follow-up
+
+A per-path GitHub commit-history investigation was performed for the 32 unique SVG paths in the inventory. The commit records below are commits that touch one or more of those paths; repeated paths across commits reflect later edits, not additional assets.
+
+| Commit | SVG paths recorded in the commit |
+|---|---|
+| [`1eba5b8`](https://github.com/JM-Brun/llm-lab/commit/1eba5b8d69471b35fcc99488b1bbc9e62de14f66) | `attention-calculation-flow.svg`, `attention-vs-mlp.svg`, `embedding-space-fr.svg`, `gpt-data-flow.svg`, `queries-keys-values.svg`, `rope-fr.svg`, `tensors-fr.svg` |
+| [`1a52a8e`](https://github.com/JM-Brun/llm-lab/commit/1a52a8eb3256464537dbec49f89de832ccbaaa01) | `cross-entropy-target-probability-fr.svg`, `cross-entropy-target-probability.svg` |
+| [`787581b`](https://github.com/JM-Brun/llm-lab/commit/787581b5402d006558314891f3c7e7f52ddfd39d) | `bpe-merges-en.svg`, `bpe-merges-fr.svg`, `tokenization-language-cost.svg` |
+| [`f43db86`](https://github.com/JM-Brun/llm-lab/commit/f43db862f7b1773cc3b56072e388e589b55bb1c8) | `causal-attention-mask.svg` |
+| [`bff079f`](https://github.com/JM-Brun/llm-lab/commit/bff079f0fe14c5cb52e470e2c6ff04cc2d99defc) | `math-training-pipeline.svg` |
+| [`f215226`](https://github.com/JM-Brun/llm-lab/commit/f215226bf995ab32d41fddf6a20e50979049cb96) | `tensors-en.svg` |
+| [`1d23717`](https://github.com/JM-Brun/llm-lab/commit/1d23717bd9dfa73bc55c6b3607b63a9aeb8dad18) | `queries-keys-values-en.svg` |
+| [`415f106`](https://github.com/JM-Brun/llm-lab/commit/415f106a10bddbd62a6c259c01ba2e44cf8176be) | `attention-calculation-flow-en.svg`, `attention-calculation-flow.svg` |
+| [`c919373`](https://github.com/JM-Brun/llm-lab/commit/c9193738286b8655dd0ed129a62732ee156ab9b1) | `attention-vs-mlp-en.svg`, `gpt-data-flow-en.svg` |
+| [`94cfcb1`](https://github.com/JM-Brun/llm-lab/commit/94cfcb1dae959776bc9d16cc016f9e4957f82f35) | `token-embedding-matrix-en.svg`, `token-embedding-matrix-fr.svg` |
+| [`06f0d77`](https://github.com/JM-Brun/llm-lab/commit/06f0d77f7f39e0031101d28e73d720b32e16e6f0) | `tokenization-language-cost-fr.svg`, `tokenization-language-cost.svg` |
+| [`9a98f09`](https://github.com/JM-Brun/llm-lab/commit/9a98f0905e126b2e4d6d038920303a6735545663) | `tokenizer-evaluation-dimensions-fr.svg`, `tokenizer-evaluation-dimensions.svg` |
+| [`a6cc348`](https://github.com/JM-Brun/llm-lab/commit/a6cc348ad1995a1fd11a530e37210a7966f3d24e) | `embedding-space-en.svg` |
+| [`437b869`](https://github.com/JM-Brun/llm-lab/commit/437b8699751fe272aaf19f6580c6d1bca84e01ff) | `contextualized-embeddings-en.svg`, `contextualized-embeddings-fr.svg`, `unicode-utf8-tokenization-en.svg`, `unicode-utf8-tokenization-fr.svg` |
+| [`2c61357`](https://github.com/JM-Brun/llm-lab/commit/2c613573d9878e8a55b3334a8cb868b44e1ac44a) | `rope-en.svg` |
+| [`5cbfcfa`](https://github.com/JM-Brun/llm-lab/commit/5cbfcfaed446da2de5ebf4c01b438a4c654b300a) | `softmax-axis-comparison-en.svg`, `softmax-axis-comparison-fr.svg` |
+
+The GitHub commit API attributes these path-changing commits to the `JM-Brun` account. This provides useful repository-level provenance: the recorded changes were committed through the project owner's account. It does **not**, by itself, establish that every diagram was drawn from scratch by the account owner, that no third-party visual design was adapted, or that the account owner holds all relevant rights. Commit attribution is not a substitute for the author's confirmation of creation/adaptation history.
+
+**Updated assessment:** Git history is no longer wholly missing for the local assets. There is a path-level audit trail for the 32 unique SVGs, but authorship and third-party adaptation status still require owner confirmation. Keep the existing status as **provenance partly evidenced; authorship/licence not yet confirmed**. No asset files were modified.
+
+### Hugging Face tokenizer-pipeline SVG — exact-file history
+
+The exact upstream path `en/chapter6/tokenization_pipeline.svg` appears in commit [`07e86fc`](https://huggingface.co/datasets/huggingface-course/documentation-images/commit/07e86fc4f13286402333e65c52b7d9e8ea1293ea), titled “More svg files”, dated 19 March 2022 and attributed by the dataset UI to `mishig` (Hugging Face Staff). The commit records the SVG as added alongside a dark variant and the deletion of a PNG version; the page reports the SVG's Git LFS remote size as 50.3 kB. The dataset card declares Apache-2.0.
+
+This closes the previously noted exact-path history gap at the repository level. It does not independently identify the original illustrator or rule out third-party components. **Status: repository-level Apache-2.0 evidence and exact path history established; underlying creator/third-party notices not independently confirmed.** Retain the current attribution and remote embed unchanged.
+
+Evidence:
+- [Exact upstream commit](https://huggingface.co/datasets/huggingface-course/documentation-images/commit/07e86fc4f13286402333e65c52b7d9e8ea1293ea)
+- [Dataset repository and declared Apache-2.0 licence](https://huggingface.co/datasets/huggingface-course/documentation-images/tree/main)
+- [Hugging Face course contribution instructions for image placement](https://github.com/huggingface/course)
+
+No local or external illustration was removed, replaced, hidden, disabled, copied locally, or modified during this follow-up.
