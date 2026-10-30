@@ -47,7 +47,9 @@ project:
     - fr/tensors.qmd
     - en/tensors.qmd
     - fr/embedding-space.qmd
+    - fr/contextualized-representations.qmd
     - en/embedding-space.qmd
+    - en/contextualized-representations.qmd
     - fr/positional-encoding.qmd
     - en/positional-encoding.qmd
     - fr/exercises.qmd
@@ -95,6 +97,7 @@ website:
           contents:
             - fr/tensors.qmd
             - fr/embedding-space.qmd
+            - fr/contextualized-representations.qmd
             - fr/positional-encoding.qmd
         - section: "4 · Contextualiser avec le Transformer"
           contents:
@@ -142,6 +145,7 @@ website:
           contents:
             - en/tensors.qmd
             - en/embedding-space.qmd
+            - en/contextualized-representations.qmd
             - en/positional-encoding.qmd
         - section: "4 · Contextualize with the Transformer"
           contents:
