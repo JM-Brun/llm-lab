@@ -83,7 +83,7 @@ website:
       collapse-level: 1
       contents:
         - index.qmd
-        - section: "1 · Comprendre le système"
+        - section: "1 · S’orienter : GPT et Transformers"
           contents:
             - fr/transformer.qmd
             - fr/transformer-history.qmd
@@ -93,21 +93,22 @@ website:
             - fr/unicode-text.qmd
             - fr/tokenization-strategies.qmd
             - fr/training-examples.qmd
-        - section: "3 · Construire les représentations"
+        - section: "3 · Représenter le texte"
           contents:
             - fr/tensors.qmd
             - fr/embedding-space.qmd
             - fr/positional-encoding.qmd
-        - section: "4 · Contextualiser avec le Transformer"
+            - fr/contextualized-representations.qmd
+        - section: "4 · Calculer avec le Transformer"
           contents:
             - fr/queries-keys-values.qmd
             - fr/scaled-dot-product-attention.qmd
             - fr/causal-masking.qmd
-        - section: "5 · Prédire le prochain token"
+        - section: "5 · Produire une prédiction"
           contents:
             - fr/logits.qmd
             - fr/probabilites.qmd
-        - section: "6 · Apprendre à partir de l'erreur"
+        - section: "6 · Définir l’objectif d’apprentissage"
           contents:
             - fr/vraisemblance.qmd
             - fr/entropy.qmd
@@ -115,7 +116,7 @@ website:
             - fr/loss.qmd
             - fr/gradients.qmd
             - fr/mathematical-foundations.qmd
-        - section: "7 · Évaluer et mettre à l'épreuve"
+        - section: "7 · Évaluer et mettre à l’épreuve (transversal)"
           contents:
             - fr/evaluation-experimentale.qmd
             - fr/exercises.qmd
@@ -130,7 +131,7 @@ website:
       collapse-level: 1
       contents:
         - en/index.qmd
-        - section: "1 · Understand the system"
+        - section: "1 · Get oriented: GPT and Transformers"
           contents:
             - en/transformer.qmd
             - en/transformer-history.qmd
@@ -140,21 +141,22 @@ website:
             - en/unicode-text.qmd
             - en/tokenization-strategies.qmd
             - en/training-examples.qmd
-        - section: "3 · Build the representations"
+        - section: "3 · Represent text"
           contents:
             - en/tensors.qmd
             - en/embedding-space.qmd
             - en/positional-encoding.qmd
-        - section: "4 · Contextualize with the Transformer"
+            - en/contextualized-representations.qmd
+        - section: "4 · Compute with the Transformer"
           contents:
             - en/queries-keys-values.qmd
             - en/scaled-dot-product-attention.qmd
             - en/causal-masking.qmd
-        - section: "5 · Predict the next token"
+        - section: "5 · Produce a prediction"
           contents:
             - en/logits.qmd
             - en/probabilities.qmd
-        - section: "6 · Learn from prediction error"
+        - section: "6 · Define the learning objective"
           contents:
             - en/likelihood.qmd
             - en/entropy.qmd
@@ -162,7 +164,7 @@ website:
             - en/loss.qmd
             - en/gradients.qmd
             - en/mathematical-foundations.qmd
-        - section: "7 · Evaluate and challenge"
+        - section: "7 · Evaluate and challenge (cross-cutting)"
           contents:
             - en/experimental-evaluation.qmd
             - en/exercises.qmd

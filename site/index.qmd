@@ -11,14 +11,14 @@ toc: false
 
 ## Comment un modèle de langage produit-il le prochain token ?
 
-Un grand modèle de langage (LLM) reçoit une séquence de tokens et calcule une distribution de probabilités pour prédire la suite. Cette opération apparemment simple mobilise des données, des représentations numériques, des mécanismes d’attention et un objectif d’apprentissage.
+Un LLM autorégressif reçoit une séquence de tokens et calcule une distribution de probabilités sur le token suivant. Cette opération apparemment simple mobilise des données, des représentations numériques, des mécanismes d’attention et un objectif d’apprentissage.
 
 **LLM Lab relie ces mécanismes à leurs explications mathématiques et à leur comportement observable.** Le but n’est pas de croire une intuition parce qu’un schéma paraît convaincant : c’est de comprendre ce qu’un composant calcule, de vérifier ce qu’on peut tester et d’identifier ce qui reste une hypothèse ou une limite.
 
 <div class="hero-actions">
-[Voir le panorama visuel](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s){.btn .btn-primary}
-[Commencer par le texte et les données](fr/text-data.qmd){.btn .btn-outline-primary}
-[Explorer les concepts du site](fr/transformer.qmd){.btn .btn-outline-primary}
+[Explorer la vue d’ensemble GPT / Transformer](fr/transformer.qmd){.btn .btn-primary}
+[Suivre le parcours de construction](fr/text-data.qmd){.btn .btn-outline-primary}
+[Explorer les notions](fr/glossary.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
@@ -48,6 +48,66 @@ Le même modèle intervient dans plusieurs processus, mais ceux-ci n'ont ni le m
 <g class="flow-node"><a href="fr/evaluation-experimentale.html" aria-label="Métriques, incertitude,"><rect x="420" y="425" width="220" height="80" rx="12"/><text x="434" y="446" class="flow-kicker">MESURES + ERREURS</text><text x="434" y="471" class="flow-title">Métriques, incertitude,</text><text x="434" y="490" class="flow-subtitle">analyse qualitative</text></a></g>
 <g class="flow-node flow-node-planned"><rect x="820" y="425" width="220" height="80" rx="12"/><text x="834" y="446" class="flow-kicker">ADAPTATION · PLANIFIÉE</text><text x="834" y="471" class="flow-title">Décision sur le modèle</text><text x="834" y="490" class="flow-subtitle">données · adaptation</text></g><text x="20" y="526" class="flow-hint">Les blocs ouvrent les pages de référence actuellement disponibles.</text>
 </svg><figcaption>Schéma conceptuel : l'inférence réutilise des paramètres fixes ; l'entraînement les met à jour ; l'évaluation est transversale et informe les décisions. Les boucles et variantes réelles dépendent du protocole.</figcaption></figure>
+
+## Un parcours conceptuel en sept étapes
+
+Le menu distingue les opérations qui transforment les entrées, celles qui calculent la prédiction et celles qui définissent le signal d’apprentissage. L’ordre proposé suit les dépendances principales, sans imposer une lecture linéaire.
+
+:::: {.learning-route}
+::: {.route-step}
+**1 · S’orienter**
+
+Que fait un GPT autorégressif ? Quelle place occupent ses composants dans le cycle général d’un modèle de langage ?
+
+[Vue d’ensemble GPT / Transformer](fr/transformer.qmd) · [Repères historiques](fr/transformer-history.qmd)
+:::
+::: {.route-step}
+**2 · Préparer le texte et les données**
+
+Comment passer des documents au texte exploitable, puis aux tokens, aux identifiants et aux exemples d’entraînement ?
+
+[Texte, tokenisation et données](fr/text-data.qmd) · [Exemples d’entraînement](fr/training-examples.qmd)
+:::
+::: {.route-step}
+**3 · Représenter le texte**
+
+Comment les identifiants deviennent-ils des tenseurs et des vecteurs, puis des représentations contextualisées ?
+
+[Tenseurs](fr/tensors.qmd) · [Espace des embeddings](fr/embedding-space.qmd) · [Position](fr/positional-encoding.qmd) · [Représentations contextualisées](fr/contextualized-representations.qmd)
+:::
+::: {.route-step}
+**4 · Calculer avec le Transformer**
+
+Comment l’attention combine-t-elle l’information entre positions, et comment le masquage causal contraint-il ce calcul ?
+
+[Requêtes, clés et valeurs](fr/queries-keys-values.qmd) · [Attention](fr/scaled-dot-product-attention.qmd) · [Masquage causal](fr/causal-masking.qmd)
+:::
+::: {.route-step}
+**5 · Produire une prédiction**
+
+Comment les représentations finales deviennent-elles des scores sur le vocabulaire, puis une distribution de probabilités ?
+
+[Logits](fr/logits.qmd) · [Probabilités](fr/probabilites.qmd)
+:::
+::: {.route-step}
+**6 · Définir le signal d’apprentissage**
+
+Comment mesurer l’écart entre prédictions et cibles, formaliser l’objectif et obtenir les gradients utiles à l’apprentissage ?
+
+[Vraisemblance et entropie](fr/vraisemblance.qmd) · [Entropie croisée](fr/cross-entropy.qmd) · [Loss et gradients](fr/loss.qmd)
+:::
+::: {.route-step}
+**7 · Évaluer et mettre à l’épreuve**
+
+Comment concevoir une évaluation, analyser les erreurs et distinguer ce que les mesures permettent réellement de conclure ?
+
+[Évaluation expérimentale](fr/evaluation-experimentale.qmd) · [Exercices](fr/exercises.qmd)
+:::
+::::
+
+::: {.callout-note}
+**Périmètre actuel.** Ce parcours organise les contenus disponibles ; il ne prétend pas qu'un GPT complet est déjà implémenté. La génération détaillée, le préentraînement reproductible et l'adaptation d'un modèle pré-entraîné restent des chantiers distincts du parcours conceptuel.
+:::
 
 ## Choisir son point d’entrée
 

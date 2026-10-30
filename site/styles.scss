@@ -304,3 +304,27 @@ pre code { color: #26352b; }
   }
   .learning-card:hover { transform: none; }
 }
+
+
+/* Suggested learning route: readable as a sequence without competing with the sidebar. */
+.learning-route {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .85rem;
+  margin: 1.25rem 0 1.5rem;
+}
+.route-step {
+  min-width: 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--llm-line);
+  border-left: 4px solid var(--llm-teal);
+  border-radius: .35rem;
+  background: var(--llm-paper);
+}
+.route-step p { margin: .4rem 0 0; }
+.route-step strong { color: var(--llm-ink); }
+.route-step a { font-weight: 650; }
+@media (max-width: 700px) {
+  .learning-route { grid-template-columns: 1fr; }
+  .route-step { padding: .9rem 1rem; }
+}

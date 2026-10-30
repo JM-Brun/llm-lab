@@ -18,7 +18,7 @@ Le pipeline de référence texte → IDs → lookup dans la table d'embeddings e
 
 ## Ce qui reste identique
 
-Supposons que le mot visible `banque` soit représenté par le même ID dans deux phrases :
+Supposons que le mot visible `bank` soit représenté par le même ID dans deux phrases :
 
 - “The river bank eroded.”
 - “The financial bank collapsed.”

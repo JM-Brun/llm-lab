@@ -10,14 +10,14 @@ toc: false
 
 ## How does a language model produce the next token?
 
-A large language model (LLM) receives a sequence of tokens and computes a probability distribution to predict what comes next. This apparently simple operation relies on data, numerical representations, attention mechanisms, and a learning objective.
+An autoregressive language model receives a sequence of tokens and computes a probability distribution over the next token. This apparently simple operation relies on data, numerical representations, attention mechanisms, and a learning objective.
 
 **LLM Lab connects these mechanisms to their mathematical explanations and observable behaviour.** The goal is not to trust an intuition because a diagram looks convincing: it is to understand what a component computes, verify what can be tested, and identify what remains an assumption or limitation.
 
 <div class="hero-actions">
-[Watch the visual overview](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s){.btn .btn-primary}
-[Start with text and data](text-data.qmd){.btn .btn-outline-primary}
-[Explore concepts on this site](transformer.qmd){.btn .btn-outline-primary}
+[Explore the GPT / Transformer overview](transformer.qmd){.btn .btn-primary}
+[Follow the model-building path](text-data.qmd){.btn .btn-outline-primary}
+[Browse the concepts](glossary.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
@@ -47,6 +47,66 @@ The same model is involved in several processes, but they have different objecti
 <g class="flow-node"><a href="experimental-evaluation.html" aria-label="Metrics, uncertainty,"><rect x="420" y="425" width="220" height="80" rx="12"/><text x="434" y="446" class="flow-kicker">METRICS + ERRORS</text><text x="434" y="471" class="flow-title">Metrics, uncertainty,</text><text x="434" y="490" class="flow-subtitle">qualitative analysis</text></a></g>
 <g class="flow-node flow-node-planned"><rect x="820" y="425" width="220" height="80" rx="12"/><text x="834" y="446" class="flow-kicker">ADAPTATION · PLANNED</text><text x="834" y="471" class="flow-title">Model decision</text><text x="834" y="490" class="flow-subtitle">data · adaptation</text></g><text x="20" y="526" class="flow-hint">Blocks open the currently available canonical pages.</text>
 </svg><figcaption>Conceptual map: inference reuses fixed parameters; training updates them; evaluation is cross-cutting and informs decisions. Actual loops and variants depend on the protocol.</figcaption></figure>
+
+## A seven-step conceptual route
+
+The sidebar separates the operations that transform the input, those that compute a prediction, and those that define the learning signal. The suggested order follows the main dependencies without requiring linear reading.
+
+:::: {.learning-route}
+::: {.route-step}
+**1 · Get oriented**
+
+What does an autoregressive GPT do? How do its components fit into the overall language-model process?
+
+[GPT / Transformer overview](transformer.qmd) · [Historical landmarks](transformer-history.qmd)
+:::
+::: {.route-step}
+**2 · Prepare text and data**
+
+How do documents become usable text, then tokens, token IDs, and training examples?
+
+[Text, tokenization, and data](text-data.qmd) · [Training examples](training-examples.qmd)
+:::
+::: {.route-step}
+**3 · Represent text**
+
+How do token IDs become tensors and vectors, then context-dependent representations?
+
+[Tensors](tensors.qmd) · [Embedding space](embedding-space.qmd) · [Position](positional-encoding.qmd) · [Contextualized representations](contextualized-representations.qmd)
+:::
+::: {.route-step}
+**4 · Compute with the Transformer**
+
+How does attention combine information across positions, and how does causal masking constrain this computation?
+
+[Queries, keys, and values](queries-keys-values.qmd) · [Attention](scaled-dot-product-attention.qmd) · [Causal masking](causal-masking.qmd)
+:::
+::: {.route-step}
+**5 · Produce a prediction**
+
+How do final representations become vocabulary scores and then a probability distribution?
+
+[Logits](logits.qmd) · [Probabilities](probabilities.qmd)
+:::
+::: {.route-step}
+**6 · Define the learning signal**
+
+How do we measure the gap between predictions and targets, formalize the objective, and obtain gradients for learning?
+
+[Likelihood and entropy](likelihood.qmd) · [Cross-entropy](cross-entropy.qmd) · [Loss and gradients](loss.qmd)
+:::
+::: {.route-step}
+**7 · Evaluate and challenge**
+
+How should we design an evaluation, analyze errors, and distinguish what measurements actually support?
+
+[Experimental evaluation](experimental-evaluation.qmd) · [Exercises](exercises.qmd)
+:::
+::::
+
+::: {.callout-note}
+**Current scope.** This route organizes the content currently available; it does not claim that a complete GPT has already been implemented. Detailed generation, reproducible pretraining, and adaptation of a pretrained model remain distinct workstreams beyond the conceptual route.
+:::
 
 ## Choose your starting point
 
