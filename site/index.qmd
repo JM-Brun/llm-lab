@@ -87,7 +87,7 @@ Comment passer des documents au texte exploitable, puis aux tokens, aux identifi
 
 Comment les identifiants deviennent-ils des tenseurs et des vecteurs, puis des représentations contextualisées ?
 
-[Tenseurs](fr/tensors.qmd) · [Espace des embeddings](fr/embedding-space.qmd) · [Position](fr/positional-encoding.qmd) · [Représentations contextualisées](fr/contextualized-representations.qmd)
+[Espace des embeddings](fr/embedding-space.qmd) · [Position](fr/positional-encoding.qmd) · [Représentations contextualisées](fr/contextualized-representations.qmd) · [Référence sur les formes tensorielles (facultative)](fr/tensors.qmd)
 :::
 ::: {.route-step}
 **4 · Calculer avec le Transformer**
