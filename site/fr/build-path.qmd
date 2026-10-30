@@ -1,0 +1,65 @@
+---
+title: "Construire un petit GPT"
+subtitle: "Un parcours pratique guidé, sans prérequis mathématiques disproportionnés"
+lang: fr
+---
+
+::: {.chapter-lead}
+Ce parcours relie les explications conceptuelles à la construction progressive d'un petit GPT décodeur seul. **Il n'est pas nécessaire de maîtriser au préalable l'algèbre linéaire, le calcul tensoriel ou le calcul différentiel.** Les opérations utiles sont introduites au moment où elles deviennent nécessaires ; les développements mathématiques restent accessibles en approfondissement.
+:::
+
+::: {.callout-note}
+**État du projet.** Le parcours et les pages conceptuelles sont disponibles, mais le dépôt ne contient pas encore une implémentation complète et testée d'un GPT ni un entraînement reproductible de bout en bout. Les étapes ci-dessous distinguent donc les connaissances disponibles des réalisations pratiques encore à construire.
+:::
+
+## Le principe : apprendre juste ce qu'il faut, au bon moment
+
+Pour chaque étape, distinguer :
+
+- **Comprendre :** le mécanisme et son rôle dans le modèle.
+- **Construire :** l'opération Python/PyTorch à réaliser et à tester.
+- **Approfondir :** la théorie facultative qui explique plus largement le mécanisme.
+
+Il faut savoir lire une forme de tenseur avant de déboguer une opération, mais pas maîtriser toute la théorie des tenseurs. Il faut comprendre le rôle du gradient avant d'entraîner, mais pas suivre au préalable un cours complet de calcul différentiel.
+
+## Jalons de construction
+
+| Étape | Ce que l'on construit | Pages conceptuelles à consulter | État pratique |
+|---|---|---|---|
+| 0. Définir le modèle | Délimiter un petit GPT décodeur seul et ses objectifs | [Vue d'ensemble Transformer](transformer.qmd), [historique](transformer-history.qmd) | **Partiel** — le cadre conceptuel existe ; le panorama général des familles de LLM reste à compléter |
+| 1. Préparer le texte | Corpus documenté, tokenizer, encodage/décodage | [Texte et données](text-data.qmd), [Unicode](unicode-text.qmd), [tokenisation](tokenization-strategies.qmd) | **Conceptuel** — pas de pipeline corpus/tokenizer complet validé dans le dépôt |
+| 2. Former les exemples | Fenêtres de contexte, entrées/cibles décalées, batches et masques | [Exemples d'entraînement](training-examples.qmd) | **Conceptuel** — les règles et pièges sont expliqués ; le pipeline exécutable complet reste à établir |
+| 3. Représenter les tokens | Lookup d'embeddings et information de position | [Espace des embeddings](embedding-space.qmd), [position](positional-encoding.qmd) | **Conceptuel** — pas de pile d'embeddings GPT complète validée |
+| 4. Calculer l'attention | Projections Q/K/V, scores, softmax et masque causal | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd), [masquage causal](causal-masking.qmd) | **Conceptuel** — les mécanismes sont documentés ; le module complet et ses tests restent à construire |
+| 5. Assembler le GPT | Blocs Transformer, résidus, normalisation, MLP et projection de sortie | [Transformer](transformer.qmd), [tenseurs](tensors.qmd) en référence si nécessaire | **Partiel** — vue système disponible ; modèle complet configurable et testé absent |
+| 6. Calculer la loss | Aligner logits et cibles, calculer et agréger la perte | [Logits](logits.qmd), [probabilités](probabilites.qmd), [vraisemblance](vraisemblance.qmd), [cross-entropie](cross-entropy.qmd), [loss](loss.qmd) | **Partiel** — une référence NumPy de loss/gradient et ses tests existent ; ce n'est pas un entraînement GPT |
+| 7. Entraîner et valider | Autograd, optimiseur, boucle d'entraînement, validation et checkpoints | [Gradients](gradients.qmd), [évaluation](evaluation-experimentale.qmd) | **À construire** — pas d'entraînement GPT reproductible de bout en bout |
+| 8. Générer | Décodage autoregressif, échantillonnage et arrêt | [Transformer](transformer.qmd), [logits](logits.qmd), [probabilités](probabilites.qmd) | **Partiel** — principes expliqués ; génération complète depuis un checkpoint local non établie |
+| 9. Évaluer | Baselines, métriques, analyse d'erreurs et limites | [Évaluation expérimentale](evaluation-experimentale.qmd) | **Méthode disponible** — pas d'évaluation complète d'un GPT entraîné localement |
+
+Le détail des prérequis, preuves attendues, dépendances et critères de validation est maintenu dans le [plan de construction versionné](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
+
+## Les connaissances à acquérir au fil du parcours
+
+| Notion | Minimum utile pour construire | Approfondissement facultatif |
+|---|---|---|
+| Tenseurs | Lire `[B, L]`, `[B, L, D]`, `[B, L, V]` et vérifier les axes utilisés | Algèbre tensorielle générale, broadcasting avancé, conventions et propriétés |
+| Algèbre linéaire | Comprendre une projection et un produit matriciel dans les dimensions rencontrées | Espaces vectoriels, bases, spectre, opérateurs et preuves |
+| Probabilités | Comprendre une distribution catégorielle et le softmax | Théorie des probabilités et de l'information |
+| Dérivées et gradients | Comprendre le rôle d'une dérivée locale et appeler l'autodifférentiation | Règle de chaîne détaillée, Jacobiennes, optimisation numérique |
+| Optimisation | Comprendre le rôle du learning rate et de l'optimiseur | Convergence, conditionnement, méthodes adaptatives et analyse avancée |
+
+## Parcours complémentaires
+
+- [Comprendre les LLM](transformer.qmd) : commencer par le système et les mécanismes, sans suivre le code.
+- [Approfondir les tenseurs](tensors.qmd) : consulter les formes et axes quand ils deviennent utiles.
+- [S'exercer](exercises.qmd) : travailler les questions conceptuelles et les exercices pratiques séparément.
+- [Évaluer une expérience](evaluation-experimentale.qmd) : distinguer observation, interprétation et preuve.
+
+::: {.callout-warning}
+**Ne pas confondre ce projet pédagogique avec un entraînement industriel.** Un petit GPT initialisé aléatoirement sert à rendre inspectables les transformations et les erreurs. Il ne reproduit ni les volumes de données, ni les ressources de calcul, ni les performances d'un LLM de production.
+:::
+
+::: {.language-switch}
+**Langue :** [Français](build-path.qmd) · [English](../en/build-path.qmd)
+:::
