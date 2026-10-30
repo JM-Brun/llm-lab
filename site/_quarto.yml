@@ -87,7 +87,6 @@ website:
         - index.qmd
         - section: "Comprendre les LLM"
           contents:
-            - fr/mathematical-foundations.qmd
             - fr/transformer.qmd
             - fr/transformer-history.qmd
             - section: "Du texte aux représentations"
@@ -120,8 +119,9 @@ website:
           contents:
             - fr/exercises.qmd
             - fr/evaluation-experimentale.qmd
-        - section: "Approfondir"
+        - section: "Approfondir (facultatif)"
           contents:
+            - fr/mathematical-foundations.qmd
             - fr/tensors.qmd
             - fr/cosine-similarity.qmd
             - fr/linearite-embeddings.qmd
@@ -137,7 +137,6 @@ website:
         - en/index.qmd
         - section: "Understand LLMs"
           contents:
-            - en/mathematical-foundations.qmd
             - en/transformer.qmd
             - en/transformer-history.qmd
             - section: "From text to representations"
@@ -170,8 +169,9 @@ website:
           contents:
             - en/exercises.qmd
             - en/experimental-evaluation.qmd
-        - section: "Deepen your understanding"
+        - section: "Deepen your understanding (optional)"
           contents:
+            - en/mathematical-foundations.qmd
             - en/tensors.qmd
             - en/cosine-similarity.qmd
             - en/embedding-linearity.qmd
