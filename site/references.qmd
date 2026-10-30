@@ -125,11 +125,11 @@ Ressource vidéo et animée pour l'intuition mathématique. Ce dépôt ne télé
 :::
 
 ::: {.reference-card}
-### Cho et al. — *Transformer Explainer: Learning LLM Transformers with Interactive Visual Explanation and Experimentation*
+### Cho et al. — *Transformer Explainer: Learning LLM Transformers with Interactive Visual Explanation and Experimentation* (CHI 2026)
 
-[Explorer la démonstration interactive](https://poloclub.github.io/transformer-explainer/) · [Dépôt open source](https://github.com/poloclub/transformer-explainer) · [Article scientifique](https://arxiv.org/abs/2408.04619).
+[Explorer la démonstration interactive](https://poloclub.github.io/transformer-explainer/) · [Dépôt open source](https://github.com/poloclub/transformer-explainer) · [Article CHI 2026](https://doi.org/10.1145/3772318.3791725) · [Prépublication antérieure (2024)](https://arxiv.org/abs/2408.04619).
 
-Outil pédagogique de Georgia Tech qui exécute GPT-2 small dans le navigateur et relie une entrée textuelle aux opérations internes du modèle : représentations, attention et prédiction du prochain token. L'intérêt pour LLM Lab est de permettre l'observation manipulable d'un *forward pass*, en complément des dérivations et des schémas du dépôt. Il s'agit d'un modèle GPT-2 de 124 millions de paramètres : les observations ne doivent pas être généralisées sans précaution à toutes les architectures récentes. Le code source est publié sous licence MIT ; cette licence ne s'étend pas automatiquement aux contenus externes éventuellement intégrés au site.
+Outil pédagogique de Georgia Tech qui exécute GPT-2 dans le navigateur et relie une entrée textuelle aux opérations internes du modèle : représentations, attention et prédiction du prochain token. L'article CHI 2026 décrit notamment une visualisation progressive entre niveaux d'abstraction et une étude utilisateur ; la prépublication arXiv de 2024 est une version antérieure du travail et ne doit pas être confondue avec la publication de 2026. L'intérêt pour LLM Lab est de permettre l'observation manipulable d'un *forward pass*, en complément des dérivations et des schémas du dépôt. La démonstration utilise GPT-2 small (124 millions de paramètres) : les observations ne doivent pas être généralisées sans précaution à toutes les architectures récentes. Le code source est publié sous licence MIT ; cette licence ne s'étend pas automatiquement aux contenus externes éventuellement intégrés au site.
 :::
 
 ## Ressources pédagogiques vidéo
