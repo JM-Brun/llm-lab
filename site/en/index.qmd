@@ -10,7 +10,7 @@ toc: false
 
 ## How does a language model produce the next token?
 
-A large language model (LLM) receives a sequence of tokens and computes a probability distribution to predict what comes next. This apparently simple operation relies on data, numerical representations, attention mechanisms, and a learning objective.
+An autoregressive language model receives a sequence of tokens and computes a probability distribution over the next token. This apparently simple operation relies on data, numerical representations, attention mechanisms, and a learning objective.
 
 **LLM Lab connects these mechanisms to their mathematical explanations and observable behaviour.** The goal is not to trust an intuition because a diagram looks convincing: it is to understand what a component computes, verify what can be tested, and identify what remains an assumption or limitation.
 
