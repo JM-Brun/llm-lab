@@ -51,6 +51,25 @@ Ce schéma est conceptuel : les tokeniseurs réels diffèrent par leurs unités 
 :::
 
 
+## Des documents sources aux séquences prêtes pour l'entraînement
+
+Le tokenizer n'est qu'un élément d'un pipeline de données plus large. Avant de devenir des IDs, les textes doivent être rassemblés et préparés. Les étapes ci-dessous décrivent les principales décisions, pas un ordre d'exécution universel : certaines opérations sont itératives et leur ordre dépend des sources, du protocole d'évaluation et de l'objectif d'entraînement.
+
+| Étape | Question principale | Décisions typiques |
+|---|---|---|
+| **1. Collecter et délimiter les sources** | Quels contenus sont admissibles pour ce modèle et cet objectif ? | Sélectionner les sources ; conserver leur provenance, les droits d'utilisation, les licences et les contraintes de collecte. |
+| **2. Parser et filtrer les documents** | Chaque élément est-il exploitable et approprié ? | Extraire texte et métadonnées ; traiter les documents mal formés ou vides ; appliquer des filtres documentés de qualité, de langue, de sécurité et de conformité. |
+| **3. Détecter les doublons** | Des documents identiques ou proches sont-ils surreprésentés ? | Effectuer une déduplication exacte et, si elle est justifiée, approximative. Conserver assez de provenance pour auditer les suppressions. |
+| **4. Définir les partitions** | Quelles données doivent rester inconnues lors de l'évaluation ? | Découper à une unité adaptée (par exemple source, famille de documents, utilisateur ou période), plutôt que de répartir aléatoirement des fragments d'un même document. |
+| **5. Entraîner et figer le tokenizer** | Quels textes peuvent influencer son vocabulaire et ses règles ? | Pour une évaluation held-out, apprendre le tokenizer uniquement sur la partition d'entraînement, puis le figer et utiliser la même version pour toutes les partitions. |
+| **6. Encoder et construire les exemples** | Comment les documents deviennent-ils des entrées et des cibles ? | Encoder avec le tokenizer figé ; appliquer les conventions choisies pour les frontières de documents, fenêtres, packing et masques. Voir [les exemples d'entraînement](training-examples.qmd). |
+
+**La déduplication et le partitionnement doivent être conçus ensemble.** Dédupliquer avant le découpage peut empêcher que des copies soient réparties entre plusieurs partitions ; un partitionnement par groupes suivi d'un audit des quasi-doublons entre partitions est une autre approche possible. L'exigence centrale est d'éviter que des copies ou fragments apparentés rendent l'évaluation artificiellement facile. L'unité et l'ordre adaptés dépendent de la généralisation que l'on souhaite mesurer.
+
+Dans un protocole held-out classique, les documents de validation et de test ne doivent pas influencer le vocabulaire d'un tokenizer appris. C'est une précaution d'évaluation, pas l'affirmation que tout pipeline de préentraînement en production possède la même structure train/validation/test. De même, le filtrage et la déduplication concernent le corpus ; la normalisation et la pré-tokenisation sont des transformations propres au tokenizer, appliquées lors de l'encodage du texte.
+
+Après l'encodage, la page suivante explique comment les flux de tokens deviennent des paires entrée-cible, des fenêtres, des séquences packées et des masques. Elle ne prescrit pas une stratégie universelle de packing.
+
 ### Le vocabulaire minimal
 
 | Terme | Rôle dans le pipeline |
