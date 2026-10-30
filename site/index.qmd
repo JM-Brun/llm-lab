@@ -23,6 +23,18 @@ Un LLM autorégressif reçoit une séquence de tokens et calcule une distributio
 ::::
 
 
+## Un projet fil rouge : construire un petit GPT
+
+Le parcours vise à construire progressivement un **petit GPT décodeur seul, initialisé aléatoirement**, puis à le valider et à générer du texte. Ce fil rouge relie les notions du site à un même objet concret : corpus et tokenizer, exemples d’entraînement, tenseurs, embeddings, attention, logits, fonction de perte, optimisation et génération.
+
+<div class="learning-card learning-card-featured">
+  <p class="eyebrow">OBJECTIF PÉDAGOGIQUE · EN CONSTRUCTION</p>
+  <h3>Du texte brut à un modèle génératif inspectable</h3>
+  <p>Le corpus français, sa provenance et sa licence devront être explicitement documentés avant toute expérience d’entraînement. La taille du modèle restera volontairement modeste pour rendre les calculs et les erreurs inspectables.</p>
+  <p><strong>Point de départ :</strong> comprendre chaque transformation et ses dimensions avant d'assembler ou d'entraîner le modèle.</p>
+  [Voir les jalons, prérequis et critères de preuve](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md){.card-link}
+</div>
+
 ## Trois processus à distinguer
 
 Le même modèle intervient dans plusieurs processus, mais ceux-ci n'ont ni le même objectif ni la même dynamique :
