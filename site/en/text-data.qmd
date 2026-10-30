@@ -82,6 +82,12 @@ Segmentation is neither perfect linguistic analysis nor a measure of meaning. A 
 
 The figure illustrates that segmentation depends on a tokenizer’s rules and vocabulary; it does not show that one segmentation is better. For an empirical comparison, use the same texts, record tokenizer and version, and report measurements by language and text type. See [Ahia et al. (2023)](https://aclanthology.org/2023.emnlp-main.614/) for a study of tokenization costs across languages.
 
+### Evaluate trade-offs beyond token count
+
+Token count is a measure of sequence length, not an overall quality score. A rigorous evaluation distinguishes representation efficiency, downstream task performance, differences across languages, and protocol reproducibility. Results depend on the corpus, task, model, and budgets being compared.
+
+For the definitions and research behind these dimensions, see **[Evaluating a tokenizer: metrics, downstream performance, and multilingual equity](tokenization-strategies.qmd#tokenizer-evaluation)**.
+
 ### Where to explore the mechanisms
 
 This overview stays focused on the pipeline. Technical details live on dedicated pages:
