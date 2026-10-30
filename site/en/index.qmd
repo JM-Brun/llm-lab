@@ -56,9 +56,9 @@ The sidebar follows a chain of understanding: **from data to representations, fr
 ::: {.route-step}
 **1 · Get oriented**
 
-What problem does an LLM solve? Where do Transformers, other model families, and the main lifecycle stages fit?
+What does an autoregressive GPT do? How do its main components and prediction loop fit together?
 
-[System overview](transformer.qmd) · [Historical landmarks](transformer-history.qmd)
+[System overview](transformer.qmd) · [Historical landmarks](transformer-history.qmd) · [Glossary](glossary.qmd)
 :::
 ::: {.route-step}
 **2 · Prepare the data**
