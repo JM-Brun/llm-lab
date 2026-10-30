@@ -66,7 +66,7 @@ Un token spécial est une entrée réservée du vocabulaire, associée à un ID 
 
 Certaines API rendent ce choix explicite au moyen d'une liste d'autorisation. Par exemple, `tiktoken` et `minbpe` de Karpathy exposent des paramètres qui contrôlent les graphies de tokens spéciaux autorisées. Ce comportement dépend de l'implémentation ; ce n'est pas une règle universelle des tokenizers. Dans une application, n'autorisez pas indistinctement tous les tokens spéciaux dans du texte utilisateur non fiable ; les tokens réservés devraient normalement être insérés intentionnellement par une couche de formatage de confiance.
 
-Voir l'[implémentation pédagogique](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) de `tiktoken` et les [notes de `minbpe` sur les tokens spéciaux](https://github.com/karpathy/minbpe/blob/master/README.md).
+Voir l'[API d'encodage](https://github.com/openai/tiktoken/blob/main/tiktoken/core.py) de `tiktoken` et les [notes de `minbpe` sur les tokens spéciaux](https://github.com/karpathy/minbpe/blob/master/README.md).
 
 Ces étapes ne sont pas toutes présentes de la même façon dans chaque tokenizer. Le nom de l'algorithme ne suffit donc pas à reproduire une segmentation : il faut aussi connaître la configuration et les versions.
 
