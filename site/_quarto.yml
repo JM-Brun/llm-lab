@@ -112,6 +112,9 @@ website:
                 - fr/cross-entropy.qmd
                 - fr/loss.qmd
                 - fr/gradients.qmd
+            - section: "Repères mathématiques (facultatifs)"
+              contents:
+                - fr/mathematical-foundations.qmd
         - section: "Construire un petit GPT"
           contents:
             - fr/build-path.qmd
@@ -119,9 +122,8 @@ website:
           contents:
             - fr/exercises.qmd
             - fr/evaluation-experimentale.qmd
-        - section: "Approfondir (facultatif)"
+        - section: "Approfondir"
           contents:
-            - fr/mathematical-foundations.qmd
             - fr/tensors.qmd
             - fr/cosine-similarity.qmd
             - fr/linearite-embeddings.qmd
@@ -162,6 +164,9 @@ website:
                 - en/cross-entropy.qmd
                 - en/loss.qmd
                 - en/gradients.qmd
+            - section: "Mathematical orientation (optional)"
+              contents:
+                - en/mathematical-foundations.qmd
         - section: "Build a small GPT"
           contents:
             - en/build-path.qmd
@@ -169,9 +174,8 @@ website:
           contents:
             - en/exercises.qmd
             - en/experimental-evaluation.qmd
-        - section: "Deepen your understanding (optional)"
+        - section: "Deepen your understanding"
           contents:
-            - en/mathematical-foundations.qmd
             - en/tensors.qmd
             - en/cosine-similarity.qmd
             - en/embedding-linearity.qmd
