@@ -87,7 +87,6 @@ website:
         - index.qmd
         - section: "Comprendre les LLM"
           contents:
-            - fr/mathematical-foundations.qmd
             - fr/transformer.qmd
             - fr/transformer-history.qmd
             - section: "Du texte aux représentations"
@@ -113,6 +112,9 @@ website:
                 - fr/cross-entropy.qmd
                 - fr/loss.qmd
                 - fr/gradients.qmd
+            - section: "Repères mathématiques (facultatifs)"
+              contents:
+                - fr/mathematical-foundations.qmd
         - section: "Construire un petit GPT"
           contents:
             - fr/build-path.qmd
@@ -137,7 +139,6 @@ website:
         - en/index.qmd
         - section: "Understand LLMs"
           contents:
-            - en/mathematical-foundations.qmd
             - en/transformer.qmd
             - en/transformer-history.qmd
             - section: "From text to representations"
@@ -163,6 +164,9 @@ website:
                 - en/cross-entropy.qmd
                 - en/loss.qmd
                 - en/gradients.qmd
+            - section: "Mathematical orientation (optional)"
+              contents:
+                - en/mathematical-foundations.qmd
         - section: "Build a small GPT"
           contents:
             - en/build-path.qmd

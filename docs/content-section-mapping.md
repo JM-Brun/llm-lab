@@ -40,7 +40,7 @@ Paths are the canonical source files. French and English counterparts are listed
 | `cross-entropy.qmd` / `cross-entropy.qmd` | Understand + Build bridge | Explain token-level negative log-likelihood and the training objective | Keep the identities needed for the LLM objective; Build owns PyTorch use, reduction and tests |
 | `loss.qmd` / `loss.qmd` | Understand + Build bridge | Explain target alignment, masking and objective aggregation | Keep conceptual objective and pitfalls; implementation claims must match actual code/tests |
 | `gradients.qmd` / `gradients.qmd` | Understand + Deepen | Explain how loss changes flow toward model parameters | Keep the LLM-specific gradient-flow story; detailed chain-rule/optimization theory remains optional |
-| `mathematical-foundations.qmd` / `mathematical-foundations.qmd` | Understand (orientation map) | Compact map from logits to probabilities, likelihood, loss and gradients | Keep as an applied map, not a general prerequisite syllabus; its existing framing already says this is not a prerequisite course |
+| `mathematical-foundations.qmd` / `mathematical-foundations.qmd` | Understand (optional orientation map) | Compact LLM-specific map from logits to probabilities, likelihood, loss and gradients | Keep in Understand because it synthesizes the LLM learning signal; place it after the core conceptual sequence and label it optional, never as a prerequisite before the Transformer overview |
 | `tensors.qmd` / `tensors.qmd` | Deepen (with Build links) | Reference for tensor shapes, axes, projections and common LLM operations | Keep Transformer-specific shape semantics; state explicitly that advanced tensor theory is not a prerequisite; Build teaches only operations as needed |
 | `cosine-similarity.qmd` / `cosine-similarity.qmd` | Deepen / critical case study | Examine a geometric measure and its limitations in representation analysis | Keep optional and link from embedding concepts; do not make it part of the minimum GPT build |
 | `linearite-embeddings.qmd` / `embedding-linearity.qmd` | Deepen / critical case study | Examine and challenge linearity claims about embeddings | Keep as optional research-oriented reading, not a core construction step |
@@ -68,7 +68,27 @@ The Build route is a **sequence of implementation checkpoints**, not a parallel 
 
 A milestone may use a short local explanation of a tensor operation, derivative, or probability calculation. That does **not** make a full mathematics course a prerequisite. The implementation should teach the smallest useful operation at the point of use, with a link to Deepen for readers who want the derivation.
 
-## 4. Prerequisite policy: minimum viable knowledge, then optional depth
+## 4. Milestone-to-evidence traceability
+
+This matrix deliberately distinguishes a conceptual page from an implemented and tested component. Links in the implementation column identify maintained repository evidence; **“not present” is an explicit gap**, not an invitation to infer implementation from prose or illustrative snippets.
+
+| Milestone | Canonical concept pages | Optional deepening | Maintained implementation / test evidence | Evidence status |
+|---|---|---|---|---|
+| G0 — Scope the model | [Transformer](../site/fr/transformer.qmd) / [EN](../site/en/transformer.qmd); [history](../site/fr/transformer-history.qmd) / [EN](../site/en/transformer-history.qmd) | No separate deep dive required for the first system-level orientation | No model implementation; conceptual material only. Broad LLM panorama: #108. | Partial — system overview exists; broader LLM framing remains open |
+| G1 — Prepare text and tokenizer | [Text and data](../site/fr/text-data.qmd) / [EN](../site/en/text-data.qmd); [Unicode](../site/fr/unicode-text.qmd) / [EN](../site/en/unicode-text.qmd); [tokenization](../site/fr/tokenization-strategies.qmd) / [EN](../site/en/tokenization-strategies.qmd) | Unicode and tokenizer details within the canonical pages | No maintained end-to-end corpus/tokenizer pipeline or associated test suite is established. | Conceptual — implementation gap; #82 / #114 |
+| G2 — Create training examples | [Training examples](../site/fr/training-examples.qmd) / [EN](../site/en/training-examples.qmd) | [Tensor reference](../site/fr/tensors.qmd) / [EN](../site/en/tensors.qmd) for indexing and shapes only | No complete corpus-to-window/batch pipeline or dedicated alignment/split tests are established. | Conceptual — implementation gap; #58 / #78 |
+| G3 — Represent tokens | [Embedding space](../site/fr/embedding-space.qmd) / [EN](../site/en/embedding-space.qmd); [position](../site/fr/positional-encoding.qmd) / [EN](../site/en/positional-encoding.qmd); [contextualized representations](../site/fr/contextualized-representations.qmd) / [EN](../site/en/contextualized-representations.qmd) | [Tensors](../site/fr/tensors.qmd) / [EN](../site/en/tensors.qmd); RoPE details in positional-encoding | No complete GPT embedding/position module or associated tests are established. | Conceptual — active foundational gate #82 |
+| G4 — Implement attention | [Q/K/V](../site/fr/queries-keys-values.qmd) / [EN](../site/en/queries-keys-values.qmd); [attention](../site/fr/scaled-dot-product-attention.qmd) / [EN](../site/en/scaled-dot-product-attention.qmd); [causal masking](../site/fr/causal-masking.qmd) / [EN](../site/en/causal-masking.qmd) | [Tensors](../site/fr/tensors.qmd) / [EN](../site/en/tensors.qmd); attention derivations in the canonical attention page | No maintained complete attention module or causal-invariance test suite is established. | Conceptual — implementation gap; #78–#81 |
+| G5 — Assemble GPT | [Transformer](../site/fr/transformer.qmd) / [EN](../site/en/transformer.qmd) | [Tensors](../site/fr/tensors.qmd) / [EN](../site/en/tensors.qmd); [positional encoding](../site/fr/positional-encoding.qmd) / [EN](../site/en/positional-encoding.qmd) | No complete configurable GPT model, forward/backward test suite or parameter-count validation is established. | Partial concept coverage — implementation gap; #78 |
+| G6 — Compute objective | [Logits](../site/fr/logits.qmd) / [EN](../site/en/logits.qmd); [probabilities](../site/fr/probabilites.qmd) / [EN](../site/en/probabilities.qmd); [likelihood](../site/fr/vraisemblance.qmd) / [EN](../site/en/likelihood.qmd); [cross-entropy](../site/fr/cross-entropy.qmd) / [EN](../site/en/cross-entropy.qmd); [loss](../site/fr/loss.qmd) / [EN](../site/en/loss.qmd) | [Mathematical foundations](../site/fr/mathematical-foundations.qmd) / [EN](../site/en/mathematical-foundations.qmd); [tensors](../site/fr/tensors.qmd) / [EN](../site/en/tensors.qmd) | [NumPy loss reference](../src/llm_lab/foundations/losses.py); [unit tests](../tests/unit/test_losses.py). These validate the isolated reference, not integration into a GPT training loop. | Partial — isolated loss/gradient reference and tests exist; integration gap |
+| G7 — Train and validate | [Gradients](../site/fr/gradients.qmd) / [EN](../site/en/gradients.qmd); [experimental evaluation](../site/fr/evaluation-experimentale.qmd) / [EN](../site/en/experimental-evaluation.qmd) | [Mathematical foundations](../site/fr/mathematical-foundations.qmd) / [EN](../site/en/mathematical-foundations.qmd) | No reproducible end-to-end GPT training loop, validation run or checkpoint evidence is established. | Planned — major implementation gap |
+| G8 — Generate | [Transformer](../site/fr/transformer.qmd) / [EN](../site/en/transformer.qmd); [logits](../site/fr/logits.qmd) / [EN](../site/en/logits.qmd); [probabilities](../site/fr/probabilites.qmd) / [EN](../site/en/probabilities.qmd) | Decoding variants should be documented as a distinct inference deepening when implemented. | No complete local-checkpoint generation module or stopping/sampling tests are established. | Partial concepts — implementation gap; #84 |
+| G9 / E1 — Evaluate | [Experimental evaluation](../site/fr/evaluation-experimentale.qmd) / [EN](../site/en/experimental-evaluation.qmd) | [Cosine similarity](../site/fr/cosine-similarity.qmd) / [EN](../site/en/cosine-similarity.qmd); [embedding linearity](../site/fr/linearite-embeddings.qmd) / [EN](../site/en/embedding-linearity.qmd) | No end-to-end evaluation report for a locally trained GPT is established. | Method and critical case studies exist; complete model evaluation gap |
+| A1–A4 — Adapt pretrained models | No complete bilingual pathway currently established. | Relevant mathematics and tensor references remain optional, to be linked when each adaptation lesson exists. | No complete maintained checkpoint-loading, classification, SFT, LoRA/QLoRA implementation-and-test pathway is established. | Planned — separate branch, not part of G0–G9 |
+
+The matrix is a **repository evidence snapshot**, not a claim that every absent artifact must be created immediately. Update it when code/tests land, and keep status aligned with the corresponding milestone in [learning-path.md](learning-path.md). The concept-to-code inventory remains owned by [#78](https://github.com/JM-Brun/llm-lab/issues/78); this matrix does not duplicate that issue's detailed implementation sequencing.
+
+## 5. Prerequisite policy: minimum viable knowledge, then optional depth
 
 Use three explicit levels:
 
@@ -85,7 +105,7 @@ Examples:
 
 Never label a concept as a mandatory prerequisite merely because it is mathematically related. State the specific operation or claim that requires it.
 
-## 5. Editorial rules for page changes
+## 6. Editorial rules for page changes
 
 - **Do not split by subject name alone.** “Attention” can have a conceptual lesson, a tested implementation checkpoint, and a mathematical deep dive because these answer different questions.
 - **Do not duplicate canonical explanations.** Build pages link to Understand; Deepen links back to the applied concept; exercises link to both.
@@ -95,7 +115,7 @@ Never label a concept as a mandatory prerequisite merely because it is mathemati
 - **Do not advertise absent practical content.** Build milestones must carry explicit status until code, tests and evidence exist.
 - **Keep bilingual parity.** Every reader-facing route and major lesson must have equivalent FR/EN learning objectives, caveats, status and links.
 
-## 6. Relationship to existing planning documents
+## 7. Relationship to existing planning documents
 
 - This file owns the **page-by-page editorial classification**.
 - [Learning path](learning-path.md) owns the dependency-aware build sequence and evidence criteria.
