@@ -136,13 +136,9 @@ Cette addition n'est **pas universelle**. Par exemple, [RoPE](positional-encodin
 
 Pendant l'entraînement, les gradients peuvent modifier les lignes de la table d'embeddings utilisées par les exemples. La sélection par indice ne rend pas, à elle seule, un vecteur contextuel : la contextualisation intervient dans les couches suivantes du réseau. Voir les [tenseurs](tensors.qmd) pour les conventions de dimensions et [du texte aux tokens](text-data.qmd) pour l'étape précédente du tokenizer.
 
-### Même token, contextes différents
+### De l'embedding initial à l'état contextualisé
 
-![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Deux phrases utilisent bank dans des contextes différents. Sous l'hypothèse d'un même ID, les deux occurrences partagent l'embedding initial, puis peuvent produire des états contextualisés différents." width=100%}
-
-Cette figure est une illustration originale, motivée par l'étude d'[Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). Elle montre le principe, pas des vecteurs mesurés : on suppose que `bank` correspond au même token dans les deux phrases. Selon le tokenizer, un mot visible peut être constitué de plusieurs tokens.
-
-L'embedding initial est récupéré à partir de l'ID ; la représentation contextualisée dépend ensuite des autres tokens, de l'architecture et de la couche considérée. Cela ne signifie pas que chaque occurrence obtient un vecteur entièrement différent à chaque couche, ni que ces vecteurs se séparent toujours selon le sens humain attendu.
+Un même ID récupère le même embedding initial, mais sa représentation peut évoluer lorsque le Transformer traite l'information positionnelle et les tokens environnants. Cette distinction mérite un complément ciblé : [Pourquoi un même token peut-il avoir plusieurs représentations contextualisées ?](contextualized-representations.qmd).
 
 ## Une carte de représentations
 
