@@ -36,6 +36,15 @@ Le diagramme du masque causal affiché dans le chapitre est créé pour ce proje
 - **Provenance :** illustrations originales du dépôt, sans image externe incorporée. Les ressources de Jay Alammar et de 3Blue1Brown sont des références de conception pédagogique, pas les sources graphiques de ces SVG.
 - **Limite :** le diagramme montre la structure conceptuelle ; il ne visualise pas à lui seul les dimensions exactes, les conventions de masque ou l'effet causal des poids sur la sortie finale.
 
+## Illustration externe — texte, IDs, embeddings et contextualisation
+
+- **Auteur :** Rushang Chauhan.
+- **Article source :** [*Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/), publié le 30 avril 2026.
+- **Image :** couverture/illustration de l'article, intégrée dans les pages française et anglaise sur les représentations contextualisées.
+- **Rôle pédagogique :** donner une carte visuelle du passage texte → IDs → table d'embeddings → information positionnelle → attention → représentations contextualisées. La figure est un schéma d'orientation, pas une spécification universelle de l'injection de position ; la page précise notamment le cas de RoPE.
+- **Hébergement :** image intégrée depuis le CDN LinkedIn ; aucune copie locale n'a pu être créée dans cet environnement. Le lien CDN est signé et peut évoluer ; une copie locale ne devra être ajoutée qu'après obtention d'un fichier source téléchargeable et vérification des conditions de réutilisation.
+- **Droits :** attribution fournie à titre de provenance ; elle ne constitue pas une licence de réutilisation. Vérifier les conditions applicables auprès de l'auteur avant redistribution ou modification.
+
 ## Illustrations intégrées
 
 ::: {.reference-card}
