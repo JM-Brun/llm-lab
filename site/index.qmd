@@ -11,7 +11,7 @@ toc: false
 
 ## Comment un modèle de langage produit-il le prochain token ?
 
-Un grand modèle de langage (LLM) reçoit une séquence de tokens et calcule une distribution de probabilités pour prédire la suite. Cette opération apparemment simple mobilise des données, des représentations numériques, des mécanismes d’attention et un objectif d’apprentissage.
+Un LLM autorégressif reçoit une séquence de tokens et calcule une distribution de probabilités sur le token suivant. Cette opération apparemment simple mobilise des données, des représentations numériques, des mécanismes d’attention et un objectif d’apprentissage.
 
 **LLM Lab relie ces mécanismes à leurs explications mathématiques et à leur comportement observable.** Le but n’est pas de croire une intuition parce qu’un schéma paraît convaincant : c’est de comprendre ce qu’un composant calcule, de vérifier ce qu’on peut tester et d’identifier ce qui reste une hypothèse ou une limite.
 
