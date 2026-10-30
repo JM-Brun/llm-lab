@@ -104,6 +104,26 @@ Une distinction connexe est importante pour la couverture : un tokenizer fondé 
 | **WordPiece** | Sélection d'unités liée à un critère de vraisemblance, puis encodage selon des règles propres à l'implémentation | Ce n'est pas simplement BPE sous un autre nom ; certains systèmes marquent les continuations avec `##` |
 | **Unigramme** | Modèle probabiliste sur des sous-mots candidats, souvent réduit par élagage | Le résultat dépend du modèle, des candidats et des conventions |
 
+### En quoi WordPiece diffère de BPE
+
+Dans l'explication courante de l'apprentissage WordPiece, les paires d'unités adjacentes sont classées au moyen d'un score lié à leur cooccurrence relativement à la fréquence de chaque unité prise séparément. Une forme simplifiée est :
+
+\\[\\operatorname{score}(a,b)=\\frac{f(ab)}{f(a)\\,f(b)}\\]
+
+où les fréquences sont estimées sur le corpus d'apprentissage. Ce score favorise une paire dont la fréquence conjointe est élevée relativement à celle de ses composants ; il ne sélectionne donc pas simplement la paire la plus fréquente, comme dans le BPE de base. **Réserve :** la procédure originale d'apprentissage WordPiece de Google n'est pas entièrement spécifiée dans une implémentation publique de référence. Hugging Face présente sa description comme une reconstruction : cette formule est explicative et ne garantit pas que tous les entraîneurs WordPiece l'utilisent exactement.
+
+À l'encodage, les implémentations WordPiece courantes utilisent une recherche gloutonne du **plus long fragment correspondant** au vocabulaire. Dans les tokenizers de type BERT, les fragments de continuation sont conventionnellement préfixés par `##`. Si un mot entier ne peut pas être segmenté selon les règles configurées, un tokenizer tel que BERT peut produire un unique `[UNK]` pour ce mot plutôt que de conserver une segmentation partielle. Ce sont des conventions d'implémentation, pas des propriétés universelles de tout tokenizer WordPiece.
+
+Voir l'[explication WordPiece de Hugging Face](https://huggingface.co/learn/llm-course/fr/chapter6/6) et la [documentation du modèle WordPiece](https://huggingface.co/docs/tokenizers/python/latest/api/reference.html#tokenizers.models.WordPiece).
+
+### En quoi Unigramme diffère des tokenizers fondés sur des fusions
+
+Un tokenizer Unigramme commence avec un vocabulaire candidat relativement large, auquel sont associées des probabilités. L'apprentissage retire progressivement les candidats dont la suppression entraîne la plus faible augmentation de la loss du modèle, afin de réduire le vocabulaire vers la taille visée. Il s'agit d'un élagage dans un modèle probabiliste de segmentation, et non d'une succession de fusions de paires.
+
+À l'encodage, plusieurs segmentations peuvent être possibles. L'algorithme de Viterbi détermine la segmentation de probabilité maximale selon le modèle appris. Cela contraste avec l'application d'un ordre de fusions appris par BPE et avec la recherche gloutonne courante du plus long fragment de WordPiece. Voir l'[explication Unigram de Hugging Face](https://huggingface.co/learn/llm-course/fr/chapter6/7) et [SentencePiece](https://github.com/google/sentencepiece).
+
+**En une phrase :** BPE applique des fusions classées ; WordPiece utilise couramment une segmentation gloutonne par plus long fragment après une construction de vocabulaire liée à la vraisemblance ; Unigramme sélectionne la segmentation complète la plus probable selon un modèle probabiliste appris.
+
 **SentencePiece** est une bibliothèque pouvant entraîner BPE ou unigramme à partir de texte brut ; ce n'est pas un algorithme unique. **Hugging Face Tokenizers** est une bibliothèque de plusieurs modèles et composants. **tiktoken** est une implémentation BPE avec des encodages précis. Ces noms ne se situent donc pas tous au même niveau de comparaison.
 
 
@@ -136,6 +156,8 @@ La paire la plus fréquente est ex æquo : `l + o` et `o + w` apparaissent toute
 | 2 : fusion `lo + w` | `low · </w>` | `low · e · r · </w>` | `low · e · s · t · </w>` |
 
 Le tableau de fréquences rend visible le choix glouton ; cela ne signifie pas que BPE découvre les morphèmes ou un vocabulaire optimal. Il s'agit d'une convention pédagogique au niveau du mot avec un marqueur de fin, pas d'un tokenizer byte-level de production complet. Les sorties réelles dépendent aussi du pré-découpage, des unités initiales, des fréquences du corpus, des tokens spéciaux et du départage propre à l'implémentation. Pour manipuler les paires candidates, utiliser le [BPE Explainer de Müller et Steinbach](https://philipmueller.dev/bpe-visualization/).
+
+**Précision historique.** L'algorithme de [compression par paires d'octets de Gage (1994)](https://www.derczynski.com/papers/archive/BPE_Gage.pdf) est une méthode générale de compression : il remplace itérativement des paires d'octets adjacents fréquentes par des valeurs d'octet inutilisées et enregistre les substitutions pour la décompression. Le BPE sous-lexical en NLP adapte l'idée de fusion de paires pour construire un vocabulaire de tokens et un ordre de fusion à partir d'unités textuelles. Les unités de base, le pré-découpage, la construction du vocabulaire et la procédure d'encodage diffèrent ; le BPE byte-level de type GPT n'est qu'une conception particulière. Gage constitue donc une référence historique pour l'idée de remplacement de paires, pas une spécification des tokenizers modernes de LLM.
 
 ### Apprentissage du tokenizer et encodage à l'inférence
 
