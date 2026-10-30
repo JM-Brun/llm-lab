@@ -57,9 +57,9 @@ Le menu suit une chaîne de compréhension : **des données vers les représenta
 ::: {.route-step}
 **1 · S'orienter**
 
-Quel problème un LLM résout-il ? Où se situent le Transformer, les autres familles de modèles et les grandes étapes du cycle de vie ?
+Que fait un GPT autorégressif ? Comment s'organisent ses principales composantes et son cycle de prédiction ?
 
-[Vue d'ensemble du système](fr/transformer.qmd) · [Repères historiques](fr/transformer-history.qmd)
+[Vue d'ensemble du système](fr/transformer.qmd) · [Repères historiques](fr/transformer-history.qmd) · [Glossaire](fr/glossary.qmd)
 :::
 ::: {.route-step}
 **2 · Préparer les données**
