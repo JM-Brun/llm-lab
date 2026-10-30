@@ -83,6 +83,10 @@ website:
       collapse-level: 1
       contents:
         - index.qmd
+        - section: "Repères et prérequis"
+          contents:
+            - fr/mathematical-foundations.qmd
+            - fr/glossary.qmd
         - section: "1 · S’orienter : GPT et Transformers"
           contents:
             - fr/transformer.qmd
@@ -115,22 +119,26 @@ website:
             - fr/cross-entropy.qmd
             - fr/loss.qmd
             - fr/gradients.qmd
-            - fr/mathematical-foundations.qmd
         - section: "7 · Évaluer et mettre à l’épreuve (transversal)"
           contents:
             - fr/evaluation-experimentale.qmd
+        - section: "S’exercer"
+          contents:
             - fr/exercises.qmd
         - section: "Approfondir et prendre du recul"
           contents:
             - fr/cosine-similarity.qmd
             - fr/linearite-embeddings.qmd
-        - fr/glossary.qmd
     - id: en
       title: "LLM Lab · English"
       style: "docked"
       collapse-level: 1
       contents:
         - en/index.qmd
+        - section: "Foundations and prerequisites"
+          contents:
+            - en/mathematical-foundations.qmd
+            - en/glossary.qmd
         - section: "1 · Get oriented: GPT and Transformers"
           contents:
             - en/transformer.qmd
@@ -163,16 +171,16 @@ website:
             - en/cross-entropy.qmd
             - en/loss.qmd
             - en/gradients.qmd
-            - en/mathematical-foundations.qmd
         - section: "7 · Evaluate and challenge (cross-cutting)"
           contents:
             - en/experimental-evaluation.qmd
+        - section: "Practice"
+          contents:
             - en/exercises.qmd
         - section: "Deep dives and critical perspectives"
           contents:
             - en/cosine-similarity.qmd
             - en/embedding-linearity.qmd
-        - en/glossary.qmd
   page-footer:
     left: "LLM Lab · Mathématiques, code et expériences reproductibles"
     right:
