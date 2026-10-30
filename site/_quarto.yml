@@ -91,23 +91,25 @@ website:
           contents:
             - fr/transformer.qmd
             - fr/transformer-history.qmd
-        - section: "2 · Préparer le texte et les données"
+        - section: "Pipelines de données & représentations"
           contents:
-            - fr/text-data.qmd
-            - fr/unicode-text.qmd
-            - fr/tokenization-strategies.qmd
-            - fr/training-examples.qmd
-        - section: "3 · Représenter le texte"
-          contents:
-            - fr/tensors.qmd
-            - fr/embedding-space.qmd
-            - fr/positional-encoding.qmd
-            - fr/contextualized-representations.qmd
-        - section: "4 · Calculer avec le Transformer"
-          contents:
-            - fr/queries-keys-values.qmd
-            - fr/scaled-dot-product-attention.qmd
-            - fr/causal-masking.qmd
+            - section: "2 · Préparer le texte et les données"
+              contents:
+                - fr/text-data.qmd
+                - fr/unicode-text.qmd
+                - fr/tokenization-strategies.qmd
+                - fr/training-examples.qmd
+            - section: "3 · Représenter le texte"
+              contents:
+                - fr/tensors.qmd
+                - fr/embedding-space.qmd
+                - fr/positional-encoding.qmd
+                - fr/contextualized-representations.qmd
+            - section: "4 · Calculer avec le Transformer"
+              contents:
+                - fr/queries-keys-values.qmd
+                - fr/scaled-dot-product-attention.qmd
+                - fr/causal-masking.qmd
         - section: "5 · Produire une prédiction"
           contents:
             - fr/logits.qmd
@@ -143,23 +145,25 @@ website:
           contents:
             - en/transformer.qmd
             - en/transformer-history.qmd
-        - section: "2 · Prepare text and data"
+        - section: "Data pipelines & representations"
           contents:
-            - en/text-data.qmd
-            - en/unicode-text.qmd
-            - en/tokenization-strategies.qmd
-            - en/training-examples.qmd
-        - section: "3 · Represent text"
-          contents:
-            - en/tensors.qmd
-            - en/embedding-space.qmd
-            - en/positional-encoding.qmd
-            - en/contextualized-representations.qmd
-        - section: "4 · Compute with the Transformer"
-          contents:
-            - en/queries-keys-values.qmd
-            - en/scaled-dot-product-attention.qmd
-            - en/causal-masking.qmd
+            - section: "2 · Prepare text and data"
+              contents:
+                - en/text-data.qmd
+                - en/unicode-text.qmd
+                - en/tokenization-strategies.qmd
+                - en/training-examples.qmd
+            - section: "3 · Represent text"
+              contents:
+                - en/tensors.qmd
+                - en/embedding-space.qmd
+                - en/positional-encoding.qmd
+                - en/contextualized-representations.qmd
+            - section: "4 · Compute with the Transformer"
+              contents:
+                - en/queries-keys-values.qmd
+                - en/scaled-dot-product-attention.qmd
+                - en/causal-masking.qmd
         - section: "5 · Produce a prediction"
           contents:
             - en/logits.qmd

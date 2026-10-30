@@ -22,6 +22,18 @@ An autoregressive language model receives a sequence of tokens and computes a pr
 ::::
 
 
+## One guiding project: build a small GPT
+
+The learning path aims to build a **small decoder-only GPT from randomly initialized parameters**, then validate it and generate text. This project connects the site's concepts to one concrete object: corpus and tokenizer, training examples, tensors, embeddings, attention, logits, loss, optimization, and generation.
+
+<div class="learning-card learning-card-featured">
+  <p class="eyebrow">LEARNING TARGET · IN PROGRESS</p>
+  <h3>From raw text to an inspectable generative model</h3>
+  <p>The French-language corpus, its provenance, and its licence must be documented before any training experiment. Model size will remain deliberately modest so that computations and errors can be inspected.</p>
+  <p><strong>Starting point:</strong> understand each transformation and its tensor dimensions before assembling or training the model.</p>
+  [See milestones, prerequisites, and evidence criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md){.card-link}
+</div>
+
 ## Three processes to distinguish
 
 The same model is involved in several processes, but they have different objectives and dynamics:
