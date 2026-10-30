@@ -45,8 +45,11 @@ The same model is involved in several processes, but they have different objecti
 <path d="M240 105 H280"/><path d="M500 105 H540"/><path d="M760 105 H800"/><path d="M910 145 V174 H130 V145"/>
 <path d="M240 285 H280"/><path d="M500 285 H540"/><path d="M760 285 H800"/><path d="M910 325 V355 H390 V325"/>
 </g>
+<g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#flow-arrow-en)">
+<path d="M240 495 H420"/><path d="M640 495 H820"/>
+</g>
 <g class="flow-connectors flow-feedback" fill="none" stroke="#39845b" stroke-width="2.4" stroke-dasharray="7 6" marker-end="url(#flow-feedback-en)">
-<path d="M500 455 C390 420 170 400 130 325"/><path d="M920 455 C1015 410 1015 365 910 325"/><path d="M960 455 C1050 350 1050 205 910 145"/>
+<path d="M840 455 C790 400 300 380 130 325"/><path d="M900 455 C920 405 915 365 910 325"/><path d="M1000 455 C1060 360 1060 200 910 145"/>
 </g>
 <text x="20" y="42" class="flow-kicker">INFERENCE / GENERATION · FIXED PARAMETERS</text>
 <g class="flow-node"><a href="text-data.html" aria-label="Previously generated tokens"><rect x="20" y="65" width="220" height="80" rx="12"/><text x="34" y="86" class="flow-kicker">CONTEXT</text><text x="34" y="111" class="flow-title">Previously generated tokens</text><text x="34" y="130" class="flow-subtitle">and current input</text></a></g>
