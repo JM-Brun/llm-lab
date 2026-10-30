@@ -75,3 +75,23 @@ The logits/probabilities source-text audit is now recorded in the [knowledge-pre
 - The public site remains understandable and renderable without private-repository access.
 - French/English parity gaps are explicitly tracked.
 - No implementation or experiment is added before its prerequisite knowledge is validated.
+
+
+## 2026-10-30 — Separate the conceptual course from implementation
+
+This boundary is distinct from the public-course-versus-general-mathematics-wiki boundary above. The first determines **where reusable general mathematical knowledge is canonically maintained**; this second determines **what question each reader-facing LLM Lab section answers**.
+
+The site uses four reader-facing destinations:
+
+- **Understand:** LLM-specific system and concept explanations. Keep the definitions, assumptions, worked examples and equations needed to understand the LLM mechanism; do not turn these pages into full implementation tutorials.
+- **Build:** a dependency-aware sequence of practical checkpoints for a small decoder-only GPT. It links to the canonical concept lessons and owns code, interfaces, shape contracts, tests and implementation evidence. It is not yet a complete implementation: see the status-aware [guided build page](../site/fr/build-path.qmd) and [learning path](learning-path.md).
+- **Deepen:** optional general or advanced mathematics, tensor shape references, derivations, variants and critical analysis. This content must not be presented as a prerequisite for the conceptual overview or the first practical implementation.
+- **Practice & experiment:** exercises, tests used as learning activities, interactive investigations and experiment reports. Every artifact must state what it can and cannot establish.
+
+The exact page-by-page assignment is maintained in [content-section-mapping.md](content-section-mapping.md). Do not infer that a page belongs to Build merely because it contains a Python snippet, or to Deepen merely because it contains an equation. Classification follows the primary learner question. One canonical concept page may be linked from multiple routes, but its explanation must not be duplicated.
+
+### Minimum-prerequisite rule
+
+A small GPT can be constructed by learning the necessary operations in context. The learner needs to read the relevant tensor shapes, understand a projection/matrix product at the level used, interpret a categorical distribution, and understand that gradients provide a local learning signal. This does not require completing a general course in tensor algebra, linear algebra, probability theory, differential calculus or numerical optimization first. Link to optional depth when a reader wants the derivation or broader theory.
+
+This distinction must be reflected in page introductions, navigation, calls to action and milestone status. Do not make advanced mathematics appear mandatory by placing it ahead of the build route or describing it as a gate. Keep scientific prerequisites for a specific claim explicit and narrow.
