@@ -100,7 +100,7 @@ The bilingual notes on [cosine similarity](../site/fr/cosine-similarity.qmd) and
 
 ## Suggested 12-week cadence
 
-At approximately 10 hours per week, use weeks 1–2 for foundations and tokenization; 3–4 for attention and the Transformer; 5–6 for training; 7 for reference comparison; 8–9 for SFT; 10 for LoRA/quantization; 11 for ablations and reproducibility; and 12 for documentation and portfolio review. Adjust the schedule based on failed exit criteria rather than moving on automatically.
+At **five focused hours per week**, using sessions of no more than 60 minutes, treat the following 12-week outline as an illustrative sequence rather than a deadline or mastery promise: weeks 1–2 for foundations and tokenization; weeks 3–4 for attention and the Transformer only after the foundational gate in #82 is explicitly cleared; weeks 5–6 for training; week 7 for reference comparison; weeks 8–9 for SFT; week 10 for LoRA/quantization; week 11 for ablations and reproducibility; and week 12 for documentation and portfolio review. These week labels are provisional and may stretch substantially; do not advance while exit criteria remain unmet or compensate for missed time by exceeding the weekly or session limit.
 
 
 ## 2026-10-29 — End-to-end GPT build route and evidence gates
