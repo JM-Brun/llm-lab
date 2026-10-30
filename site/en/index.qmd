@@ -15,7 +15,7 @@ An autoregressive language model receives a sequence of tokens and computes a pr
 **LLM Lab connects these mechanisms to their mathematical explanations and observable behaviour.** The goal is not to trust an intuition because a diagram looks convincing: it is to understand what a component computes, verify what can be tested, and identify what remains an assumption or limitation.
 
 <div class="hero-actions">
-[Understand the system](transformer.qmd){.btn .btn-primary}
+[Explore the GPT / Transformer overview](transformer.qmd){.btn .btn-primary}
 [Follow the model-building path](text-data.qmd){.btn .btn-outline-primary}
 [Browse the concepts](glossary.qmd){.btn .btn-outline-primary}
 </div>
@@ -72,7 +72,7 @@ How do documents become usable text, then tokens, token IDs, and training exampl
 
 How do token IDs become tensors and vectors, then context-dependent representations?
 
-[Tensors](tensors.qmd) · [Embedding space](embedding-space.qmd) · [Position and context](positional-encoding.qmd)
+[Tensors](tensors.qmd) · [Embedding space](embedding-space.qmd) · [Position](positional-encoding.qmd) · [Contextualized representations](contextualized-representations.qmd)
 :::
 ::: {.route-step}
 **4 · Compute with the Transformer**
@@ -93,7 +93,7 @@ How do final representations become vocabulary scores and then a probability dis
 
 How do we measure the gap between predictions and targets, formalize the objective, and obtain gradients for learning?
 
-[Likelihood and entropy](likelihood.qmd) · [Cross-entropy, loss, and gradients](cross-entropy.qmd)
+[Likelihood and entropy](likelihood.qmd) · [Cross-entropy](cross-entropy.qmd) · [Loss and gradients](loss.qmd)
 :::
 ::: {.route-step}
 **7 · Evaluate and challenge**
