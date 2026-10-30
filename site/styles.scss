@@ -122,6 +122,8 @@ details > :last-child { margin-bottom: .15rem; }
 /* Clickable homepage learning map: inline SVG links remain usable without JavaScript. */
 .llm-flow-figure {
   margin: 1.5rem 0 2.4rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
   padding: clamp(.6rem, 2vw, 1.2rem);
   border: 1px solid #c2d0b9;
   border-radius: .55rem;
@@ -156,6 +158,8 @@ details > :last-child { margin-bottom: .15rem; }
 .llm-flow-figure figcaption { margin: .4rem .4rem .1rem; }
 @media (max-width: 700px) {
   .llm-flow-figure { padding: .35rem; }
+  /* Preserve diagram text size on narrow screens; allow the diagram itself to scroll. */
+  .llm-flow { width: 900px; max-width: none; }
   .llm-flow .flow-kicker { font-size: 12px; }
   .llm-flow .flow-title { font-size: 16px; }
   .llm-flow .flow-subtitle { font-size: 12px; }
