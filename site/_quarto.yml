@@ -83,7 +83,7 @@ website:
       collapse-level: 1
       contents:
         - index.qmd
-        - section: "1 · S'orienter dans les LLM"
+        - section: "1 · Vue d’ensemble : GPT et Transformers"
           contents:
             - fr/transformer.qmd
             - fr/transformer-history.qmd
@@ -129,7 +129,7 @@ website:
       collapse-level: 1
       contents:
         - en/index.qmd
-        - section: "1 · Orient yourself in LLMs"
+        - section: "1 · System overview: GPT and Transformers"
           contents:
             - en/transformer.qmd
             - en/transformer-history.qmd
