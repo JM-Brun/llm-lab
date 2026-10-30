@@ -423,7 +423,7 @@ Keep these distinctions visible in the existing curriculum and navigation work, 
 The reconciliation does not authorize a broad rewrite or new implementation work.
 
 1. Inventory and map existing pages, navigation entries, code, tests, and experiments before changing the sidebar.
-2. Reuse the current six-question homepage crosswalk and guided modules in `docs/learning-path.md`; update them only where a concrete mismatch or missing dependency is demonstrated.
+2. Maintain one lifecycle crosswalk in `docs/learning-path.md`, aligned with the G0–G9 / A1–A4 / E1 milestone model; do not reintroduce a parallel module sequence or fixed calendar schedule.
 3. Preserve the existing three-depth model and progressive disclosure. Do not make optional deep dives such as RoPE mandatory prerequisites for the overview.
 4. Respect the active learning/implementation gate recorded in the roadmap and learning path, including issue #82. Do not jump ahead to later implementation stages merely because the high-level map lists them.
 5. Preserve existing content, URLs, bilingual scope, and external illustrations. Do not delete illustrations as a precaution; record provenance and verify license/copyright status through the existing visual-assets process.
@@ -440,4 +440,22 @@ The target is **one coherent learning system**, not a new taxonomy:
 - **Build progression and evidence:** maintain `docs/learning-path.md` and the roadmap.
 - **Validation:** extend the page audit inventory and visual asset register with observed evidence.
 
-The audit's ten thematic groupings in §3.2 are retained only as a coverage lens. They are not a menu specification. The next concrete action is to complete the crosswalk/inventory under #130 and #87, identify genuine gaps or contradictions, and only then prototype the sidebar and homepage. No mass renaming, page splitting, content deletion, or implementation expansion is justified by this audit alone.
+The audit's ten thematic groupings in §3.2 are retained only as a coverage lens. They are not a menu specification. The initial crosswalk and sidebar reconciliation are now implemented on branch `docs/reconcile-curriculum-navigation-2026-10-30`; the next action is to validate the rendered reader journeys, then continue the page-role and link-graph audit. No mass renaming, page splitting, content deletion, or implementation expansion is justified by this audit alone.
+
+
+## 16. Implementation status after the navigation reconciliation — 2026-10-30
+
+This section records source-level changes prepared on branch `docs/reconcile-curriculum-navigation-2026-10-30`. It does not claim that they have been merged, rendered, or visually validated.
+
+| Audit recommendation | Source-level status | Evidence / remaining validation |
+|---|---|---|
+| Distinguish the conceptual reading route from a complete training lifecycle | Updated | Both homepages state that the seven steps are a reading order, not a complete training run. Rendered layout still needs desktop/mobile inspection. |
+| Keep evaluation cross-cutting and adaptation separate | Updated | Homepage lifecycle diagram and curriculum crosswalk distinguish evaluation from pretrained-model adaptation. |
+| Separate prerequisites/synthesis, practice, and deep dives from the numbered route | Updated | Bilingual sidebar now has distinct sections; the mathematical-chain overview is explicitly a synthesis/map, not a prerequisite course. |
+| Align the guided-build curriculum with computational dependencies | Updated | The full curriculum map now separates input representation, contextual computation, prediction, objective, training, generation, and the adaptation branch. |
+| Keep one authoritative milestone sequence and sustainable pacing | Updated | The lifecycle crosswalk uses G0–G9 / A1–A4 / E1; the parallel module list and fixed 12-week schedule were removed from the learning-path document. |
+| Validate actual reader journeys and page-level link relationships | Not yet complete | Static checks found no duplicate sidebar entries and no sidebar destination missing from the Quarto render list. A systematic inbound/outbound link audit and rendered EN/FR review remain open. |
+| Verify CI and rendered browser behavior | Not yet complete | No Quarto build or desktop/mobile browser QA has been run on this branch. |
+
+**Important scope boundary:** the exercise landing pages currently describe planned collections as scaffolding, not completed exercise sets. Their presence in the navigation must not be interpreted as evidence that a complete exercise bank exists. Do not add learner-transfer questions or expand exercises until the user-requested later stage.
+

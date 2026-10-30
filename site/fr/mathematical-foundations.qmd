@@ -8,6 +8,11 @@ lang: fr
 Un modèle autorégressif produit des **logits** pour le token suivant. Le softmax les transforme en probabilités ; le token observé détermine la vraisemblance et la perte ; le gradient de cette perte indique comment ajuster les paramètres. Ces étapes sont liées, mais chacune a un rôle précis.
 :::
 
+::: {.callout-note}
+**Rôle de cette page.** Il s'agit d'une carte synthétique des grandeurs mathématiques mobilisées pour la prédiction du token suivant, et non d'un cours de prérequis ni d'un substitut aux pages consacrées à chaque notion. Utilisez-la pour vous orienter, puis suivez les dérivations utiles à votre question.
+:::
+
+
 ![Schéma original de la chaîne mathématique : logits, probabilités, vraisemblance, perte et gradients.](../images/math-training-pipeline.svg){fig-alt="Chaîne du calcul : logits z, softmax vers p, probabilité du token cible, log-vraisemblance négative, puis gradient de la perte vers les paramètres." width=100%}
 
 ## La chaîne en un coup d'œil

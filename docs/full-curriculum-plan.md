@@ -42,16 +42,19 @@ The 3Blue1Brown video is a useful reference for the role of a visual overview, n
 
 #### Level 2 — Guided model-building path
 
-Purpose: provide a moderately detailed route from text to a working small language model.
+Purpose: provide a dependency-aware route from text to a working small language model. The sequence below follows the computation graph rather than the order in which concepts happen to be introduced in a book.
 
-1. Text, tokenization, token IDs and special tokens.
-2. Context windows, shifted inputs/targets, batching and data hygiene.
-3. Tensor shapes, embeddings, logits and probability distributions.
-4. Likelihood, cross-entropy, loss, gradients and optimization.
-5. Attention, Q/K/V, score scaling, causal masking and positional information.
-6. Transformer blocks: multi-head attention, residual connections, normalization, MLP/FFN and output head.
-7. Training loop, validation, checkpoints, reproducibility and learning curves.
-8. Generation, decoding, evaluation, baselines and error analysis.
+1. **Text and tokenization:** text normalization, token IDs and special tokens.
+2. **Training examples:** context windows, shifted inputs/targets, batching and data hygiene.
+3. **Input representations:** tensor shapes, embedding lookup and positional information.
+4. **Contextual computation:** Q/K/V, attention, causal masking, multi-head attention, residual connections, normalization and MLP/FFN blocks.
+5. **Prediction:** output projection, vocabulary logits and probability distributions.
+6. **Learning objective:** likelihood, cross-entropy, loss, gradients and optimization signal.
+7. **From-scratch training:** optimizer updates, validation, checkpoints, reproducibility and learning curves.
+8. **Inference and generation:** autoregressive decoding, stopping rules and context-window constraints.
+9. **Verification and evaluation:** compatible reference comparisons, task-specific baselines, uncertainty and error analysis.
+
+**Separate adaptation branch:** pretrained checkpoint loading, classification, instruction SFT, LoRA and quantization. This branch reuses learned parameters; it is not a stage of training a GPT from random initialization.
 
 Use Raschka's *LLMs from Scratch* as an important implementation and coverage reference, not as a chapter structure to mirror. Connect the build path to concept pages, experiments, mathematical explanations, critical analysis, and tests.
 
@@ -96,13 +99,17 @@ Overviews should remain concise and link outward; deep dives should own detailed
 
 ### Concept dependencies and implementation gates
 
-`text/tokens → windows and targets → logits/probabilities → loss/gradients`
+`raw text → tokens/IDs → context windows + shifted targets`
 
-`tensor shapes → Q/K/V and attention → causal masking → Transformer block`
+`token IDs → embeddings + positional information → Transformer blocks → contextual states → logits/probabilities`
 
-`embeddings + positional information → context-dependent representations → generation`
+`logits + aligned targets → loss → gradients → optimizer updates → trained checkpoint`
 
-`training/validation discipline → fine-tuning → evaluation and robustness`
+`trained checkpoint → autoregressive decoding → generated sequence`
+
+`pretrained checkpoint → task/adaptation head or SFT → adapted model` (separate branch)
+
+`evaluation protocol` is cross-cutting: it informs data selection, training decisions, reference checks, generation analysis and adaptation; it is not a final computational stage.
 
 These dependencies guide navigation but are not rigid gates to reading. Introduce concepts intuitively when useful, then link to rigorous derivations. Deep dives must also be accessible from search, glossary entries, diagrams and related-concept links.
 

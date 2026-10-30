@@ -17,7 +17,7 @@ Un LLM autorégressif reçoit une séquence de tokens et calcule une distributio
 
 <div class="hero-actions">
 [Explorer la vue d’ensemble GPT / Transformer](fr/transformer.qmd){.btn .btn-primary}
-[Suivre le parcours de construction](fr/text-data.qmd){.btn .btn-outline-primary}
+[Parcours de construction (en cours)](fr/text-data.qmd){.btn .btn-outline-primary}
 [Explorer les notions](fr/glossary.qmd){.btn .btn-outline-primary}
 </div>
 ::::
@@ -44,12 +44,14 @@ Le même modèle intervient dans plusieurs processus, mais ceux-ci n'ont ni le m
 <g class="flow-node"><a href="fr/transformer.html" aria-label="Prédictions avec"><rect x="280" y="245" width="220" height="80" rx="12"/><text x="294" y="266" class="flow-kicker">PASSE AVANT</text><text x="294" y="291" class="flow-title">Prédictions avec</text><text x="294" y="310" class="flow-subtitle">les paramètres θ</text></a></g>
 <g class="flow-node"><a href="fr/cross-entropy.html" aria-label="Écart entre prédictions"><rect x="540" y="245" width="220" height="80" rx="12"/><text x="554" y="266" class="flow-kicker">FONCTION DE PERTE</text><text x="554" y="291" class="flow-title">Écart entre prédictions</text><text x="554" y="310" class="flow-subtitle">et cibles</text></a></g>
 <g class="flow-node"><a href="fr/gradients.html" aria-label="Calculer ∇θ L, puis"><rect x="800" y="245" width="220" height="80" rx="12"/><text x="814" y="266" class="flow-kicker">GRADIENTS / UPDATE</text><text x="814" y="291" class="flow-title">Calculer ∇θ L, puis</text><text x="814" y="310" class="flow-subtitle">modifier θ</text></a></g><text x="470" y="380" class="flow-note">Les paramètres mis à jour servent au pas suivant</text>
-<text x="20" y="405" class="flow-kicker">ÉVALUATION / ADAPTATION · BOUCLE DE DÉCISION</text><g class="flow-node"><a href="fr/text-data.html" aria-label="Jeu de validation / test"><rect x="20" y="425" width="220" height="80" rx="12"/><text x="34" y="446" class="flow-kicker">DONNÉES TENUES À L'ÉCART</text><text x="34" y="471" class="flow-title">Jeu de validation / test</text><text x="34" y="490" class="flow-subtitle">selon le protocole</text></a></g>
+<text x="20" y="405" class="flow-kicker">ÉVALUATION · TRANSVERSALE</text><g class="flow-node"><a href="fr/text-data.html" aria-label="Jeu de validation / test"><rect x="20" y="425" width="220" height="80" rx="12"/><text x="34" y="446" class="flow-kicker">DONNÉES TENUES À L'ÉCART</text><text x="34" y="471" class="flow-title">Jeu de validation / test</text><text x="34" y="490" class="flow-subtitle">selon le protocole</text></a></g>
 <g class="flow-node"><a href="fr/evaluation-experimentale.html" aria-label="Métriques, incertitude,"><rect x="420" y="425" width="220" height="80" rx="12"/><text x="434" y="446" class="flow-kicker">MESURES + ERREURS</text><text x="434" y="471" class="flow-title">Métriques, incertitude,</text><text x="434" y="490" class="flow-subtitle">analyse qualitative</text></a></g>
-<g class="flow-node flow-node-planned"><rect x="820" y="425" width="220" height="80" rx="12"/><text x="834" y="446" class="flow-kicker">ADAPTATION · PLANIFIÉE</text><text x="834" y="471" class="flow-title">Décision sur le modèle</text><text x="834" y="490" class="flow-subtitle">données · adaptation</text></g><text x="20" y="526" class="flow-hint">Les blocs ouvrent les pages de référence actuellement disponibles.</text>
+<g class="flow-node"><rect x="820" y="425" width="220" height="80" rx="12"/><text x="834" y="446" class="flow-kicker">DIAGNOSTIC</text><text x="834" y="471" class="flow-title">Interpréter les résultats</text><text x="834" y="490" class="flow-subtitle">limites · prochaines étapes</text></g><text x="20" y="526" class="flow-hint">Les blocs ouvrent les pages de référence actuellement disponibles.</text>
 </svg><figcaption>Schéma conceptuel : l'inférence réutilise des paramètres fixes ; l'entraînement les met à jour ; l'évaluation est transversale et informe les décisions. Les boucles et variantes réelles dépendent du protocole.</figcaption></figure>
 
 ## Un parcours conceptuel en sept étapes
+
+Cet ordre est un **fil de lecture**, pas la chronologie complète d’un entraînement. L’évaluation est transversale : elle éclaire les choix de données, d’apprentissage, d’inférence et d’adaptation. Les exercices sont regroupés à part pour rester accessibles depuis chaque étape.
 
 Le menu distingue les opérations qui transforment les entrées, celles qui calculent la prédiction et celles qui définissent le signal d’apprentissage. L’ordre proposé suit les dépendances principales, sans imposer une lecture linéaire.
 
@@ -101,7 +103,7 @@ Comment mesurer l’écart entre prédictions et cibles, formaliser l’objectif
 
 Comment concevoir une évaluation, analyser les erreurs et distinguer ce que les mesures permettent réellement de conclure ?
 
-[Évaluation expérimentale](fr/evaluation-experimentale.qmd) · [Exercices](fr/exercises.qmd)
+[Évaluation expérimentale](fr/evaluation-experimentale.qmd)
 :::
 ::::
 
