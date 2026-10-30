@@ -39,7 +39,7 @@ The same model is involved in several processes, but they have different objecti
 
 <figure class="llm-flow-figure">
 <svg class="llm-flow" viewBox="0 0 1060 620" role="img" aria-labelledby="llm-flow-title-en llm-flow-desc-en" xmlns="http://www.w3.org/2000/svg">
-<title id="llm-flow-title-en">Three related processes, with cross-cutting evaluation</title><desc id="llm-flow-desc-en">Inference uses fixed parameters, while learning updates them. Evaluation analyzes held-out data; its findings can inform data, learning, and decoding choices. The test set remains reserved for final assessment.</desc>
+<title id="llm-flow-title-en">Two operational processes, with cross-cutting evaluation</title><desc id="llm-flow-desc-en">Inference uses fixed parameters, while learning updates them. Evaluation analyzes held-out data; its findings can inform data, learning, and decoding choices. The test set remains reserved for final assessment.</desc>
 <defs><marker id="flow-arrow-en" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7b91a6"/></marker><marker id="flow-feedback-en" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#39845b"/></marker></defs>
 <g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#flow-arrow-en)">
 <path d="M240 105 H280"/><path d="M500 105 H540"/><path d="M760 105 H800"/><path d="M910 145 V174 H130 V145"/>
@@ -57,7 +57,7 @@ The same model is involved in several processes, but they have different objecti
 <text x="20" y="225" class="flow-kicker">LEARNING · PARAMETER UPDATES</text>
 <g class="flow-node"><a href="training-examples.html" aria-label="Input sequences"><rect x="20" y="245" width="220" height="80" rx="12"/><text x="34" y="266" class="flow-kicker">EXAMPLES + TARGETS</text><text x="34" y="291" class="flow-title">Input sequences</text><text x="34" y="310" class="flow-subtitle">and expected tokens</text></a></g>
 <g class="flow-node"><a href="transformer.html" aria-label="Predictions using"><rect x="280" y="245" width="220" height="80" rx="12"/><text x="294" y="266" class="flow-kicker">FORWARD PASS</text><text x="294" y="291" class="flow-title">Predictions using</text><text x="294" y="310" class="flow-subtitle">parameters θ</text></a></g>
-<g class="flow-node"><a href="cross-entropy.html" aria-label="LOSS FUNCTION"><rect x="540" y="245" width="220" height="80" rx="12"/><text x="554" y="266" class="flow-kicker">LOSS FUNCTION</text><text x="554" y="291" class="flow-title">Difference between</text><text x="554" y="310" class="flow-subtitle">predictions and targets</text></a></g>
+<g class="flow-node"><a href="cross-entropy.html" aria-label="Difference between predictions and targets"><rect x="540" y="245" width="220" height="80" rx="12"/><text x="554" y="266" class="flow-kicker">LOSS FUNCTION</text><text x="554" y="291" class="flow-title">Difference between</text><text x="554" y="310" class="flow-subtitle">predictions and targets</text></a></g>
 <g class="flow-node"><a href="gradients.html" aria-label="Compute ∇θ L, then"><rect x="800" y="245" width="220" height="80" rx="12"/><text x="814" y="266" class="flow-kicker">GRADIENTS / UPDATE</text><text x="814" y="291" class="flow-title">Compute ∇θ L, then</text><text x="814" y="310" class="flow-subtitle">modify θ</text></a></g>
 <text x="470" y="380" class="flow-note">Updated parameters are used for the next step</text>
 <text x="20" y="435" class="flow-kicker">EVALUATION · CROSS-CUTTING FUNCTION</text>
