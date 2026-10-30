@@ -80,6 +80,8 @@ Pour la pré-tokenisation, considérons exactement l'entrée `Hello, how are  yo
 | `gpt2` | `Hello`, `,`, `Ġhow`, `Ġare`, `Ġ`, `Ġyou`, `?` | La convention visible `Ġ` marque les espaces ; l'espace répété est conservé dans la sortie du pré-tokeniseur. |
 | `t5-small` | `▁Hello,`, `▁how`, `▁are`, `▁you?` | La convention fondée sur SentencePiece utilise `▁` ; ce pré-tokeniseur découpe sur les espaces plutôt que sur la ponctuation et ne conserve pas l'espace répété comme fragment distinct. |
 
+**Important :** le tableau appelle directement le composant de pré-tokenisation ; il n'applique pas le normaliseur présenté plus haut. C'est pourquoi la ligne BERT affiche encore `Hello` avec une majuscule. Un appel complet au tokenizer applique ensemble les étapes configurées.
+
 Ces sorties dépendent des configurations nommées et du pipeline Hugging Face Tokenizers. Les marqueurs `Ġ` et `▁` sont des représentations visibles, pas des caractères à insérer dans n'importe quel texte. Le cours fournit également des offsets dans la chaîne d'origine : ils permettent de relier les fragments tokenisés à leurs segments sources, notamment lorsque la normalisation ou le traitement des espaces transforme le texte.
 
 Cette comparaison montre pourquoi le seul nom d'un algorithme comme BPE ne suffit pas à reproduire une tokenisation. Le normaliseur, le pré-tokeniseur, le modèle, le post-traitement, le décodeur et leurs configurations déterminent ensemble le comportement. Voir la [leçon Hugging Face sur la normalisation et la pré-tokenisation](https://huggingface.co/docs/course/main/chapter6/4) pour les exemples sources.
