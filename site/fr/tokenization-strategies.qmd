@@ -137,6 +137,8 @@ La paire la plus fréquente est ex æquo : `l + o` et `o + w` apparaissent toute
 
 Le tableau de fréquences rend visible le choix glouton ; cela ne signifie pas que BPE découvre les morphèmes ou un vocabulaire optimal. Il s'agit d'une convention pédagogique au niveau du mot avec un marqueur de fin, pas d'un tokenizer byte-level de production complet. Les sorties réelles dépendent aussi du pré-découpage, des unités initiales, des fréquences du corpus, des tokens spéciaux et du départage propre à l'implémentation. Pour manipuler les paires candidates, utiliser le [BPE Explainer de Müller et Steinbach](https://philipmueller.dev/bpe-visualization/).
 
+**Précision historique.** L'algorithme de [compression par paires d'octets de Gage (1994)](https://www.derczynski.com/papers/archive/BPE_Gage.pdf) est une méthode générale de compression : il remplace itérativement des paires d'octets adjacents fréquentes par des valeurs d'octet inutilisées et enregistre les substitutions pour la décompression. Le BPE sous-lexical en NLP adapte l'idée de fusion de paires pour construire un vocabulaire de tokens et un ordre de fusion à partir d'unités textuelles. Les unités de base, le pré-découpage, la construction du vocabulaire et la procédure d'encodage diffèrent ; le BPE byte-level de type GPT n'est qu'une conception particulière. Gage constitue donc une référence historique pour l'idée de remplacement de paires, pas une spécification des tokenizers modernes de LLM.
+
 ### Apprentissage du tokenizer et encodage à l'inférence
 
 Il faut distinguer deux processus :
