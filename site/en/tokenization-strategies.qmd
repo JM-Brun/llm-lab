@@ -60,6 +60,14 @@ A production tokenizer is not just a segmentation algorithm. Libraries can expos
 | **Post-processing** | May add special tokens or prepare sequences for the model | Are BOS, EOS, separators, or task tokens added? |
 | **Decoder** | Converts tokens/IDs back to text according to implementation conventions | Are whitespace, bytes, and characters reconstructed as expected? |
 
+### Special-token spellings are not ordinary vocabulary words
+
+A special token is a reserved vocabulary entry with a dedicated ID and a model-specific role. For example, GPT-2 uses `<|endoftext|>` as an end-of-text marker. Its visible spelling is not enough, by itself, to establish how an input string will be handled: the token must be registered in that tokenizer, and the API decides whether a matching string is parsed as a special token, rejected, or treated as ordinary text.
+
+Some APIs make this choice explicit through an allow-list. For example, `tiktoken` and Karpathy's `minbpe` expose controls for which special-token spellings may be interpreted. This is implementation-specific behaviour, not a universal tokenizer rule. In an application, do not indiscriminately allow every special token in untrusted user text; reserved tokens should normally be inserted intentionally by a trusted formatting layer.
+
+See the `tiktoken` [educational implementation](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) and the `minbpe` [special-token handling notes](https://github.com/karpathy/minbpe/blob/master/README.md).
+
 Not every tokenizer exposes or uses these stages in the same way. An algorithm name alone is therefore insufficient to reproduce a segmentation: the configuration and versions also matter.
 
 ### Same text, different tokenizer pipelines
