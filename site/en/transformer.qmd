@@ -50,6 +50,74 @@ After the blocks, an output projection produces **logits**—unnormalized scores
 
 During generation, a selection rule chooses the next token: greedy selection, sampling, or a more elaborate method. The selected token is appended to the context, and the model runs again. Generation is therefore **autoregressive**; the model does not produce the whole response in a single prediction.
 
+## Observe a Transformer in action
+
+**[Transformer Explainer](https://poloclub.github.io/transformer-explainer/)**, developed at Georgia Tech, lets you explore a real GPT-2 small inference run in your browser. It complements this page's static diagrams: enter text and observe how representations, attention computations, and the next-token distribution evolve.
+
+<iframe
+  src="https://poloclub.github.io/transformer-explainer/"
+  title="Transformer Explainer — interactive GPT-2 visualization"
+  width="100%"
+  height="820"
+  loading="lazy"
+  allow="fullscreen"
+  style="border: 1px solid #d2d9c8; border-radius: 0.6rem; background: #fff;"
+></iframe>
+
+[Open Transformer Explainer in a new tab](https://poloclub.github.io/transformer-explainer/) if the embed does not load or you prefer the full browser window.
+
+### A guided four-part exploration
+
+1. **Tokens and representations.** Make a small change to the input text and inspect its tokenization. Connect tokens to IDs and embeddings in the [representation page](embedding-space.qmd).
+2. **Attention.** Select tokens and inspect attention patterns. Relate scores, causal masking, and value aggregation to the pages on [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd), and [causal masking](causal-masking.qmd).
+3. **Prediction.** Inspect output scores (*logits*) and the vocabulary distribution. Use the pages on [logits](logits.qmd) and [probabilities](probabilities.qmd) to distinguish scores from probabilities.
+4. **Decoding.** Change the temperature and, where offered by the interface, top-k/top-p settings. The same distribution can lead to different token selections; decoding does not change the model weights.
+
+### Controlled experiments: move from observation to testing
+
+To avoid drawing conclusions from a single visualization, keep a reference prompt, change **one factor at a time**, and record what changes.
+
+1. **Tokenizer sensitivity.** Compare a word on its own, the same word preceded by a space, and a punctuation variant. Record tokens and IDs. Subword segmentation depends on the tokenizer and character context; it does not directly reveal the model's “understanding”.
+2. **Causal masking.** Inspect the attention row for the final token, then append a suffix to the prompt. A position must not receive information from future positions. In a causal model in evaluation mode, prefix-position representations should remain invariant when a suffix is appended (up to numerical tolerance); this tests internal states, not just generated text.
+3. **Temperature and sampling.** Keep the prompt and logits fixed, then change only temperature. The distribution changes according to \(p_i(T)=\operatorname{softmax}(z/T)_i\), while the raw logits remain identical. Then compare top-k and top-p: these filters change the set of allowed candidates. A sampled generation can vary even when prompt and settings are identical.
+
+For each experiment, record the hypothesis, changed variable, observation, interpretation, and limitation. A visual observation is evidence to check against the equation and, where possible, an automated test.
+
+### Read Transformer Explainer's source code
+
+The source repository connects visible elements to the operations actually computed:
+
+| Observed element | Source file | What to inspect |
+|---|---|---|
+| Tokens, IDs, and embeddings | [Embedding.svelte](https://github.com/poloclub/transformer-explainer/blob/main/src/components/Embedding.svelte) | Tokenization, embedding lookup, and GPT-2 learned positional embeddings |
+| Q, K, and V projections | [QKV.svelte](https://github.com/poloclub/transformer-explainer/blob/main/src/components/QKV.svelte) | Three projections and head splitting |
+| Causal attention and MLP | [model.py](https://github.com/poloclub/transformer-explainer/blob/main/src/utils/model/model.py) | \(QK^\top/\sqrt{d_k}\), triangular mask, softmax, V aggregation, residuals, and MLP |
+| Logits and decoding | [data.ts](https://github.com/poloclub/transformer-explainer/blob/main/src/utils/data.ts) and [LinearSoftmax.svelte](https://github.com/poloclub/transformer-explainer/blob/main/src/components/LinearSoftmax.svelte) | ONNX inference, temperature scaling, filtering, and visualization |
+| Contextual explanations | [textbookPages.ts](https://github.com/poloclub/transformer-explainer/blob/main/src/utils/textbookPages.ts) | Mapping between interactive textbook steps and visual components |
+
+The interface is built with Svelte/TypeScript; browser inference uses ONNX Runtime Web and a GPT-2 tokenizer. The repository also contains a PyTorch reference implementation. This separation between model, tensor extraction, UI state, and animation is an architecture worth studying—not one to copy wholesale into LLM Lab.
+
+### Critical audit: a visualization is not a specification
+
+The source code also exposes implementation choices to keep in mind:
+
+- **Top-p:** in src/utils/data.ts, logits are sorted and truncated to the top 50 candidates before the cumulative distribution is computed. The displayed top-p is therefore computed over this subset, not necessarily over the full vocabulary. If the cumulative probability mass of the top 50 is below threshold \(p\), the result differs from exact nucleus sampling over the full vocabulary. This is a limitation of the educational implementation, not a property of top-p itself.
+- **Embeddings:** a learned vector representation is not a universal geometric definition of meaning. Similarity depends on the metric, space, layer, and task.
+- **Attention:** displayed weights describe one computation step. They are not sufficient to measure a token's causal influence on the final logit.
+- **Stochastic generation:** comparing two text outputs does not isolate a parameter's effect if the random draw also changes. To study the distribution, compare probabilities or control the random seed where the implementation allows it.
+
+These observations do not invalidate the tool; they define precisely what it can teach and what should not be inferred from it.
+
+### What this demonstration does — and does not — establish
+
+- The tool runs **GPT-2 small (124 million parameters)**. It is a useful representative teaching model for core operations, not a substitute for inspecting every modern LLM architecture.
+- Inference runs in the browser. The first load may download model assets and use your machine's memory and CPU.
+- An attention-weight visualization shows one internal operation; by itself, it is not a causal or faithful explanation of the prediction.
+- Generation settings such as temperature change next-token selection; they do not retrain the model or make its outputs factually reliable.
+- This is an external demonstration. It does not execute LLM Lab's Python code and is not a test of our future implementations.
+
+**Takeaway:** use the explorer to form hypotheses and locate operations; return to this site's equations to check them, then to repository tests and experiments when a corresponding implementation is available.
+
 ## Training and generation are not the same computation
 
 During training, positions in an autoregressive sequence can be processed in parallel because the input-target shift and causal mask prevent future-token leakage. During ordinary generation, each next token depends on the context currently available, so the model advances step by step. Optimizations such as the KV cache avoid recomputing keys and values that have already been produced.
