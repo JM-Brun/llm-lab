@@ -14,6 +14,8 @@ project:
     - en/training-examples.qmd
     - fr/mathematical-foundations.qmd
     - en/mathematical-foundations.qmd
+    - fr/build-path.qmd
+    - en/build-path.qmd
     - fr/logits.qmd
     - en/logits.qmd
     - fr/probabilites.qmd
@@ -60,7 +62,7 @@ project:
 
 website:
   title: "LLM Lab"
-  description: "A bilingual, code-first guide to the mathematics and implementation of language models."
+  description: "A bilingual learning lab to understand, build, and investigate language models."
   site-url: "https://jm-brun.github.io/llm-lab/"
   repo-url: "https://github.com/JM-Brun/llm-lab"
   repo-actions: [source, issue]
@@ -83,108 +85,100 @@ website:
       collapse-level: 1
       contents:
         - index.qmd
-        - section: "Synthèses et glossaire"
+        - section: "Comprendre les LLM"
           contents:
             - fr/mathematical-foundations.qmd
-            - fr/glossary.qmd
-        - section: "1 · S’orienter : GPT et Transformers"
-          contents:
             - fr/transformer.qmd
             - fr/transformer-history.qmd
-        - section: "Pipelines de données & représentations"
-          contents:
-            - section: "2 · Préparer le texte et les données"
+            - section: "Du texte aux représentations"
               contents:
                 - fr/text-data.qmd
                 - fr/unicode-text.qmd
                 - fr/tokenization-strategies.qmd
                 - fr/training-examples.qmd
-            - section: "3 · Représenter le texte"
-              contents:
-                - fr/tensors.qmd
                 - fr/embedding-space.qmd
                 - fr/positional-encoding.qmd
                 - fr/contextualized-representations.qmd
-            - section: "4 · Calculer avec le Transformer"
+            - section: "Dans le Transformer"
               contents:
                 - fr/queries-keys-values.qmd
                 - fr/scaled-dot-product-attention.qmd
                 - fr/causal-masking.qmd
-        - section: "5 · Produire une prédiction"
+            - section: "Prédire et apprendre"
+              contents:
+                - fr/logits.qmd
+                - fr/probabilites.qmd
+                - fr/vraisemblance.qmd
+                - fr/entropy.qmd
+                - fr/cross-entropy.qmd
+                - fr/loss.qmd
+                - fr/gradients.qmd
+        - section: "Construire un petit GPT"
           contents:
-            - fr/logits.qmd
-            - fr/probabilites.qmd
-        - section: "6 · Objectif d’apprentissage et gradients"
-          contents:
-            - fr/vraisemblance.qmd
-            - fr/entropy.qmd
-            - fr/cross-entropy.qmd
-            - fr/loss.qmd
-            - fr/gradients.qmd
-        - section: "7 · Évaluer et mettre à l’épreuve (transversal)"
-          contents:
-            - fr/evaluation-experimentale.qmd
-        - section: "S’exercer"
+            - fr/build-path.qmd
+        - section: "S’exercer et expérimenter"
           contents:
             - fr/exercises.qmd
-        - section: "Approfondir et prendre du recul"
+            - fr/evaluation-experimentale.qmd
+        - section: "Approfondir"
           contents:
+            - fr/tensors.qmd
             - fr/cosine-similarity.qmd
             - fr/linearite-embeddings.qmd
+        - section: "Références"
+          contents:
+            - fr/glossary.qmd
+            - references.qmd
     - id: en
       title: "LLM Lab · English"
       style: "docked"
       collapse-level: 1
       contents:
         - en/index.qmd
-        - section: "Overviews and glossary"
+        - section: "Understand LLMs"
           contents:
             - en/mathematical-foundations.qmd
-            - en/glossary.qmd
-        - section: "1 · Get oriented: GPT and Transformers"
-          contents:
             - en/transformer.qmd
             - en/transformer-history.qmd
-        - section: "Data pipelines & representations"
-          contents:
-            - section: "2 · Prepare text and data"
+            - section: "From text to representations"
               contents:
                 - en/text-data.qmd
                 - en/unicode-text.qmd
                 - en/tokenization-strategies.qmd
                 - en/training-examples.qmd
-            - section: "3 · Represent text"
-              contents:
-                - en/tensors.qmd
                 - en/embedding-space.qmd
                 - en/positional-encoding.qmd
                 - en/contextualized-representations.qmd
-            - section: "4 · Compute with the Transformer"
+            - section: "Inside the Transformer"
               contents:
                 - en/queries-keys-values.qmd
                 - en/scaled-dot-product-attention.qmd
                 - en/causal-masking.qmd
-        - section: "5 · Produce a prediction"
+            - section: "Prediction and learning"
+              contents:
+                - en/logits.qmd
+                - en/probabilities.qmd
+                - en/likelihood.qmd
+                - en/entropy.qmd
+                - en/cross-entropy.qmd
+                - en/loss.qmd
+                - en/gradients.qmd
+        - section: "Build a small GPT"
           contents:
-            - en/logits.qmd
-            - en/probabilities.qmd
-        - section: "6 · Learning objective and gradients"
-          contents:
-            - en/likelihood.qmd
-            - en/entropy.qmd
-            - en/cross-entropy.qmd
-            - en/loss.qmd
-            - en/gradients.qmd
-        - section: "7 · Evaluate and challenge (cross-cutting)"
-          contents:
-            - en/experimental-evaluation.qmd
-        - section: "Practice"
+            - en/build-path.qmd
+        - section: "Practice and experiment"
           contents:
             - en/exercises.qmd
-        - section: "Deep dives and critical perspectives"
+            - en/experimental-evaluation.qmd
+        - section: "Deepen your understanding"
           contents:
+            - en/tensors.qmd
             - en/cosine-similarity.qmd
             - en/embedding-linearity.qmd
+        - section: "Reference"
+          contents:
+            - en/glossary.qmd
+            - references.qmd
   page-footer:
     left: "LLM Lab · Mathématiques, code et expériences reproductibles"
     right:
