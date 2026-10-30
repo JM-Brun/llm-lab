@@ -66,7 +66,7 @@ The tokenizer is only one component of a larger data pipeline. Before text becom
 
 **Deduplication and splitting must be designed together.** Deduplicating before a split can prevent copies from being assigned to different partitions; group-aware splitting followed by a cross-partition near-duplicate audit is another possible design. The important requirement is to prevent related copies or chunks from making the evaluation artificially easy. The correct unit and order depend on the intended generalization claim.
 
-In a conventional held-out setup, validation and test documents must not influence a learned tokenizer's vocabulary. This is an evaluation safeguard, not a claim that every production pretraining pipeline has the same train/validation/test structure. Likewise, document filtering and deduplication are corpus-level decisions; tokenizer normalization and pre-tokenization are tokenizer-specific transformations applied when text is encoded.
+In a conventional held-out setup, validation and test documents must not influence a learned tokenizer's vocabulary. This is an evaluation safeguard, not a claim that every production pretraining pipeline has the same train/validation/test structure. Likewise, document filtering and deduplication are corpus-level decisions; tokenizer normalization and pre-tokenization are tokenizer-specific transformations used when the tokenizer is trained and reused when text is encoded.
 
 Once encoding is complete, the next page explains how token streams are turned into input-target pairs, windows, packed sequences, and masks. It does not prescribe one universal packing strategy.
 
