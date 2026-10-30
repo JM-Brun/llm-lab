@@ -14,8 +14,8 @@ This is a focused companion to [The embedding space](embedding-space.qmd). It an
 
 Suppose the visible word `bank` is represented by the same token ID in two sentences:
 
-- “They sat on the bank of the river.”
-- “She deposited money at the bank.”
+- “The river bank eroded.”
+- “The financial bank collapsed.”
 
 Under that explicit assumption, both occurrences retrieve the same initial embedding:
 
@@ -44,10 +44,10 @@ The Transformer layers then process information across the sequence. At a high l
 \[
 h_t^{(\ell+1)}
 =
-F_\ell\big(h_1^{(\ell)},\ldots,h_L^{(\ell)}\big),
+F_\ell\big(h_1^{(\ell)},\ldots,h_t^{(\ell)}\big),
 \]
 
-where the representation at position \(t\) can depend on other positions through the layer's operations, including attention. The function \(F_\ell\) stands for a complete block; this expression is conceptual, not an implementation specification.
+For a causal decoder such as GPT, the state at position \(t\) can use the current token and its preceding context, but not future tokens. Other architectures, such as bidirectional encoders, use different attention masks. The function \(F_\ell\) stands for a complete block; this expression is conceptual, not an implementation specification.
 
 Consequently, the two occurrences can have different hidden states even though their initial token lookup is identical.
 
