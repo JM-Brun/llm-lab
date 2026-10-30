@@ -1,0 +1,65 @@
+---
+title: "Build a small GPT"
+subtitle: "A guided practical path without disproportionate mathematical prerequisites"
+lang: en
+---
+
+::: {.chapter-lead}
+This path connects conceptual explanations to the gradual construction of a small decoder-only GPT. **You do not need to master linear algebra, tensor calculus, or differential calculus beforehand.** The required operations are introduced when they become useful; broader mathematical treatments remain available as optional deep dives.
+:::
+
+::: {.callout-note}
+**Project status.** The route and conceptual pages are available, but the repository does not yet contain a complete, tested GPT implementation or a reproducible end-to-end training run. The milestones below distinguish existing knowledge from practical work that remains to be built.
+:::
+
+## The principle: learn only what is needed, when it is needed
+
+At each milestone, distinguish:
+
+- **Understand:** the mechanism and its role in the model.
+- **Build:** the Python/PyTorch operation to implement and test.
+- **Deepen:** optional theory that explains the mechanism more generally.
+
+You need to read a tensor shape to debug an operation, not master tensor theory. You need to understand what a gradient represents before training, not complete a full course in differential calculus.
+
+## Build milestones
+
+| Step | What you build | Concept pages | Practical status |
+|---|---|---|---|
+| 0. Define the model | Scope a small decoder-only GPT and its objectives | [Transformer overview](transformer.qmd), [history](transformer-history.qmd) | **Partial** — conceptual framing exists; a broad overview of LLM families remains to be completed |
+| 1. Prepare text | Documented corpus, tokenizer, encoding/decoding | [Text and data](text-data.qmd), [Unicode](unicode-text.qmd), [tokenization](tokenization-strategies.qmd) | **Conceptual** — no complete, validated corpus/tokenizer pipeline is established in the repository |
+| 2. Create training examples | Context windows, shifted inputs/targets, batches and masks | [Training examples](training-examples.qmd) | **Conceptual** — rules and pitfalls are explained; the complete executable pipeline remains to be established |
+| 3. Represent tokens | Embedding lookup and positional information | [Embedding space](embedding-space.qmd), [position](positional-encoding.qmd) | **Conceptual** — no validated complete GPT embedding stack |
+| 4. Compute attention | Q/K/V projections, scores, softmax and causal mask | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd) | **Conceptual** — mechanisms are documented; the complete module and tests remain to be built |
+| 5. Assemble GPT | Transformer blocks, residuals, normalization, MLP and output projection | [Transformer](transformer.qmd), [tensors](tensors.qmd) as needed | **Partial** — system overview exists; a complete configurable and tested model does not |
+| 6. Compute the loss | Align logits and targets, calculate and reduce the objective | [Logits](logits.qmd), [probabilities](probabilities.qmd), [likelihood](likelihood.qmd), [cross-entropy](cross-entropy.qmd), [loss](loss.qmd) | **Partial** — a NumPy loss/gradient reference and tests exist; this is not GPT training |
+| 7. Train and validate | Autograd, optimizer, training loop, validation and checkpoints | [Gradients](gradients.qmd), [evaluation](experimental-evaluation.qmd) | **To build** — no reproducible end-to-end GPT training run |
+| 8. Generate | Autoregressive decoding, sampling and stopping | [Transformer](transformer.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd) | **Partial** — principles are explained; complete generation from a local checkpoint is not established |
+| 9. Evaluate | Baselines, metrics, error analysis and limitations | [Experimental evaluation](experimental-evaluation.qmd) | **Method available** — no complete evaluation of a locally trained GPT |
+
+Detailed prerequisites, expected evidence, dependencies and validation criteria are maintained in the [versioned build plan](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
+
+## Knowledge to acquire along the way
+
+| Topic | Minimum useful for building | Optional deeper study |
+|---|---|---|
+| Tensors | Read `[B, L]`, `[B, L, D]`, `[B, L, V]` and check the axes used | General tensor algebra, advanced broadcasting, conventions and properties |
+| Linear algebra | Understand a projection and matrix product in the dimensions encountered | Vector spaces, bases, spectra, operators and proofs |
+| Probability | Understand a categorical distribution and softmax | Probability and information theory |
+| Derivatives and gradients | Understand local sensitivity and use automatic differentiation | Detailed chain rule, Jacobians and numerical optimization |
+| Optimization | Understand the role of learning rate and optimizer | Convergence, conditioning, adaptive methods and advanced analysis |
+
+## Related paths
+
+- [Understand LLMs](transformer.qmd): start with the system and its mechanisms without following the code.
+- [Deepen tensor knowledge](tensors.qmd): consult shapes and axes when they become useful.
+- [Practice](exercises.qmd): distinguish conceptual checks from practical coding exercises.
+- [Evaluate an experiment](experimental-evaluation.qmd): separate observation, interpretation and evidence.
+
+::: {.callout-warning}
+**Do not confuse this educational project with industrial-scale training.** A small randomly initialized GPT makes transformations and errors inspectable. It does not reproduce the data volumes, compute resources, or performance of a production LLM.
+:::
+
+::: {.language-switch}
+**Language:** [Français](../fr/build-path.qmd) · [English](build-path.qmd)
+:::
