@@ -46,6 +46,11 @@ The final box deliberately groups positional handling with Transformer processin
 
 This is a conceptual diagram. Real tokenizers differ in base units, normalization, pre-tokenization, vocabulary, and special tokens.
 
+::: {.callout-note}
+**Two different meanings of preprocessing.** Corpus preparation (for example, filtering documents, deduplicating near-copies, and defining train/validation boundaries) is an upstream data-engineering stage. Tokenizer normalization and pre-tokenization are part of the tokenizer pipeline and operate on input text. They should not be treated as the same operation. Likewise, tokenizer training learns a vocabulary and rules; encoding a new input reuses them and does not retrain the tokenizer.
+:::
+
+
 ### Essential vocabulary
 
 | Term | Role in the pipeline |
@@ -93,6 +98,9 @@ For the definitions and research behind these dimensions, see **[Evaluating a to
 This overview stays focused on the pipeline. Technical details live on dedicated pages:
 
 - [Tokenization strategies](tokenization-strategies.qmd): pre-tokenization, BPE, WordPiece, unigram, examples, comparisons, and limitations.
+
+
+For a visual overview of tokenization quirks, see ByteByteGo's [How LLMs See the World](https://blog.bytebytego.com/p/how-llms-see-the-world). For guided, notebook-based BPE practice, Vizuara offers [Tokenization from Scratch: Building Byte-Pair Encoding by Hand](https://pods.vizuara.ai/courses/build-llm/tokenization-from-scratch-building-byte-pair-encoding-by-han). These are optional pedagogical resources, not prerequisites or substitutes for the definitions and caveats in this project.
 - [Unicode, UTF-8, and normalization](unicode-text.qmd): code points, bytes, and visually identical strings.
 - [Embedding space](embedding-space.qmd) and [tensors](tensors.qmd): dimensions, weight tables, and representation shapes.
 
