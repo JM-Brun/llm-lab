@@ -316,6 +316,19 @@ To compare two tokenizers:
 4. [Andrej Karpathy — Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE): Unicode, UTF-8, BPE, whitespace, and special tokens.
 5. [Hugging Face — visualizing BPE encoding](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize): complementary visualization; verify community code before execution.
 
+#### Useful timestamps in Karpathy's video
+
+The video is long; these chapter markers let you select only the relevant parts:
+
+- [14:56 — Unicode code points and strings](https://www.youtube.com/watch?v=zduSFxRajkE&t=896s), then [18:15 — UTF encodings and bytes](https://www.youtube.com/watch?v=zduSFxRajkE&t=1095s).
+- [23:50 — BPE intuition](https://www.youtube.com/watch?v=zduSFxRajkE&t=1430s) and [28:35 — counting and merging frequent pairs](https://www.youtube.com/watch?v=zduSFxRajkE&t=1715s).
+- [39:20 — tokenizer as a separate pipeline stage](https://www.youtube.com/watch?v=zduSFxRajkE&t=2360s), [42:47 — decoding](https://www.youtube.com/watch?v=zduSFxRajkE&t=2567s), and [48:21 — encoding](https://www.youtube.com/watch?v=zduSFxRajkE&t=2901s).
+- [57:36 — regex pre-tokenization](https://www.youtube.com/watch?v=zduSFxRajkE&t=3456s) and [1:11:38 — GPT-2/GPT-4 regex differences](https://www.youtube.com/watch?v=zduSFxRajkE&t=4298s).
+- [1:18:15 — special tokens and API handling](https://www.youtube.com/watch?v=zduSFxRajkE&t=4695s).
+- [1:28:42 — SentencePiece](https://www.youtube.com/watch?v=zduSFxRajkE&t=5322s); [1:49:58 — multimodal tokenization](https://www.youtube.com/watch?v=zduSFxRajkE&t=6598s) is an optional extension beyond this text-tokenization sequence.
+
+These are navigation aids, not a substitute for checking implementation details against the relevant tokenizer documentation and source code.
+
 The page combines project-owned diagrams with selected external illustrations and linked resources. The provenance and reuse status of embedded assets are tracked in [the cross-site visual-asset audit](https://github.com/JM-Brun/llm-lab/issues/156).
 
 
