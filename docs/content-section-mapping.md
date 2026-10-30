@@ -22,7 +22,7 @@ Paths are the canonical source files. French and English counterparts are listed
 |---|---|---|---|
 | `index.qmd` / `en/index.qmd` | Entry point | Help readers choose a route; explain the project's scope and current status | Present the four destinations clearly; avoid implying that math/tensor mastery precedes building |
 | `transformer.qmd` / `transformer.qmd` | Understand | System-level GPT/Transformer explanation | Keep concise and system-oriented; link to build milestones and optional details |
-| `transformer-history.qmd` / `transformer-history.qmd` | Understand (context) | Historical and architectural context | Keep as supporting context, not a prerequisite |
+| `transformer-history.qmd` / `transformer-history.qmd` | Reference (optional history) | Selective history of attention, Transformers and LLM evolution; not a concept lesson or prerequisite | Keep in Reference, link from the Transformer overview and relevant concepts; use milestones to point back to canonical pages |
 | `text-data.qmd` / `text-data.qmd` | Understand | Explain how raw text becomes usable model input | Keep concept-first; link to tokenizer/data preparation in Build |
 | `unicode-text.qmd` / `unicode-text.qmd` | Understand (supporting concept) | Explain text representation issues that affect preprocessing | Keep only the Unicode detail needed to reason about real text; deeper encoding detail optional |
 | `tokenization-strategies.qmd` / `tokenization-strategies.qmd` | Understand | Explain tokenization choices and their consequences | Keep the conceptual comparison; implementation belongs to Build |
@@ -55,7 +55,7 @@ The Build route is a **sequence of implementation checkpoints**, not a parallel 
 
 | Build milestone | Conceptual source pages | Minimum practical learning | Current repository evidence |
 |---|---|---|---|
-| G0 — Define the target | Transformer overview, history, glossary | State what a decoder-only GPT does and distinguish it from other model families | Conceptual overview exists; a broader LLM panorama remains tracked by #108 |
+| G0 — Define the target | Transformer overview and glossary; optional history in Reference | State what a decoder-only GPT does and distinguish it from other model families | Conceptual overview exists; a broader LLM panorama remains tracked by #108 |
 | G1 — Prepare text and tokenizer | Text/data, Unicode, tokenization | Load a licensed corpus, tokenize/decode, document provenance and deterministic splits | Conceptual pages exist; no complete end-to-end corpus/tokenizer pipeline is established by this audit |
 | G2 — Create training examples | Training examples | Build context windows, shifted targets, batches and masks; test alignment and leakage boundaries | Detailed conceptual explanation exists; production-ready data pipeline is not established |
 | G3 — Represent tokens | Embedding space, positional encoding; tensors as needed | Use embedding lookup and positional information; inspect only the shapes required by the implementation | Conceptual pages exist; no complete GPT embedding stack is established |
