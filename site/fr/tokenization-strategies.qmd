@@ -62,9 +62,29 @@ Un tokenizer de production n'est pas seulement un algorithme de segmentation. Le
 
 Ces étapes ne sont pas toutes présentes de la même façon dans chaque tokenizer. Le nom de l'algorithme ne suffit donc pas à reproduire une segmentation : il faut aussi connaître la configuration et les versions.
 
-### Exemple de marqueur d'espace
+### Un même texte, plusieurs pipelines de tokenisation
 
-Certaines sorties SentencePiece affichent un marqueur visible tel que `▁` pour représenter une frontière d'espace dans leur convention de tokenisation. Ce marqueur n'est pas un symbole universel de tous les tokenizers et ne signifie pas qu'un espace littéral est toujours stocké de cette manière. Pour interpréter une sortie, consultez la documentation du modèle exact.
+La sortie visible d'un tokenizer dépend de davantage que son seul algorithme de segmentation. Les exemples suivants proviennent du cours Hugging Face et concernent des checkpoints précis ; ce sont des **sorties de pré-tokenisation**, pas les IDs finaux du modèle.
+
+Pour la normalisation, le cours montre que le normaliseur de `bert-base-uncased` transforme :
+
+```text
+Héllò hôw are ü?  →  hello how are u?
+```
+
+Pour la pré-tokenisation, considérons exactement l'entrée `Hello, how are  you?` :
+
+| Checkpoint | Sortie du pré-tokeniseur (fragments visibles) | Point à observer |
+|---|---|---|
+| `bert-base-uncased` | `Hello`, `,`, `how`, `are`, `you`, `?` | Les espaces et la ponctuation créent des frontières ; les espaces répétés ne deviennent pas des fragments distincts. |
+| `gpt2` | `Hello`, `,`, `Ġhow`, `Ġare`, `Ġ`, `Ġyou`, `?` | La convention visible `Ġ` marque les espaces ; l'espace répété est conservé dans la sortie du pré-tokeniseur. |
+| `t5-small` | `▁Hello,`, `▁how`, `▁are`, `▁you?` | La convention fondée sur SentencePiece utilise `▁` ; ce pré-tokeniseur découpe sur les espaces plutôt que sur la ponctuation et ne conserve pas l'espace répété comme fragment distinct. |
+
+Ces sorties dépendent des configurations nommées et du pipeline Hugging Face Tokenizers. Les marqueurs `Ġ` et `▁` sont des représentations visibles, pas des caractères à insérer dans n'importe quel texte. Le cours fournit également des offsets dans la chaîne d'origine : ils permettent de relier les fragments tokenisés à leurs segments sources, notamment lorsque la normalisation ou le traitement des espaces transforme le texte.
+
+Cette comparaison montre pourquoi le seul nom d'un algorithme comme BPE ne suffit pas à reproduire une tokenisation. Le normaliseur, le pré-tokeniseur, le modèle, le post-traitement, le décodeur et leurs configurations déterminent ensemble le comportement. Voir la [leçon Hugging Face sur la normalisation et la pré-tokenisation](https://huggingface.co/docs/course/main/chapter6/4) pour les exemples sources.
+
+Une distinction connexe est importante pour la couverture : un tokenizer fondé sur les caractères dont l'alphabet initial omet un caractère peut devoir recourir à un token inconnu. Un BPE au niveau des octets dont le vocabulaire de base contient les 256 valeurs d'octet peut, lui, représenter des octets d'entrée arbitraires. C'est une propriété de cette conception byte-level, pas une garantie de tout tokenizer appelé BPE.
 
 ## 4. BPE, WordPiece et unigramme
 
