@@ -124,6 +124,14 @@ Référence complémentaire pour une présentation progressive de l'architecture
 Ressource vidéo et animée pour l'intuition mathématique. Ce dépôt ne téléverse ni ne republie les vidéos. Pour toute utilisation d'images fixes ou d'extraits, suivre les conditions publiées par [3Blue1Brown](https://www.3blue1brown.com/about/), notamment l'attribution visible et les limites annoncées.
 :::
 
+::: {.reference-card}
+### Cho et al. — *Transformer Explainer: Learning LLM Transformers with Interactive Visual Explanation and Experimentation*
+
+[Explorer la démonstration interactive](https://poloclub.github.io/transformer-explainer/) · [Dépôt open source](https://github.com/poloclub/transformer-explainer) · [Article scientifique](https://arxiv.org/abs/2408.04619).
+
+Outil pédagogique de Georgia Tech qui exécute GPT-2 small dans le navigateur et relie une entrée textuelle aux opérations internes du modèle : représentations, attention et prédiction du prochain token. L'intérêt pour LLM Lab est de permettre l'observation manipulable d'un *forward pass*, en complément des dérivations et des schémas du dépôt. Il s'agit d'un modèle GPT-2 de 124 millions de paramètres : les observations ne doivent pas être généralisées sans précaution à toutes les architectures récentes. Le code source est publié sous licence MIT ; cette licence ne s'étend pas automatiquement aux contenus externes éventuellement intégrés au site.
+:::
+
 ## Ressources pédagogiques vidéo
 
 Ces liens sont proposés pour compléter la lecture. Ils servent d'appui pédagogique ; les affirmations historiques et mathématiques de référence restent reliées aux articles originaux ou à la documentation correspondante.
