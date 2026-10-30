@@ -96,7 +96,7 @@ Comment les représentations finales deviennent-elles des scores sur le vocabula
 
 Comment mesurer l’écart entre prédictions et cibles, formaliser l’objectif et obtenir les gradients utiles à l’apprentissage ?
 
-[Vraisemblance et entropie](fr/vraisemblance.qmd) · [Entropie croisée](fr/cross-entropy.qmd) · [Loss et gradients](fr/loss.qmd)
+[Vraisemblance](fr/vraisemblance.qmd) · [Entropie](fr/entropy.qmd) · [Entropie croisée](fr/cross-entropy.qmd) · [Loss et gradients](fr/loss.qmd)
 :::
 ::: {.route-step}
 **7 · Évaluer et mettre à l’épreuve**
