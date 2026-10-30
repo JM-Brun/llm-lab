@@ -94,7 +94,88 @@ Where relevant, identify these relationships:
 
 Do not label a concept as a prerequisite merely because it is related. Make essential dependencies few and explain why they are essential. A reader following an overview should not have to understand every linked concept before the overview itself makes sense.
 
-## 4. Source synthesis: curate and combine the best explanations
+## 4. Question-led complementary lessons
+
+A canonical concept page does not need to answer every interesting question in equal depth. Keep one stable, authoritative explanation for each concept, then add **complementary learning units** only when a distinct learner question deserves its own treatment.
+
+This extends the four reading modes (Orient, Connect, Understand, Investigate); it does not create a competing curriculum or replace the guided build-from-scratch route.
+
+### 4.1 Distinguish content roles
+
+- **Main lesson (canonical concept or system page):** explains what the mechanism is, why an LLM needs it, how it fits into the data/model/training/generation lifecycle, and the minimum correct mechanism. It owns the core definitions, notation, and scope.
+- **Question lesson (focused companion):** answers one bounded question that would otherwise overload the main lesson, such as “Why scale dot products by sqrt(d_k)?”, “Why is the causal mask applied before softmax?”, or “What exactly changes when the context window grows?”. It must provide enough local context to stand alone, state its prerequisites, and link back to the canonical explanation.
+- **Worked example or exercise:** asks the learner to calculate, predict, diagnose, or explain something. It tests a learning objective; it is not automatically a separate lesson.
+- **Interactive experiment:** lets the learner manipulate a meaningful variable or inspect an intermediate result. It must state the question, controls, expected observation, interpretation, and limitations. An animation without a testable learning purpose is decoration, not a lab.
+- **Deep dive / research note:** develops derivations, variants, implementation details, evidence, controversies, or limitations beyond the main lesson.
+
+These are roles, not mandatory sections or a requirement to create one artifact of every type for every concept. A short concept may need only one main lesson and a worked example.
+
+### 4.2 Let learner questions determine whether a companion is warranted
+
+Create a separate question lesson only when at least one condition holds:
+
+1. The question has a distinct learning objective and can be answered coherently on its own.
+2. It requires a different explanatory mode (for example a geometric intuition, a derivation, a counterexample, or a controlled comparison).
+3. It is a recurring misconception or a conceptual obstacle that appears in multiple parts of the course.
+4. It connects multiple canonical concepts and is better explained as a cross-cutting bridge than repeated in each page.
+
+Do **not** create a companion merely to split a long page, restate a definition, add a quiz, or imitate a micro-learning platform. Prefer, in order: a concise inline explanation; a worked example or disclosure; a contextual question/answer; then a separate companion page when the objective justifies it.
+
+### 4.3 Connect lessons as a graph
+
+Every companion must identify:
+- the learner question it answers;
+- its canonical concept owner(s);
+- essential prerequisites (few, with a reason) and optional background;
+- the specific point at which it should be discovered from the main lesson;
+- at least one return link to the main lesson or guided-path milestone;
+- related code/tests/experiments and references, when they exist;
+- EN/FR counterpart and a stable shared identifier when it is an exercise or question.
+
+A companion may be linked from multiple lessons, but it must have one canonical home. Do not duplicate its full content across chapters. Main lessons should link to the most useful companions at the point where the question naturally arises, not through a generic “related pages” dump. Do not automatically add every companion to the global sidebar: contextual links should remain the primary discovery mechanism unless a companion becomes a major, independently navigable curriculum stage.
+
+The guided build remains the spine: companion material must clarify or deepen a milestone, never obscure the next construction step or make optional theory appear mandatory. The panorama remains an entry point; deep dives remain non-linear.
+
+### 4.4 Use questions to drive a coherent teaching sequence
+
+For a major mechanism, consider this progression where useful:
+
+1. **Need:** what problem appears if this mechanism is absent?
+2. **Intuition:** what mental model predicts its behavior?
+3. **Mechanism:** what operation is actually computed?
+4. **Why this formulation:** why this equation, scaling, mask, parameterization, or design choice?
+5. **Inspect:** what intermediate values, shapes, or geometry can we observe?
+6. **Challenge:** which plausible alternative or edge case exposes a misconception?
+7. **Build:** how is the mechanism implemented and tested in the small GPT?
+8. **Limits:** what does this mechanism not guarantee?
+
+This is a question bank, not a compulsory eight-page sequence. Combine adjacent questions when one explanation serves them better; separate them when the learning objective or method genuinely differs.
+
+### 4.5 Example: attention as a family of connected learning units
+
+- **Main lesson — Self-attention in a GPT:** purpose, Q/K/V data flow, causal context, output, and its place inside a Transformer block.
+- **Question companion — Why divide attention scores by sqrt(d_k)?** variance intuition, assumptions, softmax saturation, and a small numerical comparison.
+- **Question companion — Why mask future positions before softmax?** causal semantics, a counterexample when masking after softmax, and the no-future-information invariant.
+- **Worked example — Compute one attention head by hand:** small Q/K/V matrices, scores, mask, normalized weights, and weighted sum.
+- **Interactive lab — Change score scale and inspect softmax:** compare entropy/concentration and gradients where executable; do not imply that one plot proves training quality.
+- **Deep dive — Multi-head attention and tensor transformations:** split/reshape/transpose/concatenate, projection matrices, and implementation conventions.
+- **Build checkpoint — Implement and test causal self-attention:** link to the actual code and property tests only when they exist and have been reviewed.
+
+The companions answer different questions. They should not repeat the entire attention lesson, and their existence/status must not be claimed before implementation and validation.
+
+### 4.6 Acceptance criteria for a companion
+
+A proposed companion is justified when:
+- [ ] its question and learning outcome are explicit and non-duplicative;
+- [ ] its canonical owner and entry/return links are identified;
+- [ ] it is locally understandable with clearly stated prerequisites;
+- [ ] its explanation uses an appropriate mode (visual, derivation, example, experiment, or critique);
+- [ ] assumptions, caveats, and evidence are accurate;
+- [ ] it has EN/FR parity where published in both languages;
+- [ ] it improves a real learner transition or resolves a documented misconception;
+- [ ] it does not create a second source of truth for definitions or implementation status.
+
+## 5. Source synthesis: curate and combine the best explanations
 
 LLM Lab aims to be a **more complete, more teachable synthesis of the strongest existing material**, not a summary of one book and not a pile of links. “Best” is question-dependent: a visual explanation may be best for first intuition, a primary paper for the original claim, official documentation for an API contract, and a controlled experiment for a measured performance claim. No single source is authoritative for every kind of question.
 
@@ -121,7 +202,7 @@ A source matrix is useful for a major topic or contested claim; it is unnecessar
 
 **The output should be better than any single source for this learning goal** because it combines clear intuition, rigorous definitions, consistent notation, the right depth, counterexamples, current evidence, and links to further reading. It should not claim to be universally superior or exhaustive: define the scope, state what remains uncovered, and keep references inspectable.
 
-## 5. Shared quality contract for every public page
+## 6. Shared quality contract for every public page
 
 Before a page is considered ready, check the following applicable items:
 
@@ -138,7 +219,7 @@ Before a page is considered ready, check the following applicable items:
 
 Not every page needs a full derivation, code sample, counterexample, or exercise. It must either include what its purpose requires or link clearly to the relevant material. Do not remove a caveat or a needed explanation merely to make a page shorter.
 
-## 6. Review workflow for a page, concept, or learning stage
+## 7. Review workflow for a page, concept, or learning stage
 
 Use this workflow for both new material and revisions:
 
@@ -153,7 +234,7 @@ Use this workflow for both new material and revisions:
 9. **Record status and remaining uncertainty.** Mark content, code, and experiments as planned, illustrative, implemented, tested, or experimentally evaluated as appropriate. Do not imply mastery from publication or CI.
 10. **Only then advance the roadmap.** New implementations and experiments remain gated by validated prerequisite knowledge as specified in the roadmap.
 
-## 7. What this method deliberately avoids
+## 8. What this method deliberately avoids
 
 - A compulsory, chapter-by-chapter reading order.
 - Treating every concept as equally important to every reader.
