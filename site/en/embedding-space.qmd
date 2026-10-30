@@ -22,6 +22,14 @@ In a Transformer, this representation is then transformed by the network's layer
 
 These objects are not interchangeable. A method suited to sentence embeddings for document retrieval does not automatically transfer to a language model's internal activations.
 
+### A historical distinction: static word vectors
+
+Before contextual language models, methods such as Word2Vec learned **one vector per word type** from patterns in its surrounding words. CBOW predicts a target word from its context; Skip-gram predicts surrounding words from a target word. In a trained Word2Vec model, the vector for a vocabulary entry such as `bank` is the same wherever that word appears.
+
+A Transformer starts differently: its embedding table maps each **token ID** (often a subword unit, not a whole word) to an initial vector. The same ID retrieves the same initial row, but subsequent layers combine it with positional and contextual information, so the resulting hidden state can differ across occurrences. Thus, a static Word2Vec word vector, a Transformer token embedding, and a contextualized hidden state are related ideas, but they are not interchangeable.
+
+This is a conceptual contrast, not a claim that modern Transformer embeddings are initialized or trained like Word2Vec. See [Mikolov et al. (2013)](https://arxiv.org/abs/1301.3781) for the original word-representation architectures.
+
 ## From token IDs to vectors: a worked lookup
 
 Let the vocabulary contain five IDs and let each token embedding have dimension two. A tiny illustrative embedding matrix is:
