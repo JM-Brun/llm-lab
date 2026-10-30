@@ -136,13 +136,9 @@ This addition is **not universal**. For example, [RoPE](positional-encoding.qmd)
 
 During training, gradients can update the embedding-table rows used by the examples. The lookup operation itself does not make a vector context-aware; contextualization happens in the subsequent network layers. See [tensors](tensors.qmd) for axis conventions and [from text to tokens](text-data.qmd) for the preceding tokenizer stage.
 
-### Same token, different contexts
+### From an initial embedding to a contextualized state
 
-![The same token can receive different contextualized representations depending on the sentence.](../images/contextualized-embeddings-en.svg){fig-alt="Two sentences use bank in different contexts. Assuming the same ID, both occurrences share the initial embedding, then may produce different contextualized states." width=100%}
-
-This original illustration is motivated by [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). It illustrates the principle, not measured vectors: it assumes `bank` maps to the same token in both sentences. Depending on the tokenizer, a visible word may consist of multiple tokens.
-
-The initial embedding is retrieved from the ID; the contextualized representation then depends on other tokens, the architecture, and the layer considered. This does not mean every occurrence must have a wholly different vector at every layer, or that vectors always separate according to human-expected meanings.
+The same token ID retrieves the same initial embedding, but its representation can change as positional information and surrounding tokens are processed by the Transformer. This distinction is important enough to deserve a focused explanation: see [Why can the same token have different contextualized representations?](contextualized-representations.qmd).
 
 ## A map of representations
 
