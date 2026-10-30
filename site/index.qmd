@@ -49,50 +49,57 @@ Le même modèle intervient dans plusieurs processus, mais ceux-ci n'ont ni le m
 <g class="flow-node flow-node-planned"><rect x="820" y="425" width="220" height="80" rx="12"/><text x="834" y="446" class="flow-kicker">ADAPTATION · PLANIFIÉE</text><text x="834" y="471" class="flow-title">Décision sur le modèle</text><text x="834" y="490" class="flow-subtitle">données · adaptation</text></g><text x="20" y="526" class="flow-hint">Les blocs ouvrent les pages de référence actuellement disponibles.</text>
 </svg><figcaption>Schéma conceptuel : l'inférence réutilise des paramètres fixes ; l'entraînement les met à jour ; l'évaluation est transversale et informe les décisions. Les boucles et variantes réelles dépendent du protocole.</figcaption></figure>
 
-## Un fil conducteur en six étapes
+## Un parcours conceptuel en sept étapes
 
-Le menu suit une chaîne de compréhension : **des données vers les représentations, des représentations vers une prédiction, puis de la prédiction vers l’apprentissage et l’évaluation**. Ce fil donne un ordre conseillé, pas une obligation de lecture.
+Le menu distingue les opérations qui transforment les entrées, celles qui calculent la prédiction et celles qui définissent le signal d’apprentissage. L’ordre proposé suit les dépendances principales, sans imposer une lecture linéaire.
 
 :::: {.learning-route}
 ::: {.route-step}
-**1 · S'orienter**
+**1 · S’orienter**
 
-Que fait un GPT autorégressif ? Comment s'organisent ses principales composantes et son cycle de prédiction ?
+Que fait un GPT autorégressif ? Quelle place occupent ses composants dans le cycle général d’un modèle de langage ?
 
-[Vue d'ensemble du système](fr/transformer.qmd) · [Repères historiques](fr/transformer-history.qmd) · [Glossaire](fr/glossary.qmd)
+[Vue d’ensemble GPT / Transformer](fr/transformer.qmd) · [Repères historiques](fr/transformer-history.qmd)
 :::
 ::: {.route-step}
-**2 · Préparer les données**
+**2 · Préparer le texte et les données**
 
-Comment passer des documents au texte exploitable, puis aux tokens, aux identifiants et aux exemples d'entraînement ?
+Comment passer des documents au texte exploitable, puis aux tokens, aux identifiants et aux exemples d’entraînement ?
 
-[Texte, tokenisation et données](fr/text-data.qmd) · [Exemples d'entraînement](fr/training-examples.qmd)
+[Texte, tokenisation et données](fr/text-data.qmd) · [Exemples d’entraînement](fr/training-examples.qmd)
 :::
 ::: {.route-step}
-**3 · Construire les représentations**
+**3 · Représenter le texte**
 
-Comment les identifiants deviennent-ils des tenseurs et des vecteurs, puis des représentations qui dépendent du contexte ?
+Comment les identifiants deviennent-ils des tenseurs et des vecteurs, puis des représentations contextualisées ?
 
-[Tenseurs](fr/tensors.qmd) · [Espace des embeddings](fr/embedding-space.qmd) · [Représentations contextualisées](fr/contextualized-representations.qmd)
+[Tenseurs](fr/tensors.qmd) · [Espace des embeddings](fr/embedding-space.qmd) · [Position et contexte](fr/positional-encoding.qmd)
 :::
 ::: {.route-step}
-**4 · Calculer une prédiction**
+**4 · Calculer avec le Transformer**
 
-Comment le modèle combine-t-il l'information entre positions et transforme-t-il ses représentations en scores puis en probabilités ?
+Comment l’attention combine-t-elle l’information entre positions, et comment le masquage causal contraint-il ce calcul ?
 
-[Attention et masquage](fr/queries-keys-values.qmd) · [Logits et probabilités](fr/logits.qmd)
+[Requêtes, clés et valeurs](fr/queries-keys-values.qmd) · [Attention](fr/scaled-dot-product-attention.qmd) · [Masquage causal](fr/causal-masking.qmd)
 :::
 ::: {.route-step}
-**5 · Apprendre les paramètres**
+**5 · Produire une prédiction**
 
-Comment quantifier l'écart entre prédiction et cible, calculer les gradients et ajuster les paramètres ?
+Comment les représentations finales deviennent-elles des scores sur le vocabulaire, puis une distribution de probabilités ?
 
-[Vraisemblance et entropie croisée](fr/vraisemblance.qmd) · [Loss et gradients](fr/loss.qmd)
+[Logits](fr/logits.qmd) · [Probabilités](fr/probabilites.qmd)
 :::
 ::: {.route-step}
-**6 · Évaluer et poursuivre**
+**6 · Définir le signal d’apprentissage**
 
-Comment vérifier les performances, analyser les erreurs et décider de la suite ? La génération est présentée dans la vue d'ensemble ; son approfondissement dédié reste à développer.
+Comment mesurer l’écart entre prédictions et cibles, formaliser l’objectif et obtenir les gradients utiles à l’apprentissage ?
+
+[Vraisemblance et entropie](fr/vraisemblance.qmd) · [Entropie croisée, loss et gradients](fr/cross-entropy.qmd)
+:::
+::: {.route-step}
+**7 · Évaluer et mettre à l’épreuve**
+
+Comment concevoir une évaluation, analyser les erreurs et distinguer ce que les mesures permettent réellement de conclure ?
 
 [Évaluation expérimentale](fr/evaluation-experimentale.qmd) · [Exercices](fr/exercises.qmd)
 :::
