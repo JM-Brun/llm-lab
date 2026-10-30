@@ -104,6 +104,26 @@ A related coverage distinction is important: a character-based tokenizer whose i
 | **WordPiece** | Select units using a likelihood-related criterion, then encode with implementation-specific rules | Not simply BPE under another name; some systems mark continuations with `##` |
 | **Unigram** | Probabilistic model over candidate subwords, often reduced by pruning | Output depends on model, candidates, and conventions |
 
+### How WordPiece differs from BPE
+
+In the common WordPiece training explanation, candidate adjacent units are ranked with a score related to how strongly they co-occur relative to the frequencies of their individual parts. A simplified form is:
+
+\\[\\operatorname{score}(a,b)=\\frac{f(ab)}{f(a)\\,f(b)}\\]
+
+where frequencies are estimated from the training corpus. This favours a pair whose joint frequency is high relative to the frequencies of its parts; it is not simply the most frequent pair, as in basic BPE. **Caveat:** Google's original WordPiece training procedure is not fully specified in a public reference implementation. Hugging Face presents its account as a reconstruction, so this formula is explanatory rather than a guarantee that every WordPiece trainer uses exactly this procedure.
+
+At encoding time, common WordPiece implementations use greedy **longest-match-first** search over the vocabulary. In BERT-style tokenizers, continuation pieces are conventionally prefixed with `##`. If the complete input word cannot be segmented under the configured rules, a tokenizer such as BERT may emit one `[UNK]` for the whole word rather than retain a partial segmentation. These are implementation conventions, not universal properties of every WordPiece tokenizer.
+
+See the [Hugging Face WordPiece explanation](https://huggingface.co/learn/llm-course/en/chapter6/6) and [WordPiece model documentation](https://huggingface.co/docs/tokenizers/python/latest/api/reference.html#tokenizers.models.WordPiece).
+
+### How Unigram differs from merge-based tokenizers
+
+A Unigram tokenizer starts from a relatively large candidate vocabulary with associated probabilities. Training iteratively removes candidates whose removal causes the smallest increase in the model's loss, reducing the vocabulary toward the target size. This is pruning over a probabilistic segmentation model—not a sequence of pair merges.
+
+At encoding time, several segmentations may be possible. The Viterbi algorithm finds the highest-probability segmentation under the learned model. This contrasts with BPE's application of a learned merge order and WordPiece's common greedy longest-match procedure. See the [Hugging Face Unigram explanation](https://huggingface.co/learn/llm-course/en/chapter6/7) and [SentencePiece](https://github.com/google/sentencepiece).
+
+**In one sentence:** BPE applies ranked merges; WordPiece commonly uses greedy longest-match segmentation after likelihood-related vocabulary construction; Unigram selects the most probable complete segmentation under a learned probabilistic model.
+
 **SentencePiece** is a library that can train BPE or unigram models from raw text; it is not one algorithm. **Hugging Face Tokenizers** is a library of models and pipeline components. **tiktoken** is a BPE implementation with specific encodings. These names therefore do not all belong at the same comparison level.
 
 
