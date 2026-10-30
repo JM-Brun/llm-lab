@@ -95,7 +95,7 @@ How do final representations become vocabulary scores and then a probability dis
 
 How do we measure the gap between predictions and targets, formalize the objective, and obtain gradients for learning?
 
-[Likelihood and entropy](likelihood.qmd) · [Cross-entropy](cross-entropy.qmd) · [Loss and gradients](loss.qmd)
+[Likelihood](likelihood.qmd) · [Entropy](entropy.qmd) · [Cross-entropy](cross-entropy.qmd) · [Loss and gradients](loss.qmd)
 :::
 ::: {.route-step}
 **7 · Evaluate and challenge**
