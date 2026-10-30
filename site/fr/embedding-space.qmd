@@ -8,7 +8,7 @@ lang: fr
 Un **embedding** est un vecteur numérique associé à un objet, par exemple un token. L'ensemble de ces vecteurs forme un espace de représentation. On peut comparer leurs directions, leurs distances ou leurs voisins, mais leur interprétation dépend du modèle, de son entraînement et de la tâche : la géométrie n'est pas un dictionnaire universel du sens.
 :::
 
-Cette page établit d'abord comment les identifiants sélectionnent des vecteurs et comment un Transformer transforme les embeddings initiaux en représentations contextualisées. Elle examine ensuite la géométrie de ces représentations, les limites des mesures de similarité et les pièges d'interprétation.
+Cette page explique comment les IDs sélectionnent des vecteurs initiaux, puis examine la géométrie des représentations apprises et les limites des mesures de similarité. La question distincte de la contextualisation d'un embedding initial par le Transformer est traitée dans un [complément ciblé](contextualized-representations.qmd).
 
 ## D'où viennent les vecteurs ?
 
