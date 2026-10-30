@@ -8,7 +8,7 @@ lang: en
 An **embedding** is a numerical vector associated with an object, such as a token. The collection of these vectors forms a representation space. We can compare their directions, distances, or neighbours, but interpretation depends on the model, its training, and the task: geometry is not a universal dictionary of meaning.
 :::
 
-This page first establishes how token IDs select vectors and how a Transformer turns initial embeddings into contextualized states. It then examines the geometry of those representations, the limits of similarity measures, and common interpretation pitfalls.
+This page establishes how token IDs select initial vectors, then examines the geometry of learned representations and the limits of similarity measures. The distinct question of how a Transformer contextualizes an initial embedding is handled in a [focused companion](contextualized-representations.qmd).
 
 ## Where do the vectors come from?
 
