@@ -53,7 +53,7 @@ Dans un décodeur causal comme GPT, l'état à la position \(t\) peut utiliser l
 
 Les deux occurrences peuvent donc produire des états cachés différents, même si leur lookup initial du token est identique.
 
-![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Deux phrases utilisent le mot banque dans des contextes différents. En supposant le même ID, les deux occurrences partagent l'embedding initial, puis peuvent produire des états contextualisés différents." fig-cap="Même ID, même lookup initial ; des informations positionnelles et contextuelles différentes peuvent conduire à des états cachés différents." width=100%}
+![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Deux phrases utilisent le token anglais bank dans des contextes différents. En supposant le même ID, les deux occurrences partagent l'embedding initial, puis peuvent produire des états contextualisés différents." fig-cap="Même ID, même lookup initial ; des informations positionnelles et contextuelles différentes peuvent conduire à des états cachés différents." width=100%}
 
 Cette illustration originale s'inspire de [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). Elle illustre le principe, pas des vecteurs mesurés. Selon le tokenizer, un mot visible peut être constitué de plusieurs tokens.
 
