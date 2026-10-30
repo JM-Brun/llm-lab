@@ -50,6 +50,8 @@ The same model is involved in several processes, but they have different objecti
 
 ## A seven-step conceptual route
 
+This is a **reading order**, not the chronology of a complete training run. Evaluation is cross-cutting: it informs data, training, inference, and adaptation decisions. Exercises are grouped separately so they remain accessible from every stage.
+
 The sidebar separates the operations that transform the input, those that compute a prediction, and those that define the learning signal. The suggested order follows the main dependencies without requiring linear reading.
 
 :::: {.learning-route}
@@ -100,7 +102,7 @@ How do we measure the gap between predictions and targets, formalize the objecti
 
 How should we design an evaluation, analyze errors, and distinguish what measurements actually support?
 
-[Experimental evaluation](experimental-evaluation.qmd) · [Exercises](exercises.qmd)
+[Experimental evaluation](experimental-evaluation.qmd)
 :::
 ::::
 
