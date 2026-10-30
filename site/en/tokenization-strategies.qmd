@@ -80,9 +80,13 @@ For pre-tokenization, consider the exact input `Hello, how are  you?`:
 | `gpt2` | `Hello`, `,`, `Ġhow`, `Ġare`, `Ġ`, `Ġyou`, `?` | The visible `Ġ` convention marks whitespace; the repeated space is retained in the pre-tokenizer output. |
 | `t5-small` | `▁Hello,`, `▁how`, `▁are`, `▁you?` | The SentencePiece-based convention uses `▁`; this pre-tokenizer splits on whitespace rather than punctuation and does not preserve the repeated space as a separate piece. |
 
+**Important:** the table calls the pre-tokenizer component directly; it does not apply the normalizer shown above. That is why the BERT pre-tokenizer row still displays `Hello` with a capital letter. A complete tokenizer call applies the configured stages together.
+
 These outputs are specific to the named configurations and the Hugging Face Tokenizers pipeline. The markers `Ġ` and `▁` are visible representations, not literal characters that should be inserted into arbitrary text. The course also reports offsets into the original string: these matter when mapping tokenized pieces back to source spans, especially when normalization or whitespace handling changes the text.
 
 This comparison illustrates why an algorithm label such as BPE is insufficient to reproduce tokenization. Normalizer, pre-tokenizer, model, post-processor, decoder, and their configuration jointly determine the behaviour. See the Hugging Face course's [normalization and pre-tokenization lesson](https://huggingface.co/docs/course/main/chapter6/4) for the source examples.
+
+A related coverage distinction is important: a character-based tokenizer whose initial alphabet omits a character may need an unknown-token fallback. A byte-level BPE with all 256 byte values in its base vocabulary can instead represent arbitrary input bytes. This is a property of that byte-level design, not a guarantee about every tokenizer called BPE.
 
 ## 4. BPE, WordPiece, and unigram
 
@@ -124,8 +128,6 @@ The most frequent pair is tied: `l + o` and `o + w` both occur three times. Assu
 | 2: merge `lo + w` | `low · </w>` | `low · e · r · </w>` | `low · e · s · t · </w>` |
 
 The frequency table makes the greedy choice visible; it does not mean BPE discovers linguistic morphemes or an optimal vocabulary. This is a word-level teaching convention with an end-of-word marker, not a complete byte-level production tokenizer. Real outputs also depend on pre-tokenization, base units, corpus frequencies, special-token handling, and implementation-specific tie-breaking. To manipulate candidate pairs, use the [BPE Explainer by Müller and Steinbach](https://philipmueller.dev/bpe-visualization/).
-
-A related coverage distinction is important: a character-based tokenizer whose initial alphabet omits a character may need an unknown-token fallback. A byte-level BPE with all 256 byte values in its base vocabulary can instead represent arbitrary input bytes. This is a property of that byte-level design, not a guarantee about every tokenizer called BPE.
 
 ### Tokenizer training versus encoding at inference
 
