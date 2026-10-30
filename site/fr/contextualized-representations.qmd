@@ -22,7 +22,7 @@ Le mot anglais `bank` est conservé dans cet exemple pour garder une même forme
 Sous cette hypothèse explicite, les deux occurrences récupèrent le même embedding initial :
 
 \[
-e_{\text{banque}} = E[\text{ID}_{\text{banque}}].
+e_{\text{bank}} = E[\text{ID}_{\text{bank}}].
 \]
 
 Le lookup est un accès à une table. Il n'examine pas les mots voisins, ne déduit pas le sens visé et ne produit pas un vecteur propre à chaque phrase.
