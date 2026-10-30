@@ -45,6 +45,33 @@ Le diagramme du masque causal affiché dans le chapitre est créé pour ce proje
 - **Hébergement :** image intégrée depuis le CDN LinkedIn ; aucune copie locale n'a pu être créée dans cet environnement. Le lien CDN est signé et peut évoluer ; une copie locale ne devra être ajoutée qu'après obtention d'un fichier source téléchargeable et vérification des conditions de réutilisation.
 - **Droits :** attribution fournie à titre de provenance ; elle ne constitue pas une licence de réutilisation. Vérifier les conditions applicables auprès de l'auteur avant redistribution ou modification.
 
+## Illustrations externes actuellement intégrées — tokenisation
+
+Ces trois figures sont intégrées dans les pages française et anglaise sur les stratégies de tokenisation. Elles sont conservées dans le site pendant la vérification des droits ; leur présence ne signifie pas que la réutilisation a déjà été juridiquement validée.
+
+### Catherine Arnett — fertilité des tokenizers selon la langue
+
+- **Source :** [*wHy DoNt YoU jUsT uSe ThE lLaMa ToKeNiZeR??*](https://huggingface.co/blog/catherinearnett/dangers-of-tokenizer-recycling), article communautaire publié le 27 septembre 2024.
+- **Illustration intégrée :** [fichier image hébergé sur le CDN Hugging Face](https://cdn-uploads.huggingface.co/production/uploads/6384d424ac61472e5e92d403/yZnGPoBwKK4d19aCR7Ypo.png).
+- **Utilisation :** figure de comparaison de la fertilité de plusieurs tokenizers dans les expériences présentées par l'autrice ; ce n'est pas un classement universel.
+- **Droits :** aucun droit de réutilisation explicite pour cet actif précis n'a été identifié sur l'article. Vérification en attente ; illustration conservée sans modification.
+
+### Petrov et al. — disparités de longueur de tokenisation et de temps d'exécution
+
+- **Source :** [*Language Model Tokenizers Introduce Unfairness Between Languages*](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/), NeurIPS 2023.
+- **Illustration intégrée :** [figure hébergée sur le site de l'auteur](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/featured_hu3a085884cc9c15c3954ff8e09a76a4a3_251753_720x2500_fit_q75_h2_lanczos.webp).
+- **Utilisation :** visualisation d'une association mesurée dans le protocole étudié, pas d'une loi causale universelle.
+- **Droits :** la page source identifie le travail sous CC BY-NC-ND 4.0. La couverture exacte de cette image par la licence et les conditions applicables à son intégration inchangée restent à confirmer. Vérification en attente ; illustration conservée sans modification.
+
+### Hugging Face — composants du pipeline de tokenisation
+
+- **Source :** [cours Hugging Face, *Building a tokenizer, block by block*](https://huggingface.co/docs/course/chapter6/8).
+- **Illustration intégrée :** [SVG du dépôt huggingface-course/documentation-images](https://huggingface.co/datasets/huggingface-course/documentation-images/resolve/main/en/chapter6/tokenization_pipeline.svg).
+- **Utilisation :** schéma des étapes de normalisation, pré-tokenisation, modèle de tokenisation et post-traitement.
+- **Droits :** le dépôt de données [déclare Apache-2.0 dans son README](https://huggingface.co/datasets/huggingface-course/documentation-images/blob/main/README.md). Il reste à confirmer que l'actif exact est couvert par cette licence et à vérifier sa provenance/attribution. Vérification en cours ; illustration conservée sans modification.
+
+Le registre technique complet, y compris les SVG locaux, les actifs liés mais non intégrés et les vérifications restantes, est suivi dans [l'issue #156](https://github.com/JM-Brun/llm-lab/issues/156) et dans `docs/visual-assets-register.md`.
+
 ## Illustrations intégrées
 
 ::: {.reference-card}
