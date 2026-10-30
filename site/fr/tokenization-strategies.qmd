@@ -316,6 +316,19 @@ Pour comparer deux tokenizers de manière interprétable :
 4. [Andrej Karpathy — Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE) : Unicode, UTF-8, BPE, espaces et tokens spéciaux.
 5. [Hugging Face — visualiser l'encodage BPE](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize) : visualisation complémentaire, article communautaire dont le code doit être vérifié avant exécution.
 
+#### Repères temporels utiles dans la vidéo de Karpathy
+
+La vidéo est longue ; ces chapitres permettent de sélectionner les passages pertinents :
+
+- [14:56 — points de code Unicode et chaînes](https://www.youtube.com/watch?v=zduSFxRajkE&t=896s), puis [18:15 — encodages UTF et octets](https://www.youtube.com/watch?v=zduSFxRajkE&t=1095s).
+- [23:50 — intuition de BPE](https://www.youtube.com/watch?v=zduSFxRajkE&t=1430s) et [28:35 — comptage et fusion des paires fréquentes](https://www.youtube.com/watch?v=zduSFxRajkE&t=1715s).
+- [39:20 — tokenizer comme étape distincte du pipeline](https://www.youtube.com/watch?v=zduSFxRajkE&t=2360s), [42:47 — décodage](https://www.youtube.com/watch?v=zduSFxRajkE&t=2567s) et [48:21 — encodage](https://www.youtube.com/watch?v=zduSFxRajkE&t=2901s).
+- [57:36 — pré-tokenisation par expressions régulières](https://www.youtube.com/watch?v=zduSFxRajkE&t=3456s) et [1:11:38 — différences entre les expressions GPT-2 et GPT-4](https://www.youtube.com/watch?v=zduSFxRajkE&t=4298s).
+- [1:18:15 — tokens spéciaux et gestion par les API](https://www.youtube.com/watch?v=zduSFxRajkE&t=4695s).
+- [1:28:42 — SentencePiece](https://www.youtube.com/watch?v=zduSFxRajkE&t=5322s) ; [1:49:58 — tokenisation multimodale](https://www.youtube.com/watch?v=zduSFxRajkE&t=6598s) constitue un prolongement facultatif, au-delà de cette séquence sur les tokens textuels.
+
+Ces repères facilitent la navigation ; ils ne remplacent pas la vérification des détails d'implémentation dans la documentation et le code source des tokenizers concernés.
+
 La page combine des schémas originaux du projet, des illustrations externes sélectionnées et des ressources liées. La provenance et les droits de réutilisation des actifs intégrés sont suivis dans [l'audit transversal des illustrations](https://github.com/JM-Brun/llm-lab/issues/156).
 
 
