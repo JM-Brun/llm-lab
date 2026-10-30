@@ -365,3 +365,79 @@ Use this report alongside the existing canonical project documents:
 - [Visual assets register](visual-assets-register.md)
 
 **Relationship to those documents:** this report captures the external strategic diagnosis and recommendations. The editorial method remains the contract for reader experience and page design; the curriculum and learning path remain the source of truth for educational dependencies; the roadmap remains the implementation-priority record; page-level inventories and audits remain the evidence for individual content decisions. If recommendations here conflict with a more detailed, already validated project rule, reconcile the documents explicitly before changing the site.
+
+
+## 15. Reconciliation with the existing project architecture (2026-10-30)
+
+This section records the comparison with the repository's existing editorial, curriculum, learning-path, roadmap, and audit documents. It resolves the main risk raised by the first version of this review: accidentally introducing a second information architecture or a parallel roadmap.
+
+### 15.1 Finding: the repository already has the right strategic model
+
+The existing documents already establish the central design principles:
+
+- [Reader experience and editorial method](reader-experience-and-editorial-method.md) defines a **non-linear learning graph with progressive depth**, four reading modes (Orient, Connect, Understand, Investigate), page roles, contextual links, and criteria for question-led companion lessons.
+- [Full curriculum and coverage plan](full-curriculum-plan.md) defines the scope, conceptual dependencies, the three learning depths (big-picture overview, guided model-building path, deep dives), and a laboratory layer for diagrams, interactions, experiments, and tests.
+- [Learning path](learning-path.md) operationalizes the curriculum through a reader-facing crosswalk, guided modules, page links, evidence gates, and explicit distinctions between available and planned work.
+- [Repository roadmap](roadmap.md) owns priorities, current implementation status, sequencing, and the rule that existing knowledge must be validated before new implementation or experiment work.
+- [Public page audit inventory](page-audit-inventory.md) records page-level evidence and remaining checks; it is explicitly partial and does not certify every page.
+- [Editorial boundary audit](editorial-boundary-audit.md) defines what belongs in LLM Lab versus the general mathematical knowledge base and protects the public pages' self-contained explanations.
+
+**Conclusion:** no new curriculum document, top-level navigation taxonomy, or parallel roadmap is needed. The audit's role is to challenge and refine the existing system, not replace it.
+
+### 15.2 Existing coordination issues are the source of truth for this work
+
+Two open issues already coordinate the relevant work:
+
+- [Issue #130 — Coordinate the high-level learning-design audit](https://github.com/JM-Brun/llm-lab/issues/130) owns the lifecycle-oriented navigation proposal and the coordination of the high-level design review. Its proposed flow is: understand an LLM; text to model input; inside the model; representations to prediction; learning; generation; adaptation to useful assistant; build and inspect; optional deep dives and references.
+- [Issue #87 — Turn the three learning depths into a traceable curriculum map](https://github.com/JM-Brun/llm-lab/issues/87) owns the traceability between the panorama, guided build path, and deep dives, including learning questions, prerequisites, outcomes, next steps, optional detours, and evidence.
+
+The present audit should feed findings into #130. The curriculum crosswalk and milestone evidence belong in #87 and `docs/learning-path.md`; page-level findings belong in the page audit inventory and relevant focused issues.
+
+### 15.3 How the audit recommendations map to canonical documents
+
+| Audit recommendation | Canonical owner | Reconciliation decision |
+|---|---|---|
+| Global navigation should follow the system's causal/lifecycle flow | Issue #130; full curriculum plan | Refine the existing lifecycle proposal; do not introduce a second sidebar taxonomy |
+| Three reader routes/depths | Reader-experience method; issue #87 | Preserve Panorama / Guided build / Deep dives as complementary routes, not separate content silos |
+| Explicit from-scratch GPT milestones | Learning path; full curriculum plan; roadmap | Keep the existing modules and evidence gates; do not imply that the complete GPT implementation or training run exists |
+| Training, inference/generation, adaptation/post-training, and evaluation | Full curriculum plan; learning path; issue #130 | Keep the processes distinct and cross-linked; evaluation is cross-cutting, not a post-adaptation-only phase or a new mandatory chapter |
+| Page types and title conventions | Reader-experience method | Apply its existing page contracts; do not impose a universal template or mass-renaming exercise |
+| Concept coverage and dependencies | Full curriculum plan | Use the curriculum graph and source baseline; do not mirror Raschka chapter-for-chapter |
+| Implementation/test/experiment status | Learning path; roadmap; page audit inventory | Keep evidence states separate: documented, implemented, tested, rendered, experimentally demonstrated, and learner mastery |
+| General mathematics vs LLM-specific application | Editorial boundary audit | Preserve self-contained public explanations; do not move or remove prerequisite mathematics based solely on overlap |
+| Visual and accessibility review | Roadmap; page audit inventory; visual assets register | Record concrete browser findings in the existing audit/asset records; this report does not claim a pixel-level review |
+
+### 15.4 Lifecycle distinction: clarify the model without creating duplicate chapters
+
+The audit highlights four related but distinct processes. They form a cross-cutting explanatory lens; they should be connected in overview diagrams without being collapsed into one linear pipeline:
+
+- **Training from initialization:** data/targets → representations → forward pass → objective → gradients → parameter updates → checkpoint selection.
+- **Inference/generation:** context → tokenization → forward pass → next-token distribution → decoding → appended token → repeated forward pass.
+- **Adaptation/post-training:** pretrained checkpoint → optional supervised fine-tuning, preference optimization, or another adaptation procedure → adapted checkpoint. This is an optional branch, not a required stage of every GPT build or every inference workflow.
+- **Evaluation:** define the task and protocol → select data and baselines → measure the base or adapted model → analyze errors, uncertainty, and limitations. Evaluation can inform model selection during training, compare checkpoints, or assess a pretrained/adapted model; it is not merely the final step after adaptation.
+
+Keep these distinctions visible in the existing curriculum and navigation work, but do not turn them into four new mandatory chapters. Evaluation is a cross-cutting activity, while validation used for model selection must remain distinct from a final held-out test or benchmark.
+
+### 15.5 Scope and sequencing constraints retained
+
+The reconciliation does not authorize a broad rewrite or new implementation work.
+
+1. Inventory and map existing pages, navigation entries, code, tests, and experiments before changing the sidebar.
+2. Reuse the current six-question homepage crosswalk and guided modules in `docs/learning-path.md`; update them only where a concrete mismatch or missing dependency is demonstrated.
+3. Preserve the existing three-depth model and progressive disclosure. Do not make optional deep dives such as RoPE mandatory prerequisites for the overview.
+4. Respect the active learning/implementation gate recorded in the roadmap and learning path, including issue #82. Do not jump ahead to later implementation stages merely because the high-level map lists them.
+5. Preserve existing content, URLs, bilingual scope, and external illustrations. Do not delete illustrations as a precaution; record provenance and verify license/copyright status through the existing visual-assets process.
+6. Do not conflate a page's existence, code presence, passing tests, a successful render, an experiment, and learner mastery.
+7. Prototype and validate representative reader journeys before making broad navigation or homepage changes.
+
+### 15.6 Revised decision
+
+The target is **one coherent learning system**, not a new taxonomy:
+
+- **Navigation:** use issue #130's lifecycle-oriented proposal, reconciled against the real page inventory.
+- **Learning depths:** preserve the Panorama / Guided build / Deep dives model in issue #87 and the full curriculum plan.
+- **Page design:** follow the reader-experience and editorial method.
+- **Build progression and evidence:** maintain `docs/learning-path.md` and the roadmap.
+- **Validation:** extend the page audit inventory and visual asset register with observed evidence.
+
+The audit's ten thematic groupings in §3.2 are retained only as a coverage lens. They are not a menu specification. The next concrete action is to complete the crosswalk/inventory under #130 and #87, identify genuine gaps or contradictions, and only then prototype the sidebar and homepage. No mass renaming, page splitting, content deletion, or implementation expansion is justified by this audit alone.
