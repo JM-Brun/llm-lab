@@ -48,50 +48,57 @@ The same model is involved in several processes, but they have different objecti
 <g class="flow-node flow-node-planned"><rect x="820" y="425" width="220" height="80" rx="12"/><text x="834" y="446" class="flow-kicker">ADAPTATION · PLANNED</text><text x="834" y="471" class="flow-title">Model decision</text><text x="834" y="490" class="flow-subtitle">data · adaptation</text></g><text x="20" y="526" class="flow-hint">Blocks open the currently available canonical pages.</text>
 </svg><figcaption>Conceptual map: inference reuses fixed parameters; training updates them; evaluation is cross-cutting and informs decisions. Actual loops and variants depend on the protocol.</figcaption></figure>
 
-## A six-step learning thread
+## A seven-step conceptual route
 
-The sidebar follows a chain of understanding: **from data to representations, from representations to a prediction, then from prediction to learning and evaluation**. This is a suggested route, not a mandatory reading order.
+The sidebar separates the operations that transform the input, those that compute a prediction, and those that define the learning signal. The suggested order follows the main dependencies without requiring linear reading.
 
 :::: {.learning-route}
 ::: {.route-step}
 **1 · Get oriented**
 
-What does an autoregressive GPT do? How do its main components and prediction loop fit together?
+What does an autoregressive GPT do? How do its components fit into the overall language-model process?
 
-[System overview](transformer.qmd) · [Historical landmarks](transformer-history.qmd) · [Glossary](glossary.qmd)
+[GPT / Transformer overview](transformer.qmd) · [Historical landmarks](transformer-history.qmd)
 :::
 ::: {.route-step}
-**2 · Prepare the data**
+**2 · Prepare text and data**
 
 How do documents become usable text, then tokens, token IDs, and training examples?
 
 [Text, tokenization, and data](text-data.qmd) · [Training examples](training-examples.qmd)
 :::
 ::: {.route-step}
-**3 · Build representations**
+**3 · Represent text**
 
-How do IDs become tensors and vectors, then representations that depend on context?
+How do token IDs become tensors and vectors, then context-dependent representations?
 
-[Tensors](tensors.qmd) · [Embedding space](embedding-space.qmd) · [Contextualized representations](contextualized-representations.qmd)
+[Tensors](tensors.qmd) · [Embedding space](embedding-space.qmd) · [Position and context](positional-encoding.qmd)
 :::
 ::: {.route-step}
-**4 · Compute a prediction**
+**4 · Compute with the Transformer**
 
-How does the model combine information across positions and transform representations into scores and probabilities?
+How does attention combine information across positions, and how does causal masking constrain this computation?
 
-[Attention and masking](queries-keys-values.qmd) · [Logits and probabilities](logits.qmd)
+[Queries, keys, and values](queries-keys-values.qmd) · [Attention](scaled-dot-product-attention.qmd) · [Causal masking](causal-masking.qmd)
 :::
 ::: {.route-step}
-**5 · Learn the parameters**
+**5 · Produce a prediction**
 
-How do we quantify the gap between predictions and targets, compute gradients, and update parameters?
+How do final representations become vocabulary scores and then a probability distribution?
 
-[Likelihood and cross-entropy](likelihood.qmd) · [Loss and gradients](loss.qmd)
+[Logits](logits.qmd) · [Probabilities](probabilities.qmd)
 :::
 ::: {.route-step}
-**6 · Evaluate and continue**
+**6 · Define the learning signal**
 
-How do we assess performance, analyze errors, and decide what to do next? Generation is introduced in the system overview; its dedicated deep dive remains to be developed.
+How do we measure the gap between predictions and targets, formalize the objective, and obtain gradients for learning?
+
+[Likelihood and entropy](likelihood.qmd) · [Cross-entropy, loss, and gradients](cross-entropy.qmd)
+:::
+::: {.route-step}
+**7 · Evaluate and challenge**
+
+How should we design an evaluation, analyze errors, and distinguish what measurements actually support?
 
 [Experimental evaluation](experimental-evaluation.qmd) · [Exercises](exercises.qmd)
 :::
