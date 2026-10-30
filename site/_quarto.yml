@@ -112,7 +112,7 @@ website:
           contents:
             - fr/logits.qmd
             - fr/probabilites.qmd
-        - section: "6 · Définir l’objectif d’apprentissage"
+        - section: "6 · Objectif d’apprentissage et gradients"
           contents:
             - fr/vraisemblance.qmd
             - fr/entropy.qmd
@@ -164,7 +164,7 @@ website:
           contents:
             - en/logits.qmd
             - en/probabilities.qmd
-        - section: "6 · Define the learning objective"
+        - section: "6 · Learning objective and gradients"
           contents:
             - en/likelihood.qmd
             - en/entropy.qmd
