@@ -5,6 +5,8 @@
 **Scope of this pass:** Transformer overview and its direct concept chain.  
 **Method:** [Reader experience and editorial method](reader-experience-and-editorial-method.md).
 
+For the primary reader-facing destination of every current FR/EN page (Understand, Build, Deepen, or Practice & experiment), see the [content-section mapping](content-section-mapping.md). This classification does not replace the page-by-page evidence and review status recorded here.
+
 This file records what was actually reviewed and what remains to be checked. A page is not marked complete because it exists, is linked, or has a green CI run. Scientific review, French/English parity, rendered-page review, implementation evidence, and learner mastery are separate checks.
 
 ## Status vocabulary
