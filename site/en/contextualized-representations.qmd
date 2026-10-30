@@ -10,9 +10,7 @@ The same token ID always selects the same row from a fixed embedding matrix. Yet
 
 This is a focused companion to [The embedding space](embedding-space.qmd). It answers one question without interrupting the main path from token IDs to vectors and then to the geometry of representations.
 
-![Overview of the path from text and token IDs through an embedding table and positional information to contextual representations.](https://media.licdn.com/dms/image/v2/D4D12AQHkmEd7fMhztQ/article-cover_image-shrink_720_1280/B4DZ3YWKZfI0AM-/0/1777451187827?e=2147483647&t=ETNuRHmhKfKe0FYbI-a9g2NaUZ3QNv9xue4OYjI1qUs&v=beta){fig-alt="A schematic pipeline: text is tokenized into IDs, IDs select rows in a learned embedding table, positional information is handled, attention layers process the sequence, and contextual representations are produced." fig-cap="Overview illustration by Rushang Chauhan. The position-handling stage is schematic: architectures such as RoPE do not simply add a position vector to each token embedding. See the explanation below and the page on positional encoding." width=100%}
-
-The figure is reproduced from Rushang Chauhan's LinkedIn article, [*Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/). It provides an orientation map; the sections below specify the architectural distinctions that a high-level diagram necessarily compresses.
+The canonical text → token IDs → embedding lookup pipeline is shown in the [text-to-token overview](text-data.qmd). This page focuses on the additional distinction between an initial token embedding and a context-dependent hidden state; the original example below provides the relevant visual comparison.
 
 ## Start with what stays the same
 
