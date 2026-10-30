@@ -17,7 +17,8 @@ An autoregressive language model receives a sequence of tokens and computes a pr
 <div class="hero-actions">
 [Explore the GPT / Transformer overview](transformer.qmd){.btn .btn-primary}
 [Build a small GPT](build-path.qmd){.btn .btn-outline-primary}
-[Deepen your understanding](tensors.qmd){.btn .btn-outline-primary}
+[Deepen your understanding (optional)](tensors.qmd){.btn .btn-outline-primary}
+[Practice and experiment](exercises.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
