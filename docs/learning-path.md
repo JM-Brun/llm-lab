@@ -34,86 +34,35 @@ The sidebar is intentionally a map of **available canonical pages**, not a compl
 - Follow contextual links from an overview to a concept page, and from that concept to code/tests or evidence where available. A deep dive should always provide a route back to its parent question.
 - Treat “page exists,” “source checked,” “code executes,” “CI passes,” “rendered desktop/mobile reviewed,” and “learner can transfer the idea” as separate evidence states.
 
-## Module 0 — Mathematical and numerical foundations
+## How the guided milestones relate to the concept pages
 
-**Learn:** vectors and matrices, logits and probabilities, log-sum-exp intuition, cross-entropy, derivatives, the chain rule, gradient descent, numerical stability.
+The **G0–G9 milestone table above is the authoritative sequence** for the from-scratch GPT build. The topic descriptions below are not a second course sequence: they describe the kinds of knowledge and evidence attached to those milestones.
 
-**Build:** a small NumPy loss implementation and a finite-difference gradient check.
+- **Foundations and text (G0–G3):** mathematical and numerical prerequisites; Unicode and tokenization; context windows and targets; tensor shapes, embeddings and contextualized representations.
+- **Architecture and objective (G4–G6):** Q/K/V, attention and causal masking; GPT block composition; logits, likelihood, cross-entropy, loss and gradients.
+- **From-scratch training and inference (G7–G8):** optimization, validation, checkpoints, reproducibility, autoregressive generation and decoding.
+- **Verification (G9):** reference comparison only under compatible architecture, tokenizer, weights and preprocessing. This is a verification milestone, not a substitute for task-level evaluation.
+- **Separate adaptation branch (A1–A4):** pretrained checkpoint reuse, classification, instruction SFT, and parameter-efficient adaptation. These milestones do not belong inside the randomly initialized training route.
+- **Cross-cutting evaluation (E1):** task-specific metrics, baselines, uncertainty, ablations, leakage, contamination, distribution shift and error analysis. Introduce evaluation design before experiments; do not postpone it to a final course chapter.
 
-**Exit criteria:** explain tensor shapes and the loss reduction; pass tests for edge cases; show analytical gradients agree with numerical estimates within a justified tolerance.
-
-## Module 1 — Text data and tokenization
-
-**Learn:** Unicode, normalization, vocabulary construction, byte-pair encoding (BPE), special tokens, padding, truncation, sliding windows, next-token targets.
-
-**Build:** a small tokenizer or a clearly scoped educational tokenizer adapter, plus a deterministic dataset/window builder.
-
-**Exit criteria:** round-trip tests where applicable, explicit special-token behavior, no accidental train/validation overlap, and documented limitations versus production tokenizers.
-
-## Module 2 — Attention and Transformer blocks
-
-**Learn:** embeddings, positional information, queries/keys/values, scaled dot-product attention, causal masks, multi-head attention, residual connections, normalization, feed-forward blocks.
-
-**Build:** small, composable PyTorch modules with explicit tensor shapes and tests.
-
-**Exit criteria:** causal masking prevents future-token influence; forward and backward passes are finite; shape and gradient tests cover important boundary cases.
-
-## Module 3 — Small GPT and pre-training
-
-**Learn:** autoregressive objective, batching, optimizer, learning-rate schedule, gradient clipping, validation loss, perplexity, checkpointing, text generation.
-
-**Build:** a tiny GPT trained on a small, documented corpus.
-
-**Exit criteria:** deterministic configuration and seed, separate train/validation data, saved training curves, a generation example, and honest discussion of model/data limitations.
-
-## Module 4 — Reference comparison
-
-**Learn:** parameter naming, initialization, tokenizer compatibility, checkpoint loading, numerical tolerances, optimized attention.
-
-**Build:** compare selected outputs with a trusted reference implementation where architecture and preprocessing match.
-
-**Exit criteria:** documented matching conditions, numerical comparison, and an explanation of any discrepancies. Do not claim equivalence when tokenization or architecture differs.
-
-## Module 5 — Supervised fine-tuning (SFT)
-
-**Learn:** instruction formats, target masking, sequence packing, data quality, overfitting, catastrophic forgetting, evaluation-set design.
-
-**Build:** a small SFT run with a fixed, held-out evaluation set and a baseline.
-
-**Exit criteria:** training and evaluation examples are separated before learned preprocessing or selection; report regressions and examples, not only aggregate scores.
-
-## Module 6 — LoRA, quantization, and memory
-
-**Learn:** low-rank updates, rank/alpha/dropout, adapter targeting, quantization, activation and optimizer memory, throughput and latency.
-
-**Build:** compare a baseline with an adapter-based fine-tune under a measured resource budget.
-
-**Exit criteria:** record model, tokenizer, data, configuration, device, peak memory, runtime, quality, and trade-offs. Distinguish LoRA from quantization and QLoRA.
-
-## Module 7 — Preference optimization
-
-**Learn:** preference pairs, reward modeling concepts, DPO objective, SFT versus preference optimization, preference-data bias.
-
-**Build:** a small controlled experiment or a fully specified simulation if hardware/data make training inappropriate.
-
-**Exit criteria:** explain the objective, establish a baseline, and examine regressions and preference-data limitations.
-
-## Module 8 — Evaluation, efficiency, and robustness
-
-**Learn:** task-specific metrics, calibration where relevant, confidence intervals, repeated runs, ablations, contamination, leakage, distribution shift, prompt sensitivity, safety and failure analysis.
-
-**Build:** an evaluation harness with versioned tasks and machine-readable outputs.
-
-**Exit criteria:** report baseline and ablations, uncertainty or run-to-run variability, data provenance, limitations, and representative errors. Never infer real-world utility from one benchmark score.
+For detailed coverage against Raschka's chapters and appendices, use the [full curriculum map](full-curriculum-plan.md). Avoid maintaining parallel module lists with different ordering or status: update the milestone table and the coverage map instead.
 
 ## Critical reading: test default assumptions
 
 The bilingual notes on [cosine similarity](../site/fr/cosine-similarity.qmd) and the [linearity hypothesis](../site/fr/linearite-embeddings.qmd) are cross-cutting modules, not replacements for the implementation sequence above. Use them to practise stating assumptions, finding counterexamples, designing controls, and distinguishing decodability from causal use. Their proposed experiments should be considered complete only when the protocol and results are committed under `experiments/` and summarized under `reports/`.
 
-## Suggested 12-week cadence
+## Weekly working rhythm
 
-At **five focused hours per week**, using sessions of no more than 60 minutes, treat the following 12-week outline as an illustrative sequence rather than a deadline or mastery promise: weeks 1–2 for foundations and tokenization; weeks 3–4 for attention and the Transformer only after the foundational gate in #82 is explicitly cleared; weeks 5–6 for training; week 7 for reference comparison; weeks 8–9 for SFT; week 10 for LoRA/quantization; week 11 for ablations and reproducibility; and week 12 for documentation and portfolio review. These week labels are provisional and may stretch substantially; do not advance while exit criteria remain unmet or compensate for missed time by exceeding the weekly or session limit.
+Plan for **up to five focused hours per week**, in sessions of **no more than 60 minutes**. This is a sustainable planning ceiling, not a deadline or a promise that a milestone will fit into a fixed number of weeks.
 
+At the start of each week, select the smallest unfinished acceptance criterion from the current milestone. Allocate sessions to:
+1. inspect and understand the relevant concept/source;
+2. work through one concrete example or derivation;
+3. review a misconception, boundary case or counterexample;
+4. inspect or write tests/code only when the prerequisite gate permits implementation;
+5. record what is established, uncertain and still missing.
+
+Do not schedule downstream milestones by calendar date. In particular, do not move to attention, full-GPT implementation or training while the active #82 foundational gate remains open. Missed sessions do not create a requirement to exceed the weekly or session limit. Adaptation topics (A1–A4) remain a separate later branch, not a fixed week in the core route.
 
 ## 2026-10-29 — End-to-end GPT build route and evidence gates
 
