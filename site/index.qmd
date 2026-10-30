@@ -51,6 +51,8 @@ Le même modèle intervient dans plusieurs processus, mais ceux-ci n'ont ni le m
 
 ## Un parcours conceptuel en sept étapes
 
+Cet ordre est un **fil de lecture**, pas la chronologie complète d’un entraînement. L’évaluation est transversale : elle éclaire les choix de données, d’apprentissage, d’inférence et d’adaptation. Les exercices sont regroupés à part pour rester accessibles depuis chaque étape.
+
 Le menu distingue les opérations qui transforment les entrées, celles qui calculent la prédiction et celles qui définissent le signal d’apprentissage. L’ordre proposé suit les dépendances principales, sans imposer une lecture linéaire.
 
 :::: {.learning-route}
@@ -101,7 +103,7 @@ Comment mesurer l’écart entre prédictions et cibles, formaliser l’objectif
 
 Comment concevoir une évaluation, analyser les erreurs et distinguer ce que les mesures permettent réellement de conclure ?
 
-[Évaluation expérimentale](fr/evaluation-experimentale.qmd) · [Exercices](fr/exercises.qmd)
+[Évaluation expérimentale](fr/evaluation-experimentale.qmd)
 :::
 ::::
 
