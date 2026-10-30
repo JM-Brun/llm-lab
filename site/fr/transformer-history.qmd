@@ -10,7 +10,7 @@ La chronologie est sélective. Elle distingue des précurseurs, des propositions
 
 ## Chronologie
 
-::: {.history-timeline}
+:::: {.history-timeline}
 
 ::: {.history-milestone}
 **2014 · Publication scientifique**
@@ -96,7 +96,7 @@ Sources : [Training language models to follow instructions with human feedback](
 **Approfondir :** [évaluation expérimentale](evaluation-experimentale.qmd). Le site ne propose pas encore de leçon dédiée à l’alignement par préférences.
 :::
 
-:::
+::::
 
 ## Comment interpréter cette chronologie
 
