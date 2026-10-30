@@ -376,3 +376,5 @@ The current EN/FR tokenization guide covers the core conceptual distinctions in 
 | Upstream source links used the mutable `main` branch. | Upstream tree and relevant files were inspected at commit `bfe50afba10b9b560b84143ee1107d977defa74f`. | The source map now pins links to that commit so readers can reproduce the audit. Re-audit before relying on those implementation details after upstream changes. |
 
 **Confirmed:** the repository has a PyTorch reference model, while the browser path uses an ONNX session; the two should not be conflated. **Not checked:** a fresh browser interaction, model download behavior, mobile layout, keyboard accessibility, or whether the upstream demo's runtime behavior still matches the pinned source snapshot.
+
+**Numerical counterexample for the top-p limitation:** if the top 50 candidates contain 0.80 of the full-vocabulary probability mass and the requested threshold is 0.90, exact full-vocabulary nucleus sampling must include candidates beyond rank 50. The audited implementation renormalizes the top-50 subset to 1.00 first, so its cumulative threshold can be reached without considering the omitted 0.20 tail.
