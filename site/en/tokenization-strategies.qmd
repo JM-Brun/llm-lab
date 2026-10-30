@@ -137,6 +137,8 @@ The most frequent pair is tied: `l + o` and `o + w` both occur three times. Assu
 
 The frequency table makes the greedy choice visible; it does not mean BPE discovers linguistic morphemes or an optimal vocabulary. This is a word-level teaching convention with an end-of-word marker, not a complete byte-level production tokenizer. Real outputs also depend on pre-tokenization, base units, corpus frequencies, special-token handling, and implementation-specific tie-breaking. To manipulate candidate pairs, use the [BPE Explainer by Müller and Steinbach](https://philipmueller.dev/bpe-visualization/).
 
+**Historical distinction.** Gage's 1994 [byte-pair encoding algorithm](https://www.derczynski.com/papers/archive/BPE_Gage.pdf) is a general-purpose compression method: it repeatedly replaces frequent adjacent byte pairs with unused byte values and records substitutions for decompression. NLP subword BPE adapts the pair-merging idea to build a token vocabulary and merge order over text units. Its base units, pre-tokenization, vocabulary construction, and encoding procedure are different; GPT-style byte-level BPE is one specific design. Gage is therefore the historical reference for the pair-replacement idea, not a specification of a modern LLM tokenizer.
+
 ### Tokenizer training versus encoding at inference
 
 Two processes must be distinguished:
