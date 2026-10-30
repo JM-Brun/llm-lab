@@ -139,7 +139,7 @@ When loss is unexpectedly low, high, or unstable, check:
 - **Visual bridge to the model:** [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) and [Transformer Explainer](https://poloclub.github.io/transformer-explainer/).
 - **Attention:** [3Blue1Brown — Attention in Transformers](https://www.3blue1brown.com/lessons/attention/), best consulted after understanding data preparation.
 
-For tokenization, return to [From text to tokens](text-data.qmd). Next, see [tensors](tensors.qmd), [mathematical foundations](mathematical-foundations.qmd), [cross-entropy](cross-entropy.qmd), and [the Transformer](transformer.qmd).
+To revisit the input stage, see [From text to tokens](text-data.qmd). To continue the conceptual course, see [cross-entropy](cross-entropy.qmd) and [the Transformer](transformer.qmd). The [tensor](tensors.qmd) and [mathematical training-chain](mathematical-foundations.qmd) pages are supporting references, not prerequisites to master before moving on.
 
 ## Limitations
 
