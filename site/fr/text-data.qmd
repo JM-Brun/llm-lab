@@ -47,7 +47,7 @@ Le dernier bloc regroupe volontairement le traitement positionnel et le Transfor
 Ce schéma est conceptuel : les tokeniseurs réels diffèrent par leurs unités de base, leur normalisation, leur pré-tokenisation, leur vocabulaire et leurs tokens spéciaux.
 
 ::: {.callout-note}
-**Deux sens différents du prétraitement.** La préparation du corpus (par exemple filtrer les documents, dédupliquer les quasi-copies et définir les frontières entre entraînement et validation) relève de l'ingénierie des données en amont. La normalisation et la pré-tokenisation relèvent du pipeline du tokenizer et s'appliquent au texte d'entrée. Il ne faut pas confondre ces opérations. De même, l'entraînement du tokenizer apprend un vocabulaire et des règles ; l'encodage d'une nouvelle entrée les réutilise sans réentraîner le tokenizer.
+**Deux sens différents du prétraitement.** La préparation du corpus (par exemple filtrer les documents, dédupliquer les quasi-copies et définir les frontières entre entraînement et validation) relève de l'ingénierie des données en amont. La normalisation et la pré-tokenisation relèvent du pipeline du tokenizer et s'appliquent au texte d'entrée. Il ne faut pas confondre ces opérations. De même, l'entraînement du tokenizer apprend un vocabulaire et des règles ; l'encodage d'une nouvelle entrée les réutilise sans réentraîner le tokenizer. Pour une évaluation avec données tenues à l'écart, ajuster le tokenizer appris sur la seule partition d'entraînement afin que le vocabulaire ne soit pas influencé par les textes de validation ou de test. Cette page se concentre sur l'étape du tokenizer ; voir les [exemples d'entraînement](training-examples.qmd) pour comprendre comment le texte encodé devient des fenêtres d'entrée et des cibles décalées.
 :::
 
 
