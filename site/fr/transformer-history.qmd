@@ -96,6 +96,31 @@ Sources : [Training language models to follow instructions with human feedback](
 **Approfondir :** [évaluation expérimentale](evaluation-experimentale.qmd). Le site ne propose pas encore de leçon dédiée à l’alignement par préférences.
 :::
 
+
+::: {.history-milestone}
+**2023 · Publications et mises à disposition**
+
+### Multimodalité, modèles à poids ouverts et nouvelles méthodes d’alignement
+
+Plusieurs axes progressent en parallèle. Le rapport GPT-4 décrit un modèle Transformer pré-entraîné à prédire le token suivant, capable de recevoir des entrées texte et image et de produire du texte. DPO propose une méthode d’optimisation sur préférences qui évite l’étape explicite d’apprentissage d’un modèle de récompense suivie d’une optimisation RL. Llama 2 et Mistral 7B illustrent l’essor des modèles dont les poids sont publiés pour être réutilisés ; leurs licences et conditions d’usage diffèrent, et « poids ouverts » ne signifie pas automatiquement « open source ».
+
+Sources : [GPT-4 Technical Report](https://arxiv.org/abs/2303.08774) · [Direct Preference Optimization](https://arxiv.org/abs/2305.18290) · [Llama 2](https://arxiv.org/abs/2307.09288) · [Mistral 7B](https://arxiv.org/abs/2310.06825).
+
+**Approfondir :** [vue d’ensemble du Transformer](transformer.qmd) · [évaluation expérimentale](evaluation-experimentale.qmd). Le site ne propose pas encore de leçons dédiées à DPO ou aux modèles à poids ouverts.
+:::
+
+::: {.history-milestone}
+**2024 · Publications scientifiques**
+
+### Mélange d’experts et contextes multimodaux étendus
+
+Mixtral 8x7B popularise un exemple marquant de *mixture of experts* parcimonieuse : un routeur sélectionne certains sous-réseaux experts pour chaque token, au lieu d’activer tous les paramètres à chaque étape. Gemini 1.5 met en avant le traitement multimodal de contextes très longs. Ces travaux illustrent deux axes distincts — efficacité conditionnelle et extension du contexte/modalités — plutôt qu’une nouvelle architecture unique remplaçant les Transformers.
+
+Sources primaires : [Mixtral of Experts](https://arxiv.org/abs/2401.04088) · [Gemini 1.5 Technical Report](https://arxiv.org/abs/2403.05530).
+
+**Approfondir :** [vue d’ensemble du Transformer](transformer.qmd). Le site ne propose pas encore de leçon dédiée aux mélanges d’experts ou aux architectures multimodales à long contexte.
+:::
+
 ::::
 
 ## Comment interpréter cette chronologie
