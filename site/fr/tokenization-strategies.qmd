@@ -282,7 +282,7 @@ Pour comparer deux tokenizers de manière interprétable :
 4. [Andrej Karpathy — Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE) : Unicode, UTF-8, BPE, espaces et tokens spéciaux.
 5. [Hugging Face — visualiser l'encodage BPE](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize) : visualisation complémentaire, article communautaire dont le code doit être vérifié avant exécution.
 
-Les liens externes sont privilégiés plutôt que de recopier des figures dont la licence n'a pas été vérifiée. Pour le pipeline global, le schéma original ci-dessus est la figure de référence de cette page.
+Les ressources visuelles externes sont proposées sous forme de liens vers leurs sources plutôt qu'intégrées au site. La page utilise les schémas originaux du projet pour le pipeline et le cadre d'évaluation.
 
 
 
@@ -302,6 +302,7 @@ Les liens externes sont privilégiés plutôt que de recopier des figures dont l
 - [Arnett et al. (2025), *Explaining and Mitigating Crosslingual Tokenizer Inequities*](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html) : étudie les écarts de coût entre langues et des facteurs de conception tels que la taille du vocabulaire et le pré-tokenizer.
 - [Ahia et al. (2023), *Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/) : compare le coût de tokenisation entre 22 langues et discute ses implications pour les API.
 - [TokLens (ACL 2026 SRW)](https://aclanthology.org/2026.acl-srw.18/) : outil de mesure comparative multilingue à examiner comme méthode et logiciel, pas comme preuve qu'une seule métrique intrinsèque suffit.
+- [Petrov et al. (2023), *Language Model Tokenizers Introduce Unfairness Between Languages*](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/) : étudie les écarts de longueur de tokenisation et de temps d'exécution entre langues ; consulter l'article pour le protocole expérimental.
 
 ### Code pédagogique et références historiques
 
