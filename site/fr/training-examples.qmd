@@ -139,7 +139,7 @@ Quand la perte est anormalement basse, élevée ou instable, vérifier :
 - **Pont visuel vers le modèle :** [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) et [Transformer Explainer](https://poloclub.github.io/transformer-explainer/).
 - **Attention :** [3Blue1Brown — Attention in Transformers](https://www.3blue1brown.com/lessons/attention/), à consulter après avoir compris la préparation des exemples.
 
-Pour la tokenisation, revenir à [Du texte aux tokens](text-data.qmd) ; pour la suite, consulter [les tenseurs](tensors.qmd), [les fondements mathématiques](mathematical-foundations.qmd), [la cross-entropie](cross-entropy.qmd) et [le Transformer](transformer.qmd).
+Pour revenir en amont, consulter [Du texte aux tokens](text-data.qmd). Pour poursuivre le cours, voir [la cross-entropie](cross-entropy.qmd) et [le Transformer](transformer.qmd). Les pages sur les [tenseurs](tensors.qmd) et la [chaîne mathématique de l'entraînement](mathematical-foundations.qmd) sont des références complémentaires, pas des prérequis à maîtriser avant de continuer.
 
 ## Limites
 
