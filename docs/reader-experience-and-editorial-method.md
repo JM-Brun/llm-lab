@@ -132,7 +132,7 @@ Every companion must identify:
 - related code/tests/experiments and references, when they exist;
 - EN/FR counterpart and a stable shared identifier when it is an exercise or question.
 
-A companion may be linked from multiple lessons, but it must have one canonical home. Do not duplicate its full content across chapters. Main lessons should link to the most useful companions at the point where the question naturally arises, not through a generic “related pages” dump.
+A companion may be linked from multiple lessons, but it must have one canonical home. Do not duplicate its full content across chapters. Main lessons should link to the most useful companions at the point where the question naturally arises, not through a generic “related pages” dump. Do not automatically add every companion to the global sidebar: contextual links should remain the primary discovery mechanism unless a companion becomes a major, independently navigable curriculum stage.
 
 The guided build remains the spine: companion material must clarify or deepen a milestone, never obscure the next construction step or make optional theory appear mandatory. The panorama remains an entry point; deep dives remain non-linear.
 
