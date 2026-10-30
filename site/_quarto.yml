@@ -83,7 +83,7 @@ website:
       collapse-level: 1
       contents:
         - index.qmd
-        - section: "Repères et prérequis"
+        - section: "Repères et synthèses"
           contents:
             - fr/mathematical-foundations.qmd
             - fr/glossary.qmd
@@ -135,7 +135,7 @@ website:
       collapse-level: 1
       contents:
         - en/index.qmd
-        - section: "Foundations and prerequisites"
+        - section: "Synthesis and reference"
           contents:
             - en/mathematical-foundations.qmd
             - en/glossary.qmd
