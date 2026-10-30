@@ -198,6 +198,14 @@ Le descriptif annonce un parcours intermédiaire composé d'un article, de figur
 Le format en courtes leçons autonomes et questions explicites est intéressant pour la progression éditoriale. Les séquences « How words become numbers » et « Why tokenizers struggle with Indian languages » sont proches des questions traitées ici. Les formulations très condensées servent d'intuition, mais ne remplacent pas les distinctions techniques entre token, ID et embedding, ni une évaluation empirique des coûts et performances multilingues.
 :::
 
+::: {.reference-card}
+### Kevin Degila — visualisations interactives autour de *Construire un LLM de zéro*
+
+[Voir la publication LinkedIn](https://fr.linkedin.com/posts/kevindegila_construire-un-llm-de-z%C3%A9ro-est-un-livre-activity-7483807443496497152-yspe).
+
+Exemple de visualisations manipulables autour des vecteurs, du produit scalaire, de fonctions à plusieurs variables et de la température. L'intérêt retenu est éditorial : placer une manipulation au moment où elle éclaire une notion, plutôt que regrouper toutes les démonstrations dans une galerie sans contexte. L'aperçu public consulté ne permet pas d'identifier un fichier image pédagogique autonome réutilisable ; aucune image de cette publication n'est copiée dans le dépôt.
+:::
+
 ## Entropie, compression et divergence KL
 
 ### Références mathématiques et scientifiques
