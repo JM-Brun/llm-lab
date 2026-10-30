@@ -23,16 +23,14 @@ An autoregressive language model receives a sequence of tokens and computes a pr
 ::::
 
 
-## One guiding project: build a small GPT
+## Guided project: a small GPT
 
-The learning path aims to build a **small decoder-only GPT from randomly initialized parameters**, then validate it and generate text. It connects conceptual explanations to a practical implementation without making mathematics or tensor theory general prerequisites.
+The practical goal is to build a **small decoder-only GPT from randomly initialized parameters**, then validate it and generate text. Mathematical and tensor operations are introduced when needed; a general prerequisite course is not assumed.
 
 <div class="learning-card learning-card-featured">
-  <p class="eyebrow">LEARNING TARGET · IN PROGRESS</p>
-  <h3>From raw text to an inspectable generative model</h3>
-  <p>The French-language corpus, its provenance, and its licence must be documented before any training experiment. Model size will remain deliberately modest so that computations and errors can be inspected.</p>
-  <p><strong>Prerequisites:</strong> no complete course in linear algebra, tensor calculus, or differential calculus is required. Necessary operations are explained when used; advanced derivations remain optional.</p>
-  [Follow the guided build](build-path.qmd){.card-link} · [See milestones and evidence criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md){.card-link}
+  <p class="eyebrow">GUIDED PATH · IN PROGRESS</p>
+  <p>The path is organized into milestones with explicit evidence criteria. A complete model and reproducible training run are not yet available. Corpus provenance and licensing must be established before any training experiment.</p>
+  [Open the guided build](build-path.qmd){.card-link} · [See milestones and evidence criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md){.card-link}
 </div>
 
 ## Three processes to distinguish
@@ -61,63 +59,11 @@ The same model is involved in several processes, but they have different objecti
 <g class="flow-node"><rect x="820" y="425" width="220" height="80" rx="12"/><text x="834" y="446" class="flow-kicker">DIAGNOSTIC</text><text x="834" y="471" class="flow-title">Interpret the results</text><text x="834" y="490" class="flow-subtitle">limits · next steps</text></g><text x="20" y="526" class="flow-hint">Blocks open the currently available canonical pages.</text>
 </svg><figcaption>Conceptual map: inference reuses fixed parameters; training updates them; evaluation is cross-cutting and informs decisions. Actual loops and variants depend on the protocol.</figcaption></figure>
 
-## The conceptual course: understand how it works
+## Conceptual route
 
-This is a **reading order**, not the chronology of a complete training run. Evaluation is cross-cutting: it informs data, training, inference, and adaptation decisions. Exercises are grouped separately so they remain accessible from every stage.
+Start with the [GPT / Transformer overview](transformer.qmd), then follow the conceptual pages in the sidebar: from text and representations through model computation, prediction, and the learning signal. Evaluation remains cross-cutting; it is not simply a final stage of generation.
 
-This route explains how a GPT works; it is not the programming route. Follow [Build a small GPT](build-path.qmd) for implementation milestones. Tensor shapes and mathematical derivations are optional deep dives, not prerequisites for a first reading.
-
-:::: {.learning-route}
-::: {.route-step}
-**1 · Get oriented**
-
-What does an autoregressive GPT do? How do its components fit into the overall language-model process?
-
-[GPT / Transformer overview](transformer.qmd) · [Historical landmarks](transformer-history.qmd)
-:::
-::: {.route-step}
-**2 · Prepare text and data**
-
-How do documents become usable text, then tokens, token IDs, and training examples?
-
-[Text, tokenization, and data](text-data.qmd) · [Training examples](training-examples.qmd)
-:::
-::: {.route-step}
-**3 · Represent text**
-
-How do token IDs become tensors and vectors, then context-dependent representations?
-
-[Embedding space](embedding-space.qmd) · [Position](positional-encoding.qmd) · [Contextualized representations](contextualized-representations.qmd) · [Tensor-shape reference (optional)](tensors.qmd)
-:::
-::: {.route-step}
-**4 · Compute with the Transformer**
-
-How does attention combine information across positions, and how does causal masking constrain this computation?
-
-[Queries, keys, and values](queries-keys-values.qmd) · [Attention](scaled-dot-product-attention.qmd) · [Causal masking](causal-masking.qmd)
-:::
-::: {.route-step}
-**5 · Produce a prediction**
-
-How do final representations become vocabulary scores and then a probability distribution?
-
-[Logits](logits.qmd) · [Probabilities](probabilities.qmd)
-:::
-::: {.route-step}
-**6 · Define the learning signal**
-
-How do we measure the gap between predictions and targets, formalize the objective, and obtain gradients for learning?
-
-[Likelihood](likelihood.qmd) · [Entropy](entropy.qmd) · [Cross-entropy](cross-entropy.qmd) · [Loss and gradients](loss.qmd)
-:::
-::: {.route-step}
-**7 · Evaluate and challenge**
-
-How should we design an evaluation, analyze errors, and distinguish what measurements actually support?
-
-[Experimental evaluation](experimental-evaluation.qmd)
-:::
-::::
+The detailed map of the three learning depths and implementation milestones lives in the [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md). Tensor references and advanced mathematical derivations are optional, not prerequisites.
 
 ::: {.callout-note}
 **Current scope.** This route organizes the content currently available; it does not claim that a complete GPT has already been implemented. Detailed generation, reproducible pretraining, and adaptation of a pretrained model remain distinct workstreams beyond the conceptual route.
@@ -133,12 +79,6 @@ A page may combine intuition, mathematical derivation, code, tests, and experime
 - an experiment compares configurations under a documented protocol, metrics, and limitations.
 
 Pages distinguish available explanations, code that has actually been tested, and work that remains planned.
-
-## Build: from understanding to implementation
-
-The practical path is a sequence of implementation and validation milestones. It reuses the conceptual pages instead of duplicating them. The actual status of each module is stated explicitly: an explanation existing does not mean its implementation exists. Adapting a pretrained model (classification, instruction tuning, LoRA, quantization) is a separate branch.
-
-The complete path, prerequisites, and evidence criteria are documented in the [curriculum map](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) and [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md). **A page existing does not mean its implementation, tests, or rendering have been validated**: the sidebar reflects currently available content, not the full intended programme.
 
 ## Further resources
 
