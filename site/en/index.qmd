@@ -15,9 +15,9 @@ A large language model (LLM) receives a sequence of tokens and computes a probab
 **LLM Lab connects these mechanisms to their mathematical explanations and observable behaviour.** The goal is not to trust an intuition because a diagram looks convincing: it is to understand what a component computes, verify what can be tested, and identify what remains an assumption or limitation.
 
 <div class="hero-actions">
-[Watch the visual overview](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s){.btn .btn-primary}
-[Start with text and data](text-data.qmd){.btn .btn-outline-primary}
-[Explore concepts on this site](transformer.qmd){.btn .btn-outline-primary}
+[Understand the system](transformer.qmd){.btn .btn-primary}
+[Follow the model-building path](text-data.qmd){.btn .btn-outline-primary}
+[Browse the concepts](glossary.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
@@ -47,6 +47,59 @@ The same model is involved in several processes, but they have different objecti
 <g class="flow-node"><a href="experimental-evaluation.html" aria-label="Metrics, uncertainty,"><rect x="420" y="425" width="220" height="80" rx="12"/><text x="434" y="446" class="flow-kicker">METRICS + ERRORS</text><text x="434" y="471" class="flow-title">Metrics, uncertainty,</text><text x="434" y="490" class="flow-subtitle">qualitative analysis</text></a></g>
 <g class="flow-node flow-node-planned"><rect x="820" y="425" width="220" height="80" rx="12"/><text x="834" y="446" class="flow-kicker">ADAPTATION · PLANNED</text><text x="834" y="471" class="flow-title">Model decision</text><text x="834" y="490" class="flow-subtitle">data · adaptation</text></g><text x="20" y="526" class="flow-hint">Blocks open the currently available canonical pages.</text>
 </svg><figcaption>Conceptual map: inference reuses fixed parameters; training updates them; evaluation is cross-cutting and informs decisions. Actual loops and variants depend on the protocol.</figcaption></figure>
+
+## A six-step learning thread
+
+The sidebar follows a chain of understanding: **from data to representations, from representations to a prediction, then from prediction to learning and evaluation**. This is a suggested route, not a mandatory reading order.
+
+:::: {.learning-route}
+::: {.route-step}
+**1 · Get oriented**
+
+What problem does an LLM solve? Where do Transformers, other model families, and the main lifecycle stages fit?
+
+[System overview](transformer.qmd) · [Historical landmarks](transformer-history.qmd)
+:::
+::: {.route-step}
+**2 · Prepare the data**
+
+How do documents become usable text, then tokens, token IDs, and training examples?
+
+[Text, tokenization, and data](text-data.qmd) · [Training examples](training-examples.qmd)
+:::
+::: {.route-step}
+**3 · Build representations**
+
+How do IDs become tensors and vectors, then representations that depend on context?
+
+[Tensors](tensors.qmd) · [Embedding space](embedding-space.qmd) · [Contextualized representations](contextualized-representations.qmd)
+:::
+::: {.route-step}
+**4 · Compute a prediction**
+
+How does the model combine information across positions and transform representations into scores and probabilities?
+
+[Attention and masking](queries-keys-values.qmd) · [Logits and probabilities](logits.qmd)
+:::
+::: {.route-step}
+**5 · Learn the parameters**
+
+How do we quantify the gap between predictions and targets, compute gradients, and update parameters?
+
+[Likelihood and cross-entropy](likelihood.qmd) · [Loss and gradients](loss.qmd)
+:::
+::: {.route-step}
+**6 · Evaluate and continue**
+
+How do we assess performance, analyze errors, and decide what to do next? Generation is introduced in the system overview; its dedicated deep dive remains to be developed.
+
+[Experimental evaluation](experimental-evaluation.qmd) · [Exercises](exercises.qmd)
+:::
+::::
+
+::: {.callout-note}
+**Current scope.** This route organizes the content currently available; it does not claim that a complete GPT has already been implemented. Detailed generation, reproducible pretraining, and adaptation of a pretrained model remain distinct workstreams beyond the conceptual route.
+:::
 
 ## Choose your starting point
 
