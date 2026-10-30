@@ -16,66 +16,37 @@ A large language model (LLM) receives a sequence of tokens and computes a probab
 
 <div class="hero-actions">
 [Watch the visual overview](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s){.btn .btn-primary}
-[Follow a step-by-step build](https://github.com/rasbt/LLMs-from-scratch/){.btn .btn-outline-primary}
+[Start with text and data](text-data.qmd){.btn .btn-outline-primary}
 [Explore concepts on this site](transformer.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
 
-## From text to prediction, learning, and evaluation
+## Three processes to distinguish
 
-Explore the diagram: each block opens a page about the corresponding mechanism. This is a simplified view. In particular, training updates parameters from prediction error, whereas generation uses an already-trained model.
+The same model is involved in several processes, but they have different objectives and dynamics:
 
 <figure class="llm-flow-figure">
-<svg class="llm-flow" viewBox="0 0 1040 390" role="img" aria-labelledby="llm-flow-title-en llm-flow-desc-en" xmlns="http://www.w3.org/2000/svg">
-  <title id="llm-flow-title-en">From text to prediction, then learning and evaluation</title>
-  <desc id="llm-flow-desc-en">Six clickable blocks show data, representations, attention, predictions, error-based learning, and evaluation or generation.</desc>
-  <defs><marker id="flow-arrow-en" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7b91a6"/></marker></defs>
-  <g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.5" marker-end="url(#flow-arrow-en)">
-    <path d="M235 88 H265"/><path d="M490 88 H520"/><path d="M745 88 H775"/>
-    <path d="M885 138 V204 H635 V235"/>
-    <path d="M745 290 H775"/>
-  </g>
-  <g class="flow-node">
-    <a href="text-data.html" aria-label="Open Text and data">
-      <rect x="10" y="38" width="225" height="100" rx="15"/>
-      <text x="28" y="64" class="flow-kicker">01 · INPUTS</text><text x="28" y="91" class="flow-title">Text and data</text><text x="28" y="115" class="flow-subtitle">Tokens · context · targets</text>
-    </a>
-  </g>
-  <g class="flow-node">
-    <a href="tensors.html" aria-label="Open Tensors and representations">
-      <rect x="265" y="38" width="225" height="100" rx="15"/>
-      <text x="283" y="64" class="flow-kicker">02 · REPRESENT</text><text x="283" y="91" class="flow-title">Representations</text><text x="283" y="115" class="flow-subtitle">Tensors · embeddings</text>
-    </a>
-  </g>
-  <g class="flow-node">
-    <a href="transformer.html" aria-label="Open Transformer and attention">
-      <rect x="520" y="38" width="225" height="100" rx="15"/>
-      <text x="538" y="64" class="flow-kicker">03 · ADD CONTEXT</text><text x="538" y="91" class="flow-title">Attention / Transformer</text><text x="538" y="115" class="flow-subtitle">Context · causal mask</text>
-    </a>
-  </g>
-  <g class="flow-node">
-    <a href="logits.html" aria-label="Open Logits and probabilities">
-      <rect x="775" y="38" width="225" height="100" rx="15"/>
-      <text x="793" y="64" class="flow-kicker">04 · PREDICT</text><text x="793" y="91" class="flow-title">Scores and probabilities</text><text x="793" y="115" class="flow-subtitle">Logits · softmax · token</text>
-    </a>
-  </g>
-  <g class="flow-node">
-    <a href="cross-entropy.html" aria-label="Open Loss and learning">
-      <rect x="520" y="235" width="225" height="110" rx="15"/>
-      <text x="538" y="261" class="flow-kicker">05 · LEARN</text><text x="538" y="288" class="flow-title">Error and gradients</text><text x="538" y="312" class="flow-subtitle">Cross-entropy · update</text><text x="538" y="330" class="flow-note">Adjust parameters</text>
-    </a>
-  </g>
-  <g class="flow-node">
-    <a href="experimental-evaluation.html" aria-label="Open experimental evaluation">
-      <rect x="775" y="235" width="225" height="110" rx="15"/>
-      <text x="793" y="261" class="flow-kicker">06 · USE / EVALUATE</text><text x="793" y="288" class="flow-title">Generation and tests</text><text x="793" y="312" class="flow-subtitle">Decoding · validation</text><text x="793" y="330" class="flow-note">Measure limitations</text>
-    </a>
-  </g>
-  <text x="10" y="375" class="flow-hint">Select a block to explore the corresponding concept →</text>
-</svg>
-<figcaption>Conceptual map, not an exhaustive architecture: details and variants are explained in the linked pages. Blocks are keyboard accessible.</figcaption>
-</figure>
+<svg class="llm-flow" viewBox="0 0 1060 535" role="img" aria-labelledby="llm-flow-title-en llm-flow-desc-en" xmlns="http://www.w3.org/2000/svg">
+<title id="llm-flow-title-en">Three related but distinct processes</title><desc id="llm-flow-desc-en">Autoregressive inference with fixed parameters, learning through parameter updates, and evaluation that informs decisions.</desc>
+<defs><marker id="flow-arrow-en" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7b91a6"/></marker></defs>
+<g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#flow-arrow-en)">
+<path d="M240 105 H280"/><path d="M500 105 H540"/><path d="M760 105 H800"/><path d="M910 145 V174 H130 V145"/>
+<path d="M240 285 H280"/><path d="M500 285 H540"/><path d="M760 285 H800"/><path d="M910 325 V355 H390 V325"/>
+<path d="M240 465 H420"/><path d="M640 465 H820"/>
+</g>
+<text x="20" y="42" class="flow-kicker">INFERENCE / GENERATION · FIXED PARAMETERS</text><g class="flow-node"><a href="text-data.html" aria-label="Previously generated tokens"><rect x="20" y="65" width="220" height="80" rx="12"/><text x="34" y="86" class="flow-kicker">CONTEXT</text><text x="34" y="111" class="flow-title">Previously generated tokens</text><text x="34" y="130" class="flow-subtitle">and current input</text></a></g>
+<g class="flow-node"><a href="transformer.html" aria-label="Transformer with θ"><rect x="280" y="65" width="220" height="80" rx="12"/><text x="294" y="86" class="flow-kicker">PARAMETERIZED MODEL</text><text x="294" y="111" class="flow-title">Transformer with θ</text><text x="294" y="130" class="flow-subtitle">weights unchanged</text></a></g>
+<g class="flow-node"><a href="logits.html" aria-label="Next-token"><rect x="540" y="65" width="220" height="80" rx="12"/><text x="554" y="86" class="flow-kicker">DISTRIBUTION</text><text x="554" y="111" class="flow-title">Next-token</text><text x="554" y="130" class="flow-subtitle">probabilities</text></a></g>
+<g class="flow-node flow-node-planned"><rect x="800" y="65" width="220" height="80" rx="12"/><text x="814" y="86" class="flow-kicker">DECODING · PLANNED</text><text x="814" y="111" class="flow-title">Select / sample</text><text x="814" y="130" class="flow-subtitle">the next token</text></g><text x="350" y="169" class="flow-note">Append the token to the context, then repeat</text>
+<text x="20" y="225" class="flow-kicker">LEARNING · PARAMETER UPDATES</text><g class="flow-node"><a href="training-examples.html" aria-label="Input sequences"><rect x="20" y="245" width="220" height="80" rx="12"/><text x="34" y="266" class="flow-kicker">EXAMPLES + TARGETS</text><text x="34" y="291" class="flow-title">Input sequences</text><text x="34" y="310" class="flow-subtitle">and expected tokens</text></a></g>
+<g class="flow-node"><a href="transformer.html" aria-label="Predictions using"><rect x="280" y="245" width="220" height="80" rx="12"/><text x="294" y="266" class="flow-kicker">FORWARD PASS</text><text x="294" y="291" class="flow-title">Predictions using</text><text x="294" y="310" class="flow-subtitle">parameters θ</text></a></g>
+<g class="flow-node"><a href="cross-entropy.html" aria-label="Difference between"><rect x="540" y="245" width="220" height="80" rx="12"/><text x="554" y="266" class="flow-kicker">LOSS FUNCTION</text><text x="554" y="291" class="flow-title">Difference between</text><text x="554" y="310" class="flow-subtitle">predictions and targets</text></a></g>
+<g class="flow-node"><a href="gradients.html" aria-label="Compute ∇θ L, then"><rect x="800" y="245" width="220" height="80" rx="12"/><text x="814" y="266" class="flow-kicker">GRADIENTS / UPDATE</text><text x="814" y="291" class="flow-title">Compute ∇θ L, then</text><text x="814" y="310" class="flow-subtitle">modify θ</text></a></g><text x="470" y="380" class="flow-note">Updated parameters are used for the next step</text>
+<text x="20" y="405" class="flow-kicker">EVALUATION / ADAPTATION · DECISION LOOP</text><g class="flow-node"><a href="text-data.html" aria-label="Validation / test set"><rect x="20" y="425" width="220" height="80" rx="12"/><text x="34" y="446" class="flow-kicker">HELD-OUT DATA</text><text x="34" y="471" class="flow-title">Validation / test set</text><text x="34" y="490" class="flow-subtitle">under a defined protocol</text></a></g>
+<g class="flow-node"><a href="experimental-evaluation.html" aria-label="Metrics, uncertainty,"><rect x="420" y="425" width="220" height="80" rx="12"/><text x="434" y="446" class="flow-kicker">METRICS + ERRORS</text><text x="434" y="471" class="flow-title">Metrics, uncertainty,</text><text x="434" y="490" class="flow-subtitle">qualitative analysis</text></a></g>
+<g class="flow-node flow-node-planned"><rect x="820" y="425" width="220" height="80" rx="12"/><text x="834" y="446" class="flow-kicker">ADAPTATION · PLANNED</text><text x="834" y="471" class="flow-title">Model decision</text><text x="834" y="490" class="flow-subtitle">data · adaptation</text></g><text x="20" y="526" class="flow-hint">Blocks open the currently available canonical pages.</text>
+</svg><figcaption>Conceptual map: inference reuses fixed parameters; training updates them; evaluation is cross-cutting and informs decisions. Actual loops and variants depend on the protocol.</figcaption></figure>
 
 ## Choose your starting point
 
@@ -111,35 +82,22 @@ Explore a definition, derivation, tensor shapes, an assumption, a counterexample
 :::
 ::::
 
-## One concept, several ways to verify it
+## Verify, do not only visualize
 
-Depending on the topic, a page may combine intuition, mathematical notation, a hand-worked example, a diagram, executable code, a numerical test, or a reproducible experiment. These formats serve different purposes:
+A page may combine intuition, mathematical derivation, code, tests, and experiments. These provide different kinds of evidence:
 
-- **A diagram** helps trace data and dimensions; it does not prove a property.
-- **A derivation** establishes a result under explicit assumptions.
-- **A test** checks behaviour in the cases it covers; on its own, it does not prove a general property.
-- **An experiment** compares configurations when its protocol, baselines, metrics, and limitations are stated.
-- **A counterexample** reveals where an intuitive rule or an overly broad claim fails.
+- a diagram makes a structure readable but does not prove a property;
+- a derivation establishes a result under explicit assumptions;
+- a test checks the cases it covers but does not by itself prove a general rule;
+- an experiment compares configurations under a documented protocol, metrics, and limitations.
 
-Interactive visualizations and animations are useful when manipulation makes a relationship easier to understand. They are not goals in themselves. Available content, code that has actually been tested, and work that is still planned must be clearly distinguished.
+Pages distinguish available explanations, code that has actually been tested, and work that remains planned.
 
-## The learning map
+## Guided build and intended scope
 
-The main thread follows the lifecycle of an autoregressive model, from raw text to model use:
+The guided path aims to build a small decoder-only GPT from randomly initialized parameters: data and tokenizer, training examples, representations, architecture, objective, optimization, validation, and generation. Adapting a pretrained model (classification, instruction tuning, LoRA, quantization) is a separate branch.
 
-1. **What does it receive?** Text, data, Unicode, and a corpus.
-2. **How does text become a numerical input?** Tokenization, token IDs, context windows, tensors, and embeddings.
-3. **How does the model build context?** Positional information, causal attention, and Transformer blocks.
-4. **How does it make a prediction?** Contextualized states, logits, and a probability distribution over the vocabulary.
-5. **How does it learn?** Shifted targets, likelihood, cross-entropy, gradients, optimization, and validation.
-6. **How does it generate text?** The autoregressive loop, next-token selection, decoding, and stopping.
-7. **How is it adapted and evaluated?** Pretrained-weight loading, classification, instruction tuning, adaptation methods, metrics, and error analysis.
-
-This sequence makes the construction of a GPT from randomly initialized parameters explicit. Adapting a pretrained model is a distinct downstream stage that starts from a model that has already been trained. Deep-dive pages explain local prerequisites and connect related concepts in multiple directions: the map guides readers without imposing one exhaustive linear reading order. Mathematics is introduced when it clarifies a mechanism, then explored in greater depth on demand.
-
-The build objective is a small decoder-only autoregressive GPT, trained from randomly initialized parameters on a manageable corpus: start with raw text, prepare training examples, implement the model and training loop, monitor validation, then generate text. Loading pretrained weights and adapting a model (classification, instruction tuning, LoRA, or quantization) are distinct downstream stages.
-
-The intended curriculum also covers these advanced stages, together with evaluation, efficiency, and limitations. **The sidebar reflects pages currently available, not yet the full intended programme**: missing modules remain to be written and validated. The educational goal matters more than model size: make computations and limitations understandable, reproducible, and open to scrutiny.
+The complete path, prerequisites, and evidence criteria are documented in the [curriculum map](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) and [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md). **A page existing does not mean its implementation, tests, or rendering have been validated**: the sidebar reflects currently available content, not the full intended programme.
 
 ## Further resources
 
