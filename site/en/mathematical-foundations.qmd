@@ -8,6 +8,11 @@ lang: en
 An autoregressive model produces **logits** for the next token. Softmax turns them into probabilities; the observed target defines a likelihood and a loss; differentiating that loss gives gradients used to update the parameters. These concepts are connected, but they are not interchangeable.
 :::
 
+::: {.callout-note}
+**How to use this page.** This is a compact map of the mathematical quantities used in next-token training, not a prerequisite course or a substitute for the linked concept lessons. Read it for orientation, then follow only the derivations needed for your current question.
+:::
+
+
 ![Original diagram of the mathematical chain: logits, probabilities, likelihood, loss, and gradients.](../images/math-training-pipeline.svg){fig-alt="Computation chain: logits z, softmax to p, target-token probability, negative log-likelihood, then loss gradient with respect to parameters." width=100%}
 
 ## The chain at a glance
