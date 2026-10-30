@@ -66,7 +66,7 @@ A special token is a reserved vocabulary entry with a dedicated ID and a model-s
 
 Some APIs make this choice explicit through an allow-list. For example, `tiktoken` and Karpathy's `minbpe` expose controls for which special-token spellings may be interpreted. This is implementation-specific behaviour, not a universal tokenizer rule. In an application, do not indiscriminately allow every special token in untrusted user text; reserved tokens should normally be inserted intentionally by a trusted formatting layer.
 
-See the `tiktoken` [educational implementation](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py) and the `minbpe` [special-token handling notes](https://github.com/karpathy/minbpe/blob/master/README.md).
+See the `tiktoken` [encoding API](https://github.com/openai/tiktoken/blob/main/tiktoken/core.py) and the `minbpe` [special-token handling notes](https://github.com/karpathy/minbpe/blob/master/README.md).
 
 Not every tokenizer exposes or uses these stages in the same way. An algorithm name alone is therefore insufficient to reproduce a segmentation: the configuration and versions also matter.
 
