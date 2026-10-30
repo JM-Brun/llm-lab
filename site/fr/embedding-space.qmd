@@ -22,6 +22,14 @@ Dans un Transformer, cette représentation est ensuite transformée par les couc
 
 Ces objets ne sont pas interchangeables. Une méthode adaptée aux embeddings de phrases pour la recherche documentaire ne se transfère pas automatiquement aux activations internes d'un LLM.
 
+### Une distinction historique : les vecteurs de mots statiques
+
+Avant les modèles de langage contextualisés, des méthodes comme Word2Vec apprenaient **un vecteur par type de mot** à partir des régularités observées dans son contexte. CBOW prédit un mot cible à partir de son contexte ; Skip-gram prédit les mots environnants à partir d'un mot cible. Dans un modèle Word2Vec entraîné, le vecteur associé à une entrée du vocabulaire telle que `bank` reste le même quelle que soit la phrase où le mot apparaît.
+
+Un Transformer procède autrement : sa table d'embeddings associe chaque **ID de token** (souvent une unité sous-lexicale, et non un mot entier) à un vecteur initial. Un même ID sélectionne toujours la même ligne, mais les couches suivantes combinent cette représentation avec l'information positionnelle et contextuelle ; l'état caché obtenu peut donc varier d'une occurrence à l'autre. Un vecteur de mot statique Word2Vec, un embedding initial de token dans un Transformer et un état caché contextualisé sont des notions apparentées, mais non interchangeables.
+
+Cette comparaison est conceptuelle : elle ne signifie pas que les embeddings des Transformers modernes sont initialisés ou entraînés comme ceux de Word2Vec. Voir [Mikolov et al. (2013)](https://arxiv.org/abs/1301.3781) pour les architectures originales de représentation des mots.
+
 ## Des identifiants aux vecteurs : une sélection par indice calculable à la main
 
 Supposons que le vocabulaire contienne cinq identifiants et que chaque embedding ait deux coordonnées. Voici une petite matrice illustrative :
