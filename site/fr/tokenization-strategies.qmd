@@ -314,7 +314,7 @@ Pour comparer deux tokenizers de manière interprétable :
 2. [Hugging Face — cours BPE en français](https://huggingface.co/learn/llm-course/fr/chapter6/5?fw=tf) : présentation structurée de l'entraînement.
 3. [Cornell CS4782 — Tokenization Visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/) : comparaison pédagogique BPE/WordPiece. **Réserve sur l'interface (vérifiée le 29-10-2026) :** le panneau de la fusion sélectionnée affichait « Frequency: undefined », alors que la liste des paires candidates indiquait des fréquences. Ne pas se fier à cette valeur tant que la page n'a pas été corrigée.
 4. [Andrej Karpathy — Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE) : Unicode, UTF-8, BPE, espaces et tokens spéciaux.
-5. [Hugging Face — visualiser l'encodage BPE](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize) : visualisation complémentaire, article communautaire dont le code doit être vérifié avant exécution.
+5. [Hugging Face — visualiser l'encodage BPE](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize) : visualisation communautaire facultative. **Réserve issue de l'audit du code (30-10-2026) :** l'implémentation inspectée rejoue la liste des fusions du modèle sur les caractères Unicode bruts ; elle ne reproduit pas le prétraitement du tokenizer ni sa conversion byte-level. Le graphe doit donc être lu comme un schéma des opérations de fusion, et non comme une trace fidèle des frontières de tokens de GPT-2. Les métadonnées du paquet ne déclarent pas non plus les dépendances d'exécution, alors que le README cite `graphviz` et `transformers` ; examiner et figer les dépendances avant installation.
 
 #### Repères temporels utiles dans la vidéo de Karpathy
 
