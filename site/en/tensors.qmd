@@ -8,6 +8,10 @@ lang: en
 In a Transformer, tensors carry token representations, logits, masks, and gradients. Reading their axes correctly is essential: an operation can run without an error while acting on the wrong axis.
 :::
 
+::: {.callout-note}
+**Place in the learning path.** This page is an optional technical reference, not a prerequisite course to complete before building a GPT. For the practical path, learn to read the shapes and axes actually used, step by step. PyTorch operations are introduced in context; general tensor theory belongs in optional deep dives.
+:::
+
 ![Three-axis activation tensor organized by batch, sequence positions, and features.](../images/tensors-en.svg){fig-alt="Tensor of shape B × T × D: B indexes examples, T indexes positions in each sequence, and D indexes features at each position." width=100%}
 
 For a batch of texts, each sequence position is represented by a vector. The activation tensor is therefore often organized along batch, position, and feature axes.
