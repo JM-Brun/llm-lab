@@ -8,6 +8,10 @@ lang: fr
 Dans un Transformer, les tenseurs transportent les représentations des tokens, les logits, les masques et les gradients. Lire correctement leurs axes est indispensable : une opération peut s'exécuter sans erreur tout en portant sur le mauvais axe.
 :::
 
+::: {.callout-note}
+**Place dans le parcours.** Cette page est une référence technique facultative, pas un cours de prérequis à terminer avant de construire un GPT. Pour le parcours pratique, il suffit d'apprendre progressivement à lire les formes et les axes effectivement utilisés. Les opérations PyTorch sont introduites dans leur contexte ; la théorie tensorielle générale relève de l'approfondissement.
+:::
+
 ![Tenseur d'activations organisé selon trois axes : lot, positions et caractéristiques.](../images/tensors-fr.svg){fig-alt="Tenseur de forme B × T × D : B indexe les exemples, T les positions de chaque séquence et D les caractéristiques de chaque position." width=100%}
 
 Pour un lot de textes, chaque position d'une séquence est décrite par un vecteur. Le tenseur d'activations est donc souvent organisé selon les axes batch, positions et caractéristiques.

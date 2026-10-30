@@ -17,22 +17,22 @@ Un LLM autorégressif reçoit une séquence de tokens et calcule une distributio
 
 <div class="hero-actions">
 [Explorer la vue d’ensemble GPT / Transformer](fr/transformer.qmd){.btn .btn-primary}
-[Commencer par le texte et les données](fr/text-data.qmd){.btn .btn-outline-primary}
-[Explorer les notions](fr/glossary.qmd){.btn .btn-outline-primary}
+[Construire un petit GPT](fr/build-path.qmd){.btn .btn-outline-primary}
+[Approfondir les notions](fr/tensors.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
 
 ## Un projet fil rouge : construire un petit GPT
 
-Le parcours vise à construire progressivement un **petit GPT décodeur seul, initialisé aléatoirement**, puis à le valider et à générer du texte. Ce fil rouge relie les notions du site à un même objet concret : corpus et tokenizer, exemples d’entraînement, tenseurs, embeddings, attention, logits, fonction de perte, optimisation et génération.
+Le parcours vise à construire progressivement un **petit GPT décodeur seul, initialisé aléatoirement**, puis à le valider et à générer du texte. Il relie les explications conceptuelles à une réalisation concrète, sans transformer les mathématiques ou les tenseurs en prérequis généraux.
 
 <div class="learning-card learning-card-featured">
   <p class="eyebrow">OBJECTIF PÉDAGOGIQUE · EN CONSTRUCTION</p>
   <h3>Du texte brut à un modèle génératif inspectable</h3>
   <p>Le corpus français, sa provenance et sa licence devront être explicitement documentés avant toute expérience d’entraînement. La taille du modèle restera volontairement modeste pour rendre les calculs et les erreurs inspectables.</p>
-  <p><strong>Point de départ :</strong> comprendre chaque transformation et ses dimensions avant d'assembler ou d'entraîner le modèle.</p>
-  [Voir les jalons, prérequis et critères de preuve](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md){.card-link}
+  <p><strong>Prérequis :</strong> aucun cours complet d'algèbre linéaire, de calcul tensoriel ou de calcul différentiel n'est exigé. Les opérations nécessaires sont expliquées au moment de leur utilisation ; les démonstrations avancées restent facultatives.</p>
+  [Suivre le parcours de construction](fr/build-path.qmd){.card-link} · [Consulter les jalons et critères de preuve](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md){.card-link}
 </div>
 
 ## Trois processus à distinguer
@@ -61,11 +61,11 @@ Le même modèle intervient dans plusieurs processus, mais ceux-ci n'ont ni le m
 <g class="flow-node"><rect x="820" y="425" width="220" height="80" rx="12"/><text x="834" y="446" class="flow-kicker">DIAGNOSTIC</text><text x="834" y="471" class="flow-title">Interpréter les résultats</text><text x="834" y="490" class="flow-subtitle">limites · prochaines étapes</text></g><text x="20" y="526" class="flow-hint">Les blocs ouvrent les pages de référence actuellement disponibles.</text>
 </svg><figcaption>Schéma conceptuel : l'inférence réutilise des paramètres fixes ; l'entraînement les met à jour ; l'évaluation est transversale et informe les décisions. Les boucles et variantes réelles dépendent du protocole.</figcaption></figure>
 
-## Un parcours conceptuel en sept étapes
+## Le cours conceptuel : comprendre le fonctionnement
 
 Cet ordre est un **fil de lecture**, pas la chronologie complète d’un entraînement. L’évaluation est transversale : elle éclaire les choix de données, d’apprentissage, d’inférence et d’adaptation. Les exercices sont regroupés à part pour rester accessibles depuis chaque étape.
 
-Le menu distingue les opérations qui transforment les entrées, celles qui calculent la prédiction et celles qui définissent le signal d’apprentissage. L’ordre proposé suit les dépendances principales, sans imposer une lecture linéaire.
+Ce fil de lecture explique le fonctionnement d'un GPT. Il ne constitue pas le parcours de programmation : celui-ci est présenté séparément dans [Construire un petit GPT](fr/build-path.qmd). Les liens vers les tenseurs et les développements mathématiques sont des approfondissements, pas des conditions préalables à la première lecture.
 
 :::: {.learning-route}
 ::: {.route-step}
@@ -87,7 +87,7 @@ Comment passer des documents au texte exploitable, puis aux tokens, aux identifi
 
 Comment les identifiants deviennent-ils des tenseurs et des vecteurs, puis des représentations contextualisées ?
 
-[Tenseurs](fr/tensors.qmd) · [Espace des embeddings](fr/embedding-space.qmd) · [Position](fr/positional-encoding.qmd) · [Représentations contextualisées](fr/contextualized-representations.qmd)
+[Espace des embeddings](fr/embedding-space.qmd) · [Position](fr/positional-encoding.qmd) · [Représentations contextualisées](fr/contextualized-representations.qmd) · [Référence sur les formes tensorielles (facultative)](fr/tensors.qmd)
 :::
 ::: {.route-step}
 **4 · Calculer avec le Transformer**
@@ -134,9 +134,9 @@ Une page peut combiner intuition, dérivation mathématique, code, tests et exp�
 
 Les pages distinguent les explications disponibles, le code effectivement testé et les développements encore planifiés.
 
-## Parcours de construction et périmètre
+## Construire : de la compréhension à l'implémentation
 
-Le parcours guidé vise la construction d'un petit GPT décodeur seul depuis des paramètres initialisés aléatoirement : données et tokenizer, exemples d'entraînement, représentations, architecture, objectif, optimisation, validation et génération. L'adaptation d'un modèle pré-entraîné (classification, instruction tuning, LoRA, quantification) constitue une branche distincte.
+Le parcours pratique est une suite de jalons d'implémentation et de validation. Il réutilise les pages conceptuelles au lieu de les dupliquer. L'état réel des modules est indiqué à chaque étape : la présence d'une explication ne signifie pas que le code correspondant existe. L'adaptation d'un modèle pré-entraîné (classification, instruction tuning, LoRA, quantification) constitue une branche distincte.
 
 Le parcours complet, ses prérequis et ses critères de preuve sont détaillés dans la [carte du curriculum](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) et le [parcours d'apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md). **La présence d'une page ne signifie pas que son implémentation, ses tests ou son rendu ont été validés** : le menu reflète le contenu actuellement disponible, pas l'intégralité du programme visé.
 

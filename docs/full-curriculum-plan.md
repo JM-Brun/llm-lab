@@ -18,7 +18,7 @@ The shared [reader-experience and editorial method](reader-experience-and-editor
 - Explain intuition, notation, tensor shapes, assumptions, numerical issues, misconceptions, counterexamples, failure modes, and limits—not just the happy path.
 - Cite research papers and official documentation for technical claims. Attribute external diagrams and link to their original pages. Do not copy an illustration merely because it is publicly accessible.
 - State clearly what exists, what has been validated, and what is only planned. A passing test, rendered page, low training loss, or completed exercise does not by itself demonstrate mastery.
-- Do not add new implementations or experiments until their conceptual prerequisites are marked acquired in the private `career-knowledge` inventory.
+- Before a new implementation or experiment, validate only the **specific minimum conceptual prerequisites** needed for that next step in the private `career-knowledge` inventory. Learn local tensor, probability, and gradient operations in context; optional general mathematics and advanced derivations are not blanket gates for building a small GPT.
 - Use Raschka's book and repository as a **coverage baseline**, not as text, code, or exercise material to reproduce. Write original explanations and exercises; link to the source.
 - The ACM-hosted article presents a useful modern-block perspective, but it is not a substitute for explaining the original encoder–decoder Transformer and why decoder-only GPT differs.
 
@@ -113,7 +113,7 @@ Overviews should remain concise and link outward; deep dives should own detailed
 
 These dependencies guide navigation but are not rigid gates to reading. Introduce concepts intuitively when useful, then link to rigorous derivations. Deep dives must also be accessible from search, glossary entries, diagrams and related-concept links.
 
-Before implementing a downstream mechanism, review its prerequisites against the private acquired/to-review/missing knowledge inventory. If a prerequisite is not acquired, improve or test understanding before expanding implementation scope. This gate applies to new implementations, not to explaining a high-level map.
+Before implementing a downstream mechanism, identify its few genuinely essential prerequisites and review those against the private acquired/to-review/missing knowledge inventory. If one is missing, teach or test that specific concept at the point of use before proceeding. Do not require completion of a general mathematics or tensor curriculum when a local explanation and a small checked operation are sufficient. This gate applies to implementation scope, not to reading the overview or accessing optional deep dives.
 
 ### Exercises
 
@@ -190,7 +190,7 @@ This is a targeted gap analysis, not an instruction to add all the material now.
 ## 5. Suggested sequencing and gates
 
 1. **Inventory first:** map every existing page to the plan; identify duplicates, gaps, language asymmetry, and missing cross-links.
-2. **Knowledge gate:** check prerequisites against `career-knowledge`. Do not create an implementation for a concept that has not been acquired.
+2. **Minimum-knowledge gate:** check only the essential concepts needed for the next implementation step against `career-knowledge`. Introduce the required operation locally; do not make optional mathematical depth a global prerequisite.
 3. **Improve existing pages:** correct claims, equations, terminology, counterexamples, references and figures before adding new pages.
 4. **Plan review:** confirm scope and ordering; mark each planned module core or optional.
 5. **Exercise framework:** create the navigation and link convention first; populate only after course concepts and prerequisite knowledge are validated.
@@ -367,7 +367,7 @@ Before a lesson's implementation work begins, its French and English theory page
 8. Preserve claim-level parity between French and English, or explicitly track a missing language counterpart.
 9. Pass the configured Quarto render and link checks; visual inspection and scientific review remain separate checks.
 
-**Working order:** audit sources and concepts → choose the next lesson based on reader prerequisites and explanatory value → write/review its theory in both languages → render and inspect → only then implement or extend code, tests, and experiments when prerequisites are marked acquired in the private knowledge inventory. Do not draft all lessons in one bulk change.
+**Working order:** audit sources and concepts → choose the next lesson based on reader questions and explanatory value → write/review its theory in both languages → render and inspect → implement or extend code/tests only when the specific minimum knowledge needed for that step has been validated in the private inventory. Teach low-level operations in context; optional general mathematics is not a prerequisite to the first small GPT. Do not draft all lessons in one bulk change.
 
 ## 9. Editorial boundary with wiki-knowledge: general foundations and complete public application
 
@@ -444,7 +444,7 @@ The first-pass inventory is recorded in [`docs/editorial-boundary-audit.md`](edi
 3. The application pages have been refocused in this branch: entropy → next-token distribution; cross-entropy → token objective, target shift, masks, reduction, perplexity; probabilities → logits, temperature and calibration; tensors → Transformer shapes and axes. Stable URLs are preserved.
 4. Each public page retains the full set of definitions, assumptions, derivations, examples, limits, and public references needed to understand its LLM application independently. The Wiki may carry a broader cross-domain treatment in parallel.
 5. The tensor, embedding-space, and positional-encoding/RoPE lessons now have French and English versions. This closes the missing-counterpart inventory item, but not the separate semantic-parity, external-reference, rendered-math, or browser visual reviews.
-6. Render Quarto, check internal links and image alternatives, and inspect both language paths. Do not add model implementations or experiments until their conceptual prerequisites are validated.
+6. Render Quarto, check internal links and image alternatives, and inspect both language paths. Do not add model implementations or experiments until the specific conceptual prerequisites for the next step are validated; do not treat advanced mathematics as a blanket gate.
 7. For every retained chapter, ask whether it explains an LLM-specific mechanism and whether it contributes directly or indirectly to implementing, testing, training, generating with, or evaluating a small decoder-only LLM. Neither general-mathematics duplication nor an unmotivated code dump is sufficient.
 
 
