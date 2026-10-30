@@ -144,6 +144,11 @@ details > :last-child { margin-bottom: .15rem; }
 .llm-flow .flow-node:nth-of-type(2) rect,
 .llm-flow .flow-node:nth-of-type(4) rect,
 .llm-flow .flow-node:nth-of-type(6) rect { fill: #edf5e4; }
+.llm-flow .flow-node-planned rect {
+  fill: #f8f2df;
+  stroke: #b98528;
+  stroke-dasharray: 5 3;
+}
 .llm-flow .flow-node a:hover rect,
 .llm-flow .flow-node a:focus rect {
   fill: #e3f1d7;
