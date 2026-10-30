@@ -102,3 +102,50 @@ Findings:
 A repository commit search for `path:site/images` surfaced commit `c37b04483f0f6f1ae75fe767622068e445ca1d51` (21 October 2026), whose GitHub commit metadata identifies `JM-Brun` as the author. However, the returned commit is a broad site-organization commit and its exposed file list does not establish the introduction history of every SVG. The earlier directory-level history observation that commits were authored by the repository owner is likewise not asset-level proof of original creation or exclusive rights.
 
 **Status for all 32 local SVGs: provenance/licence unresolved.** No files were modified, removed, replaced, hidden, or disabled. The two unreferenced pairs remain preserved. Next evidence required: per-file introduction commit and diff, any source/design notes outside the SVG, and confirmation from the project owner of authorship or adaptation history. Only then can the project-owned licence decision in #163 be made responsibly.
+
+
+## External figure licence evidence — focused follow-up, 2026-10-30
+
+This section records additional source-level evidence. It does not constitute legal advice or resolve whether every embedded asset is covered by the identified site/repository terms.
+
+### Petrov et al. — CC BY-NC-ND 4.0
+
+The author's publication page identifies *Language Model Tokenizers Introduce Unfairness Between Languages* (NeurIPS 2023) and displays CC BY-NC-ND 4.0 in its page footer. The exact image URL used by this site is the page's featured WebP asset.
+
+The official Creative Commons deed states that CC BY-NC-ND 4.0 permits copying and redistribution in any medium or format for non-commercial purposes, subject to attribution; it does not permit public sharing of adapted material. The legal code allows technical format modifications necessary to exercise the licence, but does not remove the NonCommercial condition. The current LLM Lab pages describe the figure as embedded unchanged and link to the source. Their attribution does not currently include a direct link to the CC licence.
+
+**Assessment:** the source-page licence is materially more informative than a generic rights-unknown status, but two questions remain open: (1) whether the featured image itself is within the material licensed under the page's CC notice and who holds the relevant rights; and (2) whether the project's public use meets the licence's NonCommercial condition. Do not infer an answer from the educational subject matter or the absence of monetisation information. Keep the image unchanged and escalate these questions for rights-holder/project-owner confirmation. If asset-level coverage is confirmed, update the attribution to include a direct licence link and any required notices.
+
+Evidence:
+- [Author's publication page](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/)
+- [Exact featured image](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/featured_hu3a085884cc9c15c3954ff8e09a76a4a3_251753_720x2500_fit_q75_h2_lanczos.webp)
+- [Official CC BY-NC-ND 4.0 deed](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+- [Official CC BY-NC-ND 4.0 legal code](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.en)
+
+### Hugging Face tokenizer-pipeline SVG — Apache-2.0 repository evidence
+
+The exact remote path used by LLM Lab is `en/chapter6/tokenization_pipeline.svg` in the Hugging Face dataset repository `huggingface-course/documentation-images`. Its repository README declares Apache-2.0. The Hugging Face course repository's contribution instructions also direct course authors to place course images in this documentation-images repository and use this path pattern. This corroborates that the asset is intended to be distributed as part of the course image repository.
+
+The repository-level licence is therefore stronger evidence than a licence inferred only from the course page. However, the exact file's history/blame and any file-specific third-party notices or exclusions have not yet been inspected. The asset itself has no local copy or embedded metadata in LLM Lab; the current pages load it remotely and cite the course page.
+
+**Assessment:** provisionally Apache-2.0 at repository level; verify exact-file provenance and notices before marking the asset fully cleared. Preserve the current remote embed unchanged.
+
+Evidence:
+- [Exact asset URL](https://huggingface.co/datasets/huggingface-course/documentation-images/resolve/main/en/chapter6/tokenization_pipeline.svg)
+- [Dataset repository README](https://huggingface.co/datasets/huggingface-course/documentation-images/blob/main/README.md)
+- [Hugging Face course contribution instructions](https://github.com/huggingface/course)
+
+### Catherine Arnett and Rushang Chauhan
+
+The inspected article pages still provide source attribution but no explicit reuse licence for the exact embedded image assets. No permission has been obtained or established in this follow-up. Both remain **unclear/pending**; keep them in place and unchanged. A permission request may be considered as a separate project-owner action; none has been sent.
+
+### Current external-asset status
+
+| Asset | Evidence level | Remaining check |
+|---|---|---|
+| Rushang Chauhan | Source identified; no explicit asset reuse licence found | Rights-holder permission/licence |
+| Catherine Arnett | Source article and exact CDN image identified; no explicit asset reuse licence found | Rights-holder permission/licence |
+| Petrov et al. | Source page displays CC BY-NC-ND 4.0; exact featured image identified | Confirm image coverage, rights holder, NonCommercial applicability, and complete attribution |
+| Hugging Face pipeline | Exact repository path identified; dataset repository declares Apache-2.0 | Confirm exact-file history and any file-specific notices/exclusions |
+
+No image was removed, replaced, hidden, disabled, copied locally, or modified during this follow-up.
