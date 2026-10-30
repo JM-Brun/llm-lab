@@ -100,9 +100,10 @@ La page principale reste centrée sur le parcours. Les détails techniques sont 
 - [Stratégies de tokenisation](tokenization-strategies.qmd) : pré-tokenisation, BPE, WordPiece, unigramme, exemples, comparaisons et limites.
 
 
-Pour une vue visuelle des particularités de la tokenisation, voir [How LLMs See the World](https://blog.bytebytego.com/p/how-llms-see-the-world) de ByteByteGo. Pour une pratique guidée de BPE avec des notebooks, Vizuara propose [Tokenization from Scratch: Building Byte-Pair Encoding by Hand](https://pods.vizuara.ai/courses/build-llm/tokenization-from-scratch-building-byte-pair-encoding-by-han). Ce sont des ressources pédagogiques facultatives, pas des prérequis ni des substituts aux définitions et précautions de ce projet.
 - [Unicode, UTF-8 et normalisation](unicode-text.qmd) : points de code, octets et chaînes visuellement identiques.
 - [Espace des embeddings](embedding-space.qmd) et [tenseurs](tensors.qmd) : dimensions, tables de poids et formes des représentations.
+
+Pour une vue visuelle des particularités de la tokenisation, voir [How LLMs See the World](https://blog.bytebytego.com/p/how-llms-see-the-world) de ByteByteGo. Pour une pratique guidée de BPE avec des notebooks, Vizuara propose [Tokenization from Scratch: Building Byte-Pair Encoding by Hand](https://pods.vizuara.ai/courses/build-llm/tokenization-from-scratch-building-byte-pair-encoding-by-han). Ce sont des ressources pédagogiques facultatives, pas des prérequis ni des substituts aux définitions et précautions de ce projet.
 
 ## 3. Mini-laboratoire de comparaison
 
