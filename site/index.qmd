@@ -17,7 +17,7 @@ Un LLM autorégressif reçoit une séquence de tokens et calcule une distributio
 
 <div class="hero-actions">
 [Explorer la vue d’ensemble GPT / Transformer](fr/transformer.qmd){.btn .btn-primary}
-[Parcours de construction (en cours)](fr/text-data.qmd){.btn .btn-outline-primary}
+[Commencer par le texte et les données](fr/text-data.qmd){.btn .btn-outline-primary}
 [Explorer les notions](fr/glossary.qmd){.btn .btn-outline-primary}
 </div>
 ::::
