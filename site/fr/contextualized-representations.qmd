@@ -18,12 +18,10 @@ Le pipeline de référence texte → IDs → lookup dans la table d'embeddings e
 
 ## Ce qui reste identique
 
-Supposons que le mot visible `bank` soit représenté par le même ID dans deux phrases :
+Supposons que le token visible `bank` soit représenté par le même ID dans deux phrases :
 
 - “The river bank eroded.”
 - “The financial bank collapsed.”
-
-Le mot anglais `bank` est conservé dans cet exemple pour garder une même forme lexicale dans les deux contextes.
 
 Sous cette hypothèse explicite, les deux occurrences récupèrent le même embedding initial :
 
