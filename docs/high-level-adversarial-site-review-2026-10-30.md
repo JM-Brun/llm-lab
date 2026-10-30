@@ -400,7 +400,7 @@ The present audit should feed findings into #130. The curriculum crosswalk and m
 | Global navigation should follow the system's causal/lifecycle flow | Issue #130; full curriculum plan | Refine the existing lifecycle proposal; do not introduce a second sidebar taxonomy |
 | Three reader routes/depths | Reader-experience method; issue #87 | Preserve Panorama / Guided build / Deep dives as complementary routes, not separate content silos |
 | Explicit from-scratch GPT milestones | Learning path; full curriculum plan; roadmap | Keep the existing modules and evidence gates; do not imply that the complete GPT implementation or training run exists |
-| Training vs inference vs adaptation/evaluation | Full curriculum plan; learning path; issue #130 | Treat these as distinct lifecycle processes that cross-link, not as three new mandatory chapters |
+| Training, inference/generation, adaptation/post-training, and evaluation | Full curriculum plan; learning path; issue #130 | Keep the processes distinct and cross-linked; evaluation is cross-cutting, not a post-adaptation-only phase or a new mandatory chapter |
 | Page types and title conventions | Reader-experience method | Apply its existing page contracts; do not impose a universal template or mass-renaming exercise |
 | Concept coverage and dependencies | Full curriculum plan | Use the curriculum graph and source baseline; do not mirror Raschka chapter-for-chapter |
 | Implementation/test/experiment status | Learning path; roadmap; page audit inventory | Keep evidence states separate: documented, implemented, tested, rendered, experimentally demonstrated, and learner mastery |
@@ -409,13 +409,14 @@ The present audit should feed findings into #130. The curriculum crosswalk and m
 
 ### 15.4 Lifecycle distinction: clarify the model without creating duplicate chapters
 
-The three processes highlighted in this audit—training, inference/generation, and adaptation/evaluation—are useful as a cross-cutting explanatory lens:
+The audit highlights four related but distinct processes. They form a cross-cutting explanatory lens; they should be connected in overview diagrams without being collapsed into one linear pipeline:
 
-- **Training:** data/targets → representations → forward pass → objective → gradients → parameter updates → validation.
+- **Training from initialization:** data/targets → representations → forward pass → objective → gradients → parameter updates → checkpoint selection.
 - **Inference/generation:** context → tokenization → forward pass → next-token distribution → decoding → appended token → repeated forward pass.
-- **Adaptation/evaluation:** pretrained checkpoint → optional adaptation/post-training → evaluation protocol → measurements → error analysis and limitations.
+- **Adaptation/post-training:** pretrained checkpoint → optional supervised fine-tuning, preference optimization, or another adaptation procedure → adapted checkpoint. This is an optional branch, not a required stage of every GPT build or every inference workflow.
+- **Evaluation:** define the task and protocol → select data and baselines → measure the base or adapted model → analyze errors, uncertainty, and limitations. Evaluation can inform model selection during training, compare checkpoints, or assess a pretrained/adapted model; it is not merely the final step after adaptation.
 
-These processes should be shown in overview diagrams and used to disambiguate explanations. They are not a replacement for issue #130's lifecycle-oriented navigation, and they should not become three new top-level chapters by default. In particular, evaluation applies to base models and adapted models; it is not a phase that only follows fine-tuning.
+Keep these distinctions visible in the existing curriculum and navigation work, but do not turn them into four new mandatory chapters. Evaluation is a cross-cutting activity, while validation used for model selection must remain distinct from a final held-out test or benchmark.
 
 ### 15.5 Scope and sequencing constraints retained
 
