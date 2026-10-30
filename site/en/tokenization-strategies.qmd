@@ -87,7 +87,17 @@ This schematic example preserves an explicit trace of the merges. Teaching conve
 | `lower` | `l · o · w · e · r · </w>` |
 | `lowest` | `l · o · w · e · s · t · </w>` |
 
-Suppose tie-breaking selects `l + o → lo` first, then `lo + w → low`.
+Count every adjacent pair across the corpus. Each word occurs once here, so the pair counts are:
+
+| Pair | Count | Pair | Count |
+|---|---:|---|---:|
+| `l + o` | 3 | `w + e` | 2 |
+| `o + w` | 3 | `w + </w>` | 1 |
+| `e + r` | 1 | `r + </w>` | 1 |
+| `e + s` | 1 | `s + t` | 1 |
+| `t + </w>` | 1 | | |
+
+The most frequent pair is tied: `l + o` and `o + w` both occur three times. Assume the deterministic tie-breaker chooses `l + o → lo`. Replace non-overlapping occurrences, then recount. The pair `lo + w` now occurs three times and can be merged next.
 
 | Step | `low` | `lower` | `lowest` |
 |---|---|---|---|
@@ -95,7 +105,7 @@ Suppose tie-breaking selects `l + o → lo` first, then `lo + w → low`.
 | 1: merge `l + o` | `lo · w · </w>` | `lo · w · e · r · </w>` | `lo · w · e · s · t · </w>` |
 | 2: merge `lo + w` | `low · </w>` | `low · e · r · </w>` | `low · e · s · t · </w>` |
 
-This table illustrates the mechanics, not a universal tokenizer output. Pre-tokenization, base units, frequencies, end-of-word handling, and tie-breaking affect the actual order. Later merges might create `er` or `est`, but that is not guaranteed. To manipulate candidate pairs, use the [BPE Explainer by Müller and Steinbach](https://philipmueller.dev/bpe-visualization/).
+The frequency table makes the greedy choice visible; it does not mean BPE discovers linguistic morphemes or an optimal vocabulary. This is a word-level teaching convention with an end-of-word marker, not a complete byte-level production tokenizer. Real outputs also depend on pre-tokenization, base units, corpus frequencies, special-token handling, and implementation-specific tie-breaking. To manipulate candidate pairs, use the [BPE Explainer by Müller and Steinbach](https://philipmueller.dev/bpe-visualization/).
 
 ### Tokenizer training versus encoding at inference
 
