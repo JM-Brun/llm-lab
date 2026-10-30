@@ -83,3 +83,22 @@ Not yet completed:
 - resolve the repository's missing licence declaration and define a policy for original project assets.
 
 Do not mark this register complete until these checks have evidence recorded for each asset. Update it when figures are added, moved, replaced, or removed; record changes and rationale in the associated PR and #156.
+
+
+## Local SVG source inspection — 2026-10-30
+
+A direct source inspection was completed for all 32 files listed above (32/32 fetched from the repository default branch). The checks covered SVG root declarations and dimensions, XML/SVG metadata elements, comments, embedded raster images, `foreignObject`, scripts, and explicit external HTTP(S) references in `href`/`xlink:href`.
+
+Findings:
+
+- No SVG in this 32-file set contains an explicit `<metadata>` block or XML comment identifying an author, creator, source, copyright holder, or licence.
+- No SVG contains an embedded `<image>`, `<foreignObject>`, or `<script>` element.
+- No explicit external HTTP(S) `href` or `xlink:href` was found.
+- The files are predominantly hand-authored SVG markup with accessible `title`/`desc` labels and vector elements. This is a description of file structure, not proof of authorship.
+- Consequently, the SVG source itself does not currently provide enough provenance to establish who created each diagram or whether any underlying visual design was adapted from another source. The absence of metadata is not evidence of original authorship or a particular licence.
+
+### Git history evidence and limitation
+
+A repository commit search for `path:site/images` surfaced commit `c37b04483f0f6f1ae75fe767622068e445ca1d51` (21 October 2026), whose GitHub commit metadata identifies `JM-Brun` as the author. However, the returned commit is a broad site-organization commit and its exposed file list does not establish the introduction history of every SVG. The earlier directory-level history observation that commits were authored by the repository owner is likewise not asset-level proof of original creation or exclusive rights.
+
+**Status for all 32 local SVGs: provenance/licence unresolved.** No files were modified, removed, replaced, hidden, or disabled. The two unreferenced pairs remain preserved. Next evidence required: per-file introduction commit and diff, any source/design notes outside the SVG, and confirmation from the project owner of authorship or adaptation history. Only then can the project-owned licence decision in #163 be made responsibly.
