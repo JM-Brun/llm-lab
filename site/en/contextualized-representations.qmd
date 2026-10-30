@@ -1,0 +1,87 @@
+---
+title: "Why can the same token have different contextualized representations?"
+subtitle: "From a shared embedding lookup to context-dependent hidden states"
+lang: en
+---
+
+::: {.chapter-lead}
+The same token ID always selects the same row from a fixed embedding matrix. Yet the token can play different roles in different sentences. The distinction is that **lookup provides an initial vector; the Transformer subsequently builds representations that depend on context**.
+:::
+
+This is a focused companion to [The embedding space](embedding-space.qmd). It answers one question without interrupting the main path from token IDs to vectors and then to the geometry of representations.
+
+## Start with what stays the same
+
+Suppose the visible word `bank` is represented by the same token ID in two sentences:
+
+- “The river bank eroded.”
+- “The financial bank collapsed.”
+
+Under that explicit assumption, both occurrences retrieve the same initial embedding:
+
+\[
+e_{\text{bank}} = E[\text{ID}_{\text{bank}}].
+\]
+
+The embedding lookup is a table access. It does not inspect the surrounding words, infer which sense is intended, or produce a sentence-specific vector.
+
+A qualification matters: a visible word is not guaranteed to correspond to one token. A tokenizer may split it into several tokens. This example isolates the contextualization principle by assuming one shared token ID.
+
+## What changes with position and context?
+
+The two occurrences are at different positions and have different neighbours. The exact handling of position depends on the architecture.
+
+For a model using learned absolute position embeddings, the initial input at position \(t\) may be written:
+
+\[
+h_t^{(0)} = E[\text{ID}_t] + P_t.
+\]
+
+The same token ID gives the same token-embedding term, but a different position may give a different positional term. Architectures using RoPE handle position differently: it modifies query and key vectors inside attention rather than adding an absolute position vector to the token embedding. See [positional encoding and RoPE](positional-encoding.qmd).
+
+The Transformer layers then process information across the sequence. At a high level:
+
+\[
+h_t^{(\ell+1)}
+=
+F_\ell\big(h_1^{(\ell)},\ldots,h_t^{(\ell)}\big),
+\]
+
+For a causal decoder such as GPT, the state at position \(t\) can use the current token and its preceding context, but not future tokens. Other architectures, such as bidirectional encoders, use different attention masks. The function \(F_\ell\) stands for a complete block; this expression is conceptual, not an implementation specification.
+
+Consequently, the two occurrences can have different hidden states even though their initial token lookup is identical.
+
+![The same token can receive different contextualized representations depending on the sentence.](../images/contextualized-embeddings-en.svg){fig-alt="Two sentences use bank in different contexts. Assuming the same token ID, both occurrences share the initial embedding, then may produce different contextualized states." fig-cap="Same token ID, same initial lookup; different positional and contextual information can lead to different hidden states." width=100%}
+
+This original illustration is motivated by [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). It illustrates the principle, not measured vectors. Depending on the tokenizer, a visible word may consist of multiple tokens.
+
+## Keep three distinctions separate
+
+| Object | What determines it? | Is it context-dependent? |
+|---|---|---|
+| Token ID | Tokenizer vocabulary and rules | No; it identifies a vocabulary entry |
+| Initial token embedding | The selected row of the embedding matrix | No, for a fixed matrix and token ID |
+| Contextualized hidden state | Initial representation, position handling, surrounding sequence, architecture, and layer | Yes, in general |
+
+Two common confusions follow from collapsing these stages:
+
+- **“The embedding lookup understands the sentence.”** No. The lookup selects a learned row; context is incorporated by subsequent network operations.
+- **“The same token must have the same hidden state everywhere.”** No. The initial lookup can be shared while position and context change later representations.
+
+This also does not guarantee that the model will represent human-interpreted senses as cleanly separated clusters. Contextualization is a computational mechanism, not a guarantee of a particular semantic geometry.
+
+## Where this fits in the model
+
+The learning path is:
+
+1. The tokenizer maps text to token IDs.
+2. The embedding table maps each ID to an initial vector.
+3. The architecture introduces positional information according to its design.
+4. Transformer layers produce context-dependent hidden states.
+5. Later layers and the output head use those states to predict the next token.
+
+For the full lookup example, matrix dimensions, parameter counts, and representation geometry, return to [The embedding space](embedding-space.qmd). For the surrounding sequence-processing mechanism, continue to [Queries, keys, and values](queries-keys-values.qmd) and [Scaled dot-product attention](scaled-dot-product-attention.qmd).
+
+::: {.language-switch}
+**Language:** [Français](../fr/contextualized-representations.qmd) · [English](contextualized-representations.qmd)
+:::
