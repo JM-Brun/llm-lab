@@ -16,7 +16,7 @@ Un LLM autorégressif reçoit une séquence de tokens et calcule une distributio
 **LLM Lab relie ces mécanismes à leurs explications mathématiques et à leur comportement observable.** Le but n’est pas de croire une intuition parce qu’un schéma paraît convaincant : c’est de comprendre ce qu’un composant calcule, de vérifier ce qu’on peut tester et d’identifier ce qui reste une hypothèse ou une limite.
 
 <div class="hero-actions">
-[Comprendre le fonctionnement global](fr/transformer.qmd){.btn .btn-primary}
+[Explorer la vue d’ensemble GPT / Transformer](fr/transformer.qmd){.btn .btn-primary}
 [Suivre le parcours de construction](fr/text-data.qmd){.btn .btn-outline-primary}
 [Explorer les notions](fr/glossary.qmd){.btn .btn-outline-primary}
 </div>
@@ -73,7 +73,7 @@ Comment passer des documents au texte exploitable, puis aux tokens, aux identifi
 
 Comment les identifiants deviennent-ils des tenseurs et des vecteurs, puis des représentations contextualisées ?
 
-[Tenseurs](fr/tensors.qmd) · [Espace des embeddings](fr/embedding-space.qmd) · [Position et contexte](fr/positional-encoding.qmd)
+[Tenseurs](fr/tensors.qmd) · [Espace des embeddings](fr/embedding-space.qmd) · [Position](fr/positional-encoding.qmd) · [Représentations contextualisées](fr/contextualized-representations.qmd)
 :::
 ::: {.route-step}
 **4 · Calculer avec le Transformer**
@@ -94,7 +94,7 @@ Comment les représentations finales deviennent-elles des scores sur le vocabula
 
 Comment mesurer l’écart entre prédictions et cibles, formaliser l’objectif et obtenir les gradients utiles à l’apprentissage ?
 
-[Vraisemblance et entropie](fr/vraisemblance.qmd) · [Entropie croisée, loss et gradients](fr/cross-entropy.qmd)
+[Vraisemblance et entropie](fr/vraisemblance.qmd) · [Entropie croisée](fr/cross-entropy.qmd) · [Loss et gradients](fr/loss.qmd)
 :::
 ::: {.route-step}
 **7 · Évaluer et mettre à l’épreuve**
