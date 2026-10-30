@@ -98,8 +98,6 @@ For the definitions and research behind these dimensions, see **[Evaluating a to
 This overview stays focused on the pipeline. Technical details live on dedicated pages:
 
 - [Tokenization strategies](tokenization-strategies.qmd): pre-tokenization, BPE, WordPiece, unigram, examples, comparisons, and limitations.
-
-
 - [Unicode, UTF-8, and normalization](unicode-text.qmd): code points, bytes, and visually identical strings.
 - [Embedding space](embedding-space.qmd) and [tensors](tensors.qmd): dimensions, weight tables, and representation shapes.
 
