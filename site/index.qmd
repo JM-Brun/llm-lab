@@ -111,40 +111,6 @@ Comment concevoir une évaluation, analyser les erreurs et distinguer ce que les
 **Périmètre actuel.** Ce parcours organise les contenus disponibles ; il ne prétend pas qu'un GPT complet est déjà implémenté. La génération détaillée, le préentraînement reproductible et l'adaptation d'un modèle pré-entraîné restent des chantiers distincts du parcours conceptuel.
 :::
 
-## Choisir son point d’entrée
-
-Ces trois approches sont complémentaires, pas des étapes obligatoires. Vous pouvez suivre le fil principal, partir d’une question précise ou approfondir un mécanisme sans avoir lu toutes les pages précédentes.
-
-:::: {.learning-grid}
-::: {.learning-card}
-<span class="step">01 · VUE D’ENSEMBLE</span>
-
-### Comprendre le système avant les détails
-
-Suivez le trajet général des données : du texte aux tokens, des représentations à la prédiction, puis de l’erreur de prédiction à l’apprentissage. Cette première vue privilégie les rôles et les relations, pas les dérivations.
-
-**Pour commencer :** une vidéo visuelle, puis la [vue d’ensemble du Transformer](fr/transformer.qmd).
-:::
-::: {.learning-card}
-<span class="step">02 · CONSTRUCTION GUIDÉE</span>
-
-### Suivre les étapes d’un petit modèle
-
-Partez des données et des exemples d’entraînement, puis reliez progressivement représentation, attention, fonction de perte, optimisation et génération. Les pages de code et les tests servent à confronter l’explication au calcul effectif.
-
-**Pour commencer :** [texte et données](fr/text-data.qmd), puis [exemples d’entraînement](fr/training-examples.qmd).
-:::
-::: {.learning-card}
-<span class="step">03 · APPROFONDISSEMENT</span>
-
-### Enquêter sur une question précise
-
-Explorez une définition, une dérivation, les dimensions des tenseurs, une hypothèse, un contre-exemple ou une implémentation. Chaque détour devrait préciser ses prérequis et permettre de revenir à la vue d’ensemble.
-
-**Pour commencer :** [fondements mathématiques appliqués](fr/mathematical-foundations.qmd) ou [tenseurs et dimensions](fr/tensors.qmd).
-:::
-::::
-
 ## Vérifier plutôt que seulement visualiser
 
 Une page peut combiner intuition, dérivation mathématique, code, tests et expérience. Ces éléments n'apportent pas le même type de preuve :

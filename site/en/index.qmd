@@ -110,40 +110,6 @@ How should we design an evaluation, analyze errors, and distinguish what measure
 **Current scope.** This route organizes the content currently available; it does not claim that a complete GPT has already been implemented. Detailed generation, reproducible pretraining, and adaptation of a pretrained model remain distinct workstreams beyond the conceptual route.
 :::
 
-## Choose your starting point
-
-These three approaches complement one another; they are not mandatory stages. Follow the main thread, start with a specific question, or investigate a mechanism without reading every preceding page.
-
-:::: {.learning-grid}
-::: {.learning-card}
-<span class="step">01 · BIG PICTURE</span>
-
-### Understand the system before the details
-
-Follow the broad flow of information: from text to tokens, from representations to prediction, and from prediction error to learning. This first view focuses on roles and relationships rather than derivations.
-
-**Start here:** a visual overview, then the [Transformer overview](transformer.qmd).
-:::
-::: {.learning-card}
-<span class="step">02 · GUIDED BUILD</span>
-
-### Follow the construction of a small model
-
-Start with data and training examples, then connect representations, attention, the loss function, optimization, and generation. Code pages and tests help compare explanations with actual computation.
-
-**Start here:** [text and data](text-data.qmd), then [training examples](training-examples.qmd).
-:::
-::: {.learning-card}
-<span class="step">03 · DEEP DIVE</span>
-
-### Investigate a specific question
-
-Explore a definition, derivation, tensor shapes, an assumption, a counterexample, or an implementation. Each detour should state its prerequisites and provide a route back to the big picture.
-
-**Start here:** [applied mathematical foundations](mathematical-foundations.qmd) or [tensors and shapes](tensors.qmd).
-:::
-::::
-
 ## Verify, do not only visualize
 
 A page may combine intuition, mathematical derivation, code, tests, and experiments. These provide different kinds of evidence:
