@@ -114,6 +114,32 @@ Ces liens sont proposés pour compléter la lecture. Ils servent d'appui pédago
 - [Mikolov et al. (2013), *Efficient Estimation of Word Representations in Vector Space*](https://arxiv.org/abs/1301.3781) — embeddings de mots.
 - [PyTorch — Tensors](https://docs.pytorch.org/tutorials/beginner/introyt/tensors_deeper_tutorial.html) — formes et opérations sur les tenseurs.
 
+## Ressources pédagogiques externes — texte et tokenisation
+
+::: {.reference-card}
+### ByteByteGo — *How LLMs See the World* (4 août 2025)
+
+[Lire l'article](https://blog.bytebytego.com/p/how-llms-see-the-world).
+
+Vue d'ensemble accessible des tokens, IDs, embeddings, principales familles de tokenizers et exemples de segmentation de nombres, code, ponctuation et langues. À utiliser comme support d'intuition et de repérage des questions, pas comme source technique de référence : certaines formulations sont simplificatrices (notamment sur le lien entre fragmentation et raisonnement, ou sur la portée sémantique directe des embeddings). Les mécanismes et limites sont traités plus rigoureusement dans les pages de ce dépôt.
+:::
+
+::: {.reference-card}
+### Vizuara — *Tokenization from Scratch: Building Byte-Pair Encoding by Hand*
+
+[Consulter le parcours](https://pods.vizuara.ai/courses/build-llm/tokenization-from-scratch-building-byte-pair-encoding-by-han).
+
+Le descriptif annonce une progression intermédiaire avec article, figures, équations, neuf notebooks pratiques (environ quatre heures) et étude de cas. L'intérêt pédagogique retenu pour LLM Lab est la continuité entre explication, manipulation de l'algorithme et application. Le contenu détaillé peut être soumis à accès ; ce lien n'est donc pas présenté comme une ressource libre ou un prérequis.
+:::
+
+::: {.reference-card}
+### Vizuara — *LLMs from 30,000 feet*
+
+[Consulter le micro-cours](https://mu.vizuara.ai/learn/llms-30k).
+
+Le format en courtes leçons autonomes et questions explicites est intéressant pour la progression éditoriale. Les séquences « How words become numbers » et « Why tokenizers struggle with Indian languages » sont proches des questions traitées ici. Les formulations très condensées servent d'intuition, mais ne remplacent pas les distinctions techniques (token vs ID vs embedding, tokenizer vs modèle, coût de tokenisation vs qualité en aval).
+:::
+
 ## Références techniques
 
 - [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch)
