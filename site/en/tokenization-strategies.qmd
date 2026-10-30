@@ -314,7 +314,7 @@ To compare two tokenizers:
 2. [Hugging Face — Byte-Pair Encoding tokenization](https://huggingface.co/learn/llm-course/en/chapter6/5): English-language explanation of BPE training, paired with the French course linked from the French page.
 3. [Cornell CS4782 — Tokenization Visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/): educational BPE/WordPiece comparison. **UI caveat (checked 2026-10-29):** the selected-merge panel displayed “Frequency: undefined” while the candidate-pair list showed counts. Treat that selected value as unreliable unless the page has since been fixed.
 4. [Andrej Karpathy — Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE): Unicode, UTF-8, BPE, whitespace, and special tokens.
-5. [Hugging Face — visualizing BPE encoding](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize): complementary visualization; verify community code before execution.
+5. [Hugging Face — visualizing BPE encoding](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize): optional community visualization. **Source-audit caveat (2026-10-30):** the inspected implementation replays the model's merge list over raw Unicode characters; it does not reproduce the tokenizer's byte-level mapping and pre-tokenization pipeline. Treat its graph as a schematic of merge operations, not a faithful trace of GPT-2 token boundaries. Its package metadata also omits runtime dependencies although the README lists `graphviz` and `transformers`; inspect and pin dependencies before installing.
 
 #### Useful timestamps in Karpathy's video
 
