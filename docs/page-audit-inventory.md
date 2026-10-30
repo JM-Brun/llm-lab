@@ -364,3 +364,15 @@ The Hugging Face course's tokenizer-pipeline illustration is already embedded re
 The current EN/FR tokenization guide covers the core conceptual distinctions in the four Hugging Face course sections. The main differences are deliberate depth boundaries: weighted BPE training counts, detailed Unigram loss/pruning calculations, and an executable library-level tokenizer construction are not fully reproduced. These should be treated as deferred practical extensions, not silently described as already implemented. No scientific correction to the current pages is required by this comparison alone.
 
 **Validation boundary:** source files and the cited Hugging Face course pages were inspected; this pass did not execute the Hugging Face notebooks, perform a browser-based visual review, or validate desktop/mobile rendering.
+
+## Focused source audit — Transformer Explainer integration (2026-10-30)
+
+**Scope:** the integration and source-reading section in the French and English Transformer overview pages, checked against upstream commit [`bfe50af`](https://github.com/poloclub/transformer-explainer/commit/bfe50afba10b9b560b84143ee1107d977defa74f). This is a source-level review, not a browser-render or accessibility certification.
+
+| Finding | Evidence inspected | Correction / remaining boundary |
+|---|---|---|
+| UI components were described as if they performed the model calculations. | `Embedding.svelte`, `QKV.svelte`, `AttentionMatrix.svelte`, `Mlp.svelte`, and `LinearSoftmax.svelte` render or expose the visual interface. | The bilingual overview now separates the visual component from the computation/data path. Q/K/V projections, attention, MLP, and embeddings are implemented in the PyTorch reference model (`model.py`); browser inference and tokenization are orchestrated through `data.ts` and ONNX Runtime Web. |
+| The top-p caveat described an impossible condition for the restricted distribution. | `topPSampling` in `src/utils/data.ts` sorts logits, slices to 50, applies temperature, softmaxes those 50 values, computes cumulative probabilities, truncates, and renormalizes. | The explanation now states that top-p is computed over a distribution already restricted to 50 candidates. The omitted vocabulary tail cannot enter the selected nucleus; exact full-vocabulary top-p can therefore differ when its nucleus extends beyond those 50 candidates. |
+| Upstream source links used the mutable `main` branch. | Upstream tree and relevant files were inspected at commit `bfe50afba10b9b560b84143ee1107d977defa74f`. | The source map now pins links to that commit so readers can reproduce the audit. Re-audit before relying on those implementation details after upstream changes. |
+
+**Confirmed:** the repository has a PyTorch reference model, while the browser path uses an ONNX session; the two should not be conflated. **Not checked:** a fresh browser interaction, model download behavior, mobile layout, keyboard accessibility, or whether the upstream demo's runtime behavior still matches the pinned source snapshot.
