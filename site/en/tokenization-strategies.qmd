@@ -239,12 +239,6 @@ Comparing algorithms is not enough to establish whether a tokenizer is suitable 
 - **Reproducibility**: record the exact tokenizer and revision, preprocessing, corpus, languages, metrics, task, budgets, and software versions.
 
 
-#### External research figure: tokenizer fertility varies by language
-
-![Tokenizer fertility distributions for English, French, German, Italian, Polish, and Spanish across the tokenizers compared in Catherine Arnett's experiments.](https://cdn-uploads.huggingface.co/production/uploads/6384d424ac61472e5e92d403/yZnGPoBwKK4d19aCR7Ypo.png){fig-alt="Six small-multiple bar charts show tokenizer fertility across English, French, German, Italian, Polish, and Spanish; the red bar marks the author's tokenizer and grey bars show alternatives." width=100%}
-
-*Source: Catherine Arnett, [“wHy DoNt YoU jUsT uSe ThE lLaMa ToKeNiZeR??”](https://huggingface.co/blog/catherinearnett/dangers-of-tokenizer-recycling), 2024. This is a study-specific comparison, not a universal ranking: fertility depends on the text sample, word definition, and tokenizer set. The image is embedded from the author's hosted article and is not modified or redistributed in this repository.*
-
 ### What the studies show — and what they do not
 
 The following papers are complementary: they do not all measure the same object and should not be read as a direct tokenizer ranking.
@@ -258,12 +252,6 @@ The following papers are complementary: they do not all measure the same object 
 
 Goldman et al. and Schmidt et al. should not be reduced to a simplistic contradiction. The former studies empirical associations between compression and downstream results; the latter reminds us that compression does not summarize every relevant property. TokLens adds a complementary finding: observed relationships differ between English and multilingual benchmarks and remain correlational, with possible confounders such as pretraining-data composition. The methodological conclusion is to **measure separately the dimensions that correspond to the decision being made**.
 
-
-#### External research figure: representation length and execution time
-
-![Tokenization length for the FLORES-200 parallel corpus versus RoBERTa execution time across languages and writing-system families.](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/featured_hu3a085884cc9c15c3954ff8e09a76a4a3_251753_720x2500_fit_q75_h2_lanczos.webp){fig-alt="Scatter plot of tokenization length against RoBERTa execution time for languages in FLORES-200, with points colored by script family." width=80%}
-
-*Source: Petrov, La Malfa, Torr, and Bibi, [“Language Model Tokenizers Introduce Unfairness Between Languages”](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/), NeurIPS 2023. The plot illustrates an association in the studied setup, not a universal causal law or a direct measure of generation quality. The author's page identifies the work as CC BY-NC-ND 4.0; the figure is embedded unchanged and linked to its source.*
 
 ### Building an interpretable comparison protocol
 
@@ -284,6 +272,7 @@ To compare two tokenizers:
 - [Ahia et al. (2023), *Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/) — earlier study of tokenization costs across languages.
 - [Wegmann et al. (2025), *Tokenization is Sensitive to Language Variation*](https://aclanthology.org/2025.findings-acl.572/) — linguistic variation and the role of the pre-tokenizer.
 - [TokLens — paper and resources](https://aclanthology.org/2026.acl-srw.18/) — inspect as a tool/method, checking its metrics and protocol.
+- [Catherine Arnett (2024), tokenizer-recycling community article](https://huggingface.co/blog/catherinearnett/dangers-of-tokenizer-recycling) — practitioner observations on tokenizer reuse and pre-tokenization; not a substitute for controlled research evidence.
 
 ### Recommended visual resources
 
@@ -293,7 +282,7 @@ To compare two tokenizers:
 4. [Andrej Karpathy — Let's build the GPT Tokenizer](https://www.youtube.com/watch?v=zduSFxRajkE): Unicode, UTF-8, BPE, whitespace, and special tokens.
 5. [Hugging Face — visualizing BPE encoding](https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize): complementary visualization; verify community code before execution.
 
-These are external links rather than copied figures whose licences have not been checked. For the overall pipeline, the original diagram above is this page's reference figure.
+External visual assets are linked through their sources rather than embedded in the site. The page uses project-owned diagrams for its pipeline and evaluation framework.
 
 
 
@@ -306,18 +295,13 @@ These are external links rather than copied figures whose licences have not been
 5. Return to [Raschka's Chapter 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) to connect IDs to embeddings and input-target examples.
 6. Test multilingual text, code, numbers, leading spaces, and unusual Unicode forms.
 
-### An external illustration of the tokenizer pipeline
-
-![Tokenization pipeline from the Hugging Face course, showing the stages that transform text into model-ready tokens.](https://huggingface.co/datasets/huggingface-course/documentation-images/resolve/main/en/chapter6/tokenization_pipeline.svg){fig-alt="Tokenization pipeline: normalization, pre-tokenization, tokenization model, and post-processing." width=100%}
-
-This published illustration comes from the [Hugging Face course, “Building a tokenizer, block by block”](https://huggingface.co/docs/course/chapter6/8). It complements the conceptual diagram on the [overview page](text-data.qmd) with the components of a tokenizer. The image is served from the course's public documentation assets rather than copied locally; citation does not itself grant redistribution rights.
-
 ### Additional research references
 
 - [Ali et al. (2024), *Tokenizer Choice For LLM Training: Negligible or Crucial?*](https://aclanthology.org/2024.findings-naacl.247/): examines tokenizer choice effects on cost and performance, noting that intrinsic metrics do not always predict downstream results.
 - [Wegmann et al. (2025), *Tokenization is Sensitive to Language Variation*](https://aclanthology.org/2025.findings-acl.572/): analyses linguistic variation and the role of the pre-tokenizer.
 - [Arnett et al. (2025), *Explaining and Mitigating Crosslingual Tokenizer Inequities*](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html): studies cross-language cost differences and design factors such as vocabulary size and pre-tokenization.
 - [Ahia et al. (2023), *Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/): compares tokenization cost across 22 languages and discusses API implications.
+- [Petrov et al. (2023), *Language Model Tokenizers Introduce Unfairness Between Languages*](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/): studies cross-language tokenization-length and runtime disparities; consult the paper for the experimental setup.
 - [TokLens (ACL 2026 SRW)](https://aclanthology.org/2026.acl-srw.18/): a multilingual measurement toolkit to inspect as a method and software, not as evidence that one intrinsic metric is sufficient.
 
 ### Educational code and historical reference
