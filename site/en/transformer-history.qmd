@@ -10,7 +10,7 @@ This is a selective chronology. It distinguishes precursors, architectural propo
 
 ## Timeline
 
-::: {.history-timeline}
+:::: {.history-timeline}
 
 ::: {.history-milestone}
 **2014 · Research publication**
@@ -96,7 +96,7 @@ Sources: [Training language models to follow instructions with human feedback](h
 **Explore the concept:** [experimental evaluation](experimental-evaluation.qmd). The site does not yet have a dedicated lesson on preference alignment.
 :::
 
-:::
+::::
 
 ## How to read this chronology
 
