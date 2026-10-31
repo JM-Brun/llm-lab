@@ -109,6 +109,15 @@ def validate() -> list[str]:
                 errors.append(f"{where}.date: value does not match declared precision")
             if date.get("kind") not in DATE_KINDS:
                 errors.append(f"{where}.date.kind: unsupported value {date.get('kind')!r}")
+            end_value = date.get("end_value")
+            if end_value is not None and (
+                not isinstance(end_value, str)
+                or pattern is None
+                or not pattern.fullmatch(end_value)
+                or not isinstance(value, str)
+                or end_value < value
+            ):
+                errors.append(f"{where}.date.end_value: invalid range end for declared precision")
 
         for field in ("title", "summary"):
             translations = event.get(field)
