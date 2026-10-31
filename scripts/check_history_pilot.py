@@ -138,7 +138,15 @@ def validate() -> list[str]:
         confidence = event.get("confidence")
         if confidence not in CONFIDENCE:
             errors.append(f"{where}: unsupported confidence {confidence!r}")
-        elif confidence != "high" and not event.get("editorial_note"):
+        note = event.get("editorial_note")
+        if note is not None:
+            if not isinstance(note, dict):
+                errors.append(f"{where}: editorial_note must be bilingual")
+            else:
+                for lang in ("fr", "en"):
+                    if not isinstance(note.get(lang), str) or not note[lang].strip():
+                        errors.append(f"{where}.editorial_note.{lang}: missing translation")
+        elif confidence != "high":
             errors.append(f"{where}: non-high confidence requires an editorial_note")
 
         links = event.get("internal_links", {})
