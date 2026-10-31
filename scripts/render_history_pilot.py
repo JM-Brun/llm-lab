@@ -157,7 +157,7 @@ def render(data: dict[str, Any], lang: str) -> str:
     title = "Chronologie historique" if lang == "fr" else "Historical timeline"
     output = [f'<div class="history-timeline" aria-label="{title}">']
     current_era: str | None = None
-    for event in events:
+    for index, event in enumerate(events):
         era = event["era"]
         if era != current_era:
             if era not in ERA_LABELS:
@@ -166,7 +166,7 @@ def render(data: dict[str, Any], lang: str) -> str:
             output.append('<ol class="history-timeline__list">')
             current_era = era
         output.append(render_event(event, sources, lang))
-        next_index = events.index(event) + 1
+        next_index = index + 1
         if next_index == len(events) or events[next_index]["era"] != current_era:
             output.append("</ol>")
     output.append("</div>")
