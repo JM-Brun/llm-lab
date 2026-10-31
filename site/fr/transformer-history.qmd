@@ -1,35 +1,155 @@
 ---
-title: "Historique des Transformers"
-subtitle: "Des mécanismes d'attention à l'architecture Transformer et aux LLM modernes"
+title: "Histoire des Transformers et des LLM"
+subtitle: "Des mécanismes d’attention aux modèles de langage contemporains"
 lang: fr
 ---
 
-Le Transformer n'est pas apparu sans précurseurs. Son histoire combine les mécanismes d'attention développés pour la traduction neuronale, l'auto-attention, l'entraînement à grande échelle et des objectifs différents selon les familles de modèles. Cette chronologie est sélective : elle présente des jalons, pas une histoire exhaustive ni une causalité unique.
+Cette page propose des repères historiques pour comprendre comment des mécanismes d’attention, l’architecture Transformer et différentes stratégies de pré-entraînement ont contribué aux LLM actuels. Elle complète la [présentation conceptuelle du Transformer](transformer.qmd), mais n’est pas un prérequis pour la lire ni pour suivre le parcours de construction.
+
+La chronologie est sélective. Elle distingue des précurseurs, des propositions architecturales, des publications et des mises à disposition publiques. Les années indiquées correspondent à la première publication ou annonce citée, pas nécessairement à la date d’invention ni au début de l’adoption.
 
 ## Chronologie
 
+:::: {.history-timeline}
 
-1. **2014 — Attention dans la traduction neuronale.** Bahdanau, Cho et Bengio proposent un mécanisme d'attention qui apprend à aligner les éléments de la sortie avec les parties pertinentes de l'entrée dans un modèle encodeur-décodeur récurrent. Ce n'est pas encore le Transformer, mais un précurseur important. [Article](https://arxiv.org/abs/1409.0473).
-2. **2015 — Variantes de l'attention pour la traduction.** Luong, Pham et Manning étudient plusieurs formes d'attention et de comparaison entre états source et cible. [Article](https://arxiv.org/abs/1508.04025).
-3. **2017 — Le Transformer.** Vaswani et ses collègues proposent une architecture fondée sur l'attention, sans récurrence ni convolution dans son mécanisme central. L'article introduit l'attention à produit scalaire mise à l'échelle et l'attention multi-têtes. [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
-4. **2018 — Deux trajectoires de pré-entraînement.** GPT popularise le pré-entraînement génératif avec un Transformer décodeur autorégressif ; BERT exploite un Transformer encodeur et un objectif de modélisation masquée. Ces approches ne sont pas interchangeables : elles structurent différemment le contexte accessible et l'objectif appris. [BERT](https://arxiv.org/abs/1810.04805) · [GPT, rapport technique](https://openai.com/index/language-unsupervised/).
-5. **2019 — Mise à l'échelle et contexte long.** GPT-2 étudie la génération conditionnée par le texte et le transfert zéro-shot ; Transformer-XL propose des mécanismes pour mieux traiter les dépendances au-delà d'une longueur fixe de segment. [GPT-2](https://openai.com/index/better-language-models/) · [Transformer-XL](https://arxiv.org/abs/1901.02860).
-6. **2020 — Modèles plus grands et autres modalités.** GPT-3 étudie le comportement *few-shot* à grande échelle ; Vision Transformer applique des blocs Transformer à des séquences de patches d'image. [GPT-3](https://arxiv.org/abs/2005.14165) · [ViT](https://arxiv.org/abs/2010.11929).
-7. **2022 — Alignement par retours humains et interfaces conversationnelles.** InstructGPT étudie le réglage par instructions, notamment avec apprentissage par préférences humaines. ChatGPT rend une interface conversationnelle largement accessible ; il s'agit d'un jalon de diffusion, pas de l'invention de l'architecture Transformer. [InstructGPT](https://arxiv.org/abs/2203.02155) · [annonce de ChatGPT](https://openai.com/index/chatgpt/).
+::: {.history-milestone #attention-2014}
+**2014 · Publication scientifique**
+
+### L’attention dans la traduction neuronale
+
+Bahdanau, Cho et Bengio proposent un mécanisme d’attention pour un modèle récurrent encodeur-décodeur. Le modèle apprend à pondérer les parties de l’entrée utiles à chaque étape de génération. L’attention est donc un précurseur du Transformer, pas une invention de l’article de 2017.
+
+Source primaire : [Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473).
+
+**Approfondir :** [attention à produit scalaire](scaled-dot-product-attention.qmd) — comparaison conceptuelle, sans assimiler ce mécanisme précoce à l’attention du Transformer.
+:::
+
+::: {.history-milestone #attention-2015}
+**2015 · Publication scientifique**
+
+### Plusieurs formulations de l’attention
+
+Luong, Pham et Manning étudient différentes fonctions de score et façons de calculer l’attention dans la traduction neuronale. Ces travaux illustrent qu’il existait déjà plusieurs variantes et choix de conception avant le Transformer.
+
+Source primaire : [Effective Approaches to Attention-based Neural Machine Translation](https://arxiv.org/abs/1508.04025).
+
+**Approfondir :** [attention à produit scalaire](scaled-dot-product-attention.qmd).
+:::
+
+::: {.history-milestone #transformer-2017}
+**2017 · Publication scientifique**
+
+### Transformer : une architecture fondée sur l’attention
+
+Vaswani et ses collègues présentent une architecture encodeur-décodeur pour la traduction, dont le mécanisme central repose sur l’attention plutôt que sur la récurrence ou la convolution. L’article formalise notamment l’attention à produit scalaire mise à l’échelle et l’attention multi-têtes.
+
+Source primaire : [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
+
+**Approfondir :** [vue d’ensemble du Transformer](transformer.qmd) · [attention](scaled-dot-product-attention.qmd).
+:::
+
+::: {.history-milestone #pretraining-2018}
+**2018 · Publications scientifiques**
+
+### Deux trajectoires de pré-entraînement : GPT et BERT
+
+GPT explore le pré-entraînement génératif autorégressif avec un Transformer de type décodeur. BERT utilise un Transformer de type encodeur et un objectif de prédiction de tokens masqués. Ces modèles partagent des briques architecturales, mais diffèrent par leur accès au contexte et leur objectif d’apprentissage.
+
+Sources primaires : [Improving Language Understanding by Generative Pre-Training (GPT)](https://openai.com/index/language-unsupervised/) · [BERT](https://arxiv.org/abs/1810.04805).
+
+**Approfondir :** [masque causal](causal-masking.qmd) · [exemples d’entraînement](training-examples.qmd).
+:::
+
+::: {.history-milestone #scaling-context-2019}
+**2019 · Publications et mise à disposition**
+
+### Mise à l’échelle et gestion du contexte
+
+GPT-2 étudie la génération conditionnée par le texte et le transfert zéro-shot, avec une mise à disposition publique progressive du modèle. En parallèle, Transformer-XL introduit des mécanismes de récurrence entre segments pour traiter des dépendances au-delà d’une fenêtre de contexte segmentée. Ces travaux répondent à des questions différentes : échelle et transfert d’un côté, longueur de contexte de l’autre.
+
+Sources : [annonce et rapport GPT-2](https://openai.com/index/better-language-models/) · [Transformer-XL](https://arxiv.org/abs/1901.02860).
+
+**Approfondir :** [encodage positionnel](positional-encoding.qmd) · [masque causal](causal-masking.qmd).
+:::
+
+::: {.history-milestone #few-shot-2020}
+**2020 · Publications scientifiques**
+
+### Comportements few-shot et extension à d’autres modalités
+
+GPT-3 étudie le comportement *few-shot* de modèles de langage de grande taille, conditionnés par des exemples fournis dans le contexte. La même année, Vision Transformer applique des blocs Transformer à des séquences de patches d’image. ViT n’est pas un LLM : il témoigne de l’extension de l’architecture à une autre modalité.
+
+Sources primaires : [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) · [An Image is Worth 16x16 Words](https://arxiv.org/abs/2010.11929).
+
+**Approfondir :** [représentations contextualisées](contextualized-representations.qmd) · [vue d’ensemble du Transformer](transformer.qmd).
+:::
+
+::: {.history-milestone #instruction-alignment-2022}
+**2022 · Publication et lancement public**
+
+### Apprentissage sur préférences humaines et interface conversationnelle
+
+InstructGPT étudie l’ajustement de modèles pour mieux suivre des instructions, notamment à partir de démonstrations et de préférences humaines. ChatGPT est ensuite rendu accessible au public sous forme d’interface conversationnelle. Il s’agit d’un jalon important de diffusion et d’usage, pas de l’invention des Transformers ni de l’apprentissage par préférences.
+
+Sources : [Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155) · [annonce de ChatGPT](https://openai.com/index/chatgpt/).
+
+**Approfondir :** [évaluation expérimentale](evaluation-experimentale.qmd). Le site ne propose pas encore de leçon dédiée à l’alignement par préférences.
+:::
 
 
-## Quelques précautions de lecture
+::: {.history-milestone #multimodal-open-weights-2023}
+**2023 · Publications et mises à disposition**
 
-- **Le Transformer n'est pas synonyme de LLM autorégressif.** L'article de 2017 présente une architecture encodeur-décodeur pour la traduction ; BERT utilise un encodeur et un objectif de prédiction masquée.
-- **L'attention précède le Transformer.** Le papier de 2017 rassemble et réorganise des idées existantes en une architecture cohérente ; il ne crée pas à lui seul toute la famille des mécanismes d'attention.
-- **L'échelle n'explique pas tout.** Données, objectifs, tokenisation, architecture, procédure d'entraînement et évaluation influencent aussi les capacités observées.
-- **Une date de publication n'est pas une preuve de priorité absolue.** Cette page choisit quelques jalons pédagogiques et ne prétend pas recenser toutes les contributions parallèles.
+### Multimodalité, modèles à poids ouverts et nouvelles méthodes d’alignement
 
-## Pour approfondir
+Plusieurs axes progressent en parallèle. Le rapport GPT-4 décrit un modèle Transformer pré-entraîné à prédire le token suivant, capable de recevoir des entrées texte et image et de produire du texte. DPO propose une méthode d’optimisation sur préférences qui évite l’étape explicite d’apprentissage d’un modèle de récompense suivie d’une optimisation RL. Llama 2 et Mistral 7B illustrent l’essor des modèles dont les poids sont publiés pour être réutilisés ; leurs licences et conditions d’usage diffèrent, et « poids ouverts » ne signifie pas automatiquement « open source ».
 
-- Lire d'abord le papier original [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
-- Comparer les objectifs avec les pages [masque causal](causal-masking.qmd), [attention](scaled-dot-product-attention.qmd) et [fondations mathématiques](mathematical-foundations.qmd).
-- Consulter le [glossaire](glossary.qmd) pour les termes utilisés dans cette chronologie.
+Sources : [GPT-4 Technical Report](https://arxiv.org/abs/2303.08774) · [Direct Preference Optimization](https://arxiv.org/abs/2305.18290) · [Llama 2](https://arxiv.org/abs/2307.09288) · [Mistral 7B](https://arxiv.org/abs/2310.06825).
+
+**Approfondir :** [vue d’ensemble du Transformer](transformer.qmd) · [évaluation expérimentale](evaluation-experimentale.qmd). Le site ne propose pas encore de leçons dédiées à DPO ou aux modèles à poids ouverts.
+:::
+
+::: {.history-milestone #moe-long-context-2024}
+**2024 · Publications scientifiques**
+
+### Mélange d’experts et contextes multimodaux étendus
+
+Mixtral 8x7B popularise un exemple marquant de *mixture of experts* parcimonieuse : un routeur sélectionne certains sous-réseaux experts pour chaque token, au lieu d’activer tous les paramètres à chaque étape. Gemini 1.5 met en avant le traitement multimodal de contextes très longs. Ces travaux illustrent deux axes distincts — efficacité conditionnelle et extension du contexte/modalités — plutôt qu’une nouvelle architecture unique remplaçant les Transformers.
+
+Sources primaires : [Mixtral of Experts](https://arxiv.org/abs/2401.04088) · [Gemini 1.5 Technical Report](https://arxiv.org/abs/2403.05530).
+
+**Approfondir :** [vue d’ensemble du Transformer](transformer.qmd). Le site ne propose pas encore de leçon dédiée aux mélanges d’experts ou aux architectures multimodales à long contexte.
+:::
+
+
+::: {.history-milestone #reasoning-test-time-2025}
+**2025 · Publication, mise à disposition et conférence**
+
+### Modèles orientés raisonnement et calcul à l’inférence
+
+DeepSeek-R1 rend particulièrement visible une trajectoire de post-entraînement où l’apprentissage par renforcement contribue à développer des comportements de raisonnement. Il faut distinguer R1-Zero, entraîné par RL sans données de démonstration de raisonnement, de R1, qui combine plusieurs étapes dont rejet-échantillonnage, RL et fine-tuning supervisé. En parallèle, des travaux à ICLR 2025 étudient l’allocation adaptative de calcul au moment de l’inférence (*test-time compute*). Ces approches déplacent une partie du budget de calcul du seul pré-entraînement vers la génération et la sélection de réponses.
+
+Sources : [DeepSeek-R1 — annonce officielle](https://deepseek.com/en/news/deepseek-r1/) · [DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning](https://www.nature.com/articles/s41586-025-09422-z) · [Scaling LLM Test-Time Compute Optimally](https://proceedings.iclr.cc/paper_files/paper/2025/hash/1b623663fd9b874366f3ce019fdfdd44-Abstract-Conference.html).
+
+**Approfondir :** [évaluation expérimentale](evaluation-experimentale.qmd). Le site ne propose pas encore de leçon dédiée au post-entraînement des modèles de raisonnement ni au calcul à l’inférence.
+:::
+
+::::
+
+## Comment interpréter cette chronologie
+
+- **Attention et Transformer ne sont pas synonymes.** Des mécanismes d’attention existaient avant 2017 ; le Transformer en propose une architecture particulière.
+- **Transformer et LLM autorégressif ne sont pas synonymes.** Le papier de 2017 décrit un modèle encodeur-décodeur pour la traduction ; BERT suit une trajectoire encodeur distincte.
+- **Les trajectoires sont parallèles.** Modèles encodeurs, décodeurs, encodeur-décodeurs, modèles multimodaux et méthodes d’alignement répondent à des objectifs différents.
+- **L’échelle n’explique pas tout.** Données, objectifs, tokenisation, architecture, procédure d’entraînement et protocole d’évaluation contribuent aux comportements observés.
+- **Une date de publication n’établit pas une priorité absolue.** Cette sélection pédagogique ne recense ni toutes les contributions parallèles ni toutes les étapes d’adoption.
+
+## Pour poursuivre
+
+- Comprendre l’architecture : [présentation du Transformer](transformer.qmd).
+- Étudier le mécanisme central : [attention](scaled-dot-product-attention.qmd), [masque causal](causal-masking.qmd).
+- Relier l’architecture à l’apprentissage : [exemples d’entraînement](training-examples.qmd), [évaluation expérimentale](evaluation-experimentale.qmd).
+- Retrouver les notions : [glossaire](glossary.qmd).
 
 ::: {.language-switch}
 [Français](transformer-history.qmd) · [English](../en/transformer-history.qmd)

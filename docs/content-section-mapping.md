@@ -22,7 +22,7 @@ Paths are the canonical source files. French and English counterparts are listed
 |---|---|---|---|
 | `index.qmd` / `en/index.qmd` | Entry point | Help readers choose a route; explain the project's scope and current status | Present the four destinations clearly; avoid implying that math/tensor mastery precedes building |
 | `transformer.qmd` / `transformer.qmd` | Understand | System-level GPT/Transformer explanation | Keep concise and system-oriented; link to build milestones and optional details |
-| `transformer-history.qmd` / `transformer-history.qmd` | Understand (context) | Historical and architectural context | Keep as supporting context, not a prerequisite |
+| `transformer-history.qmd` / `transformer-history.qmd` | Reference (optional history) | Selective history of attention, Transformers and LLM evolution; not a concept lesson or prerequisite | Keep in Reference, link from the Transformer overview and relevant concepts; use milestones to point back to canonical pages |
 | `text-data.qmd` / `text-data.qmd` | Understand | Explain how raw text becomes usable model input | Keep concept-first; link to tokenizer/data preparation in Build |
 | `unicode-text.qmd` / `unicode-text.qmd` | Understand (supporting concept) | Explain text representation issues that affect preprocessing | Keep only the Unicode detail needed to reason about real text; deeper encoding detail optional |
 | `tokenization-strategies.qmd` / `tokenization-strategies.qmd` | Understand | Explain tokenization choices and their consequences | Keep the conceptual comparison; implementation belongs to Build |
@@ -55,7 +55,7 @@ The Build route is a **sequence of implementation checkpoints**, not a parallel 
 
 | Build milestone | Conceptual source pages | Minimum practical learning | Current repository evidence |
 |---|---|---|---|
-| G0 — Define the target | Transformer overview, history, glossary | State what a decoder-only GPT does and distinguish it from other model families | Conceptual overview exists; a broader LLM panorama remains tracked by #108 |
+| G0 — Define the target | Transformer overview and glossary; optional history in Reference | State what a decoder-only GPT does and distinguish it from other model families | Conceptual overview exists; a broader LLM panorama remains tracked by #108 |
 | G1 — Prepare text and tokenizer | Text/data, Unicode, tokenization | Load a licensed corpus, tokenize/decode, document provenance and deterministic splits | Conceptual pages exist; no complete end-to-end corpus/tokenizer pipeline is established by this audit |
 | G2 — Create training examples | Training examples | Build context windows, shifted targets, batches and masks; test alignment and leakage boundaries | Detailed conceptual explanation exists; production-ready data pipeline is not established |
 | G3 — Represent tokens | Embedding space, positional encoding; tensors as needed | Use embedding lookup and positional information; inspect only the shapes required by the implementation | Conceptual pages exist; no complete GPT embedding stack is established |
@@ -74,7 +74,7 @@ This matrix deliberately distinguishes a conceptual page from an implemented and
 
 | Milestone | Canonical concept pages | Optional deepening | Maintained implementation / test evidence | Evidence status |
 |---|---|---|---|---|
-| G0 — Scope the model | [Transformer](../site/fr/transformer.qmd) / [EN](../site/en/transformer.qmd); [history](../site/fr/transformer-history.qmd) / [EN](../site/en/transformer-history.qmd) | No separate deep dive required for the first system-level orientation | No model implementation; conceptual material only. Broad LLM panorama: #108. | Partial — system overview exists; broader LLM framing remains open |
+| G0 — Scope the model | [Transformer](../site/fr/transformer.qmd) / [EN](../site/en/transformer.qmd); glossary | Optional [history](../site/fr/transformer-history.qmd) / [EN](../site/en/transformer-history.qmd) in Reference; not a prerequisite | No model implementation; conceptual material only. Broad LLM panorama: #108. | Partial — system overview exists; broader LLM framing remains open |
 | G1 — Prepare text and tokenizer | [Text and data](../site/fr/text-data.qmd) / [EN](../site/en/text-data.qmd); [Unicode](../site/fr/unicode-text.qmd) / [EN](../site/en/unicode-text.qmd); [tokenization](../site/fr/tokenization-strategies.qmd) / [EN](../site/en/tokenization-strategies.qmd) | Unicode and tokenizer details within the canonical pages | No maintained end-to-end corpus/tokenizer pipeline or associated test suite is established. | Conceptual — implementation gap; #82 / #114 |
 | G2 — Create training examples | [Training examples](../site/fr/training-examples.qmd) / [EN](../site/en/training-examples.qmd) | [Tensor reference](../site/fr/tensors.qmd) / [EN](../site/en/tensors.qmd) for indexing and shapes only | No complete corpus-to-window/batch pipeline or dedicated alignment/split tests are established. | Conceptual — implementation gap; #58 / #78 |
 | G3 — Represent tokens | [Embedding space](../site/fr/embedding-space.qmd) / [EN](../site/en/embedding-space.qmd); [position](../site/fr/positional-encoding.qmd) / [EN](../site/en/positional-encoding.qmd); [contextualized representations](../site/fr/contextualized-representations.qmd) / [EN](../site/en/contextualized-representations.qmd) | [Tensors](../site/fr/tensors.qmd) / [EN](../site/en/tensors.qmd); RoPE details in positional-encoding | No complete GPT embedding/position module or associated tests are established. | Conceptual — active foundational gate #82 |
@@ -125,3 +125,6 @@ Never label a concept as a mandatory prerequisite merely because it is mathemati
 - [Page audit inventory](page-audit-inventory.md) records what has actually been reviewed and what remains to validate.
 
 Do not create a new issue for every row. Route changes to existing owners: #130 (high-level architecture), #87 (curriculum relationships), #61 (page-level progressive disclosure), #78 (concept-to-code), #82 (current foundational content gate), and #108 (broad LLM panorama).
+
+
+The bilingual history timeline uses matching stable milestone anchors in the French and English pages (for example, `#attention-2014` and `#reasoning-test-time-2025`). Keep anchor IDs identical across translations so references and future editorial checks remain stable. Milestone text and source references are maintained in parallel FR/EN Quarto pages; any change to one page must be mirrored and checked against the same source set.
