@@ -117,11 +117,11 @@ Do not encode the proposed lanes as causal relations. The sparse relation decisi
 
 ## 7. Decision and implementation gates
 
-**Recommended decision:** accept the 16-event core as a working editorial target, subject to the explicit GPT-2 source gate and the broader coverage caveat. Keep context and supplementary candidates available without putting all of them on the first visual axis.
+**Recommended decision:** accept the 16-event core as a working editorial target, subject to final GPT-2 date-semantics review and the broader coverage caveat. Keep context and supplementary candidates available without putting all of them on the first visual axis.
 
 Before implementing the bilingual timeline:
 
-- [ ] Add and verify a primary/official GPT-2 source record and normalize its date semantics.
+- [ ] Final-check GPT-2 announcement, report and staged-release date semantics against the linked official records.
 - [ ] Verify the full text of every core paper used for a substantive historical claim; abstracts alone are not enough for relation claims.
 - [ ] Decide whether Seq2Seq and BPE appear as contextual side markers or remain in the expandable detail/reference layer.
 - [ ] Draft equivalent EN/FR titles and concise descriptions with stable event IDs.
