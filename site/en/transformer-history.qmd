@@ -12,7 +12,7 @@ This is a selective chronology. It distinguishes precursors, architectural propo
 
 :::: {.history-timeline}
 
-::: {.history-milestone}
+::: {.history-milestone #attention-2014}
 **2014 · Research publication**
 
 ### Attention for neural machine translation
@@ -24,7 +24,7 @@ Primary source: [Neural Machine Translation by Jointly Learning to Align and Tra
 **Explore the concept:** [scaled dot-product attention](scaled-dot-product-attention.qmd) — a conceptual comparison, not an assertion that this early mechanism is identical to Transformer attention.
 :::
 
-::: {.history-milestone}
+::: {.history-milestone #attention-2015}
 **2015 · Research publication**
 
 ### Multiple formulations of attention
@@ -36,7 +36,7 @@ Primary source: [Effective Approaches to Attention-based Neural Machine Translat
 **Explore the concept:** [scaled dot-product attention](scaled-dot-product-attention.qmd).
 :::
 
-::: {.history-milestone}
+::: {.history-milestone #transformer-2017}
 **2017 · Research publication**
 
 ### The Transformer: an attention-based architecture
@@ -48,7 +48,7 @@ Primary source: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
 **Explore the concepts:** [Transformer overview](transformer.qmd) · [attention](scaled-dot-product-attention.qmd).
 :::
 
-::: {.history-milestone}
+::: {.history-milestone #pretraining-2018}
 **2018 · Research publications**
 
 ### Two pretraining paths: GPT and BERT
@@ -60,7 +60,7 @@ Primary sources: [Improving Language Understanding by Generative Pre-Training (G
 **Explore the concepts:** [causal masking](causal-masking.qmd) · [training examples](training-examples.qmd).
 :::
 
-::: {.history-milestone}
+::: {.history-milestone #scaling-context-2019}
 **2019 · Publications and public release**
 
 ### Scaling and context handling
@@ -72,7 +72,7 @@ Sources: [GPT-2 announcement and report](https://openai.com/index/better-languag
 **Explore the concepts:** [positional encoding](positional-encoding.qmd) · [causal masking](causal-masking.qmd).
 :::
 
-::: {.history-milestone}
+::: {.history-milestone #few-shot-2020}
 **2020 · Research publications**
 
 ### Few-shot behavior and extension to other modalities
@@ -84,7 +84,7 @@ Primary sources: [Language Models are Few-Shot Learners](https://arxiv.org/abs/2
 **Explore the concepts:** [contextualized representations](contextualized-representations.qmd) · [Transformer overview](transformer.qmd).
 :::
 
-::: {.history-milestone}
+::: {.history-milestone #instruction-alignment-2022}
 **2022 · Research publication and public launch**
 
 ### Human-preference training and conversational interface
@@ -97,7 +97,7 @@ Sources: [Training language models to follow instructions with human feedback](h
 :::
 
 
-::: {.history-milestone}
+::: {.history-milestone #multimodal-open-weights-2023}
 **2023 · Publications and model releases**
 
 ### Multimodality, open-weight models, and new alignment methods
@@ -109,7 +109,7 @@ Sources: [GPT-4 Technical Report](https://arxiv.org/abs/2303.08774) · [Direct P
 **Explore the concepts:** [Transformer overview](transformer.qmd) · [experimental evaluation](experimental-evaluation.qmd). The site does not yet have dedicated lessons on DPO or open-weight models.
 :::
 
-::: {.history-milestone}
+::: {.history-milestone #moe-long-context-2024}
 **2024 · Research publications**
 
 ### Mixture of experts and extended multimodal context
@@ -119,6 +119,19 @@ Mixtral 8x7B is a prominent example of a sparse mixture-of-experts model: a rout
 Primary sources: [Mixtral of Experts](https://arxiv.org/abs/2401.04088) · [Gemini 1.5 Technical Report](https://arxiv.org/abs/2403.05530).
 
 **Explore the concept:** [Transformer overview](transformer.qmd). The site does not yet have dedicated lessons on mixture-of-experts or long-context multimodal architectures.
+:::
+
+
+::: {.history-milestone #reasoning-test-time-2025}
+**2025 · Release, research publication, and conference**
+
+### Reasoning-oriented models and inference-time compute
+
+DeepSeek-R1 brought renewed attention to a post-training path in which reinforcement learning contributes to reasoning behavior. R1-Zero and R1 should be distinguished: R1-Zero is trained with RL without reasoning demonstrations, whereas R1 combines several stages, including rejection sampling, RL, and supervised fine-tuning. In parallel, ICLR 2025 research studies adaptive allocation of computation at inference time (*test-time compute*). These approaches shift part of the compute budget from pretraining alone toward generation and answer selection.
+
+Sources: [DeepSeek-R1 — official release](https://deepseek.com/en/news/deepseek-r1/) · [DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning](https://www.nature.com/articles/s41586-025-09422-z) · [Scaling LLM Test-Time Compute Optimally](https://proceedings.iclr.cc/paper_files/paper/2025/hash/1b623663fd9b874366f3ce019fdfdd44-Abstract-Conference.html).
+
+**Explore the concept:** [experimental evaluation](experimental-evaluation.qmd). The site does not yet have a dedicated lesson on reasoning-model post-training or inference-time compute.
 :::
 
 ::::
