@@ -50,7 +50,7 @@ The first view contains 16 selected core milestone entries. Because the GPT-2 re
 | DPO (2023) | 2 | 3 | 3 | 2 | **Core** | Shows a different preference-optimization formulation. Do not say it removes preference data or all RLHF-related ideas; no unsupported direct InstructGPT → DPO lineage. |
 | Mamba (2023) | 2 | 3 | 3 | 3 | **Core** | Represents a distinct state-space sequence-model research line and a useful contrast with attention-based backbones. Not a universal Transformer replacement. |
 
-**Editorial note:** GPT-2 has separate official research-announcement/report and staged-release records in the source inventory. Before publication, verify the precise date convention against those records and retain separate `research` and `model_release` events; the core label does not permit combining them.
+**Editorial note:** GPT-2 has separate official research-announcement/report and staged-release records. The source audit now documents two retrospective date conflicts (January/February for the 124M release; April/May for the 355M release) and OpenAI's correction of the original parameter counts. Use 14 February 2019 for the dated research announcement, month-level precision for the early checkpoint releases, 20 August for 774M, and 5 November for 1.5B. Retain separate `research` and `model_release` events; the core label does not permit combining them.
 
 ## 3. Context and supplementary candidates
 
