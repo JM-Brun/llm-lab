@@ -125,7 +125,9 @@ def render_event(event: dict[str, Any], sources: dict[str, dict[str, Any]], lang
     date_value = date["value"]
     date_text = display_date(date_value, date["precision"], lang)
     if date.get("end_value"):
-        date_text += " " + chr(0x2013) + " " + display_date(date["end_value"], date["precision"], lang)
+        date_text += (
+            " " + chr(0x2013) + " " + display_date(date["end_value"], date["precision"], lang)
+        )
     stream = STREAM_LABELS[event["type"]][lang]
     date_kind = DATE_KIND_LABELS[date["kind"]][lang]
     title = esc(event["title"][lang])
