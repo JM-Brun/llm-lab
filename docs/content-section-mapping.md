@@ -125,3 +125,6 @@ Never label a concept as a mandatory prerequisite merely because it is mathemati
 - [Page audit inventory](page-audit-inventory.md) records what has actually been reviewed and what remains to validate.
 
 Do not create a new issue for every row. Route changes to existing owners: #130 (high-level architecture), #87 (curriculum relationships), #61 (page-level progressive disclosure), #78 (concept-to-code), #82 (current foundational content gate), and #108 (broad LLM panorama).
+
+
+The bilingual history timeline uses matching stable milestone anchors in the French and English pages (for example, `#attention-2014` and `#reasoning-test-time-2025`). Keep anchor IDs identical across translations so references and future editorial checks remain stable. Milestone text and source references are maintained in parallel FR/EN Quarto pages; any change to one page must be mirrored and checked against the same source set.
