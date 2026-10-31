@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Validate the bilingual history pilot dataset against its editorial contract."""
+
 from __future__ import annotations
 
 import re
@@ -152,8 +153,7 @@ def validate() -> list[str]:
                 for destination in destinations:
                     if not isinstance(destination, str) or not (ROOT / destination).is_file():
                         errors.append(
-                            f"{where}.internal_links.{lang}: "
-                            f"missing destination {destination!r}"
+                            f"{where}.internal_links.{lang}: missing destination {destination!r}"
                         )
 
     for i, event in enumerate(events):
