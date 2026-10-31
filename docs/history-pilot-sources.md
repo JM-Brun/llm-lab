@@ -17,6 +17,9 @@ This is a candidate set for a first historical pilot, not the final public chron
 | 2017 | Transformer architecture | research | Proposes an encoder-decoder sequence-transduction architecture based on attention, without recurrence or convolution in its central computation. | [Vaswani et al., arXiv:1706.03762](https://arxiv.org/abs/1706.03762) | The arXiv v1 submission is 12 June 2017; distinguish submission from conference publication. Do not describe the paper as inventing attention. |
 | 2018 | ELMo contextualized representations | research | Uses deep bidirectional language-model states to create context-dependent word representations. | [Peters et al., NAACL 2018](https://aclanthology.org/N18-1202/) · [arXiv:1802.05365](https://arxiv.org/abs/1802.05365) | ELMo is based on a bidirectional LSTM language model, not a Transformer. It is a parallel pretraining path. |
 | 2018 | BERT pretraining | research | Demonstrates deep bidirectional Transformer encoder pretraining with masked language modelling and task adaptation. | [Devlin et al., arXiv:1810.04805](https://arxiv.org/abs/1810.04805) | arXiv v1 was submitted 11 October 2018; conference publication followed in 2019. BERT is not an autoregressive text generator. |
+
+| 2019-02-14 | GPT-2 research announcement and technical report | research | Extends the GPT autoregressive language-model line and studies zero-shot transfer across several NLP tasks using a larger Transformer trained on WebText. | [OpenAI announcement and linked technical report (14 February 2019)](https://openai.com/index/better-language-models/) · [OpenAI-hosted paper PDF](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) | Treat 14 February as the announcement date; the report is an OpenAI technical report, not a peer-reviewed conference paper. Describe reported zero-shot results with the paper's task/benchmark limits, not as general task mastery. |
+| 2019-02 to 2019-11 | GPT-2 staged model releases | model_release | Makes the GPT-2 family available in stages: 124M initially, followed by larger checkpoints, with the 1.5B checkpoint released last. | [OpenAI six-month update (20 August 2019)](https://openai.com/index/gpt-2-6-month-follow-up/) · [OpenAI 1.5B release (5 November 2019)](https://openai.com/index/gpt-2-1-5b-release/) · [OpenAI GPT-2 release report (PDF)](https://cdn.openai.com/GPT_2_August_Report.pdf) | This is a separate model-release event stream, not the date of the research contribution. The staged release included 124M, 355M, 774M and 1.5B checkpoints; verify the parameter-count correction noted in the official repository. |
 | 2019 | T5 text-to-text transfer framework | research | Unifies a broad range of NLP tasks under a text-to-text formulation and systematically compares transfer-learning choices. | [Raffel et al., arXiv:1910.10683](https://arxiv.org/abs/1910.10683) · [Google Research record](https://research.google/pubs/exploring-the-limits-of-transfer-learning-with-a-unified-text-to-text-transformer/) | T5 is an encoder-decoder model; do not fold it into the decoder-only GPT lineage. |
 | 2020 | Empirical scaling laws for neural language models | research | Quantifies relationships between loss, model size, data and compute, making resource allocation a central research question. | [Kaplan et al., arXiv:2001.08361](https://arxiv.org/abs/2001.08361) · [OpenAI paper page](https://openai.com/index/scaling-laws-for-neural-language-models/) | Later compute-optimal work revised practical implications; avoid presenting the original allocation conclusion as timeless consensus. |
 | 2020 | GPT-3 and few-shot in-context learning | research | Shows strong task-agnostic few-shot performance from a large autoregressive model without gradient updates at evaluation time. | [Brown et al., arXiv:2005.14165](https://arxiv.org/abs/2005.14165) | Distinguish in-context learning from parameter fine-tuning; avoid implying that scale alone explains all capabilities. |
@@ -92,7 +95,7 @@ The source discovery is broader now, but still incomplete. A balanced history st
 
 - earlier statistical foundations: Shannon's information-theoretic language modelling, Markov assumptions, smoothing, perplexity, and the transition from count-based to neural models;
 - the pre-2016 history of subword segmentation, byte-pair encoding, WordPiece and SentencePiece, with their distinct origins and uses;
-- GPT-2 and the progression of decoder-only pretrained language models, with model release and paper dates separated;
+- the broader progression of decoder-only pretrained language models beyond the GPT-2 source-checked announcement and staged-release record;
 - QLoRA and later parameter-efficient adaptation methods;
 - grouped-query attention, multi-query attention, KV caching, speculative decoding and inference-time systems;
 - further multimodal lines (speech, audio, video, image-text pretraining) and contributions beyond Flamingo;
@@ -103,7 +106,7 @@ Do not fill these gaps with model-release catalogues alone. Each candidate needs
 
 ## First-release selection
 
-The candidate inventory is now assessed in [history-milestone-selection.md](history-milestone-selection.md). That matrix proposes a focused core chronology, separates context/supplementary items, records ordinal decision criteria, and maps only to existing bilingual concept pages. It also identifies GPT-2 as a core candidate whose dedicated source/date record is still a publication gate.
+The candidate inventory is now assessed in [history-milestone-selection.md](history-milestone-selection.md). That matrix proposes a focused core chronology, separates context/supplementary items, records ordinal decision criteria, and maps only to existing bilingual concept pages. GPT-2 now has separate source-backed research-announcement and staged-release records; its exact date semantics and careful capability wording still need final editorial review.
 
 ## Verification status
 
@@ -113,5 +116,5 @@ The candidate inventory is now assessed in [history-milestone-selection.md](hist
 - **First-release selection:** proposed in [history-milestone-selection.md](history-milestone-selection.md); not yet approved as final content.
 - **Bilingual descriptions:** not yet drafted.
 - **Internal concept links:** current EN/FR Quarto page inventory checked on the working branch; only existing destinations are proposed in the selection matrix.
-- **Coverage balance:** incomplete, notably early statistical foundations, efficient inference, multimodal speech/audio/video, multilingual/non-Western contributions and the GPT-2 record.
+- **Coverage balance:** incomplete, notably early statistical foundations, efficient inference, multimodal speech/audio/video, and multilingual/non-Western contributions.
 - **Publication decision:** not yet made. Keep the existing page until the pilot has been reviewed and rendered.
