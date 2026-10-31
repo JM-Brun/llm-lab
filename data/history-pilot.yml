@@ -1,0 +1,430 @@
+# Canonical bilingual pilot dataset for issue #197.
+# 16 selected core milestones, represented by 17 event records because
+# the GPT-2 research announcement and staged checkpoint releases are distinct.
+# Dates describe the cited event convention, not invention priority.
+schema_version: 1
+dataset_status: editorial_pilot
+selection:
+  core_milestone_count: 16
+  event_record_count: 17
+  caveat: "Focused chronology, not an exhaustive history of language modelling."
+events:
+  - id: bahdanau-learned-attention
+    type: research
+    date: { value: "2014-09-01", precision: day, kind: submission, note: "First arXiv version." }
+    era: neural-sequence-modelling-and-attention
+    title:
+      fr: "Attention apprise pour la traduction neuronale"
+      en: "Learned attention for neural machine translation"
+    summary:
+      fr: "Introduit une attention qui permet au décodeur d'exploiter différentes positions de la séquence source, plutôt qu'un unique vecteur de longueur fixe."
+      en: "Introduces attention that lets the decoder use different source positions rather than relying on a single fixed-length vector."
+    significance: [architecture, attention]
+    concept_ids: [attention, encoder-decoder]
+    source_ids: [bahdanau-2014-arxiv]
+    confidence: high
+    editorial_note: "Précurseur pertinent de l'attention des Transformers, mais mécanisme et architecture différents."
+
+  - id: transformer-attention-is-all-you-need
+    type: research
+    date: { value: "2017-06-12", precision: day, kind: submission, note: "First arXiv version; conference publication is a distinct date." }
+    era: transformer-and-pretraining
+    title:
+      fr: "Architecture Transformer"
+      en: "Transformer architecture"
+    summary:
+      fr: "Propose une architecture encodeur-décodeur pour la transduction de séquences, fondée sur l'attention et sans récurrence ni convolution dans son calcul central."
+      en: "Proposes an attention-based encoder-decoder architecture for sequence transduction, without recurrence or convolution in its central computation."
+    significance: [architecture, attention]
+    concept_ids: [self-attention, multi-head-attention, transformer]
+    internal_links:
+      fr: [site/fr/transformer.qmd, site/fr/scaled-dot-product-attention.qmd]
+      en: [site/en/transformer.qmd, site/en/scaled-dot-product-attention.qmd]
+    source_ids: [vaswani-2017-arxiv]
+    confidence: high
+    editorial_note: "Le papier ne prétend pas inventer l'attention ; ne pas assimiler Transformer à décodeur autorégressif."
+
+  - id: gpt-generative-pretraining
+    type: research
+    date: { value: "2018-06-11", precision: day, kind: announcement, note: "Official OpenAI announcement; not an arXiv submission date." }
+    era: transformer-and-pretraining
+    title:
+      fr: "Pré-entraînement génératif GPT"
+      en: "GPT generative pretraining"
+    summary:
+      fr: "Présente une approche de pré-entraînement génératif non supervisé suivie d'une adaptation supervisée, sur une architecture Transformer décodeur."
+      en: "Presents an unsupervised generative pretraining approach followed by supervised adaptation, using a Transformer decoder architecture."
+    significance: [architecture, objective]
+    concept_ids: [autoregressive-language-modelling, generative-pretraining]
+    source_ids: [openai-gpt-2018-announcement]
+    confidence: high
+    editorial_note: "La date est celle de l'annonce officielle, pas une date de priorité absolue."
+
+  - id: bert-pretraining
+    type: research
+    date: { value: "2018-10-11", precision: day, kind: submission, note: "First arXiv version; NAACL publication followed in 2019." }
+    era: transformer-and-pretraining
+    title:
+      fr: "Pré-entraînement BERT"
+      en: "BERT pretraining"
+    summary:
+      fr: "Montre le pré-entraînement d'un encodeur Transformer bidirectionnel, notamment avec la modélisation du langage masqué, puis son adaptation à des tâches."
+      en: "Demonstrates bidirectional Transformer encoder pretraining, notably with masked language modelling, followed by task adaptation."
+    significance: [architecture, objective]
+    concept_ids: [transformer-encoder, masked-language-modelling]
+    internal_links:
+      fr: [site/fr/contextualized-representations.qmd]
+      en: [site/en/contextualized-representations.qmd]
+    source_ids: [devlin-2018-arxiv]
+    confidence: high
+    editorial_note: "BERT n'est pas un modèle génératif autorégressif ; distinguer soumission arXiv et publication en conférence."
+
+  - id: gpt2-research-announcement
+    type: research
+    date: { value: "2019-02-14", precision: day, kind: announcement, note: "Official OpenAI announcement and technical report." }
+    era: transformer-and-pretraining
+    title:
+      fr: "Annonce de recherche GPT-2"
+      en: "GPT-2 research announcement"
+    summary:
+      fr: "Étudie la génération conditionnée par le texte et le transfert zéro-shot avec un modèle autorégressif entraîné sur WebText."
+      en: "Studies text-conditioned generation and zero-shot transfer with an autoregressive model trained on WebText."
+    significance: [architecture, scaling, objective]
+    concept_ids: [autoregressive-language-modelling, zero-shot-transfer]
+    source_ids: [openai-gpt2-announcement, openai-gpt2-report]
+    confidence: high
+    editorial_note: "Rapport technique OpenAI, pas article évalué par les pairs ; les résultats zéro-shot doivent rester associés aux tâches et benchmarks étudiés."
+
+  - id: gpt2-staged-checkpoint-releases
+    type: model_release
+    date: { value: "2019-02", precision: month, kind: release, note: "Staged releases from February through November 2019; 124M, 355M, 774M and 1.5B checkpoints. The early month attribution has a documented source conflict." }
+    era: scaling-and-post-training
+    title:
+      fr: "Diffusion progressive des checkpoints GPT-2"
+      en: "GPT-2 staged checkpoint releases"
+    summary:
+      fr: "Les checkpoints GPT-2 sont rendus publics par étapes, de 124 millions à 1,5 milliard de paramètres."
+      en: "GPT-2 checkpoints are released in stages, from 124 million to 1.5 billion parameters."
+    significance: [scaling, ecosystem]
+    concept_ids: [language-model-scaling, model-release]
+    source_ids: [openai-gpt2-report, openai-gpt2-followup, openai-gpt2-15b-release, openai-gpt2-repository]
+    confidence: medium
+    editorial_note: "Les mois des releases 124M et 355M sont contradictoires selon les sources rétrospectives ; afficher une granularité mensuelle et signaler le conflit. Utiliser les comptes corrigés 124M/355M/774M/1.5B, pas les chiffres initiaux erronés."
+
+  - id: t5-text-to-text
+    type: research
+    date: { value: "2019-10-23", precision: day, kind: submission, note: "First arXiv version." }
+    era: transformer-and-pretraining
+    title:
+      fr: "T5 et le cadre text-to-text"
+      en: "T5 and the text-to-text framework"
+    summary:
+      fr: "Unifie de nombreuses tâches NLP dans une formulation texte-vers-texte et étudie systématiquement plusieurs choix de transfert."
+      en: "Unifies many NLP tasks under a text-to-text formulation and systematically studies transfer-learning choices."
+    significance: [architecture, objective]
+    concept_ids: [encoder-decoder, text-to-text]
+    source_ids: [raffel-2019-arxiv]
+    confidence: high
+    editorial_note: "T5 est un modèle encodeur-décodeur ; ne pas le ranger dans la seule lignée GPT décodeur."
+
+  - id: empirical-scaling-laws
+    type: research
+    date: { value: "2020-01-23", precision: day, kind: submission, note: "First arXiv version." }
+    era: scaling-and-post-training
+    title:
+      fr: "Lois d'échelle empiriques"
+      en: "Empirical scaling laws"
+    summary:
+      fr: "Quantifie des relations empiriques entre la perte, la taille du modèle, les données et le calcul d'entraînement."
+      en: "Quantifies empirical relationships between loss, model size, data and training compute."
+    significance: [scaling, training]
+    concept_ids: [scaling-laws, compute-allocation]
+    source_ids: [kaplan-2020-arxiv]
+    confidence: high
+    editorial_note: "Résultats empiriques dont les implications pratiques ont été affinées par des travaux ultérieurs ; ne pas présenter comme loi universelle."
+
+  - id: retrieval-augmented-generation
+    type: research
+    date: { value: "2020-05-22", precision: day, kind: submission, note: "First arXiv version." }
+    era: scaling-and-post-training
+    title:
+      fr: "Retrieval-Augmented Generation (RAG)"
+      en: "Retrieval-Augmented Generation (RAG)"
+    summary:
+      fr: "Associe une mémoire paramétrique à une mémoire non paramétrique récupérée dans un index documentaire pour certaines tâches NLP."
+      en: "Combines parametric memory with non-parametric memory retrieved from a document index for selected NLP tasks."
+    significance: [retrieval, architecture]
+    concept_ids: [retrieval-augmented-generation, non-parametric-memory]
+    source_ids: [lewis-2020-arxiv]
+    confidence: high
+    editorial_note: "Décrire la formulation originale ; les systèmes RAG actuels sont plus variés et ne sont pas exempts d'hallucinations."
+
+  - id: gpt3-few-shot-learning
+    type: research
+    date: { value: "2020-05-28", precision: day, kind: submission, note: "First arXiv version." }
+    era: scaling-and-post-training
+    title:
+      fr: "GPT-3 et l'apprentissage few-shot en contexte"
+      en: "GPT-3 and few-shot in-context learning"
+    summary:
+      fr: "Montre des performances few-shot sur diverses tâches à partir d'exemples dans le contexte, sans mise à jour des poids pendant l'évaluation."
+      en: "Demonstrates few-shot performance across tasks from examples in the prompt context, without updating model weights at evaluation time."
+    significance: [scaling, in-context-learning]
+    concept_ids: [in-context-learning, autoregressive-language-modelling]
+    source_ids: [brown-2020-arxiv]
+    confidence: high
+    editorial_note: "Distinguer apprentissage en contexte et fine-tuning des paramètres ; ne pas attribuer toutes les capacités à la seule taille."
+
+  - id: lora-low-rank-adaptation
+    type: research
+    date: { value: "2021-06-17", precision: day, kind: submission, note: "First arXiv version." }
+    era: scaling-and-post-training
+    title:
+      fr: "LoRA : adaptation de faible rang"
+      en: "LoRA: low-rank adaptation"
+    summary:
+      fr: "Propose d'adapter efficacement un modèle pré-entraîné en optimisant des matrices de faible rang, sans réentraîner tous ses poids."
+      en: "Proposes efficient adaptation of a pretrained model by optimizing low-rank matrices rather than retraining all weights."
+    significance: [efficiency, adaptation]
+    concept_ids: [parameter-efficient-fine-tuning, low-rank-adaptation]
+    source_ids: [hu-2021-arxiv]
+    confidence: high
+    editorial_note: "LoRA n'est pas QLoRA et ne modifie pas à elle seule l'architecture de base."
+
+  - id: instructgpt-rlhf
+    type: research
+    date: { value: "2022-03-04", precision: day, kind: submission, note: "First arXiv version." }
+    era: scaling-and-post-training
+    title:
+      fr: "InstructGPT et RLHF"
+      en: "InstructGPT and RLHF"
+    summary:
+      fr: "Étudie l'alignement sur les instructions à l'aide de démonstrations, de préférences humaines, d'un modèle de récompense et d'apprentissage par renforcement."
+      en: "Studies instruction following using demonstrations, human preference rankings, a reward model and reinforcement learning."
+    significance: [alignment, post-training]
+    concept_ids: [instruction-tuning, preference-learning, rlhf]
+    source_ids: [ouyang-2022-arxiv]
+    confidence: high
+    editorial_note: "Contribution de recherche distincte du lancement public de ChatGPT."
+
+  - id: chinchilla-compute-optimal-training
+    type: research
+    date: { value: "2022-03-29", precision: day, kind: submission, note: "First arXiv version." }
+    era: scaling-and-post-training
+    title:
+      fr: "Chinchilla et l'entraînement compute-optimal"
+      en: "Chinchilla and compute-optimal training"
+    summary:
+      fr: "Montre que l'allocation du calcul d'entraînement dépend conjointement de la taille du modèle et du nombre de tokens d'entraînement."
+      en: "Shows that training-compute allocation depends jointly on model size and the number of training tokens."
+    significance: [scaling, training]
+    concept_ids: [compute-optimal-training, scaling-laws]
+    source_ids: [hoffmann-2022-arxiv]
+    confidence: high
+    editorial_note: "Ne pas transformer les proportions de l'étude en ratio universel indépendant du budget et du régime d'entraînement."
+
+  - id: flashattention-io-aware-exact-attention
+    type: research
+    date: { value: "2022-05-27", precision: day, kind: submission, note: "First arXiv version." }
+    era: efficiency-and-alternative-architectures
+    title:
+      fr: "FlashAttention"
+      en: "FlashAttention"
+    summary:
+      fr: "Présente un algorithme exact d'attention, conscient des entrées-sorties, qui réduit les transferts mémoire entre GPU et mémoire rapide."
+      en: "Presents an IO-aware exact attention algorithm that reduces data movement between GPU high-bandwidth memory and on-chip SRAM."
+    significance: [efficiency, attention]
+    concept_ids: [attention, gpu-memory-hierarchy]
+    source_ids: [dao-2022-arxiv]
+    confidence: high
+    editorial_note: "Améliore l'efficacité IO ; ne supprime pas la complexité quadratique du calcul d'attention standard."
+
+  - id: chatgpt-public-launch
+    type: ecosystem
+    date: { value: "2022-11-30", precision: day, kind: announcement, note: "Public research-preview launch announcement." }
+    era: multimodal-reasoning-and-ecosystem
+    title:
+      fr: "Lancement public de ChatGPT"
+      en: "Public launch of ChatGPT"
+    summary:
+      fr: "OpenAI met à disposition une interface conversationnelle fondée sur la famille GPT, accélérant la diffusion grand public des assistants conversationnels."
+      en: "OpenAI makes a conversational interface based on the GPT family publicly available, accelerating broad adoption of conversational assistants."
+    significance: [ecosystem, adoption]
+    concept_ids: [conversational-assistants]
+    source_ids: [openai-chatgpt-launch]
+    confidence: high
+    editorial_note: "Jalon de produit et de diffusion, distinct de la recherche InstructGPT et de l'invention des Transformers."
+
+  - id: direct-preference-optimization
+    type: research
+    date: { value: "2023-05-29", precision: day, kind: submission, note: "First arXiv version." }
+    era: scaling-and-post-training
+    title:
+      fr: "Direct Preference Optimization (DPO)"
+      en: "Direct Preference Optimization (DPO)"
+    summary:
+      fr: "Formule l'optimisation à partir de préférences comme une approche directe qui évite, dans sa procédure proposée, un modèle de récompense séparé et une étape de RL explicite."
+      en: "Formulates preference optimization as a direct approach that, in its proposed procedure, avoids a separate reward model and explicit RL stage."
+    significance: [alignment, post-training]
+    concept_ids: [preference-learning, direct-preference-optimization]
+    source_ids: [rafailov-2023-arxiv]
+    confidence: high
+    editorial_note: "Ne supprime ni les données de préférence ni tous les concepts associés au RLHF ; aucune filiation directe depuis InstructGPT n'est affirmée ici."
+
+  - id: mamba-selective-state-space-model
+    type: research
+    date: { value: "2023-12-01", precision: day, kind: submission, note: "First arXiv version." }
+    era: efficiency-and-alternative-architectures
+    title:
+      fr: "Mamba et les modèles d'espace d'états sélectifs"
+      en: "Mamba and selective state-space models"
+    summary:
+      fr: "Propose une architecture de modèle de séquence fondée sur des espaces d'états sélectifs, comme autre voie que les Transformers pour le traitement de longues séquences."
+      en: "Proposes a sequence-model architecture based on selective state spaces as an alternative path to Transformers for processing long sequences."
+    significance: [architecture, efficiency]
+    concept_ids: [state-space-models, selective-state-spaces]
+    source_ids: [gu-2023-arxiv]
+    confidence: high
+    editorial_note: "Lignée de recherche alternative, pas remplacement universel des Transformers."
+
+sources:
+  - id: bahdanau-2014-arxiv
+    kind: primary_paper
+    title: "Neural Machine Translation by Jointly Learning to Align and Translate"
+    authors_or_organization: "Bahdanau, Cho and Bengio"
+    date: "2014-09-01"
+    url: "https://arxiv.org/abs/1409.0473"
+    supports: [event-date, attention-contribution]
+  - id: vaswani-2017-arxiv
+    kind: primary_paper
+    title: "Attention Is All You Need"
+    authors_or_organization: "Vaswani et al."
+    date: "2017-06-12"
+    url: "https://arxiv.org/abs/1706.03762"
+    supports: [event-date, transformer-architecture]
+  - id: openai-gpt-2018-announcement
+    kind: official_announcement
+    title: "Improving language understanding with unsupervised learning"
+    authors_or_organization: "OpenAI"
+    date: "2018-06-11"
+    url: "https://openai.com/index/language-unsupervised/"
+    supports: [event-date, gpt-research-announcement]
+  - id: devlin-2018-arxiv
+    kind: primary_paper
+    title: "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"
+    authors_or_organization: "Devlin et al."
+    date: "2018-10-11"
+    url: "https://arxiv.org/abs/1810.04805"
+    supports: [event-date, bert-pretraining]
+  - id: openai-gpt2-announcement
+    kind: official_announcement
+    title: "Better Language Models and Their Implications"
+    authors_or_organization: "OpenAI"
+    date: "2019-02-14"
+    url: "https://openai.com/index/better-language-models/"
+    supports: [event-date, gpt2-research-announcement]
+  - id: openai-gpt2-report
+    kind: technical_report
+    title: "Language Models are Unsupervised Multitask Learners"
+    authors_or_organization: "Radford et al.; OpenAI"
+    date: "2019-02-14"
+    url: "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf"
+    supports: [gpt2-contribution, checkpoint-release-months, checkpoint-parameter-counts]
+  - id: openai-gpt2-followup
+    kind: official_announcement
+    title: "GPT-2: 6-Month Follow-Up"
+    authors_or_organization: "OpenAI"
+    date: "2019-08-20"
+    url: "https://openai.com/index/gpt-2-6-month-follow-up/"
+    supports: [checkpoint-release-months, checkpoint-parameter-counts]
+  - id: openai-gpt2-15b-release
+    kind: official_announcement
+    title: "GPT-2: 1.5B Release"
+    authors_or_organization: "OpenAI"
+    date: "2019-11-05"
+    url: "https://openai.com/index/gpt-2-1-5b-release/"
+    supports: [checkpoint-release-date, checkpoint-parameter-counts]
+  - id: openai-gpt2-repository
+    kind: official_announcement
+    title: "OpenAI GPT-2 repository and model card"
+    authors_or_organization: "OpenAI"
+    date: "2019"
+    url: "https://github.com/openai/gpt-2"
+    supports: [corrected-checkpoint-parameter-counts]
+  - id: raffel-2019-arxiv
+    kind: primary_paper
+    title: "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer"
+    authors_or_organization: "Raffel et al."
+    date: "2019-10-23"
+    url: "https://arxiv.org/abs/1910.10683"
+    supports: [event-date, text-to-text-framework]
+  - id: kaplan-2020-arxiv
+    kind: primary_paper
+    title: "Scaling Laws for Neural Language Models"
+    authors_or_organization: "Kaplan et al."
+    date: "2020-01-23"
+    url: "https://arxiv.org/abs/2001.08361"
+    supports: [event-date, empirical-scaling-laws]
+  - id: lewis-2020-arxiv
+    kind: primary_paper
+    title: "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+    authors_or_organization: "Lewis et al."
+    date: "2020-05-22"
+    url: "https://arxiv.org/abs/2005.11401"
+    supports: [event-date, retrieval-augmented-generation]
+  - id: brown-2020-arxiv
+    kind: primary_paper
+    title: "Language Models are Few-Shot Learners"
+    authors_or_organization: "Brown et al."
+    date: "2020-05-28"
+    url: "https://arxiv.org/abs/2005.14165"
+    supports: [event-date, few-shot-in-context-learning]
+  - id: hu-2021-arxiv
+    kind: primary_paper
+    title: "LoRA: Low-Rank Adaptation of Large Language Models"
+    authors_or_organization: "Hu et al."
+    date: "2021-06-17"
+    url: "https://arxiv.org/abs/2106.09685"
+    supports: [event-date, low-rank-adaptation]
+  - id: ouyang-2022-arxiv
+    kind: primary_paper
+    title: "Training language models to follow instructions with human feedback"
+    authors_or_organization: "Ouyang et al."
+    date: "2022-03-04"
+    url: "https://arxiv.org/abs/2203.02155"
+    supports: [event-date, instruction-following, rlhf-method]
+  - id: hoffmann-2022-arxiv
+    kind: primary_paper
+    title: "Training Compute-Optimal Large Language Models"
+    authors_or_organization: "Hoffmann et al."
+    date: "2022-03-29"
+    url: "https://arxiv.org/abs/2203.15556"
+    supports: [event-date, compute-optimal-training]
+  - id: dao-2022-arxiv
+    kind: primary_paper
+    title: "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness"
+    authors_or_organization: "Dao et al."
+    date: "2022-05-27"
+    url: "https://arxiv.org/abs/2205.14135"
+    supports: [event-date, exact-attention, io-efficiency]
+  - id: openai-chatgpt-launch
+    kind: official_announcement
+    title: "Introducing ChatGPT"
+    authors_or_organization: "OpenAI"
+    date: "2022-11-30"
+    url: "https://openai.com/index/chatgpt/"
+    supports: [event-date, public-product-launch]
+  - id: rafailov-2023-arxiv
+    kind: primary_paper
+    title: "Direct Preference Optimization: Your Language Model is Secretly a Reward Model"
+    authors_or_organization: "Rafailov et al."
+    date: "2023-05-29"
+    url: "https://arxiv.org/abs/2305.18290"
+    supports: [event-date, direct-preference-optimization]
+  - id: gu-2023-arxiv
+    kind: primary_paper
+    title: "Mamba: Linear-Time Sequence Modeling with Selective State Spaces"
+    authors_or_organization: "Gu and Dao"
+    date: "2023-12-01"
+    url: "https://arxiv.org/abs/2312.00752"
+    supports: [event-date, selective-state-space-model]
