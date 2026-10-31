@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Check the rendered bilingual timeline's event parity and semantic structure."""
+
 from __future__ import annotations
 
 import sys
