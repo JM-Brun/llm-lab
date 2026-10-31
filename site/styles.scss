@@ -421,3 +421,19 @@ pre code { color: #17212B; }
     align-items: center;
   }
 }
+
+.history-timeline__item--model_release::before {
+  border-radius: .08rem;
+  background: #B45309;
+  box-shadow: 0 0 0 2px #B45309;
+  transform: rotate(45deg);
+}
+.history-timeline__item--ecosystem::before {
+  background: #1D4ED8;
+  box-shadow: 0 0 0 2px #1D4ED8;
+}
+.history-timeline__missing {
+  color: #475569;
+  font-size: .88rem;
+  font-style: italic;
+}
