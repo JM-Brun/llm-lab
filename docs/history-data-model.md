@@ -232,3 +232,21 @@ These references informed the product/design requirements; they are not accepted
 3. Check every source, date, relation and internal destination; record omissions and uncertainty.
 4. Render the pilot as a bilingual chronology and assess whether the genealogy adds explanatory value. Do not build a large graph before the records justify it.
 5. Only then implement the complete page integration and responsive/accessibility review.
+
+
+## 13. Canonical pilot rendering
+
+The first public timeline is rendered from `data/history-pilot.yml`; the French and English pages must not maintain separate milestone lists. The build script `scripts/render_history_pilot.py` generates the two Quarto fragments included by the existing page pair.
+
+- Edit event content, dates, sources, caveats and verified internal destinations in the dataset, not in the generated fragments.
+- Keep titles, summaries and editorial caveats bilingual under the same stable event ID.
+- The generator sorts by the ISO date value, groups adjacent events by editorial era, and renders the event stream, date semantics, source links and available internal concept links.
+- The generator escapes text and attributes before emitting HTML. The rendered chronology uses semantic headings, ordered lists, `time` elements and visible text labels; event type is never conveyed by colour alone.
+- CI generates the fragments before Quarto rendering. For a local render, run:
+
+```bash
+uv run --with-requirements docs/requirements-history-validation.txt python scripts/render_history_pilot.py
+quarto render site
+```
+
+Generated files are build artifacts and must not be edited manually. The data validator checks their inputs and references; the Quarto workflow checks the resulting rendered links. Neither check substitutes for manual responsive and accessibility review.
