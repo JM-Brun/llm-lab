@@ -250,4 +250,4 @@ uv run --with-requirements docs/requirements-history-validation.txt python scrip
 quarto render site
 ```
 
-Generated files are build artifacts and must not be edited manually. The data validator checks their inputs and references; the Quarto workflow checks the resulting rendered links. Neither check substitutes for manual responsive and accessibility review.
+Generated files are build artifacts and must not be edited manually. The data validator checks their inputs and references; the Quarto workflow checks rendered event count, FR/EN ID parity, date-range visibility, source links, accessible section labels and local rendered links. Neither check substitutes for manual responsive and accessibility review.
