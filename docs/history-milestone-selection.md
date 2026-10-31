@@ -37,7 +37,7 @@ The first view should contain approximately 12–16 milestones. Same-year events
 | Transformer (2017) | 3 | 3 | 3 | 3 | **Core** | Central architectural milestone and anchor for the site's canonical Transformer explanation. It did not invent attention. |
 | GPT generative pretraining (2018) | 3 | 3 | 3 | 3 | **Core** | Makes the autoregressive pretrained language-model path explicit. Label the research announcement/report date convention accurately. |
 | BERT (2018 arXiv; 2019 conference) | 3 | 3 | 3 | 3 | **Core** | Important contrasting branch: bidirectional encoder pretraining, not a left-to-right text generator. Display submission and conference dates distinctly. |
-| GPT-2 (2019) | 3 | 3 | 1 | 3 | **Core — evidence gate** | Needed to explain the GPT progression and public discussion of scaling/zero-shot behavior. Add only after a source-checked release/paper record and careful capability wording are added to the inventory. |
+| GPT-2 research announcement and staged releases (2019; separate event records) | 3 | 3 | 3 | 3 | **Core** | Needed to explain the GPT progression and public discussion of scaling/zero-shot behavior. Keep the 14 February research announcement/report distinct from the staged 124M→1.5B model releases; describe zero-shot results with benchmark-specific limits. |
 | T5 (2019) | 2 | 3 | 3 | 2 | **Core** | Demonstrates the encoder–decoder/text-to-text branch; prevents a misleading decoder-only account. |
 | Scaling laws (2020) | 3 | 3 | 3 | 3 | **Core** | Introduces an empirical lens on model/data/compute trade-offs. Present as a research finding, not a universal law or a causal explanation of GPT-3. |
 | GPT-3 (2020) | 3 | 3 | 3 | 3 | **Core** | Landmark example for few-shot in-context learning. Keep distinct from parameter fine-tuning and from scaling-law claims. |
@@ -50,7 +50,7 @@ The first view should contain approximately 12–16 milestones. Same-year events
 | DPO (2023) | 2 | 3 | 3 | 2 | **Core** | Shows a different preference-optimization formulation. Do not say it removes preference data or all RLHF-related ideas; no unsupported direct InstructGPT → DPO lineage. |
 | Mamba (2023) | 2 | 3 | 3 | 3 | **Core** | Represents a distinct state-space sequence-model research line and a useful contrast with attention-based backbones. Not a universal Transformer replacement. |
 
-**Editorial note:** the GPT-2 evidence-readiness score is intentionally low. Its inclusion is pedagogically important, but the current source inventory does not yet contain a dedicated, audited primary/official release record. A core label does not waive that gate.
+**Editorial note:** GPT-2 has separate official research-announcement/report and staged-release records in the source inventory. Before publication, verify the precise date convention against those records and retain separate `research` and `model_release` events; the core label does not permit combining them.
 
 ## 3. Context and supplementary candidates
 
