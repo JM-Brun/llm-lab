@@ -107,7 +107,7 @@ events:
 
   - id: gpt2-staged-checkpoint-releases
     type: model_release
-    date: { value: "2019-02", precision: month, kind: release, note: "Staged releases from February through November 2019; 124M, 355M, 774M and 1.5B checkpoints. The early month attribution has a documented source conflict." }
+    date: { value: "2019-02", end_value: "2019-11", precision: month, kind: release, note: "Staged releases from February through November 2019; 124M, 355M, 774M and 1.5B checkpoints. The early month attribution has a documented source conflict." }
     era: scaling-and-post-training
     title:
       fr: "Diffusion progressive des checkpoints GPT-2"
