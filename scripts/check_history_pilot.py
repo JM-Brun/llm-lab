@@ -18,8 +18,22 @@ DATE_PATTERNS = {
     "year": re.compile(r"\d{4}"),
 }
 EVENT_TYPES = {"research", "model_release", "ecosystem"}
-DATE_KINDS = {"proposal", "submission", "publication", "announcement", "release", "adoption", "other"}
-SOURCE_KINDS = {"primary_paper", "technical_report", "official_announcement", "standard", "secondary_review"}
+DATE_KINDS = {
+    "proposal",
+    "submission",
+    "publication",
+    "announcement",
+    "release",
+    "adoption",
+    "other",
+}
+SOURCE_KINDS = {
+    "primary_paper",
+    "technical_report",
+    "official_announcement",
+    "standard",
+    "secondary_review",
+}
 CONFIDENCE = {"high", "medium", "provisional"}
 
 
@@ -101,7 +115,10 @@ def validate() -> list[str]:
                 errors.append(f"{where}.{field}: expected bilingual mapping")
             else:
                 for lang in ("fr", "en"):
-                    if not isinstance(translations.get(lang), str) or not translations[lang].strip():
+                    if (
+                        not isinstance(translations.get(lang), str)
+                        or not translations[lang].strip()
+                    ):
                         errors.append(f"{where}.{field}.{lang}: missing translation")
         if not isinstance(event.get("era"), str) or not event["era"].strip():
             errors.append(f"{where}: missing era")
@@ -134,7 +151,10 @@ def validate() -> list[str]:
                     continue
                 for destination in destinations:
                     if not isinstance(destination, str) or not (ROOT / destination).is_file():
-                        errors.append(f"{where}.internal_links.{lang}: missing destination {destination!r}")
+                        errors.append(
+                            f"{where}.internal_links.{lang}: "
+                            f"missing destination {destination!r}"
+                        )
 
     for i, event in enumerate(events):
         if isinstance(event, dict):
@@ -151,11 +171,11 @@ def validate() -> list[str]:
 def main() -> int:
     errors = validate()
     if errors:
-        print("History pilot validation failed:")
+        sys.stdout.write("History pilot validation failed:\\n")
         for error in errors:
-            print(f"- {error}")
+            sys.stdout.write(f"- {error}\\n")
         return 1
-    print("History pilot validation passed: counts, schema, bilingual fields, dates, sources and internal links.")
+    sys.stdout.write("History pilot validation passed: counts, schema, bilingual fields, dates, sources and internal links.\\n")
     return 0
 
 
