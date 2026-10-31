@@ -41,6 +41,34 @@ The official record contains internal inconsistencies, so the chronology should 
 
 This audit distinguishes source publication date from retrospective event dating. It does not establish the exact day on which the January/February or April/May checkpoint transitions occurred.
 
+### Core research-event date audit (arXiv v1 convention)
+
+For consistency, the following dates are **first arXiv submission dates**, not invention dates, acceptance dates, or necessarily first public discussion. This convention applies only where an arXiv record exists. The timeline may display year-level precision for readability, but the underlying source record should retain the full date and `kind: submission`.
+
+| Candidate | First-submission date | Source | Date decision / boundary |
+|---|---:|---|---|
+| Bahdanau et al., learned attention | 2014-09-01 | [arXiv:1409.0473](https://arxiv.org/abs/1409.0473) | First arXiv version; do not conflate with later conference/publication history. |
+| Transformer | 2017-06-12 | [arXiv:1706.03762](https://arxiv.org/abs/1706.03762) | The paper proposes the Transformer; it explicitly describes prior attention mechanisms in existing encoder-decoder systems. |
+| ELMo | 2018-02-15 | [arXiv:1802.05365](https://arxiv.org/abs/1802.05365) | First arXiv version; the method uses deep bidirectional language-model states, not a Transformer. |
+| BERT | 2018-10-11 | [arXiv:1810.04805](https://arxiv.org/abs/1810.04805) | First arXiv version; conference publication is a separate 2019 bibliographic event. |
+| T5 | 2019-10-23 | [arXiv:1910.10683](https://arxiv.org/abs/1910.10683) | First arXiv version; encoder-decoder text-to-text transfer framework. |
+| Kaplan et al. scaling laws | 2020-01-23 | [arXiv:2001.08361](https://arxiv.org/abs/2001.08361) | First arXiv version; empirical scaling relationships, not timeless universal laws. |
+| GPT-3 | 2020-05-28 | [arXiv:2005.14165](https://arxiv.org/abs/2005.14165) | First arXiv version; describe few-shot evaluation without gradient updates, not as proof that scale alone explains capabilities. |
+| RAG | 2020-05-22 | [arXiv:2005.11401](https://arxiv.org/abs/2005.11401) | First arXiv version; original formulation combines parametric generation with a non-parametric retrieved memory. |
+| LoRA | 2021-06-17 | [arXiv:2106.09685](https://arxiv.org/abs/2106.09685) | First arXiv version; parameter-efficient adaptation, not a new base architecture. |
+| Chinchilla | 2022-03-29 | [arXiv:2203.15556](https://arxiv.org/abs/2203.15556) | First arXiv version; use its compute-optimal training claim with the study's compute/data/model assumptions, not as a universal token/parameter law. |
+| InstructGPT | 2022-03-04 | [arXiv:2203.02155](https://arxiv.org/abs/2203.02155) | First arXiv version; the abstract and method describe demonstrations, preference rankings, reward modelling and RLHF. |
+| FlashAttention | 2022-05-27 | [arXiv:2205.14135](https://arxiv.org/abs/2205.14135) | First arXiv version; exact IO-aware attention algorithm using tiling. Do not claim it changes the quadratic arithmetic complexity of standard attention. |
+| DPO | 2023-05-29 | [arXiv:2305.18290](https://arxiv.org/abs/2305.18290) | First arXiv version; direct preference objective in the paper's formulation. It still uses preference data. |
+| Mamba | 2023-12-01 | [arXiv:2312.00752](https://arxiv.org/abs/2312.00752) | First arXiv version; selective state-space sequence model, not evidence of universal Transformer replacement. |
+
+Two 2018–2019 cases require a different treatment:
+
+- **GPT (GPT-1):** use **11 June 2018** as the date of OpenAI's [official research announcement](https://openai.com/index/language-unsupervised/), which links the paper. The original work was circulated as an OpenAI technical report/preprint, not a conventional arXiv submission in this inventory. The paper's contribution is generative language-model pretraining followed by discriminative task-specific fine-tuning; do not frame it as the first use of pretraining or transfer learning in NLP.
+- **GPT-2:** use **14 February 2019** for the dated official announcement, as detailed in the GPT-2 audit above. This is not a peer-reviewed conference publication date.
+
+**Evidence scope:** this pass checked arXiv first-version metadata and abstracts for the listed papers, plus the official OpenAI GPT announcement. It validates date conventions and high-level descriptions only. It does **not** satisfy the separate full-text review gate for every technical claim or relation. Keep that gate open until each complete paper is reviewed.
+
 ## Separate stream: ecosystem and product events
 
 These events may appear on the same timeline but must be visibly distinguished from research contributions:
