@@ -52,6 +52,10 @@ The first view contains 16 selected core milestone entries. Because the GPT-2 re
 
 **Editorial note:** GPT-2 has separate official research-announcement/report and staged-release records. The source audit now documents two retrospective date conflicts (January/February for the 124M release; April/May for the 355M release) and OpenAI's correction of the original parameter counts. Use 14 February 2019 for the dated research announcement, month-level precision for the early checkpoint releases, 20 August for 774M, and 5 November for 1.5B. Retain separate `research` and `model_release` events; the core label does not permit combining them.
 
+
+
+**Date convention:** where the source is an arXiv paper, the research-event date is its first-version submission date unless the event explicitly uses a different convention (for example, GPT's official announcement or GPT-2's dated announcement). The source inventory records exact dates and the distinction between submission, conference publication, announcement and release. The visual matrix intentionally groups many entries by year; do not infer same-year ordering from that display.
+
 ## 3. Context and supplementary candidates
 
 | Candidate | Relevance | Pedagogy | Evidence | Coverage | Decision | Why it is not in the core chronology yet |
