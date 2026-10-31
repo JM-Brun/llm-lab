@@ -60,6 +60,9 @@ events:
       en: "Presents an unsupervised generative pretraining approach followed by supervised adaptation, using a Transformer decoder architecture."
     significance: [architecture, objective]
     concept_ids: [autoregressive-language-modelling, generative-pretraining]
+    internal_links:
+      fr: [site/fr/transformer.qmd]
+      en: [site/en/transformer.qmd]
     source_ids: [openai-gpt-2018-announcement]
     confidence: high
     editorial_note:
