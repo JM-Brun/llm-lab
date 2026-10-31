@@ -37,5 +37,8 @@ jobs:
       - name: Render site
         run: quarto render site
 
+      - name: Check rendered history timeline parity
+        run: python3 scripts/check_history_rendered.py
+
       - name: Check local links in rendered site
         run: python3 scripts/check_site_links.py site/_site
