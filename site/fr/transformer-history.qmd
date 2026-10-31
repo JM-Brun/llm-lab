@@ -12,7 +12,7 @@ La chronologie est sélective. Elle distingue des précurseurs, des propositions
 
 :::: {.history-timeline}
 
-::: {.history-milestone}
+::: {.history-milestone #attention-2014}
 **2014 · Publication scientifique**
 
 ### L’attention dans la traduction neuronale
@@ -24,7 +24,7 @@ Source primaire : [Neural Machine Translation by Jointly Learning to Align and T
 **Approfondir :** [attention à produit scalaire](scaled-dot-product-attention.qmd) — comparaison conceptuelle, sans assimiler ce mécanisme précoce à l’attention du Transformer.
 :::
 
-::: {.history-milestone}
+::: {.history-milestone #attention-2015}
 **2015 · Publication scientifique**
 
 ### Plusieurs formulations de l’attention
@@ -36,7 +36,7 @@ Source primaire : [Effective Approaches to Attention-based Neural Machine Transl
 **Approfondir :** [attention à produit scalaire](scaled-dot-product-attention.qmd).
 :::
 
-::: {.history-milestone}
+::: {.history-milestone #transformer-2017}
 **2017 · Publication scientifique**
 
 ### Transformer : une architecture fondée sur l’attention
@@ -48,7 +48,7 @@ Source primaire : [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
 **Approfondir :** [vue d’ensemble du Transformer](transformer.qmd) · [attention](scaled-dot-product-attention.qmd).
 :::
 
-::: {.history-milestone}
+::: {.history-milestone #pretraining-2018}
 **2018 · Publications scientifiques**
 
 ### Deux trajectoires de pré-entraînement : GPT et BERT
@@ -60,7 +60,7 @@ Sources primaires : [Improving Language Understanding by Generative Pre-Training
 **Approfondir :** [masque causal](causal-masking.qmd) · [exemples d’entraînement](training-examples.qmd).
 :::
 
-::: {.history-milestone}
+::: {.history-milestone #scaling-context-2019}
 **2019 · Publications et mise à disposition**
 
 ### Mise à l’échelle et gestion du contexte
@@ -72,7 +72,7 @@ Sources : [annonce et rapport GPT-2](https://openai.com/index/better-language-mo
 **Approfondir :** [encodage positionnel](positional-encoding.qmd) · [masque causal](causal-masking.qmd).
 :::
 
-::: {.history-milestone}
+::: {.history-milestone #few-shot-2020}
 **2020 · Publications scientifiques**
 
 ### Comportements few-shot et extension à d’autres modalités
@@ -84,7 +84,7 @@ Sources primaires : [Language Models are Few-Shot Learners](https://arxiv.org/ab
 **Approfondir :** [représentations contextualisées](contextualized-representations.qmd) · [vue d’ensemble du Transformer](transformer.qmd).
 :::
 
-::: {.history-milestone}
+::: {.history-milestone #instruction-alignment-2022}
 **2022 · Publication et lancement public**
 
 ### Apprentissage sur préférences humaines et interface conversationnelle
@@ -97,7 +97,7 @@ Sources : [Training language models to follow instructions with human feedback](
 :::
 
 
-::: {.history-milestone}
+::: {.history-milestone #multimodal-open-weights-2023}
 **2023 · Publications et mises à disposition**
 
 ### Multimodalité, modèles à poids ouverts et nouvelles méthodes d’alignement
@@ -109,7 +109,7 @@ Sources : [GPT-4 Technical Report](https://arxiv.org/abs/2303.08774) · [Direct 
 **Approfondir :** [vue d’ensemble du Transformer](transformer.qmd) · [évaluation expérimentale](evaluation-experimentale.qmd). Le site ne propose pas encore de leçons dédiées à DPO ou aux modèles à poids ouverts.
 :::
 
-::: {.history-milestone}
+::: {.history-milestone #moe-long-context-2024}
 **2024 · Publications scientifiques**
 
 ### Mélange d’experts et contextes multimodaux étendus
@@ -119,6 +119,19 @@ Mixtral 8x7B popularise un exemple marquant de *mixture of experts* parcimonieus
 Sources primaires : [Mixtral of Experts](https://arxiv.org/abs/2401.04088) · [Gemini 1.5 Technical Report](https://arxiv.org/abs/2403.05530).
 
 **Approfondir :** [vue d’ensemble du Transformer](transformer.qmd). Le site ne propose pas encore de leçon dédiée aux mélanges d’experts ou aux architectures multimodales à long contexte.
+:::
+
+
+::: {.history-milestone #reasoning-test-time-2025}
+**2025 · Publication, mise à disposition et conférence**
+
+### Modèles orientés raisonnement et calcul à l’inférence
+
+DeepSeek-R1 rend particulièrement visible une trajectoire de post-entraînement où l’apprentissage par renforcement contribue à développer des comportements de raisonnement. Il faut distinguer R1-Zero, entraîné par RL sans données de démonstration de raisonnement, de R1, qui combine plusieurs étapes dont rejet-échantillonnage, RL et fine-tuning supervisé. En parallèle, des travaux à ICLR 2025 étudient l’allocation adaptative de calcul au moment de l’inférence (*test-time compute*). Ces approches déplacent une partie du budget de calcul du seul pré-entraînement vers la génération et la sélection de réponses.
+
+Sources : [DeepSeek-R1 — annonce officielle](https://deepseek.com/en/news/deepseek-r1/) · [DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning](https://www.nature.com/articles/s41586-025-09422-z) · [Scaling LLM Test-Time Compute Optimally](https://proceedings.iclr.cc/paper_files/paper/2025/hash/1b623663fd9b874366f3ce019fdfdd44-Abstract-Conference.html).
+
+**Approfondir :** [évaluation expérimentale](evaluation-experimentale.qmd). Le site ne propose pas encore de leçon dédiée au post-entraînement des modèles de raisonnement ni au calcul à l’inférence.
 :::
 
 ::::
