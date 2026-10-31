@@ -175,7 +175,9 @@ def main() -> int:
         for error in errors:
             sys.stdout.write(f"- {error}\n")
         return 1
-    sys.stdout.write(\n        "History pilot validation passed: counts, schema, bilingual fields, dates, sources and internal links.\n"\n    )
+    sys.stdout.write(
+        "History pilot validation passed: counts, schema, bilingual fields, dates, sources and internal links.\n"
+    )
     return 0
 
 
