@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Render the canonical bilingual history dataset as accessible Quarto timeline fragments."""
+
 from __future__ import annotations
 
 import argparse
@@ -54,8 +55,34 @@ DATE_KIND_LABELS = {
     "other": {"fr": "Autre date documentée", "en": "Other documented date"},
 }
 MONTHS = {
-    "fr": ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"],
-    "en": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    "fr": [
+        "janvier",
+        "février",
+        "mars",
+        "avril",
+        "mai",
+        "juin",
+        "juillet",
+        "août",
+        "septembre",
+        "octobre",
+        "novembre",
+        "décembre",
+    ],
+    "en": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ],
 }
 
 
@@ -184,7 +211,9 @@ def render(data: dict[str, Any], lang: str) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--check", action="store_true", help="Fail if generated fragments are stale.")
+    parser.add_argument(
+        "--check", action="store_true", help="Fail if generated fragments are stale."
+    )
     args = parser.parse_args()
 
     try:
