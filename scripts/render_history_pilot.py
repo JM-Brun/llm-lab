@@ -134,7 +134,8 @@ def render_event(event: dict[str, Any], sources: dict[str, dict[str, Any]], lang
     summary = esc(event["summary"][lang])
 
     output = [
-        f'<li class="history-timeline__item history-timeline__item--{esc(event["type"])}">',
+        f'<li class="history-timeline__item history-timeline__item--{esc(event["type"])}" '
+        f'data-event-id="{esc(event["id"])}" data-event-type="{esc(event["type"])}">',
         '  <div class="history-timeline__meta">',
         f'    <time datetime="{esc(date_value)}">{esc(date_text)}</time>',
         f'    <span class="history-timeline__kind">{esc(date_kind)}</span>',
