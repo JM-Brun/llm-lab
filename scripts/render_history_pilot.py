@@ -15,8 +15,8 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 DATA_PATH = ROOT / "data" / "history-pilot.yml"
 OUTPUTS = {
-    "fr": ROOT / "site" / "fr" / "_history-timeline-generated.qmd",
-    "en": ROOT / "site" / "en" / "_history-timeline-generated.qmd",
+    "fr": ROOT / "site" / "includes" / "history-timeline-fr.qmd",
+    "en": ROOT / "site" / "includes" / "history-timeline-en.qmd",
 }
 ERA_LABELS = {
     "neural-sequence-modelling-and-attention": {
