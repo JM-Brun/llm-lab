@@ -51,20 +51,55 @@ The initial hypotheses have been reviewed in [history-relation-audit.md](history
 
 The audit is a first-pass editorial decision record, not final publication approval. Full-paper review, coverage expansion, and bilingual source-backed event records remain outstanding.
 
-## Gaps deliberately left open
+## Coverage expansion: additional source-backed candidates
 
-The pilot is not yet balanced across all relevant histories. Further source work is needed for:
+These candidates address gaps identified in the first pass. They are not all selected for the first visual release. Their role, date convention, and relation to the existing events must be reviewed before inclusion.
 
-- statistical n-gram language modelling and perplexity before neural language models;
-- recurrent language models, LSTM origins, and neural machine translation context;
-- subword tokenization and byte-pair encoding in NLP;
-- GPT-1 and the generative-pretraining line, with a stable primary source and clear date convention;
-- compute-optimal scaling (including Chinchilla) and the relationship to Kaplan et al.;
-- LoRA/QLoRA, mixture-of-experts, grouped-query attention and KV caching;
-- multimodal pretraining, retrieval-augmented generation, tool use and reasoning-time compute;
-- non-English and non-Western research contributions.
+### Earlier statistical and recurrent language modelling
 
-Do not fill these gaps with model-release catalogues alone. Each candidate needs an original source and a clear pedagogical reason to appear.
+| Approx. date | Candidate event | Stream | Why it belongs | Primary evidence | Editorial caution |
+|---|---|---|---|---|---|
+| 1992 | Class-based n-gram language models | research | Representative account of statistical language modelling with word classes and n-gram probabilities before neural LMs became dominant. | [Brown et al., Computational Linguistics (1992)](https://aclanthology.org/J92-4003/) | Not the origin of n-gram modelling. Use as a documented milestone, not as the beginning of statistical language modelling. A deeper historical survey is still needed for Shannon, Markov models, smoothing and perplexity. |
+| 1997 | Long short-term memory (LSTM) | research | Introduces a gated recurrent architecture designed to preserve error flow over long time intervals. | [Hochreiter & Schmidhuber, Neural Computation (1997)](https://doi.org/10.1162/neco.1997.9.8.1735) | The article history records receipt in 1995 and publication in 1997. Choose and label publication date for the chronology; do not imply LSTM was invented specifically for language modelling. |
+
+### Generative pretraining and tokenization
+
+| Approx. date | Candidate event | Stream | Why it belongs | Primary evidence | Editorial caution |
+|---|---|---|---|---|---|
+| 2018-06 | GPT / generative pretraining for language understanding | research | Combines a Transformer-based autoregressive language model pretraining stage with task-specific discriminative fine-tuning, establishing a prominent GPT research line. | [OpenAI research announcement and paper link (11 June 2018)](https://openai.com/index/language-unsupervised/) · [Original paper PDF](https://abaj.ai/doc/papers/radford2018improving.pdf) | The paper was distributed as a technical report rather than a conventional peer-reviewed conference paper. Distinguish the research announcement from later GPT-2/GPT-3 model releases. |
+| 2016 | Subword units for neural machine translation | research | Shows how subword segmentation based on byte-pair encoding can address rare and open-vocabulary words in neural MT. | [Sennrich, Haddow & Birch, ACL 2016](https://aclanthology.org/P16-1162/) | BPE predates this NLP application as a compression algorithm. Credit this work for a prominent NLP adaptation, not invention of BPE itself. Distinguish tokenization from model architecture. |
+
+### Scaling, adaptation and conditional computation
+
+| Approx. date | Candidate event | Stream | Why it belongs | Primary evidence | Editorial caution |
+|---|---|---|---|---|---|
+| 2017 | Sparsely-gated Mixture-of-Experts | research | Demonstrates conditional computation with a gating network selecting a sparse subset of expert subnetworks, including language-modelling applications. | [Shazeer et al., ICLR 2017](https://arxiv.org/abs/1701.06538) · [Google Research record](https://research.google/pubs/outrageously-large-neural-networks-the-sparsely-gated-mixture-of-experts-layer/) | This is not the first theoretical proposal of mixture-of-experts. Explain sparse conditional computation and distinguish parameter count from active compute. The paper's model is recurrent/convolutional-era, not a Transformer MoE. |
+| 2022-03 | Chinchilla and compute-optimal training | research | Reassesses the allocation of a fixed training-compute budget between parameter count and training tokens. | [Hoffmann et al., arXiv:2203.15556](https://arxiv.org/abs/2203.15556) · [NeurIPS 2022 proceedings](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html) | Do not summarize as a universal fixed parameter/token ratio. The conclusion depends on the study's training setup and compute assumptions; compare explicitly with Kaplan et al. |
+| 2021-06 | LoRA: low-rank adaptation | research | Introduces a parameter-efficient adaptation method that freezes pretrained weights and learns low-rank updates. | [Hu et al., arXiv:2106.09685](https://arxiv.org/abs/2106.09685) | LoRA is an adaptation technique, not a new base architecture. QLoRA is a later distinct extension and needs its own source and event if included. |
+
+### Retrieval, multimodality, prompting and tools
+
+| Approx. date | Candidate event | Stream | Why it belongs | Primary evidence | Editorial caution |
+|---|---|---|---|---|---|
+| 2020-05 | Retrieval-Augmented Generation (RAG) | research | Combines parametric sequence-to-sequence generation with a retrieved non-parametric document index for knowledge-intensive tasks. | [Lewis et al., arXiv:2005.11401](https://arxiv.org/abs/2005.11401) · [NeurIPS 2020 proceedings](https://papers.neurips.cc/paper/2020/hash/6b493230205f780e1bc26945df7481e5-Abstract.html) | The paper's specific architecture is not identical to every modern system called RAG. Do not imply retrieval eliminates hallucination or guarantees provenance. |
+| 2022-04 | Flamingo visual-language model | research | Demonstrates few-shot visual-language learning over interleaved image, video and text inputs by connecting pretrained vision and language models. | [Alayrac et al., arXiv:2204.14198](https://arxiv.org/abs/2204.14198) · [NeurIPS 2022 proceedings](https://papers.neurips.cc/paper_files/paper/2022/hash/960a172bc7fbf0177ccccbb411a7d800-Abstract-Conference.html) | A representative multimodal research milestone, not the origin of vision-language learning or multimodality. Include other modalities and research groups in a balanced account. |
+| 2022-01 | Chain-of-thought prompting | research | Studies whether prompting with intermediate reasoning examples improves performance on multi-step tasks. | [Wei et al., arXiv:2201.11903](https://arxiv.org/abs/2201.11903) · [NeurIPS 2022 proceedings](https://papers.neurips.cc/paper_files/paper/2022/hash/9d5609613524ecf4f15af0f7b31abca4-Abstract-Conference.html) | This is a prompting/evaluation method, not evidence that generated rationales faithfully expose internal reasoning. Avoid claims that reasoning abilities simply “emerged” as a settled causal explanation. |
+| 2023-02 | Toolformer | research | Explores training language models to decide when and how to call external APIs and incorporate returned results. | [Schick et al., arXiv:2302.04761](https://arxiv.org/abs/2302.04761) · [NeurIPS 2023 proceedings](https://proceedings.neurips.cc/paper/2023/hash/d842425e4bf79ba039352da0f658a906-Abstract-Conference.html) | This is one research approach to tool use, not the origin of all tool-augmented systems. Distinguish tool calling from retrieval-only RAG and from product-level agent systems. |
+
+### Remaining research gaps
+
+The source discovery is broader now, but still incomplete. A balanced history still needs:
+
+- earlier statistical foundations: Shannon's information-theoretic language modelling, Markov assumptions, smoothing, perplexity, and the transition from count-based to neural models;
+- the pre-2016 history of subword segmentation, byte-pair encoding, WordPiece and SentencePiece, with their distinct origins and uses;
+- GPT-2 and the progression of decoder-only pretrained language models, with model release and paper dates separated;
+- QLoRA and later parameter-efficient adaptation methods;
+- grouped-query attention, multi-query attention, KV caching, speculative decoding and inference-time systems;
+- further multimodal lines (speech, audio, video, image-text pretraining) and contributions beyond Flamingo;
+- tool use, external memory, planning, test-time compute and reasoning approaches beyond the single CoT and Toolformer examples;
+- non-English, multilingual and non-Western contributions, deliberately sourced rather than appended as token examples.
+
+Do not fill these gaps with model-release catalogues alone. Each candidate needs a primary or authoritative source, an accurate date convention, and a clear pedagogical reason to appear.
 
 ## Verification status
 
