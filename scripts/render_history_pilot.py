@@ -69,7 +69,7 @@ def display_date(value: str, precision: str, lang: str) -> str:
     year, month, *day = value.split("-")
     month_name = MONTHS[lang][int(month) - 1]
     if precision == "month":
-        return f"{month_name} {year}" if lang == "en" else f"{month_name} {year}"
+        return f"{month_name} {year}"
     return f"{int(day[0])} {month_name} {year}"
 
 
@@ -155,7 +155,7 @@ def render(data: dict[str, Any], lang: str) -> str:
     sources = {source["id"]: source for source in data["sources"]}
     events = sorted(data["events"], key=lambda event: (event["date"]["value"], event["id"]))
     title = "Chronologie historique" if lang == "fr" else "Historical timeline"
-    output = [f'<div class="history-timeline" aria-label="{title}">']
+    output = [f'<section class="history-timeline" aria-label="{title}">']
     current_era: str | None = None
     for index, event in enumerate(events):
         era = event["era"]
@@ -169,7 +169,7 @@ def render(data: dict[str, Any], lang: str) -> str:
         next_index = index + 1
         if next_index == len(events) or events[next_index]["era"] != current_era:
             output.append("</ol>")
-    output.append("</div>")
+    output.append("</section>")
     return "\n".join(output) + "\n"
 
 
