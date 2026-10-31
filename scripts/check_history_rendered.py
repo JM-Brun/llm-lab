@@ -26,12 +26,14 @@ class TimelineParser(HTMLParser):
         self.links: list[str] = []
         self.text: list[str] = []
         self.has_labelled_timeline = False
+        self.timeline_depth = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = dict(attrs)
         classes = (attributes.get("class") or "").split()
         if tag == "section" and "history-timeline" in classes:
             self.has_labelled_timeline = bool(attributes.get("aria-label"))
+            self.timeline_depth += 1
         if tag == "li" and "history-timeline__item" in classes:
             event_id = attributes.get("data-event-id") or ""
             event_type = attributes.get("data-event-type") or ""
@@ -39,8 +41,12 @@ class TimelineParser(HTMLParser):
         if tag == "time":
             self.times.append(attributes.get("datetime") or "")
         href = attributes.get("href")
-        if href:
+        if href and self.timeline_depth > 0:
             self.links.append(href)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "section" and self.timeline_depth > 0:
+            self.timeline_depth -= 1
 
     def handle_data(self, data: str) -> None:
         if data.strip():
