@@ -25,6 +25,15 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@8a96df13519ee81fd526f2dfca5962811136661b # v2.2.0
 
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.12.15"
+          python-version: "3.12"
+
+      - name: Generate bilingual history timeline fragments
+        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python scripts/render_history_pilot.py
+
       - name: Render site
         run: quarto render site
 
