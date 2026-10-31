@@ -320,3 +320,104 @@ pre code { color: #17212B; }
   .learning-route { grid-template-columns: 1fr; }
   .route-step { padding: .9rem 1rem; }
 }
+
+
+/* Accessible, static-first history timeline generated from data/history-pilot.yml. */
+.history-timeline {
+  margin: 1.5rem 0 2.5rem;
+}
+.history-timeline__era {
+  margin: 2rem 0 .9rem;
+  padding: .65rem .85rem;
+  border-left: 4px solid var(--llm-brand);
+  background: #F1F5F9;
+  color: var(--llm-brand-dark);
+  font-size: 1.15rem;
+}
+.history-timeline__list {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 1.1rem;
+  border-left: 2px solid #94A3B8;
+}
+.history-timeline__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(9rem, 13rem) minmax(0, 1fr);
+  gap: 1rem;
+  margin: 0;
+  padding: 0 0 1.5rem 1.1rem;
+}
+.history-timeline__item::before {
+  position: absolute;
+  top: .25rem;
+  left: -1.53rem;
+  width: .75rem;
+  height: .75rem;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--llm-brand-dark);
+  box-shadow: 0 0 0 2px var(--llm-brand-dark);
+  content: "";
+}
+.history-timeline__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .35rem;
+  color: #334155;
+  font-size: .9rem;
+}
+.history-timeline__meta time {
+  color: #14532D;
+  font-size: 1rem;
+  font-weight: 800;
+}
+.history-timeline__kind,
+.history-timeline__stream {
+  display: inline-block;
+  padding: .15rem .45rem;
+  border: 1px solid #64748B;
+  border-radius: .25rem;
+  background: #fff;
+  color: #1E293B;
+  font-size: .78rem;
+  font-weight: 650;
+}
+.history-timeline__content {
+  min-width: 0;
+  padding: 0 0 1rem;
+  border-bottom: 1px solid var(--llm-line);
+}
+.history-timeline__content h4 {
+  margin: 0 0 .45rem;
+  color: #14532D;
+  font-size: 1.08rem;
+}
+.history-timeline__content p {
+  margin: .45rem 0;
+}
+.history-timeline__sources,
+.history-timeline__concepts {
+  font-size: .9rem;
+}
+.history-timeline__note {
+  padding: .55rem .75rem;
+  border-left: 3px solid #B45309;
+  background: #FFFBEB;
+  color: #422006;
+  font-size: .88rem;
+}
+@media (max-width: 700px) {
+  .history-timeline__item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: .45rem;
+    padding-bottom: 1.2rem;
+  }
+  .history-timeline__meta {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}
