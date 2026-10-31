@@ -101,11 +101,17 @@ The source discovery is broader now, but still incomplete. A balanced history st
 
 Do not fill these gaps with model-release catalogues alone. Each candidate needs a primary or authoritative source, an accurate date convention, and a clear pedagogical reason to appear.
 
+## First-release selection
+
+The candidate inventory is now assessed in [history-milestone-selection.md](history-milestone-selection.md). That matrix proposes a focused core chronology, separates context/supplementary items, records ordinal decision criteria, and maps only to existing bilingual concept pages. It also identifies GPT-2 as a core candidate whose dedicated source/date record is still a publication gate.
+
 ## Verification status
 
 - **Source discovery:** completed for the candidate rows above using original papers, proceedings or official institutional records.
 - **Bibliographic audit:** partial. Conference publication dates, arXiv submission dates and release dates still need consistent normalization.
-- **Relation audit:** provisional. The relation table is a review queue, not an approved graph.
+- **Relation audit:** provisional but documented in [history-relation-audit.md](history-relation-audit.md).
+- **First-release selection:** proposed in [history-milestone-selection.md](history-milestone-selection.md); not yet approved as final content.
 - **Bilingual descriptions:** not yet drafted.
-- **Internal concept links:** not yet checked against the current EN/FR page inventory.
+- **Internal concept links:** current EN/FR Quarto page inventory checked on the working branch; only existing destinations are proposed in the selection matrix.
+- **Coverage balance:** incomplete, notably early statistical foundations, efficient inference, multimodal speech/audio/video, multilingual/non-Western contributions and the GPT-2 record.
 - **Publication decision:** not yet made. Keep the existing page until the pilot has been reviewed and rendered.
