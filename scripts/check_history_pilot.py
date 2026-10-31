@@ -171,11 +171,11 @@ def validate() -> list[str]:
 def main() -> int:
     errors = validate()
     if errors:
-        sys.stdout.write("History pilot validation failed:\\n")
+        sys.stdout.write("History pilot validation failed:\n")
         for error in errors:
-            sys.stdout.write(f"- {error}\\n")
+            sys.stdout.write(f"- {error}\n")
         return 1
-    sys.stdout.write("History pilot validation passed: counts, schema, bilingual fields, dates, sources and internal links.\\n")
+    sys.stdout.write(\n        "History pilot validation passed: counts, schema, bilingual fields, dates, sources and internal links.\n"\n    )
     return 0
 
 
