@@ -65,12 +65,13 @@ Each event has a stable, language-neutral ID. Translated text lives side-by-side
 
 A date is not just a string. Use:
 
-- **value**: ISO date (YYYY-MM-DD) or year (YYYY);
+- **value**: ISO date (YYYY-MM-DD), year-month (YYYY-MM), or year (YYYY);
+- **end_value**: optional inclusive end date/month/year, using the same precision, for events spanning an interval;
 - **precision**: day, month, or year;
 - **kind**: proposal, submission, publication, announcement, release, adoption, or other;
 - **note**: optional explanation when multiple dates matter.
 
-Do not invent a day when only a year or month is supported. If proposal, publication and release dates differ, either represent distinct events or explain the distinction in the date note.
+Do not invent a day when only a year or month is supported. For a staged release or other interval, use `end_value` rather than presenting the first date as if it described the whole interval. If proposal, publication and release dates differ, either represent distinct events or explain the distinction in the date note.
 
 ## 4. Concept record
 
