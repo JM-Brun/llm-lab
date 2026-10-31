@@ -97,6 +97,8 @@ def render_event(event: dict[str, Any], sources: dict[str, dict[str, Any]], lang
     date = event["date"]
     date_value = date["value"]
     date_text = display_date(date_value, date["precision"], lang)
+    if date.get("end_value"):
+        date_text += " – " + display_date(date["end_value"], date["precision"], lang)
     stream = STREAM_LABELS[event["type"]][lang]
     date_kind = DATE_KIND_LABELS[date["kind"]][lang]
     title = esc(event["title"][lang])
@@ -126,6 +128,13 @@ def render_event(event: dict[str, Any], sources: dict[str, dict[str, Any]], lang
             + " · ".join(links)
             + "</p>"
         )
+    else:
+        missing_label = (
+            "Aucune page de notion dédiée dans LLM Lab pour le moment."
+            if lang == "fr"
+            else "No dedicated LLM Lab concept page yet."
+        )
+        output.append(f'    <p class="history-timeline__missing">{missing_label}</p>')
 
     source_links = []
     for source_id in event["source_ids"]:
