@@ -29,7 +29,7 @@ Selection labels:
 
 ## 2. Proposed core chronology
 
-The first view should contain approximately 12–16 milestones. Same-year events must not be artificially ordered when the available date precision does not justify it. The chronology can use parallel thematic lanes (architecture, training/scaling, systems, ecosystem) rather than a single causal chain.
+The first view contains 16 selected core milestone entries. Because the GPT-2 research announcement/report and staged model releases are distinct events, this selection expands to **17 underlying event records**. Keep both counts explicit in implementation and review; do not merge the GPT-2 records merely to preserve a round milestone count. Same-year events must not be artificially ordered when the available date precision does not justify it. The chronology can use parallel thematic lanes (architecture, training/scaling, systems, ecosystem) rather than a single causal chain.
 
 | Candidate | Relevance | Pedagogy | Evidence | Coverage | Decision | Reason / caveat |
 |---|---:|---:|---:|---:|---|---|
