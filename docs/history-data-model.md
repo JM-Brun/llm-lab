@@ -228,7 +228,7 @@ These references informed the product/design requirements; they are not accepted
 ## 12. Implementation sequence
 
 1. Review this model against #197 and the existing bilingual page pair.
-2. Build a small, verified pilot dataset (roughly 10–15 events) spanning pre-Transformer foundations, attention, Transformer/pretraining, scaling, post-training and one or two alternative/efficiency lines.
+2. Build a small, verified pilot dataset spanning pre-Transformer foundations, attention, Transformer/pretraining, scaling, post-training and one or two alternative/efficiency lines. Report both the number of visible milestone groupings and underlying event records; the current selection matrix contains 16 core milestone entries and 17 records because GPT-2 research and staged releases are distinct events.
 3. Check every source, date, relation and internal destination; record omissions and uncertainty.
 4. Render the pilot as a bilingual chronology and assess whether the genealogy adds explanatory value. Do not build a large graph before the records justify it.
 5. Only then implement the complete page integration and responsive/accessibility review.
