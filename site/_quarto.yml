@@ -88,7 +88,6 @@ website:
         - section: "Comprendre les LLM"
           contents:
             - fr/transformer.qmd
-            - fr/transformer-history.qmd
             - section: "Du texte aux représentations"
               contents:
                 - fr/text-data.qmd
@@ -130,6 +129,7 @@ website:
         - section: "Références"
           contents:
             - fr/glossary.qmd
+            - fr/transformer-history.qmd
             - references.qmd
     - id: en
       title: "LLM Lab · English"
@@ -140,7 +140,6 @@ website:
         - section: "Understand LLMs"
           contents:
             - en/transformer.qmd
-            - en/transformer-history.qmd
             - section: "From text to representations"
               contents:
                 - en/text-data.qmd
@@ -182,6 +181,7 @@ website:
         - section: "Reference"
           contents:
             - en/glossary.qmd
+            - en/transformer-history.qmd
             - references.qmd
   page-footer:
     left: "LLM Lab · Mathématiques, code et expériences reproductibles"

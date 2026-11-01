@@ -23,7 +23,9 @@ events:
     concept_ids: [attention, encoder-decoder]
     source_ids: [bahdanau-2014-arxiv]
     confidence: high
-    editorial_note: "Précurseur pertinent de l'attention des Transformers, mais mécanisme et architecture différents."
+    editorial_note:
+      fr: "Précurseur pertinent de l'attention des Transformers, mais mécanisme et architecture différents."
+      en: "A relevant precursor to Transformer attention, but a different mechanism and architecture."
 
   - id: transformer-attention-is-all-you-need
     type: research
@@ -42,7 +44,9 @@ events:
       en: [site/en/transformer.qmd, site/en/scaled-dot-product-attention.qmd]
     source_ids: [vaswani-2017-arxiv]
     confidence: high
-    editorial_note: "Le papier ne prétend pas inventer l'attention ; ne pas assimiler Transformer à décodeur autorégressif."
+    editorial_note:
+      fr: "Le papier ne prétend pas inventer l'attention ; ne pas assimiler Transformer à décodeur autorégressif."
+      en: "The paper does not claim to invent attention; do not equate the original encoder-decoder Transformer with an autoregressive decoder-only model."
 
   - id: gpt-generative-pretraining
     type: research
@@ -56,9 +60,14 @@ events:
       en: "Presents an unsupervised generative pretraining approach followed by supervised adaptation, using a Transformer decoder architecture."
     significance: [architecture, objective]
     concept_ids: [autoregressive-language-modelling, generative-pretraining]
+    internal_links:
+      fr: [site/fr/transformer.qmd]
+      en: [site/en/transformer.qmd]
     source_ids: [openai-gpt-2018-announcement]
     confidence: high
-    editorial_note: "La date est celle de l'annonce officielle, pas une date de priorité absolue."
+    editorial_note:
+      fr: "La date est celle de l'annonce officielle, pas une date de priorité absolue."
+      en: "This is the official announcement date, not a claim of absolute historical priority."
 
   - id: bert-pretraining
     type: research
@@ -77,7 +86,9 @@ events:
       en: [site/en/contextualized-representations.qmd]
     source_ids: [devlin-2018-arxiv]
     confidence: high
-    editorial_note: "BERT n'est pas un modèle génératif autorégressif ; distinguer soumission arXiv et publication en conférence."
+    editorial_note:
+      fr: "BERT n'est pas un modèle génératif autorégressif ; distinguer soumission arXiv et publication en conférence."
+      en: "BERT is not an autoregressive generative model; distinguish arXiv submission from conference publication."
 
   - id: gpt2-research-announcement
     type: research
@@ -93,11 +104,13 @@ events:
     concept_ids: [autoregressive-language-modelling, zero-shot-transfer]
     source_ids: [openai-gpt2-announcement, openai-gpt2-report]
     confidence: high
-    editorial_note: "Rapport technique OpenAI, pas article évalué par les pairs ; les résultats zéro-shot doivent rester associés aux tâches et benchmarks étudiés."
+    editorial_note:
+      fr: "Rapport technique OpenAI, pas article évalué par les pairs ; les résultats zéro-shot doivent rester associés aux tâches et benchmarks étudiés."
+      en: "An OpenAI technical report, not a peer-reviewed paper; keep zero-shot claims tied to the evaluated tasks and benchmarks."
 
   - id: gpt2-staged-checkpoint-releases
     type: model_release
-    date: { value: "2019-02", precision: month, kind: release, note: "Staged releases from February through November 2019; 124M, 355M, 774M and 1.5B checkpoints. The early month attribution has a documented source conflict." }
+    date: { value: "2019-02", end_value: "2019-11", precision: month, kind: release, note: "Staged releases from February through November 2019; 124M, 355M, 774M and 1.5B checkpoints. The early month attribution has a documented source conflict." }
     era: scaling-and-post-training
     title:
       fr: "Diffusion progressive des checkpoints GPT-2"
@@ -109,7 +122,9 @@ events:
     concept_ids: [language-model-scaling, model-release]
     source_ids: [openai-gpt2-report, openai-gpt2-followup, openai-gpt2-15b-release, openai-gpt2-repository]
     confidence: medium
-    editorial_note: "Les mois des releases 124M et 355M sont contradictoires selon les sources rétrospectives ; afficher une granularité mensuelle et signaler le conflit. Utiliser les comptes corrigés 124M/355M/774M/1.5B, pas les chiffres initiaux erronés."
+    editorial_note:
+      fr: "Les mois des releases 124M et 355M sont contradictoires selon les sources rétrospectives ; afficher une granularité mensuelle et signaler le conflit. Utiliser les comptes corrigés 124M/355M/774M/1.5B, pas les chiffres initiaux erronés."
+      en: "The 124M and 355M release months conflict across retrospective sources; show month-level precision and disclose the conflict. Use corrected counts 124M/355M/774M/1.5B, not the original erroneous counts."
 
   - id: t5-text-to-text
     type: research
@@ -125,7 +140,9 @@ events:
     concept_ids: [encoder-decoder, text-to-text]
     source_ids: [raffel-2019-arxiv]
     confidence: high
-    editorial_note: "T5 est un modèle encodeur-décodeur ; ne pas le ranger dans la seule lignée GPT décodeur."
+    editorial_note:
+      fr: "T5 est un modèle encodeur-décodeur ; ne pas le ranger dans la seule lignée GPT décodeur."
+      en: "T5 is an encoder-decoder model; do not place it solely in the GPT decoder-only lineage."
 
   - id: empirical-scaling-laws
     type: research
@@ -141,7 +158,9 @@ events:
     concept_ids: [scaling-laws, compute-allocation]
     source_ids: [kaplan-2020-arxiv]
     confidence: high
-    editorial_note: "Résultats empiriques dont les implications pratiques ont été affinées par des travaux ultérieurs ; ne pas présenter comme loi universelle."
+    editorial_note:
+      fr: "Résultats empiriques dont les implications pratiques ont été affinées par des travaux ultérieurs ; ne pas présenter comme loi universelle."
+      en: "Empirical findings whose practical implications were refined by later work; do not present them as universal laws."
 
   - id: retrieval-augmented-generation
     type: research
@@ -157,7 +176,9 @@ events:
     concept_ids: [retrieval-augmented-generation, non-parametric-memory]
     source_ids: [lewis-2020-arxiv]
     confidence: high
-    editorial_note: "Décrire la formulation originale ; les systèmes RAG actuels sont plus variés et ne sont pas exempts d'hallucinations."
+    editorial_note:
+      fr: "Décrire la formulation originale ; les systèmes RAG actuels sont plus variés et ne sont pas exempts d'hallucinations."
+      en: "Describe the original formulation; modern RAG systems vary and are not hallucination-free."
 
   - id: gpt3-few-shot-learning
     type: research
@@ -173,7 +194,9 @@ events:
     concept_ids: [in-context-learning, autoregressive-language-modelling]
     source_ids: [brown-2020-arxiv]
     confidence: high
-    editorial_note: "Distinguer apprentissage en contexte et fine-tuning des paramètres ; ne pas attribuer toutes les capacités à la seule taille."
+    editorial_note:
+      fr: "Distinguer apprentissage en contexte et fine-tuning des paramètres ; ne pas attribuer toutes les capacités à la seule taille."
+      en: "Distinguish in-context learning from parameter fine-tuning; do not attribute all capabilities to scale alone."
 
   - id: lora-low-rank-adaptation
     type: research
@@ -189,7 +212,9 @@ events:
     concept_ids: [parameter-efficient-fine-tuning, low-rank-adaptation]
     source_ids: [hu-2021-arxiv]
     confidence: high
-    editorial_note: "LoRA n'est pas QLoRA et ne modifie pas à elle seule l'architecture de base."
+    editorial_note:
+      fr: "LoRA n'est pas QLoRA et ne modifie pas à elle seule l'architecture de base."
+      en: "LoRA is not QLoRA and does not by itself change the base architecture."
 
   - id: instructgpt-rlhf
     type: research
@@ -205,7 +230,9 @@ events:
     concept_ids: [instruction-tuning, preference-learning, rlhf]
     source_ids: [ouyang-2022-arxiv]
     confidence: high
-    editorial_note: "Contribution de recherche distincte du lancement public de ChatGPT."
+    editorial_note:
+      fr: "Contribution de recherche distincte du lancement public de ChatGPT."
+      en: "A research contribution distinct from ChatGPT's public launch."
 
   - id: chinchilla-compute-optimal-training
     type: research
@@ -221,7 +248,9 @@ events:
     concept_ids: [compute-optimal-training, scaling-laws]
     source_ids: [hoffmann-2022-arxiv]
     confidence: high
-    editorial_note: "Ne pas transformer les proportions de l'étude en ratio universel indépendant du budget et du régime d'entraînement."
+    editorial_note:
+      fr: "Ne pas transformer les proportions de l'étude en ratio universel indépendant du budget et du régime d'entraînement."
+      en: "Do not turn the study's proportions into a universal ratio independent of compute budget and training regime."
 
   - id: flashattention-io-aware-exact-attention
     type: research
@@ -237,7 +266,9 @@ events:
     concept_ids: [attention, gpu-memory-hierarchy]
     source_ids: [dao-2022-arxiv]
     confidence: high
-    editorial_note: "Améliore l'efficacité IO ; ne supprime pas la complexité quadratique du calcul d'attention standard."
+    editorial_note:
+      fr: "Améliore l'efficacité IO ; ne supprime pas la complexité quadratique du calcul d'attention standard."
+      en: "Improves IO efficiency; it does not remove the quadratic arithmetic complexity of standard attention."
 
   - id: chatgpt-public-launch
     type: ecosystem
@@ -253,7 +284,9 @@ events:
     concept_ids: [conversational-assistants]
     source_ids: [openai-chatgpt-launch]
     confidence: high
-    editorial_note: "Jalon de produit et de diffusion, distinct de la recherche InstructGPT et de l'invention des Transformers."
+    editorial_note:
+      fr: "Jalon de produit et de diffusion, distinct de la recherche InstructGPT et de l'invention des Transformers."
+      en: "A product and distribution milestone, distinct from InstructGPT research and from the invention of Transformers."
 
   - id: direct-preference-optimization
     type: research
@@ -269,7 +302,9 @@ events:
     concept_ids: [preference-learning, direct-preference-optimization]
     source_ids: [rafailov-2023-arxiv]
     confidence: high
-    editorial_note: "Ne supprime ni les données de préférence ni tous les concepts associés au RLHF ; aucune filiation directe depuis InstructGPT n'est affirmée ici."
+    editorial_note:
+      fr: "Ne supprime ni les données de préférence ni tous les concepts associés au RLHF ; aucune filiation directe depuis InstructGPT n'est affirmée ici."
+      en: "It removes neither preference data nor all concepts associated with RLHF; no direct InstructGPT-to-DPO lineage is asserted here."
 
   - id: mamba-selective-state-space-model
     type: research
@@ -285,7 +320,9 @@ events:
     concept_ids: [state-space-models, selective-state-spaces]
     source_ids: [gu-2023-arxiv]
     confidence: high
-    editorial_note: "Lignée de recherche alternative, pas remplacement universel des Transformers."
+    editorial_note:
+      fr: "Lignée de recherche alternative, pas remplacement universel des Transformers."
+      en: "An alternative research line, not a universal replacement for Transformers."
 
 sources:
   - id: bahdanau-2014-arxiv
