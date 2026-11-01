@@ -1,13 +1,10 @@
 """Regression tests for parsing generated timeline HTML after Quarto rendering."""
 
-from runpy import run_path
-
-
 SCRIPT = __file__.replace(
     "/tests/unit/test_history_rendered.py",
     "/scripts/check_history_rendered.py",
 )
-TimelineParser = run_path(SCRIPT, run_name="check_history_rendered")["TimelineParser"]
+TimelineParser = __import__("runpy").run_path(SCRIPT, run_name="check_history_rendered")["TimelineParser"]
 
 
 def test_nested_quarto_sections_do_not_end_timeline_scope() -> None:
