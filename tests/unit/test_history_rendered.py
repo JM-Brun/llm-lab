@@ -1,7 +1,7 @@
 """Regression tests for parsing generated timeline HTML after Quarto rendering."""
 
-from runpy import run_path
 from pathlib import Path
+from runpy import run_path
 
 
 SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "check_history_rendered.py"
