@@ -10,7 +10,7 @@ The Transformer did not emerge without predecessors. Its history combines attent
 
 Dates distinguish submissions, announcements, and releases. Milestones are grouped by research area; chronological order does not imply a single causal chain.
 
-{{< include ../includes/history-timeline-en.qmd >}}
+{{< include /includes/_history-timeline-en.qmd >}}
 
 
 ## What the timeline should not imply
