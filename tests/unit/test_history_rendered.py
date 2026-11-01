@@ -8,7 +8,9 @@ GENERATOR = __file__.replace(
     "/tests/unit/test_history_rendered.py",
     "/scripts/render_history_pilot.py",
 )
-render_timeline = __import__("runpy").run_path(GENERATOR, run_name="render_history_pilot")[\n    "render"\n]
+render_timeline = __import__("runpy").run_path(
+    GENERATOR, run_name="render_history_pilot"
+)["render"]
 TimelineParser = __import__("runpy").run_path(SCRIPT, run_name="check_history_rendered")[
     "TimelineParser"
 ]
