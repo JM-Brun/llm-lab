@@ -8,12 +8,9 @@ GENERATOR = __file__.replace(
     "/tests/unit/test_history_rendered.py",
     "/scripts/render_history_pilot.py",
 )
-render_timeline = __import__("runpy").run_path(
-    GENERATOR, run_name="render_history_pilot"
-)["render"]
-TimelineParser = __import__("runpy").run_path(
-    SCRIPT, run_name="check_history_rendered"
-)["TimelineParser"]
+RUNPY = __import__("runpy")
+render_timeline = RUNPY.run_path(GENERATOR, run_name="render_history_pilot")["render"]
+TimelineParser = RUNPY.run_path(SCRIPT, run_name="check_history_rendered")["TimelineParser"]
 
 
 def test_nested_quarto_sections_do_not_end_timeline_scope() -> None:
