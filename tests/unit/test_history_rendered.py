@@ -8,7 +8,7 @@ GENERATOR = __file__.replace(
     "/tests/unit/test_history_rendered.py",
     "/scripts/render_history_pilot.py",
 )
-render_timeline = __import__("runpy").run_path(GENERATOR, run_name="render_history_pilot")["render"]
+render_timeline = __import__("runpy").run_path(GENERATOR, run_name="render_history_pilot")[\n    "render"\n]
 TimelineParser = __import__("runpy").run_path(SCRIPT, run_name="check_history_rendered")[
     "TimelineParser"
 ]
@@ -42,7 +42,7 @@ def test_nested_quarto_sections_do_not_end_timeline_scope() -> None:
 
 def test_generated_fragment_is_a_raw_html_block() -> None:
     dataset = {
-        "sources": [{"id": "paper", "url": "https://example.org/paper", "title": "Primary source"}],
+        "sources": [\n            {"id": "paper", "url": "https://example.org/paper", "title": "Primary source"}\n        ],
         "events": [{
             "id": "example",
             "type": "research",
