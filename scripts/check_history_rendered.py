@@ -98,8 +98,9 @@ class TimelineParser(HTMLParser):
 def inspect_page(path: Path, lang: str) -> tuple[list[tuple[str, str]], list[str]]:
     if not path.is_file():
         raise FileNotFoundError(f"Rendered history page is missing: {path}")
+    rendered_html = path.read_text(encoding="utf-8")
     parser = TimelineParser()
-    parser.feed(path.read_text(encoding="utf-8"))
+    parser.feed(rendered_html)
     parser.close()
 
     errors: list[str] = []
@@ -138,12 +139,19 @@ def inspect_page(path: Path, lang: str) -> tuple[list[tuple[str, str]], list[str
         errors.append(f"{lang}: placeholder link found")
 
     if errors:
+        timeline_marker = rendered_html.find("history-timeline")
+        timeline_snippet = (
+            rendered_html[max(0, timeline_marker - 300) : timeline_marker + 2400]
+            if timeline_marker >= 0
+            else "<history-timeline marker absent>"
+        )
         sys.stdout.write(
             f"{lang}: HTML diagnostics: tags={dict(parser.tag_counts)}, "
             f"timeline_root_tags_seen={dict(parser.timeline_root_tags_seen)}, "
             f"all_time_tags={parser.time_tags[:8]}, "
             f"all_anchors={parser.anchor_tags[:12]}, "
-            f"timeline_times={len(parser.times)}, timeline_links={len(parser.links)}\n"
+            f"timeline_times={len(parser.times)}, timeline_links={len(parser.links)}\\n"
+            f"{lang}: timeline HTML excerpt: {timeline_snippet}\\n"
         )
     return parser.events, errors
 
