@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import sys
+from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -27,12 +28,13 @@ class TimelineParser(HTMLParser):
         self.text: list[str] = []
         self.has_labelled_timeline = False
         self.timeline_depth = 0
-        # Quarto may wrap headings in nested <section> elements. Track each
-        # section independently so closing a nested section cannot close the
-        # outer history-timeline scope.
         self.section_stack: list[bool] = []
+        self.tag_counts: Counter[str] = Counter()
+        self.time_tags: list[tuple[str, str | None]] = []
+        self.anchor_tags: list[tuple[str | None, str | None]] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.tag_counts[tag] += 1
         attributes = dict(attrs)
         classes = (attributes.get("class") or "").split()
 
@@ -48,9 +50,13 @@ class TimelineParser(HTMLParser):
             event_type = attributes.get("data-event-type") or ""
             self.events.append((event_id, event_type))
 
-        if tag == "time" and self.timeline_depth > 0:
-            self.times.append(attributes.get("datetime") or "")
+        if tag == "time":
+            self.time_tags.append((attributes.get("datetime"), attributes.get("class")))
+            if self.timeline_depth > 0:
+                self.times.append(attributes.get("datetime") or "")
 
+        if tag == "a":
+            self.anchor_tags.append((attributes.get("href"), attributes.get("class")))
         href = attributes.get("href")
         if href and self.timeline_depth > 0:
             self.links.append(href)
@@ -105,6 +111,16 @@ def inspect_page(path: Path, lang: str) -> tuple[list[tuple[str, str]], list[str
         errors.append(f"{lang}: expected at least one source link per event")
     if any("TODO" in href or href == "#" for href in parser.links):
         errors.append(f"{lang}: placeholder link found")
+
+    if errors and (
+        len(parser.times) != EXPECTED_EVENT_COUNT
+        or len(parser.links) < EXPECTED_EVENT_COUNT
+    ):
+        sys.stdout.write(
+            f"{lang}: HTML diagnostics: tags={dict(parser.tag_counts)}, "
+            f"timeline_depth={parser.timeline_depth}, "
+            f"time_tags={parser.time_tags[:5]}, anchors={parser.anchor_tags[:8]}\\n"
+        )
     return parser.events, errors
 
 
@@ -124,14 +140,14 @@ def main() -> int:
         errors.append("FR/EN rendered event IDs or event-stream order differ")
 
     if errors:
-        sys.stdout.write("Rendered history validation failed:\n")
+        sys.stdout.write("Rendered history validation failed:\\n")
         for error in errors:
-            sys.stdout.write(f"- {error}\n")
+            sys.stdout.write(f"- {error}\\n")
         return 1
 
     sys.stdout.write(
         "Rendered history validation passed: 17 events, three streams, date ranges, "
-        "source links, accessible labels and FR/EN parity.\n"
+        "source links, accessible labels and FR/EN parity.\\n"
     )
     return 0
 
