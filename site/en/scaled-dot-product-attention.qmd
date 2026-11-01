@@ -8,7 +8,6 @@ lang: en
 Scaled dot-product attention turns learned compatibility scores between queries and keys into weights, then uses those weights to aggregate values. Softmax normalizes scores over accessible positions; it does not prove semantic relevance or causality.
 :::
 
-
 ::: {.callout-tip title="The one-minute mental model"}
 Attention is not one indivisible operation: it is the sequence **scores → scaling → optional mask → softmax → aggregation**. Scores compare Q and K; weights are normalized row by row; the output is a weighted combination of V.
 
@@ -16,6 +15,7 @@ Attention is not one indivisible operation: it is the sequence **scores → scal
 
 **Go deeper:** examine why scores are divided by $\sqrt{d_k}$, then how a mask changes which positions are accessible before softmax.
 :::
+
 ## Four computation steps
 
 For one head, $Q,K\in\mathbb{R}^{T\times d_k}$ and $V\in\mathbb{R}^{T\times d_v}$.
