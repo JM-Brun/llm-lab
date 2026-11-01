@@ -194,7 +194,10 @@ def render(data: dict[str, Any], lang: str) -> str:
     sources = {source["id"]: source for source in data["sources"]}
     events = sorted(data["events"], key=lambda event: (event["date"]["value"], event["id"]))
     title = "Chronologie historique" if lang == "fr" else "Historical timeline"
-    output = [f'<section class="history-timeline" aria-label="{title}">']
+    # Included fragments are parsed again as Markdown by Quarto.
+    # Fence the generated markup as raw HTML so tags are not escaped or
+    # interpreted as indented code blocks.
+    output = ["```{=html}", f'<section class="history-timeline" aria-label="{title}">']
     current_era: str | None = None
     for index, event in enumerate(events):
         era = event["era"]
@@ -209,6 +212,7 @@ def render(data: dict[str, Any], lang: str) -> str:
         if next_index == len(events) or events[next_index]["era"] != current_era:
             output.append("</ol>")
     output.append("</section>")
+    output.append("```")
     return "\n".join(output) + "\n"
 
 
