@@ -8,6 +8,14 @@ lang: fr
 Un **embedding** est un vecteur numérique associé à un objet, par exemple un token. L'ensemble de ces vecteurs forme un espace de représentation. On peut comparer leurs directions, leurs distances ou leurs voisins, mais leur interprétation dépend du modèle, de son entraînement et de la tâche : la géométrie n'est pas un dictionnaire universel du sens.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice d'embeddings contient un vecteur appris par ID ; le lookup sélectionne simplement la bonne ligne. Deux occurrences du même ID récupèrent donc le même vecteur initial. C'est ensuite le traitement par le Transformer qui construit une représentation dépendant du contexte.
+
+**Première lecture :** comprenez le lookup sur la petite matrice et retenez la différence entre (V) (nombre de lignes, taille du vocabulaire) et (d) (coordonnées par vecteur, dimension de l'embedding).
+
+**Pour approfondir :** exécutez la trace Python, puis explorez la géométrie, les similarités et leurs limites. La géométrie des embeddings initiaux n'est pas, à elle seule, une explication du sens.
+:::
+
 Cette page explique comment les IDs sélectionnent des vecteurs initiaux, puis examine la géométrie des représentations apprises et les limites des mesures de similarité. La question distincte de la contextualisation d'un embedding initial par le Transformer est traitée dans un [complément ciblé](contextualized-representations.qmd).
 
 ## D'où viennent les vecteurs ?
