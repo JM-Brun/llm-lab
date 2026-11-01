@@ -67,6 +67,5 @@ def test_generated_fragment_is_a_raw_html_block() -> None:
     assert rendered.startswith("```{=html}\n")
     assert rendered.rstrip().endswith("```")
     assert '<time datetime="2020-01-01">1 January 2020</time>' in rendered
-    assert (
-        '<a href="https://example.org/paper" rel="external">Primary source</a>' in rendered
-    )
+    source_link = '<a href="https://example.org/paper" rel="external">Primary source</a>'
+    assert source_link in rendered
