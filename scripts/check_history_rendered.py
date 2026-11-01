@@ -27,45 +27,53 @@ class TimelineParser(HTMLParser):
         self.links: list[str] = []
         self.text: list[str] = []
         self.has_labelled_timeline = False
-        self.timeline_depth = 0
-        self.section_stack: list[bool] = []
+        self.timeline_roots: list[str] = []
         self.tag_counts: Counter[str] = Counter()
-        self.time_tags: list[tuple[str, str | None]] = []
+        self.time_tags: list[tuple[str | None, str | None]] = []
         self.anchor_tags: list[tuple[str | None, str | None]] = []
+
+    @property
+    def in_timeline(self) -> bool:
+        return bool(self.timeline_roots)
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         self.tag_counts[tag] += 1
         attributes = dict(attrs)
         classes = (attributes.get("class") or "").split()
 
-        if tag == "section":
-            is_timeline = "history-timeline" in classes
-            self.section_stack.append(is_timeline)
-            if is_timeline:
-                self.has_labelled_timeline = bool(attributes.get("aria-label"))
-                self.timeline_depth += 1
+        # Quarto/Pandoc may preserve raw HTML containers or wrap them differently.
+        # Identify the timeline by its semantic class, not by assuming <section>.
+        if "history-timeline" in classes:
+            self.timeline_roots.append(tag)
+            self.has_labelled_timeline = self.has_labelled_timeline or bool(
+                attributes.get("aria-label")
+            )
 
-        if tag == "li" and "history-timeline__item" in classes and self.timeline_depth > 0:
+        if tag == "li" and "history-timeline__item" in classes and self.in_timeline:
             event_id = attributes.get("data-event-id") or ""
             event_type = attributes.get("data-event-type") or ""
             self.events.append((event_id, event_type))
 
         if tag == "time":
-            self.time_tags.append((attributes.get("datetime"), attributes.get("class")))
-            if self.timeline_depth > 0:
-                self.times.append(attributes.get("datetime") or "")
+            datetime_value = attributes.get("datetime")
+            self.time_tags.append((datetime_value, attributes.get("class")))
+            if self.in_timeline:
+                self.times.append(datetime_value or "")
 
         if tag == "a":
-            self.anchor_tags.append((attributes.get("href"), attributes.get("class")))
-        href = attributes.get("href")
-        if href and self.timeline_depth > 0:
-            self.links.append(href)
+            href = attributes.get("href")
+            self.anchor_tags.append((href, attributes.get("class")))
+            if href and self.in_timeline:
+                self.links.append(href)
+
+    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.handle_starttag(tag, attrs)
+        self.handle_endtag(tag)
 
     def handle_endtag(self, tag: str) -> None:
-        if tag == "section" and self.section_stack:
-            was_timeline = self.section_stack.pop()
-            if was_timeline:
-                self.timeline_depth -= 1
+        # Only timeline roots are tracked; nested sections/divs cannot corrupt scope.
+        if self.timeline_roots and self.timeline_roots[-1] == tag:
+            self.timeline_roots.pop()
 
     def handle_data(self, data: str) -> None:
         if data.strip():
@@ -93,7 +101,7 @@ def inspect_page(path: Path, lang: str) -> tuple[list[tuple[str, str]], list[str
     if len(parser.times) != EXPECTED_EVENT_COUNT:
         errors.append(f"{lang}: expected 17 semantic time elements, found {len(parser.times)}")
     if not parser.has_labelled_timeline:
-        errors.append(f"{lang}: timeline section is missing its accessible label")
+        errors.append(f"{lang}: timeline container is missing its accessible label")
 
     visible_text = " ".join(parser.text)
     if lang == "fr":
@@ -112,13 +120,13 @@ def inspect_page(path: Path, lang: str) -> tuple[list[tuple[str, str]], list[str
     if any("TODO" in href or href == "#" for href in parser.links):
         errors.append(f"{lang}: placeholder link found")
 
-    if errors and (
-        len(parser.times) != EXPECTED_EVENT_COUNT or len(parser.links) < EXPECTED_EVENT_COUNT
-    ):
+    if errors:
         sys.stdout.write(
             f"{lang}: HTML diagnostics: tags={dict(parser.tag_counts)}, "
-            f"timeline_depth={parser.timeline_depth}, "
-            f"time_tags={parser.time_tags[:5]}, anchors={parser.anchor_tags[:8]}\n"
+            f"timeline_roots={parser.timeline_roots}, "
+            f"all_time_tags={parser.time_tags[:8]}, "
+            f"all_anchors={parser.anchor_tags[:12]}, "
+            f"timeline_times={len(parser.times)}, timeline_links={len(parser.links)}\\n"
         )
     return parser.events, errors
 
@@ -139,14 +147,14 @@ def main() -> int:
         errors.append("FR/EN rendered event IDs or event-stream order differ")
 
     if errors:
-        sys.stdout.write("Rendered history validation failed:\n")
+        sys.stdout.write("Rendered history validation failed:\\n")
         for error in errors:
-            sys.stdout.write(f"- {error}\n")
+            sys.stdout.write(f"- {error}\\n")
         return 1
 
     sys.stdout.write(
         "Rendered history validation passed: 17 events, three streams, date ranges, "
-        "source links, accessible labels and FR/EN parity.\n"
+        "source links, accessible labels and FR/EN parity.\\n"
     )
     return 0
 
