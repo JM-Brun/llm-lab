@@ -113,8 +113,7 @@ def inspect_page(path: Path, lang: str) -> tuple[list[tuple[str, str]], list[str
         errors.append(f"{lang}: placeholder link found")
 
     if errors and (
-        len(parser.times) != EXPECTED_EVENT_COUNT
-        or len(parser.links) < EXPECTED_EVENT_COUNT
+        len(parser.times) != EXPECTED_EVENT_COUNT or len(parser.links) < EXPECTED_EVENT_COUNT
     ):
         sys.stdout.write(
             f"{lang}: HTML diagnostics: tags={dict(parser.tag_counts)}, "
