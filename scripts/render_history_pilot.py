@@ -197,7 +197,10 @@ def render(data: dict[str, Any], lang: str) -> str:
     # Included fragments are parsed again as Markdown by Quarto.
     # Fence the generated markup as raw HTML so tags are not escaped or
     # interpreted as indented code blocks.
-    output = ["```{=html}", f'<section class="history-timeline" aria-label="{title}">']
+    output = [
+        "```{=html}",
+        f'<section class="history-timeline" aria-label="{title}">',
+    ]
     current_era: str | None = None
     for index, event in enumerate(events):
         era = event["era"]
