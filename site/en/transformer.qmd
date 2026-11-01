@@ -8,6 +8,14 @@ lang: en
 A **GPT** is a language model based on an autoregressive Transformer: given a context of tokens, it estimates a distribution over the next token. To understand the system, distinguish the data flow, the learned parameters, and the generation loop. This page provides the overview; linked concept pages explain individual operations.
 :::
 
+::: {.callout-tip title="The one-minute mental model"}
+A GPT repeats the same loop: **represent the context → compute a distribution over the next token → select a token → append it to the context**. Attention lets positions exchange information; learned parameters determine the transformations being applied.
+
+**First pass:** inspect the diagram, read sections 1–3, and remember this loop. You can leave the equations and interactive explorer for a second visit.
+
+**Go deeper:** follow the attention calculation, try the interactive explorer, then use the linked concept pages. The mathematical details are optional depth, not an entry fee.
+:::
+
 ## The full path, at a glance
 
 ![Simplified data flow of an autoregressive GPT, from tokens to next-token selection.](../images/gpt-data-flow-en.svg){fig-alt="Conceptual pipeline: text, tokenization, embeddings and position, repeated Transformer blocks, logits, softmax, next-token selection, then adding the token to the context." width=100%}

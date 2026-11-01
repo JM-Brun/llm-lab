@@ -8,6 +8,14 @@ lang: fr
 Un **GPT** est un modèle de langage fondé sur un Transformer autorégressif : à partir d'un contexte de tokens, il estime une distribution sur le token suivant. Pour comprendre le système, il faut distinguer le flux des données, les paramètres appris et la boucle de génération. Cette page donne la vue d'ensemble ; les pages liées détaillent chaque opération.
 :::
 
+::: {.callout-tip title="L’essentiel en une minute"}
+Un GPT répète une même boucle : **représenter le contexte → calculer une distribution sur le prochain token → sélectionner un token → l’ajouter au contexte**. L’attention permet aux positions d’échanger de l’information ; les paramètres appris déterminent les transformations effectuées.
+
+**Première lecture :** regardez le schéma, lisez les sections 1 à 3 et retenez cette boucle. Vous pouvez laisser les équations et l’explorateur pour une seconde visite.
+
+**Pour aller plus loin :** suivez le calcul d’attention, testez l’explorateur interactif, puis consultez les pages conceptuelles liées. Les détails mathématiques sont des approfondissements, pas un péage à l’entrée.
+:::
+
 ## Le parcours complet, en un schéma
 
 ![Flux simplifié d'un GPT autorégressif, des tokens à la sélection du prochain token.](../images/gpt-data-flow.svg){fig-alt="Pipeline conceptuel : texte, tokenisation, embeddings et position, blocs Transformer répétés, logits, softmax, choix du prochain token puis ajout au contexte." width=100%}
