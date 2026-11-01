@@ -8,7 +8,6 @@ lang: fr
 Pour prédire le token suivant à la position $t+1$, le modèle ne doit utiliser que les tokens déjà disponibles. Le masque causal impose cette règle dans le calcul de l'attention : ce n'est pas seulement un repère graphique.
 :::
 
-
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 Le masque causal impose une règle d'information : **la sortie à la position $i$ ne doit pas dépendre d'un token situé après $i$**. Il bloque les scores correspondants avant le softmax. Il autorise généralement la position courante, car la cible prédite est le token suivant.
 
@@ -16,6 +15,7 @@ Le masque causal impose une règle d'information : **la sortie à la position $i
 
 **Pour approfondir :** étudiez les conventions de masques booléens propres aux API, puis le test d'invariance qui détecte une fuite d'information.
 :::
+
 ## Pourquoi ce masque est nécessaire
 
 Lorsqu'on entraîne un modèle à prédire le token suivant, toutes les positions d'une séquence peuvent être calculées en parallèle. Sans masque, cependant, la représentation d'une position pourrait utiliser des tokens qui ne seraient pas encore connus au moment de la génération. Le masque rend donc l'entraînement parallèle compatible avec l'objectif autorégressif.
