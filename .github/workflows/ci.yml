@@ -35,6 +35,12 @@ jobs:
       - name: Install documentation example dependency
         run: uv pip install --python .venv/bin/python -r docs/requirements-tokenizer-example.txt
 
+      - name: Install history data validation dependency
+        run: uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
+
+      - name: Validate bilingual history pilot dataset
+        run: uv run python scripts/check_history_pilot.py
+
       - name: Execute bilingual tokenizer-to-embedding example
         run: uv run python scripts/check_embedding_trace.py
 
