@@ -8,7 +8,6 @@ lang: en
 Queries, keys, and values are not three kinds of tokens. They are three **learned projections** of input representations, used to compute which positions contribute to a contextualized representation.
 :::
 
-
 ::: {.callout-tip title="The one-minute mental model"}
 **Q and K determine the weights; V supplies what gets aggregated.** At each position, the model compares its query with accessible keys, turns the scores into weights with softmax, then applies those weights to value vectors.
 
@@ -16,6 +15,7 @@ Queries, keys, and values are not three kinds of tokens. They are three **learne
 
 **Go deeper:** follow the full computation in [scaled dot-product attention](scaled-dot-product-attention.qmd), then the information constraint in [causal masking](causal-masking.qmd).
 :::
+
 ## Intuition
 
 Imagine a collection of index cards. A **query** expresses what a position is looking for; a **key** describes how a position can be matched as relevant; a **value** carries the information that will actually be aggregated. This analogy separates the roles, but does not imply that the model performs explicit symbolic search.
