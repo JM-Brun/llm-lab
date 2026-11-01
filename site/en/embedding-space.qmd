@@ -8,6 +8,14 @@ lang: en
 An **embedding** is a numerical vector associated with an object, such as a token. The collection of these vectors forms a representation space. We can compare their directions, distances, or neighbours, but interpretation depends on the model, its training, and the task: geometry is not a universal dictionary of meaning.
 :::
 
+::: {.callout-tip title="The one-minute mental model"}
+An ID is a **row address**, not a semantic coordinate. The embedding matrix stores one learned vector per ID; lookup simply selects the corresponding row. Two occurrences of the same ID therefore retrieve the same initial vector. The Transformer then builds a context-dependent representation from it.
+
+**First pass:** understand the lookup in the small matrix and remember the difference between (V) (number of rows, vocabulary size) and (d) (coordinates per vector, embedding dimension).
+
+**Go deeper:** run the Python trace, then explore geometry, similarity, and their limitations. The geometry of initial embeddings alone does not explain meaning.
+:::
+
 This page establishes how token IDs select initial vectors, then examines the geometry of learned representations and the limits of similarity measures. The distinct question of how a Transformer contextualizes an initial embedding is handled in a [focused companion](contextualized-representations.qmd).
 
 ## Where do the vectors come from?

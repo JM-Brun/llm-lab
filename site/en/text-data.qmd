@@ -8,6 +8,14 @@ lang: en
 A language model receives a sequence of numerical IDs, not raw text. Tokenization defines how text becomes IDs and how IDs are decoded. It is separate from the neural network, but affects vocabulary, sequence length, compute cost, and some observable behaviours.
 :::
 
+::: {.callout-tip title="The one-minute mental model"}
+Think of a **catalogue with reference numbers**. The tokenizer splits text into units (tokens) and assigns each one an ID. The ID retrieves a row from the embedding table: it is not a score or a measure of meaning. The Transformer then transforms these vectors using the surrounding context.
+
+**First pass:** follow the diagram and keep the distinct roles of token, ID, and embedding in mind. You can leave Unicode details, BPE/WordPiece algorithms, and corpus preparation for later.
+
+**Go deeper:** compare real tokenizers, examine their trade-offs, then follow the lookup operation in [embedding space](embedding-space.qmd).
+:::
+
 ::: {.callout-tip}
 **The key chain:** Unicode text → tokens → IDs → embedding vectors → contextual representations. Each arrow is a distinct transformation; in particular, do not confuse **vocabulary size** ($V$) with **embedding dimension** ($d$).
 :::
