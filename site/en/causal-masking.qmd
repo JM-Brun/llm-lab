@@ -8,7 +8,6 @@ lang: en
 Causal masking is an information constraint: to predict the token at position $t+1$, the computation at position $t$ must depend only on the available prefix. It is not merely a visualization convention.
 :::
 
-
 ::: {.callout-tip title="The one-minute mental model"}
 Causal masking enforces an information rule: **the output at position $i$ must not depend on a token after position $i$**. It blocks the corresponding scores before softmax. The current position is usually allowed because the target is the next token.
 
@@ -16,6 +15,7 @@ Causal masking enforces an information rule: **the output at position $i$ must n
 
 **Go deeper:** study API-specific boolean-mask conventions, then the invariance test that detects information leakage.
 :::
+
 ## Intuition
 
 When training a model to predict the next token, all positions in a sequence can be computed in parallel. Without a mask, however, a position's representation could use tokens that would not yet be known during generation. The mask makes parallel training compatible with the autoregressive objective.
