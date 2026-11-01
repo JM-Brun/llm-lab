@@ -119,7 +119,7 @@ def inspect_page(path: Path, lang: str) -> tuple[list[tuple[str, str]], list[str
         sys.stdout.write(
             f"{lang}: HTML diagnostics: tags={dict(parser.tag_counts)}, "
             f"timeline_depth={parser.timeline_depth}, "
-            f"time_tags={parser.time_tags[:5]}, anchors={parser.anchor_tags[:8]}\\n"
+            f"time_tags={parser.time_tags[:5]}, anchors={parser.anchor_tags[:8]}\n"
         )
     return parser.events, errors
 
@@ -140,14 +140,14 @@ def main() -> int:
         errors.append("FR/EN rendered event IDs or event-stream order differ")
 
     if errors:
-        sys.stdout.write("Rendered history validation failed:\\n")
+        sys.stdout.write("Rendered history validation failed:\n")
         for error in errors:
-            sys.stdout.write(f"- {error}\\n")
+            sys.stdout.write(f"- {error}\n")
         return 1
 
     sys.stdout.write(
         "Rendered history validation passed: 17 events, three streams, date ranges, "
-        "source links, accessible labels and FR/EN parity.\\n"
+        "source links, accessible labels and FR/EN parity.\n"
     )
     return 0
 
