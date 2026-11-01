@@ -26,8 +26,10 @@ class TimelineParser(HTMLParser):
         self.times: list[str] = []
         self.links: list[str] = []
         self.text: list[str] = []
+        self.timeline_text: list[str] = []
         self.has_labelled_timeline = False
         self.timeline_roots: list[str] = []
+        self.timeline_root_tags_seen: Counter[str] = Counter()
         self.tag_counts: Counter[str] = Counter()
         self.time_tags: list[tuple[str | None, str | None]] = []
         self.anchor_tags: list[tuple[str | None, str | None]] = []
@@ -45,6 +47,7 @@ class TimelineParser(HTMLParser):
         # Identify the timeline by its semantic class, not by assuming <section>.
         if "history-timeline" in classes:
             self.timeline_roots.append(tag)
+            self.timeline_root_tags_seen[tag] += 1
             self.has_labelled_timeline = self.has_labelled_timeline or bool(
                 attributes.get("aria-label")
             )
@@ -77,7 +80,10 @@ class TimelineParser(HTMLParser):
 
     def handle_data(self, data: str) -> None:
         if data.strip():
-            self.text.append(data.strip())
+            text = data.strip()
+            self.text.append(text)
+            if self.in_timeline:
+                self.timeline_text.append(text)
 
 
 def inspect_page(path: Path, lang: str) -> tuple[list[tuple[str, str]], list[str]]:
@@ -100,10 +106,12 @@ def inspect_page(path: Path, lang: str) -> tuple[list[tuple[str, str]], list[str
         errors.append(f"{lang}: expected all three event streams, found {sorted(streams)}")
     if len(parser.times) != EXPECTED_EVENT_COUNT:
         errors.append(f"{lang}: expected 17 semantic time elements, found {len(parser.times)}")
+    if any(not value for value in parser.times):
+        errors.append(f"{lang}: a semantic time element is missing its datetime attribute")
     if not parser.has_labelled_timeline:
         errors.append(f"{lang}: timeline container is missing its accessible label")
 
-    visible_text = " ".join(parser.text)
+    visible_text = " ".join(parser.timeline_text)
     if lang == "fr":
         if "Aucune page de notion dédiée" not in visible_text:
             errors.append("fr: missing explicit no-internal-page fallback")
@@ -123,7 +131,7 @@ def inspect_page(path: Path, lang: str) -> tuple[list[tuple[str, str]], list[str
     if errors:
         sys.stdout.write(
             f"{lang}: HTML diagnostics: tags={dict(parser.tag_counts)}, "
-            f"timeline_roots={parser.timeline_roots}, "
+            f"timeline_root_tags_seen={dict(parser.timeline_root_tags_seen)}, "
             f"all_time_tags={parser.time_tags[:8]}, "
             f"all_anchors={parser.anchor_tags[:12]}, "
             f"timeline_times={len(parser.times)}, timeline_links={len(parser.links)}\n"
