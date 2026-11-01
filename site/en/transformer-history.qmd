@@ -8,14 +8,9 @@ The Transformer did not emerge without predecessors. Its history combines attent
 
 ## Timeline
 
+Dates distinguish submissions, announcements, and releases. Milestones are grouped by research area; chronological order does not imply a single causal chain.
 
-1. **2014 — Attention for neural machine translation.** Bahdanau, Cho, and Bengio propose an attention mechanism that learns to align output elements with relevant parts of the input in a recurrent encoder-decoder model. This is not yet the Transformer, but an important precursor. [Paper](https://arxiv.org/abs/1409.0473).
-2. **2015 — Attention variants for translation.** Luong, Pham, and Manning study several attention and scoring approaches between source and target states. [Paper](https://arxiv.org/abs/1508.04025).
-3. **2017 — The Transformer.** Vaswani and colleagues propose an attention-based architecture without recurrence or convolution in its central mechanism. The paper introduces scaled dot-product attention and multi-head attention. [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
-4. **2018 — Two pretraining paths.** GPT popularizes generative pretraining with an autoregressive Transformer decoder; BERT uses a Transformer encoder and a masked-language objective. These approaches are not interchangeable: they structure accessible context and the learned objective differently. [BERT](https://arxiv.org/abs/1810.04805) · [GPT technical report](https://openai.com/index/language-unsupervised/).
-5. **2019 — Scaling and longer context.** GPT-2 studies text-conditioned generation and zero-shot transfer; Transformer-XL introduces mechanisms to handle dependencies beyond a fixed segment length. [GPT-2](https://openai.com/index/better-language-models/) · [Transformer-XL](https://arxiv.org/abs/1901.02860).
-6. **2020 — Larger models and other modalities.** GPT-3 studies few-shot behavior at scale; Vision Transformer applies Transformer blocks to sequences of image patches. [GPT-3](https://arxiv.org/abs/2005.14165) · [ViT](https://arxiv.org/abs/2010.11929).
-7. **2022 — Human-feedback alignment and conversational interfaces.** InstructGPT studies instruction tuning, including learning from human preference feedback. ChatGPT makes a conversational interface widely accessible; this is a diffusion milestone, not the invention of the Transformer architecture. [InstructGPT](https://arxiv.org/abs/2203.02155) · [ChatGPT announcement](https://openai.com/index/chatgpt/).
+{{< include ../includes/history-timeline-en.qmd >}}
 
 
 ## What the timeline should not imply

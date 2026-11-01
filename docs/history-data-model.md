@@ -65,12 +65,13 @@ Each event has a stable, language-neutral ID. Translated text lives side-by-side
 
 A date is not just a string. Use:
 
-- **value**: ISO date (YYYY-MM-DD) or year (YYYY);
+- **value**: ISO date (YYYY-MM-DD), year-month (YYYY-MM), or year (YYYY);
+- **end_value**: optional inclusive end date/month/year, using the same precision, for events spanning an interval;
 - **precision**: day, month, or year;
 - **kind**: proposal, submission, publication, announcement, release, adoption, or other;
 - **note**: optional explanation when multiple dates matter.
 
-Do not invent a day when only a year or month is supported. If proposal, publication and release dates differ, either represent distinct events or explain the distinction in the date note.
+Do not invent a day when only a year or month is supported. For a staged release or other interval, use `end_value` rather than presenting the first date as if it described the whole interval. If proposal, publication and release dates differ, either represent distinct events or explain the distinction in the date note.
 
 ## 4. Concept record
 
@@ -232,3 +233,21 @@ These references informed the product/design requirements; they are not accepted
 3. Check every source, date, relation and internal destination; record omissions and uncertainty.
 4. Render the pilot as a bilingual chronology and assess whether the genealogy adds explanatory value. Do not build a large graph before the records justify it.
 5. Only then implement the complete page integration and responsive/accessibility review.
+
+
+## 13. Canonical pilot rendering
+
+The first public timeline is rendered from `data/history-pilot.yml`; the French and English pages must not maintain separate milestone lists. The build script `scripts/render_history_pilot.py` generates the two Quarto fragments included by the existing page pair.
+
+- Edit event content, dates, sources, caveats and verified internal destinations in the dataset, not in the generated fragments.
+- Keep titles, summaries and editorial caveats bilingual under the same stable event ID.
+- The generator sorts by the ISO date value, groups adjacent events by editorial era, and renders the event stream, date semantics, source links and available internal concept links.
+- The generator escapes text and attributes before emitting HTML. The rendered chronology uses semantic headings, ordered lists, `time` elements and visible text labels; event type is never conveyed by colour alone.
+- CI generates the fragments before Quarto rendering. For a local render, run:
+
+```bash
+uv run --with-requirements docs/requirements-history-validation.txt python scripts/render_history_pilot.py
+quarto render site
+```
+
+Generated files are build artifacts and must not be edited manually. The data validator checks their inputs and references; the Quarto workflow checks rendered event count, FR/EN ID parity, date-range visibility, source links, accessible section labels and local rendered links. Neither check substitutes for manual responsive and accessibility review.
