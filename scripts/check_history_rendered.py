@@ -150,8 +150,8 @@ def inspect_page(path: Path, lang: str) -> tuple[list[tuple[str, str]], list[str
             f"timeline_root_tags_seen={dict(parser.timeline_root_tags_seen)}, "
             f"all_time_tags={parser.time_tags[:8]}, "
             f"all_anchors={parser.anchor_tags[:12]}, "
-            f"timeline_times={len(parser.times)}, timeline_links={len(parser.links)}\\n"
-            f"{lang}: timeline HTML excerpt: {timeline_snippet}\\n"
+            f"timeline_times={len(parser.times)}, timeline_links={len(parser.links)}\n"
+            f"{lang}: timeline HTML excerpt: {timeline_snippet}\n"
         )
     return parser.events, errors
 
