@@ -8,6 +8,14 @@ lang: fr
 L'attention à produit scalaire compare les requêtes aux clés pour calculer des scores, puis transforme ces scores en poids qui servent à combiner les valeurs. Le softmax normalise les poids sur les positions accessibles ; il ne prouve ni pertinence sémantique ni causalité.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+L'attention n'est pas une opération unique : elle enchaîne **scores → mise à l'échelle → masque éventuel → softmax → agrégation**. Les scores comparent Q et K ; les poids sont normalisés ligne par ligne ; la sortie est une combinaison des V.
+
+**Première lecture :** suivez les quatre étapes et refaites l'exemple avec une requête et deux clés. Vérifiez séparément la forme de chaque matrice : les scores sont de taille $T\times T$, la sortie de taille $T\times d_v$.
+
+**Pour approfondir :** examinez pourquoi on divise par $\sqrt{d_k}$, puis comment un masque modifie les positions accessibles avant le softmax.
+:::
+
 ## Calcul en quatre étapes
 
 Pour une tête, $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$.

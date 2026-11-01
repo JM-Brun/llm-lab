@@ -8,6 +8,14 @@ lang: fr
 À chaque position, le Transformer calcule trois vecteurs à partir de la représentation du token : une **requête** (Q), une **clé** (K) et une **valeur** (V). Les requêtes et les clés servent à calculer les poids d'attention ; ces poids déterminent ensuite comment combiner les valeurs.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+**Q et K calculent les poids ; V fournit ce qui est agrégé.** Pour chaque position, le modèle compare sa requête aux clés accessibles, transforme les scores en poids avec le softmax, puis applique ces poids aux vecteurs de valeur.
+
+**Première lecture :** retenez cette séparation des rôles et vérifiez le petit calcul numérique ci-dessous. Vous pourrez ensuite étudier les projections apprises et les dimensions des matrices.
+
+**Pour approfondir :** suivez le calcul complet dans [l'attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), puis la contrainte temporelle dans le [masque causal](causal-masking.qmd).
+:::
+
 Imagine une collection de fiches. Une **requête** exprime ce qu'une position cherche ; une **clé** aide à comparer les positions disponibles ; une **valeur** porte l'information qui sera agrégée. Cette analogie distingue les rôles, mais ne signifie pas que le modèle effectue une recherche symbolique explicite.
 
 ## L'idée en un schéma
