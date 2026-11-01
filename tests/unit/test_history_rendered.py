@@ -11,9 +11,12 @@ GENERATOR = __file__.replace(
 render_timeline = __import__("runpy").run_path(
     GENERATOR, run_name="render_history_pilot"
 )["render"]
-TimelineParser = __import__("runpy").run_path(SCRIPT, run_name="check_history_rendered")[
+TimelineParser = __import__("runpy").run_path(
+    SCRIPT, run_name="check_history_rendered"
+)["TimelineParser"]
     "TimelineParser"
 ]
+
 
 def test_nested_quarto_sections_do_not_end_timeline_scope() -> None:
     parser = TimelineParser()
@@ -39,6 +42,7 @@ def test_nested_quarto_sections_do_not_end_timeline_scope() -> None:
     assert parser.links == ["https://example.org/paper"]
     assert "Era heading" in parser.timeline_text
 
+
 def test_generated_fragment_is_a_raw_html_block() -> None:
     dataset = {
         "sources": [
@@ -52,7 +56,11 @@ def test_generated_fragment_is_a_raw_html_block() -> None:
             {
                 "id": "example",
                 "type": "research",
-                "date": {"value": "2020-01-01", "precision": "day", "kind": "submission"},
+                "date": {
+                    "value": "2020-01-01",
+                    "precision": "day",
+                    "kind": "submission",
+                },
                 "era": "neural-sequence-modelling-and-attention",
                 "title": {"fr": "Exemple", "en": "Example"},
                 "summary": {"fr": "Résumé", "en": "Summary"},
