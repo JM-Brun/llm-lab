@@ -28,7 +28,10 @@ class TimelineParser(HTMLParser):
         self.text: list[str] = []
         self.timeline_text: list[str] = []
         self.has_labelled_timeline = False
-        self.timeline_roots: list[str] = []
+        # Track nesting depth for the root tag: Pandoc may wrap headings in nested
+        # <section> elements, so the first matching closing tag is not necessarily
+        # the end of the timeline container.
+        self.timeline_roots: list[tuple[str, int]] = []
         self.timeline_root_tags_seen: Counter[str] = Counter()
         self.tag_counts: Counter[str] = Counter()
         self.time_tags: list[tuple[str | None, str | None]] = []
@@ -46,11 +49,14 @@ class TimelineParser(HTMLParser):
         # Quarto/Pandoc may preserve raw HTML containers or wrap them differently.
         # Identify the timeline by its semantic class, not by assuming <section>.
         if "history-timeline" in classes:
-            self.timeline_roots.append(tag)
+            self.timeline_roots.append((tag, 1))
             self.timeline_root_tags_seen[tag] += 1
             self.has_labelled_timeline = self.has_labelled_timeline or bool(
                 attributes.get("aria-label")
             )
+        elif self.timeline_roots and self.timeline_roots[-1][0] == tag:
+            root_tag, depth = self.timeline_roots[-1]
+            self.timeline_roots[-1] = (root_tag, depth + 1)
 
         if tag == "li" and "history-timeline__item" in classes and self.in_timeline:
             event_id = attributes.get("data-event-id") or ""
@@ -74,9 +80,12 @@ class TimelineParser(HTMLParser):
         self.handle_endtag(tag)
 
     def handle_endtag(self, tag: str) -> None:
-        # Only timeline roots are tracked; nested sections/divs cannot corrupt scope.
-        if self.timeline_roots and self.timeline_roots[-1] == tag:
-            self.timeline_roots.pop()
+        if self.timeline_roots and self.timeline_roots[-1][0] == tag:
+            root_tag, depth = self.timeline_roots[-1]
+            if depth == 1:
+                self.timeline_roots.pop()
+            else:
+                self.timeline_roots[-1] = (root_tag, depth - 1)
 
     def handle_data(self, data: str) -> None:
         if data.strip():
