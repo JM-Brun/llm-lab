@@ -10,7 +10,7 @@ Le Transformer n'est pas apparu sans précurseurs. Son histoire combine les méc
 
 Les dates distinguent soumission, annonce et mise à disposition. Les jalons sont regroupés par domaine ; leur ordre chronologique ne signifie pas qu'ils forment une chaîne causale.
 
-{{< include ../includes/history-timeline-fr.qmd >}}
+{{< include /includes/_history-timeline-fr.qmd >}}
 
 
 ## Quelques précautions de lecture
