@@ -8,6 +8,13 @@ lang: fr
 Le gradient $\nabla_\theta\mathcal{L}$ rassemble les dérivées partielles de l'objectif par rapport aux paramètres appris. Il indique comment la perte varie localement quand les paramètres changent ; il ne garantit pas, à lui seul, une amélioration globale.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+La loss indique **ce qui doit être amélioré** ; le gradient indique **comment elle varie quand les paramètres changent**. La rétropropagation applique la règle de chaîne pour transporter cette information depuis la sortie jusqu'aux paramètres.
+
+**Première lecture :** suivez le chemin loss → dérivée par rapport aux logits → dérivées par rapport aux paramètres → mise à jour. Le gradient décrit une variation locale : il ne garantit pas qu'un pas quelconque réduira la loss.
+
+**Pour approfondir :** vérifiez les dérivées par différences finies, puis étudiez les effets du taux d'apprentissage, du momentum et des optimiseurs adaptatifs. Distinguez toujours la qualité du calcul du gradient de la qualité de la généralisation du modèle.
+:::
 ## Gradient par rapport aux logits
 
 Pour une cible one-hot $y$ et une cross-entropie calculée depuis le softmax :
