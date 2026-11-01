@@ -15,9 +15,8 @@ TimelineParser = __import__("runpy").run_path(
     SCRIPT, run_name="check_history_rendered"
 )["TimelineParser"]
 
+
 def test_nested_quarto_sections_do_not_end_timeline_scope() -> None:
-
-
     parser = TimelineParser()
     parser.feed(
         """
@@ -41,9 +40,8 @@ def test_nested_quarto_sections_do_not_end_timeline_scope() -> None:
     assert parser.links == ["https://example.org/paper"]
     assert "Era heading" in parser.timeline_text
 
+
 def test_generated_fragment_is_a_raw_html_block() -> None:
-
-
     dataset = {
         "sources": [
             {
