@@ -27,26 +27,39 @@ class TimelineParser(HTMLParser):
         self.text: list[str] = []
         self.has_labelled_timeline = False
         self.timeline_depth = 0
+        # Quarto may wrap headings in nested <section> elements. Track each
+        # section independently so closing a nested section cannot close the
+        # outer history-timeline scope.
+        self.section_stack: list[bool] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = dict(attrs)
         classes = (attributes.get("class") or "").split()
-        if tag == "section" and "history-timeline" in classes:
-            self.has_labelled_timeline = bool(attributes.get("aria-label"))
-            self.timeline_depth += 1
-        if tag == "li" and "history-timeline__item" in classes:
+
+        if tag == "section":
+            is_timeline = "history-timeline" in classes
+            self.section_stack.append(is_timeline)
+            if is_timeline:
+                self.has_labelled_timeline = bool(attributes.get("aria-label"))
+                self.timeline_depth += 1
+
+        if tag == "li" and "history-timeline__item" in classes and self.timeline_depth > 0:
             event_id = attributes.get("data-event-id") or ""
             event_type = attributes.get("data-event-type") or ""
             self.events.append((event_id, event_type))
-        if tag == "time":
+
+        if tag == "time" and self.timeline_depth > 0:
             self.times.append(attributes.get("datetime") or "")
+
         href = attributes.get("href")
         if href and self.timeline_depth > 0:
             self.links.append(href)
 
     def handle_endtag(self, tag: str) -> None:
-        if tag == "section" and self.timeline_depth > 0:
-            self.timeline_depth -= 1
+        if tag == "section" and self.section_stack:
+            was_timeline = self.section_stack.pop()
+            if was_timeline:
+                self.timeline_depth -= 1
 
     def handle_data(self, data: str) -> None:
         if data.strip():
