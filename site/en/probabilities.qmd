@@ -8,6 +8,13 @@ lang: en
 An LLM does not directly produce facts or probabilities of truth. At each position, it produces scores that are transformed into a distribution over possible tokens, conditioned on the prefix.
 :::
 
+::: {.callout-tip title="The one-minute mental model"}
+Softmax turns logits into a **distribution conditioned on the prefix**. It guarantees positive values that sum to one; it does not guarantee calibration or factual truth.
+
+**First pass:** follow the two-logit example, then remember that $p_\theta(x_t\mid x_{<t})$ depends on context. Temperature changes the concentration of this distribution, not the learned parameters.
+
+**Go deeper:** distinguish normalization, calibration, and truth, then compare argmax with sampling. The distribution is used for generation; during training, logits are compared with target tokens through a loss function.
+:::
 ## From logits to a categorical distribution
 
 At a given position, the model produces a logit \(z_i\) for each vocabulary token \(i\). Logits are unnormalized scores: they may be positive or negative and do not sum to one.
