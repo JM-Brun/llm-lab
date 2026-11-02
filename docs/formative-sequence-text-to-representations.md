@@ -19,7 +19,7 @@
 | TR-03 | Trace batch and axes | Infer shapes and explain what lookup does not do | TR-02 | embedding-space; tensors | G3 |
 | TR-04 | Diagnose identity vs context | Reject invalid claims about IDs, initial vectors, position and hidden states | Pipeline and contextualization overview | contextualized-representations; positional-encoding | G3 |
 | TR-05 | Complete a partially worked shape trace | Complete shapes while distinguishing vocabulary, sequence and feature axes | TR-02 | embedding-space; tensors | G3 |
-| TR-06 | Predict what changes and what remains invariant | Separate lookup invariants from positional and contextual effects | TR-01–TR-04 (guided review) | contextualized-representations; positional-encoding | G3 |
+| TR-06 | Predict what changes and what remains invariant | Separate lookup invariants from positional and contextual effects | TR-01–TR-03 and the positional/contextualization overview | contextualized-representations; positional-encoding | G3 |
 
 **Suggested teaching order:** TR-01 → TR-02 → TR-05 → TR-03 → TR-06 → TR-04. The stable IDs identify activities across languages and references; they do not prescribe a numerical order. The sequence deliberately moves from reconstruction to a worked calculation, scaffolded completion, less-scaffolded tracing, prediction, and finally misconception diagnosis.
 
