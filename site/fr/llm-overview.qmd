@@ -10,13 +10,15 @@ Un **grand modèle de langage** (*Large Language Model*, LLM) est un modèle neu
 
 ## 1. Où situer les LLM ?
 
-Le traitement automatique des langues (TAL / NLP) regroupe des méthodes très différentes : règles linguistiques, modèles statistiques, systèmes spécialisés pour une tâche, réseaux neuronaux et modèles pré-entraînés réutilisables.
-
-Les LLM contemporains sont généralement des modèles d’apprentissage profond entraînés à grande échelle sur des données textuelles.
-
 L’intelligence artificielle (IA) est le domaine le plus large ; l’apprentissage automatique (*machine learning*) en est une partie, et l’apprentissage profond (*deep learning*) désigne des méthodes d’apprentissage fondées sur des réseaux neuronaux à plusieurs couches. Les LLM actuels sont généralement des modèles d’apprentissage profond appliqués au langage. Ces catégories décrivent des niveaux différents : « NLP » désigne un domaine de problèmes, tandis que « deep learning » désigne une famille de méthodes.
 
-### Trois architectures à comparer
+Le traitement automatique des langues (TAL / NLP) regroupe des méthodes très différentes : règles linguistiques, modèles statistiques, systèmes spécialisés pour une tâche, réseaux neuronaux et modèles pré-entraînés réutilisables. Les LLM contemporains sont généralement entraînés à grande échelle sur des données textuelles. Ils peuvent servir de base à plusieurs tâches plutôt que d’être construits séparément pour chacune. Cela ne signifie pas que les approches précédentes ont disparu : un système de production peut combiner règles, modèles spécialisés, recherche documentaire, outils et LLM.
+
+Il n’existe pas de seuil universel de paramètres qui transforme mécaniquement un modèle en « LLM ». La taille compte, mais le terme est aussi lié à l’ampleur des données, à l’objectif d’entraînement, aux capacités visées et à la manière dont le modèle est réutilisé. Le concept de *foundation model* est plus large : il désigne un modèle entraîné sur des données étendues et réutilisable comme base pour de nombreuses applications, pas nécessairement un modèle de langage uniquement.
+
+## 2. Trois grandes familles d’architectures Transformer
+
+L’architecture décrit **comment l’information circule dans le modèle**. L’objectif d’entraînement décrit **ce que le modèle apprend à prédire ou à reconstruire**. Les deux sont liés, mais ne sont pas synonymes.
 
 ```{mermaid}
 flowchart LR
@@ -25,21 +27,14 @@ flowchart LR
   D["Décodeur seul<br/>Contexte causal<br/>Prédiction du prochain token"]
 ```
 
-Le tableau précise les objectifs et les usages typiques ; le schéma est un repère architectural, pas un classement de qualité.
-
- Ils peuvent servir de base à plusieurs tâches, plutôt que d’être construits séparément pour chacune. Cela ne signifie pas que les approches précédentes ont disparu : un système de production peut combiner règles, modèles spécialisés, recherche documentaire, outils et LLM.
-
-Il n’existe pas de seuil universel de paramètres qui transforme mécaniquement un modèle en « LLM ». La taille compte, mais le terme est aussi lié à l’ampleur des données, à l’objectif d’entraînement, aux capacités visées et à la manière dont le modèle est réutilisé. Le concept de *foundation model* est plus large : il désigne un modèle entraîné sur des données étendues et réutilisable comme base pour de nombreuses applications, pas nécessairement un modèle de langage uniquement.
-
-## 2. Trois grandes familles d’architectures Transformer
-
-L’architecture décrit **comment l’information circule dans le modèle**. L’objectif d’entraînement décrit **ce que le modèle apprend à prédire ou à reconstruire**. Les deux sont liés, mais ne sont pas synonymes.
+Le schéma présente trois familles comme des alternatives architecturales, pas comme les étapes d’une évolution ni comme un classement de qualité.
 
 | Famille | Accès au contexte | Objectif pré-entraînement typique | Usages fréquents | Exemple |
 |---|---|---|---|---|
 | **Encodeur seul** | Attention généralement bidirectionnelle sur la séquence fournie | Prédire des tokens masqués (*masked language modeling*) | Représentation de texte, classification, recherche sémantique après adaptation | BERT |
 | **Encodeur-décodeur** | L’encodeur traite l’entrée ; le décodeur génère en s’appuyant sur cette représentation | Objectif de reconstruction ou de transformation de séquence ; dépend du modèle | Traduction, résumé, transformation texte-vers-texte | Transformer original, T5 |
 | **Décodeur seul** | Attention causale : chaque position utilise le contexte précédent autorisé | Prédire le prochain token | Continuation de texte et génération conditionnée par un prompt | GPT |
+
 
 Ces familles sont des repères, pas une taxonomie exhaustive. L’article Transformer de 2017 décrit une architecture encodeur-décodeur pour la traduction. BERT illustre l’encodeur seul et le masquage de tokens. GPT illustre le décodeur seul autorégressif. T5 montre qu’un encodeur-décodeur peut être pré-entraîné avec un objectif de corruption puis utilisé dans un cadre texte-vers-texte.
 
