@@ -1,10 +1,26 @@
 ---
 title: "LLM Lab — comprendre en explorant"
 subtitle: "Comprendre les modèles de langage en reliant intuition, mathématiques, code et expériences vérifiables."
+keywords: ["type:entry-point", "destination:orient", "topic:index", "level:overview", "language:fr", "status:published"]
 lang: fr
 sidebar: fr
 toc: false
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/index"
+scope: "Point d’entrée du site et choix des parcours."
+purpose: "Orienter le lecteur vers la compréhension, la construction, l’approfondissement ou la pratique."
+suggested_route:
+  previous: null
+  next: "fr/llm-overview"
+hierarchy:
+  parents: []
+  children: ["fr/llm-overview", "fr/build-path", "fr/exercises", "fr/glossary", "fr/transformer-history"]
+related: []
+tags: ["type:entry-point", "destination:orient", "topic:index", "level:overview", "language:fr", "status:published"]
+-->
 
 :::: {.hero-intro}
 <p class="eyebrow">OBSERVER · EXPLIQUER · VÉRIFIER</p>
