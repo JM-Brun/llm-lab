@@ -42,7 +42,7 @@ These families are landmarks, not an exhaustive taxonomy. The 2017 Transformer p
 
 This project focuses on building a **small decoder-only GPT**. That is a pedagogical choice that makes autoregressive prediction and its mechanisms inspectable, not a claim that every LLM works this way.
 
-## 3. Understand use before studying learning
+## A first look: understand inference
 
 To understand what an LLM does, start with **inference**: a model receives a context, computes an output using its current parameters and, for an autoregressive model, generates a sequence of tokens. At this stage, you do not need to know how those parameters were learned.
 
