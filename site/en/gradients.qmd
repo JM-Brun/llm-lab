@@ -1,8 +1,24 @@
 ---
 title: "Gradients: connecting loss to parameters"
 subtitle: "Derivatives, the chain rule, and numerical verification"
+keywords: ["type:concept-lesson", "destination:understand", "topic:gradients", "level:core", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/gradients"
+scope: "Gradients: connecting loss to parameters"
+purpose: "Explain "Gradients: connecting loss to parameters", its role in an LLM, and its upstream and downstream conceptual connections."
+suggested_route:
+  previous: "en/loss"
+  next: null
+hierarchy:
+  parents: ["en/loss"]
+  children: ["en/build-path"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:gradients", "level:core", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 The gradient $\nabla_\theta\mathcal{L}$ collects partial derivatives of the loss with respect to learned parameters. It describes local objective variation; by itself, it does not guarantee global improvement.
