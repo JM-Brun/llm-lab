@@ -138,6 +138,12 @@ Il n'est pas nécessaire de consulter toutes les ressources. Choisissez celle qu
 - [DeepLearning.AI — *How Transformer LLMs Work*](https://www.deeplearning.ai/courses/how-transformer-llms-work) : un cours vidéo compact de Jay Alammar et Maarten Grootendorst sur la tokenisation, les embeddings, l'attention, les blocs modernes et quelques variantes d'efficacité. L'accès et les conditions du cours peuvent évoluer.
 
 Ces ressources ont des rôles différents : les visualisations construisent l'intuition, l'article primaire documente la formulation originale, le code annoté rend visibles les choix d'implémentation et la documentation d'API précise le contrat d'une opération de bibliothèque. Elles sont complémentaires, mais non interchangeables. Lorsqu'une explication simplifie un mécanisme ou qu'une implémentation adopte une convention particulière, vérifiez les hypothèses et le périmètre avant de généraliser.
+## Bilan : reconstruire le calcul
+
+Vous avez terminé cette étape si vous pouvez suivre les identifiants de tokens jusqu'aux représentations, expliquer comment attention et MLP les transforment, distinguer les logits du texte généré et décrire la boucle : passe avant → sélection d'un token → ajout au contexte → nouvelle passe avant.
+
+**Étape suivante recommandée :** [Du texte aux tokens](text-data.qmd) explique la construction de l'entrée. Si cette étape est déjà claire, passez aux pages sur les représentations et l'attention liées ci-dessus. La [génération](generation.qmd) approfondit les règles de sélection et leurs effets.
+
 ::: {.language-switch}
 **Langue :** [Français](transformer.qmd) · [English](../en/transformer.qmd)
 :::
