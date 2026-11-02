@@ -380,3 +380,33 @@ The current EN/FR tokenization guide covers the core conceptual distinctions in 
 **Confirmed:** the repository has a PyTorch reference model, while the browser path uses an ONNX session; the two should not be conflated. **Not checked:** a fresh browser interaction, model download behavior, mobile layout, keyboard accessibility, or whether the upstream demo's runtime behavior still matches the pinned source snapshot.
 
 **Numerical counterexample for the top-p limitation:** if the top 50 candidates contain 0.80 of the full-vocabulary probability mass and the requested threshold is 0.90, exact full-vocabulary nucleus sampling must include candidates beyond rank 50. The audited implementation renormalizes the top-50 subset to 1.00 first, so its cumulative threshold can be reached without considering the omitted 0.20 tail.
+
+
+## Coverage reconciliation against the current sidebar — 2026-11-02
+
+The existing [content-section mapping](content-section-mapping.md) classifies the reader-facing role of the site pages. That classification is useful for navigation design, but it is **not** evidence that each page has received the detailed source, language-parity, rendered, and responsive review required by this inventory.
+
+A mechanical comparison of the two current sidebars in `site/_quarto.yml` against the detailed page entries above found **23 sidebar page entries not yet represented by a page-specific row in this audit inventory** (11 bilingual pairs plus the English landing page counterpart; the French landing page is the root `index.qmd`). These are recorded as **Not reviewed** below. This is a coverage gap, not a finding that the pages are defective.
+
+| Canonical page pair / entry | Primary role from content map | Detailed audit status | Next bounded review |
+|---|---|---|---|
+| `index.qmd` / `en/index.qmd` | Entry point | Not reviewed | Check route selection, project scope, status honesty, and equivalent FR/EN entry affordances. |
+| `site/fr/llm-overview.qmd` / `site/en/llm-overview.qmd` | Understand — system orientation | Not reviewed | Check the first mental model, model-family distinctions, lifecycle coverage, limits, and transitions to Transformer/build pages. |
+| `site/fr/unicode-text.qmd` / `site/en/unicode-text.qmd` | Understand — supporting concept | Not reviewed | Check Unicode scalar values, code points, UTF-8 bytes, normalization, and tokenizer boundary claims; distinguish required intuition from optional encoding detail. |
+| `site/fr/embedding-space.qmd` / `site/en/embedding-space.qmd` | Understand — concept | Not reviewed | Check the lookup-to-vector explanation, distinction between initial and contextualized representations, and links to #82's worked trace. |
+| `site/fr/contextualized-representations.qmd` / `site/en/contextualized-representations.qmd` | Understand — concept bridge | Not reviewed | Check how context changes hidden states, the transition from embedding inputs to Transformer outputs, and sidebar/next-step continuity. |
+| `site/fr/build-path.qmd` / `site/en/build-path.qmd` | Build — guided implementation route | Not reviewed | Check milestone status honesty, prerequisite order, links to maintained code/tests, safe stopping points, and parity with `docs/learning-path.md`. |
+| `site/fr/cosine-similarity.qmd` / `site/en/cosine-similarity.qmd` | Deepen — critical case study | Not reviewed | Check assumptions, counterexamples, geometry claims, and that similarity is not presented as semantic truth or a universal quality metric. |
+| `site/fr/linearite-embeddings.qmd` / `site/en/embedding-linearity.qmd` | Deepen — research-oriented case study | Not reviewed | Check operational definitions, evidence scope, counterexamples, and the boundary between observed geometry and causal/semantic claims. |
+| `site/fr/evaluation-experimentale.qmd` / `site/en/experimental-evaluation.qmd` | Practice & experiment — method | Not reviewed | Check reproducibility, baselines, controls, uncertainty, interpretation limits, and distinction between illustrative experiments and model-scale evidence. |
+| `site/fr/exercises.qmd` / `site/en/exercises.qmd` | Practice & experiment | Not reviewed | Check exercise objectives, prerequisites, answer/feedback behavior, links back to canonical lessons, and whether claimed interactivity actually works. |
+| `site/fr/glossary.qmd` / `site/en/glossary.qmd` | Reference | Not reviewed | Check term definitions against canonical pages, cross-language terminology, duplicate definitions, and links to the authoritative concept page. |
+| `site/fr/transformer-history.qmd` / `site/en/transformer-history.qmd` | Reference — optional history | Not reviewed | Check chronology, primary-source attribution, historical nuance, and that the timeline is not presented as a prerequisite learning path. |
+
+### Review protocol for these entries
+
+- Review FR and EN as separate rendered pages, then compare the learning objective and claims side by side.
+- Record source inspection, scientific verification, link/build checks, browser rendering, responsive behavior, and accessibility observations separately.
+- Do not mark a page complete solely because its counterpart exists, the page appears in the sidebar, or Quarto CI passes.
+- Prioritize the overview, build path, and embedding/contextualization bridge after the active #82 browser gate; then review optional deep dives and references.
+- Keep this table as a gap register. Add a page-specific findings row only when the corresponding review has actually been performed.
