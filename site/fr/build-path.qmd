@@ -22,6 +22,51 @@ Pour chaque étape, distinguer :
 
 Il faut savoir lire une forme de tenseur avant de déboguer une opération, mais pas maîtriser toute la théorie des tenseurs. Il faut comprendre le rôle du gradient avant d'entraîner, mais pas suivre au préalable un cours complet de calcul différentiel.
 
+
+## Deux chemins qui partagent le même modèle
+
+Il faut distinguer **l'inférence** (utiliser les paramètres existants pour produire un token) et **l'apprentissage** (modifier ces paramètres à partir d'exemples et d'une fonction de perte). Ce ne sont pas deux descriptions interchangeables d'une même boucle.
+
+### Chemin de génération : des tokens au prochain token
+
+1. Le tokenizer transforme le texte en identifiants de tokens.
+2. La table d'embeddings transforme ces identifiants en vecteurs ; l'information de position est ajoutée ou intégrée selon l'architecture.
+3. Les blocs Transformer transforment ces représentations. L'attention causale permet à chaque position d'utiliser le contexte autorisé, sans accéder aux tokens futurs.
+4. La projection de sortie produit un logit par token du vocabulaire. La softmax peut convertir ces scores en distribution conditionnelle.
+5. Une règle de décodage sélectionne le token suivant ; celui-ci est ajouté au contexte et le calcul recommence.
+
+**À savoir expliquer :** pourquoi le modèle prédit un token à la fois, pourquoi les logits ne sont pas des probabilités et pourquoi le masque causal est nécessaire. Les paramètres restent fixes pendant cette génération.
+
+### Chemin d'apprentissage : des exemples à la mise à jour des paramètres
+
+1. On prépare des séquences d'entrée et des cibles décalées : à la position (t), le modèle doit prédire le token attendu en (t+1).
+2. Le modèle effectue une passe avant et produit les logits.
+3. La loss compare les logits aux cibles, en respectant l'alignement et les positions éventuellement ignorées.
+4. La rétropropagation calcule les gradients de la loss par rapport aux paramètres.
+5. Un optimiseur utilise ces gradients pour mettre à jour les paramètres ; validation et suivi permettent de détecter les régressions et le surapprentissage.
+
+**À savoir expliquer :** la loss définit l'objectif, le gradient décrit une variation locale de cet objectif et l'optimiseur applique une règle de mise à jour. Calculer un gradient ne garantit pas, à lui seul, une meilleure généralisation.
+
+Les deux chemins utilisent en grande partie le même calcul de modèle. Leur différence essentielle est l'usage des sorties : **générer avec des paramètres fixes** ou **évaluer une loss puis modifier les paramètres**. La génération complète depuis un checkpoint et l'entraînement reproductible restent des réalisations pratiques à construire dans ce dépôt.
+
+## Ce que chaque étape doit permettre de vérifier
+
+Les pages conceptuelles sont des ressources pour atteindre ces résultats, pas des preuves que l'implémentation correspondante existe déjà. Avant de passer à l'étape suivante, le lecteur devrait pouvoir produire ou vérifier l'élément indiqué.
+
+| Étape | Résultat observable attendu |
+|---|---|
+| Texte et tokenisation | Encoder puis décoder un court texte ; identifier les effets des tokens spéciaux et de la version du tokenizer. |
+| Exemples d'entraînement | Construire une fenêtre d'entrée et sa cible décalée ; tester les frontières, le padding et l'absence de fuite entre jeux de données. |
+| Embeddings et position | Tracer les formes de `[B, L]` à `[B, L, D]` et expliquer ce que représente chaque axe. |
+| Attention causale | Vérifier sur un exemple que modifier un token futur ne change pas les sorties des positions antérieures, à paramètres et contexte initial identiques. |
+| Bloc GPT | Tracer les dimensions à travers attention, résidus, normalisation, MLP et projection de sortie ; vérifier la cohérence du nombre de paramètres. |
+| Loss | Calculer à la main un petit cas, vérifier l'alignement logits/cibles et tester l'exclusion correcte des positions ignorées. |
+| Entraînement | Reproduire une petite exécution avec configuration et graine documentées ; suivre séparément loss d'entraînement et de validation. |
+| Génération | Charger un checkpoint et produire une séquence ; documenter décodage, arrêt et limite de contexte. |
+| Évaluation | Comparer à une baseline avec un protocole explicite ; analyser des erreurs et préciser ce que les métriques ne démontrent pas. |
+
+Ces critères sont des **objectifs pédagogiques**. Ils ne changent pas le statut du dépôt : une page disponible, un exemple calculable, un test automatisé, une exécution reproductible et une validation visuelle sont des niveaux de preuve différents.
+
 ## Jalons de construction
 
 | Étape | Ce que l'on construit | Pages conceptuelles à consulter | État pratique |
