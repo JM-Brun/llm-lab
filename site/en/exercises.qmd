@@ -4,7 +4,7 @@ subtitle: "A separate place to test and transfer knowledge"
 lang: en
 ---
 
-This page is the entry point for exercises. **The collections below are navigation scaffolding, not exercises that have already been written.** They will be populated only after prerequisite concepts have been validated and the coverage plan reviewed.
+This page is the entry point for extended exercises. Short self-checks with collapsed explanations are now embedded in selected lesson pages; they provide immediate checks of individual concepts. **The collections below remain navigation scaffolding for more substantial exercises**, to be developed after prerequisites and coverage have been reviewed.
 
 ## How to use this space
 
@@ -17,9 +17,9 @@ This page is the entry point for exercises. **The collections below are navigati
 
 | Collection | Scope | Status |
 |---|---|---|
-| [Mathematical foundations](#foundations) | Tensors, probability, logits, entropy, cross-entropy, likelihood, gradients, numerical stability | Structure to be filled |
-| [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Structure to be filled |
-| [Attention](#attention) | Q/K/V, scores, scaling, causal masks, multi-head attention, invariants | Structure to be filled |
+| [Mathematical foundations](#foundations) | Tensors, probability, logits, entropy, cross-entropy, likelihood, gradients, numerical stability | Self-checks already present on logits, probabilities, and loss; extended exercises to be developed |
+| [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Self-checks on IDs and tokenizers in text/embedding pages; extended exercises to be developed |
+| [Attention](#attention) | Q/K/V, scores, scaling, causal masks, multi-head attention, invariants | Self-checks on Q/K/V aggregation and scaling/masking; extended exercises to be developed |
 | [Transformer](#transformer) | Embeddings, position, residuals, normalization, MLP and architecture variants | Structure to be filled |
 | [Pretraining](#pretraining) | Objective, train/validation, perplexity, checkpoints and reproducibility | Structure to be filled |
 | [Generation](#generation) | Decoding, temperature, top-k/top-p, stopping, context and KV cache | Structure to be filled |
@@ -34,7 +34,7 @@ This page is the entry point for exercises. **The collections below are navigati
 
 **Prerequisites:** [mathematical foundations](mathematical-foundations.qmd), [tensors](../fr/tensors.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd), [entropy](entropy.qmd), [cross-entropy](cross-entropy.qmd), [likelihood](likelihood.qmd), [gradients](gradients.qmd).
 
-**Planned formats:** hand calculations, counterexample analysis, tensor shapes and numerical checks. No exercise statements are added in this planning step.
+**Further work:** hand calculations, counterexample analysis, tensor shapes, and numerical checks. The embedded self-checks do not replace a progressive exercise collection.
 
 ### Text data {#text-data}
 
