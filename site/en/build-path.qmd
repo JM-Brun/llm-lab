@@ -62,7 +62,7 @@ Concept pages are resources for reaching these outcomes; they are not evidence t
 | Text and tokenization | Encode and decode a short text; identify the effects of special tokens and tokenizer version. |
 | Training examples | Construct an input window and its shifted target; test boundaries, padding, and separation between data splits. |
 | Embeddings and position | Trace shapes from `[B, L]` to `[B, L, D]` and explain each axis. |
-| Causal attention | Verify on a small example that changing a future token does not change earlier-position outputs, with parameters and earlier context held fixed. |
+| Causal attention | With the model in evaluation mode (dropout disabled), verify on a small example that changing a future token does not change earlier-position outputs, with parameters and earlier context held fixed. |
 | GPT block | Trace dimensions through attention, residuals, normalization, MLP, and output projection; check parameter-count consistency. |
 | Loss | Hand-calculate a small case, verify logits/target alignment, and test correct exclusion of ignored positions. |
 | Training | Reproduce a small run with documented configuration and seed; track training and validation loss separately. |
