@@ -1,7 +1,7 @@
 ---
 title: "Explorer un Transformer : observer, tester, critiquer"
 subtitle: "Une activité guidée autour d’une exécution réelle de GPT-2 et des limites de sa visualisation"
-keywords: ["type:experiment", "destination:practice", "topic:transformer-explainer", "level:applied", "language:fr", "status:published"]
+keywords: ["type:experiment-guide", "destination:practice", "topic:transformer-explainer", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -11,13 +11,13 @@ id: "fr/transformer-explainer"
 scope: "Guide une exploration expérimentale de GPT-2 small avec Transformer Explainer : observer tokenisation, représentations, attention et décodage, concevoir des comparaisons contrôlées, puis auditer les limites de la visualisation et certains choix de son implémentation. Ne réexplique pas l'architecture générale du GPT."
 purpose: "Le lecteur doit pouvoir formuler et tester une hypothèse sur une exécution GPT-2, distinguer observation visuelle et preuve sur le calcul, identifier la chaîne computationnelle derrière l'interface et expliquer une limite concrète de l'implémentation top-p."
 suggested_route:
-  previous: "fr/transformer"
-  next: "fr/exercises"
+  previous: null
+  next: null
 hierarchy:
   parents: ["fr/transformer"]
   children: []
 related: ["fr/exercises"]
-tags: ["type:experiment", "destination:practice", "topic:transformer-explainer", "level:applied", "language:fr", "status:published"]
+tags: ["type:experiment-guide", "destination:practice", "topic:transformer-explainer", "level:applied", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
