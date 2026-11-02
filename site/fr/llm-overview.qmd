@@ -24,6 +24,15 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 Un **grand modèle de langage** (*Large Language Model*, LLM) est un modèle neuronal entraîné sur de grandes quantités de données textuelles pour traiter ou produire du langage. Le terme décrit une famille de modèles et un régime d’usage ; il ne désigne pas une architecture unique. Cette page donne la carte d’ensemble. Elle ne remplace pas les leçons détaillées sur les tokens, l’attention, la loss ou la génération.
 :::
 
+::: {.callout-note title="Résultat attendu — et place dans le parcours"}
+**Après cette page, vous devriez pouvoir :**
+- expliquer pourquoi « LLM » ne désigne pas une architecture unique ;
+- distinguer architecture, apprentissage/adaptation et inférence ;
+- expliquer pourquoi l'inférence utilise des paramètres fixes, alors que l'entraînement les modifie.
+
+C'est la **première étape du parcours conceptuel**. Il n'est pas nécessaire de maîtriser les équations ni les tenseurs à ce stade.
+::: 
+
 ::: {.callout-tip title="Comment lire ce panorama"}
 Cette page répond d’abord à trois questions : **de quoi parle-t-on, quelles grandes familles distinguer, et comment distinguer architecture, apprentissage/adaptation et utilisation ?** Elle donne les repères, sans détailler chaque opération.
 
@@ -196,6 +205,16 @@ Le RAG peut récupérer les documents à l’inférence et les fournir dans le c
 - [Gu et Dao (2023), *Mamba: Linear-Time Sequence Modeling with Selective State Spaces*](https://arxiv.org/abs/2312.00752) — exemple d’architecture de modélisation de séquence non fondée sur l’attention Transformer standard.
 
 Ces sources n’ont pas toutes le même rôle : les articles d’architecture documentent des formulations précises ; les travaux sur les modèles de fondation discutent un cadre plus large ; les travaux d’adaptation décrivent des objectifs et protocoles spécifiques. Aucun article isolé ne définit à lui seul tous les usages actuels du terme « LLM ».
+
+## Bilan : ce que vous devez pouvoir expliquer
+
+Avant de poursuivre, vérifiez que vous pouvez répondre sans relire le tableau :
+
+1. **Qu'est-ce qui définit un LLM ?** Une catégorie de modèles de langage, pas une architecture précise.
+2. **Quelles sont les trois dimensions distinctes ?** L'architecture décrit le calcul ; l'apprentissage/adaptation explique comment les paramètres sont obtenus ou ajustés ; l'inférence applique des paramètres fixés à une entrée.
+3. **Pourquoi étudier l'inférence avant l'entraînement ?** On peut comprendre le calcul d'une sortie sans connaître encore l'origine des paramètres ; leur qualité dépend toutefois de l'apprentissage ou de poids pré-entraînés.
+
+Si ces distinctions sont claires, l'étape suivante recommandée est [GPT et Transformer](transformer.qmd) : vous suivrez concrètement le calcul qui transforme un contexte de tokens en scores du prochain token. Si vous souhaitez d'abord comprendre l'entrée du système, [Du texte aux tokens](text-data.qmd) est un détour ciblé, non un prérequis.
 
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../en/llm-overview.qmd)
