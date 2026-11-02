@@ -96,7 +96,6 @@ website:
                 - fr/text-data.qmd
                 - fr/unicode-text.qmd
                 - fr/tokenization-strategies.qmd
-                - fr/training-examples.qmd
                 - fr/embedding-space.qmd
                 - fr/positional-encoding.qmd
                 - fr/contextualized-representations.qmd
@@ -105,10 +104,13 @@ website:
                 - fr/queries-keys-values.qmd
                 - fr/scaled-dot-product-attention.qmd
                 - fr/causal-masking.qmd
-            - section: "Prédire et apprendre"
+            - section: "Prédire et générer"
               contents:
                 - fr/logits.qmd
                 - fr/probabilites.qmd
+            - section: "Apprendre à partir des données"
+              contents:
+                - fr/training-examples.qmd
                 - fr/vraisemblance.qmd
                 - fr/entropy.qmd
                 - fr/cross-entropy.qmd
@@ -149,7 +151,6 @@ website:
                 - en/text-data.qmd
                 - en/unicode-text.qmd
                 - en/tokenization-strategies.qmd
-                - en/training-examples.qmd
                 - en/embedding-space.qmd
                 - en/positional-encoding.qmd
                 - en/contextualized-representations.qmd
@@ -158,10 +159,13 @@ website:
                 - en/queries-keys-values.qmd
                 - en/scaled-dot-product-attention.qmd
                 - en/causal-masking.qmd
-            - section: "Prediction and learning"
+            - section: "Predict and generate"
               contents:
                 - en/logits.qmd
                 - en/probabilities.qmd
+            - section: "Learn from data"
+              contents:
+                - en/training-examples.qmd
                 - en/likelihood.qmd
                 - en/entropy.qmd
                 - en/cross-entropy.qmd
