@@ -1,8 +1,24 @@
 ---
 title: "Probabilités de sortie : des logits aux tokens"
 subtitle: "Distribution conditionnelle, température et calibration"
+keywords: ["type:concept-lesson", "destination:understand", "topic:probabilites", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/probabilites"
+scope: "Probabilités de sortie : des logits aux tokens"
+purpose: "Expliquer la notion « Probabilités de sortie : des logits aux tokens », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/logits"
+  next: "fr/training-examples"
+hierarchy:
+  parents: ["fr/logits"]
+  children: []
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:probabilites", "level:core", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Un LLM ne produit pas directement des faits ni des probabilités de vérité. À chaque position, il produit des scores qui sont transformés en une distribution sur les tokens possibles, conditionnée par le préfixe.
