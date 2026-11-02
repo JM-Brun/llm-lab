@@ -270,7 +270,7 @@ B. Two token IDs with consecutive integer values must have similar embeddings.
 
 C. The same token ID must have the same contextualized hidden state in every sentence.
 
-D. A Transformer may incorporate position by adding learned absolute position embeddings to token embeddings, or by applying a mechanism such as RoPE inside attention.
+D. In this model, position information is added as a learned absolute vector to each token embedding.
 
 E. RoPE is applied to query/key representations inside attention, rather than being a vector universally added by the embedding lookup.
 
@@ -304,7 +304,7 @@ B. Deux IDs consécutifs doivent avoir des embeddings similaires.
 
 C. Un même ID doit produire le même état caché contextualisé dans toutes les phrases.
 
-D. Un Transformer peut intégrer la position en ajoutant des embeddings positionnels absolus appris aux embeddings des tokens, ou au moyen d'un mécanisme comme RoPE dans l'attention.
+D. Dans ce modèle, l'information positionnelle est ajoutée sous la forme d'un vecteur absolu appris à chaque embedding de token.
 
 E. RoPE s'applique aux représentations requête/clé dans l'attention ; ce n'est pas un vecteur ajouté universellement par le lookup.
 
