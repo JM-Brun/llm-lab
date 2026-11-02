@@ -15,8 +15,8 @@ suggested_route:
   next: "fr/embedding-space"
 hierarchy:
   parents: ["fr/text-data"]
-  children: ["fr/training-examples"]
-related: []
+  children: []
+related: ["fr/training-examples"]
 tags: ["type:concept-lesson", "destination:understand", "topic:tokenization-strategies", "level:core", "language:fr", "status:published"]
 -->
 
