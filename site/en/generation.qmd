@@ -1,7 +1,7 @@
 ---
 title: "Generating text: inference step by step"
 subtitle: "How a trained LLM produces one token after another"
-keywords: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:planned"]
+keywords: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:published"]
 lang: en
 ---
 
@@ -17,7 +17,7 @@ hierarchy:
   parents: ["en/llm-overview"]
   children: ["en/logits", "en/probabilities"]
 related: ["en/build-path", "en/training-examples"]
-tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:planned"]
+tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
