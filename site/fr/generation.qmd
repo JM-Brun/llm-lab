@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/generation"
-scope: "Générer du texte : l'inférence pas à pas"
-purpose: "Introduire la génération autoregressive avec paramètres fixes avant les détails internes du Transformer et la boucle d’apprentissage."
+scope: "Décrit la boucle d’inférence autorégressive d’un modèle déjà entraîné, traité comme une boîte noire : contexte, distribution du prochain token, règle de décodage, ajout du token et arrêt ; les détails internes du Transformer et l’apprentissage des paramètres sont hors périmètre."
+purpose: "Le lecteur doit pouvoir dérouler une génération token par token, expliquer pourquoi les paramètres restent fixes pendant l’inférence et prévoir comment une règle de décodage modifie la sortie sans réentraîner le modèle."
 suggested_route:
   previous: "fr/transformer"
   next: "fr/text-data"
