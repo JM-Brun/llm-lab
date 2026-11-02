@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/cross-entropy"
-scope: "Cross-entropy: the token-prediction objective"
-purpose: "Explain Cross-entropy: the token-prediction objective; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Define cross-entropy between a target distribution and the model's predicted distribution at a target position, including the one-hot case that reduces to token negative log-probability; distinguish it from the entropy of the prediction and from the batch-level loss reduction and masking policy."
+purpose: "Derive cross-entropy for a target distribution, recover negative log-probability for a one-hot target, and explain how token alignment and valid-target masking affect the quantity computed during autoregressive training."
 suggested_route:
   previous: "en/entropy"
   next: "en/loss"
