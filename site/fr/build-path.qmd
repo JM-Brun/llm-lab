@@ -9,6 +9,10 @@ Ce parcours relie les explications conceptuelles à la construction progressive 
 :::
 
 ::: {.callout-note}
+**Nouveau dans les LLM ?** Commencez par le [panorama des LLM](llm-overview.qmd) pour distinguer les familles de modèles et leur cycle de vie. Ce parcours pratique se concentre ensuite sur un GPT décodeur seul.
+:::
+
+::: {.callout-note}
 **État du projet.** Le parcours et les pages conceptuelles sont disponibles, mais le dépôt ne contient pas encore une implémentation complète et testée d'un GPT ni un entraînement reproductible de bout en bout. Les étapes ci-dessous distinguent donc les connaissances disponibles des réalisations pratiques encore à construire.
 :::
 
