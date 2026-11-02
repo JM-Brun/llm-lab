@@ -1,8 +1,24 @@
 ---
 title: "Glossaire des LLM et des Transformers"
 subtitle: "Les termes essentiels, définis au premier niveau et reliés aux pages de référence"
+keywords: ["type:glossary", "destination:reference", "topic:glossary", "level:reference", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/glossary"
+scope: "Glossaire des LLM et des Transformers"
+purpose: "Expliquer la notion « Glossaire des LLM et des Transformers », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: null
+  next: "fr/transformer-history"
+hierarchy:
+  parents: ["fr/index"]
+  children: []
+related: []
+tags: ["type:glossary", "destination:reference", "topic:glossary", "level:reference", "language:fr", "status:published"]
+-->
 
 Ce glossaire donne une définition courte des termes rencontrés dans le site. Il ne remplace pas les pages de référence : chaque lien renvoie vers une explication plus approfondie lorsqu'elle existe.
 
