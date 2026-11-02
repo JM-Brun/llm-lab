@@ -24,6 +24,24 @@ tags: ["type:concept-lesson", "destination:understand", "topic:logits", "level:c
 Un **logit** est un score réel associé à une classe ou à un token du vocabulaire, avant sa conversion en probabilité. Dans un LLM, la dernière projection produit généralement un vecteur $z\in\mathbb{R}^{V}$ à chaque position où le modèle doit prédire un token.
 :::
 
+<div class="epistemic-badges">
+  <span class="epistemic-badge badge-concept">Concept vérifié</span>
+  <span class="epistemic-badge badge-code">Explorateur interactif & code</span>
+  <span class="epistemic-badge badge-status">Étape : Prédiction & Décodage</span>
+</div>
+
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes du pipeline LLM">
+  <a class="step-item" href="text-data.qmd">1. Texte</a>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="queries-keys-values.qmd">3. Attention</a>
+  <span class="step-arrow">→</span>
+  <span class="step-item active">4. Logits & Probabilités</span>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="cross-entropy.qmd">5. Perte & Entraînement</a>
+</div>
+
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 Les **logits sont des scores, pas des probabilités**. À une position, le modèle produit un score par token du vocabulaire : le plus grand indique le candidat classé premier, mais les valeurs ne sont ni bornées entre 0 et 1 ni normalisées.
 
@@ -57,7 +75,105 @@ Pour $z=(0,\log 3)$, on obtient $p=(1/4,3/4)$. Les logits ne sont pas les probab
 
 - **Invariance par translation :** $\operatorname{softmax}(z+c\mathbf{1})=\operatorname{softmax}(z)$. Seules les différences comptent.
 - **Ordre conservé :** si $z_i>z_j$, alors $p_i>p_j$.
-- **Échelle et température :** multiplier les logits change généralement la concentration de la distribution ; ce n'est pas une simple translation.
+- **Échelle et température :** diviser les logits par une température $T > 0$ modifie la concentration de la distribution ($p_i \propto e^{z_i / T}$) sans changer l'ordre relatif des tokens. Lorsque $T \to 0$, la distribution converge vers une sélection déterministe (argmax) ; lorsque $T \to \infty$, elle tend vers la distribution uniforme $1/V$.
+
+```{=html}
+<div class="interactive-toy-box" id="temp-explorer">
+  <h4>EXPLORATEUR INTERACTIF · EFFET DE LA TEMPÉRATURE SUR LES PROBABILITÉS</h4>
+  <p style="font-size: 0.9rem; color: #475569;">
+    Modifiez la température $T$ pour observer la transition entre un décodage concentré ($T < 1$) et une distribution uniforme ($T > 1$).
+  </p>
+  <div class="interactive-controls">
+    <label for="temp-slider-fr" style="font-weight: 700; font-size: 0.9rem;">Température (T) : <span id="temp-val-fr" style="color: var(--llm-brand); font-family: monospace;">1.00</span></label>
+    <input type="range" id="temp-slider-fr" min="0.1" max="3.0" step="0.05" value="1.0" style="flex: 1; accent-color: var(--llm-brand);">
+  </div>
+  <div class="interactive-bars">
+    <div class="prob-bar-row">
+      <span class="prob-bar-label">Token A (z=3.0)</span>
+      <div class="prob-bar-track"><div class="prob-bar-fill" id="bar-fr-0" style="width: 70.5%;"></div></div>
+      <span class="prob-bar-value" id="val-fr-0">70.5%</span>
+    </div>
+    <div class="prob-bar-row">
+      <span class="prob-bar-label">Token B (z=1.5)</span>
+      <div class="prob-bar-track"><div class="prob-bar-fill" id="bar-fr-1" style="width: 15.7%;"></div></div>
+      <span class="prob-bar-value" id="val-fr-1">15.7%</span>
+    </div>
+    <div class="prob-bar-row">
+      <span class="prob-bar-label">Token C (z=1.0)</span>
+      <div class="prob-bar-track"><div class="prob-bar-fill" id="bar-fr-2" style="width: 9.5%;"></div></div>
+      <span class="prob-bar-value" id="val-fr-2">9.5%</span>
+    </div>
+    <div class="prob-bar-row">
+      <span class="prob-bar-label">Token D (z=0.2)</span>
+      <div class="prob-bar-track"><div class="prob-bar-fill" id="bar-fr-3" style="width: 4.3%;"></div></div>
+      <span class="prob-bar-value" id="val-fr-3">4.3%</span>
+    </div>
+  </div>
+  <script>
+    (function() {
+      const slider = document.getElementById('temp-slider-fr');
+      const tempVal = document.getElementById('temp-val-fr');
+      const logits = [3.0, 1.5, 1.0, 0.2];
+      function update() {
+        if (!slider) return;
+        const T = parseFloat(slider.value);
+        if (tempVal) tempVal.textContent = T.toFixed(2);
+        const scaled = logits.map(z => z / T);
+        const maxVal = Math.max(...scaled);
+        const exp = scaled.map(s => Math.exp(s - maxVal));
+        const sumExp = exp.reduce((a, b) => a + b, 0);
+        const probs = exp.map(e => e / sumExp);
+        probs.forEach((p, idx) => {
+          const bar = document.getElementById('bar-fr-' + idx);
+          const val = document.getElementById('val-fr-' + idx);
+          const pct = (p * 100).toFixed(1) + '%';
+          if (bar) bar.style.width = pct;
+          if (val) val.textContent = pct;
+        });
+      }
+      if (slider) slider.addEventListener('input', update);
+    })();
+  </script>
+</div>
+```
+
+::: {.micro-workbench}
+::: {.micro-workbench-header}
+<span>MICRO-ATELIER NUMÉRIQUE · EXPÉRIMENTATION AVEC LE SOFTMAX TEMPÉRÉ</span>
+<span>Python 3.12+ / NumPy</span>
+:::
+::: {.micro-workbench-body}
+```python
+import numpy as np
+
+logits = np.array([3.0, 1.5, 1.0, 0.2])
+
+def stable_softmax(z, temperature=1.0):
+    scaled = z / temperature
+    exp_z = np.exp(scaled - np.max(scaled))
+    return exp_z / np.sum(exp_z)
+
+# 1. Température standard (T=1.0)
+p_standard = stable_softmax(logits, temperature=1.0)
+
+# 2. Température froide (T=0.2) : accentue le maximum (effet greedy)
+p_cold = stable_softmax(logits, temperature=0.2)
+
+# 3. Température chaude (T=5.0) : aplatit la distribution vers l'uniformité
+p_hot = stable_softmax(logits, temperature=5.0)
+
+print(f"Probabilité token dominant (T=1.0) : {p_standard[0]:.2%}")
+print(f"Probabilité token dominant (T=0.2) : {p_cold[0]:.2%}")
+print(f"Probabilité token dominant (T=5.0) : {p_hot[0]:.2%}")
+
+assert p_cold[0] > p_standard[0] > p_hot[0]
+assert np.allclose(p_hot, 0.25, atol=0.1)
+```
+:::
+::: {.micro-workbench-footer}
+La température module la sélectivité du décodage sans jamais modifier l'ordre relatif des logits ($z_i > z_j \implies p_i > p_j$).
+:::
+:::
 
 Pour éviter le débordement numérique, le softmax est calculé en pratique après soustraction du maximum : $e^{z_i-m}/\sum_j e^{z_j-m}$, avec $m=\max_j z_j$.
 
@@ -67,9 +183,18 @@ Pour éviter le débordement numérique, le softmax est calculé en pratique apr
 - **« Les logits sont comparables entre modèles sans précaution. »** Pas nécessairement : architectures, températures et entraînements peuvent produire des échelles différentes.
 :::
 
+<details class="spot-the-fallacy">
+<summary>Piège fréquent : « Deux modèles ayant le même logit maximal pour un mot ont la même certitude »</summary>
+<div class="fallacy-content">
+<p><strong>Contre-exemple :</strong> Considérons le modèle A avec des logits $(10, 2, 1)$ et le modèle B avec $(10, 9{,}9, 9{,}8)$. Les deux ont le même logit maximal ($z_1 = 10$). Cependant, après softmax, le modèle A attribue plus de 99 % de probabilité au premier token (certitude quasi absolue), tandis que le modèle B répartit la probabilité presque équitablement entre les trois tokens ($\approx 34\,\%$, incertitude maximale). La certitude dépend de l'écart relatif (la marge), non de la valeur absolue du logit.</p>
+</div>
+</details>
+
 ## Dans un LLM
 
 Pour chaque position $t$, la tête de sortie fournit $z_t\in\mathbb{R}^{V}$. Le modèle choisit ou échantillonne ensuite un token à partir de la distribution associée. Pendant l'entraînement, les logits sont comparés à l'identifiant du token cible par une perte telle que la [cross-entropie](cross-entropy.qmd).
+
+Une implémentation réutilisable de la fonction softmax avec température est disponible dans `src/llm_lab/foundations/attention.py` (`softmax_with_temperature`) et couverte par les tests unitaires de `tests/unit/test_attention.py`.
 
 ## Questions de contrôle
 
@@ -104,7 +229,16 @@ Cela réduit le risque de débordement numérique. Soustraire le même maximum �
 
 </details>
 
-**Suite :** [Probabilités](probabilites.qmd) · [Vue d'ensemble](mathematical-foundations.qmd)
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="causal-masking.qmd">
+    <span class="nav-direction">← Étape précédente</span>
+    <span class="nav-title">Masque causal</span>
+  </a>
+  <a class="route-nav-card" href="probabilites.qmd">
+    <span class="nav-direction">Étape suivante →</span>
+    <span class="nav-title">Probabilités : normaliser et interpréter</span>
+  </a>
+</div>
 
 ## Pour approfondir
 

@@ -38,6 +38,38 @@ Large language models (LLMs) are a family of neural models trained on large amou
 </div>
 ::::
 
+## Three Learning Routes
+
+::: {.learning-grid}
+::: {.learning-card}
+<p class="eyebrow">ROUTE 1 · GUIDED BUILD</p>
+### Build a Small GPT
+A step-by-step roadmap to implement and understand a decoder-only model from scratch.
+[Follow the build](build-path.qmd){.card-link}
+:::
+
+::: {.learning-card}
+<p class="eyebrow">ROUTE 2 · CONCEPTS & WORKBENCHES</p>
+### Concepts & Micro-workbenches
+Self-contained lessons with executable numerical code snippets for each mechanism.
+[Explore concepts](llm-overview.qmd){.card-link}
+:::
+
+::: {.learning-card}
+<p class="eyebrow">ROUTE 3 · RIGOR & CRITIQUE</p>
+### Foundations & Limits
+Representation geometry, embedding linearity, cosine similarity, and evaluation caveats.
+[Examine foundations](mathematical-foundations.qmd){.card-link}
+:::
+:::
+
+## Transparent Reading System: Intuition, Code, and Epistemic Status
+
+To preserve scientific rigor while keeping the learning experience fluid, lessons use standardized visual markers:
+
+- <span class="epistemic-badge badge-concept">Verified Concept</span> Formal definitions, equations, and explicit mathematical assumptions.
+- <span class="epistemic-badge badge-code">Executable Micro-code</span> Inspectable Python/NumPy workbenches with shape invariants and assertion checks.
+- <span class="epistemic-badge badge-status">Architecture / Status</span> Explicit architectural scope and roadmap milestone state.
 
 ## Guided project: a small GPT
 

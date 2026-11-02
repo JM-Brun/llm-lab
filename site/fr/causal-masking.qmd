@@ -24,6 +24,24 @@ tags: ["type:concept-lesson", "destination:understand", "topic:causal-masking", 
 Pour prédire le token suivant à la position $t+1$, le modèle ne doit utiliser que les tokens déjà disponibles. Le masque causal impose cette règle dans le calcul de l'attention : ce n'est pas seulement un repère graphique.
 :::
 
+<div class="epistemic-badges">
+  <span class="epistemic-badge badge-concept">Concept vérifié</span>
+  <span class="epistemic-badge badge-code">Test d'invariance exécutable</span>
+  <span class="epistemic-badge badge-status">Architecture : Décodeur autorégressif</span>
+</div>
+
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes du pipeline LLM">
+  <a class="step-item" href="text-data.qmd">1. Texte</a>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
+  <span class="step-arrow">→</span>
+  <span class="step-item active">3. Masque causal & Attention</span>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="logits.qmd">4. Logits</a>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="cross-entropy.qmd">5. Perte & Entraînement</a>
+</div>
+
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 Le masque causal impose une règle d'information : **la sortie à la position $i$ ne doit pas dépendre d'un token situé après $i$**. Il bloque les scores correspondants avant le softmax. Il autorise généralement la position courante, car la cible prédite est le token suivant.
 
@@ -79,9 +97,63 @@ Les Transformers décodeurs comme GPT utilisent cette contrainte pour apprendre 
 - **« Tester uniquement la matrice du masque prouve l'absence de fuite. »** Faux : un autre chemin de calcul pourrait laisser passer l'information future.
 - **« Causal signifie que l'attention ne regarde que le token précédent. »** Faux : elle peut regarder toutes les positions antérieures, sauf si une autre restriction (par exemple une fenêtre glissante) est imposée.
 
+<details class="spot-the-fallacy">
+<summary>Piège fréquent : « Pourquoi s'embêter avec $-\infty$ avant le softmax ? Il suffit de multiplier par zéro après le softmax ! »</summary>
+<div class="fallacy-content">
+<p><strong>Démonstration mathématique de l'erreur :</strong> Le softmax est calculé ligne par ligne : $\sum_{j=1}^T \alpha_{ij} = 1$. Si vous appliquez le softmax sur toute la ligne puis annulez les positions futures ($\alpha_{ij} = 0$ pour $j > i$), la somme des poids restants sera strictement inférieure à 1 ($\sum_{j \le i} \alpha_{ij} < 1$). Les poids ne formeront plus une distribution de probabilité et la norme de l'état agrégé sera artificiellement compressée pour les premières positions ! En posant $M_{ij} = -\infty$ <em>avant</em> exponentiation, $e^{-\infty} = 0$ et le dénominateur normalise exactement sur les seules positions autorisées.</p>
+</div>
+</details>
+
 ## Un test qui détecte les fuites
 
-Pour une implémentation complète, gardez les tokens jusqu'à $t$ identiques, modifiez un token situé après $t$, puis vérifiez que les sorties des positions jusqu'à $t$ restent identiques à la tolérance numérique près. Il faut aussi tester les formes, les lignes entièrement masquées, les gradients et la stabilité numérique.
+Pour vérifier rigoureusement l'absence de fuite d'information : gardez les tokens jusqu'à $t$ identiques, modifiez un token situé après $t$, puis vérifiez que les sorties des positions jusqu'à $t$ restent strictement identiques.
+
+::: {.micro-workbench}
+::: {.micro-workbench-header}
+<span>MICRO-ATELIER NUMÉRIQUE · TEST D'INVARIANCE CAUSALE (NON-FUITE DU FUTUR)</span>
+<span>Python 3.12+ / NumPy</span>
+:::
+::: {.micro-workbench-body}
+```python
+import numpy as np
+
+# 1. Matrice de masque causal additif (T=4 positions)
+T = 4
+mask = np.full((T, T), -np.inf)
+mask[np.tril_indices(T)] = 0.0
+
+# 2. Données synthétiques pour T=4 tokens en dimension d=4
+np.random.seed(42)
+Q = np.random.randn(T, 4)
+K = np.random.randn(T, 4)
+V = np.random.randn(T, 4)
+
+def run_causal_attention(q, k, v, m):
+    scores = (q @ k.T) / np.sqrt(k.shape[-1]) + m
+    exp_scores = np.exp(scores - np.max(scores, axis=-1, keepdims=True))
+    exp_scores[~np.isfinite(scores)] = 0.0
+    weights = exp_scores / np.sum(exp_scores, axis=-1, keepdims=True)
+    return weights @ v, weights
+
+out_ref, w_ref = run_causal_attention(Q, K, V, mask)
+
+# 3. Modification massive d'un token FUTUR (position 3)
+K_alt = K.copy()
+V_alt = V.copy()
+K_alt[3] += 100.0
+V_alt[3] += 100.0
+
+out_alt, w_alt = run_causal_attention(Q, K_alt, V_alt, mask)
+
+# 4. Invariance mathématique absolue : les positions 0, 1 et 2 sont IDENTIQUES
+assert np.allclose(out_ref[:3], out_alt[:3]), "Fuite temporelle détectée !"
+assert not np.allclose(out_ref[3], out_alt[3]), "La position 3 devait changer."
+```
+:::
+::: {.micro-workbench-footer}
+Test formel d'invariance réussi : modifier le futur n'altère absolument aucun état passé ou présent.
+:::
+:::
 
 ## Liens avec les autres concepts
 
@@ -92,11 +164,22 @@ Pour une implémentation complète, gardez les tokens jusqu'à $t$ identiques, m
 
 ## Code et état d'implémentation
 
-Le dépôt ne contient pas encore d'implémentation d'attention réutilisable ni de test d'invariance de bout en bout. Le masque illustré est une spécification conceptuelle, pas la preuve que l'architecture entière est causale.
+Une implémentation de référence testée est disponible dans `src/llm_lab/foundations/attention.py` (`causal_mask` et `scaled_dot_product_attention`). La suite de tests `tests/unit/test_attention.py` intègre ce test d'invariance temporelle ainsi que la validation des formes et des bornes.
 
-- [Code Python disponible](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab)
-- [Tests disponibles](https://github.com/JM-Brun/llm-lab/tree/main/tests)
+- [Implémentation du masque causal](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
+- [Tests d'invariance temporelle](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
 - [Critères d'acceptation prévus](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="scaled-dot-product-attention.qmd">
+    <span class="nav-direction">← Étape précédente</span>
+    <span class="nav-title">Attention à produit scalaire mise à l'échelle</span>
+  </a>
+  <a class="route-nav-card" href="logits.qmd">
+    <span class="nav-direction">Étape suivante →</span>
+    <span class="nav-title">Logits : scores avant normalisation</span>
+  </a>
+</div>
 
 ::: {.language-switch}
 **Langue :** [Français](causal-masking.qmd) · [English](../en/causal-masking.qmd)

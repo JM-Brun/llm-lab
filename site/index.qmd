@@ -39,6 +39,38 @@ Les grands modèles de langage (LLM) sont une famille de modèles neuronaux entr
 </div>
 ::::
 
+## Trois parcours d'apprentissage
+
+::: {.learning-grid}
+::: {.learning-card}
+<p class="eyebrow">PARCOURS 1 · GUIDÉ</p>
+### Construire un petit GPT
+Un fil conducteur pas à pas pour implémenter et comprendre un décodeur de A à Z.
+[Suivre le parcours](fr/build-path.qmd){.card-link}
+:::
+
+::: {.learning-card}
+<p class="eyebrow">PARCOURS 2 · NOTIONS & MÉCANISMES</p>
+### Notions & Micro-ateliers
+Des fiches autonomes avec micro-ateliers numériques exécutables pour chaque mécanisme.
+[Explorer les notions](fr/llm-overview.qmd){.card-link}
+:::
+
+::: {.learning-card}
+<p class="eyebrow">PARCOURS 3 · RIGUEUR & CRITIQUE</p>
+### Fondations & limites
+Géométrie des représentations, hypothèse de linéarité et protocoles expérimentaux.
+[Examiner les fondations](fr/mathematical-foundations.qmd){.card-link}
+:::
+:::
+
+## Grille de lecture : distinguer intuition, code et statut
+
+Pour maintenir une rigueur sans faille tout en rendant la lecture agréable, les leçons intègrent des repères visuels normalisés :
+
+- <span class="epistemic-badge badge-concept">Concept vérifié</span> Définition formelle, équations et hypothèses mathématiques explicites.
+- <span class="epistemic-badge badge-code">Micro-code exécutable</span> Atelier Python/NumPy inspectable avec assertions sur les formes tensorielles et invariants.
+- <span class="epistemic-badge badge-status">Architecture / Statut</span> Périmètre d'application exact et jalon dans le parcours de construction.
 
 ## Projet guidé : un petit GPT
 
