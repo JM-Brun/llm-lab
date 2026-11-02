@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/cosine-similarity"
 scope: "Does cosine similarity measure semantic similarity?"
-purpose: "Explain "Does cosine similarity measure semantic similarity?", its role in an LLM, and its upstream and downstream conceptual connections."
+purpose: Explain Does cosine similarity measure semantic similarity?; describe its role in an LLM and connect it to upstream and downstream concepts.
 suggested_route:
   previous: "en/tensors"
   next: "en/embedding-linearity"
