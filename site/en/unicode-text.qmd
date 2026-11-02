@@ -1,8 +1,24 @@
 ---
 title: "Unicode, UTF-8, and text normalization"
 subtitle: "An optional technical deep dive into string representation"
+keywords: ["type:concept-lesson", "destination:understand", "topic:unicode-text", "level:core", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/unicode-text"
+scope: "Unicode, UTF-8, and text normalization"
+purpose: "Explain 'Unicode, UTF-8, and text normalization', its role in an LLM, and its upstream and downstream conceptual connections."
+suggested_route:
+  previous: "en/text-data"
+  next: "en/tokenization-strategies"
+hierarchy:
+  parents: ["en/text-data"]
+  children: []
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:unicode-text", "level:core", "language:en", "status:published"]
+-->
 
 This page is a **technical companion** to the [overview of the text-to-token path](text-data.qmd). It is not required to understand the general pipeline; it becomes useful when text looks identical on screen but produces different encodings or tokenization.
 
