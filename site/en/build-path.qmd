@@ -75,7 +75,7 @@ These criteria are **learning outcomes**, not a change in repository status: an 
 
 | Step | What you build | Concept pages | Practical status |
 |---|---|---|---|
-| 0. Define the model | Scope a small decoder-only GPT and its objectives | [Transformer overview](transformer.qmd), [history](transformer-history.qmd) | **Partial** — conceptual framing exists; a broad overview of LLM families remains to be completed |
+| 0. Define the model | Place LLM families, then scope the decoder-only GPT studied here and its objective | [LLM panorama](llm-overview.qmd), [GPT / Transformer overview](transformer.qmd), [history](transformer-history.qmd) as optional context | **Conceptual material available** — the broad panorama and the scope of the selected GPT are documented; the complete executable model remains to be built |
 | 1. Prepare text | Documented corpus, tokenizer, encoding/decoding | [Text and data](text-data.qmd), [Unicode](unicode-text.qmd), [tokenization](tokenization-strategies.qmd) | **Conceptual** — no complete, validated corpus/tokenizer pipeline is established in the repository |
 | 2. Create training examples | Context windows, shifted inputs/targets, batches and masks | [Training examples](training-examples.qmd) | **Conceptual** — rules and pitfalls are explained; the complete executable pipeline remains to be established |
 | 3. Represent tokens | Embedding lookup and positional information | [Embedding space](embedding-space.qmd), [position](positional-encoding.qmd) | **Conceptual** — no validated complete GPT embedding stack |
