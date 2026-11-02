@@ -42,9 +42,24 @@ These families are landmarks, not an exhaustive taxonomy. The 2017 Transformer p
 
 This project focuses on building a **small decoder-only GPT**. That is a pedagogical choice that makes autoregressive prediction and its mechanisms inspectable, not a claim that every LLM works this way.
 
-## 3. From pretraining to use
+## 3. Understand use before studying learning
 
-The lifecycle below is a simplified map. Exact stages and objectives vary by model; evaluation occurs at several points, not only at the end. Validation data can guide choices and adjustments. The test set should remain held out until final assessment: repeatedly using it to select a model or tune parameters would bias that assessment.
+To understand what an LLM does, start with **inference**: a model receives a context, computes an output using its current parameters and, for an autoregressive model, generates a sequence of tokens. At this stage, you do not need to know how those parameters were learned.
+
+For a GPT, the loop can be summarized as follows:
+
+1. turn the input text into tokens and token IDs;
+2. compute representations and scores for the next token;
+3. optionally convert scores into probabilities and select a token;
+4. append that token to the context and repeat until a stopping condition is met.
+
+Parameters remain fixed during ordinary inference. The pages on [tokens and representations](text-data.qmd) and [GPT and Transformers](transformer.qmd) then unpack the computation.
+
+**Why study training afterwards?** Inference explains how the model uses its parameters; training explains how those parameters are adjusted to produce useful behaviour. A randomly initialized model can execute the loop, but it generally does not generate coherent text.
+
+## 4. From pretraining to use
+
+The lifecycle below is a simplified map. It describes the chronological order of operations, not necessarily the pedagogical order in which we study them. Exact stages and objectives vary by model; evaluation occurs at several points, not only at the end. Validation data can guide choices and adjustments. The test set should remain held out until final assessment: repeatedly using it to select a model or tune parameters would bias that assessment.
 
 ```{mermaid}
 flowchart TB
