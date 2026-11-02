@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/tokenization-strategies"
-scope: "Stratégies de tokenisation : granularité, algorithmes et compromis"
-purpose: "Expliquer la notion « Stratégies de tokenisation : granularité, algorithmes et compromis », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Compare les unités de segmentation et les familles d’algorithmes de tokenisation — notamment BPE, WordPiece et unigramme — ainsi que leurs compromis de couverture, longueur et coût ; suppose la chaîne d’entrée déjà représentée en texte et s’arrête avant le lookup des embeddings."
+purpose: "Le lecteur doit pouvoir décrire le principe des principales stratégies de segmentation, comparer leurs hypothèses et compromis, et expliquer pourquoi les tokens et IDs dépendent du tokenizer et de sa version."
 suggested_route:
   previous: "fr/unicode-text"
   next: "fr/embedding-space"
