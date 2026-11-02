@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/build-path"
 scope: "Build a small GPT"
-purpose: "Explain "Build a small GPT", its role in an LLM, and its upstream and downstream conceptual connections."
+purpose: Explain Build a small GPT; describe its role in an LLM and connect it to upstream and downstream concepts.
 suggested_route:
   previous: null
   next: "en/exercises"
