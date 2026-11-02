@@ -8,6 +8,10 @@ lang: fr
 Un **GPT** est un modèle de langage fondé sur un Transformer autorégressif : à partir d'un contexte de tokens, il estime une distribution sur le token suivant. Pour comprendre le système, il faut distinguer le flux des données, les paramètres appris et la boucle de génération. Cette page donne la vue d'ensemble ; les pages liées détaillent chaque opération.
 :::
 
+::: {.callout-note}
+Cette page zoome sur un **GPT de type Transformer** ; elle ne décrit pas toutes les familles de LLM. Pour situer les architectures, le pré-entraînement, l’adaptation et l’inférence, commencez par le [panorama des LLM](llm-overview.qmd).
+:::
+
 ::: {.callout-tip title="L’essentiel en une minute"}
 Un GPT répète une même boucle : **représenter le contexte → calculer une distribution sur le prochain token → sélectionner un token → l’ajouter au contexte**. L’attention permet aux positions d’échanger de l’information ; les paramètres appris déterminent les transformations effectuées.
 
