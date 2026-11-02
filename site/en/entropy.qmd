@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/entropy"
 scope: "Entropy: uncertainty over the next token"
-purpose: "Explain "Entropy: uncertainty over the next token", its role in an LLM, and its upstream and downstream conceptual connections."
+purpose: Explain Entropy: uncertainty over the next token; describe its role in an LLM and connect it to upstream and downstream concepts.
 suggested_route:
   previous: "en/likelihood"
   next: "en/cross-entropy"
