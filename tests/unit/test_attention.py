@@ -1,8 +1,8 @@
 """Unit tests for scaled dot-product attention, causal masking, and temperature scaling."""
 
 import numpy as np
-
 import pytest
+
 from llm_lab.foundations.attention import (
     causal_mask,
     scaled_dot_product_attention,
