@@ -44,12 +44,12 @@ Pour le projet de construction, nous nous concentrons sur un **petit GPT décode
 
 ## 3. Du pré-entraînement à l’utilisation
 
-Le cycle de vie suivant est une carte simplifiée. Les étapes exactes et les objectifs dépendent du modèle ; l’évaluation intervient à plusieurs moments, pas uniquement à la fin.
+Le cycle de vie suivant est une carte simplifiée. Les étapes exactes et les objectifs dépendent du modèle ; l’évaluation intervient à plusieurs moments, pas uniquement à la fin. Les données de validation peuvent guider les choix et les ajustements. Le jeu de test doit rester tenu à l’écart jusqu’à l’évaluation finale : l’utiliser à répétition pour choisir un modèle ou régler ses paramètres biaiserait cette évaluation.
 
 ```{mermaid}
 flowchart TB
   D["Corpus et données de pré-entraînement"] --> P["Pré-entraînement : apprendre un objectif à grande échelle"]
-  P --> B["Modèle de base / foundation model"]
+  P --> B["Modèle de base<br/>parfois qualifié de foundation model"]
   B --> U["Utilisation directe : prompt et contexte"]
   B --> A["Adaptation avec mise à jour de paramètres"]
   A --> C["Fine-tuning pour une tâche, par ex. classification"]
@@ -58,7 +58,7 @@ flowchart TB
   C --> I
   S --> I
   I --> O["Sortie pour l’application"]
-  E["Évaluation sur des données adaptées à la question"] -.-> P
+  E["Validation pour les ajustements<br/>test tenu à l’écart"] -.-> P
   E -.-> A
   E -.-> I
 ```
