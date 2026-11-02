@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/loss"
-scope: "Loss: from per-token penalty to training objective"
-purpose: "Explain Loss: from per-token penalty to training objective; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Define the scalar training objective obtained by aggregating per-target penalties across valid token positions and examples, with explicit masking and reduction conventions; distinguish the local cross-entropy term from the resulting objective and from its gradient."
+purpose: "Construct a batch loss from per-token penalties, explain how masking and sum/mean/weighted reductions change the objective or gradient scale, and interpret the loss as the scalar quantity differentiated during training."
 suggested_route:
   previous: "en/cross-entropy"
   next: "en/gradients"
