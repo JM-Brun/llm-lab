@@ -10,13 +10,15 @@ A **large language model (LLM)** is a neural model trained on large amounts of t
 
 ## 1. Where do LLMs fit?
 
-Natural language processing (NLP) includes very different methods: linguistic rules, statistical models, task-specific systems, neural networks, and reusable pretrained models.
-
-Contemporary LLMs are generally deep-learning models trained at scale on text data.
-
 Artificial intelligence (AI) is the broadest field; machine learning (ML) is one part of it, and deep learning refers to learning methods based on multilayer neural networks. Current LLMs are generally deep-learning models applied to language. These categories describe different levels: “NLP” names a problem domain, whereas “deep learning” names a family of methods.
 
-### Three architectures to compare
+Natural language processing (NLP) includes very different methods: linguistic rules, statistical models, task-specific systems, neural networks, and reusable pretrained models. Contemporary LLMs are generally trained at scale on text data. They can serve as a base for multiple tasks rather than being built separately for each one. This does not mean earlier approaches have disappeared: a production system may combine rules, specialized models, document retrieval, tools, and an LLM.
+
+There is no universal parameter-count threshold that mechanically turns a model into an “LLM”. Size matters, but the term also relates to data scale, training objective, intended capabilities, and how the model is reused. The term *foundation model* is broader: it describes a model trained on extensive data and reusable as a basis for many applications, not necessarily a language-only model.
+
+## 2. Three major Transformer architecture families
+
+Architecture describes **how information flows through a model**. A training objective describes **what the model learns to predict or reconstruct**. They are related, but they are not synonyms.
 
 ```{mermaid}
 flowchart LR
@@ -25,21 +27,14 @@ flowchart LR
   D["Decoder-only<br/>Causal context<br/>Next-token prediction"]
 ```
 
-The table specifies typical objectives and uses; the diagram is an architectural guide, not a quality ranking.
-
- They can serve as a base for multiple tasks rather than being built separately for each one. This does not mean earlier approaches have disappeared: a production system may combine rules, specialized models, document retrieval, tools, and an LLM.
-
-There is no universal parameter-count threshold that mechanically turns a model into an “LLM”. Size matters, but the term also relates to data scale, training objective, intended capabilities, and how the model is reused. The term *foundation model* is broader: it describes a model trained on extensive data and reusable as a basis for many applications, not necessarily a language-only model.
-
-## 2. Three major Transformer architecture families
-
-Architecture describes **how information flows through a model**. A training objective describes **what the model learns to predict or reconstruct**. They are related, but they are not synonyms.
+The diagram presents three families as architectural alternatives, not as stages in an evolution or a quality ranking.
 
 | Family | Context access | Typical pretraining objective | Common uses | Example |
 |---|---|---|---|---|
 | **Encoder-only** | Usually bidirectional attention over the supplied sequence | Predict masked tokens (*masked language modeling*) | Text representations, classification, semantic search after adaptation | BERT |
 | **Encoder–decoder** | The encoder processes the input; the decoder generates while attending to that representation | Sequence reconstruction or transformation objective; model-dependent | Translation, summarization, text-to-text transformation | Original Transformer, T5 |
 | **Decoder-only** | Causal attention: each position uses its permitted preceding context | Predict the next token | Text continuation and prompt-conditioned generation | GPT |
+
 
 These families are landmarks, not an exhaustive taxonomy. The 2017 Transformer paper describes an encoder–decoder architecture for translation. BERT illustrates an encoder-only model and masked-token prediction. GPT illustrates an autoregressive decoder-only model. T5 shows that an encoder–decoder can be pretrained with a corruption objective and used in a text-to-text framework.
 
