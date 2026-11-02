@@ -30,7 +30,7 @@ project:
     - en/loss.qmd
     - fr/gradients.qmd
     - en/gradients.qmd
-    - fr/transformer.qmd
+    - fr/llm-overview.qmd\n    - en/llm-overview.qmd\n    - fr/transformer.qmd
     - en/transformer.qmd
     - fr/glossary.qmd
     - en/glossary.qmd
@@ -87,7 +87,7 @@ website:
         - index.qmd
         - section: "Comprendre les LLM"
           contents:
-            - fr/transformer.qmd
+            - fr/llm-overview.qmd\n            - fr/transformer.qmd
             - section: "Du texte aux représentations"
               contents:
                 - fr/text-data.qmd
@@ -139,7 +139,7 @@ website:
         - en/index.qmd
         - section: "Understand LLMs"
           contents:
-            - en/transformer.qmd
+            - en/llm-overview.qmd\n            - en/transformer.qmd
             - section: "From text to representations"
               contents:
                 - en/text-data.qmd
