@@ -1,4 +1,4 @@
-""""Small reference implementations of attention mechanisms and score transformations."""
+"""Small reference implementations of attention mechanisms and score transformations."""
 
 import numpy as np
 from numpy.typing import NDArray
