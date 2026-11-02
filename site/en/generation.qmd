@@ -59,7 +59,7 @@ These rules are **decoding choices**, not properties of the model: the same mode
 
 - **Context window.** The model only sees the current context, truncated to its maximum window; information that fell out of the window no longer influences the continuation.
 - **No memory across generations.** Each generation starts from the provided context; the model retains nothing beyond what appears in that context.
-- **Project status.** In this repository, generation from a local checkpoint remains planned work: milestone 8 of the [guided build](build-path.qmd) describes what is available and what remains to be built.
+- **Project status.** In this repository, generation from a local checkpoint remains planned work: the generation milestones of the [guided build](build-path.qmd) describe what is available and what remains to be built.
 
 ## Self-check questions
 

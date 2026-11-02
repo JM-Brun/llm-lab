@@ -59,7 +59,7 @@ Ces règles sont des **choix de décodage**, pas des propriétés du modèle : l
 
 - **Fenêtre de contexte.** Le modèle ne voit que le contexte courant, tronqué à sa fenêtre maximale ; une information sortie de la fenêtre n'influence plus la suite.
 - **Pas de mémoire entre les générations.** Chaque génération repart du contexte fourni ; le modèle ne retient rien au-delà de ce qui figure dans ce contexte.
-- **État du projet.** Dans ce dépôt, la génération depuis un checkpoint local reste un chantier : le jalon 8 du [parcours guidé](build-path.qmd) décrit ce qui est disponible et ce qui reste à construire.
+- **État du projet.** Dans ce dépôt, la génération depuis un checkpoint local reste un chantier : les jalons de génération du [parcours guidé](build-path.qmd) décrivent ce qui est disponible et ce qui reste à construire.
 
 ## Questions de contrôle
 
