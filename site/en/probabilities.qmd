@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/probabilities"
-scope: "Output probabilities: from logits to tokens"
-purpose: "Explain Output probabilities: from logits to tokens; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Define the conditional categorical distribution over the vocabulary at one autoregressive position, from logits through normalization and sampling-related transformations; distinguish next-token probabilities from sequence likelihood, predictive entropy, and the training loss."
+purpose: "Identify what a next-token probability represents, explain how logits become a normalized distribution, and distinguish normalization, calibration, temperature, and factual truth."
 suggested_route:
   previous: "en/logits"
   next: "en/training-examples"
