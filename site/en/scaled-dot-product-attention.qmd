@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/scaled-dot-product-attention"
-scope: "Scaled dot-product attention"
-purpose: "Explain Scaled dot-product attention; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Breaks down scaled dot-product attention: QKᵀ scores, scaling by key dimension, softmax normalization, and weighted aggregation of values; causal masking is treated separately, and multi-head architecture is only a further topic."
+purpose: "Readers should be able to follow the attention calculation, explain the role of scaling, and interpret the weights as an aggregation distribution conditioned on scores and the mask."
 suggested_route:
   previous: "en/queries-keys-values"
   next: "en/causal-masking"
