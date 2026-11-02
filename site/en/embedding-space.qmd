@@ -195,7 +195,7 @@ To evaluate an embedding space, return to the actual task: document retrieval, a
 
 ## Check your understanding
 
-Two occurrences of the same token ID appear in different contexts. Before the Transformer, do they select the same embedding vector? After several layers, must their representations remain identical?
+1. Two occurrences of the same token ID appear in different contexts. Before the Transformer, do they select the same embedding vector? After several layers, must their representations remain identical?
 
 <details>
 <summary>Show the reasoning</summary>
