@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/logits"
-scope: "Logits: scores before normalization"
-purpose: "Explain Logits: scores before normalization; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Defines logits as unnormalized scores over vocabulary tokens at the model output and examines their scale, differences, and transformations; distinguishes these scores from normalized probabilities and decoding rules."
+purpose: "Readers should be able to interpret a logit vector, explain why its values are not probabilities, and describe how temperature and softmax transform scores before token selection."
 suggested_route:
   previous: "en/causal-masking"
   next: "en/probabilities"
