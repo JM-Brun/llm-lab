@@ -103,6 +103,28 @@ La taille du modèle ne suffit pas à expliquer ses performances. La qualité, l
 **Pourquoi construire un petit GPT ici ?** Un modèle éducatif permet d’inspecter les données, les tenseurs, les opérations, la loss et les erreurs sur une échelle maîtrisable. Il peut vérifier qu’un mécanisme fonctionne dans un cas donné. Il ne reproduit pas les volumes de données, les ressources de calcul, les choix d’entraînement ni les capacités d’un modèle de production.
 :::
 
+## Vérifier votre compréhension
+
+Essayez de répondre avant d’ouvrir les corrigés. L’objectif est de distinguer les niveaux de description, pas de mémoriser des étiquettes.
+
+1. Un modèle utilise une architecture encodeur-décodeur et apprend à reconstruire des segments de texte masqués. Quelle information décrit l’architecture, et laquelle décrit l’objectif d’entraînement ? Peut-on en déduire qu’il s’agit d’un GPT décodeur seul ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Encodeur-décodeur décrit l’architecture : deux sous-réseaux et un flux d’information entre eux. La reconstruction de segments masqués décrit l’objectif. On ne peut pas en déduire un GPT décodeur seul : ce serait une autre famille architecturale. Architecture et objectif sont deux axes liés, mais distincts.
+
+</details>
+
+2. Une application doit répondre à partir d’une documentation qui change chaque jour. Comparez l’ajout d’une recherche documentaire (RAG) à un fine-tuning : lequel peut exploiter les nouveaux documents sans réentraîner les poids ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Le RAG peut récupérer les documents à l’inférence et les fournir dans le contexte ; les poids du modèle ne changent pas. Un fine-tuning modifie les poids à partir d’exemples d’entraînement et nécessite une nouvelle procédure d’adaptation pour intégrer les changements. Le RAG ne garantit toutefois ni la pertinence des documents récupérés ni la fidélité de la réponse.
+
+</details>
+
 ## 6. Où poursuivre dans LLM Lab ?
 
 - [**GPT et Transformer**](transformer.qmd) — suivre précisément le chemin d’un GPT autorégressif, des tokens aux probabilités du prochain token.
