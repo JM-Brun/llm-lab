@@ -74,7 +74,7 @@ Use these dimensions consistently:
 ## 6. Maintenance rules
 
 1. When adding or renaming a page, update its YAML keywords and comment block in the same change.
-2. Update incoming and outgoing relations when a page is renamed, split, merged, or moved to another destination.
+2. Keep hierarchy reciprocal: if page A lists page B as a child, page B must list A as a parent, and vice versa. Update incoming and outgoing relations when a page is renamed, split, merged, or moved to another destination.
 3. Do not infer hierarchy from sidebar indentation alone. Check the curriculum map and the page's actual learning objective.
 4. Do not force a single `previous/next` route where the subject has genuinely different entry points. Use `null` and meaningful parent/child or related links instead.
 5. Keep metadata concise; the page body remains the source of truth for the full explanation.
