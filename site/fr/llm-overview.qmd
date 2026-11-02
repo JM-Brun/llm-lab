@@ -58,9 +58,10 @@ flowchart TB
   C --> I
   S --> I
   I --> O["Sortie pour l’application"]
-  E["Validation pour les ajustements<br/>test tenu à l’écart"] -.-> P
-  E -.-> A
-  E -.-> I
+  E["Validation pour les ajustements<br/>test tenu à l’écart"] -.-> R["Revoir les choix de conception<br/>sans régler sur le jeu de test"]
+  R -.-> P
+  R -.-> A
+  R -.-> I
 ```
 
 ### Les étapes à distinguer
@@ -91,6 +92,8 @@ Un objectif de prédiction apprend à attribuer des probabilités aux suites de 
 - que le modèle possède une compréhension humaine du monde ;
 - qu’une capacité observée se généralise à toute tâche ou tout contexte ;
 - qu’un comportement soit causalement expliqué par un motif d’attention isolé.
+
+Le mot « compréhension » doit lui aussi être précisé. Il peut désigner une compétence opérationnelle mesurée sur des tâches — résumer, classer, expliquer ou résoudre un problème — ou une thèse plus forte sur la compréhension humaine, l’expérience ou l’intention. Les performances observables peuvent étayer la première interprétation dans un périmètre donné ; elles ne suffisent pas à établir la seconde. Il faut donc annoncer le critère utilisé plutôt que traiter « comprend » comme une propriété unique et directement mesurable.
 
 Les discussions sur les capacités dites *émergentes* demandent de préciser la tâche, la métrique, les seuils et les modèles comparés. Une capacité qui semble apparaître brutalement avec une métrique donnée peut dépendre de la résolution de mesure ou du protocole. Il faut examiner les résultats, les contrôles et les définitions avant de conclure à une transition qualitative.
 
