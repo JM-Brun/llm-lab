@@ -56,7 +56,7 @@ The Build route is a **sequence of implementation checkpoints**, not a parallel 
 
 | Build milestone | Conceptual source pages | Minimum practical learning | Current repository evidence |
 |---|---|---|---|
-| G0 — Define the target | LLM panorama, then Transformer overview and glossary; history as optional context only | State what a decoder-only GPT does and distinguish it from other model families | Conceptual overview exists; historical reading is not a prerequisite; a broader LLM panorama remains tracked by #108 |
+| G0 — Define the target | LLM panorama, then Transformer overview and glossary; history as optional context only | State what a decoder-only GPT does and distinguish it from other model families | Bilingual panorama authored on draft PR #213; browser review and #108 acceptance remain pending. Historical reading is not a prerequisite |
 | G1 — Prepare text and tokenizer | Text/data, Unicode, tokenization | Load a licensed corpus, tokenize/decode, document provenance and deterministic splits | Conceptual pages exist; no complete end-to-end corpus/tokenizer pipeline is established by this audit |
 | G2 — Create training examples | Training examples | Build context windows, shifted targets, batches and masks; test alignment and leakage boundaries | Detailed conceptual explanation exists; production-ready data pipeline is not established |
 | G3 — Represent tokens | Embedding space, positional encoding; tensors as needed | Use embedding lookup and positional information; inspect only the shapes required by the implementation | Conceptual pages exist; no complete GPT embedding stack is established |
