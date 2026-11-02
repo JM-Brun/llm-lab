@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/transformer-history"
-scope: "Historique des Transformers"
-purpose: "Expliquer la notion « Historique des Transformers », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Présente une chronologie pédagogique sélective des précurseurs et jalons ayant conduit aux architectures Transformer et aux familles modernes de LLM, en distinguant dates de soumission, d’annonce et de mise à disposition. Elle évite explicitement de prétendre à l’exhaustivité, à une priorité absolue ou à une chaîne causale unique entre attention et modèles actuels."
+purpose: "Situer les principaux jalons historiques, distinguer familles d’architectures et objectifs d’entraînement, et interpréter avec recul ce qu’une chronologie sélective permet d’établir sans lui attribuer une couverture exhaustive ni une causalité simpliste."
 suggested_route:
   previous: "fr/glossary"
   next: null
