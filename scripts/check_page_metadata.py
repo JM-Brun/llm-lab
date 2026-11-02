@@ -96,6 +96,11 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
 
     comments = COMMENT.findall(source)
     marker_count = source.count(MARKER)
+    metadata_follows_front_matter = re.match(
+        r"\\s*<!--\\s*\\nLLM-LAB-PAGE-MAP v1\\n", source[front_match.end() :]
+    ) is not None
+    if not metadata_follows_front_matter:
+        errors.append(f"{relative}: page-map comment must immediately follow front matter")
     if len(comments) != 1 or marker_count != 1:
         errors.append(
             f"{relative}: expected exactly one {MARKER!r} comment, "
@@ -125,6 +130,8 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
             errors.append(
                 f"{relative}.id: expected {expected_id!r} from source path, found {page_id!r}"
             )
+    if not isinstance(page_id, str) or not ID_PATTERN.fullmatch(page_id):
+        return None
 
     for field in ("scope", "purpose"):
         if not isinstance(metadata.get(field), str) or not metadata[field].strip():
@@ -135,6 +142,9 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
         errors.append(f"{relative}.suggested_route: expected a mapping")
         route = {}
     for field in ("previous", "next"):
+        if field not in route:
+            errors.append(f"{relative}.suggested_route.{field}: required field is missing")
+    for field in ("previous", "next"):
         target = route.get(field)
         if target is not None and not isinstance(target, str):
             errors.append(f"{relative}.suggested_route.{field}: expected a page ID or null")
@@ -143,6 +153,9 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
     if not isinstance(hierarchy, dict):
         errors.append(f"{relative}.hierarchy: expected a mapping")
         hierarchy = {}
+    for field in LIST_FIELDS[:2]:
+        if field not in hierarchy:
+            errors.append(f"{relative}.hierarchy.{field}: required field is missing")
     relations: dict[str, Any] = {
         "previous": route.get("previous"),
         "next": route.get("next"),
