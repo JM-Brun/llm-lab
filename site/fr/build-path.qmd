@@ -62,7 +62,7 @@ Les pages conceptuelles sont des ressources pour atteindre ces résultats, pas d
 | Texte et tokenisation | Encoder puis décoder un court texte ; identifier les effets des tokens spéciaux et de la version du tokenizer. |
 | Exemples d'entraînement | Construire une fenêtre d'entrée et sa cible décalée ; tester les frontières, le padding et l'absence de fuite entre jeux de données. |
 | Embeddings et position | Tracer les formes de `[B, L]` à `[B, L, D]` et expliquer ce que représente chaque axe. |
-| Attention causale | Vérifier sur un exemple que modifier un token futur ne change pas les sorties des positions antérieures, à paramètres et contexte initial identiques. |
+| Attention causale | En mode évaluation (dropout désactivé), vérifier sur un exemple que modifier un token futur ne change pas les sorties des positions antérieures, à paramètres et contexte initial identiques. |
 | Bloc GPT | Tracer les dimensions à travers attention, résidus, normalisation, MLP et projection de sortie ; vérifier la cohérence du nombre de paramètres. |
 | Loss | Calculer à la main un petit cas, vérifier l'alignement logits/cibles et tester l'exclusion correcte des positions ignorées. |
 | Entraînement | Reproduire une petite exécution avec configuration et graine documentées ; suivre séparément loss d'entraînement et de validation. |
