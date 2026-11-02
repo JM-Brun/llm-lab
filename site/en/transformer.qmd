@@ -15,7 +15,7 @@ suggested_route:
   next: "en/generation"
 hierarchy:
   parents: ["en/llm-overview"]
-  children: ["en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/queries-keys-values", "en/logits", "en/tensors"]
+  children: ["en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/queries-keys-values", "en/logits", "en/tensors", "en/transformer-explainer"]
 related: ["en/text-data"]
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:en", "status:published"]
 -->
