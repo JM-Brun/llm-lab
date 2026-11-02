@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/mathematical-foundations"
-scope: "The mathematical chain of LLM training"
-purpose: "Explain The mathematical chain of LLM training; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Provides a compact mathematical map linking logits, softmax probabilities, observed-token likelihood, cross-entropy, aggregated loss, and gradients, with shared notation and key caveats. It orients readers toward canonical concept lessons rather than serving as a prerequisite course or replacing their detailed derivations."
+purpose: "Follow the mathematical quantities from model scores to parameter gradients, interpret the shared notation and equations, and explain why likelihood, entropy, cross-entropy, loss, and gradients are related but not interchangeable."
 suggested_route:
   previous: null
   next: "en/tensors"

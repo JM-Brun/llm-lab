@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/glossary"
-scope: "LLM and Transformer glossary"
-purpose: "Explain LLM and Transformer glossary; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Acts as a concise reference index for terminology used across the site, grouped by topic and linked to canonical explanations. It provides first-pass definitions, not complete derivations, a learning sequence, or a substitute for the linked concept pages."
+purpose: "Locate a term, understand its short working definition, and follow the canonical page for assumptions, equations, examples, and limitations that a glossary entry cannot provide."
 suggested_route:
   previous: null
   next: "en/transformer-history"
