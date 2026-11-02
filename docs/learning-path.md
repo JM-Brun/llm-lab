@@ -40,7 +40,7 @@ This crosswalk connects the public conceptual course to the guided build and opt
 ### How the three learning depths work together
 
 - **Panorama:** build a short mental model of an LLM and its lifecycle. The bilingual family-level panorama is published on `main` (merged PR #213). Issue #108 acceptance checks and rendered-page browser review remain pending.
-- **Guided build:** follow G0–G9 to implement, train, validate and generate with a small GPT from randomly initialized parameters. Stop at unmet evidence gates; the current foundational gate is #82.
+- **Guided build:** follow the G0–G9 dependency graph to assemble a small GPT, demonstrate inference with its initially random parameters, prepare training examples, train and validate it, then generate again from the trained checkpoint. Stop at unmet evidence gates; the current foundational gate is #82.
 - **Deep dives:** enter concept pages, mathematical derivations, critical analyses and experiments when they answer a concrete question. They are optional branches, not a second mandatory syllabus.
 
 The sidebar is intentionally a map of **available canonical pages**, not a complete representation of every future lifecycle stage. In both languages, the mathematical-foundations page remains an optional orientation map at the end of Understand, not a prerequisite at the top of the sequence. The landing page should expose Practice & experiment alongside the other first-visit routes. Planned training, generation and adaptation stages must be described as planned in the curriculum and homepage until their destinations and evidence exist. Do not create empty links merely to make the menu appear complete.
