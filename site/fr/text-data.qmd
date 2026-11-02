@@ -1,8 +1,24 @@
 ---
 title: "Du texte aux tokens : représenter le langage"
 subtitle: "Le parcours conceptuel du texte aux représentations du modèle"
+keywords: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/text-data"
+scope: "Du texte brut aux données textuelles fournies au modèle."
+purpose: "Définir l’entrée textuelle et distinguer contexte d’inférence et corpus d’apprentissage."
+suggested_route:
+  previous: "fr/transformer"
+  next: "fr/unicode-text"
+hierarchy:
+  parents: ["fr/transformer"]
+  children: ["fr/unicode-text", "fr/tokenization-strategies", "fr/training-examples"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Un modèle de langage reçoit une séquence d'identifiants numériques, pas du texte brut. La tokenisation définit comment le texte est converti en identifiants et comment ceux-ci sont décodés. Elle est distincte du réseau neuronal, mais conditionne son vocabulaire, la longueur des séquences, le coût de calcul et certains comportements observables.
