@@ -195,7 +195,7 @@ Pour évaluer un espace d'embeddings, revenir à la tâche réelle : recherche d
 
 ## Vérifier votre compréhension
 
-Deux occurrences du même ID apparaissent dans des contextes différents. Avant le Transformer, sélectionnent-elles le même vecteur d’embedding ? Après plusieurs couches, leurs représentations doivent-elles rester identiques ?
+1. Deux occurrences du même ID apparaissent dans des contextes différents. Avant le Transformer, sélectionnent-elles le même vecteur d’embedding ? Après plusieurs couches, leurs représentations doivent-elles rester identiques ?
 
 <details>
 <summary>Afficher le raisonnement</summary>
