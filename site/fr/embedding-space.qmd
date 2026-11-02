@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/embedding-space"
-scope: "L'espace des embeddings"
-purpose: "Expliquer la notion « L'espace des embeddings », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Étudie la table d’embeddings comme correspondance apprise entre IDs de tokens et vecteurs initiaux, puis les propriétés géométriques de ces vecteurs ; distingue ce lookup des représentations contextualisées produites par les couches du réseau et des embeddings utilisés dans d’autres architectures ou tâches."
+purpose: "Le lecteur doit pouvoir expliquer comment un ID sélectionne un vecteur appris, distinguer taille du vocabulaire et dimension vectorielle, et interpréter avec prudence les notions de distance, similarité et géométrie dans cet espace."
 suggested_route:
   previous: "fr/tokenization-strategies"
   next: "fr/positional-encoding"
