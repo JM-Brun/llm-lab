@@ -75,7 +75,7 @@ Ces critères sont des **objectifs pédagogiques**. Ils ne changent pas le statu
 
 | Étape | Ce que l'on construit | Pages conceptuelles à consulter | État pratique |
 |---|---|---|---|
-| 0. Définir le modèle | Délimiter un petit GPT décodeur seul et ses objectifs | [Vue d'ensemble Transformer](transformer.qmd), [historique](transformer-history.qmd) | **Partiel** — le cadre conceptuel existe ; le panorama général des familles de LLM reste à compléter |
+| 0. Définir le modèle | Situer les familles de LLM, puis délimiter le GPT décodeur seul étudié ici et son objectif | [Panorama des LLM](llm-overview.qmd), [vue d'ensemble GPT / Transformer](transformer.qmd), [historique](transformer-history.qmd) en contexte facultatif | **Conceptuel disponible** — le panorama général et le périmètre du GPT étudié sont documentés ; le modèle exécutable complet reste à construire |
 | 1. Préparer le texte | Corpus documenté, tokenizer, encodage/décodage | [Texte et données](text-data.qmd), [Unicode](unicode-text.qmd), [tokenisation](tokenization-strategies.qmd) | **Conceptuel** — pas de pipeline corpus/tokenizer complet validé dans le dépôt |
 | 2. Former les exemples | Fenêtres de contexte, entrées/cibles décalées, batches et masques | [Exemples d'entraînement](training-examples.qmd) | **Conceptuel** — les règles et pièges sont expliqués ; le pipeline exécutable complet reste à établir |
 | 3. Représenter les tokens | Lookup d'embeddings et information de position | [Espace des embeddings](embedding-space.qmd), [position](positional-encoding.qmd) | **Conceptuel** — pas de pile d'embeddings GPT complète validée |
