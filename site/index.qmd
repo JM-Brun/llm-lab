@@ -75,7 +75,7 @@ Le même modèle intervient dans plusieurs processus, mais ceux-ci n'ont ni le m
 
 ## Parcours conceptuel
 
-Commencez par la [vue d’ensemble GPT / Transformer](fr/transformer.qmd), puis suivez les pages conceptuelles dans l’ordre de la navigation : du texte et des représentations jusqu’au calcul du modèle, à la prédiction et au signal d’apprentissage. L’évaluation reste transversale ; elle ne constitue pas une simple dernière étape de génération.
+Commencez par le [panorama des LLM](fr/llm-overview.qmd) pour situer les familles de modèles et leur cycle de vie. Passez ensuite à la [vue d’ensemble GPT / Transformer](fr/transformer.qmd), qui zoome sur le modèle décodeur seul construit dans ce projet, puis utilisez le parcours guidé pour relier les mécanismes aux jalons de construction. Les pages conceptuelles détaillent les opérations ; l’évaluation reste transversale et ne constitue pas une simple dernière étape de génération.
 
 La carte détaillée des trois profondeurs pédagogiques et des jalons de construction est maintenue dans le [parcours d’apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md). Les pages de tenseurs et les développements mathématiques avancés sont des références facultatives, non des prérequis.
 
