@@ -41,6 +41,8 @@ Distinguish **inference** (using existing parameters to produce a token) from **
 
 **Be able to explain:** why the model predicts one token at a time, why logits are not probabilities, and why causal masking is needed. Parameters remain fixed during this generation process.
 
+This loop and the rules for selecting the next token are detailed on the [Generating text: inference step by step](generation.qmd) page.
+
 ### Learning path: from examples to parameter updates
 
 1. Prepare input sequences and shifted targets: at position (t), the model should predict the expected token at (t+1).
@@ -83,7 +85,7 @@ These criteria are **learning outcomes**, not a change in repository status: an 
 | 5. Assemble GPT | Transformer blocks, residuals, normalization, MLP and output projection | [Transformer](transformer.qmd), [tensors](tensors.qmd) as needed | **Partial** — system overview exists; a complete configurable and tested model does not |
 | 6. Compute the loss | Align logits and targets, calculate and reduce the objective | [Logits](logits.qmd), [probabilities](probabilities.qmd), [likelihood](likelihood.qmd), [cross-entropy](cross-entropy.qmd), [loss](loss.qmd) | **Partial** — a NumPy loss/gradient reference and tests exist; this is not GPT training |
 | 7. Train and validate | Autograd, optimizer, training loop, validation and checkpoints | [Gradients](gradients.qmd), [evaluation](experimental-evaluation.qmd) | **To build** — no reproducible end-to-end GPT training run |
-| 8. Generate | Autoregressive decoding, sampling and stopping | [Transformer](transformer.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd) | **Partial** — principles are explained; complete generation from a local checkpoint is not established |
+| 8. Generate | Autoregressive decoding, sampling and stopping | [Transformer](transformer.qmd), [generation step by step](generation.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd) | **Partial** — principles are explained; complete generation from a local checkpoint is not established |
 | 9. Evaluate | Baselines, metrics, error analysis and limitations | [Experimental evaluation](experimental-evaluation.qmd) | **Method available** — no complete evaluation of a locally trained GPT |
 
 Detailed prerequisites, expected evidence, dependencies and validation criteria are maintained in the [versioned build plan](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).

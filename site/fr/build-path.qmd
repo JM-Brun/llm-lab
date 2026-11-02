@@ -41,6 +41,8 @@ Il faut distinguer **l'inférence** (utiliser les paramètres existants pour pro
 
 **À savoir expliquer :** pourquoi le modèle prédit un token à la fois, pourquoi les logits ne sont pas des probabilités et pourquoi le masque causal est nécessaire. Les paramètres restent fixes pendant cette génération.
 
+La boucle de génération et les règles de sélection du prochain token sont détaillées sur la page [Générer du texte : l'inférence pas à pas](generation.qmd).
+
 ### Chemin d'apprentissage : des exemples à la mise à jour des paramètres
 
 1. On prépare des séquences d'entrée et des cibles décalées : à la position (t), le modèle doit prédire le token attendu en (t+1).
@@ -83,7 +85,7 @@ Ces critères sont des **objectifs pédagogiques**. Ils ne changent pas le statu
 | 5. Assembler le GPT | Blocs Transformer, résidus, normalisation, MLP et projection de sortie | [Transformer](transformer.qmd), [tenseurs](tensors.qmd) en référence si nécessaire | **Partiel** — vue système disponible ; modèle complet configurable et testé absent |
 | 6. Calculer la loss | Aligner logits et cibles, calculer et agréger la perte | [Logits](logits.qmd), [probabilités](probabilites.qmd), [vraisemblance](vraisemblance.qmd), [cross-entropie](cross-entropy.qmd), [loss](loss.qmd) | **Partiel** — une référence NumPy de loss/gradient et ses tests existent ; ce n'est pas un entraînement GPT |
 | 7. Entraîner et valider | Autograd, optimiseur, boucle d'entraînement, validation et checkpoints | [Gradients](gradients.qmd), [évaluation](evaluation-experimentale.qmd) | **À construire** — pas d'entraînement GPT reproductible de bout en bout |
-| 8. Générer | Décodage autoregressif, échantillonnage et arrêt | [Transformer](transformer.qmd), [logits](logits.qmd), [probabilités](probabilites.qmd) | **Partiel** — principes expliqués ; génération complète depuis un checkpoint local non établie |
+| 8. Générer | Décodage autoregressif, échantillonnage et arrêt | [Transformer](transformer.qmd), [génération pas à pas](generation.qmd), [logits](logits.qmd), [probabilités](probabilites.qmd) | **Partiel** — principes expliqués ; génération complète depuis un checkpoint local non établie |
 | 9. Évaluer | Baselines, métriques, analyse d'erreurs et limites | [Évaluation expérimentale](evaluation-experimentale.qmd) | **Méthode disponible** — pas d'évaluation complète d'un GPT entraîné localement |
 
 Le détail des prérequis, preuves attendues, dépendances et critères de validation est maintenu dans le [plan de construction versionné](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).

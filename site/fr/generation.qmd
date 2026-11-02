@@ -1,0 +1,97 @@
+---
+title: "Générer du texte : l'inférence pas à pas"
+subtitle: "Comment un LLM entraîné produit un token après un token"
+lang: fr
+---
+
+::: {.chapter-lead}
+**Générer du texte**, pour un LLM déjà entraîné, c'est répéter une même boucle : représenter le contexte courant, estimer la distribution du prochain token, en sélectionner un, l'ajouter au contexte, puis recommencer. Pendant toute la boucle, **les paramètres du modèle restent fixes** : on parle d'**inférence** (ou de génération), à distinguer de l'apprentissage, qui modifie ces paramètres.
+:::
+
+::: {.callout-note}
+Cette page suit un modèle **déjà entraîné, traité comme une boîte noire** : aucun détail d'architecture ni d'entraînement n'est nécessaire ici. Les pages [logits](logits.qmd) et [probabilités](probabilites.qmd) détaillent ensuite la distribution produite à chaque pas ; la suite du parcours explique comment ces paramètres sont appris.
+:::
+
+::: {.callout-tip title="L'idée à retenir en une minute"}
+Un LLM n'écrit pas un texte d'un bloc : il produit **un token à la fois**. À chaque pas, il estime une distribution de probabilités sur le vocabulaire, conditionnée par le contexte courant ; une **règle de décodage** transforme cette distribution en un unique token ; ce token est ajouté au contexte et la boucle recommence. Changer la règle de décodage change le texte produit **sans changer le modèle**.
+:::
+
+## La boucle de génération, étape par étape
+
+1. **Préparer le contexte.** Le texte de départ est découpé en [tokens](text-data.qmd) et converti en identifiants. Si le contexte dépasse la fenêtre maximale du modèle, il est tronqué selon une règle propre à chaque modèle.
+2. **Estimer la distribution du prochain token.** Le modèle produit, pour chaque token du vocabulaire, un score puis une probabilité. Cette distribution dépend du contexte courant : c'est une probabilité conditionnelle.
+3. **Sélectionner le prochain token.** Une règle de décodage (voir ci-dessous) transforme la distribution en un unique choix : soit déterministe, soit tiré au hasard selon les probabilités.
+4. **Ajouter le token et recommencer.** Le token sélectionné est ajouté au contexte, et la boucle repart à l'étape 2 avec un contexte rallongé d'un token.
+5. **Arrêter.** La génération s'arrête sur un critère explicite — token de fin, longueur maximale, ou règle imposée par l'application — jamais parce que le modèle « aurait fini de réfléchir ».
+
+À chaque pas, le contexte s'allonge d'un token : les prédictions suivantes sont donc aussi conditionnées par les tokens que le modèle vient de produire lui-même.
+
+## L'inférence n'apprend rien
+
+Contrairement à l'apprentissage, la boucle de génération **ne modifie aucun paramètre**. Avec une règle déterministe, le même contexte produit toujours la même suite ; seule une règle aléatoire (échantillonnage) introduit de la variabilité. Générer beaucoup de texte n'entraîne pas le modèle : rien de ce qui est produit n'est mémorisé au-delà du contexte courant.
+
+C'est la distinction reprise par le [parcours de construction](build-path.qmd) : **générer avec des paramètres fixes**, ou **évaluer une loss puis modifier les paramètres**.
+
+## Choisir le prochain token : trois familles de règles
+
+### Sélection gloutonne (argmax)
+
+Le token le plus probable est sélectionné systématiquement. Le résultat est reproductible, mais les textes générés sont souvent répétitifs : une fois engagé dans une boucle, le modèle peut la parcourir indéfiniment.
+
+### Échantillonnage selon la distribution
+
+Le token est tiré au hasard selon les probabilités. Les textes varient d'une exécution à l'autre ; un token peu probable peut apparaître, parfois au prix de la cohérence.
+
+### Échantillonnage ajusté : température et troncature
+
+- **Température.** Avant la normalisation, les logits sont divisés par une température $T$ : $p_i \propto e^{z_i/T}$. Une température basse concentre la distribution sur le token le plus probable ; une température élevée l'aplatit. Voir la page [logits](logits.qmd) pour l'effet de l'échelle.
+- **Top-k et top-p (nucleus).** On ne garde que les $k$ tokens les plus probables, ou le plus petit ensemble de tokens dont la probabilité cumulée dépasse un seuil $p$ ; le tirage se fait alors dans cet ensemble réduit.
+
+Ces règles sont des **choix de décodage**, pas des propriétés du modèle : le même modèle peut produire des textes très différents selon la règle retenue et ses paramètres.
+
+::: {.callout-warning title="Idées reçues"}
+- **« Le modèle choisit toujours le meilleur token. »** Non : avec échantillonnage, un token moins probable peut être sélectionné ; et « meilleur » n'est pas défini sans une règle de décodage.
+- **« Une probabilité élevée garantit un token correct. »** Non : la distribution traduit des régularités statistiques apprises, pas la vérité factuelle. Un modèle peut attribuer une probabilité élevée à une suite fausse.
+- **« Les répétitions sont un bug. »** Pas nécessairement : avec une règle gloutonne, des boucles de répétition sont un comportement attendu ; elles relèvent du choix de décodage, pas d'une défaillance aléatoire.
+:::
+
+## Limites à garder en tête
+
+- **Fenêtre de contexte.** Le modèle ne voit que le contexte courant, tronqué à sa fenêtre maximale ; une information sortie de la fenêtre n'influence plus la suite.
+- **Pas de mémoire entre les générations.** Chaque génération repart du contexte fourni ; le modèle ne retient rien au-delà de ce qui figure dans ce contexte.
+- **État du projet.** Dans ce dépôt, la génération depuis un checkpoint local reste un chantier : le jalon 8 du [parcours guidé](build-path.qmd) décrit ce qui est disponible et ce qui reste à construire.
+
+## Questions de contrôle
+
+1. Pourquoi un même modèle avec un même contexte peut-il produire des textes différents ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Parce que la règle de décodage peut être aléatoire : l'échantillonnage tire un token selon la distribution, et ce tirage change le contexte des pas suivants.
+
+</details>
+
+2. Pourquoi une température proche de zéro rend-elle la génération proche d'une sélection gloutonne ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Diviser les logits par un $T$ très petit amplifie leurs différences ; la distribution devient très concentrée sur le token le plus probable, et le tirage devient quasi déterministe.
+
+</details>
+
+3. Pourquoi la génération ne peut-elle pas corriger un modèle mal entraîné ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Les paramètres restent fixes pendant l'inférence : aucune mise à jour n'a lieu, quel que soit le nombre de tokens générés.
+
+</details>
+
+**Suite :** [Logits](logits.qmd) · [Probabilités](probabilites.qmd) · [Parcours de construction](build-path.qmd)
+
+::: {.language-switch}
+[Français](generation.qmd) · [English](../en/generation.qmd)
+:::

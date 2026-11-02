@@ -34,6 +34,8 @@ project:
     - en/llm-overview.qmd
     - fr/transformer.qmd
     - en/transformer.qmd
+    - fr/generation.qmd
+    - en/generation.qmd
     - fr/glossary.qmd
     - en/glossary.qmd
     - fr/transformer-history.qmd
@@ -91,6 +93,7 @@ website:
           contents:
             - fr/llm-overview.qmd
             - fr/transformer.qmd
+            - fr/generation.qmd
             - section: "Du texte aux représentations"
               contents:
                 - fr/text-data.qmd
@@ -105,10 +108,12 @@ website:
                 - fr/queries-keys-values.qmd
                 - fr/scaled-dot-product-attention.qmd
                 - fr/causal-masking.qmd
-            - section: "Prédire et apprendre"
+            - section: "Prédire le prochain token (inférence)"
               contents:
                 - fr/logits.qmd
                 - fr/probabilites.qmd
+            - section: "Apprendre : loss et gradients"
+              contents:
                 - fr/vraisemblance.qmd
                 - fr/entropy.qmd
                 - fr/cross-entropy.qmd
@@ -144,6 +149,7 @@ website:
           contents:
             - en/llm-overview.qmd
             - en/transformer.qmd
+            - en/generation.qmd
             - section: "From text to representations"
               contents:
                 - en/text-data.qmd
@@ -158,10 +164,12 @@ website:
                 - en/queries-keys-values.qmd
                 - en/scaled-dot-product-attention.qmd
                 - en/causal-masking.qmd
-            - section: "Prediction and learning"
+            - section: "Predicting the next token (inference)"
               contents:
                 - en/logits.qmd
                 - en/probabilities.qmd
+            - section: "Learning: loss and gradients"
+              contents:
                 - en/likelihood.qmd
                 - en/entropy.qmd
                 - en/cross-entropy.qmd
