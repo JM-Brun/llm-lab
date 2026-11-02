@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/causal-masking"
 scope: "Causal masking"
-purpose: "Explain "Causal masking", its role in an LLM, and its upstream and downstream conceptual connections."
+purpose: Explain Causal masking; describe its role in an LLM and connect it to upstream and downstream concepts.
 suggested_route:
   previous: "en/scaled-dot-product-attention"
   next: "en/logits"
