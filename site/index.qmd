@@ -9,14 +9,14 @@ toc: false
 :::: {.hero-intro}
 <p class="eyebrow">OBSERVER · EXPLIQUER · VÉRIFIER</p>
 
-## Comment un modèle de langage produit-il le prochain token ?
+## Qu’est-ce qu’un LLM, et comment produit-il du texte ?
 
-Un LLM autorégressif reçoit une séquence de tokens et calcule une distribution de probabilités sur le token suivant. Cette opération apparemment simple mobilise des données, des représentations numériques, des mécanismes d’attention et un objectif d’apprentissage.
+Les grands modèles de langage (LLM) sont une famille de modèles neuronaux entraînés sur de grandes quantités de texte. Beaucoup de modèles actuels utilisent un Transformer autorégressif qui prédit le prochain token, mais les LLM ne se réduisent ni à une architecture unique ni à cette seule tâche.
 
 **LLM Lab relie ces mécanismes à leurs explications mathématiques et à leur comportement observable.** Le but n’est pas de croire une intuition parce qu’un schéma paraît convaincant : c’est de comprendre ce qu’un composant calcule, de vérifier ce qu’on peut tester et d’identifier ce qui reste une hypothèse ou une limite.
 
 <div class="hero-actions">
-[Explorer la vue d’ensemble GPT / Transformer](fr/transformer.qmd){.btn .btn-primary}
+[Découvrir le panorama des LLM](fr/llm-overview.qmd){.btn .btn-primary}
 [Construire un petit GPT](fr/build-path.qmd){.btn .btn-outline-primary}
 [Approfondir les notions (facultatif)](fr/tensors.qmd){.btn .btn-outline-primary}
 [S’exercer et expérimenter](fr/exercises.qmd){.btn .btn-outline-primary}
