@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/loss"
-scope: "Loss : de la perte par token à l'objectif"
-purpose: "Expliquer la notion « Loss : de la perte par token à l'objectif », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Définir l'objectif scalaire d'entraînement obtenu en agrégeant les pénalités par token cible sur les positions et exemples valides, avec des conventions explicites de masquage et de réduction ; distinguer le terme local de cross-entropie de l'objectif agrégé et de son gradient."
+purpose: "Construire une loss de batch à partir des pénalités par token, expliquer comment le masquage et les réductions somme/moyenne/pondérée modifient l'objectif ou l'échelle du gradient, et interpréter la loss comme la quantité scalaire dérivée pendant l'entraînement."
 suggested_route:
   previous: "fr/cross-entropy"
   next: "fr/gradients"

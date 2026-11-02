@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/cross-entropy"
-scope: "Entropie croisée : l'objectif de prédiction des tokens"
-purpose: "Expliquer la notion « Entropie croisée : l'objectif de prédiction des tokens », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Définir l'entropie croisée entre une distribution cible et la distribution prédite par le modèle à une position cible, y compris le cas one-hot qui se réduit à la négative log-probabilité du token ; la distinguer de l'entropie de la prédiction et des conventions de masquage et de réduction de la loss sur un batch."
+purpose: "Dériver l'entropie croisée pour une distribution cible, retrouver la négative log-probabilité dans le cas one-hot et expliquer l'effet de l'alignement des tokens et du masquage des cibles valides pendant l'entraînement autorégressif."
 suggested_route:
   previous: "fr/entropy"
   next: "fr/loss"

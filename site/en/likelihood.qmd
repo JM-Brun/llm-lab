@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/likelihood"
-scope: "Likelihood and log-likelihood"
-purpose: "Explain Likelihood and log-likelihood; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Define the probability assigned to an observed token sequence under fixed model parameters, using the autoregressive chain-rule factorization and its logarithm; distinguish sequence likelihood and log-likelihood from one-step predictive uncertainty, cross-entropy as a target-distribution measure, and dataset-level loss reduction."
+purpose: "Compute a sequence likelihood from conditional token probabilities, convert products to summed log-likelihoods, and explain why maximizing log-likelihood corresponds to minimizing negative log-likelihood for fixed observations."
 suggested_route:
   previous: "en/training-examples"
   next: "en/entropy"

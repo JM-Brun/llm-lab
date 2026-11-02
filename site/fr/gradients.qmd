@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/gradients"
-scope: "Gradients : relier la perte aux paramètres"
-purpose: "Expliquer la notion « Gradients : relier la perte aux paramètres », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Définir les dérivées de l'objectif d'entraînement par rapport aux logits et aux paramètres appris, et expliquer la rétropropagation comme application efficace de la règle de chaîne ; distinguer sensibilité locale, règle de mise à jour de l'optimiseur et performance de généralisation."
+purpose: "Interpréter un gradient comme la sensibilité locale de l'objectif, suivre les dérivées des logits jusqu'aux paramètres avec la règle de chaîne et expliquer pourquoi le gradient ne définit pas à lui seul l'optimiseur ni ne garantit une amélioration globale."
 suggested_route:
   previous: "fr/loss"
   next: null
