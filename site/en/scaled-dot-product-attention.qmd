@@ -76,6 +76,17 @@ The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Ne
 - Softmax connects to [probabilities](probabilities.qmd), but a normalized distribution is not necessarily calibrated.
 - The [Transformer overview](transformer.qmd) places this computation in the model's data flow.
 
+## Check your understanding
+
+A row of scores is $(2,0)$ and the key dimension is $d_k=4$. Calculate the softmax weights after scaling. What happens if the second position is forbidden by a causal mask?
+
+<details>
+<summary>Show the reasoning</summary>
+
+First divide the scores by $\sqrt{4}=2$, giving $(1,0)$. Softmax is approximately $(0.731,0.269)$. If the second position is forbidden, its score is masked before softmax (conceptually set to $-\infty$), so the weights become $(1,0)$. Masking must happen before normalization; setting a weight to zero after softmax without renormalizing does not produce the same distribution.
+
+</details>
+
 ## Code, implementation, and verification
 
 A reusable attention implementation does not yet exist in **src/llm_lab/**. This page's equation should become the reference contract: expected shapes, row-wise normalization, weights summing to one over allowed positions, finite outputs, and valid gradients.
