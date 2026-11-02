@@ -57,7 +57,7 @@ Les paramètres restent fixes pendant cette inférence ordinaire. Les sections s
 
 **Pourquoi étudier l'entraînement ensuite ?** Parce que l'inférence explique comment le modèle utilise ses paramètres, tandis que l'entraînement explique comment ils sont ajustés pour produire des comportements utiles. Un modèle initialisé aléatoirement peut exécuter la boucle, mais ne génère généralement pas de texte cohérent.
 
-## 4. Du pré-entraînement à l’utilisation
+## 3. Du pré-entraînement à l’utilisation
 
 Le cycle de vie suivant est une carte simplifiée. Il décrit l'ordre chronologique des opérations, pas nécessairement l'ordre pédagogique dans lequel on les étudie. Les étapes exactes et les objectifs dépendent du modèle ; l’évaluation intervient à plusieurs moments, pas uniquement à la fin. Les données de validation peuvent guider les choix et les ajustements. Le jeu de test doit rester tenu à l’écart jusqu’à l’évaluation finale : l’utiliser à répétition pour choisir un modèle ou régler ses paramètres biaiserait cette évaluation.
 
