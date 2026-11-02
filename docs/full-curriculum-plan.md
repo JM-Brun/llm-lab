@@ -728,7 +728,7 @@ The first candidate for a complete formative sequence is the existing representa
 
 Its canonical content remains in the existing bilingual text/data, embedding-space, positional-encoding and tensor pages. Do not create duplicate concept pages or expand this first exercise sequence into attention/GPT implementation.
 
-The exercise deliverable is tracked in [issue #220 — bilingual formative exercise sequence](https://github.com/JM-Brun/llm-lab/issues/220). A first design draft with four bilingual activities (pipeline reconstruction, hand-checkable lookup, batch/axis tracing, and misconception diagnosis) is maintained in [formative-sequence-text-to-representations.md](formative-sequence-text-to-representations.md); it is an internal review artifact, not yet a learner-facing release. It is coordinated with:
+The exercise deliverable is tracked in [issue #220 — bilingual formative exercise sequence](https://github.com/JM-Brun/llm-lab/issues/220). A first design draft with six bilingual activities (pipeline reconstruction, hand-checkable lookup, batch/axis tracing, misconception diagnosis, scaffolded shape completion, and controlled prediction) is maintained in [formative-sequence-text-to-representations.md](formative-sequence-text-to-representations.md); it is an internal review artifact, not yet a learner-facing release. It is coordinated with:
 - [#82 — foundational content and browser-review gate](https://github.com/JM-Brun/llm-lab/issues/82);
 - [#87 — three-depth curriculum and milestone map](https://github.com/JM-Brun/llm-lab/issues/87);
 - [#130 — high-level learning-design architecture](https://github.com/JM-Brun/llm-lab/issues/130).
