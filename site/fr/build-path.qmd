@@ -1,8 +1,24 @@
 ---
 title: "Construire un petit GPT"
 subtitle: "Un parcours pratique guidé, sans prérequis mathématiques disproportionnés"
+keywords: ["type:guided-build", "destination:build", "topic:build-path", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/build-path"
+scope: "Construire un petit GPT"
+purpose: "Expliquer la notion « Construire un petit GPT », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: null
+  next: "fr/exercises"
+hierarchy:
+  parents: ["fr/llm-overview", "fr/gradients"]
+  children: ["fr/exercises", "fr/evaluation-experimentale"]
+related: []
+tags: ["type:guided-build", "destination:build", "topic:build-path", "level:applied", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Ce parcours relie les explications conceptuelles à la construction progressive d'un petit GPT décodeur seul. **Il n'est pas nécessaire de maîtriser au préalable l'algèbre linéaire, le calcul tensoriel ou le calcul différentiel.** Les opérations utiles sont introduites au moment où elles deviennent nécessaires ; les développements mathématiques restent accessibles en approfondissement.
