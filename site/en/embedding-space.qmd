@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/embedding-space"
-scope: "The embedding space"
-purpose: "Explain The embedding space; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Studies the embedding table as a learned mapping from token IDs to initial vectors, then examines the geometry of those vectors; distinguishes this lookup from contextual representations produced by network layers and from embeddings used in other architectures or tasks."
+purpose: "Readers should be able to explain how an ID selects a learned vector, distinguish vocabulary size from vector dimension, and interpret distance, similarity, and geometry in this space with appropriate caution."
 suggested_route:
   previous: "en/tokenization-strategies"
   next: "en/positional-encoding"
