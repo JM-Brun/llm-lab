@@ -1,8 +1,24 @@
 ---
 title: "Entropie croisée : l'objectif de prédiction des tokens"
 subtitle: "Des logits à la perte, avec masques et réduction explicites"
+keywords: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/cross-entropy"
+scope: "Entropie croisée : l'objectif de prédiction des tokens"
+purpose: "Expliquer la notion « Entropie croisée : l'objectif de prédiction des tokens », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/entropy"
+  next: "fr/loss"
+hierarchy:
+  parents: ["fr/vraisemblance", "fr/entropy"]
+  children: ["fr/loss"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Pour une cible one-hot, la cross-entropie d'une position est la négative log-probabilité du token observé. En entraînement autorégressif, cette quantité est calculée pour les positions cibles autorisées, puis agrégée selon une convention qu'il faut expliciter.
