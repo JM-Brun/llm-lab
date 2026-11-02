@@ -103,6 +103,28 @@ Model size alone does not explain performance. Data quality, diversity and prove
 **Why build a small GPT here?** An educational model makes data, tensors, operations, loss, and errors inspectable at a manageable scale. It can verify that a mechanism works in a specific case. It does not reproduce the data volumes, compute resources, training choices, or capabilities of a production model.
 :::
 
+## Check your understanding
+
+Try to answer before opening the explanations. The goal is to distinguish levels of description, not memorize labels.
+
+1. A model uses an encoder–decoder architecture and learns to reconstruct corrupted text spans. Which part describes the architecture, and which describes the training objective? Can you infer that it is a decoder-only GPT?
+
+<details>
+<summary>Show the reasoning</summary>
+
+Encoder–decoder describes the architecture: two subnetworks and an information flow between them. Reconstructing corrupted spans describes the objective. This does not imply a decoder-only GPT; that would be a different architectural family. Architecture and objective are related but distinct axes.
+
+</details>
+
+2. An application must answer using documentation that changes every day. Compare retrieval-augmented generation (RAG) with fine-tuning: which can use new documents without retraining the model weights?
+
+<details>
+<summary>Show the reasoning</summary>
+
+RAG can retrieve documents at inference time and provide them in the context; model weights remain unchanged. Fine-tuning changes weights using training examples and requires another adaptation procedure to incorporate changes. RAG does not guarantee that retrieved documents are relevant or that the answer faithfully uses them.
+
+</details>
+
 ## 6. Where to continue in LLM Lab
 
 - [**GPT and Transformer**](transformer.qmd) — follow the specific path of an autoregressive GPT, from tokens to next-token probabilities.
