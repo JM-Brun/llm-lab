@@ -42,9 +42,24 @@ Ces familles sont des repères, pas une taxonomie exhaustive. L’article Transf
 
 Pour le projet de construction, nous nous concentrons sur un **petit GPT décodeur seul**. C’est un choix pédagogique qui rend la prédiction autorégressive et ses mécanismes inspectables, pas une affirmation selon laquelle tous les LLM fonctionnent ainsi.
 
-## 3. Du pré-entraînement à l’utilisation
+## 3. Comprendre l'utilisation avant d'étudier l'apprentissage
 
-Le cycle de vie suivant est une carte simplifiée. Les étapes exactes et les objectifs dépendent du modèle ; l’évaluation intervient à plusieurs moments, pas uniquement à la fin. Les données de validation peuvent guider les choix et les ajustements. Le jeu de test doit rester tenu à l’écart jusqu’à l’évaluation finale : l’utiliser à répétition pour choisir un modèle ou régler ses paramètres biaiserait cette évaluation.
+Pour comprendre ce que fait un LLM, commencez par **l'inférence** : un modèle reçoit un contexte, calcule une sortie avec ses paramètres actuels et, dans le cas d'un modèle autorégressif, génère une suite de tokens. À ce stade, il n'est pas nécessaire de savoir comment ces paramètres ont été appris.
+
+Pour un GPT, la boucle se résume ainsi :
+
+1. transformer le texte d'entrée en tokens et en identifiants ;
+2. calculer les représentations et les scores du prochain token ;
+3. convertir éventuellement les scores en probabilités et sélectionner un token ;
+4. ajouter ce token au contexte et recommencer jusqu'à une condition d'arrêt.
+
+Les paramètres restent fixes pendant cette inférence ordinaire. Les sections sur les [tokens et représentations](text-data.qmd) et sur [GPT et Transformer](transformer.qmd) détaillent ensuite les étapes de ce calcul.
+
+**Pourquoi étudier l'entraînement ensuite ?** Parce que l'inférence explique comment le modèle utilise ses paramètres, tandis que l'entraînement explique comment ils sont ajustés pour produire des comportements utiles. Un modèle initialisé aléatoirement peut exécuter la boucle, mais ne génère généralement pas de texte cohérent.
+
+## 4. Du pré-entraînement à l’utilisation
+
+Le cycle de vie suivant est une carte simplifiée. Il décrit l'ordre chronologique des opérations, pas nécessairement l'ordre pédagogique dans lequel on les étudie. Les étapes exactes et les objectifs dépendent du modèle ; l’évaluation intervient à plusieurs moments, pas uniquement à la fin. Les données de validation peuvent guider les choix et les ajustements. Le jeu de test doit rester tenu à l’écart jusqu’à l’évaluation finale : l’utiliser à répétition pour choisir un modèle ou régler ses paramètres biaiserait cette évaluation.
 
 ```{mermaid}
 flowchart TB
