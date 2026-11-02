@@ -270,7 +270,7 @@ B. Two token IDs with consecutive integer values must have similar embeddings.
 
 C. The same token ID must have the same contextualized hidden state in every sentence.
 
-D. Every Transformer adds a learned position vector directly to the token embedding.
+D. A Transformer may incorporate position by adding learned absolute position embeddings to token embeddings, or by applying a mechanism such as RoPE inside attention.
 
 E. RoPE is applied to query/key representations inside attention, rather than being a vector universally added by the embedding lookup.
 
@@ -304,7 +304,7 @@ B. Deux IDs consécutifs doivent avoir des embeddings similaires.
 
 C. Un même ID doit produire le même état caché contextualisé dans toutes les phrases.
 
-D. Chaque Transformer ajoute directement un vecteur positionnel appris à l'embedding du token.
+D. Un Transformer peut intégrer la position en ajoutant des embeddings positionnels absolus appris aux embeddings des tokens, ou au moyen d'un mécanisme comme RoPE dans l'attention.
 
 E. RoPE s'applique aux représentations requête/clé dans l'attention ; ce n'est pas un vecteur ajouté universellement par le lookup.
 
@@ -327,6 +327,160 @@ E. RoPE s'applique aux représentations requête/clé dans l'attention ; ce n'es
 La distinction décisive sépare une propriété du tokenizer, une propriété d'une table de lookup fixée et une propriété du calcul complet du réseau. Il ne faut pas déduire la troisième des deux premières.
 
 **Critère d'évaluation :** les classements et justifications distinguent les invariants du lookup fixe, les sorties dépendantes du contexte et les mécanismes propres à certaines architectures.
+
+---
+
+## TR-05 — Complete a partially worked shape trace
+
+**Outcome:** complete a scaffolded representation trace without confusing the vocabulary axis, sequence axis and feature axis.
+
+### English prompt
+
+A batch contains two sequences, each represented by three token IDs. The embedding table has vocabulary size \(V=5\) and embedding dimension \(d=2\).
+
+Complete the missing entries:
+
+| Object | Shape | Meaning |
+|---|---:|---|
+| Embedding table \(E\) | \((5,2)\) | vocabulary entries × features |
+| Token IDs | \((2,3)\) | batch × sequence |
+| Lookup result | ? | batch × sequence × features |
+| One sequence after lookup | ? | sequence × features |
+
+Then explain why the vocabulary size \(V\) does not appear as an axis in the lookup result.
+
+**Progressive hints**
+
+1. Each of the six IDs selects one row of \(E\).
+2. The selected row has length \(d=2\).
+3. The lookup output contains one vector for each batch-position pair, not the entire vocabulary table.
+
+**Worked solution**
+
+The lookup result has shape \((2,3,2)\); one sequence has shape \((3,2)\). The vocabulary axis indexes the source table. After row selection, the output axes describe the batch, sequence positions and features. The vocabulary dimension is therefore not retained as an output axis.
+
+**Misconception feedback**
+
+- \((2,3,5,2)\) would incorrectly retain the whole vocabulary table as an extra output axis.
+- \((2,3,5)\) confuses vocabulary size with embedding width.
+- \((2,2,3)\) swaps the sequence and feature axes.
+
+**Assessment criterion:** both shapes are correct and the learner explains why lookup removes the vocabulary axis from the selected output.
+
+### Consigne française
+
+Un batch contient deux séquences de trois IDs chacune. La table d'embeddings possède un vocabulaire de taille \(V=5\) et une dimension d'embedding \(d=2\).
+
+Complétez les formes manquantes :
+
+| Objet | Forme | Signification |
+|---|---:|---|
+| Table d'embeddings \(E\) | \((5,2)\) | entrées du vocabulaire × caractéristiques |
+| IDs des tokens | \((2,3)\) | batch × séquence |
+| Résultat du lookup | ? | batch × séquence × caractéristiques |
+| Une séquence après lookup | ? | séquence × caractéristiques |
+
+Expliquez ensuite pourquoi la taille du vocabulaire \(V\) ne figure pas parmi les axes du résultat du lookup.
+
+**Indices progressifs**
+
+1. Chacun des six IDs sélectionne une ligne de \(E\).
+2. La ligne sélectionnée possède une longueur \(d=2\).
+3. Le résultat contient un vecteur par couple batch-position, et non toute la table du vocabulaire.
+
+**Solution détaillée**
+
+Le résultat du lookup a pour forme \((2,3,2)\) ; une séquence a pour forme \((3,2)\). L'axe du vocabulaire indexe la table source. Après sélection des lignes, les axes du résultat décrivent le batch, les positions de séquence et les caractéristiques. La dimension du vocabulaire n'est donc pas conservée comme axe de sortie.
+
+**Retour sur les erreurs fréquentes**
+
+- \((2,3,5,2)\) conserverait à tort toute la table du vocabulaire comme axe supplémentaire.
+- \((2,3,5)\) confond la taille du vocabulaire et la largeur des embeddings.
+- \((2,2,3)\) échange les axes séquence et caractéristiques.
+
+**Critère d'évaluation :** les deux formes sont correctes et l'explication montre pourquoi le lookup élimine l'axe du vocabulaire du résultat sélectionné.
+
+---
+
+## TR-06 — Predict what changes, and what stays invariant
+
+**Outcome:** predict which representation changes when token identity, position or surrounding context changes, while holding the tokenizer and parameters fixed.
+
+### English prompt
+
+Assume a deterministic tokenizer and a fixed model checkpoint. Consider the same token ID \(t\) in these situations:
+
+1. It occurs twice in the same input sequence.
+2. It occurs in two different input sequences with different surrounding tokens.
+3. It is replaced by a different ID \(u\), while all other positions remain unchanged.
+
+For each situation, predict whether the following can change:
+
+- the initial embedding selected by lookup;
+- the position-aware representation entering the network;
+- the contextualized hidden state.
+
+State any architectural qualification needed. Do not assume that a change at one position leaves all later states unchanged.
+
+**Progressive hints**
+
+1. A fixed embedding table maps an ID to a fixed row.
+2. Position mechanisms can make equal token embeddings enter the network differently at different positions.
+3. Contextualized states depend on the network computation and surrounding input.
+
+**Worked solution**
+
+1. The same ID selects the same initial embedding row. Its position-aware representation may differ if its position differs. Its contextualized state may also differ because position and surrounding context matter.
+2. The initial lookup row remains the same for the same ID and fixed table. Position-aware input may be the same or different depending on the position mechanism and location; contextualized states can differ because the surrounding sequence differs.
+3. A different ID generally selects a different row. The position mechanism is applied according to the architecture; contextualized states may change at that position and at other positions that depend on it.
+
+These are qualitative predictions, not guarantees about the magnitude of a numerical change. Exact effects depend on architecture, masking, position mechanism and model parameters.
+
+**Misconception feedback**
+
+- “Same ID means same hidden state”: only the initial lookup row is invariant under a fixed table; later computation is context-sensitive.
+- “Changing one ID affects only one output position”: contextual mixing can propagate the change to other positions, subject to the architecture and attention mask.
+- “Different IDs must produce very different vectors”: distinct rows need not be far apart geometrically.
+
+**Assessment criterion:** the learner separates lookup invariance from position- and context-dependent representations, and avoids unsupported claims about the magnitude or propagation of changes.
+
+### Consigne française
+
+Supposez que le tokenizer soit déterministe et que le checkpoint du modèle soit fixe. Considérez le même ID \(t\) dans les situations suivantes :
+
+1. Il apparaît deux fois dans la même séquence d'entrée.
+2. Il apparaît dans deux séquences différentes, avec des tokens voisins différents.
+3. Il est remplacé par un autre ID \(u\), tous les autres emplacements restant inchangés.
+
+Pour chaque situation, prévoyez si les éléments suivants peuvent changer :
+
+- l'embedding initial sélectionné par lookup ;
+- la représentation tenant compte de la position et transmise au réseau ;
+- l'état caché contextualisé.
+
+Précisez les réserves liées à l'architecture. Ne supposez pas qu'un changement à une position laisse nécessairement inchangés tous les états ultérieurs.
+
+**Indices progressifs**
+
+1. Une table d'embeddings fixe associe un ID à une ligne fixe.
+2. Les mécanismes positionnels peuvent faire entrer dans le réseau des embeddings identiques mais associés à des positions différentes.
+3. Les états contextualisés dépendent du calcul du réseau et du contexte de la séquence.
+
+**Solution détaillée**
+
+1. Le même ID sélectionne la même ligne d'embedding initial. Sa représentation tenant compte de la position peut différer si sa position change. Son état contextualisé peut également différer, car la position et le contexte interviennent.
+2. La ligne initiale sélectionnée reste la même pour un ID donné et une table fixe. La représentation tenant compte de la position peut être identique ou différente selon le mécanisme positionnel et l'emplacement ; les états contextualisés peuvent différer parce que le contexte de la séquence change.
+3. Un ID différent sélectionne généralement une autre ligne. Le mécanisme positionnel s'applique selon l'architecture ; les états contextualisés peuvent changer à cette position ainsi qu'à d'autres positions qui en dépendent.
+
+Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un changement numérique. Les effets exacts dépendent de l'architecture, du masque, du mécanisme positionnel et des paramètres du modèle.
+
+**Retour sur les erreurs fréquentes**
+
+- « Même ID signifie même état caché » : seule la ligne du lookup initial est invariante pour une table fixe ; les calculs ultérieurs dépendent du contexte.
+- « Changer un ID ne modifie que la sortie à cette position » : le mélange contextuel peut propager le changement à d'autres positions, selon l'architecture et le masque d'attention.
+- « Des IDs différents doivent produire des vecteurs très éloignés » : des lignes distinctes ne sont pas nécessairement éloignées géométriquement.
+
+**Critère d'évaluation :** l'apprenant distingue l'invariance du lookup des représentations dépendantes de la position et du contexte, sans avancer d'affirmation non justifiée sur l'amplitude ou la propagation des changements.
 
 ---
 
