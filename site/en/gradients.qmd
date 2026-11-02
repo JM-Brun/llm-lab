@@ -8,6 +8,13 @@ lang: en
 The gradient $\nabla_\theta\mathcal{L}$ collects partial derivatives of the loss with respect to learned parameters. It describes local objective variation; by itself, it does not guarantee global improvement.
 :::
 
+::: {.callout-tip title="The one-minute mental model"}
+The loss tells us **what should improve**; the gradient tells us **how the loss changes when parameters change**. Backpropagation applies the chain rule to carry this information from the output back to the parameters.
+
+**First pass:** follow the path loss → derivative with respect to logits → derivatives with respect to parameters → parameter update. A gradient describes a local change; it does not guarantee that an arbitrary step will reduce the loss.
+
+**Go deeper:** verify derivatives with finite differences, then study the effects of learning rate, momentum, and adaptive optimizers. Keep the correctness of gradient computation distinct from the model's generalization performance.
+:::
 ## Gradient with respect to logits
 
 For a one-hot target $y$ and cross-entropy computed from softmax:
