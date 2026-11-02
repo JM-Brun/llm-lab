@@ -1,8 +1,24 @@
 ---
 title: "LLM and Transformer glossary"
 subtitle: "Essential terms, introduced plainly and linked to canonical explanations"
+keywords: ["type:glossary", "destination:reference", "topic:glossary", "level:reference", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/glossary"
+scope: "LLM and Transformer glossary"
+purpose: "Explain "LLM and Transformer glossary", its role in an LLM, and its upstream and downstream conceptual connections."
+suggested_route:
+  previous: null
+  next: "en/transformer-history"
+hierarchy:
+  parents: ["en/index"]
+  children: []
+related: []
+tags: ["type:glossary", "destination:reference", "topic:glossary", "level:reference", "language:en", "status:published"]
+-->
 
 This glossary gives a concise first definition for terms used across the site. It does not replace canonical concept pages: follow the links for deeper explanations where available.
 
