@@ -22,6 +22,51 @@ At each milestone, distinguish:
 
 You need to read a tensor shape to debug an operation, not master tensor theory. You need to understand what a gradient represents before training, not complete a full course in differential calculus.
 
+
+## Two paths that share the same model
+
+Distinguish **inference** (using existing parameters to produce a token) from **learning** (changing those parameters from examples and a loss objective). These are not interchangeable descriptions of one loop.
+
+### Generation path: from tokens to the next token
+
+1. The tokenizer maps text to token IDs.
+2. The embedding table maps those IDs to vectors; positional information is added or incorporated according to the architecture.
+3. Transformer blocks transform these representations. Causal attention lets each position use its permitted context without accessing future tokens.
+4. The output projection produces one logit per vocabulary token. Softmax can turn these scores into a conditional distribution.
+5. A decoding rule selects the next token; it is appended to the context and the computation repeats.
+
+**Be able to explain:** why the model predicts one token at a time, why logits are not probabilities, and why causal masking is needed. Parameters remain fixed during this generation process.
+
+### Learning path: from examples to parameter updates
+
+1. Prepare input sequences and shifted targets: at position (t), the model should predict the expected token at (t+1).
+2. Run the model forward to obtain logits.
+3. The loss compares logits with targets, respecting alignment and any ignored positions.
+4. Backpropagation computes loss gradients with respect to the parameters.
+5. An optimizer uses those gradients to update parameters; validation and monitoring help detect regressions and overfitting.
+
+**Be able to explain:** the loss defines the objective, the gradient describes a local change in that objective, and the optimizer applies an update rule. Computing a gradient does not, by itself, guarantee better generalization.
+
+Both paths use largely the same model computation. Their essential difference is what happens with the outputs: **generate with fixed parameters**, or **evaluate a loss and then update parameters**. Complete generation from a checkpoint and reproducible training remain practical deliverables to be built in this repository.
+
+## What each milestone should let you verify
+
+Concept pages are resources for reaching these outcomes; they are not evidence that the corresponding implementation already exists. Before moving on, the learner should be able to produce or verify the item below.
+
+| Step | Observable expected outcome |
+|---|---|
+| Text and tokenization | Encode and decode a short text; identify the effects of special tokens and tokenizer version. |
+| Training examples | Construct an input window and its shifted target; test boundaries, padding, and separation between data splits. |
+| Embeddings and position | Trace shapes from `[B, L]` to `[B, L, D]` and explain each axis. |
+| Causal attention | Verify on a small example that changing a future token does not change earlier-position outputs, with parameters and earlier context held fixed. |
+| GPT block | Trace dimensions through attention, residuals, normalization, MLP, and output projection; check parameter-count consistency. |
+| Loss | Hand-calculate a small case, verify logits/target alignment, and test correct exclusion of ignored positions. |
+| Training | Reproduce a small run with documented configuration and seed; track training and validation loss separately. |
+| Generation | Load a checkpoint and produce a sequence; document decoding, stopping, and context limits. |
+| Evaluation | Compare against a baseline under an explicit protocol; analyze errors and state what the metrics do not establish. |
+
+These criteria are **learning outcomes**, not a change in repository status: an available page, a hand-checkable example, an automated test, a reproducible run, and visual review are different levels of evidence.
+
 ## Build milestones
 
 | Step | What you build | Concept pages | Practical status |
