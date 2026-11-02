@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/probabilites"
-scope: "Probabilités de sortie : des logits aux tokens"
-purpose: "Expliquer la notion « Probabilités de sortie : des logits aux tokens », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Définir la distribution catégorielle conditionnelle sur le vocabulaire à une position autorégressive, des logits à la normalisation et aux transformations liées à l'échantillonnage ; distinguer les probabilités du prochain token de la vraisemblance d'une séquence, de l'entropie prédictive et de la perte d'entraînement."
+purpose: "Interpréter une probabilité de prochain token, expliquer le passage des logits à une distribution normalisée et distinguer normalisation, calibration, température et vérité factuelle."
 suggested_route:
   previous: "fr/logits"
   next: "fr/training-examples"
