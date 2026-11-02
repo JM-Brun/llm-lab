@@ -72,6 +72,8 @@ The important distinction is not that attention “understands” tokens while t
 3. [**Causal masking**](causal-masking.qmd) — excludes future positions before softmax.
 4. [**Positional information**](positional-encoding.qmd) — supplies information about token order; the [positional encoding and RoPE lesson](positional-encoding.qmd) explains the mechanism in detail.
 
+**RoPE specifically.** In this variant, positional information is introduced by rotating query and key representations **after their projections and before the $QK^T$ product**. It therefore changes the attention scores themselves; it is not an operation applied after attention. Other model families use different positional mechanisms.
+
 Attention weights are not a complete explanation of a prediction. They describe one aggregation step; projections, values, other heads, later layers, and the output projection also contribute.
 
 ## 3. From representations to probabilities
@@ -80,80 +82,13 @@ After the blocks, an output projection produces **logits**—unnormalized scores
 
 During generation, a selection rule chooses the next token: greedy selection, sampling, or a more elaborate method. The selected token is appended to the context, and the model runs again. Generation is therefore **autoregressive**; the model does not produce the whole response in a single prediction.
 
-## Observe a Transformer in action
+### A forward pass is not a generation loop
 
-**[Transformer Explainer](https://poloclub.github.io/transformer-explainer/)**, developed at Georgia Tech, lets you explore a real GPT-2 small inference run in your browser. It complements this page's static diagrams: enter text and observe how representations, attention computations, and the next-token distribution evolve.
+A **forward pass** receives the available context and computes logits for the positions being processed. To generate the next token, the model typically uses the logits at the final relevant position, then a decoding rule selects a token. The **generation loop** repeats: forward pass → selection → append the token to the context → another forward pass. The network does not compute the entire future response in one pass.
 
-<iframe
-  src="https://poloclub.github.io/transformer-explainer/"
-  title="Transformer Explainer — interactive GPT-2 visualization"
-  width="100%"
-  height="820"
-  loading="lazy"
-  allow="fullscreen"
-  style="border: 1px solid #d2d9c8; border-radius: 0.6rem; background: #fff;"
-></iframe>
+## Explore a run: guided activity and critical audit
 
-[Open Transformer Explainer in a new tab](https://poloclub.github.io/transformer-explainer/) if the embed does not load or you prefer the full browser window.
-
-### A guided four-part exploration
-
-1. **Tokens and representations.** Make a small change to the input text and inspect its tokenization. Connect tokens to IDs and embeddings in the [representation page](embedding-space.qmd).
-2. **Attention.** Select tokens and inspect attention patterns. Relate scores, causal masking, and value aggregation to the pages on [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd), and [causal masking](causal-masking.qmd).
-3. **Prediction.** Inspect output scores (*logits*) and the vocabulary distribution. Use the pages on [logits](logits.qmd) and [probabilities](probabilities.qmd) to distinguish scores from probabilities.
-4. **Decoding.** Change the temperature and, where offered by the interface, top-k/top-p settings. The same distribution can lead to different token selections; decoding does not change the model weights.
-
-### Controlled experiments: move from observation to testing
-
-To avoid drawing conclusions from a single visualization, keep a reference prompt, change **one factor at a time**, and record what changes.
-
-1. **Tokenizer sensitivity.** Compare a word on its own, the same word preceded by a space, and a punctuation variant. Record tokens and IDs. Subword segmentation depends on the tokenizer and character context; it does not directly reveal the model's “understanding”.
-2. **Causal masking.** Inspect the attention row for the final token, then append a suffix to the prompt. A position must not receive information from future positions. In a causal model in evaluation mode, prefix-position representations should remain invariant when a suffix is appended (up to numerical tolerance); this tests internal states, not just generated text.
-3. **Temperature and sampling.** Keep the prompt and logits fixed, then change only temperature. The distribution changes according to \(p_i(T)=\operatorname{softmax}(z/T)_i\), while the raw logits remain identical. Then compare top-k and top-p: these filters change the set of allowed candidates. A sampled generation can vary even when prompt and settings are identical.
-
-For each experiment, record the hypothesis, changed variable, observation, interpretation, and limitation. A visual observation is evidence to check against the equation and, where possible, an automated test.
-
-### Read Transformer Explainer's source code
-
-**Audit scope:** upstream repository [poloclub/transformer-explainer](https://github.com/poloclub/transformer-explainer), snapshot [`bfe50af`](https://github.com/poloclub/transformer-explainer/commit/bfe50afba10b9b560b84143ee1107d977defa74f), inspected on 30 October 2026. The interface components below display results; they should not be mistaken for the functions that compute them.
-
-| Observed element | UI component | Computation or data source to inspect |
-|---|---|---|
-| Tokens, IDs, and embedding vectors | [Embedding.svelte](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/components/Embedding.svelte) — visualization | [data.ts](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/data.ts) for tokenization and ONNX inference; [model.py](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/model/model.py), `GPT.forward`, for token and positional embedding tables |
-| Q, K, and V projections | [QKV.svelte](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/components/QKV.svelte) — vector visualization | [model.py](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/model/model.py), `CausalSelfAttention.forward`: joint projection, splitting, and head reshaping |
-| Attention scores and weights | [AttentionMatrix.svelte](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/components/AttentionMatrix.svelte) — displayed matrix | [model.py](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/model/model.py) for scores, scaling, causal mask, softmax, and dropout; [data.ts](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/data.ts) selects tensors exposed by the ONNX session |
-| MLP and residual blocks | [Mlp.svelte](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/components/Mlp.svelte) — visualization | [model.py](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/model/model.py), classes `MLP` and `Block`: feed-forward transformations, normalization, and residual connections |
-| Logits, temperature, and sampling | [LinearSoftmax.svelte](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/components/LinearSoftmax.svelte) — visualization | [data.ts](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/data.ts): ONNX logit extraction, temperature, softmax, top-k, and top-p |
-| Guided explanations and highlights | [textbookPages.ts](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/textbookPages.ts) | Pedagogical text and mapping between textbook steps and UI components; this file does not define model computation |
-
-The browser execution path uses Svelte/TypeScript, ONNX Runtime Web, and a GPT-2 tokenizer; `data.ts` calls the ONNX session. The repository also contains a PyTorch reference model in `model.py`, useful for inspecting the architecture and operations but distinct from the ONNX inference path used by the interface. This separation between computation, tensor extraction, visualization, and explanation is an architectural pattern to study, not one to copy wholesale into LLM Lab.
-
-### Critical audit: a visualization is not a specification
-
-The source code also exposes implementation choices to keep in mind:
-
-- **Top-p:** `topPSampling` in `src/utils/data.ts` sorts the logits, keeps the top 50, applies temperature, then computes softmax and cumulative probabilities **over those 50 candidates only**. It truncates at threshold \(p\) and renormalizes the retained candidates. The restricted distribution therefore already sums to one, so the threshold is reached within this subset. The actual limitation is that tokens ranked below 50 are excluded before nucleus selection; if the exact nucleus over the full vocabulary would contain more than 50 tokens, this implementation cannot include them. For example, if the first 50 tokens carry only 60% of the full-vocabulary probability mass and \(p=0.9\), the tool renormalizes that 60% to 100%: the displayed threshold then corresponds to only 0.54 (= 0.9 × 0.60) of the original mass. Exact nucleus sampling over the full vocabulary must instead include tokens beyond rank 50 to reach 0.9. This is a tool-specific approximation, not a property of top-p itself.
-
-**Conditional-distribution formulation.** Fix a temperature $T>0$ and let $P_T$ denote the softmax distribution that would be obtained over the full vocabulary after applying that temperature. Let $S_{50}$ be the retained set of 50 candidates and let $m=P_T(S_{50})<1$ be their mass under that distribution. After truncation, the implementation works with the conditional distribution $P_T(i\mid i\in S_{50})=P_T(i)/m$. For a retained prefix $A\subseteq S_{50}$, its cutoff condition becomes
-
-$\sum_{i\in A}\frac{P_T(i)}{m}\geq p\quad\Longleftrightarrow\quad P_T(A)\geq p\,m.$
-
-With $m=0.60$ and $p=0.90$, the prefix therefore needs only 0.54 of the original mass. Exact nucleus sampling over the full vocabulary instead accumulates $P_T$ until it reaches 0.90; because $S_{50}$ carries only 0.60, it must include tokens outside $S_{50}$.
-- **Embeddings:** a learned vector representation is not a universal geometric definition of meaning. Similarity depends on the metric, space, layer, and task.
-- **Attention:** displayed weights describe one computation step. They are not sufficient to measure a token's causal influence on the final logit.
-- **Stochastic generation:** comparing two text outputs does not isolate a parameter's effect if the random draw also changes. To study the distribution, compare probabilities or control the random seed where the implementation allows it.
-
-These observations do not invalidate the tool; they define precisely what it can teach and what should not be inferred from it.
-
-### What this demonstration does — and does not — establish
-
-- The tool runs **GPT-2 small (124 million parameters)**. It is a useful representative teaching model for core operations, not a substitute for inspecting every modern LLM architecture.
-- Inference runs in the browser. The first load may download model assets and use your machine's memory and CPU.
-- An attention-weight visualization shows one internal operation; by itself, it is not a causal or faithful explanation of the prediction.
-- Generation settings such as temperature change next-token selection; they do not retrain the model or make its outputs factually reliable.
-- This is an external demonstration. It does not execute LLM Lab's Python code and is not a test of our future implementations.
-
-**Takeaway:** use the explorer to form hypotheses and locate operations; return to this site's equations to check them, then to repository tests and experiments when a corresponding implementation is available.
+The [GPT-2 exploration activity](transformer-explainer.qmd) is a separate practice page: inspect the interface, run controlled experiments, and examine the limits of the visualization. It is an analytical exercise, not an additional prerequisite for understanding the data flow explained here.
 
 ## Training and generation are not the same computation
 
