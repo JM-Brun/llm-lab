@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/gradients"
-scope: "Gradients: connecting loss to parameters"
-purpose: "Explain Gradients: connecting loss to parameters; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Define derivatives of the training objective with respect to logits and learned parameters, and explain backpropagation as efficient application of the chain rule; distinguish local sensitivity from the optimizer's parameter-update rule and from generalization performance."
+purpose: "Interpret a gradient as local sensitivity of the objective, trace derivatives from logits back to parameters with the chain rule, and explain why the gradient alone neither specifies the optimizer nor guarantees a globally better model."
 suggested_route:
   previous: "en/loss"
   next: null
