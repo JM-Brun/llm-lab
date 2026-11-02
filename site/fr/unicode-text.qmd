@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/unicode-text"
-scope: "Unicode, UTF-8 et normalisation du texte"
-purpose: "Expliquer la notion « Unicode, UTF-8 et normalisation du texte », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Distingue caractères abstraits, points de code Unicode, séquences d’octets UTF-8 et formes normalisées ; explique pourquoi des chaînes visuellement identiques peuvent avoir des représentations différentes avant tokenisation. Ne traite ni des algorithmes BPE/WordPiece ni des embeddings."
+purpose: "Le lecteur doit pouvoir distinguer point de code et octet, reconnaître les formes Unicode composées et décomposées, et expliquer comment encodage et normalisation peuvent modifier la chaîne présentée au tokenizer."
 suggested_route:
   previous: "fr/text-data"
   next: "fr/tokenization-strategies"
