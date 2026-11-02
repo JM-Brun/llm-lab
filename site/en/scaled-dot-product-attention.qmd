@@ -1,8 +1,24 @@
 ---
 title: "Scaled dot-product attention"
 subtitle: "From position-to-position scores to a weighted aggregation of values"
+keywords: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/scaled-dot-product-attention"
+scope: "Scaled dot-product attention"
+purpose: "Explain "Scaled dot-product attention", its role in an LLM, and its upstream and downstream conceptual connections."
+suggested_route:
+  previous: "en/queries-keys-values"
+  next: "en/causal-masking"
+hierarchy:
+  parents: ["en/queries-keys-values"]
+  children: ["en/causal-masking"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Scaled dot-product attention turns learned compatibility scores between queries and keys into weights, then uses those weights to aggregate values. Softmax normalizes scores over accessible positions; it does not prove semantic relevance or causality.
