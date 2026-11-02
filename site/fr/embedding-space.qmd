@@ -14,7 +14,7 @@ suggested_route:
   previous: "fr/tokenization-strategies"
   next: "fr/positional-encoding"
 hierarchy:
-  parents: ["fr/text-data"]
+  parents: ["fr/text-data", "fr/transformer"]
   children: ["fr/positional-encoding", "fr/contextualized-representations", "fr/cosine-similarity", "fr/linearite-embeddings"]
 related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
