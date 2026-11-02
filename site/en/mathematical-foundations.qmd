@@ -1,8 +1,24 @@
 ---
 title: "The mathematical chain of LLM training"
 subtitle: "From logits to next-token probabilities, loss, and gradients"
+keywords: ["type:deep-dive", "destination:deepen", "topic:mathematical-foundations", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/mathematical-foundations"
+scope: "The mathematical chain of LLM training"
+purpose: "Explain "The mathematical chain of LLM training", its role in an LLM, and its upstream and downstream conceptual connections."
+suggested_route:
+  previous: null
+  next: "en/tensors"
+hierarchy:
+  parents: ["en/llm-overview"]
+  children: []
+related: []
+tags: ["type:deep-dive", "destination:deepen", "topic:mathematical-foundations", "level:advanced", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 An autoregressive model produces **logits** for the next token. Softmax turns them into probabilities; the observed target defines a likelihood and a loss; differentiating that loss gives gradients used to update the parameters. These concepts are connected, but they are not interchangeable.
