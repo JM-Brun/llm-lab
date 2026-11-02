@@ -262,7 +262,7 @@ Le lookup conserve les axes batch et position, et ajoute l'axe des caractéristi
 
 ### English prompt
 
-For a fixed tokenizer and fixed embedding matrix, classify each statement as **valid**, **invalid**, or **architecture-dependent**, and justify your choice.
+For a fixed tokenizer and fixed embedding matrix, classify each statement as **valid**, **invalid**, or **architecture-dependent**, and justify your choice. No specific model configuration is supplied: when a statement refers to “this model”, decide whether the information given is sufficient to determine its behavior.
 
 A. The same token ID selects the same initial embedding row on every occurrence.
 
@@ -270,7 +270,7 @@ B. Two token IDs with consecutive integer values must have similar embeddings.
 
 C. The same token ID must have the same contextualized hidden state in every sentence.
 
-D. In this model, position information is added as a learned absolute vector to each token embedding.
+D. This model adds a learned absolute position vector to each token embedding before its first Transformer block.
 
 E. RoPE is applied to query/key representations inside attention, rather than being a vector universally added by the embedding lookup.
 
@@ -285,7 +285,7 @@ E. RoPE is applied to query/key representations inside attention, rather than be
 - **A — Valid**, under the stated fixed-matrix condition: lookup selects the same row.
 - **B — Invalid:** row indices are labels, not coordinates.
 - **C — Invalid:** context and position can change later hidden states even when the initial lookup is identical.
-- **D — Invalid:** learned absolute position embeddings are one approach, not a universal Transformer rule.
+- **D — Architecture-dependent / not decidable from the information given:** learned absolute position embeddings are one possible design, but the exercise does not specify which positional mechanism this model uses. Do not turn a possible design into a universal claim.
 - **E — Valid as a description of RoPE:** it acts on query/key vectors within attention; other positional mechanisms exist.
 
 **Misconception feedback**
@@ -296,7 +296,7 @@ The decisive distinction is between a property of the tokenizer, a property of a
 
 ### Consigne française
 
-Pour un tokenizer et une matrice d'embeddings fixés, classez chaque affirmation comme **valide**, **invalide** ou **dépendante de l'architecture**, puis justifiez votre choix.
+Pour un tokenizer et une matrice d'embeddings fixés, classez chaque affirmation comme **valide**, **invalide** ou **dépendante de l'architecture**, puis justifiez votre choix. Aucune configuration de modèle particulière n'est fournie : lorsqu'une affirmation parle de « ce modèle », déterminez si les informations données suffisent pour établir son comportement.
 
 A. Le même ID sélectionne la même ligne d'embedding initial à chaque occurrence.
 
@@ -304,7 +304,7 @@ B. Deux IDs consécutifs doivent avoir des embeddings similaires.
 
 C. Un même ID doit produire le même état caché contextualisé dans toutes les phrases.
 
-D. Dans ce modèle, l'information positionnelle est ajoutée sous la forme d'un vecteur absolu appris à chaque embedding de token.
+D. Ce modèle ajoute un vecteur positionnel absolu appris à chaque embedding de token avant son premier bloc Transformer.
 
 E. RoPE s'applique aux représentations requête/clé dans l'attention ; ce n'est pas un vecteur ajouté universellement par le lookup.
 
@@ -319,7 +319,7 @@ E. RoPE s'applique aux représentations requête/clé dans l'attention ; ce n'es
 - **A — Valide**, sous l'hypothèse d'une matrice fixe : le lookup sélectionne la même ligne.
 - **B — Invalide :** les indices de lignes sont des étiquettes, pas des coordonnées.
 - **C — Invalide :** le contexte et la position peuvent modifier les états cachés ultérieurs même si le lookup initial est identique.
-- **D — Invalide :** les embeddings positionnels absolus appris constituent une approche, pas une règle universelle des Transformers.
+- **D — Dépendante de l'architecture / indéterminable avec les informations fournies :** les embeddings positionnels absolus appris constituent une possibilité, mais l'exercice ne précise pas le mécanisme positionnel utilisé par ce modèle. Il ne faut pas transformer une conception possible en règle universelle.
 - **E — Valide pour décrire RoPE :** le mécanisme agit sur les vecteurs requête/clé dans l'attention ; d'autres mécanismes positionnels existent.
 
 **Retour sur les erreurs fréquentes**
@@ -417,7 +417,7 @@ Assume a deterministic tokenizer and a fixed model checkpoint. Consider the same
 For each situation, predict whether the following can change:
 
 - the initial embedding selected by lookup;
-- the position-aware representation entering the network;
+- the effect of the positional mechanism (whether applied to the token stream before the first block or inside attention);
 - the contextualized hidden state.
 
 State any architectural qualification needed. Do not assume that a change at one position leaves all later states unchanged.
@@ -425,14 +425,14 @@ State any architectural qualification needed. Do not assume that a change at one
 **Progressive hints**
 
 1. A fixed embedding table maps an ID to a fixed row.
-2. Position mechanisms can make equal token embeddings enter the network differently at different positions.
+2. Some architectures add position information to the token stream before the first block; RoPE instead transforms query/key vectors inside attention. Do not assume every model has a distinct position-aware input embedding.
 3. Contextualized states depend on the network computation and surrounding input.
 
 **Worked solution**
 
-1. The same ID selects the same initial embedding row. Its position-aware representation may differ if its position differs. Its contextualized state may also differ because position and surrounding context matter.
-2. The initial lookup row remains the same for the same ID and fixed table. Position-aware input may be the same or different depending on the position mechanism and location; contextualized states can differ because the surrounding sequence differs.
-3. A different ID generally selects a different row. The position mechanism is applied according to the architecture; contextualized states may change at that position and at other positions that depend on it.
+1. The same ID selects the same initial embedding row. If the architecture adds learned absolute position embeddings before the first block, the resulting input representation can differ by position. With a mechanism such as RoPE, the token embedding itself is not changed by a position vector; positional effects enter later inside attention. Contextualized states may differ because position and surrounding context matter.
+2. The initial lookup row remains the same for the same ID and fixed table. The positional mechanism may act on the token stream or inside attention, depending on the architecture. Contextualized states can differ because the surrounding sequence differs.
+3. A different ID generally selects a different row. Any positional mechanism is applied according to the architecture; contextualized states may change at that position and at other positions that depend on it.
 
 These are qualitative predictions, not guarantees about the magnitude of a numerical change. Exact effects depend on architecture, masking, position mechanism and model parameters.
 
@@ -455,7 +455,7 @@ Supposez que le tokenizer soit déterministe et que le checkpoint du modèle soi
 Pour chaque situation, prévoyez si les éléments suivants peuvent changer :
 
 - l'embedding initial sélectionné par lookup ;
-- la représentation tenant compte de la position et transmise au réseau ;
+- l'effet du mécanisme positionnel (appliqué au flux de tokens avant le premier bloc ou à l'intérieur de l'attention) ;
 - l'état caché contextualisé.
 
 Précisez les réserves liées à l'architecture. Ne supposez pas qu'un changement à une position laisse nécessairement inchangés tous les états ultérieurs.
@@ -463,14 +463,14 @@ Précisez les réserves liées à l'architecture. Ne supposez pas qu'un changeme
 **Indices progressifs**
 
 1. Une table d'embeddings fixe associe un ID à une ligne fixe.
-2. Les mécanismes positionnels peuvent faire entrer dans le réseau des embeddings identiques mais associés à des positions différentes.
+2. Certaines architectures ajoutent l'information positionnelle au flux de tokens avant le premier bloc ; RoPE transforme plutôt les vecteurs requête/clé à l'intérieur de l'attention. Ne supposez pas que chaque modèle possède un embedding d'entrée distinct tenant compte de la position.
 3. Les états contextualisés dépendent du calcul du réseau et du contexte de la séquence.
 
 **Solution détaillée**
 
-1. Le même ID sélectionne la même ligne d'embedding initial. Sa représentation tenant compte de la position peut différer si sa position change. Son état contextualisé peut également différer, car la position et le contexte interviennent.
-2. La ligne initiale sélectionnée reste la même pour un ID donné et une table fixe. La représentation tenant compte de la position peut être identique ou différente selon le mécanisme positionnel et l'emplacement ; les états contextualisés peuvent différer parce que le contexte de la séquence change.
-3. Un ID différent sélectionne généralement une autre ligne. Le mécanisme positionnel s'applique selon l'architecture ; les états contextualisés peuvent changer à cette position ainsi qu'à d'autres positions qui en dépendent.
+1. Le même ID sélectionne la même ligne d'embedding initial. Si l'architecture ajoute des embeddings positionnels absolus appris avant le premier bloc, la représentation d'entrée qui en résulte peut différer selon la position. Avec un mécanisme comme RoPE, l'embedding du token n'est pas modifié par un vecteur positionnel ; les effets de position interviennent plus tard, dans l'attention. Les états contextualisés peuvent différer en raison de la position et du contexte.
+2. La ligne initiale sélectionnée reste la même pour un ID donné et une table fixe. Le mécanisme positionnel peut agir sur le flux de tokens ou à l'intérieur de l'attention, selon l'architecture. Les états contextualisés peuvent différer parce que le contexte de la séquence change.
+3. Un ID différent sélectionne généralement une autre ligne. Tout mécanisme positionnel est appliqué selon l'architecture ; les états contextualisés peuvent changer à cette position ainsi qu'à d'autres positions qui en dépendent.
 
 Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un changement numérique. Les effets exacts dépendent de l'architecture, du masque, du mécanisme positionnel et des paramètres du modèle.
 
