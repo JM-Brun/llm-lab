@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/experimental-evaluation"
-scope: "Evaluating a model: from score to experimental protocol"
-purpose: "Explain Evaluating a model: from score to experimental protocol; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Defines a transfer exercise in experimental evaluation for a scientific-passage ranker: target estimand, dependence and grouping, leakage-safe model selection, average precision, calibration, uncertainty, and reproducibility. It is a protocol-design exercise, not a model implementation or benchmark report."
+purpose: "Design an evaluation protocol aligned with a stated deployment target, identify leakage and selection-bias risks, interpret average precision and its limits, and justify an uncertainty procedure that respects the sampling structure."
 suggested_route:
   previous: "en/exercises"
   next: null
