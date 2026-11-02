@@ -16,7 +16,7 @@ suggested_route:
   next: "en/llm-overview"
 hierarchy:
   parents: []
-  children: ["en/llm-overview", "en/build-path", "en/exercises", "en/glossary", "en/transformer-history"]
+  children: ["en/llm-overview", "en/build-path", "en/exercises", "en/experimental-evaluation", "en/glossary", "en/transformer-history"]
 related: []
 tags: ["type:entry-point", "destination:orient", "topic:index", "level:overview", "language:en", "status:published"]
 -->
