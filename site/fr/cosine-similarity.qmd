@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/cosine-similarity"
-scope: "La similarité cosinus mesure-t-elle la similarité sémantique ?"
-purpose: "Expliquer la notion « La similarité cosinus mesure-t-elle la similarité sémantique ? », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Étudie la similarité cosinus comme alignement angulaire entre vecteurs de représentation non nuls, avec les hypothèses de normalisation, l’anisotropie, le hubness, les effets sur les plus proches voisins et le choix de métrique selon la tâche. Elle distingue proximité géométrique et équivalence sémantique, sans traiter un score élevé comme une preuve de pertinence ou de vérité."
+purpose: "Calculer et interpréter une similarité cosinus, expliquer quelle information la normalisation des vecteurs retire, repérer les conditions qui peuvent déformer les classements et concevoir des vérifications adaptées à la tâche plutôt que de supposer que le cosinus mesure directement le sens."
 suggested_route:
   previous: "fr/tensors"
   next: "fr/linearite-embeddings"
