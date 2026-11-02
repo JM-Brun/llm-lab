@@ -1,8 +1,24 @@
 ---
 title: "A history of Transformers"
 subtitle: "From attention mechanisms to the Transformer architecture and modern LLMs"
+keywords: ["type:historical-reference", "destination:reference", "topic:transformer-history", "level:reference", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/transformer-history"
+scope: "A history of Transformers"
+purpose: "Explain "A history of Transformers", its role in an LLM, and its upstream and downstream conceptual connections."
+suggested_route:
+  previous: "en/glossary"
+  next: null
+hierarchy:
+  parents: ["en/index"]
+  children: []
+related: []
+tags: ["type:historical-reference", "destination:reference", "topic:transformer-history", "level:reference", "language:en", "status:published"]
+-->
 
 The Transformer did not emerge without predecessors. Its history combines attention mechanisms developed for neural machine translation, self-attention, large-scale training, and different objectives across model families. This selective timeline highlights milestones; it is neither exhaustive nor a claim of a single causal path.
 
