@@ -8,6 +8,10 @@ lang: en
 A **GPT** is a language model based on an autoregressive Transformer: given a context of tokens, it estimates a distribution over the next token. To understand the system, distinguish the data flow, the learned parameters, and the generation loop. This page provides the overview; linked concept pages explain individual operations.
 :::
 
+::: {.callout-note}
+This page focuses on a **Transformer-based GPT**; it does not describe every LLM family. For the broader picture of architectures, pretraining, adaptation, and inference, start with the [LLM panorama](llm-overview.qmd).
+:::
+
 ::: {.callout-tip title="The one-minute mental model"}
 A GPT repeats the same loop: **represent the context → compute a distribution over the next token → select a token → append it to the context**. Attention lets positions exchange information; learned parameters determine the transformations being applied.
 

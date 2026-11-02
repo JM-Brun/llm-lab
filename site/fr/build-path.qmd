@@ -9,6 +9,10 @@ Ce parcours relie les explications conceptuelles à la construction progressive 
 :::
 
 ::: {.callout-note}
+**Nouveau dans les LLM ?** Commencez par le [panorama des LLM](llm-overview.qmd) pour distinguer les familles de modèles et leur cycle de vie. Ce parcours pratique se concentre ensuite sur un GPT décodeur seul.
+:::
+
+::: {.callout-note}
 **État du projet.** Le parcours et les pages conceptuelles sont disponibles, mais le dépôt ne contient pas encore une implémentation complète et testée d'un GPT ni un entraînement reproductible de bout en bout. Les étapes ci-dessous distinguent donc les connaissances disponibles des réalisations pratiques encore à construire.
 :::
 
@@ -71,7 +75,7 @@ Ces critères sont des **objectifs pédagogiques**. Ils ne changent pas le statu
 
 | Étape | Ce que l'on construit | Pages conceptuelles à consulter | État pratique |
 |---|---|---|---|
-| 0. Définir le modèle | Délimiter un petit GPT décodeur seul et ses objectifs | [Vue d'ensemble Transformer](transformer.qmd), [historique](transformer-history.qmd) | **Partiel** — le cadre conceptuel existe ; le panorama général des familles de LLM reste à compléter |
+| 0. Définir le modèle | Situer les familles de LLM, puis délimiter le GPT décodeur seul étudié ici et son objectif | [Panorama des LLM](llm-overview.qmd), [vue d'ensemble GPT / Transformer](transformer.qmd), [historique](transformer-history.qmd) en contexte facultatif | **Conceptuel disponible** — le panorama général et le périmètre du GPT étudié sont documentés ; le modèle exécutable complet reste à construire |
 | 1. Préparer le texte | Corpus documenté, tokenizer, encodage/décodage | [Texte et données](text-data.qmd), [Unicode](unicode-text.qmd), [tokenisation](tokenization-strategies.qmd) | **Conceptuel** — pas de pipeline corpus/tokenizer complet validé dans le dépôt |
 | 2. Former les exemples | Fenêtres de contexte, entrées/cibles décalées, batches et masques | [Exemples d'entraînement](training-examples.qmd) | **Conceptuel** — les règles et pièges sont expliqués ; le pipeline exécutable complet reste à établir |
 | 3. Représenter les tokens | Lookup d'embeddings et information de position | [Espace des embeddings](embedding-space.qmd), [position](positional-encoding.qmd) | **Conceptuel** — pas de pile d'embeddings GPT complète validée |
@@ -96,7 +100,8 @@ Le détail des prérequis, preuves attendues, dépendances et critères de valid
 
 ## Parcours complémentaires
 
-- [Comprendre les LLM](transformer.qmd) : commencer par le système et les mécanismes, sans suivre le code.
+- [Panorama des LLM](llm-overview.qmd) : situer les familles de modèles et leur cycle de vie.
+- [GPT et Transformer](transformer.qmd) : comprendre le modèle décodeur seul retenu comme fil conducteur du projet.
 - [Approfondir les tenseurs](tensors.qmd) : consulter les formes et axes quand ils deviennent utiles.
 - [S'exercer](exercises.qmd) : travailler les questions conceptuelles et les exercices pratiques séparément.
 - [Évaluer une expérience](evaluation-experimentale.qmd) : distinguer observation, interprétation et preuve.

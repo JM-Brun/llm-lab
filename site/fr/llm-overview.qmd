@@ -1,0 +1,128 @@
+---
+title: "Panorama : qu’est-ce qu’un LLM ?"
+subtitle: "Situer les modèles de langage, leurs architectures et leur cycle de vie avant d’entrer dans les mécanismes"
+lang: fr
+---
+
+::: {.chapter-lead}
+Un **grand modèle de langage** (*Large Language Model*, LLM) est un modèle neuronal entraîné sur de grandes quantités de données textuelles pour traiter ou produire du langage. Le terme décrit une famille de modèles et un régime d’usage ; il ne désigne pas une architecture unique. Cette page donne la carte d’ensemble. Elle ne remplace pas les leçons détaillées sur les tokens, l’attention, la loss ou la génération.
+:::
+
+## 1. Où situer les LLM ?
+
+L’intelligence artificielle (IA) est le domaine le plus large ; l’apprentissage automatique (*machine learning*) en est une partie, et l’apprentissage profond (*deep learning*) désigne des méthodes d’apprentissage fondées sur des réseaux neuronaux à plusieurs couches. Les LLM actuels sont généralement des modèles d’apprentissage profond appliqués au langage. Ces catégories décrivent des niveaux différents : « NLP » désigne un domaine de problèmes, tandis que « deep learning » désigne une famille de méthodes.
+
+Le traitement automatique des langues (TAL / NLP) regroupe des méthodes très différentes : règles linguistiques, modèles statistiques, systèmes spécialisés pour une tâche, réseaux neuronaux et modèles pré-entraînés réutilisables. Les LLM contemporains sont généralement entraînés à grande échelle sur des données textuelles. Ils peuvent servir de base à plusieurs tâches plutôt que d’être construits séparément pour chacune. Cela ne signifie pas que les approches précédentes ont disparu : un système de production peut combiner règles, modèles spécialisés, recherche documentaire, outils et LLM.
+
+Il n’existe pas de seuil universel de paramètres qui transforme mécaniquement un modèle en « LLM ». La taille compte, mais le terme est aussi lié à l’ampleur des données, à l’objectif d’entraînement, aux capacités visées et à la manière dont le modèle est réutilisé. Le concept de *foundation model* est plus large : il désigne un modèle entraîné sur des données étendues et réutilisable comme base pour de nombreuses applications, pas nécessairement un modèle de langage uniquement.
+
+## 2. Trois grandes familles d’architectures Transformer
+
+L’architecture décrit **comment l’information circule dans le modèle**. L’objectif d’entraînement décrit **ce que le modèle apprend à prédire ou à reconstruire**. Les deux sont liés, mais ne sont pas synonymes.
+
+```{mermaid}
+flowchart LR
+  E["Encodeur seul<br/>Contexte bidirectionnel<br/>Tokens masqués"]
+  ED["Encodeur–décodeur<br/>Entrée encodée + génération conditionnée<br/>Transformation de séquence"]
+  D["Décodeur seul<br/>Contexte causal<br/>Prédiction du prochain token"]
+```
+
+Le schéma présente trois familles comme des alternatives architecturales, pas comme les étapes d’une évolution ni comme un classement de qualité.
+
+| Famille | Accès au contexte | Objectif pré-entraînement typique | Usages fréquents | Exemple |
+|---|---|---|---|---|
+| **Encodeur seul** | Attention généralement bidirectionnelle sur la séquence fournie | Prédire des tokens masqués (*masked language modeling*) | Représentation de texte, classification, recherche sémantique après adaptation | BERT |
+| **Encodeur-décodeur** | L’encodeur traite l’entrée ; le décodeur génère en s’appuyant sur cette représentation | Objectif de reconstruction ou de transformation de séquence ; dépend du modèle | Traduction, résumé, transformation texte-vers-texte | Transformer original, T5 |
+| **Décodeur seul** | Attention causale : chaque position utilise le contexte précédent autorisé | Prédire le prochain token | Continuation de texte et génération conditionnée par un prompt | GPT |
+
+
+Ces familles sont des repères, pas une taxonomie exhaustive. L’article Transformer de 2017 décrit une architecture encodeur-décodeur pour la traduction. BERT illustre l’encodeur seul et le masquage de tokens. GPT illustre le décodeur seul autorégressif. T5 montre qu’un encodeur-décodeur peut être pré-entraîné avec un objectif de corruption puis utilisé dans un cadre texte-vers-texte.
+
+**Ne pas confondre deux axes :** « Transformer » désigne une famille d’architectures ; « LLM » désigne une catégorie de modèles de langage par leur échelle et leur usage. Beaucoup de LLM connus sont des Transformers, mais les architectures de modèles de langage évoluent et des approches non-Transformer existent également. Inversement, un Transformer n’est pas nécessairement un LLM.
+
+Pour le projet de construction, nous nous concentrons sur un **petit GPT décodeur seul**. C’est un choix pédagogique qui rend la prédiction autorégressive et ses mécanismes inspectables, pas une affirmation selon laquelle tous les LLM fonctionnent ainsi.
+
+## 3. Du pré-entraînement à l’utilisation
+
+Le cycle de vie suivant est une carte simplifiée. Les étapes exactes et les objectifs dépendent du modèle ; l’évaluation intervient à plusieurs moments, pas uniquement à la fin. Les données de validation peuvent guider les choix et les ajustements. Le jeu de test doit rester tenu à l’écart jusqu’à l’évaluation finale : l’utiliser à répétition pour choisir un modèle ou régler ses paramètres biaiserait cette évaluation.
+
+```{mermaid}
+flowchart TB
+  D["Corpus et données de pré-entraînement"] --> P["Pré-entraînement : apprendre un objectif à grande échelle"]
+  P --> B["Modèle de base<br/>parfois qualifié de foundation model"]
+  B --> U["Utilisation directe : prompt et contexte"]
+  B --> A["Adaptation avec mise à jour de paramètres"]
+  A --> C["Fine-tuning pour une tâche, par ex. classification"]
+  A --> S["Supervised fine-tuning (SFT) sur des exemples instruction-réponse"]
+  U --> I["Inférence : calculer une sortie avec des paramètres fixes"]
+  C --> I
+  S --> I
+  I --> O["Sortie pour l’application"]
+  E["Validation pour les ajustements<br/>test tenu à l’écart"] -.-> R["Revoir les choix de conception<br/>sans régler sur le jeu de test"]
+  R -.-> P
+  R -.-> A
+  R -.-> I
+```
+
+### Les étapes à distinguer
+
+1. **Pré-entraînement (*pretraining*).** Le modèle apprend à partir d’un corpus selon un objectif donné. Pour un GPT classique, l’objectif est généralement la prédiction du prochain token. « Auto-supervisé » signifie que les cibles sont construites à partir des données elles-mêmes ; cela ne signifie pas que les données sont exemptes de biais ou d’erreurs.
+2. **Modèle de base (*base model*).** Le résultat du pré-entraînement est un modèle dont les paramètres capturent des régularités statistiques utiles. Le terme *foundation model* insiste sur sa réutilisation possible dans plusieurs domaines ; l’usage des deux termes varie selon les sources.
+3. **Adaptation.** On peut réutiliser le modèle tel quel, le guider par un prompt, lui fournir des documents externes via une méthode de recherche augmentée (RAG), ou modifier ses paramètres par fine-tuning. Ces stratégies ne sont pas équivalentes.
+4. **Fine-tuning pour la classification.** On adapte un modèle à une tâche avec des exemples étiquetés — par exemple attribuer une catégorie à un texte. Selon la méthode, on met à jour tout ou partie des paramètres et/ou une tête de classification.
+5. **SFT (*supervised fine-tuning*) pour suivre des instructions.** On entraîne le modèle sur des exemples de requêtes et de réponses attendues. Cela adapte le comportement aux formats et consignes illustrés ; cela ne garantit ni vérité factuelle ni robustesse universelle.
+6. **Inférence.** On utilise les paramètres obtenus pour traiter une entrée et calculer une sortie. Pour un modèle autorégressif, la génération sélectionne un token, l’ajoute au contexte et recommence. Les paramètres ne sont pas mis à jour par cette opération ordinaire.
+
+Le prompt et le RAG peuvent modifier le contexte disponible sans modifier les poids du modèle. Le fine-tuning, lui, modifie des paramètres (ou des paramètres additionnels). Il faut choisir entre ces approches selon le besoin, les données disponibles, le coût, la latence, la confidentialité et la facilité de mise à jour — pas supposer que fine-tuner est toujours préférable.
+
+## 4. À quoi servent ces modèles ?
+
+Les usages courants comprennent la génération et la reformulation de texte, le résumé, la traduction, l’extraction structurée, la classification, l’assistance à la programmation et les interfaces de question-réponse.
+
+La réutilisation d’un modèle généraliste est intéressante lorsqu’une même base peut couvrir plusieurs tâches ou lorsque les exemples d’une tâche sont limités. Une adaptation spécifique peut devenir pertinente si le format, le domaine, le comportement ou les contraintes de déploiement l’exigent. Pour des connaissances qui changent fréquemment, récupérer des documents à jour peut être plus approprié que de modifier les paramètres.
+
+Le choix doit être évalué sur la tâche réelle : qualité, erreurs, robustesse, coût, latence, confidentialité, provenance des données et maintenance. Une démonstration convaincante sur quelques prompts n’est pas une évaluation suffisante.
+
+## 5. Ce que la prédiction du prochain token ne prouve pas
+
+Un objectif de prédiction apprend à attribuer des probabilités aux suites de tokens observées. Il peut conduire à des capacités linguistiques et à des comportements complexes, mais il ne garantit pas :
+
+- que chaque affirmation générée soit vraie ;
+- que les probabilités soient bien calibrées ;
+- que le modèle possède une compréhension humaine du monde ;
+- qu’une capacité observée se généralise à toute tâche ou tout contexte ;
+- qu’un comportement soit causalement expliqué par un motif d’attention isolé.
+
+Le mot « compréhension » doit lui aussi être précisé. Il peut désigner une compétence opérationnelle mesurée sur des tâches — résumer, classer, expliquer ou résoudre un problème — ou une thèse plus forte sur la compréhension humaine, l’expérience ou l’intention. Les performances observables peuvent étayer la première interprétation dans un périmètre donné ; elles ne suffisent pas à établir la seconde. Il faut donc annoncer le critère utilisé plutôt que traiter « comprend » comme une propriété unique et directement mesurable.
+
+Les discussions sur les capacités dites *émergentes* demandent de préciser la tâche, la métrique, les seuils et les modèles comparés. Une capacité qui semble apparaître brutalement avec une métrique donnée peut dépendre de la résolution de mesure ou du protocole. Il faut examiner les résultats, les contrôles et les définitions avant de conclure à une transition qualitative.
+
+La taille du modèle ne suffit pas à expliquer ses performances. La qualité, la diversité et la provenance des données, l’objectif, l’architecture, le procédé d’entraînement, l’adaptation et le protocole d’évaluation contribuent ensemble aux résultats.
+
+::: {.callout-note}
+**Pourquoi construire un petit GPT ici ?** Un modèle éducatif permet d’inspecter les données, les tenseurs, les opérations, la loss et les erreurs sur une échelle maîtrisable. Il peut vérifier qu’un mécanisme fonctionne dans un cas donné. Il ne reproduit pas les volumes de données, les ressources de calcul, les choix d’entraînement ni les capacités d’un modèle de production.
+:::
+
+## 6. Où poursuivre dans LLM Lab ?
+
+- [**GPT et Transformer**](transformer.qmd) — suivre précisément le chemin d’un GPT autorégressif, des tokens aux probabilités du prochain token.
+- [**Construire un petit GPT**](build-path.qmd) — suivre les jalons G0–G9 et distinguer les connaissances disponibles des implémentations encore à construire.
+- [**Texte et données**](text-data.qmd) — comprendre comment le texte devient une séquence de tokens.
+- [**Espace des embeddings**](embedding-space.qmd) — distinguer les vecteurs initiaux des représentations contextualisées.
+- [**Évaluation expérimentale**](evaluation-experimentale.qmd) — définir des mesures, des baselines et des limites d’interprétation.
+
+## Sources principales et rôle
+
+- [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — architecture Transformer encodeur-décodeur originale.
+- [Devlin et al. (2018), *BERT*](https://arxiv.org/abs/1810.04805) — encodeur bidirectionnel et objectif de tokens masqués.
+- [Raffel et al. (2019), *Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer (T5)*](https://arxiv.org/abs/1910.10683) — cadre encodeur-décodeur texte-vers-texte et pré-entraînement par corruption.
+- [Radford et al. (2019), *Language Models are Unsupervised Multitask Learners*](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) — exemple GPT-2 de modèle autorégressif décodeur seul.
+- [Bommasani et al. (2021), *On the Opportunities and Risks of Foundation Models*](https://arxiv.org/abs/2108.07258) — cadrage des modèles de fondation et de leurs risques.
+- [Ouyang et al. (2022), *Training language models to follow instructions with human feedback*](https://arxiv.org/abs/2203.02155) — exemple de pipeline d’adaptation par démonstrations et préférences.
+- [Gu et Dao (2023), *Mamba: Linear-Time Sequence Modeling with Selective State Spaces*](https://arxiv.org/abs/2312.00752) — exemple d’architecture de modélisation de séquence non fondée sur l’attention Transformer standard.
+
+Ces sources n’ont pas toutes le même rôle : les articles d’architecture documentent des formulations précises ; les travaux sur les modèles de fondation discutent un cadre plus large ; les travaux d’adaptation décrivent des objectifs et protocoles spécifiques. Aucun article isolé ne définit à lui seul tous les usages actuels du terme « LLM ».
+
+::: {.language-switch}
+**Langue :** [Français](llm-overview.qmd) · [English](../en/llm-overview.qmd)
+:::
