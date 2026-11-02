@@ -1,9 +1,25 @@
 ---
 title: "LLM Lab — understand by exploring"
 subtitle: "Understand language models by connecting intuition, mathematics, code, and verifiable experiments."
+keywords: ["type:entry-point", "destination:orient", "topic:index", "level:overview", "language:en", "status:published"]
 lang: en
 toc: false
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/index"
+scope: "Site entry point and route selection."
+purpose: "Orient readers toward understanding, building, deeper study, or practice."
+suggested_route:
+  previous: null
+  next: "en/llm-overview"
+hierarchy:
+  parents: []
+  children: ["en/llm-overview", "en/build-path", "en/exercises", "en/glossary", "en/transformer-history"]
+related: []
+tags: ["type:entry-point", "destination:orient", "topic:index", "level:overview", "language:en", "status:published"]
+-->
 
 :::: {.hero-intro}
 <p class="eyebrow">OBSERVE · EXPLAIN · VERIFY</p>
