@@ -59,7 +59,11 @@ Ce schéma est conceptuel : les tokeniseurs réels diffèrent par leurs unités 
 :::
 
 
-## Des documents sources aux séquences prêtes pour l'entraînement
+::: {.callout-note}
+**Branche entraînement — pas un préalable à l'inférence.** La tokenisation sert aussi bien à encoder un prompt qu'à préparer un corpus. En revanche, le partitionnement des documents, les fenêtres de contexte et les cibles décalées sont des opérations propres à la préparation des exemples d'entraînement. Vous pouvez les étudier après avoir compris comment un modèle reçoit un prompt et génère une réponse.
+:::
+
+## Branche apprentissage : des documents aux séquences d'entraînement
 
 Le tokenizer n'est qu'un élément d'un pipeline de données plus large. Avant de devenir des IDs, les textes doivent être rassemblés et préparés. Les étapes ci-dessous décrivent les principales décisions, pas un ordre d'exécution universel : certaines opérations sont itératives et leur ordre dépend des sources, du protocole d'évaluation et de l'objectif d'entraînement.
 
