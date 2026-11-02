@@ -1,8 +1,24 @@
 ---
 title: "Likelihood and log-likelihood"
 subtitle: "Connecting observed tokens to the training objective"
+keywords: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/likelihood"
+scope: "Likelihood and log-likelihood"
+purpose: Explain Likelihood and log-likelihood; describe its role in an LLM and connect it to upstream and downstream concepts.
+suggested_route:
+  previous: "en/training-examples"
+  next: "en/entropy"
+hierarchy:
+  parents: ["en/training-examples", "en/probabilities"]
+  children: ["en/entropy", "en/cross-entropy"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Likelihood measures the probability of observed data for fixed parameters. In autoregressive language modeling, it is built from the conditional probabilities of each target token.

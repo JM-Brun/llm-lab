@@ -1,8 +1,24 @@
 ---
 title: "Gradients : relier la perte aux paramètres"
 subtitle: "Dérivées, règle de chaîne et vérification numérique"
+keywords: ["type:concept-lesson", "destination:understand", "topic:gradients", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/gradients"
+scope: "Gradients : relier la perte aux paramètres"
+purpose: "Expliquer la notion « Gradients : relier la perte aux paramètres », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/loss"
+  next: null
+hierarchy:
+  parents: ["fr/loss"]
+  children: []
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:gradients", "level:core", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Le gradient $\nabla_\theta\mathcal{L}$ rassemble les dérivées partielles de l'objectif par rapport aux paramètres appris. Il indique comment la perte varie localement quand les paramètres changent ; il ne garantit pas, à lui seul, une amélioration globale.

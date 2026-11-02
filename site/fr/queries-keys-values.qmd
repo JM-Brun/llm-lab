@@ -1,8 +1,24 @@
 ---
 title: "Requêtes, clés et valeurs (Q, K, V)"
 subtitle: "Comment le modèle choisit quelles informations combiner"
+keywords: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/queries-keys-values"
+scope: "Requêtes, clés et valeurs (Q, K, V)"
+purpose: "Expliquer la notion « Requêtes, clés et valeurs (Q, K, V) », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/contextualized-representations"
+  next: "fr/scaled-dot-product-attention"
+hierarchy:
+  parents: ["fr/contextualized-representations"]
+  children: ["fr/scaled-dot-product-attention"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 À chaque position, le Transformer calcule trois vecteurs à partir de la représentation du token : une **requête** (Q), une **clé** (K) et une **valeur** (V). Les requêtes et les clés servent à calculer les poids d'attention ; ces poids déterminent ensuite comment combiner les valeurs.

@@ -1,8 +1,24 @@
 ---
 title: "Pourquoi un même token peut-il avoir plusieurs représentations contextualisées ?"
 subtitle: "Du lookup partagé aux états cachés dépendants du contexte"
+keywords: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/contextualized-representations"
+scope: "Pourquoi un même token peut-il avoir plusieurs représentations contextualisées ?"
+purpose: "Expliquer la notion « Pourquoi un même token peut-il avoir plusieurs représentations contextualisées ? », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/positional-encoding"
+  next: "fr/queries-keys-values"
+hierarchy:
+  parents: ["fr/embedding-space", "fr/positional-encoding"]
+  children: ["fr/queries-keys-values"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Un même ID de token sélectionne toujours la même ligne dans une matrice d'embeddings fixe. Pourtant, ce token peut jouer des rôles différents selon la phrase. La distinction essentielle est la suivante : **le lookup fournit un vecteur initial ; le Transformer construit ensuite des représentations qui dépendent du contexte**.

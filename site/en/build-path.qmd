@@ -1,8 +1,24 @@
 ---
 title: "Build a small GPT"
 subtitle: "A guided practical path without disproportionate mathematical prerequisites"
+keywords: ["type:guided-build", "destination:build", "topic:build-path", "level:applied", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/build-path"
+scope: "Build a small GPT"
+purpose: Explain Build a small GPT; describe its role in an LLM and connect it to upstream and downstream concepts.
+suggested_route:
+  previous: null
+  next: "en/exercises"
+hierarchy:
+  parents: ["en/llm-overview"]
+  children: []
+related: []
+tags: ["type:guided-build", "destination:build", "topic:build-path", "level:applied", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 This path connects conceptual explanations to the gradual construction of a small decoder-only GPT. **You do not need to master linear algebra, tensor calculus, or differential calculus beforehand.** The required operations are introduced when they become useful; broader mathematical treatments remain available as optional deep dives.

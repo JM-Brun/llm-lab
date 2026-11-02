@@ -1,8 +1,24 @@
 ---
 title: "Causal masking"
 subtitle: "Preventing access to future tokens in an autoregressive model"
+keywords: ["type:concept-lesson", "destination:understand", "topic:causal-masking", "level:core", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/causal-masking"
+scope: "Causal masking"
+purpose: Explain Causal masking; describe its role in an LLM and connect it to upstream and downstream concepts.
+suggested_route:
+  previous: "en/scaled-dot-product-attention"
+  next: "en/logits"
+hierarchy:
+  parents: ["en/scaled-dot-product-attention"]
+  children: ["en/logits"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:causal-masking", "level:core", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Causal masking is an information constraint: to predict the token at position $t+1$, the computation at position $t$ must depend only on the available prefix. It is not merely a visualization convention.

@@ -1,8 +1,24 @@
 ---
 title: "Du corpus tokenisé aux exemples d’entraînement"
 subtitle: "Décalage entrée-cible, fenêtres, documents, padding et dimensions"
+keywords: ["type:concept-bridge", "destination:understand", "topic:training-examples", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/training-examples"
+scope: "Du corpus tokenisé aux exemples d’entraînement"
+purpose: "Expliquer la notion « Du corpus tokenisé aux exemples d’entraînement », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/probabilites"
+  next: "fr/vraisemblance"
+hierarchy:
+  parents: ["fr/text-data", "fr/tokenization-strategies"]
+  children: ["fr/vraisemblance"]
+related: []
+tags: ["type:concept-bridge", "destination:understand", "topic:training-examples", "level:core", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Un modèle autorégressif apprend à prédire le prochain token à partir du contexte disponible. Pour l’entraîner, on transforme un flux de tokens en paires entrée-cible alignées. Un décalage d’un seul indice, un masque incorrect ou une frontière de document mal traitée change l’objectif effectivement optimisé.

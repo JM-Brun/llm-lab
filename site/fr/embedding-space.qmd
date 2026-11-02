@@ -1,8 +1,24 @@
 ---
 title: "L'espace des embeddings"
 subtitle: "Comment les tokens deviennent des vecteurs — et ce que leur géométrie permet de dire"
+keywords: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/embedding-space"
+scope: "L'espace des embeddings"
+purpose: "Expliquer la notion « L'espace des embeddings », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/tokenization-strategies"
+  next: "fr/positional-encoding"
+hierarchy:
+  parents: ["fr/text-data"]
+  children: ["fr/positional-encoding", "fr/contextualized-representations", "fr/cosine-similarity", "fr/linearite-embeddings"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Un **embedding** est un vecteur numérique associé à un objet, par exemple un token. L'ensemble de ces vecteurs forme un espace de représentation. On peut comparer leurs directions, leurs distances ou leurs voisins, mais leur interprétation dépend du modèle, de son entraînement et de la tâche : la géométrie n'est pas un dictionnaire universel du sens.

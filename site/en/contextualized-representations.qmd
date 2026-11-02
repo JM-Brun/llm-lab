@@ -1,8 +1,24 @@
 ---
 title: "Why can the same token have different contextualized representations?"
 subtitle: "From a shared embedding lookup to context-dependent hidden states"
+keywords: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/contextualized-representations"
+scope: "Why can the same token have different contextualized representations?"
+purpose: Explain Why can the same token have different contextualized representations?; describe its role in an LLM and connect it to upstream and downstream concepts.
+suggested_route:
+  previous: "en/positional-encoding"
+  next: "en/queries-keys-values"
+hierarchy:
+  parents: ["en/embedding-space", "en/positional-encoding"]
+  children: ["en/queries-keys-values"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 The same token ID always selects the same row from a fixed embedding matrix. Yet the token can play different roles in different sentences. The distinction is that **lookup provides an initial vector; the Transformer subsequently builds representations that depend on context**.

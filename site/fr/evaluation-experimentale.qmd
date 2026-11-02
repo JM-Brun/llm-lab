@@ -1,8 +1,24 @@
 ---
 title: "Évaluer un modèle : du score au protocole expérimental"
 subtitle: "Exercice de transfert — sans nouvelle implémentation"
+keywords: ["type:experiment-guide", "destination:practice", "topic:evaluation-experimentale", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/evaluation-experimentale"
+scope: "Évaluer un modèle : du score au protocole expérimental"
+purpose: "Expliquer la notion « Évaluer un modèle : du score au protocole expérimental », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/exercises"
+  next: null
+hierarchy:
+  parents: ["fr/index"]
+  children: []
+related: []
+tags: ["type:experiment-guide", "destination:practice", "topic:evaluation-experimentale", "level:applied", "language:fr", "status:published"]
+-->
 
 ## Objectif
 

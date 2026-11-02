@@ -1,8 +1,24 @@
 ---
 title: "Espace d’exercices"
 subtitle: "Un espace séparé du cours pour vérifier et transférer les connaissances"
+keywords: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises"
+scope: "Espace d’exercices"
+purpose: "Expliquer la notion « Espace d’exercices », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/build-path"
+  next: "fr/evaluation-experimentale"
+hierarchy:
+  parents: ["fr/index"]
+  children: []
+related: []
+tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:fr", "status:published"]
+-->
 
 Cette page est le point d’entrée des exercices approfondis. Des auto-vérifications courtes avec corrigé replié sont désormais intégrées à certaines pages de cours ; elles vérifient immédiatement une notion. **Les collections ci-dessous restent une structure de navigation pour des exercices plus développés**, à construire après validation des prérequis et revue du plan de couverture.
 

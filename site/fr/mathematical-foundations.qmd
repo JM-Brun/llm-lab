@@ -1,8 +1,24 @@
 ---
 title: "La chaîne mathématique de l’entraînement d’un LLM"
 subtitle: "Une chaîne cohérente, des scores du modèle à l'apprentissage"
+keywords: ["type:deep-dive", "destination:deepen", "topic:mathematical-foundations", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/mathematical-foundations"
+scope: "La chaîne mathématique de l’entraînement d’un LLM"
+purpose: "Expliquer la notion « La chaîne mathématique de l’entraînement d’un LLM », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: null
+  next: "fr/tensors"
+hierarchy:
+  parents: ["fr/llm-overview"]
+  children: []
+related: []
+tags: ["type:deep-dive", "destination:deepen", "topic:mathematical-foundations", "level:advanced", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Un modèle autorégressif produit des **logits** pour le token suivant. Le softmax les transforme en probabilités ; le token observé détermine la vraisemblance et la perte ; le gradient de cette perte indique comment ajuster les paramètres. Ces étapes sont liées, mais chacune a un rôle précis.

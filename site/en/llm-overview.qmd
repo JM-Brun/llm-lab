@@ -1,8 +1,24 @@
 ---
 title: "Panorama: what is an LLM?"
 subtitle: "Place language models, their architectures, and their lifecycle before studying the mechanisms"
+keywords: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/llm-overview"
+scope: "Panorama: what is an LLM?"
+purpose: Explain Panorama: what is an LLM?; describe its role in an LLM and connect it to upstream and downstream concepts.
+suggested_route:
+  previous: "en/index"
+  next: "en/transformer"
+hierarchy:
+  parents: ["en/index"]
+  children: ["en/transformer", "en/build-path", "en/mathematical-foundations"]
+related: []
+tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 A **large language model (LLM)** is a neural model trained on large amounts of text data to process or generate language. The term describes a family of models and a mode of use; it does not name one unique architecture. This page provides the big picture. It does not replace the detailed lessons on tokens, attention, loss, or generation.

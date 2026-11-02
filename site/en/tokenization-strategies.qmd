@@ -1,8 +1,24 @@
 ---
 title: "Tokenization strategies: granularity, algorithms, and trade-offs"
 subtitle: "Choosing a discrete representation without conflating compression, linguistics, and quality"
+keywords: ["type:concept-lesson", "destination:understand", "topic:tokenization-strategies", "level:core", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/tokenization-strategies"
+scope: "Tokenization strategies: granularity, algorithms, and trade-offs"
+purpose: "Explain 'Tokenization strategies: granularity, algorithms, and trade-offs', its role in an LLM, and its upstream and downstream conceptual connections."
+suggested_route:
+  previous: "en/unicode-text"
+  next: "en/embedding-space"
+hierarchy:
+  parents: ["en/text-data"]
+  children: ["en/training-examples"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:tokenization-strategies", "level:core", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 A tokenizer is a representation and engineering choice. It must cover expected inputs while managing vocabulary size and sequence cost. No segmentation—word, character, byte, or subword—is optimal for every corpus and task.

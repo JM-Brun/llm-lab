@@ -1,8 +1,24 @@
 ---
 title: "Entropy: uncertainty over the next token"
 subtitle: "Reading an output distribution without confusing it with truth"
+keywords: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/entropy"
+scope: "Entropy: uncertainty over the next token"
+purpose: Explain Entropy: uncertainty over the next token; describe its role in an LLM and connect it to upstream and downstream concepts.
+suggested_route:
+  previous: "en/likelihood"
+  next: "en/cross-entropy"
+hierarchy:
+  parents: ["en/likelihood"]
+  children: ["en/cross-entropy"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 In an autoregressive LLM, entropy describes how spread out the predicted next-token distribution is for a given context. It characterizes that distribution: it does not tell us whether the answer is true or the model is reliable.

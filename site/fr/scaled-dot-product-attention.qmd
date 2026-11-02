@@ -1,8 +1,24 @@
 ---
 title: "Attention à produit scalaire mise à l'échelle"
 subtitle: "Des scores entre positions à une agrégation pondérée des valeurs"
+keywords: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/scaled-dot-product-attention"
+scope: "Attention à produit scalaire mise à l'échelle"
+purpose: "Expliquer la notion « Attention à produit scalaire mise à l'échelle », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/queries-keys-values"
+  next: "fr/causal-masking"
+hierarchy:
+  parents: ["fr/queries-keys-values"]
+  children: ["fr/causal-masking"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 L'attention à produit scalaire compare les requêtes aux clés pour calculer des scores, puis transforme ces scores en poids qui servent à combiner les valeurs. Le softmax normalise les poids sur les positions accessibles ; il ne prouve ni pertinence sémantique ni causalité.

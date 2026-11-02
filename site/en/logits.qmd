@@ -1,8 +1,24 @@
 ---
 title: "Logits: scores before normalization"
 subtitle: "Why a model does not directly output probabilities"
+keywords: ["type:concept-lesson", "destination:understand", "topic:logits", "level:core", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/logits"
+scope: "Logits: scores before normalization"
+purpose: Explain Logits: scores before normalization; describe its role in an LLM and connect it to upstream and downstream concepts.
+suggested_route:
+  previous: "en/causal-masking"
+  next: "en/probabilities"
+hierarchy:
+  parents: ["en/transformer", "en/causal-masking"]
+  children: ["en/probabilities"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:logits", "level:core", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 A **logit** is an unnormalized real-valued score associated with a class or vocabulary token. In an LLM, the final projection usually produces a vector $z\in\mathbb{R}^{V}$ at each prediction position.

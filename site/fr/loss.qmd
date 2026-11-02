@@ -1,8 +1,24 @@
 ---
 title: "Loss : de la perte par token à l'objectif"
 subtitle: "Réduction, masquage des cibles et interprétation d'une courbe"
+keywords: ["type:concept-lesson", "destination:understand", "topic:loss", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/loss"
+scope: "Loss : de la perte par token à l'objectif"
+purpose: "Expliquer la notion « Loss : de la perte par token à l'objectif », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/cross-entropy"
+  next: "fr/gradients"
+hierarchy:
+  parents: ["fr/cross-entropy"]
+  children: ["fr/gradients"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:loss", "level:core", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 La *loss* (fonction de perte) est un nombre que l'entraînement cherche à minimiser. Elle est souvent calculée à partir de l'entropie croisée pour chaque token, puis agrégée. La manière de faire cette agrégation fait partie du protocole et doit être documentée.

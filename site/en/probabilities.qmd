@@ -1,8 +1,24 @@
 ---
 title: "Output probabilities: from logits to tokens"
 subtitle: "Conditional distributions, temperature, and calibration"
+keywords: ["type:concept-lesson", "destination:understand", "topic:probabilites", "level:core", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/probabilities"
+scope: "Output probabilities: from logits to tokens"
+purpose: Explain Output probabilities: from logits to tokens; describe its role in an LLM and connect it to upstream and downstream concepts.
+suggested_route:
+  previous: "en/logits"
+  next: "en/training-examples"
+hierarchy:
+  parents: ["en/logits"]
+  children: ["en/likelihood"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:probabilites", "level:core", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 An LLM does not directly produce facts or probabilities of truth. At each position, it produces scores that are transformed into a distribution over possible tokens, conditioned on the prefix.

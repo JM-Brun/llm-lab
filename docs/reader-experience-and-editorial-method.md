@@ -1,6 +1,6 @@
 # Reader experience and editorial method
 
-**Purpose:** make LLM Lab a navigable explanation system, not a textbook that must be read from page one to the end. This document is the shared editorial contract for public pages, concepts, learning stages, and contributions. It complements the scientific and implementation criteria in the [full curriculum plan](full-curriculum-plan.md), [roadmap](roadmap.md), and [contributing guide](../CONTRIBUTING.md); it does not replace them.
+**Purpose:** make LLM Lab a navigable explanation system, not a textbook that must be read from page one to the end. This document is the shared editorial contract for public pages, concepts, learning stages, and contributions. It complements the scientific and implementation criteria in the [full curriculum plan](full-curriculum-plan.md), [roadmap](roadmap.md), and [contributing guide](../CONTRIBUTING.md); it does not replace them. The source-level page map and controlled tag vocabulary are specified in the [page metadata contract](page-metadata-schema.md); keep suggested reading order distinct from conceptual parent/child relations.
 
 ## 1. The learning model: a graph with progressive depth
 

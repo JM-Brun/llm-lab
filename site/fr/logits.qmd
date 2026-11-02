@@ -1,8 +1,24 @@
 ---
 title: "Logits : les scores avant normalisation"
 subtitle: "Pourquoi un modèle ne produit pas directement des probabilités"
+keywords: ["type:concept-lesson", "destination:understand", "topic:logits", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/logits"
+scope: "Logits : les scores avant normalisation"
+purpose: "Expliquer la notion « Logits : les scores avant normalisation », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/causal-masking"
+  next: "fr/probabilites"
+hierarchy:
+  parents: ["fr/transformer", "fr/causal-masking"]
+  children: ["fr/probabilites"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:logits", "level:core", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Un **logit** est un score réel associé à une classe ou à un token du vocabulaire, avant sa conversion en probabilité. Dans un LLM, la dernière projection produit généralement un vecteur $z\in\mathbb{R}^{V}$ à chaque position où le modèle doit prédire un token.

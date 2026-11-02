@@ -1,8 +1,24 @@
 ---
 title: "Positional encoding: giving tokens an order"
 subtitle: "From explicit positions to RoPE rotations"
+keywords: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/positional-encoding"
+scope: "Positional encoding: giving tokens an order"
+purpose: Explain Positional encoding: giving tokens an order; describe its role in an LLM and connect it to upstream and downstream concepts.
+suggested_route:
+  previous: "en/embedding-space"
+  next: "en/contextualized-representations"
+hierarchy:
+  parents: ["en/embedding-space"]
+  children: ["en/contextualized-representations"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Attention compares token representations, but it does not inherently know their order. A positional mechanism supplies this information, allowing a model to distinguish, for example, “the cat chases the dog” from “the dog chases the cat”. Transformers use several approaches; **RoPE** (*Rotary Position Embedding*) encodes position by rotating pairs of coordinates in queries and keys.

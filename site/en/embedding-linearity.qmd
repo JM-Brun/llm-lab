@@ -1,8 +1,24 @@
 ---
 title: "The linearity hypothesis in representation spaces"
 subtitle: "Representation, decodability, superposition, and generalization"
+keywords: ["type:deep-dive", "destination:deepen", "topic:linearite-embeddings", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/embedding-linearity"
+scope: "The linearity hypothesis in representation spaces"
+purpose: Explain The linearity hypothesis in representation spaces; describe its role in an LLM and connect it to upstream and downstream concepts.
+suggested_route:
+  previous: "en/cosine-similarity"
+  next: null
+hierarchy:
+  parents: ["en/embedding-space"]
+  children: []
+related: []
+tags: ["type:deep-dive", "destination:deepen", "topic:linearite-embeddings", "level:advanced", "language:en", "status:published"]
+-->
 
 This page belongs to the [Representation geometry and interpretability](embedding-space.qmd) path. [Embedding space](embedding-space.qmd) introduces the geometric objects; the [cosine similarity](cosine-similarity.qmd) page examines a metric often applied to them, without treating it as a direct measure of meaning.
 

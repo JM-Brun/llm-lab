@@ -1,8 +1,24 @@
 ---
 title: "Exercise space"
 subtitle: "A separate place to test and transfer knowledge"
+keywords: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/exercises"
+scope: "Exercise space"
+purpose: Explain Exercise space; describe its role in an LLM and connect it to upstream and downstream concepts.
+suggested_route:
+  previous: "en/build-path"
+  next: "en/experimental-evaluation"
+hierarchy:
+  parents: ["en/index"]
+  children: []
+related: []
+tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:en", "status:published"]
+-->
 
 This page is the entry point for extended exercises. Short self-checks with collapsed explanations are now embedded in selected lesson pages; they provide immediate checks of individual concepts. **The collections below remain navigation scaffolding for more substantial exercises**, to be developed after prerequisites and coverage have been reviewed.
 

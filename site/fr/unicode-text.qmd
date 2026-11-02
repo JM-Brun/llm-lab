@@ -1,8 +1,24 @@
 ---
 title: "Unicode, UTF-8 et normalisation du texte"
 subtitle: "Un approfondissement technique facultatif sur la représentation des chaînes"
+keywords: ["type:concept-lesson", "destination:understand", "topic:unicode-text", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/unicode-text"
+scope: "Unicode, UTF-8 et normalisation du texte"
+purpose: "Expliquer la notion « Unicode, UTF-8 et normalisation du texte », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/text-data"
+  next: "fr/tokenization-strategies"
+hierarchy:
+  parents: ["fr/text-data"]
+  children: []
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:unicode-text", "level:core", "language:fr", "status:published"]
+-->
 
 Cette page est un **complément technique** à la [vue d'ensemble du parcours texte → tokens](text-data.qmd). Elle n'est pas nécessaire pour comprendre le pipeline général ; elle devient utile lorsqu'un texte semble identique à l'écran mais produit un encodage ou une tokenisation différents.
 
