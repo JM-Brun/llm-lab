@@ -15,8 +15,8 @@ suggested_route:
   next: "fr/logits"
 hierarchy:
   parents: ["fr/scaled-dot-product-attention"]
-  children: ["fr/logits"]
-related: []
+  children: []
+related: ["fr/logits"]
 tags: ["type:concept-lesson", "destination:understand", "topic:causal-masking", "level:core", "language:fr", "status:published"]
 -->
 

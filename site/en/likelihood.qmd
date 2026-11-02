@@ -14,9 +14,9 @@ suggested_route:
   previous: "en/training-examples"
   next: "en/entropy"
 hierarchy:
-  parents: ["en/training-examples", "en/probabilities"]
-  children: ["en/entropy", "en/cross-entropy"]
-related: []
+  parents: ["en/probabilities"]
+  children: []
+related: ["en/training-examples", "en/entropy", "en/cross-entropy"]
 tags: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:en", "status:published"]
 -->
 

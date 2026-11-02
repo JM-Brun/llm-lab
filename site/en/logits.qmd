@@ -14,9 +14,9 @@ suggested_route:
   previous: "en/causal-masking"
   next: "en/probabilities"
 hierarchy:
-  parents: ["en/transformer", "en/causal-masking", "en/generation"]
+  parents: ["en/transformer", "en/generation"]
   children: ["en/probabilities"]
-related: []
+related: ["en/causal-masking"]
 tags: ["type:concept-lesson", "destination:understand", "topic:logits", "level:core", "language:en", "status:published"]
 -->
 

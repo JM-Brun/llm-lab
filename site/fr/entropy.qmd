@@ -14,9 +14,9 @@ suggested_route:
   previous: "fr/vraisemblance"
   next: "fr/cross-entropy"
 hierarchy:
-  parents: ["fr/vraisemblance"]
+  parents: []
   children: ["fr/cross-entropy"]
-related: []
+related: ["fr/vraisemblance"]
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:fr", "status:published"]
 -->
 

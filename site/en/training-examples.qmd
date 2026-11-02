@@ -14,9 +14,9 @@ suggested_route:
   previous: "en/probabilities"
   next: "en/likelihood"
 hierarchy:
-  parents: ["en/text-data", "en/tokenization-strategies"]
-  children: ["en/likelihood"]
-related: []
+  parents: ["en/text-data"]
+  children: []
+related: ["en/tokenization-strategies", "en/likelihood"]
 tags: ["type:concept-bridge", "destination:understand", "topic:training-examples", "level:core", "language:en", "status:published"]
 -->
 

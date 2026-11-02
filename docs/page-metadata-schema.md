@@ -53,6 +53,18 @@ These fields must not be conflated:
 
 A page can have several parents or children. The learning path is a **graph with suggested routes**, not a mandatory linear sequence. Optional deep dives must not become hidden prerequisites for the core conceptual course.
 
+### 3.1.1 Do not encode a processing sequence as conceptual containment
+
+A parent/child edge is stronger than “comes before”, “is used by”, or “is mathematically related to”. Use `suggested_route` for a recommended reading transition and `related` for an important connection that is not genuine conceptual containment or decomposition. For example:
+
+- Text preprocessing and tokenization feed a Transformer, but are not thereby sub-concepts of the Transformer architecture.
+- Training examples provide observations on which likelihood is evaluated; they do not conceptually contain likelihood.
+- Likelihood, predictive entropy, and cross-entropy are distinct mathematical quantities. Their relationships belong in `related` unless a page genuinely generalizes or decomposes another concept.
+- A causal mask constrains attention; it does not contain or decompose the output logits.
+- Cross-entropy can reasonably be modelled as an extension of entropy, while batch loss is an aggregation built from per-target cross-entropy.
+
+When an edge is removed from `hierarchy`, preserve discoverability with a reciprocal `related` link where the connection remains pedagogically useful. This keeps the hierarchy a map of conceptual ownership rather than a diagram of every dependency in the computation pipeline.
+
 ## 3.1 Specificity: scope versus learning purpose
 
 The two fields answer different editorial questions and should not paraphrase one another:

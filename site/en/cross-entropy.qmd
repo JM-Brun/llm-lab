@@ -14,9 +14,9 @@ suggested_route:
   previous: "en/entropy"
   next: "en/loss"
 hierarchy:
-  parents: ["en/likelihood", "en/entropy"]
+  parents: ["en/entropy"]
   children: ["en/loss"]
-related: []
+related: ["en/likelihood"]
 tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:en", "status:published"]
 -->
 
