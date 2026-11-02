@@ -24,6 +24,15 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 A **large language model (LLM)** is a neural model trained on large amounts of text data to process or generate language. The term describes a family of models and a mode of use; it does not name one unique architecture. This page provides the big picture. It does not replace the detailed lessons on tokens, attention, loss, or generation.
 :::
 
+::: {.callout-note title="Expected outcome — and where this page fits"}
+**After this page, you should be able to:**
+- explain why “LLM” does not name one specific architecture;
+- distinguish architecture, learning/adaptation, and inference;
+- explain why inference uses fixed parameters whereas training updates them.
+
+This is the **first stage of the conceptual route**. You do not need to master equations or tensors yet.
+:::
+
 ::: {.callout-tip title="How to use this overview"}
 This page first answers three questions: **what are we talking about, which broad model families should we distinguish, and how do architecture, learning/adaptation, and use differ?** It provides orientation without unpacking every operation.
 
@@ -196,6 +205,16 @@ RAG can retrieve documents at inference time and provide them in the context; mo
 - [Gu and Dao (2023), *Mamba: Linear-Time Sequence Modeling with Selective State Spaces*](https://arxiv.org/abs/2312.00752) — example of a sequence-modeling architecture not based on standard Transformer attention.
 
 These sources serve different purposes: architecture papers document specific formulations; foundation-model work discusses a broader framing; adaptation work describes particular objectives and protocols. No single paper defines every current use of the term “LLM”.
+
+## Checkpoint: what you should now be able to explain
+
+Before moving on, check that you can answer without rereading the table:
+
+1. **What defines an LLM?** A category of language models, not one specific architecture.
+2. **What are the three distinct dimensions?** Architecture describes the computation; learning/adaptation explains how parameters are obtained or adjusted; inference applies fixed parameters to an input.
+3. **Why study inference before training?** The computation of an output can be understood without first knowing where the parameters came from; their quality still depends on learning or pretrained weights.
+
+If these distinctions are clear, the recommended next step is [GPT and Transformers](transformer.qmd): trace how a token context becomes next-token scores. If you first want to understand the model's input, [From text to tokens](text-data.qmd) is a focused detour, not a prerequisite.
 
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-overview.qmd) · [English](llm-overview.qmd)
