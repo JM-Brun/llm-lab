@@ -15,7 +15,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: ["en/loss"]
-  children: ["en/build-path"]
+  children: []
 related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:gradients", "level:core", "language:en", "status:published"]
 -->
