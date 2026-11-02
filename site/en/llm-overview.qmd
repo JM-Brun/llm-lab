@@ -1,6 +1,6 @@
 ---
 title: "Panorama: what is an LLM?"
-subtitle: "Distinguish architecture, learning, adaptation and inference before studying the mechanisms"
+subtitle: "One loop, three dimensions, three phases — the mental model before the mechanisms"
 keywords: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 lang: en
 ---
@@ -8,194 +8,167 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-overview"
-scope: "Places LLMs within AI and NLP, distinguishes major architecture families, and outlines the path from pretraining to use, distinguishing architecture, learning/adaptation, and inference; it does not unpack Transformer computations or the mathematics of learning objectives."
-purpose: "By the end of this page, readers should be able to define an LLM without conflating it with an architecture, place the major model families, distinguish pretraining, adaptation, and inference, and choose which learning-path branch to explore next."
+scope: "Installs the central mental model — a function that maps a token sequence to a distribution over the next token — then places LLMs within AI and NLP, distinguishes architecture, learning/adaptation and inference, and presents the three-phase path from pretraining to use; it does not unpack Transformer computations or the mathematics of learning objectives."
+purpose: "By the end of this page, readers should be able to describe the context → distribution → token loop, distinguish architecture, learning/adaptation, and inference, place the major model families as landmarks, and choose which learning-path branch to explore next."
 suggested_route:
   previous: "en/index"
   next: "en/transformer"
 hierarchy:
   parents: ["en/index"]
-  children: ["en/transformer", "en/generation", "en/build-path", "en/mathematical-foundations"]
+  children: ["en/transformer", "en/generation", "en/build-path", "en/mathematical-foundations", "en/llm-limits"]
 related: []
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
-A **large language model (LLM)** is a neural model trained on large amounts of text data to process or generate language. The term describes a family of models and a mode of use; it does not name one unique architecture. This page provides the big picture. It does not replace the detailed lessons on tokens, attention, loss, or generation.
+An **LLM** is a function that maps a token sequence to a **probability distribution over the next token**. Training adjusts the parameters of this function so that these distributions match the observed data; using the model reads them to produce text. This page installs that mental model, then situates it: dimensions not to conflate, model families, phases of the path.
 :::
 
-::: {.callout-tip title="How to use this overview"}
-This page first answers three questions: **what are we talking about, which broad model families should we distinguish, and how do architecture, learning/adaptation, and use differ?** It provides orientation without unpacking every operation.
+## 1. The loop: what an LLM does
 
-- To follow how a GPT works, continue to [GPT and Transformers](transformer.qmd).
-- To inspect how text becomes a numerical input, open [From text to tokens](text-data.qmd). This is a focused deepening branch, not a prerequisite for the whole overview.
-- To build a model step by step, follow the [guided build path](build-path.qmd).
-:::
-
-## 1. Where do LLMs fit?
-
-Artificial intelligence (AI) is the broadest field; machine learning (ML) is one part of it, and deep learning refers to learning methods based on multilayer neural networks. Current LLMs are generally deep-learning models applied to language. These categories describe different levels: “NLP” names a problem domain, whereas “deep learning” names a family of methods.
-
-Natural language processing (NLP) includes very different methods: linguistic rules, statistical models, task-specific systems, neural networks, and reusable pretrained models. Contemporary LLMs are generally trained at scale on text data. They can serve as a base for multiple tasks rather than being built separately for each one. This does not mean earlier approaches have disappeared: a production system may combine rules, specialized models, document retrieval, tools, and an LLM.
-
-There is no universal parameter-count threshold that mechanically turns a model into an “LLM”. Size matters, but the term also relates to data scale, training objective, intended capabilities, and how the model is reused. The term *foundation model* is broader: it describes a model trained on extensive data and reusable as a basis for many applications, not necessarily a language-only model.
-
-
-## Three dimensions that should not be conflated
-
-To describe an LLM, ask three independent questions. They interact, but they refer to different objects and operations.
-
-| Dimension | Question | What it describes | Examples |
-|---|---|---|---|
-| **Architecture** | How does information flow through the model? | The operations and connections that define the computation | Encoder-only, encoder–decoder, decoder-only; other families, such as state-space models, are not conventional Transformers |
-| **Learning and adaptation** | How were the parameters obtained or changed? | Objectives and procedures that learn or adjust parameters; some adaptation methods do not change weights | Pretraining, fine-tuning/SFT, preference optimization; prompting and RAG change context without retraining weights |
-| **Inference and use** | What is done with the model once its parameters are fixed? | Computing an output from an input, possibly inside a system with retrieval or tools | Classification, scoring, autoregressive generation, retrieval-augmented answers |
-
-These dimensions do not form one universal sequence. The same architecture can be trained with different objectives; a trained model can be used directly, prompted, combined with a RAG system, or adapted through parameter updates. Ordinary inference uses the available parameters without changing them.
-
-## 2. Three major Transformer architecture families
-
-Architecture describes **how information flows through a model**. A training objective describes **what the model learns to predict or reconstruct**. They are related, but they are not synonyms.
+The operation of an autoregressive LLM reduces to one loop:
 
 ```{mermaid}
 flowchart LR
-  E["Encoder-only<br/>Bidirectional context<br/>Masked tokens"]
-  ED["Encoder–decoder<br/>Encoded input + conditioned generation<br/>Sequence transformation"]
-  D["Decoder-only<br/>Causal context<br/>Next-token prediction"]
+  C["Context<br/>(token sequence)"] --> M["Model<br/>fixed parameters"]
+  M --> D["Distribution over<br/>the next token"]
+  D --> S["Selection of<br/>one token"]
+  S -->|"added to context"| C
 ```
 
-The diagram presents three families as architectural alternatives, not as stages in an evolution or a quality ranking.
+At each step:
 
-| Family | Context access | Typical pretraining objective | Common uses | Example |
-|---|---|---|---|---|
-| **Encoder-only** | Usually bidirectional attention over the supplied sequence | Predict masked tokens (*masked language modeling*) | Text representations, classification, semantic search after adaptation | BERT |
-| **Encoder–decoder** | The encoder processes the input; the decoder generates while attending to that representation | Sequence reconstruction or transformation objective; model-dependent | Translation, summarization, text-to-text transformation | Original Transformer, T5 |
-| **Decoder-only** | Causal attention: each position uses its permitted preceding context | Predict the next token | Text continuation and prompt-conditioned generation | GPT |
+1. the context (a token sequence) enters the model;
+2. the model computes a probability distribution over the vocabulary: every possible token receives a probability of being the next one;
+3. a selection rule picks one token — the most likely, or a draw from the distribution;
+4. the chosen token is appended to the context, and the loop repeats until a stopping condition.
 
+During this loop, the model's parameters do not change: inference **reads** the function, it does not modify it. Training is what fixed those parameters, by adjusting the function so its distributions match the data; this is why a randomly initialized model runs the same loop but does not produce coherent text. The rest of this page situates that loop.
 
-These families are landmarks, not an exhaustive taxonomy. The 2017 Transformer paper describes an encoder–decoder architecture for translation. BERT illustrates an encoder-only model and masked-token prediction. GPT illustrates an autoregressive decoder-only model. T5 shows that an encoder–decoder can be pretrained with a corruption objective and used in a text-to-text framework.
+::: {.callout-tip title="First reading"}
+Keep the loop and the three dimensions of section 2. The architecture families (section 4) are landmarks to consult, not a prerequisite; the caveats are grouped at the end of the page and developed in [What next-token prediction does not prove](llm-limits.qmd).
+:::
 
-**Do not confuse two axes:** “Transformer” names an architecture family; “LLM” describes a class of language models by scale and use. Many well-known LLMs are Transformers, but language-model architectures continue to evolve and non-Transformer approaches also exist. Conversely, a Transformer is not necessarily an LLM.
+## 2. Three dimensions not to conflate
 
-This project focuses on building a **small decoder-only GPT**. That is a pedagogical choice that makes autoregressive prediction and its mechanisms inspectable, not a claim that every LLM works this way.
+Describing an LLM requires three independent questions. They answer one another, but they denote neither the same objects nor the same operations.
 
-## A first look: understand inference
+| Dimension | Question | What it describes | Examples |
+|---|---|---|---|
+| **Architecture** | How does information flow through the model? | The operations and connections that define the computation performed | Encoder-only, encoder–decoder, decoder-only; other families, such as state-space models, are not classic Transformers |
+| **Learning and adaptation** | How were the parameters obtained or modified? | The objectives and procedures that learn or adjust parameters; some adaptations never touch the weights | Pretraining, fine-tuning/SFT, preference optimization; prompting and RAG change the context without retraining the weights |
+| **Inference and use** | What do you do with the model once its parameters are fixed? | Computing an output from an input, possibly within a system with retrieval or tools | Classification, scoring, autoregressive generation, retrieval-augmented answers |
 
-To understand what an LLM does, start with **inference**: a model receives a context, computes an output using its current parameters and, for an autoregressive model, generates a sequence of tokens. At this stage, you do not need to know how those parameters were learned.
+The loop of section 1 belongs to inference. Training belongs to learning. The same model can change use without changing architecture: that is what the following sections unpack.
 
-For a GPT, the loop can be summarized as follows:
+## 3. Where do LLMs sit?
 
-1. turn the input text into tokens and token IDs;
-2. compute representations and scores for the next token;
-3. optionally convert scores into probabilities and select a token;
-4. append that token to the context and repeat until a stopping condition is met.
-
-Parameters remain fixed during ordinary inference. The pages on [tokens and representations](text-data.qmd) and [GPT and Transformers](transformer.qmd) then unpack the computation.
-
-**Why study training afterwards?** Inference explains how the model uses its parameters; training explains how those parameters are adjusted to produce useful behaviour. A randomly initialized model can execute the loop, but it generally does not generate coherent text.
-
-## 3. From pretraining to use
-
-The path below, from pretraining to use, is a simplified map. It describes the chronological order of operations, not necessarily the pedagogical order in which we study them. Exact stages and objectives vary by model; evaluation occurs at several points, not only at the end. Validation data can guide choices and adjustments. The test set should remain held out until final assessment: repeatedly using it to select a model or tune parameters would bias that assessment.
+LLMs live at the intersection of a family of methods and a domain of problems:
 
 ```{mermaid}
 flowchart TB
-  D["Pretraining corpus and data"] --> P["Pretraining: learn an objective at scale"]
-  P --> B["Base model<br/>sometimes called a foundation model"]
-  B --> U["Direct use: prompt and context"]
-  B --> A["Adaptation with parameter updates"]
-  A --> C["Task fine-tuning, e.g. classification"]
-  A --> S["Supervised fine-tuning (SFT) on instruction–response examples"]
-  U --> I["Inference: compute an output with fixed parameters"]
-  C --> I
-  S --> I
-  I --> O["Application output"]
-  E["Validation for iteration<br/>test set held out"] -.-> R["Review design choices<br/>do not tune on the test set"]
-  R -.-> P
-  R -.-> A
-  R -.-> I
+  subgraph AI["Artificial intelligence"]
+    subgraph ML["Machine learning"]
+      subgraph DL["Deep learning<br/>(neural networks)"]
+        LLM["LLM"]
+      end
+    end
+  end
+  NLP["NLP: a domain of problems<br/>(rules, statistics, models, LLMs…)"]
 ```
 
-### From pretraining to use (chronological order)
+- **Deep learning** denotes a family of methods: neural networks with multiple layers. Current LLMs belong to it.
+- **Natural language processing** (NLP) denotes a domain of problems: processing or producing language. It is addressed by very different methods — linguistic rules, statistical models, specialized systems, neural networks. LLMs are a dominant but not exclusive answer: a production system can combine rules, specialized models, document retrieval, tools, and LLMs.
 
-1. **Pretraining.** The model learns from a corpus under a chosen objective. For a conventional GPT, this is usually next-token prediction. *Self-supervised* means that targets are constructed from the data itself; it does not mean the data are free of bias or error.
-2. **Base model.** The result of pretraining is a model whose parameters capture useful statistical regularities. *Foundation model* emphasizes its potential reuse across multiple domains; usage of the two terms varies across sources.
-3. **Adaptation.** A model can be reused as is, guided with a prompt, supplied with external documents through retrieval-augmented generation (RAG), or have its parameters changed through fine-tuning. These strategies are not equivalent.
-4. **Classification fine-tuning.** A model is adapted to a task using labeled examples—for example, assigning a category to a text. Depending on the method, all or some parameters and/or a classification head are updated.
-5. **Instruction supervised fine-tuning (SFT).** The model is trained on examples of prompts and expected responses. This adapts behavior to the formats and instructions demonstrated; it does not guarantee factual truth or universal robustness.
-6. **Inference.** The resulting parameters are used to process an input and compute an output. For an autoregressive model, generation selects a token, appends it to the context, and repeats. Ordinary inference does not update the parameters.
+A model becomes an "LLM" through the joint scale of data, parameters, and training objective — not through a universal parameter threshold. The *foundation model* concept emphasizes reuse: a model trained on broad data, serving as the base for many applications.
 
-Prompting and RAG can change the available context without changing model weights. Fine-tuning changes parameters (or additional parameters). Choose among these approaches based on the task, available data, cost, latency, privacy, and ease of updating—not on the assumption that fine-tuning is always preferable.
+## 4. The path in three phases
 
-## 4. What are these models used for?
+From corpus to use, the lifecycle reduces to three phases:
 
-Common applications include text generation and rewriting, summarization, translation, structured extraction, classification, coding assistance, and question-answering interfaces.
+```{mermaid}
+flowchart LR
+  P["1. Pretrain<br/>learn an objective<br/>at scale"] --> B["Base model"]
+  B --> A["2. Adapt<br/>prompting, RAG, or<br/>weight updates"]
+  A --> I["3. Infer<br/>compute an output with<br/>fixed parameters"]
+```
 
-Reusing a general-purpose model is attractive when one base model can support multiple tasks or when task-specific examples are limited. A task-specific adaptation may be useful when the required format, domain, behavior, or deployment constraints demand it. For frequently changing knowledge, retrieving up-to-date documents may be more appropriate than changing model parameters.
+1. **Pretraining.** The model learns from a corpus according to an objective — for a GPT, next-token prediction. The learning is called *self-supervised*: the targets are built from the data itself, without human labels. The result is a **base model**, sometimes called a *foundation model*.
+2. **Adaptation.** You can reuse the model as is, steer it with a prompt, feed it documents via retrieval-augmented generation (RAG), or update its parameters: task fine-tuning (e.g. classification), SFT on instruction–response examples, or preference optimization. These strategies are not equivalent: prompting and RAG change the context, fine-tuning changes the weights.
+3. **Inference.** You use the obtained parameters to process an input and compute an output — for an autoregressive model, the loop of section 1.
 
-The choice must be evaluated on the actual task: quality, errors, robustness, cost, latency, privacy, data provenance, and maintenance. A convincing demonstration on a few prompts is not a sufficient evaluation.
+These three phases describe the chronological order in which a model is built, not a pedagogical order of study: inference can be understood before training, even though it comes last in the making of the model. Evaluation happens at several points; the test set must remain held out until the final evaluation, otherwise that evaluation would be biased.
 
-## 5. What next-token prediction does not prove
+## 5. For orientation: the architecture families
 
-A next-token objective learns to assign probabilities to token sequences observed in data. It can lead to useful linguistic regularities and complex behaviors, but it does not guarantee:
+::: {.callout-note title="For orientation"}
+Nearly all current LLMs are **Transformers**, but they do not all realize the loop the same way. Three families serve as landmarks:
 
-- that every generated statement is true;
-- that probabilities are well calibrated;
-- that the model has human-like understanding of the world;
-- that an observed capability generalizes to every task or context;
-- that a behavior is causally explained by an isolated attention pattern.
-
-The word “understanding” also needs qualification. It may refer to operational competence measured on tasks—summarizing, classifying, explaining, or solving a problem—or to a stronger claim about human-like understanding, experience, or intention. Observable performance can support the first interpretation within a defined scope; it does not establish the second. State the criterion being used rather than treating “understands” as one directly measurable property.
-
-Discussions of supposedly *emergent* capabilities require precise task definitions, metrics, thresholds, and model comparisons. A capability that appears to emerge abruptly under one metric may depend on measurement resolution or protocol. Inspect results, controls, and definitions before claiming a qualitative transition.
-
-Model size alone does not explain performance. Data quality, diversity and provenance, objective, architecture, training process, adaptation, and evaluation protocol all contribute to results.
-
-::: {.callout-note}
-**Why build a small GPT here?** An educational model makes data, tensors, operations, loss, and errors inspectable at a manageable scale. It can verify that a mechanism works in a specific case. It does not reproduce the data volumes, compute resources, training choices, or capabilities of a production model.
+| Family | Context access | Typical pretraining objective | Common uses | Example |
+|---|---|---|---|---|
+| **Encoder-only** | Generally bidirectional attention over the provided sequence | Predict masked tokens (*masked language modeling*) | Text representation, classification, semantic search after adaptation | BERT |
+| **Encoder–decoder** | The encoder processes the input; the decoder generates from that representation | Reconstruction or sequence-transformation objective; model-dependent | Translation, summarization, text-to-text transformation | Original Transformer, T5 |
+| **Decoder-only** | Causal attention: each position uses the allowed previous context | Predict the next token | Text continuation and prompt-conditioned generation | GPT |
 :::
 
-## Check your understanding
+Two axes not to conflate: "Transformer" denotes a family of architectures; "LLM" denotes a category of language models by scale and use. Many well-known LLMs are decoder-only Transformers, but non-Transformer architectures exist (state-space models), and a Transformer is not necessarily an LLM.
 
-Try to answer before opening the explanations. The goal is to distinguish levels of description, not memorize labels.
+For this site's build project, we choose a **small decoder-only GPT**: autoregressive prediction becomes inspectable step by step. It is a pedagogical choice, not a claim that all LLMs work this way. The computation details come in [GPT and Transformer](transformer.qmd).
 
-1. A model uses an encoder–decoder architecture and learns to reconstruct corrupted text spans. Which part describes the architecture, and which describes the training objective? Can you infer that it is a decoder-only GPT?
+## 6. What are these models for?
+
+Common uses include text generation and rewriting, summarization, translation, structured extraction, classification, programming assistance, and question-answering interfaces.
+
+Reusing a general-purpose model is attractive when one base can cover several tasks, or when the labeled examples of a task are scarce. For knowledge that changes frequently, retrieving up-to-date documents (RAG) is often better suited than changing parameters; for a specific format, domain, or behavior, an adaptation may become worthwhile. The choice is evaluated on the real task: quality, errors, robustness, cost, latency, confidentiality, data provenance, and maintenance — a convincing demo on a few prompts is not an evaluation.
+
+## 7. Check your understanding
+
+Try to answer before opening the solutions. The goal is to manipulate the mental model, not to memorize labels.
+
+1. A model has just generated the token "cat" and is preparing the next one. Describe what happens between these two tokens: what does the model receive, what does it compute, and what does not change?
 
 <details>
 <summary>Show the reasoning</summary>
 
-Encoder–decoder describes the architecture: two subnetworks and an information flow between them. Reconstructing corrupted spans describes the objective. This does not imply a decoder-only GPT; that would be a different architectural family. Architecture and objective are related but distinct axes.
+The token "cat" is appended to the context: it is this longer sequence that the model receives. It computes a new probability distribution over the vocabulary, from which a selection rule extracts the next token. What does not change: the model's parameters — inference reads them, it does not modify them.
 
 </details>
 
-2. An application must answer using documentation that changes every day. Compare retrieval-augmented generation (RAG) with fine-tuning: which can use new documents without retraining the model weights?
+2. An application must answer from documentation that changes daily. Compare adding document retrieval (RAG) with fine-tuning: which one can exploit the new documents without retraining the weights?
 
 <details>
 <summary>Show the reasoning</summary>
 
-RAG can retrieve documents at inference time and provide them in the context; model weights remain unchanged. Fine-tuning changes weights using training examples and requires another adaptation procedure to incorporate changes. RAG does not guarantee that retrieved documents are relevant or that the answer faithfully uses them.
+RAG can retrieve documents at inference time and provide them in the context; the model's weights do not change. Fine-tuning modifies the weights from training examples and requires a new adaptation procedure to absorb the changes. RAG guarantees neither the relevance of the retrieved documents nor the faithfulness of the answer.
 
 </details>
 
-## 6. Where to continue in LLM Lab
+## 8. What this page does not say
 
-- [**GPT and Transformer**](transformer.qmd) — follow the specific path of an autoregressive GPT, from tokens to next-token probabilities.
-- [**Build a small GPT**](build-path.qmd) — follow milestones G0–G9 and distinguish available knowledge from implementations still to be built.
-- [**Text and data**](text-data.qmd) — understand how text becomes a sequence of tokens.
-- [**Embedding space**](embedding-space.qmd) — distinguish initial vectors from contextualized representations.
-- [**Experimental evaluation**](experimental-evaluation.qmd) — define measures, baselines, and limits of interpretation.
+A next-token prediction loop is easy to state; what it guarantees is less so. An LLM's performance proves neither the truth of its outputs, nor human-like understanding of the world, nor abilities that would generalize to every task. These questions deserve more than a style clause: they have their own page, [What next-token prediction does not prove](llm-limits.qmd).
 
-## Primary sources and their roles
+::: {.callout-note}
+**Why build a small GPT here?** An educational model lets you inspect the data, tensors, operations, loss, and errors at a manageable scale. It can verify that a mechanism works in a given case. It does not reproduce the data volumes, compute resources, or capabilities of a production model.
+:::
+
+## 9. Where to go next in LLM Lab
+
+- [**GPT and Transformer**](transformer.qmd) — follow an autoregressive GPT's path, from tokens to next-token probabilities.
+- [**What next-token prediction does not prove**](llm-limits.qmd) — read performance without over-interpreting the objective.
+- [**Build a small GPT**](build-path.qmd) — follow the G0–G9 milestones.
+- [**Experimental evaluation**](experimental-evaluation.qmd) — define metrics, baselines, and interpretation limits.
+
+## Primary sources and their role
 
 - [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — original encoder–decoder Transformer architecture.
 - [Devlin et al. (2018), *BERT*](https://arxiv.org/abs/1810.04805) — bidirectional encoder and masked-token objective.
-- [Raffel et al. (2019), *Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer (T5)*](https://arxiv.org/abs/1910.10683) — encoder–decoder text-to-text framework and corruption-based pretraining.
+- [Raffel et al. (2019), *T5*](https://arxiv.org/abs/1910.10683) — text-to-text encoder–decoder framework and corruption-based pretraining.
 - [Radford et al. (2019), *Language Models are Unsupervised Multitask Learners*](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) — GPT-2 example of an autoregressive decoder-only model.
 - [Bommasani et al. (2021), *On the Opportunities and Risks of Foundation Models*](https://arxiv.org/abs/2108.07258) — framing of foundation models and their risks.
-- [Ouyang et al. (2022), *Training language models to follow instructions with human feedback*](https://arxiv.org/abs/2203.02155) — example of an adaptation pipeline using demonstrations and preferences.
-- [Gu and Dao (2023), *Mamba: Linear-Time Sequence Modeling with Selective State Spaces*](https://arxiv.org/abs/2312.00752) — example of a sequence-modeling architecture not based on standard Transformer attention.
+- [Ouyang et al. (2022), *Training language models to follow instructions with human feedback*](https://arxiv.org/abs/2203.02155) — example adaptation pipeline with demonstrations and preferences.
+- [Gu and Dao (2023), *Mamba*](https://arxiv.org/abs/2312.00752) — example of a sequence-modeling architecture not based on standard Transformer attention.
 
-These sources serve different purposes: architecture papers document specific formulations; foundation-model work discusses a broader framing; adaptation work describes particular objectives and protocols. No single paper defines every current use of the term “LLM”.
+These sources play different roles — precise formulations, broader framings, specific protocols; none alone defines every current use of the term "LLM".
 
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-overview.qmd) · [English](llm-overview.qmd)
