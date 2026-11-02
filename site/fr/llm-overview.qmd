@@ -79,7 +79,7 @@ flowchart TB
   R -.-> I
 ```
 
-### Les étapes à distinguer
+### Les étapes du cycle de vie (ordre chronologique)
 
 1. **Pré-entraînement (*pretraining*).** Le modèle apprend à partir d’un corpus selon un objectif donné. Pour un GPT classique, l’objectif est généralement la prédiction du prochain token. « Auto-supervisé » signifie que les cibles sont construites à partir des données elles-mêmes ; cela ne signifie pas que les données sont exemptes de biais ou d’erreurs.
 2. **Modèle de base (*base model*).** Le résultat du pré-entraînement est un modèle dont les paramètres capturent des régularités statistiques utiles. Le terme *foundation model* insiste sur sa réutilisation possible dans plusieurs domaines ; l’usage des deux termes varie selon les sources.
