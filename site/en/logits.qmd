@@ -8,6 +8,13 @@ lang: en
 A **logit** is an unnormalized real-valued score associated with a class or vocabulary token. In an LLM, the final projection usually produces a vector $z\in\mathbb{R}^{V}$ at each prediction position.
 :::
 
+::: {.callout-tip title="The one-minute mental model"}
+**Logits are scores, not probabilities.** At one position, the model produces one score per vocabulary token. The largest score identifies the top-ranked candidate, but logits are neither bounded between 0 and 1 nor normalized.
+
+**First pass:** follow “Transformer representation → output projection → vector of $V$ logits”. Check the two-class example: $(0,\log 3)$ becomes $(1/4,3/4)$ after softmax.
+
+**Go deeper:** study translation invariance and numerical stability. Then move to [output probabilities](probabilities.qmd) to understand the conditional distribution.
+:::
 ## Definition and shapes
 
 At one position, $z=(z_1,\ldots,z_V)$, where $V$ is the vocabulary size. No logit is constrained to $[0,1]$, and the logits do not need to sum to one.

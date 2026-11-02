@@ -8,6 +8,15 @@ lang: fr
 La *loss* (fonction de perte) est un nombre que l'entraînement cherche à minimiser. Elle est souvent calculée à partir de l'entropie croisée pour chaque token, puis agrégée. La manière de faire cette agrégation fait partie du protocole et doit être documentée.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+La *loss* mesure l'écart entre les prédictions et les **tokens cibles attendus**. En prédiction autorégressive, les logits à la position $t$ doivent généralement être comparés au token en position $t+1$ : un décalage incorrect peut produire une loss plausible tout en entraînant la mauvaise tâche.
+
+**Première lecture :** comprenez la perte d'un token, puis sa moyenne sur les seules positions valides. Les positions ignorées (par exemple le padding) ne doivent contribuer ni à la somme ni au dénominateur.
+
+**Pour approfondir :** examinez les conventions de réduction, la perplexité et les diagnostics de validation. La loss fournit ensuite le signal différentiable utilisé pour calculer les [gradients](gradients.qmd).
+
+**Repère d'implémentation :** les fonctions usuelles de cross-entropie attendent des logits non normalisés ; ne leur appliquez pas une softmax préalable si l'API attend directement les logits.
+:::
 Avant d’interpréter la perte, vérifier la construction des [entrées et cibles d’entraînement](training-examples.qmd) : une formule correcte ne corrige pas un décalage de tokens erroné.
 
 ## De la perte locale à la loss du batch

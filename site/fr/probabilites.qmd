@@ -8,6 +8,13 @@ lang: fr
 Un LLM ne produit pas directement des faits ni des probabilités de vérité. À chaque position, il produit des scores qui sont transformés en une distribution sur les tokens possibles, conditionnée par le préfixe.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+La softmax transforme les logits en une **distribution conditionnée par le préfixe**. Elle garantit des valeurs positives dont la somme vaut un ; elle ne garantit ni calibration, ni vérité factuelle.
+
+**Première lecture :** suivez l'exemple à deux logits, puis retenez que $p_\theta(x_t\mid x_{<t})$ dépend du contexte. La température modifie la concentration de cette distribution, pas les paramètres appris.
+
+**Pour approfondir :** distinguez normalisation, calibration et vérité, puis comparez argmax et échantillonnage. La distribution sert à générer ; pendant l'entraînement, les logits sont confrontés aux tokens cibles par une fonction de perte.
+:::
 ## Des logits à une distribution catégorielle
 
 À une position donnée, le modèle produit un logit \(z_i\) pour chaque token \(i\) du vocabulaire. Les logits sont des scores non normalisés : ils peuvent être négatifs ou positifs et ne somment pas à un.

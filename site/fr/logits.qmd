@@ -8,6 +8,13 @@ lang: fr
 Un **logit** est un score réel associé à une classe ou à un token du vocabulaire, avant sa conversion en probabilité. Dans un LLM, la dernière projection produit généralement un vecteur $z\in\mathbb{R}^{V}$ à chaque position où le modèle doit prédire un token.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+Les **logits sont des scores, pas des probabilités**. À une position, le modèle produit un score par token du vocabulaire : le plus grand indique le candidat classé premier, mais les valeurs ne sont ni bornées entre 0 et 1 ni normalisées.
+
+**Première lecture :** retenez le passage « représentation du Transformer → projection de sortie → vecteur de $V$ logits ». Vérifiez l'exemple à deux classes : $(0,\log 3)$ devient $(1/4,3/4)$ après softmax.
+
+**Pour approfondir :** étudiez l'invariance par translation et la stabilité numérique. Puis passez aux [probabilités de sortie](probabilites.qmd) pour comprendre la distribution conditionnelle.
+:::
 ## Définition et dimensions
 
 Pour une position, $z=(z_1,\ldots,z_V)$, où $V$ est la taille du vocabulaire. Aucun logit n'est contraint à l'intervalle $[0,1]$, et leur somme n'a pas à valoir un.

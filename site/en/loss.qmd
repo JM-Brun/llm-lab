@@ -8,6 +8,15 @@ lang: en
 *Loss* refers to a scalar objective that training seeks to minimize. It is often built from per-token cross-entropies, but its exact aggregation is part of the experiment's definition.
 :::
 
+::: {.callout-tip title="The one-minute mental model"}
+The *loss* measures the mismatch between predictions and **target tokens**. In autoregressive prediction, logits at position $t$ are usually compared with the token at position $t+1$: a shift error can produce a plausible-looking loss while training the wrong task.
+
+**First pass:** understand the penalty for one token, then its mean over valid positions only. Ignored positions (such as padding) must contribute neither to the sum nor to the denominator.
+
+**Go deeper:** examine reduction conventions, perplexity, and validation diagnostics. The loss then provides the differentiable signal used to compute [gradients](gradients.qmd).
+
+**Implementation note:** standard cross-entropy functions expect unnormalized logits; do not apply softmax first when the API expects logits directly.
+:::
 Before interpreting the loss, check how [training inputs and targets are constructed](training-examples.qmd): a correct formula cannot fix a token-shift error.
 
 ## From local penalty to batch loss
