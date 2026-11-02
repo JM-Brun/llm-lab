@@ -1,8 +1,24 @@
 ---
 title: "Does cosine similarity measure semantic similarity?"
 subtitle: "Geometry, anisotropy, nearest-neighbour rankings, and metric choice"
+keywords: ["type:deep-dive", "destination:deepen", "topic:cosine-similarity", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/cosine-similarity"
+scope: "Does cosine similarity measure semantic similarity?"
+purpose: "Explain "Does cosine similarity measure semantic similarity?", its role in an LLM, and its upstream and downstream conceptual connections."
+suggested_route:
+  previous: "en/tensors"
+  next: "en/embedding-linearity"
+hierarchy:
+  parents: ["en/embedding-space"]
+  children: []
+related: []
+tags: ["type:deep-dive", "destination:deepen", "topic:cosine-similarity", "level:advanced", "language:en", "status:published"]
+-->
 
 This topic belongs to the [Representation geometry and interpretability](embedding-space.qmd) path. Start with [embedding space](embedding-space.qmd) to distinguish representation types, then continue to the [linearity hypothesis](embedding-linearity.qmd), which asks a different question: how are features represented and decoded?
 
