@@ -145,6 +145,26 @@ Comparer les mêmes chaînes avec au moins deux tokenizers, en s'appuyant sur le
 
 **Compte rendu minimal :** pour chaque chaîne, noter le tokenizer/version, les tokens visibles, le nombre de tokens et une limite d'interprétation. Le nombre de tokens seul ne mesure ni la qualité linguistique ni la qualité du modèle.
 
+## Vérifier votre compréhension
+
+1. Un tokenizer attribue l’ID `17` au token `chat`. Dans une séquence, cet ID apparaît deux fois. Les deux occurrences sélectionnent-elles le même vecteur initial ? Peut-on conclure que le nombre 17 encode une quantité de sens ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Oui : un même ID sélectionne la même ligne de la table d’embeddings, donc le même vecteur initial (à paramètres identiques). Non : 17 est un identifiant arbitraire dans le vocabulaire, pas une mesure de sens, de fréquence ou de similarité. Les représentations peuvent ensuite devenir différentes selon le contexte traité par le Transformer.
+
+</details>
+
+2. Deux tokenizers découpent la même phrase en séquences de longueurs différentes. Peut-on comparer directement leurs IDs token par token ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Non. Les IDs ne sont définis qu’à l’intérieur du vocabulaire de leur tokenizer ; l’ID 17 dans un vocabulaire n’a aucune raison de désigner le même token dans un autre. Il faut comparer les tokens décodés, les conventions et les propriétés mesurées (longueur, couverture, coût), en documentant la version de chaque tokenizer.
+
+</details>
+
 ## 4. Contre-exemples et erreurs fréquentes
 
 - **« Un token est un mot. »** Faux : il peut s'agir d'un sous-mot, de ponctuation, d'un fragment avec espace, d'octets ou d'un token spécial.
