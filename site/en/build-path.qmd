@@ -45,6 +45,8 @@ You can understand what a model does before studying how it was trained: first o
 
 **Be able to explain:** why the model predicts one token at a time, why logits are not probabilities, and why causal masking is needed. Parameters remain fixed during this generation process.
 
+This loop and the rules for selecting the next token are detailed on the [Generating text: inference step by step](generation.qmd) page.
+
 ### Learning path: from examples to parameter updates
 
 1. Prepare input sequences and shifted targets: at position (t), the model should predict the expected token at (t+1).
@@ -85,8 +87,8 @@ These criteria are **learning outcomes**, not a change in repository status: an 
 | 2. Represent tokens | Embedding lookup and positional information | [Embedding space](embedding-space.qmd), [position](positional-encoding.qmd) | **Conceptual** — no validated complete GPT embedding stack |
 | 3. Compute attention | Q/K/V projections, scores, softmax and causal mask | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd) | **Conceptual** — mechanisms are documented; the complete module and tests remain to be built |
 | 4. Assemble GPT | Transformer blocks, residuals, normalization, MLP and output projection | [Transformer](transformer.qmd), [tensors](tensors.qmd) as needed | **Partial** — system overview exists; a complete configurable and tested model does not |
-| 5. Predict and select | Logits, probabilities and the decoding rule | [Logits](logits.qmd), [probabilities](probabilities.qmd), [Transformer](transformer.qmd) | **Partial** — concepts are explained; full integration into generation remains to be built |
-| 6. Generate before training | Run the autoregressive loop with the assembled GPT's random parameters; observe untrained output | [Transformer](transformer.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd) | **To build** — complete demonstration and stopping/context tests are absent |
+| 5. Predict and select | Logits, probabilities and the decoding rule | [Logits](logits.qmd), [probabilities](probabilities.qmd), [Transformer](transformer.qmd), [generation step by step](generation.qmd) | **Partial** — concepts are explained; full integration into generation remains to be built |
+| 6. Generate before training | Run the autoregressive loop with the assembled GPT's random parameters; observe untrained output | [Transformer](transformer.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd), [generation step by step](generation.qmd) | **To build** — complete demonstration and stopping/context tests are absent |
 | 7. Prepare training data | Documented and partitioned corpus; context windows, shifted inputs/targets, batches and masks | [Text and data](text-data.qmd), [training examples](training-examples.qmd) | **Conceptual** — rules and pitfalls are explained; the complete executable pipeline remains to be established |
 | 8. Train and validate | Loss, backpropagation, optimizer, validation and checkpoints | [Cross-entropy](cross-entropy.qmd), [loss](loss.qmd), [gradients](gradients.qmd), [evaluation](experimental-evaluation.qmd) | **To build** — no reproducible end-to-end GPT training run |
 | 9. Evaluate | Baselines, metrics, error analysis and limitations | [Experimental evaluation](experimental-evaluation.qmd) | **Method available** — no complete evaluation of a locally trained GPT |

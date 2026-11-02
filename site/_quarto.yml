@@ -34,6 +34,8 @@ project:
     - en/llm-overview.qmd
     - fr/transformer.qmd
     - en/transformer.qmd
+    - fr/generation.qmd
+    - en/generation.qmd
     - fr/glossary.qmd
     - en/glossary.qmd
     - fr/transformer-history.qmd
@@ -91,6 +93,7 @@ website:
           contents:
             - fr/llm-overview.qmd
             - fr/transformer.qmd
+            - fr/generation.qmd
             - section: "Du texte aux représentations"
               contents:
                 - fr/text-data.qmd
@@ -146,6 +149,7 @@ website:
           contents:
             - en/llm-overview.qmd
             - en/transformer.qmd
+            - en/generation.qmd
             - section: "From text to representations"
               contents:
                 - en/text-data.qmd
