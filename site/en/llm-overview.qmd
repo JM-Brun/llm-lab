@@ -116,7 +116,7 @@ flowchart TB
   R -.-> I
 ```
 
-### Lifecycle stages (chronological order)
+### From pretraining to use (chronological order)
 
 1. **Pretraining.** The model learns from a corpus under a chosen objective. For a conventional GPT, this is usually next-token prediction. *Self-supervised* means that targets are constructed from the data itself; it does not mean the data are free of bias or error.
 2. **Base model.** The result of pretraining is a model whose parameters capture useful statistical regularities. *Foundation model* emphasizes its potential reuse across multiple domains; usage of the two terms varies across sources.
