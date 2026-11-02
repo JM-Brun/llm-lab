@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/probabilities"
-scope: "Output probabilities: from logits to tokens"
-purpose: "Explain Output probabilities: from logits to tokens; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Explains how logits become a probability distribution over the vocabulary and how that distribution informs next-token selection; distinguishes probabilistic normalization, decoding, and the likelihood of an observed sequence."
+purpose: "Readers should be able to check the properties of a vocabulary distribution, connect conditional probabilities to context, and distinguish next-token probability from the probability of a complete sequence."
 suggested_route:
   previous: "en/logits"
   next: "en/training-examples"
