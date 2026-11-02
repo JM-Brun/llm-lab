@@ -8,6 +8,14 @@ lang: en
 A **large language model (LLM)** is a neural model trained on large amounts of text data to process or generate language. The term describes a family of models and a mode of use; it does not name one unique architecture. This page provides the big picture. It does not replace the detailed lessons on tokens, attention, loss, or generation.
 :::
 
+::: {.callout-tip title="How to use this overview"}
+This page first answers three questions: **what are we talking about, which broad model families should we distinguish, and how does a model move from training to use?** It provides orientation without unpacking every operation.
+
+- To follow how a GPT works, continue to [GPT and Transformers](transformer.qmd).
+- To inspect how text becomes a numerical input, open [From text to tokens](text-data.qmd). This is a focused deepening branch, not a prerequisite for the whole overview.
+- To build a model step by step, follow the [guided build path](build-path.qmd).
+:::
+
 ## 1. Where do LLMs fit?
 
 Artificial intelligence (AI) is the broadest field; machine learning (ML) is one part of it, and deep learning refers to learning methods based on multilayer neural networks. Current LLMs are generally deep-learning models applied to language. These categories describe different levels: “NLP” names a problem domain, whereas “deep learning” names a family of methods.
