@@ -1,8 +1,24 @@
 ---
 title: "Vraisemblance et log-vraisemblance"
 subtitle: "Relier les tokens observés à l'objectif d'entraînement"
+keywords: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/vraisemblance"
+scope: "Vraisemblance et log-vraisemblance"
+purpose: "Expliquer la notion « Vraisemblance et log-vraisemblance », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/training-examples"
+  next: "fr/entropy"
+hierarchy:
+  parents: ["fr/training-examples", "fr/probabilites"]
+  children: ["fr/entropy", "fr/cross-entropy"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Pour des paramètres fixés, la vraisemblance indique la probabilité que le modèle attribue aux données observées. Dans un modèle autorégressif, elle se calcule à partir des probabilités conditionnelles des tokens cibles successifs.
