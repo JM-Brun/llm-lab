@@ -17,6 +17,8 @@ Un GPT répète une même boucle : **représenter le contexte → calculer une d
 
 **Première lecture :** regardez le schéma, lisez les sections 1 à 3 et retenez cette boucle. Vous pouvez laisser les équations et l’explorateur pour une seconde visite.
 
+**Situer cette page :** elle prend le relais du [panorama des LLM](llm-overview.qmd) et zoome sur le calcul d’un GPT. Si le passage du texte brut aux tokens et aux embeddings reste flou, consultez d’abord ou en parallèle [Du texte aux tokens](text-data.qmd) ; cette branche explique l’entrée du pipeline, tandis que la présente page suit le calcul dans le réseau.
+
 **Pour aller plus loin :** suivez le calcul d’attention, testez l’explorateur interactif, puis consultez les pages conceptuelles liées. Les détails mathématiques sont des approfondissements, pas un péage à l’entrée.
 :::
 

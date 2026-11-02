@@ -8,6 +8,14 @@ lang: fr
 Un **grand modèle de langage** (*Large Language Model*, LLM) est un modèle neuronal entraîné sur de grandes quantités de données textuelles pour traiter ou produire du langage. Le terme décrit une famille de modèles et un régime d’usage ; il ne désigne pas une architecture unique. Cette page donne la carte d’ensemble. Elle ne remplace pas les leçons détaillées sur les tokens, l’attention, la loss ou la génération.
 :::
 
+::: {.callout-tip title="Comment lire ce panorama"}
+Cette page répond d’abord à trois questions : **de quoi parle-t-on, quelles grandes familles distinguer, et comment un modèle passe-t-il de l’entraînement à l’utilisation ?** Elle donne les repères, sans détailler chaque opération.
+
+- Pour suivre le fonctionnement concret d’un GPT, passez à [GPT et Transformer](transformer.qmd).
+- Pour examiner en amont comment un texte devient une entrée numérique, ouvrez [Du texte aux tokens](text-data.qmd). C’est un approfondissement ciblé, pas un préalable obligatoire à tout le panorama.
+- Pour construire progressivement un modèle, suivez le [parcours de construction](build-path.qmd).
+:::
+
 ## 1. Où situer les LLM ?
 
 L’intelligence artificielle (IA) est le domaine le plus large ; l’apprentissage automatique (*machine learning*) en est une partie, et l’apprentissage profond (*deep learning*) désigne des méthodes d’apprentissage fondées sur des réseaux neuronaux à plusieurs couches. Les LLM actuels sont généralement des modèles d’apprentissage profond appliqués au langage. Ces catégories décrivent des niveaux différents : « NLP » désigne un domaine de problèmes, tandis que « deep learning » désigne une famille de méthodes.

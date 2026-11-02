@@ -17,6 +17,8 @@ A GPT repeats the same loop: **represent the context → compute a distribution 
 
 **First pass:** inspect the diagram, read sections 1–3, and remember this loop. You can leave the equations and interactive explorer for a second visit.
 
+**Where this page fits:** it follows the [LLM panorama](llm-overview.qmd) and zooms in on a GPT computation. If the transition from raw text to tokens and embeddings is still unclear, read [From text to tokens](text-data.qmd) first or alongside it: that page explains the pipeline's input, while this page follows computation inside the network.
+
 **Go deeper:** follow the attention calculation, try the interactive explorer, then use the linked concept pages. The mathematical details are optional depth, not an entry fee.
 :::
 
