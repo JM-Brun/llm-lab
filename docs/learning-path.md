@@ -89,7 +89,7 @@ This section makes the guided path operational while preserving the current prer
 
 ### Two distinct learning routes
 
-- **Core from-scratch route:** implement a small decoder-only GPT from randomly initialized parameters, train it on a documented manageable corpus, validate it, save a checkpoint, and generate text. This is the defining end-to-end construction outcome.
+- **Core from-scratch route:** implement a small decoder-only GPT from randomly initialized parameters; demonstrate its inference/generation loop before training (and explain why the output is poor); prepare training examples; train and validate the model; save a checkpoint; then generate again and compare. This is the defining end-to-end construction outcome.
 - **Pretrained adaptation route:** load a compatible pretrained checkpoint and tokenizer, then adapt/evaluate the model for classification or instruction following; later explore LoRA and quantization. This route starts from learned parameters and is not a substitute for the from-scratch route.
 
 The routes share foundations (text, tokenization, tensors, architecture, prediction and evaluation) but diverge at initialization and training objective.
