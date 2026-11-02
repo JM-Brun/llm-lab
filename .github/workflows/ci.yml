@@ -38,6 +38,9 @@ jobs:
       - name: Install history data validation dependency
         run: uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
 
+      - name: Validate page metadata learning graph
+        run: uv run python scripts/check_page_metadata.py
+
       - name: Validate bilingual history pilot dataset
         run: uv run python scripts/check_history_pilot.py
 
