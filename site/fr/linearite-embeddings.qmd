@@ -1,8 +1,24 @@
 ---
 title: "L'hypothèse de linéarité dans les espaces de représentations"
 subtitle: "Représentation, décodabilité, superposition et généralisation"
+keywords: ["type:deep-dive", "destination:deepen", "topic:linearite-embeddings", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/linearite-embeddings"
+scope: "L'hypothèse de linéarité dans les espaces de représentations"
+purpose: "Expliquer la notion « L'hypothèse de linéarité dans les espaces de représentations », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/cosine-similarity"
+  next: null
+hierarchy:
+  parents: ["fr/embedding-space"]
+  children: []
+related: []
+tags: ["type:deep-dive", "destination:deepen", "topic:linearite-embeddings", "level:advanced", "language:fr", "status:published"]
+-->
 
 Cette page appartient au parcours [Géométrie et interprétabilité des représentations](embedding-space.qmd). L’[espace des embeddings](embedding-space.qmd) en présente les objets géométriques ; la page sur la [similarité cosinus](cosine-similarity.qmd) examine une métrique souvent utilisée sur ces objets, sans la confondre avec une mesure directe du sens.
 
