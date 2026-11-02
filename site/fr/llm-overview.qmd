@@ -15,7 +15,7 @@ suggested_route:
   next: "fr/transformer"
 hierarchy:
   parents: ["fr/index"]
-  children: ["fr/transformer", "fr/build-path", "fr/mathematical-foundations"]
+  children: ["fr/transformer", "fr/generation", "fr/build-path", "fr/mathematical-foundations"]
 related: []
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
