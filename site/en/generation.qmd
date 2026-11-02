@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/generation"
-scope: "Generating text: inference step by step"
-purpose: "Introduce autoregressive generation with fixed parameters before the Transformer internals and the learning loop."
+scope: "Describes autoregressive inference for an already trained model treated as a black box: context, next-token distribution, decoding rule, token appending, and stopping; Transformer internals and parameter learning are outside its scope."
+purpose: "Readers should be able to step through token-by-token generation, explain why parameters remain fixed during inference, and predict how a decoding rule changes the output without retraining the model."
 suggested_route:
   previous: "en/transformer"
   next: "en/text-data"
