@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/glossary"
-scope: "Glossaire des LLM et des Transformers"
-purpose: "Expliquer la notion « Glossaire des LLM et des Transformers », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Fait office d’index de référence concis pour le vocabulaire utilisé dans le site, organisé par thèmes et relié aux explications canoniques. Il fournit des définitions de premier niveau, pas des démonstrations complètes, un parcours d’apprentissage ni un substitut aux pages de notions liées."
+purpose: "Retrouver un terme, comprendre sa définition opérationnelle courte et rejoindre la page canonique pour les hypothèses, équations, exemples et limites qu’une entrée de glossaire ne peut pas développer."
 suggested_route:
   previous: null
   next: "fr/transformer-history"
