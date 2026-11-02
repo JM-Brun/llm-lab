@@ -23,7 +23,7 @@ This crosswalk connects the public conceptual course to the guided build and opt
 
 ### How the three learning depths work together
 
-- **Panorama:** build a short mental model of an LLM and its lifecycle. The current public overview is GPT/Transformer-centred; the broader family-level panorama remains partial.
+- **Panorama:** build a short mental model of an LLM and its lifecycle. The bilingual family-level panorama is implemented on draft PR #213; its review and acceptance are still pending.
 - **Guided build:** follow G0–G9 to implement, train, validate and generate with a small GPT from randomly initialized parameters. Stop at unmet evidence gates; the current foundational gate is #82.
 - **Deep dives:** enter concept pages, mathematical derivations, critical analyses and experiments when they answer a concrete question. They are optional branches, not a second mandatory syllabus.
 
