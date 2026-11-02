@@ -100,7 +100,8 @@ Detailed prerequisites, expected evidence, dependencies and validation criteria 
 
 ## Related paths
 
-- [Understand LLMs](transformer.qmd): start with the system and its mechanisms without following the code.
+- [LLM panorama](llm-overview.qmd): place model families and their lifecycle.
+- [GPT and Transformer](transformer.qmd): understand the decoder-only model used as this project's running example.
 - [Deepen tensor knowledge](tensors.qmd): consult shapes and axes when they become useful.
 - [Practice](exercises.qmd): distinguish conceptual checks from practical coding exercises.
 - [Evaluate an experiment](experimental-evaluation.qmd): separate observation, interpretation and evidence.
