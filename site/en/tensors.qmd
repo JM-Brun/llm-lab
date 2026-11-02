@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/tensors"
 scope: "Tensors in a Transformer: shapes and axes"
-purpose: Explain Tensors in a Transformer: shapes and axes; describe its role in an LLM and connect it to upstream and downstream concepts.
+purpose: "Explain Tensors in a Transformer: shapes and axes; describe its role in an LLM and connect it to upstream and downstream concepts."
 suggested_route:
   previous: "en/mathematical-foundations"
   next: "en/cosine-similarity"

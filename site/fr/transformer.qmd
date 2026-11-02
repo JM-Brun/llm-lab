@@ -8,11 +8,11 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/transformer"
-scope: "GPT et Transformer : architecture et flux des données"
-purpose: "Expliquer la notion « GPT et Transformer : architecture et flux des données », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Suit le calcul d’un GPT autorégressif dans le réseau — embeddings, information de position, blocs Transformer, attention et scores de sortie — du contexte de tokens aux logits ; ne traite pas la génération comme simple boucle boîte noire ni l’apprentissage des paramètres comme sujet principal."
+purpose: "Le lecteur doit pouvoir retracer le flux d’un contexte de tokens jusqu’aux logits, expliquer le rôle des principales opérations d’un bloc Transformer et distinguer représentations initiales, représentations contextualisées et scores de sortie."
 suggested_route:
   previous: "fr/llm-overview"
-  next: "fr/text-data"
+  next: "fr/generation"
 hierarchy:
   parents: ["fr/llm-overview"]
   children: ["fr/text-data", "fr/embedding-space", "fr/positional-encoding", "fr/contextualized-representations", "fr/queries-keys-values", "fr/logits", "fr/tensors"]

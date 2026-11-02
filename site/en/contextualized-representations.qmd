@@ -9,12 +9,12 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/contextualized-representations"
 scope: "Why can the same token have different contextualized representations?"
-purpose: Explain Why can the same token have different contextualized representations?; describe its role in an LLM and connect it to upstream and downstream concepts.
+purpose: "Explain Why can the same token have different contextualized representations?; describe its role in an LLM and connect it to upstream and downstream concepts."
 suggested_route:
   previous: "en/positional-encoding"
   next: "en/queries-keys-values"
 hierarchy:
-  parents: ["en/embedding-space", "en/positional-encoding"]
+  parents: ["en/embedding-space", "en/positional-encoding", "en/transformer"]
   children: ["en/queries-keys-values"]
 related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:en", "status:published"]

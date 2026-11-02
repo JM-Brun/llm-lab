@@ -8,14 +8,14 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
-scope: "Panorama : qu’est-ce qu’un LLM ?"
-purpose: "Expliquer la notion « Panorama : qu’est-ce qu’un LLM ? », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Situe les LLM dans l’IA et le TAL, distingue les grandes familles d’architectures et décrit le cycle de vie pré-entraînement–adaptation–inférence ; ne détaille ni les calculs internes d’un Transformer ni les objectifs mathématiques d’apprentissage."
+purpose: "À l’issue de cette page, le lecteur doit pouvoir définir ce qu’est un LLM sans le confondre avec une architecture, situer les grandes familles de modèles, distinguer pré-entraînement, adaptation et inférence, et choisir quelle branche du parcours approfondir."
 suggested_route:
   previous: "fr/index"
   next: "fr/transformer"
 hierarchy:
   parents: ["fr/index"]
-  children: ["fr/transformer", "fr/build-path", "fr/mathematical-foundations"]
+  children: ["fr/transformer", "fr/generation", "fr/build-path", "fr/mathematical-foundations"]
 related: []
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->

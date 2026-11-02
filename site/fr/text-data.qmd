@@ -11,7 +11,7 @@ id: "fr/text-data"
 scope: "Du texte brut aux données textuelles fournies au modèle."
 purpose: "Définir l’entrée textuelle et distinguer contexte d’inférence et corpus d’apprentissage."
 suggested_route:
-  previous: "fr/transformer"
+  previous: "fr/generation"
   next: "fr/unicode-text"
 hierarchy:
   parents: ["fr/transformer"]

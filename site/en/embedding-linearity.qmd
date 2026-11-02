@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/embedding-linearity"
 scope: "The linearity hypothesis in representation spaces"
-purpose: Explain The linearity hypothesis in representation spaces; describe its role in an LLM and connect it to upstream and downstream concepts.
+purpose: "Explain The linearity hypothesis in representation spaces; describe its role in an LLM and connect it to upstream and downstream concepts."
 suggested_route:
   previous: "en/cosine-similarity"
   next: null

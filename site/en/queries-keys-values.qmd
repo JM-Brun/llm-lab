@@ -9,12 +9,12 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/queries-keys-values"
 scope: "Queries, keys, and values (Q, K, V)"
-purpose: Explain Queries, keys, and values (Q, K, V); describe its role in an LLM and connect it to upstream and downstream concepts.
+purpose: "Explain Queries, keys, and values (Q, K, V); describe its role in an LLM and connect it to upstream and downstream concepts."
 suggested_route:
   previous: "en/contextualized-representations"
   next: "en/scaled-dot-product-attention"
 hierarchy:
-  parents: ["en/contextualized-representations"]
+  parents: ["en/contextualized-representations", "en/transformer"]
   children: ["en/scaled-dot-product-attention"]
 related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:en", "status:published"]

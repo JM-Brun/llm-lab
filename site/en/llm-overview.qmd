@@ -8,14 +8,14 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-overview"
-scope: "Panorama: what is an LLM?"
-purpose: Explain Panorama: what is an LLM?; describe its role in an LLM and connect it to upstream and downstream concepts.
+scope: "Places LLMs within AI and NLP, distinguishes major architecture families, and outlines the pretraining–adaptation–inference lifecycle; it does not unpack Transformer computations or the mathematics of learning objectives."
+purpose: "By the end of this page, readers should be able to define an LLM without conflating it with an architecture, place the major model families, distinguish pretraining, adaptation, and inference, and choose which learning-path branch to explore next."
 suggested_route:
   previous: "en/index"
   next: "en/transformer"
 hierarchy:
   parents: ["en/index"]
-  children: ["en/transformer", "en/build-path", "en/mathematical-foundations"]
+  children: ["en/transformer", "en/generation", "en/build-path", "en/mathematical-foundations"]
 related: []
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 -->

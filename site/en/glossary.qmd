@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/glossary"
 scope: "LLM and Transformer glossary"
-purpose: Explain LLM and Transformer glossary; describe its role in an LLM and connect it to upstream and downstream concepts.
+purpose: "Explain LLM and Transformer glossary; describe its role in an LLM and connect it to upstream and downstream concepts."
 suggested_route:
   previous: null
   next: "en/transformer-history"

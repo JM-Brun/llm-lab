@@ -8,11 +8,11 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer"
-scope: "GPT and Transformers: architecture and data flow"
-purpose: Explain GPT and Transformers: architecture and data flow; describe its role in an LLM and connect it to upstream and downstream concepts.
+scope: "Follows an autoregressive GPT computation inside the network—from token context through embeddings, positional information, Transformer blocks, attention, and output scores to logits; it does not treat generation as a black-box loop or parameter learning as its main subject."
+purpose: "Readers should be able to trace a token context through the network to the logits, explain the role of the main operations in a Transformer block, and distinguish initial embeddings, contextualized representations, and output scores."
 suggested_route:
   previous: "en/llm-overview"
-  next: "en/text-data"
+  next: "en/generation"
 hierarchy:
   parents: ["en/llm-overview"]
   children: ["en/text-data", "en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/queries-keys-values", "en/logits", "en/tensors"]

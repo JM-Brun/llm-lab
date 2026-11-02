@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/experimental-evaluation"
 scope: "Evaluating a model: from score to experimental protocol"
-purpose: Explain Evaluating a model: from score to experimental protocol; describe its role in an LLM and connect it to upstream and downstream concepts.
+purpose: "Explain Evaluating a model: from score to experimental protocol; describe its role in an LLM and connect it to upstream and downstream concepts."
 suggested_route:
   previous: "en/exercises"
   next: null

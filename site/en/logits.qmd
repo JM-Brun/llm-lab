@@ -9,12 +9,12 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/logits"
 scope: "Logits: scores before normalization"
-purpose: Explain Logits: scores before normalization; describe its role in an LLM and connect it to upstream and downstream concepts.
+purpose: "Explain Logits: scores before normalization; describe its role in an LLM and connect it to upstream and downstream concepts."
 suggested_route:
   previous: "en/causal-masking"
   next: "en/probabilities"
 hierarchy:
-  parents: ["en/transformer", "en/causal-masking"]
+  parents: ["en/transformer", "en/causal-masking", "en/generation"]
   children: ["en/probabilities"]
 related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:logits", "level:core", "language:en", "status:published"]

@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/mathematical-foundations"
 scope: "The mathematical chain of LLM training"
-purpose: Explain The mathematical chain of LLM training; describe its role in an LLM and connect it to upstream and downstream concepts.
+purpose: "Explain The mathematical chain of LLM training; describe its role in an LLM and connect it to upstream and downstream concepts."
 suggested_route:
   previous: null
   next: "en/tensors"

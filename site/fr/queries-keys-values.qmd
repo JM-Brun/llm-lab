@@ -14,7 +14,7 @@ suggested_route:
   previous: "fr/contextualized-representations"
   next: "fr/scaled-dot-product-attention"
 hierarchy:
-  parents: ["fr/contextualized-representations"]
+  parents: ["fr/contextualized-representations", "fr/transformer"]
   children: ["fr/scaled-dot-product-attention"]
 related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:fr", "status:published"]

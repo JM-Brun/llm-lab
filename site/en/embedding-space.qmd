@@ -9,12 +9,12 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/embedding-space"
 scope: "The embedding space"
-purpose: Explain The embedding space; describe its role in an LLM and connect it to upstream and downstream concepts.
+purpose: "Explain The embedding space; describe its role in an LLM and connect it to upstream and downstream concepts."
 suggested_route:
   previous: "en/tokenization-strategies"
   next: "en/positional-encoding"
 hierarchy:
-  parents: ["en/text-data"]
+  parents: ["en/text-data", "en/transformer"]
   children: ["en/positional-encoding", "en/contextualized-representations", "en/cosine-similarity", "en/embedding-linearity"]
 related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:en", "status:published"]
