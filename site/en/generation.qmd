@@ -1,0 +1,113 @@
+---
+title: "Generating text: inference step by step"
+subtitle: "How a trained LLM produces one token after another"
+keywords: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:planned"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/generation"
+scope: "Generating text: inference step by step"
+purpose: "Introduce autoregressive generation with fixed parameters before the Transformer internals and the learning loop."
+suggested_route:
+  previous: "en/transformer"
+  next: "en/text-data"
+hierarchy:
+  parents: ["en/llm-overview"]
+  children: ["en/logits", "en/probabilities"]
+related: ["en/build-path", "en/training-examples"]
+tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:planned"]
+-->
+
+::: {.chapter-lead}
+**Generating text**, for an already trained LLM, means repeating one loop: represent the current context, estimate the distribution of the next token, select one, append it to the context, and start over. Throughout the loop, **the model's parameters stay fixed**: this is **inference** (or generation), to be distinguished from learning, which updates those parameters.
+:::
+
+::: {.callout-note}
+This page follows an **already trained model, treated as a black box**: no architecture or training details are required here. The [logits](logits.qmd) and [probabilities](probabilities.qmd) pages then detail the distribution produced at each step; the rest of the course explains how the parameters are learned.
+:::
+
+::: {.callout-tip title="The idea to remember in one minute"}
+An LLM does not write text in one block: it produces **one token at a time**. At each step, it estimates a probability distribution over the vocabulary, conditioned on the current context; a **decoding rule** turns this distribution into a single token; the token is appended to the context, and the loop starts again. Changing the decoding rule changes the generated text **without changing the model**.
+:::
+
+## The generation loop, step by step
+
+1. **Prepare the context.** The starting text is split into [tokens](text-data.qmd) and converted to token IDs. If the context exceeds the model's maximum window, it is truncated according to a model-specific rule.
+2. **Estimate the next-token distribution.** For every token in the vocabulary, the model produces a score and then a probability. This distribution depends on the current context: it is a conditional probability.
+3. **Select the next token.** A decoding rule (see below) turns the distribution into a single choice: either deterministic, or drawn at random according to the probabilities.
+4. **Append the token and repeat.** The selected token is added to the context, and the loop returns to step 2 with a context one token longer.
+5. **Stop.** Generation stops on an explicit criterion — an end-of-sequence token, a maximum length, or a rule imposed by the application — never because the model "finished thinking".
+
+At each step, the context grows by one token: later predictions are therefore also conditioned on the tokens the model itself has just produced.
+
+## Inference learns nothing
+
+Unlike learning, the generation loop **does not modify any parameter**. With a deterministic rule, the same context always produces the same continuation; only a random rule (sampling) introduces variability. Generating a lot of text does not train the model: nothing that is produced is memorized beyond the current context.
+
+This is the distinction used by the [build path](build-path.qmd): **generate with fixed parameters**, or **evaluate a loss and then update the parameters**.
+
+## Choosing the next token: three families of rules
+
+### Greedy selection (argmax)
+
+The most likely token is selected every time. The result is reproducible, but generated texts are often repetitive: once locked into a loop, the model may cycle through it indefinitely.
+
+### Sampling from the distribution
+
+The token is drawn at random according to the probabilities. Texts vary from one run to another; an unlikely token may appear, sometimes at the cost of coherence.
+
+### Adjusted sampling: temperature and truncation
+
+- **Temperature.** Before normalization, logits are divided by a temperature $T$: $p_i \propto e^{z_i/T}$. A low temperature concentrates the distribution on the most likely token; a high temperature flattens it. See the [logits](logits.qmd) page for the effect of scale.
+- **Top-k and top-p (nucleus).** Only the $k$ most likely tokens are kept, or the smallest set of tokens whose cumulative probability exceeds a threshold $p$; the draw then happens within this reduced set.
+
+These rules are **decoding choices**, not properties of the model: the same model can produce very different texts depending on the rule and its parameters.
+
+::: {.callout-warning title="Common misconceptions"}
+- **"The model always picks the best token."** No: under sampling, a less likely token can be selected; and "best" is not defined without a decoding rule.
+- **"A high probability guarantees a correct token."** No: the distribution reflects learned statistical regularities, not factual truth. A model can assign a high probability to a false continuation.
+- **"Repetitions are a bug."** Not necessarily: under a greedy rule, repetition loops are expected behavior; they stem from the decoding choice, not from a random failure.
+:::
+
+## Limits to keep in mind
+
+- **Context window.** The model only sees the current context, truncated to its maximum window; information that fell out of the window no longer influences the continuation.
+- **No memory across generations.** Each generation starts from the provided context; the model retains nothing beyond what appears in that context.
+- **Project status.** In this repository, generation from a local checkpoint remains planned work: the generation milestones of the [guided build](build-path.qmd) describe what is available and what remains to be built.
+
+## Self-check questions
+
+1. Why can the same model with the same context produce different texts?
+
+<details>
+<summary>Show the answer</summary>
+
+Because the decoding rule can be random: sampling draws a token according to the distribution, and that draw changes the context of the following steps.
+
+</details>
+
+2. Why does a temperature close to zero make generation close to greedy selection?
+
+<details>
+<summary>Show the answer</summary>
+
+Dividing the logits by a very small $T$ amplifies their differences; the distribution becomes highly concentrated on the most likely token, and the draw becomes almost deterministic.
+
+</details>
+
+3. Why cannot generation "fix" a poorly trained model?
+
+<details>
+<summary>Show the answer</summary>
+
+Parameters stay fixed during inference: no update happens, no matter how many tokens are generated.
+
+</details>
+
+**Next:** [Logits](logits.qmd) · [Probabilities](probabilities.qmd) · [Build path](build-path.qmd)
+
+::: {.language-switch}
+[Français](../fr/generation.qmd) · [English](generation.qmd)
+:::
