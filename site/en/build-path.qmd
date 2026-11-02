@@ -31,6 +31,10 @@ You need to read a tensor shape to debug an operation, not master tensor theory.
 
 Distinguish **inference** (using existing parameters to produce a token) from **learning** (changing those parameters from examples and a loss objective). These are not interchangeable descriptions of one loop.
 
+::: {.callout-tip title="Why start with inference?"}
+You can understand what a model does before studying how it was trained: first observe generation with fixed parameters, then ask where those parameters came from and how they are learned. In the build path, the first generation demonstration can use a randomly initialized GPT; its output will generally be incoherent. This separates **the mechanics of generation** from **the quality acquired through learning**. A useful model requires training or loading pretrained weights.
+:::
+
 ### Generation path: from tokens to the next token
 
 1. The tokenizer maps text to token IDs.
@@ -60,13 +64,14 @@ Concept pages are resources for reaching these outcomes; they are not evidence t
 | Step | Observable expected outcome |
 |---|---|
 | Text and tokenization | Encode and decode a short text; identify the effects of special tokens and tokenizer version. |
-| Training examples | Construct an input window and its shifted target; test boundaries, padding, and separation between data splits. |
 | Embeddings and position | Trace shapes from `[B, L]` to `[B, L, D]` and explain each axis. |
 | Causal attention | With the model in evaluation mode (dropout disabled), verify on a small example that changing a future token does not change earlier-position outputs, with parameters and earlier context held fixed. |
 | GPT block | Trace dimensions through attention, residuals, normalization, MLP, and output projection; check parameter-count consistency. |
-| Loss | Hand-calculate a small case, verify logits/target alignment, and test correct exclusion of ignored positions. |
-| Training | Reproduce a small run with documented configuration and seed; track training and validation loss separately. |
-| Generation | Load a checkpoint and produce a sequence; document decoding, stopping, and context limits. |
+| Prediction and decoding | Distinguish logits from probabilities; explain greedy or sampled next-token selection. |
+| Generation before training | Run the loop with random parameters and observe that the output is not yet coherent; check stopping and context limits. |
+| Training examples | Construct an input window and its shifted target; test boundaries, padding, and separation between data splits. This branch is needed for learning, not for generation. |
+| Loss and training | Align logits/targets, calculate the loss, reproduce a small update, and track training and validation losses separately. |
+| Generation after training | Load a trained checkpoint and compare outputs under documented decoding conditions. |
 | Evaluation | Compare against a baseline under an explicit protocol; analyze errors and state what the metrics do not establish. |
 
 These criteria are **learning outcomes**, not a change in repository status: an available page, a hand-checkable example, an automated test, a reproducible run, and visual review are different levels of evidence.
@@ -76,14 +81,14 @@ These criteria are **learning outcomes**, not a change in repository status: an 
 | Step | What you build | Concept pages | Practical status |
 |---|---|---|---|
 | 0. Define the model | Place LLM families, then scope the decoder-only GPT studied here and its objective | [LLM panorama](llm-overview.qmd), [GPT / Transformer overview](transformer.qmd), [history](transformer-history.qmd) as optional context | **Conceptual material available** — the broad panorama and the scope of the selected GPT are documented; the complete executable model remains to be built |
-| 1. Prepare text | Documented corpus, tokenizer, encoding/decoding | [Text and data](text-data.qmd), [Unicode](unicode-text.qmd), [tokenization](tokenization-strategies.qmd) | **Conceptual** — no complete, validated corpus/tokenizer pipeline is established in the repository |
-| 2. Create training examples | Context windows, shifted inputs/targets, batches and masks | [Training examples](training-examples.qmd) | **Conceptual** — rules and pitfalls are explained; the complete executable pipeline remains to be established |
-| 3. Represent tokens | Embedding lookup and positional information | [Embedding space](embedding-space.qmd), [position](positional-encoding.qmd) | **Conceptual** — no validated complete GPT embedding stack |
-| 4. Compute attention | Q/K/V projections, scores, softmax and causal mask | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd) | **Conceptual** — mechanisms are documented; the complete module and tests remain to be built |
-| 5. Assemble GPT | Transformer blocks, residuals, normalization, MLP and output projection | [Transformer](transformer.qmd), [tensors](tensors.qmd) as needed | **Partial** — system overview exists; a complete configurable and tested model does not |
-| 6. Compute the loss | Align logits and targets, calculate and reduce the objective | [Logits](logits.qmd), [probabilities](probabilities.qmd), [likelihood](likelihood.qmd), [cross-entropy](cross-entropy.qmd), [loss](loss.qmd) | **Partial** — a NumPy loss/gradient reference and tests exist; this is not GPT training |
-| 7. Train and validate | Autograd, optimizer, training loop, validation and checkpoints | [Gradients](gradients.qmd), [evaluation](experimental-evaluation.qmd) | **To build** — no reproducible end-to-end GPT training run |
-| 8. Generate | Autoregressive decoding, sampling and stopping | [Transformer](transformer.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd) | **Partial** — principles are explained; complete generation from a local checkpoint is not established |
+| 1. Prepare text input | Understand the tokenizer and encode/decode a prompt; corpus construction belongs to the training branch | [Text and data](text-data.qmd), [Unicode](unicode-text.qmd), [tokenization](tokenization-strategies.qmd) | **Conceptual** — no complete, validated tokenizer pipeline is established in the repository |
+| 2. Represent tokens | Embedding lookup and positional information | [Embedding space](embedding-space.qmd), [position](positional-encoding.qmd) | **Conceptual** — no validated complete GPT embedding stack |
+| 3. Compute attention | Q/K/V projections, scores, softmax and causal mask | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd) | **Conceptual** — mechanisms are documented; the complete module and tests remain to be built |
+| 4. Assemble GPT | Transformer blocks, residuals, normalization, MLP and output projection | [Transformer](transformer.qmd), [tensors](tensors.qmd) as needed | **Partial** — system overview exists; a complete configurable and tested model does not |
+| 5. Predict and select | Logits, probabilities and the decoding rule | [Logits](logits.qmd), [probabilities](probabilities.qmd), [Transformer](transformer.qmd) | **Partial** — concepts are explained; full integration into generation remains to be built |
+| 6. Generate before training | Run the autoregressive loop with the assembled GPT's random parameters; observe untrained output | [Transformer](transformer.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd) | **To build** — complete demonstration and stopping/context tests are absent |
+| 7. Prepare training data | Documented and partitioned corpus; context windows, shifted inputs/targets, batches and masks | [Text and data](text-data.qmd), [training examples](training-examples.qmd) | **Conceptual** — rules and pitfalls are explained; the complete executable pipeline remains to be established |
+| 8. Train and validate | Loss, backpropagation, optimizer, validation and checkpoints | [Cross-entropy](cross-entropy.qmd), [loss](loss.qmd), [gradients](gradients.qmd), [evaluation](experimental-evaluation.qmd) | **To build** — no reproducible end-to-end GPT training run |
 | 9. Evaluate | Baselines, metrics, error analysis and limitations | [Experimental evaluation](experimental-evaluation.qmd) | **Method available** — no complete evaluation of a locally trained GPT |
 
 Detailed prerequisites, expected evidence, dependencies and validation criteria are maintained in the [versioned build plan](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).

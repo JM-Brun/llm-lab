@@ -58,7 +58,11 @@ Ce schéma est conceptuel : les tokeniseurs réels diffèrent par leurs unités 
 :::
 
 
-## Des documents sources aux séquences prêtes pour l'entraînement
+::: {.callout-note}
+**Branche entraînement — pas un préalable à l'inférence.** La tokenisation sert aussi bien à encoder un prompt qu'à préparer un corpus. En revanche, le partitionnement des documents, les fenêtres de contexte et les cibles décalées sont des opérations propres à la préparation des exemples d'entraînement. Vous pouvez les étudier après avoir compris comment un modèle reçoit un prompt et génère une réponse.
+:::
+
+## Branche apprentissage : des documents aux séquences d'entraînement
 
 Le tokenizer n'est qu'un élément d'un pipeline de données plus large. Avant de devenir des IDs, les textes doivent être rassemblés et préparés. Les étapes ci-dessous décrivent les principales décisions, pas un ordre d'exécution universel : certaines opérations sont itératives et leur ordre dépend des sources, du protocole d'évaluation et de l'objectif d'entraînement.
 
@@ -75,7 +79,7 @@ Le tokenizer n'est qu'un élément d'un pipeline de données plus large. Avant d
 
 Dans un protocole held-out classique, les documents de validation et de test ne doivent pas influencer le vocabulaire d'un tokenizer appris. C'est une précaution d'évaluation, pas l'affirmation que tout pipeline de préentraînement en production possède la même structure train/validation/test. De même, le filtrage et la déduplication concernent le corpus ; la normalisation et la pré-tokenisation sont des transformations propres au tokenizer, utilisées lors de son apprentissage puis réappliquées à l'encodage.
 
-Après l'encodage, la page suivante explique comment les flux de tokens deviennent des paires entrée-cible, des fenêtres, des séquences packées et des masques. Elle ne prescrit pas une stratégie universelle de packing.
+Dans la branche consacrée à l'apprentissage, la page sur les [exemples d'entraînement](training-examples.qmd) explique comment les flux de tokens deviennent des paires entrée-cible, des fenêtres, des séquences packées et des masques. Elle ne prescrit pas une stratégie universelle de packing.
 
 ### Le vocabulaire minimal
 
