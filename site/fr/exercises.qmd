@@ -38,7 +38,7 @@ Cette page est le point d’entrée des exercices approfondis. Des auto-vérific
 
 ### Données textuelles {#donnees-textuelles}
 
-**Notions préalables :** à relier aux futures pages canoniques sur la tokenisation, les données et le décalage entrée-cible.
+**Notions préalables :** [texte et tokenisation](text-data.qmd), [espace des embeddings](embedding-space.qmd) et [exemples d’entraînement et décalage entrée-cible](training-examples.qmd).
 
 **À préparer :** découpage de séquences, alignement entrée-cible, gestion des tokens spéciaux et contrôle des recouvrements entre partitions.
 
