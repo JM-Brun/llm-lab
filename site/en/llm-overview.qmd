@@ -12,7 +12,23 @@ A **large language model (LLM)** is a neural model trained on large amounts of t
 
 Natural language processing (NLP) includes very different methods: linguistic rules, statistical models, task-specific systems, neural networks, and reusable pretrained models.
 
-Contemporary LLMs are generally deep-learning models trained at scale on text data. They can serve as a base for multiple tasks rather than being built separately for each one. This does not mean earlier approaches have disappeared: a production system may combine rules, specialized models, document retrieval, tools, and an LLM.
+Contemporary LLMs are generally deep-learning models trained at scale on text data.
+
+Artificial intelligence (AI) is the broadest field; machine learning (ML) is one part of it, and deep learning refers to learning methods based on multilayer neural networks. Current LLMs are generally deep-learning models applied to language. These categories describe different levels: “NLP” names a problem domain, whereas “deep learning” names a family of methods.
+
+### Three architectures to compare
+
+```{mermaid}
+flowchart TB
+  E["Encoder-only<br/>Bidirectional context<br/>Masked tokens"]
+  ED["Encoder–decoder<br/>Encoded input + conditioned generation<br/>Sequence transformation"]
+  D["Decoder-only<br/>Causal context<br/>Next-token prediction"]
+  E --- ED --- D
+```
+
+The table specifies typical objectives and uses; the diagram is an architectural guide, not a quality ranking.
+
+ They can serve as a base for multiple tasks rather than being built separately for each one. This does not mean earlier approaches have disappeared: a production system may combine rules, specialized models, document retrieval, tools, and an LLM.
 
 There is no universal parameter-count threshold that mechanically turns a model into an “LLM”. Size matters, but the term also relates to data scale, training objective, intended capabilities, and how the model is reused. The term *foundation model* is broader: it describes a model trained on extensive data and reusable as a basis for many applications, not necessarily a language-only model.
 
