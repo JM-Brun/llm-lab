@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/text-data"
-scope: "Du texte brut aux données textuelles fournies au modèle."
-purpose: "Définir l’entrée textuelle et distinguer contexte d’inférence et corpus d’apprentissage."
+scope: "Présente les étapes et objets qui relient un texte source à l’entrée d’un modèle — prétraitement, tokenisation, IDs et lookup d’embedding — et distingue l’encodage d’un prompt de la préparation d’un corpus d’apprentissage ; les détails Unicode, les algorithmes de segmentation et les calculs du réseau sont délégués aux pages spécialisées."
+purpose: "Le lecteur doit pouvoir retracer la chaîne texte → tokens → IDs → vecteurs initiaux, distinguer les opérations d’encodage d’un prompt de celles de préparation des données d’entraînement, et identifier ce que chaque étape ne permet pas de conclure."
 suggested_route:
   previous: "fr/generation"
   next: "fr/unicode-text"
