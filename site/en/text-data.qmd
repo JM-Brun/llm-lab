@@ -59,7 +59,11 @@ This is a conceptual diagram. Real tokenizers differ in base units, normalizatio
 :::
 
 
-## From source documents to training-ready sequences
+::: {.callout-note}
+**Training branch — not a prerequisite for inference.** Tokenization is used both to encode a prompt and to prepare a corpus. By contrast, document partitioning, context windows, and shifted targets are operations for preparing training examples. You can study them after understanding how a model receives a prompt and generates a response.
+:::
+
+## The learning branch: from documents to training sequences
 
 The tokenizer is only one component of a larger data pipeline. Before text becomes token IDs, a corpus must be assembled and prepared. The stages below describe the main decisions, not a universal execution order: some operations are iterative, and their order depends on the sources, evaluation design, and training objective.
 
