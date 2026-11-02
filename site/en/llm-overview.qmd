@@ -58,9 +58,10 @@ flowchart TB
   C --> I
   S --> I
   I --> O["Application output"]
-  E["Validation for iteration<br/>test set held out"] -.-> P
-  E -.-> A
-  E -.-> I
+  E["Validation for iteration<br/>test set held out"] -.-> R["Review design choices<br/>do not tune on the test set"]
+  R -.-> P
+  R -.-> A
+  R -.-> I
 ```
 
 ### Stages to distinguish
@@ -91,6 +92,8 @@ A next-token objective learns to assign probabilities to token sequences observe
 - that the model has human-like understanding of the world;
 - that an observed capability generalizes to every task or context;
 - that a behavior is causally explained by an isolated attention pattern.
+
+The word “understanding” also needs qualification. It may refer to operational competence measured on tasks—summarizing, classifying, explaining, or solving a problem—or to a stronger claim about human-like understanding, experience, or intention. Observable performance can support the first interpretation within a defined scope; it does not establish the second. State the criterion being used rather than treating “understands” as one directly measurable property.
 
 Discussions of supposedly *emergent* capabilities require precise task definitions, metrics, thresholds, and model comparisons. A capability that appears to emerge abruptly under one metric may depend on measurement resolution or protocol. Inspect results, controls, and definitions before claiming a qualitative transition.
 
