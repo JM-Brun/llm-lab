@@ -12,7 +12,23 @@ Un **grand modèle de langage** (*Large Language Model*, LLM) est un modèle neu
 
 Le traitement automatique des langues (TAL / NLP) regroupe des méthodes très différentes : règles linguistiques, modèles statistiques, systèmes spécialisés pour une tâche, réseaux neuronaux et modèles pré-entraînés réutilisables.
 
-Les LLM contemporains sont généralement des modèles d’apprentissage profond entraînés à grande échelle sur des données textuelles. Ils peuvent servir de base à plusieurs tâches, plutôt que d’être construits séparément pour chacune. Cela ne signifie pas que les approches précédentes ont disparu : un système de production peut combiner règles, modèles spécialisés, recherche documentaire, outils et LLM.
+Les LLM contemporains sont généralement des modèles d’apprentissage profond entraînés à grande échelle sur des données textuelles.
+
+L’intelligence artificielle (IA) est le domaine le plus large ; l’apprentissage automatique (*machine learning*) en est une partie, et l’apprentissage profond (*deep learning*) désigne des méthodes d’apprentissage fondées sur des réseaux neuronaux à plusieurs couches. Les LLM actuels sont généralement des modèles d’apprentissage profond appliqués au langage. Ces catégories décrivent des niveaux différents : « NLP » désigne un domaine de problèmes, tandis que « deep learning » désigne une famille de méthodes.
+
+### Trois architectures à comparer
+
+```{mermaid}
+flowchart TB
+  E["Encodeur seul<br/>Contexte bidirectionnel<br/>Tokens masqués"]
+  ED["Encodeur–décodeur<br/>Entrée encodée + génération conditionnée<br/>Transformation de séquence"]
+  D["Décodeur seul<br/>Contexte causal<br/>Prédiction du prochain token"]
+  E --- ED --- D
+```
+
+Le tableau précise les objectifs et les usages typiques ; le schéma est un repère architectural, pas un classement de qualité.
+
+ Ils peuvent servir de base à plusieurs tâches, plutôt que d’être construits séparément pour chacune. Cela ne signifie pas que les approches précédentes ont disparu : un système de production peut combiner règles, modèles spécialisés, recherche documentaire, outils et LLM.
 
 Il n’existe pas de seuil universel de paramètres qui transforme mécaniquement un modèle en « LLM ». La taille compte, mais le terme est aussi lié à l’ampleur des données, à l’objectif d’entraînement, aux capacités visées et à la manière dont le modèle est réutilisé. Le concept de *foundation model* est plus large : il désigne un modèle entraîné sur des données étendues et réutilisable comme base pour de nombreuses applications, pas nécessairement un modèle de langage uniquement.
 
