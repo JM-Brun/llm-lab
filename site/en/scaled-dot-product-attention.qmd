@@ -24,6 +24,24 @@ tags: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-produc
 Scaled dot-product attention turns learned compatibility scores between queries and keys into weights, then uses those weights to aggregate values. Softmax normalizes scores over accessible positions; it does not prove semantic relevance or causality.
 :::
 
+<div class="epistemic-badges">
+  <span class="epistemic-badge badge-concept">Verified Concept</span>
+  <span class="epistemic-badge badge-code">Executable Micro-code</span>
+  <span class="epistemic-badge badge-status">Architecture: Standard Attention</span>
+</div>
+
+<div class="pipeline-stepper" role="navigation" aria-label="LLM pipeline stages">
+  <a class="step-item" href="text-data.qmd">1. Text</a>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
+  <span class="step-arrow">→</span>
+  <span class="step-item active">3. Scaled Dot-Product Attention</span>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="logits.qmd">4. Logits</a>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="cross-entropy.qmd">5. Loss & Training</a>
+</div>
+
 ::: {.callout-tip title="The one-minute mental model"}
 Attention is not one indivisible operation: it is the sequence **scores → scaling → optional mask → softmax → aggregation**. Scores compare Q and K; weights are normalized row by row; the output is a weighted combination of V.
 
@@ -72,7 +90,43 @@ The diagram also shows why three objects must not be conflated: **scores** (raw 
 
 ## Why divide by $\sqrt{d_k}$?
 
-Under the simplifying assumption that query and key components are independent, zero-mean, and unit-variance, the variance of a dot product—the sum of about $d_k$ terms—grows with $d_k$. Dividing by $\sqrt{d_k}$ helps keep score scale more stable as dimensionality increases, limiting overly saturated softmax outputs and weak gradients. This is a motivation for scaling, not a guarantee that trained-network scores always have exactly unit variance.
+Under the simplifying assumption that query and key components are independent, zero-mean, and unit-variance, the variance of their dot product $\sum_{i=1}^{d_k} q_i k_i$ equals $d_k$, yielding a standard deviation of $\sqrt{d_k}$. For $d_k=64$, raw dot-product scores typically swing by $\pm 8$. Without scaling, these large magnitudes saturate the softmax function into near one-hot outputs, resulting in near-zero gradients that stall backpropagation.
+
+::: {.micro-workbench}
+::: {.micro-workbench-header}
+<span>NUMERICAL WORKBENCH · SCORE VARIANCE AND SOFTMAX GRADIENT PRESERVATION</span>
+<span>Python 3.12+ / NumPy</span>
+:::
+::: {.micro-workbench-body}
+```python
+import numpy as np
+
+# Simulate dot products for d_k = 64
+np.random.seed(42)
+d_k = 64
+N = 10000
+
+# Independent standard normal random vectors
+q = np.random.randn(N, d_k)
+k = np.random.randn(N, d_k)
+
+# Raw dot products q . k
+raw_dots = np.sum(q * k, axis=1)
+
+# Compare raw vs scaled standard deviation
+std_raw = np.std(raw_dots)
+std_scaled = np.std(raw_dots / np.sqrt(d_k))
+
+print(f"Raw std dev: {std_raw:.2f} (theoretical: {np.sqrt(d_k):.1f})")
+print(f"Scaled std dev: {std_scaled:.2f} (theoretical: 1.0)")
+
+assert np.isclose(std_scaled, 1.0, atol=0.05)
+```
+:::
+::: {.micro-workbench-footer}
+Dividing by $\sqrt{d_k}$ stabilizes score variance to unit scale, preventing softmax saturation and vanishing gradients.
+:::
+:::
 
 ## Provenance and purpose
 
@@ -84,6 +138,13 @@ The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Ne
 - **“A weight of 0.8 means 80% semantic relevance.”** No: it is a weight in this aggregation, conditional on the other scores and learned projections.
 - **“The scale factor is an empirical constant with no rationale.”** It follows from reasoning about dot-product scale; the assumptions are simplified, but the factor addresses a specific numerical issue.
 - **“Softmax alone makes attention causal.”** No: without a causal mask, a position can still assign weight to future tokens.
+
+<details class="spot-the-fallacy">
+<summary>Common Fallacy: “Increasing head dimension $d_k$ automatically improves attention expressiveness with no drawbacks”</summary>
+<div class="fallacy-content">
+<p><strong>Counterexample:</strong> If scaling were omitted, widening $d_k$ from 64 to 512 would multiply score standard deviation nearly threefold ($\sqrt{512} \approx 22.6$). Extreme scores push softmax inputs deep into exponential saturation regions where local derivatives vanish, effectively preventing early Transformer layers from receiving training gradients.</p>
+</div>
+</details>
 
 ## Connections to other concepts
 
@@ -99,19 +160,30 @@ A row of scores is $(2,0)$ and the key dimension is $d_k=4$. Calculate the softm
 <details>
 <summary>Show the reasoning</summary>
 
-First divide the scores by $\sqrt{4}=2$, giving $(1,0)$. Softmax is approximately $(0.731,0.269)$. If the second position is forbidden, its score is masked before softmax (conceptually set to $-\infty$), so the weights become $(1,0)$. Masking must happen before normalization; setting a weight to zero after softmax without renormalizing does not produce the same distribution.
+First divide the scores by $\sqrt{4}=2$, giving $(1,0)$. Softmax is approximately $(0.731,0.269)$. If the second position is forbidden, its score is masked before softmax (conceptuellement set to $-\infty$), so the weights become $(1,0)$. Masking must happen before normalization; setting a weight to zero after softmax without renormalizing does not produce the same distribution.
 
 </details>
 
 ## Code, implementation, and verification
 
-A reusable attention implementation does not yet exist in **src/llm_lab/**. This page's equation should become the reference contract: expected shapes, row-wise normalization, weights summing to one over allowed positions, finite outputs, and valid gradients.
+A numerically tested reference implementation is available in `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`). The test suite in `tests/unit/test_attention.py` validates tensor dimensions, row-wise unit sums, and numerical invariants.
 
 Input and output dimensions matter as much as the formula; see [tensors](tensors.qmd).
 
-- [Source code](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab)
-- [Tests](https://github.com/JM-Brun/llm-lab/tree/main/tests)
+- [Reference implementation](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
+- [Unit tests](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
 - [Planned verification criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="queries-keys-values.qmd">
+    <span class="nav-direction">← Previous Step</span>
+    <span class="nav-title">Queries, Keys, and Values (Q, K, V)</span>
+  </a>
+  <a class="route-nav-card" href="causal-masking.qmd">
+    <span class="nav-direction">Next Step →</span>
+    <span class="nav-title">Causal Masking</span>
+  </a>
+</div>
 
 :::: {.language-switch}
 **Language:** [Français](../fr/scaled-dot-product-attention.qmd) · [English](scaled-dot-product-attention.qmd)

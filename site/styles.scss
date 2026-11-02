@@ -442,3 +442,233 @@ pre code { color: #17212B; }
   font-size: .88rem;
   font-style: italic;
 }
+
+/* Epistemic Badges for clear, non-intrusive status communication */
+.epistemic-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.8rem 0 1.5rem;
+}
+.epistemic-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  border-radius: 0.35rem;
+  letter-spacing: 0.02em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.badge-concept {
+  background-color: #DCFCE7;
+  color: #14532D;
+  border: 1px solid #86EFAC;
+}
+.badge-code {
+  background-color: #FEF3C7;
+  color: #78350F;
+  border: 1px solid #FCD34D;
+}
+.badge-status {
+  background-color: #F1F5F9;
+  color: #334155;
+  border: 1px solid #CBD5E1;
+}
+
+/* Pipeline Stepper: Visual awareness of the LLM data/model lifecycle */
+.pipeline-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.85rem;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 0.55rem;
+  margin: 1rem 0 1.6rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  font-size: 0.82rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+.pipeline-stepper .step-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: #64748B;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.25rem 0.55rem;
+  border-radius: 0.35rem;
+  transition: all 0.15s ease;
+}
+.pipeline-stepper .step-item:hover {
+  color: #14532D;
+  background: #E2E8F0;
+}
+.pipeline-stepper .step-item.active {
+  background: #14532D;
+  color: #F8FAFC;
+  font-weight: 750;
+}
+.pipeline-stepper .step-arrow {
+  color: #94A3B8;
+  font-size: 0.75rem;
+  user-select: none;
+}
+
+/* Micro-Workbench: Executable, self-contained Python/NumPy blocks with shape invariants */
+.micro-workbench {
+  margin: 1.8rem 0;
+  border: 1px solid #BBF7D0;
+  border-left: 4px solid var(--llm-brand);
+  border-radius: 0.6rem;
+  background: #FAFCF9;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.05);
+}
+.micro-workbench-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 1rem;
+  background: #F0FDF4;
+  border-bottom: 1px solid #DCFCE7;
+  font-size: 0.82rem;
+  font-weight: 750;
+  color: #14532D;
+}
+.micro-workbench-body {
+  padding: 0.8rem 1rem;
+}
+.micro-workbench-body pre {
+  margin: 0.5rem 0;
+}
+.micro-workbench-footer {
+  padding: 0.45rem 1rem;
+  background: #F8FAFC;
+  border-top: 1px solid #E2E8F0;
+  font-size: 0.8rem;
+  color: #475569;
+}
+
+/* Spot-the-Fallacy: Active recall & counterexample foldouts */
+details.spot-the-fallacy {
+  margin: 1.8rem 0;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid #FCD34D;
+  border-left: 4px solid #B45309;
+  border-radius: 0.6rem;
+  background: #FFFBEB;
+}
+details.spot-the-fallacy summary {
+  font-weight: 750;
+  color: #78350F;
+  cursor: pointer;
+  font-size: 0.98rem;
+  outline: none;
+}
+details.spot-the-fallacy summary:hover {
+  color: #92400E;
+}
+details.spot-the-fallacy .fallacy-content {
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px dashed #FDE68A;
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: #1E293B;
+}
+
+/* Route Navigation Cards */
+.route-nav-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin: 2.5rem 0 1.5rem;
+}
+.route-nav-card {
+  padding: 1rem;
+  border: 1px solid var(--llm-line);
+  border-radius: 0.6rem;
+  background: #fff;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.route-nav-card:hover {
+  border-color: var(--llm-brand);
+  box-shadow: 0 4px 12px rgba(20, 83, 45, 0.08);
+}
+.route-nav-card .nav-direction {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #64748B;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+.route-nav-card .nav-title {
+  font-weight: 750;
+  color: #14532D;
+  font-size: 0.98rem;
+}
+
+/* Interactive Slider Box */
+.interactive-toy-box {
+  margin: 1.6rem 0;
+  padding: 1.2rem;
+  border: 1px solid #BBF7D0;
+  border-radius: 0.6rem;
+  background: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.06);
+}
+.interactive-toy-box h4 {
+  margin-top: 0;
+  color: #14532D;
+  font-size: 1rem;
+  font-weight: 750;
+}
+.interactive-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.8rem 0;
+}
+.interactive-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.prob-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.88rem;
+}
+.prob-bar-label {
+  width: 90px;
+  font-family: ui-monospace, monospace;
+}
+.prob-bar-track {
+  flex: 1;
+  height: 20px;
+  background: #F1F5F9;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.prob-bar-fill {
+  height: 100%;
+  background: var(--llm-brand);
+  transition: width 0.15s ease;
+}
+.prob-bar-value {
+  width: 48px;
+  text-align: right;
+  font-family: ui-monospace, monospace;
+  font-weight: 600;
+}
