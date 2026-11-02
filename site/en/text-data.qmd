@@ -1,8 +1,24 @@
 ---
 title: "From text to tokens: representing language"
 subtitle: "The conceptual path from text to model representations"
+keywords: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/text-data"
+scope: "From raw text to textual data supplied to a model."
+purpose: "Define textual input and distinguish inference context from a training corpus."
+suggested_route:
+  previous: "en/transformer"
+  next: "en/unicode-text"
+hierarchy:
+  parents: ["en/transformer"]
+  children: ["en/unicode-text", "en/tokenization-strategies", "en/training-examples"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 A language model receives a sequence of numerical IDs, not raw text. Tokenization defines how text becomes IDs and how IDs are decoded. It is separate from the neural network, but affects vocabulary, sequence length, compute cost, and some observable behaviours.
