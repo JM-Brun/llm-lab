@@ -97,7 +97,7 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
     comments = COMMENT.findall(source)
     marker_count = source.count(MARKER)
     metadata_follows_front_matter = re.match(
-        r"\\s*<!--\\s*\\nLLM-LAB-PAGE-MAP v1\\n", source[front_match.end() :]
+        r"\s*<!--\s*\nLLM-LAB-PAGE-MAP v1\n", source[front_match.end() :]
     ) is not None
     if not metadata_follows_front_matter:
         errors.append(f"{relative}: page-map comment must immediately follow front matter")
