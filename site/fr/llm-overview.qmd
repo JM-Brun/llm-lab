@@ -42,7 +42,7 @@ Ces familles sont des repères, pas une taxonomie exhaustive. L’article Transf
 
 Pour le projet de construction, nous nous concentrons sur un **petit GPT décodeur seul**. C’est un choix pédagogique qui rend la prédiction autorégressive et ses mécanismes inspectables, pas une affirmation selon laquelle tous les LLM fonctionnent ainsi.
 
-## 3. Comprendre l'utilisation avant d'étudier l'apprentissage
+## Une première vue : comprendre l'inférence
 
 Pour comprendre ce que fait un LLM, commencez par **l'inférence** : un modèle reçoit un contexte, calcule une sortie avec ses paramètres actuels et, dans le cas d'un modèle autorégressif, génère une suite de tokens. À ce stade, il n'est pas nécessaire de savoir comment ces paramètres ont été appris.
 
