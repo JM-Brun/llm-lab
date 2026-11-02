@@ -1,8 +1,24 @@
 ---
 title: "Tensors in a Transformer: shapes and axes"
 subtitle: "Read dimensions without confusing shape compatibility with correctness"
+keywords: ["type:deep-dive", "destination:deepen", "topic:tensors", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/tensors"
+scope: "Tensors in a Transformer: shapes and axes"
+purpose: "Explain "Tensors in a Transformer: shapes and axes", its role in an LLM, and its upstream and downstream conceptual connections."
+suggested_route:
+  previous: "en/mathematical-foundations"
+  next: "en/cosine-similarity"
+hierarchy:
+  parents: ["en/transformer"]
+  children: []
+related: []
+tags: ["type:deep-dive", "destination:deepen", "topic:tensors", "level:advanced", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 In a Transformer, tensors carry token representations, logits, masks, and gradients. Reading their axes correctly is essential: an operation can run without an error while acting on the wrong axis.
