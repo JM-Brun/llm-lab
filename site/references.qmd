@@ -2,7 +2,7 @@
 sidebar: false
 title: "Références et provenance des illustrations"
 subtitle: "Sources externes, attribution et réutilisation responsable"
-keywords: ["type:bibliography", "destination:reference", "topic:references", "level:reference", "language:fr", "status:published"]
+keywords: ["type:bibliography", "destination:reference", "topic:references", "level:reference", "language:shared", "status:published"]
 lang: fr
 ---
 
@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: []
-tags: ["type:bibliography", "destination:reference", "topic:references", "level:reference", "language:fr", "status:published"]
+tags: ["type:bibliography", "destination:reference", "topic:references", "level:reference", "language:shared", "status:published"]
 -->
 
 Cette page distingue les schémas originaux présents dans le site des ressources visuelles externes recommandées. Une image visible en ligne n'est pas automatiquement libre de réutilisation.
