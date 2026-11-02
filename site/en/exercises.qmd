@@ -14,7 +14,7 @@ suggested_route:
   previous: "en/build-path"
   next: "en/experimental-evaluation"
 hierarchy:
-  parents: ["en/build-path"]
+  parents: ["en/index"]
   children: []
 related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:en", "status:published"]
