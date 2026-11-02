@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/positional-encoding"
-scope: "Positional encoding: giving tokens an order"
-purpose: "Explain Positional encoding: giving tokens an order; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Introduces mechanisms that inject or represent token order and position in a Transformer—including absolute encodings and relative methods such as RoPE—and distinguishes positional information from embedding content; it does not unpack the full attention computation."
+purpose: "Readers should be able to explain why a Transformer needs positional information, distinguish several ways of introducing it, and describe where these mechanisms enter the computation."
 suggested_route:
   previous: "en/embedding-space"
   next: "en/contextualized-representations"
