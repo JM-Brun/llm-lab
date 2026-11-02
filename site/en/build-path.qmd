@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/build-path"
-scope: "Build a small GPT"
-purpose: "Explain Build a small GPT; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Guides a staged practical path for constructing a small decoder-only GPT, separating the generation path with fixed parameters from the learning path that updates parameters. It distinguishes conceptual understanding, implementation milestones, and optional mathematical deep dives; it explicitly records that a complete tested implementation and reproducible end-to-end training run are not yet present."
+purpose: "Trace the generation and learning workflows, identify what can be understood before implementation, map each milestone to its conceptual prerequisites, and distinguish current repository content from work still planned."
 suggested_route:
   previous: null
   next: "en/exercises"
