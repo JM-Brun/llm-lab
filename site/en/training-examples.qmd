@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/training-examples"
-scope: "From tokenized corpus to training examples"
-purpose: "Explain From tokenized corpus to training examples; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Covers the transformation of a tokenized stream into autoregressive input-target examples: one-token shifting, context windows and stride, document packing and boundaries, padding, attention and loss masks, and tensor shapes. It stops at correctly constructed training batches rather than deriving the probability and optimization objectives."
+purpose: "Construct aligned input-target batches from token IDs, distinguish windowing and masking decisions, verify tensor shapes, and diagnose common boundary or alignment errors that would change the training objective."
 suggested_route:
   previous: "en/probabilities"
   next: "en/likelihood"
