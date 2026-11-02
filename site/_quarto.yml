@@ -37,7 +37,9 @@ project:
     - en/transformer.qmd
     - en/transformer-explainer.qmd
     - fr/generation.qmd
+    - fr/llm-limits.qmd
     - en/generation.qmd
+    - en/llm-limits.qmd
     - fr/glossary.qmd
     - en/glossary.qmd
     - fr/transformer-history.qmd
@@ -96,6 +98,7 @@ website:
             - fr/llm-overview.qmd
             - fr/transformer.qmd
             - fr/generation.qmd
+            - fr/llm-limits.qmd
             - section: "Du texte aux représentations"
               contents:
                 - fr/text-data.qmd
@@ -127,7 +130,7 @@ website:
         - section: "Construire un petit GPT"
           contents:
             - fr/build-path.qmd
-        - section: "S’exercer et expérimenter"
+        - section: "S'exercer et expérimenter"
           contents:
             - fr/exercises.qmd
             - fr/transformer-explainer.qmd
@@ -153,6 +156,7 @@ website:
             - en/llm-overview.qmd
             - en/transformer.qmd
             - en/generation.qmd
+            - en/llm-limits.qmd
             - section: "From text to representations"
               contents:
                 - en/text-data.qmd
