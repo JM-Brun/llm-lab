@@ -18,9 +18,17 @@ FRONT_MATTER = re.compile(r"\A---\s*\n(.*?)\n---\s*(?:\n|\Z)", re.DOTALL)
 ID_PATTERN = re.compile(r"(?:fr|en)/[a-z0-9]+(?:-[a-z0-9]+)*|reference/references")
 TOPIC_PATTERN = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 TAG_TYPES = {
-    "entry-point", "system-overview", "concept-lesson", "concept-bridge",
-    "guided-build", "deep-dive", "exercise-hub", "experiment-guide",
-    "glossary", "historical-reference", "bibliography",
+    "entry-point",
+    "system-overview",
+    "concept-lesson",
+    "concept-bridge",
+    "guided-build",
+    "deep-dive",
+    "exercise-hub",
+    "experiment-guide",
+    "glossary",
+    "historical-reference",
+    "bibliography",
 }
 DESTINATIONS = {"orient", "understand", "build", "deepen", "practice", "reference"}
 LEVELS = {"overview", "core", "applied", "advanced", "reference"}
@@ -65,9 +73,7 @@ def _tag_map(tags: Any, where: str, errors: list[str]) -> dict[str, str]:
     if dimensions.get("type") not in TAG_TYPES:
         errors.append(f"{where}.tags: unsupported type {dimensions.get('type')!r}")
     if dimensions.get("destination") not in DESTINATIONS:
-        errors.append(
-            f"{where}.tags: unsupported destination {dimensions.get('destination')!r}"
-        )
+        errors.append(f"{where}.tags: unsupported destination {dimensions.get('destination')!r}")
     if not TOPIC_PATTERN.fullmatch(dimensions.get("topic", "")):
         errors.append(f"{where}.tags: topic must be a stable kebab-case identifier")
     if dimensions.get("level") not in LEVELS:
@@ -96,9 +102,9 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
 
     comments = COMMENT.findall(source)
     marker_count = source.count(MARKER)
-    metadata_follows_front_matter = re.match(
-        r"\s*<!--\s*\nLLM-LAB-PAGE-MAP v1\n", source[front_match.end() :]
-    ) is not None
+    metadata_follows_front_matter = (
+        re.match(r"\s*<!--\s*\nLLM-LAB-PAGE-MAP v1\n", source[front_match.end() :]) is not None
+    )
     if not metadata_follows_front_matter:
         errors.append(f"{relative}: page-map comment must immediately follow front matter")
     if len(comments) != 1 or marker_count != 1:
@@ -289,11 +295,13 @@ def _validate_bilingual_parity(pages: dict[str, dict[str, Any]], errors: list[st
         for field in ("parents", "children", "related"):
             fr_topics = sorted(
                 pages[target]["tags"].get("topic", target)
-                for target in fr[field] if target in pages
+                for target in fr[field]
+                if target in pages
             )
             en_topics = sorted(
                 pages[target]["tags"].get("topic", target)
-                for target in en[field] if target in pages
+                for target in en[field]
+                if target in pages
             )
             if fr_topics != en_topics:
                 errors.append(f"topic {topic!r}: FR/EN {field} relations differ")
