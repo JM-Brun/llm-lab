@@ -705,3 +705,47 @@ LLM Lab should be considered a complete pedagogical companion to the reviewed up
 6. “Covered” is not inferred from a link or heading alone: it requires a sufficient explanation, assumptions and limitations, appropriate examples, and—where implementation is claimed—code and tests. Rendering, browser review and learner mastery remain separate evidence states.
 
 **Scope discipline:** this inventory does not authorize bulk lesson creation or implementation. Continue with the existing prioritized issues and prerequisite review; use the inventory to prevent omissions and duplicated ownership.
+
+
+## 9. Evidence-informed learning design and exercise delivery
+
+The shared [reader-experience and editorial method, section 9](reader-experience-and-editorial-method.md#9-operationalize-learning-science-without-turning-lessons-into-templates) defines how learning-science evidence should inform lesson and exercise design. This curriculum plan owns the placement and dependency mapping of those activities; it does not duplicate the editorial contract.
+
+### Adopted design principles
+
+- Specify observable outcomes (recognize, explain, predict, calculate, implement/verify, diagnose, transfer/critique) rather than vague intentions such as “understand”.
+- For new or demanding procedures, move from a worked example to completion, independent practice and—when justified—transfer.
+- Use retrieval, explanatory feedback and delayed revisits where they serve the objective; do not prescribe one universal spacing schedule.
+- Make mathematical understanding inspectable through representation, procedure, interpretation, assumptions, boundary cases and verification.
+- Distinguish content review, exercise validation, immediate performance, retention, transfer and instructional effectiveness. Do not claim mastery from page completion or an immediate quiz score.
+- Keep exercises concise and avoid applying every field mechanically to trivial recall checks.
+
+### Current application: first foundational sequence
+
+The first candidate for a complete formative sequence is the existing representation chain:
+
+**text → tokenizer output → token IDs → embedding lookup → positional information → contextualized hidden states**
+
+Its canonical content remains in the existing bilingual text/data, embedding-space, positional-encoding and tensor pages. Do not create duplicate concept pages or expand this first exercise sequence into attention/GPT implementation.
+
+The exercise deliverable is tracked in [issue #220 — bilingual formative exercise sequence](https://github.com/JM-Brun/llm-lab/issues/220). It is coordinated with:
+- [#82 — foundational content and browser-review gate](https://github.com/JM-Brun/llm-lab/issues/82);
+- [#87 — three-depth curriculum and milestone map](https://github.com/JM-Brun/llm-lab/issues/87);
+- [#130 — high-level learning-design architecture](https://github.com/JM-Brun/llm-lab/issues/130).
+
+**Release dependency:** #220 must not be treated as ready for learner-facing release until the outstanding desktop/mobile browser review and applicable acceptance criteria in #82 are completed. Transfer assessment remains deferred until the first learning sequence is complete, as specified in #82. The exercise-design work may be prepared without claiming that the underlying sequence or learner mastery has been validated.
+
+### Traceability requirements
+
+For each substantial activity, keep a stable bilingual ID and map it to:
+1. the canonical FR/EN lesson(s);
+2. the relevant G0–G9 milestone in [the learning path](learning-path.md);
+3. the observable outcome and prerequisite(s);
+4. its worked solution, misconception feedback and assessment criteria;
+5. the evidence state: authored, mathematically reviewed, executable checks passed (if applicable), rendered/browser reviewed, and—only if actually studied—learner retention/transfer evidence.
+
+Do not collapse these evidence states into a single “complete” flag. A correct solution is not automatically a proof; a passing test is not evidence of durable learning; a rendered page is not evidence of learner mastery.
+
+### Change history
+
+- 2026-11-02: the shared editorial method was extended and merged in [PR #219](https://github.com/JM-Brun/llm-lab/pull/219). This establishes the design criteria; it does not mean the exercise sequence has been authored or evaluated.
