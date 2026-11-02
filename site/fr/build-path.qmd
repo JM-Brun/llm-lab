@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/build-path"
-scope: "Construire un petit GPT"
-purpose: "Expliquer la notion « Construire un petit GPT », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Guide un parcours pratique progressif pour construire un petit GPT décodeur seul, en séparant le chemin de génération à paramètres fixes du chemin d’apprentissage qui modifie les paramètres. Il distingue compréhension conceptuelle, jalons d’implémentation et approfondissements mathématiques facultatifs ; il précise qu’une implémentation complète testée et un entraînement reproductible de bout en bout ne sont pas encore disponibles."
+purpose: "Décrire les chemins de génération et d’apprentissage, identifier ce qui peut être compris avant l’implémentation, relier chaque étape à ses prérequis conceptuels et distinguer le contenu déjà disponible du travail encore planifié."
 suggested_route:
   previous: null
   next: "fr/exercises"
