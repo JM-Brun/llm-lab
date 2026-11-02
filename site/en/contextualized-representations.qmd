@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/contextualized-representations"
-scope: "Why can the same token have different contextualized representations?"
-purpose: "Explain Why can the same token have different contextualized representations?; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Explains how Transformer layers turn initial embeddings into context-dependent vectors and why the same ID can therefore have different contextualized states depending on position and context; distinguishes these states from the static vectors in the embedding table."
+purpose: "Readers should be able to explain why two occurrences of the same token share an initial embedding but can have different contextualized representations, and connect this difference to processing by Transformer layers."
 suggested_route:
   previous: "en/positional-encoding"
   next: "en/queries-keys-values"
