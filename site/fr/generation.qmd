@@ -1,7 +1,7 @@
 ---
 title: "Générer du texte : l'inférence pas à pas"
 subtitle: "Comment un LLM entraîné produit un token après un token"
-keywords: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:fr", "status:planned"]
+keywords: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -17,7 +17,7 @@ hierarchy:
   parents: ["fr/llm-overview"]
   children: ["fr/logits", "fr/probabilites"]
 related: ["fr/build-path", "fr/training-examples"]
-tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:fr", "status:planned"]
+tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
