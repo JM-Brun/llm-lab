@@ -33,7 +33,9 @@ project:
     - fr/llm-overview.qmd
     - en/llm-overview.qmd
     - fr/transformer.qmd
+    - fr/transformer-explainer.qmd
     - en/transformer.qmd
+    - en/transformer-explainer.qmd
     - fr/generation.qmd
     - en/generation.qmd
     - fr/glossary.qmd
@@ -128,6 +130,7 @@ website:
         - section: "S’exercer et expérimenter"
           contents:
             - fr/exercises.qmd
+            - fr/transformer-explainer.qmd
             - fr/evaluation-experimentale.qmd
         - section: "Approfondir"
           contents:
@@ -184,6 +187,7 @@ website:
         - section: "Practice and experiment"
           contents:
             - en/exercises.qmd
+            - en/transformer-explainer.qmd
             - en/experimental-evaluation.qmd
         - section: "Deepen your understanding"
           contents:
