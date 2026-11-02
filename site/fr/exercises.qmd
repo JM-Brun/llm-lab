@@ -4,7 +4,7 @@ subtitle: "Un espace séparé du cours pour vérifier et transférer les connais
 lang: fr
 ---
 
-Cette page est le point d’entrée des exercices. **Les collections ci-dessous sont une structure de navigation, pas des exercices déjà rédigés.** Elles seront alimentées après validation des notions préalables et revue du plan de couverture.
+Cette page est le point d’entrée des exercices approfondis. Des auto-vérifications courtes avec corrigé replié sont désormais intégrées à certaines pages de cours ; elles vérifient immédiatement une notion. **Les collections ci-dessous restent une structure de navigation pour des exercices plus développés**, à construire après validation des prérequis et revue du plan de couverture.
 
 ## Comment utiliser cet espace
 
@@ -17,9 +17,9 @@ Cette page est le point d’entrée des exercices. **Les collections ci-dessous 
 
 | Collection | Périmètre | Statut |
 |---|---|---|
-| [Fondations mathématiques](#fondations) | Tenseurs, probabilités, logits, entropie, cross-entropie, vraisemblance, gradients, stabilité numérique | Structure à compléter |
-| [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Structure à compléter |
-| [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Structure à compléter |
+| [Fondations mathématiques](#fondations) | Tenseurs, probabilités, logits, entropie, cross-entropie, vraisemblance, gradients, stabilité numérique | Auto-vérifications déjà présentes sur logits, probabilités et loss ; exercices approfondis à construire |
+| [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Auto-vérifications sur IDs et tokenizers dans les pages texte/embeddings ; exercices approfondis à construire |
+| [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Auto-vérifications sur agrégation Q/K/V et mise à l’échelle/masquage ; exercices approfondis à construire |
 | [Transformer](#transformer) | Embeddings, position, résidus, normalisation, MLP et variantes d’architecture | Structure à compléter |
 | [Préentraînement](#preentrainement) | Objectif, entraînement/validation, perplexité, checkpoints et reproductibilité | Structure à compléter |
 | [Génération](#generation) | Décodage, température, top-k/top-p, arrêt, contexte et cache KV | Structure à compléter |
@@ -34,7 +34,7 @@ Cette page est le point d’entrée des exercices. **Les collections ci-dessous 
 
 **Notions préalables :** [fondations mathématiques](mathematical-foundations.qmd), [tenseurs](tensors.qmd), [logits](logits.qmd), [probabilités](probabilites.qmd), [entropie](entropy.qmd), [cross-entropie](cross-entropy.qmd), [vraisemblance](vraisemblance.qmd), [gradients](gradients.qmd).
 
-**À préparer :** calculs sur papier, analyse de contre-exemples, formes de tenseurs et vérification numérique. Aucun énoncé n’est ajouté dans cette étape.
+**À développer :** calculs sur papier, analyse de contre-exemples, formes de tenseurs et vérification numérique. Les auto-vérifications intégrées aux pages ne remplacent pas une collection progressive d’exercices.
 
 ### Données textuelles {#donnees-textuelles}
 
