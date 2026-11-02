@@ -1,6 +1,6 @@
 ---
 title: "Panorama : qu’est-ce qu’un LLM ?"
-subtitle: "Situer les modèles de langage, leurs architectures et leur cycle de vie avant d’entrer dans les mécanismes"
+subtitle: "Distinguer architectures, apprentissage, adaptation et inférence avant d’entrer dans les mécanismes"
 keywords: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 lang: fr
 ---
@@ -8,7 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
-scope: "Situe les LLM dans l’IA et le TAL, distingue les grandes familles d’architectures et décrit le cycle de vie pré-entraînement–adaptation–inférence ; ne détaille ni les calculs internes d’un Transformer ni les objectifs mathématiques d’apprentissage."
+scope: "Situe les LLM dans l’IA et le TAL, distingue les grandes familles d’architectures et présente le parcours du pré-entraînement à l’utilisation, en distinguant architecture, apprentissage/adaptation et inférence ; ne détaille ni les calculs internes d’un Transformer ni les objectifs mathématiques d’apprentissage."
 purpose: "À l’issue de cette page, le lecteur doit pouvoir définir ce qu’est un LLM sans le confondre avec une architecture, situer les grandes familles de modèles, distinguer pré-entraînement, adaptation et inférence, et choisir quelle branche du parcours approfondir."
 suggested_route:
   previous: "fr/index"
@@ -25,7 +25,7 @@ Un **grand modèle de langage** (*Large Language Model*, LLM) est un modèle neu
 :::
 
 ::: {.callout-tip title="Comment lire ce panorama"}
-Cette page répond d’abord à trois questions : **de quoi parle-t-on, quelles grandes familles distinguer, et comment un modèle passe-t-il de l’entraînement à l’utilisation ?** Elle donne les repères, sans détailler chaque opération.
+Cette page répond d’abord à trois questions : **de quoi parle-t-on, quelles grandes familles distinguer, et comment distinguer architecture, apprentissage/adaptation et utilisation ?** Elle donne les repères, sans détailler chaque opération.
 
 - Pour suivre le fonctionnement concret d’un GPT, passez à [GPT et Transformer](transformer.qmd).
 - Pour examiner en amont comment un texte devient une entrée numérique, ouvrez [Du texte aux tokens](text-data.qmd). C’est un approfondissement ciblé, pas un préalable obligatoire à tout le panorama.
@@ -39,6 +39,19 @@ L’intelligence artificielle (IA) est le domaine le plus large ; l’apprentiss
 Le traitement automatique des langues (TAL / NLP) regroupe des méthodes très différentes : règles linguistiques, modèles statistiques, systèmes spécialisés pour une tâche, réseaux neuronaux et modèles pré-entraînés réutilisables. Les LLM contemporains sont généralement entraînés à grande échelle sur des données textuelles. Ils peuvent servir de base à plusieurs tâches plutôt que d’être construits séparément pour chacune. Cela ne signifie pas que les approches précédentes ont disparu : un système de production peut combiner règles, modèles spécialisés, recherche documentaire, outils et LLM.
 
 Il n’existe pas de seuil universel de paramètres qui transforme mécaniquement un modèle en « LLM ». La taille compte, mais le terme est aussi lié à l’ampleur des données, à l’objectif d’entraînement, aux capacités visées et à la manière dont le modèle est réutilisé. Le concept de *foundation model* est plus large : il désigne un modèle entraîné sur des données étendues et réutilisable comme base pour de nombreuses applications, pas nécessairement un modèle de langage uniquement.
+
+
+## Trois dimensions à ne pas confondre
+
+Pour décrire un LLM, trois questions indépendantes doivent être posées. Elles se répondent, mais ne désignent ni les mêmes objets ni les mêmes opérations.
+
+| Dimension | Question | Ce qu'elle décrit | Exemples |
+|---|---|---|---|
+| **Architecture** | Comment l'information circule-t-elle dans le modèle ? | Les opérations et connexions qui définissent le calcul effectué | Encodeur seul, encodeur-décodeur, décodeur seul ; d'autres familles, comme les modèles à espace d'état, ne sont pas des Transformers classiques |
+| **Apprentissage et adaptation** | Comment les paramètres ont-ils été obtenus ou modifiés ? | Les objectifs et procédures qui apprennent ou ajustent les paramètres ; certaines adaptations ne touchent pas aux poids | Pré-entraînement, fine-tuning/SFT, optimisation des préférences ; prompt et RAG modifient le contexte sans réentraîner les poids |
+| **Inférence et utilisation** | Que fait-on du modèle une fois ses paramètres fixés ? | Le calcul d'une sortie à partir d'une entrée, éventuellement dans un système avec recherche ou outils | Classification, score, génération autorégressive, réponse augmentée par récupération documentaire |
+
+Ces dimensions ne forment pas une séquence universelle. Une même architecture peut être entraînée avec différents objectifs ; un modèle entraîné peut être utilisé directement, guidé par prompt, associé à un système RAG ou adapté par mise à jour de paramètres. L'inférence ordinaire utilise les paramètres disponibles sans les modifier.
 
 ## 2. Trois grandes familles d’architectures Transformer
 
@@ -83,7 +96,7 @@ Les paramètres restent fixes pendant cette inférence ordinaire. Les sections s
 
 ## 3. Du pré-entraînement à l’utilisation
 
-Le cycle de vie suivant est une carte simplifiée. Il décrit l'ordre chronologique des opérations, pas nécessairement l'ordre pédagogique dans lequel on les étudie. Les étapes exactes et les objectifs dépendent du modèle ; l’évaluation intervient à plusieurs moments, pas uniquement à la fin. Les données de validation peuvent guider les choix et les ajustements. Le jeu de test doit rester tenu à l’écart jusqu’à l’évaluation finale : l’utiliser à répétition pour choisir un modèle ou régler ses paramètres biaiserait cette évaluation.
+Le parcours suivant, du pré-entraînement à l’utilisation, est une carte simplifiée. Il décrit l'ordre chronologique des opérations, pas nécessairement l'ordre pédagogique dans lequel on les étudie. Les étapes exactes et les objectifs dépendent du modèle ; l’évaluation intervient à plusieurs moments, pas uniquement à la fin. Les données de validation peuvent guider les choix et les ajustements. Le jeu de test doit rester tenu à l’écart jusqu’à l’évaluation finale : l’utiliser à répétition pour choisir un modèle ou régler ses paramètres biaiserait cette évaluation.
 
 ```{mermaid}
 flowchart TB
@@ -103,7 +116,7 @@ flowchart TB
   R -.-> I
 ```
 
-### Les étapes du cycle de vie (ordre chronologique)
+### Du pré-entraînement à l’utilisation (ordre chronologique)
 
 1. **Pré-entraînement (*pretraining*).** Le modèle apprend à partir d’un corpus selon un objectif donné. Pour un GPT classique, l’objectif est généralement la prédiction du prochain token. « Auto-supervisé » signifie que les cibles sont construites à partir des données elles-mêmes ; cela ne signifie pas que les données sont exemptes de biais ou d’erreurs.
 2. **Modèle de base (*base model*).** Le résultat du pré-entraînement est un modèle dont les paramètres capturent des régularités statistiques utiles. Le terme *foundation model* insiste sur sa réutilisation possible dans plusieurs domaines ; l’usage des deux termes varie selon les sources.
