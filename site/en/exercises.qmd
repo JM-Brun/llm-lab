@@ -38,7 +38,7 @@ This page is the entry point for extended exercises. Short self-checks with coll
 
 ### Text data {#text-data}
 
-**Prerequisites:** [text and tokenization](../fr/text-data.qmd), [embedding space](../fr/embedding-space.qmd), and [training examples and input-target shifting](../fr/training-examples.qmd).
+**Prerequisites:** [text and tokenization](text-data.qmd), [embedding space](embedding-space.qmd), and [training examples and input-target shifting](training-examples.qmd).
 
 **Planned focus:** sequence windows, input-target alignment, special tokens and train/validation overlap.
 
