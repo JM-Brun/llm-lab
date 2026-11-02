@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/causal-masking"
-scope: "Masque causal"
-purpose: "Expliquer la notion « Masque causal », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Explique la contrainte causale appliquée aux scores d’attention dans un modèle autorégressif : une position ne peut pas exploiter les positions futures ; distingue ce masque de la sélection du prochain token et des autres masques de padding ou de séquence."
+purpose: "Le lecteur doit pouvoir lire un masque causal, expliquer quelles interactions il interdit et relier cette contrainte à la factorisation autorégressive de la probabilité d’une séquence."
 suggested_route:
   previous: "fr/scaled-dot-product-attention"
   next: "fr/logits"

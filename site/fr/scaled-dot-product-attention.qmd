@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/scaled-dot-product-attention"
-scope: "Attention à produit scalaire mise à l'échelle"
-purpose: "Expliquer la notion « Attention à produit scalaire mise à l'échelle », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Décompose le calcul d’attention à produit scalaire : scores QKᵀ, mise à l’échelle par la dimension des clés, normalisation softmax et combinaison pondérée des valeurs ; le masque causal est traité séparément et l’architecture multi-tête n’est abordée qu’en complément."
+purpose: "Le lecteur doit pouvoir suivre les étapes du calcul d’attention, expliquer le rôle de la mise à l’échelle et interpréter les poids comme une distribution de pondération conditionnée par les scores et le masque."
 suggested_route:
   previous: "fr/queries-keys-values"
   next: "fr/causal-masking"
