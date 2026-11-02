@@ -24,6 +24,7 @@ The project includes a bilingual Quarto website organized around LLM-specific ex
 - Critical notes on cosine similarity: `site/fr/cosine-similarity.qmd` and `site/en/cosine-similarity.qmd`
 - Critical notes on embedding linearity: `site/fr/linearite-embeddings.qmd` and `site/en/embedding-linearity.qmd`
 - Visual references and image provenance: `site/references.qmd`
+- Live backlog dashboard (priority filters, current slice, dependencies and next work): [`docs/backlog-dashboard.md`](docs/backlog-dashboard.md)
 - Prioritized roadmap and acceptance criteria: [`docs/roadmap.md`](docs/roadmap.md)
 - Shared reader-experience and editorial method: [`docs/reader-experience-and-editorial-method.md`](docs/reader-experience-and-editorial-method.md) — progressive disclosure, non-linear navigation, page types, and review criteria.
 - Full curriculum plan and source-coverage audit (Raschka is a source, not the table-of-contents authority): [`docs/full-curriculum-plan.md`](docs/full-curriculum-plan.md)
