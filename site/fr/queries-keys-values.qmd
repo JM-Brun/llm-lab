@@ -87,7 +87,7 @@ Une position reçoit les poids d’attention $(0{,}75,\,0{,}25)$ et les vecteurs
 <details>
 <summary>Afficher le raisonnement</summary>
 
-La sortie est la somme pondérée : $0{,}75(2,0)+0{,}25(0,4)=(1{,}5,1)$. Après échange des valeurs, elle devient $0{,}75(0,4)+0{,}25(2,0)=(0{,}5,3)$. Les poids déterminent la contribution relative des positions ; les valeurs déterminent le contenu agrégé. Les poids seuls ne suffisent donc pas à déterminer la sortie.
+La sortie est la somme pondérée : $0{,}75(2,0)+0{,}25(0,4)=(1{,}5;1)$. Après échange des valeurs, elle devient $0{,}75(0,4)+0{,}25(2,0)=(0{,}5;3)$. Les poids déterminent la contribution relative des positions ; les valeurs déterminent le contenu agrégé. Les poids seuls ne suffisent donc pas à déterminer la sortie.
 
 </details>
 
