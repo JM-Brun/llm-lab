@@ -100,7 +100,8 @@ Le détail des prérequis, preuves attendues, dépendances et critères de valid
 
 ## Parcours complémentaires
 
-- [Comprendre les LLM](transformer.qmd) : commencer par le système et les mécanismes, sans suivre le code.
+- [Panorama des LLM](llm-overview.qmd) : situer les familles de modèles et leur cycle de vie.
+- [GPT et Transformer](transformer.qmd) : comprendre le modèle décodeur seul retenu comme fil conducteur du projet.
 - [Approfondir les tenseurs](tensors.qmd) : consulter les formes et axes quand ils deviennent utiles.
 - [S'exercer](exercises.qmd) : travailler les questions conceptuelles et les exercices pratiques séparément.
 - [Évaluer une expérience](evaluation-experimentale.qmd) : distinguer observation, interprétation et preuve.
