@@ -11,7 +11,7 @@ Cette page est le point d’entrée des exercices approfondis. Des auto-vérific
 - Commencer par la page de cours indiquée dans les prérequis.
 - Répondre sans consulter le corrigé, puis expliquer les hypothèses et les cas où la réponse ne tient plus.
 - Utiliser les exercices de transfert pour vérifier qu’une notion est comprise au-delà de l’exemple vu en cours.
-- Les corrigés futurs seront masqués par défaut. Un résultat juste sans raisonnement ne suffit pas à établir la maîtrise.
+- Les corrigés sont masqués par défaut. Un résultat juste sans raisonnement ne suffit pas à établir la maîtrise.
 
 ## Collections prévues
 
