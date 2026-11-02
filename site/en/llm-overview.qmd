@@ -44,12 +44,12 @@ This project focuses on building a **small decoder-only GPT**. That is a pedagog
 
 ## 3. From pretraining to use
 
-The lifecycle below is a simplified map. Exact stages and objectives vary by model; evaluation occurs at several points, not only at the end.
+The lifecycle below is a simplified map. Exact stages and objectives vary by model; evaluation occurs at several points, not only at the end. Validation data can guide choices and adjustments. The test set should remain held out until final assessment: repeatedly using it to select a model or tune parameters would bias that assessment.
 
 ```{mermaid}
 flowchart TB
   D["Pretraining corpus and data"] --> P["Pretraining: learn an objective at scale"]
-  P --> B["Base model / foundation model"]
+  P --> B["Base model<br/>sometimes called a foundation model"]
   B --> U["Direct use: prompt and context"]
   B --> A["Adaptation with parameter updates"]
   A --> C["Task fine-tuning, e.g. classification"]
@@ -58,7 +58,7 @@ flowchart TB
   C --> I
   S --> I
   I --> O["Application output"]
-  E["Evaluation on data suited to the question"] -.-> P
+  E["Validation for iteration<br/>test set held out"] -.-> P
   E -.-> A
   E -.-> I
 ```
