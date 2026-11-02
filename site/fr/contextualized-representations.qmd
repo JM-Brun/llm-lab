@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/contextualized-representations"
-scope: "Pourquoi un même token peut-il avoir plusieurs représentations contextualisées ?"
-purpose: "Expliquer la notion « Pourquoi un même token peut-il avoir plusieurs représentations contextualisées ? », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Explique comment les couches du Transformer transforment les embeddings initiaux en vecteurs dépendant du contexte et pourquoi un même ID peut donc correspondre à des états contextualisés différents selon sa position et son contexte ; ne confond pas ces états avec les vecteurs statiques de la table d’embeddings."
+purpose: "Le lecteur doit pouvoir expliquer pourquoi deux occurrences d’un même token partagent un embedding initial mais peuvent avoir des représentations contextualisées différentes, et relier cette différence au traitement par les couches du Transformer."
 suggested_route:
   previous: "fr/positional-encoding"
   next: "fr/queries-keys-values"
