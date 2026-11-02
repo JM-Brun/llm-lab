@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/queries-keys-values"
-scope: "Queries, keys, and values (Q, K, V)"
-purpose: "Explain Queries, keys, and values (Q, K, V); describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Defines the projections that produce queries, keys, and values from input representations, and their distinct roles in attention; leaves dot-product scoring, masking, and normalization to the scaled dot-product attention page."
+purpose: "Readers should be able to distinguish Q, K, and V, identify the learned projections that produce them, and explain how they contribute respectively to attention-weight calculation and information aggregation."
 suggested_route:
   previous: "en/contextualized-representations"
   next: "en/scaled-dot-product-attention"
