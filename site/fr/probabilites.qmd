@@ -15,7 +15,7 @@ suggested_route:
   next: "fr/training-examples"
 hierarchy:
   parents: ["fr/logits"]
-  children: []
+  children: ["fr/vraisemblance"]
 related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:probabilites", "level:core", "language:fr", "status:published"]
 -->
