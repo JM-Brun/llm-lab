@@ -1,8 +1,24 @@
 ---
 title: "Cross-entropy: the token-prediction objective"
 subtitle: "From logits to loss, with explicit masks and reduction"
+keywords: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/cross-entropy"
+scope: "Cross-entropy: the token-prediction objective"
+purpose: "Explain "Cross-entropy: the token-prediction objective", its role in an LLM, and its upstream and downstream conceptual connections."
+suggested_route:
+  previous: "en/entropy"
+  next: "en/loss"
+hierarchy:
+  parents: ["en/likelihood", "en/entropy"]
+  children: ["en/loss"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 For a one-hot target, cross-entropy at one position is the negative log-probability of the observed token. During autoregressive training, this quantity is computed for allowed target positions and then aggregated using a convention that must be stated explicitly.
