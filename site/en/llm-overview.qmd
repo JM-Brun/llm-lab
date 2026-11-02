@@ -1,6 +1,6 @@
 ---
 title: "Panorama: what is an LLM?"
-subtitle: "Place language models, their architectures, and their lifecycle before studying the mechanisms"
+subtitle: "Distinguish architecture, learning, adaptation and inference before studying the mechanisms"
 keywords: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 lang: en
 ---
@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-overview"
-scope: "Places LLMs within AI and NLP, distinguishes major architecture families, and outlines the pretraining–adaptation–inference lifecycle; it does not unpack Transformer computations or the mathematics of learning objectives."
+scope: "Places LLMs within AI and NLP, distinguishes major architecture families, and outlines the path from pretraining to use, distinguishing architecture, learning/adaptation, and inference; it does not unpack Transformer computations or the mathematics of learning objectives."
 purpose: "By the end of this page, readers should be able to define an LLM without conflating it with an architecture, place the major model families, distinguish pretraining, adaptation, and inference, and choose which learning-path branch to explore next."
 suggested_route:
   previous: "en/index"
@@ -25,7 +25,7 @@ A **large language model (LLM)** is a neural model trained on large amounts of t
 :::
 
 ::: {.callout-tip title="How to use this overview"}
-This page first answers three questions: **what are we talking about, which broad model families should we distinguish, and how does a model move from training to use?** It provides orientation without unpacking every operation.
+This page first answers three questions: **what are we talking about, which broad model families should we distinguish, and how do architecture, learning/adaptation, and use differ?** It provides orientation without unpacking every operation.
 
 - To follow how a GPT works, continue to [GPT and Transformers](transformer.qmd).
 - To inspect how text becomes a numerical input, open [From text to tokens](text-data.qmd). This is a focused deepening branch, not a prerequisite for the whole overview.
@@ -39,6 +39,19 @@ Artificial intelligence (AI) is the broadest field; machine learning (ML) is one
 Natural language processing (NLP) includes very different methods: linguistic rules, statistical models, task-specific systems, neural networks, and reusable pretrained models. Contemporary LLMs are generally trained at scale on text data. They can serve as a base for multiple tasks rather than being built separately for each one. This does not mean earlier approaches have disappeared: a production system may combine rules, specialized models, document retrieval, tools, and an LLM.
 
 There is no universal parameter-count threshold that mechanically turns a model into an “LLM”. Size matters, but the term also relates to data scale, training objective, intended capabilities, and how the model is reused. The term *foundation model* is broader: it describes a model trained on extensive data and reusable as a basis for many applications, not necessarily a language-only model.
+
+
+## Three dimensions that should not be conflated
+
+To describe an LLM, ask three independent questions. They interact, but they refer to different objects and operations.
+
+| Dimension | Question | What it describes | Examples |
+|---|---|---|---|
+| **Architecture** | How does information flow through the model? | The operations and connections that define the computation | Encoder-only, encoder–decoder, decoder-only; other families, such as state-space models, are not conventional Transformers |
+| **Learning and adaptation** | How were the parameters obtained or changed? | Objectives and procedures that learn or adjust parameters; some adaptation methods do not change weights | Pretraining, fine-tuning/SFT, preference optimization; prompting and RAG change context without retraining weights |
+| **Inference and use** | What is done with the model once its parameters are fixed? | Computing an output from an input, possibly inside a system with retrieval or tools | Classification, scoring, autoregressive generation, retrieval-augmented answers |
+
+These dimensions do not form one universal sequence. The same architecture can be trained with different objectives; a trained model can be used directly, prompted, combined with a RAG system, or adapted through parameter updates. Ordinary inference uses the available parameters without changing them.
 
 ## 2. Three major Transformer architecture families
 
@@ -83,7 +96,7 @@ Parameters remain fixed during ordinary inference. The pages on [tokens and repr
 
 ## 3. From pretraining to use
 
-The lifecycle below is a simplified map. It describes the chronological order of operations, not necessarily the pedagogical order in which we study them. Exact stages and objectives vary by model; evaluation occurs at several points, not only at the end. Validation data can guide choices and adjustments. The test set should remain held out until final assessment: repeatedly using it to select a model or tune parameters would bias that assessment.
+The path below, from pretraining to use, is a simplified map. It describes the chronological order of operations, not necessarily the pedagogical order in which we study them. Exact stages and objectives vary by model; evaluation occurs at several points, not only at the end. Validation data can guide choices and adjustments. The test set should remain held out until final assessment: repeatedly using it to select a model or tune parameters would bias that assessment.
 
 ```{mermaid}
 flowchart TB
