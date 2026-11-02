@@ -53,6 +53,22 @@ These fields must not be conflated:
 
 A page can have several parents or children. The learning path is a **graph with suggested routes**, not a mandatory linear sequence. Optional deep dives must not become hidden prerequisites for the core conceptual course.
 
+## 3.1 Specificity: scope versus learning purpose
+
+The two fields answer different editorial questions and should not paraphrase one another:
+
+- **Scope:** what this page owns, including the boundary with adjacent pages. Name the object, process, or level of abstraction covered; state important exclusions when a neighbouring page could plausibly claim the same material.
+- **Purpose:** what the learner should be able to explain, distinguish, trace, calculate, or decide after reading. Prefer observable intellectual outcomes over a description of what the page contains.
+
+| Field | Insufficient | Specific and useful |
+|---|---|---|
+| `scope` | `"What is a Transformer?"` | `"Traces an autoregressive GPT computation through its network to the logits; excludes the black-box decoding loop and parameter training."` |
+| `purpose` | `"Explain the Transformer and its role in an LLM."` | `"Readers should be able to trace a token context to the logits and distinguish initial embeddings from contextualized representations."` |
+| `scope` | `"Text and tokens."` | `"Covers text as model input, Unicode representation, and tokenization as distinct preprocessing stages; excludes vector representations produced after tokenization."` |
+| `purpose` | `"Introduce text data."` | `"Readers should be able to explain why visible characters, Unicode code points, token IDs, and embedding vectors are different representations."` |
+
+A useful scope can mention an adjacent topic, but only to establish a boundary. A useful purpose is learner-centred and testable by asking the learner to perform the stated action. Do not turn every purpose into a long list: one or two tightly related outcomes are usually enough.
+
 ## 4. Tag vocabulary
 
 Use these dimensions consistently:
