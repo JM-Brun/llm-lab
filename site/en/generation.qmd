@@ -1,8 +1,24 @@
 ---
 title: "Generating text: inference step by step"
 subtitle: "How a trained LLM produces one token after another"
+keywords: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:planned"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/generation"
+scope: "Generating text: inference step by step"
+purpose: "Introduce autoregressive generation with fixed parameters before the Transformer internals and the learning loop."
+suggested_route:
+  previous: "en/transformer"
+  next: "en/text-data"
+hierarchy:
+  parents: ["en/llm-overview"]
+  children: ["en/logits", "en/probabilities"]
+related: ["en/build-path", "en/training-examples"]
+tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:planned"]
+-->
 
 ::: {.chapter-lead}
 **Generating text**, for an already trained LLM, means repeating one loop: represent the current context, estimate the distribution of the next token, select one, append it to the context, and start over. Throughout the loop, **the model's parameters stay fixed**: this is **inference** (or generation), to be distinguished from learning, which updates those parameters.
