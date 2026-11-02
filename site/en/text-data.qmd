@@ -11,7 +11,7 @@ id: "en/text-data"
 scope: "From raw text to textual data supplied to a model."
 purpose: "Define textual input and distinguish inference context from a training corpus."
 suggested_route:
-  previous: "en/transformer"
+  previous: "en/generation"
   next: "en/unicode-text"
 hierarchy:
   parents: ["en/transformer"]
