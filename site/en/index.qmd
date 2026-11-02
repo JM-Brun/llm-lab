@@ -31,37 +31,32 @@ Large language models (LLMs) are a family of neural models trained on large amou
 **LLM Lab connects these mechanisms to their mathematical explanations and observable behaviour.** The goal is not to trust an intuition because a diagram looks convincing: it is to understand what a component computes, verify what can be tested, and identify what remains an assumption or limitation.
 
 <div class="hero-actions">
-[Explore the LLM panorama](llm-overview.qmd){.btn .btn-primary}
-[Build a small GPT](build-path.qmd){.btn .btn-outline-primary}
-[Deepen your understanding (optional)](tensors.qmd){.btn .btn-outline-primary}
-[Practice and experiment](exercises.qmd){.btn .btn-outline-primary}
+[Start the guided route: understand what an LLM is](llm-overview.qmd){.btn .btn-primary}
+[See the GPT build project](build-path.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
-## Three Learning Routes
+## One recommended route, with optional detours
 
-::: {.learning-grid}
-::: {.learning-card}
-<p class="eyebrow">ROUTE 1 · GUIDED BUILD</p>
-### Build a Small GPT
-A step-by-step roadmap to implement and understand a decoder-only model from scratch.
-[Follow the build](build-path.qmd){.card-link}
-:::
+For a first reading, follow this order. It builds a cumulative explanation: from the role of an LLM to the computations that make generation possible, then to how its parameters are learned.
 
-::: {.learning-card}
-<p class="eyebrow">ROUTE 2 · CONCEPTS & WORKBENCHES</p>
-### Concepts & Micro-workbenches
-Self-contained lessons with executable numerical code snippets for each mechanism.
-[Explore concepts](llm-overview.qmd){.card-link}
-:::
+1. **Place the system** — [LLM panorama](llm-overview.qmd): distinguish a model, its architecture, learning, and inference.
+2. **See the overall computation** — [GPT and Transformers](transformer.qmd): trace a context through the network to next-token scores.
+3. **Understand the input** — [From text to tokens](text-data.qmd): explain how a character string becomes a sequence of IDs and vectors.
+4. **Open the computational model** — attention, contextualized representations, and causal masking: understand how information flows.
+5. **Understand output and learning** — logits, probabilities, likelihood, loss, and gradients: distinguish prediction, error measurement, and parameter updates.
+6. **Verify through practice** — [exercises](exercises.qmd) and [experimental evaluation](experimental-evaluation.qmd): confront explanations with calculations and protocols.
 
-::: {.learning-card}
-<p class="eyebrow">ROUTE 3 · RIGOR & CRITIQUE</p>
-### Foundations & Limits
-Representation geometry, embedding linearity, cosine similarity, and evaluation caveats.
-[Examine foundations](mathematical-foundations.qmd){.card-link}
-:::
-:::
+You can stop after the first two stages and already have a system-level map. Technical pages deepen a specific question; they are not all mandatory linear prerequisites. The [guided build path](build-path.qmd), by contrast, follows the dependencies needed to implement a model, so its practical order is not identical to the conceptual discovery order.
+
+### Choose a destination
+
+- **Understand** — follow the conceptual explanations and recommended route above.
+- **Build** — implement a small GPT step by step with the [guided path](build-path.qmd).
+- **Deepen** — consult advanced derivations and analyses, such as [tensors](tensors.qmd); no general mathematics course is required at the entry point.
+- **Practice and experiment** — test mechanisms with [exercises](exercises.qmd), the [GPT-2 explorer](transformer-explainer.qmd), and [experimental evaluation](experimental-evaluation.qmd).
+
+These four destinations describe what the reader comes to do. The three learning depths — **panorama**, **guided build**, and **deep dives** — describe level of detail. Practice cuts across all three; these are not competing classifications.
 
 ## Transparent Reading System: Intuition, Code, and Epistemic Status
 
