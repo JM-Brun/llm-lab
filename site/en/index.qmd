@@ -8,14 +8,14 @@ toc: false
 :::: {.hero-intro}
 <p class="eyebrow">OBSERVE · EXPLAIN · VERIFY</p>
 
-## How does a language model produce the next token?
+## What is an LLM, and how does it produce text?
 
-An autoregressive language model receives a sequence of tokens and computes a probability distribution over the next token. This apparently simple operation relies on data, numerical representations, attention mechanisms, and a learning objective.
+Large language models (LLMs) are a family of neural models trained on large amounts of text. Many current models use an autoregressive Transformer that predicts the next token, but LLMs are not limited to one architecture or to this single objective.
 
 **LLM Lab connects these mechanisms to their mathematical explanations and observable behaviour.** The goal is not to trust an intuition because a diagram looks convincing: it is to understand what a component computes, verify what can be tested, and identify what remains an assumption or limitation.
 
 <div class="hero-actions">
-[Explore the GPT / Transformer overview](transformer.qmd){.btn .btn-primary}
+[Explore the LLM panorama](llm-overview.qmd){.btn .btn-primary}
 [Build a small GPT](build-path.qmd){.btn .btn-outline-primary}
 [Deepen your understanding (optional)](tensors.qmd){.btn .btn-outline-primary}
 [Practice and experiment](exercises.qmd){.btn .btn-outline-primary}
