@@ -15,7 +15,7 @@ suggested_route:
   next: "en/exercises"
 hierarchy:
   parents: ["en/llm-overview", "en/gradients"]
-  children: ["en/exercises", "en/evaluation-experimentale"]
+  children: ["en/exercises", "en/experimental-evaluation"]
 related: []
 tags: ["type:guided-build", "destination:build", "topic:build-path", "level:applied", "language:en", "status:published"]
 -->
