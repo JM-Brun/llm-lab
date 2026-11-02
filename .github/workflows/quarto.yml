@@ -31,6 +31,9 @@ jobs:
           version: "0.12.15"
           python-version: "3.12"
 
+      - name: Validate page metadata learning graph
+        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python scripts/check_page_metadata.py
+
       - name: Generate bilingual history timeline fragments
         run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python scripts/render_history_pilot.py
 
