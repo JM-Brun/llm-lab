@@ -9,6 +9,10 @@ This path connects conceptual explanations to the gradual construction of a smal
 :::
 
 ::: {.callout-note}
+**New to LLMs?** Start with the [LLM panorama](llm-overview.qmd) to distinguish model families and their lifecycle. This practical path then focuses on a decoder-only GPT.
+:::
+
+::: {.callout-note}
 **Project status.** The route and conceptual pages are available, but the repository does not yet contain a complete, tested GPT implementation or a reproducible end-to-end training run. The milestones below distinguish existing knowledge from practical work that remains to be built.
 :::
 
