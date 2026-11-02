@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/evaluation-experimentale"
-scope: "Évaluer un modèle : du score au protocole expérimental"
-purpose: "Expliquer la notion « Évaluer un modèle : du score au protocole expérimental », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Définit un exercice de transfert sur l’évaluation expérimentale d’un système de classement de passages scientifiques : estimande cible, dépendances et groupes, sélection sans fuite, average precision, calibration, incertitude et reproductibilité. Il s’agit de concevoir un protocole, pas d’implémenter un modèle ni de rapporter un benchmark."
+purpose: "Concevoir un protocole d’évaluation cohérent avec une cible de déploiement, repérer les risques de fuite et de biais de sélection, interpréter l’average precision et ses limites, puis justifier une méthode d’incertitude respectant la structure d’échantillonnage."
 suggested_route:
   previous: "fr/exercises"
   next: null
