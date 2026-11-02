@@ -32,37 +32,32 @@ Les grands modèles de langage (LLM) sont une famille de modèles neuronaux entr
 **LLM Lab relie ces mécanismes à leurs explications mathématiques et à leur comportement observable.** Le but n’est pas de croire une intuition parce qu’un schéma paraît convaincant : c’est de comprendre ce qu’un composant calcule, de vérifier ce qu’on peut tester et d’identifier ce qui reste une hypothèse ou une limite.
 
 <div class="hero-actions">
-[Découvrir le panorama des LLM](fr/llm-overview.qmd){.btn .btn-primary}
-[Construire un petit GPT](fr/build-path.qmd){.btn .btn-outline-primary}
-[Approfondir les notions (facultatif)](fr/tensors.qmd){.btn .btn-outline-primary}
-[S’exercer et expérimenter](fr/exercises.qmd){.btn .btn-outline-primary}
+[Commencer le parcours guidé : comprendre ce qu’est un LLM](fr/llm-overview.qmd){.btn .btn-primary}
+[Voir le projet de construction d’un GPT](fr/build-path.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
-## Trois parcours d'apprentissage
+## Un parcours conseillé, avec des détours facultatifs
 
-::: {.learning-grid}
-::: {.learning-card}
-<p class="eyebrow">PARCOURS 1 · GUIDÉ</p>
-### Construire un petit GPT
-Un fil conducteur pas à pas pour implémenter et comprendre un décodeur de A à Z.
-[Suivre le parcours](fr/build-path.qmd){.card-link}
-:::
+Pour une première lecture, suivez cet ordre. Il construit une explication cumulative : du rôle d’un LLM jusqu’aux calculs qui rendent la génération possible, puis à l’apprentissage de ses paramètres.
 
-::: {.learning-card}
-<p class="eyebrow">PARCOURS 2 · NOTIONS & MÉCANISMES</p>
-### Notions & Micro-ateliers
-Des fiches autonomes avec micro-ateliers numériques exécutables pour chaque mécanisme.
-[Explorer les notions](fr/llm-overview.qmd){.card-link}
-:::
+1. **Situer le système** — [Panorama des LLM](fr/llm-overview.qmd) : distinguer modèle, architecture, apprentissage et inférence.
+2. **Voir le calcul d’ensemble** — [GPT et Transformer](fr/transformer.qmd) : suivre un contexte à travers le réseau jusqu’aux scores du prochain token.
+3. **Comprendre l’entrée** — [Du texte aux tokens](fr/text-data.qmd) : expliquer comment une chaîne de caractères devient une séquence d’identifiants et de vecteurs.
+4. **Ouvrir la boîte de calcul** — attention, représentations contextualisées et masquage causal : comprendre comment l’information circule.
+5. **Comprendre la sortie et l’apprentissage** — logits, probabilités, vraisemblance, fonction de perte et gradients : distinguer prédire, mesurer l’erreur et modifier les paramètres.
+6. **Vérifier par la pratique** — [exercices](fr/exercises.qmd) et [évaluation expérimentale](fr/evaluation-experimentale.qmd) : confronter les explications à des calculs et à des protocoles.
 
-::: {.learning-card}
-<p class="eyebrow">PARCOURS 3 · RIGUEUR & CRITIQUE</p>
-### Fondations & limites
-Géométrie des représentations, hypothèse de linéarité et protocoles expérimentaux.
-[Examiner les fondations](fr/mathematical-foundations.qmd){.card-link}
-:::
-:::
+Vous pouvez vous arrêter après les deux premières étapes et avoir déjà une carte du système. Les pages techniques approfondissent une question précise ; elles ne sont pas toutes des prérequis linéaires. Le [parcours de construction](fr/build-path.qmd) suit, lui, les dépendances nécessaires pour implémenter un modèle : son ordre pratique n’est pas exactement celui de la découverte conceptuelle.
+
+### Choisir une destination
+
+- **Comprendre** — suivre les explications conceptuelles et le fil recommandé ci-dessus.
+- **Construire** — implémenter progressivement un petit GPT avec le [parcours guidé](fr/build-path.qmd).
+- **Approfondir** — consulter les dérivations et analyses avancées, par exemple les [tenseurs](fr/tensors.qmd) ; aucun cours mathématique général n’est exigé à l’entrée.
+- **S’exercer et expérimenter** — tester les mécanismes avec les [exercices](fr/exercises.qmd), l’[explorateur GPT-2](fr/transformer-explainer.qmd) et l’[évaluation expérimentale](fr/evaluation-experimentale.qmd).
+
+Ces quatre destinations décrivent l’activité du lecteur. Les trois profondeurs — **panorama**, **construction guidée**, **approfondissements** — décrivent le niveau de détail. La pratique traverse ces trois profondeurs ; ce ne sont pas deux classifications concurrentes.
 
 ## Grille de lecture : distinguer intuition, code et statut
 

@@ -138,6 +138,12 @@ You do not need to consume every resource. Choose one that answers your current 
 - [DeepLearning.AI — *How Transformer LLMs Work*](https://www.deeplearning.ai/courses/how-transformer-llms-work): a compact video course by Jay Alammar and Maarten Grootendorst, including tokenization, embeddings, attention, modern block components, and selected efficiency variants. Course access and terms may change.
 
 These sources have different jobs: visual resources build intuition, the primary paper records the original formulation, annotated code exposes implementation choices, and API documentation specifies one library contract. They are complementary, not interchangeable. Where an explanation simplifies or an implementation makes a convention-specific choice, check the assumptions and scope before generalizing it.
+## Checkpoint: reconstruct the computation
+
+You have completed this stage when you can trace token IDs into representations, explain how attention and the MLP transform them, distinguish logits from generated text, and describe the loop: forward pass → token selection → append to context → next forward pass.
+
+**Recommended next step:** [From text to tokens](text-data.qmd) explains how the input is constructed. If you already understand that, move to the representation and attention lessons linked above. The [generation lesson](generation.qmd) deepens the selection rules and their effects.
+
 :::: {.language-switch}
 **Language:** [Français](../fr/transformer.qmd) · [English](transformer.qmd)
 ::::
