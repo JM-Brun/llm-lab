@@ -1,8 +1,24 @@
 ---
 title: "La similarité cosinus mesure-t-elle la similarité sémantique ?"
 subtitle: "Géométrie, anisotropie, classement des voisins et choix de métrique"
+keywords: ["type:deep-dive", "destination:deepen", "topic:cosine-similarity", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/cosine-similarity"
+scope: "La similarité cosinus mesure-t-elle la similarité sémantique ?"
+purpose: "Expliquer la notion « La similarité cosinus mesure-t-elle la similarité sémantique ? », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/tensors"
+  next: "fr/linearite-embeddings"
+hierarchy:
+  parents: ["fr/embedding-space"]
+  children: []
+related: []
+tags: ["type:deep-dive", "destination:deepen", "topic:cosine-similarity", "level:advanced", "language:fr", "status:published"]
+-->
 
 Ce sujet s’inscrit dans le parcours [Géométrie et interprétabilité des représentations](embedding-space.qmd). Commencez par [l’espace des embeddings](embedding-space.qmd) pour distinguer les types de représentations, puis poursuivez avec l’[hypothèse de linéarité](linearite-embeddings.qmd), qui porte sur une autre question : comment les caractéristiques sont-elles représentées et décodables ?
 
