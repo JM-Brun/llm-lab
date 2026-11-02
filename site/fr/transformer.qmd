@@ -1,8 +1,24 @@
 ---
 title: "GPT et Transformer : architecture et flux des données"
 subtitle: "Des tokens aux probabilités du prochain token"
+keywords: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/transformer"
+scope: "GPT et Transformer : architecture et flux des données"
+purpose: "Expliquer la notion « GPT et Transformer : architecture et flux des données », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/llm-overview"
+  next: "fr/text-data"
+hierarchy:
+  parents: ["fr/llm-overview"]
+  children: ["fr/text-data", "fr/embedding-space", "fr/positional-encoding", "fr/contextualized-representations", "fr/queries-keys-values", "fr/logits", "fr/tensors"]
+related: []
+tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Un **GPT** est un modèle de langage fondé sur un Transformer autorégressif : à partir d'un contexte de tokens, il estime une distribution sur le token suivant. Pour comprendre le système, il faut distinguer le flux des données, les paramètres appris et la boucle de génération. Cette page donne la vue d'ensemble ; les pages liées détaillent chaque opération.
