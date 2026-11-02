@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/scaled-dot-product-attention"
 scope: "Scaled dot-product attention"
-purpose: "Explain "Scaled dot-product attention", its role in an LLM, and its upstream and downstream conceptual connections."
+purpose: Explain Scaled dot-product attention; describe its role in an LLM and connect it to upstream and downstream concepts.
 suggested_route:
   previous: "en/queries-keys-values"
   next: "en/causal-masking"
