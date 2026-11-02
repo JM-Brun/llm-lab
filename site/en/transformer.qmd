@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer"
 scope: "GPT and Transformers: architecture and data flow"
-purpose: "Explain "GPT and Transformers: architecture and data flow", its role in an LLM, and its upstream and downstream conceptual connections."
+purpose: Explain GPT and Transformers: architecture and data flow; describe its role in an LLM and connect it to upstream and downstream concepts.
 suggested_route:
   previous: "en/llm-overview"
   next: "en/text-data"
