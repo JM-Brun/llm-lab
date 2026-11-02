@@ -32,7 +32,7 @@ This page is the entry point for extended exercises. Short self-checks with coll
 
 ### Mathematical foundations {#foundations}
 
-**Prerequisites:** [mathematical foundations](mathematical-foundations.qmd), [tensors](../fr/tensors.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd), [entropy](entropy.qmd), [cross-entropy](cross-entropy.qmd), [likelihood](likelihood.qmd), [gradients](gradients.qmd).
+**Prerequisites:** [mathematical foundations](mathematical-foundations.qmd), [tensors](tensors.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd), [entropy](entropy.qmd), [cross-entropy](cross-entropy.qmd), [likelihood](likelihood.qmd), [gradients](gradients.qmd).
 
 **Further work:** hand calculations, counterexample analysis, tensor shapes, and numerical checks. The embedded self-checks do not replace a progressive exercise collection.
 
@@ -44,13 +44,13 @@ This page is the entry point for extended exercises. Short self-checks with coll
 
 ### Attention {#attention}
 
-**Prerequisites:** [Q/K/V](queries-keys-values.qmd), [scaled dot-product attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd), [tensors](../fr/tensors.qmd).
+**Prerequisites:** [Q/K/V](queries-keys-values.qmd), [scaled dot-product attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd), [tensors](tensors.qmd).
 
 **Planned focus:** score and weight calculations, shape checks, cautious interpretation of attention weights and causal-invariance reasoning.
 
 ### Transformer {#transformer}
 
-**Prerequisites:** [Transformer overview](transformer.qmd), [embedding space](../fr/embedding-space.qmd), [position and RoPE](../fr/positional-encoding.qmd).
+**Prerequisites:** [Transformer overview](transformer.qmd), [embedding space](embedding-space.qmd), [position and RoPE](positional-encoding.qmd).
 
 **Planned focus:** trace representations through a block, compare attention and MLP roles, and distinguish architecture families.
 
