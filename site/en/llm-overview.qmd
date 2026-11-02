@@ -57,7 +57,7 @@ Parameters remain fixed during ordinary inference. The pages on [tokens and repr
 
 **Why study training afterwards?** Inference explains how the model uses its parameters; training explains how those parameters are adjusted to produce useful behaviour. A randomly initialized model can execute the loop, but it generally does not generate coherent text.
 
-## 4. From pretraining to use
+## 3. From pretraining to use
 
 The lifecycle below is a simplified map. It describes the chronological order of operations, not necessarily the pedagogical order in which we study them. Exact stages and objectives vary by model; evaluation occurs at several points, not only at the end. Validation data can guide choices and adjustments. The test set should remain held out until final assessment: repeatedly using it to select a model or tune parameters would bias that assessment.
 
