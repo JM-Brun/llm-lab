@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer-history"
 scope: "A history of Transformers"
-purpose: "Explain "A history of Transformers", its role in an LLM, and its upstream and downstream conceptual connections."
+purpose: Explain A history of Transformers; describe its role in an LLM and connect it to upstream and downstream concepts.
 suggested_route:
   previous: "en/glossary"
   next: null
