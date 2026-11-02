@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/exercises"
-scope: "Exercise space"
-purpose: "Explain Exercise space; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Acts as the registry and navigation hub for extended exercises and transfer practice, distinct from short self-checks embedded in lesson pages. It states prerequisites, planned collections, and their development status; it is not itself a lesson or evidence that every listed collection is complete."
+purpose: "Choose an appropriate exercise collection, identify its prerequisites and current maturity, and use worked answers and transfer questions to test reasoning rather than answer recall."
 suggested_route:
   previous: "en/build-path"
   next: "en/experimental-evaluation"
