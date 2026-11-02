@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/mathematical-foundations"
-scope: "La chaîne mathématique de l’entraînement d’un LLM"
-purpose: "Expliquer la notion « La chaîne mathématique de l’entraînement d’un LLM », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Fournit une carte mathématique synthétique reliant logits, probabilités par softmax, vraisemblance des tokens observés, cross-entropie, loss agrégée et gradients, avec une notation commune et les principales précautions d’interprétation. Elle oriente vers les pages canoniques sans constituer un cours de prérequis ni remplacer leurs démonstrations détaillées."
+purpose: "Suivre les grandeurs mathématiques des scores du modèle jusqu’aux gradients des paramètres, interpréter la notation et les équations communes, et expliquer pourquoi vraisemblance, entropie, cross-entropie, loss et gradients sont liés sans être interchangeables."
 suggested_route:
   previous: null
   next: "fr/tensors"
