@@ -20,7 +20,7 @@ Paths are the canonical source files. French and English counterparts are listed
 
 | Existing page pair (FR / EN) | Primary destination | Editorial role and boundary | Recommended treatment |
 |---|---|---|---|
-| `llm-overview.qmd` / `en/llm-overview.qmd` | Understand | First system-level orientation: distinguish NLP/LLMs, architecture families, pretraining, adaptation, inference, evaluation and limits | Keep concise and link to the canonical GPT/Transformer and guided-build pages; do not duplicate their mechanisms |
+| `llm-overview.qmd` / `en/llm-overview.qmd` | Understand | First system-level orientation: distinguish NLP/LLMs and architecture families; preview inference and the model lifecycle before unpacking pretraining, adaptation, evaluation and limits | Keep concise and link to the canonical GPT/Transformer and guided-build pages; do not duplicate their mechanisms |
 | `index.qmd` / `en/index.qmd` | Entry point | Help readers choose a route; explain the project's scope and current status | Present the four destinations clearly; avoid implying that math/tensor mastery precedes building |
 | `transformer.qmd` / `transformer.qmd` | Understand | System-level GPT/Transformer explanation | Keep concise and system-oriented; link to build milestones and optional details |
 | `transformer-history.qmd` / `transformer-history.qmd` | Reference (optional historical context) | Historical context, research lineages and milestone provenance | Move out of Understand; keep discoverable as an optional reference, not a prerequisite |
