@@ -104,6 +104,16 @@ Le parcours est le suivant :
 
 Pour retrouver l'exemple complet de lookup, les dimensions matricielles, le nombre de paramètres et la géométrie des représentations, retournez à [la page principale sur l'espace des embeddings](embedding-space.qmd). Pour approfondir le traitement de la séquence, poursuivez avec [Requêtes, clés et valeurs](queries-keys-values.qmd) puis [Attention à produit scalaire redimensionné](scaled-dot-product-attention.qmd).
 
+## Vérifier votre compréhension
+
+Deux occurrences du **même ID de token** apparaissent dans deux phrases différentes. Sans changement de matrice d'embeddings :
+
+1. Les vecteurs obtenus par lookup sont-ils identiques ?
+2. Les états cachés après les couches du Transformer doivent-ils être identiques ? Pourquoi ?
+3. À quelle étape l'information du contexte intervient-elle ?
+
+Vous avez compris cette étape si vous pouvez expliquer la différence entre **identité du vecteur initial** et **dépendance contextuelle des états cachés**, sans attribuer au lookup lui-même une compréhension de la phrase.
+
 ::: {.language-switch}
 **Langue :** [Français](contextualized-representations.qmd) · [English](../en/contextualized-representations.qmd)
 :::
