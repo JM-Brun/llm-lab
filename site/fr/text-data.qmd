@@ -15,7 +15,7 @@ suggested_route:
   next: "fr/unicode-text"
 hierarchy:
   parents: ["fr/transformer"]
-  children: ["fr/unicode-text", "fr/tokenization-strategies", "fr/training-examples"]
+  children: ["fr/unicode-text", "fr/tokenization-strategies", "fr/embedding-space", "fr/training-examples"]
 related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:fr", "status:published"]
 -->
