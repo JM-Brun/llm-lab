@@ -1,8 +1,24 @@
 ---
 title: "Masque causal"
 subtitle: "Empêcher l'accès aux tokens futurs dans un modèle autorégressif"
+keywords: ["type:concept-lesson", "destination:understand", "topic:causal-masking", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/causal-masking"
+scope: "Masque causal"
+purpose: "Expliquer la notion « Masque causal », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/scaled-dot-product-attention"
+  next: "fr/logits"
+hierarchy:
+  parents: ["fr/scaled-dot-product-attention"]
+  children: ["fr/logits"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:causal-masking", "level:core", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Pour prédire le token suivant à la position $t+1$, le modèle ne doit utiliser que les tokens déjà disponibles. Le masque causal impose cette règle dans le calcul de l'attention : ce n'est pas seulement un repère graphique.
