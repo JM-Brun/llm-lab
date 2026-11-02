@@ -246,3 +246,94 @@ Use this workflow for both new material and revisions:
 - Adding pages and code solely to make progress appear larger.
 
 The target experience is simple: **understand the whole at a useful level first; follow a link when a question becomes relevant; return to the whole with a better mental model.**
+
+
+## 9. Operationalize learning science without turning lessons into templates
+
+The editorial method should support durable understanding and transfer, not only clear first reading. Use the following evidence-informed strategies where they serve the learning objective. They are design options, not a mandatory checklist for every page; their effects depend on prior knowledge, task complexity, timing, and learner context.
+
+### 9.1 Define observable learning outcomes
+
+State what a learner should be able to do after the activity. Prefer verbs that produce inspectable evidence:
+
+- **Recognize:** identify a component, quantity, convention, or failure mode.
+- **Explain:** describe a mechanism and why it is used.
+- **Predict:** anticipate the effect of changing an input, parameter, or assumption.
+- **Calculate:** derive or compute a result from stated inputs.
+- **Implement and verify:** translate a formulation into code and test a stated property.
+- **Diagnose:** locate an error in reasoning, notation, code, or experimental design.
+- **Transfer and critique:** apply the concept in a new setting and state where the analogy or method stops working.
+
+Do not equate these levels with a universal ranking of difficulty. A learner may explain a concept well but make an arithmetic error; an exercise should make clear which capability it assesses.
+
+### 9.2 Move from worked examples to independent reasoning
+
+For a new or mathematically demanding procedure, consider a progression:
+
+1. A fully worked example with every important step and assumption visible.
+2. A completion problem in which the learner supplies one or more missing steps.
+3. An independent problem with different values or a changed condition.
+4. A transfer or counterexample task that tests whether the learner understands the underlying rule rather than memorizing the example.
+
+Use this progression when it reduces unnecessary search during initial learning. Do not keep learners on worked examples after they can already solve the target task independently. For an established concept, begin with retrieval or diagnosis instead.
+
+### 9.3 Prefer retrieval and explanation over repeated passive rereading
+
+Use short, low-stakes prompts that require learners to reconstruct an idea before seeing the answer: explain a mechanism from memory, reproduce a key equation and define its symbols, predict a tensor shape, or identify which assumption makes a claim valid.
+
+- Ask for a reason or intermediate step when the objective is conceptual understanding.
+- Give feedback that explains the correct reasoning and diagnoses common alternatives; a score or “correct/incorrect” marker alone is insufficient for difficult concepts.
+- Let learners attempt an answer before revealing a worked solution. Do not hide essential caveats in the answer key.
+- Revisit important ideas after a delay and mix earlier topics into later practice when the learner has enough initial fluency to make comparisons useful.
+- Use confidence judgements selectively to help learners notice when fluency is mistaken for understanding; do not treat self-reported confidence as evidence of competence.
+
+Retrieval practice, spaced practice, elaboration, concrete examples, and interleaving have substantial research support, but no single schedule or exercise format is optimal for every topic. Avoid prescribing exact spacing intervals without a defined retention goal and learner context.
+
+### 9.4 Make mathematical understanding observable
+
+For mathematical and computational topics, exercises should distinguish at least the relevant parts of the following:
+
+- **Representation:** identify variables, dimensions, axes, units, domains, and conventions.
+- **Procedure:** perform the algebraic or numerical operation correctly.
+- **Interpretation:** explain what the result means in the LLM computation.
+- **Conditions:** state assumptions and conditions under which the result holds.
+- **Boundary:** provide a counterexample, limiting case, or failure condition.
+- **Verification:** select an appropriate check and explain what it establishes—and what it does not establish.
+
+A numerical check can catch an arithmetic or implementation error; it does not replace a derivation. A unit test establishes behavior for the cases and properties it covers; it does not prove a general theorem. A visual pattern does not establish causality. Preserve these distinctions in exercise instructions and feedback.
+
+### 9.5 Specify an exercise before authoring it
+
+For each substantial exercise, record the fields that are relevant:
+
+- stable exercise ID shared by the French and English versions;
+- learning outcome and target capability;
+- essential prerequisites, with a reason for each;
+- prompt, expected response format, and available tools;
+- hints that reveal progressively more information;
+- worked solution, including intermediate reasoning and assumptions;
+- likely misconceptions and why tempting alternatives fail;
+- assessment criteria or rubric, including numerical tolerance where appropriate;
+- a changed-condition or transfer variant when it adds value;
+- references or implementation/tests needed to verify the answer.
+
+Do not add all fields mechanically to a one-line recall check. Keep the learner-facing activity concise while retaining enough information for another reviewer to validate its correctness.
+
+### 9.6 Evaluate learning claims separately from content quality
+
+Distinguish these evidence levels:
+
+1. **Content review:** the explanation is scientifically and pedagogically coherent.
+2. **Exercise validation:** prompts, solutions, distractors, and expected outputs have been checked.
+3. **Immediate performance:** a learner can answer directly after instruction.
+4. **Retention:** the learner can retrieve or apply the idea after a meaningful delay.
+5. **Transfer:** the learner can use the concept in a materially different problem.
+6. **Instructional effectiveness:** comparative evidence supports the claim that a teaching design improves outcomes for a defined population and context.
+
+A published page, completed exercise, immediate quiz score, or positive impression does not establish durable mastery or instructional effectiveness. Do not claim that a strategy works for all learners based on general literature; state the scope of evidence and keep learner data collection proportionate, transparent, and privacy-conscious.
+
+### Research grounding
+
+- Weinstein, Y., Madan, C. R., & Sumeracki, M. A. (2018). [Teaching the science of learning](https://doi.org/10.1186/s41235-017-0087-y). *Cognitive Research: Principles and Implications*, 3, 2. A tutorial review of spaced practice, interleaving, retrieval practice, elaboration, concrete examples, and dual coding.
+- Roediger, H. L., & Karpicke, J. D. (2006). [The Power of Testing Memory: Basic Research and Implications for Educational Practice](https://doi.org/10.1111/j.1745-6916.2006.00012.x). *Perspectives on Psychological Science*, 1(3), 181–210. Review of retrieval/testing effects and their educational implications.
+- Dunlosky, J., et al. (2013). [Improving Students' Learning With Effective Learning Techniques](https://doi.org/10.1111/j.1539-6053.2013.01002.x). *Psychological Science in the Public Interest*, 14(1), 4–58. Comparative review of learning techniques and the conditions that affect their utility.
