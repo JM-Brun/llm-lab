@@ -1,8 +1,24 @@
 ---
 title: "Loss: from per-token penalty to training objective"
 subtitle: "Reduction, target masking, and interpreting a curve"
+keywords: ["type:concept-lesson", "destination:understand", "topic:loss", "level:core", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/loss"
+scope: "Loss: from per-token penalty to training objective"
+purpose: "Explain "Loss: from per-token penalty to training objective", its role in an LLM, and its upstream and downstream conceptual connections."
+suggested_route:
+  previous: "en/cross-entropy"
+  next: "en/gradients"
+hierarchy:
+  parents: ["en/cross-entropy"]
+  children: ["en/gradients"]
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:loss", "level:core", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 *Loss* refers to a scalar objective that training seeks to minimize. It is often built from per-token cross-entropies, but its exact aggregation is part of the experiment's definition.
