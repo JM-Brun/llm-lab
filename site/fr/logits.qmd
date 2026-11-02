@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/logits"
-scope: "Logits : les scores avant normalisation"
-purpose: "Expliquer la notion « Logits : les scores avant normalisation », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Définit les logits comme scores non normalisés associés aux tokens du vocabulaire en sortie du modèle, et examine leur échelle, leurs écarts et leurs transformations ; distingue ces scores des probabilités normalisées et des règles de décodage."
+purpose: "Le lecteur doit pouvoir interpréter un vecteur de logits, expliquer pourquoi ses valeurs ne sont pas des probabilités et décrire comment température et softmax transforment les scores avant la sélection d’un token."
 suggested_route:
   previous: "fr/causal-masking"
   next: "fr/probabilites"
