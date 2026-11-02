@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/logits"
 scope: "Logits: scores before normalization"
-purpose: "Explain "Logits: scores before normalization", its role in an LLM, and its upstream and downstream conceptual connections."
+purpose: Explain Logits: scores before normalization; describe its role in an LLM and connect it to upstream and downstream concepts.
 suggested_route:
   previous: "en/causal-masking"
   next: "en/probabilities"
