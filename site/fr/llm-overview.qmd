@@ -1,8 +1,24 @@
 ---
 title: "Panorama : qu’est-ce qu’un LLM ?"
 subtitle: "Situer les modèles de langage, leurs architectures et leur cycle de vie avant d’entrer dans les mécanismes"
+keywords: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 lang: fr
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/llm-overview"
+scope: "Panorama : qu’est-ce qu’un LLM ?"
+purpose: "Expliquer la notion « Panorama : qu’est-ce qu’un LLM ? », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+suggested_route:
+  previous: "fr/index"
+  next: "fr/transformer"
+hierarchy:
+  parents: ["fr/index"]
+  children: ["fr/transformer", "fr/build-path"]
+related: []
+tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
+-->
 
 ::: {.chapter-lead}
 Un **grand modèle de langage** (*Large Language Model*, LLM) est un modèle neuronal entraîné sur de grandes quantités de données textuelles pour traiter ou produire du langage. Le terme décrit une famille de modèles et un régime d’usage ; il ne désigne pas une architecture unique. Cette page donne la carte d’ensemble. Elle ne remplace pas les leçons détaillées sur les tokens, l’attention, la loss ou la génération.
