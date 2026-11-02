@@ -74,7 +74,7 @@ The same model is involved in several processes, but they have different objecti
 
 ## Conceptual route
 
-Start with the [LLM panorama](llm-overview.qmd) to place model families and their lifecycle. Then move to the [GPT / Transformer overview](fr/transformer.qmd), which focuses on the decoder-only model built in this project, and use the guided path to connect mechanisms to implementation milestones. The concept pages explain individual operations; evaluation remains cross-cutting, not simply a final stage of generation.
+Start with the [LLM panorama](llm-overview.qmd) to place model families and their lifecycle. Then move to the [GPT / Transformer overview](transformer.qmd), which focuses on the decoder-only model built in this project, and use the guided path to connect mechanisms to implementation milestones. The concept pages explain individual operations; evaluation remains cross-cutting, not simply a final stage of generation.
 
 The detailed map of the three learning depths and implementation milestones lives in the [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md). Tensor references and advanced mathematical derivations are optional, not prerequisites.
 
