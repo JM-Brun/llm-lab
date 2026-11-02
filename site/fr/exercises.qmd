@@ -14,7 +14,7 @@ suggested_route:
   previous: "fr/build-path"
   next: "fr/evaluation-experimentale"
 hierarchy:
-  parents: ["fr/build-path"]
+  parents: ["fr/llm-overview"]
   children: []
 related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:fr", "status:published"]
