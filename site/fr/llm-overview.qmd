@@ -19,11 +19,10 @@ L’intelligence artificielle (IA) est le domaine le plus large ; l’apprentiss
 ### Trois architectures à comparer
 
 ```{mermaid}
-flowchart TB
+flowchart LR
   E["Encodeur seul<br/>Contexte bidirectionnel<br/>Tokens masqués"]
   ED["Encodeur–décodeur<br/>Entrée encodée + génération conditionnée<br/>Transformation de séquence"]
   D["Décodeur seul<br/>Contexte causal<br/>Prédiction du prochain token"]
-  E --- ED --- D
 ```
 
 Le tableau précise les objectifs et les usages typiques ; le schéma est un repère architectural, pas un classement de qualité.
