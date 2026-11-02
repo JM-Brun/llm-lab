@@ -1,8 +1,24 @@
 ---
 title: "From tokenized corpus to training examples"
 subtitle: "Input-target shifting, windows, documents, padding, and tensor shapes"
+keywords: ["type:concept-bridge", "destination:understand", "topic:training-examples", "level:core", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/training-examples"
+scope: "From tokenized corpus to training examples"
+purpose: "Explain "From tokenized corpus to training examples", its role in an LLM, and its upstream and downstream conceptual connections."
+suggested_route:
+  previous: "en/probabilites"
+  next: "en/vraisemblance"
+hierarchy:
+  parents: ["en/text-data", "en/tokenization-strategies"]
+  children: ["en/vraisemblance"]
+related: []
+tags: ["type:concept-bridge", "destination:understand", "topic:training-examples", "level:core", "language:en", "status:published"]
+-->
 
 ::: {.chapter-lead}
 An autoregressive model learns to predict the next token from the available context. Training turns a token stream into aligned input-target pairs. A one-index error, faulty mask, or unintended document boundary changes the objective being optimized.
