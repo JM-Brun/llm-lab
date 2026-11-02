@@ -12,7 +12,7 @@ scope: "GPT et Transformer : architecture et flux des données"
 purpose: "Expliquer la notion « GPT et Transformer : architecture et flux des données », son rôle dans un LLM et ses liens avec les concepts amont et aval."
 suggested_route:
   previous: "fr/llm-overview"
-  next: "fr/text-data"
+  next: "fr/generation"
 hierarchy:
   parents: ["fr/llm-overview"]
   children: ["fr/text-data", "fr/embedding-space", "fr/positional-encoding", "fr/contextualized-representations", "fr/queries-keys-values", "fr/logits", "fr/tensors"]
