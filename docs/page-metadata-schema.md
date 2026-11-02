@@ -82,4 +82,4 @@ Use these dimensions consistently:
 
 ## 7. Coverage boundary
 
-This baseline covers the pages currently listed for rendering in `site/_quarto.yml` plus the French root landing page. New pages added on separate branches must receive the same metadata before or immediately after they enter the published render list. In particular, an inference/generation page still awaiting integration must be tagged and mapped when that page is merged.
+This baseline covers the pages currently listed for rendering in `site/_quarto.yml` plus the French root landing page. The bilingual inference/generation lesson in PR #229 already carries the same metadata block on its feature branch with `status:planned`; change that tag to `status:published` when it is integrated. New pages added on separate branches must receive the same metadata before or immediately after they enter the published render list.
