@@ -2,7 +2,7 @@
 sidebar: false
 title: "Références et provenance des illustrations"
 subtitle: "Sources externes, attribution et réutilisation responsable"
-keywords: ["type:bibliography", "destination:reference", "topic:references", "level:reference", "language:shared", "status:published"]
+keywords: ["type:bibliography", "destination:reference", "topic:references", "level:reference", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -10,7 +10,7 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "reference/references"
 scope: "Références et provenance des illustrations"
-purpose: "Explain "Références et provenance des illustrations", its role in an LLM, and its upstream and downstream conceptual connections."
+purpose: "Présenter les sources citées et la provenance des illustrations, ainsi que les conditions de réutilisation."
 suggested_route:
   previous: null
   next: null
@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: []
-tags: ["type:bibliography", "destination:reference", "topic:references", "level:reference", "language:shared", "status:published"]
+tags: ["type:bibliography", "destination:reference", "topic:references", "level:reference", "language:fr", "status:published"]
 -->
 
 Cette page distingue les schémas originaux présents dans le site des ressources visuelles externes recommandées. Une image visible en ligne n'est pas automatiquement libre de réutilisation.
