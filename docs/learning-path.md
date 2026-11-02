@@ -54,7 +54,7 @@ The sidebar is intentionally a map of **available canonical pages**, not a compl
 
 ## How the guided milestones relate to the concept pages
 
-The **G0–G9 milestone table above is the authoritative sequence** for the from-scratch GPT build. The topic descriptions below are not a second course sequence: they describe the kinds of knowledge and evidence attached to those milestones.
+The **G0–G9 milestone table above is the authoritative milestone inventory** for the from-scratch GPT build; the dependency graph below defines the order. G2 is a parallel training-data branch, not a prerequisite to inference. The topic descriptions below are not a second course sequence: they describe the kinds of knowledge and evidence attached to those milestones.
 
 - **Orientation and input (G0–G1):** LLM families, lifecycle, Unicode, tokenization, vocabulary and token IDs.
 - **Inference computation (G3–G7):** embeddings and position; contextual representations; Q/K/V, attention and causal masking; GPT block; logits, probabilities, decoding and generation with fixed parameters.
