@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/embedding-linearity"
-scope: "The linearity hypothesis in representation spaces"
-purpose: "Explain The linearity hypothesis in representation spaces; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Distinguishes linear representation, linear accessibility/decodability, and functional use of a feature in a network; examines representation dependence, superposition, probing, and counterexamples such as XOR. It does not claim that all concepts are linearly encoded or that a successful probe establishes causal use."
+purpose: "Explain the distinct claims grouped under the linearity hypothesis, use a counterexample to reason about representation dependence, and evaluate what probing or steering evidence does—and does not—establish."
 suggested_route:
   previous: "en/cosine-similarity"
   next: null

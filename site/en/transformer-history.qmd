@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer-history"
-scope: "A history of Transformers"
-purpose: "Explain A history of Transformers; describe its role in an LLM and connect it to upstream and downstream concepts."
+scope: "Presents a selective, pedagogical timeline of precursors and milestones leading to Transformer architectures and modern LLM families, while distinguishing submission, announcement, and release dates. It explicitly avoids claiming an exhaustive history, absolute priority, or a single causal path from attention to current models."
+purpose: "Place major milestones in context, distinguish architecture families and training objectives, and critically interpret what a selective chronology can establish without inferring exhaustive coverage or simple causation."
 suggested_route:
   previous: "en/glossary"
   next: null

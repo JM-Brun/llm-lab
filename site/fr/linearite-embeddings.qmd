@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/linearite-embeddings"
-scope: "L'hypothèse de linéarité dans les espaces de représentations"
-purpose: "Expliquer la notion « L'hypothèse de linéarité dans les espaces de représentations », son rôle dans un LLM et ses liens avec les concepts amont et aval."
+scope: "Distingue représentation linéaire, accessibilité/décodabilité linéaire et utilisation fonctionnelle d’une caractéristique par le réseau ; examine la dépendance à la représentation, la superposition, les probes et des contre-exemples comme XOR. La page ne prétend ni que tous les concepts sont encodés linéairement ni qu’un probe réussi démontre un usage causal."
+purpose: "Expliquer les affirmations distinctes regroupées sous l’hypothèse de linéarité, utiliser un contre-exemple pour raisonner sur la dépendance à la représentation et évaluer ce que les résultats de probing ou de steering permettent — ou non — de conclure."
 suggested_route:
   previous: "fr/cosine-similarity"
   next: null
