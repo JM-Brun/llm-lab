@@ -80,6 +80,25 @@ Use these dimensions consistently:
 5. Keep metadata concise; the page body remains the source of truth for the full explanation.
 6. Before merging a navigation or curriculum change, review both the rendered navigation and this source-level graph.
 
-## 7. Coverage boundary
+## 7. Automated validation
 
-This baseline covers the pages currently listed for rendering in `site/_quarto.yml` plus the French root landing page. The bilingual inference/generation lesson in PR #229 already carries the same metadata block on its feature branch with `status:planned`; change that tag to `status:published` when it is integrated. New pages added on separate branches must receive the same metadata before or immediately after they enter the published render list.
+Run the validator locally from the repository root:
+
+```bash
+uv run --with-requirements docs/requirements-history-validation.txt python scripts/check_page_metadata.py
+```
+
+The validator reads the actual `project.render` list from `site/_quarto.yml`; it does not infer coverage from sidebar indentation. It checks:
+
+- exactly one correctly placed page-map comment and valid YAML front matter per rendered page;
+- required fields, stable IDs derived from source paths, unique IDs, and matching Quarto `keywords` / comment tags;
+- one value for each controlled tag dimension and valid vocabulary values;
+- resolvable relations, reciprocal parent/child and suggested-route edges, and an acyclic conceptual hierarchy;
+- French/English counterpart coverage, matching editorial dimensions, and equivalent relations after mapping translated IDs to canonical topic tags;
+- published status for every page in the render list.
+
+The validator runs in both the Python quality workflow and the Quarto workflow, before site rendering. It reports the source page and offending field or target. It deliberately does not generate navigation or treat a suggested reading route as a prerequisite graph.
+
+## 8. Coverage boundary
+
+The baseline covers every page in the current `site/_quarto.yml` render list, including the French root landing page, the bilingual inference/generation lesson, and the shared references page. The inference lesson is now published and must carry `status:published`. New pages must receive complete metadata in the same change that adds them to the render list.
