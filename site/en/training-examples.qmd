@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/training-examples"
 scope: "From tokenized corpus to training examples"
-purpose: Explain From tokenized corpus to training examples; describe its role in an LLM and connect it to upstream and downstream concepts.
+purpose: "Explain From tokenized corpus to training examples; describe its role in an LLM and connect it to upstream and downstream concepts."
 suggested_route:
   previous: "en/probabilities"
   next: "en/likelihood"
