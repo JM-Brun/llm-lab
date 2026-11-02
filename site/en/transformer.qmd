@@ -24,6 +24,10 @@ tags: ["type:system-overview", "destination:understand", "topic:transformer", "l
 A **GPT** is a language model based on an autoregressive Transformer: given a context of tokens, it estimates a distribution over the next token. To understand the system, distinguish the data flow, the learned parameters, and the generation loop. This page provides the overview; linked concept pages explain individual operations.
 :::
 
+::: {.callout-note title="What you should be able to do after this page"}
+You should be able to **trace the computation** from a token context to the logits, explain the roles of attention and the MLP, and distinguish contextualized representations from output scores. The final checkpoint lets you test these three outcomes.
+:::
+
 ::: {.callout-note}
 This page focuses on a **Transformer-based GPT**; it does not describe every LLM family. For the broader picture of architectures, pretraining, adaptation, and inference, start with the [LLM panorama](llm-overview.qmd).
 :::
