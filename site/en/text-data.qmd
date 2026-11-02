@@ -145,6 +145,26 @@ Compare the same strings with at least two tokenizers, using the examples and to
 
 **Minimal lab record:** for each string, record tokenizer/version, visible tokens, token count, and one interpretation limit. Token count alone measures neither linguistic nor model quality.
 
+## Check your understanding
+
+1. A tokenizer assigns ID `17` to the token `cat`. This ID appears twice in a sequence. Do both occurrences select the same initial vector? Can you conclude that the number 17 encodes an amount of meaning?
+
+<details>
+<summary>Show the reasoning</summary>
+
+Yes: the same ID selects the same row of the embedding table, hence the same initial vector (for fixed parameters). No: 17 is an arbitrary identifier in the vocabulary, not a measure of meaning, frequency, or similarity. The representations may later differ depending on the context processed by the Transformer.
+
+</details>
+
+2. Two tokenizers split the same sentence into sequences of different lengths. Can their token IDs be compared directly, token by token?
+
+<details>
+<summary>Show the reasoning</summary>
+
+No. IDs are defined only within a tokenizer's vocabulary; ID 17 in one vocabulary need not denote the same token in another. Compare decoded tokens, conventions, and measured properties (length, coverage, cost), while recording each tokenizer's version.
+
+</details>
+
 ## 4. Counterexamples and common misconceptions
 
 - **“A token is a word.”** False: it may be a subword, punctuation, a fragment with a space, bytes, or a special token.
