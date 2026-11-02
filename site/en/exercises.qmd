@@ -11,7 +11,7 @@ This page is the entry point for extended exercises. Short self-checks with coll
 - Start with the linked course page and prerequisites.
 - Attempt each exercise before opening its solution; explain assumptions and conditions under which the answer would fail.
 - Use transfer questions to check whether a concept generalizes beyond the example shown in the lesson.
-- Future answer keys will be collapsed by default. A correct result without reasoning is not sufficient evidence of mastery.
+- Answer keys are collapsed by default. A correct result without reasoning is not sufficient evidence of mastery.
 
 ## Planned collections
 
