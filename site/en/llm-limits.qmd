@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-limits"
-scope: "Examines what the next-token prediction objective guarantees and does not guarantee: truth of outputs, calibration, the meaning of "understanding", so-called emergent abilities, the role of scale. Short critical companion to the panorama; it does not unpack Transformer mechanisms or experimental evaluation protocols."
-purpose: "By the end of this page, readers should be able to distinguish what follows from the training objective from what requires evaluation, specify the criterion behind the word "understand", and explain why an apparent ability depends on the metric and protocol."
+scope: "Examines what the next-token prediction objective guarantees and does not guarantee: truth of outputs, calibration, the meaning of “understanding”, so-called emergent abilities, the role of scale. Short critical companion to the panorama; it does not unpack Transformer mechanisms or experimental evaluation protocols."
+purpose: "By the end of this page, readers should be able to distinguish what follows from the training objective from what requires evaluation, specify the criterion behind the word “understand”, and explain why an apparent ability depends on the metric and protocol."
 suggested_route:
   previous: null
   next: null
