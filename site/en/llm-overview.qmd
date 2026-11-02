@@ -19,11 +19,10 @@ Artificial intelligence (AI) is the broadest field; machine learning (ML) is one
 ### Three architectures to compare
 
 ```{mermaid}
-flowchart TB
+flowchart LR
   E["Encoder-only<br/>Bidirectional context<br/>Masked tokens"]
   ED["Encoder–decoder<br/>Encoded input + conditioned generation<br/>Sequence transformation"]
   D["Decoder-only<br/>Causal context<br/>Next-token prediction"]
-  E --- ED --- D
 ```
 
 The table specifies typical objectives and uses; the diagram is an architectural guide, not a quality ranking.
