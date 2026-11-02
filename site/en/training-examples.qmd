@@ -11,11 +11,11 @@ id: "en/training-examples"
 scope: "From tokenized corpus to training examples"
 purpose: Explain From tokenized corpus to training examples; describe its role in an LLM and connect it to upstream and downstream concepts.
 suggested_route:
-  previous: "en/probabilites"
-  next: "en/vraisemblance"
+  previous: "en/probabilities"
+  next: "en/likelihood"
 hierarchy:
   parents: ["en/text-data", "en/tokenization-strategies"]
-  children: ["en/vraisemblance"]
+  children: ["en/likelihood"]
 related: []
 tags: ["type:concept-bridge", "destination:understand", "topic:training-examples", "level:core", "language:en", "status:published"]
 -->
