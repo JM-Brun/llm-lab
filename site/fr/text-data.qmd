@@ -31,7 +31,7 @@ Pensez à un **catalogue avec des numéros de référence**. Le tokenizer décou
 
 **Première lecture :** suivez le schéma et retenez le rôle distinct du token, de l'ID et de l'embedding. Vous pouvez remettre à plus tard les détails Unicode, les algorithmes BPE/WordPiece et le pipeline de préparation des corpus.
 
-**Pour approfondir :** comparez des tokenizers réels, examinez leurs compromis, puis suivez le calcul du lookup dans [l'espace des embeddings](embedding-space.qmd).
+Les [stratégies de tokenisation](tokenization-strategies.qmd) comparent les compromis de tokenizers réels ; l’[espace des embeddings](embedding-space.qmd) décrit le lookup qui associe ensuite un vecteur à chaque ID.
 :::
 
 ## Objectifs
@@ -106,7 +106,7 @@ Dans la branche consacrée à l'apprentissage, la page sur les [exemples d'entra
 | **Embedding** | Vecteur associé à un ID, utilisé comme représentation numérique initiale. |
 | **Représentation contextualisée** | Vecteur après traitement par le réseau, influencé par les autres tokens de la séquence. |
 
-Les détails de bas niveau ne sont pas nécessaires pour suivre ce parcours. Pour comprendre pourquoi deux chaînes visuellement identiques peuvent être encodées différemment, consultez le [complément sur Unicode, UTF-8 et la normalisation](unicode-text.qmd). Pour les algorithmes de segmentation et leurs compromis, consultez la [page dédiée aux stratégies de tokenisation](tokenization-strategies.qmd). Les dimensions des matrices et le rôle exact des embeddings sont détaillés dans [l'espace des embeddings](embedding-space.qmd) et [la page sur les tenseurs](tensors.qmd).
+Les détails de bas niveau ne sont pas nécessaires pour suivre ce parcours. Deux chaînes visuellement identiques peuvent différer par leur [représentation Unicode, leur encodage UTF-8 et leur normalisation](unicode-text.qmd). Les algorithmes de segmentation et leurs compromis sont comparés dans les [stratégies de tokenisation](tokenization-strategies.qmd). Les dimensions des matrices et le rôle des embeddings relèvent de [l'espace des embeddings](embedding-space.qmd) et des [tenseurs](tensors.qmd).
 
 ### Un même texte, plusieurs segmentations
 
@@ -136,11 +136,9 @@ Cette figure illustre la dépendance du découpage aux règles et au vocabulaire
 
 Le nombre de tokens est un indicateur de longueur, pas un score global de qualité. Une évaluation rigoureuse distingue l'efficacité de représentation, les performances sur des tâches en aval, les écarts entre langues et la reproductibilité du protocole. Les résultats dépendent du corpus, de la tâche, du modèle et des budgets comparés.
 
-Pour comprendre ces dimensions et examiner les travaux scientifiques associés, consultez **[Évaluer un tokenizer : métriques, performances et équité multilingue](tokenization-strategies.qmd#tokenizer-evaluation)**.
+L’[évaluation d’un tokenizer : métriques, performances et équité multilingue](tokenization-strategies.qmd#tokenizer-evaluation) compare ces dimensions et les travaux scientifiques associés.
 
-### Pour approfondir les mécanismes
-
-La page principale reste centrée sur le parcours. Les détails techniques sont traités dans des pages dédiées :
+### Concepts techniques associés
 
 - [Stratégies de tokenisation](tokenization-strategies.qmd) : pré-tokenisation, BPE, WordPiece, unigramme, exemples, comparaisons et limites.
 - [Unicode, UTF-8 et normalisation](unicode-text.qmd) : points de code, octets et chaînes visuellement identiques.
@@ -196,15 +194,7 @@ Non. Les IDs ne sont définis qu’à l’intérieur du vocabulaire de leur toke
 - **« Une chaîne inconnue ne peut pas être encodée. »** Pas nécessairement : un tokenizer byte-level dispose d'unités de base couvrant les octets, sous réserve de ses règles d'encodage.
 - **« Le tokenizer est une couche du Transformer. »** C'est une étape distincte, même si modèle et tokenizer doivent être compatibles.
 
-## Pour approfondir : stratégies de tokenisation
-
-Le guide [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.qmd) compare mots, caractères, octets, sous-mots, BPE, WordPiece et unigramme.
-
-## Étape suivante
-
-Poursuivez avec [l'espace des embeddings](embedding-space.qmd) pour voir comment les IDs sélectionnent des lignes dans une matrice d'embeddings, comment évoluent les formes des tenseurs et comment les couches suivantes du réseau produisent des représentations contextualisées.
-
-Pour le langage mathématique utilisé dans le modèle, consultez les pages [tenseurs](tensors.qmd) et [fondations mathématiques](mathematical-foundations.qmd). Le [plan complet du programme et de couverture des sources](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) présente le parcours plus large.
+Chaque ID sélectionne une ligne de la [matrice d'embeddings](embedding-space.qmd). Les [tenseurs](tensors.qmd) décrivent les formes et les axes de ces représentations ; les [fondations mathématiques](mathematical-foundations.qmd) explicitent les opérations utilisées par le modèle.
 
 ::: {.language-switch}
 **Langue :** [Français](text-data.qmd) · [English](../en/text-data.qmd)
