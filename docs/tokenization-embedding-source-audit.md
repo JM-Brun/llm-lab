@@ -287,7 +287,7 @@ For the research papers below, the lesson currently captures the high-level prin
 - Whitespace-based fertility and STRR are ill-defined for Chinese, Japanese and Thai; Wikipedia does not represent all domains; the study covers BPE-family tokenizers, and within-language correlations remain underpowered.
 - **Metric distinction:** the abstract's “56×” Japanese/English headline refers to fertility (91.1 versus about 1.6 tokens per whitespace-delimited word). The Japanese parity ratio is a different metric: 8.8× for GPT-2, 4.2× for Qwen2.5 and 3.7× for Gemma-2 in the reported table. Do not combine these into one ratio or repeat the abstract's compressed phrasing without naming the denominator.
 
-**LLM Lab coverage:** the advanced page now summarizes the six metrics and the English/multilingual benchmark contrast. The revised wording should state the smaller MMLU-ProX sample and the correlational/pretraining-data caveat.
+**LLM Lab coverage:** the advanced page summarizes the six metrics and the English/multilingual benchmark contrast, including the smaller MMLU-ProX sample and the correlational/pretraining-data caveat in both languages.
 
 **Gap / action:** no new public metric or figure is needed. Keep the FR/EN synthesis equivalent, state the relevant sample sizes, and distinguish fertility from character-normalized parity. Do not recommend the toolkit as a validated quality score; its value is a reproducible measurement framework.
 
