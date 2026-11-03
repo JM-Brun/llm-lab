@@ -36,7 +36,7 @@ $D$ is a random training sample; $\hat f_D$ the learned model; $\sigma^2(x)$ con
 - **Variance**: sensitivity of predictions to changes in the training sample.
 - **Irreducible noise**: target uncertainty conditional on observed features.
 
-An overly constrained model may underfit; a flexible model may learn sample-specific fluctuations. A widening train-validation gap signals possible overfitting, but does not prove its cause. Complexity depends on depth, regularization, data, noise, and optimization; it is not a universal scalar.
+An overly constrained model may underfit; a flexible model may learn sample-specific fluctuations. A widening train-validation gap signals possible overfitting, but does not prove its cause. Complexity depends on depth, regularization, data, noise, and optimization; it is not a universal scalar. See [Model Capacity, Complexity, and Data Size](model-capacity-data-regimes.qmd) for the roles of $N$, $M$, and effective degrees of freedom.
 
 | Mechanism | Possible tendency | Qualification |
 |---|---|---|
