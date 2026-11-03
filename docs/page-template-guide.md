@@ -4,7 +4,7 @@ These templates define a small set of page archetypes for the LLM Lab knowledge 
 
 ## Choose the page type
 
-Start with the [site page design system](site-page-design-system.md): it explains how the existing `LLM-LAB-PAGE-MAP` metadata, Quarto conventions, and page archetypes fit together.
+Start with the [page archetype implementation map](site-page-design-system.md), then consult the canonical [reader-experience method](reader-experience-and-editorial-method.md), [visual design system](design-system.md), and [metadata contract](page-metadata-schema.md).
 
 | Archetype | Reader's task | Typical content | Avoid |
 |---|---|---|---|
