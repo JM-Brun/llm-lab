@@ -87,13 +87,6 @@ Le comportement à grande longueur dépend aussi de la base de fréquences, de l
 
 Vérifier les dimensions, l'ordre des paires de coordonnées, les positions utilisées, la précision numérique et le comportement sur plusieurs longueurs. Une erreur d'indexation peut produire des tenseurs de forme correcte tout en encodant les mauvaises positions. Les tests doivent comparer les résultats à une référence connue et contrôler les scores d'attention.
 
-## Pour poursuivre
-
-- [Tenseurs](tensors.qmd) : axes et formes des requêtes et des clés.
-- [Requêtes, clés et valeurs](queries-keys-values.qmd) : place de Q, K et V dans l'attention.
-- [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) : scores et softmax.
-- [Espace des embeddings](embedding-space.qmd) : vecteur initial et représentation contextualisée.
-
 ## Références
 
 - [Vaswani et al. (2017), Attention Is All You Need](https://arxiv.org/abs/1706.03762) — encodages positionnels sinusoïdaux.
