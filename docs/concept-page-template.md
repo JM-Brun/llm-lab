@@ -1,6 +1,6 @@
 # Reusable concept-page template
 
-Use this as the **concept-page archetype** in the [page-template guide](page-template-guide.md), not as a mandatory page layout. Keep sections that serve the learner's question; omit or combine the rest. A short page with a clear scope is better than a long page padded to match a template.
+Use this as the **concept-page archetype** in the [page-template guide](page-template-guide.md), not as a mandatory page layout. The [page archetype implementation map](site-page-design-system.md) links this template to the existing editorial and visual rules. Keep sections that serve the learner's question; omit or combine the rest. A short page with a clear scope is better than a long page padded to match a template.
 
 ## Suggested learning path
 
