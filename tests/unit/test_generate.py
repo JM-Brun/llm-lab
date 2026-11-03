@@ -116,9 +116,7 @@ def test_generate_top_k_one_sampling_matches_greedy_chain() -> None:
     prompt = np.array([3, 1, 4, 1, 5], dtype=np.int64)
 
     greedy_chain = generate(model, prompt, 6)
-    sampled = generate(
-        model, prompt, 6, greedy=False, top_k=1, rng=np.random.default_rng(7)
-    )
+    sampled = generate(model, prompt, 6, greedy=False, top_k=1, rng=np.random.default_rng(7))
 
     # With a single candidate left, the draw is forced: sampling with
     # top_k=1 must reproduce the greedy argmax chain exactly.
@@ -170,9 +168,7 @@ def test_generate_sampling_with_truncation_matches_manual_chain() -> None:
         probs = softmax_with_temperature(step_logits, temperature=1.3)
         probs = top_k_filter(probs, k=5)
         probs = top_p_filter(probs, p=0.9)
-        manual = np.append(
-            manual, np.int64(rng.choice(model.config.vocab_size, p=probs))
-        )
+        manual = np.append(manual, np.int64(rng.choice(model.config.vocab_size, p=probs)))
 
     assert np.array_equal(result, manual)
 
@@ -181,9 +177,7 @@ def test_generate_top_k_at_vocabulary_equivalent_to_plain_sampling() -> None:
     model = GPT(_small_config())
     prompt = np.array([3, 1, 4], dtype=np.int64)
 
-    plain = generate(
-        model, prompt, 5, greedy=False, temperature=1.2, rng=np.random.default_rng(9)
-    )
+    plain = generate(model, prompt, 5, greedy=False, temperature=1.2, rng=np.random.default_rng(9))
     truncated = generate(
         model,
         prompt,

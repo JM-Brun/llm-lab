@@ -113,9 +113,7 @@ def generate(
         raise ValueError("max_new_tokens must be >= 0")
     if temperature <= 0:
         raise ValueError("temperature must be strictly positive")
-    if top_k is not None and (
-        top_k < 1 or not np.issubdtype(np.asarray(top_k).dtype, np.integer)
-    ):
+    if top_k is not None and (top_k < 1 or not np.issubdtype(np.asarray(top_k).dtype, np.integer)):
         raise ValueError("top_k must be an integer >= 1 when provided")
     if top_p is not None and not 0.0 < top_p <= 1.0:
         raise ValueError("top_p must be in the interval (0, 1] when provided")
