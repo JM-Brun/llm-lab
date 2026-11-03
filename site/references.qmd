@@ -328,3 +328,28 @@ Ces sources ont des rôles différents — description d'architecture, objectifs
 - **Henighan et al. (2020), [*Scaling Laws for Autoregressive Generative Modeling*](https://arxiv.org/abs/2010.14701)** — lois d'échelle mesurées sur une large famille de modalités et d'architectures.
 
 Ces trois travaux établissent des régularités observées dans des régimes expérimentaux donnés ; ils ne fixent ni seuil universel de LLM ni règle d'allocation indépendante du protocole. La page [Lois d'échelle](fr/scaling-laws.qmd) présente ces résultats et leurs limites.
+
+
+## Références pédagogiques — processus de génération autorégressive
+
+Ces ressources ont servi de références de conception et de vérification pour la page [Panorama : qu’est-ce qu’un LLM ?](fr/llm-overview.qmd). Elles ne sont pas les sources graphiques de l’illustration originale du dépôt.
+
+### Pipeline NLP : prétraitement, modèle et post-traitement {#pipeline-et-génération-autoregressive}
+
+- **Hugging Face, LLM Course — [“Behind the pipeline”](https://huggingface.co/learn/llm-course/chapter2/2).** Présente un pipeline NLP en trois grandes parties : prétraitement, passage dans le modèle, puis post-traitement. L’exemple de la page porte sur la classification de sentiment ; il est utile pour clarifier la séparation des responsabilités, mais ne doit pas être pris pour une description exacte de toutes les architectures GPT génératives.
+
+### Visualiser le Transformer {#visualiser-le-transformer}
+
+- **Jay Alammar (2018), [“The Illustrated Transformer”](https://jalammar.github.io/illustrated-transformer/).** Présentation visuelle progressive de l’architecture Transformer, de l’attention et de l’information positionnelle. La page LLM Lab reprend l’idée d’une hiérarchie visuelle et d’une progression par niveaux, sans reprendre ni adapter ses illustrations. L’auteur indique une licence [Creative Commons Attribution–NonCommercial–ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/) pour cet article ; cette licence ne s’applique pas à l’illustration originale de LLM Lab.
+
+### Transformers : comment les entrées deviennent des sorties {#transformers-how-inputs-become-outputs}
+
+- **Edward Raff, Drew Farris et Stella Biderman (2025), [*How Large Language Models Work*](https://www.manning.com/books/how-large-language-models-work), chapitre 3 : “Transformers: How Inputs Become Outputs”.** Décrit la transformation des tokens en représentations, le rôle des couches Transformer, la production des scores de sortie et la boucle de génération. Le [chapitre en aperçu](https://www.manning.com/preview/how-large-language-models-work/chapter-3) est particulièrement pertinent pour relier le traitement du contexte à la sélection du token suivant. Référence de synthèse pédagogique, et non source primaire.
+
+### Provenance de l’illustration du processus
+
+- **Fichiers :** `site/images/llm-generation-process-fr.svg` et `site/images/llm-generation-process-en.svg`.
+- **Création :** schémas vectoriels originaux dessinés pour LLM Lab ; ils ne reproduisent pas les figures des ressources ci-dessus et ne contiennent aucun logo de fournisseur.
+- **Utilisation :** pages française et anglaise du panorama LLM.
+- **Contenu :** distinction entre le contexte évolutif, les paramètres fixes du modèle pendant l’inférence, l’évaluation des continuations et la règle de sélection. Les pourcentages visibles sont explicitement illustratifs et ne correspondent pas à une mesure réelle.
+- **Droits et provenance :** illustration originale produite pour le dépôt ; les trois références précédentes sont citées comme ressources pédagogiques consultées, pas comme titulaires ou sources de l’image.
