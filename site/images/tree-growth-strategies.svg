@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 410" role="img" aria-labelledby="t d">
+<title id="t">Tree growth strategies / Stratégies de croissance des arbres</title>
+<desc id="d">Schematic comparison of level-wise, leaf-wise best-first, and symmetric tree growth. Shapes are illustrative, not exact implementation diagrams.</desc>
+<rect width="960" height="410" fill="#fff"/>
+<g font-family="sans-serif" fill="#183c2b" text-anchor="middle">
+<text x="160" y="38" font-size="21" font-weight="700">Level-wise</text><text x="160" y="62" font-size="15">Niveau par niveau</text>
+<text x="480" y="38" font-size="21" font-weight="700">Leaf-wise</text><text x="480" y="62" font-size="15">Meilleure feuille d'abord</text>
+<text x="800" y="38" font-size="21" font-weight="700">Symmetric</text><text x="800" y="62" font-size="15">Symétrique</text>
+</g>
+<g stroke="#34495e" stroke-width="3" fill="none">
+<path d="M160 110 L95 190 M160 110 L225 190 M95 190 L60 275 M95 190 L130 275 M225 190 L190 275 M225 190 L260 275"/>
+<path d="M480 110 L415 190 M480 110 L545 190 M415 190 L380 275 M415 190 L450 275 M545 190 L510 275"/>
+<path d="M800 110 L735 190 M800 110 L865 190 M735 190 L700 275 M735 190 L770 275 M865 190 L830 275 M865 190 L900 275"/>
+</g>
+<g fill="#dceee2" stroke="#286345" stroke-width="2">
+<circle cx="160" cy="110" r="17"/><circle cx="95" cy="190" r="15"/><circle cx="225" cy="190" r="15"/><circle cx="60" cy="275" r="13"/><circle cx="130" cy="275" r="13"/><circle cx="190" cy="275" r="13"/><circle cx="260" cy="275" r="13"/>
+<circle cx="480" cy="110" r="17"/><circle cx="415" cy="190" r="15"/><circle cx="545" cy="190" r="15"/><circle cx="380" cy="275" r="13"/><circle cx="450" cy="275" r="13"/><circle cx="510" cy="275" r="13"/>
+<circle cx="800" cy="110" r="17"/><circle cx="735" cy="190" r="15"/><circle cx="865" cy="190" r="15"/><circle cx="700" cy="275" r="13"/><circle cx="770" cy="275" r="13"/><circle cx="830" cy="275" r="13"/><circle cx="900" cy="275" r="13"/>
+</g>
+<g font-family="sans-serif" font-size="15" fill="#34495e" text-anchor="middle">
+<text x="160" y="340">Expand a whole depth</text><text x="160" y="362">Développer un niveau</text>
+<text x="480" y="340">Expand the best-gain leaf</text><text x="480" y="362">Développer la feuille au meilleur gain</text>
+<text x="800" y="340">Reuse one split per depth</text><text x="800" y="362">Même split à chaque profondeur</text>
+</g>
+<text x="480" y="398" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#666">Schematic only; not exact tree shapes or defaults / Schéma indicatif, pas des arbres exacts ni des valeurs par défaut</text>
+</svg>
