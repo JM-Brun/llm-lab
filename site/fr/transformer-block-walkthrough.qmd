@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/build-path"]
   children: []
-related: ["fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/causal-masking", "fr/contextualized-representations"]
+related: ["fr/transformer", "fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/causal-masking", "fr/contextualized-representations"]
 tags: ["type:guided-build", "destination:build", "topic:reference-transformer-block", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -180,7 +180,7 @@ Chaque position passe seule dans `d → mlp_hidden_dim` (souvent `4d`), puis GEL
 
 - **Étape précédente** : [les briques numériques (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
 - **Étape suivante** : [l'assemblage du GPT (`gpt.py`)](gpt-model-walkthrough.qmd) — où les blocs sont empilés.
-- **Pages conceptuelles** : [Q/K/V](queries-keys-values.qmd), [attention à produit scalaire mis à l'échelle](scaled-dot-product-attention.qmd), [masquage causal](causal-masking.qmd), [représentations contextualisées](contextualized-representations.qmd).
+- **Pages conceptuelles** : [vue d'ensemble GPT et Transformer](transformer.qmd), [Q/K/V](queries-keys-values.qmd), [attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), [masquage causal](causal-masking.qmd), [représentations contextualisées](contextualized-representations.qmd).
 - **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
 - **Code source** : [`transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py) · **Tests** : [`test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py).
 
