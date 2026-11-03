@@ -82,9 +82,6 @@ Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
 $$
 
 Les matrices $W_Q$, $W_K$ et $W_V$ sont apprises pendant l'entraînement. Elles transforment chaque représentation d'entrée pour lui donner un rôle différent dans le calcul de l'attention. Dans l'attention à produit scalaire standard, les valeurs $V$ ne déterminent pas directement les scores : ceux-ci sont calculés à partir de $Q$ et $K$.
-
-Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model}\times d_v}$, les formes obtenues sont $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$. Les biais éventuels sont omis ici.
-
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
 <span>MICRO-ATELIER NUMÉRIQUE · CALCUL MATRICIEL ET FORMES TENSORIELLES</span>
@@ -94,6 +91,7 @@ Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model
 ```python
 import numpy as np
 
+# 1. Représentations d'entrée : 3 positions, d_model = 4
 X = np.array([
     [1.0, 0.5, 0.2, 0.1],  # position 0
     [0.1, 0.9, 0.8, 0.3],  # position 1
@@ -106,30 +104,22 @@ W_Q = np.array([[0.5, 0.1], [0.2, 0.8], [0.1, 0.3], [0.9, 0.4]])
 W_K = np.array([[0.2, 0.7], [0.4, 0.1], [0.6, 0.5], [0.3, 0.2]])
 W_V = np.array([[1.0, 0.0, 0.2], [0.0, 1.0, 0.5], [0.5, 0.2, 0.0], [0.1, 0.8, 0.4]])
 
-# 3. Projections linéaires
+# 3. Projections linéaires : chaque position produit une requête, une clé et une valeur
 Q = X @ W_Q  # Forme (T, d_k)
 K = X @ W_K  # Forme (T, d_k)
 V = X @ W_V  # Forme (T, d_v)
 assert Q.shape == (3, 2) and K.shape == (3, 2) and V.shape == (3, 3)
-
-# 4. Scores d'attention S = Q K^T / sqrt(d_k)
-d_k = 2
-scores = (Q @ K.T) / np.sqrt(d_k)
-assert scores.shape == (3, 3)
-
-# 5. Poids softmax (somme = 1 sur chaque ligne)
-exp_scores = np.exp(scores - np.max(scores, axis=-1, keepdims=True))
-weights = exp_scores / np.sum(exp_scores, axis=-1, keepdims=True)
-assert np.allclose(weights.sum(axis=-1), 1.0)
-
-# 6. Agrégation finale O = A V
-output = weights @ V
-assert output.shape == (3, 3)
 ```
 :::
 ::: {.micro-workbench-footer}
-Invariant vérifié : les dimensions respectent rigoureusement $(T, d_{model}) \to [(T, d_k), (T, d_v)] \to (T, d_v)$.
+Invariant vérifié : les projections conservent le nombre de positions $T$ ; les formes obtenues sont $(T, d_k)$ pour $Q$ et $K$, et $(T, d_v)$ pour $V$.
 :::
+:::
+
+::: {.callout-note collapse="true" title="Dimensions des matrices et suite du calcul (facultatif)"}
+Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model}\times d_v}$, les formes obtenues sont $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$. Les biais éventuels sont omis ici.
+
+La suite du calcul — scores $QK^\top$, mise à l'échelle par $\sqrt{d_k}$, softmax puis combinaison des valeurs — est le sujet de la page [attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), qui la déroule étape par étape avec un exemple numérique et son propre micro-atelier.
 :::
 
 ## Pourquoi séparer ces trois rôles ?
