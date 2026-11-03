@@ -2,6 +2,21 @@
 
 **Purpose:** make LLM Lab a navigable explanation system, not a textbook that must be read from page one to the end. This document is the shared editorial contract for public pages, concepts, learning stages, and contributions. It complements the scientific and implementation criteria in the [full curriculum plan](full-curriculum-plan.md), [roadmap](roadmap.md), and [contributing guide](../CONTRIBUTING.md); it does not replace them. The source-level page map and controlled tag vocabulary are specified in the [page metadata contract](page-metadata-schema.md); keep suggested reading order distinct from conceptual parent/child relations.
 
+## Editorial economy: page-specific information only
+
+Reader-facing prose must teach, orient through a real decision, or establish a meaningful conceptual connection. Do not add generic meta-discourse that merely describes the document or the learning platform. Avoid statements such as “this page provides an overview”, “the following sections explore…”, “each step links to a dedicated explanation”, “to continue the learning journey…”, and their French equivalents. These formulations can be pasted into almost any page without changing their meaning; that is a strong signal that they carry no useful information.
+
+A sentence about page structure is justified only when it conveys something specific that the reader needs: the precise question answered here, a genuine prerequisite, a scope boundary, a deliberate simplification, a reason to choose one branch over another, or the distinct purpose of a linked resource. A cross-link should say what question it resolves or what concept it supplies—not simply promise more detail.
+
+Use this deletion test during drafting and review:
+
+1. Remove the sentence temporarily.
+2. Ask whether the reader loses a scientific claim, definition, assumption, interpretation, useful warning, or actionable navigation choice.
+3. If not, leave it out. Do not replace it with a synonym or another generic transition.
+4. If something important is lost, rewrite the sentence to name that exact information.
+
+Apply the test especially to chapter leads, introductory paragraphs, callouts, section transitions, recaps, conclusions, and “next step” blocks. This is not a demand for terse prose: retain explanations, examples, and caveats that carry knowledge, even when they take space. The goal is higher information density, not shorter pages. Keep French and English versions equivalent in substance and apply the same standard to both.
+
 ## 1. The learning model: a graph with progressive depth
 
 The site has an overall direction—from the problem an LLM solves to its mechanisms, mathematical details, implementations, and evidence—but it is **not a single mandatory reading sequence**. Readers arrive with different questions and backgrounds. They must be able to enter at a useful level, understand where they are, and follow only the branches they need.
