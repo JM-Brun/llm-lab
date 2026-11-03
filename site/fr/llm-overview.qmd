@@ -126,7 +126,7 @@ Essayez de répondre avant d’ouvrir les raisonnements. L’objectif est de man
 
 Le token « chat » est ajouté au contexte : c’est cette séquence allongée que le modèle reçoit. Il calcule une nouvelle distribution de probabilité sur le vocabulaire, dont une règle de sélection extrait le token suivant. Ce qui ne change pas : les paramètres du modèle — l’inférence les lit, elle ne les modifie pas.
 
-:::
+</details>
 
 2. Une application doit répondre à partir d’une documentation qui change chaque jour. Comparez l’ajout d’une recherche documentaire (RAG) à un fine-tuning : lequel peut exploiter les nouveaux documents sans réentraîner les poids ?
 
@@ -137,7 +137,7 @@ Le RAG peut récupérer les documents à l’inférence et les fournir dans le c
 
 </details>
 
-</details>
+:::
 
 ## 7. Une distinction à garder en tête
 
