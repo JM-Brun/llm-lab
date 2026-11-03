@@ -11,12 +11,12 @@ id: "fr/hybrid-llm-architectures"
 scope: "Étudie les compromis entre Mamba-2, attention, MoE, GQA, MTP et précision numérique à partir de Nemotron 3 ; distingue principes généraux et choix propres à une version."
 purpose: "Expliquer les coûts d'inférence ciblés par une architecture hybride, distinguer paramètres totaux et actifs, et identifier les compromis de capacité, de rappel et de bande passante."
 suggested_route:
-  previous: "fr/transformer-architectures"
+  previous: null
   next: null
 hierarchy:
-  parents: ["fr/transformer-architectures"]
+  parents: []
   children: []
-related: ["fr/transformer", "fr/generation", "fr/scaling-laws"]
+related: ["fr/transformer-architectures", "fr/transformer", "fr/generation", "fr/scaling-laws"]
 tags: ["type:concept-lesson", "destination:understand", "topic:hybrid-llm-architectures", "level:advanced", "language:fr", "status:published"]
 -->
 

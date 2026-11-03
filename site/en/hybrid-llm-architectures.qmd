@@ -11,12 +11,12 @@ id: "en/hybrid-llm-architectures"
 scope: "Uses Nemotron 3 to study trade-offs among Mamba-2, attention, MoE, GQA, MTP, and numerical precision; distinguishes general principles from version-specific choices."
 purpose: "Explain inference costs targeted by hybrid architectures, distinguish total and active parameters, and identify trade-offs in capacity, retrieval, and bandwidth."
 suggested_route:
-  previous: "en/transformer-architectures"
+  previous: null
   next: null
 hierarchy:
-  parents: ["en/transformer-architectures"]
+  parents: []
   children: []
-related: ["en/transformer", "en/generation", "en/scaling-laws"]
+related: ["en/transformer-architectures", "en/transformer", "en/generation", "en/scaling-laws"]
 tags: ["type:concept-lesson", "destination:understand", "topic:hybrid-llm-architectures", "level:advanced", "language:en", "status:published"]
 -->
 
