@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
-scope: "Situe les LLM comme catégorie large de modèles de langage ; donne une carte de lecture du pipeline d’un GPT autorégressif, du texte à la sélection du prochain token ; distingue architecture, apprentissage des poids et conditionnement de l’inférence ; renvoie les comparaisons et mécanismes détaillés vers leurs pages dédiées."
-purpose: "À l’issue de cette page, le lecteur doit pouvoir situer les LLM, retracer à haut niveau le chemin texte → tokens → embeddings → Transformer → logits → distribution → sélection, distinguer architecture, apprentissage et inférence, puis choisir la page spécialisée à approfondir."
+scope: "Définit les LLM comme catégorie de modèles de langage ; donne une carte de lecture du pipeline d’un GPT autorégressif, du texte à la sélection du prochain token ; distingue architecture, apprentissage des poids et conditionnement de l’inférence ; renvoie les comparaisons et mécanismes détaillés vers leurs pages dédiées."
+purpose: "À l’issue de cette page, le lecteur doit pouvoir retracer à haut niveau le chemin texte → tokens → embeddings → Transformer → logits → distribution → sélection, distinguer architecture, apprentissage et inférence, puis choisir la page spécialisée à approfondir."
 suggested_route:
   previous: "fr/index"
   next: "fr/transformer"
@@ -26,8 +26,7 @@ Un **grand modèle de langage (LLM)** est un modèle de langage entraîné à gr
 
 ::: {.callout-note title="Résultat attendu — et place dans le parcours"}
 **Après cette page, vous devriez pouvoir :**
-- situer les LLM dans l’IA et le traitement automatique des langues ;
-- retracer le pipeline d’un GPT autorégressif sans confondre ses étapes ;
+- - retracer le pipeline d’un GPT autorégressif sans confondre ses étapes ;
 - distinguer architecture, apprentissage des poids et inférence ;
 - identifier quelle page approfondit chaque notion.
 
@@ -92,28 +91,7 @@ Pour décrire un LLM, trois questions indépendantes doivent être posées. Elle
 
 La boucle de la section 1 relève de l’inférence. L’entraînement relève de l’apprentissage. Un même modèle peut changer d’usage sans changer d’architecture : c’est ce que détaillent les sections suivantes.
 
-## 3. Où situer les LLM ?
-
-Les LLM vivent à l’intersection d’une famille de méthodes et d’un domaine de problèmes :
-
-```{mermaid}
-flowchart TB
-  subgraph IA["Intelligence artificielle"]
-    subgraph ML["Apprentissage automatique"]
-      subgraph DL["Apprentissage profond<br/>(réseaux neuronaux)"]
-        LLM["LLM"]
-      end
-    end
-  end
-  TAL["TAL / NLP : un domaine de problèmes<br/>(règles, statistique, modèles, LLM…)"]
-```
-
-- L’**apprentissage profond** (*deep learning*) désigne une famille de méthodes : des réseaux neuronaux à plusieurs couches. Les LLM actuels en font partie.
-- Le **traitement automatique des langues** (TAL / NLP) désigne un domaine de problèmes : traiter ou produire du langage. Il se résout par des méthodes très différentes — règles linguistiques, modèles statistiques, systèmes spécialisés, réseaux neuronaux. Les LLM y sont une réponse dominante mais non exclusive : un système de production peut combiner règles, modèles spécialisés, recherche documentaire, outils et LLM.
-
-Le terme « LLM » ne possède pas de seuil numérique universel : il désigne généralement des modèles de langage entraînés à grande échelle, avec des données et des capacités de calcul importantes. Le concept de *foundation model* insiste plutôt sur la réutilisation d'un modèle comme base pour de nombreuses applications.
-
-## 4. Le parcours en trois phases
+## 3. Le parcours en trois phases
 
 Du corpus à l’utilisation, le cycle de vie se résume en trois phases :
 
@@ -132,19 +110,19 @@ flowchart LR
 
 Le pré-entraînement et l’éventuelle adaptation des poids décrivent la fabrication du modèle ; le prompt et les documents récupérés sont fournis au système au moment de l’inférence. Ce n’est donc pas une chaîne obligatoire en trois étapes : un modèle de base peut être utilisé directement, avec un contexte adapté. L’ordre pédagogique reste distinct de l’ordre de fabrication : l’inférence se comprend avant l’entraînement. L’évaluation intervient à plusieurs moments ; le jeu de test doit rester tenu à l’écart jusqu’à l’évaluation finale, faute de quoi elle la biaiserait.
 
-## 5. Les architectures : un renvoi plutôt qu’un tableau
+## 4. Les architectures : un renvoi plutôt qu’un tableau
 
 Encodeur seul, encodeur-décodeur et décodeur seul décrivent trois organisations courantes des **Transformers**, pas trois catégories universelles de LLM. Leur différence tient au flux d’information, aux masques et aux interactions entre encodeur et décodeur. Le tableau comparatif et les conséquences pour les objectifs et les usages méritent une explication distincte : [Comparer les architectures Transformer](transformer-architectures.qmd).
 
 Pour le parcours de construction, LLM Lab choisit un **petit GPT décodeur seul** : la prédiction autorégressive y est inspectable pas à pas. C’est un choix pédagogique, pas une affirmation que tous les LLM fonctionnent ainsi.
 
-## 6. À quoi servent ces modèles ?
+## 5. À quoi servent ces modèles ?
 
 Les usages courants comprennent la génération et la reformulation de texte, le résumé, la traduction, l’extraction structurée, la classification, l’assistance à la programmation et les interfaces de question-réponse.
 
 La réutilisation d’un modèle généraliste est intéressante lorsqu’une même base peut couvrir plusieurs tâches ou lorsque les exemples d’une tâche sont limités. Pour des connaissances qui changent fréquemment, récupérer des documents à jour (RAG) est souvent plus adapté que modifier les paramètres ; pour un format, un domaine ou un comportement spécifique, une adaptation peut devenir pertinente. Le choix s’évalue sur la tâche réelle : qualité, erreurs, robustesse, coût, latence, confidentialité, provenance des données et maintenance — une démonstration convaincante sur quelques prompts n’est pas une évaluation.
 
-## 7. Vérifier votre compréhension
+## 6. Vérifier votre compréhension
 
 Essayez de répondre avant d’ouvrir les raisonnements. L’objectif est de manipuler le modèle mental, pas de mémoriser des étiquettes.
 
@@ -166,16 +144,16 @@ Le RAG peut récupérer les documents à l’inférence et les fournir dans le c
 
 </details>
 
-## 8. Une distinction à garder en tête
+## 7. Une distinction à garder en tête
 
 La prédiction du prochain token ne garantit ni la vérité des sorties ni une compréhension humaine du monde. Ces questions, ainsi que les limites des affirmations sur les capacités émergentes, sont examinées dans [Ce que la prédiction du prochain token ne prouve pas](llm-limits.qmd).
 
 
 ::: {.callout-note title="Repère historique"}
-Le Transformer de 2017 s’inscrit dans une histoire plus large des mécanismes d’attention, des modèles séquence-à-séquence et des objectifs de pré-entraînement. Pour cette chronologie et ses précautions de lecture, consultez [l’historique des Transformers](transformer-history.qmd).
+Le Transformer de 2017 s’inscrit dans une histoire plus large des mécanismes d’attention, des modèles séquence-à-séquence et des objectifs de pré-entraînement. Pour cette chronologie, ses précautions de lecture et la place des LLM dans le paysage de l’IA, consultez [l’historique des Transformers](transformer-history.qmd).
 :::
 
-## 9. Où poursuivre dans LLM Lab ?
+## 8. Où poursuivre dans LLM Lab ?
 
 - [**GPT et Transformer**](transformer.qmd) — suivre le calcul interne d’un GPT autorégressif, des représentations aux logits.
 - [**Comparer les architectures Transformer**](transformer-architectures.qmd) — comprendre les différences entre encodeur, encodeur-décodeur et décodeur.
