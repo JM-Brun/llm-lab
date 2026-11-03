@@ -395,14 +395,12 @@ This published illustration comes from the [Hugging Face course, “Building a t
 - **IDs transfer between models.** Generally not: the same ID can denote different fragments.
 - **Byte-level = language-independent.** No: coverage guarantees neither uniform cost nor uniform quality.
 
-## Continue learning
+## External tools
 
-- [Overview and BPE example](text-data.qmd)
-- [Training examples, windows, and shifted targets](training-examples.qmd)
-- [Embedding space](embedding-space.qmd)
 - [Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/index)
 - [SentencePiece](https://github.com/google/sentencepiece)
 - [tiktoken](https://github.com/openai/tiktoken)
+
 
 ::: {.language-switch}
 **Language:** [Français](../fr/tokenization-strategies.qmd) · [English](tokenization-strategies.qmd)
