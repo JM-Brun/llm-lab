@@ -41,6 +41,10 @@ Ce fichier transforme les logits en séquence : à chaque étape, retraiter le c
             next_token = int(np.argmax(logits))
         else:
             probs = softmax_with_temperature(logits, temperature=temperature)
+            if top_k is not None:
+                probs = top_k_filter(probs, k=top_k)
+            if top_p is not None:
+                probs = top_p_filter(probs, p=top_p)
             next_token = int(rng.choice(model.config.vocab_size, p=probs))
         context = np.append(context, np.int64(next_token))
     return np.asarray(context, dtype=np.int64)
@@ -107,10 +111,11 @@ Ligne par ligne :
 - `[0, -1, :]` : lot 0, **dernière position**, tous les logits. La position `T-1` prédit le token qui suit `T-1` — c'est la seule ligne de logits utile pour un token de plus.
 - `greedy` : `argmax` est **déterministe** — pas besoin de graine ; les égalités se tranchent vers le plus petit indice (convention NumPy).
 - échantillonnage : la température met les logits à l'échelle **avant** la softmax (`T < 1` durcit, `T > 1` aplatit), puis `rng.choice` tire un id. La reproductibilité vient de la graine du `rng` fourni.
+- troncations optionnelles : `top_k` puis `top_p` coupent la distribution **après** la température et renormalisent les probabilités conservées avant le tirage ; en mode glouton elles sont validées mais ignorées.
 - `np.append` : le token devient contexte ; la boucle recommence.
 
 ::: {.callout-note}
-**`temperature` est validée même en mode glouton.** Un appel `greedy=True, temperature=0.0` échoue : une valeur invalide cachée ne doit pas attendre qu'on bascule en échantillonnage pour se révéler.
+**`temperature`, `top_k` et `top_p` sont validées même en mode glouton.** Un appel `greedy=True, temperature=0.0` ou `top_k=0` échoue : une valeur invalide cachée ne doit pas attendre qu'on bascule en échantillonnage pour se révéler.
 :::
 
 ## Deux limites assumées, pas deux oublis
@@ -124,7 +129,7 @@ Ligne par ligne :
 
 ## Ce que les tests vérifient
 
-[`tests/unit/test_generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_generate.py) : le mode glouton est déterministe **et** égal à une chaîne d'`argmax` recalculée indépendamment ; l'échantillonnage est reproductible à graine égale ; un prompt qui remplit toute la fenêtre fonctionne quand même (glissement) ; `max_new_tokens=0` renvoie le prompt inchangé ; toutes les erreurs de validation sont nommées.
+[`tests/unit/test_generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_generate.py) : le mode glouton est déterministe **et** égal à une chaîne d'`argmax` recalculée indépendamment ; l'échantillonnage est reproductible à graine égale ; les troncations optionnelles suivent la chaîne température → top-k → top-p recalculée indépendamment, `top_k=1` (et un noyau `top_p` très serré) reproduisant la chaîne gloutonne ; un prompt qui remplit toute la fenêtre fonctionne quand même (glissement) ; `max_new_tokens=0` renvoie le prompt inchangé ; toutes les erreurs de validation sont nommées.
 
 ## Exercices
 

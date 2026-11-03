@@ -41,6 +41,10 @@ By the end of this tour, you will be able to:
             next_token = int(np.argmax(logits))
         else:
             probs = softmax_with_temperature(logits, temperature=temperature)
+            if top_k is not None:
+                probs = top_k_filter(probs, k=top_k)
+            if top_p is not None:
+                probs = top_p_filter(probs, p=top_p)
             next_token = int(rng.choice(model.config.vocab_size, p=probs))
         context = np.append(context, np.int64(next_token))
     return np.asarray(context, dtype=np.int64)
@@ -107,10 +111,11 @@ Line by line:
 - `[0, -1, :]`: batch 0, **last position**, all logits. Position `T-1` predicts the token after `T-1` — the only logit row useful for one more token.
 - `greedy`: `argmax` is **deterministic** — no seed needed; ties resolve to the lowest index (NumPy's convention).
 - sampling: temperature scales the logits **before** the softmax (`T < 1` sharpens, `T > 1` flattens), then `rng.choice` draws one id. Reproducibility comes from the caller's seeded `rng`.
+- optional truncation: `top_k` then `top_p` cut the distribution **after** temperature and renormalize the retained probabilities before the draw; in greedy mode they are validated but ignored.
 - `np.append`: the token becomes context; the loop repeats.
 
 ::: {.callout-note}
-**`temperature` is validated even in greedy mode.** A call `greedy=True, temperature=0.0` fails: a hidden invalid value must not wait for a switch to sampling to reveal itself.
+**`temperature`, `top_k`, and `top_p` are validated even in greedy mode.** A call `greedy=True, temperature=0.0` or `top_k=0` fails: a hidden invalid value must not wait for a switch to sampling to reveal itself.
 :::
 
 ## Two deliberate limitations, not two omissions
@@ -124,7 +129,7 @@ Line by line:
 
 ## What the tests verify
 
-[`tests/unit/test_generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_generate.py): greedy mode is deterministic **and** matches an independently recomputed argmax chain; sampling is reproducible at equal seed; a prompt filling the whole window still generates (sliding); `max_new_tokens=0` returns the prompt unchanged; every validation error is named.
+[`tests/unit/test_generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_generate.py): greedy mode is deterministic **and** matches an independently recomputed argmax chain; sampling is reproducible at equal seed; the optional truncations follow an independently recomputed temperature → top-k → top-p chain, with `top_k=1` (and a very tight `top_p` nucleus) reproducing the greedy chain; a prompt filling the whole window still generates (sliding); `max_new_tokens=0` returns the prompt unchanged; every validation error is named.
 
 ## Exercises
 

@@ -5,7 +5,8 @@ order: ``gpt_config`` (dimensions), ``gpt_ops`` (building blocks),
 ``transformer_block`` (one block), ``gpt`` (the assembled model) and
 ``generate`` (the decoding loop). ``training_examples`` builds the aligned
 input/target windows that pretraining consumes, and ``decoding_filters`` implements
-the optional top-k/top-p truncations of the decoding deep dive. This package-level
+the optional top-k/top-p truncations of the decoding deep dive, applied by
+``generate`` in sampling mode. This package-level
 module re-exports
 the public surface so callers can import from ``llm_lab.foundations``
 directly.

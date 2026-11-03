@@ -15,6 +15,10 @@ Deliberate limitations, documented rather than hidden:
 - **No early stopping.** Production decoders stop at an end-of-text
   token; that rule belongs to the tokenizer/vocabulary layer, which this
   milestone does not include.
+- **No configurable processor chain.** The optional ``top_k``/``top_p``
+  truncations apply to the sampling path only, in the fixed order
+  temperature -> top-k -> top-p; there is no beam search, contrastive
+  decoding or repetition penalty.
 
 Line-by-line walkthrough (bilingual site pages):
 - https://jm-brun.github.io/llm-lab/fr/gpt-generation-walkthrough/
@@ -31,6 +35,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 from llm_lab.foundations.attention import softmax_with_temperature
+from llm_lab.foundations.decoding_filters import top_k_filter, top_p_filter
 from llm_lab.foundations.gpt import GPT
 
 # Token ids are int64 throughout the reference implementation.
@@ -44,6 +49,8 @@ def generate(
     *,
     temperature: float = 1.0,
     greedy: bool = True,
+    top_k: int | None = None,
+    top_p: float | None = None,
     rng: np.random.Generator | None = None,
 ) -> IntArray:
     """Generate token ids autoregressively with fixed parameters.
@@ -56,7 +63,8 @@ def generate(
     3. read the logits at the final position -- position T-1 predicts
        the token that follows position T-1;
     4. select one token: ``argmax`` when ``greedy``, otherwise a sample
-       from the temperature-scaled distribution;
+       from the temperature-scaled distribution, optionally truncated to
+       its top-k entries and/or its top-p nucleus (then renormalized);
     5. append the token and repeat, until ``max_new_tokens`` are produced.
 
     Args:
@@ -68,6 +76,12 @@ def generate(
             but is validated in both modes so that a latent invalid value
             cannot hide behind greedy decoding.
         greedy: If True, select the argmax token at each step.
+        top_k: Optional per-step truncation for sampling: keep only the
+            ``k`` most probable tokens (integer >= 1). Validated in both
+            modes but ignored when ``greedy`` is True.
+        top_p: Optional nucleus truncation for sampling: keep the smallest
+            set whose cumulative mass reaches ``p`` (0 < p <= 1).
+            Validated in both modes but ignored when ``greedy`` is True.
         rng: Seeded generator used for sampling; required when ``greedy``
             is False. Sampling is reproducible only when this generator
             is seeded.
@@ -79,7 +93,9 @@ def generate(
     Raises:
         ValueError: If the prompt is not a non-empty 1D integer array
             within range, if max_new_tokens is negative, if
-            temperature <= 0, or if no rng is provided for sampling.
+            temperature <= 0, if top_k is provided and is not an integer
+            >= 1, if top_p is provided and lies outside (0, 1], or if
+            no rng is provided for sampling.
     """
     # Validate the prompt before touching the model: shape, dtype, range.
     ids = np.asarray(prompt_ids)
@@ -97,6 +113,12 @@ def generate(
         raise ValueError("max_new_tokens must be >= 0")
     if temperature <= 0:
         raise ValueError("temperature must be strictly positive")
+    if top_k is not None and (
+        top_k < 1 or not np.issubdtype(np.asarray(top_k).dtype, np.integer)
+    ):
+        raise ValueError("top_k must be an integer >= 1 when provided")
+    if top_p is not None and not 0.0 < top_p <= 1.0:
+        raise ValueError("top_p must be in the interval (0, 1] when provided")
     if not greedy and rng is None:
         raise ValueError("rng is required when greedy is False")
 
@@ -120,9 +142,15 @@ def generate(
             # the Optional type for mypy.
             assert rng is not None
             # Temperature scales the logits before softmax: T < 1 sharpens
-            # the distribution, T > 1 flattens it. rng.choice then draws
-            # one id from that distribution.
+            # the distribution, T > 1 flattens it. Optional truncation then
+            # zeroes the tail and renormalizes; the fixed temperature ->
+            # top-k -> top-p order is a teaching convention. rng.choice
+            # finally draws one id from the retained distribution.
             probs = softmax_with_temperature(logits, temperature=temperature)
+            if top_k is not None:
+                probs = top_k_filter(probs, k=top_k)
+            if top_p is not None:
+                probs = top_p_filter(probs, p=top_p)
             next_token = int(rng.choice(model.config.vocab_size, p=probs))
         # Append and loop: the generated token becomes context.
         context = np.append(context, np.int64(next_token))
