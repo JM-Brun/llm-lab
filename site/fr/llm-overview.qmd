@@ -54,11 +54,9 @@ Le modèle apprend des régularités statistiques des données ; cet objectif ne
 
 **GPT** (*Generative Pre-trained Transformer*) désigne une famille de modèles génératifs pré-entraînés fondés sur l'architecture Transformer. Dans l'usage courant, les GPT classiques sont des Transformers **décodeur seul**, entraînés à prédire le prochain token. GPT et Transformer ne sont donc pas synonymes : Transformer désigne une famille d'architectures ; GPT désigne une famille de modèles qui en utilise une configuration particulière.
 
-Les LLM modernes s'inscrivent dans l'intelligence artificielle et l'apprentissage automatique : ce sont généralement des modèles de langage fondés sur des réseaux neuronaux profonds, souvent (mais pas par définition) sur l'architecture Transformer. Le traitement automatique des langues (TAL) est un domaine, pas une architecture. Les systèmes de TAL antérieurs reposaient souvent sur des règles linguistiques, des caractéristiques conçues à la main ou des modèles statistiques/neuronaux spécialisés par tâche ; les grands modèles pré-entraînés apprennent des régularités réutilisables à partir de corpus étendus et peuvent être adaptés à plusieurs tâches. Ils nécessitent néanmoins une évaluation propre à chaque tâche et ne rendent pas obsolètes tous les systèmes spécialisés.
+Les LLM modernes sont généralement des modèles d'apprentissage profond au sein de l'intelligence artificielle et de l'apprentissage automatique. Le TAL est un domaine, pas une architecture. Les systèmes antérieurs reposaient souvent sur des règles, des caractéristiques conçues à la main ou des modèles statistiques/neuronaux spécialisés par tâche. Les LLM apprennent des régularités réutilisables à partir de corpus étendus et peuvent être adaptés à plusieurs tâches, mais nécessitent toujours une évaluation propre à chaque tâche.
 
-Pour une comparaison côte à côte des architectures encodeur seul, encodeur-décodeur et décodeur seul, de leurs objectifs et de leurs usages typiques, consultez la [comparaison des architectures](transformer-architectures.qmd).
-
-LLM Lab construit de petits composants inspectables pour rendre visibles les flux de données, les formes tensorielles, les masques, la fonction de perte et le décodage. Les modèles de taille pédagogique ne visent pas à reproduire les données, le calcul ou les capacités des LLM de production ; un modèle de référence initialisé aléatoirement est censé produire un texte incohérent tant qu'il n'a pas été entraîné.
+LLM Lab utilise de petits modèles inspectables pour expliquer les mécanismes, pas pour reproduire les capacités des modèles de production. Un modèle de référence non entraîné est censé produire un texte incohérent.
 
 ## 3. Le processus de génération, du texte au prochain token
 
@@ -84,7 +82,7 @@ Pour situer cette représentation parmi d’autres approches pédagogiques, voir
 
 ::: {.callout-note collapse="true" title="Approfondissement facultatif : efficacité de l'inférence et cache KV"}
 
-À chaque étape autorégressive, le contexte s'allonge. Une implémentation simple recalcule toute la fenêtre courante ; le [GPT de référence de ce laboratoire](fr/build-path.qmd) le fait volontairement pour rendre le mécanisme inspectable et ne possède pas de cache KV. Les moteurs d'inférence de production mettent souvent en cache les clés et valeurs de chaque couche pour les tokens déjà traités : cela réduit les calculs répétés, au prix de mémoire et d'une gestion du cache plus complexe. Cette optimisation change l'efficacité de l'inférence, pas l'objectif de prédiction du prochain token.
+À chaque étape autorégressive, le contexte s'allonge. Le [GPT de référence de ce laboratoire](fr/build-path.qmd) recalcule toute la fenêtre pour rendre le mécanisme inspectable et ne possède pas de cache KV. Les moteurs de production réutilisent souvent les clés et valeurs des tokens précédents à chaque couche : ils réduisent ainsi les calculs répétés, au prix de mémoire et d'une gestion du cache. Cela change l'efficacité de l'inférence, pas l'objectif de prédiction du prochain token.
 
 :::
 
