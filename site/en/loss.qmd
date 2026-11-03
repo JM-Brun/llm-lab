@@ -45,7 +45,9 @@ Let $p_{b,t,:}$ be the predicted distribution at position $(b,t)$ and $y_{b,t}$ 
 
 $$
 \ell_{b,t}=-\log p_{b,t,y_{b,t}}.
-$$
+$
+
+For a one-hot target, this term is the special case of [cross-entropy](cross-entropy.qmd) in which only the target token's probability contributes. The dedicated lesson derives it and connects it to logits; here, the focus is on aggregating it into a batch objective.
 
 The mean over valid positions is:
 
