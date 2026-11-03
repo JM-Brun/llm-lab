@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-overview"
 scope: "Introduces the language-modeling problem and why it is difficult; defines language model, generative model, LLM, GPT, and Transformer; maps an autoregressive GPT pipeline and delegates detailed mechanisms to dedicated pages."
-purpose: "By the end of this page, readers should be able to trace the high-level path text → tokens → embeddings → Transformer → logits → distribution → selection, distinguish architecture, learning, and inference, and choose the specialist page to explore next."
+purpose: "By the end of this page, readers should be able to explain the language-modeling problem and its difficulties, distinguish language model, generative model, LLM, GPT, and Transformer, and trace an autoregressive GPT computation while separating embeddings from positional information."
 suggested_route:
   previous: "en/index"
   next: "en/transformer"
@@ -33,9 +33,7 @@ By the end of this page, you should be able to:
 - distinguish a language model, generative model, LLM, GPT, and Transformer;
 - trace the main stages of an autoregressive GPT computation.
 
-This page introduces the problem and its computational principle. It does not assume prior knowledge of equations or tensors.
-
-The next step in the learning path is indicated at the end of this page.
+This page introduces the problem and its computational principle without assuming prior knowledge of equations or tensors. The next page, [GPT and Transformer](transformer.qmd), explains the internal computation that produces this prediction.
 
 </details>
 
@@ -195,10 +193,6 @@ RAG can retrieve documents at inference time and provide them in the context; th
 Next-token prediction guarantees neither the truth of a model's outputs nor human-like understanding of the world. These questions, along with claims about emergent capabilities, are examined in [What next-token prediction does not prove](llm-limits.qmd).
 
 
-
-## 8. Where to continue
-
-The natural next step is [GPT and Transformer](transformer.qmd), which explains the blocks, attention, and the path from representations to logits. Links throughout this page let you explore tokenization, embeddings, positional information, architectures, and generation separately.
 
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-overview.qmd) · [English](llm-overview.qmd)
