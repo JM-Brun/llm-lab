@@ -38,8 +38,6 @@ project:
     - en/scaling-laws.qmd
     - en/emergence.qmd
     - en/in-context-learning.qmd
-    - fr/scaling-laws.qmd
-    - en/scaling-laws.qmd
     - fr/transformer-architectures.qmd
     - en/transformer-architectures.qmd
     - fr/transformer.qmd
