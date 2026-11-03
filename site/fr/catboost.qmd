@@ -35,9 +35,11 @@ CatBoost utilise des permutations. Pour une ligne, la statistique est calculée 
 {\#\{j:x_j=x_k,\;j\prec k\}+a},
 \]
 
-où (j\prec k) signifie que (j) précède (k), (P) est un a priori et (a) son poids. C'est un schéma illustratif : CatBoost utilise plusieurs statistiques et variantes.
+où $j\\prec k$ signifie que $j$ précède $k$, $P$ est un a priori et $a$ son poids. C'est un schéma illustratif : CatBoost utilise plusieurs statistiques et variantes.
 
-![Comparaison schématique des stratégies de croissance des arbres.](../images/tree-growth-strategies.svg){fig-alt="Trois structures illustrant la croissance niveau par niveau, leaf-wise et symétrique ; schéma indicatif."}\n\n## Ordered boosting et arbres symétriques
+![Comparaison schématique des stratégies de croissance des arbres.](../images/tree-growth-strategies.svg){fig-alt="Trois structures illustrant la croissance niveau par niveau, leaf-wise et symétrique ; schéma indicatif."}
+
+## Ordered boosting et arbres symétriques
 
 L'ordered boosting construit les estimations de gradient de façon ordonnée, en évitant d'utiliser la cible de l'observation dans l'estimation correspondante. Il réduit certains biais de prédiction, mais ne remplace pas une séparation train/validation/test et ne prévient pas toutes les fuites.
 
