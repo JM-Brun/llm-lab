@@ -41,11 +41,11 @@ r_{im}=-\left[
 \right]_{F=F_{m-1}}.
 \]
 
-These are **pseudo-residuals**. Under squared-error loss they are proportional to residuals (y_i-F_{m-1}(x_i)). For other losses, they are not necessarily target-minus-prediction.
+These are **pseudo-residuals**. Under squared-error loss they are proportional to residuals $y_i-F_{m-1}(x_i)$. For other losses, they are not necessarily target-minus-prediction.
 
 ## One iteration
 
-1. Initialize (F_0) with a constant minimizing the loss.
+1. Initialize $F_0$ with a constant minimizing the loss.
 2. Compute pseudo-residuals from the current model.
 3. Fit a tree to those pseudo-residuals.
 4. Fit its leaf contributions under the loss.
@@ -54,7 +54,11 @@ These are **pseudo-residuals**. Under squared-error loss they are proportional t
 
 The next tree does not reconstruct the whole target; it seeks a structured correction to current errors.
 
-\n\n![One Gradient Boosting round, from the current ensemble to the added correction.](../images/gradient-boosting-iteration.svg){fig-alt="Workflow: current model, negative gradient, corrective tree, shrinkage, update, and repeat."}\n\n## Boosting versus bagging
+
+
+![One Gradient Boosting round, from the current ensemble to the added correction.](../images/gradient-boosting-iteration.svg){fig-alt="Workflow: current model, negative gradient, corrective tree, shrinkage, update, and repeat."}
+
+## Boosting versus bagging
 
 | Bagging (random forest) | Boosting |
 |---|---|
