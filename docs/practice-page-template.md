@@ -1,50 +1,46 @@
-# Reusable practice and experiment page template
+# Practice and experiment page quick start
 
-Use this archetype when the learner must **test understanding, investigate a claim, or reproduce an observation**. Distinguish a short self-check from a full exercise collection or an empirical protocol.
+Use this pattern when the reader must do more than answer a short in-page comprehension check: solve a sequence of problems, practise transfer, investigate a claim, or reproduce an observation. These are related but distinct jobs. Do not force an exercise set and an empirical protocol into the same outline.
 
-## Suggested structure
+The [flexible page-template system](page-template-system.md) defines shared composition principles. For code execution, benchmarking, and reproducibility details, also consult the [implementation-page patterns](implementation-page-patterns.md) and the repository's experiment protocol.
 
-1. **Question and objective** — What is being tested or investigated?
-2. **Prerequisites** — Concepts, data, tools, and expected preparation.
-3. **Task or hypothesis** — State the problem, variables, and expected evidence.
-4. **Procedure** — Steps that another learner can reproduce.
-5. **Analysis and interpretation** — Explain what outcomes support, weaken, or fail to test the claim.
-6. **Solution / expected reasoning** — Hidden by default for exercises; never reveal only a final numeric answer.
-7. **Limitations and reproducibility** — Data provenance, controls, uncertainty, seeds, environment, and known confounders.
-8. **Further study** — Link back to canonical concepts and onward experiments.
+## For an exercise collection
 
-## Compact authoring skeleton
+Clarify only what the learner needs:
 
-```markdown
-::: {.chapter-lead}
-State the question and what a successful investigation or solution demonstrates.
-:::
+- What capability or concept is being practised?
+- Which prerequisites are genuinely necessary?
+- What response is expected: explanation, derivation, calculation, code, diagnosis, or critique?
+- Are hints useful, and can they reveal reasoning progressively?
+- What does a complete solution explain, including assumptions and common mistakes?
+- Does the collection build from interpretation to calculation, diagnosis, and transfer where appropriate?
 
+Keep solutions hidden by default. A short self-check embedded in a lesson should remain short; it is not a reason to create a separate practice page.
+
+## For an experiment or investigation
+
+Clarify the scientific question and the evidence needed:
+
+- State the hypothesis or question, operational definitions, variables, metric, and baseline.
+- Describe the procedure sufficiently for another person to reproduce the relevant result.
+- Record data and code provenance, controls, configuration, seeds, environment, and uncertainty where they matter.
+- Interpret what the result supports, weakens, or leaves untested.
+- Report failed runs and limitations; do not infer causality from an uncontrolled comparison.
+
+## Possible composition
+
+~~~markdown
 ## Objective and prerequisites
 
 ## Task / hypothesis
 
-## Procedure
+## Procedure and evidence
 
-## Analysis and interpretation
+## Solution / interpretation
+~~~
 
-::: {.callout-note collapse="true" title="Solution and reasoning"}
-Show the complete reasoning, assumptions, and checks.
-:::
+This is only a compact example. Omit, combine, or rename sections according to whether the page is primarily practice or investigation.
 
-## Limitations and reproducibility
+## Keep evidence claims bounded
 
-## Further study
-
-- Concepts:
-- Data / code:
-- Related experiment:
-```
-
-## Editorial rules
-
-- Keep short retrieval questions in lesson pages; use this archetype for sustained practice or investigation.
-- For experiments, distinguish hypothesis, operational definition, metric, baseline, controls, and conclusion.
-- Do not infer causality from correlation or from an uncontrolled before/after comparison.
-- Report uncertainty and failure cases, not only successful runs.
-- Record data and code provenance, environment, and random seeds where relevant.
+A worked solution demonstrates a line of reasoning; it does not establish that a learner has retained or transferred the concept. A reproducible experiment supports only the claims justified by its design, controls, and measurements. Keep those evidence levels separate.
