@@ -66,7 +66,7 @@ Blocks also use **residual connections** and **normalization**. A residual conne
 x_{\text{out}} = x_{\text{in}} + F(x_{\text{in}}).
 \]
 
-Normalization (*LayerNorm* in classic GPT models) rescales the components of a position's vector before or after selected sublayers, depending on the architecture. It does not mix sequence positions. A typical **pre-LN** block, for example, uses $x' = x + \operatorname{Attention}(\operatorname{LN}(x))$, followed by $x'' = x' + \operatorname{MLP}(\operatorname{LN}(x'))$. This is one design, not a universal formula: pre-LN/post-LN order and normalization variants differ across models.
+Normalization (*LayerNorm* in classic GPT models) centers and normalizes the hidden-vector components of each position independently of other positions. Depending on the architecture, it is placed before or after selected sublayers. A typical **pre-LN** block, for example, uses $x' = x + \operatorname{Attention}(\operatorname{LN}(x))$, followed by $x'' = x' + \operatorname{MLP}(\operatorname{LN}(x'))$. This is one design, not a universal formula: pre-LN/post-LN order and normalization variants differ across models.
 
 To see these operations in a concrete implementation without mistaking them for invariants of every Transformer, consult the [guided tour of the reference block](transformer-block-walkthrough.qmd).
 
