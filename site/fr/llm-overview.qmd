@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
-scope: "Présente intuitivement le problème de modélisation du langage et sa difficulté ; définit les termes LLM, modèle de langage, modèle génératif, GPT et Transformer ; donne une carte de lecture du pipeline d’un GPT autorégressif et renvoie les formalismes et mécanismes détaillés vers leurs pages dédiées."
-purpose: "À l’issue de cette page, le lecteur doit pouvoir expliquer intuitivement le problème de modélisation du langage et ses difficultés, distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer, et retracer le calcul d’un GPT autorégressif en séparant embeddings et information positionnelle."
+scope: "Présente intuitivement le problème de modélisation du langage et sa difficulté ; définit les termes LLM, modèle de langage, modèle génératif, GPT et Transformer ; explique à haut niveau le processus par lequel un GPT transforme un contexte en prochain token, et renvoie les notions techniques vers leurs pages dédiées."
+purpose: "À l’issue de cette page, le lecteur doit pouvoir expliquer intuitivement le problème de modélisation du langage et ses difficultés, distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer, et décrire les grandes étapes de la génération autorégressive sans confondre le modèle, les représentations et la règle de sélection."
 suggested_route:
   previous: "fr/index"
   next: "fr/transformer"
@@ -29,7 +29,7 @@ Un **modèle de langage** est un modèle qui attribue une probabilité à des s�
 À l’issue de cette page, vous pourrez :
 - expliquer intuitivement pourquoi un modèle doit comparer plusieurs continuations possibles ;
 - distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer ;
-- retracer le pipeline d’un GPT et distinguer embeddings et information positionnelle.
+- décrire les grandes étapes par lesquelles un GPT transforme un contexte en prochain token, et expliquer pourquoi le processus recommence.
 :::
 
 ## 1. Le problème : continuer un texte à partir d'un contexte
@@ -53,67 +53,33 @@ Le modèle apprend des régularités statistiques des données ; cet objectif ne
 
 **GPT** (*Generative Pre-trained Transformer*) désigne une famille de modèles génératifs pré-entraînés fondés sur l'architecture Transformer. Dans l'usage courant, les GPT classiques sont des Transformers **décodeur seul**, entraînés à prédire le prochain token. GPT et Transformer ne sont donc pas synonymes : Transformer désigne une famille d'architectures ; GPT désigne une famille de modèles qui en utilise une configuration particulière.
 
-## 3. Le chemin d’un GPT, du texte au prochain token
+## 3. Le processus de génération, du texte au prochain token
 
-Le schéma ci-dessous suit un GPT autorégressif. Il ne décrit pas tous les modèles de langage : certains ne sont pas génératifs, et d'autres architectures génératives existent. Les flèches représentent des transformations distinctes, pas une succession de synonymes.
-
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes du pipeline d'un GPT">
-  <a class="step-item" href="tokenization-strategies.qmd">1. Vocabulaire</a>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="text-data.qmd">2. Tokens / IDs</a>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="embedding-space.qmd">3. Embeddings</a>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="positional-encoding.qmd">4. Position</a>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="transformer.qmd">5. Transformer</a>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="logits.qmd">6. Logits</a>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="probabilites.qmd">7. Distribution</a>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="generation.qmd">8. Sélection</a>
-</div>
+Le schéma donne une vue d’ensemble d’un GPT autorégressif. Il ne représente pas un objet qui se déplace dans une série d’étapes : il distingue les transformations appliquées au contexte, les calculs effectués par le modèle et la règle qui choisit le prochain token. Les paramètres du GPT restent fixes pendant l’inférence ; c’est le contexte qui s’enrichit à chaque itération.
 
 ```{mermaid}
 flowchart LR
-  subgraph Entree["Représenter l'entrée"]
-    T["Texte"] --> K["Tokenizer<br/>vocabulaire"]
-    K --> I["Tokens et IDs"]
-    I --> E["Lookup<br/>embeddings"]
-    E --> R["Information<br/>positionnelle"]
+  A["Texte et contexte<br/>prompt + échanges précédents"] --> B["Préparer l'entrée<br/>découper et représenter le texte"]
+  subgraph GPT["Modèle GPT · paramètres fixes"]
+    C["Traiter le contexte<br/>combiner les informations utiles"] --> D["Évaluer les continuations<br/>estimer leur plausibilité"]
   end
-  subgraph Calcul["Calcul du modèle"]
-    R --> X["Blocs Transformer<br/>représentations contextualisées"]
-    X --> L["Logits<br/>un score par token"]
-  end
-  subgraph Sortie["Choisir une continuation"]
-    L --> P["Distribution<br/>de probabilités"]
-    P --> S["Sélection du prochain token"]
-  end
-  S -->|"ID ajouté au contexte"| I
+  B --> C
+  D --> E["Choisir un token<br/>règle de décodage"]
+  E --> F["Enrichir le contexte<br/>ajouter le token choisi"]
+  F -. "répéter avec le nouveau contexte" .-> B
 ```
 
-| Étape | Ce qui se passe | Pour comprendre |
-|---|---|---|
-| **Texte et vocabulaire** | Le tokenizer segmente le texte selon son vocabulaire et ses règles. | [Du texte aux tokens](text-data.qmd) · [Stratégies de tokenisation](tokenization-strategies.qmd) |
-| **Tokens et IDs** | Chaque token est représenté par un identifiant entier ; un ID n’est ni un score ni un vecteur de sens. | [Texte, tokens et données](text-data.qmd) |
-| **Embeddings** | Chaque ID sélectionne un vecteur appris dans la matrice d'embeddings ; ce vecteur initial n'est pas encore contextualisé. | [Espace des embeddings](embedding-space.qmd) |
-| **Information positionnelle** | Un mécanisme distinct fournit l'ordre des tokens ; il peut intervenir à différents endroits du calcul. | [Information de position](positional-encoding.qmd) |
-| **Transformer** | Les blocs transforment ces vecteurs en représentations contextualisées, notamment par l’attention. | [GPT et Transformer](transformer.qmd) · [Comparer les architectures](transformer-architectures.qmd) |
-| **Logits** | La projection de sortie associe un score non normalisé à chaque token du vocabulaire. | [Logits](logits.qmd) |
-| **Distribution** | Les scores sont normalisés en probabilités conditionnelles sur les tokens possibles. | [Probabilités de sortie](probabilites.qmd) |
-| **Sélection** | Une règle de décodage choisit le prochain token ; celui-ci est ajouté au contexte et le calcul recommence. | [Générer du texte](generation.qmd) |
+### Les quatre grandes opérations
 
-### Embeddings : associer un vecteur à un identifiant
+1. **Préparer l’entrée.** Le texte du prompt et le contexte de la conversation sont découpés en unités appelées *tokens*, puis convertis en représentations que le modèle peut traiter. L’ordre des tokens est également pris en compte. Pour approfondir : [vocabulaire et tokenisation](tokenization-strategies.qmd), [tokens et données](text-data.qmd), [embeddings](embedding-space.qmd) et [information positionnelle](positional-encoding.qmd).
 
-L'ID d'un token est un indice entier, pas une coordonnée qui porte du sens. La table d'embeddings associe à chaque ID un vecteur appris ; deux occurrences du même ID sélectionnent donc le même vecteur initial. Les couches du réseau le transformeront ensuite en fonction du contexte. Voir [l'espace des embeddings](embedding-space.qmd).
+2. **Traiter le contexte.** Le [Transformer](transformer.qmd) combine les informations portées par les différentes positions pour construire des représentations qui dépendent du contexte. Le modèle ne traite donc pas chaque token comme un élément isolé.
 
-### Information positionnelle : représenter l'ordre
+3. **Évaluer les continuations possibles.** À partir de ce calcul, le modèle estime la plausibilité des tokens qui pourraient suivre. Les [logits](logits.qmd) et la [distribution de probabilités](probabilites.qmd) décrivent plus précisément le passage des représentations internes aux possibilités de sortie.
 
-Une séquence n'est pas un simple ensemble de tokens : l'ordre change le sens et les dépendances à apprendre. Le modèle doit donc disposer d'une information qui distingue les positions. Les [mécanismes de représentation positionnelle](positional-encoding.qmd) diffèrent notamment par l’endroit où cette information intervient dans le calcul.
+4. **Choisir et recommencer.** Une règle de décodage choisit le prochain token parmi les possibilités évaluées. Elle ne sélectionne pas nécessairement celui qui a la probabilité la plus élevée : certaines stratégies tiennent aussi compte d'un tirage aléatoire. Le token choisi est ajouté au contexte, puis le modèle recommence son calcul pour produire le suivant. Voir [la génération](generation.qmd).
 
-**Le point de jonction :** le passage des IDs aux logits correspond au calcul avant (*forward pass*) du modèle ; la transformation des logits en distribution et la sélection relèvent du décodage. Pendant l’inférence, les paramètres restent fixes. Leur apprentissage est une autre étape du cycle de vie, présentée plus loin.
+**L’idée essentielle :** un GPT ne rédige pas toute sa réponse d’un seul coup. Il estime une continuation, en sélectionne un token, l’ajoute au contexte, puis répète l’opération jusqu’à une condition d’arrêt. Le texte visible est ainsi construit progressivement.
 
 ## 4. Trois dimensions à ne pas confondre
 
