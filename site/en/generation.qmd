@@ -11,7 +11,7 @@ id: "en/generation"
 scope: "Describes autoregressive inference for an already trained model treated as a black box: context, next-token distribution, decoding rule, token appending, and stopping; Transformer internals and parameter learning are outside its scope."
 purpose: "Readers should be able to step through token-by-token generation, explain why parameters remain fixed during inference, and predict how a decoding rule changes the output without retraining the model."
 suggested_route:
-  previous: "en/transformer"
+  previous: "en/hybrid-llm-architectures"
   next: "en/text-data"
 hierarchy:
   parents: ["en/llm-overview"]
@@ -76,6 +76,10 @@ These rules are **decoding choices**, not properties of the model: the same mode
 - **Context window.** The model only sees the current context, truncated to its maximum window; information that fell out of the window no longer influences the continuation.
 - **No memory across generations.** Each generation starts from the provided context; the model retains nothing beyond what appears in that context.
 - **Project status.** In this repository, generation from a local checkpoint remains planned work: the generation milestones of the [guided build](build-path.qmd) describe what is available and what remains to be built.
+
+
+
+For inference optimizations that accelerate this loop without removing its autoregressive nature, see the [Nemotron hybrid architecture and MTP case study](hybrid-llm-architectures.qmd).
 
 ::: {.self-check}
 ## Check your understanding

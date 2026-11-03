@@ -11,7 +11,7 @@ id: "fr/generation"
 scope: "Décrit la boucle d’inférence autorégressive d’un modèle déjà entraîné, traité comme une boîte noire : contexte, distribution du prochain token, règle de décodage, ajout du token et arrêt ; les détails internes du Transformer et l’apprentissage des paramètres sont hors périmètre."
 purpose: "Le lecteur doit pouvoir dérouler une génération token par token, expliquer pourquoi les paramètres restent fixes pendant l’inférence et prévoir comment une règle de décodage modifie la sortie sans réentraîner le modèle."
 suggested_route:
-  previous: "fr/transformer"
+  previous: "fr/hybrid-llm-architectures"
   next: "fr/text-data"
 hierarchy:
   parents: ["fr/llm-overview"]
@@ -76,6 +76,10 @@ Ces règles sont des **choix de décodage**, pas des propriétés du modèle : l
 - **Fenêtre de contexte.** Le modèle ne voit que le contexte courant, tronqué à sa fenêtre maximale ; une information sortie de la fenêtre n'influence plus la suite.
 - **Pas de mémoire entre les générations.** Chaque génération repart du contexte fourni ; le modèle ne retient rien au-delà de ce qui figure dans ce contexte.
 - **État du projet.** Dans ce dépôt, la génération depuis un checkpoint local reste un chantier : les jalons de génération du [parcours guidé](build-path.qmd) décrivent ce qui est disponible et ce qui reste à construire.
+
+
+
+Pour approfondir les optimisations qui accélèrent cette boucle sans changer son caractère autorégressif, voir l’étude de cas sur [MTP et les architectures hybrides de Nemotron](hybrid-llm-architectures.qmd).
 
 ::: {.self-check}
 ## Vérifier sa compréhension
