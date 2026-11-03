@@ -1,7 +1,7 @@
 ---
 title: "Preparing a corpus for pretraining"
 subtitle: "Provenance, filtering, deduplication, splits, and tokenizer fitting"
-keywords: ["type:build-guide", "destination:build", "topic:corpus-preparation", "level:core", "language:en", "status:published"]
+keywords: ["type:guided-build", "destination:build", "topic:corpus-preparation", "level:core", "language:en", "status:published"]
 lang: en
 ---
 
@@ -12,12 +12,12 @@ scope: "Covers data-engineering decisions upstream of pretraining: source eligib
 purpose: "Build a traceable corpus-preparation protocol suited to a training or evaluation objective, avoid split leakage, and distinguish corpus-level decisions from tokenizer internals and training-example construction."
 suggested_route:
   previous: "en/build-path"
-  next: "en/training-examples"
+  next: null
 hierarchy:
   parents: ["en/build-path"]
   children: []
 related: ["en/text-data", "en/tokenization-strategies", "en/tokenizer-design-evaluation", "en/training-examples", "en/experimental-evaluation"]
-tags: ["type:build-guide", "destination:build", "topic:corpus-preparation", "level:core", "language:en", "status:published"]
+tags: ["type:guided-build", "destination:build", "topic:corpus-preparation", "level:core", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
