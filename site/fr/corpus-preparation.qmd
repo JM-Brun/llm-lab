@@ -24,13 +24,14 @@ tags: ["type:guided-build", "destination:build", "topic:corpus-preparation", "le
 Un modèle ne s'entraîne pas directement sur « Internet » ou sur un ensemble abstrait de textes : il consomme des séquences construites à partir de sources sélectionnées et transformées. La préparation du corpus définit ce qui entre dans l'expérience, ce qui doit rester indépendant pour l'évaluation et les transformations qui doivent pouvoir être auditées. Ce travail est distinct de la tokenisation d'un prompt et de la construction des fenêtres d'entraînement.
 :::
 
-## Objectifs
-
-- Définir les sources admissibles et conserver leur provenance et leurs conditions d'utilisation.
-- Distinguer parsing, filtrage, déduplication et normalisation du tokenizer.
-- Choisir des partitions cohérentes avec la généralisation que l'évaluation doit mesurer.
-- Ajuster puis figer un tokenizer sans contaminer une évaluation held-out.
-- Transmettre un corpus préparé à l'encodage et à la construction des exemples.
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+À l’issue de cette page, vous pourrez :
+- définir les sources admissibles et conserver leur provenance et leurs conditions d'utilisation ;
+- distinguer parsing, filtrage, déduplication et normalisation du tokenizer ;
+- choisir des partitions cohérentes avec la généralisation que l'évaluation doit mesurer ;
+- entraîner puis figer un tokenizer sans contaminer une évaluation tenue à l'écart ;
+- transmettre un corpus préparé à l'encodage et à la construction des exemples d'entraînement.
+:::
 
 ## 1. Une chaîne de décisions, pas une recette universelle
 
@@ -86,3 +87,7 @@ Le corpus préparé peut alors être encodé en flux de tokens. La page [Du corp
 ## Limites
 
 Cette page définit un cadre de traçabilité et de séparation des responsabilités, pas une politique juridique, une recette universelle de filtrage ni un système de détection de contamination prêt à l'emploi. Les seuils, outils et unités de partition doivent être justifiés par les données, les droits applicables et l'affirmation expérimentale visée.
+
+::: {.language-switch}
+[Français](corpus-preparation.qmd) · [English](../en/corpus-preparation.qmd)
+:::
