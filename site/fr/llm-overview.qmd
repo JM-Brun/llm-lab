@@ -40,32 +40,7 @@ Pour représenter cette incertitude, le modèle estime la plausibilité de plusi
 
 Le modèle apprend des régularités statistiques des données ; cet objectif ne lui fournit pas, à lui seul, un mécanisme de vérification de la vérité.
 
-### Le modèle probabiliste derrière la génération
-
-Pour un GPT autorégressif, le calcul central peut s'écrire :
-
-\[
-p_\theta(x_t \mid x_{<t}),
-\]
-
-où \(x_{<t}\) désigne les tokens déjà présents dans le contexte et \(\theta\) les paramètres appris du modèle. Cette expression représente une **distribution sur le prochain token**, pas une prédiction certaine ni nécessairement un mot entier.
-
-En appliquant la règle de factorisation autorégressive, la probabilité d'une séquence complète s'écrit :
-
-\[
-p_\theta(x_{1:T}) =
-\prod_{t=1}^{T} p_\theta(x_t \mid x_{<t}).
-\]
-
-Lors du pré-entraînement par prédiction du prochain token, on ajuste les paramètres pour augmenter la probabilité des tokens observés dans les séquences d'entraînement. Cela revient généralement à minimiser la log-vraisemblance négative :
-
-\[
-\mathcal{L}(\theta) =
--\frac{1}{T}\sum_{t=1}^{T}
-\log p_\theta(x_t \mid x_{<t}).
-\]
-
-La moyenne par token est une convention fréquente pour exprimer la loss ; les détails de réduction et de masquage dépendent de l'implémentation. Cette formalisation décrit l'objectif usuel du GPT autorégressif étudié ici, et non tous les objectifs possibles des LLM. La page [Modélisation du langage : formalisation probabiliste](language-modeling-math.qmd) développe les hypothèses et les conséquences mathématiques.
+La génération autorégressive repose sur une distribution de probabilité du prochain token, conditionnée par le contexte courant. Cette dépendance est le cœur du modèle probabiliste ; sa formalisation, la factorisation d’une séquence et le lien avec l’objectif d’entraînement sont développés dans la page d’[approfondissement mathématique sur la modélisation du langage](language-modeling-math.qmd).
 
 ### Pourquoi ce problème est-il difficile ?
 
