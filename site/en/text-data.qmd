@@ -34,13 +34,13 @@ Think of a **catalogue with reference numbers**. The tokenizer splits text into 
 [Tokenization strategies](tokenization-strategies.qmd) compare the trade-offs of real tokenizers; [embedding space](embedding-space.qmd) explains the lookup that maps each ID to a vector.
 :::
 
-## Learning objectives
-
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 - Distinguish Unicode text, bytes, tokens, token IDs, and embeddings.
 - Explain why whitespace splitting is insufficient.
 - Describe how segmentation affects sequence length, cost, and compatibility.
 - Identify the dedicated pages for technical deep dives.
 - Identify what tokenization does not establish about a model's meaning representations or capabilities.
+:::
 
 ## 1. The path from text to model
 
