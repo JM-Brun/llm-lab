@@ -29,7 +29,7 @@ A tree partitions feature space into regions and assigns a prediction to each le
 F_M(x)=F_0(x)+\sum_{m=1}^{M}\eta\,\rho_m h_m(x),
 \]
 
-where $h_m$ is the new tree, (ho_m) adjusts its leaf contributions, and $\eta$ is the learning rate.
+where $h_m$ is the new tree, $\\rho_m$ adjusts its leaf contributions, and $\eta$ is the learning rate.
 
 ## Why “gradient”?
 
