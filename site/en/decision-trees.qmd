@@ -23,7 +23,7 @@ A decision tree represents a prediction as a sequence of feature tests. Each spl
 :::
 ## Tree structure
 
-An internal node applies a test such as (x_j < s). Observations move down one branch; successive tests define regions of feature space. A leaf stores a predicted value (regression) or class label/distribution (classification).
+An internal node applies a test such as $x_j < s$. Observations move down one branch; successive tests define regions of feature space. A leaf stores a predicted value (regression) or class label/distribution (classification).
 
 ## Choosing a split
 
@@ -33,7 +33,7 @@ CART trees greedily search for a feature and threshold that reduce child impurit
 G(S)=1-\sum_{k=1}^{K}p_k^2,
 \]
 
-where (p_k) is the proportion of class (k) in the node. Split gain weights child impurities by their sizes. A locally optimal greedy choice does not guarantee a globally optimal tree.
+where $p_k$ is the proportion of class $k$ in the node. Split gain weights child impurities by their sizes. A locally optimal greedy choice does not guarantee a globally optimal tree.
 
 ## Complexity and generalization
 
