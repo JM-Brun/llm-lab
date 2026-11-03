@@ -9,7 +9,7 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
 scope: "Présente le problème de modélisation du langage et sa difficulté ; définit les termes LLM, modèle de langage, modèle génératif, GPT et Transformer ; donne une carte de lecture du pipeline d’un GPT autorégressif et renvoie les mécanismes détaillés vers leurs pages dédiées."
-purpose: "À l’issue de cette page, le lecteur doit pouvoir retracer à haut niveau le chemin texte → tokens → embeddings → Transformer → logits → distribution → sélection, distinguer architecture, apprentissage et inférence, puis choisir la page spécialisée à approfondir."
+purpose: "À l’issue de cette page, le lecteur doit pouvoir expliquer le problème de modélisation du langage et ses difficultés, distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer, et retracer le calcul d’un GPT autorégressif en séparant embeddings et information positionnelle."
 suggested_route:
   previous: "fr/index"
   next: "fr/transformer"
@@ -34,9 +34,7 @@ Cette page part du problème à résoudre : produire une continuation plausible 
 - distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer ;
 - retracer les grandes étapes du calcul d'un GPT autorégressif.
 
-Cette page introduit le problème et son principe de traitement. Elle ne suppose pas de connaître les équations ni les tenseurs.
-
-La suite du parcours est présentée à la fin de cette page.
+Cette page introduit le problème et son principe de traitement sans supposer de connaissances préalables sur les équations ou les tenseurs. La page suivante, [GPT et Transformer](transformer.qmd), explique le calcul interne qui réalise cette prédiction.
 
 </details>
 
@@ -196,10 +194,6 @@ Le RAG peut récupérer les documents à l’inférence et les fournir dans le c
 La prédiction du prochain token ne garantit ni la vérité des sorties ni une compréhension humaine du monde. Ces questions, ainsi que les limites des affirmations sur les capacités émergentes, sont examinées dans [Ce que la prédiction du prochain token ne prouve pas](llm-limits.qmd).
 
 
-
-## 8. Pour continuer
-
-La suite naturelle est [GPT et Transformer](transformer.qmd), qui explique les blocs, l'attention et le passage des représentations aux logits. Les liens placés au fil de cette page permettent d'approfondir séparément la tokenisation, les embeddings, la position, les architectures et la génération.
 
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../en/llm-overview.qmd)
