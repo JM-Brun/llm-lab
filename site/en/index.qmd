@@ -16,7 +16,7 @@ suggested_route:
   next: "en/llm-overview"
 hierarchy:
   parents: []
-  children: ["en/llm-overview", "en/exercises", "en/experimental-evaluation", "en/glossary", "en/transformer-history"]
+  children: ["en/llm-overview", "en/build-path", "en/transformer", "en/exercises", "en/experimental-evaluation", "en/glossary", "en/transformer-history"]
 related: []
 tags: ["type:entry-point", "destination:orient", "topic:index", "level:overview", "language:en", "status:published"]
 -->
@@ -36,45 +36,24 @@ Large language models (LLMs) are a family of neural models trained on large amou
 </div>
 ::::
 
-## One recommended route, with optional detours
+## Choose how to proceed
 
-For a first reading, follow this order. It builds a cumulative explanation: from the role of an LLM to the computations that make generation possible, then to how its parameters are learned.
+- **Understand** — Start with the [LLM panorama](llm-overview.qmd) to place model families, objectives, learning and inference.
+- **Build** — Follow the [guided path](build-path.qmd) to implement a small decoder-only GPT from random initialization. **Current status:** reference inference code is tested; a complete training loop and reproducible training run are not yet available. Corpus provenance and licensing must be established before training.
+- **Deepen** — Explore optional derivations and technical references, such as [tensors](tensors.qmd). These are not prerequisites for the main route.
+- **Practice and experiment** — Use [exercises](exercises.qmd) and [experimental evaluation](experimental-evaluation.qmd) to test explanations against calculations and documented protocols.
 
-1. **Place the system** — [LLM panorama](llm-overview.qmd): distinguish a model, its architecture, learning, and inference.
-2. **See the overall computation** — [GPT and Transformers](transformer.qmd): trace a context through the network to next-token scores.
-3. **Understand the input** — [From text to tokens](text-data.qmd): explain how a character string becomes a sequence of IDs and vectors.
-4. **Open the computational model** — attention, contextualized representations, and causal masking: understand how information flows.
-5. **Understand output and learning** — logits, probabilities, likelihood, loss, and gradients: distinguish prediction, error measurement, and parameter updates.
-6. **Verify through practice** — [exercises](exercises.qmd) and [experimental evaluation](experimental-evaluation.qmd): confront explanations with calculations and protocols.
+Practice supports all three learning depths; it is not a fourth depth. The conceptual route and the implementation route have different orders. Their relationship is documented in the [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
 
-You can stop after the first two stages and already have a system-level map. Technical pages deepen a specific question; they are not all mandatory linear prerequisites. The [guided build path](build-path.qmd), by contrast, follows the dependencies needed to implement a model, so its practical order is not identical to the conceptual discovery order.
+## How to read a lesson
 
-### Choose a destination
-
-- **Understand** — follow the conceptual explanations and recommended route above.
-- **Build** — implement a small GPT step by step with the [guided path](build-path.qmd).
-- **Deepen** — consult advanced derivations and analyses, such as [tensors](tensors.qmd); no general mathematics course is required at the entry point.
-- **Practice and experiment** — test mechanisms with [exercises](exercises.qmd), the [GPT-2 explorer](transformer-explainer.qmd), and [experimental evaluation](experimental-evaluation.qmd).
-
-How these destinations fit with the three learning depths and the build milestones is detailed in the [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
-
-## Transparent Reading System: Intuition, Code, and Epistemic Status
-
-To preserve scientific rigor while keeping the learning experience fluid, lessons use standardized visual markers:
+Lessons use three markers to distinguish different kinds of material:
 
 - <span class="epistemic-badge badge-concept">Verified Concept</span> Formal definitions, equations, and explicit mathematical assumptions.
 - <span class="epistemic-badge badge-code">Executable Micro-code</span> Inspectable Python/NumPy workbenches with shape invariants and assertion checks.
 - <span class="epistemic-badge badge-status">Architecture / Status</span> Explicit architectural scope and roadmap milestone state.
 
-## Guided project: a small GPT
-
-The practical goal is to build a **small decoder-only GPT from randomly initialized parameters**, then validate it and generate text. Mathematical and tensor operations are introduced when needed; a general prerequisite course is not assumed.
-
-<div class="learning-card learning-card-featured">
-  <p class="eyebrow">GUIDED PATH · IN PROGRESS</p>
-  <p>The path is organized into milestones with explicit evidence criteria. A reference implementation limited to inference is now available and tested in the repository; a complete model and reproducible training run are not yet available. Corpus provenance and licensing must be established before any training experiment.</p>
-  [Open the guided build](build-path.qmd){.card-link} · [See milestones and evidence criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md){.card-link}
-</div>
+These markers describe the evidence available; they do not make all evidence equivalent. A diagram makes a structure readable but does not prove a property; a derivation establishes a result under stated assumptions; a test checks the cases it covers; an experiment compares configurations under a documented protocol, metrics and limitations.
 
 ## Three processes to distinguish
 
@@ -115,39 +94,13 @@ The same model is involved in several processes, but they have different objecti
 <text x="20" y="610" class="flow-hint">Blocks open the currently available canonical pages.</text>
 </svg><figcaption>Inference: fixed parameters · Learning: updated parameters · Dashed arrows: evaluation feedback</figcaption></figure>
 
-## Conceptual route
+## Explore further
 
-Start with the [LLM panorama](llm-overview.qmd) to place model families and their lifecycle. Then move to the [GPT / Transformer overview](transformer.qmd), which focuses on the decoder-only model built in this project, and use the guided path to connect mechanisms to implementation milestones. The concept pages explain individual operations; evaluation remains cross-cutting, not simply a final stage of generation.
+**In LLM Lab:** [Glossary](glossary.qmd) · [Exercises](exercises.qmd) · [Transformer history](transformer-history.qmd) · [Experimental evaluation](experimental-evaluation.qmd) · [Annotated bibliography](../references.qmd).
 
-The detailed map of the three learning depths and implementation milestones lives in the [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md). Tensor references and advanced mathematical derivations are optional, not prerequisites.
+**External references:** [3Blue1Brown — Transformers](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s) for visual intuition; [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch/) for implementation detail; [Jay Alammar — Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) and [Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) for visual explanations.
 
-::: {.callout-note}
-**Current scope.** This route organizes the content currently available; it does not claim that a complete GPT has already been implemented. Detailed generation, reproducible pretraining, and adaptation of a pretrained model remain distinct workstreams beyond the conceptual route.
-:::
-
-## Verify, do not only visualize
-
-A page may combine intuition, mathematical derivation, code, tests, and experiments. These provide different kinds of evidence:
-
-- a diagram makes a structure readable but does not prove a property;
-- a derivation establishes a result under explicit assumptions;
-- a test checks the cases it covers but does not by itself prove a general rule;
-- an experiment compares configurations under a documented protocol, metrics, and limitations.
-
-Pages distinguish available explanations, code that has actually been tested, and work that remains planned.
-
-## Further resources
-
-- [3Blue1Brown — Transformers](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s): visual intuition and the big picture.
-- [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch/): a detailed model-building path and associated code.
-- [Jay Alammar — The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) and [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/): visual explanations of model mechanisms.
-- [Annotated bibliography](../references.qmd): scientific sources, technical documentation, and teaching resources, with their roles and limitations.
-
-## Explore by question
-
-[Glossary](glossary.qmd) · [Exercises](exercises.qmd) · [Transformer history](transformer-history.qmd) · [Experimental evaluation](experimental-evaluation.qmd)
-
-For the full programme: [curriculum map](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) · [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) · [roadmap](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md)
+For the complete programme, see the [curriculum map](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) and [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
 
 ::: {.language-switch}
 [Français](../index.qmd) · [English](index.qmd)

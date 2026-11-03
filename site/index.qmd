@@ -17,7 +17,7 @@ suggested_route:
   next: "fr/llm-overview"
 hierarchy:
   parents: []
-  children: ["fr/llm-overview", "fr/exercises", "fr/evaluation-experimentale", "fr/glossary", "fr/transformer-history"]
+  children: ["fr/llm-overview", "fr/build-path", "fr/transformer", "fr/exercises", "fr/evaluation-experimentale", "fr/glossary", "fr/transformer-history"]
 related: []
 tags: ["type:entry-point", "destination:orient", "topic:index", "level:overview", "language:fr", "status:published"]
 -->
@@ -37,45 +37,24 @@ Les grands modèles de langage (LLM) sont une famille de modèles neuronaux entr
 </div>
 ::::
 
-## Un parcours conseillé, avec des détours facultatifs
+## Choisir son parcours
 
-Pour une première lecture, suivez cet ordre. Il construit une explication cumulative : du rôle d’un LLM jusqu’aux calculs qui rendent la génération possible, puis à l’apprentissage de ses paramètres.
+- **Comprendre** — Commencez par le [panorama des LLM](fr/llm-overview.qmd) pour situer les familles de modèles, les objectifs, l’apprentissage et l’inférence.
+- **Construire** — Suivez le [parcours guidé](fr/build-path.qmd) pour implémenter un petit GPT décodeur seul à partir de paramètres initialisés aléatoirement. **État actuel :** le code de référence pour l’inférence est testé ; la boucle d’entraînement complète et un entraînement reproductible ne sont pas encore disponibles. La provenance et la licence du corpus devront être établies avant tout entraînement.
+- **Approfondir** — Consultez les dérivations et références techniques facultatives, par exemple les [tenseurs](fr/tensors.qmd). Elles ne sont pas des prérequis au parcours principal.
+- **S’exercer et expérimenter** — Utilisez les [exercices](fr/exercises.qmd) et l’[évaluation expérimentale](fr/evaluation-experimentale.qmd) pour confronter les explications à des calculs et à des protocoles documentés.
 
-1. **Situer le système** — [Panorama des LLM](fr/llm-overview.qmd) : distinguer modèle, architecture, apprentissage et inférence.
-2. **Voir le calcul d’ensemble** — [GPT et Transformer](fr/transformer.qmd) : suivre un contexte à travers le réseau jusqu’aux scores du prochain token.
-3. **Comprendre l’entrée** — [Du texte aux tokens](fr/text-data.qmd) : expliquer comment une chaîne de caractères devient une séquence d’identifiants et de vecteurs.
-4. **Ouvrir la boîte de calcul** — attention, représentations contextualisées et masquage causal : comprendre comment l’information circule.
-5. **Comprendre la sortie et l’apprentissage** — logits, probabilités, vraisemblance, fonction de perte et gradients : distinguer prédire, mesurer l’erreur et modifier les paramètres.
-6. **Vérifier par la pratique** — [exercices](fr/exercises.qmd) et [évaluation expérimentale](fr/evaluation-experimentale.qmd) : confronter les explications à des calculs et à des protocoles.
+La pratique soutient les trois profondeurs pédagogiques ; elle ne constitue pas une quatrième profondeur. Le parcours conceptuel et le parcours d’implémentation suivent des ordres différents. Leur articulation est documentée dans le [parcours d’apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
 
-Vous pouvez vous arrêter après les deux premières étapes et avoir déjà une carte du système. Les pages techniques approfondissent une question précise ; elles ne sont pas toutes des prérequis linéaires. Le [parcours de construction](fr/build-path.qmd) suit, lui, les dépendances nécessaires pour implémenter un modèle : son ordre pratique n’est pas exactement celui de la découverte conceptuelle.
+## Lire une leçon
 
-### Choisir une destination
+Les leçons utilisent trois repères pour distinguer les types de contenu :
 
-- **Comprendre** — suivre les explications conceptuelles et le fil recommandé ci-dessus.
-- **Construire** — implémenter progressivement un petit GPT avec le [parcours guidé](fr/build-path.qmd).
-- **Approfondir** — consulter les dérivations et analyses avancées, par exemple les [tenseurs](fr/tensors.qmd) ; aucun cours mathématique général n’est exigé à l’entrée.
-- **S’exercer et expérimenter** — tester les mécanismes avec les [exercices](fr/exercises.qmd), l’[explorateur GPT-2](fr/transformer-explainer.qmd) et l’[évaluation expérimentale](fr/evaluation-experimentale.qmd).
+- <span class="epistemic-badge badge-concept">Concept vérifié</span> Définitions formelles, équations et hypothèses mathématiques explicites.
+- <span class="epistemic-badge badge-code">Micro-code exécutable</span> Ateliers Python/NumPy inspectables avec assertions sur les formes tensorielles et les invariants.
+- <span class="epistemic-badge badge-status">Architecture / Statut</span> Périmètre architectural explicite et état du jalon dans le parcours de construction.
 
-L’articulation entre ces destinations, les trois profondeurs pédagogiques et les jalons de construction est détaillée dans le [parcours d’apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
-
-## Grille de lecture : distinguer intuition, code et statut
-
-Pour maintenir une rigueur sans faille tout en rendant la lecture agréable, les leçons intègrent des repères visuels normalisés :
-
-- <span class="epistemic-badge badge-concept">Concept vérifié</span> Définition formelle, équations et hypothèses mathématiques explicites.
-- <span class="epistemic-badge badge-code">Micro-code exécutable</span> Atelier Python/NumPy inspectable avec assertions sur les formes tensorielles et invariants.
-- <span class="epistemic-badge badge-status">Architecture / Statut</span> Périmètre d'application exact et jalon dans le parcours de construction.
-
-## Projet guidé : un petit GPT
-
-L’objectif pratique est de construire un **petit GPT décodeur seul, initialisé aléatoirement**, puis de le valider et de générer du texte. Le parcours introduit les opérations mathématiques et tensorielles au moment où elles deviennent nécessaires ; il ne suppose pas un cours général préalable.
-
-<div class="learning-card learning-card-featured">
-  <p class="eyebrow">PARCOURS GUIDÉ · EN CONSTRUCTION</p>
-  <p>Le parcours est organisé en jalons avec des critères de preuve. Une implémentation de référence limitée à l’inférence est désormais disponible et testée dans le dépôt ; le modèle complet et son entraînement reproductible ne sont pas encore disponibles. La provenance et la licence du corpus devront être établies avant toute expérience d’entraînement.</p>
-  [Voir le parcours de construction](fr/build-path.qmd){.card-link} · [Consulter les jalons et critères de preuve](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md){.card-link}
-</div>
+Ces repères décrivent les preuves disponibles ; ils ne rendent pas toutes les preuves équivalentes. Un schéma rend une structure lisible sans démontrer une propriété ; une dérivation établit un résultat sous des hypothèses explicites ; un test vérifie les cas qu’il couvre ; une expérience compare des configurations selon un protocole, des métriques et des limites documentés.
 
 ## Trois processus à distinguer
 
@@ -116,39 +95,13 @@ Le même modèle intervient dans plusieurs processus, mais ceux-ci n'ont ni le m
 <text x="20" y="610" class="flow-hint">Les blocs ouvrent les pages de référence actuellement disponibles.</text>
 </svg><figcaption>Inférence : paramètres fixes · Apprentissage : paramètres mis à jour · Flèches pointillées : rétroactions de l’évaluation</figcaption></figure>
 
-## Parcours conceptuel
+## Explorer davantage
 
-Commencez par le [panorama des LLM](fr/llm-overview.qmd) pour situer les familles de modèles et leur cycle de vie. Passez ensuite à la [vue d’ensemble GPT / Transformer](fr/transformer.qmd), qui zoome sur le modèle décodeur seul construit dans ce projet, puis utilisez le parcours guidé pour relier les mécanismes aux jalons de construction. Les pages conceptuelles détaillent les opérations ; l’évaluation reste transversale et ne constitue pas une simple dernière étape de génération.
+**Dans LLM Lab :** [Glossaire](fr/glossary.qmd) · [Exercices](fr/exercises.qmd) · [Histoire des Transformers](fr/transformer-history.qmd) · [Évaluation expérimentale](fr/evaluation-experimentale.qmd) · [Bibliographie commentée](references.qmd).
 
-La carte détaillée des trois profondeurs pédagogiques et des jalons de construction est maintenue dans le [parcours d’apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md). Les pages de tenseurs et les développements mathématiques avancés sont des références facultatives, non des prérequis.
+**Références externes :** [3Blue1Brown — Transformers](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s) pour l’intuition visuelle ; [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch/) pour les détails d’implémentation ; [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) et [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) de Jay Alammar pour les explications visuelles.
 
-::: {.callout-note}
-**Périmètre actuel.** Ce parcours organise les contenus disponibles ; il ne prétend pas qu'un GPT complet est déjà implémenté. La génération détaillée, le préentraînement reproductible et l'adaptation d'un modèle pré-entraîné restent des chantiers distincts du parcours conceptuel.
-:::
-
-## Vérifier plutôt que seulement visualiser
-
-Une page peut combiner intuition, dérivation mathématique, code, tests et expérience. Ces éléments n'apportent pas le même type de preuve :
-
-- un schéma rend une structure lisible, mais ne démontre pas une propriété ;
-- une dérivation établit un résultat sous des hypothèses explicites ;
-- un test vérifie les cas qu’il couvre, sans prouver à lui seul une règle générale ;
-- une expérience compare des configurations selon un protocole, des métriques et des limites documentés.
-
-Les pages distinguent les explications disponibles, le code effectivement testé et les développements encore planifiés.
-
-## Ressources pour aller plus loin
-
-- [3Blue1Brown — Transformers](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s) : intuition visuelle et panorama.
-- [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch/) : parcours détaillé de construction et code associé.
-- [Jay Alammar — The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) et [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) : représentations visuelles des mécanismes.
-- [Bibliographie commentée](references.qmd) : sources scientifiques, documentations techniques et ressources pédagogiques, avec leurs rôles et leurs limites.
-
-## Explorer par question
-
-[Glossaire](fr/glossary.qmd) · [Exercices](fr/exercises.qmd) · [Histoire des Transformers](fr/transformer-history.qmd) · [Évaluation expérimentale](fr/evaluation-experimentale.qmd)
-
-Pour le détail du programme : [carte complète du curriculum](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) · [parcours d’apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) · [feuille de route](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md)
+Pour le programme complet, consultez la [carte du curriculum](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) et le [parcours d’apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
 
 ::: {.language-switch}
 [Français](index.qmd) · [English](en/index.qmd)
