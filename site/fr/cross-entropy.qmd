@@ -50,8 +50,7 @@ Les deux cas concernent **le même token cible** : seul le poids de probabilité
 
 Cette image illustre la perte d'un token avec une cible one-hot ; elle ne représente ni la distribution complète du vocabulaire, ni la moyenne sur les positions valides, ni l'ensemble de l'objectif d'entraînement.
 
-## Cible one-hot, cible souple et divergence KL
-
+::: {.callout-note collapse="true" title="Cibles souples et divergence KL (approfondissement)"}
 Pour une distribution cible \(q\) et une distribution prédite \(p\), l'entropie croisée est (les termes de masse cible nulle contribuent zéro) :
 
 \[
@@ -72,6 +71,7 @@ D_{\mathrm{KL}}(q\Vert p)
 \]
 
 Donc \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\). Ici, \(q\) et \(p\) sont des distributions normalisées et les termes de masse nulle contribuent zéro ; si \(q_i>0\) mais \(p_i=0\), la cross-entropie et \(D_{\mathrm{KL}}(q\Vert p)\) sont infinies selon la convention usuelle des valeurs étendues. La divergence KL est directionnelle ; l'entropie croisée n'est ni symétrique ni une distance métrique. Par exemple, avec \(q=(1,0)\) et \(p=(0.9,0.1)\), \(D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)\approx0.105\) nat, tandis que \(D_{\mathrm{KL}}(p\Vert q)=+\infty\), car \(p\) attribue une masse positive à une catégorie à laquelle \(q\) attribue une masse nulle. En pratique, un calcul log-softmax stable aide à éviter un sous-débordement accidentel, sans modifier cette condition mathématique.
+:::
 
 ## Plusieurs positions : décalage causal et masques
 
@@ -85,13 +85,13 @@ Pour un batch, les logits ont souvent la forme \((B,T,V)\) et les labels \((B,T)
 - **Pondération :** poids de classes, label smoothing ou pertes auxiliaires modifient l'objectif par rapport au cas one-hot non pondéré.
 - **Comparaison :** préciser le tokenizer, les positions incluses et la convention de moyenne avant de comparer deux valeurs.
 
-## Implémentation de référence et périmètre
-
+::: {.callout-note collapse="true" title="Implémentation NumPy et tests (approfondissement)"}
 L'[implémentation de référence NumPy](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/losses.py) et ses [tests unitaires](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_losses.py) couvrent volontairement un cas restreint : des logits de forme \((B,C)\), une cible entière par ligne et la **moyenne non pondérée sur les lignes**. La perte utilise le logarithme naturel et s'exprime donc en nats. La fonction de gradient renvoie la dérivée de cette même perte moyenne par rapport aux logits, et non par rapport aux paramètres d'un modèle.
 
 Cette référence ne met **pas** en œuvre le décalage des entrées/cibles d'une séquence, les masques de tokens ou `ignore_index`, les cibles souples, les poids de classes, ni la perplexité. Pour la modélisation du langage au niveau token, l'appelant doit aligner les logits et les cibles et sélectionner les positions cibles valides avant d'utiliser cette fonction ligne par ligne. Cette implémentation ne doit pas être confondue avec une loss complète d'entraînement d'un LLM.
 
 Les tests vérifient une valeur connue, l'accord avec des différences finies centrées, la stabilité pour de grands logits, l'invariance à l'ajout d'une constante par ligne, la somme nulle des gradients par ligne, l'absence de mutation des entrées et le rejet des entrées invalides. Ils étayent le périmètre annoncé de cette référence ; ils ne valident ni le masquage ni l'alignement des séquences, qui ne sont pas implémentés ici.
+:::
 
 ## Lien avec la perplexité
 
@@ -103,34 +103,18 @@ Si \(\bar{\ell}\) est la cross-entropie moyenne en nats sur les tokens valides, 
 
 Avec une moyenne en bits, la formule devient \(2^{\bar{\ell}}\). La perplexité dépend donc de la base du logarithme et de la convention d'évaluation. Elle mesure la performance probabiliste sur les tokens évalués ; elle n'est pas une mesure directe de vérité factuelle ou de qualité globale d'un assistant.
 
-## Gradient par rapport aux logits
+## Lien avec le gradient
 
-Pour une cible one-hot \(y\) et \(p=\operatorname{softmax}(z)\), la dérivée par logit est :
+La dérivée de la cross-entropie one-hot par rapport aux logits est $p_i-\mathbb{1}[i=y]$. Son interprétation et son rôle dans la rétropropagation sont développés dans la page [Gradients](gradients.qmd).
 
-\[
-\frac{\partial\ell}{\partial z_i}=p_i-\mathbb{1}[i=y].
-\]
-
-Pour retrouver ce résultat, on dérive l'expression de la perte en fonction des logits :
-
-\[
-\begin{aligned}
-\frac{\partial\ell}{\partial z_i}
-&=-\mathbb{1}[i=y]+\frac{e^{z_i}}{\sum_j e^{z_j}}\\
-&=p_i-\mathbb{1}[i=y].
-\end{aligned}
-\]
-
-Cette dérivation concerne une position et une cible one-hot sans pondération. En descente de gradient, le gradient négatif du logit cible conduit à l'augmenter, tandis que les gradients positifs des alternatives conduisent à les diminuer. Le masquage, la pondération et la réduction changent les gradients agrégés ou leur échelle. Le lien entre ce gradient local et les paramètres du réseau est détaillé dans [Gradients](gradients.qmd).
-
-## Exemple numérique
-
-Si le token cible reçoit une probabilité \(0.8\), la perte en nats est \(-\log(0.8)\approx0.223\). Si sa probabilité est \(0.01\), elle vaut environ \(4.605\). Une faible probabilité pour le token observé entraîne donc une pénalité importante.
+::: {.callout-note collapse="true" title="Détail d'API (approfondissement)"}
+- **« PyTorch CrossEntropyLoss attend des probabilités. »** Pour la classification catégorielle usuelle, l'API attend des logits non normalisés et combine une opération de type log-softmax avec la NLL. Vérifier les formes, ignore_index, les cibles et la réduction.
+:::
 
 ## Idées reçues
 
 - **« La cross-entropie est comprise entre 0 et 1. »** Faux : elle peut être arbitrairement grande si le modèle attribue une probabilité proche de zéro à la cible.
-- **« PyTorch CrossEntropyLoss attend des probabilités. »** Pour la classification catégorielle usuelle, l'API attend des logits non normalisés et combine une opération de type log-softmax avec la NLL. Vérifier les formes, ignore_index, les cibles et la réduction.
+
 - **« Une loss d'entraînement qui baisse prouve que le modèle s'améliore. »** Non : il faut examiner la validation, les fuites, les baselines et la généralisation.
 - **« La perplexité compare directement n'importe quels modèles. »** Non sans contrôler le tokenizer, les données et les conventions d'évaluation.
 
