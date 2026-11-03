@@ -360,4 +360,4 @@ Les pages d'approfondissement consacrées au biais-variance et aux arbres boost�
 
 ### Figures du projet
 
-Les trois figures `bias-variance-decomposition.svg`, `gradient-boosting-iteration.svg` et `tree-growth-strategies.svg` sont des schémas explicatifs originaux créés pour LLM Lab. Elles sont décrites dans le [registre des ressources visuelles](../docs/visual-assets-register.md). Elles ne reproduisent pas les figures des sources citées.
+Les trois figures `bias-variance-decomposition.svg`, `gradient-boosting-iteration.svg` et `tree-growth-strategies.svg` sont des schémas explicatifs originaux créés pour LLM Lab. Elles sont décrites dans le registre du dépôt docs/visual-assets-register.md. Elles ne reproduisent pas les figures des sources citées.
