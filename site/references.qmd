@@ -320,3 +320,11 @@ Un [PDF miroir tiers fourni pour examen](https://dl.tehrandata.org/book/Build-a-
 - **Gu et Dao (2023), [*Mamba: Linear-Time Sequence Modeling with Selective State Spaces*](https://arxiv.org/abs/2312.00752)** — exemple d'architecture de modélisation de séquence non fondée sur l'attention Transformer standard.
 
 Ces sources ont des rôles différents — description d'architecture, objectifs d'entraînement, modèles de fondation et adaptation par préférences. Aucune ne définit à elle seule tous les usages actuels du terme « LLM ».
+
+## Sources scientifiques citées dans les lois d'échelle
+
+- **Kaplan et al. (2020), [*Scaling Laws for Neural Language Models*](https://arxiv.org/abs/2001.08361)** — relations de puissance empiriques entre la perte et l'échelle du modèle, des données et du calcul.
+- **Hoffmann et al. (2022), [*Training Compute-Optimal Large Language Models*](https://arxiv.org/abs/2203.15556)** — étude dite « Chinchilla » : de nombreux grands modèles étaient entraînés sur trop peu de tokens au regard de leur taille ; propose une allocation du budget de calcul entre paramètres et données.
+- **Henighan et al. (2020), [*Scaling Laws for Autoregressive Generative Modeling*](https://arxiv.org/abs/2010.14701)** — lois d'échelle mesurées sur une large famille de modalités et d'architectures.
+
+Ces trois travaux établissent des régularités observées dans des régimes expérimentaux donnés ; ils ne fixent ni seuil universel de LLM ni règle d'allocation indépendante du protocole. La page [Lois d'échelle](fr/scaling-laws.qmd) présente ces résultats et leurs limites.
