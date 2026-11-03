@@ -10,7 +10,7 @@ id: "en/decision-trees"
 scope: "Describes decision trees as recursive partitions of feature space, split criteria, leaf predictions, and complexity control."
 purpose: "Read a tree, explain a greedy split, and distinguish local criterion, global objective, and regularization."
 suggested_route:
-  previous: "en/bias-variance"
+  previous: "en/model-capacity-data-regimes"
   next: "en/gradient-boosting"
 hierarchy:
   parents: []
