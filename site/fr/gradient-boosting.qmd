@@ -76,6 +76,17 @@ XGBoost formalise un objectif régularisé et une approximation de second ordre 
 3. Pourquoi un learning rate plus faible peut-il sous-ajuster à nombre d'arbres constant ?
 <details><summary>Afficher la réponse</summary>Chaque arbre apporte une correction plus petite ; le nombre d'étapes peut devenir insuffisant.</details>
 :::
+## Comparer les implémentations
+
+| Dimension | XGBoost | LightGBM | CatBoost |
+|---|---|---|---|
+| Objectif / construction | Approximation de Taylor d'ordre deux, régularisation explicite | Histogrammes, croissance leaf-wise, GOSS/EFB | Ordered boosting et statistiques catégorielles ordonnées |
+| Croissance typique | Level-wise / profondeur contrôlée selon configuration | Leaf-wise best-first | Arbres symétriques par défaut |
+| Données catégorielles | Support dépendant de la version et de la configuration | Support natif avec contraintes de représentation | Traitement catégoriel au cœur de l'algorithme |
+| Point de vigilance | Régularisation et coût de recherche | Contrôle du nombre de feuilles et du surapprentissage | Protocole d'encodage, permutations et coût de calcul |
+
+Ce tableau résume des choix caractéristiques, pas des règles absolues ni des garanties de performance. Les versions, paramètres, objectifs et matériels modifient les comportements. Le bon choix se fait par validation sur le problème réel, avec une baseline et un budget comparables.
+
 ## Références
 - [Friedman (2001), Greedy Function Approximation: A Gradient Boosting Machine](https://doi.org/10.1214/aos/1013203451).
 - [AiEdge — The Gradient Boosted Algorithm Explained!](https://newsletter.theaiedge.io/p/the-gradient-boosted-algorithm-explained).
