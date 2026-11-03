@@ -15,7 +15,7 @@ The learner-facing course and the implementation dependency graph answer differe
 4. **Unpack representations and computation:** embeddings, positional information, contextual states, Transformer blocks, attention and causal masking.
 5. **Unpack prediction and decoding:** output logits, probabilities, selection strategies, stopping and inference-time efficiency.
 6. **Explain learning:** training corpora, context windows and shifted targets; then the next-token objective, loss, gradients, backpropagation, optimization, pretraining and validation. Only now introduce the full parameter-update loop.
-7. **Explain adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation; keep these distinct.
+7. **Prepare and train:** when following the Build route, prepare a traceable corpus and tokenizer, then construct context windows and shifted targets before implementing the training objective. This is not a prerequisite for understanding inference.\n8. **Explain adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation; keep these distinct.
 
 ## Page ownership: one canonical explanation, deliberate reminders
 
@@ -24,7 +24,7 @@ The sequence above is a **route through concepts**, not permission to explain th
 - **LLM panorama:** terminology, model-family orientation, and the distinctions between architecture, weight learning, and use.
 - **Generation:** the complete autoregressive inference loop and the basic decoding choices.
 - **GPT/Transformer overview:** one forward pass through the network, with emphasis on Transformer blocks and the path to logits.
-- **Text/data:** the short path from raw text to token IDs and initial embeddings; tokenizer algorithms and comparative examples belong to `tokenization-strategies`, while empirical design/evaluation belongs to its advanced page. Corpus curation remains a separate upstream concern (canonical page under review in #360).
+- **Text/data:** the short inference path from raw text to token IDs and initial embeddings; tokenizer algorithms and comparative examples belong to `tokenization-strategies`, while empirical design/evaluation belongs to its advanced page. Corpus curation is a separate Build-stage concern owned by `corpus-preparation`.
 - **Component lessons:** embeddings, positional information, contextualized representations, attention mechanisms, logits, probabilities, likelihood, entropy, cross-entropy, loss, and gradients each have their own explanatory home.
 - **Training examples:** context windows, shifted targets, document boundaries, packing, and training masks belong to the training-data branch, not to the first explanation of inference input.
 
