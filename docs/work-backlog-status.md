@@ -7,10 +7,12 @@ This is an execution register, not a second curriculum or a replacement for the 
 
 ## 1. Current status
 
-- `llm-lab`: 47 open issues and no open pull requests at the time of this snapshot.
+- `llm-lab`: 47 open issues; the curriculum-docs reconciliation PR [#319](https://github.com/JM-Brun/llm-lab/pull/319) was squash-merged on 2026-11-03 (commit `15832af`), and the advanced-reading reclassification PR (branch `docs/advanced-comprehension-lives-in-deepen`) is open at the time of this update.
 - `wiki-knowledge`: 4 open issues and no open pull requests at the time of this snapshot.
 - LLM Lab PR [#306](https://github.com/JM-Brun/llm-lab/pull/306) (site-wide breadcrumbs) and [#307](https://github.com/JM-Brun/llm-lab/pull/307) (dedicated self-check pattern) are merged.
 - PR #307's Quarto render and Python quality workflows completed successfully. The #306 GitHub Pages render and deployment jobs also completed successfully.
+- PR #319 (curriculum docs reconciled with the rendered navigation) was squash-merged as `15832af` on 2026-11-03 after both workflows passed: five obsolete sidebar references fixed in `learning-path.md`, `mathematical-foundations` realigned to Deepen, seven missing inventory rows added. Documentation-only change; no browser review is claimed.
+- Owner rule recorded 2026-11-03: advanced comprehension belongs in the Deepen destination. The four advanced panorama readings (scaling-laws, emergence, in-context-learning, hybrid-llm-architectures) are retagged from `destination:understand` to `destination:deepen` (FR/EN page maps and keywords), with `content-section-mapping.md` rows and a new editorial rule aligned. Sidebar placement already matched.
 - Automated build/deployment success is not browser inspection, accessibility certification, or evidence of learning. No desktop/mobile visual validation is claimed here.
 
 ## 2. Recommended execution order
