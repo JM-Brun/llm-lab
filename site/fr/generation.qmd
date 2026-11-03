@@ -24,8 +24,12 @@ tags: ["type:concept-lesson", "destination:understand", "topic:inference-generat
 **Générer du texte**, pour un LLM déjà entraîné, c'est répéter une même boucle : représenter le contexte courant, estimer la distribution du prochain token, en sélectionner un, l'ajouter au contexte, puis recommencer. Pendant toute la boucle, **les paramètres du modèle restent fixes** : on parle d'**inférence** (ou de génération), à distinguer de l'apprentissage, qui modifie ces paramètres.
 :::
 
-::: {.callout-note}
-On considère ici les paramètres d'un modèle entraîné comme fixes. La génération consiste à transformer le contexte courant en scores, puis à choisir un token à ajouter au contexte ; elle ne met pas à jour les paramètres. L'architecture interne intervient dans le calcul des scores, pas dans la règle de décodage étudiée ici.
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+À l’issue de cette page, vous pourrez :
+- dérouler les étapes d’une génération autorégressive, du contexte au critère d’arrêt ;
+- distinguer passe avant, décodage et génération ;
+- expliquer pourquoi l’inférence ne modifie pas les paramètres du modèle ;
+- prévoir l’effet de la sélection gloutonne, de l’échantillonnage et de la température sur le texte produit.
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
