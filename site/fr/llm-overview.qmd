@@ -21,12 +21,12 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 -->
 
 ::: {.chapter-lead}
-Un **grand modèle de langage (LLM)** est un modèle de langage entraîné à grande échelle. Le terme désigne une catégorie large, sans seuil universel de paramètres ni architecture unique. Pour comprendre un modèle génératif comme GPT, il est utile de suivre le trajet des données : du texte aux tokens, puis aux représentations, au calcul du modèle et enfin à la sélection du prochain token. Cette page donne cette carte d’ensemble ; chaque étape renvoie vers une explication dédiée.
+Un **grand modèle de langage (LLM)** est un modèle de langage entraîné à grande échelle. Le terme désigne une catégorie large, sans seuil universel de paramètres ni architecture unique. Pour comprendre un modèle génératif comme GPT, il est utile de suivre le trajet des données : du texte aux tokens, puis aux représentations, au calcul du modèle et enfin à la sélection du prochain token.
 :::
 
 ::: {.callout-note title="Résultat attendu — et place dans le parcours"}
 **Après cette page, vous devriez pouvoir :**
-- - retracer le pipeline d’un GPT autorégressif sans confondre ses étapes ;
+- retracer le pipeline d’un GPT autorégressif sans confondre ses étapes ;
 - distinguer architecture, apprentissage des poids et inférence ;
 - identifier quelle page approfondit chaque notion.
 
