@@ -1,7 +1,7 @@
 ---
 title: "Attention croisée : faire communiquer deux séquences"
 subtitle: "Comment un décodeur consulte les représentations produites par un encodeur"
-keywords: ["type:concept-lesson", "destination:understand", "topic:cross-attention", "level:core", "language:fr", "status:published"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:cross-attention", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -9,22 +9,24 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/cross-attention"
 scope: "Explique l'attention croisée dans les Transformers encodeur-décodeur, la provenance de Q, K et V, les dimensions, le flux d'information et les masques éventuels."
-purpose: "Le lecteur doit pouvoir expliquer pourquoi Q provient du décodeur alors que K et V proviennent de l'encodeur, écrire l'équation de l'attention croisée et la distinguer de l'auto-attention."
+purpose: "Approfondissement avancé : formaliser l'attention croisée, établir la provenance de Q/K/V et les dimensions des tenseurs, analyser les masques et situer le mécanisme dans les architectures encodeur-décodeur et multimodales."
 suggested_route:
-  previous: "fr/transformer-architectures"
-  next: "fr/scaled-dot-product-attention"
+  previous: null
+  next: null
 hierarchy:
   parents: ["fr/transformer-architectures"]
   children: []
 related: ["fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/causal-masking"]
-tags: ["type:concept-lesson", "destination:understand", "topic:cross-attention", "level:core", "language:fr", "status:published"]
+tags: ["type:deep-dive", "destination:deepen", "topic:cross-attention", "level:advanced", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
+Cette page est un **approfondissement avancé**. Elle suppose déjà compris le principe général de l'attention, les projections Q/K/V et les grandes familles d'architectures Transformer. Pour une première découverte, la page [Architectures Transformer](transformer-architectures.qmd) suffit : retenez simplement que le décodeur d'un modèle encodeur-décodeur peut consulter les représentations produites par l'encodeur.
+
 L'attention croisée (*cross-attention*) permet à une séquence de consulter les représentations d'une autre. Dans un Transformer encodeur-décodeur, le décodeur produit les requêtes **Q**, tandis que les clés **K** et les valeurs **V** proviennent de la sortie de l'encodeur. C'est cette séparation des sources qui la distingue de l'auto-attention.
 :::
 
-::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs de cet approfondissement"}
 Vous pourrez :
 - identifier la provenance de Q, K et V dans l'attention croisée ;
 - expliquer comment chaque position cible sélectionne et agrège l'information de l'entrée ;
