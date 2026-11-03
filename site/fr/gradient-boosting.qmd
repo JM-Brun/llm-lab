@@ -29,7 +29,7 @@ Un arbre partitionne l'espace des variables en régions et attribue une prédict
 F_M(x)=F_0(x)+\sum_{m=1}^{M}\eta\,\rho_m h_m(x),
 \]
 
-où (h_m) est le nouvel arbre, (ho_m) ajuste la contribution de ses feuilles et (eta) est le taux d'apprentissage.
+où $h_m$ est le nouvel arbre, (ho_m) ajuste la contribution de ses feuilles et $\eta$ est le taux d'apprentissage.
 
 ## Pourquoi « gradient » ?
 
