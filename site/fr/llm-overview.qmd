@@ -55,7 +55,7 @@ Le modèle apprend des régularités statistiques des données ; cet objectif ne
 
 ## 3. Le processus de génération, du texte au prochain token
 
-Le schéma donne une vue d’ensemble d’un GPT autorégressif. Il ne représente pas un objet qui se déplace dans une série d’étapes : il distingue les transformations appliquées au contexte, les calculs effectués par le modèle et la règle qui choisit le prochain token. Les paramètres du GPT restent fixes pendant l’inférence ; c’est le contexte qui s’enrichit à chaque itération.
+Le schéma distingue les transformations successives du contexte, le calcul effectué par le modèle et la sélection du prochain token. Le GPT ne se déplace pas dans ce processus : ses paramètres restent fixes pendant l’inférence ; c’est le contexte qui s’enrichit à chaque itération.
 
 ```{mermaid}
 flowchart LR
