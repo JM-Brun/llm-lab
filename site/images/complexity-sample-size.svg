@@ -7,18 +7,18 @@
 <path d="M105 455 V110 M105 455 H910" stroke="#34495e" stroke-width="3" fill="none"/>
 <text x="35" y="285" transform="rotate(-90 35 285)" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#34495e">Prediction error</text>
 <text x="505" y="510" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#34495e">Effective model complexity →</text>
-<path d="M120 180 C280 260 500 360 885 405" fill="none" stroke="#777" stroke-width="4" stroke-dasharray="10 7"/>
-<path d="M120 185 C230 320 330 330 420 285 C560 210 720 180 885 175" fill="none" stroke="#b85d36" stroke-width="5"/>
-<path d="M120 140 C340 255 530 355 640 380 C740 395 815 395 885 395" fill="none" stroke="#2878b5" stroke-width="5"/>
+<path d="M120 390 C280 300 500 220 885 155" fill="none" stroke="#777" stroke-width="4" stroke-dasharray="10 7"/>
+<path d="M120 390 C230 290 330 245 420 265 C560 310 720 345 885 355" fill="none" stroke="#b85d36" stroke-width="5"/>
+<path d="M120 355 C340 260 530 205 640 215 C740 235 815 255 885 265" fill="none" stroke="#2878b5" stroke-width="5"/>
 <path d="M120 130 C220 260 380 340 530 365 C670 385 800 390 885 390" fill="none" stroke="#23845b" stroke-width="5"/>
 <g font-family="sans-serif" font-size="16" fill="#243746">
-<text x="690" y="145" fill="#b85d36" font-weight="700">Validation — smaller N</text>
-<text x="690" y="370" fill="#23845b" font-weight="700">Validation — larger N</text>
-<text x="690" y="425" fill="#777">Training error (schematic)</text>
-<text x="350" y="235" fill="#b85d36">Earlier minimum</text>
-<text x="585" y="330" fill="#23845b">Later minimum</text>
+<text x="690" y="335" fill="#b85d36" font-weight="700">Validation — smaller N</text>
+<text x="690" y="245" fill="#23845b" font-weight="700">Validation — larger N</text>
+<text x="690" y="180" fill="#777">Training error (schematic)</text>
+<text x="350" y="290" fill="#b85d36">Earlier minimum</text>
+<text x="585" y="185" fill="#23845b">Later minimum</text>
 </g>
-<path d="M420 285 V455 M640 380 V455" stroke="#999" stroke-dasharray="5 6" stroke-width="2"/>
+<path d="M420 265 V455 M640 215 V455" stroke="#999" stroke-dasharray="5 6" stroke-width="2"/>
 <g font-family="sans-serif" font-size="14" fill="#555">
 <text x="105" y="480">Low</text><text x="885" y="480" text-anchor="end">High</text>
 <text x="500" y="548" text-anchor="middle">More observations can support a more flexible model, but do not guarantee it will generalize.</text>
