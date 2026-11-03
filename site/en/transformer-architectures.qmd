@@ -24,7 +24,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:transformer-archi
 Transformers do not form a single architecture. Depending on whether a network uses an encoder, a decoder, or both, information flows differently: a sequence can be represented in both directions, transformed into another sequence, or extended one token at a time. These choices shape likely uses, but do not determine the training objective by themselves.
 :::
 
-::: {.callout-note .learning-outcomes title="Learning outcomes"}
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 You will be able to:
 - compare encoder-only, encoder–decoder, and decoder-only architectures by context visibility and information flow;
 - distinguish bidirectional self-attention, causal self-attention, and cross-attention;
