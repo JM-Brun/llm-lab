@@ -104,6 +104,16 @@ The learning path is:
 
 For the full lookup example, matrix dimensions, parameter counts, and representation geometry, return to [The embedding space](embedding-space.qmd). For the surrounding sequence-processing mechanism, continue to [Queries, keys, and values](queries-keys-values.qmd) and [Scaled dot-product attention](scaled-dot-product-attention.qmd).
 
+## Check your understanding
+
+Two occurrences of the **same token ID** appear in two different sentences. Assume the embedding matrix is unchanged:
+
+1. Are the vectors returned by the embedding lookup identical?
+2. Must the hidden states after the Transformer layers also be identical? Why?
+3. At which stage does contextual information enter the computation?
+
+You have understood this step if you can explain the difference between **identity of the initial vector** and **context-dependence of hidden states**, without attributing sentence understanding to the lookup itself.
+
 ::: {.language-switch}
 **Language:** [Français](../fr/contextualized-representations.qmd) · [English](contextualized-representations.qmd)
 :::
