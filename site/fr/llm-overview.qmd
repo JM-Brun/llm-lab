@@ -178,6 +178,7 @@ Le Transformer de 2017 s’inscrit dans une histoire plus large des mécanismes 
 - [**Ce que la prédiction ne prouve pas**](llm-limits.qmd) — lire les performances sans surinterpréter l’objectif.
 - [**Construire un petit GPT**](build-path.qmd) — suivre les jalons G0–G9.
 - [**Évaluation expérimentale**](evaluation-experimentale.qmd) — définir des mesures, des baselines et des limites d’interprétation.
+- [**Sources scientifiques**](../references.qmd) — retrouver les articles et travaux cités dans ce panorama.
 
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../en/llm-overview.qmd)
