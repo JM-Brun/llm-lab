@@ -69,7 +69,7 @@ Pour situer cette représentation parmi d’autres approches pédagogiques, voir
 
 2. **Traiter le contexte.** Le [Transformer](transformer.qmd) combine les informations portées par les différentes positions pour construire des représentations qui dépendent du contexte. Le modèle ne traite donc pas chaque token comme un élément isolé.
 
-3. **Évaluer les continuations possibles.** À partir de ce calcul, le modèle estime la plausibilité des tokens qui pourraient suivre. Les [logits](logits.qmd) et la [distribution de probabilités](probabilites.qmd) décrivent plus précisément le passage des représentations internes aux possibilités de sortie.
+3. **Évaluer les continuations possibles.** À partir de ce calcul, le modèle estime la plausibilité des tokens qui pourraient suivre. Les [scores de sortie](logits.qmd) et les [probabilités](probabilites.qmd) décrivent plus précisément comment ces possibilités sont évaluées.
 
 4. **Choisir et recommencer.** Une règle de décodage choisit le prochain token parmi les possibilités évaluées. Elle ne sélectionne pas nécessairement celui qui a la probabilité la plus élevée : certaines stratégies tiennent aussi compte d'un tirage aléatoire. Le token choisi est ajouté au contexte, puis le modèle recommence son calcul pour produire le suivant. Voir [la génération](generation.qmd).
 
