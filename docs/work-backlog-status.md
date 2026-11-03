@@ -217,3 +217,18 @@ This addendum records work completed after the earlier snapshot in this register
 - #308 did not change SCSS, palette tokens or page content.
 - PR #322 adds only the three-activity inventory; it does not rewrite or delete the six detailed exercise drafts.
 - Browser appearance, accessibility conformance and learner outcomes remain unverified wherever their dedicated issues remain open.
+
+## 11. Follow-up execution update — 2026-11-03
+
+- **#313:** closed after [PR #322](https://github.com/JM-Brun/llm-lab/pull/322) was merged. The three-activity inventory is now on main.
+- **#314:** in progress through [PR #325](https://github.com/JM-Brun/llm-lab/pull/325). The six draft sections are consolidated into three bilingual bundles without deleting prompts, hints, solutions or misconception feedback.
+- **#310:** source-level contrast risk documented; targeted correction is proposed in [PR #324](https://github.com/JM-Brun/llm-lab/pull/324). The wider rendered keyboard/responsive review remains open.
+- **#114:** primary-source rechecks for Ahia, Petrov, Wegmann and TokLens are recorded in the issue. A small FR/EN parity correction for the TokLens synthesis is identified as follow-up work; no additional content is needed in the essential learning path.
+- **#320:** remains the P2 deferred browser review for the four text-to-representation page pairs; it is not a passed release criterion.
+
+### Immediate next actions
+
+1. Validate and merge #324 only after both workflows pass on its current head.
+2. Validate #325, including the bilingual Quarto render, then complete #314 with an independent mathematical/content review before learner-facing integration.
+3. Correct the TokLens FR/EN synthesis in the advanced tokenizer-design page, preserving the distinction between fertility, character-normalized parity and downstream association.
+4. Keep #309/#310 and #316/#317 as separate rendered/accessibility audits; do not claim their browser evidence from source inspection.
