@@ -17,6 +17,7 @@ The project includes a bilingual Quarto website organized around LLM-specific ex
 - Transformer overview: `site/fr/transformer.qmd` and `site/en/transformer.qmd`
 - Glossary: `site/fr/glossary.qmd` and `site/en/glossary.qmd`
 - Transformer history and timeline: `site/fr/transformer-history.qmd` and `site/en/transformer-history.qmd`
+- Guided build route and line-by-line reference-code walkthroughs: `site/fr/build-path.qmd` and `site/en/build-path.qmd`, plus five walkthrough pages per language covering each module of the reference implementation (`gpt-config`, `gpt-ops`, `transformer-block`, `gpt-model`, `gpt-generation`).
 - Dedicated attention concepts: Q/K/V, scaled dot-product attention, and causal masking, each with French and English pages under `site/fr/` and `site/en/`
 - Applied mathematical chain (logits → probabilities → token likelihood/loss → gradients): `site/fr/mathematical-foundations.qmd` and `site/en/mathematical-foundations.qmd`
 - Transformer tensor shapes and axes, in French and English: `site/fr/tensors.qmd` and `site/en/tensors.qmd`
@@ -40,6 +41,10 @@ quarto render site
 ```
 
 The rendered site is written to `site/_site/`. The Quarto CLI is a separate system dependency; it is not installed by `uv`.
+
+## Page composition
+
+- Flexible page composition and reusable soft patterns: [page-template system](docs/page-template-system.md), [page patterns](docs/page-patterns.md), and [implementation-page patterns](docs/implementation-page-patterns.md).
 
 ## Editorial and content principles
 
@@ -131,7 +136,7 @@ The project builds on existing educational work rather than presenting establish
 
 ## Status
 
-Current scope: a bilingual Quarto learning site, a tested NumPy cross-entropy implementation, and automated Python/Quarto checks. Transformer and training modules remain planned; see [`docs/roadmap.md`](docs/roadmap.md) for verified status, priorities, and completion criteria. Passing CI verifies configured checks, not research claims or visual quality.
+Current scope: a bilingual Quarto learning site, a tested NumPy reference implementation of a small decoder-only GPT — configuration, numerical building blocks, attention primitives, one pre-LN Transformer block, the assembled model and the autoregressive generation loop in `src/llm_lab/foundations/`, plus cross-entropy loss/gradient helpers — and automated Python/Quarto checks. The reference covers inference only: the corpus/tokenizer pipeline, the training loop and end-to-end evaluation remain planned; see [`docs/roadmap.md`](docs/roadmap.md) for verified status, priorities, and completion criteria. Passing CI verifies configured checks, not research claims or visual quality.
 
 ## License
 
