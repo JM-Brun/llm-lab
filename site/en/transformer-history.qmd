@@ -24,6 +24,8 @@ The Transformer did not emerge without predecessors. Its history combines attent
 
 ## Timeline
 
+To reconnect this timeline with the conceptual course, return to the [LLM panorama](llm-overview.qmd); to compare the architecture families discussed across milestones, see the dedicated [Transformer architectures page](transformer-architectures.qmd).
+
 Dates distinguish submissions, announcements, and releases. Milestones are grouped by research area; chronological order does not imply a single causal chain.
 
 {{< include /includes/_history-timeline-en.qmd >}}

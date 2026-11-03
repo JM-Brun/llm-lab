@@ -1,0 +1,90 @@
+---
+title: "Transformer architectures: encoder, encoder–decoder, and decoder"
+subtitle: "Three ways to organize information, objectives, and uses"
+keywords: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/transformer-architectures"
+scope: "Compares encoder-only, encoder–decoder, and decoder-only Transformer architectures by information flow, masking, typical training objectives, and uses; explicitly distinguishes architecture, objective, and task without claiming these families cover every language-model architecture."
+purpose: "Readers should be able to explain how each family processes context, identify the differences between bidirectional self-attention, causal self-attention, and cross-attention, and understand why architecture alone does not determine a training objective or use."
+suggested_route:
+  previous: "en/llm-overview"
+  next: "en/transformer"
+hierarchy:
+  parents: ["en/llm-overview"]
+  children: []
+related: ["en/transformer-history", "en/transformer"]
+tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+Transformers do not form a single architecture. Depending on whether a network uses an encoder, a decoder, or both, information flows differently: a sequence can be represented in both directions, transformed into another sequence, or extended one token at a time. These choices shape likely uses, but do not determine the training objective by themselves.
+:::
+
+::: {.callout-note title="By the end of this page"}
+You should be able to compare the three families by **what they can attend to**, **how they produce an output**, and **which tasks they suit**. You should also be able to distinguish an architecture from an objective such as masked-token prediction or next-token prediction.
+:::
+
+## At a glance
+
+| Family | Information flow | Masking and attention | Typical objectives | Common uses | Examples |
+|---|---|---|---|---|---|
+| **Encoder-only** | The encoder transforms an entire input sequence into contextual representations. | Generally bidirectional self-attention: each position can use information from other positions in the input. | Masked language modeling, among other possible objectives. | Classification, semantic search, extraction, and text representation. | BERT, RoBERTa |
+| **Encoder–decoder** | The encoder represents the input; the decoder produces a target sequence using that representation. | Encoder attention over the input; causal self-attention in the decoder; cross-attention to encoder states. | Reconstruction, denoising, or text-to-text learning, depending on the model. | Translation, summarization, and sequence-to-sequence transformation. | Original Transformer, T5 |
+| **Decoder-only** | The decoder extends a prefix by producing representations used to predict the next token. | Causal self-attention: a position cannot attend to future tokens. | Autoregressive next-token prediction in classic GPT models. | Prompt-conditioned continuation and generation. | GPT, GPT-2 |
+
+## What actually distinguishes the three families
+
+### Encoder-only: contextualize an input
+
+An encoder generally processes the supplied sequence as a whole. With bidirectional attention, a token representation can incorporate information from positions both before and after it in the input. This is useful for tasks that represent, classify, or compare a complete text.
+
+In BERT, the best-known pretraining objective predicts masked tokens from their left and right context. This objective makes use of the architecture; it is not the definition of every encoder.
+
+### Encoder–decoder: transform one sequence into another
+
+The encoder builds a representation of the input. The decoder then generates the output, usually autoregressively, combining its already-produced context with information from the encoder through *cross-attention*.
+
+This separation is natural when input and output play distinct roles: translating a sentence, summarizing a document, or converting text into another format. The original 2017 Transformer and T5 are important examples of this family.
+
+### Decoder-only: extend a prefix
+
+A decoder-only model uses a causal mask: when computing a representation at one position, it cannot consult future tokens. During autoregressive training, each position learns to predict the token following the available prefix. At inference, the system repeats this prediction and appends each selected token to the context.
+
+This is the architecture used in LLM Lab's small-GPT build route. It makes generation inspectable step by step; it does not mean every LLM is decoder-only.
+
+## Architecture, objective, and task are different concepts
+
+These terms are often conflated, but they answer different questions:
+
+- **Architecture**: which operations and connections organize the computation?
+- **Training objective**: what quantity does the model learn to predict or optimize? Examples include masked tokens, next tokens, or denoised sequences.
+- **Use task**: what problem should the system solve? Examples include classification, translation, summarization, or generation.
+
+One family can be trained with several objectives; similar objectives can be implemented in different architectures. The table shows common associations, not mandatory pairings.
+
+## Scope of this comparison
+
+The three families described here are major configurations of the **Transformer**. They do not cover every language- or sequence-modeling architecture: state-space models, recurrent architectures, and hybrids also exist. Conversely, a Transformer is not necessarily an LLM: architecture alone says nothing about model scale, data, or capabilities.
+
+To understand how these architectures fit into the research timeline, see the [history of Transformers](transformer-history.qmd). To follow the internal computation of the decoder-only GPT chosen for this project, continue with [GPT and Transformer](transformer.qmd).
+
+## Check your understanding
+
+1. **Why can BERT use tokens that appear after the token being represented?** Its encoder generally uses bidirectional attention over the full input; it is not subject to GPT's causal mask.
+2. **Which operation particularly distinguishes an encoder–decoder from a decoder-only model?** The encoder–decoder's decoder has cross-attention to representations produced by the encoder.
+3. **Does next-token prediction define every Transformer?** No. It is a typical objective for autoregressive decoders, not a property of all Transformers.
+4. **Is a Transformer necessarily an LLM?** No. Architecture alone does not determine model scale or whether it qualifies as an LLM.
+
+## Where to go next
+
+- [LLM panorama](llm-overview.qmd) — place these families in the broader picture.
+- [GPT and Transformer](transformer.qmd) — follow the internal computation of an autoregressive decoder.
+- [History of Transformers](transformer-history.qmd) — place major milestones in the development of these architectures.
+
+::: {.language-switch}
+**Language:** [Français](../fr/transformer-architectures.qmd) · [English](transformer-architectures.qmd)
+:::
