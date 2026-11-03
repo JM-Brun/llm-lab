@@ -1,8 +1,10 @@
 # Page-template guide
 
-These templates define three page archetypes for the LLM Lab knowledge base. They are **reusable starting points, not mandatory checklists**. Choose the archetype according to the reader's task, then remove sections that do not serve it.
+These templates define a small set of page archetypes for the LLM Lab knowledge base. They are **reusable starting points, not mandatory checklists**. The design system maps the existing page taxonomy to these archetypes and provides a shared visual and editorial contract.
 
 ## Choose the page type
+
+Start with the [site page design system](site-page-design-system.md): it explains how the existing `LLM-LAB-PAGE-MAP` metadata, Quarto conventions, and page archetypes fit together.
 
 | Archetype | Reader's task | Typical content | Avoid |
 |---|---|---|---|
@@ -32,6 +34,8 @@ Supplementary explanation goes here.
 - [Overview / panorama page](overview-page-template.md)
 - [Concept page](concept-page-template.md)
 - [Reference / history page](reference-page-template.md)
+- [Guided-build page](guided-build-page-template.md)
+- [Exercise / experiment page](practice-page-template.md)
 
 ## Review checklist
 
