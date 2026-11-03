@@ -32,6 +32,8 @@ project:
     - en/gradients.qmd
     - fr/llm-overview.qmd
     - en/llm-overview.qmd
+    - fr/scaling-laws.qmd
+    - en/scaling-laws.qmd
     - fr/transformer-architectures.qmd
     - en/transformer-architectures.qmd
     - fr/transformer.qmd
@@ -98,6 +100,7 @@ website:
         - section: "Comprendre les LLM"
           contents:
             - fr/llm-overview.qmd
+            - fr/scaling-laws.qmd
             - fr/transformer-architectures.qmd
             - fr/transformer.qmd
             - fr/generation.qmd
@@ -153,6 +156,7 @@ website:
         - section: "Understand LLMs"
           contents:
             - en/llm-overview.qmd
+            - en/scaling-laws.qmd
             - en/transformer-architectures.qmd
             - en/transformer.qmd
             - en/generation.qmd

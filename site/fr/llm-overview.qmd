@@ -8,34 +8,66 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
-scope: "Définit les LLM comme catégorie de modèles de langage ; donne une carte de lecture du pipeline d’un GPT autorégressif, du texte à la sélection du prochain token ; distingue architecture, apprentissage des poids et conditionnement de l’inférence ; renvoie les comparaisons et mécanismes détaillés vers leurs pages dédiées."
-purpose: "À l’issue de cette page, le lecteur doit pouvoir retracer à haut niveau le chemin texte → tokens → embeddings → Transformer → logits → distribution → sélection, distinguer architecture, apprentissage et inférence, puis choisir la page spécialisée à approfondir."
+scope: "Présente le problème de modélisation du langage et sa difficulté ; définit les termes LLM, modèle de langage, modèle génératif, GPT et Transformer ; donne une carte de lecture du pipeline d’un GPT autorégressif et renvoie les mécanismes détaillés vers leurs pages dédiées."
+purpose: "À l’issue de cette page, le lecteur doit pouvoir expliquer le problème de modélisation du langage et ses difficultés, distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer, et retracer le calcul d’un GPT autorégressif en séparant embeddings et information positionnelle."
 suggested_route:
   previous: "fr/index"
   next: "fr/transformer"
 hierarchy:
   parents: ["fr/index"]
-  children: ["fr/transformer", "fr/transformer-architectures", "fr/generation", "fr/build-path", "fr/mathematical-foundations", "fr/llm-limits"]
+  children: ["fr/transformer", "fr/transformer-architectures", "fr/generation", "fr/build-path", "fr/mathematical-foundations", "fr/llm-limits", "fr/scaling-laws"]
 related: ["fr/transformer-history"]
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
-Un **grand modèle de langage (LLM)** est un modèle de langage entraîné à grande échelle. Le terme désigne une catégorie large, sans seuil universel de paramètres ni architecture unique. Pour comprendre un modèle génératif comme GPT, il est utile de suivre le trajet des données : du texte aux tokens, puis aux représentations, au calcul du modèle et enfin à la sélection du prochain token.
+Un **modèle de langage** est un modèle qui attribue une probabilité à des séquences de texte — ou, de façon équivalente dans une factorisation autorégressive, au prochain token sachant le contexte. Un **modèle génératif** peut produire de nouveaux échantillons à partir d'une distribution apprise ; il peut être conditionné par une entrée. Un **LLM** (*large language model*) est un modèle de langage entraîné à grande échelle : il n'existe pas de seuil universel de paramètres qui sépare mécaniquement les « petits » modèles des LLM. La taille n'est qu'une dimension de l'échelle ; les relations entre paramètres, données, calcul et performance sont étudiées par les [lois d'échelle](scaling-laws.qmd). La catégorie LLM ne présuppose pas une architecture particulière.
+
+Cette page part du problème à résoudre : produire une continuation plausible à partir d'un contexte, alors que le langage est ambigu, structuré à plusieurs niveaux et combinatoire. Elle montre ensuite comment un GPT traite ce problème, sans détailler les mécanismes renvoyés vers leurs pages dédiées.
 :::
 
-::: {.callout-note title="Résultat attendu — et place dans le parcours"}
-**Après cette page, vous devriez pouvoir :**
-- retracer le pipeline d’un GPT autorégressif sans confondre ses étapes ;
-- distinguer architecture, apprentissage des poids et inférence ;
-- identifier quelle page approfondit chaque notion.
+<details>
+<summary>Résultat attendu — et place dans le parcours</summary>
 
-C’est la **première étape du parcours conceptuel**. Il n’est pas nécessaire de maîtriser les équations ni les tenseurs à ce stade.
-:::
+À l'issue de cette page, vous devriez pouvoir :
+- expliquer ce qu'un modèle de langage cherche à estimer ;
+- distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer ;
+- retracer les grandes étapes du calcul d'un GPT autorégressif.
 
-## 1. Le chemin d’un GPT, du texte au prochain token
+Cette page introduit le problème et son principe de traitement sans supposer de connaissances préalables sur les équations ou les tenseurs. La page suivante, [GPT et Transformer](transformer.qmd), explique le calcul interne qui réalise cette prédiction.
 
-Le schéma résume le calcul d’un **GPT autorégressif**. Il ne décrit pas tous les LLM : d’autres architectures et objectifs existent. Les flèches représentent des transformations distinctes, pas une succession de synonymes.
+</details>
+
+## 1. Le problème : continuer un texte à partir d'un contexte
+
+À partir d'un préfixe tel que « Le rapport indique que la concentration », le modèle doit estimer quels tokens pourraient suivre. Il ne s'agit pas de retrouver une unique suite correcte : plusieurs continuations peuvent être grammaticales et cohérentes, mais différer par leur sens, leur précision ou leur pertinence.
+
+Un modèle de langage représente cette incertitude par une distribution conditionnelle. Pour une séquence de tokens $x_1,\ldots,x_T$, un modèle autorégressif la factorise ainsi :
+
+$$
+P(x_1,\ldots,x_T)=\prod_{t=1}^{T}P(x_t\mid x_{<t}).
+$$
+
+À chaque position, il estime donc une distribution sur le vocabulaire à partir des tokens précédents. La génération consiste ensuite à sélectionner un token, l'ajouter au contexte et recommencer. Le modèle apprend des régularités statistiques des données ; cet objectif ne lui fournit pas, à lui seul, un mécanisme de vérification de la vérité.
+
+### Pourquoi ce problème est-il difficile ?
+
+- **Ambiguïté et dépendances longues :** le sens d'un token dépend souvent de mots éloignés, de la syntaxe, du discours et de connaissances implicites.
+- **Espace combinatoire :** le nombre de séquences possibles croît très rapidement avec leur longueur ; le modèle doit généraliser au-delà des exemples exacts vus pendant l'entraînement.
+- **Données hétérogènes :** les corpus mélangent styles, domaines, niveaux de qualité, langues et contradictions ; leurs régularités ne sont pas toutes pertinentes pour une tâche donnée.
+- **Compromis de calcul :** augmenter la capacité du modèle ne suffit pas. Il faut aussi des données adaptées et du calcul pour les exploiter ; les gains dépendent de la manière dont ces ressources sont réparties.
+
+Les [lois d'échelle](scaling-laws.qmd) étudient empiriquement les relations entre ces ressources et la perte. Elles ne définissent pas un seuil universel à partir duquel un modèle deviendrait un LLM.
+
+## 2. Comment un GPT traite ce problème
+
+Un **GPT** signifie *Generative Pre-trained Transformer*. Le nom désigne une famille de modèles génératifs pré-entraînés fondés sur l'architecture Transformer. Dans l'usage courant, les GPT classiques sont des Transformers **décodeur seul**, entraînés à prédire le prochain token. GPT et Transformer ne sont donc pas synonymes : Transformer désigne une famille d'architectures ; GPT désigne une famille de modèles qui en utilise une configuration particulière.
+
+Le schéma suivant suit un GPT autorégressif. Il ne décrit pas tous les modèles de langage : certains ne sont pas génératifs, et d'autres architectures génératives existent.
+
+## 3. Le chemin d’un GPT, du texte au prochain token
+
+Les flèches représentent des transformations distinctes, pas une succession de synonymes.
 
 <div class="pipeline-stepper" role="navigation" aria-label="Étapes du pipeline d'un GPT">
   <a class="step-item" href="tokenization-strategies.qmd">1. Vocabulaire</a>
@@ -44,54 +76,70 @@ Le schéma résume le calcul d’un **GPT autorégressif**. Il ne décrit pas to
   <span class="step-arrow">→</span>
   <a class="step-item" href="embedding-space.qmd">3. Embeddings</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="transformer.qmd">4. Transformer</a>
+  <a class="step-item" href="positional-encoding.qmd">4. Position</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="logits.qmd">5. Logits</a>
+  <a class="step-item" href="transformer.qmd">5. Transformer</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="probabilites.qmd">6. Distribution</a>
+  <a class="step-item" href="logits.qmd">6. Logits</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="generation.qmd">7. Sélection</a>
+  <a class="step-item" href="probabilites.qmd">7. Distribution</a>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="generation.qmd">8. Sélection</a>
 </div>
 
 ```{mermaid}
 flowchart LR
-  T["Texte"] --> K["Tokenizer<br/>vocabulaire"]
-  K --> I["Tokens et IDs<br/>contexte"]
-  I --> E["Embeddings<br/>+ position"]
-  E --> X["Blocs Transformer"]
-  X --> L["Logits"]
-  L --> P["Distribution"]
-  P --> S["Sélection"]
-  S -->|"ajout de l'ID au contexte"| I
+  subgraph Entree["Représenter l'entrée"]
+    T["Texte"] --> K["Tokenizer<br/>vocabulaire"]
+    K --> I["Tokens et IDs"]
+    I --> E["Lookup<br/>embeddings"]
+    E --> R["Information<br/>positionnelle"]
+  end
+  subgraph Calcul["Calcul du modèle"]
+    R --> X["Blocs Transformer<br/>représentations contextualisées"]
+    X --> L["Logits<br/>un score par token"]
+  end
+  subgraph Sortie["Choisir une continuation"]
+    L --> P["Distribution<br/>de probabilités"]
+    P --> S["Sélection du prochain token"]
+  end
+  S -->|"ID ajouté au contexte"| I
 ```
 
 | Étape | Ce qui se passe | Pour comprendre |
 |---|---|---|
 | **Texte et vocabulaire** | Le tokenizer segmente le texte selon son vocabulaire et ses règles. | [Du texte aux tokens](text-data.qmd) · [Stratégies de tokenisation](tokenization-strategies.qmd) |
 | **Tokens et IDs** | Chaque token est représenté par un identifiant entier ; un ID n’est ni un score ni un vecteur de sens. | [Texte, tokens et données](text-data.qmd) |
-| **Embeddings et position** | Les IDs sélectionnent des vecteurs initiaux ; une information de position permet de distinguer les emplacements. | [Espace des embeddings](embedding-space.qmd) · [Information de position](positional-encoding.qmd) |
+| **Embeddings** | Chaque ID sélectionne un vecteur appris dans la matrice d'embeddings ; ce vecteur initial n'est pas encore contextualisé. | [Espace des embeddings](embedding-space.qmd) |
+| **Information positionnelle** | Un mécanisme distinct fournit l'ordre des tokens ; il peut intervenir à différents endroits du calcul. | [Information de position](positional-encoding.qmd) |
 | **Transformer** | Les blocs transforment ces vecteurs en représentations contextualisées, notamment par l’attention. | [GPT et Transformer](transformer.qmd) · [Comparer les architectures](transformer-architectures.qmd) |
 | **Logits** | La projection de sortie associe un score non normalisé à chaque token du vocabulaire. | [Logits](logits.qmd) |
 | **Distribution** | Les scores sont normalisés en probabilités conditionnelles sur les tokens possibles. | [Probabilités de sortie](probabilites.qmd) |
 | **Sélection** | Une règle de décodage choisit le prochain token ; celui-ci est ajouté au contexte et le calcul recommence. | [Générer du texte](generation.qmd) |
 
-**Précision sur la position :** l’information de position n’est pas toujours un vecteur ajouté aux embeddings. Certaines méthodes, comme [RoPE](positional-encoding.qmd), l’intègrent directement aux calculs d’attention.
+### Embeddings : associer un vecteur à un identifiant
+
+L'ID d'un token est un indice entier, pas une coordonnée qui porte du sens. La table d'embeddings associe à chaque ID un vecteur appris ; deux occurrences du même ID sélectionnent donc le même vecteur initial. Les couches du réseau le transformeront ensuite en fonction du contexte. Voir [l'espace des embeddings](embedding-space.qmd).
+
+### Information positionnelle : représenter l'ordre
+
+Une séquence n'est pas un simple ensemble de tokens : l'ordre change le sens et les dépendances à apprendre. Le modèle doit donc disposer d'une information qui distingue les positions. Cette information peut être introduite de différentes manières dans le calcul ; les mécanismes et leurs différences sont expliqués dans [la page dédiée à la position](positional-encoding.qmd).
 
 **Le point de jonction :** le passage des IDs aux logits correspond au calcul avant (*forward pass*) du modèle ; la transformation des logits en distribution et la sélection relèvent du décodage. Pendant l’inférence, les paramètres restent fixes. Leur apprentissage est une autre étape du cycle de vie, présentée plus loin.
 
-## 2. Trois dimensions à ne pas confondre
+## 4. Trois dimensions à ne pas confondre
 
 Pour décrire un LLM, trois questions indépendantes doivent être posées. Elles se répondent ensemble, mais ne désignent ni les mêmes objets ni les mêmes opérations.
 
 | Dimension | Question | Ce qu’elle décrit | Exemples |
 |---|---|---|---|
-| **Architecture** | Comment l’information circule-t-elle dans le modèle ? | Les opérations et connexions qui définissent le calcul effectué | Encodeur seul, encodeur-décodeur, décodeur seul ; d’autres familles, comme les modèles à espace d’état, ne sont pas des Transformers classiques |
+| **Architecture** | Comment l’information circule-t-elle dans le modèle ? | Les opérations et connexions qui définissent le calcul effectué | Encodeur seul, encodeur-décodeur, décodeur seul ; voir [la comparaison des architectures Transformer](transformer-architectures.qmd) |
 | **Apprentissage des poids** | Comment les paramètres ont-ils été obtenus ou modifiés ? | Les objectifs et procédures qui apprennent ou ajustent les paramètres | Pré-entraînement, fine-tuning/SFT, optimisation des préférences |
 | **Inférence et utilisation** | Que fait-on du modèle une fois ses paramètres fixés ? | Le calcul d’une sortie à partir d’une entrée, éventuellement dans un système avec recherche ou outils | Classification, score, génération autorégressive ; prompt et RAG conditionnent le contexte sans modifier les poids |
 
 La boucle de la section 1 relève de l’inférence. L’entraînement relève de l’apprentissage. Un même modèle peut changer d’usage sans changer d’architecture : c’est ce que détaillent les sections suivantes.
 
-## 3. Le parcours en trois phases
+## 5. Le parcours en trois phases
 
 Du corpus à l’utilisation, le cycle de vie se résume en trois phases :
 
@@ -110,19 +158,14 @@ flowchart LR
 
 Le pré-entraînement et l’éventuelle adaptation des poids décrivent la fabrication du modèle ; le prompt et les documents récupérés sont fournis au système au moment de l’inférence. Ce n’est donc pas une chaîne obligatoire en trois étapes : un modèle de base peut être utilisé directement, avec un contexte adapté. L’ordre pédagogique reste distinct de l’ordre de fabrication : l’inférence se comprend avant l’entraînement. L’évaluation intervient à plusieurs moments ; le jeu de test doit rester tenu à l’écart jusqu’à l’évaluation finale, faute de quoi elle la biaiserait.
 
-## 4. Les architectures : un renvoi plutôt qu’un tableau
-
-Encodeur seul, encodeur-décodeur et décodeur seul décrivent trois organisations courantes des **Transformers**, pas trois catégories universelles de LLM. Leur différence tient au flux d’information, aux masques et aux interactions entre encodeur et décodeur. Le tableau comparatif et les conséquences pour les objectifs et les usages méritent une explication distincte : [Comparer les architectures Transformer](transformer-architectures.qmd).
-
-Pour le parcours de construction, LLM Lab choisit un **petit GPT décodeur seul** : la prédiction autorégressive y est inspectable pas à pas. C’est un choix pédagogique, pas une affirmation que tous les LLM fonctionnent ainsi.
-
-## 5. À quoi servent ces modèles ?
+## 6. À quoi servent ces modèles ?
 
 Les usages courants comprennent la génération et la reformulation de texte, le résumé, la traduction, l’extraction structurée, la classification, l’assistance à la programmation et les interfaces de question-réponse.
 
 La réutilisation d’un modèle généraliste est intéressante lorsqu’une même base peut couvrir plusieurs tâches ou lorsque les exemples d’une tâche sont limités. Pour des connaissances qui changent fréquemment, récupérer des documents à jour (RAG) est souvent plus adapté que modifier les paramètres ; pour un format, un domaine ou un comportement spécifique, une adaptation peut devenir pertinente. Le choix s’évalue sur la tâche réelle : qualité, erreurs, robustesse, coût, latence, confidentialité, provenance des données et maintenance — une démonstration convaincante sur quelques prompts n’est pas une évaluation.
 
-## 6. Vérifier votre compréhension
+<details>
+<summary>Vérifier votre compréhension</summary>
 
 Essayez de répondre avant d’ouvrir les raisonnements. L’objectif est de manipuler le modèle mental, pas de mémoriser des étiquettes.
 
@@ -144,23 +187,13 @@ Le RAG peut récupérer les documents à l’inférence et les fournir dans le c
 
 </details>
 
+</details>
+
 ## 7. Une distinction à garder en tête
 
 La prédiction du prochain token ne garantit ni la vérité des sorties ni une compréhension humaine du monde. Ces questions, ainsi que les limites des affirmations sur les capacités émergentes, sont examinées dans [Ce que la prédiction du prochain token ne prouve pas](llm-limits.qmd).
 
 
-::: {.callout-note title="Repère historique"}
-Le Transformer de 2017 s’inscrit dans une histoire plus large des mécanismes d’attention, des modèles séquence-à-séquence et des objectifs de pré-entraînement. Pour cette chronologie, ses précautions de lecture et la place des LLM dans le paysage de l’IA, consultez [l’historique des Transformers](transformer-history.qmd).
-:::
-
-## 8. Où poursuivre dans LLM Lab ?
-
-- [**GPT et Transformer**](transformer.qmd) — suivre le calcul interne d’un GPT autorégressif, des représentations aux logits.
-- [**Comparer les architectures Transformer**](transformer-architectures.qmd) — comprendre les différences entre encodeur, encodeur-décodeur et décodeur.
-- [**Ce que la prédiction ne prouve pas**](llm-limits.qmd) — lire les performances sans surinterpréter l’objectif.
-- [**Construire un petit GPT**](build-path.qmd) — suivre les jalons G0–G9.
-- [**Évaluation expérimentale**](evaluation-experimentale.qmd) — définir des mesures, des baselines et des limites d’interprétation.
-- [**Sources scientifiques**](../references.qmd) — retrouver les articles et travaux cités dans ce panorama.
 
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../en/llm-overview.qmd)

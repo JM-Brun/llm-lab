@@ -8,34 +8,65 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-overview"
-scope: "Defines LLMs as a category of language models; provides a high-level map of an autoregressive GPT pipeline from text to next-token selection; distinguishes architecture, weight learning, and inference-time conditioning; delegates detailed comparisons and mechanisms to dedicated pages."
-purpose: "By the end of this page, readers should be able to trace the high-level path text → tokens → embeddings → Transformer → logits → distribution → selection, distinguish architecture, learning, and inference, and choose the specialist page to explore next."
+scope: "Introduces the language-modeling problem and why it is difficult; defines language model, generative model, LLM, GPT, and Transformer; maps an autoregressive GPT pipeline and delegates detailed mechanisms to dedicated pages."
+purpose: "By the end of this page, readers should be able to explain the language-modeling problem and its difficulties, distinguish language model, generative model, LLM, GPT, and Transformer, and trace an autoregressive GPT computation while separating embeddings from positional information."
 suggested_route:
   previous: "en/index"
   next: "en/transformer"
 hierarchy:
   parents: ["en/index"]
-  children: ["en/transformer", "en/transformer-architectures", "en/generation", "en/build-path", "en/mathematical-foundations", "en/llm-limits"]
+  children: ["en/transformer", "en/transformer-architectures", "en/generation", "en/build-path", "en/mathematical-foundations", "en/llm-limits", "en/scaling-laws"]
 related: ["en/transformer-history"]
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 -->
-
 ::: {.chapter-lead}
-A **large language model (LLM)** is a language model trained at large scale. The term denotes a broad category, with no universal parameter threshold or single architecture. To understand a generative model such as GPT, follow the data: from text to tokens, then representations, model computation, and finally next-token selection.
+A **language model** assigns probabilities to text sequences—or, in an autoregressive factorization, to the next token given its context. A **generative model** can produce new samples from a learned distribution, possibly conditioned on an input. An **LLM** (*large language model*) is a language model trained at large scale: there is no universal parameter threshold that mechanically separates “small” models from LLMs. Parameter count is only one dimension of scale; relationships between parameters, data, compute, and performance are studied through [scaling laws](scaling-laws.qmd). The LLM category does not imply a particular architecture.
+
+This page starts with the problem: producing a plausible continuation from context when language is ambiguous, structured at several levels, and combinatorial. It then shows how a GPT approaches that problem, while delegating detailed mechanisms to their dedicated pages.
 :::
 
-::: {.callout-note title="What to take away"}
-**After this page, you should be able to:**
-- - trace the high-level pipeline of an autoregressive GPT without conflating its stages;
-- distinguish architecture, weight learning, and inference;
-- identify which page develops each concept.
+<details>
+<summary>Expected outcome — and where this page fits</summary>
 
-This is the **first stage of the conceptual route**. You do not need to master equations or tensors yet.
-:::
+By the end of this page, you should be able to:
+- explain what a language model estimates;
+- distinguish a language model, generative model, LLM, GPT, and Transformer;
+- trace the main stages of an autoregressive GPT computation.
 
-## 1. A GPT's path from text to the next token
+This page introduces the problem and its computational principle without assuming prior knowledge of equations or tensors. The next page, [GPT and Transformer](transformer.qmd), explains the internal computation that produces this prediction.
 
-The diagram summarizes the computation of an **autoregressive GPT**. It does not describe every LLM: other architectures and objectives exist. The arrows represent distinct transformations, not successive synonyms.
+</details>
+
+## 1. The problem: continue text from a context
+
+Given a prefix such as “The report indicates that the concentration”, the model must estimate which tokens could follow. There is not necessarily one uniquely correct continuation: several continuations may be grammatical and coherent while differing in meaning, precision, or relevance.
+
+A language model represents this uncertainty with a conditional distribution. For a token sequence $x_1,\ldots,x_T$, an autoregressive model factorizes it as:
+
+$$
+P(x_1,\ldots,x_T)=\prod_{t=1}^{T}P(x_t\mid x_{<t}).
+$$
+
+At each position, it therefore estimates a distribution over the vocabulary from preceding tokens. Generation then selects a token, appends it to the context, and repeats. The model learns statistical regularities in its data; this objective does not, by itself, provide a mechanism for verifying truth.
+
+### Why is this problem difficult?
+
+- **Ambiguity and long-range dependencies:** a token's meaning often depends on distant words, syntax, discourse, and implicit knowledge.
+- **Combinatorial space:** the number of possible sequences grows rapidly with length; the model must generalize beyond exact examples seen during training.
+- **Heterogeneous data:** corpora mix styles, domains, quality levels, languages, and contradictions; not every learned regularity is relevant to a given task.
+- **Compute trade-offs:** increasing model capacity is not enough. Suitable data and compute are also needed to exploit it; gains depend on how these resources are allocated.
+
+[Scaling laws](scaling-laws.qmd) empirically study relationships between these resources and loss. They do not define a universal threshold at which a model becomes an LLM.
+
+## 2. How a GPT approaches this problem
+
+**GPT** stands for *Generative Pre-trained Transformer*. The name refers to a family of pretrained generative models built on the Transformer architecture. In common usage, classic GPT models are **decoder-only** Transformers trained to predict the next token. GPT and Transformer are therefore not synonyms: Transformer names an architecture family; GPT names a family of models using a particular configuration.
+
+The following diagram traces an autoregressive GPT. It does not describe every language model: some are not generative, and other generative architectures exist.
+
+## 3. A GPT's path from text to the next token
+
+The arrows represent distinct transformations, not successive synonyms.
 
 <div class="pipeline-stepper" role="navigation" aria-label="Stages in a GPT pipeline">
   <a class="step-item" href="tokenization-strategies.qmd">1. Vocabulary</a>
@@ -44,24 +75,33 @@ The diagram summarizes the computation of an **autoregressive GPT**. It does not
   <span class="step-arrow">→</span>
   <a class="step-item" href="embedding-space.qmd">3. Embeddings</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="transformer.qmd">4. Transformer</a>
+  <a class="step-item" href="positional-encoding.qmd">4. Position</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="logits.qmd">5. Logits</a>
+  <a class="step-item" href="transformer.qmd">5. Transformer</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="probabilities.qmd">6. Distribution</a>
+  <a class="step-item" href="logits.qmd">6. Logits</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="generation.qmd">7. Selection</a>
+  <a class="step-item" href="probabilities.qmd">7. Distribution</a>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="generation.qmd">8. Selection</a>
 </div>
 
 ```{mermaid}
 flowchart LR
-  T["Text"] --> K["Tokenizer<br/>vocabulary"]
-  K --> I["Tokens and IDs<br/>context"]
-  I --> E["Embeddings<br/>+ position"]
-  E --> X["Transformer blocks"]
-  X --> L["Logits"]
-  L --> P["Distribution"]
-  P --> S["Selection"]
+  subgraph Input["Represent the input"]
+    T["Text"] --> K["Tokenizer<br/>vocabulary"]
+    K --> I["Tokens and IDs"]
+    I --> E["Embedding<br/>lookup"]
+    E --> R["Positional<br/>information"]
+  end
+  subgraph Model["Model computation"]
+    R --> X["Transformer blocks<br/>contextual representations"]
+    X --> L["Logits<br/>one score per token"]
+  end
+  subgraph Output["Choose a continuation"]
+    L --> P["Probability<br/>distribution"]
+    P --> S["Next-token selection"]
+  end
   S -->|"append ID to context"| I
 ```
 
@@ -69,29 +109,36 @@ flowchart LR
 |---|---|---|
 | **Text and vocabulary** | The tokenizer segments text according to a vocabulary and its rules. | [From text to tokens](text-data.qmd) · [Tokenization strategies](tokenization-strategies.qmd) |
 | **Tokens and IDs** | Each token is represented by an integer ID; an ID is neither a score nor a semantic vector. | [Text, tokens, and data](text-data.qmd) |
-| **Embeddings and position** | IDs select initial vectors; positional information distinguishes sequence positions. | [Embedding space](embedding-space.qmd) · [Positional information](positional-encoding.qmd) |
+| **Embeddings** | Each ID selects a learned vector from the embedding matrix; this initial vector is not yet contextualized. | [Embedding space](embedding-space.qmd) |
+| **Positional information** | A distinct mechanism provides token order; it can enter the computation at different points. | [Positional information](positional-encoding.qmd) |
 | **Transformer** | Blocks transform these vectors into contextual representations, notably through attention. | [GPT and Transformer](transformer.qmd) · [Compare architectures](transformer-architectures.qmd) |
 | **Logits** | The output projection assigns an unnormalized score to every token in the vocabulary. | [Logits](logits.qmd) |
 | **Distribution** | Scores are normalized into conditional probabilities over possible tokens. | [Output probabilities](probabilities.qmd) |
 | **Selection** | A decoding rule selects the next token; it is appended to the context and computation repeats. | [Text generation](generation.qmd) |
 
-**A note on position:** positional information is not always a vector added to embeddings. Some methods, such as [RoPE](positional-encoding.qmd), integrate it directly into attention computations.
+### Embeddings: map an ID to a vector
+
+A token ID is an integer index, not a coordinate that carries meaning. The embedding table associates a learned vector with each ID; two occurrences of the same ID therefore select the same initial vector. Network layers then transform it in context. See [embedding space](embedding-space.qmd).
+
+### Positional information: represent order
+
+A sequence is not merely a set of tokens: order changes meaning and the dependencies to be learned. The model therefore needs information that distinguishes positions. This information can enter the computation in different ways; the mechanisms and their differences are explained on the [dedicated positional-information page](positional-encoding.qmd).
 
 **The key boundary:** the transformation from IDs to logits is the model's forward pass; transforming logits into a distribution and selecting a token belong to decoding. During inference, parameters remain fixed. Learning those parameters is a separate lifecycle stage, introduced below.
 
-## 2. Three dimensions not to conflate
+## 4. Three dimensions not to conflate
 
 Describing an LLM requires three independent questions. They answer one another, but they denote neither the same objects nor the same operations.
 
 | Dimension | Question | What it describes | Examples |
 |---|---|---|---|
-| **Architecture** | How does information flow through the model? | The operations and connections that define the computation performed | Encoder-only, encoder–decoder, decoder-only; other families, such as state-space models, are not classic Transformers |
+| **Architecture** | How does information flow through the model? | The operations and connections that define the computation performed | Encoder-only, encoder–decoder, decoder-only; see [the Transformer architecture comparison](transformer-architectures.qmd) |
 | **Weight learning** | How were the parameters obtained or modified? | The objectives and procedures that learn or adjust the parameters | Pretraining, fine-tuning/SFT, preference optimization |
 | **Inference and use** | What do you do with the model once its parameters are fixed? | Computing an output from an input, possibly within a system with retrieval or tools | Classification, scoring, autoregressive generation; prompting and RAG condition the context without changing weights |
 
 The loop of section 1 belongs to inference. Training belongs to learning. The same model can change use without changing architecture: that is what the following sections unpack.
 
-## 3. The path in three phases
+## 5. The path in three phases
 
 From corpus to use, the lifecycle reduces to three phases:
 
@@ -110,19 +157,14 @@ flowchart LR
 
 Pretraining and optional weight adaptation describe how a model is made; prompts and retrieved documents are supplied to the system at inference time. This is therefore not a mandatory three-step chain: a base model can be used directly with an appropriate context. The pedagogical order remains distinct from the order of model construction: inference can be understood before training. Evaluation happens at several points; the test set must remain held out until the final evaluation, otherwise that evaluation would be biased.
 
-## 4. Architectures: a link, not another comparison table
-
-Encoder-only, encoder–decoder, and decoder-only describe three common organizations of **Transformers**, not three universal categories of LLMs. They differ in information flow, masking, and interactions between encoder and decoder. The comparison and its implications for objectives and uses deserve a separate explanation: [Compare Transformer architectures](transformer-architectures.qmd).
-
-For the build route, LLM Lab chooses a **small decoder-only GPT**: autoregressive prediction can be inspected step by step. This is a pedagogical choice, not a claim that all LLMs work this way.
-
-## 5. What are these models for?
+## 6. What are these models for?
 
 Common uses include text generation and rewriting, summarization, translation, structured extraction, classification, programming assistance, and question-answering interfaces.
 
 Reusing a general-purpose model is attractive when one base can cover several tasks, or when the labeled examples of a task are scarce. For knowledge that changes frequently, retrieving up-to-date documents (RAG) is often better suited than changing parameters; for a specific format, domain, or behavior, an adaptation may become worthwhile. The choice is evaluated on the real task: quality, errors, robustness, cost, latency, confidentiality, data provenance, and maintenance — a convincing demo on a few prompts is not an evaluation.
 
-## 6. Check your understanding
+<details>
+<summary>Check your understanding</summary>
 
 Try to answer before opening the solutions. The goal is to manipulate the mental model, not to memorize labels.
 
@@ -144,23 +186,13 @@ RAG can retrieve documents at inference time and provide them in the context; th
 
 </details>
 
+</details>
+
 ## 7. One distinction to keep in mind
 
 Next-token prediction guarantees neither the truth of a model's outputs nor human-like understanding of the world. These questions, along with claims about emergent capabilities, are examined in [What next-token prediction does not prove](llm-limits.qmd).
 
 
-::: {.callout-note title="Historical context"}
-The 2017 Transformer emerged from a broader history of attention mechanisms, sequence-to-sequence models, and pretraining objectives. For the timeline, its historiographical caveats, and the place of LLMs in the AI landscape, see the [history of Transformers](transformer-history.qmd).
-:::
-
-## 8. Where to go next in LLM Lab
-
-- [**GPT and Transformer**](transformer.qmd) — follow an autoregressive GPT's computation from representations to logits.
-- [**Compare Transformer architectures**](transformer-architectures.qmd) — understand the differences between encoder, encoder–decoder, and decoder.
-- [**What next-token prediction does not prove**](llm-limits.qmd) — read performance without over-interpreting the objective.
-- [**Build a small GPT**](build-path.qmd) — follow the G0–G9 milestones.
-- [**Experimental evaluation**](experimental-evaluation.qmd) — define metrics, baselines, and interpretation limits.
-- [**Research sources**](../references.qmd) — find the papers and studies cited in this panorama.
 
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-overview.qmd) · [English](llm-overview.qmd)

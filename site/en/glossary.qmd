@@ -22,6 +22,12 @@ tags: ["type:glossary", "destination:reference", "topic:glossary", "level:refere
 
 This glossary gives a concise first definition for terms used across the site. It does not replace canonical concept pages: follow the links for deeper explanations where available.
 
+## Language models and generation
+
+- **Language model** — a model that assigns probabilities to text sequences or their next tokens, conditional on context. See the [LLM panorama](llm-overview.qmd).
+- **Generative model** — a model that defines a distribution from which new samples can be produced, possibly conditioned on an input; it is not necessarily a language model.
+- **LLM (*large language model*)** — a language model trained at large scale. No universal parameter threshold defines this category; see [scaling laws](scaling-laws.qmd).
+
 ## Text and data
 
 - **Token** — a discrete unit processed by a model; it may be a word, subword, character, or another segment.
@@ -54,7 +60,8 @@ These topics are grouped in the [Representation geometry and interpretability](e
 
 ## Transformer architecture
 
-- **Transformer** — a neural architecture built around attention and representation transformations, introduced by Vaswani and colleagues in 2017. See the [Transformer overview](transformer.qmd) and [history](transformer-history.qmd).
+- **Transformer** — a family of neural architectures built around attention and representation transformations, introduced by Vaswani and colleagues in 2017. The term does not name a single model family. See the [Transformer overview](transformer.qmd) and [history](transformer-history.qmd).
+- **GPT (*Generative Pre-trained Transformer*)** — a family of pretrained generative models built on Transformers; classic GPT models use a decoder-only architecture and an autoregressive objective. GPT is not synonymous with Transformer. See [GPT and Transformer](transformer.qmd) and [Transformer architectures](transformer-architectures.qmd).
 - **Attention** — a mechanism that computes weights from queries and keys, then aggregates the corresponding values. See [Q, K, and V](queries-keys-values.qmd).
 - **Query (Q)** — a projection used to compute compatibility scores with keys.
 - **Key (K)** — a projection compared with a query to produce a score.
@@ -67,6 +74,7 @@ These topics are grouped in the [Representation geometry and interpretability](e
 - **Decoder** — a component designed to produce outputs from context; in an autoregressive decoder, a causal mask prevents access to future tokens.
 - **Embedding** — a learned vector representation of a token or other item.
 - **Positional encoding / position information** — a signal that lets the model distinguish token order.
+- **Scaling law** — an empirical relationship between a training resource (parameters, data, or compute) and a measure such as loss; it depends on the regime studied and does not establish a universal LLM threshold. See [scaling laws](scaling-laws.qmd).
 - **Parameter** — a value learned during training.
 - **Fine-tuning** — continuing training of a pretrained model on a particular objective or dataset.
 
