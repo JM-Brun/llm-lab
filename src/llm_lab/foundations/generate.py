@@ -116,6 +116,9 @@ def generate(
             # logits. Ties resolve to the lowest index (NumPy argmax).
             next_token = int(np.argmax(logits))
         else:
+            # rng was validated before the loop; the assert only narrows
+            # the Optional type for mypy.
+            assert rng is not None
             # Temperature scales the logits before softmax: T < 1 sharpens
             # the distribution, T > 1 flattens it. rng.choice then draws
             # one id from that distribution.

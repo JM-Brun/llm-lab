@@ -36,7 +36,7 @@ def test_config_requires_divisible_head_count() -> None:
 def test_config_is_immutable() -> None:
     config = _config()
     with pytest.raises(dataclasses.FrozenInstanceError):
-        setattr(config, "vocab_size", 20)
+        config.vocab_size = 20
 
 
 def test_config_defaults_seed_to_zero() -> None:

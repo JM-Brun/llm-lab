@@ -3,9 +3,9 @@
 import numpy as np
 import pytest
 
+from llm_lab.foundations.generate import generate
 from llm_lab.foundations.gpt import GPT
 from llm_lab.foundations.gpt_config import GPTConfig
-from llm_lab.foundations.generate import generate
 
 
 def _small_config(seed: int = 0) -> GPTConfig:
@@ -27,7 +27,7 @@ def test_generate_greedy_is_deterministic_and_matches_manual_argmax_chain() -> N
     generated_a = generate(model, prompt, 6)
     generated_b = generate(model, prompt, 6)
 
-    assert generated_a.shape == (9,)
+    assert generated_a.shape == (11,)
     assert np.array_equal(generated_a, generated_b)
     assert np.array_equal(generated_a[:5], prompt)
 

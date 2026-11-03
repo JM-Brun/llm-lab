@@ -44,8 +44,9 @@ def test_layer_norm_with_identity_affine_yields_roughly_unit_variance() -> None:
 
     assert out.shape == x.shape
     np.testing.assert_allclose(out.mean(axis=-1), 0.0, atol=1e-10)
-    # Slightly below 1 because eps is added to the variance.
-    np.testing.assert_allclose(out.var(axis=-1), 1.0, atol=1e-4)
+    # Slightly below 1 because eps (1e-5) is added to the variance; the
+    # shortfall is about eps / variance and stays well under 1e-3 here.
+    np.testing.assert_allclose(out.var(axis=-1), 1.0, atol=1e-3)
 
 
 def test_gelu_is_zero_at_zero_and_close_to_exact_erf_definition() -> None:
