@@ -40,6 +40,10 @@ The diagram shows a single pair of coordinates. In practice, RoPE acts on multip
 
 These approaches inject positional information at different points and do not have exactly the same properties.
 
+![Where positional information enters the computation: at the input for an absolute encoding, inside queries and keys for RoPE.](../images/positional-info-insertion-en.svg){fig-alt="An absolute encoding is added to the embeddings at the input, before any projection. RoPE applies rotations to queries and keys after their projections, before the QK product, so the attention scores carry positional information." width=100%}
+
+**The RoPE case.** Positional information is injected by rotating the query and key representations **after their projections and before the $QK^\top$ product**. It therefore changes the attention scores themselves; it is not an operation applied after attention. The next section details the computation that shows this.
+
 ## The mathematical intuition behind RoPE
 
 For a pair of coordinates $(x_1,x_2)$, a rotation by angle $\theta$ is:
