@@ -1,0 +1,190 @@
+---
+title: "Complexity and parallelism in LLMs"
+subtitle: "Where is computation linear or quadratic, parallel or sequential?"
+keywords: ["type:concept-lesson", "destination:deepen", "topic:llm-computational-complexity", "level:advanced", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/llm-computational-complexity"
+scope: "Analyzes sequence-length complexity, memory, and parallelism in major LLM operations, distinguishing training, prefill, and decode."
+purpose: "Distinguish total work, sequential depth, and memory; explain attention, MLP, KV-cache, and recurrent architecture costs."
+suggested_route:
+  previous: "en/transformer"
+  next: null
+hierarchy:
+  parents: ["en/llm-overview"]
+  children: []
+related: ["en/transformer", "en/generation", "en/hybrid-llm-architectures", "en/scaling-laws"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:llm-computational-complexity", "level:advanced", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+LLM performance does not depend only on the number of operations. It also depends on **how those operations scale with context length**, how much data must be stored or moved, and whether they can run simultaneously. A quadratic operation can be highly parallelized; a linear operation can still have a sequential dependency.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+- Distinguish computational complexity, memory complexity, and sequential depth.
+- Explain the costs of dense attention, MLPs, KV caches, and decoding.
+- Distinguish training, prefill, and decode.
+- Compare attention, recurrent states, linear attention, and sparse experts.
+- Identify the forms of parallelism used in LLM systems.
+:::
+
+## 1. Three different questions
+
+A performance analysis should separate three quantities:
+
+1. **Total work**: the number of operations required, often described using \(O(\cdot)\).
+2. **Depth or critical path (*span*)**: the length of the dependency chain that must execute in order. It limits theoretical parallelism.
+3. **Memory and memory traffic**: the size of tensors that must be retained and the amount of data moved between memory and compute units.
+
+Asymptotic notation does not directly give runtime: constants, dimensions, bandwidth, communication, hardware, and available parallelism also matter.
+
+| Symbol | Meaning |
+|---|---|
+| \(B\) | batch size |
+| \(T\) | sequence or context length |
+| \(d\) | model width |
+| \(d_{ff}\) | MLP inner width |
+| \(H\), \(H_{KV}\) | number of query heads and key/value heads |
+| \(N_L\) | number of layers |
+| \(G\) | number of generated tokens after the prompt |
+| \(K\) | number of experts activated per token |
+
+Unless stated otherwise, study scaling with \(T\) at fixed model dimensions.
+
+## 2. Dense Transformer: where does the quadratic term come from?
+
+| Operation | Dominant work as a function of \(T\) | Why? |
+|---|---:|---|
+| \(Q,K,V\) and output projections | \(O(BTd^2)\) | One projection per token |
+| MLP / feed-forward network | \(O(BTdd_{ff})\) | Same computation at every position |
+| Attention scores \(QK^\top\) | \(O(BT^2d)\) | Each query compares context positions |
+| Attention-weighted value aggregation | \(O(BT^2d)\) | Each output combines accessible values |
+| Naïvely stored attention weights | \(O(BHT^2)\) | One score matrix per head |
+
+The **quadratic term in sequence length** comes from interactions between pairs of positions in dense attention. Projections and the MLP scale linearly with \(T\), at fixed width.
+
+For causal attention, future positions are masked: useful pairs form a triangle, approximately \(T(T+1)/2\). This changes a constant, not the asymptotic order \(O(T^2)\).
+
+Saying “the Transformer is quadratic” is imprecise: **dense attention is quadratic in \(T\)**; not every Transformer operation is. If \(d\) also increases, projection and MLP costs increase too.
+
+## 3. Quadratic does not mean sequential
+
+During prefill, representations for all positions are available. Within an attention layer, matrix products between queries, keys, and values can be computed in parallel across many position blocks and heads.
+
+Total work remains quadratic, but GPUs execute many matrix operations simultaneously. The main sequential constraint in a standard Transformer lies **between layers**: layer \(l+1\) needs the representations from layer \(l\).
+
+The causal mask forbids looking into the future; it does not force positions to be computed one by one during training. Predictions for all positions in a training sequence can be computed in parallel, with the appropriate target shift.
+
+### FlashAttention: reduce memory movement, not quadratic work
+
+FlashAttention retains exact attention and its \(O(T^2d)\) work, but tiles the computation to avoid materializing the full attention matrix in high-bandwidth memory. It reduces costly reads/writes and intermediate memory, without making dense attention linear in \(T\).
+
+**An optimization can accelerate an operation without changing its arithmetic complexity class.**
+
+## 4. Training, prefill, and decode: three distinct regimes
+
+### Training
+
+Sequence positions are processed in parallel within each layer. Dense attention costs \(O(T^2d)\) work per layer; projections and the MLP are linear in \(T\), at fixed width. Backpropagation adds work and memory but preserves the fundamental dependencies between layers.
+
+### Prefill
+
+The full prompt is processed at once. Its positions can be parallelized within a layer; dense attention still performs quadratic work in prompt length. A long prompt can therefore increase time to first token.
+
+### Decode
+
+In standard autoregressive generation, the next token depends on the token already selected: generation steps are **sequential across tokens**. The KV cache avoids recomputing past keys and values, but each new token must still consult the stored history.
+
+For a prompt of length \(T\) and \(G\) generated tokens, attention work during cached decoding scales as:
+
+\[
+\sum_{i=0}^{G-1}(T+i)
+= GT+\frac{G(G-1)}{2}
+= O(GT+G^2)
+\]
+
+This expression describes attention interactions, not total model cost: projections, MLPs, layers, and vocabulary operations add their own costs. At each step, operations for one token can be parallelized inside the network, but successive steps remain dependent.
+
+The KV cache avoids recomputing the past; it does not eliminate either the traversal of context by each new token or cache growth with total context length.
+
+## 5. Why recurrent architectures can be linear
+
+A recurrent model updates a compact state at each position:
+
+\[
+h_t = f(h_{t-1}, x_t)
+\]
+
+At fixed dimensions and state size, total work scales linearly with \(T\). In streaming inference, a token can be processed while retaining the previous state, without rereading the entire history. State memory therefore need not grow with context length.
+
+But a naïve recurrence has a dependency: \(h_t\) waits for \(h_{t-1}\). **Linear work does not mean full parallelism.**
+
+Some recurrences have an associative structure that enables a *parallel scan*: prefixes can be computed in parallel, with theoretical logarithmic depth in \(T\), while retaining linear work. Mamba and selective state-space models use scans adapted to their structure; this does not mean every operation or every Mamba variant is free of sequential dependencies.
+
+## 6. Linear attention and other trade-offs
+
+Linear-attention methods reorganize or approximate computation to avoid constructing every pairwise token interaction. Under certain formulations, work scales linearly with \(T\), at fixed dimensions.
+
+There can be trade-offs: kernel approximation, normalization constraints, difficulty reproducing some exact interactions, or task-dependent quality. Not every form of “linear attention” is equivalent to exact softmax attention.
+
+Hybrid architectures can retain a few attention layers for explicit access to context positions and use recurrent states elsewhere. This is one of the trade-offs illustrated by the [Nemotron case study](hybrid-llm-architectures.qmd).
+
+## 7. MoE: sparse computation, total capacity
+
+A *Mixture of Experts* (MoE) network contains multiple expert networks, but a router activates only a subset for each token. With \(N\) experts and \(K\) activated experts, expert computation per token depends mainly on \(K\), rather than \(N\), at comparable expert size.
+
+This does not mean weight memory depends only on active experts: parameters for all experts must be stored or made accessible. Distributed across GPUs, routing can also trigger *all-to-all* communication. Actual cost therefore depends on expert placement, load balancing, and batch size.
+
+**Sparse active computation ≠ sparse hosted capacity.**
+
+## 8. Where does parallelism enter?
+
+| Form | What is distributed | Limitation or cost |
+|---|---|---|
+| Data | Examples or batches across replicas | Gradient synchronization |
+| Tensor | Matrix dimensions and heads across GPUs | Collective communication |
+| Pipeline | Groups of layers across devices | Pipeline bubbles and micro-batch dependencies |
+| Sequence | Positions or blocks of a long sequence | Communication between partitions |
+| Expert | MoE experts across devices | Routing and *all-to-all* exchanges |
+
+Parallelism does not remove algorithmic dependencies: it distributes available work. Added communication can offset some theoretical gains.
+
+## 9. Summary: work, dependencies, and memory
+
+| Mechanism | Work in \(T\), fixed dimensions | Sequential dependency | Context-related memory |
+|---|---|---|---|
+| Exact dense attention | Quadratic \(O(T^2)\) | Between layers; positions parallel during training/prefill | KV cache \(O(T)\) in decode; naïve intermediate \(O(T^2)\) |
+| FlashAttention | Quadratic \(O(T^2)\) | Same structure as dense attention | Reduces intermediates; does not remove KV cache |
+| Recurrence / SSM | Linear \(O(T)\) at fixed state | Streaming recurrence; scan parallelizable for some structures | Bounded recurrent state in streaming |
+| Linear attention | Often linear \(O(T)\), depending on formulation | Depends on algorithm | Compact state or intermediates are possible |
+| MoE | Expert computation tied to \(K\), not all \(N\) experts | Per-token routing and communication | Total weights tied to \(N\) |
+
+This table gives trends, not a benchmark. Constants, dimensions, bandwidth, quality, batch size, and hardware can reverse practical rankings.
+
+## 10. Rules of thumb
+
+- **Quadratic** describes the number of interactions between positions, not an inability to parallelize them.
+- **Linear** describes total work as a function of \(T\), not the absence of dependencies between tokens.
+- **Sequential** describes a dependency path; it can limit latency even when each step is cheap.
+- **Memory** and **compute** are not interchangeable: FlashAttention reduces memory traffic without removing quadratic work; GQA reduces KV cache; MoE reduces active computation without removing all weights.
+- **Latency** and **throughput** differ: processing many requests in parallel can improve throughput without accelerating generation for one isolated request.
+
+Apply these distinctions to concrete architecture choices: [hybrid architectures and Nemotron](hybrid-llm-architectures.qmd), [autoregressive generation](generation.qmd), the [Transformer block](transformer.qmd), and [scaling laws](scaling-laws.qmd).
+
+::: {.self-check}
+## Check your understanding
+
+1. **Dense attention is quadratic: why can it still be computed in parallel?** Interactions between positions are parallelizable matrix operations; total work and sequential depth are different.
+2. **Why is standard generation still sequential?** The next token depends on the token just selected.
+3. **Does FlashAttention make attention linear?** No: it retains quadratic work while reducing memory movement and intermediates.
+4. **Is a recurrent model with linear work in \(T\) fully parallel?** No: a naïve recurrence depends on the previous state, although some structures enable parallel scans.
+5. **Does an MoE with few active experts store only those experts?** No: all expert weights must be hosted or accessible.
+:::
+
+::: {.language-switch}
+**Language:** [Français](../fr/llm-computational-complexity.qmd) · [English](llm-computational-complexity.qmd)
+:::
