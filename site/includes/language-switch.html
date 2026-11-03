@@ -116,14 +116,14 @@
   const sidebarLinks = Array.from(document.querySelectorAll(".sidebar a[href]"));
   const currentPath = new URL(window.location.href).pathname.replace(/\/+$/, "");
   const currentLink =
-    sidebarLinks.find((link) => link.classList.contains("active") || link.getAttribute("aria-current") === "page") ||
     sidebarLinks.find((link) => {
       try {
         return new URL(link.href, document.baseURI).pathname.replace(/\/+$/, "") === currentPath;
       } catch {
         return false;
       }
-    });
+    }) ||
+    sidebarLinks.find((link) => link.classList.contains("active") || link.getAttribute("aria-current") === "page");
   if (!currentLink) return;
 
   const trail = [];
