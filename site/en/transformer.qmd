@@ -106,14 +106,7 @@ This distinction explains why "the model predicts the next token" remains true i
 - **"Attention weights alone reveal the model's reasoning."** No: they do not establish the causal influence of a piece of information on the output.
 - **"All Transformers are GPTs."** No: the original 2017 architecture used an encoder and a decoder; GPT is an autoregressive decoder-only family.
 
-## Continue
-
-- [Mathematical foundations](mathematical-foundations.qmd) — connect logits, probabilities, likelihood, and loss.
-- [Transformer history](transformer-history.qmd) — place architectural choices in context.
-
 ## To go further
-
-Each resource below answers a different need. Pick the one that matches your current question; return to the others if you need another explanation or more technical detail.
 
 ### Building intuition with visualizations
 
