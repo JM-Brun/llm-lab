@@ -57,6 +57,7 @@ The source-level scan found 32 SVG files. The table records source references fo
 | `embedding-space-en.svg`, `embedding-space-fr.svg` | EN/FR `embedding-space.qmd` | Project-managed SVG pair; verify authorship/history and licence |
 | `gpt-data-flow-en.svg`, `gpt-data-flow.svg` | EN/FR `transformer.qmd` | Project-managed SVG pair; verify authorship/history and licence |
 | `math-training-pipeline.svg` | EN/FR `mathematical-foundations.qmd` | Project-managed SVG; described as original in `site/references.qmd`; verify authorship/history and licence |
+| `positional-info-insertion-en.svg`, `positional-info-insertion-fr.svg` | EN/FR `positional-encoding.qmd` | Project-managed SVG pair; original diagrams added with the RoPE relocation in PR #255; verify authorship/history and licence |
 | `queries-keys-values-en.svg`, `queries-keys-values.svg` | EN/FR `queries-keys-values.qmd` | Project-managed SVG pair; described as original in `site/references.qmd`; verify authorship/history and licence |
 | `rope-en.svg`, `rope-fr.svg` | EN/FR `positional-encoding.qmd` | Project-managed SVG pair; verify authorship/history and licence |
 | `softmax-axis-comparison-en.svg`, `softmax-axis-comparison-fr.svg` | EN/FR `tensors.qmd` | Project-managed SVG pair; verify authorship/history and licence |
