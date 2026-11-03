@@ -34,7 +34,6 @@ Think of a **catalogue with reference numbers**. The tokenizer splits text into 
 **Go deeper:** compare real tokenizers, examine their trade-offs, then follow the lookup operation in [embedding space](embedding-space.qmd).
 :::
 
-This page details the model's input. The [LLM panorama](llm-overview.qmd) situates the system as a whole, while [GPT and Transformers](transformer.qmd) picks up from the representations and explains the network's computations. Read them in that order, or return to each page according to the question you want to answer.
 ## Learning objectives
 
 - Distinguish Unicode text, bytes, tokens, token IDs, and embeddings.
@@ -70,7 +69,7 @@ The final box deliberately groups positional handling with Transformer processin
 This is a conceptual diagram. Real tokenizers differ in base units, normalization, pre-tokenization, vocabulary, and special tokens.
 
 ::: {.callout-note}
-**Two different meanings of preprocessing.** Corpus preparation (for example, filtering documents, deduplicating near-copies, and defining train/validation boundaries) is an upstream data-engineering stage. Tokenizer normalization and pre-tokenization are part of the tokenizer pipeline and operate on input text. They should not be treated as the same operation. Likewise, tokenizer training learns a vocabulary and rules; encoding a new input reuses them and does not retrain the tokenizer. For a held-out evaluation, fit a learned tokenizer on the training partition only, rather than letting validation or test text influence its vocabulary. This page focuses on the tokenizer stage; see [training examples](training-examples.qmd) for how encoded text becomes input windows and shifted targets.
+**Two different meanings of preprocessing.** Corpus preparation (for example, filtering documents, deduplicating near-copies, and defining train/validation boundaries) is an upstream data-engineering stage. Tokenizer normalization and pre-tokenization are part of the tokenizer pipeline and operate on input text. They should not be treated as the same operation. Likewise, tokenizer training learns a vocabulary and rules; encoding a new input reuses them and does not retrain the tokenizer. For a held-out evaluation, fit a learned tokenizer on the training partition only, rather than letting validation or test text influence its vocabulary.
 :::
 
 
@@ -141,7 +140,7 @@ For the definitions and research behind these dimensions, see **[Evaluating a to
 
 ### Where to explore the mechanisms
 
-This overview stays focused on the pipeline. Technical details live on dedicated pages:
+
 
 - [Tokenization strategies](tokenization-strategies.qmd): pre-tokenization, BPE, WordPiece, unigram, examples, comparisons, and limitations.
 - [Unicode, UTF-8, and normalization](unicode-text.qmd): code points, bytes, and visually identical strings.
