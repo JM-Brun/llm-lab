@@ -46,6 +46,59 @@ Ce fichier transforme les logits en séquence : à chaque étape, retraiter le c
     return np.asarray(context, dtype=np.int64)
 ```
 
+```{=html}
+<figure class="wf-fig" id="wf-gen-map" data-wf-default="Une étape complète : trancher la fenêtre, passer le modèle, lire la dernière position, choisir un token, l’ajouter au contexte — puis recommencer, jusqu’à max_new_tokens.">
+<figcaption class="wf-fig-title">La boucle de décodage : chaque ligne de la boucle a son étape dans le schéma</figcaption>
+<div class="wf-stage">
+<div class="wf-diagram">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 320" role="img" aria-labelledby="wfg-title wfg-desc">
+<title id="wfg-title">La boucle de décodage de generate.py : fenêtre glissante, lecture de la dernière position, sélection du token et ajout au contexte</title>
+<desc id="wfg-desc">Le contexte est une file de tokens : la fenêtre garde les derniers context_length d’entre eux, la passe avant produit des logits (1, T, V), seule la dernière ligne est lue, un token est choisi par argmax ou par échantillonnage avec température, puis ajouté au contexte ; la boucle recommence jusqu’à max_new_tokens.</desc>
+<defs>
+<marker id="wfg-green" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#16A34A"/></marker>
+<marker id="wfg-ink" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#344054"/></marker>
+</defs>
+<g font-family="Arial,sans-serif">
+<rect x="20" y="56" width="36" height="36" rx="6" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="5 3"/><rect x="60" y="56" width="36" height="36" rx="6" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="5 3"/><rect x="100" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0EA5E9" stroke-width="1.8"/><rect x="140" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0EA5E9" stroke-width="1.8"/><rect x="180" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0EA5E9" stroke-width="1.8"/><rect x="220" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0EA5E9" stroke-width="1.8"/><rect x="260" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0EA5E9" stroke-width="1.8"/><rect x="300" y="56" width="36" height="36" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.8"/><rect x="340" y="56" width="36" height="36" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.8"/><rect x="380" y="56" width="36" height="36" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.8"/>
+<g data-wf-part="win"><text x="58" y="128" text-anchor="middle" font-size="11" fill="#64748B">hors fenêtre</text></g>
+<g data-wf-part="win"><rect x="94" y="48" width="326" height="52" rx="8" fill="none" stroke="#16A34A" stroke-width="3"/><text x="257" y="42" text-anchor="middle" font-size="12.5" font-weight="700" fill="#14532D">fenêtre = les derniers context_length tokens</text></g>
+<g data-wf-part="win fwd"><path d="M272 104 C 340 150, 430 160, 508 160" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfg-ink)"/></g>
+<g data-wf-part="fwd"><rect x="460" y="162" width="150" height="56" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="535" y="186" text-anchor="middle" font-size="13" font-weight="700" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#17212B">model.forward</text><text x="535" y="206" text-anchor="middle" font-size="11" fill="#475569">(1, T)</text></g>
+<g data-wf-part="fwd"><path d="M610 190 H640" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfg-ink)"/></g>
+<g data-wf-part="fwd"><rect x="646" y="162" width="114" height="56" rx="10" fill="#FEF3C7" stroke="#B45309" stroke-width="2"/><text x="703" y="186" text-anchor="middle" font-size="13" font-weight="700" fill="#78350F">logits</text><text x="703" y="206" text-anchor="middle" font-size="11" fill="#92400E">(1, T, V)</text></g>
+<g data-wf-part="fwd last"><path d="M760 190 H790" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfg-ink)"/></g>
+<g data-wf-part="last"><rect x="796" y="162" width="140" height="56" rx="10" fill="#FFFFFF" stroke="#B45309" stroke-width="2"/><text x="866" y="186" text-anchor="middle" font-size="12" font-weight="700" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#78350F">logits[0, -1, :]</text><text x="866" y="206" text-anchor="middle" font-size="11" fill="#92400E">(V,)</text></g>
+<g data-wf-part="sel"><path d="M936 178 C 958 176, 962 172, 969 169" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfg-ink)"/><path d="M936 202 C 958 205, 962 209, 969 213" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfg-ink)"/></g>
+<g data-wf-part="sel"><rect x="975" y="150" width="92" height="38" rx="8" fill="#F0FDF4" stroke="#15803D" stroke-width="1.8"/><text x="1021" y="174" text-anchor="middle" font-size="12.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">argmax</text><rect x="975" y="200" width="92" height="38" rx="8" fill="#F0FDF4" stroke="#15803D" stroke-width="1.8"/><text x="1021" y="224" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">temp + choice</text></g>
+<g data-wf-part="app"><rect x="424" y="56" width="34" height="36" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="2" stroke-dasharray="5 3"/><text x="441" y="80" text-anchor="middle" font-size="16" font-weight="700" fill="#14532D">+</text><text x="441" y="128" text-anchor="middle" font-size="11" fill="#64748B">nouveau token</text></g>
+<g data-wf-part="app"><path d="M973 219 C 940 280, 780 302, 640 302 H441 V100" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfg-green)"/></g>
+<g data-wf-part="app"><path d="M441 52 C 441 18, 340 14, 264 44" stroke="#16A34A" stroke-width="2.5" stroke-dasharray="6 4" fill="none" marker-end="url(#wfg-green)"/><text x="352" y="12" text-anchor="middle" font-size="12" font-weight="700" fill="#14532D">boucle × max_new_tokens</text></g>
+</g>
+</svg>
+</div>
+<div class="wf-panel">
+<p class="wf-hint">Survolez ou sélectionnez une ligne de la boucle : son étape s’allume. Au clavier : <kbd>Tab</kbd>, <kbd>Entrée</kbd> pour épingler, <kbd>Échap</kbd> pour libérer.</p>
+<div class="wf-chips" role="group" aria-label="Lignes de la boucle">
+<button type="button" class="wf-chip" data-wf-links="win" data-wf-note="Une fois la séquence plus longue que le contexte, seuls les derniers context_length tokens entrent dans la passe ; les tokens sortis (en gris) n’influencent plus la suite.">window = context[-context_length:]</button>
+<button type="button" class="wf-chip" data-wf-links="fwd" data-wf-note="La fenêtre devient un lot d’une séquence (1, T) ; la passe avant calcule les logits de toutes les positions en un seul appel.">model.forward(window[None, :])</button>
+<button type="button" class="wf-chip" data-wf-links="last" data-wf-note="Seule la dernière ligne de logits est utile : la position T-1 prédit le token suivant. Sans cache KV, tout est recalculé à chaque étape — un choix d’inspectabilité.">[0, -1, :]</button>
+<button type="button" class="wf-chip" data-wf-links="sel" data-wf-note="Glouton : argmax, déterministe, sans graine. Échantillonné : température puis softmax, tirage reproductible à graine égale. La température change la distribution, jamais les logits.">argmax / rng.choice</button>
+<button type="button" class="wf-chip" data-wf-links="app" data-wf-note="Le token choisi rejoint le contexte et la fenêtre glisse ; la boucle recommence. L’arrêt vient de max_new_tokens, jamais d’un token de fin (choix assumé).">np.append(context, next_token)</button>
+</div>
+<p class="wf-note" aria-live="polite">Une étape complète : trancher la fenêtre, passer le modèle, lire la dernière position, choisir un token, l’ajouter au contexte — puis recommencer, jusqu’à max_new_tokens.</p>
+</div>
+</div>
+<figcaption class="wf-legend">
+<span class="wf-key"><span class="wf-swatch" style="background:#E0F2FE;border-color:#0EA5E9"></span>prompt (entrée)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#DCFCE7;border-color:#16A34A"></span>tokens générés</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#F1F5F9;border-color:#94A3B8"></span>hors fenêtre (exclus)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#FEF3C7;border-color:#B45309"></span>logits</span>
+</figcaption>
+</figure>
+<script src="../includes/walkthrough-figures.js" defer></script>
+```
+
+
 Ligne par ligne :
 
 - `astype(..., copy=True)` : la séquence de travail est une **copie** int64 — le tableau de l'appelant n'est jamais modifié, et le type de retour est stable.

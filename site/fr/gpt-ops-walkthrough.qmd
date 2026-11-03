@@ -38,6 +38,59 @@ FloatArray = NDArray[np.float64]
 
 Tout le paquet échange des tableaux **float64** : les résultats restent exacts au point de pouvoir être vérifiés à la main ; la perte de vitesse est sans importance à l'échelle de référence.
 
+```{=html}
+<figure class="wf-fig" id="wf-ops-map" data-wf-default="Quatre opérations, un contrat commun : les axes de lot passent intacts, seul le dernier axe est transformé — par une projection, une normalisation ou une activation. C’est ce contrat qui rend les formes du bloc prévisibles.">
+<figcaption class="wf-fig-title">Le contrat de formes des quatre briques de <code>gpt_ops.py</code></figcaption>
+<div class="wf-stage">
+<div class="wf-diagram">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 250" role="img" aria-labelledby="wfo-title wfo-desc">
+<title id="wfo-title">Contrat de formes des quatre briques de gpt_ops.py, de l’initialisation à l’activation</title>
+<desc id="wfo-desc">Un générateur initialise W (out, in) et un biais nul ; la projection linéaire remplace le dernier axe de x (..., in) par la largeur de sortie (..., out) ; la normalisation agit sur le dernier axe, par position ; GELU transforme chaque activation individuellement, sans changer la forme.</desc>
+<defs>
+<marker id="wfo-green" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#16A34A"/></marker>
+<marker id="wfo-violet" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#8B5CF6"/></marker>
+<marker id="wfo-slate" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748B"/></marker>
+</defs>
+<g font-family="Arial,sans-serif">
+<g data-wf-part="init"><rect x="14" y="18" width="86" height="40" rx="20" fill="#ECFDF5" stroke="#15803D" stroke-width="2"/><text x="57" y="43" text-anchor="middle" font-size="13" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">rng</text></g>
+<g data-wf-part="init"><rect x="130" y="18" width="216" height="40" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1.5"/><text x="238" y="43" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#17212B">_init_matrix / _init_linear</text></g>
+<g data-wf-part="init"><path d="M100 38 H124" stroke="#64748B" stroke-width="2" fill="none" marker-end="url(#wfo-slate)"/></g>
+<g data-wf-part="init lin"><rect x="378" y="18" width="128" height="40" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="442" y="43" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#4C1D95">W (out, in)</text></g>
+<g data-wf-part="init lin"><rect x="532" y="18" width="104" height="40" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="584" y="43" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#4C1D95">b = (0,)</text></g>
+<g data-wf-part="init"><path d="M346 38 H372" stroke="#8B5CF6" stroke-width="2" fill="none" marker-end="url(#wfo-violet)"/><path d="M310 58 C 360 66, 500 70, 578 58" stroke="#8B5CF6" stroke-width="2" fill="none" marker-end="url(#wfo-violet)"/></g>
+<g data-wf-part="init lin"><path d="M442 58 C 380 84, 280 98, 252 114" stroke="#8B5CF6" stroke-width="1.8" fill="none" marker-end="url(#wfo-violet)"/><path d="M584 58 C 480 92, 320 102, 274 114" stroke="#8B5CF6" stroke-width="1.8" fill="none" marker-end="url(#wfo-violet)"/></g>
+<g data-wf-part="lin"><rect x="14" y="146" width="92" height="56" rx="10" fill="#DCFCE7" stroke="#16A34A" stroke-width="2"/><text x="60" y="169" text-anchor="middle" font-size="15" font-weight="700" fill="#14532D">x</text><text x="60" y="189" text-anchor="middle" font-size="12" fill="#166534">(..., in)</text></g>
+<g data-wf-part="lin"><path d="M106 174 H144" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfo-green)"/></g>
+<g data-wf-part="lin"><rect x="150" y="124" width="180" height="100" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="240" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#17212B">linear</text><text x="240" y="172" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#17212B">y = x @ W&#7511; + b</text><text x="240" y="194" text-anchor="middle" font-size="11" fill="#475569">(..., in) &#8594; (..., out)</text><text x="240" y="212" text-anchor="middle" font-size="11" fill="#475569">le biais diffuse sur le dernier axe</text></g>
+<g data-wf-part="lin"><path d="M330 174 H374" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfo-green)"/></g>
+<g data-wf-part="ln"><rect x="380" y="124" width="200" height="100" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="480" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#17212B">layer_norm</text><text x="480" y="172" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#17212B">axis = -1</text><text x="480" y="190" text-anchor="middle" font-size="11" fill="#475569">moyenne 0, variance 1</text><text x="480" y="208" text-anchor="middle" font-size="11" fill="#475569">puis &#215; &#947; + &#946;</text></g>
+<g data-wf-part="ln"><path d="M580 174 H624" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfo-green)"/></g>
+<g data-wf-part="gelu"><rect x="630" y="124" width="200" height="100" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="730" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#17212B">gelu</text><text x="730" y="172" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#17212B">0.5x(1+tanh(&#8230;))</text><text x="730" y="194" text-anchor="middle" font-size="11" fill="#475569">élément par élément</text></g>
+<g data-wf-part="gelu"><path d="M830 174 H874" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfo-green)"/></g>
+<rect x="880" y="146" width="100" height="56" rx="10" fill="#F8FAFC" stroke="#64748B" stroke-width="1.8"/><text x="930" y="169" text-anchor="middle" font-size="14" font-weight="700" fill="#334155">sortie</text><text x="930" y="189" text-anchor="middle" font-size="12" fill="#475569">(..., d)</text>
+</g>
+</svg>
+</div>
+<div class="wf-panel">
+<p class="wf-hint">Survolez ou sélectionnez une opération pour la repérer dans la chaîne. Au clavier : <kbd>Tab</kbd> pour parcourir, <kbd>Entrée</kbd> pour épingler, <kbd>Échap</kbd> pour libérer.</p>
+<div class="wf-chips" role="group" aria-label="Opérations de gpt_ops.py">
+<button type="button" class="wf-chip" data-wf-links="init" data-wf-note="Tire W de forme (out, in), écart-type 0.02, et un biais nul : à l’initialisation, chaque couche est une application linéaire pure, sans décalage appris.">_init_matrix / _init_linear</button>
+<button type="button" class="wf-chip" data-wf-links="lin" data-wf-note="x (..., in) @ Wᵀ donne (..., out) : seul le dernier axe est remplacé ; le biais (out,) diffuse dessus. Le même contrat vaut pour Q, K, V, O et le MLP.">linear</button>
+<button type="button" class="wf-chip" data-wf-links="ln" data-wf-note="Statistiques du dernier axe, calculées par position : moyenne nulle, variance un, puis transformation affine apprise (γ, β) ; eps planche le dénominateur.">layer_norm</button>
+<button type="button" class="wf-chip" data-wf-links="gelu" data-wf-note="Élément par élément, approximation tanh de GPT-2 : lisse près de zéro, à environ 10⁻⁴ de la définition exacte par erf. La forme ne change jamais.">gelu</button>
+</div>
+<p class="wf-note" aria-live="polite">Quatre opérations, un contrat commun : les axes de lot passent intacts, seul le dernier axe est transformé — par une projection, une normalisation ou une activation. C’est ce contrat qui rend les formes du bloc prévisibles.</p>
+</div>
+</div>
+<figcaption class="wf-legend">
+<span class="wf-key"><span class="wf-swatch" style="background:#DCFCE7;border-color:#16A34A"></span>flux de données</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#F5F3FF;border-color:#8B5CF6"></span>paramètres tirés (W, b)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#FFFFFF;border-color:#334155"></span>opération</span>
+</figcaption>
+</figure>
+<script src="../includes/walkthrough-figures.js" defer></script>
+```
+
 ## Initialiser : tirer des poids petits
 
 ```python

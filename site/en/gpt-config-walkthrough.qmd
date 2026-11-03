@@ -66,6 +66,68 @@ class GPTConfig:
     seed: int = 0
 ```
 
+```{=html}
+<figure class="wf-fig" id="wf-config-map" data-wf-default="One full forward pass: ids become d-dimensional vectors, cross L blocks, and leave as V logits. Select a field to see the shape it controls.">
+<figcaption class="wf-fig-title">The dimension map: where every <code>GPTConfig</code> field lives</figcaption>
+<div class="wf-stage">
+<div class="wf-diagram">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 430" role="img" aria-labelledby="wfc-title wfc-desc">
+<title id="wfc-title">Dimension map: where every GPTConfig field lives inside the model</title>
+<desc id="wfc-desc">Diagram of one forward pass: token ids (B, T), embedding table (V, d), position table (T, d), L blocks each holding H attention heads of d/H columns and an MLP of hidden width mlp_hidden_dim, output projection w_head (V, d) to the logits (B, T, V). The seed initializes the generator that draws every parameter.</desc>
+<defs>
+<marker id="wfa-green" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#16A34A"/></marker>
+<marker id="wfa-ink" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#344054"/></marker>
+<marker id="wfa-grey" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#94A3B8"/></marker>
+</defs>
+<g font-family="Arial,sans-serif">
+<g data-wf-part="voc"><rect x="14" y="196" width="112" height="68" rx="10" fill="#E0F2FE" stroke="#0EA5E9" stroke-width="2"/><text x="70" y="222" text-anchor="middle" font-size="16" font-weight="700" fill="#0C4A6E">ids</text><text x="70" y="243" text-anchor="middle" font-size="13" fill="#0C4A6E">(B, T)</text><text x="70" y="259" text-anchor="middle" font-size="11" fill="#0369A1">&#8712; [0, V)</text></g>
+<g data-wf-part="voc dim"><text x="226" y="146" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">token_embedding</text><rect x="160" y="152" width="132" height="100" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><g stroke="#DDD6FE" stroke-width="1"><path d="M160 177 H292"/><path d="M160 202 H292"/><path d="M160 227 H292"/><path d="M193 152 V252"/><path d="M226 152 V252"/><path d="M259 152 V252"/></g><text x="226" y="212" text-anchor="middle" font-size="14" font-weight="700" fill="#4C1D95">(V, d)</text></g>
+<g data-wf-part="ctx dim"><text x="226" y="282" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">position_embedding</text><rect x="160" y="288" width="132" height="76" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><g stroke="#DDD6FE" stroke-width="1"><path d="M160 313 H292"/><path d="M160 338 H292"/><path d="M204 288 V364"/><path d="M248 288 V364"/></g><text x="226" y="332" text-anchor="middle" font-size="14" font-weight="700" fill="#4C1D95">(T, d)</text></g>
+<g data-wf-part="voc dim"><path d="M126 230 C 140 230, 146 216, 156 206" stroke="#344054" stroke-width="2" fill="none" marker-end="url(#wfa-ink)"/></g>
+<g data-wf-part="voc dim"><path d="M292 202 C 302 206, 308 212, 312 222" stroke="#16A34A" stroke-width="2.5" fill="none" marker-end="url(#wfa-green)"/></g>
+<g data-wf-part="ctx dim"><path d="M292 326 C 302 322, 308 244, 312 242" stroke="#16A34A" stroke-width="2.5" fill="none" marker-end="url(#wfa-green)"/></g>
+<g data-wf-part="dim ctx"><circle cx="322" cy="232" r="15" fill="#fff" stroke="#16A34A" stroke-width="2.5"/><text x="322" y="239" text-anchor="middle" font-size="20" font-weight="700" fill="#14532D">+</text></g>
+<g data-wf-part="dim"><path d="M338 232 H442" stroke="#16A34A" stroke-width="5" fill="none" marker-end="url(#wfa-green)"/><text x="390" y="216" text-anchor="middle" font-size="14" font-weight="700" fill="#14532D">x : (B, T, d)</text></g>
+<g data-wf-part="lay"><rect x="456" y="118" width="336" height="298" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/><text x="624" y="142" text-anchor="middle" font-size="16" font-weight="700" fill="#334155">Stacked blocks</text><rect x="744" y="126" width="34" height="24" rx="6" fill="#EDE9FE" stroke="#A78BFA"/><text x="761" y="142" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">&#215; L</text><text x="624" y="404" text-anchor="middle" font-size="12" font-style="italic" fill="#64748B">W ~ N(0, 0.02&#178; / 2L)</text></g>
+<g data-wf-part="lay"><rect x="470" y="158" width="308" height="222" rx="10" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1.5"/><text x="624" y="180" text-anchor="middle" font-size="12" fill="#6D28D9">1 bloc</text></g>
+<g data-wf-part="hea dim"><rect x="482" y="192" width="140" height="140" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1.5"/><text x="552" y="212" text-anchor="middle" font-size="14" font-weight="700" fill="#4C1D95">Attention</text><rect x="490" y="224" width="124" height="18" rx="3" fill="#EDE9FE" stroke="#A78BFA" stroke-width="0.8"/><rect x="490" y="246" width="124" height="18" rx="3" fill="#DDD6FE" stroke="#A78BFA" stroke-width="0.8"/><rect x="490" y="268" width="124" height="18" rx="3" fill="#EDE9FE" stroke="#A78BFA" stroke-width="0.8"/><rect x="490" y="290" width="124" height="18" rx="3" fill="#DDD6FE" stroke="#A78BFA" stroke-width="0.8"/><text x="552" y="322" text-anchor="middle" font-size="12" fill="#6D28D9">H heads × d/H columns</text></g>
+<g data-wf-part="mlp dim"><rect x="646" y="192" width="120" height="140" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1.5"/><text x="706" y="212" text-anchor="middle" font-size="14" font-weight="700" fill="#4C1D95">MLP</text><rect x="654" y="224" width="104" height="18" rx="4" fill="#DDD6FE" stroke="#A78BFA" stroke-width="0.8"/><text x="706" y="237" text-anchor="middle" font-size="11" fill="#4C1D95">d</text><rect x="654" y="256" width="104" height="22" rx="4" fill="#EDE9FE" stroke="#A78BFA" stroke-width="0.8"/><text x="706" y="271" text-anchor="middle" font-size="11" fill="#4C1D95">mlp_hidden_dim</text><rect x="654" y="292" width="104" height="18" rx="4" fill="#DDD6FE" stroke="#A78BFA" stroke-width="0.8"/><text x="706" y="305" text-anchor="middle" font-size="11" fill="#4C1D95">d</text><text x="706" y="322" text-anchor="middle" font-size="12" fill="#6D28D9">d &#8594; hidden &#8594; d</text></g>
+<g data-wf-part="dim"><path d="M552 332 C 570 350, 595 360, 613 362" stroke="#344054" stroke-width="2" fill="none" marker-end="url(#wfa-ink)"/><path d="M706 332 C 688 350, 653 360, 635 362" stroke="#344054" stroke-width="2" fill="none" marker-end="url(#wfa-ink)"/><circle cx="624" cy="368" r="13" fill="#fff" stroke="#16A34A" stroke-width="2.5"/><text x="624" y="374" text-anchor="middle" font-size="18" font-weight="700" fill="#14532D">+</text></g>
+<g data-wf-part="dim"><path d="M446 232 H454" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfa-green)"/><path d="M792 232 H802" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfa-green)"/></g>
+<g data-wf-part="voc dim"><text x="858" y="200" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">w_head</text><rect x="806" y="206" width="104" height="52" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="858" y="228" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">(V, d)</text><text x="858" y="246" text-anchor="middle" font-size="11" fill="#6D28D9">d &#8594; V</text></g>
+<g data-wf-part="dim"><path d="M910 232 H928" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfa-green)"/></g>
+<g data-wf-part="voc ctx dim"><rect x="932" y="206" width="134" height="52" rx="8" fill="#FEF3C7" stroke="#B45309" stroke-width="2"/><text x="999" y="228" text-anchor="middle" font-size="14" font-weight="700" fill="#78350F">logits</text><text x="999" y="246" text-anchor="middle" font-size="12" fill="#92400E">(B, T, V)</text></g>
+<g data-wf-part="seed"><rect x="452" y="18" width="212" height="42" rx="21" fill="#ECFDF5" stroke="#15803D" stroke-width="2"/><text x="558" y="44" text-anchor="middle" font-size="14" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">default_rng(seed)</text></g>
+<g data-wf-part="seed" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="5 4" fill="none"><path d="M500 60 C 420 100, 300 112, 230 148" marker-end="url(#wfa-grey)"/><path d="M540 60 C 460 170, 330 230, 232 284" marker-end="url(#wfa-grey)"/><path d="M592 60 C 602 78, 612 94, 622 114" marker-end="url(#wfa-grey)"/><path d="M640 60 C 730 100, 800 160, 852 202" marker-end="url(#wfa-grey)"/></g>
+</g>
+</svg>
+</div>
+<div class="wf-panel">
+<p class="wf-hint">Hover over or select a field: the diagram dims everywhere except the places this field determines. Keyboard: <kbd>Tab</kbd> to browse, <kbd>Enter</kbd> to pin, <kbd>Esc</kbd> to release.</p>
+<div class="wf-chips" role="group" aria-label="Configuration fields">
+<button type="button" class="wf-chip" data-wf-links="voc" data-wf-note="V rows in token_embedding (V × d); ids live in [0, V); w_head produces V logits per position — the same V at both ends of the model.">vocab_size (V)</button>
+<button type="button" class="wf-chip" data-wf-links="ctx" data-wf-note="T rows in position_embedding (T × d); maximum window of one forward pass; the logits carry T positions (B, T, V).">context_length (T)</button>
+<button type="button" class="wf-chip" data-wf-links="dim" data-wf-note="Width of the residual stream: d columns in both tables, d entries in every block, split into H slices of d/H — the d % H == 0 constraint is born here.">embedding_dim (d)</button>
+<button type="button" class="wf-chip" data-wf-links="hea" data-wf-note="H contiguous bands of d/H columns in attention; heads only mix at the output, through the w_o projection.">num_heads (H)</button>
+<button type="button" class="wf-chip" data-wf-links="lay" data-wf-note="L blocks stacked on the stream; depth also shrinks the residual weight scale: 0.02 / √(2L) at initialization.">num_layers (L)</button>
+<button type="button" class="wf-chip" data-wf-links="mlp" data-wf-note="Hidden width of the MLP: d → mlp_hidden_dim → d (GPT-2 uses 4d); explicit in the configuration, hence visible and changeable.">mlp_hidden_dim</button>
+<button type="button" class="wf-chip" data-wf-links="seed" data-wf-note="Seed of the single generator: every initial draw depends on it, in a fixed order. Changing the seed changes parameter values, never shapes.">seed</button>
+</div>
+<p class="wf-note" aria-live="polite">One full forward pass: ids become d-dimensional vectors, cross L blocks, and leave as V logits. Select a field to see the shape it controls.</p>
+</div>
+</div>
+<figcaption class="wf-legend">
+<span class="wf-key"><span class="wf-swatch" style="background:#DCFCE7;border-color:#16A34A"></span>data flow (residual stream)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#F5F3FF;border-color:#8B5CF6"></span>learned parameters</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#E0F2FE;border-color:#0EA5E9"></span>input (token ids)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#FEF3C7;border-color:#B45309"></span>output (logits)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#FFFFFF;border-color:#94A3B8;border-top-style:dashed"></span>initial draws (seed)</span>
+</figcaption>
+</figure>
+<script src="../includes/walkthrough-figures.js" defer></script>
+```
+
+
 | Field | Role | What it determines elsewhere |
 |---|---|---|
 | `vocab_size` (`V`) | vocabulary size | rows of the embedding table; number of logits per position |

@@ -759,3 +759,81 @@ details.spot-the-fallacy .fallacy-content {
 @media (max-width: 700px) {
   .callout.learning-outcomes { padding: 0.7rem 0.8rem; }
 }
+
+
+/* Interactive walkthrough figures: shared component for the guided-build tour.
+   Chips are buttons that light the matching parts of an adjacent SVG diagram;
+   the note area is an aria-live fallback, so hover is never the only access path. */
+.wf-fig {
+  margin: 1.7rem 0 2.1rem;
+  padding: 1rem 1.1rem 1.1rem;
+  border: 1px solid var(--llm-line);
+  border-radius: .55rem;
+  background: var(--llm-paper);
+  box-shadow: var(--llm-soft-shadow);
+}
+.wf-fig > figcaption.wf-fig-title {
+  font-weight: 720;
+  color: var(--llm-brand-dark);
+  font-size: 1.02rem;
+  margin: 0 0 .45rem;
+  padding: 0;
+}
+.wf-stage { display: flex; flex-wrap: wrap; gap: 1.1rem; align-items: flex-start; }
+.wf-diagram { flex: 1 1 430px; min-width: 0; overflow-x: auto; }
+.wf-diagram svg { width: 100%; height: auto; display: block; }
+.wf-panel { flex: 1 1 240px; max-width: 340px; min-width: 220px; }
+.wf-hint { font-size: .88rem; color: #475569; margin: 0 0 .55rem; }
+.wf-chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+.wf-chip {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .82rem;
+  color: var(--llm-ink);
+  background: #fff;
+  border: 1px solid var(--llm-line);
+  border-radius: .4rem;
+  padding: .3rem .55rem;
+  cursor: pointer;
+}
+.wf-chip:hover { border-color: var(--llm-brand); }
+.wf-chip[aria-pressed="true"] {
+  border-color: var(--llm-brand-action);
+  background: var(--llm-brand-tint);
+  color: var(--llm-brand-dark);
+}
+.wf-chip:focus-visible { outline: 2px solid var(--llm-brand-action); outline-offset: 2px; }
+.wf-note {
+  font-size: .9rem;
+  line-height: 1.5;
+  color: var(--llm-ink);
+  background: #fff;
+  border: 1px solid var(--llm-line);
+  border-radius: .4rem;
+  padding: .5rem .65rem;
+  margin: .6rem 0 0;
+  min-height: 4.6em;
+}
+.wf-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem 1.2rem;
+  font-size: .85rem;
+  color: #475569;
+  margin: .8rem 0 0;
+}
+.wf-key { display: inline-flex; align-items: center; gap: .4rem; }
+.wf-swatch {
+  display: inline-block;
+  width: .95rem;
+  height: .62rem;
+  border-radius: .18rem;
+  border: 1px solid rgba(23, 33, 43, .18);
+}
+[data-wf-part] { transition: opacity .18s ease; }
+.wf-fig.wf-focus [data-wf-part]:not(.wf-lit) { opacity: .22; }
+@media (prefers-reduced-motion: reduce) { [data-wf-part] { transition: none; } }
+@media (max-width: 700px) {
+  .wf-fig { padding: .8rem .8rem .9rem; }
+  .wf-diagram svg { min-width: 340px; }
+  .wf-note { min-height: 3.4em; }
+}
