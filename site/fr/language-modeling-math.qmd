@@ -61,7 +61,7 @@ Pour le premier token, le préfixe est vide. En pratique, un token de début de 
 
 ## 2. Du modèle paramétré à l'objectif d'entraînement
 
-Un modèle de paramètres (	heta) approxime les conditionnelles :
+Un modèle de paramètres \(\theta\) approxime les conditionnelles :
 
 \[
 P_\theta(x_t\mid x_{<t}).
@@ -114,7 +114,7 @@ Donc \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\).
 
 Ici, \(q\) et \(p\) sont des distributions normalisées et les termes de masse nulle contribuent zéro. Si \(q_i>0\) mais \(p_i=0\), l'entropie croisée et \(D_{\mathrm{KL}}(q\Vert p)\) sont infinies selon la convention usuelle des valeurs étendues. La divergence KL est **directionnelle** ; l'entropie croisée n'est ni symétrique ni une distance métrique.
 
-Par exemple, avec (q=(1,0)) et (p=(0.9,0.1)) :
+Par exemple, avec \(q=(1,0)\) et \(p=(0.9,0.1)\) :
 
 \[
 D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)\approx 0.105\text{ nat},
@@ -122,7 +122,7 @@ D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)\approx 0.105\text{ nat},
 D_{\mathrm{KL}}(p\Vert q)=+\infty.
 \]
 
-La seconde quantité est infinie parce que (p) attribue une masse positive à une catégorie à laquelle (q) attribue une masse nulle. En calcul numérique, une implémentation stable de log-softmax aide à éviter un sous-débordement accidentel ; elle ne modifie pas cette condition mathématique.
+La seconde quantité est infinie parce que \(p\) attribue une masse positive à une catégorie à laquelle \(q\) attribue une masse nulle. En calcul numérique, une implémentation stable de log-softmax aide à éviter un sous-débordement accidentel ; elle ne modifie pas cette condition mathématique.
 
 La page [Entropie croisée](cross-entropy.qmd) reste la référence pour la perte par token, le cas one-hot, les masques et les conventions de réduction. Cette page avancée se concentre sur la dérivation et sur le cas général des cibles souples.
 
