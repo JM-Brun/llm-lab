@@ -87,7 +87,11 @@ Visual polish must not upgrade a planned feature to implemented, or an illustrat
 - Python remains the reference implementation for numerical behavior where a Python implementation exists. Any browser-side equivalent must be checked against it or explicitly documented as an independent teaching approximation.
 - Avoid introducing a front-end framework, large client-side dependencies, model downloads, or duplicate implementations merely to imitate another site.
 
-## 8. UX delivery sequence
+## 8. Relationship to page templates
+
+The [flexible page-template system](page-template-system.md) defines how authors compose pages from optional explanatory modules and choose a dominant pedagogical pattern. This design system remains the single authority for their visual presentation: templates must reuse its tokens, typography, callout styles, disclosure conventions, and accessibility rules. Do not create page-specific styling just because a new page pattern exists.
+
+## 9. UX delivery sequence
 
 The authoritative sequence and acceptance criteria live in [the repository roadmap](roadmap.md), under **UX and visual-system track — Green identity**:
 
@@ -98,7 +102,7 @@ The authoritative sequence and acceptance criteria live in [the repository roadm
 5. build and validate one interactive exemplar;
 6. expand only after scientific, accessibility, responsive, performance, and maintenance review.
 
-## 9. References
+## 10. References
 
 - [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) — reference for visual explanation and direct manipulation, not a template to copy.
 - [Quarto website documentation](https://quarto.org/docs/websites/) — publishing and navigation constraints.
