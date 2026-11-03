@@ -35,7 +35,7 @@ Cette page ne réintroduit ni la tokenisation, ni la distribution du prochain to
 
 ## 1. De la règle de chaîne à la factorisation autorégressive
 
-La page [Probabilités de sortie](probabilites.qmd) définit la probabilité conditionnelle du prochain token, notée (P(x_t\mid x_{<t})), et explique comment le modèle construit sa distribution. Ici, on part de cette quantité pour établir la probabilité d'une séquence complète.
+La page [Probabilités de sortie](probabilites.qmd) définit la probabilité conditionnelle du prochain token, notée \(P(x_t\mid x_{<t})\), et explique comment le modèle construit sa distribution. Ici, on part de cette quantité pour établir la probabilité d'une séquence complète.
 
 Pour toute distribution jointe, la règle de chaîne donne :
 
@@ -45,7 +45,7 @@ P(x_1,\ldots,x_T)
 P(x_T\mid x_1,\ldots,x_{T-1}).
 \]
 
-En posant (x_{<t}=(x_1,\ldots,x_{t-1})), on obtient :
+En posant \(x_{<t}=(x_1,\ldots,x_{t-1})\), on obtient :
 
 \[
 \boxed{
@@ -55,7 +55,7 @@ P(x_{1:T})=\prod_{t=1}^{T}P(x_t\mid x_{<t})
 
 C'est la **factorisation autorégressive** : la probabilité de la séquence est le produit des probabilités conditionnelles de ses tokens, dans l'ordre.
 
-**La règle de chaîne est une identité probabiliste**, valable pour toute distribution jointe. Elle n'impose pas à elle seule une architecture ni un ordre de calcul particulier. Le caractère autorégressif vient du modèle qui représente et utilise les conditionnelles dans l'ordre du préfixe : à la position (t), le token est prédit à partir des tokens précédents, pas des tokens futurs.
+**La règle de chaîne est une identité probabiliste**, valable pour toute distribution jointe. Elle n'impose pas à elle seule une architecture ni un ordre de calcul particulier. Le caractère autorégressif vient du modèle qui représente et utilise les conditionnelles dans l'ordre du préfixe : à la position \(t\), le token est prédit à partir des tokens précédents, pas des tokens futurs.
 
 Pour le premier token, le préfixe est vide. En pratique, un token de début de séquence (BOS) peut être explicite, ou une convention équivalente peut être utilisée.
 
@@ -79,7 +79,7 @@ P_\theta(x_{1:T})
 
 Le maximum de vraisemblance cherche à augmenter la log-vraisemblance des séquences observées ; sa formulation minimisée est la log-vraisemblance négative (NLL). Cette équivalence ne fixe pas la réduction sur les tokens et les exemples, ni le traitement du padding ou des positions ignorées. Ces conventions appartiennent aux pages canoniques sur la [vraisemblance](vraisemblance.qmd), la [cross-entropie](cross-entropy.qmd) et la [loss agrégée](loss.qmd).
 
-**Notation.** Les pages probabilistes utilisent souvent (P) pour une probabilité d'événement ou une distribution conditionnelle. Les pages de calcul utilisent (p_{b,t,v}) pour la composante (v) du vecteur de probabilités à l'exemple (b) et la position (t). L'ID cible (y_{b,t}) sélectionne la composante (p_{b,t,y_{b,t}}). Il s'agit de deux notations pour des niveaux de description compatibles, pas de deux objets probabilistes différents.
+**Notation.** Les pages probabilistes utilisent souvent \(P\) pour une probabilité d'événement ou une distribution conditionnelle. Les pages de calcul utilisent \(p_{b,t,v}\) pour la composante \(v\) du vecteur de probabilités à l'exemple \(b\) et la position \(t\). L'ID cible \(y_{b,t}\) sélectionne la composante \(p_{b,t,y_{b,t}}\). Il s'agit de deux notations pour des niveaux de description compatibles, pas de deux objets probabilistes différents.
 
 ## 3. Cibles souples et divergence KL
 
@@ -91,9 +91,9 @@ Pour une distribution cible (q) et une distribution prédite (p), l'entropie cro
 H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
 \]
 
-Les termes tels que (q_i=0) contribuent zéro. Avec une cible one-hot, la somme se réduit à (-\log p_y) ; avec une cible souple, plusieurs catégories contribuent. On suppose (q_i\geq 0), (sum_i q_i=1), et (p) normalisée également. Sauf mention contraire, (log) désigne le logarithme naturel : les pertes sont exprimées en nats ; avec (log_2), en bits.
+Les termes tels que \(q_i=0\) contribuent zéro. Avec une cible one-hot, la somme se réduit à \(-\log p_y\) ; avec une cible souple, plusieurs catégories contribuent. On suppose \(q_i\geq 0\), \(\sum_i q_i=1\), et \(p\) normalisée également. Sauf mention contraire, \(\log\) désigne le logarithme naturel : les pertes sont exprimées en nats ; avec \(\log_2\), en bits.
 
-Définissons l'entropie de la cible par (H(q)=-\sum_i q_i\log q_i). La relation
+Définissons l'entropie de la cible par \(H(q)=-\sum_i q_i\log q_i\). La relation
 
 \[
 H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)
@@ -110,9 +110,9 @@ D_{\mathrm{KL}}(q\Vert p)
 \end{aligned}
 \]
 
-Donc (H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)).
+Donc \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\).
 
-Ici, (q) et (p) sont des distributions normalisées et les termes de masse nulle contribuent zéro. Si (q_i>0) mais (p_i=0), l'entropie croisée et (D_{\mathrm{KL}}(q\Vert p)) sont infinies selon la convention usuelle des valeurs étendues. La divergence KL est **directionnelle** ; l'entropie croisée n'est ni symétrique ni une distance métrique.
+Ici, \(q\) et \(p\) sont des distributions normalisées et les termes de masse nulle contribuent zéro. Si \(q_i>0\) mais \(p_i=0\), l'entropie croisée et \(D_{\mathrm{KL}}(q\Vert p)\) sont infinies selon la convention usuelle des valeurs étendues. La divergence KL est **directionnelle** ; l'entropie croisée n'est ni symétrique ni une distance métrique.
 
 Par exemple, avec (q=(1,0)) et (p=(0.9,0.1)) :
 
