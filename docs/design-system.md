@@ -34,6 +34,8 @@ Green is the primary brand colour. It identifies the site, navigation, links, pr
 | Blue | #0EA5E9 | Distinct data category or external/system reference, not the brand |
 | Violet | #8B5CF6 | Distinct data category only where a legend defines its meaning |
 
+**Text-contrast rule:** on the reading surface `#F8FAFC`, brand green `#16A34A` has a calculated contrast ratio of 3.15:1 and must not be used for normal-size text. Action green `#15803D` reaches 4.79:1 and is the preferred green for links and small labels on light surfaces. This pairwise calculation is not a global WCAG conformance claim.
+
 ### Usage rules
 
 - Keep long-form reading surfaces neutral. Do not turn every card, section, or page background green.
