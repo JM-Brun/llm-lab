@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer"
-scope: "Follows an autoregressive GPT computation inside the network—from the input token sequence through embeddings, positional information, Transformer blocks, attention, MLP, residual paths, and normalization to logits; it does not treat generation as a black-box loop or parameter learning as its main subject."
-purpose: "Readers should be able to trace the computation to the logits, explain the main operations in a Transformer block, distinguish network depth from width, and separate representations, scores, and decoding."
+scope: "Follows an autoregressive GPT computation inside the network, from input representations to logits, focusing on Transformer blocks, self-attention, the MLP, residual connections, and normalization; text preparation and the generation loop are located but not retaught."
+purpose: "Readers should be able to describe one forward pass, explain the operations in a Transformer block, distinguish depth from width, and identify logits as the network output without conflating that pass with decoding or generation."
 suggested_route:
   previous: "en/llm-overview"
   next: "en/generation"
@@ -36,23 +36,15 @@ You will be able to:
 
 ![Simplified flow of an autoregressive GPT, from tokens to next-token selection.](../images/gpt-data-flow.svg){fig-alt="Conceptual pipeline: text, tokenization, embeddings and position, repeated Transformer blocks, logits, softmax, next-token choice, then addition to the context." width=100%}
 
-The diagram shows the conceptual path of one generation. It deliberately omits implementation details such as residual connections, normalization, the key-value cache (*KV cache*), and sampling variants.
+This diagram locates the Transformer within the complete system. **This page zooms in on the computation performed by the network**, from its input representations to the logits; it does not reteach text preparation or the next-token selection loop.
 
-::: {.callout-tip title="The guiding idea"}
-Every GPT repeats one loop: **represent the context → compute a distribution over the next token → select one token → append it to the context**. The diagram above walks through it end to end, and sections 1 to 3 describe it step by step.
+For the model-family overview and learning stages, see the [LLM panorama](llm-overview.qmd). For the inference loop and decoding, see [generating text](generation.qmd). The [architecture comparison](transformer-architectures.qmd) places decoder-only GPT among the other families.
 
-To situate architectures and the pretraining → adaptation → inference path, return to the [LLM panorama](llm-overview.qmd); if the move from raw text to tokens remains unclear, consult [From text to tokens](text-data.qmd).
-:::
+## 1. From token IDs to input representations
 
-## 1. From text to representations
+The network does not receive raw text: it receives a sequence of token IDs, mapped to vectors by an embedding table. Positional information is also incorporated, either into the embeddings or into the attention computation, depending on the architecture. Transformer blocks then turn these vectors into contextualized representations: the same token can contribute to different states depending on its context.
 
-Text does not enter the network as is. The [tokenizer](text-data.qmd) splits it into tokens and replaces each with a number, its identifier. A table of numbers learned during training — the **embedding matrix** — then maps each identifier to a vector, the token's **embedding**. This is the numerical starting point of the computation: from here on, the network only manipulates vectors.
-
-Token order carries information that these vectors, taken in isolation, do not encode: "the cat chases the dog" and "the dog chases the cat" contain exactly the same tokens. Positional information is therefore provided, either added to the embeddings or built into the attention computation; the [Positional encoding](positional-encoding.qmd) page compares these mechanisms.
-
-One final distinction matters for what follows: a token's initial embedding does not depend on the context, but the Transformer layers then update the vectors according to the surrounding tokens. These are **contextualized** representations: the same word can correspond to different vectors depending on the sentence.
-
-To go further: [the embedding space](embedding-space.qmd) and its geometry — [cosine similarity](cosine-similarity.qmd), the [linearity hypothesis](embedding-linearity.qmd) —, [contextualized representations](contextualized-representations.qmd), and [tensors](tensors.qmd), which detail how these vectors are organized in the computations.
+This section provides only the landmarks needed to follow the network computation. The canonical explanations are separate: [text and tokenization](text-data.qmd), [embedding space](embedding-space.qmd), [positional information](positional-encoding.qmd), and [contextualized representations](contextualized-representations.qmd). For tensor shapes and dimensions, see [Tensors](tensors.qmd).
 
 ## 2. Transformer blocks
 
@@ -102,13 +94,13 @@ Positional information also plays a part here: depending on the model, it was ad
 
 Attention weights are not a complete explanation of a prediction: they describe one aggregation step. The projections, the values, the other heads, the following layers, and the final output all contribute to the result.
 
-## 3. From representations to probabilities
+## 3. From representations to logits
 
-After the last block, an output projection produces the **logits**: one unnormalized score for every token in the vocabulary. The *softmax* turns them into a probability distribution over the next token. These probabilities say nothing, by themselves, about the truth of the text or the calibration of the model: see [logits](logits.qmd), [probabilities](probabilities.qmd), and [likelihood](likelihood.qmd).
+After the final block, an output projection produces the **logits**: one unnormalized score for every token in the vocabulary. Applying *softmax* to these scores defines a probability distribution over next-token candidates. These are distinct objects: logits are the network's numerical output; the distribution is their probabilistic transformation. See the canonical pages on [logits](logits.qmd), [probabilities](probabilities.qmd), and [likelihood](likelihood.qmd).
 
-### Numerical example: from context to a distribution
+### Numerical example: from a logit vector to a distribution
 
-Suppose the context is "The cat" and a toy vocabulary contains only four candidates for the next token. The output projection produces the following **illustrative** logits:
+Suppose a toy vocabulary contains only four candidates. The output projection produces the following **illustrative** logits:
 
 | Candidate token | Logit | Probability after softmax |
 |---|---:|---:|
@@ -117,15 +109,16 @@ Suppose the context is "The cat" and a toy vocabulary contains only four candida
 | `eats` | 0 | 8.7% |
 | `plays` | −1 | 3.2% |
 
-The probabilities are computed as \(p_i = \exp(z_i)/\sum_j\exp(z_j)\). These numbers are chosen to make the calculation readable: they do not come from the repository's reference GPT or from a trained language model. A real model has many more vocabulary candidates, and its logits depend on the context, parameters, and position being considered.
+The probabilities are computed as \\(p_i = \\exp(z_i)/\\sum_j\\exp(z_j)\\). These values are chosen for readability: they do not come from the repository's reference GPT or from a trained model. A real model has a much larger vocabulary, and its logits depend on the context, parameters, and position being considered.
 
-During generation, a selection rule picks the next token: maximum, sampling, or a more elaborate method. In the toy example, greedy selection would choose `sleeps`, while sampling could select another candidate according to the probabilities. The chosen token joins the context, and the computation starts again. Generation is therefore **autoregressive**: text is built token by token, not as a single prediction of a whole answer.
+This output corresponds to **one forward pass** for a given context. Selecting the next token, appending it to the context, and repeating the computation belong to the [generation loop](generation.qmd), not to the forward pass itself.
 
 ### A forward pass is not a generation loop
 
-A **forward pass** receives the available context and computes the logits for the processed positions. To pick the next token, you read the logits of the last position, then a decoding rule selects one token. The **generation loop** then repeats: forward pass → selection → append the token to the context → new forward pass. The network never computes the whole future answer in one pass.
+A **forward pass** transforms the supplied context into logits; it does not, by itself, choose the token to append or compute the entire future answer. Decoding and autoregressive repetition are described in the dedicated [generation lesson](generation.qmd).
 
-::: {.self-check}
+
+
 ## Check your understanding
 
 [See the extended generation exercises](exercises.qmd#generation) — this short check reuses the numerical example on this page.
@@ -148,11 +141,11 @@ A **forward pass** receives the available context and computes the logits for th
 
 The [GPT-2 exploration workshop](transformer-explainer.qmd) lets you observe these mechanisms on a real model: run controlled experiments and examine the limits of the visualization. It is an independent analysis exercise — useful, but not required to follow the flow described here.
 
-## Training and generation: two modes not to conflate
+## Training and inference: two different organizations of computation
 
-During training of an autoregressive model, the positions of a sequence are computed in parallel, thanks to the shift between inputs and targets and to the causal mask. During ordinary generation, the next token depends on the context actually available: the model advances step by step. Optimizations such as the KV cache avoid recomputing keys and values already produced.
+During autoregressive training, the causal mask allows predictions for different positions in a sequence to be computed in parallel, using shifted inputs and targets. During generation, successive **token-production steps** are sequential because each new token depends on the previous one; a forward pass can nevertheless process all positions in the currently available context in parallel.
 
-This distinction explains why "the model predicts the next token" remains true in both cases, while the organization of the computations differs.
+Window construction, shifted inputs and targets, and training masks are detailed in [Training examples](training-examples.qmd). The costs of prefill, decoding, and the KV cache are covered in the [computational complexity deep dive](llm-computational-complexity.qmd).
 
 ## Limits and misconceptions
 
