@@ -8,15 +8,15 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/language-modeling-math"
-scope: "Formalise le problème de modélisation du langage par les probabilités conditionnelles et la factorisation autorégressive ; distingue règle de chaîne, modèle probabiliste appris et objectif de maximum de vraisemblance."
-purpose: "Lire et interpréter la probabilité d'un token sachant son contexte, reconstruire la probabilité d'une séquence par factorisation autorégressive et relier cette formalisation à l'objectif d'entraînement."
+scope: "Formalise le problème de modélisation du langage par les probabilités conditionnelles et la factorisation autorégressive ; distingue règle de chaîne, modèle probabiliste appris et objectif de maximum de vraisemblance. Elle présente la variante à cibles souples de l'objectif et son lien avec la divergence KL."
+purpose: "Lire et interpréter la probabilité d'un token sachant son contexte, reconstruire la probabilité d'une séquence par factorisation autorégressive et relier cette formalisation à l'objectif d'entraînement. Expliquer pourquoi, pour une cible fixe, minimiser l'entropie croisée revient à minimiser la divergence KL."
 suggested_route:
   previous: null
   next: null
 hierarchy:
   parents: ["fr/llm-overview"]
   children: []
-related: ["fr/probabilites", "fr/vraisemblance", "fr/loss", "fr/training-examples", "fr/mathematical-foundations"]
+related: ["fr/probabilites", "fr/vraisemblance", "fr/cross-entropy", "fr/loss", "fr/training-examples", "fr/mathematical-foundations"]
 tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:fr", "status:published"]
 -->
 
@@ -28,7 +28,8 @@ Dans un modèle autorégressif, la probabilité d’une séquence de tokens se f
 À l’issue de cette page, vous pourrez :
 - interpréter une probabilité conditionnelle de prochain token et sa notation ;
 - expliquer la factorisation autorégressive d’une probabilité de séquence ;
-- distinguer la règle de chaîne, le modèle appris et l’objectif d’entraînement.
+- distinguer la règle de chaîne, le modèle appris et l’objectif d’entraînement ;
+- expliquer le lien entre entropie croisée et divergence KL pour une cible fixe ;
 :::
 
 ## 1. De la séquence de texte à une séquence de tokens
@@ -131,10 +132,38 @@ La probabilité de la séquence entière est le produit de ces trois termes. Si 
 - **Elle ne garantit pas la vérité.** Une probabilité élevée exprime ce que le modèle a appris à privilégier dans ses données, pas une validation factuelle.
 - **Elle ne fixe pas la procédure de génération.** Échantillonnage, choix glouton et autres stratégies interviennent après le calcul de la distribution ([génération](generation.qmd)).
 
+## 7. Cibles souples et divergence KL
+
+La section précédente utilise des cibles one-hot : une seule catégorie reçoit toute la masse. Une cible peut aussi être une distribution $q$ — lissage de cible, distribution enseignante — sur les $V$ tokens.
+
+Pour une distribution cible $q$ et la distribution prédite $p$, l'entropie croisée est (les termes de masse cible nulle contribuent zéro) :
+
+$$
+H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
+$$
+
+Avec une cible one-hot, la somme se réduit à $-\log p_y$. Avec une cible souple, plusieurs catégories contribuent. On suppose $q_i\geq 0$, $\sum_i q_i=1$, et une distribution $p$ elle aussi normalisée. Sauf mention contraire, $\log$ désigne le logarithme naturel : les pertes sont exprimées en nats ; avec $\log_2$, en bits.
+
+Définissons l'entropie de la cible par $H(q)=-\sum_i q_i\log q_i$. La relation $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$ explique pourquoi, pour une cible fixe, minimiser l'entropie croisée revient à minimiser la divergence KL vers la distribution prédite. Lorsque les quantités sont finies, elle se déduit directement des définitions :
+
+$$
+\begin{aligned}
+D_{\mathrm{KL}}(q\Vert p)
+&=\sum_i q_i\log\frac{q_i}{p_i}\\
+&=\sum_i q_i\log q_i-\sum_i q_i\log p_i\\
+&=-H(q)+H(q,p).
+\end{aligned}
+$$
+
+Donc $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$. Ici, $q$ et $p$ sont des distributions normalisées et les termes de masse nulle contribuent zéro ; si $q_i>0$ mais $p_i=0$, l'entropie croisée et $D_{\mathrm{KL}}(q\Vert p)$ sont infinies selon la convention usuelle des valeurs étendues. La divergence KL est directionnelle ; l'entropie croisée n'est ni symétrique ni une distance métrique. Par exemple, avec $q=(1,0)$ et $p=(0.9,0.1)$, $D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)\approx 0.105$ nat, tandis que $D_{\mathrm{KL}}(p\Vert q)=+\infty$, car $p$ attribue une masse positive à une catégorie à laquelle $q$ attribue une masse nulle. En pratique, un calcul log-softmax stable aide à éviter un sous-débordement accidentel, sans modifier cette condition mathématique.
+
+Cette dérivation prolonge l'objectif de maximum de vraisemblance de la section 4 ; la définition de l'entropie croisée par token et ses conventions d'entraînement restent dans la page [Entropie croisée](cross-entropy.qmd).
+
 ## Références et prolongements
 
 - [Probabilités de sortie](probabilites.qmd) : comment les logits deviennent une distribution sur le vocabulaire.
 - [Vraisemblance](vraisemblance.qmd) : comment évaluer la probabilité des tokens observés.
+- [Entropie croisée](cross-entropy.qmd) : la perte par token, ses conventions, et le cas général à cibles souples.
 - [Exemples d'entraînement](training-examples.qmd) : comment construire les entrées et les cibles décalées.
 - [Chaîne mathématique de l'entraînement](mathematical-foundations.qmd) : relier logits, probabilités, loss et gradients.
 
