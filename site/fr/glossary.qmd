@@ -91,6 +91,8 @@ Ces notions sont regroupées dans le parcours [Géométrie et interprétabilité
 - **Modèle de récompense (*reward model*)** — modèle entraîné à attribuer des scores aux réponses en fonction des données de préférences ; ces scores sont des approximations apprises, pas des mesures objectives de vérité ou de qualité.
 - **PPO (*proximal policy optimization*)** — algorithme d'apprentissage par renforcement fondé sur le gradient de politique, utilisé dans certains pipelines RLHF pour optimiser une politique en limitant l'ampleur des mises à jour.
 - **DPO (*direct preference optimization*)** — méthode qui optimise directement une politique à partir de comparaisons de préférences, sans la boucle distincte modèle de récompense + PPO du pipeline RLHF classique.
+- **GRPO (*group relative policy optimization*)** — méthode d'optimisation d'une politique qui compare les récompenses de plusieurs réponses échantillonnées pour un même prompt afin de construire un signal d'apprentissage relatif. La récompense peut provenir d'un vérificateur ou d'un autre évaluateur ; GRPO n'en spécifie pas l'origine.
+- **RLVR (*reinforcement learning with verifiable rewards*)** — apprentissage par renforcement où les récompenses sont calculées à partir de résultats vérifiables, par exemple une réponse exacte, des tests exécutables ou la validation d'un format de sortie.
 
 ## Voir aussi
 

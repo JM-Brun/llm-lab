@@ -110,6 +110,18 @@ NVIDIA's white paper describes an architecture made predominantly of Mamba-2 and
 | MTP / speculative decoding | Sequential passes | Propose multiple tokens, then verify | Gain depends on acceptance rate |
 | Quantization | Storage and memory traffic | Fewer bits per number | Numerical error and layer sensitivity |
 
+## Post-training: from SFT to reinforcement learning
+
+The ByteByteGo overview describes a training progression for the **Nemotron Lightning** recipe: pretraining, supervised fine-tuning (SFT), then reinforcement learning. In SFT, conversation context can include user and system messages while the training loss is applied to the assistant responses. The model is therefore trained to produce the desired continuation for a given conversation, rather than to reproduce every input token ([ByteByteGo's overview](https://blog.bytebytego.com/p/how-nvidias-new-nemotron-model-works)).
+
+For its reinforcement-learning stage, the article reports **Group Relative Policy Optimization (GRPO)**: the policy samples several responses to a prompt, task-specific evaluators assign rewards, and the responses are compared within the group to form a relative learning signal. The described environments check mathematical answers, run code against tests, assess instruction compliance, and validate output schemas. These are programmatically checkable signals, so this recipe is closer to **reinforcement learning with verifiable rewards (RLVR)** than to preference-only RLHF—unless a separate human-preference signal is explicitly documented. GRPO is an optimization algorithm; it does not, by itself, tell us where the reward came from.
+
+This distinction matters:
+- **RLHF (classic recipe):** human comparisons train a reward model, then a policy is optimized against that learned reward, often with PPO.
+- **GRPO with verifiable rewards:** a group of sampled responses is scored by task verifiers; relative rewards guide the policy update. It need not involve human preference labels or a learned reward model.
+
+Do not infer that every Nemotron variant uses the same stages or reward sources. The ByteByteGo article is a secondary account; model-specific recipes should be checked against the corresponding NVIDIA technical report and model release. The GRPO method is introduced in [DeepSeekMath (Shao et al., 2024)](https://arxiv.org/abs/2402.03300).
+
 ### MTP and speculative decoding
 
 **Multi-Token Prediction** (MTP) adds auxiliary objectives that train a model to predict multiple future tokens. At inference, these predictions can serve as proposals in speculative decoding: a lightweight mechanism proposes a continuation, then the main model verifies it. Several tokens may be accepted in one verification pass, reducing the number of sequential passes.
