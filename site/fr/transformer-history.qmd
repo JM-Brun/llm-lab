@@ -22,6 +22,26 @@ tags: ["type:historical-reference", "destination:reference", "topic:transformer-
 
 Le Transformer n'est pas apparu sans précurseurs. Son histoire combine les mécanismes d'attention développés pour la traduction neuronale, l'auto-attention, l'entraînement à grande échelle et des objectifs différents selon les familles de modèles. Cette chronologie est sélective : elle présente des jalons, pas une histoire exhaustive ni une causalité unique.
 
+## Situer les LLM dans le paysage de l’IA
+
+Cette classification aide à comprendre **de quel type de méthode** relève un LLM et **dans quel domaine de problèmes** il est utilisé. Elle complète la chronologie : elle ne décrit pas une étape du fonctionnement d’un modèle.
+
+```{mermaid}
+flowchart TB
+  subgraph IA["Intelligence artificielle"]
+    subgraph AA["Apprentissage automatique"]
+      subgraph AP["Apprentissage profond<br/>(réseaux neuronaux)"]
+        LLM["LLM"]
+      end
+    end
+  end
+  TAL["TAL / NLP : un domaine de problèmes<br/>(règles, statistique, modèles, LLM…)"]
+```
+
+- L’**apprentissage profond** (*deep learning*) désigne une famille de méthodes : des réseaux neuronaux à plusieurs couches. Les LLM actuels en font partie.
+- Le **traitement automatique des langues** (TAL / NLP) désigne un domaine de problèmes : traiter ou produire du langage. Il se résout par des méthodes très différentes — règles linguistiques, modèles statistiques, systèmes spécialisés, réseaux neuronaux. Les LLM y sont une réponse dominante mais non exclusive : un système de production peut combiner règles, modèles spécialisés, recherche documentaire, outils et LLM.
+- Le terme **LLM** ne possède pas de seuil numérique universel : il désigne généralement des modèles de langage entraînés à grande échelle, avec des données et des capacités de calcul importantes. Le concept de *foundation model* insiste plutôt sur la réutilisation d'un modèle comme base pour de nombreuses applications ; les deux notions sont liées, mais ne sont pas synonymes.
+
 ## Chronologie
 
 Pour replacer cette chronologie dans le parcours conceptuel, revenir au [panorama des LLM](llm-overview.qmd) ; pour comparer les familles d’architectures abordées dans plusieurs jalons, consulter [la page dédiée aux architectures Transformer](transformer-architectures.qmd).
