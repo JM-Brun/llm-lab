@@ -24,13 +24,14 @@ tags: ["type:guided-build", "destination:build", "topic:corpus-preparation", "le
 A model is not trained directly on “the internet” or on an abstract collection of text: it consumes sequences built from selected and transformed sources. Corpus preparation defines what enters the experiment, what must remain independent for evaluation, and which transformations must be auditable. This work is distinct from tokenizing a prompt and from constructing training windows.
 :::
 
-## Learning objectives
-
-- Define eligible sources and preserve provenance and usage conditions.
-- Distinguish parsing, filtering, deduplication, and tokenizer normalization.
-- Choose splits that match the generalization claim an evaluation is intended to test.
-- Fit and freeze a tokenizer without contaminating a held-out evaluation.
-- Hand a prepared corpus off to encoding and training-example construction.
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this page, you will be able to:
+- define eligible sources and preserve provenance and usage conditions;
+- distinguish parsing, filtering, deduplication, and tokenizer normalization;
+- choose splits that match the generalization claim an evaluation is intended to test;
+- fit and freeze a tokenizer without contaminating a held-out evaluation;
+- hand a prepared corpus off to encoding and training-example construction.
+:::
 
 ## 1. A chain of decisions, not a universal recipe
 
@@ -86,3 +87,7 @@ The prepared corpus can then be encoded into token streams. The [training exampl
 ## Limitations
 
 This page defines a traceability framework and separation of responsibilities, not a legal policy, universal filtering recipe, or ready-made contamination detector. Thresholds, tools, and split units must be justified by the data, applicable rights, and the experimental claim being made.
+
+::: {.language-switch}
+[Français](../fr/corpus-preparation.qmd) · [English](corpus-preparation.qmd)
+:::

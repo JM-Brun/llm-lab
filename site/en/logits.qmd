@@ -24,11 +24,12 @@ tags: ["type:concept-lesson", "destination:understand", "topic:logits", "level:c
 A **logit** is an unnormalized real-valued score associated with a class or vocabulary token. In an LLM, the final projection usually produces a vector $z\in\mathbb{R}^{V}$ at each prediction position.
 :::
 
-<div class="epistemic-badges">
-  <span class="epistemic-badge badge-concept">Verified Concept</span>
-  <span class="epistemic-badge badge-code">Interactive Explorer & Code</span>
-  <span class="epistemic-badge badge-status">Stage: Prediction & Decoding</span>
-</div>
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this page, you will be able to:
+- interpret a logit vector and explain why its values are not probabilities;
+- describe the role of softmax and the effect of temperature on the distribution;
+- distinguish token ranking, distribution concentration, and factual confidence.
+:::
 
 <div class="pipeline-stepper" role="navigation" aria-label="LLM pipeline stages">
   <a class="step-item" href="text-data.qmd">1. Text</a>
@@ -37,9 +38,11 @@ A **logit** is an unnormalized real-valued score associated with a class or voca
   <span class="step-arrow">→</span>
   <a class="step-item" href="queries-keys-values.qmd">3. Attention</a>
   <span class="step-arrow">→</span>
-  <span class="step-item active">4. Logits & Probabilities</span>
+  <span class="step-item active">4. Logits</span>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="cross-entropy.qmd">5. Loss & Training</a>
+  <a class="step-item" href="probabilities.qmd">5. Probabilities</a>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="generation.qmd">6. Generation</a>
 </div>
 
 ::: {.callout-tip title="The one-minute mental model"}
