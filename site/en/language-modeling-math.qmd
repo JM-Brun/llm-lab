@@ -8,15 +8,15 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/language-modeling-math"
-scope: "Formalizes language modeling using conditional probabilities and autoregressive factorization; distinguishes the chain rule, a learned probabilistic model, and the maximum-likelihood objective."
-purpose: "Interpret a next-token conditional probability and its notation, reconstruct sequence probability through autoregressive factorization, and connect this formalization to the training objective."
+scope: "Formalizes language modeling using conditional probabilities and autoregressive factorization; distinguishes the chain rule, a learned probabilistic model, and the maximum-likelihood objective. It then presents the soft-target variant of the objective and its connection to KL divergence."
+purpose: "Interpret a next-token conditional probability and its notation, reconstruct sequence probability through autoregressive factorization, and connect this formalization to the training objective, and explain why, for a fixed target, minimizing cross-entropy is equivalent to minimizing KL divergence."
 suggested_route:
   previous: null
   next: null
 hierarchy:
   parents: ["en/llm-overview"]
   children: []
-related: ["en/probabilities", "en/likelihood", "en/loss", "en/training-examples", "en/mathematical-foundations"]
+related: ["en/probabilities", "en/likelihood", "en/cross-entropy", "en/loss", "en/training-examples", "en/mathematical-foundations"]
 tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:en", "status:published"]
 -->
 
@@ -28,7 +28,8 @@ In an autoregressive model, the probability of a token sequence factorizes into 
 By the end of this page, you will be able to:
 - interpret a next-token conditional probability and its notation;
 - explain the autoregressive factorization of a sequence probability;
-- distinguish the chain rule, the learned model, and the training objective.
+- distinguish the chain rule, the learned model, and the training objective;
+- explain the link between cross-entropy and KL divergence for a fixed target;
 :::
 
 ## 1. From a text sequence to a token sequence
@@ -131,10 +132,38 @@ The probability of the entire sequence is the product of these three terms. If o
 - **It does not guarantee truth.** A high probability expresses what the model learned to favor in its data, not factual validation.
 - **It does not determine the generation procedure.** Sampling, greedy selection, and other strategies operate after the distribution has been computed ([generation](generation.qmd)).
 
+## 7. Soft targets and KL divergence
+
+The previous section uses one-hot targets: a single category receives all the mass. A target can also be a distribution $q$ — label smoothing, a teacher distribution — over the $V$ tokens.
+
+For a target distribution $q$ and the predicted distribution $p$, cross-entropy is (terms with zero target mass contribute zero):
+
+$$
+H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
+$$
+
+With a one-hot target, the sum reduces to $-\log p_y$. With a soft target, multiple categories contribute. Assume $q_i\geq 0$, $\sum_i q_i=1$, and that $p$ is also normalized. Unless stated otherwise, $\log$ is the natural logarithm, so losses are measured in nats; using $\log_2$ gives bits.
+
+Define the target entropy as $H(q)=-\sum_i q_i\log q_i$. The identity $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$ explains why, for a fixed target, minimizing cross-entropy is equivalent to minimizing KL divergence toward the predicted distribution. When the quantities are finite, the identity follows directly from the definitions:
+
+$$
+\begin{aligned}
+D_{\mathrm{KL}}(q\Vert p)
+&=\sum_i q_i\log\frac{q_i}{p_i}\\
+&=\sum_i q_i\log q_i-\sum_i q_i\log p_i\\
+&=-H(q)+H(q,p).
+\end{aligned}
+$$
+
+Thus $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$. Here $q$ and $p$ are normalized distributions and zero-mass terms contribute zero; if $q_i>0$ but $p_i=0$, cross-entropy and $D_{\mathrm{KL}}(q\Vert p)$ are infinite under the usual extended-value convention. KL divergence is directional; cross-entropy is neither symmetric nor a metric distance. For example, with $q=(1,0)$ and $p=(0.9,0.1)$, $D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)\approx 0.105$ nats, whereas $D_{\mathrm{KL}}(p\Vert q)=+\infty$ because $p$ assigns positive mass where $q$ assigns zero. Stable log-softmax calculations help avoid accidental underflow in numerical implementations, but they do not change this mathematical condition.
+
+This derivation extends the maximum-likelihood objective of Section 4; the per-token cross-entropy definition and its training conventions remain in the [Cross-entropy](cross-entropy.qmd) lesson.
+
 ## References and further study
 
 - [Output probabilities](probabilities.qmd): how logits become a distribution over the vocabulary.
 - [Likelihood](likelihood.qmd): how to evaluate the probability of observed tokens.
+- [Cross-entropy](cross-entropy.qmd): the per-token loss, its conventions, and the general soft-target case.
 - [Training examples](training-examples.qmd): how to construct inputs and shifted targets.
 - [The mathematical chain of LLM training](mathematical-foundations.qmd): connect logits, probabilities, loss, and gradients.
 

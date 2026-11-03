@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/tensors"
-scope: "Fournit une référence technique facultative sur les formes et axes des tenseurs dans les calculs d’un Transformer, notamment les dimensions batch, séquence, caractéristiques, vocabulaire et têtes, les projections et les formes courantes des activations et logits. Elle souligne qu’une compatibilité de formes ne garantit ni la justesse sémantique ni la correction du calcul et ne constitue pas un cours de prérequis au parcours pratique."
-purpose: "Lire les formes courantes des tenseurs d’un LLM, suivre les axes préservés ou transformés par une opération, vérifier les dimensions des projections et de l’attention, et identifier pourquoi un calcul compatible en forme peut néanmoins être incorrect."
+scope: "Fournit une référence technique facultative sur les formes et axes des tenseurs dans les calculs d’un Transformer, notamment les dimensions batch, séquence, caractéristiques, vocabulaire et têtes, les projections et les formes courantes des activations et logits. Elle souligne qu’une compatibilité de formes ne garantit ni la justesse sémantique ni la correction du calcul et ne constitue pas un cours de prérequis au parcours pratique. Elle couvre également le coût en paramètres de la table d'embeddings."
+purpose: "Lire les formes courantes des tenseurs d’un LLM, suivre les axes préservés ou transformés par une opération, vérifier les dimensions des projections et de l’attention, et identifier pourquoi un calcul compatible en forme peut néanmoins être incorrect. Évaluer le nombre de paramètres de la table d'embeddings et de la projection de sortie."
 suggested_route:
   previous: "fr/mathematical-foundations"
   next: "fr/cosine-similarity"
@@ -49,6 +49,20 @@ Les activations cachées ont souvent la forme \((B,T,D)\), les logits \((B,T,V)\
 | Embedding d'un token | `(D,)` | un vecteur de caractéristiques |
 | États cachés d'une séquence | `(T,D)` | un vecteur par position |
 | États cachés d'un batch | `(B,T,D)` | exemples, positions, caractéristiques |
+
+## Coût en paramètres : la table d'embeddings et la projection de sortie
+
+La taille du vocabulaire \(V\) et la dimension d'embedding \(d\) sont deux choix distincts. La matrice d'embeddings \(E\in\mathbb{R}^{V\times d}\) contient \(V\) lignes — une par ID — et \(d\) composantes par ligne. Pour une séquence de longueur \(L\), le lookup produit une matrice de forme \(L\times d\) ; pour un lot de \(B\) séquences, la forme usuelle est \(B\times L\times d\).
+
+- **\(V\)** dépend du tokenizer et du vocabulaire qu'il définit, y compris les tokens spéciaux.
+- **\(d\)** est un hyperparamètre de l'architecture, choisi avec la profondeur, les têtes d'attention et le budget de calcul ; il n'est pas déduit de \(V\).
+- La table d'embeddings contient \(Vd\) paramètres.
+
+**Ordre de grandeur calculable :** avec \(V=50\,000\) tokens et \(d=768\), la table contient \(50\,000\times768=38\,400\,000\) paramètres. En précision 32 bits, les poids seuls occupent environ 153,6 MB en unités décimales (ou 146,5 MiB), hors gradients, états de l'optimiseur et autres paramètres. C'est une estimation du coût de la table, pas la description d'un modèle particulier.
+- Si la projection de sortie possède une matrice distincte, elle ajoute typiquement \(dV\) paramètres, éventuellement plus un biais. Certains modèles partagent les poids d'entrée et de sortie (*weight tying*) : il faut vérifier l'architecture avant d'additionner les deux matrices.
+- Les IDs et les poids associés sont couplés. Modifier le vocabulaire, l'ordre des IDs ou \(V\) exige une stratégie explicite d'adaptation ou de réentraînement ; ce n'est pas une substitution neutre.
+
+À chaque position, la distribution de sortie comporte en général \(V\) logits ; la [page sur les logits](logits.qmd) approfondit les scores de sortie. Cette section héberge dans le parcours avancé le comptage détaillé des paramètres, dont le rôle conceptuel est présenté dans [l'espace des embeddings](embedding-space.qmd).
 
 ## Lire les dimensions d'une projection
 
