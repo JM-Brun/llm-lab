@@ -91,7 +91,7 @@ Run the relevant checks for the changed surface and state clearly if a tool or o
 
 ### Page learning outcomes: one shared component
 
-When a page needs an explicit statement of expected capabilities, use the bilingual **Objectifs d’apprentissage / Learning outcomes** component with the shared `.callout-note.learning-outcomes` classes. Its appearance must be controlled centrally in `site/styles.scss`; do not create one-off styles or ad hoc “À la fin de cette page” notes. Place it after the chapter lead, keep it to two to four observable, page-specific capabilities, and omit it when it adds no useful target. Outcomes are not summaries or comprehension checks. Follow section 11 of the [reader-experience method](docs/reader-experience-and-editorial-method.md#11-standardize-page-learning-outcomes).
+When a page needs an explicit statement of expected capabilities, use the bilingual **Objectifs d’apprentissage / Learning outcomes** component with the shared `.callout-note.learning-outcomes` classes and `collapse="true"`, so it is collapsed by default like comprehension checks. Its appearance must be controlled centrally in `site/styles.scss`; do not create one-off styles or ad hoc “À la fin de cette page” notes. Place it after the chapter lead, keep it to two to four observable, page-specific capabilities, and omit it when it adds no useful target. Outcomes are not summaries or comprehension checks. Follow section 11 of the [reader-experience method](docs/reader-experience-and-editorial-method.md#11-standardize-page-learning-outcomes).
 
 ### Learning checks: one recognizable pattern, increasing cognitive demand
 
