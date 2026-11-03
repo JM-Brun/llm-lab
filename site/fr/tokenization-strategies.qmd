@@ -394,14 +394,12 @@ Cette illustration publiée provient du [cours Hugging Face, « Building a token
 - **Les IDs se transfèrent entre modèles.** Non en général : un même ID peut désigner des fragments différents.
 - **Byte-level = indépendant de la langue.** Non : la couverture ne garantit ni coût ni qualité uniformes.
 
-## Pour poursuivre
+## Ressources externes
 
-- [Vue d'ensemble et exemple BPE](text-data.qmd)
-- [Exemples d'entraînement, fenêtres et cibles décalées](training-examples.qmd)
-- [Espace des embeddings](embedding-space.qmd)
 - [Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/index)
 - [SentencePiece](https://github.com/google/sentencepiece)
 - [tiktoken](https://github.com/openai/tiktoken)
+
 
 ::: {.language-switch}
 **Langue :** [Français](tokenization-strategies.qmd) · [English](../en/tokenization-strategies.qmd)
