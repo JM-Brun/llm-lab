@@ -1,7 +1,7 @@
 ---
 title: "Emergent capabilities: what changes with scale?"
 subtitle: "Distinguishing new capabilities, measurement thresholds, and evaluation effects"
-keywords: ["type:concept-lesson", "destination:understand", "topic:emergence", "level:advanced", "language:en", "status:published"]
+keywords: ["type:concept-lesson", "destination:deepen", "topic:emergence", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
 
@@ -17,7 +17,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/scaling-laws", "en/llm-limits", "en/experimental-evaluation"]
-tags: ["type:concept-lesson", "destination:understand", "topic:emergence", "level:advanced", "language:en", "status:published"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:emergence", "level:advanced", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}

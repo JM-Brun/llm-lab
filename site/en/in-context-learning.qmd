@@ -1,7 +1,7 @@
 ---
 title: "In-context learning"
 subtitle: "Adapting from a prompt without updating model parameters"
-keywords: ["type:concept-lesson", "destination:understand", "topic:in-context-learning", "level:advanced", "language:en", "status:published"]
+keywords: ["type:concept-lesson", "destination:deepen", "topic:in-context-learning", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
 
@@ -17,7 +17,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/llm-overview", "en/generation", "en/contextualized-representations"]
-tags: ["type:concept-lesson", "destination:understand", "topic:in-context-learning", "level:advanced", "language:en", "status:published"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:in-context-learning", "level:advanced", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}

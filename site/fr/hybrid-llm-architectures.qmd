@@ -1,7 +1,7 @@
 ---
 title: "Architectures hybrides : Nemotron 3 et 3.5"
 subtitle: "Combiner états récurrents, attention, experts et précision numérique"
-keywords: ["type:concept-lesson", "destination:understand", "topic:hybrid-llm-architectures", "level:advanced", "language:fr", "status:published"]
+keywords: ["type:concept-lesson", "destination:deepen", "topic:hybrid-llm-architectures", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -17,7 +17,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/transformer-architectures", "fr/transformer", "fr/generation", "fr/scaling-laws"]
-tags: ["type:concept-lesson", "destination:understand", "topic:hybrid-llm-architectures", "level:advanced", "language:fr", "status:published"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:hybrid-llm-architectures", "level:advanced", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
