@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">The GPT generation process</title>
+<desc id="desc">Quatre étapes : le texte et le contexte sont préparés, traités par un GPT dont les paramètres restent fixes, puis une continuation est sélectionnée et ajoutée au contexte. La boucle se répète.</desc>
+<defs>
+  <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#315f9f" stroke-width="2"/></marker>
+  <marker id="greenArrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#16805b" stroke-width="2"/></marker>
+  <style>
+    text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;fill:#172b4d}
+    .h1{font-size:38px;font-weight:750}.sub{font-size:20px;fill:#52647f}
+    .step{font-size:23px;font-weight:700}.body{font-size:18px}.small{font-size:15px}.strong{font-weight:700}
+    .panel{stroke-width:2}.arrow{stroke:#315f9f;stroke-width:5;fill:none;marker-end:url(#arrow)}
+  </style>
+</defs>
+<rect width="1600" height="900" fill="#fff"/>
+<text x="48" y="62" class="h1">Le processus de génération d’un GPT</text>
+<text x="50" y="98" class="sub">From the input text to the next-token selection — then the process repeats</text>
+<path d="M50 120 H1550" stroke="#d9e2ef" stroke-width="2"/>
+
+<!-- phase 1 -->
+<rect x="42" y="150" width="300" height="445" rx="22" fill="#f1f6ff" stroke="#9dbcf0" class="panel"/>
+<circle cx="80" cy="190" r="23" fill="#2866b8"/><text x="80" y="198" text-anchor="middle" font-size="23" font-weight="750" fill="#fff">1</text>
+<text x="115" y="198" class="step">Text and context</text>
+<text x="68" y="244" class="body">A prompt and, if available,</text><text x="68" y="270" class="body">the previous turns.</text>
+<rect x="66" y="310" width="252" height="230" rx="15" fill="#fff" stroke="#8eb1eb" stroke-width="2"/>
+<text x="88" y="350" class="body strong">« Pourquoi le ciel</text><text x="88" y="377" class="body strong">est-il bleu ? »</text>
+<text x="88" y="423" class="small strong" fill="#2866b8">CONTEXT</text>
+<rect x="88" y="442" width="204" height="13" rx="6" fill="#c4d1e3"/><rect x="88" y="465" width="188" height="13" rx="6" fill="#c4d1e3"/><rect x="88" y="488" width="198" height="13" rx="6" fill="#c4d1e3"/>
+<text x="190" y="523" text-anchor="middle" class="small" fill="#55739f">…</text>
+
+<!-- phase 2 -->
+<rect x="375" y="150" width="300" height="445" rx="22" fill="#f7f2ff" stroke="#c7b1ee" class="panel"/>
+<circle cx="413" cy="190" r="23" fill="#7046b8"/><text x="413" y="198" text-anchor="middle" font-size="23" font-weight="750" fill="#fff">2</text>
+<text x="448" y="198" class="step">Prepare the input</text>
+<text x="400" y="244" class="body">The text is split and</text><text x="400" y="270" class="body">converted into representations</text><text x="400" y="296" class="body">the model can process.</text>
+<rect x="430" y="350" width="190" height="170" rx="16" fill="#fff" stroke="#b9a3e4" stroke-width="2"/>
+<rect x="455" y="382" width="102" height="18" rx="9" fill="#c8b5ec"/><rect x="455" y="414" width="142" height="18" rx="9" fill="#c8b5ec"/><rect x="455" y="446" width="120" height="18" rx="9" fill="#c8b5ec"/><rect x="455" y="478" width="132" height="18" rx="9" fill="#c8b5ec"/>
+<text x="525" y="552" text-anchor="middle" class="small">A model-ready representation</text>
+
+<!-- arrows to model -->
+<path d="M345 375 H365" class="arrow"/><path d="M678 375 H700" class="arrow"/>
+
+<!-- phase 3 -->
+<rect x="710" y="150" width="500" height="445" rx="22" fill="#f0faf4" stroke="#9bd3b2" class="panel"/>
+<circle cx="750" cy="190" r="23" fill="#238653"/><text x="750" y="198" text-anchor="middle" font-size="23" font-weight="750" fill="#fff">3</text>
+<text x="785" y="198" class="step">GPT processing</text>
+<text x="740" y="244" class="body">The model combines information from the context</text><text x="740" y="270" class="body">and evaluates possible continuations.</text>
+<rect x="746" y="294" width="205" height="235" rx="18" fill="#e0f4e7" stroke="#26845a" stroke-width="3"/>
+<rect x="785" y="320" width="127" height="36" rx="18" fill="#fff" stroke="#9bcfb0"/>
+<text x="848" y="344" text-anchor="middle" class="small strong">FIXED PARAMETERS</text>
+<text x="848" y="423" text-anchor="middle" font-size="38" font-weight="750" fill="#145b3b">GPT</text>
+<text x="848" y="456" text-anchor="middle" class="body">The model computes</text><text x="848" y="481" text-anchor="middle" class="body">without changing its weights.</text>
+<path d="M962 410 H986" stroke="#16805b" stroke-width="3" fill="none" marker-end="url(#greenArrow)"/>
+<rect x="995" y="294" width="190" height="235" rx="15" fill="#fff" stroke="#a9c8b6" stroke-width="2"/>
+<text x="1090" y="325" text-anchor="middle" class="body strong">Possible continuations</text>
+<text x="1017" y="365" class="body">« Le »</text><text x="1160" y="365" text-anchor="end" class="body strong">42 %</text>
+<rect x="1010" y="378" width="160" height="34" rx="8" fill="#e7f0fc"/>
+<text x="1017" y="402" class="body">« Grâce à »</text><text x="1160" y="402" text-anchor="end" class="body strong">34 %</text>
+<text x="1017" y="445" class="body">« Car »</text><text x="1160" y="445" text-anchor="end" class="body strong">15 %</text>
+<text x="1017" y="488" class="body">« En raison de »</text><text x="1160" y="488" text-anchor="end" class="body strong">9 %</text>
+<text x="1090" y="515" text-anchor="middle" class="small">Illustrative example</text>
+
+<!-- phase 4 -->
+<rect x="1245" y="150" width="313" height="445" rx="22" fill="#fff6ef" stroke="#efbd9a" class="panel"/>
+<circle cx="1285" cy="190" r="23" fill="#d9782a"/><text x="1285" y="198" text-anchor="middle" font-size="23" font-weight="750" fill="#fff">4</text>
+<text x="1320" y="198" class="step">Select a token</text>
+<text x="1270" y="244" class="body">A rule selects one token.</text><text x="1270" y="270" class="body">It is not necessarily</text><text x="1270" y="296" class="body">the most probable one.</text>
+<rect x="1270" y="330" width="263" height="112" rx="15" fill="#fff" stroke="#e9b18b" stroke-width="2"/>
+<text x="1401" y="366" text-anchor="middle" class="body strong">Selection rule</text><text x="1292" y="400" class="small">Maximum or sampling</text>
+<path d="M1401 449 V475" stroke="#a44b23" stroke-width="3" fill="none"/>
+<rect x="1305" y="480" width="193" height="70" rx="15" fill="#ffe5d2" stroke="#df8b4c" stroke-width="2"/>
+<text x="1401" y="510" text-anchor="middle" font-size="22" font-weight="750">« Le »</text><text x="1401" y="534" text-anchor="middle" class="small">selected token</text>
+<path d="M1215 375 H1234" class="arrow"/>
+
+<!-- autoregressive loop -->
+<path d="M1400 560 V660 Q1400 690 1370 690 H210 Q175 690 175 655 V610" stroke="#315f9f" stroke-width="6" fill="none" marker-end="url(#arrow)"/>
+<rect x="550" y="635" width="500" height="105" rx="18" fill="#edf4ff" stroke="#8eafe0" stroke-width="2"/>
+<circle cx="600" cy="687" r="25" fill="none" stroke="#315f9f" stroke-width="5"/><path d="M600 662 L615 668 L604 679" fill="none" stroke="#315f9f" stroke-width="4"/>
+<text x="645" y="676" class="step">The context grows</text><text x="645" y="708" class="body">The selected token is appended; computation repeats.</text>
+
+<!-- takeaway -->
+<rect x="42" y="780" width="1516" height="78" rx="16" fill="#f5f7fb" stroke="#d8e0ec"/>
+<text x="70" y="813" class="body strong">Key takeaway</text>
+<text x="70" y="840" class="body">During inference, GPT parameters remain fixed. The context changes with each token; generation is a loop of prediction and selection.</text>
+</svg>
