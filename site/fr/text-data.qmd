@@ -34,13 +34,13 @@ Pensez à un **catalogue avec des numéros de référence**. Le tokenizer décou
 Les [stratégies de tokenisation](tokenization-strategies.qmd) comparent les compromis de tokenizers réels ; l’[espace des embeddings](embedding-space.qmd) décrit le lookup qui associe ensuite un vecteur à chaque ID.
 :::
 
-## Objectifs
-
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 - Distinguer texte Unicode, octets, tokens, identifiants et embeddings.
 - Expliquer pourquoi un découpage par espaces ne suffit pas.
 - Décrire les conséquences de la segmentation sur la longueur, le coût et la compatibilité.
 - Identifier les pages spécialisées adaptées à un approfondissement technique.
 - Identifier ce que la tokenisation ne permet pas de conclure sur le sens ou les capacités du modèle.
+:::
 
 ## 1. Le parcours, du texte au modèle
 
