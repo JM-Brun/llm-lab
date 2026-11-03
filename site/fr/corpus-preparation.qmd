@@ -11,7 +11,7 @@ id: "fr/corpus-preparation"
 scope: "Décrit les décisions d'ingénierie des données en amont du préentraînement : admissibilité et provenance des sources, parsing et filtrage, déduplication, partitions d'évaluation, ajustement/fixation du tokenizer et transfert vers les flux de tokens."
 purpose: "Construire un protocole de préparation de corpus traçable et adapté à l'objectif d'entraînement ou d'évaluation, en évitant les fuites entre partitions et en séparant les décisions de corpus des opérations internes au tokenizer et de la construction des exemples."
 suggested_route:
-  previous: "fr/build-path"
+  previous: null
   next: null
 hierarchy:
   parents: ["fr/build-path"]
