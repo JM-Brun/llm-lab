@@ -76,6 +76,8 @@ flowchart LR
 | **Distribution** | Scores are normalized into conditional probabilities over possible tokens. | [Output probabilities](probabilities.qmd) |
 | **Selection** | A decoding rule selects the next token; it is appended to the context and computation repeats. | [Text generation](generation.qmd) |
 
+**A note on position:** positional information is not always a vector added to embeddings. Some methods, such as [RoPE](positional-encoding.qmd), integrate it directly into attention computations.
+
 **The key boundary:** the transformation from IDs to logits is the model's forward pass; transforming logits into a distribution and selecting a token belong to decoding. During inference, parameters remain fixed. Learning those parameters is a separate lifecycle stage, introduced below.
 
 ## 2. Three dimensions not to conflate
