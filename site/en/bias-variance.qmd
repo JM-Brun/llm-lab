@@ -23,14 +23,14 @@ The bias-variance trade-off describes distinct sources of generalization error. 
 :::
 ## Classical decomposition
 
-For regression with squared-error loss, at a fixed input (x):
+For regression with squared-error loss, at a fixed input $x$:
 
 \[
 \mathbb{E}_{D,\varepsilon}[(Y-\hat f_D(x))^2]
 =\operatorname{Bias}(\hat f(x))^2+\operatorname{Var}(\hat f(x))+\sigma^2(x).
 \]
 
-$D$ is a random training sample; $\\hat f_D$ the learned model; $\\sigma^2(x)$ conditional irreducible noise. This identity assumes a setting such as $Y=f(x)+\\varepsilon$, with zero-mean conditional noise.
+$D$ is a random training sample; $\hat f_D$ the learned model; $\sigma^2(x)$ conditional irreducible noise. This identity assumes a setting such as $Y=f(x)+\varepsilon$, with zero-mean conditional noise.
 
 - **Bias**: gap between average prediction across possible samples and the target function.
 - **Variance**: sensitivity of predictions to changes in the training sample.
