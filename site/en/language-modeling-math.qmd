@@ -63,7 +63,7 @@ This quantity is the probability assigned to token $x_t$ given the preceding tok
 
 $$
 \sum_{v\in\mathcal{V}}P(v\mid x_{<t})=1.
-$
+$$
 
 In this page, $P_\theta(x_t\mid x_{<t})$ denotes the conditional probability of the observed token under the model. In the computational lessons, the same quantity is often written as $p_{b,t,y_{b,t}}$: $p_{b,t,:}$ denotes the probability vector over the vocabulary, and index $y_{b,t}$ selects the target-token entry. The uppercase $P$ emphasizes the probability of an event; lowercase $p$ denotes a component of the categorical distribution here.
 
