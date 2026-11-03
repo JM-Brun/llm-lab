@@ -66,7 +66,7 @@ Les blocs utilisent aussi des **connexions résiduelles** et des **normalisation
 x_{\text{sortie}} = x_{\text{entrée}} + F(x_{\text{entrée}}).
 \]
 
-La normalisation (*LayerNorm*, dans les GPT classiques) remet à l'échelle les composantes du vecteur d'une position avant ou après certaines sous-couches, selon l'architecture. Elle ne mélange pas les positions de la séquence. Dans un bloc **pré-LN** typique, on a par exemple $x' = x + \operatorname{Attention}(\operatorname{LN}(x))$, puis $x'' = x' + \operatorname{MLP}(\operatorname{LN}(x'))$. C'est un exemple de conception, pas une formule universelle : l'ordre pré-LN/post-LN et les variantes de normalisation diffèrent entre modèles.
+La normalisation (*LayerNorm*, dans les GPT classiques) centre et normalise les composantes du vecteur caché de chaque position, indépendamment des autres positions. Selon l'architecture, elle est placée avant ou après certaines sous-couches. Dans un bloc **pré-LN** typique, on a par exemple $x' = x + \operatorname{Attention}(\operatorname{LN}(x))$, puis $x'' = x' + \operatorname{MLP}(\operatorname{LN}(x'))$. C'est un exemple de conception, pas une formule universelle : l'ordre pré-LN/post-LN et les variantes de normalisation diffèrent entre modèles.
 
 Pour voir ces opérations dans une implémentation concrète, sans les confondre avec les invariants de tous les Transformers, consulter la [visite guidée du bloc de référence](transformer-block-walkthrough.qmd).
 
