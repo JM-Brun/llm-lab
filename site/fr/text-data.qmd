@@ -163,7 +163,10 @@ Comparer les mêmes chaînes avec au moins deux tokenizers, en s'appuyant sur le
 
 **Compte rendu minimal :** pour chaque chaîne, noter le tokenizer/version, les tokens visibles, le nombre de tokens et une limite d'interprétation. Le nombre de tokens seul ne mesure ni la qualité linguistique ni la qualité du modèle.
 
-## Vérifier votre compréhension
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](exercises.qmd#donnees-textuelles).
 
 1. Un tokenizer attribue l’ID `17` au token `chat`. Dans une séquence, cet ID apparaît deux fois. Les deux occurrences sélectionnent-elles le même vecteur initial ? Peut-on conclure que le nombre 17 encode une quantité de sens ?
 
@@ -182,6 +185,7 @@ Oui : un même ID sélectionne la même ligne de la table d’embeddings, donc l
 Non. Les IDs ne sont définis qu’à l’intérieur du vocabulaire de leur tokenizer ; l’ID 17 dans un vocabulaire n’a aucune raison de désigner le même token dans un autre. Il faut comparer les tokens décodés, les conventions et les propriétés mesurées (longueur, couverture, coût), en documentant la version de chaque tokenizer.
 
 </details>
+:::
 
 ## 4. Contre-exemples et erreurs fréquentes
 
