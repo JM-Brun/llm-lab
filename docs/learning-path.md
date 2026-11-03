@@ -15,7 +15,7 @@ The learner-facing course and the implementation dependency graph answer differe
 4. **Unpack representations and computation:** embeddings, positional information, contextual states, Transformer blocks, attention and causal masking.
 5. **Unpack prediction and decoding:** output logits, probabilities, selection strategies, stopping and inference-time efficiency.
 6. **Explain learning:** training corpora, context windows and shifted targets; then the next-token objective, loss, gradients, backpropagation, optimization, pretraining and validation. Only now introduce the full parameter-update loop.
-7. **Prepare and train:** when following the Build route, prepare a traceable corpus and tokenizer, then construct context windows and shifted targets before implementing the training objective. This is not a prerequisite for understanding inference.\n8. **Explain adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation; keep these distinct.
+7. **Prepare and train:** when following the Build route, prepare a traceable corpus and tokenizer ([corpus preparation](../site/fr/corpus-preparation.qmd) / [EN](../site/en/corpus-preparation.qmd)), then construct context windows and shifted targets before implementing the training objective. This is not a prerequisite for understanding inference.\n8. **Explain adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation; keep these distinct.
 
 ## Page ownership: one canonical explanation, deliberate reminders
 
@@ -26,6 +26,7 @@ The sequence above is a **route through concepts**, not permission to explain th
 - **GPT/Transformer overview:** one forward pass through the network, with emphasis on Transformer blocks and the path to logits.
 - **Text/data:** the short inference path from raw text to token IDs and initial embeddings; tokenizer algorithms and comparative examples belong to `tokenization-strategies`, while empirical design/evaluation belongs to its advanced page. Corpus curation is a separate Build-stage concern owned by `corpus-preparation`.
 - **Component lessons:** embeddings, positional information, contextualized representations, attention mechanisms, logits, probabilities, likelihood, entropy, cross-entropy, loss, and gradients each have their own explanatory home.
+- **Corpus preparation:** provenance, source eligibility, parsing, filtering, deduplication, evaluation splits and tokenizer fitting; this is a Build-stage concern, not a prerequisite for the inference path.
 - **Training examples:** context windows, shifted targets, document boundaries, packing, and training masks belong to the training-data branch, not to the first explanation of inference input.
 
 Use [the cross-page content ownership contract](content-section-mapping.md#9-cross-page-content-ownership-contract) to decide whether a repeated passage is a useful reminder, a system-level map, retrieval practice, or avoidable duplication. The contract also records where advanced depth and implementation evidence belong.
