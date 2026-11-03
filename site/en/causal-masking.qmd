@@ -118,12 +118,12 @@ To strictly verify the absence of future information leakage: keep tokens up to 
 ```python
 import numpy as np
 
-# 1. Additive causal mask matrix (T=4 positions)
+### 1. Additive causal mask matrix (T=4 positions)
 T = 4
 mask = np.full((T, T), -np.inf)
 mask[np.tril_indices(T)] = 0.0
 
-# 2. Synthetic token representations for T=4 in dimension d=4
+### 2. Synthetic token representations for T=4 in dimension d=4
 np.random.seed(42)
 Q = np.random.randn(T, 4)
 K = np.random.randn(T, 4)
@@ -138,7 +138,7 @@ def run_causal_attention(q, k, v, m):
 
 out_ref, w_ref = run_causal_attention(Q, K, V, mask)
 
-# 3. Massive alteration of a FUTURE token (position 3)
+### 3. Massive alteration of a FUTURE token (position 3)
 K_alt = K.copy()
 V_alt = V.copy()
 K_alt[3] += 100.0
@@ -146,7 +146,7 @@ V_alt[3] += 100.0
 
 out_alt, w_alt = run_causal_attention(Q, K_alt, V_alt, mask)
 
-# 4. Strict mathematical invariance: outputs at positions 0, 1, and 2 are IDENTICAL
+### 4. Strict mathematical invariance: outputs at positions 0, 1, and 2 are IDENTICAL
 assert np.allclose(out_ref[:3], out_alt[:3]), "Future leakage detected!"
 assert not np.allclose(out_ref[3], out_alt[3]), "Position 3 was expected to change."
 ```
