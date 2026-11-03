@@ -1,7 +1,7 @@
 ---
 title: "Complexity and parallelism in LLMs"
 subtitle: "Where is computation linear or quadratic, parallel or sequential?"
-keywords: ["type:concept-lesson", "destination:deepen", "topic:llm-computational-complexity", "level:advanced", "language:en", "status:published"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:llm-computational-complexity", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
 
@@ -11,13 +11,13 @@ id: "en/llm-computational-complexity"
 scope: "Analyzes sequence-length complexity, memory, and parallelism in major LLM operations, distinguishing training, prefill, and decode."
 purpose: "Distinguish total work, sequential depth, and memory; explain attention, MLP, KV-cache, and recurrent architecture costs."
 suggested_route:
-  previous: "en/transformer"
+  previous: null
   next: null
 hierarchy:
   parents: ["en/llm-overview"]
   children: []
 related: ["en/transformer", "en/generation", "en/hybrid-llm-architectures", "en/scaling-laws"]
-tags: ["type:concept-lesson", "destination:deepen", "topic:llm-computational-complexity", "level:advanced", "language:en", "status:published"]
+tags: ["type:deep-dive", "destination:deepen", "topic:llm-computational-complexity", "level:advanced", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
