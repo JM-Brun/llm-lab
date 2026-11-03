@@ -25,7 +25,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:inference-generat
 :::
 
 ::: {.callout-note}
-Cette page suit un modèle **déjà entraîné, traité comme une boîte noire** : aucun détail d'architecture ni d'entraînement n'est nécessaire ici. Les pages [logits](logits.qmd) et [probabilités](probabilites.qmd) détaillent ensuite la distribution produite à chaque pas ; la suite du parcours explique comment ces paramètres sont appris.
+On considère ici les paramètres d'un modèle entraîné comme fixes. La génération consiste à transformer le contexte courant en scores, puis à choisir un token à ajouter au contexte ; elle ne met pas à jour les paramètres. L'architecture interne intervient dans le calcul des scores, pas dans la règle de décodage étudiée ici.
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
