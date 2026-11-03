@@ -251,24 +251,49 @@ For the research papers below, the lesson currently captures the high-level prin
 
 ### 3.2 Ali et al. (2024) — [Tokenizer Choice for LLM Training: Negligible or Crucial?](https://aclanthology.org/2024.findings-naacl.247/)
 
-**Concepts in the source:** tokenizer selection can influence training cost and downstream performance; intrinsic tokenizer metrics do not necessarily predict downstream results.  
-**LLM Lab coverage:** **explained at synthesis level**; the lesson explicitly rejects “fewer tokens = better model.”  
-**Gap / action:** do not reduce the paper to a universal claim that tokenizer choice is always decisive. Summarize experimental conditions and distinguish tokenization effects from training-budget/model differences before adding detail.  
-**Visual decision:** link to the paper. No figure integration unless a specific experimental comparison is essential to a worked lesson.
+**Primary source checked:** [ACL Anthology PDF](https://aclanthology.org/2024.findings-naacl.247.pdf).
+
+- 24 tokenizer configurations (BPE/Unigram, Hugging Face/SentencePiece, monolingual English/multilingual, vocabulary size) each receive a 2.6B decoder-only model; two GPT-2 tokenizer baselines are also trained.
+- The matched training corpora contain 70B words each: English-only and multilingual English/German/French/Italian/Spanish, with comparable domain mixtures. Models are trained up to about 52B tokens and evaluated zero-shot.
+- Tokenizer effects vary by task, language, algorithm/library and vocabulary size. The best average configuration differs between English-only and multilingual settings; 33k is sufficient in the English setting, while the multilingual setting benefits from a larger vocabulary in most (not all) languages.
+- Fertility and parity are not generally predictive of downstream quality; correlations are task- and language-dependent. Low fertility may be necessary in some settings, but is not sufficient.
+- The reported **up to 68%** is a specific **training-compute** comparison (Multi-UNI-SP-50 vs EN-UNI-SP-100 on German documents), not a universal penalty or an inference-cost result.
+
+**Limits:** five European Latin-script languages; zero-shot only; 2.6B models; one seed and no per-tokenizer hyperparameter optimization; fewer evaluation tasks for non-English languages. The authors report roughly 59,000 GPU-hours for the 26 trained models including baselines.
+
+**LLM Lab coverage:** now summarized in the advanced evaluation table. Keep the cost figure tied to its German training comparison and do not generalize it to other languages, model sizes or inference.
+
+**Visual decision:** link to the paper; no figure integration required.
 
 ### 3.3 Wegmann et al. (2025) — [Tokenization is Sensitive to Language Variation](https://aclanthology.org/2025.findings-acl.572/)
 
-**Concepts in the source:** sensitivity to language variation and the role of tokenizer/pre-tokenizer design.  
-**LLM Lab coverage:** **mentioned and summarized**, but the precise dimensions of variation and the paper's operational definitions are not fully taught.  
-**Gap / action:** inspect the full paper before expanding the claim; distinguish language, dialect/register, orthographic variation and tokenizer-specific preprocessing rather than collapsing them into “multilingual fairness.”  
-**Visual decision:** link to original paper. Consider an original schematic only if it clarifies the dimensions of variation without implying results not reported by the authors.
+**Primary source checked:** [ACL Anthology PDF](https://aclanthology.org/2025.findings-acl.572.pdf).
+
+- Studies variation **within English**, including lexical, orthographic, syntactic, dialectal and register variation; it is not a cross-language fairness study.
+- Trains BERT-base (110M) with BPE and varies tokenizer training corpus, pre-tokenizer and vocabulary size (500–128k) across classification tasks designed to be either robust or sensitive to variation.
+- Pre-tokenization has the largest aggregate effect in the tested tasks, but effects differ by task and aggregate performance differences are modest. A task-aware logistic-regression metric correlates better with the tested BERT outcomes than Corpus Token Count or Rényi efficiency.
+- The result does not establish how decoder-only generative LLMs behave, nor a universal best pre-tokenizer.
+
+**Limits:** English-only encoder/classification setup, selected variation types and tasks, and limited combinations of tokenizer settings. The distinction between semantic and form-sensitive tasks is operational rather than absolute.
+
+**LLM Lab coverage:** the strategy page links the paper; the advanced page now summarizes its within-language scope and task dependence. Keep it distinct from multilingual token-premium studies.
+
+**Visual decision:** link to the original paper; no copied figure required.
 
 ### 3.4 Arnett et al. (2025) — [Explaining and Mitigating Crosslingual Tokenizer Inequities](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html)
 
-**Concepts in the source:** unequal tokenization costs across languages and design factors such as vocabulary size and pre-tokenization; analysis/mitigation of crosslingual inequity.  
-**LLM Lab coverage:** **summarized at high level**.  
-**Gap / action:** verify paper-specific claims and distinguish observed cost differences from demonstrated downstream capability gaps. Keep token count, compute budget, and task performance as separate quantities.  
-**Visual decision:** link to the paper. A reproduction of a paper plot would require a faithful method/data trail and rights review.
+**Primary source checked:** [OpenReview PDF](https://openreview.net/pdf?id=0Y7AxxNCYh).
+
+- Defines **crosslingual** effects as differences between languages with monolingual tokenizers, and **multilingual** effects as those observed with tokenizers trained on multiple languages.
+- Trains about 7,000 comparable monolingual tokenizers across 97 languages, with 300MB per language, BPE/Unigram, seven vocabulary sizes and controlled data-size conditions. Compression is measured as corpus token count (CTC) on parallel FLORES-200 text; fertility is rejected because “word” has no universal functional definition, and bytes/token is rejected because UTF-8 byte premiums vary across languages.
+- BPE has slightly better compression than Unigram in the tested setup. Uniformly increasing vocabulary size reduces overall CTC but does not significantly reduce premium variance; language-specific “optimal” vocabulary sizes reduce CTC variance. Whitespace pre-tokenization explains a substantial share of variation; SuperBPE merges across whitespace and improves compression in the tested setting.
+- Training on parallel data has only a small effect (about 1% of total CTC on average in the selected seven-language intervention) and does not meaningfully remove token-premium effects.
+
+**Limits:** no language models are trained, so the paper does not establish downstream quality improvements. FLORES is the only evaluation corpus and is translated from English; the parallel-data intervention covers seven languages. Training data is 300MB per language, and the authors flag possible data requirements for SuperBPE. Residual effects from length ratios and UTF-8 bytes per character remain.
+
+**LLM Lab coverage:** the advanced table now distinguishes compression/token premiums from downstream capability. Do not claim that the proposed mitigations improve LLM quality without a separate model-training experiment.
+
+**Visual decision:** link to the paper; no figure reproduction required.
 
 ### 3.5 TokLens — [ACL 2026 SRW](https://aclanthology.org/2026.acl-srw.18/)
 
