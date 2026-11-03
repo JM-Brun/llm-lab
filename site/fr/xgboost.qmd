@@ -23,16 +23,16 @@ XGBoost optimise un objectif combinant la loss et une pénalité de complexité 
 :::
 ## Ajouter un arbre
 
-À l'étape (t), \,\(\hat y_i^{(t)}=\hat y_i^{(t-1)}+f_t(x_i)\). XGBoost approxime la variation de l'objectif par Taylor à l'ordre deux :
+À l'étape $t$, $\\hat y_i^{(t)}=\\hat y_i^{(t-1)}+f_t(x_i)$.  XGBoost approxime la variation de l'objectif par Taylor à l'ordre deux :
 
 \[
 \mathcal{L}^{(t)}\simeq
 \sum_i\left[g_i f_t(x_i)+\frac12 h_i f_t(x_i)^2\right]+\Omega(f_t),
 \]
 
-où (g_i) et (h_i) sont gradient et Hessienne (dérivée seconde scalaire) de la loss par rapport à la prédiction courante. Ce ne sont pas le biais et la variance statistiques.
+où $g_i$ et $h_i$ sont gradient et Hessienne (dérivée seconde scalaire) de la loss par rapport à la prédiction courante. Ce ne sont pas le biais et la variance statistiques.
 
-Pour un arbre avec (T) feuilles et un score (w_j) par feuille :
+Pour un arbre avec $T$ feuilles et un score $w_j$ par feuille :
 
 \[
 \Omega(f)=\gamma T+\frac12\lambda\sum_{j=1}^{T}w_j^2.
@@ -42,7 +42,7 @@ Gamma pénalise le nombre de feuilles ; lambda pénalise les scores de feuilles 
 
 ## Score et gain
 
-Avec (G_j=\sum_{i\in I_j}g_i) et (H_j=\sum_{i\in I_j}h_i), sans pénalité L1, le score optimal est (w_j^*=-G_j/(H_j+\lambda)). Le gain d'une séparation est :
+Avec $G_j=\\sum_{i\\in I_j}g_i$ et $H_j=\\sum_{i\\in I_j}h_i$, sans pénalité L1, le score optimal est $w_j^*=-G_j/(H_j+\\lambda)$. Le gain d'une séparation est :
 
 \[
 \mathrm{Gain}=\frac12\left[
