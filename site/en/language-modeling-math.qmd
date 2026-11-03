@@ -11,11 +11,11 @@ id: "en/language-modeling-math"
 scope: "Formalizes language modeling using conditional probabilities and autoregressive factorization; distinguishes the chain rule, a learned probabilistic model, and the maximum-likelihood objective."
 purpose: "Interpret a next-token conditional probability and its notation, reconstruct sequence probability through autoregressive factorization, and connect this formalization to the training objective."
 suggested_route:
-  previous: "en/llm-overview"
-  next: "en/probabilities"
+  previous: null
+  next: null
 hierarchy:
   parents: ["en/llm-overview"]
-  children: ["en/probabilities", "en/likelihood", "en/loss"]
+  children: []
 related: ["en/mathematical-foundations", "en/training-examples"]
 tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:en", "status:published"]
 -->
