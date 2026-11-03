@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/build-path"
-scope: "Guide un parcours pratique progressif pour construire un petit GPT décodeur seul, en séparant le chemin de génération à paramètres fixes du chemin d’apprentissage qui modifie les paramètres. Il distingue compréhension conceptuelle, jalons d’implémentation et approfondissements mathématiques facultatifs ; il précise qu’une implémentation complète testée et un entraînement reproductible de bout en bout ne sont pas encore disponibles."
-purpose: "Décrire les chemins de génération et d’apprentissage, identifier ce qui peut être compris avant l’implémentation, relier chaque étape à ses prérequis conceptuels et distinguer le contenu déjà disponible du travail encore planifié."
+scope: "Guide la construction progressive d'un petit GPT décodeur seul à partir du code de référence testé de src/llm_lab/foundations : configuration, briques numériques, bloc Transformer, assemblage, boucle de génération, puis démarrage exécutable du modèle et de ses tests. Chaque jalon est relié à un résultat observable à vérifier et aux pages conceptuelles qui expliquent le mécanisme ; le parcours distingue la mécanique de génération, disponible, du chemin d'apprentissage (données, entraînement, évaluation) encore à construire."
+purpose: "Le lecteur doit pouvoir suivre l'ordre de construction module par module à travers les visites guidées, exécuter le code de référence et ses tests, vérifier chaque jalon disponible, et expliquer pourquoi un GPT initialisé aléatoirement génère un texte incohérent alors que sa mécanique fonctionne."
 suggested_route:
   previous: null
   next: "fr/exercises"
@@ -21,117 +21,115 @@ tags: ["type:guided-build", "destination:build", "topic:build-path", "level:appl
 -->
 
 ::: {.chapter-lead}
-Ce parcours relie les explications conceptuelles à la construction progressive d'un petit GPT décodeur seul. **Il n'est pas nécessaire de maîtriser au préalable l'algèbre linéaire, le calcul tensoriel ou le calcul différentiel.** Les opérations utiles sont introduites au moment où elles deviennent nécessaires ; les développements mathématiques restent accessibles en approfondissement.
+Ce parcours construit un petit GPT décodeur seul, module par module : une configuration nommée et validée, des briques numériques, un bloc Transformer, le modèle assemblé, puis la boucle de génération. Le code de référence est testé et vit dans `src/llm_lab/foundations/⟧ ; chaque module y est expliqué ligne par ligne dans une visite guidée. Aucune maîtrise préalable de l'algèbre linéaire, du calcul tensoriel ou du calcul différentiel n'est requise : les notions utiles sont introduites au moment où elles servent, avec un lien vers la page conceptuelle qui les explique.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
+À l'issue de ce parcours, vous pourrez :
+- situer les cinq modules du code de référence et leur ordre de construction ;
+- exécuter le code de référence et ses tests, puis vérifier le résultat observable de chaque jalon disponible (formes de tenseurs, causalité, boucle de génération) ;
+- expliquer pourquoi un GPT initialisé aléatoirement génère un texte incohérent alors que sa mécanique fonctionne.
 :::
 
 ::: {.callout-note}
-**Nouveau dans les LLM ?** Commencez par le [panorama des LLM](llm-overview.qmd) pour distinguer les familles de modèles et leur cycle de vie. Ce parcours pratique se concentre ensuite sur un GPT décodeur seul.
+**Nouveau dans les LLM ?** Commencez par le [panorama des LLM](llm-overview.qmd) pour situer les familles de modèles et leur cycle de vie ; ce parcours se concentre ensuite sur un GPT décodeur seul.
 :::
 
 ::: {.callout-note}
-**État du projet.** Le parcours et les pages conceptuelles sont disponibles. Une implémentation de référence **limitée à l'inférence** est désormais disponible et testée dans `src/llm_lab/foundations/` (modules `gpt_config.py`, `gpt_ops.py`, `transformer_block.py`, `gpt.py`, `generate.py`) : elle couvre l'assemblage du modèle et la boucle de génération, mais pas l'entraînement. Un modèle complet avec entraînement reproductible de bout en bout et pipeline de données reste à construire. Les étapes ci-dessous distinguent donc les connaissances disponibles des réalisations pratiques encore à construire. Chaque module est expliqué ligne par ligne dans une [visite guidée du code de référence](gpt-config-walkthrough.qmd).
+**État du code.** L'implémentation de référence couvre **l'inférence** — assemblage du modèle et boucle de génération, testés unitairement. Le pipeline de données, l'entraînement complet et l'évaluation restent à construire ; les jalons concernés indiquent ce qui existe déjà.
 :::
 
-## Le principe : apprendre juste ce qu'il faut, au bon moment
+## Le code, dans l'ordre de construction
 
-Pour chaque étape, distinguer :
+Chaque module ne dépend que des précédents ; chacun se lit et se teste seul.
 
-- **Comprendre :** le mécanisme et son rôle dans le modèle.
-- **Construire :** l'opération Python/PyTorch à réaliser et à tester.
-- **Approfondir :** la théorie facultative qui explique plus largement le mécanisme.
+1. **[La configuration](gpt-config-walkthrough.qmd)** (`gpt_config.py⟧) : nommer et valider les dimensions du modèle avant tout calcul.
+2. **[Les briques numériques](gpt-ops-walkthrough.qmd)** (`gpt_ops.py⟧) : initialisation, projection linéaire, normalisation, GELU.
+3. **[Le bloc Transformer](transformer-block-walkthrough.qmd)** (`transformer_block.py⟧) : attention causale multi-têtes, MLP et résidus, dans l'ordre pré-LN.
+4. **[L'assemblage du modèle](gpt-model-walkthrough.qmd)** (`gpt.py⟧) : embeddings, blocs empilés, projection vers les logits.
+5. **[La génération](gpt-generation-walkthrough.qmd)** (`generate.py⟧) : la boucle autorégressive — choisir un token, l'ajouter au contexte, recommencer.
 
-Il faut savoir lire une forme de tenseur avant de déboguer une opération, mais pas maîtriser toute la théorie des tenseurs. Il faut comprendre le rôle du gradient avant d'entraîner, mais pas suivre au préalable un cours complet de calcul différentiel.
+## Exécuter le code de référence
 
+Rien à installer au-delà de Python 3.12+ et [uv](https://docs.astral.sh/uv/) :
 
-## Deux chemins qui partagent le même modèle
+```bash
+git clone https://github.com/JM-Brun/llm-lab.git
+cd llm-lab
+uv sync --dev
+```
 
-Il faut distinguer **l'inférence** (utiliser les paramètres existants pour produire un token) et **l'apprentissage** (modifier ces paramètres à partir d'exemples et d'une fonction de perte). Ce ne sont pas deux descriptions interchangeables d'une même boucle.
+Le modèle complet tient en quelques lignes — sa sortie est incohérente, et c'est attendu (voir « Générer d'abord, entraîner ensuite ») :
 
-::: {.callout-tip title="Pourquoi commencer par l'inférence ?"}
-On peut comprendre le fonctionnement d'un modèle avant d'étudier son entraînement : on observe une génération avec des paramètres fixes, puis on cherche à expliquer d'où viennent ces paramètres et comment ils sont appris. Dans le parcours de construction, la première génération peut utiliser un GPT initialisé aléatoirement ; le texte produit sera généralement incohérent. Cela distingue **la mécanique de génération** de **la qualité acquise par l'apprentissage**. Un modèle utile nécessite un entraînement ou le chargement de poids pré-entraînés.
-:::
+```python
+import numpy as np
+from llm_lab.foundations import GPT, GPTConfig, generate
 
-### Chemin de génération : des tokens au prochain token
+config = GPTConfig(
+    vocab_size=50,       # V : lignes de la table d'embeddings, logits par position
+    context_length=32,   # T : positions traitées en une passe
+    embedding_dim=32,    # d : largeur du flux résiduel, divisible par num_heads
+    num_heads=4,         # H : têtes d'attention
+    num_layers=2,        # blocs empilés
+    mlp_hidden_dim=64,   # largeur cachée du MLP
+    seed=0,              # même graine, mêmes paramètres
+)
+model = GPT(config)
+model.num_parameters()  # à confronter au décompte attendu (jalon 4)
 
-1. Le tokenizer transforme le texte en identifiants de tokens.
-2. La table d'embeddings transforme ces identifiants en vecteurs ; l'information de position est ajoutée ou intégrée selon l'architecture.
-3. Les blocs Transformer transforment ces représentations. L'attention causale permet à chaque position d'utiliser le contexte autorisé, sans accéder aux tokens futurs.
-4. La projection de sortie produit un logit par token du vocabulaire. La softmax peut convertir ces scores en distribution conditionnelle.
-5. Une règle de décodage sélectionne le token suivant ; celui-ci est ajouté au contexte et le calcul recommence.
+ids = generate(model, np.array([1, 2, 3]), max_new_tokens=8)  # décodage glouton
+ids = generate(model, np.array([1, 2, 3]), max_new_tokens=8, greedy=False,
+               temperature=0.8, rng=np.random.default_rng(42))  # échantillonnage
+```
 
-**À savoir expliquer :** pourquoi le modèle prédit un token à la fois, pourquoi les logits ne sont pas des probabilités et pourquoi le masque causal est nécessaire. Les paramètres restent fixes pendant cette génération.
+Chaque module a son fichier de test, dans l'ordre de lecture :
 
-La boucle de génération et les règles de sélection du prochain token sont détaillées sur la page [Générer du texte : l'inférence pas à pas](generation.qmd).
+```bash
+uv run pytest
+```
 
-### Chemin d'apprentissage : des exemples à la mise à jour des paramètres
+`test_gpt_config.py⟧, `test_gpt_ops.py⟧, `test_transformer_block.py⟧, `test_gpt.py⟧ et `test_generate.py⟧ suivent les cinq modules ; `test_attention.py⟧ et `test_losses.py⟧ couvrent les briques d'attention et de loss. Le code de référence est en NumPy pur (float64) : lisibilité d'abord, vitesse ensuite.
 
-1. On prépare des séquences d'entrée et des cibles décalées : à la position (t), le modèle doit prédire le token attendu en (t+1).
-2. Le modèle effectue une passe avant et produit les logits.
-3. La loss compare les logits aux cibles, en respectant l'alignement et les positions éventuellement ignorées.
-4. La rétropropagation calcule les gradients de la loss par rapport aux paramètres.
-5. Un optimiseur utilise ces gradients pour mettre à jour les paramètres ; validation et suivi permettent de détecter les régressions et le surapprentissage.
+## Comprendre, construire, approfondir
 
-**À savoir expliquer :** la loss définit l'objectif, le gradient décrit une variation locale de cet objectif et l'optimiseur applique une règle de mise à jour. Calculer un gradient ne garantit pas, à lui seul, une meilleure généralisation.
+À chaque jalon :
 
-Les deux chemins utilisent en grande partie le même calcul de modèle. Leur différence essentielle est l'usage des sorties : **générer avec des paramètres fixes** ou **évaluer une loss puis modifier les paramètres**. La génération complète depuis un checkpoint et l'entraînement reproductible restent des réalisations pratiques à construire dans ce dépôt.
+- **Comprendre** le mécanisme : la page conceptuelle liée l'explique, à consulter quand la question surgit plutôt qu'avant.
+- **Construire** l'opération correspondante et vérifier le résultat observé.
+- **Approfondir** seulement au besoin : savoir lire une forme de tenseur suffit pour déboguer une opération, comprendre le rôle d'un gradient suffit pour entraîner. Les [tenseurs](tensors.qmd) et la [chaîne mathématique de l'entraînement](mathematical-foundations.qmd) servent de référence au moment voulu.
 
-## Ce que chaque étape doit permettre de vérifier
+## Générer d'abord, entraîner ensuite
 
-Les pages conceptuelles sont des ressources pour atteindre ces résultats, pas des preuves que l'implémentation correspondante existe déjà. Avant de passer à l'étape suivante, le lecteur devrait pouvoir produire ou vérifier l'élément indiqué.
+Un même calcul de modèle sert deux usages distincts : **générer** un token à paramètres fixes, ou **apprendre** en comparant les prédictions à des cibles puis en mettant les paramètres à jour. Le panorama détaille cette [distinction entre apprentissage et inférence](llm-overview.qmd).
 
-| Étape | Résultat observable attendu |
-|---|---|
-| Texte et tokenisation | Encoder puis décoder un court texte ; identifier les effets des tokens spéciaux et de la version du tokenizer. |
-| Embeddings et position | Tracer les formes de `[B, L]` à `[B, L, D]` et expliquer ce que représente chaque axe. |
-| Attention causale | En mode évaluation (dropout désactivé), vérifier sur un exemple que modifier un token futur ne change pas les sorties des positions antérieures, à paramètres et contexte initial identiques. |
-| Bloc GPT | Tracer les dimensions à travers attention, résidus, normalisation, MLP et projection de sortie ; vérifier la cohérence du nombre de paramètres. |
-| Prédiction et décodage | Distinguer logits et probabilités ; expliquer la sélection gloutonne ou échantillonnée d'un token. |
-| Génération avant entraînement | Exécuter la boucle avec des paramètres aléatoires et constater que le texte n'est pas encore cohérent ; vérifier l'arrêt et la limite de contexte. |
-| Exemples d'entraînement | Construire une fenêtre d'entrée et sa cible décalée ; tester les frontières, le padding et l'absence de fuite entre jeux de données. Cette branche devient nécessaire pour l'apprentissage, pas pour la génération. |
-| Loss et entraînement | Aligner logits/cibles, calculer la loss, reproduire une petite mise à jour et suivre séparément les losses d'entraînement et de validation. |
-| Génération après entraînement | Charger un checkpoint entraîné et comparer les sorties dans des conditions de décodage documentées. |
-| Évaluation | Comparer à une baseline avec un protocole explicite ; analyser des erreurs et préciser ce que les métriques ne démontrent pas. |
-
-Ces critères sont des **objectifs pédagogiques**. Ils ne changent pas le statut du dépôt : une page disponible, un exemple calculable, un test automatisé, une exécution reproductible et une validation visuelle sont des niveaux de preuve différents.
+Le parcours construit d'abord le chemin de génération. Un GPT **initialisé aléatoirement** produit un texte incohérent — un résultat attendu, pas un bug : les formes, le masque causal et la boucle fonctionnent ; seule la qualité, acquise par l'apprentissage, manque. Cette séparation motive les jalons d'apprentissage : préparer des [exemples d'entraînement](training-examples.qmd), optimiser une [loss](loss.qmd) par [gradients](gradients.qmd) — dont seuls les calculs de loss existent aujourd'hui (`losses.py⟧). Le déroulé de la boucle de génération est détaillé sur la page [Générer du texte : l'inférence pas à pas](generation.qmd).
 
 ## Jalons de construction
 
-| Étape | Ce que l'on construit | Pages conceptuelles à consulter | État pratique |
-|---|---|---|---|
-| 0. Définir le modèle | Situer les familles de LLM, puis délimiter le GPT décodeur seul étudié ici et son objectif | [Panorama des LLM](llm-overview.qmd), [vue d'ensemble GPT / Transformer](transformer.qmd), [historique](transformer-history.qmd) en contexte facultatif | **Conceptuel disponible** — le panorama général et le périmètre du GPT étudié sont documentés ; le modèle exécutable complet reste à construire |
-| 1. Préparer l'entrée texte | Comprendre le tokenizer et encoder/décoder un prompt ; la constitution d'un corpus relève de la branche entraînement | [Texte et données](text-data.qmd), [Unicode](unicode-text.qmd), [tokenisation](tokenization-strategies.qmd) | **Conceptuel** — pas de pipeline tokenizer complet validé dans le dépôt |
-| 2. Représenter les tokens | Lookup d'embeddings et information de position | [Espace des embeddings](embedding-space.qmd), [position](positional-encoding.qmd) | **Référence partielle** — le lookup et la position sont implémentés dans le GPT de référence, sans validation pédagogique dédiée |
-| 3. Calculer l'attention | Projections Q/K/V, scores, softmax et masque causal | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd), [masquage causal](causal-masking.qmd) | **Composants de référence disponibles** — fonctions testées dans `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`, `causal_mask`, `softmax_with_temperature`) ; l'attention multi-têtes est assemblée dans le GPT de référence |
-| 4. Assembler le GPT | Blocs Transformer, résidus, normalisation, MLP et projection de sortie | [Transformer](transformer.qmd), [tenseurs](tensors.qmd) en référence si nécessaire | **Référence disponible** — GPT configurable et testé dans les modules `gpt_config.py`, `gpt_ops.py`, `transformer_block.py` et `gpt.py` (inférence uniquement, initialisation aléatoire) ; [visite guidée du code](gpt-config-walkthrough.qmd) |
-| 5. Prédire et sélectionner | Logits, probabilités et règle de décodage | [Logits](logits.qmd), [probabilités](probabilites.qmd), [Transformer](transformer.qmd), [génération pas à pas](generation.qmd) | **Référence disponible** — sélection gloutonne et échantillonnage avec température implémentés et testés dans `generate` |
-| 6. Générer avant l'entraînement | Exécuter la boucle autorégressive avec les paramètres aléatoires du GPT assemblé ; observer une sortie non entraînée | [Transformer](transformer.qmd), [logits](logits.qmd), [probabilités](probabilites.qmd), [génération pas à pas](generation.qmd) | **Référence disponible** — boucle autorégressive `generate` avec fenêtre de contexte glissante et tests ; la sortie non entraînée reste incohérente, ce qui est attendu |
-| 7. Préparer les données d'entraînement | Corpus documenté et partitionné ; fenêtres de contexte, entrées/cibles décalées, batches et masques | [Texte et données](text-data.qmd), [exemples d'entraînement](training-examples.qmd) | **Conceptuel** — les règles et pièges sont expliqués ; le pipeline exécutable complet reste à établir |
-| 8. Entraîner et valider | Loss, rétropropagation, optimiseur, validation et checkpoints | [Cross-entropie](cross-entropy.qmd), [loss](loss.qmd), [gradients](gradients.qmd), [évaluation](evaluation-experimentale.qmd) | **Partiel** — `cross_entropy_from_logits` et `cross_entropy_gradient` implémentés et testés dans `src/llm_lab/foundations/losses.py` ; boucle d'entraînement complète à construire |
-| 9. Évaluer | Baselines, métriques, analyse d'erreurs et limites | [Évaluation expérimentale](evaluation-experimentale.qmd) | **Méthode disponible** — pas d'évaluation complète d'un GPT entraîné localement |
+Avant de passer à l'étape suivante, produisez ou vérifiez le résultat indiqué ; les pages conceptuelles fournissent le mécanisme, pas la preuve que le code existe. Les identifiants **G0–G9** sont ceux du [plan de construction versionné](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) ; **G2** (données d'entraînement) est une branche parallèle : requise avant l'entraînement, pas pour la génération.
 
-Le détail des prérequis, preuves attendues, dépendances et critères de validation est maintenu dans le [plan de construction versionné](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
+| Étape | Ce que l'on construit | Résultat à vérifier | Pour comprendre | État du code |
+|---|---|---|---|---|
+| 0 · G0. Définir le modèle | Le périmètre : un GPT décodeur seul qui prédit le prochain token | Situer ce modèle parmi les familles de LLM et les architectures Transformer | [Panorama des LLM](llm-overview.qmd), [GPT et Transformer](transformer.qmd), [historique](transformer-history.qmd) en contexte | Conceptuel |
+| 1 · G1. Préparer l'entrée texte | L'encodage et le décodage d'un prompt par le tokenizer | Encoder puis décoder un court texte ; identifier l'effet des tokens spéciaux et de la version du tokenizer | [Texte et données](text-data.qmd), [Unicode](unicode-text.qmd), [tokenisation](tokenization-strategies.qmd) | Conceptuel — pas de pipeline tokenizer validé |
+| 2 · G3. Représenter les tokens | Le lookup d'embeddings et l'information de position | Tracer les formes de `[B, L]⟧ à `[B, L, D]⟧ et nommer chaque axe | [Espace des embeddings](embedding-space.qmd), [position](positional-encoding.qmd) | Référence — dans `gpt.py⟧ ; [visite : modèle](gpt-model-walkthrough.qmd) |
+| 3 · G4. Calculer l'attention | Les projections Q/K/V, les scores, le softmax et le masque causal | En mode évaluation, modifier un token futur sans changer les sorties des positions antérieures | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd), [masquage causal](causal-masking.qmd) | Référence — `attention.py⟧ (`scaled_dot_product_attention⟧, `causal_mask⟧, `softmax_with_temperature⟧) ; [visite : bloc](transformer-block-walkthrough.qmd) |
+| 4 · G5. Assembler le GPT | L'empilement des blocs : résidus, normalisation, MLP et projection de sortie | Tracer les dimensions à travers le modèle et vérifier le nombre de paramètres (`model.num_parameters()⟧) | [Transformer](transformer.qmd), [tenseurs](tensors.qmd) en référence | Référence — [visites : bloc](transformer-block-walkthrough.qmd) et [modèle](gpt-model-walkthrough.qmd) |
+| 5 · G6. Prédire et sélectionner | La conversion des logits en distribution, puis la règle de décodage | Distinguer logits et probabilités ; expliquer la sélection gloutonne ou échantillonnée | [Logits](logits.qmd), [probabilités](probabilites.qmd), [génération pas à pas](generation.qmd) | Référence — dans `generate.py⟧ ; [visite : génération](gpt-generation-walkthrough.qmd) |
+| 6 · G7. Générer avant l'entraînement | La boucle autorégressive complète, à paramètres aléatoires | Exécuter la boucle : sortie incohérente attendue, arrêt et fenêtre de contexte vérifiés | [Génération pas à pas](generation.qmd) | Référence — [visite : génération](gpt-generation-walkthrough.qmd) |
+| 7 · G2. Préparer les données d'entraînement | Un corpus documenté et partitionné ; fenêtres d'entrée, cibles décalées, batches et masques — branche parallèle de l'apprentissage | Construire une fenêtre et sa cible décalée ; tester frontières, padding et absence de fuite entre jeux de données | [Texte et données](text-data.qmd), [exemples d'entraînement](training-examples.qmd) | Conceptuel — pipeline à construire |
+| 8 · G8. Entraîner et valider | La loss, la rétropropagation, l'optimiseur, la validation et les checkpoints | Aligner logits et cibles, calculer la loss, reproduire une petite mise à jour, suivre séparément les losses d'entraînement et de validation | [Cross-entropie](cross-entropy.qmd), [loss](loss.qmd), [gradients](gradients.qmd) | Partiel — `losses.py⟧ (`cross_entropy_from_logits⟧, `cross_entropy_gradient⟧) ; boucle complète à construire |
+| 9 · G9 / E1. Évaluer | Baselines, métriques, analyse d'erreurs et limites | Comparer à une baseline avec un protocole explicite ; dire ce que les métriques ne démontrent pas | [Évaluation expérimentale](evaluation-experimentale.qmd) | Méthode disponible — pas d'évaluation complète d'un GPT entraîné |
 
-## Les connaissances à acquérir au fil du parcours
+Ces critères sont des objectifs pédagogiques : une page disponible, un exemple calculable, un test automatisé et une exécution reproductible sont des niveaux de preuve différents.
 
-| Notion | Minimum utile pour construire | Approfondissement facultatif |
-|---|---|---|
-| Tenseurs | Lire `[B, L]`, `[B, L, D]`, `[B, L, V]` et vérifier les axes utilisés | Algèbre tensorielle générale, broadcasting avancé, conventions et propriétés |
-| Algèbre linéaire | Comprendre une projection et un produit matriciel dans les dimensions rencontrées | Espaces vectoriels, bases, spectre, opérateurs et preuves |
-| Probabilités | Comprendre une distribution catégorielle et le softmax | Théorie des probabilités et de l'information |
-| Dérivées et gradients | Comprendre le rôle d'une dérivée locale et appeler l'autodifférentiation | Règle de chaîne détaillée, Jacobiennes, optimisation numérique |
-| Optimisation | Comprendre le rôle du learning rate et de l'optimiseur | Convergence, conditionnement, méthodes adaptatives et analyse avancée |
+## Pour continuer
 
-## Parcours complémentaires
-
-- [Panorama des LLM](llm-overview.qmd) : situer les familles de modèles et leur cycle de vie.
-- [GPT et Transformer](transformer.qmd) : comprendre le modèle décodeur seul retenu comme fil conducteur du projet.
-- [Visite guidée du code de référence](gpt-config-walkthrough.qmd) : cinq pages expliquent chaque module ligne par ligne, de la configuration à la génération.
-- [Approfondir les tenseurs](tensors.qmd) : consulter les formes et axes quand ils deviennent utiles.
-- [S'exercer](exercises.qmd) : travailler les questions conceptuelles et les exercices pratiques séparément.
-- [Évaluer une expérience](evaluation-experimentale.qmd) : distinguer observation, interprétation et preuve.
+- [Exercices et mises en pratique](exercises.qmd) : appliquer les jalons sur des exercices, séparément des questions conceptuelles.
+- [Plan de construction versionné](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) : prérequis, preuves attendues, dépendances et critères de validation de chaque jalon.
 
 ::: {.callout-warning}
-**Ne pas confondre ce projet pédagogique avec un entraînement industriel.** Un petit GPT initialisé aléatoirement sert à rendre inspectables les transformations et les erreurs. Il ne reproduit ni les volumes de données, ni les ressources de calcul, ni les performances d'un LLM de production.
+**Un projet pédagogique, pas un entraînement industriel.** Le petit GPT initialisé aléatoirement rend les transformations et les erreurs inspectables ; il ne reproduit ni les volumes de données, ni les ressources de calcul, ni les performances d'un LLM de production.
 :::
 
 ::: {.language-switch}
