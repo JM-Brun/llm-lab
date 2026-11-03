@@ -77,7 +77,10 @@ These rules are **decoding choices**, not properties of the model: the same mode
 - **No memory across generations.** Each generation starts from the provided context; the model retains nothing beyond what appears in that context.
 - **Project status.** In this repository, generation from a local checkpoint remains planned work: the generation milestones of the [guided build](build-path.qmd) describe what is available and what remains to be built.
 
-## Self-check questions
+::: {.self-check}
+## Check your understanding
+
+[Extended exercises on this topic](../en/exercises.qmd#generation).
 
 1. Why can the same model with the same context produce different texts?
 
@@ -110,4 +113,5 @@ Parameters stay fixed during inference: no update happens, no matter how many to
 
 ::: {.language-switch}
 [Français](../fr/generation.qmd) · [English](generation.qmd)
+:::
 :::
