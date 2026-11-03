@@ -29,7 +29,7 @@ The *loss* measures the mismatch between predictions and **target tokens**. In a
 
 **First pass:** understand the penalty for one token, then its mean over valid positions only. Ignored positions (such as padding) must contribute neither to the sum nor to the denominator.
 
-**Go deeper:** examine reduction conventions, perplexity, and validation diagnostics. The loss then provides the differentiable signal used to compute [gradients](gradients.qmd).
+Reduction conventions determine how per-token losses are aggregated. Perplexity is the exponential of mean per-token loss; the loss gradient supplies the signal used to update parameters ([gradients](gradients.qmd)).
 
 **Implementation note:** standard cross-entropy functions expect unnormalized logits; do not apply softmax first when the API expects logits directly.
 :::
