@@ -11,7 +11,7 @@ scope: "Décompose l'erreur quadratique en biais, variance et bruit irréductibl
 purpose: "Diagnostiquer sous-ajustement et surapprentissage, et interpréter la sensibilité d'un modèle aux échantillons."
 suggested_route:
   previous: null
-  next: "fr/gradient-boosting"
+  next: "fr/decision-trees"
 hierarchy:
   parents: []
   children: []
@@ -46,6 +46,8 @@ Un modèle trop contraint peut sous-ajuster ; un modèle très flexible peut app
 | Gradient Boosting | Corrections successives de la loss | Les itérations peuvent aussi surajuster |
 
 Il est faux de déduire automatiquement « faible biais = forte variance ». Le biais statistique n'est pas le gradient d'une fonction de perte.
+
+Voir aussi [les arbres de décision](decision-trees.qmd) et le [Gradient Boosting](gradient-boosting.qmd).
 
 ## Évaluer le compromis
 
