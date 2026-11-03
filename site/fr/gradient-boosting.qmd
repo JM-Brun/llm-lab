@@ -54,7 +54,7 @@ Ces valeurs sont les **pseudo-résidus**. Avec l'erreur quadratique, ils sont pr
 
 L'arbre suivant ne reconstruit pas toute la cible : il cherche une correction structurée des erreurs actuelles.
 
-## Boosting contre bagging
+\n\n![Une itération de Gradient Boosting, de l'ensemble courant à la correction ajoutée.](../images/gradient-boosting-iteration.svg){fig-alt="Schéma de la boucle : modèle courant, gradient négatif, arbre correctif, shrinkage, mise à jour et répétition."}\n\n## Boosting contre bagging
 
 | Bagging (forêt aléatoire) | Boosting |
 |---|---|
