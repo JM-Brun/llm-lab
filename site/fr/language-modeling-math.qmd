@@ -11,11 +11,11 @@ id: "fr/language-modeling-math"
 scope: "Formalise le problème de modélisation du langage par les probabilités conditionnelles et la factorisation autorégressive ; distingue règle de chaîne, modèle probabiliste appris et objectif de maximum de vraisemblance."
 purpose: "Lire et interpréter la probabilité d'un token sachant son contexte, reconstruire la probabilité d'une séquence par factorisation autorégressive et relier cette formalisation à l'objectif d'entraînement."
 suggested_route:
-  previous: "fr/llm-overview"
-  next: "fr/probabilites"
+  previous: null
+  next: null
 hierarchy:
   parents: ["fr/llm-overview"]
-  children: ["fr/probabilites", "fr/vraisemblance", "fr/loss"]
+  children: []
 related: ["fr/mathematical-foundations", "fr/training-examples"]
 tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:fr", "status:published"]
 -->
