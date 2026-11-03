@@ -8,14 +8,14 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-overview"
-scope: "Introduces the language-modeling problem and why it is difficult; defines language model, generative model, LLM, GPT, and Transformer; maps an autoregressive GPT pipeline and delegates detailed mechanisms to dedicated pages."
-purpose: "By the end of this page, readers should be able to explain the language-modeling problem and its difficulties, distinguish language model, generative model, LLM, GPT, and Transformer, and trace an autoregressive GPT computation while separating embeddings from positional information."
+scope: "Introduces the language-modeling problem intuitively and why it is difficult; defines language model, generative model, LLM, GPT, and Transformer; maps an autoregressive GPT pipeline and delegates formalism and detailed mechanisms to dedicated pages."
+purpose: "By the end of this page, readers should be able to explain the language-modeling problem intuitively and its difficulties, distinguish language model, generative model, LLM, GPT, and Transformer, and trace an autoregressive GPT computation while separating embeddings from positional information."
 suggested_route:
   previous: "en/index"
   next: "en/transformer"
 hierarchy:
   parents: ["en/index"]
-  children: ["en/transformer", "en/transformer-architectures", "en/generation", "en/build-path", "en/mathematical-foundations", "en/llm-limits"]
+  children: ["en/transformer", "en/transformer-architectures", "en/generation", "en/build-path", "en/language-modeling-math", "en/mathematical-foundations", "en/llm-limits"]
 related: ["en/transformer-history"]
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 -->
@@ -26,7 +26,7 @@ A **language model** assigns probabilities to text sequences—or, in an autoreg
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this page, you will be able to:
-- formulate language modeling as estimating a conditional distribution over the next token;
+- explain intuitively why a model must compare multiple possible continuations;
 - distinguish a language model, generative model, LLM, GPT, and Transformer;
 - trace a GPT pipeline and distinguish embeddings from positional information.
 :::
@@ -35,13 +35,9 @@ By the end of this page, you will be able to:
 
 Given a prefix such as “The report indicates that the concentration”, the model must estimate which tokens could follow. There is not necessarily one uniquely correct continuation: several continuations may be grammatical and coherent while differing in meaning, precision, or relevance.
 
-A language model represents this uncertainty with a conditional distribution. For a token sequence $x_1,\ldots,x_T$, an autoregressive model factorizes it as:
+To represent this uncertainty, the model must assign relative scores to possible continuations while taking the existing context into account. In an autoregressive GPT, this computation is repeated token by token: the selected token is appended to the context, and the model evaluates the possible next tokens again. The probabilistic formalization of this idea—and the conventions needed to write sequence probabilities—is developed in the optional page [The mathematics of language modeling](language-modeling-math.qmd).
 
-$$
-P(x_1,\ldots,x_T)=\prod_{t=1}^{T}P(x_t\mid x_{<t}).
-$$
-
-At each position, it therefore estimates a distribution over the vocabulary from preceding tokens. Generation then selects a token, appends it to the context, and repeats. The model learns statistical regularities in its data; this objective does not, by itself, provide a mechanism for verifying truth.
+The model learns statistical regularities in its data; this objective does not, by itself, provide a mechanism for verifying truth.
 
 ### Why is this problem difficult?
 

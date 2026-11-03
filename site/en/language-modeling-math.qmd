@@ -1,0 +1,145 @@
+---
+title: "The mathematics of language modeling"
+subtitle: "From possible continuations to sequence probabilities"
+keywords: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/language-modeling-math"
+scope: "Formalizes language modeling using conditional probabilities and autoregressive factorization; distinguishes the chain rule, a learned probabilistic model, and the maximum-likelihood objective."
+purpose: "Interpret a next-token conditional probability and its notation, reconstruct sequence probability through autoregressive factorization, and connect this formalization to the training objective."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["en/llm-overview"]
+  children: []
+related: ["en/probabilities", "en/likelihood", "en/loss", "en/training-examples", "en/mathematical-foundations"]
+tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+This page deepens the [LLM overview](llm-overview.qmd) by formalizing its central problem: a language model assigns a probability to a sequence of tokens. In an autoregressive model, this probability is built from successive conditional probabilities: at each position, the model estimates the next token from the prefix already observed. This page makes the mathematical objects behind that idea explicit; the overview does not assume that readers already know them.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this page, you will be able to:
+- interpret a next-token conditional probability and its notation;
+- explain the autoregressive factorization of a sequence probability;
+- distinguish the chain rule, the learned model, and the training objective.
+:::
+
+## 1. From a text sequence to a token sequence
+
+Assume that text has already been converted by a tokenizer into a sequence of IDs:
+
+$$
+x_{1:T}=(x_1,x_2,\ldots,x_T).
+$$
+
+Each $x_t$ is an integer belonging to the vocabulary $\mathcal{V}$, whose size is $V$. The indices indicate positions in the sequence; they are not numerical values on which arithmetic operations are performed.
+
+Language modeling means constructing a probabilistic model that assigns probabilities to possible sequences. We therefore need to specify what a “sequence probability” means and how context enters the calculation.
+
+## 2. Conditional probability: the next token given its context
+
+For two events $A$ and $B$, with $P(B)>0$, conditional probability is defined as:
+
+$$
+P(A\mid B)=\frac{P(A\cap B)}{P(B)}.
+$$
+
+In a language model, event $B$ represents the prefix already observed and $A$ the next token. We write:
+
+$$
+P(x_t\mid x_{<t}),
+\qquad x_{<t}=(x_1,\ldots,x_{t-1}).
+$$
+
+This quantity is the probability assigned to token $x_t$ given the preceding tokens. For a given prefix, the model defines a distribution over the possible tokens in the vocabulary:
+
+$$
+\sum_{v\in\mathcal{V}}P(v\mid x_{<t})=1.
+$$
+
+Probabilities depend on context: the same token can receive different probabilities after two different prefixes. It does not have an intrinsic probability independent of its surroundings.
+
+## 3. Factorizing a sequence probability
+
+The probability chain rule gives, for any joint distribution:
+
+$$
+P(x_1,\ldots,x_T)
+=P(x_1)P(x_2\mid x_1)\cdots
+P(x_T\mid x_1,\ldots,x_{T-1}).
+$$
+
+Using the notation $x_{<t}$, we obtain:
+
+$$
+\boxed{
+P(x_{1:T})=\prod_{t=1}^{T}P(x_t\mid x_{<t})
+}
+$$
+
+This is the autoregressive factorization. It expresses the probability of the sequence as the product of the conditional probabilities of each token, in order.
+
+**Important:** the chain rule is a probabilistic identity, not an assumption specific to Transformers. The autoregressive aspect comes from the order in which the model represents and uses these conditionals: the token at position $t$ is predicted from the prefix, not from future tokens.
+
+For the first token, the prefix is empty. In practice, a beginning-of-sequence token (BOS) may be made explicit, or an equivalent convention may be used.
+
+## 4. What the model learns
+
+A model parameterized by $\theta$ approximates each conditional distribution:
+
+$$
+P_\theta(x_t\mid x_{<t}).
+$$
+
+For an observed sequence, its probability under the model is therefore:
+
+$$
+P_\theta(x_{1:T})
+=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}).
+$$
+
+The parameters $\theta$ are adjusted to assign high probability to sequences in the training corpus. A standard formulation maximizes the log-likelihood:
+
+$$
+\log P_\theta(x_{1:T})
+=\sum_{t=1}^{T}\log P_\theta(x_t\mid x_{<t}).
+$$
+
+Equivalently, one minimizes the negative log-likelihood, often averaged over tokens and examples. The exact aggregation, masking, and reduction conventions matter when comparing losses; they are detailed in the pages on [likelihood](likelihood.qmd), the [loss function](loss.qmd), and [the mathematical chain of LLM training](mathematical-foundations.qmd).
+
+## 5. A conceptual example
+
+Consider the sequence “The cat sleeps”. After tokenization, suppose it is represented by three tokens $x_1,x_2,x_3$. The model successively assigns:
+
+- a probability to $x_1$ with no prefix (or after a BOS token);
+- a probability to $x_2$ given $x_1$;
+- a probability to $x_3$ given $x_1,x_2$.
+
+The probability of the entire sequence is the product of these three terms. If one observed token receives a very low probability, the probability of the full product also decreases. This is why training examines probabilities of target tokens, not merely the subjective quality of generated sentences.
+
+## 6. What this formalization does not tell us
+
+- **It does not define the tokenizer.** Text segmentation and vocabulary construction are separate choices ([tokenization strategies](tokenization-strategies.qmd)).
+- **It does not specify the architecture.** Several architectures can represent conditional distributions; factorization alone does not imply a Transformer.
+- **It does not guarantee truth.** A high probability expresses what the model learned to favor in its data, not factual validation.
+- **It does not determine the generation procedure.** Sampling, greedy selection, and other strategies operate after the distribution has been computed ([generation](generation.qmd)).
+
+## References and further study
+
+- [Output probabilities](probabilities.qmd): how logits become a distribution over the vocabulary.
+- [Likelihood](likelihood.qmd): how to evaluate the probability of observed tokens.
+- [Training examples](training-examples.qmd): how to construct inputs and shifted targets.
+- [The mathematical chain of LLM training](mathematical-foundations.qmd): connect logits, probabilities, loss, and gradients.
+
+General probability reference: Bishop, *Pattern Recognition and Machine Learning*, Chapters 1–2.
+
+::: {.language-switch}
+**Language:** [Français](../fr/language-modeling-math.qmd) · [English](language-modeling-math.qmd)
+:::

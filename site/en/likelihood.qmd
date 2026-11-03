@@ -26,6 +26,8 @@ Likelihood measures the probability of observed data for fixed parameters. In au
 
 ## Autoregressive factorization
 
+The derivation of this factorization from the chain rule, and the interpretation of conditional probabilities, are developed in [the mathematical formalization of language modeling](language-modeling-math.qmd). Here, the focus is on likelihood as an evaluation criterion for observed sequences and on its connection to the loss.
+
 For a sequence $x_{1:T}$:
 
 $$

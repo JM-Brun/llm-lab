@@ -1,0 +1,145 @@
+---
+title: "Formaliser mathématiquement la modélisation du langage"
+subtitle: "Des continuations possibles à la probabilité d’une séquence"
+keywords: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/language-modeling-math"
+scope: "Formalise le problème de modélisation du langage par les probabilités conditionnelles et la factorisation autorégressive ; distingue règle de chaîne, modèle probabiliste appris et objectif de maximum de vraisemblance."
+purpose: "Lire et interpréter la probabilité d'un token sachant son contexte, reconstruire la probabilité d'une séquence par factorisation autorégressive et relier cette formalisation à l'objectif d'entraînement."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/llm-overview"]
+  children: []
+related: ["fr/probabilites", "fr/vraisemblance", "fr/loss", "fr/training-examples", "fr/mathematical-foundations"]
+tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Cette page approfondit le [panorama des LLM](llm-overview.qmd) et en formalise mathématiquement le problème central : un modèle de langage attribue une probabilité à une séquence de tokens. Dans un modèle autorégressif, cette probabilité est construite à partir de probabilités conditionnelles successives : à chaque position, le modèle estime le token suivant à partir du préfixe déjà observé. Cette page explicite les objets mathématiques derrière cette idée, sans les supposer acquis dans la page d’overview.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+À l’issue de cette page, vous pourrez :
+- interpréter une probabilité conditionnelle de prochain token et sa notation ;
+- expliquer la factorisation autorégressive d’une probabilité de séquence ;
+- distinguer la règle de chaîne, le modèle appris et l’objectif d’entraînement.
+:::
+
+## 1. De la séquence de texte à une séquence de tokens
+
+On suppose que le texte a déjà été converti par un tokenizer en une séquence d'identifiants :
+
+$$
+x_{1:T}=(x_1,x_2,\ldots,x_T).
+$$
+
+Chaque $x_t$ est un entier appartenant au vocabulaire $\mathcal{V}$, de taille $V$. Les indices indiquent les positions dans la séquence, pas des valeurs numériques sur lesquelles on effectuerait des opérations arithmétiques.
+
+Le problème de modélisation du langage consiste à construire un modèle probabiliste qui attribue des probabilités aux séquences possibles. Il faut donc préciser ce que signifie « probabilité d'une séquence » et comment le contexte intervient.
+
+## 2. Probabilité conditionnelle : le prochain token sachant le contexte
+
+Pour deux événements $A$ et $B$, avec $P(B)>0$, la probabilité conditionnelle est définie par :
+
+$$
+P(A\mid B)=\frac{P(A\cap B)}{P(B)}.
+$$
+
+Dans un modèle de langage, l'événement $B$ correspond au préfixe déjà observé et $A$ au prochain token. On note :
+
+$$
+P(x_t\mid x_{<t}),
+\qquad x_{<t}=(x_1,\ldots,x_{t-1}).
+$$
+
+Cette quantité représente la probabilité attribuée au token $x_t$ sachant les tokens qui le précèdent. Pour un préfixe donné, le modèle définit une distribution sur les tokens possibles du vocabulaire :
+
+$$
+\sum_{v\in\mathcal{V}}P(v\mid x_{<t})=1.
+$$
+
+Les probabilités dépendent du contexte : le même token peut recevoir des probabilités différentes après deux préfixes différents. Il ne s'agit pas d'une probabilité intrinsèque du token, indépendante de son environnement.
+
+## 3. Factoriser la probabilité d'une séquence
+
+La règle de chaîne des probabilités donne, pour toute distribution jointe :
+
+$$
+P(x_1,\ldots,x_T)
+=P(x_1)P(x_2\mid x_1)\cdots
+P(x_T\mid x_1,\ldots,x_{T-1}).
+$$
+
+En utilisant la notation $x_{<t}$, on obtient :
+
+$$
+\boxed{
+P(x_{1:T})=\prod_{t=1}^{T}P(x_t\mid x_{<t})
+}
+$$
+
+C'est la factorisation autorégressive. Elle exprime la probabilité de la séquence comme le produit des probabilités conditionnelles de chacun de ses tokens, dans l'ordre.
+
+**Point important :** la règle de chaîne est une identité probabiliste, pas une hypothèse propre aux Transformers. Le caractère autorégressif vient de l'ordre dans lequel le modèle représente et utilise ces conditionnelles : le token à la position $t$ est prédit à partir du préfixe, et non des tokens futurs.
+
+Pour le premier token, le préfixe est vide. En pratique, on peut expliciter un token de début de séquence (BOS) ou adopter une convention équivalente.
+
+## 4. Ce que le modèle apprend
+
+Un modèle paramétré par $\theta$ approxime chaque distribution conditionnelle :
+
+$$
+P_\theta(x_t\mid x_{<t}).
+$$
+
+Pour une séquence observée, sa probabilité sous le modèle est donc :
+
+$$
+P_\theta(x_{1:T})
+=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}).
+$$
+
+Les paramètres $\theta$ sont ajustés pour attribuer une probabilité élevée aux séquences du corpus d'entraînement. Une formulation standard consiste à maximiser la log-vraisemblance :
+
+$$
+\log P_\theta(x_{1:T})
+=\sum_{t=1}^{T}\log P_\theta(x_t\mid x_{<t}).
+$$
+
+Équivalemment, on minimise la log-vraisemblance négative, souvent moyennée sur les tokens et les exemples. Les conventions exactes d'agrégation, de masquage et de réduction sont importantes pour comparer des pertes : elles sont détaillées dans les pages sur la [vraisemblance](vraisemblance.qmd), la [loss](loss.qmd) et la [chaîne mathématique de l'entraînement](mathematical-foundations.qmd).
+
+## 5. Exemple conceptuel
+
+Considérons la séquence « Le chat dort ». Après tokenisation, supposons qu'elle soit représentée par trois tokens $x_1,x_2,x_3$. Le modèle attribue successivement :
+
+- une probabilité à $x_1$ sans préfixe (ou après un token BOS) ;
+- une probabilité à $x_2$ sachant $x_1$ ;
+- une probabilité à $x_3$ sachant $x_1,x_2$.
+
+La probabilité de la séquence entière est le produit de ces trois termes. Si l'un des tokens observés reçoit une probabilité très faible, la probabilité du produit complet diminue également. C'est pourquoi l'entraînement examine les probabilités des tokens cibles, et pas seulement la qualité subjective d'une phrase générée.
+
+## 6. Ce que cette formalisation ne dit pas
+
+- **Elle ne définit pas le tokenizer.** Le découpage du texte et la construction du vocabulaire sont des choix distincts ([tokenisation](tokenization-strategies.qmd)).
+- **Elle ne spécifie pas l'architecture.** Plusieurs architectures peuvent représenter des distributions conditionnelles ; la factorisation n'implique pas à elle seule un Transformer.
+- **Elle ne garantit pas la vérité.** Une probabilité élevée exprime ce que le modèle a appris à privilégier dans ses données, pas une validation factuelle.
+- **Elle ne fixe pas la procédure de génération.** Échantillonnage, choix glouton et autres stratégies interviennent après le calcul de la distribution ([génération](generation.qmd)).
+
+## Références et prolongements
+
+- [Probabilités de sortie](probabilites.qmd) : comment les logits deviennent une distribution sur le vocabulaire.
+- [Vraisemblance](vraisemblance.qmd) : comment évaluer la probabilité des tokens observés.
+- [Exemples d'entraînement](training-examples.qmd) : comment construire les entrées et les cibles décalées.
+- [Chaîne mathématique de l'entraînement](mathematical-foundations.qmd) : relier logits, probabilités, loss et gradients.
+
+Référence probabiliste générale : Bishop, *Pattern Recognition and Machine Learning*, chapitres 1–2.
+
+::: {.language-switch}
+**Langue :** [Français](language-modeling-math.qmd) · [English](../en/language-modeling-math.qmd)
+:::

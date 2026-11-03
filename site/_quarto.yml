@@ -31,10 +31,12 @@ project:
     - fr/gradients.qmd
     - en/gradients.qmd
     - fr/llm-overview.qmd
+    - fr/language-modeling-math.qmd
     - fr/scaling-laws.qmd
     - fr/emergence.qmd
     - fr/in-context-learning.qmd
     - en/llm-overview.qmd
+    - en/language-modeling-math.qmd
     - en/scaling-laws.qmd
     - en/emergence.qmd
     - en/in-context-learning.qmd
@@ -104,6 +106,7 @@ website:
         - section: "Comprendre les LLM"
           contents:
             - fr/llm-overview.qmd
+            - fr/language-modeling-math.qmd
             - fr/transformer-architectures.qmd
             - fr/transformer.qmd
             - fr/generation.qmd
@@ -168,6 +171,7 @@ website:
         - section: "Understand LLMs"
           contents:
             - en/llm-overview.qmd
+            - en/language-modeling-math.qmd
             - en/transformer-architectures.qmd
             - en/transformer.qmd
             - en/generation.qmd

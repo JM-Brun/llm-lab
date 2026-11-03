@@ -8,14 +8,14 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
-scope: "Présente le problème de modélisation du langage et sa difficulté ; définit les termes LLM, modèle de langage, modèle génératif, GPT et Transformer ; donne une carte de lecture du pipeline d’un GPT autorégressif et renvoie les mécanismes détaillés vers leurs pages dédiées."
-purpose: "À l’issue de cette page, le lecteur doit pouvoir expliquer le problème de modélisation du langage et ses difficultés, distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer, et retracer le calcul d’un GPT autorégressif en séparant embeddings et information positionnelle."
+scope: "Présente intuitivement le problème de modélisation du langage et sa difficulté ; définit les termes LLM, modèle de langage, modèle génératif, GPT et Transformer ; donne une carte de lecture du pipeline d’un GPT autorégressif et renvoie les formalismes et mécanismes détaillés vers leurs pages dédiées."
+purpose: "À l’issue de cette page, le lecteur doit pouvoir expliquer intuitivement le problème de modélisation du langage et ses difficultés, distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer, et retracer le calcul d’un GPT autorégressif en séparant embeddings et information positionnelle."
 suggested_route:
   previous: "fr/index"
   next: "fr/transformer"
 hierarchy:
   parents: ["fr/index"]
-  children: ["fr/transformer", "fr/transformer-architectures", "fr/generation", "fr/build-path", "fr/mathematical-foundations", "fr/llm-limits"]
+  children: ["fr/transformer", "fr/transformer-architectures", "fr/generation", "fr/build-path", "fr/language-modeling-math", "fr/mathematical-foundations", "fr/llm-limits"]
 related: ["fr/transformer-history"]
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
@@ -27,7 +27,7 @@ Un **modèle de langage** est un modèle qui attribue une probabilité à des s�
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À l’issue de cette page, vous pourrez :
-- formuler le problème de modélisation du langage comme l’estimation d’une distribution conditionnelle sur le prochain token ;
+- expliquer intuitivement pourquoi un modèle doit comparer plusieurs continuations possibles ;
 - distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer ;
 - retracer le pipeline d’un GPT et distinguer embeddings et information positionnelle.
 :::
@@ -36,13 +36,9 @@ Un **modèle de langage** est un modèle qui attribue une probabilité à des s�
 
 À partir d'un préfixe tel que « Le rapport indique que la concentration », le modèle doit estimer quels tokens pourraient suivre. Il ne s'agit pas de retrouver une unique suite correcte : plusieurs continuations peuvent être grammaticales et cohérentes, mais différer par leur sens, leur précision ou leur pertinence.
 
-Un modèle de langage représente cette incertitude par une distribution conditionnelle. Pour une séquence de tokens $x_1,\ldots,x_T$, un modèle autorégressif la factorise ainsi :
+Pour représenter cette incertitude, le modèle doit attribuer des scores relatifs aux continuations possibles, en tenant compte du contexte déjà fourni. Dans un GPT autorégressif, ce calcul est répété token après token : le token choisi est ajouté au contexte, puis le modèle évalue à nouveau les suites possibles. La formalisation probabiliste de cette idée — et les conventions nécessaires pour écrire les probabilités de séquences — est développée dans la page facultative [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd).
 
-$$
-P(x_1,\ldots,x_T)=\prod_{t=1}^{T}P(x_t\mid x_{<t}).
-$$
-
-À chaque position, il estime donc une distribution sur le vocabulaire à partir des tokens précédents. La génération consiste ensuite à sélectionner un token, l'ajouter au contexte et recommencer. Le modèle apprend des régularités statistiques des données ; cet objectif ne lui fournit pas, à lui seul, un mécanisme de vérification de la vérité.
+Le modèle apprend des régularités statistiques des données ; cet objectif ne lui fournit pas, à lui seul, un mécanisme de vérification de la vérité.
 
 ### Pourquoi ce problème est-il difficile ?
 
