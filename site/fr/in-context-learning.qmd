@@ -1,7 +1,7 @@
 ---
 title: "Apprentissage en contexte (in-context learning)"
 subtitle: "Apprendre à partir du prompt sans mettre à jour les paramètres"
-keywords: ["type:concept-lesson", "destination:understand", "topic:in-context-learning", "level:advanced", "language:fr", "status:published"]
+keywords: ["type:concept-lesson", "destination:deepen", "topic:in-context-learning", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -17,7 +17,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/llm-overview", "fr/generation", "fr/contextualized-representations"]
-tags: ["type:concept-lesson", "destination:understand", "topic:in-context-learning", "level:advanced", "language:fr", "status:published"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:in-context-learning", "level:advanced", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
