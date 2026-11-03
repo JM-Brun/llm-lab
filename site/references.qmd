@@ -355,6 +355,16 @@ Ces ressources ont servi de références de conception et de vérification pour 
 - **Droits et provenance :** illustration originale produite pour le dépôt ; les trois références précédentes sont citées comme ressources pédagogiques consultées, pas comme titulaires ou sources de l’image.
 
 
+## Stratégies de décodage et génération ouverte
+
+Ces travaux sont cités dans l'approfondissement [Stratégies avancées de décodage](fr/decoding-strategies.qmd). Ils étudient des tâches et des protocoles différents : leurs résultats ne définissent pas un réglage universel.
+
+- **Holtzman et al. (2020), [*The Curious Case of Neural Text Degeneration*](https://arxiv.org/abs/1904.09751), ICLR.** Analyse la dégénérescence de certaines méthodes de maximisation en génération ouverte et propose le nucleus sampling (top-p).
+- **Nadeem et al. (2020), [*A Systematic Characterization of Sampling Algorithms for Open-ended Language Generation*](https://aclanthology.org/2020.aacl-main.36/), AACL-IJCNLP.** Étudie les propriétés communes de top-k, nucleus et échantillonnage avec température, ainsi que leur compromis qualité-diversité.
+- **Meister et al. (2023), [*On the Efficacy of Sampling Adapters*](https://aclanthology.org/2023.acl-long.80/), ACL.** Propose un cadre pour analyser comment les transformations locales des distributions modifient les compromis entre précision et rappel.
+- **Li et al. (2023), [*Contrastive Decoding: Open-ended Text Generation as Optimization*](https://aclanthology.org/2023.acl-long.687/), ACL.** Introduit une fonction de score contrastive entre un modèle expert et un modèle amateur, sous contrainte de plausibilité.
+- **Welleck et al. (2020), [*Consistency of a Recurrent Language Model With Respect to Incomplete Decoding*](https://aclanthology.org/2020.emnlp-main.448/), EMNLP.** Analyse théoriquement l'incohérence de certaines stratégies de décodage pour les modèles récurrents ; la portée de ce résultat doit rester attachée à ses hypothèses et à sa classe de modèles.
+
 ## Architectures hybrides et efficacité d'inférence
 
 Ces ressources sont utilisées dans l'étude de cas [Architectures hybrides : le cas Nemotron](fr/hybrid-llm-architectures.qmd). ByteByteGo fournit une synthèse pédagogique ; les affirmations d'architecture et les chiffres propres aux modèles sont recoupés avec les documents NVIDIA primaires.
