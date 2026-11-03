@@ -15,6 +15,25 @@ Convergence does **not** mean identical sections, length, callouts, or visual de
 
 Before adding a section, ask: **what reader question does it answer, and what would be lost if it were omitted?** If there is no specific answer, omit it, merge it with another section, or move it to a more suitable page.
 
+### Choose the documentation job before the subject pattern
+
+A page's **documentation job** and its **scientific subject pattern** are different dimensions.
+
+Use the reader's need to identify the broad form:
+
+- **Tutorial:** guide a learner through a learning experience or build.
+- **How-to:** help someone complete a specific task.
+- **Reference:** make precise facts, conventions, parameters, or comparisons easy to consult.
+- **Explanation:** build understanding of a concept, mechanism, context, or design choice.
+
+These are the four Diátaxis documentation genres. They are a useful editorial taxonomy, not an empirical learning standard and not a mandatory metadata field. A page may deliberately combine genres, but should have one dominant job.
+
+Then choose the scientific pattern that best fits the subject: algorithm, mathematical object, physical concept, architecture, technology, research approach, overview, and so on. For example, an attention page may be an explanation whose subject pattern is an algorithmic mechanism; a GPT build page may be a tutorial whose subject pattern is an architecture plus implementation technique.
+
+Keep the repository's existing metadata contract authoritative: the controlled type tag describes the site's stable editorial role. Do not introduce a second archetype or Diátaxis metadata field unless a concrete tooling need is demonstrated. The documentation genre is an authoring decision that can be recorded in prose or review notes when useful.
+
+The existing overview, concept, guided-build, practice, and reference templates remain focused supplements for their respective page jobs. They should reuse this composition model rather than define a competing universal outline.
+
 ## 2. Compose from three layers
 
 ### A. Shared orientation
@@ -25,7 +44,7 @@ Most explanatory pages benefit from a little orientation. These are prompts, not
 - **Question / purpose:** the problem, phenomenon, or design choice being explained.
 - **Core mental model:** the central idea in a few sentences or a useful figure.
 - **Scope:** only where a boundary prevents a likely misunderstanding.
-- **Learning outcomes:** only when they help; use the existing `.callout-note.learning-outcomes` component and keep outcomes specific.
+- **Learning outcomes:** only when they help; use the existing learning-outcomes callout and keep outcomes specific.
 
 Combine these elements in the opening when that reads better. Do not create a separate section for each by default.
 
@@ -62,7 +81,7 @@ Do **not** collapse information needed to interpret the main claim. Assumptions,
 
 ## 3. Choose a pattern by the dominant learner question
 
-Page families are starting points, not exclusive categories. A page may combine patterns; choose the one that best describes its **main teaching job**. See the [page-pattern guide](page-patterns.md) for prompts.
+The patterns in the [page-pattern guide](page-patterns.md) are **subject-specific explanatory patterns**, not documentation genres and not metadata types. A page may combine patterns; choose the one that best describes its **main teaching job**. Do not create a new pattern for every topic.
 
 | Pattern | Dominant question | Usually emphasise |
 |---|---|---|
@@ -75,19 +94,20 @@ Page families are starting points, not exclusive categories. A page may combine 
 | Research approach | What question does this approach ask, and how does it differ? | Problem framing, assumptions, workflow, evidence, limitations |
 | Overview / synthesis | How do several ideas fit together? | Organising principles, relationships, boundaries, routes to canonical pages |
 
-Do not create a new pattern for every topic. Split or add a family only when its learner question or explanatory structure is materially different.
+Split or add a family only when its learner question or explanatory structure is materially different.
 
 ## 4. A practical starting sequence
 
-1. Write one sentence stating the question the page answers.
-2. State what the reader should understand after the core explanation.
-3. Choose the dominant pattern.
-4. Select only the modules needed to meet that outcome.
-5. Decide what belongs in the main flow and what can be optional depth.
-6. Identify useful diagrams, examples, or comparisons—if any.
-7. Connect the page to canonical neighbours using the metadata relation semantics.
-8. Add references that support the actual claims.
-9. Review the rendered page and its language counterpart.
+1. Identify the reader's documentation need (tutorial, how-to, reference, explanation, or a deliberate hybrid).
+2. Write one sentence stating the question the page answers.
+3. State what the reader should understand after the core explanation.
+4. Choose the dominant scientific pattern.
+5. Select only the modules needed to meet that outcome.
+6. Decide what belongs in the main flow and what can be optional depth.
+7. Identify useful diagrams, examples, or comparisons—if any.
+8. Connect the page to canonical neighbours using the metadata relation semantics.
+9. Add references that support the actual claims.
+10. Review the rendered page and its language counterpart.
 
 If a page becomes too long, check for duplicated explanations, unclear scope, or material that belongs on an existing canonical page. Do not split it merely to meet a target length.
 
@@ -97,7 +117,7 @@ The [visual design system](design-system.md) is the authority for colours, typog
 
 - Reuse existing Quarto callout classes and shared styles.
 - Use a callout only when its semantic role is clear.
-- Use accessible `details` disclosures for optional depth and answer keys.
+- Use accessible details disclosures for optional depth and answer keys.
 - Use figures when they explain structure, geometry, data flow, comparison, or change; provide captions and meaningful alt text.
 - Keep status labels (implemented, tested, illustrative, planned) consistent.
 - Prefer a shared component or SCSS rule when a presentation pattern genuinely recurs.
@@ -108,7 +128,7 @@ A new page pattern does not justify a new visual component by itself. Establish 
 
 Templates guide content; they do not replace page metadata or the learning graph.
 
-- Keep `LLM-LAB-PAGE-MAP` and controlled `keywords` aligned with [page-metadata-schema.md](page-metadata-schema.md).
+- Keep the LLM-LAB-PAGE-MAP marker and controlled keywords aligned with the [page-metadata-schema](page-metadata-schema.md).
 - Distinguish conceptual parent/child relations from suggested reading order and merely related concepts.
 - Link to canonical explanations rather than duplicating substantial material.
 - Keep each public page self-contained for its LLM-specific learning objective; a link is not a substitute for a necessary definition or derivation.
