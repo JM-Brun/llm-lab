@@ -54,7 +54,7 @@ The model learns statistical regularities in its data; this objective does not, 
 
 ## 3. The generation process, from text to the next token
 
-The diagram gives a high-level view of an autoregressive GPT. It does not depict an object moving through a series of stages: it distinguishes the transformations applied to the context, the computations performed by the model, and the rule that selects the next token. The GPT's parameters remain fixed during inference; the context is what grows at each iteration.
+The diagram distinguishes the successive transformations of the context, the computation performed by the model, and the selection of the next token. The GPT does not move through this process: its parameters remain fixed during inference; it is the context that grows at each iteration.
 
 ```{mermaid}
 flowchart LR
