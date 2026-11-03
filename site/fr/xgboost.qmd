@@ -23,7 +23,7 @@ XGBoost optimise un objectif combinant la loss et une pénalité de complexité 
 :::
 ## Ajouter un arbre
 
-À l'étape $t$, $\\hat y_i^{(t)}=\\hat y_i^{(t-1)}+f_t(x_i)$.  XGBoost approxime la variation de l'objectif par Taylor à l'ordre deux :
+À l'étape $t$, $\hat y_i^{(t)}=\hat y_i^{(t-1)}+f_t(x_i)$.  XGBoost approxime la variation de l'objectif par Taylor à l'ordre deux :
 
 \[
 \mathcal{L}^{(t)}\simeq
@@ -42,7 +42,7 @@ Gamma pénalise le nombre de feuilles ; lambda pénalise les scores de feuilles 
 
 ## Score et gain
 
-Avec $G_j=\\sum_{i\\in I_j}g_i$ et $H_j=\\sum_{i\\in I_j}h_i$, sans pénalité L1, le score optimal est $w_j^*=-G_j/(H_j+\\lambda)$. Le gain d'une séparation est :
+Avec $G_j=\sum_{i\in I_j}g_i$ et $H_j=\sum_{i\in I_j}h_i$, sans pénalité L1, le score optimal est $w_j^*=-G_j/(H_j+\lambda)$. Le gain d'une séparation est :
 
 \[
 \mathrm{Gain}=\frac12\left[
