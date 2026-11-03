@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 330" role="img" aria-labelledby="t d">
+<title id="t">Gradient boosting iteration / Itération de Gradient Boosting</title>
+<desc id="d">A sequence: current ensemble, compute negative loss gradients, fit a weak tree, add a shrunken correction, evaluate again.</desc>
+<rect width="980" height="330" fill="#fff"/>
+<text x="490" y="32" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="700" fill="#173b2b">One boosting round / Un tour de boosting</text>
+<g fill="#edf5ef" stroke="#286345" stroke-width="2">
+<rect x="25" y="100" width="170" height="100" rx="12"/><rect x="225" y="100" width="170" height="100" rx="12"/><rect x="425" y="100" width="170" height="100" rx="12"/><rect x="625" y="100" width="150" height="100" rx="12"/><rect x="805" y="100" width="150" height="100" rx="12"/>
+</g>
+<g font-family="sans-serif" fill="#183c2b" font-size="16" text-anchor="middle">
+<text x="110" y="138" font-weight="700">Current model</text><text x="110" y="163">Fₘ₋₁(x)</text>
+<text x="310" y="135" font-weight="700">Negative gradient</text><text x="310" y="160">pseudo-residuals</text>
+<text x="510" y="138" font-weight="700">Fit weak tree</text><text x="510" y="163">hₘ(x)</text>
+<text x="700" y="138" font-weight="700">Shrinkage</text><text x="700" y="163">η · hₘ(x)</text>
+<text x="880" y="138" font-weight="700">Update</text><text x="880" y="163">Fₘ(x)</text>
+</g>
+<g fill="none" stroke="#34495e" stroke-width="3"><path d="M195 150 H220 M395 150 H420 M595 150 H620 M775 150 H800"/></g>
+<g fill="#34495e"><path d="M214 143 L224 150 L214 157 Z M414 143 L424 150 L414 157 Z M614 143 L624 150 L614 157 Z M794 143 L804 150 L794 157 Z"/></g>
+<path d="M880 205 V255 H110 V205" fill="none" stroke="#b16b25" stroke-width="2.5" stroke-dasharray="8 6"/>
+<text x="490" y="280" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#8a541f">Repeat until stopping criterion / Répéter jusqu'au critère d'arrêt</text>
+<text x="490" y="315" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#666">Conceptual workflow; leaf fitting depends on the loss and implementation.</text>
+</svg>
