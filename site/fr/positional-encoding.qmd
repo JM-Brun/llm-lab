@@ -87,8 +87,6 @@ Le comportement à grande longueur dépend aussi de la base de fréquences, de l
 
 Vérifier les dimensions, l'ordre des paires de coordonnées, les positions utilisées, la précision numérique et le comportement sur plusieurs longueurs. Une erreur d'indexation peut produire des tenseurs de forme correcte tout en encodant les mauvaises positions. Les tests doivent comparer les résultats à une référence connue et contrôler les scores d'attention.
 
-Cette page décrit le mécanisme sans ajouter d'implémentation avant que les concepts et les tests nécessaires soient acquis.
-
 ## Pour poursuivre
 
 - [Tenseurs](tensors.qmd) : axes et formes des requêtes et des clés.

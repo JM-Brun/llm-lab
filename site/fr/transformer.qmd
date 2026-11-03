@@ -21,7 +21,7 @@ tags: ["type:system-overview", "destination:understand", "topic:transformer", "l
 -->
 
 ::: {.chapter-lead}
-Un **GPT** est un modèle de langage fondé sur un Transformer autorégressif : il reçoit en entrée une séquence de tokens — le contexte — et estime, pour chaque token du vocabulaire, la probabilité qu'il soit le prochain. Trois éléments sont à distinguer pour comprendre le système : le chemin que suivent les données à travers le réseau, les paramètres appris qui déterminent ce chemin, et la boucle de génération qui répète le calcul. Cette page décrit ce chemin dans son ensemble ; les pages liées détaillent chaque opération.
+Un **GPT** est un modèle de langage fondé sur un Transformer autorégressif : il reçoit en entrée une séquence de tokens — le contexte — et estime, pour chaque token du vocabulaire, la probabilité qu'il soit le prochain. Trois éléments sont à distinguer pour comprendre le système : le chemin que suivent les données à travers le réseau, les paramètres appris qui déterminent ce chemin, et la boucle de génération qui répète le calcul.
 :::
 
 ::: {.callout-note title="À la fin de cette page"}
@@ -132,12 +132,6 @@ Chaque ressource ci-dessous répond à un besoin différent. Choisissez celle qu
 - [DeepLearning.AI — *How Transformer LLMs Work*](https://www.deeplearning.ai/courses/how-transformer-llms-work) : un cours vidéo compact de Jay Alammar et Maarten Grootendorst sur la tokenisation, les embeddings, l'attention, les blocs modernes et quelques variantes d'efficacité. L'accès et les conditions du cours peuvent évoluer.
 
 Ces ressources sont complémentaires, pas interchangeables : les visualisations construisent l'intuition, l'article original documente la formulation, le code annoté expose les choix d'implémentation et la documentation d'API précise le contrat d'une opération de bibliothèque.
-
-## Bilan : reconstruire le calcul
-
-Cette page a atteint son but si vous pouvez suivre un token depuis son identifiant jusqu'aux logits, expliquer comment l'attention et le MLP transforment les représentations en chemin, distinguer les logits du texte généré, et décrire la boucle : passe avant → sélection d'un token → ajout au contexte → nouvelle passe avant.
-
-**Étape suivante recommandée :** [Du texte aux tokens](text-data.qmd) explique la construction de l'entrée. Si cette étape est déjà claire, passez aux pages sur les représentations et l'attention liées ci-dessus. La [génération](generation.qmd) approfondit les règles de sélection et leurs effets.
 
 ::: {.language-switch}
 **Langue :** [Français](transformer.qmd) · [English](../en/transformer.qmd)

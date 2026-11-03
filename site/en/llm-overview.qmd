@@ -21,10 +21,10 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 -->
 
 ::: {.chapter-lead}
-A **large language model (LLM)** is a language model trained at large scale. The term denotes a broad category, with no universal parameter threshold or single architecture. To understand a generative model such as GPT, follow the data: from text to tokens, then representations, model computation, and finally next-token selection. This page provides that map; each stage links to a dedicated explanation.
+A **large language model (LLM)** is a language model trained at large scale. The term denotes a broad category, with no universal parameter threshold or single architecture. To understand a generative model such as GPT, follow the data: from text to tokens, then representations, model computation, and finally next-token selection.
 :::
 
-::: {.callout-note title="Expected outcome — and where this page fits"}
+::: {.callout-note title="What to take away"}
 **After this page, you should be able to:**
 - - trace the high-level pipeline of an autoregressive GPT without conflating its stages;
 - distinguish architecture, weight learning, and inference;

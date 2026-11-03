@@ -152,7 +152,7 @@ La taille du vocabulaire \(V\) et la dimension d'embedding \(d\) sont deux choix
 - Si la projection de sortie possède une matrice distincte, elle ajoute typiquement \(dV\) paramètres, éventuellement plus un biais. Certains modèles partagent les poids d'entrée et de sortie (*weight tying*) : il faut vérifier l'architecture avant d'additionner les deux matrices.
 - Les IDs et les poids associés sont couplés. Modifier le vocabulaire, l'ordre des IDs ou \(V\) exige une stratégie explicite d'adaptation ou de réentraînement ; ce n'est pas une substitution neutre.
 
-À chaque position, la distribution de sortie comporte en général \(V\) logits. La [page sur les tenseurs](tensors.qmd) explique comment lire les axes et les formes ; la [page sur les logits](logits.qmd) approfondit les scores de sortie. Cette section complète la vue d'ensemble [du texte aux tokens](text-data.qmd), sans confondre lookup initial et contextualisation par le Transformer.
+À chaque position, la distribution de sortie comporte en général \(V\) logits. La [page sur les tenseurs](tensors.qmd) explique comment lire les axes et les formes ; la [page sur les logits](logits.qmd) approfondit les scores de sortie.
 
 ## Des embeddings de tokens aux représentations contextualisées
 

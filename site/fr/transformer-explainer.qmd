@@ -21,7 +21,7 @@ tags: ["type:experiment-guide", "destination:practice", "topic:transformer-expla
 -->
 
 ::: {.chapter-lead}
-Cette activité ne présente pas une seconde fois l'architecture GPT. Elle vous fait **observer une exécution de GPT-2, tester des hypothèses contrôlées et examiner ce que l'outil montre réellement**. Vous passerez de l'interface aux calculs, puis aux limites de l'expérience.
+Observez une exécution de GPT-2, testez des hypothèses contrôlées et examinez ce que l'outil montre réellement. Passez de l'interface aux calculs, puis évaluez les limites de l'expérience.
 :::
 
 ::: {.callout-note}

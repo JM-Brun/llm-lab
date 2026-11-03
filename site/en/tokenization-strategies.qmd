@@ -34,7 +34,7 @@ A tokenizer is a representation and engineering choice. It must cover expected i
 
 ## 1. Concept map
 
-The full pipeline—from Unicode text through IDs to embedding lookup—is illustrated on the [overview page](text-data.qmd). This page focuses on segmentation choices and their trade-offs rather than repeating the same diagram.
+The full pipeline—from Unicode text through IDs to embedding lookup—is illustrated on the [text-to-token page](text-data.qmd).
 
 To inspect BPE merges directly, open the [original interactive BPE Explainer by Müller and Steinbach](https://philipmueller.dev/bpe-visualization/). It shows the corpus as it is segmented, candidate pairs, and vocabulary growth. The resource is linked rather than copied because the reuse terms for its figures have not been established here.
 

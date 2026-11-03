@@ -20,7 +20,7 @@ related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:fr", "status:published"]
 -->
 
-Cette page est le point d’entrée des exercices approfondis. Des auto-vérifications courtes avec corrigé replié sont désormais intégrées à certaines pages de cours ; elles vérifient immédiatement une notion. **Les collections ci-dessous restent une structure de navigation pour des exercices plus développés**, à construire après validation des prérequis et revue du plan de couverture.
+Des auto-vérifications courtes avec corrigé replié sont intégrées à certaines pages de cours ; elles permettent de vérifier immédiatement une notion. **Les collections ci-dessous regroupent des exercices plus développés**, dont la rédaction reste à compléter après validation des prérequis et revue du plan de couverture.
 
 ## Comment utiliser cet espace
 

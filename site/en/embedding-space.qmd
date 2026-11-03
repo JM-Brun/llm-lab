@@ -32,8 +32,6 @@ An ID is a **row address**, not a semantic coordinate. The embedding matrix stor
 **Go deeper:** run the Python trace, then explore geometry, similarity, and their limitations. The geometry of initial embeddings alone does not explain meaning.
 :::
 
-This page establishes how token IDs select initial vectors, then examines the geometry of learned representations and the limits of similarity measures. The distinct question of how a Transformer contextualizes an initial embedding is handled in a [focused companion](contextualized-representations.qmd).
-
 ## Where do the vectors come from?
 
 A tokenizer splits text into tokens and usually maps each token to an integer ID. An embedding matrix $E\in\mathbb{R}^{V\times d}$ contains one vector per ID: $V$ is the vocabulary size and $d$ is the embedding dimension. The initial embedding for token ID $i$ is row $E_i$.
@@ -152,7 +150,7 @@ Vocabulary size \(V\) and embedding dimension \(d\) are separate design choices.
 - If the output projection has a separate weight matrix, it typically adds \(dV\) parameters, possibly plus a bias. Some models share input and output weights (*weight tying*), so check the architecture before counting both matrices.
 - IDs and their associated weights are coupled. Changing the vocabulary, ID assignments, or \(V\) requires an explicit adaptation or retraining strategy; it is not a neutral substitution.
 
-At each position, the output distribution generally has \(V\) logits. The [tensors page](tensors.qmd) explains how to read axes and shapes; the [logits page](logits.qmd) covers output scores in more depth. This section complements the [text-to-token overview](text-data.qmd) without conflating initial lookup with Transformer contextualization.
+At each position, the output distribution generally has \(V\) logits. The [tensors page](tensors.qmd) explains how to read axes and shapes; the [logits page](logits.qmd) covers output scores in more depth.
 
 ## From token embeddings to contextualized states
 

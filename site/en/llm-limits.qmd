@@ -24,10 +24,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "lev
 Predicting the next token is a **training objective**. What a model gains from it is a matter of evaluation, not definition. This page separates what the objective guarantees — little beyond prediction itself — from what it merely makes plausible.
 :::
 
-::: {.callout-note}
-This page complements the [LLM panorama](llm-overview.qmd), which installs the mental model first: the context → distribution → token loop. The caveats below are read **after** that model; they qualify its scope, they do not replace it.
-:::
-
 ## 1. What the objective guarantees — and does not
 
 A prediction objective learns to assign probabilities to observed token sequences. It can yield linguistic abilities and complex behaviors, but it does not guarantee:
