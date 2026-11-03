@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
-scope: "Présente intuitivement le problème de modélisation du langage et sa difficulté ; définit les termes LLM, modèle de langage, modèle génératif, GPT et Transformer ; explique à haut niveau le processus par lequel un GPT transforme un contexte en prochain token, et renvoie les notions techniques vers leurs pages dédiées."
-purpose: "À l’issue de cette page, le lecteur doit pouvoir expliquer intuitivement le problème de modélisation du langage et ses difficultés, distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer, et décrire les grandes étapes de la génération autorégressive sans confondre le modèle, les représentations et la règle de sélection."
+scope: "Situe les LLM modernes dans l’IA, l’apprentissage automatique et le TAL, les distingue des systèmes TAL antérieurs spécialisés par tâche, définit les termes LLM, modèle de langage, modèle génératif, GPT et Transformer ; explique l’inférence autorégressive, les familles de modèles, le cycle apprentissage-inférence et le rôle du cache KV, en renvoyant les détails techniques vers les pages dédiées."
+purpose: "À l’issue de cette page, le lecteur doit pouvoir situer les LLM dans l’IA, l’apprentissage automatique et le TAL, les distinguer des systèmes TAL spécialisés par tâche, distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer, décrire la génération autorégressive et expliquer pourquoi les optimisations d’inférence ne changent pas l’objectif de prédiction du prochain token."
 suggested_route:
   previous: "fr/index"
   next: "fr/transformer"
@@ -46,13 +46,17 @@ Le modèle apprend des régularités statistiques des données ; cet objectif ne
 - **Ambiguïté et dépendances longues :** le sens d'un token dépend souvent de mots éloignés, de la syntaxe, du discours et de connaissances implicites.
 - **Espace combinatoire :** le nombre de séquences possibles croît très rapidement avec leur longueur ; le modèle doit généraliser au-delà des exemples exacts vus pendant l'entraînement.
 - **Données hétérogènes :** les corpus mélangent styles, domaines, niveaux de qualité, langues et contradictions ; leurs régularités ne sont pas toutes pertinentes pour une tâche donnée.
-- **Compromis de calcul :** augmenter la capacité du modèle ne suffit pas. Il faut aussi des données adaptées et du calcul pour les exploiter ; les gains dépendent de la manière dont ces ressources sont réparties.
+- **Compromis de calcul :** augmenter la capacité du modèle ne suffit pas. La qualité et la diversité des données, l'objectif d'entraînement, l'allocation du calcul et l'évaluation propre à la tâche comptent également ; l'échelle seule ne garantit pas une capacité fiable.
 
 
 
 ## 2. Comment un GPT traite ce problème
 
 **GPT** (*Generative Pre-trained Transformer*) désigne une famille de modèles génératifs pré-entraînés fondés sur l'architecture Transformer. Dans l'usage courant, les GPT classiques sont des Transformers **décodeur seul**, entraînés à prédire le prochain token. GPT et Transformer ne sont donc pas synonymes : Transformer désigne une famille d'architectures ; GPT désigne une famille de modèles qui en utilise une configuration particulière.
+
+Les LLM modernes sont généralement des modèles d'apprentissage profond au sein de l'intelligence artificielle et de l'apprentissage automatique. Le TAL est un domaine, pas une architecture. Les systèmes antérieurs reposaient souvent sur des règles, des caractéristiques conçues à la main ou des modèles statistiques/neuronaux spécialisés par tâche. Les LLM apprennent des régularités réutilisables à partir de corpus étendus et peuvent être adaptés à plusieurs tâches, mais nécessitent toujours une évaluation propre à chaque tâche.
+
+LLM Lab utilise de petits modèles inspectables pour expliquer les mécanismes, pas pour reproduire les capacités des modèles de production. Un modèle de référence non entraîné est censé produire un texte incohérent.
 
 ## 3. Le processus de génération, du texte au prochain token
 
@@ -75,6 +79,12 @@ Pour situer cette représentation parmi d’autres approches pédagogiques, voir
 4. **Choisir et recommencer.** Une règle de décodage choisit le prochain token parmi les possibilités évaluées. Elle ne sélectionne pas nécessairement celui qui a la probabilité la plus élevée : certaines stratégies tiennent aussi compte d'un tirage aléatoire. Le token choisi est ajouté au contexte, puis le modèle recommence son calcul pour produire le suivant. Voir [la génération](generation.qmd).
 
 **L’idée essentielle :** un GPT ne rédige pas toute sa réponse d’un seul coup. Il estime une continuation, en sélectionne un token, l’ajoute au contexte, puis répète l’opération jusqu’à une condition d’arrêt. Le texte visible est ainsi construit progressivement.
+
+::: {.callout-note collapse="true" title="Approfondissement facultatif : efficacité de l'inférence et cache KV"}
+
+À chaque étape autorégressive, le contexte s'allonge. Le [GPT de référence de ce laboratoire](build-path.qmd) recalcule toute la fenêtre pour rendre le mécanisme inspectable et ne possède pas de cache KV. Les moteurs de production réutilisent souvent les clés et valeurs des tokens précédents à chaque couche : ils réduisent ainsi les calculs répétés, au prix de mémoire et d'une gestion du cache. Cela change l'efficacité de l'inférence, pas l'objectif de prédiction du prochain token.
+
+:::
 
 ## 4. Trois dimensions à ne pas confondre
 

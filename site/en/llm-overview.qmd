@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-overview"
-scope: "Introduces the language-modeling problem intuitively and why it is difficult; defines language model, generative model, LLM, GPT, and Transformer; explains at a high level how a GPT turns context into the next token, and delegates technical concepts to dedicated pages."
-purpose: "By the end of this page, readers should be able to explain the language-modeling problem intuitively and its difficulties, distinguish language model, generative model, LLM, GPT, and Transformer, and describe the main stages of autoregressive generation without conflating the model, its representations, and the selection rule."
+scope: "Places modern LLMs within AI/ML and NLP, distinguishes them from earlier task-specific NLP systems, defines language model, generative model, LLM, GPT, and Transformer; explains autoregressive inference, model families, the learning-to-inference lifecycle, and the role of KV caching while delegating technical detail to dedicated pages."
+purpose: "By the end of this page, readers should be able to place LLMs within AI/ML/NLP, distinguish them from task-specific NLP systems, distinguish language model, generative model, LLM, GPT, and Transformer, describe the main stages of autoregressive generation, and explain why inference optimizations do not change the next-token objective."
 suggested_route:
   previous: "en/index"
   next: "en/transformer"
@@ -27,6 +27,7 @@ A **language model** estimates the plausibility of text sequences from a context
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this page, you will be able to:
 - explain intuitively why a model must compare multiple possible continuations;
+- place modern LLMs within AI/ML and NLP, and distinguish them from earlier task-specific NLP systems;
 - distinguish a language model, generative model, LLM, GPT, and Transformer;
 - describe the main stages by which a GPT turns context into the next token, and explain why the process repeats.
 :::
@@ -45,13 +46,17 @@ The model learns statistical regularities in its data; this objective does not, 
 - **Ambiguity and long-range dependencies:** a token's meaning often depends on distant words, syntax, discourse, and implicit knowledge.
 - **Combinatorial space:** the number of possible sequences grows rapidly with length; the model must generalize beyond exact examples seen during training.
 - **Heterogeneous data:** corpora mix styles, domains, quality levels, languages, and contradictions; not every learned regularity is relevant to a given task.
-- **Compute trade-offs:** increasing model capacity is not enough. Suitable data and compute are also needed to exploit it; gains depend on how these resources are allocated.
+- **Compute trade-offs:** increasing model capacity is not enough. Data quality and diversity, the training objective, compute allocation and task-specific evaluation all matter; scale alone does not guarantee reliable capability.
 
 
 
 ## 2. How a GPT approaches this problem
 
 **GPT** (*Generative Pre-trained Transformer*) names a family of pretrained generative models built on the Transformer architecture. In common usage, classic GPT models are **decoder-only** Transformers trained to predict the next token. GPT and Transformer are therefore not synonyms: Transformer names an architecture family; GPT names a family of models using a particular configuration.
+
+Modern LLMs are deep-learning models within AI and machine learning; NLP is a field, not an architecture. Earlier NLP systems often relied on rules, hand-engineered features, or task-specific statistical/neural models. LLMs learn reusable patterns from broad corpora and can be adapted across tasks, but still require task-specific evaluation.
+
+LLM Lab uses small, inspectable models to teach mechanisms, not to reproduce production-scale capabilities. An untrained reference model is expected to produce incoherent text.
 
 ## 3. The generation process, from text to the next token
 
@@ -74,6 +79,12 @@ For complementary pedagogical perspectives, see [Hugging Face on pipeline stages
 4. **Choose and repeat.** A decoding rule selects the next token from the evaluated possibilities. It does not necessarily select the token with the highest probability: some strategies also involve random sampling. The selected token is appended to the context, and the model repeats its computation to produce the next one. See [generation](generation.qmd).
 
 **The essential idea:** a GPT does not write its entire answer in one operation. It estimates a continuation, selects one token, appends it to the context, and repeats until a stopping condition is met. The visible text is built progressively.
+
+::: {.callout-note collapse="true" title="Optional: inference efficiency and the KV cache"}
+
+At each autoregressive step, the context grows. This lab's [reference GPT](build-path.qmd) recomputes the full current window for clarity and has no KV cache. Production engines often reuse per-layer keys and values from past tokens, trading memory and cache management for less repeated computation. This changes inference efficiency, not the next-token objective.
+
+:::
 
 ## 4. Three dimensions not to conflate
 
