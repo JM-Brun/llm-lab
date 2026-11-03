@@ -136,12 +136,10 @@ Le RAG peut récupérer les documents à l’inférence et les fournir dans le c
 
 :::
 
-## 7. Une distinction à garder en tête
+::: {.callout-note collapse="true" title="Une distinction à garder en tête"}
 
 La prédiction du prochain token ne garantit ni la vérité des sorties ni une compréhension humaine du monde. Ces questions, ainsi que les limites des affirmations sur les capacités émergentes, sont examinées dans [Ce que la prédiction du prochain token ne prouve pas](llm-limits.qmd).
 
-::: {.callout-note title="Repère historique"}
-Le Transformer de 2017 s’inscrit dans une histoire plus large des mécanismes d’attention, des modèles séquence-à-séquence et des objectifs de pré-entraînement. Pour cette chronologie, ses précautions de lecture et la place des LLM dans le paysage de l’IA, consultez [l’historique des Transformers](transformer-history.qmd).
 :::
 
 ::: {.language-switch}
