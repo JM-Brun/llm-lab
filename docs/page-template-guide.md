@@ -1,49 +1,60 @@
 # Page-template guide
 
-These templates define a small set of page archetypes for the LLM Lab knowledge base. They are **reusable starting points, not mandatory checklists**. The design system maps the existing page taxonomy to these archetypes and provides a shared visual and editorial contract.
+This guide helps contributors choose a useful explanatory approach without turning page design into a fixed schema. Templates are **soft targets**: prompts to consider, not sections to reproduce. A page is complete when it serves its reader's question—not when it matches an outline.
 
-## Choose the page type
+## Start with three different questions
 
-Start with the [page archetype implementation map](site-page-design-system.md), then consult the canonical [reader-experience method](reader-experience-and-editorial-method.md), [visual design system](design-system.md), and [metadata contract](page-metadata-schema.md).
+Do not collapse these dimensions into one taxonomy:
 
-| Archetype | Reader's task | Typical content | Avoid |
-|---|---|---|---|
-| **Overview / panorama** | Build a mental map and understand how ideas relate | Scope, learning outcomes, central model, a small number of distinctions, links to deeper pages | Full derivations, implementation detail, long historical digressions |
-| **Concept** | Understand one technical idea and use it correctly | Motivation, intuition, formal definition, worked example, application, misconceptions, limitations | Repeating the whole overview or turning every page into a textbook chapter |
-| **Reference / history** | Look up facts, compare items, or place developments in context | Scope and conventions, taxonomy or chronology, evidence and sources, caveats | Presenting a selective list as exhaustive or implying causation from chronology |
+1. **What is the reader trying to do?** Use the documentation-genre lens: learn through a tutorial, accomplish a task with a how-to, look up precise information in a reference, or understand a concept through an explanation. A page can mix these needs, but identify its dominant job.
+2. **What is the page's stable editorial role in this repository?** Keep the existing LLM-LAB-PAGE-MAP and controlled type tags. They support the learning graph and site organization; do not add a parallel archetype or diataxis metadata field.
+3. **What kind of subject is being explained?** Choose a scientific pattern—concept, algorithm, mathematical object, physical law, architecture, technology, method, or overview—according to the explanatory problem. These patterns are not metadata categories and are not mutually exclusive.
 
-## Shared presentation rules
+The [page archetype implementation map](site-page-design-system.md) connects existing metadata types to their usual page roles. The [flexible page-template system](page-template-system.md) is the canonical guide to composing a page; [page patterns](page-patterns.md) and [implementation-page patterns](implementation-page-patterns.md) provide subject-specific prompts.
 
-- **Visible by default:** the question, scope, essential explanation, main diagram, core definitions, and the links needed to continue learning.
-- **Collapsed by default:** learning outcomes when they are supplementary, self-checks and exercises, worked solutions, historical side notes, optional mathematical detail, implementation notes, and extended caveats. Use descriptive titles so readers know what they will reveal.
-- Do not hide content needed to understand the page's main argument. A callout is not a way to defer an essential definition.
-- Prefer one meaningful hierarchy of headings. Do not create a numbered top-level section for a single caveat or a short aside.
-- Use the same Quarto callout pattern for optional material:
+## Choose only what helps
 
-```markdown
-::: {.callout-note collapse="true" title="Optional detail"}
-Supplementary explanation goes here.
-:::
-```
+1. State the concrete question the page should answer.
+2. Identify the dominant reader task and existing metadata type.
+3. Choose one primary scientific or implementation pattern; borrow from another only when it resolves a real explanatory need.
+4. Select the few modules that make the explanation accurate and understandable.
+5. Decide which details belong in the main flow and which are genuinely optional.
+6. Check the rendered page and its language counterpart.
 
-- Keep language versions structurally equivalent: same purpose, hierarchy, and disclosure behavior, while allowing natural wording.
-- Link to a dedicated page when a topic needs more than a concise orientation. The overview should explain enough to orient the reader, not duplicate the destination page.
+Do not create a section because a template names it. A definition may fit in the opening; a caveat may belong beside the claim it qualifies; an implementation link may need only one sentence. Combine, rename, reorder, or omit freely.
 
-## Archetype templates
+## Existing quick starts
 
-- [Overview / panorama page](overview-page-template.md)
-- [Concept page](concept-page-template.md)
-- [Reference / history page](reference-page-template.md)
-- [Guided-build page](guided-build-page-template.md)
-- [Exercise / experiment page](practice-page-template.md)
+These files offer focused prompts for recurring page jobs. They complement the canonical composition guide; they are not separate standards or competing outlines.
 
-## Review checklist
+- [Overview](overview-page-template.md): orient the reader and explain relationships across a system or topic.
+- [Concept](concept-page-template.md): explain one object, quantity, or mechanism precisely.
+- [Reference](reference-page-template.md): support lookup, comparison, chronology, or source consultation.
+- [Guided build](guided-build-page-template.md): help the reader construct and verify a working artifact.
+- [Practice and experiment](practice-page-template.md): support sustained problem-solving or a reproducible investigation.
+- [Scientific page patterns](page-patterns.md): adapt the explanation to the subject.
+- [Implementation page patterns](implementation-page-patterns.md): choose a code-facing workflow such as walkthrough, verification, benchmark, integration, or debugging.
 
-1. Is the page type clear from its purpose and content?
-2. Does the opening state what the reader will understand or be able to do?
-3. Are essential explanations visible without opening disclosures?
-4. Are optional details and self-checks collapsed by default?
-5. Does each substantial subtopic link to a canonical deeper page rather than being duplicated?
-6. Are historical claims, empirical claims, and conceptual explanations distinguished?
-7. Is the other language version aligned in structure and disclosure behavior?
-8. Has the rendered page been checked for heading hierarchy, links, and accessible disclosure labels?
+## Shared reader-experience principles
+
+- Keep the question, essential explanation, definitions, and caveats that change the conclusion visible.
+- Use progressive disclosure for genuinely supplementary derivations, extended examples, historical context, and answer keys—not to hide prerequisites or essential reasoning.
+- Keep short in-page comprehension checks distinct from full exercise collections and experiments. When a check is included, use the shared presentation convention and keep solutions collapsed by default.
+- Use diagrams, code, and interactive elements only when they answer a concrete reader question better than prose alone.
+- Reuse the [visual design system](design-system.md); a new content pattern does not justify a new visual component by itself.
+- Preserve substantive French/English parity, while allowing natural differences in wording and sectioning.
+
+## Review aid—not a gate
+
+Ask only the questions that apply:
+
+- Can a reader tell what question this page answers and what it does not cover?
+- Is the main idea understandable before optional depth?
+- Are formal claims, intuition, implementation choices, and empirical evidence distinguishable?
+- Are notation, units, dimensions, assumptions, and conditions defined where needed?
+- Does each example, figure, or exercise contribute something specific?
+- Are links placed where the relevant concept appears, rather than collected into a redundant navigation section?
+- Are source claims, reuse rights, and implementation status represented honestly?
+- Has the rendered experience and the other language version been checked?
+
+A justified deviation is not a defect. If a prompt does not fit the page, mark it not applicable or omit it; do not add content to satisfy the guide.
