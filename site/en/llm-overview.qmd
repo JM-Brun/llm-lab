@@ -35,13 +35,9 @@ By the end of this page, you will be able to:
 
 Given a prefix such as “The report indicates that the concentration”, the model must estimate which tokens could follow. There is not necessarily one uniquely correct continuation: several continuations may be grammatical and coherent while differing in meaning, precision, or relevance.
 
-A language model represents this uncertainty with a conditional distribution. For a token sequence $x_1,\ldots,x_T$, an autoregressive model factorizes it as:
+To represent this uncertainty, the model must assign relative scores to possible continuations while taking the existing context into account. In an autoregressive GPT, this computation is repeated token by token: the selected token is appended to the context, and the model evaluates the possible next tokens again. The probabilistic formalization of this idea—and the conventions needed to write sequence probabilities—is developed in the optional page [The mathematics of language modeling](language-modeling-math.qmd).
 
-$$
-P(x_1,\ldots,x_T)=\prod_{t=1}^{T}P(x_t\mid x_{<t}).
-$$
-
-At each position, it therefore estimates a distribution over the vocabulary from preceding tokens. Generation then selects a token, appends it to the context, and repeats. The model learns statistical regularities in its data; this objective does not, by itself, provide a mechanism for verifying truth.
+The model learns statistical regularities in its data; this objective does not, by itself, provide a mechanism for verifying truth.
 
 ### Why is this problem difficult?
 
