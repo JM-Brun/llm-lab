@@ -40,7 +40,6 @@ Pour représenter cette incertitude, le modèle estime la plausibilité de plusi
 
 Le modèle apprend des régularités statistiques des données ; cet objectif ne lui fournit pas, à lui seul, un mécanisme de vérification de la vérité.
 
-La génération autorégressive repose sur une distribution de probabilité du prochain token, conditionnée par le contexte courant. Cette dépendance est le cœur du modèle probabiliste ; sa formalisation, la factorisation d’une séquence et le lien avec l’objectif d’entraînement sont développés dans la page d’[approfondissement mathématique sur la modélisation du langage](language-modeling-math.qmd).
 
 ### Pourquoi ce problème est-il difficile ?
 
