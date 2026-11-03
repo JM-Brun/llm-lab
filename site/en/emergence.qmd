@@ -1,0 +1,93 @@
+---
+title: "Emergent capabilities: what changes with scale?"
+subtitle: "Distinguishing new capabilities, measurement thresholds, and evaluation effects"
+keywords: ["type:concept-lesson", "destination:understand", "topic:emergence", "level:advanced", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/emergence"
+scope: "Examines emergent capabilities in language models, observations associated with scale, and the debate over whether they are discontinuous."
+purpose: "Readers should distinguish gradual improvement, a metric-induced success threshold, and a genuinely discontinuous transition, and identify the evidence needed to support an emergence claim."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/scaling-laws", "en/llm-limits", "en/experimental-evaluation"]
+tags: ["type:concept-lesson", "destination:understand", "topic:emergence", "level:advanced", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+An **emergent capability** is commonly described as a skill that becomes detectable in sufficiently large language models but is not observed in smaller ones. Yet “sudden appearance” may describe the measured behavior without demonstrating a discontinuity in the underlying mechanism or performance. The observation, the metric, and its interpretation must be kept separate.
+:::
+
+## What emergence does — and does not — mean
+
+In the LLM literature, emergence generally refers to a capability becoming observable as model scale or training increases. Discussed examples include some reasoning, instruction-following, calculation, and compositional tasks.
+
+The term can refer to different situations:
+
+- performance improves gradually but becomes practically useful only beyond a threshold;
+- a discontinuous metric, such as exact-match accuracy, assigns zero to an almost-correct answer;
+- a genuinely abrupt transition in a system property, which requires stronger evidence.
+
+These are not equivalent. A score jumping from 0 to 1 on a task does not establish that the capability itself appeared discontinuously.
+
+## The effect of the metric
+
+Consider a multi-step task. A model's answers may become progressively closer to the target as model size increases. If evaluation awards a point only when every step is correct, the score can remain at zero and then jump, even when output quality improves continuously.
+
+A more informative metric might track distance from the target, the fraction of correct steps, or the quality of a response distribution. The metric can therefore change the apparent shape of the curve.
+
+**Methodological consequence:** before claiming emergence, inspect multiple metrics, raw outputs, and statistical uncertainty rather than relying on one aggregate score.
+
+## Scale is not a sufficient explanation
+
+A correlation between size and performance does not by itself explain why a capability becomes observable. Several variables often change together: parameter count, data volume and composition, training compute, training duration, architecture, post-training, and evaluation protocol.
+
+Model scale must also be distinguished from training scale and inference scale. An improvement obtained by spending more compute at response time is not the same as a capability emerging during pretraining.
+
+[Scaling laws](scaling-laws.qmd) describe empirical regularities between resources and performance measures; they do not automatically predict when a particular skill will appear.
+
+## How should an emergence claim be tested?
+
+A convincing study should at least:
+
+1. compare multiple model sizes and training checkpoints under controlled conditions;
+2. measure performance with multiple metrics, including graded measures where appropriate;
+3. report raw outputs, errors, and uncertainty intervals;
+4. check for data contamination or leakage between training and test;
+5. test robustness to wording, sampling, and task variants;
+6. separate scale effects from data, post-training, and inference-compute effects.
+
+A capability may be new from a user's perspective while arising from mechanisms learned gradually. Conversely, a smooth curve on one metric does not rule out every transition in internal representations. Interpretations should remain proportional to the evidence.
+
+## Key points
+
+- An “emergent” capability is first an observation tied to a task and protocol.
+- A success threshold is not necessarily a threshold in the underlying capability.
+- Model size alone cannot establish the cause of an improvement.
+- Strong claims require multiple measurements, controls, and uncertainty analysis.
+
+## References
+
+- Wei et al. (2022), [*Emergent Abilities of Large Language Models*](https://arxiv.org/abs/2206.07682).
+- Schaeffer, Miranda, and Koyejo (2023), [*Are Emergent Abilities of Large Language Models a Mirage?*](https://arxiv.org/abs/2304.15004).
+- Srivastava et al. (2022), [*Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models*](https://arxiv.org/abs/2206.04615).
+
+::: {.self-check}
+## Check your understanding
+
+1. Exact-match accuracy jumps from 0% to 60%, while a graded similarity measure increases steadily. Which conclusion is justified?
+2. Why is a comparison between only two model sizes insufficient to isolate the effect of scale?
+3. Propose a protocol for testing whether a capability truly appears discontinuously.
+
+[Exercises and experiments](exercises.qmd).
+:::
+
+::: {.language-switch}
+**Language:** [Français](../fr/emergence.qmd) · [English](emergence.qmd)
+:::

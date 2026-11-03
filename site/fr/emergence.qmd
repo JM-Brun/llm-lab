@@ -1,0 +1,93 @@
+---
+title: "Émergence des capacités : que change l’échelle ?"
+subtitle: "Distinguer capacités nouvelles, seuils de mesure et effets d’évaluation"
+keywords: ["type:concept-lesson", "destination:understand", "topic:emergence", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/emergence"
+scope: "Examine les capacités dites émergentes des modèles de langage, les observations liées à l'échelle et le débat sur leur caractère discontinu."
+purpose: "Le lecteur doit distinguer une amélioration graduelle, un seuil de réussite induit par une métrique et une transition réellement discontinue, puis savoir quelles preuves seraient nécessaires pour soutenir une affirmation d'émergence."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/scaling-laws", "fr/llm-limits", "fr/evaluation-experimentale"]
+tags: ["type:concept-lesson", "destination:understand", "topic:emergence", "level:advanced", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+On parle de **capacité émergente** lorsqu'une compétence semble apparaître chez des modèles suffisamment grands alors qu'elle n'est pas observable chez des modèles plus petits. Mais « apparaître soudainement » peut décrire le comportement mesuré sans démontrer une rupture dans le mécanisme ou dans la performance sous-jacente. Il faut donc distinguer le phénomène observé, la métrique choisie et son interprétation.
+:::
+
+## Ce que signifie — et ne signifie pas — émerger
+
+Dans la littérature sur les grands modèles de langage, l'émergence désigne généralement une capacité qui devient détectable à mesure que l'échelle du modèle ou de l'entraînement augmente. Les exemples discutés incluent certaines tâches de raisonnement, de suivi d'instructions, de calcul ou de composition de compétences.
+
+Le terme recouvre toutefois plusieurs situations :
+
+- une performance qui progresse graduellement, mais devient utile seulement au-delà d'un seuil pratique ;
+- une métrique discontinue, par exemple une exactitude stricte qui attribue zéro à une réponse presque correcte ;
+- une véritable transition abrupte dans une propriété du système, qui exige des preuves plus fortes.
+
+Ces situations ne sont pas équivalentes. Observer un score qui passe de 0 à 1 sur une tâche ne suffit pas à établir que la capacité elle-même est apparue de manière discontinue.
+
+## L'effet de la métrique
+
+Considérons une tâche composée de plusieurs étapes. Un modèle peut produire des réponses de plus en plus proches de la solution attendue lorsque sa taille augmente. Si l'évaluation attribue un point uniquement lorsque toutes les étapes sont exactes, le score peut rester nul puis augmenter brutalement, même si la qualité des sorties s'améliore de façon continue.
+
+Une métrique plus informative peut suivre la distance à la solution, la proportion d'étapes correctes, ou la qualité d'une distribution de réponses. Le choix de la métrique peut donc changer l'apparence de la courbe.
+
+**Conséquence méthodologique :** avant de conclure à une émergence, examiner plusieurs métriques, les réponses brutes et les incertitudes statistiques, plutôt que le seul score agrégé.
+
+## L'échelle n'est pas une explication suffisante
+
+Une corrélation entre taille et performance ne dit pas à elle seule pourquoi une capacité devient observable. Plusieurs variables changent souvent simultanément : nombre de paramètres, quantité et composition des données, calcul d'entraînement, durée d'entraînement, architecture, post-entraînement et protocole d'évaluation.
+
+Il faut également distinguer l'échelle du modèle de celle de l'entraînement et de celle de l'inférence. Une amélioration obtenue par davantage de calcul au moment de répondre n'est pas la même chose qu'une capacité apparue pendant le préentraînement.
+
+Les [lois d'échelle](scaling-laws.qmd) décrivent des régularités empiriques entre ressources et mesures de performance ; elles ne prédisent pas automatiquement l'apparition d'une compétence particulière.
+
+## Comment tester une affirmation d'émergence ?
+
+Une étude convaincante devrait au minimum :
+
+1. comparer plusieurs tailles et plusieurs points d'entraînement, avec des conditions aussi contrôlées que possible ;
+2. mesurer la performance avec plusieurs métriques, dont des mesures graduelles lorsque c'est pertinent ;
+3. publier les exemples de sorties, les erreurs et les intervalles d'incertitude ;
+4. vérifier que la tâche ne comporte pas de contamination des données ou de fuite entre entraînement et test ;
+5. tester la robustesse à la formulation, à l'échantillonnage et aux variantes de la tâche ;
+6. distinguer l'effet de l'échelle de celui des données, du post-entraînement et du calcul d'inférence.
+
+Une capacité peut être nouvelle du point de vue de l'usage tout en résultant de mécanismes appris progressivement. À l'inverse, une courbe lisse sur une métrique donnée n'exclut pas toute transition dans les représentations internes. L'interprétation doit rester proportionnée aux observations.
+
+## Ce qu'il faut retenir
+
+- Une capacité « émergente » est d'abord une observation dépendante d'une tâche et d'un protocole.
+- Un seuil de réussite n'est pas nécessairement un seuil dans la capacité sous-jacente.
+- La taille seule ne permet pas d'attribuer causalement une amélioration.
+- Les affirmations fortes exigent des mesures multiples, des contrôles et une analyse des incertitudes.
+
+## Références
+
+- Wei et al. (2022), [*Emergent Abilities of Large Language Models*](https://arxiv.org/abs/2206.07682).
+- Schaeffer, Miranda et Koyejo (2023), [*Are Emergent Abilities of Large Language Models a Mirage?*](https://arxiv.org/abs/2304.15004).
+- Srivastava et al. (2022), [*Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models*](https://arxiv.org/abs/2206.04615).
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+1. Une exactitude stricte passe de 0 % à 60 %, alors qu'une mesure graduelle de proximité augmente régulièrement. Quelle conclusion est justifiée ?
+2. Pourquoi une comparaison entre deux tailles de modèles ne suffit-elle pas à isoler l'effet de l'échelle ?
+3. Proposez un protocole permettant de tester si une capacité apparaît réellement de façon discontinue.
+
+[Exercices et expérimentations](exercises.qmd).
+:::
+
+::: {.language-switch}
+**Langue :** [Français](emergence.qmd) · [English](../en/emergence.qmd)
+:::
