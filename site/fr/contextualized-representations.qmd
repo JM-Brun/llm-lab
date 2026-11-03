@@ -102,7 +102,10 @@ Le parcours est le suivant :
 
 Pour retrouver l'exemple complet de lookup, les dimensions matricielles, le nombre de paramètres et la géométrie des représentations, retournez à [la page principale sur l'espace des embeddings](embedding-space.qmd). Pour approfondir le traitement de la séquence, poursuivez avec [Requêtes, clés et valeurs](queries-keys-values.qmd) puis [Attention à produit scalaire redimensionné](scaled-dot-product-attention.qmd).
 
-## Vérifier votre compréhension
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](exercises.qmd#transformer).
 
 Deux occurrences du **même ID de token** apparaissent dans deux phrases différentes. Sans changement de matrice d'embeddings :
 
@@ -114,4 +117,5 @@ Vous avez compris cette étape si vous pouvez expliquer la différence entre **i
 
 ::: {.language-switch}
 **Langue :** [Français](contextualized-representations.qmd) · [English](../en/contextualized-representations.qmd)
+:::
 :::
