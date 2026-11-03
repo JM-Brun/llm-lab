@@ -31,9 +31,13 @@ La *loss* mesure l'écart entre les prédictions et les **tokens cibles attendus
 
 Les conventions de réduction déterminent comment les pertes par token sont agrégées. La perplexité est l’exponentielle de la perte moyenne par token ; le gradient de la loss fournit le signal utilisé pour mettre à jour les paramètres ([gradients](gradients.qmd)).
 
-**Repère d'implémentation :** les fonctions usuelles de cross-entropie attendent des logits non normalisés ; ne leur appliquez pas une softmax préalable si l'API attend directement les logits.
+
 :::
 Avant d’interpréter la perte, vérifier la construction des [entrées et cibles d’entraînement](training-examples.qmd) : une formule correcte ne corrige pas un décalage de tokens erroné.
+
+::: {.callout-note collapse="true" title="Détail d'implémentation des API (facultatif)"}
+**Repère d'implémentation :** les fonctions usuelles de cross-entropie attendent des logits non normalisés ; ne leur appliquez pas une softmax préalable si l'API attend directement les logits.
+:::
 
 ## De la perte locale à la loss du batch
 
@@ -74,9 +78,9 @@ La formule avec $\exp$ suppose que la NLL moyenne est calculée avec le logarith
 - **« La loss moyenne est toujours comparable entre expériences. »** Il faut vérifier tokenizer, données, masques, longueur des séquences, réduction et objectif exact.
 :::
 
-## Diagnostic minimal
-
+::: {.callout-note collapse="true" title="Diagnostic de pipeline (approfondissement)"}
 Avant d'interpréter une courbe, documenter : définition de l'objectif, décalage entrée/cible, masque d'ignorance, réduction, split train/validation, et éventuels termes de régularisation. Vérifier qu'un mini-batch peut être surappris est un test de pipeline utile, mais pas une validation de la généralisation.
+:::
 
 ::: {.self-check}
 ## Vérifier sa compréhension
