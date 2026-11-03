@@ -353,3 +353,20 @@ Ces ressources ont servi de références de conception et de vérification pour 
 - **Utilisation :** pages française et anglaise du panorama LLM.
 - **Contenu :** distinction entre le contexte évolutif, les paramètres fixes du modèle pendant l’inférence, l’évaluation des continuations et la règle de sélection. Les pourcentages visibles sont explicitement illustratifs et ne correspondent pas à une mesure réelle.
 - **Droits et provenance :** illustration originale produite pour le dépôt ; les trois références précédentes sont citées comme ressources pédagogiques consultées, pas comme titulaires ou sources de l’image.
+
+
+## Architectures hybrides et efficacité d'inférence
+
+Ces ressources sont utilisées dans l'étude de cas [Architectures hybrides : le cas Nemotron](fr/hybrid-llm-architectures.qmd). ByteByteGo fournit une synthèse pédagogique ; les affirmations d'architecture et les chiffres propres aux modèles sont recoupés avec les documents NVIDIA primaires.
+
+- **NVIDIA, [*Nemotron 3: Efficient and Open Intelligence*](https://research.nvidia.com/labs/nemotron/files/NVIDIA-Nemotron-3-White-Paper.pdf)** — source primaire sur l'architecture hybride Mamba-2/Transformer/MoE, LatentMoE, MTP, NVFP4, contexte long et post-entraînement. Les caractéristiques varient selon Nano, Super et Ultra.
+- **NVIDIA, [*Nemotron 3 Super: Open, Efficient MoE Hybrid Mamba-Transformer Model*](https://research.nvidia.com/labs/nemotron/files/NVIDIA-Nemotron-3-Super-Technical-Report.pdf)** — rapport technique complémentaire sur le modèle Super, notamment l'intercalation Mamba/attention, LatentMoE, MTP partagé et l'entraînement NVFP4 à précision mixte.
+- **NVIDIA, [*Nemotron 3 Ultra: Open, Efficient Mixture-of-Experts Hybrid Mamba-Transformer Model for Agentic Reasoning*](https://research.nvidia.com/labs/nemotron/files/NVIDIA-Nemotron-3-Ultra-Technical-Report.pdf)** — rapport technique sur la variante Ultra, notamment LatentMoE et le post-entraînement MOPD.
+- **NVIDIA Developer Blog, [*NVIDIA Nemotron 3 Ultra Powers Faster, More Efficient Reasoning for Long-Running Agents*](https://developer.nvidia.com/blog/nvidia-nemotron-3-ultra-powers-faster-more-efficient-reasoning-for-long-running-agents/)** — synthèse de l'équipe NVIDIA sur MOPD et les usages agentiques.
+- **NVIDIA Developer Blog, [*Inside NVIDIA Nemotron 3: Techniques, Tools, and Data That Make It Efficient and Accurate*](https://developer.nvidia.com/blog/inside-nvidia-nemotron-3-techniques-tools-and-data-that-make-it-efficient-and-accurate/)** — explication par l'équipe NVIDIA.
+- **Raghav Mehta / ByteByteGo (2 novembre 2026), [*How Nvidia's New Nemotron Model Works*](https://blog.bytebytego.com/p/how-nvidias-new-nemotron-model-works)** — synthèse secondaire accessible sur Mamba, MoE, GQA, MTP et quantification. Utile pour repérer les liens entre concepts ; vérifier les versions et chiffres dans les sources primaires.
+- **Gu & Dao (2023), [*Mamba: Linear-Time Sequence Modeling with Selective State Spaces*](https://arxiv.org/abs/2312.00752)** — modèles à espace d'état sélectifs.
+- **Dao & Gu (2024), [*Transformers are SSMs: Generalized Models and Efficient Algorithms Through Structured State Space Duality*](https://arxiv.org/abs/2405.21060)** — fondements de Mamba-2.
+- **Ainslie et al. (2023), [*GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints*](https://arxiv.org/abs/2305.13245)** — grouped-query attention.
+- **Leviathan et al. (2023), [*Fast Inference from Transformers via Speculative Decoding*](https://arxiv.org/abs/2211.17192)** — décodage spéculatif.
+- **Gloeckle et al. (2024), [*Better & Faster Large Language Models via Multi-token Prediction*](https://arxiv.org/abs/2404.19737)** — prédiction multi-token et génération.
