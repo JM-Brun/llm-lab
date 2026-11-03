@@ -328,3 +328,36 @@ Ces sources ont des rôles différents — description d'architecture, objectifs
 - **Henighan et al. (2020), [*Scaling Laws for Autoregressive Generative Modeling*](https://arxiv.org/abs/2010.14701)** — lois d'échelle mesurées sur une large famille de modalités et d'architectures.
 
 Ces trois travaux établissent des régularités observées dans des régimes expérimentaux donnés ; ils ne fixent ni seuil universel de LLM ni règle d'allocation indépendante du protocole. La page [Lois d'échelle](fr/scaling-laws.qmd) présente ces résultats et leurs limites.
+
+
+## Références — fondements du Machine Learning et arbres boostés
+
+Les pages d'approfondissement consacrées au biais-variance et aux arbres boostés s'appuient sur les références suivantes. Les ressources pédagogiques servent à construire des intuitions ; les affirmations algorithmiques sont vérifiées prioritairement dans les articles scientifiques et documentations officielles.
+
+### Biais, variance et Gradient Boosting
+
+- Hastie, Tibshirani & Friedman, [The Elements of Statistical Learning](https://hastie.su.domains/ElemStatLearn/), notamment les chapitres sur les arbres, le bagging, les forêts aléatoires et le boosting.
+- Friedman (2001), [Greedy Function Approximation: A Gradient Boosting Machine](https://doi.org/10.1214/aos/1013203451).
+- Damien Benveniste, [The Gradient Boosted Algorithm Explained!](https://newsletter.theaiedge.io/p/the-gradient-boosted-algorithm-explained).
+- Damien Benveniste, [GBM vs XGBoost vs LightGBM vs CatBoost](https://newsletter.theaiedge.io/p/gbm-vs-xgboost-vs-lightgbm-vs-catboost). Article principal de départ ; son contenu détaillé est réservé aux abonnés, seule l'introduction publique a été exploitée ici.
+
+### XGBoost
+
+- Chen & Guestrin (2016), [XGBoost: A Scalable Tree Boosting System](https://arxiv.org/abs/1603.02754).
+- [Documentation officielle XGBoost](https://xgboost.readthedocs.io/en/stable/).
+- Damien Benveniste, [Understanding XGBoost from A to Z](https://newsletter.theaiedge.io/p/understanding-xgboost-from-a-to-z) et [Why XGBoost is better than GBM?](https://newsletter.theaiedge.io/p/why-xgboost-is-better-than-gbm).
+
+### LightGBM
+
+- Ke et al. (2017), [LightGBM: A Highly Efficient Gradient Boosting Decision Tree](https://papers.neurips.cc/paper_files/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html).
+- [Documentation officielle LightGBM](https://lightgbm.readthedocs.io/en/stable/).
+
+### CatBoost
+
+- Prokhorenkova et al. (2018), [CatBoost: unbiased boosting with categorical features](https://arxiv.org/abs/1706.09516).
+- [Documentation officielle CatBoost](https://catboost.ai/docs/), notamment le traitement des variables catégorielles et les politiques de croissance des arbres.
+- Damien Benveniste, [Understanding CatBoost!](https://newsletter.theaiedge.io/p/understanding-catboost).
+
+### Figures du projet
+
+Les trois figures `bias-variance-decomposition.svg`, `gradient-boosting-iteration.svg` et `tree-growth-strategies.svg` sont des schémas explicatifs originaux créés pour LLM Lab. Elles sont décrites dans le [registre des ressources visuelles](../docs/visual-assets-register.md). Elles ne reproduisent pas les figures des sources citées.
