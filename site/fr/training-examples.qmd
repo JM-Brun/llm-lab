@@ -14,7 +14,7 @@ suggested_route:
   previous: "fr/probabilites"
   next: "fr/vraisemblance"
 hierarchy:
-  parents: ["fr/text-data", "fr/corpus-preparation"]
+  parents: ["fr/text-data"]
   children: []
 related: ["fr/tokenization-strategies", "fr/vraisemblance"]
 tags: ["type:concept-bridge", "destination:understand", "topic:training-examples", "level:core", "language:fr", "status:published"]
