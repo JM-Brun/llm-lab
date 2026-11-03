@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
-scope: "Présente intuitivement le problème de modélisation du langage et sa difficulté ; définit les termes LLM, modèle de langage, modèle génératif, GPT et Transformer ; explique à haut niveau le processus par lequel un GPT transforme un contexte en prochain token, et renvoie les notions techniques vers leurs pages dédiées."
-purpose: "À l’issue de cette page, le lecteur doit pouvoir expliquer intuitivement le problème de modélisation du langage et ses difficultés, distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer, et décrire les grandes étapes de la génération autorégressive sans confondre le modèle, les représentations et la règle de sélection."
+scope: "Situe les LLM modernes dans l’IA, l’apprentissage automatique et le TAL, les distingue des systèmes TAL antérieurs spécialisés par tâche, définit les termes LLM, modèle de langage, modèle génératif, GPT et Transformer ; explique l’inférence autorégressive, les familles de modèles, le cycle apprentissage-inférence et le rôle du cache KV, en renvoyant les détails techniques vers les pages dédiées."
+purpose: "À l’issue de cette page, le lecteur doit pouvoir situer les LLM dans l’IA, l’apprentissage automatique et le TAL, les distinguer des systèmes TAL spécialisés par tâche, distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer, décrire la génération autorégressive et expliquer pourquoi les optimisations d’inférence ne changent pas l’objectif de prédiction du prochain token."
 suggested_route:
   previous: "fr/index"
   next: "fr/transformer"
