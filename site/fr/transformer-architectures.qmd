@@ -11,8 +11,8 @@ id: "fr/transformer-architectures"
 scope: "Compare les architectures Transformer encodeur seul, encodeur-décodeur et décodeur seul par leur flux d'information, leurs masques, leurs objectifs d'entraînement typiques et leurs usages ; distingue explicitement architecture, objectif et tâche, sans prétendre que ces trois familles couvrent toutes les architectures de modèles de langage."
 purpose: "Le lecteur doit pouvoir expliquer comment chaque famille traite le contexte, identifier les différences entre attention bidirectionnelle, causale et attention croisée, et comprendre pourquoi le choix d'architecture ne détermine pas à lui seul l'objectif d'entraînement ni l'usage."
 suggested_route:
-  previous: "fr/llm-overview"
-  next: "fr/transformer"
+  previous: null
+  next: null
 hierarchy:
   parents: ["fr/llm-overview"]
   children: []
