@@ -24,6 +24,8 @@ Le Transformer n'est pas apparu sans précurseurs. Son histoire combine les méc
 
 ## Chronologie
 
+Pour replacer cette chronologie dans le parcours conceptuel, revenir au [panorama des LLM](llm-overview.qmd) ; pour comparer les familles d’architectures abordées dans plusieurs jalons, consulter [la page dédiée aux architectures Transformer](transformer-architectures.qmd).
+
 Les dates distinguent soumission, annonce et mise à disposition. Les jalons sont regroupés par domaine ; leur ordre chronologique ne signifie pas qu'ils forment une chaîne causale.
 
 {{< include /includes/_history-timeline-fr.qmd >}}

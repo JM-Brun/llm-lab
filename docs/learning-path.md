@@ -8,7 +8,7 @@ This plan is a sequence of evidence-producing modules, not a promise of mastery 
 
 The learner-facing course and the implementation dependency graph answer different questions. **The conceptual course starts with what a model does; the build route follows the dependencies needed to construct one.** Do not force these into one identical chapter order.
 
-1. **Orient:** what an LLM is, which model families exist, and what the lifecycle contains.
+1. **Orient:** what the broad term LLM covers, where GPT fits, and how architecture differs from objective and task. Use the overview's linked pipeline to trace text → tokens/IDs → embeddings → Transformer → logits → distribution → selection; open the dedicated architecture comparison only when that distinction needs detail. Keep optional weight adaptation distinct from prompting/RAG at inference.
 2. **Preview inference:** follow one complete request through input, model computation, next-token prediction, selection and repeated generation. At this stage, treat the model as a system with fixed parameters; do not require training theory.
 3. **Unpack the input:** text/Unicode, tokenization, vocabulary, token IDs and the prompt/context supplied at inference.
 4. **Unpack representations and computation:** embeddings, positional information, contextual states, Transformer blocks, attention and causal masking.
