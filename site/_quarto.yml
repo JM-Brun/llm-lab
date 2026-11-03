@@ -127,7 +127,6 @@ website:
           contents:
             - fr/llm-overview.qmd
             - fr/transformer-architectures.qmd
-            - fr/cross-attention.qmd
             - fr/transformer.qmd
             - fr/generation.qmd
             - fr/llm-limits.qmd
@@ -177,6 +176,9 @@ website:
             - section: "Adaptation à l'inférence"
               contents:
                 - fr/in-context-learning.qmd
+            - section: "Mécanismes d'attention avancés"
+              contents:
+                - fr/cross-attention.qmd
             - section: "Calcul, complexité et parallélisme"
               contents:
                 - fr/llm-computational-complexity.qmd
@@ -214,7 +216,6 @@ website:
           contents:
             - en/llm-overview.qmd
             - en/transformer-architectures.qmd
-            - en/cross-attention.qmd
             - en/transformer.qmd
             - en/generation.qmd
             - en/llm-limits.qmd
@@ -264,6 +265,9 @@ website:
             - section: "Adaptation at inference"
               contents:
                 - en/in-context-learning.qmd
+            - section: "Advanced attention mechanisms"
+              contents:
+                - en/cross-attention.qmd
             - section: "Computation, complexity, and parallelism"
               contents:
                 - en/llm-computational-complexity.qmd
