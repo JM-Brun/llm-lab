@@ -106,14 +106,7 @@ Cette distinction explique pourquoi « le modèle prédit le prochain token » r
 - **« Les poids d'attention révèlent à eux seuls le raisonnement du modèle. »** Non : ils ne suffisent pas à établir l'influence causale d'une information sur la sortie.
 - **« Tous les Transformers sont des GPT. »** Non : l'architecture originale de 2017 utilisait un encodeur et un décodeur ; GPT est une famille autorégressive de type décodeur seul.
 
-## Pour poursuivre
-
-- [Fondations mathématiques](mathematical-foundations.qmd) — relier logits, probabilités, vraisemblance et loss.
-- [Historique des Transformers](transformer-history.qmd) — replacer les choix architecturaux dans leur contexte.
-
 ## Pour approfondir
-
-Chaque ressource ci-dessous répond à un besoin différent. Choisissez celle qui correspond à votre question du moment ; revenez aux autres si nécessaire.
 
 ### Construire l'intuition avec des visualisations
 
