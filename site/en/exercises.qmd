@@ -20,7 +20,7 @@ related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:en", "status:published"]
 -->
 
-This page is the entry point for extended exercises. Short self-checks with collapsed explanations are now embedded in selected lesson pages; they provide immediate checks of individual concepts. **The collections below remain navigation scaffolding for more substantial exercises**, to be developed after prerequisites and coverage have been reviewed.
+Short self-checks with collapsed explanations are embedded in selected lesson pages; they provide immediate checks of individual concepts. **The collections below group more substantial exercises**, whose content remains to be developed after prerequisites and coverage have been reviewed.
 
 ## How to use this space
 
