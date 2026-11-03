@@ -112,7 +112,8 @@ Recommended order after the gate:
 2. [#79](https://github.com/JM-Brun/llm-lab/issues/79): logits, softmax, likelihood and cross-entropy.
 3. [#80](https://github.com/JM-Brun/llm-lab/issues/80): scaled-dot-product attention and invariants.
 4. [#81](https://github.com/JM-Brun/llm-lab/issues/81): causal masking and leakage tests.
-5. Later, create or activate narrowly scoped work for the Transformer block, training/optimization, generation and evaluation. Do not bundle them into one PR.
+5. [#84](https://github.com/JM-Brun/llm-lab/issues/84): generation strategies and evaluation limitations.
+6. Later, create or activate narrowly scoped work for the Transformer block and training/optimization. Do not bundle them into one PR.
 
 For each concept, use three small stages: source/notation audit; explanation plus minimal implementation where scientifically useful; adversarial tests, bilingual parity and rendered review. For theory-only concepts, use derivation or pseudocode rather than artificial code.
 
@@ -121,7 +122,7 @@ For each concept, use three small stages: source/notation audit; explanation plu
 These issues remain open, but should not compete with the P0/P1 validation gates unless a concrete dependency emerges.
 
 - **Interactive execution:** [#268](https://github.com/JM-Brun/llm-lab/issues/268). Split into a technology/performance spike, one bilingual pilot cell on one page, then a decision on a second workbench. Do not implement tokenization and attention in parallel before the first pilot meets fallback, accessibility, mobile and maintenance criteria.
-- **External resource curation:** [#266](https://github.com/JM-Brun/llm-lab/issues/266), [#147](https://github.com/JM-Brun/llm-lab/issues/147), [#86](https://github.com/JM-Brun/llm-lab/issues/86). Keep this selective; verify one candidate and its exact pedagogical role at a time. Do not create a resource catalogue or new page by default.
+- **External resource curation:** [#266](https://github.com/JM-Brun/llm-lab/issues/266), [#147](https://github.com/JM-Brun/llm-lab/issues/147), [#114](https://github.com/JM-Brun/llm-lab/issues/114), [#86](https://github.com/JM-Brun/llm-lab/issues/86). Keep this selective; verify one candidate and its exact pedagogical role at a time. Do not create a resource catalogue or new page by default.
 - **Visual rights and project licensing:** [#156](https://github.com/JM-Brun/llm-lab/issues/156) and [#163](https://github.com/JM-Brun/llm-lab/issues/163). Split the remaining asset inventory from owner-level licence decisions. Preserve existing external illustrations; do not infer reuse permission from attribution or public availability. Licence selection requires explicit project-owner approval.
 - **Historical timeline:** [#197](https://github.com/JM-Brun/llm-lab/issues/197). Recheck the current timeline and acceptance criteria before treating the open issue as unimplemented; the timeline fragments and parity checks already exist.
 - **Raschka chapter/appendix coverage:** issues #95–#106. Treat each chapter/appendix as its own small audit and keep P2/P3 items deferred behind the foundational route.
