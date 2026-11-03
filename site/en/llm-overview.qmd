@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-overview"
-scope: "Places LLMs as a broad category; provides a high-level map of an autoregressive GPT pipeline from text to next-token selection; distinguishes architecture, weight learning, and inference-time conditioning; delegates detailed comparisons and mechanisms to dedicated pages."
-purpose: "By the end of this page, readers should be able to place LLMs in AI and NLP, trace the high-level path text → tokens → embeddings → Transformer → logits → distribution → selection, distinguish architecture, learning, and inference, and choose the specialist page to explore next."
+scope: "Defines LLMs as a category of language models; provides a high-level map of an autoregressive GPT pipeline from text to next-token selection; distinguishes architecture, weight learning, and inference-time conditioning; delegates detailed comparisons and mechanisms to dedicated pages."
+purpose: "By the end of this page, readers should be able to trace the high-level path text → tokens → embeddings → Transformer → logits → distribution → selection, distinguish architecture, learning, and inference, and choose the specialist page to explore next."
 suggested_route:
   previous: "en/index"
   next: "en/transformer"
@@ -26,8 +26,7 @@ A **large language model (LLM)** is a language model trained at large scale. The
 
 ::: {.callout-note title="Expected outcome — and where this page fits"}
 **After this page, you should be able to:**
-- place LLMs within AI and natural language processing;
-- trace the high-level pipeline of an autoregressive GPT without conflating its stages;
+- - trace the high-level pipeline of an autoregressive GPT without conflating its stages;
 - distinguish architecture, weight learning, and inference;
 - identify which page develops each concept.
 
@@ -92,28 +91,7 @@ Describing an LLM requires three independent questions. They answer one another,
 
 The loop of section 1 belongs to inference. Training belongs to learning. The same model can change use without changing architecture: that is what the following sections unpack.
 
-## 3. Where do LLMs sit?
-
-LLMs live at the intersection of a family of methods and a domain of problems:
-
-```{mermaid}
-flowchart TB
-  subgraph AI["Artificial intelligence"]
-    subgraph ML["Machine learning"]
-      subgraph DL["Deep learning<br/>(neural networks)"]
-        LLM["LLM"]
-      end
-    end
-  end
-  NLP["NLP: a domain of problems<br/>(rules, statistics, models, LLMs…)"]
-```
-
-- **Deep learning** denotes a family of methods: neural networks with multiple layers. Current LLMs belong to it.
-- **Natural language processing** (NLP) denotes a domain of problems: processing or producing language. It is addressed by very different methods — linguistic rules, statistical models, specialized systems, neural networks. LLMs are a dominant but not exclusive answer: a production system can combine rules, specialized models, document retrieval, tools, and LLMs.
-
-The term "LLM" has no universal numerical threshold: it generally refers to language models trained at large scale, using substantial data and compute. The *foundation model* concept instead emphasizes reuse: a model serving as a base for many applications.
-
-## 4. The path in three phases
+## 3. The path in three phases
 
 From corpus to use, the lifecycle reduces to three phases:
 
@@ -132,19 +110,19 @@ flowchart LR
 
 Pretraining and optional weight adaptation describe how a model is made; prompts and retrieved documents are supplied to the system at inference time. This is therefore not a mandatory three-step chain: a base model can be used directly with an appropriate context. The pedagogical order remains distinct from the order of model construction: inference can be understood before training. Evaluation happens at several points; the test set must remain held out until the final evaluation, otherwise that evaluation would be biased.
 
-## 5. Architectures: a link, not another comparison table
+## 4. Architectures: a link, not another comparison table
 
 Encoder-only, encoder–decoder, and decoder-only describe three common organizations of **Transformers**, not three universal categories of LLMs. They differ in information flow, masking, and interactions between encoder and decoder. The comparison and its implications for objectives and uses deserve a separate explanation: [Compare Transformer architectures](transformer-architectures.qmd).
 
 For the build route, LLM Lab chooses a **small decoder-only GPT**: autoregressive prediction can be inspected step by step. This is a pedagogical choice, not a claim that all LLMs work this way.
 
-## 6. What are these models for?
+## 5. What are these models for?
 
 Common uses include text generation and rewriting, summarization, translation, structured extraction, classification, programming assistance, and question-answering interfaces.
 
 Reusing a general-purpose model is attractive when one base can cover several tasks, or when the labeled examples of a task are scarce. For knowledge that changes frequently, retrieving up-to-date documents (RAG) is often better suited than changing parameters; for a specific format, domain, or behavior, an adaptation may become worthwhile. The choice is evaluated on the real task: quality, errors, robustness, cost, latency, confidentiality, data provenance, and maintenance — a convincing demo on a few prompts is not an evaluation.
 
-## 7. Check your understanding
+## 6. Check your understanding
 
 Try to answer before opening the solutions. The goal is to manipulate the mental model, not to memorize labels.
 
@@ -166,16 +144,16 @@ RAG can retrieve documents at inference time and provide them in the context; th
 
 </details>
 
-## 8. One distinction to keep in mind
+## 7. One distinction to keep in mind
 
 Next-token prediction guarantees neither the truth of a model's outputs nor human-like understanding of the world. These questions, along with claims about emergent capabilities, are examined in [What next-token prediction does not prove](llm-limits.qmd).
 
 
 ::: {.callout-note title="Historical context"}
-The 2017 Transformer emerged from a broader history of attention mechanisms, sequence-to-sequence models, and pretraining objectives. For the timeline and its historiographical caveats, see the [history of Transformers](transformer-history.qmd).
+The 2017 Transformer emerged from a broader history of attention mechanisms, sequence-to-sequence models, and pretraining objectives. For the timeline, its historiographical caveats, and the place of LLMs in the AI landscape, see the [history of Transformers](transformer-history.qmd).
 :::
 
-## 9. Where to go next in LLM Lab
+## 8. Where to go next in LLM Lab
 
 - [**GPT and Transformer**](transformer.qmd) — follow an autoregressive GPT's computation from representations to logits.
 - [**Compare Transformer architectures**](transformer-architectures.qmd) — understand the differences between encoder, encoder–decoder, and decoder.
