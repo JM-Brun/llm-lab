@@ -82,7 +82,7 @@ Pour situer cette représentation parmi d’autres approches pédagogiques, voir
 
 ::: {.callout-note collapse="true" title="Approfondissement facultatif : efficacité de l'inférence et cache KV"}
 
-À chaque étape autorégressive, le contexte s'allonge. Le [GPT de référence de ce laboratoire](fr/build-path.qmd) recalcule toute la fenêtre pour rendre le mécanisme inspectable et ne possède pas de cache KV. Les moteurs de production réutilisent souvent les clés et valeurs des tokens précédents à chaque couche : ils réduisent ainsi les calculs répétés, au prix de mémoire et d'une gestion du cache. Cela change l'efficacité de l'inférence, pas l'objectif de prédiction du prochain token.
+À chaque étape autorégressive, le contexte s'allonge. Le [GPT de référence de ce laboratoire](build-path.qmd) recalcule toute la fenêtre pour rendre le mécanisme inspectable et ne possède pas de cache KV. Les moteurs de production réutilisent souvent les clés et valeurs des tokens précédents à chaque couche : ils réduisent ainsi les calculs répétés, au prix de mémoire et d'une gestion du cache. Cela change l'efficacité de l'inférence, pas l'objectif de prédiction du prochain token.
 
 :::
 
