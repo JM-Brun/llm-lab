@@ -83,6 +83,14 @@ The table describes **input windows only**. For next-token training, each window
 
 A smaller stride generally increases the number of examples and overlap. There is no universally optimal stride: the choice depends on the pipeline, compute budget, and handling of the corpus tail. A pedagogical sliding window does not necessarily represent a production pipeline.
 
+::: {.callout-note collapse="true" title="NumPy implementation and tests (deep dive)"}
+The [reference NumPy implementation](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/training_examples.py) and its [unit tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_training_examples.py) deliberately cover a restricted case: building sliding input windows with one-token-shifted targets (`sliding_input_target_pairs`). A window is kept only when its target is complete; an incomplete corpus tail is dropped, with no padding and no invented end-of-stream token.
+
+This reference does **not** implement corpus loading or tokenization, document packing, boundary markers, padding, attention or loss masks, batching through a `Dataset`/`DataLoader`, or train/validation splits. Production windowing choices do not follow directly from it.
+
+The tests check exact alignment of every target with the following token in the source stream, window counts and overlap for several strides, explicit corpus-tail handling, determinism, absence of input mutation, and rejection of invalid inputs. They support the announced scope of this reference; they do not prove that any stride is optimal or representative of a production pretraining pipeline.
+:::
+
 ## 3. Document boundaries and packing
 
 Concatenating documents can create windows that cross document boundaries. Keep three decisions separate:

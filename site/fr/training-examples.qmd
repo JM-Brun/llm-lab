@@ -83,6 +83,14 @@ Le tableau décrit **uniquement les fenêtres d’entrée**. Pour l’entraînem
 
 Un stride plus petit augmente généralement le nombre d’exemples et le recouvrement. Il n’existe pas de stride universellement optimal : les choix dépendent du pipeline, du budget de calcul et du traitement de la fin du corpus. Une fenêtre pédagogique glissante n’est pas nécessairement représentative d’un pipeline industriel.
 
+::: {.callout-note collapse="true" title="Implémentation NumPy et tests (approfondissement)"}
+L'[implémentation de référence NumPy](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/training_examples.py) et ses [tests unitaires](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_training_examples.py) couvrent volontairement un cas restreint : la construction de fenêtres glissantes avec cibles décalées d'un token (`sliding_input_target_pairs`). Une fenêtre n'est conservée que si sa cible est complète ; la fin de corpus incomplète est écartée, sans padding ni token de fin inventé.
+
+Cette référence ne met **pas** en œuvre le chargement d'un corpus ni la tokenisation, le packing de documents, les marqueurs de frontière, le padding, les masques d'attention ou de perte, le batching via un `Dataset`/`DataLoader`, ni les découpages train/validation. Les choix de fenêtrage d'un pipeline industriel ne s'en déduisent pas directement.
+
+Les tests vérifient l'alignement exact de chaque cible sur le token suivant du flux source, le nombre de fenêtres et le recouvrement pour plusieurs strides, le traitement explicite de la fin du corpus, le déterminisme, l'absence de mutation de l'entrée et le rejet des entrées invalides. Ils étayent le périmètre annoncé de cette référence ; ils ne prouvent pas l'optimalité d'un stride ni la représentativité d'un pipeline de préentraînement.
+:::
+
 ## 3. Frontières de documents et packing
 
 Concaténer plusieurs documents peut créer des fenêtres qui traversent une frontière. Il faut distinguer trois décisions :
