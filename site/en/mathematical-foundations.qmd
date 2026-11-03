@@ -86,6 +86,7 @@ Each concept page derives one step, gives a calculable example, and states its a
 - Connect observed probabilities to [likelihood](likelihood.qmd) and [cross-entropy](cross-entropy.qmd).
 - Distinguish per-token loss from the aggregated [loss function](loss.qmd).
 - Finish with [gradients](gradients.qmd), the chain rule, and numerical verification.
+- For a detailed probabilistic treatment — autoregressive factorization, maximum likelihood, soft targets, and KL divergence — see [the mathematics of language modeling](language-modeling-math.qmd).
 
 ## Foundational references
 
