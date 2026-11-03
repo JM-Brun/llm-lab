@@ -43,7 +43,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 </div>
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
-**Q et K calculent les poids ; V fournit ce qui est agrégé.** Pour chaque position, le modèle compare sa requête aux clés accessibles, transforme les scores en poids avec le softmax, puis applique ces poids aux vecteurs de valeur.
+**Q et K calculent les poids ; V fournit ce qui est agrégé.** Les requêtes et les clés déterminent les poids relatifs entre positions ; ces poids servent ensuite à combiner les vecteurs de valeur.
 
 **Première lecture :** retenez cette séparation des rôles, puis observez comment les trois projections transforment les représentations d'entrée.
 
