@@ -135,12 +135,10 @@ RAG can retrieve documents at inference time and provide them in the context; th
 
 :::
 
-## 7. One distinction to keep in mind
+::: {.callout-note collapse="true" title="One distinction to keep in mind"}
 
 Next-token prediction guarantees neither the truth of a model's outputs nor human-like understanding of the world. These questions, along with claims about emergent capabilities, are examined in [What next-token prediction does not prove](llm-limits.qmd).
 
-::: {.callout-note title="Historical context"}
-The 2017 Transformer emerged from a broader history of attention mechanisms, sequence-to-sequence models, and pretraining objectives. For the timeline, its historiographical caveats, and the place of LLMs in the AI landscape, see the [history of Transformers](transformer-history.qmd).
 :::
 
 ::: {.language-switch}
