@@ -24,10 +24,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "lev
 Prédire le prochain token est un **objectif d’entraînement**. Ce qu’un modèle en retire relève de l’évaluation, pas de la définition. Cette page sépare ce que l’objectif garantit — pas grand-chose au-delà de la prédiction elle-même — de ce qu’il rend seulement plausible.
 :::
 
-::: {.callout-note}
-Cette page complète le [panorama des LLM](llm-overview.qmd), qui installe d’abord le modèle mental : la boucle contexte → distribution → token. Les mises en garde qui suivent se lisent **après** ce modèle ; elles en précisent le périmètre, elles ne le remplacent pas.
-:::
-
 ## 1. Ce que l’objectif garantit — et ne garantit pas
 
 Un objectif de prédiction apprend à attribuer des probabilités aux suites de tokens observées. Il peut conduire à des capacités linguistiques et à des comportements complexes, mais il ne garantit pas :
