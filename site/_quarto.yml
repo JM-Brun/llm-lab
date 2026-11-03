@@ -118,7 +118,6 @@ website:
         - section: "Comprendre les LLM"
           contents:
             - fr/llm-overview.qmd
-            - fr/language-modeling-math.qmd
             - fr/transformer-architectures.qmd
             - fr/transformer.qmd
             - fr/generation.qmd
@@ -146,7 +145,6 @@ website:
                 - fr/cross-entropy.qmd
                 - fr/loss.qmd
                 - fr/gradients.qmd
-                - fr/mathematical-foundations.qmd
         - section: "Construire un petit GPT"
           contents:
             - fr/build-path.qmd
@@ -174,6 +172,10 @@ website:
             - section: "Architectures alternatives et efficacité"
               contents:
                 - fr/hybrid-llm-architectures.qmd
+            - section: "Formalisation et mathématiques de l'entraînement"
+              contents:
+                - fr/language-modeling-math.qmd
+                - fr/mathematical-foundations.qmd
             - section: "Outils mathématiques et géométrie"
               contents:
                 - fr/tensors.qmd
@@ -193,7 +195,6 @@ website:
         - section: "Understand LLMs"
           contents:
             - en/llm-overview.qmd
-            - en/language-modeling-math.qmd
             - en/transformer-architectures.qmd
             - en/transformer.qmd
             - en/generation.qmd
@@ -221,7 +222,6 @@ website:
                 - en/cross-entropy.qmd
                 - en/loss.qmd
                 - en/gradients.qmd
-                - en/mathematical-foundations.qmd
         - section: "Build a small GPT"
           contents:
             - en/build-path.qmd
@@ -249,6 +249,10 @@ website:
             - section: "Alternative architectures and efficiency"
               contents:
                 - en/hybrid-llm-architectures.qmd
+            - section: "Formalization and training mathematics"
+              contents:
+                - en/language-modeling-math.qmd
+                - en/mathematical-foundations.qmd
             - section: "Mathematical tools and geometry"
               contents:
                 - en/tensors.qmd
