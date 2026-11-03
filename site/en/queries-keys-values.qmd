@@ -45,7 +45,7 @@ Queries, keys, and values are not three kinds of tokens. They are three **learne
 ::: {.callout-tip title="The one-minute mental model"}
 **Q and K determine the weights; V supplies what gets aggregated.** At each position, the model compares its query with accessible keys, turns the scores into weights with softmax, then applies those weights to value vectors.
 
-**First pass:** keep these roles separate and check the small numerical example below. You can study the learned projections and matrix dimensions afterwards.
+**First pass:** keep these roles separate, then observe how the three projections transform the input representations.
 
 **Go deeper:** follow the full computation in [scaled dot-product attention](scaled-dot-product-attention.qmd), then the information constraint in [causal masking](causal-masking.qmd).
 :::
@@ -56,22 +56,7 @@ Imagine a collection of index cards. A **query** expresses what a position is lo
 
 ![Diagram of query, key, and value projections: Q and K determine attention weights, which are used to aggregate V.](../images/queries-keys-values-en.svg){fig-alt="Input representations are projected into queries, keys, and values. Queries and keys determine attention weights; the weights combine values into a context-enriched representation." width=100%}
 
-The computation has two distinct stages:
-
-1. **Match.** A position's query is compared with the keys of positions it is allowed to access. The resulting scores are transformed into weights by softmax, after scaling and any required mask.
-2. **Aggregate.** The weights form a weighted sum of value vectors. Positions with larger weights contribute more to that output representation.
-
-Q and K therefore determine the weights, while V supplies the content being aggregated. These are learned vector roles, not human-readable labels.
-
-## A numerical example: weights are not values
-
-Suppose a query produces two attention scores, \(s=(0,\ln 3)\). Applying *softmax* gives weights \((0.25, 0.75)\). If the two value vectors are, for this toy example, scalars \(v_1=2\) and \(v_2=10\), the aggregated output is:
-
-\[
-o=0.25\times 2+0.75\times 10=8.
-\]
-
-This separates the two roles: scores from Q and K determine **the weights**; values V supply **the content being aggregated**. This does not mean values are generally scalars, nor that weights alone explain a prediction. In a real model, scores and values are vectors produced by learned projections.
+Q and K provide the information used to determine relative weights across accessible positions. Those weights then specify how to combine the V vectors. The precise computation of scores, masking, and softmax is covered on the scaled dot-product attention page.
 
 ## Definition and dimensions
 
@@ -87,58 +72,50 @@ The scores $QK^\top$ compare every query with every key. After scaling and apply
 
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
-<span>NUMERICAL WORKBENCH · MATRIX COMPUTATION AND TENSOR SHAPES</span>
+<span>NUMERICAL WORKBENCH · Q, K, AND V PROJECTIONS</span>
 <span>Python 3.12+ / NumPy</span>
 :::
 ::: {.micro-workbench-body}
 ```python
 import numpy as np
 
+# Three input positions, each represented by a 4-dimensional vector
 X = np.array([
-    [1.0, 0.5, 0.2, 0.1],  # position 0
-    [0.1, 0.9, 0.8, 0.3],  # position 1
-    [0.4, 0.2, 0.7, 0.9],  # position 2
+    [1.0, 0.5, 0.2, 0.1],
+    [0.1, 0.9, 0.8, 0.3],
+    [0.4, 0.2, 0.7, 0.9],
 ])
 T, d_model = X.shape
 
-# 2. Learned projection matrices: d_k=2, d_v=3
+# Learned projections: keys/queries have dimension 2; values dimension 3
 W_Q = np.array([[0.5, 0.1], [0.2, 0.8], [0.1, 0.3], [0.9, 0.4]])
 W_K = np.array([[0.2, 0.7], [0.4, 0.1], [0.6, 0.5], [0.3, 0.2]])
 W_V = np.array([[1.0, 0.0, 0.2], [0.0, 1.0, 0.5], [0.5, 0.2, 0.0], [0.1, 0.8, 0.4]])
 
-# 3. Linear projections
-Q = X @ W_Q  # Shape (T, d_k)
-K = X @ W_K  # Shape (T, d_k)
-V = X @ W_V  # Shape (T, d_v)
-assert Q.shape == (3, 2) and K.shape == (3, 2) and V.shape == (3, 3)
+# Each projection transforms all positions independently
+Q = X @ W_Q
+K = X @ W_K
+V = X @ W_V
 
-# 4. Attention scores S = Q K^T / sqrt(d_k)
-d_k = 2
-scores = (Q @ K.T) / np.sqrt(d_k)
-assert scores.shape == (3, 3)
-
-# 5. Softmax weights (summing to 1 along key dimension)
-exp_scores = np.exp(scores - np.max(scores, axis=-1, keepdims=True))
-weights = exp_scores / np.sum(exp_scores, axis=-1, keepdims=True)
-assert np.allclose(weights.sum(axis=-1), 1.0)
-
-# 6. Final aggregated output O = A V
-output = weights @ V
-assert output.shape == (3, 3)
+assert Q.shape == (T, 2)
+assert K.shape == (T, 2)
+assert V.shape == (T, 3)
+print("Q:", Q.shape, "K:", K.shape, "V:", V.shape)
 ```
 :::
 ::: {.micro-workbench-footer}
-Verified invariant: dimensions strictly follow $(T, d_{model}) \to [(T, d_k), (T, d_v)] \to (T, d_v)$.
+The projections transform each input representation. Computing attention weights and aggregating values are covered on the next page.
 :::
 :::
 
 ## Why separate these roles?
 
-- **Q and K determine where to look.** The scores $QK^\top$ compare each query with each key. In an autoregressive Transformer, a causal mask excludes future positions before softmax.
-- **V determines what information is transmitted.** Once the weights have been computed, they combine the value vectors.
-- **All three are learned jointly.** The model learns transformations suited to its objective; these are not manually assigned fields.
+Q, K, and V are learned jointly, but they have distinct roles:
 
-The full formula for one attention head is given in [scaled dot-product attention](scaled-dot-product-attention.qmd). The [causal-masking page](causal-masking.qmd) explains how to prevent a position from accessing the future.
+- **Q and K**: projections used to determine attention weights.
+- **V**: the projection that supplies the content combined using those weights.
+
+The next page details the attention computation; the [causal-masking page](causal-masking.qmd) explains how some positions can be made inaccessible.
 
 ## Misconceptions and counterexamples
 
@@ -173,12 +150,12 @@ Attention mechanisms were studied in neural encoder–decoder translation models
 
 [Extended exercises on this topic](../en/exercises.qmd#attention).
 
-A position receives attention weights $(0.75,\,0.25)$ and the value vectors are $v_1=(2,0)$ and $v_2=(0,4)$. Calculate the output. If you swap $v_1$ and $v_2$ while keeping the weights fixed, does the output stay the same?
+Which projections determine the attention weights? Which projection supplies the vectors whose content is aggregated?
 
 <details>
 <summary>Show the reasoning</summary>
 
-The output is the weighted sum: $0.75(2,0)+0.25(0,4)=(1.5,1)$. After swapping the values it becomes $0.75(0,4)+0.25(2,0)=(0.5,3)$. Weights determine the relative contribution of positions; values determine the aggregated content. Weights alone therefore do not determine the output.
+Q and K determine the weights; V supplies the vectors combined using those weights. Changing Q or K can change the weights. Changing V can change the aggregated content even if the weights stay fixed.
 
 </details>
 :::
