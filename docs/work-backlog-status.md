@@ -43,6 +43,8 @@ The parent is correctly decomposed already. Execute sequentially; do not combine
 
 **Dependency:** PR #189 was merged on 2026-10-30; use its integrated token baseline and verify the current source before making changes. The output must distinguish measured failures, manual observations and untested criteria. A representative sample cannot establish site-wide WCAG conformance.
 
+Include a focused check of the newly deployed breadcrumb from PR #306 (desktop/mobile, FR/EN, hierarchy and keyboard focus). Check the `.self-check` treatment from PR #307 on the overview page as part of the relevant rendered-page pilot (#317); do not create separate visual audits for the same components.
+
 ### P1 — Finish the existing pedagogical-template pilot
 
 **Owner:** [#282 — pedagogical templates and page audit](https://github.com/JM-Brun/llm-lab/issues/282)
