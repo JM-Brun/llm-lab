@@ -307,3 +307,16 @@ Ces ressources complètent le parcours principal. L'ordre recommandé est : **li
 - **Cours complémentaire :** [AlgoMonster — LLM course introduction](https://algo.monster/courses/llm/llm_course_introduction). À utiliser en supplément après vérification de son contenu actuel et de ses conditions d'accès.
 
 Un [PDF miroir tiers fourni pour examen](https://dl.tehrandata.org/book/Build-a-large-language-models.pdf) n'a pas de provenance ni de statut de licence vérifiés. Préférer la page de l'éditeur et les ressources officielles ; ne pas redistribuer ce fichier ni en recopier le contenu.
+
+
+## Sources scientifiques citées dans le panorama des LLM
+
+- **Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762)** — architecture Transformer encodeur-décodeur originale.
+- **Devlin et al. (2018), [*BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding*](https://arxiv.org/abs/1810.04805)** — encodeur bidirectionnel et objectif de prédiction de tokens masqués.
+- **Raffel et al. (2019), [*Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer (T5)*](https://arxiv.org/abs/1910.10683)** — cadre encodeur-décodeur texte-vers-texte et pré-entraînement par corruption.
+- **Radford et al. (2019), [*Language Models are Unsupervised Multitask Learners*](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf)** — exemple GPT-2 de modèle autorégressif décodeur seul.
+- **Bommasani et al. (2021), [*On the Opportunities and Risks of Foundation Models*](https://arxiv.org/abs/2108.07258)** — cadrage des modèles de fondation et de leurs risques.
+- **Ouyang et al. (2022), [*Training language models to follow instructions with human feedback*](https://arxiv.org/abs/2203.02155)** — exemple de pipeline d'adaptation par démonstrations et préférences.
+- **Gu et Dao (2023), [*Mamba: Linear-Time Sequence Modeling with Selective State Spaces*](https://arxiv.org/abs/2312.00752)** — exemple d'architecture de modélisation de séquence non fondée sur l'attention Transformer standard.
+
+Ces sources ont des rôles différents — description d'architecture, objectifs d'entraînement, modèles de fondation et adaptation par préférences. Aucune ne définit à elle seule tous les usages actuels du terme « LLM ».
