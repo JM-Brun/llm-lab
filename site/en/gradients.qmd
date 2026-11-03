@@ -81,7 +81,8 @@ Compare this with the analytical gradient using absolute and relative tolerances
 - **“One passing finite-difference check proves the entire backward pass.”** It verifies one function, case, precision, and configuration; it does not replace shape, edge-case, and integration tests.
 :::
 
-## Self-check
+::: {.self-check}
+## Check your understanding
 
 For additional practice outside the lesson, see the [exercise space — mathematical foundations](exercises.qmd#foundations).
 
@@ -113,6 +114,7 @@ The gradient describes a local change. A step that is too large can leave the re
 </details>
 
 **Return to:** [Overview](mathematical-foundations.qmd) · [Loss](loss.qmd)
+:::
 
 ## Further reading
 

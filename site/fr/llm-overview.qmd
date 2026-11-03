@@ -161,8 +161,10 @@ Les usages courants comprennent la génération et la reformulation de texte, le
 
 La réutilisation d’un modèle généraliste est intéressante lorsqu’une même base peut couvrir plusieurs tâches ou lorsque les exemples d’une tâche sont limités. Pour des connaissances qui changent fréquemment, récupérer des documents à jour (RAG) est souvent plus adapté que modifier les paramètres ; pour un format, un domaine ou un comportement spécifique, une adaptation peut devenir pertinente. Le choix s’évalue sur la tâche réelle : qualité, erreurs, robustesse, coût, latence, confidentialité, provenance des données et maintenance — une démonstration convaincante sur quelques prompts n’est pas une évaluation.
 
-<details>
-<summary>Vérifier votre compréhension</summary>
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices et mises en pratique](exercises.qmd).
 
 Essayez de répondre avant d’ouvrir les raisonnements. L’objectif est de manipuler le modèle mental, pas de mémoriser des étiquettes.
 
@@ -173,7 +175,7 @@ Essayez de répondre avant d’ouvrir les raisonnements. L’objectif est de man
 
 Le token « chat » est ajouté au contexte : c’est cette séquence allongée que le modèle reçoit. Il calcule une nouvelle distribution de probabilité sur le vocabulaire, dont une règle de sélection extrait le token suivant. Ce qui ne change pas : les paramètres du modèle — l’inférence les lit, elle ne les modifie pas.
 
-</details>
+:::
 
 2. Une application doit répondre à partir d’une documentation qui change chaque jour. Comparez l’ajout d’une recherche documentaire (RAG) à un fine-tuning : lequel peut exploiter les nouveaux documents sans réentraîner les poids ?
 

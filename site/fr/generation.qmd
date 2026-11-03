@@ -77,7 +77,10 @@ Ces règles sont des **choix de décodage**, pas des propriétés du modèle : l
 - **Pas de mémoire entre les générations.** Chaque génération repart du contexte fourni ; le modèle ne retient rien au-delà de ce qui figure dans ce contexte.
 - **État du projet.** Dans ce dépôt, la génération depuis un checkpoint local reste un chantier : les jalons de génération du [parcours guidé](build-path.qmd) décrivent ce qui est disponible et ce qui reste à construire.
 
-## Questions de contrôle
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](exercises.qmd#generation).
 
 1. Pourquoi un même modèle avec un même contexte peut-il produire des textes différents ?
 
@@ -110,4 +113,5 @@ Les paramètres restent fixes pendant l'inférence : aucune mise à jour n'a lie
 
 ::: {.language-switch}
 [Français](generation.qmd) · [English](../en/generation.qmd)
+:::
 :::

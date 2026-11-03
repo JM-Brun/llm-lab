@@ -83,7 +83,10 @@ Selecting the argmax token at each position is not equivalent to globally search
 
 A probability of 0.9 therefore does not automatically mean “a 90% chance that the answer is true.” Calibration must be evaluated on relevant held-out data, and good overall calibration does not guarantee that each individual answer is reliable.
 
-## Self-check
+::: {.self-check}
+## Check your understanding
+
+[Extended exercises on this topic](../en/exercises.qmd#foundations).
 
 1. Why are logits not probabilities?
 2. Why does \(p_\theta(x_t\mid x_{<t})\) depend on the prefix?
@@ -99,6 +102,7 @@ A probability of 0.9 therefore does not automatically mean “a 90% chance that 
 4. Normalization is mathematical, calibration is empirical, and truth depends on facts and evidence.
 
 </details>
+:::
 
 ## Further reading
 

@@ -81,7 +81,8 @@ Comparer ce résultat au gradient analytique avec des tolérances absolue et rel
 - **« Une différence finie qui passe prouve tout le backward pass. »** Elle vérifie un cas, une fonction, une précision et une configuration ; elle ne remplace pas les tests de formes, de cas limites et d'intégration.
 :::
 
-## Questions de contrôle
+::: {.self-check}
+## Vérifier sa compréhension
 
 Pour des exercices complémentaires séparés du cours, voir l’[espace d’exercices — fondations mathématiques](exercises.qmd#fondations).
 
@@ -113,6 +114,7 @@ Le gradient décrit une variation locale. Un pas trop grand peut dépasser la r�
 </details>
 
 **Retour :** [Vue d'ensemble](mathematical-foundations.qmd) · [Loss](loss.qmd)
+:::
 
 ## Pour approfondir
 

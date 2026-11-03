@@ -169,7 +169,10 @@ Attention mechanisms were studied in neural encoder–decoder translation models
 - See how the operations fit into the [Transformer overview](transformer.qmd).
 - Connect softmax to [probabilities](probabilities.qmd).
 
+::: {.self-check}
 ## Check your understanding
+
+[Extended exercises on this topic](../en/exercises.qmd#attention).
 
 A position receives attention weights $(0.75,\,0.25)$ and the value vectors are $v_1=(2,0)$ and $v_2=(0,4)$. Calculate the output. If you swap $v_1$ and $v_2$ while keeping the weights fixed, does the output stay the same?
 
@@ -179,6 +182,7 @@ A position receives attention weights $(0.75,\,0.25)$ and the value vectors are 
 The output is the weighted sum: $0.75(2,0)+0.25(0,4)=(1.5,1)$. After swapping the values it becomes $0.75(0,4)+0.25(2,0)=(0.5,3)$. Weights determine the relative contribution of positions; values determine the aggregated content. Weights alone therefore do not determine the output.
 
 </details>
+:::
 
 ## Code and tests
 

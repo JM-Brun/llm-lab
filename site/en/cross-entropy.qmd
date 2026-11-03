@@ -134,7 +134,10 @@ If the target token receives probability \(0.8\), the loss in nats is \(-\log(0.
 - **“A falling training loss proves that the model is improving.”** No: validation, leakage, baselines, and generalization still need to be examined.
 - **“Perplexity directly compares any models.”** Not without controlling for tokenizer, data, and evaluation conventions.
 
-## Self-check
+::: {.self-check}
+## Check your understanding
+
+[Extended exercises on this topic](../en/exercises.qmd#foundations).
 
 1. Why does a target probability of 1 give zero loss?
 2. Why must the averaging denominator be specified when tokens are masked?
@@ -148,6 +151,7 @@ If the target token receives probability \(0.8\), the loss in nats is \(-\log(0.
 3. Perplexity measures probability assignment to tokens in a particular dataset; it does not directly measure truth, usefulness, safety, or calibration.
 
 </details>
+:::
 
 ## Further practice
 

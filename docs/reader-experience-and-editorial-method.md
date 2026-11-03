@@ -352,3 +352,40 @@ A published page, completed exercise, immediate quiz score, or positive impressi
 - Weinstein, Y., Madan, C. R., & Sumeracki, M. A. (2018). [Teaching the science of learning](https://doi.org/10.1186/s41235-017-0087-y). *Cognitive Research: Principles and Implications*, 3, 2. A tutorial review of spaced practice, interleaving, retrieval practice, elaboration, concrete examples, and dual coding.
 - Roediger, H. L., & Karpicke, J. D. (2006). [The Power of Testing Memory: Basic Research and Implications for Educational Practice](https://doi.org/10.1111/j.1745-6916.2006.00012.x). *Perspectives on Psychological Science*, 1(3), 181–210. Review of retrieval/testing effects and their educational implications.
 - Dunlosky, J., et al. (2013). [Improving Students' Learning With Effective Learning Techniques](https://doi.org/10.1111/j.1539-6053.2013.01002.x). *Psychological Science in the Public Interest*, 14(1), 4–58. Comparative review of learning techniques and the conditions that affect their utility.
+
+
+## 10. Standardize embedded learning checks
+
+Every lesson page that includes a learner-facing comprehension check must use one recognizable structure in both languages. The check is a distinct instructional component—not an ordinary paragraph, a miscellaneous list, or a second conclusion.
+
+### Shared presentation contract
+
+- Use the canonical heading **“Vérifier sa compréhension”** in French and **“Check your understanding”** in English. Avoid competing variants such as “Questions de contrôle”, “Self-check”, or “Vérifier votre compréhension”.
+- Wrap the complete activity in the `.self-check` Quarto div so the shared site stylesheet can give it a consistent visual boundary, spacing, and accessible contrast.
+- Number questions consistently. Keep each prompt visually separate from its answer; use native `<details>` / `<summary>` disclosure for solutions, collapsed by default.
+- Place a concise link near the start or end of the activity to the matching topic collection in the exercise hub (`exercises.qmd` / `../en/exercises.qmd`), using the collection's stable anchor. The link must be relevant to the topic, not a generic invitation to browse unrelated material.
+- Do not add the component to a page when it would repeat an existing interactive investigation or when no meaningful check can be written. Do not confuse implementation verification, research checklists, or operational acceptance criteria with learner comprehension questions.
+
+### Cognitive progression
+
+Choose questions according to the learning objective, normally progressing from simpler retrieval to more demanding reasoning:
+
+1. **Identify / retrieve:** define, distinguish, locate a quantity, or recall a condition essential to the concept. Use only when retrieval itself is useful.
+2. **Explain / calculate:** reconstruct a mechanism, derive a step, calculate a small example, or predict a shape or output.
+3. **Apply / diagnose:** change an input or assumption, compare alternatives, diagnose an error, or explain why a tempting answer fails.
+4. **Transfer / critique:** apply the principle to a new context, identify a boundary case, challenge an overclaim, or state what evidence would be needed.
+
+This is a progression of cognitive demand, not a mandatory four-question quota. Use two or three questions when that is sufficient; omit levels that do not fit the topic. Avoid artificial difficulty, trivia, ambiguous prompts, and questions that can be answered by copying a nearby sentence. Increase reasoning demand rather than linguistic complexity.
+
+### Answer and feedback contract
+
+- Keep answer keys collapsed by default and make each disclosure label identify which question it answers.
+- Explain the reasoning and relevant intermediate steps; include units, tensor axes, conventions, assumptions, or numerical tolerances where relevant.
+- Explain why a plausible misconception is wrong when it helps distinguish neighboring concepts.
+- A correct numeric result without interpretation is insufficient when the learning objective includes interpretation.
+- Distinguish what a hand calculation, numerical check, unit test, or thought experiment establishes—and what it does not establish.
+- Keep embedded checks short and immediate. The exercise hub is for longer calculations, multi-step problems, transfer tasks, and integrated practice. Its status must remain honest: planned collections are not published exercises.
+
+### Bilingual parity and review
+
+French and English versions must test the same learning outcomes at comparable difficulty, with equivalent assumptions, data, answer reasoning, and links to the corresponding exercise collection. Wording may differ naturally. During review, check that every check is scientifically answerable, its solution is correct, all disclosures are closed by default, and the exercise link resolves to the intended anchor.

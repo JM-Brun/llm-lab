@@ -208,7 +208,10 @@ Pour évaluer un espace d'embeddings, revenir à la tâche réelle : recherche d
 - **« Une belle visualisation démontre la qualité des embeddings. »** Elle illustre une projection ; une évaluation adaptée mesure l'utilité pour la tâche.
 - **« Tous les embeddings doivent être comparés au cosinus. »** Le choix dépend du modèle et de son objectif. Produit scalaire et cosinus donnent le même classement lorsque les vecteurs sont normalisés.
 
-## Vérifier votre compréhension
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](exercises.qmd#transformer).
 
 1. Deux occurrences du même ID apparaissent dans des contextes différents. Avant le Transformer, sélectionnent-elles le même vecteur d’embedding ? Après plusieurs couches, leurs représentations doivent-elles rester identiques ?
 
@@ -227,6 +230,7 @@ Le lookup initial sélectionne la même ligne de la matrice : le vecteur d’emb
 Non. Une projection 2D ne préserve qu’une partie de la géométrie et peut créer ou accentuer des séparations visuelles. Il faut définir une tâche, une métrique et un protocole d’évaluation sur des données pertinentes tenues à l’écart ; une figure exploratoire ne constitue pas une preuve de performance.
 
 </details>
+:::
 
 ## Références
 

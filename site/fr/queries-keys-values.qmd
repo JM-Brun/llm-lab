@@ -169,7 +169,10 @@ Les mécanismes d'attention ont notamment été étudiés dans les modèles de t
 - Replacer ces opérations dans la [synthèse du Transformer](transformer.qmd).
 - Relier le *softmax* aux [probabilités](probabilites.qmd).
 
-## Vérifier votre compréhension
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](exercises.qmd#attention).
 
 Une position reçoit les poids d’attention $(0{,}75,\,0{,}25)$ et les vecteurs de valeur sont $v_1=(2,0)$ et $v_2=(0,4)$. Calculez la sortie. Si l’on échange $v_1$ et $v_2$ sans changer les poids, la sortie reste-t-elle identique ?
 
@@ -179,6 +182,7 @@ Une position reçoit les poids d’attention $(0{,}75,\,0{,}25)$ et les vecteurs
 La sortie est la somme pondérée : $0{,}75(2,0)+0{,}25(0,4)=(1{,}5;1)$. Après échange des valeurs, elle devient $0{,}75(0,4)+0{,}25(2,0)=(0{,}5;3)$. Les poids déterminent la contribution relative des positions ; les valeurs déterminent le contenu agrégé. Les poids seuls ne suffisent donc pas à déterminer la sortie.
 
 </details>
+:::
 
 ## Code et tests
 

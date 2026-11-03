@@ -20,7 +20,7 @@ related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:fr", "status:published"]
 -->
 
-Des auto-vérifications courtes avec corrigé replié sont intégrées à certaines pages de cours ; elles permettent de vérifier immédiatement une notion. **Les collections ci-dessous regroupent des exercices plus développés**, dont la rédaction reste à compléter après validation des prérequis et revue du plan de couverture.
+Les pages de cours utilisent un composant homogène **« Vérifier sa compréhension »** : questions courtes avec corrigés repliés, progressant de la restitution vers l’explication, l’application et le transfert lorsque le sujet s’y prête. Chaque vérification renvoie ici vers la collection thématique correspondante. **Les collections ci-dessous regroupent des exercices plus développés** (calculs approfondis, problèmes à plusieurs étapes et tâches de transfert) ; leur état de développement est indiqué explicitement.
 
 ## Comment utiliser cet espace
 

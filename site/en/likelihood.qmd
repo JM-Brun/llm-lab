@@ -61,7 +61,8 @@ If the probabilities assigned to three observed tokens are $(0.5, 0.25, 0.8)$, t
 - **“NLL is comparable without specifying the tokenizer.”** Not always: different segmentations change the number and granularity of evaluated events.
 :::
 
-## Self-check
+::: {.self-check}
+## Check your understanding
 
 [Open the related exercise space](exercises.qmd#foundations) — detailed exercises will be authored separately.
 
@@ -81,6 +82,7 @@ If the probabilities assigned to three observed tokens are $(0.5, 0.25, 0.8)$, t
 </details>
 
 **Next:** [Cross-entropy](cross-entropy.qmd) · [Loss](loss.qmd)
+:::
 
 ## Further reading
 

@@ -72,12 +72,16 @@ Les trois familles décrites ici sont les grandes configurations du **Transforme
 
 Pour comprendre comment ces architectures s'inscrivent dans l'évolution de la recherche, consultez l'[historique des Transformers](transformer-history.qmd). Pour suivre le calcul interne du GPT décodeur seul choisi dans ce projet, poursuivez avec [GPT et Transformer](transformer.qmd).
 
-## Vérifier votre compréhension
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](exercises.qmd#transformer).
 
 1. **Pourquoi BERT peut-il exploiter des tokens situés après le token à représenter ?** Parce que son encodeur utilise généralement une attention bidirectionnelle sur toute l'entrée ; il n'est pas soumis au masque causal d'un GPT.
 2. **Quelle opération distingue particulièrement un décodeur d'un encodeur-décodeur ?** Dans le second, le décodeur dispose d'une attention croisée vers les représentations produites par l'encodeur.
 3. **Le prochain-token prediction définit-il tous les Transformers ?** Non. C'est un objectif typique des décodeurs autorégressifs, pas une propriété de tous les Transformers.
 4. **Un Transformer est-il nécessairement un LLM ?** Non. L'architecture ne détermine ni la taille du modèle ni son statut de LLM.
+:::
 
 ::: {.language-switch}
 **Langue :** [Français](transformer-architectures.qmd) · [English](../en/transformer-architectures.qmd)
