@@ -145,23 +145,11 @@ Les IDs exacts dépendent de l'encodage et du comportement de la bibliothèque ;
 La table d'embeddings contient $V \times d$ paramètres ; une projection de sortie distincte peut en ajouter $d \times V$, sauf si les poids d'entrée et de sortie sont partagés (*weight tying*). Le détail du comptage, les formes associées et un ordre de grandeur calculable sont proposés dans la page [Tenseurs](tensors.qmd).
 :::
 
-## Des embeddings de tokens aux représentations contextualisées
+## De l'embedding initial aux représentations contextualisées
 
-L'étape suivante dépend de l'architecture. Dans un modèle de type GPT-2 utilisant des embeddings positionnels absolus appris, un vecteur propre à la position est ajouté à chaque embedding de token :
+Le lookup s'arrête à la sélection d'une ligne de la matrice : il ne contextualise pas le vecteur. L'information positionnelle et le traitement par les couches du Transformer interviennent ensuite ; leur mécanisme dépend de l'architecture. Pour éviter de confondre ces étapes, voir la page dédiée à [l'encodage positionnel](positional-encoding.qmd), puis celle sur les [représentations contextualisées](contextualized-representations.qmd).
 
-\[
-X_{b,t}=E_{\text{token}_{b,t}}+P_t.
-\]
-
-Les deux termes ont la dimension \(d\), donc l'entrée combinée a la forme \([B,L,d]\). Les blocs Transformer contextualisent ensuite chaque position à partir de la séquence ; dans un bloc standard qui conserve la largeur, la forme des états cachés reste \([B,L,d]\), même si leurs valeurs changent lorsque le contexte est intégré.
-
-Cette addition n'est **pas universelle**. Par exemple, [RoPE](positional-encoding.qmd) applique des rotations dépendant de la position aux vecteurs requête et clé dans l'attention, au lieu d'ajouter un vecteur de position aux embeddings initiaux. Il faut identifier l'architecture avant de fixer le pipeline exact.
-
-Pendant l'entraînement, les gradients peuvent modifier les lignes de la table d'embeddings utilisées par les exemples. La sélection par indice ne rend pas, à elle seule, un vecteur contextuel : la contextualisation intervient dans les couches suivantes du réseau. Voir les [tenseurs](tensors.qmd) pour les conventions de dimensions et [du texte aux tokens](text-data.qmd) pour l'étape précédente du tokenizer.
-
-### De l'embedding initial à l'état contextualisé
-
-Un même ID récupère le même embedding initial, mais sa représentation peut évoluer lorsque le Transformer traite l'information positionnelle et les tokens environnants. Cette distinction est approfondie dans un [complément ciblé](contextualized-representations.qmd).
+Pendant l'entraînement, les gradients peuvent modifier les lignes de la table d'embeddings utilisées par les exemples. Pour les conventions de dimensions et les opérations sur les tenseurs, voir la page [Tenseurs](tensors.qmd) ; pour l'étape précédente, voir [du texte aux tokens](text-data.qmd).
 
 ## Interpréter la géométrie avec prudence
 
@@ -178,12 +166,12 @@ Pour approfondir ces questions sans les confondre avec le mécanisme de lookup, 
 
 [Exercices approfondis sur ce thème](exercises.qmd#transformer).
 
-1. Deux occurrences du même ID apparaissent dans des contextes différents. Avant le Transformer, sélectionnent-elles le même vecteur d’embedding ? Après plusieurs couches, leurs représentations doivent-elles rester identiques ?
+1. Une matrice contient \(V\) lignes et des vecteurs de dimension \(d\). Combien de paramètres contient-elle, et que sélectionne l'ID \(i\) ?
 
 <details>
 <summary>Afficher le raisonnement</summary>
 
-Le lookup initial sélectionne la même ligne de la matrice : le vecteur d’embedding initial est donc identique, à paramètres et positionnement mis à part. Après contextualisation, les états peuvent différer parce que chaque occurrence échange de l’information avec un contexte différent. Il faut distinguer le vecteur de token initial de l’état caché contextualisé.
+La matrice contient \(V\times d\) paramètres. L'ID \(i\) sélectionne la ligne \(E_i\) ; sa valeur entière sert d'indice, pas de coordonnée sémantique. Le traitement positionnel et la contextualisation interviennent ensuite, selon l'architecture (voir les deux pages dédiées).
 
 </details>
 
