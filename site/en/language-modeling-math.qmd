@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/llm-overview"]
   children: []
-related: ["en/mathematical-foundations", "en/training-examples"]
+related: ["en/probabilities", "en/likelihood", "en/loss", "en/training-examples", "en/mathematical-foundations"]
 tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:en", "status:published"]
 -->
 
@@ -48,7 +48,7 @@ Language modeling means constructing a probabilistic model that assigns probabil
 For two events $A$ and $B$, with $P(B)>0$, conditional probability is defined as:
 
 $$
-P(A\mid B)=\frac{P(A\cap B)}{P$B$}.
+P(A\mid B)=\frac{P(A\cap B)}{P(B)}.
 $$
 
 In a language model, event $B$ represents the prefix already observed and $A$ the next token. We write:
@@ -72,7 +72,7 @@ The probability chain rule gives, for any joint distribution:
 
 $$
 P(x_1,\ldots,x_T)
-=P$x_1$P(x_2\mid x_1)\cdots
+=P(x_1)P(x_2\mid x_1)\cdots
 P(x_T\mid x_1,\ldots,x_{T-1}).
 $$
 
