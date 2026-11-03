@@ -178,6 +178,7 @@ The 2017 Transformer emerged from a broader history of attention mechanisms, seq
 - [**What next-token prediction does not prove**](llm-limits.qmd) — read performance without over-interpreting the objective.
 - [**Build a small GPT**](build-path.qmd) — follow the G0–G9 milestones.
 - [**Experimental evaluation**](experimental-evaluation.qmd) — define metrics, baselines, and interpretation limits.
+- [**Research sources**](../references.qmd) — find the papers and studies cited in this panorama.
 
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-overview.qmd) · [English](llm-overview.qmd)
