@@ -125,7 +125,7 @@ Try to answer before opening the solutions. The goal is to manipulate the mental
 
 The token "cat" is appended to the context: it is this longer sequence that the model receives. It computes a new probability distribution over the vocabulary, from which a selection rule extracts the next token. What does not change: the model's parameters — inference reads them, it does not modify them.
 
-:::
+</details>
 
 2. An application must answer from documentation that changes daily. Compare adding document retrieval (RAG) with fine-tuning: which one can exploit the new documents without retraining the weights?
 
@@ -136,7 +136,7 @@ RAG can retrieve documents at inference time and provide them in the context; th
 
 </details>
 
-</details>
+:::
 
 ## 7. One distinction to keep in mind
 
