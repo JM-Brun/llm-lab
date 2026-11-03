@@ -32,7 +32,6 @@ Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice 
 **Pour approfondir :** exécutez la trace Python, puis explorez la géométrie, les similarités et leurs limites. La géométrie des embeddings initiaux n'est pas, à elle seule, une explication du sens.
 :::
 
-Cette page explique comment les IDs sélectionnent des vecteurs initiaux, puis examine la géométrie des représentations apprises et les limites des mesures de similarité. La question distincte de la contextualisation d'un embedding initial par le Transformer est traitée dans un [complément ciblé](contextualized-representations.qmd).
 
 ## D'où viennent les vecteurs ?
 

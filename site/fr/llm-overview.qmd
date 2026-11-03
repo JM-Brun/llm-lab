@@ -23,7 +23,6 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 ::: {.chapter-lead}
 Un **modèle de langage** est un modèle qui attribue une probabilité à des séquences de texte — ou, de façon équivalente dans une factorisation autorégressive, au prochain token sachant le contexte. Un **modèle génératif** peut produire de nouveaux échantillons à partir d'une distribution apprise ; il peut être conditionné par une entrée. Un **LLM** (*large language model*) est un modèle de langage entraîné à grande échelle : il n'existe pas de seuil universel de paramètres qui sépare mécaniquement les « petits » modèles des LLM. La taille n'est qu'une dimension de l'échelle ; les relations entre paramètres, données, calcul et performance sont étudiées par les [lois d'échelle](scaling-laws.qmd). La catégorie LLM ne présuppose pas une architecture particulière.
 
-Cette page part du problème à résoudre : produire une continuation plausible à partir d'un contexte, alors que le langage est ambigu, structuré à plusieurs niveaux et combinatoire. Elle montre ensuite comment un GPT traite ce problème, sans détailler les mécanismes renvoyés vers leurs pages dédiées.
 :::
 
 <details>
