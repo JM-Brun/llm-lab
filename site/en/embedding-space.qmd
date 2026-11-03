@@ -227,13 +227,6 @@ No. A 2D projection preserves only selected aspects of the geometry and may crea
 
 </details>
 
-## Continue learning
-
-- [Cosine similarity](cosine-similarity.qmd): metrics and limitations.
-- [Representation linearity](embedding-linearity.qmd): decodability, linearity, and interpretation.
-- [Tensors](tensors.qmd): how vectors are organized in network computations.
-- [Positional encoding and RoPE](positional-encoding.qmd): information about token positions.
-
 ## References
 
 - [Mikolov et al. (2013), *Efficient Estimation of Word Representations in Vector Space*](https://arxiv.org/abs/1301.3781).

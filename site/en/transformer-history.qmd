@@ -58,11 +58,9 @@ Dates distinguish submissions, announcements, and releases. Milestones are group
 - **Scale does not explain everything.** Data, objectives, tokenization, architecture, training procedure, and evaluation also shape observed capabilities.
 - **A publication date is not proof of absolute priority.** This page selects a few pedagogical milestones and does not attempt to catalogue every parallel contribution.
 
-## Where to go next
+## Primary source
 
-- Start with the original [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
-- Compare objectives using [causal masking](causal-masking.qmd), [attention](scaled-dot-product-attention.qmd), and [mathematical foundations](mathematical-foundations.qmd).
-- Use the [glossary](glossary.qmd) for terminology in this timeline.
+- [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
 
 :::: {.language-switch}
 [Français](../fr/transformer-history.qmd) · [English](transformer-history.qmd)

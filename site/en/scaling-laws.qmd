@@ -73,12 +73,6 @@ Scaling laws are empirical models, not physical laws. Extrapolation can fail out
 
 When comparing results, check the metric, evaluation distribution, compute budget, token count, model size, and experimental conditions. A loss curve does not replace task-specific evaluation.
 
-## Continue learning
-
-- [LLM panorama](llm-overview.qmd) — place scale in the definition and operation of language models.
-- [Transformer architectures](transformer-architectures.qmd) — distinguish capacity, architecture, and objective.
-- [Experimental evaluation](experimental-evaluation.qmd) — build controlled measurements and comparisons.
-
 ## References
 
 - Kaplan et al. (2020), [*Scaling Laws for Neural Language Models*](https://arxiv.org/abs/2001.08361).
