@@ -15,7 +15,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: ["fr/llm-overview"]
-  children: []
+  children: ["fr/cross-attention"]
 related: ["fr/transformer-history", "fr/transformer", "fr/cross-attention"]
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:fr", "status:published"]
 -->
