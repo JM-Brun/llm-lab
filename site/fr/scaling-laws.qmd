@@ -1,0 +1,90 @@
+---
+title: "Lois d'échelle : paramètres, données et calcul"
+subtitle: "Ce que les régularités empiriques disent — et ne disent pas — sur la taille des modèles"
+keywords: ["type:concept-lesson", "destination:understand", "topic:scaling-laws", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/scaling-laws"
+scope: "Présente les lois d'échelle empiriques des modèles de langage, les relations entre nombre de paramètres, quantité de données, calcul et perte, ainsi que les limites de leur extrapolation ; ne fixe aucun seuil définissant universellement un LLM."
+purpose: "Le lecteur doit pouvoir expliquer ce que décrivent les lois d'échelle, pourquoi le nombre de paramètres ne suffit pas à caractériser l'échelle et pourquoi une relation empirique ne définit pas une frontière universelle entre LLM et autres modèles."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/llm-overview"]
+  children: []
+related: []
+tags: ["type:concept-lesson", "destination:understand", "topic:scaling-laws", "level:core", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Les **lois d'échelle** (*scaling laws*) décrivent des régularités empiriques entre les ressources utilisées pour entraîner un modèle — notamment le nombre de paramètres, la quantité de données et le calcul — et une mesure de performance telle que la perte de prédiction. Elles aident à comparer des régimes d'entraînement et à répartir un budget de calcul. Elles ne définissent pas une taille minimale universelle pour qu'un modèle soit un LLM.
+:::
+
+## Pourquoi parler d'échelle ?
+
+Deux modèles ayant le même nombre de paramètres peuvent avoir des comportements très différents si leurs données, leur durée d'entraînement, leur architecture ou leur procédure d'optimisation diffèrent. Inversement, un modèle plus petit, mais entraîné sur davantage de données pertinentes et avec un budget mieux utilisé, peut obtenir une meilleure perte de validation qu'un modèle plus grand sous-entraîné.
+
+Le nombre de paramètres est donc un indicateur de capacité et de coût, pas une mesure suffisante de la qualité ni une définition de la catégorie LLM.
+
+## Que décrivent les lois d'échelle ?
+
+Dans certains régimes expérimentaux, la perte diminue de façon régulière lorsque l'on augmente les ressources. Une forme idéalisée souvent étudiée est une loi de puissance :
+
+$$
+L(N) \approx L_\infty + aN^{-\alpha},
+$$
+
+où $N$ représente ici une variable d'échelle (par exemple le nombre de paramètres), $L_\infty$ une limite asymptotique, et $a$ et $\alpha$ des constantes ajustées empiriquement. Cette expression est illustrative : les études réelles examinent plusieurs variables, des termes correctifs et des domaines de validité.
+
+Trois ressources doivent être considérées conjointement :
+
+- **Paramètres ($N$)** : capacité paramétrique du modèle et coût associé à son exécution.
+- **Données ($D$)** : quantité de tokens d'entraînement, mais aussi leur qualité, leur diversité, leur déduplication et leur adéquation à l'objectif.
+- **Calcul ($C$)** : opérations disponibles pour l'entraînement, liées à la taille du modèle, au nombre de tokens traités et à l'efficacité de l'implémentation.
+
+Une expérience qui ne fait varier que $N$ ne permet pas de conclure à une règle universelle sur la taille optimale.
+
+## Le budget de calcul change la question
+
+La question pertinente n'est pas seulement « quel modèle peut-on rendre plus grand ? », mais « comment répartir un budget de calcul donné entre taille du modèle et quantité de données ? ».
+
+Kaplan et al. (2020) ont documenté des relations de puissance entre perte et échelle du modèle, des données et du calcul. Hoffmann et al. (2022), avec l'étude dite *Chinchilla*, ont montré que de nombreux grands modèles étaient entraînés avec trop peu de tokens au regard de leur taille et ont proposé une allocation du budget de calcul différente. Ces résultats ont déplacé l'attention de la seule taille paramétrique vers le compromis paramètres-données-calcul.
+
+Il ne faut pas transformer une règle d'allocation issue d'un protocole donné en constante universelle : le résultat dépend de la famille de modèles, des données, de l'optimiseur, de l'objectif, du budget et de la métrique retenue.
+
+## Pourquoi cela ne donne-t-il pas un seuil universel de LLM ?
+
+Une loi d'échelle décrit une tendance mesurée dans un ensemble d'expériences ; elle ne fournit pas une frontière taxonomique naturelle. La catégorie « LLM » est utilisée pour désigner des modèles de langage entraînés à grande échelle, mais :
+
+- aucun nombre de paramètres ne sépare à lui seul et dans tous les contextes les LLM des autres modèles ;
+- les paramètres ne disent pas combien de données distinctes ont été exploitées ni combien de calcul a été dépensé ;
+- la perte de prédiction sur une distribution ne résume pas les capacités, la robustesse, la factualité ou l'utilité sur une tâche ;
+- les résultats peuvent changer avec l'architecture, les données, l'entraînement et l'évaluation.
+
+Il est donc plus rigoureux de décrire un modèle par plusieurs dimensions — paramètres, tokens d'entraînement, calcul, données et résultats mesurés — que de lui attribuer un statut sur la base d'un seuil arbitraire.
+
+## Limites et précautions
+
+Les lois d'échelle sont des modèles empiriques, pas des lois physiques. Leur extrapolation peut échouer hors du régime observé. La perte moyenne peut masquer des différences importantes entre domaines ou sous-populations ; elle ne garantit pas une amélioration uniforme des tâches en aval. Les changements de données, d'architecture ou de procédure d'entraînement peuvent également déplacer les courbes.
+
+Pour comparer des résultats, il faut donc vérifier la métrique, la distribution d'évaluation, le budget de calcul, le nombre de tokens, la taille du modèle et les conditions expérimentales. Une courbe de perte ne remplace pas une évaluation ciblée.
+
+## Pour poursuivre
+
+- [Panorama : qu'est-ce qu'un LLM ?](llm-overview.qmd) — replacer l'échelle dans la définition et le fonctionnement des modèles de langage.
+- [Architectures Transformer](transformer-architectures.qmd) — distinguer capacité, architecture et objectif.
+- [Évaluation expérimentale](evaluation-experimentale.qmd) — construire des mesures et des comparaisons contrôlées.
+
+## Références
+
+- Kaplan et al. (2020), [*Scaling Laws for Neural Language Models*](https://arxiv.org/abs/2001.08361).
+- Hoffmann et al. (2022), [*Training Compute-Optimal Large Language Models*](https://arxiv.org/abs/2203.15556).
+- Henighan et al. (2020), [*Scaling Laws for Autoregressive Generative Modeling*](https://arxiv.org/abs/2010.14701).
+
+::: {.language-switch}
+**Langue :** [Français](scaling-laws.qmd) · [English](../en/scaling-laws.qmd)
+:::
