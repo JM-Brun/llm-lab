@@ -76,6 +76,17 @@ XGBoost formalizes a regularized objective and second-order approximation; Light
 3. Why can a lower learning rate underfit with a fixed number of trees?
 <details><summary>Show answer</summary>Each tree contributes a smaller correction, so the available stages may be insufficient.</details>
 :::
+## Compare the implementations
+
+| Dimension | XGBoost | LightGBM | CatBoost |
+|---|---|---|---|
+| Objective / construction | Second-order Taylor approximation, explicit regularization | Histograms, leaf-wise growth, GOSS/EFB | Ordered boosting and ordered categorical statistics |
+| Typical growth | Level-wise / depth-controlled, depending on configuration | Leaf-wise best-first | Symmetric trees by default |
+| Categorical data | Support depends on version and configuration | Native support with representation constraints | Categorical handling is central to the algorithm |
+| Main caution | Regularization and split-search cost | Leaf-count control and overfitting | Encoding protocol, permutations, and compute cost |
+
+This table summarizes characteristic choices, not absolute rules or performance guarantees. Versions, parameters, objectives, and hardware change behaviour. Choose by validation on the actual task, using a baseline and comparable compute budgets.
+
 ## References
 - [Friedman (2001), Greedy Function Approximation: A Gradient Boosting Machine](https://doi.org/10.1214/aos/1013203451).
 - [AiEdge — The Gradient Boosted Algorithm Explained!](https://newsletter.theaiedge.io/p/the-gradient-boosted-algorithm-explained).
