@@ -47,7 +47,7 @@ Les **logits sont des scores, pas des probabilités**. À une position, le modè
 
 **Première lecture :** retenez le passage « représentation du Transformer → projection de sortie → vecteur de $V$ logits ». Vérifiez l'exemple à deux classes : $(0,\log 3)$ devient $(1/4,3/4)$ après softmax.
 
-**Pour approfondir :** étudiez l'invariance par translation et la stabilité numérique. Puis passez aux [probabilités de sortie](probabilites.qmd) pour comprendre la distribution conditionnelle.
+Ajouter la même constante à tous les logits ne change pas la distribution softmax ; la stabilité numérique évite les débordements lors de son calcul. La [distribution conditionnelle de sortie](probabilites.qmd) est obtenue en normalisant ces scores.
 :::
 ## Définition et dimensions
 
