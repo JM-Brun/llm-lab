@@ -11,10 +11,10 @@ scope: "Decomposes squared prediction error into bias, variance, and irreducible
 purpose: "Diagnose underfitting and overfitting and interpret model sensitivity to training samples."
 suggested_route:
   previous: null
-  next: "en/decision-trees"
+  next: "en/model-capacity-data-regimes"
 hierarchy:
   parents: []
-  children: []
+  children: ["en/model-capacity-data-regimes"]
 related: ["en/gradient-boosting", "en/xgboost"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:bias-variance", "level:applied", "language:en", "status:published"]
 -->
