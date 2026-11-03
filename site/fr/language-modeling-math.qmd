@@ -21,7 +21,7 @@ tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level
 -->
 
 ::: {.chapter-lead}
-Un modèle de langage peut être décrit comme un système qui attribue une probabilité à une séquence de tokens. Dans un modèle autorégressif, cette probabilité est construite à partir de probabilités conditionnelles successives : à chaque position, le modèle estime le token suivant à partir du préfixe déjà observé. Cette page explicite les objets mathématiques derrière cette idée, sans les supposer acquis dans la page d’overview.
+Cette page approfondit le [panorama des LLM](llm-overview.qmd) et en formalise mathématiquement le problème central : un modèle de langage attribue une probabilité à une séquence de tokens. Dans un modèle autorégressif, cette probabilité est construite à partir de probabilités conditionnelles successives : à chaque position, le modèle estime le token suivant à partir du préfixe déjà observé. Cette page explicite les objets mathématiques derrière cette idée, sans les supposer acquis dans la page d’overview.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
