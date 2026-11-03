@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/transformer"
-scope: "Suit le calcul d'un GPT autorégressif dans le réseau — embeddings, information de position, blocs Transformer, attention, MLP, chemins résiduels et normalisation — de la séquence de tokens en entrée jusqu'aux logits ; ne traite pas la génération comme simple boucle boîte noire ni l'apprentissage des paramètres comme sujet principal."
-purpose: "Le lecteur doit pouvoir retracer le calcul jusqu’aux logits, expliquer les opérations principales d’un bloc Transformer, distinguer profondeur et largeur du réseau, et séparer représentations, scores et décodage."
+scope: "Suit le calcul d’un GPT autorégressif à l’intérieur du réseau, depuis les représentations d’entrée jusqu’aux logits, en se concentrant sur les blocs Transformer, l’auto-attention, le MLP, les connexions résiduelles et la normalisation ; la préparation du texte et la boucle de génération sont seulement situées, pas réenseignées."
+purpose: "Le lecteur doit pouvoir décrire le calcul d’une passe avant, expliquer les opérations d’un bloc Transformer, distinguer profondeur et largeur, et identifier les logits comme sortie du réseau sans confondre cette passe avec le décodage ou la génération."
 suggested_route:
   previous: "fr/llm-overview"
   next: "fr/generation"
@@ -21,7 +21,7 @@ tags: ["type:system-overview", "destination:understand", "topic:transformer", "l
 -->
 
 ::: {.chapter-lead}
-Un **GPT** est un modèle de langage fondé sur un Transformer autorégressif : il reçoit en entrée une séquence de tokens — le contexte — et estime, pour chaque token du vocabulaire, la probabilité qu'il soit le prochain. Trois éléments sont à distinguer pour comprendre le système : le chemin que suivent les données à travers le réseau, les paramètres appris qui déterminent ce chemin, et la boucle de génération qui répète le calcul.
+Un **GPT** est un modèle de langage fondé sur un Transformer autorégressif : il reçoit en entrée une séquence de tokens — le contexte — et estime, pour chaque token du vocabulaire, la probabilité qu'il soit le prochain. Cette page se concentre sur le calcul effectué par le réseau, des représentations d'entrée aux logits. Elle distingue ce calcul de la boucle d'inférence qui sélectionne et ajoute les tokens successifs.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
@@ -36,23 +36,15 @@ Vous pourrez :
 
 ![Flux simplifié d'un GPT autorégressif, des tokens à la sélection du prochain token.](../images/gpt-data-flow.svg){fig-alt="Pipeline conceptuel : texte, tokenisation, embeddings et position, blocs Transformer répétés, logits, softmax, choix du prochain token puis ajout au contexte." width=100%}
 
-Le schéma montre le chemin conceptuel d'une génération. Il omet volontairement certains détails d'implémentation : connexions résiduelles, normalisation, cache des clés et valeurs (*KV cache*) et variantes d'échantillonnage.
+Ce schéma situe le Transformer dans le système complet. **Cette page zoome sur le calcul effectué par le réseau**, depuis ses représentations d'entrée jusqu'aux logits ; elle ne reprend ni la préparation détaillée du texte ni la boucle de sélection du prochain token.
 
-::: {.callout-tip title="L'idée directrice"}
-Tout GPT répète une même boucle : **représenter le contexte → estimer une distribution sur le token suivant → sélectionner un token → l'ajouter au contexte**. Le schéma ci-dessus la parcourt de bout en bout, et les sections 1 à 3 la décrivent pas à pas.
+Pour le panorama des familles et des étapes d’apprentissage, voir le [panorama des LLM](llm-overview.qmd). Pour la boucle d’inférence et le décodage, voir [générer du texte](generation.qmd). La [comparaison des architectures](transformer-architectures.qmd) situe le GPT décodeur seul parmi les autres familles.
 
-Le [panorama des LLM](llm-overview.qmd) distingue les étapes de pré-entraînement, d’adaptation et d’inférence. La [comparaison des architectures Transformer](transformer-architectures.qmd) situe le décodeur seul parmi les autres configurations ; [la tokenisation du texte](text-data.qmd) explique comment le texte devient une séquence de tokens.
-:::
+## 1. Des identifiants aux représentations d'entrée
 
-## 1. Du texte aux représentations
+Le réseau ne reçoit pas directement du texte : il reçoit une séquence d'identifiants de tokens, convertis en vecteurs par une table d'embeddings. Une information de position est également intégrée, soit aux embeddings, soit au calcul d'attention selon l'architecture. Les blocs Transformer transforment ensuite ces vecteurs en représentations contextualisées : un même token peut contribuer à des états différents selon le contexte.
 
-Le texte n'entre pas dans le réseau tel quel. Le [tokenizer](text-data.qmd) le découpe en tokens et remplace chacun par un numéro, son identifiant. Une table de nombres apprise pendant l'entraînement — la **matrice d'embedding** — associe alors à chaque identifiant un vecteur, l'**embedding** du token. C'est le point de départ numérique du calcul : à partir d'ici, le réseau ne manipule plus que des vecteurs.
-
-L'ordre des tokens porte une information que ces vecteurs, pris isolément, n'encode pas : « le chat poursuit le chien » et « le chien poursuit le chat » contiennent exactement les mêmes tokens. Une information de position est donc fournie, soit ajoutée aux embeddings, soit intégrée au calcul d'attention ; la page [Encodage positionnel](positional-encoding.qmd) compare ces mécanismes.
-
-Une dernière distinction, importante pour la suite : l'embedding initial d'un token ne dépend pas du contexte, mais les couches du Transformer mettent ensuite les vecteurs à jour en fonction des tokens qui les entourent. On parle alors de représentations **contextualisées** : le même mot peut y correspondre à des vecteurs différents selon la phrase.
-
-Pour prolonger : [l'espace des embeddings](embedding-space.qmd) et sa géométrie — [similarité cosinus](cosine-similarity.qmd), [hypothèse de linéarité](linearite-embeddings.qmd) —, les [représentations contextualisées](contextualized-representations.qmd) et les [tenseurs](tensors.qmd), qui détaillent l'organisation de ces vecteurs dans les calculs.
+Cette section donne seulement les repères nécessaires pour lire le calcul du réseau. Les explications de référence sont séparées : [texte et tokenisation](text-data.qmd), [espace des embeddings](embedding-space.qmd), [information positionnelle](positional-encoding.qmd) et [représentations contextualisées](contextualized-representations.qmd). Pour les formes et dimensions des tenseurs, voir [Tenseurs](tensors.qmd).
 
 ## 2. Les blocs Transformer
 
@@ -102,13 +94,13 @@ L'information de position intervient également ici : selon le modèle, elle a �
 
 Les poids d'attention ne sont pas une explication complète d'une prédiction : ils décrivent une étape d'agrégation. Les projections, les valeurs, les autres têtes, les couches suivantes et la sortie finale contribuent toutes au résultat.
 
-## 3. Des représentations aux probabilités
+## 3. Des représentations aux logits
 
-Après le dernier bloc, une projection de sortie produit les **logits** : un score non normalisé pour chaque token du vocabulaire. Le *softmax* les transforme en distribution de probabilité sur le token suivant. Ces probabilités ne disent rien, en elles-mêmes, de la vérité du texte ni de la calibration du modèle : voir [logits](logits.qmd), [probabilités](probabilites.qmd) et [vraisemblance](vraisemblance.qmd).
+Après le dernier bloc, une projection de sortie produit les **logits** : un score non normalisé pour chaque token du vocabulaire. Une *softmax* appliquée à ces scores définit une distribution de probabilité sur les candidats au prochain token. Ces objets sont distincts : les logits sont les sorties numériques du réseau ; la distribution est leur transformation probabiliste. Voir les pages de référence sur les [logits](logits.qmd), les [probabilités](probabilites.qmd) et la [vraisemblance](vraisemblance.qmd).
 
-### Exemple numérique : du contexte à une distribution
+### Exemple numérique : d'un vecteur de logits à une distribution
 
-Supposons que le contexte soit « Le chat » et que le vocabulaire jouet ne contienne que quatre candidats pour le prochain token. La projection de sortie produit, à titre **illustratif**, les logits suivants :
+Supposons que le vocabulaire jouet ne contienne que quatre candidats. La projection de sortie produit, à titre **illustratif**, les logits suivants :
 
 | Token candidat | Logit | Probabilité après softmax |
 |---|---:|---:|
@@ -117,15 +109,16 @@ Supposons que le contexte soit « Le chat » et que le vocabulaire jouet ne cont
 | `mange` | 0 | 8,7 % |
 | `joue` | −1 | 3,2 % |
 
-Les probabilités sont calculées par \(p_i = \exp(z_i)/\sum_j\exp(z_j)\). Ces nombres sont choisis pour rendre le calcul lisible : ils ne proviennent ni du GPT de référence du dépôt ni d'un modèle linguistique entraîné. Dans un vrai modèle, le vocabulaire comporte beaucoup plus de candidats et les logits dépendent du contexte, des paramètres et de la position considérée.
+Les probabilités sont calculées par \(p_i = \exp(z_i)/\sum_j\exp(z_j)\). Ces nombres sont choisis pour rendre le calcul lisible : ils ne proviennent ni du GPT de référence du dépôt ni d'un modèle entraîné. Un vrai modèle possède un vocabulaire bien plus vaste, et ses logits dépendent du contexte, des paramètres et de la position considérée.
 
-Pendant la génération, une règle de sélection choisit le token suivant : maximum, échantillonnage ou méthode plus élaborée. Dans l'exemple jouet, la sélection gloutonne choisirait `dort`, tandis qu'un échantillonnage pourrait retenir un autre candidat selon les probabilités. Le token choisi rejoint le contexte, et le calcul recommence. La génération est donc **autorégressive** : le texte se construit token par token, et non en une seule prédiction de toute la réponse.
+Cette sortie correspond à **une passe avant** pour un contexte donné. La sélection du prochain token, l'ajout au contexte et la répétition du calcul appartiennent à la [boucle de génération](generation.qmd), pas à la passe avant elle-même.
 
 ### Une passe avant n'est pas une boucle de génération
 
-Une **passe avant** (*forward pass*) reçoit le contexte disponible et calcule les logits pour les positions traitées. Pour choisir le token suivant, on lit les logits de la dernière position, puis une règle de décodage sélectionne un token. La **boucle de génération** répète ensuite : passe avant → sélection → ajout du token au contexte → nouvelle passe avant. Le réseau ne calcule jamais toute la réponse future en une seule passe.
+Une **passe avant** transforme le contexte fourni en logits ; elle ne choisit pas, à elle seule, le token qui sera ajouté et ne calcule pas toute la réponse future. Le décodage et la répétition autorégressive sont décrits dans la page dédiée à la [génération](generation.qmd).
 
-::: {.self-check}
+
+
 ## Vérifier sa compréhension
 
 [Voir les exercices approfondis sur la génération](exercises.qmd#generation) — cette vérification courte reprend l'exemple numérique de cette page.
@@ -148,11 +141,11 @@ Une **passe avant** (*forward pass*) reçoit le contexte disponible et calcule l
 
 L'[atelier d'exploration de GPT-2](transformer-explainer.qmd) permet d'observer ces mécanismes sur un modèle réel : conduire des expériences contrôlées et examiner les limites de la visualisation. C'est un exercice d'analyse indépendant — utile, mais pas nécessaire pour suivre le flux décrit ici.
 
-## Entraînement et génération : deux modes à ne pas confondre
+## Entraînement et inférence : deux organisations du calcul
 
-Pendant l'entraînement d'un modèle autorégressif, les positions d'une séquence sont calculées en parallèle, grâce au décalage entre entrées et cibles et au masque causal. Lors de la génération ordinaire, le prochain token dépend du contexte réellement disponible : le modèle avance étape par étape. Des optimisations comme le cache KV évitent de recalculer des clés et valeurs déjà produites.
+Pendant l'entraînement autorégressif, le masque causal permet de calculer en parallèle les prédictions associées aux différentes positions d'une séquence, à partir des entrées et cibles décalées. En génération, les **pas successifs de production des tokens** sont séquentiels, car chaque nouveau token dépend du précédent ; une passe avant peut néanmoins traiter en parallèle les positions du contexte déjà disponible.
 
-Cette distinction explique pourquoi « le modèle prédit le prochain token » reste vrai dans les deux cas, alors que l'organisation des calculs diffère.
+La construction des fenêtres, le décalage entrées/cibles et les masques d'entraînement sont détaillés dans [Exemples d'entraînement](training-examples.qmd). Le coût du préremplissage, du décodage et du cache KV est étudié dans l'[approfondissement sur la complexité](llm-computational-complexity.qmd).
 
 ## Limites et idées reçues
 
