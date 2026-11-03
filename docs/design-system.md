@@ -52,7 +52,7 @@ Green is the primary brand colour. It identifies the site, navigation, links, pr
 - Code blocks should support copying, preserve readable line lengths, and remain usable on narrow screens.
 - Cards should encode a meaningful action or content grouping, not merely decorate every paragraph.
 
-## 3.1 Navigation hierarchy
+## Navigation hierarchy
 
 Every page reached through the Quarto sidebar should expose a compact **breadcrumb** above its title. It is generated from the active sidebar hierarchy, so the labels and nesting remain aligned with the actual site navigation in both languages. The breadcrumb answers “where am I?”; it is not a claim that readers must follow every parent page in sequence.
 
