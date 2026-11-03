@@ -1,0 +1,135 @@
+---
+title: "Architectures hybrides : le cas Nemotron"
+subtitle: "Combiner états récurrents, attention et calcul parcimonieux"
+keywords: ["type:concept-lesson", "destination:understand", "topic:hybrid-llm-architectures", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/hybrid-llm-architectures"
+scope: "Étudie les compromis entre Mamba-2, attention, MoE, GQA, MTP et précision numérique à partir de Nemotron 3 ; distingue principes généraux et choix propres à une version."
+purpose: "Expliquer les coûts d'inférence ciblés par une architecture hybride, distinguer paramètres totaux et actifs, et identifier les compromis de capacité, de rappel et de bande passante."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/transformer-architectures", "fr/transformer", "fr/generation", "fr/scaling-laws"]
+tags: ["type:concept-lesson", "destination:understand", "topic:hybrid-llm-architectures", "level:advanced", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Un modèle performant doit aussi déplacer et stocker ses données efficacement. **Nemotron 3** illustre une réponse : combiner des couches Mamba-2, quelques couches d'attention et des couches *Mixture of Experts* (MoE), puis optimiser la génération et la précision numérique. Ce cas explique des compromis ; il ne constitue pas une recette universelle.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+Expliquer la complémentarité entre état récurrent et attention ; distinguer paramètres totaux et actifs ; relier GQA, MTP et quantification à leurs coûts ; séparer principes généraux et caractéristiques d'une version précise.
+:::
+
+## Pourquoi hybrider l'architecture ?
+
+Lors de la génération autorégressive, un Transformer à attention globale conserve un cache *key-value* (KV) dont la taille augmente avec le contexte. À chaque nouveau token, l'attention consulte aussi un historique plus long.
+
+Il faut distinguer les deux temps de l'inférence. Le **préremplissage** (*prefill*) traite le prompt complet : avec une attention globale dense, les interactions entre positions croissent quadratiquement avec sa longueur \(T\). Pendant le **décodage** (*decode*), le cache KV évite de recalculer les clés et valeurs déjà produites, mais chaque nouveau token consulte toujours l'historique : le coût attentionnel par token croît donc avec la longueur du contexte, et le cache KV augmente lui aussi. Pour un prompt de longueur \(T\) suivi de \(L\) tokens générés, le coût attentionnel du décodage est approximativement proportionnel à \(LT + L^2\), à architecture et dimensions fixées.
+
+Une couche à espace d'état comme **Mamba-2** maintient plutôt un état récurrent borné, mis à jour à chaque token. Schématiquement :
+
+\[
+s_t = f_\theta(s_{t-1}, x_t), \qquad y_t = g_\theta(s_t, x_t).
+\]
+
+Il n'est plus nécessaire de stocker un couple clé-valeur pour chaque position passée. Le traitement de séquence peut être linéaire en longueur, avec un état borné pendant la génération. La contrepartie est que cet état résume l'historique : il ne fournit pas à lui seul le même accès direct à une position précise qu'une attention explicite.
+
+Les mécanismes sont complémentaires :
+- **Mamba-2** : traitement séquentiel efficace et état compact ;
+- **attention** : accès flexible aux représentations passées, avec un cache dépendant du contexte.
+
+Une architecture hybride alterne ces mécanismes : Mamba traite une grande partie du flux, tandis que certaines couches d'attention préservent des chemins de récupération explicite. Leur proportion et leur placement doivent être évalués empiriquement.
+
+## MoE : capacité totale et calcul activé
+
+Une couche **Mixture of Experts** contient plusieurs réseaux experts ; un routeur sélectionne un sous-ensemble pour chaque token. Si $N$ est le nombre total d'experts et $K < N$ le nombre activé pour un token, le modèle dispose d'une grande capacité tout en n'effectuant qu'une partie du calcul expert par token.
+
+C'est la distinction entre **paramètres totaux** et **paramètres actifs**. Les paramètres non sélectionnés ne sont pas gratuits : ils doivent généralement rester stockés ou accessibles sur les accélérateurs. Le nombre actif renseigne surtout sur le calcul mobilisé par token ; le nombre total influence encore la mémoire nécessaire au modèle et les transferts de poids.
+
+::: {.callout-warning title="Sparsité n'est pas compression"}
+Un MoE de 30 milliards de paramètres dont environ 3 milliards sont actifs par token n'est pas un modèle dense de 3 milliards. Les autres experts existent toujours et doivent être hébergés ou rendus accessibles.
+:::
+
+
+### LatentMoE : router dans un espace plus compact
+
+Un MoE classique route une représentation de dimension \(d\) vers plusieurs experts. Même si peu d'experts sont activés, le transfert des représentations et la lecture des poids experts peuvent devenir coûteux. **LatentMoE**, utilisé dans Nemotron 3 Super et Ultra, ajoute une projection descendante \(W_\downarrow : \mathbb{R}^{d} \rightarrow \mathbb{R}^{\ell}\), avec \(\ell < d\). Le routeur et les experts travaillent dans cet espace latent réduit ; leurs sorties sont agrégées puis reprojetées vers la dimension \(d\).
+
+À budget comparable, réduire la dimension des représentations routées diminue les poids experts à lire et le volume de communication *all-to-all*. NVIDIA utilise cette marge pour augmenter le nombre d'experts et le nombre d'experts activés par token. Ce n'est donc pas simplement « davantage d'experts » : c'est une co-conception de la représentation, du routage et des coûts matériels. La dimension latente ne peut toutefois pas être réduite arbitrairement sans perte de capacité.
+
+## GQA réduit le cache KV
+
+La *Grouped-Query Attention* (GQA) fait partager les clés et valeurs entre plusieurs têtes de requête. Elle conserve plusieurs têtes Q, mais utilise moins de têtes K/V distinctes.
+
+Pour une couche, une approximation de la mémoire du cache est :
+
+\[
+M_{KV} \approx 2 B T n_{KV} d_h b,
+\]
+
+où $B$ est le batch, $T$ la longueur du contexte, $n_{KV}$ le nombre de têtes K/V, $d_h$ leur dimension et $b$ le nombre d'octets par élément. Le facteur 2 correspond aux clés et aux valeurs ; il faut sommer les couches d'attention.
+
+Réduire $n_{KV}$ réduit approximativement le cache dans la même proportion. Ainsi, 32 têtes Q partageant 2 têtes KV donnent un ratio de 16 entre nombres de têtes, mais pas nécessairement un gain de latence de 16 : noyaux, matériel, batch et transferts mémoire interviennent aussi.
+
+## Lire ensemble les choix de Nemotron 3
+
+Le livre blanc NVIDIA décrit une architecture principalement composée de couches Mamba-2 et MoE, avec quelques couches d'auto-attention.
+
+| Technique | Coût ciblé | Principe | Compromis |
+|---|---|---|---|
+| Mamba-2 | Cache dépendant du contexte | État récurrent compact | Récupération précise moins directe |
+| Attention | Accès à l'historique | Pondération explicite des positions | Cache KV dépendant du contexte |
+| MoE | Calcul feed-forward | Activer certains experts | Poids totaux, routage et communication |
+| GQA | Mémoire KV | Partager K/V entre têtes Q | Réduit le cache, ne l'élimine pas |
+| MTP / décodage spéculatif | Passages séquentiels | Proposer plusieurs tokens puis vérifier | Gain lié au taux d'acceptation |
+| Quantification | Stockage et trafic mémoire | Moins de bits par nombre | Erreur numérique et sensibilité des couches |
+
+### MTP et décodage spéculatif
+
+La **Multi-Token Prediction** (MTP) ajoute des objectifs auxiliaires qui apprennent au modèle à prédire plusieurs tokens futurs. À l'inférence, ces prédictions peuvent servir de propositions dans un schéma de décodage spéculatif : un mécanisme léger propose une suite, puis le modèle principal la vérifie. Plusieurs tokens peuvent être acceptés lors d'une même vérification, réduisant le nombre de passages séquentiels.
+
+MTP est un objectif d'entraînement ; le décodage spéculatif est une stratégie d'inférence qui exploite des propositions vérifiées. Il ne supprime pas la dépendance causale de la génération. Dans le rapport de **Nemotron 3 Super**, deux couches MTP à poids partagés sont utilisées : le partage permet d'appliquer récursivement le mécanisme à plusieurs horizons de prédiction et vise à limiter le décalage entre les états issus des vraies séquences d'entraînement et ceux générés pendant le décodage spéculatif. Ce choix est propre à cette configuration.
+
+### MOPD : distiller plusieurs spécialistes sur les sorties du modèle
+
+Nemotron 3 Ultra illustre aussi une évolution du post-entraînement : la **Multi-Teacher On-Policy Distillation** (MOPD). Le modèle étudiant génère ses propres trajectoires (*on-policy*), puis des enseignants spécialisés par domaine évaluent ces trajectoires et fournissent un signal de supervision dense, token par token. Le modèle apprend ainsi à partir de contextes et de réponses qu'il produit réellement, plutôt qu'uniquement à partir de réponses préparées hors politique (*off-policy*).
+
+Cette approche complète, sans les remplacer, le SFT et le RL avec récompenses vérifiables (RLVR). Elle est propre à la recette de Nemotron 3 Ultra : ne pas la présenter comme une étape universelle ni comme une caractéristique de toutes les variantes Nemotron.
+
+### Quantification et précision numérique
+
+Une représentation de faible précision réduit le volume des poids et peut réduire les transferts mémoire, mais introduit une approximation. Les couches ne tolèrent pas toutes la même erreur. Pour Nemotron 3 Super, NVFP4 utilise des valeurs flottantes E2M1 sur 4 bits, des micro-blocs de 16 valeurs avec facteurs d'échelle E4M3, puis une échelle globale FP32. La recette est **mixte** : certaines projections d'attention, les couches MTP, les embeddings et une partie du réseau restent en BF16 ; la projection de sortie Mamba utilise MXFP8, tandis que la plupart des couches linéaires utilisent NVFP4. Dire « modèle entraîné en FP4 » ne signifie donc pas que chaque tenseur est codé sur 4 bits.
+
+Le livre blanc NVIDIA décrit l'entraînement NVFP4 pour certaines variantes Nemotron 3 et mentionne des précautions de précision pour des projections sensibles. Il serait incorrect d'affirmer que tous les Nemotron utilisent uniformément NVFP4 ou que toute quantification préserve automatiquement les performances. Format, mise à l'échelle, recette et métriques doivent être précisés.
+
+## Lire les chiffres avec esprit critique
+
+Les nombres de paramètres, d'experts, de têtes et la longueur de contexte décrivent une version donnée ; ils ne définissent pas toute la famille Nemotron. Un débit annoncé par le fournisseur dépend du matériel, des longueurs de préremplissage (*prefill*) et de génération (*decode*), du batch et du protocole.
+
+Une comparaison sérieuse contrôle le matériel, la précision, la concurrence, le débit, la latence du premier token, la latence inter-token et la qualité sur les mêmes tâches. **L'efficacité d'inférence est un problème de système** : FLOPs, bande passante, capacité mémoire, communication et nombre de passages séquentiels interagissent.
+
+Nemotron 3 ne rend pas le Transformer obsolète. Il montre qu'un système peut combiner plusieurs mécanismes ayant des propriétés de calcul et de représentation différentes. Le bon choix dépend du contexte, du besoin de récupération précise, de la concurrence, du matériel et de l'objectif de latence ou de débit.
+
+Pour relier ce cas au parcours : [architectures Transformer](transformer-architectures.qmd), [bloc Transformer](transformer.qmd), [génération autorégressive](generation.qmd) et [lois d'échelle](scaling-laws.qmd).
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+1. **Pourquoi garder quelques couches d'attention dans un modèle dominé par Mamba ?** Pour préserver des chemins d'accès explicite aux positions antérieures.
+2. **Un MoE 30B avec 3B actifs nécessite-t-il seulement 3B de mémoire de poids ?** Non : les autres experts restent des paramètres à héberger ou rendre accessibles.
+3. **GQA et Mamba réduisent-ils le même coût ?** Non : GQA réduit les têtes K/V et le cache attention ; Mamba maintient un état récurrent borné.
+4. **MTP rend-il la génération non autorégressive ?** Non : les propositions sont vérifiées par le modèle cible.
+5. **Un gain de débit publié est-il une loi générale ?** Non : il dépend du matériel et du protocole.
+:::
+
+::: {.language-switch}
+**Langue :** [Français](hybrid-llm-architectures.qmd) · [English](../en/hybrid-llm-architectures.qmd)
+:::
