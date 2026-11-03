@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer"
-scope: "Follows an autoregressive GPT computation inside the network—from the input token sequence through embeddings, positional information, Transformer blocks, attention, and output scores to logits; it does not treat generation as a black-box loop or parameter learning as its main subject."
+scope: "Follows an autoregressive GPT computation inside the network—from the input token sequence through embeddings, positional information, Transformer blocks, attention, MLP, residual paths, and normalization to logits; it does not treat generation as a black-box loop or parameter learning as its main subject."
 purpose: "Readers should be able to trace a token sequence through the network to the logits, explain the role of the main operations in a Transformer block, and distinguish initial embeddings, contextualized representations, and output scores."
 suggested_route:
   previous: "en/llm-overview"
@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/llm-overview"]
   children: ["en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/queries-keys-values", "en/logits", "en/tensors", "en/transformer-explainer"]
-related: ["en/text-data"]
+related: ["en/text-data", "en/transformer-block-walkthrough"]
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:en", "status:published"]
 -->
 
@@ -60,7 +60,15 @@ The core of the network is a stack of identical blocks. Each block combines two 
 - **Self-attention:** each position draws from previous positions the information that refines its representation. In GPT, a causal mask forbids reading future tokens.
 - **Feed-forward network (MLP):** a small neural network applied to each position separately, with the same weights everywhere.
 
-Blocks also include residual connections and normalizations, whose exact order depends on the architecture: the diagram in this page is an abstraction, not a specification of a particular model.
+Blocks also use **residual connections** and **normalization**. A residual connection adds a correction computed by a sublayer to the representation flowing through the network, rather than replacing that representation entirely. It therefore provides a direct path for information and gradients:
+
+\[
+x_{\text{out}} = x_{\text{in}} + F(x_{\text{in}}).
+\]
+
+Normalization (*LayerNorm* in classic GPT models) centers and normalizes the hidden-vector components of each position independently of other positions. Depending on the architecture, it is placed before or after selected sublayers. A typical **pre-LN** block, for example, uses $x' = x + \operatorname{Attention}(\operatorname{LN}(x))$, followed by $x'' = x' + \operatorname{MLP}(\operatorname{LN}(x'))$. This is one design, not a universal formula: pre-LN/post-LN order and normalization variants differ across models.
+
+To see these operations in a concrete implementation without mistaking them for invariants of every Transformer, consult the [guided tour of the reference block](transformer-block-walkthrough.qmd).
 
 ![Comparison of the roles of self-attention and the feed-forward network in a Transformer block.](../images/attention-vs-mlp.svg){fig-alt="Self-attention allows exchanges between allowed positions; the same feed-forward network is applied separately to each position." width=100%}
 
