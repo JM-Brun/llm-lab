@@ -45,7 +45,7 @@ Use headings, concise callouts, diagrams, links, and—where it improves usabili
 
 ## 2. Page types have different jobs
 
-Do not force every page into an identical chapter template. Choose the page type first and use the relevant contract.
+Do not force every page into an identical chapter template. Choose the page's dominant learner question, then compose it from the [flexible page-template system](page-template-system.md). Page families are starting points, not exclusive categories; optional modules should be omitted or combined when they add no learning value.
 
 ### A. Orientation or system overview
 
