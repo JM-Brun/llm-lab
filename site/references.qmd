@@ -334,7 +334,7 @@ Ces trois travaux établissent des régularités observées dans des régimes ex
 
 Ces ressources ont servi de références de conception et de vérification pour la page [Panorama : qu’est-ce qu’un LLM ?](fr/llm-overview.qmd). Elles ne sont pas les sources graphiques de l’illustration originale du dépôt.
 
-### Pipeline NLP : prétraitement, modèle et post-traitement {#pipeline-et-génération-autoregressive}
+### Pipeline NLP : prétraitement, modèle et post-traitement {#pipeline-et-generation-autoregressive}
 
 - **Hugging Face, LLM Course — [“Behind the pipeline”](https://huggingface.co/learn/llm-course/chapter2/2).** Présente un pipeline NLP en trois grandes parties : prétraitement, passage dans le modèle, puis post-traitement. L’exemple de la page porte sur la classification de sentiment ; il est utile pour clarifier la séparation des responsabilités, mais ne doit pas être pris pour une description exacte de toutes les architectures GPT génératives.
 
