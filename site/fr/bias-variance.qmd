@@ -30,7 +30,7 @@ En régression à perte quadratique, pour une entrée fixée (x) :
 =\operatorname{Bias}(\hat f(x))^2+\operatorname{Var}(\hat f(x))+\sigma^2(x).
 \]
 
-(D) est l'échantillon d'entraînement aléatoire ; (hat f_D) le modèle appris ; (sigma^2(x)) le bruit conditionnel irréductible. Cette identité suppose notamment (Y=f(x)+\varepsilon) avec bruit conditionnel de moyenne nulle.
+$D$ est l'échantillon d'entraînement aléatoire ; $\\hat f_D$ le modèle appris ; $\\sigma^2(x)$ le bruit conditionnel irréductible. Cette identité suppose notamment $Y=f(x)+\\varepsilon$ avec bruit conditionnel de moyenne nulle.
 
 - **Biais** : écart entre la prédiction moyenne sur les échantillons possibles et la fonction cible.
 - **Variance** : sensibilité des prédictions aux variations de l'échantillon d'entraînement.
