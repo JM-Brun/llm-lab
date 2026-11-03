@@ -1,0 +1,88 @@
+---
+title: "Preparing a corpus for pretraining"
+subtitle: "Provenance, filtering, deduplication, splits, and tokenizer fitting"
+keywords: ["type:build-guide", "destination:build", "topic:corpus-preparation", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/corpus-preparation"
+scope: "Covers data-engineering decisions upstream of pretraining: source eligibility and provenance, parsing and filtering, deduplication, evaluation splits, tokenizer fitting/freezing, and hand-off to token streams."
+purpose: "Build a traceable corpus-preparation protocol suited to a training or evaluation objective, avoid split leakage, and distinguish corpus-level decisions from tokenizer internals and training-example construction."
+suggested_route:
+  previous: "en/build-path"
+  next: "en/training-examples"
+hierarchy:
+  parents: ["en/build-path"]
+  children: []
+related: ["en/text-data", "en/tokenization-strategies", "en/tokenizer-design-evaluation", "en/training-examples", "en/experimental-evaluation"]
+tags: ["type:build-guide", "destination:build", "topic:corpus-preparation", "level:core", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+A model is not trained directly on “the internet” or on an abstract collection of text: it consumes sequences built from selected and transformed sources. Corpus preparation defines what enters the experiment, what must remain independent for evaluation, and which transformations must be auditable. This work is distinct from tokenizing a prompt and from constructing training windows.
+:::
+
+## Learning objectives
+
+- Define eligible sources and preserve provenance and usage conditions.
+- Distinguish parsing, filtering, deduplication, and tokenizer normalization.
+- Choose splits that match the generalization claim an evaluation is intended to test.
+- Fit and freeze a tokenizer without contaminating a held-out evaluation.
+- Hand a prepared corpus off to encoding and training-example construction.
+
+## 1. A chain of decisions, not a universal recipe
+
+| Stage | Question to document | Possible operations | Evidence to retain |
+|---|---|---|---|
+| **1. Scope the sources** | Which sources are relevant and eligible for the objective? | Select sources, time range, languages, domains, and document units | Source identifiers, provenance, licences/rights, collection dates, and constraints |
+| **2. Parse** | How can comparable content be extracted from source formats? | Extract text and metadata, decode, handle malformed or empty documents | Parser version, errors, extracted fields, and rejection rules |
+| **3. Filter** | Which items are out of scope or below the required quality? | Documented language, quality, spam, safety, or policy filters | Rules, thresholds, before/after counts, and audited samples |
+| **4. Deduplicate** | Are repeated or near-identical items over-represented? | Exact deduplication; approximate detection where justified | Method, thresholds, duplicate groups, and retention decisions |
+| **5. Split** | Which unit must remain independent for evaluation? | Split by source, document family, user, or time; audit overlap | Split identifiers, any random seed, grouping rules, and audit results |
+| **6. Fit the tokenizer** | Which text may influence the vocabulary and rules? | Train on permitted data, then freeze an exact revision | Fitting corpus, configuration, version, vocabulary, and fingerprint |
+| **7. Encode and hand off** | How can a reproducible token stream be produced? | Encode with the frozen tokenizer, handle boundaries, and serialize | Tokenizer revision, encoding parameters, statistics, and provenance |
+
+The exact order depends on the corpus and protocol. For example, deduplication may precede splitting to prevent exact copies crossing partitions; a group-aware split followed by a cross-partition near-duplicate audit may be preferable in other settings. The requirement is not a dogmatic order: make the strategy that supports the generalization claim explicit and verify it.
+
+## 2. Deduplication and split leakage
+
+Evaluation leakage occurs when information that should remain independent influences training or makes evaluation artificially easy. Exact copies are an obvious case; near-duplicates, overlapping chunks, documents from the same family, or items after a temporal cutoff can also create dependencies.
+
+- Define the separation unit from the evaluation question: document, author, source, user, group, or time period.
+- Do not assume a random split of chunks guarantees independent partitions.
+- Audit exact and approximate overlap after splitting, using documented methods and thresholds.
+- Preserve identifiers and provenance needed to explain why a document was retained, excluded, or grouped.
+
+Deduplication is not unconditionally beneficial: removing repetition can reduce over-representation, but it can also alter a corpus's natural distribution or remove legitimate occurrences. Document the trade-off and measure the effect of the chosen rules.
+
+## 3. Fit the tokenizer without contaminating evaluation
+
+For a conventional held-out experiment, fit a learned tokenizer on the training partition only, then freeze it before encoding validation and test. Otherwise, its vocabulary or rules may incorporate information from texts reserved for evaluation. This safeguard applies to experiments claiming generalization to unseen data; it does not necessarily describe every industrial pretraining pipeline, which may use different data-construction and tracking conventions.
+
+Keep four operations distinct:
+
+1. **Corpus preparation:** source selection, parsing, filtering, deduplication, and document splitting.
+2. **Tokenizer training:** building its vocabulary and parameters from the fitting corpus.
+3. **Tokenizer pipeline:** configured normalization and pre-tokenization, applied during training and encoding.
+4. **Encoding:** converting text into IDs with a frozen tokenizer version.
+
+Normalization and pre-tokenization do not replace document filtering. Conversely, cleaning a corpus does not by itself define tokenizer behaviour.
+
+## 4. Handoff contract to the next stages
+
+At the end of this stage, it should be possible to recover:
+
+- sources, licences/rights, dates, and collection rules;
+- parser and filter versions, with before/after counts;
+- deduplication parameters and overlap audits;
+- split definitions and leakage checks;
+- the exact tokenizer configuration and revision;
+- encoding statistics and document-boundary rules.
+
+The prepared corpus can then be encoded into token streams. The [training examples page](training-examples.qmd) covers the next stage: input-target shifting, windows, packing, padding, and masks. The [text and data page](text-data.qmd) retains the shorter inference path from prompt text to initial representations.
+
+## Limitations
+
+This page defines a traceability framework and separation of responsibilities, not a legal policy, universal filtering recipe, or ready-made contamination detector. Thresholds, tools, and split units must be justified by the data, applicable rights, and the experimental claim being made.
