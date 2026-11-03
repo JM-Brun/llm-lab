@@ -39,7 +39,6 @@ To represent this uncertainty, the model estimates the plausibility of several c
 
 The model learns statistical regularities in its data; this objective does not, by itself, provide a mechanism for verifying truth.
 
-Autoregressive generation relies on a probability distribution over the next token, conditioned on the current context. This dependency is central to the probabilistic model; its formalization, sequence factorization, and connection to the training objective are developed in the [mathematical deep dive on language modeling](language-modeling-math.qmd).
 
 ### Why is this problem difficult?
 
