@@ -60,6 +60,61 @@ This file assembles the model: the input embeddings, the stacked blocks, the fin
         return linear(x, self.w_head, self.b_head)
 ```
 
+```{=html}
+<figure class="wf-fig" id="wf-model-map" data-wf-default="The shape changes at only two moments: the embedding lookup (ids → d-vectors) and the output projection (d → V). In between, (B, T, d) crosses L blocks and the final normalization unchanged.">
+<figcaption class="wf-fig-title">The shape journey: every forward-pass line has its stage</figcaption>
+<div class="wf-stage">
+<div class="wf-diagram">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 250" role="img" aria-labelledby="wfm-title wfm-desc">
+<title id="wfm-title">Shape journey through gpt.py: ids cross the blocks and become logits</title>
+<desc id="wfm-desc">Ids (B, T) index the embedding table (V, d) to give (B, T, d); positions (T, d) are added; the L blocks and the final normalization keep (B, T, d); the w_head projection (d to V) produces the logits (B, T, V).</desc>
+<defs><marker id="wfm-green" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#16A34A"/></marker></defs>
+<g font-family="Arial,sans-serif">
+<g data-wf-part="emb"><rect x="14" y="100" width="80" height="64" rx="10" fill="#E0F2FE" stroke="#0EA5E9" stroke-width="2"/><text x="54" y="126" text-anchor="middle" font-size="15" font-weight="700" fill="#0C4A6E">ids</text><text x="54" y="146" text-anchor="middle" font-size="11" fill="#0C4A6E">(B, T)</text></g>
+<g data-wf-part="emb"><path d="M94 132 H120" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfm-green)"/></g>
+<g data-wf-part="emb"><rect x="124" y="100" width="170" height="64" rx="10" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="209" y="124" text-anchor="middle" font-size="12.5" font-family="ui-monospace,Menlo,Consolas,monospace" font-weight="700" fill="#4C1D95">token_embedding[ids]</text><text x="209" y="144" text-anchor="middle" font-size="10" fill="#6D28D9">fancy indexing: one row per id</text></g>
+<g data-wf-part="emb pos"><path d="M294 132 H314" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfm-green)"/></g>
+<g data-wf-part="pos"><rect x="318" y="100" width="190" height="64" rx="10" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="413" y="124" text-anchor="middle" font-size="12.5" font-family="ui-monospace,Menlo,Consolas,monospace" font-weight="700" fill="#4C1D95">+ position_embedding[:T]</text><text x="413" y="144" text-anchor="middle" font-size="10" fill="#6D28D9">T rows sliced, broadcast over the batch</text></g>
+<g data-wf-part="pos blk"><path d="M508 132 H528" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfm-green)"/></g>
+<g data-wf-part="blk"><rect x="532" y="100" width="140" height="64" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="602" y="122" text-anchor="middle" font-size="13" font-weight="700" fill="#17212B">blocks &#215; L</text><text x="602" y="142" text-anchor="middle" font-size="10" fill="#475569">pr&#233;-LN + r&#233;sidus</text></g>
+<g data-wf-part="blk lnf"><path d="M672 132 H690" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfm-green)"/></g>
+<g data-wf-part="lnf"><rect x="694" y="100" width="95" height="64" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="741" y="126" text-anchor="middle" font-size="13" font-weight="700" fill="#17212B">ln_f</text><text x="741" y="146" text-anchor="middle" font-size="10" fill="#475569">(&#947;f, &#946;f)</text></g>
+<g data-wf-part="lnf head"><path d="M789 132 H807" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfm-green)"/></g>
+<g data-wf-part="head"><rect x="811" y="100" width="110" height="64" rx="10" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="866" y="126" text-anchor="middle" font-size="12.5" font-family="ui-monospace,Menlo,Consolas,monospace" font-weight="700" fill="#4C1D95">w_head</text><text x="866" y="146" text-anchor="middle" font-size="10" fill="#6D28D9">d &#8594; V</text></g>
+<g data-wf-part="head"><path d="M921 132 H939" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfm-green)"/></g>
+<g data-wf-part="head"><rect x="943" y="100" width="123" height="64" rx="10" fill="#FEF3C7" stroke="#B45309" stroke-width="2"/><text x="1004" y="126" text-anchor="middle" font-size="14" font-weight="700" fill="#78350F">logits</text><text x="1004" y="146" text-anchor="middle" font-size="10" fill="#92400E">(B, T, V)</text></g>
+<g data-wf-part="emb"><rect x="2" y="196" width="104" height="26" rx="13" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.4"/><text x="54" y="213" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">(B, T)</text></g>
+<g data-wf-part="emb"><rect x="157" y="196" width="104" height="26" rx="13" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.4"/><text x="209" y="213" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">(B, T, d)</text></g>
+<g data-wf-part="pos"><rect x="361" y="196" width="104" height="26" rx="13" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.4"/><text x="413" y="213" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">(B, T, d)</text></g>
+<g data-wf-part="blk"><rect x="550" y="196" width="104" height="26" rx="13" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.4"/><text x="602" y="213" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">(B, T, d)</text></g>
+<g data-wf-part="lnf"><rect x="689" y="196" width="104" height="26" rx="13" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.4"/><text x="741" y="213" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">(B, T, d)</text></g>
+<g data-wf-part="head"><rect x="943" y="196" width="104" height="26" rx="13" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.4"/><text x="995" y="213" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">(B, T, V)</text></g>
+</g>
+</svg>
+</div>
+<div class="wf-panel">
+<p class="wf-hint">Hover over or select a line: the matching stage lights up and the tensor shape reads in the green badge. Keyboard: <kbd>Tab</kbd>, <kbd>Enter</kbd> to pin, <kbd>Esc</kbd> to release.</p>
+<div class="wf-chips" role="group" aria-label="Forward-pass lines">
+<button type="button" class="wf-chip" data-wf-links="emb" data-wf-note="Fancy indexing: each id in (B, T) selects one row of the (V, d) table. The shape goes from (B, T) to (B, T, d) — one learned vector per position.">token_embedding[ids]</button>
+<button type="button" class="wf-chip" data-wf-links="pos" data-wf-note="The (T, d) table is sliced to seq_len then broadcast over the batch: every sequence shares the same absolute positions, and the shape stays (B, T, d).">+ position_embedding[:seq_len]</button>
+<button type="button" class="wf-chip" data-wf-links="blk" data-wf-note="Each block rewrites x while keeping (B, T, d); its residual trunk keeps a copy of the input — repeated L times, the width never changes.">for block in self.blocks</button>
+<button type="button" class="wf-chip" data-wf-links="lnf" data-wf-note="Final per-position normalization: the last transform before the output projection. Shape unchanged, (B, T, d).">layer_norm(x, ln_f_γ, ln_f_β)</button>
+<button type="button" class="wf-chip" data-wf-links="head" data-wf-note="The untied head projects d → V: every position carries V scores, and position t predicts the token after t. Output: (B, T, V).">linear(x, w_head, b_head)</button>
+</div>
+<p class="wf-note" aria-live="polite">The shape changes at only two moments: the embedding lookup (ids → d-vectors) and the output projection (d → V). In between, (B, T, d) crosses L blocks and the final normalization unchanged.</p>
+</div>
+</div>
+<figcaption class="wf-legend">
+<span class="wf-key"><span class="wf-swatch" style="background:#E0F2FE;border-color:#0EA5E9"></span>token ids</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#F5F3FF;border-color:#8B5CF6"></span>parameters (tables, w_head)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#FEF3C7;border-color:#B45309"></span>logits (output)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#DCFCE7;border-color:#16A34A"></span>tensor shape</span>
+</figcaption>
+</figure>
+<script src="../includes/walkthrough-figures.js" defer></script>
+```
+
+
 The shape journey, line by line:
 
 1. **Validate first**: 2D, integers, non-empty, `seq_len <= context_length`, ids within `[0, V)`. A named error here beats an indexing crash three lines later.
