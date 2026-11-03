@@ -107,13 +107,11 @@ website:
                 - fr/embedding-space.qmd
                 - fr/positional-encoding.qmd
                 - fr/contextualized-representations.qmd
-            - section: "Dans le Transformer"
+            - section: "Attention et sortie du Transformer"
               contents:
                 - fr/queries-keys-values.qmd
                 - fr/scaled-dot-product-attention.qmd
                 - fr/causal-masking.qmd
-            - section: "Prédire et générer"
-              contents:
                 - fr/logits.qmd
                 - fr/probabilites.qmd
             - section: "Apprendre à partir des données"
@@ -124,8 +122,6 @@ website:
                 - fr/cross-entropy.qmd
                 - fr/loss.qmd
                 - fr/gradients.qmd
-            - section: "Repères mathématiques (facultatifs)"
-              contents:
                 - fr/mathematical-foundations.qmd
         - section: "Construire un petit GPT"
           contents:
@@ -165,13 +161,11 @@ website:
                 - en/embedding-space.qmd
                 - en/positional-encoding.qmd
                 - en/contextualized-representations.qmd
-            - section: "Inside the Transformer"
+            - section: "Attention and the Transformer's output"
               contents:
                 - en/queries-keys-values.qmd
                 - en/scaled-dot-product-attention.qmd
                 - en/causal-masking.qmd
-            - section: "Predict and generate"
-              contents:
                 - en/logits.qmd
                 - en/probabilities.qmd
             - section: "Learn from data"
@@ -182,8 +176,6 @@ website:
                 - en/cross-entropy.qmd
                 - en/loss.qmd
                 - en/gradients.qmd
-            - section: "Mathematical orientation (optional)"
-              contents:
                 - en/mathematical-foundations.qmd
         - section: "Build a small GPT"
           contents:
