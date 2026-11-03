@@ -17,7 +17,7 @@ hierarchy:
   parents: []
   children: []
 related: []
-tags: ["type:concept-lesson", "destination:understand", "topic:scaling-laws", "level:core", "language:en", "status:published"]
+tags: ["type:concept-lesson", "destination:understand", "topic:scaling-laws", "level:advanced", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
