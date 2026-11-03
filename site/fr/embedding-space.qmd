@@ -93,7 +93,7 @@ Pour un lot de séquences, le changement de forme usuel est :
 
 où \(B\) est la taille du lot, \(L\) la longueur de séquence et \(d\) la dimension des embeddings. Le lookup ne mélange pas l'information entre les positions : deux occurrences du même identifiant récupèrent la même ligne avant l'ajout éventuel d'information positionnelle et le traitement contextuel.
 
-::: {.callout-note collapse="true" title="Trace d'implémentation facultative : texte → IDs → embeddings"}
+::: {.callout-note collapse="true" title="Exemple facultatif"}
 
 ### Une trace reproductible : texte → IDs → lignes d'embedding
 L'exemple relie un encodage de tokenizer réel et identifié à une table d'embeddings **synthétique**. Il utilise l'encodage BPE au niveau des octets de GPT-2 fourni par `tiktoken` ; les IDs ci-dessous sont vérifiés dans les tests publics de la bibliothèque. Installez la version figée avec `python -m pip install tiktoken==0.14.0`. NumPy est déjà une dépendance du projet.
