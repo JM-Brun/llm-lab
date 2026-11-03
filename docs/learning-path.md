@@ -17,6 +17,19 @@ The learner-facing course and the implementation dependency graph answer differe
 6. **Explain learning:** training corpora, context windows and shifted targets; then the next-token objective, loss, gradients, backpropagation, optimization, pretraining and validation. Only now introduce the full parameter-update loop.
 7. **Explain adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation; keep these distinct.
 
+## Page ownership: one canonical explanation, deliberate reminders
+
+The sequence above is a **route through concepts**, not permission to explain the same mechanism in every chapter. Each concept has a canonical page; the panorama and system overviews provide orientation, while component lessons carry the substantive explanation. A later page may recall a prerequisite, but should not repeat its worked example or complete explanation unless it adds a distinct learning outcome.
+
+- **LLM panorama:** terminology, model-family orientation, and the distinctions between architecture, weight learning, and use.
+- **Generation:** the complete autoregressive inference loop and the basic decoding choices.
+- **GPT/Transformer overview:** one forward pass through the network, with emphasis on Transformer blocks and the path to logits.
+- **Text/data:** the short path from raw text to token IDs; tokenizer algorithms and design trade-offs belong to their dedicated core and advanced pages.
+- **Component lessons:** embeddings, positional information, contextualized representations, attention mechanisms, logits, probabilities, likelihood, entropy, cross-entropy, loss, and gradients each have their own explanatory home.
+- **Training examples:** context windows, shifted targets, document boundaries, packing, and training masks belong to the training-data branch, not to the first explanation of inference input.
+
+Use [the cross-page content ownership contract](content-section-mapping.md#7-cross-page-content-ownership-contract) to decide whether a repeated passage is a useful reminder, a system-level map, retrieval practice, or avoidable duplication. The contract also records where advanced depth and implementation evidence belong.
+
 Evaluation is cross-cutting: introduce the idea of a held-out test early, then deepen metrics, baselines, uncertainty, leakage and error analysis when the learner has a concrete model or claim to assess.
 
 A randomly initialized GPT can demonstrate the mechanics of inference before it is trained, but its output will generally be incoherent. This separates **how generation works** from **why learned parameters make generation useful**. Never imply that a useful language model can be obtained without training or loading pretrained weights.
