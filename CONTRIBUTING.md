@@ -89,6 +89,10 @@ Run the relevant checks for the changed surface and state clearly if a tool or o
 - No license has been selected yet; do not imply that others have permission to reuse or redistribute code or content.
 
 
+### Page learning outcomes: one shared component
+
+When a page needs an explicit statement of expected capabilities, use the bilingual **Objectifs d’apprentissage / Learning outcomes** component with the shared `.callout-note.learning-outcomes` classes. Its appearance must be controlled centrally in `site/styles.scss`; do not create one-off styles or ad hoc “À la fin de cette page” notes. Place it after the chapter lead, keep it to two to four observable, page-specific capabilities, and omit it when it adds no useful target. Outcomes are not summaries or comprehension checks. Follow section 11 of the [reader-experience method](docs/reader-experience-and-editorial-method.md#11-standardize-page-learning-outcomes).
+
 ### Learning checks: one recognizable pattern, increasing cognitive demand
 
 All reader-facing self-checks must use the shared pattern documented in [the reader-experience method](docs/reader-experience-and-editorial-method.md#10-standardize-embedded-learning-checks). Do not create ad hoc headings such as “Questions de contrôle”, “Vérifier votre compréhension”, “Self-check”, or “Check your understanding”: use the canonical language-specific heading and the shared `.self-check` container. Keep the visual treatment, question numbering, answer disclosure, and exercise-space link consistent across French and English pages.
