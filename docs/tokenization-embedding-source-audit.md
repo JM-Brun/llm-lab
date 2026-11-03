@@ -272,9 +272,25 @@ For the research papers below, the lesson currently captures the high-level prin
 
 ### 3.5 TokLens — [ACL 2026 SRW](https://aclanthology.org/2026.acl-srw.18/)
 
-**Concepts in the source:** a toolkit for comparative multilingual tokenizer measurement.  
-**LLM Lab coverage:** **mentioned as a tool**, with an appropriate warning that one intrinsic metric is not enough.  
-**Gap / action:** verify the current toolkit's supported metrics, language coverage, dependencies and maintenance before recommending it as an executable lab. Do not present the existence of a toolkit as validation of its metrics.  
+**Primary source checked:** [ACL Anthology PDF](https://aclanthology.org/2026.acl-srw.18.pdf), including metric definitions, benchmark analysis and limitations.
+
+**Concepts and operational definitions**
+- Six intrinsic metrics: fertility (tokens per whitespace-delimited word); characters per token (CPT); UTF-8 bytes per token (compression ratio, CR); normalized sequence length (tokens per character, NSL); single-token retention rate (STRR, fraction of whitespace-delimited words encoded as one token); and cross-lingual parity.
+- The parity metric is normalized tokens per character relative to English. It uses native-language Wikipedia samples of approximately 50,000 characters per language, not parallel translations. It therefore does not directly compare equal-meaning sentence pairs.
+- The intrinsic comparison covers 24 model/tokenizer configurations and 15 languages. Some model variants share a tokenizer; 22 configurations have Open LLM Leaderboard v2 scores and two are included for metric-only analysis.
+- The performance analysis is narrower than the intrinsic metric table: English benchmark analysis uses 22 models; the MMLU-ProX multilingual analysis is restricted to 7 models and 11 languages.
+
+**Findings and limits**
+- No intrinsic metric remains significantly associated with English benchmark performance after controlling for model size and multiple comparisons. The authors interpret this as a possible metric/benchmark mismatch and limited variation in English metrics, not proof that tokenization is irrelevant.
+- STRR, CPT and parity are associated with per-language MMLU-ProX results in the reported mixed-effects analysis. These are correlations, partly confounded by pretraining-data composition; they are not a causal estimate of changing a tokenizer.
+- The Qwen2.5 scaling analysis compares five model sizes sharing a tokenizer, training pipeline and data mixture. It relates per-language STRR to scaling slopes; it does not vary the tokenizer while holding the model fixed.
+- Whitespace-based fertility and STRR are ill-defined for Chinese, Japanese and Thai; Wikipedia does not represent all domains; the study covers BPE-family tokenizers, and within-language correlations remain underpowered.
+- **Metric distinction:** the abstract's “56×” Japanese/English headline refers to fertility (91.1 versus about 1.6 tokens per whitespace-delimited word). The Japanese parity ratio is a different metric: 8.8× for GPT-2, 4.2× for Qwen2.5 and 3.7× for Gemma-2 in the reported table. Do not combine these into one ratio or repeat the abstract's compressed phrasing without naming the denominator.
+
+**LLM Lab coverage:** the advanced page now summarizes the six metrics and the English/multilingual benchmark contrast. The revised wording should state the smaller MMLU-ProX sample and the correlational/pretraining-data caveat.
+
+**Gap / action:** no new public metric or figure is needed. Keep the FR/EN synthesis equivalent, state the relevant sample sizes, and distinguish fertility from character-normalized parity. Do not recommend the toolkit as a validated quality score; its value is a reproducible measurement framework.
+
 **Visual decision:** link to the paper/tool. No copied figures required.
 
 ## 4. Embeddings: conceptual and research sources
