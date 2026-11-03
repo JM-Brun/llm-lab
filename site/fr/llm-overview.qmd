@@ -68,7 +68,7 @@ flowchart LR
 
 | Étape | Ce qui se passe | Pour comprendre |
 |---|---|---|
-| **Texte et vocabulaire** | Le tokenizer segmente le texte selon un vocabulaire appris et ses règles. | [Du texte aux tokens](text-data.qmd) · [Stratégies de tokenisation](tokenization-strategies.qmd) |
+| **Texte et vocabulaire** | Le tokenizer segmente le texte selon son vocabulaire et ses règles. | [Du texte aux tokens](text-data.qmd) · [Stratégies de tokenisation](tokenization-strategies.qmd) |
 | **Tokens et IDs** | Chaque token est représenté par un identifiant entier ; un ID n’est ni un score ni un vecteur de sens. | [Texte, tokens et données](text-data.qmd) |
 | **Embeddings et position** | Les IDs sélectionnent des vecteurs initiaux ; une information de position permet de distinguer les emplacements. | [Espace des embeddings](embedding-space.qmd) · [Information de position](positional-encoding.qmd) |
 | **Transformer** | Les blocs transforment ces vecteurs en représentations contextualisées, notamment par l’attention. | [GPT et Transformer](transformer.qmd) · [Comparer les architectures](transformer-architectures.qmd) |
