@@ -136,12 +136,6 @@ Each resource below answers a different need. Pick the one that matches your cur
 
 These resources are complementary, not interchangeable: visualizations build intuition, the primary paper records the original formulation, annotated code exposes implementation choices, and API documentation specifies one library contract.
 
-## Checkpoint: reconstruct the computation
-
-This page has done its job if you can follow a token from its identifier to the logits, explain how attention and the MLP transform representations along the way, tell logits apart from generated text, and describe the loop: forward pass → token selection → append to context → new forward pass.
-
-**Recommended next step:** [From text to tokens](text-data.qmd) explains how the input is constructed. If you already understand that, move to the representation and attention lessons linked above. The [generation lesson](generation.qmd) deepens the selection rules and their effects.
-
 ::: {.language-switch}
 **Language:** [Français](../fr/transformer.qmd) · [English](transformer.qmd)
 :::
