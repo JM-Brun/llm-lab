@@ -21,7 +21,11 @@ tags: ["type:concept-lesson", "destination:deepen", "topic:lightgbm", "level:adv
 ::: {.chapter-lead}
 LightGBM aims to make training efficient on large tabular datasets. Its characteristic choices concern threshold search, tree growth, and feature-processing cost.
 :::
-\n\n![Schematic comparison of level-wise, leaf-wise, and symmetric tree growth.](../images/tree-growth-strategies.svg){fig-alt="Three schematic tree structures illustrating level-wise, leaf-wise, and symmetric growth; shapes are indicative."}\n\n## Histograms
+
+
+![Schematic comparison of level-wise, leaf-wise, and symmetric tree growth.](../images/tree-growth-strategies.svg){fig-alt="Three schematic tree structures illustrating level-wise, leaf-wise, and symmetric growth; shapes are indicative."}
+
+## Histograms
 
 Feature values are grouped into a limited number of bins. Gradient and Hessian statistics are aggregated per bin, and splits are searched over these histograms. This reduces operations and memory at the cost of approximate search, which depends in part on bin count.
 
