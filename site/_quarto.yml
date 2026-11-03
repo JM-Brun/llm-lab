@@ -55,9 +55,11 @@ project:
     - en/emergence.qmd
     - en/in-context-learning.qmd
     - fr/transformer-architectures.qmd
+    - fr/cross-attention.qmd
     - fr/hybrid-llm-architectures.qmd
     - fr/llm-computational-complexity.qmd
     - en/transformer-architectures.qmd
+    - en/cross-attention.qmd
     - en/hybrid-llm-architectures.qmd
     - en/llm-computational-complexity.qmd
     - fr/transformer.qmd
@@ -174,6 +176,9 @@ website:
             - section: "Adaptation à l'inférence"
               contents:
                 - fr/in-context-learning.qmd
+            - section: "Mécanismes d'attention avancés"
+              contents:
+                - fr/cross-attention.qmd
             - section: "Calcul, complexité et parallélisme"
               contents:
                 - fr/llm-computational-complexity.qmd
@@ -260,6 +265,9 @@ website:
             - section: "Adaptation at inference"
               contents:
                 - en/in-context-learning.qmd
+            - section: "Advanced attention mechanisms"
+              contents:
+                - en/cross-attention.qmd
             - section: "Computation, complexity, and parallelism"
               contents:
                 - en/llm-computational-complexity.qmd
