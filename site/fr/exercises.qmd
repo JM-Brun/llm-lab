@@ -33,7 +33,7 @@ Les pages de cours utilisent un composant homogène **« Vérifier sa compréhen
 
 | Collection | Périmètre | Statut |
 |---|---|---|
-| [Fondations mathématiques](#fondations) | Tenseurs, probabilités, logits, entropie, cross-entropie, vraisemblance, gradients, stabilité numérique | 4 exercices progressifs rédigés ; autres thèmes et vérifications numériques à compléter |
+| [Fondations mathématiques](#fondations) | Tenseurs, probabilités, logits, entropie, cross-entropie, vraisemblance, gradients, stabilité numérique | 7 exercices progressifs rédigés ; vérification de gradients et autres thèmes à compléter |
 | [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Auto-vérifications sur IDs et tokenizers dans les pages texte/embeddings ; exercices approfondis à construire |
 | [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Auto-vérifications sur agrégation Q/K/V et mise à l’échelle/masquage ; exercices approfondis à construire |
 | [Transformer](#transformer) | Embeddings, position, résidus, normalisation, MLP et variantes d’architecture | Structure à compléter |
@@ -50,7 +50,7 @@ Les pages de cours utilisent un composant homogène **« Vérifier sa compréhen
 
 **Notions préalables :** [fondations mathématiques](mathematical-foundations.qmd), [tenseurs](tensors.qmd), [logits](logits.qmd), [probabilités](probabilites.qmd), [entropie](entropy.qmd), [cross-entropie](cross-entropy.qmd), [vraisemblance](vraisemblance.qmd), [gradients](gradients.qmd).
 
-**Périmètre actuel :** quatre exercices corrigés couvrent le calcul softmax/NLL, l'effet du masquage et de la réduction, le gradient par rapport aux logits et le lien entre entropie croisée et divergence KL. Ils forment un premier noyau, pas une couverture exhaustive des tenseurs ni de la stabilité numérique.
+**Périmètre actuel :** sept exercices corrigés couvrent softmax/NLL, masquage et réduction, gradients, cibles souples et KL, formes de tenseurs, stabilité de log-sum-exp/log-softmax et perplexité. La vérification de gradients par différences finies reste à construire.
 
 #### Exercice 1 — Du logit à la perte
 
@@ -142,7 +142,75 @@ Pour $q$ fixé, $H(q)$ est constant par rapport à $p$. Minimiser $H(q,p)=H(q)+D
 
 </details>
 
-**Pour aller plus loin :** ajouter des exercices sur les formes de tenseurs, la stabilité numérique de log-softmax, la perplexité et la vérification par différences finies.
+#### Exercice 5 — Suivre les formes d'un batch
+
+On traite un batch de $B=2$ séquences de longueur $T=4$. La dimension cachée vaut $D=6$ et le vocabulaire contient $V=10$ tokens. Les activations $X$ ont la forme $(B,T,D)$ et la projection de sortie $W$ la forme $(D,V)$.
+
+1. Donner la forme des logits $Z=XW$.
+2. Donner la forme des identifiants cibles $Y$ et celle des pertes par position.
+3. Si deux positions de padding sont ignorées, combien de positions contribuent à une moyenne calculée sur les cibles valides ?
+4. Sur quel axe appliquer le softmax pour obtenir une distribution sur le vocabulaire à chaque position ?
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+La projection transforme le dernier axe $D$ en $V$ et conserve les axes batch et séquence : $Z$ a donc la forme $(2,4,10)$. Les cibles sont des identifiants entiers, de forme $(2,4)$ ; après sélection de la probabilité de la cible, les pertes par position ont également la forme $(2,4)$.
+
+Le batch contient $2\times4=8$ positions. Si deux sont ignorées, six contribuent à la moyenne : le dénominateur vaut $6$, pas $8$. Enfin, le softmax doit être appliqué sur le dernier axe, celui du vocabulaire $V$, indépendamment pour chaque couple (exemple, position).
+
+Une forme compatible ne garantit pas à elle seule que les cibles sont correctement décalées ni que le bon axe a été choisi : il faut aussi vérifier la sémantique des axes.
+
+</details>
+
+#### Exercice 6 — Stabiliser log-sum-exp et log-softmax
+
+On considère les logits $z=(1000,1001,999)$.
+
+1. Pourquoi calculer directement $\sum_i\exp(z_i)$ peut-il poser un problème numérique en précision flottante ?
+2. En posant $m=\max_i z_i$, réécrire $\log\sum_i\exp(z_i)$ sous une forme numériquement plus stable.
+3. Calculer la NLL de la deuxième classe cible à partir de cette forme.
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+Les exponentielles de nombres proches de $1000$ dépassent largement la plage représentable en précision flottante usuelle : elles peuvent déborder vers $+\infty$, même si la distribution softmax finale est parfaitement définie.
+
+On soustrait le maximum avant l'exponentiation :
+
+$$
+\operatorname{LSE}(z)=m+\log\sum_i\exp(z_i-m).
+$$
+
+Ici, $m=1001$ et la somme stabilisée vaut $S=\exp(-1)+1+\exp(-2)\approx1{,}5032$. Ainsi, $\operatorname{LSE}(z)=1001+\log S\approx1001{,}4076$.
+
+Pour la deuxième classe, $\log p_2=z_2-\operatorname{LSE}(z)=-\log S\approx-0{,}4076$. La NLL vaut donc environ $0{,}4076$ nat. Le calcul évite d'exponentier les grands logits ; soustraire une constante commune ne change pas la distribution softmax.
+
+</details>
+
+#### Exercice 7 — De la NLL moyenne à la perplexité
+
+Sur un corpus d'évaluation, la NLL moyenne par token vaut $1{,}2$ nat, calculée avec le logarithme naturel et une moyenne sur les seules cibles valides.
+
+1. Calculer la perplexité.
+2. Interpréter ce nombre sans le confondre avec un taux d'erreur.
+3. Citer au moins deux conditions à contrôler avant de comparer cette perplexité à celle d'un autre modèle.
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+La perplexité vaut :
+
+$$
+\operatorname{PPL}=\exp(1{,}2)\approx3{,}32.
+$$
+
+Elle est l'exponentielle de la NLL moyenne : elle résume l'incertitude probabiliste moyenne du modèle sur les tokens cibles selon le corpus et le tokenizer utilisés. Elle n'est ni un pourcentage de tokens erronés ni une mesure directe de la qualité factuelle des réponses.
+
+Une comparaison exige notamment de contrôler le tokenizer et sa segmentation, le corpus et son prétraitement, l'alignement des cibles, le masque des positions ignorées, ainsi que la convention de réduction et la base du logarithme. Une perplexité calculée sur des tokenisations différentes n'est généralement pas directement comparable.
+
+</details>
+
+**Pour aller plus loin :** un prochain lot pourra traiter la vérification de gradients par différences finies et les effets des conventions de réduction sur les gradients.
 
 ### Données textuelles {#donnees-textuelles}
 
