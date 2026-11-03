@@ -389,3 +389,18 @@ This is a progression of cognitive demand, not a mandatory four-question quota. 
 ### Bilingual parity and review
 
 French and English versions must test the same learning outcomes at comparable difficulty, with equivalent assumptions, data, answer reasoning, and links to the corresponding exercise collection. Wording may differ naturally. During review, check that every check is scientifically answerable, its solution is correct, all disclosures are closed by default, and the exercise link resolves to the intended anchor.
+
+
+## 11. Standardize page learning outcomes
+
+When a page benefits from an explicit statement of what the reader should be able to do, use one shared Quarto component in French and English:
+
+- French title: **Objectifs d’apprentissage**; English title: **Learning outcomes**.
+- Use the `.callout-note.learning-outcomes` classes with `collapse="true"`: the block is **collapsed by default** and opens on demand, like the comprehension-check sections. The shared `.learning-outcomes` selector in `site/styles.scss` owns the visual treatment; do not add page-specific inline styling or one-off variants.
+- Place the compact block after the chapter lead and before the main explanation. Do not repeat the same outcomes in a second introductory disclosure or a generic end-of-page note.
+- State two to four observable capabilities using precise verbs (distinguish, trace, calculate, predict, diagnose, compare, justify). Name the actual concepts, conditions, or outputs involved.
+- Keep each outcome specific to the page’s scope. Avoid vague promises such as “understand the topic”, “know the key ideas”, or “follow the page”.
+- Include the block only when it helps readers decide what to attend to or gives them a useful target. It is not mandatory on every page and must not become a checklist that forces empty content.
+- Keep outcomes distinct from a comprehension check: outcomes state the intended capability; a `.self-check` tests whether the learner can demonstrate it.
+
+The block is a compact learning contract, not a summary, navigation list, or claim that mastery has been measured. French and English versions must express equivalent capabilities.

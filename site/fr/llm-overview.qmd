@@ -25,17 +25,12 @@ Un **modèle de langage** est un modèle qui attribue une probabilité à des s�
 
 :::
 
-<details>
-<summary>Résultat attendu — et place dans le parcours</summary>
-
-À l'issue de cette page, vous devriez pouvoir :
-- expliquer ce qu'un modèle de langage cherche à estimer ;
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+À l’issue de cette page, vous pourrez :
+- formuler le problème de modélisation du langage comme l’estimation d’une distribution conditionnelle sur le prochain token ;
 - distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer ;
-- retracer les grandes étapes du calcul d'un GPT autorégressif.
-
-Cette page introduit le problème et son principe de traitement sans supposer de connaissances préalables sur les équations ou les tenseurs. La page suivante, [GPT et Transformer](transformer.qmd), explique le calcul interne qui réalise cette prédiction.
-
-</details>
+- retracer le pipeline d’un GPT et distinguer embeddings et information positionnelle.
+:::
 
 ## 1. Le problème : continuer un texte à partir d'un contexte
 
