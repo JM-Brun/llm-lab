@@ -22,6 +22,12 @@ tags: ["type:glossary", "destination:reference", "topic:glossary", "level:refere
 
 Ce glossaire donne une définition courte des termes rencontrés dans le site. Il ne remplace pas les pages de référence : chaque lien renvoie vers une explication plus approfondie lorsqu'elle existe.
 
+## Modèles de langage et génération
+
+- **Modèle de langage** — modèle qui attribue une probabilité à une séquence de texte ou à ses prochains tokens, conditionnellement au contexte. Voir [Panorama : qu'est-ce qu'un LLM ?](llm-overview.qmd).
+- **Modèle génératif** — modèle qui définit une distribution permettant de produire de nouveaux échantillons, éventuellement conditionnés par une entrée ; il n'est pas nécessairement un modèle de langage.
+- **LLM (*large language model*)** — modèle de langage entraîné à grande échelle. Il n'existe pas de seuil universel de paramètres qui définisse cette catégorie ; voir [Lois d'échelle](scaling-laws.qmd).
+
 ## Texte et données
 
 - **Token** — unité discrète manipulée par le modèle ; elle peut correspondre à un mot, une partie de mot, un caractère ou un autre segment.
@@ -54,7 +60,8 @@ Ces notions sont regroupées dans le parcours [Géométrie et interprétabilité
 
 ## Architecture Transformer
 
-- **Transformer** — architecture neuronale fondée sur l'attention et des transformations de représentations, introduite par Vaswani et ses collègues en 2017. Voir [synthèse du Transformer](transformer.qmd) et [historique](transformer-history.qmd).
+- **Transformer** — famille d'architectures neuronales fondées sur l'attention et des transformations de représentations, introduite par Vaswani et ses collègues en 2017. Ce terme ne désigne pas une famille de modèles unique. Voir [synthèse du Transformer](transformer.qmd) et [historique](transformer-history.qmd).
+- **GPT (*Generative Pre-trained Transformer*)** — famille de modèles génératifs pré-entraînés fondés sur le Transformer ; les GPT classiques utilisent une architecture décodeur seul et un objectif autorégressif. GPT n'est pas synonyme de Transformer. Voir [GPT et Transformer](transformer.qmd) et [architectures Transformer](transformer-architectures.qmd).
 - **Attention** — mécanisme qui calcule des poids à partir de requêtes et de clés, puis agrège les valeurs correspondantes. Voir [Q, K et V](queries-keys-values.qmd).
 - **Requête (Q)** — projection utilisée pour calculer les compatibilités avec les clés.
 - **Clé (K)** — projection comparée à une requête pour obtenir un score.
@@ -70,6 +77,7 @@ Ces notions sont regroupées dans le parcours [Géométrie et interprétabilité
 - **Tenseur** — tableau de nombres organisé selon plusieurs axes. Sa forme indique la taille de chaque axe ; elle ne suffit pas à préciser le sens des données. Voir [Tenseurs](tensors.qmd).
 - **Encodage positionnel** — mécanisme qui fournit au modèle une information sur l'ordre des tokens. Les approches comprennent les encodages absolus, les biais relatifs et RoPE. Voir [Encodage positionnel et RoPE](positional-encoding.qmd).
 - **RoPE (*Rotary Position Embedding*)** — encodage positionnel qui applique des rotations dépendant de la position aux paires de coordonnées des requêtes et des clés.
+- **Loi d'échelle (*scaling law*)** — relation empirique entre une ressource d'entraînement (paramètres, données ou calcul) et une mesure telle que la perte ; elle dépend du régime étudié et ne fixe pas un seuil universel de LLM. Voir [Lois d'échelle](scaling-laws.qmd).
 - **Paramètre** — valeur apprise pendant l'entraînement.
 - **Fine-tuning** — poursuite de l'entraînement d'un modèle pré-entraîné sur un objectif ou un jeu de données particulier.
 
