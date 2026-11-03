@@ -4,6 +4,10 @@
 **Decision date:** 2026-10-30  
 **Brand direction:** scientific learning environment, with green as the primary brand colour.
 
+## Relationship to page templates
+
+The visual system is implemented through the existing Quarto classes and site stylesheet. The [page-template guide](page-template-guide.md) provides reusable structures; the [page archetype implementation map](site-page-design-system.md) connects those structures to the metadata taxonomy and the editorial contract. Templates must reuse this system rather than introduce competing visual conventions.
+
 ## 1. Design intent
 
 LLM Lab should feel like a scientific instrument for learning: precise, calm, legible, exploratory, and technically credible. The visual language may take inspiration from [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) for direct manipulation and visual explanation, but must not imitate its interface or imply equivalent model-specific capabilities.
