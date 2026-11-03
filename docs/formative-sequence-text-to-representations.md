@@ -1,6 +1,6 @@
 # Formative sequence: text to representations
 
-> **Status: design draft — not learner-release ready.** This document operationalizes issue [#220](https://github.com/JM-Brun/llm-lab/issues/220). It reuses canonical lesson content; it is not a new concept chapter. Release remains gated by the desktop/mobile browser review in [#82](https://github.com/JM-Brun/llm-lab/issues/82).
+> **Status: design draft — not learner-release ready.** This document operationalizes issue [#220](https://github.com/JM-Brun/llm-lab/issues/220). It reuses canonical lesson content; it is not a new concept chapter. Release remains gated by the deferred desktop/mobile browser review in [#320](https://github.com/JM-Brun/llm-lab/issues/320); source-level foundational work is tracked separately in the now-closed [#82](https://github.com/JM-Brun/llm-lab/issues/82).
 
 ## Design contract
 
@@ -495,14 +495,14 @@ Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un ch
 - [ ] Check mathematical notation and Quarto rendering in both languages.
 - [ ] Review whether the activity sequence is cognitively progressive without making the first pass too long.
 - [ ] Check that feedback diagnoses the reasoning error, not merely the wrong answer.
-- [ ] Review desktop and mobile rendering after the #82 browser gate is completed.
+- [ ] Review desktop and mobile rendering when the deferred #320 browser gate is completed.
 - [ ] Only then decide whether to embed these activities in existing pages or publish a separate practice destination.
 - [ ] Do not add transfer assessment until the first learning sequence is complete.
 
 ## Ownership and evidence
 
 - Exercise design and answer keys: [#220](https://github.com/JM-Brun/llm-lab/issues/220).
-- Foundational source/content and browser gate: [#82](https://github.com/JM-Brun/llm-lab/issues/82).
+- Foundational source/content: [#82](https://github.com/JM-Brun/llm-lab/issues/82) (closed); deferred browser review: [#320](https://github.com/JM-Brun/llm-lab/issues/320).
 - Milestone mapping: [#87](https://github.com/JM-Brun/llm-lab/issues/87).
 - Reader-facing architecture: [#130](https://github.com/JM-Brun/llm-lab/issues/130).
 
