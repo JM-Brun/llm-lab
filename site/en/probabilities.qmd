@@ -55,13 +55,7 @@ The next-token distribution depends on the prefix:
 p_\theta(x_t\mid x_{<t}).
 \]
 
-The probability of a sequence factorizes into a product of these conditional probabilities:
-
-\[
-p_\theta(x_{1:T})=\prod_{t=1}^{T}p_\theta(x_t\mid x_{<t}).
-\]
-
-This is not an independence assumption: each factor depends on preceding tokens. The same token can therefore receive different probabilities in different contexts. Tokenization also matters: probability is assigned to tokenized units, not directly to words or semantic propositions.
+The same token can therefore receive different probabilities depending on the prefix. The likelihood of a complete sequence combines these conditional probabilities position by position; the product and its logarithm are covered in the [likelihood](likelihood.qmd) lesson. Tokenization also matters: probabilities are assigned to tokenized units, not directly to words or semantic propositions.
 
 ## Temperature and decoding strategy
 
