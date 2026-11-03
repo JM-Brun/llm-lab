@@ -206,7 +206,7 @@ This table poses questions to test, not exact outputs. To report a result, recor
 Vocabulary size, training budgets, and comparative tokenizer evaluation raise questions about cost, quality, and multilingual equity. These design choices go beyond understanding the segmentation mechanism; see the [advanced guide to tokenizer design and evaluation](tokenizer-design-evaluation.qmd).
 :::
 
-## 7. Counterexamples
+## 6. Counterexamples
 
 - **Fewer tokens = a better model.** No: it first demonstrates a length difference, not quality.
 - **BPE discovers morphemes.** No: linguistic analysis is not guaranteed.
