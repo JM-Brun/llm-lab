@@ -76,6 +76,8 @@ flowchart LR
 | **Distribution** | Les scores sont normalisés en probabilités conditionnelles sur les tokens possibles. | [Probabilités de sortie](probabilites.qmd) |
 | **Sélection** | Une règle de décodage choisit le prochain token ; celui-ci est ajouté au contexte et le calcul recommence. | [Générer du texte](generation.qmd) |
 
+**Précision sur la position :** l’information de position n’est pas toujours un vecteur ajouté aux embeddings. Certaines méthodes, comme [RoPE](positional-encoding.qmd), l’intègrent directement aux calculs d’attention.
+
 **Le point de jonction :** le passage des IDs aux logits correspond au calcul avant (*forward pass*) du modèle ; la transformation des logits en distribution et la sélection relèvent du décodage. Pendant l’inférence, les paramètres restent fixes. Leur apprentissage est une autre étape du cycle de vie, présentée plus loin.
 
 ## 2. Trois dimensions à ne pas confondre
