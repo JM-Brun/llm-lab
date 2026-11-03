@@ -1,6 +1,8 @@
 # Page patterns: flexible starting points
 
-These patterns operationalise the [page-template system](page-template-system.md). They are **prompts, not outlines to reproduce mechanically**. Start with the dominant learner question, keep what helps, combine adjacent elements, and omit everything else.
+These patterns operationalise the [page-template system](page-template-system.md). They are **subject-specific explanatory patterns**, not documentation genres and not metadata types. They are **prompts, not outlines to reproduce mechanically**. Start with the dominant learner question, keep what helps, combine adjacent elements, and omit everything else.
+
+First identify the page's broad documentation job: tutorial, how-to, reference, or explanation (or a deliberate hybrid). Then choose the scientific pattern below. For example, a mathematical concept can be taught as an explanation; an algorithm can be the subject of a tutorial; an architecture can be described in a reference page. The pattern selects useful explanatory modules, not a mandatory section sequence. The repository's page metadata contract remains authoritative for stable page classification; do not add another metadata field to encode these patterns.
 
 ## Concept, quantity, or notion
 
