@@ -109,17 +109,17 @@
   const pathname = window.location.pathname;
   const basePath = pathname.startsWith("/llm-lab/") ? "/llm-lab/" : "/";
   const siteRoot = new URL(basePath, window.location.origin);
-  const relativePath = pathname.slice(siteRoot.pathname.length).replace(/^\\/+|\\/+$/g, "");
+  const relativePath = pathname.slice(siteRoot.pathname.length).replace(/^\/+|\/+$/g, "");
   if (!relativePath || relativePath === "index.html" || relativePath === "en" || relativePath === "en/index.html") return;
 
   const language = document.documentElement.lang.toLowerCase().startsWith("en") ? "en" : "fr";
   const sidebarLinks = Array.from(document.querySelectorAll(".sidebar a[href]"));
-  const currentPath = new URL(window.location.href).pathname.replace(/\\/+$/, "");
+  const currentPath = new URL(window.location.href).pathname.replace(/\/+$/, "");
   const currentLink =
     sidebarLinks.find((link) => link.classList.contains("active") || link.getAttribute("aria-current") === "page") ||
     sidebarLinks.find((link) => {
       try {
-        return new URL(link.href, document.baseURI).pathname.replace(/\\/+$/, "") === currentPath;
+        return new URL(link.href, document.baseURI).pathname.replace(/\/+$/, "") === currentPath;
       } catch {
         return false;
       }
@@ -135,7 +135,7 @@
         child.matches("a, button, .sidebar-item-text, .sidebar-item-section")
       )) ||
       Array.from(item.children).find((child) => child.matches("a, button, .sidebar-item-text"));
-    const label = (labelNode?.textContent || "").replace(/\\s+/g, " ").trim();
+    const label = (labelNode?.textContent || "").replace(/\s+/g, " ").trim();
     if (label && !trail.some((entry) => entry.label === label)) {
       const rawHref = labelNode?.matches("a[href]") ? labelNode.getAttribute("href") : null;
       const href = rawHref && !rawHref.startsWith("#") ? new URL(rawHref, document.baseURI).href : null;
