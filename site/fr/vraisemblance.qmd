@@ -12,7 +12,7 @@ scope: "Définir la probabilité attribuée à une séquence de tokens observée
 purpose: "Calculer la vraisemblance d'une séquence à partir des probabilités conditionnelles des tokens, transformer le produit en somme de log-probabilités et expliquer l'équivalence entre maximiser la log-vraisemblance et minimiser la log-vraisemblance négative pour des observations fixées."
 suggested_route:
   previous: "fr/training-examples"
-  next: "fr/entropy"
+  next: "fr/cross-entropy"
 hierarchy:
   parents: ["fr/probabilites"]
   children: []
