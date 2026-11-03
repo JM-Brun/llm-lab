@@ -61,7 +61,8 @@ Si les probabilités attribuées à trois tokens observés sont $(0.5, 0.25, 0.8
 - **« La NLL est comparable sans préciser le tokenizer. »** Pas toujours : les segmentations différentes modifient le nombre et la granularité des événements évalués.
 :::
 
-## Questions de contrôle
+::: {.self-check}
+## Vérifier sa compréhension
 
 [Accéder à l'espace d'exercices associé](exercises.qmd#fondations) — les exercices détaillés seront ajoutés séparément.
 
@@ -83,6 +84,7 @@ Pour voir comment la vraisemblance devient une fonction de perte, lire [Entropie
 </details>
 
 **Suite :** [Cross-entropie](cross-entropy.qmd) · [Loss](loss.qmd)
+:::
 
 ## Pour approfondir
 
