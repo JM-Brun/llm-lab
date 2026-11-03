@@ -45,7 +45,9 @@ La formule est un résultat de la combinaison softmax + cross-entropie. Elle ne 
 
 Si les logits dépendent des paramètres $z=z(\theta)$, alors :
 
-$$
+Ici, $z$ représente l'ensemble des logits concernés par l'objectif (par exemple, tous les logits des positions valides du batch), et non un seul score scalaire. On peut voir ces logits comme un vecteur obtenu en aplatissant le tenseur ; la formule ci-dessous utilise alors le jacobien correspondant. La rétropropagation effectue ce produit jacobien-vecteur sans construire explicitement le jacobien complet.
+
+$
 \nabla_\theta\mathcal{L}
 =\left(\frac{\partial z}{\partial\theta}\right)^\top
 \nabla_z\mathcal{L}.
