@@ -45,6 +45,8 @@ This formula follows from combining softmax and cross-entropy. It does not mean 
 
 If logits depend on parameters $z=z(\theta)$, then:
 
+Here, $z$ denotes all logits involved in the objective (for example, the logits at every valid position in the batch), not a single scalar score. They can be viewed as a vector obtained by flattening the tensor; the formula below then uses the corresponding Jacobian. Backpropagation computes this Jacobian–vector product without explicitly constructing the full Jacobian.
+
 $$
 \nabla_\theta\mathcal{L}
 =\left(\frac{\partial z}{\partial\theta}\right)^\top

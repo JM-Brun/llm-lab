@@ -65,6 +65,8 @@ $$
 \sum_{v\in\mathcal{V}}P(v\mid x_{<t})=1.
 $$
 
+In this page, $P(x_t\mid x_{<t})$ denotes the conditional probability of the observed token. When making the model parameters explicit, we write $P_\theta(x_t\mid x_{<t})$. In the computational lessons, this same probability is often written as $p_{b,t,y_{b,t}}$: $p_{b,t,:}$ denotes the probability vector over the vocabulary, and index $y_{b,t}$ selects the target-token entry. The uppercase $P$ emphasizes the probability of an event; lowercase $p$ denotes a component of the categorical distribution here.
+
 Probabilities depend on context: the same token can receive different probabilities after two different prefixes. It does not have an intrinsic probability independent of its surroundings.
 
 ## 3. Factorizing a sequence probability
