@@ -61,7 +61,7 @@ For the first token, the prefix is empty. In practice, a beginning-of-sequence t
 
 ## 2. From a parameterized model to the training objective
 
-A model with parameters (	heta) approximates the conditionals:
+A model with parameters \(\theta\) approximates the conditionals:
 
 \[
 P_\theta(x_t\mid x_{<t}).
@@ -114,7 +114,7 @@ Thus \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\).
 
 Here, \(q\) and \(p\) are normalized distributions and zero-mass terms contribute zero. If \(q_i>0\) but \(p_i=0\), cross-entropy and \(D_{\mathrm{KL}}(q\Vert p)\) are infinite under the usual extended-value convention. KL divergence is **directional**; cross-entropy is neither symmetric nor a metric distance.
 
-For example, with (q=(1,0)) and (p=(0.9,0.1)):
+For example, with \(q=(1,0)\) and \(p=(0.9,0.1)\):
 
 \[
 D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)\approx 0.105\text{ nats},
@@ -122,7 +122,7 @@ D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)\approx 0.105\text{ nats},
 D_{\mathrm{KL}}(p\Vert q)=+\infty.
 \]
 
-The second quantity is infinite because (p) assigns positive mass to a category to which (q) assigns zero mass. In numerical computation, a stable log-softmax implementation helps avoid accidental underflow; it does not change this mathematical condition.
+The second quantity is infinite because \(p\) assigns positive mass to a category to which \(q\) assigns zero mass. In numerical computation, a stable log-softmax implementation helps avoid accidental underflow; it does not change this mathematical condition.
 
 The [Cross-entropy](cross-entropy.qmd) lesson remains the canonical home for per-token loss, the one-hot case, masks, and reduction conventions. This advanced page focuses on the derivation and the general soft-target case.
 
