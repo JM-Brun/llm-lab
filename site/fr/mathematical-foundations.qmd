@@ -87,6 +87,7 @@ Les pages individuelles dérivent chaque étape, donnent un exemple calculable e
 - Relier les probabilités observées à la [vraisemblance](vraisemblance.qmd) et à la [cross-entropie](cross-entropy.qmd).
 - Distinguer la perte par token de la [loss agrégée](loss.qmd).
 - Terminer par les [gradients](gradients.qmd), la règle de chaîne et la vérification numérique.
+- Pour la formalisation probabiliste détaillée — factorisation autorégressive, maximum de vraisemblance, cibles souples et divergence KL — consulter [les mathématiques de la modélisation du langage](language-modeling-math.qmd).
 
 ## Pour poursuivre
 
