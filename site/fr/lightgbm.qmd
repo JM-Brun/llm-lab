@@ -1,0 +1,66 @@
+---
+title: "LightGBM : accélérer le boosting par histogrammes"
+subtitle: "Croissance leaf-wise, GOSS et Exclusive Feature Bundling"
+keywords: ["type:concept-lesson", "destination:deepen", "topic:lightgbm", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/lightgbm"
+scope: "Présente histogrammes, croissance leaf-wise, Gradient-based One-Side Sampling et Exclusive Feature Bundling."
+purpose: "Expliquer les optimisations de calcul et les risques de surapprentissage associés à la croissance leaf-wise."
+suggested_route:
+  previous: "fr/xgboost"
+  next: "fr/catboost"
+hierarchy:
+  parents: ["fr/gradient-boosting"]
+  children: []
+related: ["fr/xgboost", "fr/catboost"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:lightgbm", "level:advanced", "language:fr", "status:published"]
+-->
+::: {.chapter-lead}
+LightGBM vise un entraînement efficace sur les données tabulaires volumineuses. Ses choix caractéristiques concernent la recherche des seuils, la croissance des arbres et le coût lié aux variables.
+:::
+## Histogrammes
+
+Les valeurs de chaque variable sont regroupées en un nombre limité de bins. Les statistiques de gradient et de Hessienne sont agrégées par bin ; les splits sont recherchés sur ces histogrammes. Cela réduit opérations et mémoire, au prix d'une recherche approximative dépendant notamment du nombre de bins.
+
+## Croissance leaf-wise
+
+Plutôt que de développer tous les nœuds d'un niveau (*level-wise*), LightGBM choisit la feuille dont le split candidat donne le gain le plus élevé, puis la développe (*best-first* ou *leaf-wise*). Cela peut réduire rapidement la loss, mais crée des arbres asymétriques et peut surajuster les petits jeux de données.
+
+Le nombre de feuilles, la profondeur, le minimum d'observations par feuille et la régularisation doivent être contrôlés. Une limite de profondeur seule ne remplace pas une limite cohérente du nombre de feuilles.
+
+## GOSS et EFB
+
+- **GOSS** conserve les observations à grands gradients et échantillonne une partie de celles à gradients plus faibles, avec une pondération destinée à préserver les statistiques utiles aux splits.
+- **EFB** regroupe des variables rarement non nulles simultanément afin de réduire le nombre de variables à traiter ; cette technique exploite la sparsité et un compromis de conflits.
+
+Ce sont des optimisations de calcul, pas des garanties de qualité prédictive.
+
+| Dimension | LightGBM |
+|---|---|
+| Recherche | Histogrammes et seuils discrétisés |
+| Croissance | Leaf-wise, best-first |
+| Optimisations | GOSS et EFB selon configuration |
+| Risque | Arbres asymétriques et surapprentissage |
+| Réglages | Feuilles, profondeur, minimum par feuille, learning rate, sous-échantillonnage |
+
+Une comparaison de vitesse exige mêmes données, objectif, validation et matériel documenté.
+
+::: {.self-check}
+## Vérifier sa compréhension
+1. Pourquoi les histogrammes accélèrent-ils la recherche ?
+<details><summary>Afficher la réponse</summary>Ils remplacent de nombreuses valeurs distinctes par un nombre limité de bins et agrègent les statistiques par bin.</details>
+2. Quel compromis introduit leaf-wise ?
+<details><summary>Afficher la réponse</summary>Elle développe la feuille au meilleur gain mais peut produire des arbres asymétriques, localement profonds et sujets au surapprentissage.</details>
+3. GOSS et EFB font-ils la même chose ?
+<details><summary>Afficher la réponse</summary>Non. GOSS réduit les observations pour certaines statistiques ; EFB regroupe des variables creuses peu co-activées.</details>
+:::
+## Références
+- [Ke et al. (2017), LightGBM: A Highly Efficient Gradient Boosting Decision Tree](https://proceedings.neurips.cc/paper/2017/hash/6449f44a102dod8eda4b4d2b6c5d2f9e-Abstract.html).
+- [Documentation LightGBM](https://lightgbm.readthedocs.io/en/stable/).
+- [AiEdge — GBM vs XGBoost vs LightGBM vs CatBoost](https://newsletter.theaiedge.io/p/gbm-vs-xgboost-vs-lightgbm-vs-catboost).
+::: {.language-switch}
+[Français](lightgbm.qmd) · [English](../en/lightgbm.qmd)
+:::
