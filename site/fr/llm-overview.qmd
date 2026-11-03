@@ -29,7 +29,8 @@ Un **modèle de langage** estime la plausibilité de séquences de texte à part
 À l’issue de cette page, vous pourrez :
 - expliquer intuitivement pourquoi un modèle doit comparer plusieurs continuations possibles ;
 - distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer ;
-- décrire les grandes étapes par lesquelles un GPT transforme un contexte en prochain token, et expliquer pourquoi le processus recommence.
+- expliquer comment les notions de modèle de langage, GPT et Transformer s'articulent ;
+- identifier la page de référence pour approfondir le calcul du réseau ou la génération.
 :::
 
 ## 1. Le problème : continuer un texte à partir d'un contexte
@@ -81,7 +82,7 @@ Pour décrire un LLM, trois questions indépendantes doivent être posées. Elle
 | **Apprentissage des poids** | Comment les paramètres ont-ils été obtenus ou modifiés ? | Les objectifs et procédures qui apprennent ou ajustent les paramètres | Pré-entraînement, fine-tuning/SFT, optimisation des préférences |
 | **Inférence et utilisation** | Que fait-on du modèle une fois ses paramètres fixés ? | Le calcul d’une sortie à partir d’une entrée, éventuellement dans un système avec recherche ou outils | Classification, score, génération autorégressive ; prompt et RAG conditionnent le contexte sans modifier les poids |
 
-La boucle de la section 1 relève de l’inférence. L’entraînement relève de l’apprentissage. Un même modèle peut changer d’usage sans changer d’architecture : c’est ce que détaillent les sections suivantes.
+La génération autorégressive relève de l’inférence. L’entraînement relève de l’apprentissage. Un même modèle peut changer d’usage sans changer d’architecture : c’est ce que détaillent les sections suivantes.
 
 ## 5. De l’apprentissage à l’inférence
 
@@ -104,7 +105,7 @@ Un **pipeline classique de RLHF** (*reinforcement learning from human feedback*,
 **DPO** (*direct preference optimization*, optimisation directe des préférences) est une autre approche : elle apprend directement à partir des comparaisons de préférences, sans la boucle distincte modèle de récompense + PPO de ce pipeline classique de RLHF ([Rafailov et al., 2023](https://arxiv.org/abs/2305.18290)). Il est donc plus exact de considérer RLHF et DPO comme des approches apparentées du post-entraînement par préférences, et non comme des étapes successives obligatoires.
 
 :::
-3. **[Inférence](generation.qmd).** On utilise les paramètres obtenus pour traiter une entrée et calculer une sortie. Pour un modèle autorégressif, cela correspond à la boucle de génération décrite plus haut. Le prompt et, éventuellement, des documents récupérés par un système RAG fournissent du contexte ; ils ne constituent pas une phase supplémentaire de l’apprentissage et ne modifient pas les poids du modèle.
+3. **[Inférence](generation.qmd).** On utilise les paramètres obtenus pour traiter une entrée et calculer une sortie. Pour un modèle autorégressif, l’inférence suit la boucle de génération décrite dans [la page dédiée](generation.qmd). Le prompt et, éventuellement, des documents récupérés par un système RAG fournissent du contexte ; ils ne constituent pas une phase supplémentaire de l’apprentissage et ne modifient pas les poids du modèle.
 
 L’adaptation est donc une branche facultative entre le pré-entraînement et l’utilisation, et non une étape obligatoire. Le RAG relève de la composition du contexte à l’inférence : il n’est ni une phase d’apprentissage ni une étape du cycle de vie du modèle. L’évaluation, quant à elle, intervient à plusieurs moments ; le jeu de test doit rester tenu à l’écart jusqu’à l’évaluation finale, faute de quoi cette évaluation serait biaisée.
 
