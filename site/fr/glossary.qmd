@@ -35,6 +35,9 @@ Ce glossaire donne une définition courte des termes rencontrés dans le site. I
 - **Tokenisation** — transformation du texte en une séquence d'identifiants de tokens.
 - **Vocabulaire** — ensemble des tokens que le tokenizer peut représenter.
 - **Préfixe** — partie déjà disponible d'une séquence, utilisée pour conditionner la prédiction suivante.
+- **Passe avant (*forward pass*)** — calcul du réseau qui transforme le contexte en représentations et en logits, avec les paramètres du modèle fixés. Voir [GPT et Transformer](transformer.qmd).
+- **Décodage (*decoding*)** — procédure qui exploite les logits ou leur distribution pour sélectionner le prochain token ; elle intervient après la passe avant et constitue une étape de la génération. Ne pas confondre avec le **décodeur** (*decoder*), partie de certaines architectures Transformer. Voir [Générer du texte](generation.qmd).
+- **Génération autorégressive** — processus itératif qui sélectionne un token, l’ajoute au contexte, puis recommence jusqu’à une condition d’arrêt. Voir [Générer du texte](generation.qmd).
 - **Fenêtre de contexte** — quantité de tokens que le modèle peut prendre en compte dans une entrée donnée.
 
 ## Représentations et géométrie
@@ -61,6 +64,9 @@ Ces notions sont regroupées dans le parcours [Géométrie et interprétabilité
 
 ## Architecture Transformer
 
+- **Profondeur (*depth*)** — nombre de blocs Transformer empilés dans le réseau. Voir [GPT et Transformer](transformer.qmd).
+- **Largeur (*width*)** — terme souvent utilisé pour désigner la dimension des représentations qui circulent entre les blocs (`d_model` ou *hidden size* dans un GPT classique) ; son sens dépend du contexte et ne doit pas être confondu avec `d_ff` ou `d_head`. Voir [GPT et Transformer](transformer.qmd).
+- **Dimension cachée (*hidden size*)** — dimension du vecteur de représentation interne ; dans les GPT classiques, elle correspond généralement à `d_model`, la largeur du flux résiduel.
 - **Transformer** — famille d'architectures neuronales fondées sur l'attention et des transformations de représentations, introduite par Vaswani et ses collègues en 2017. Ce terme ne désigne pas une famille de modèles unique. Voir [synthèse du Transformer](transformer.qmd) et [historique](transformer-history.qmd).
 - **GPT (*Generative Pre-trained Transformer*)** — famille de modèles génératifs pré-entraînés fondés sur le Transformer ; les GPT classiques utilisent une architecture décodeur seul et un objectif autorégressif. GPT n'est pas synonyme de Transformer. Voir [GPT et Transformer](transformer.qmd) et [architectures Transformer](transformer-architectures.qmd).
 - **Attention** — mécanisme qui calcule des poids à partir de requêtes et de clés, puis agrège les valeurs correspondantes. Voir [Q, K et V](queries-keys-values.qmd).
