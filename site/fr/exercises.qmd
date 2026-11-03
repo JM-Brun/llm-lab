@@ -11,7 +11,7 @@ id: "fr/exercises"
 scope: "Fait office de registre et de point d’entrée vers les exercices approfondis et les activités de transfert, distincts des auto-vérifications courtes intégrées aux leçons. La page précise les prérequis, les collections prévues et leur état d’avancement ; elle n’est ni une leçon ni la preuve que toutes les collections annoncées sont complètes."
 purpose: "Choisir une collection d’exercices adaptée, identifier ses prérequis et son degré réel d’avancement, puis utiliser les corrigés et questions de transfert pour vérifier le raisonnement plutôt que la simple restitution."
 suggested_route:
-  previous: "fr/build-path"
+  previous: null
   next: "fr/evaluation-experimentale"
 hierarchy:
   parents: ["fr/index"]
