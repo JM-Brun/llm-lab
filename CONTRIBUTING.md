@@ -85,3 +85,12 @@ Run the relevant checks for the changed surface and state clearly if a tool or o
 - Explain deviations from upstream implementations and cite the source.
 - Separate verified, planned, illustrative, and experimentally observed results. Passing CI verifies configured checks, not scientific claims or visual quality.
 - No license has been selected yet; do not imply that others have permission to reuse or redistribute code or content.
+
+
+### Learning checks: one recognizable pattern, increasing cognitive demand
+
+All reader-facing self-checks must use the shared pattern documented in [the reader-experience method](docs/reader-experience-and-editorial-method.md#10-standardize-embedded-learning-checks). Do not create ad hoc headings such as “Questions de contrôle”, “Vérifier votre compréhension”, “Self-check”, or “Check your understanding”: use the canonical language-specific heading and the shared `.self-check` container. Keep the visual treatment, question numbering, answer disclosure, and exercise-space link consistent across French and English pages.
+
+Design a short progression where the topic supports it: (1) retrieve or identify the key concept, (2) explain or calculate a mechanism, (3) apply it under changed conditions or diagnose a misconception, and (4) transfer or critique the result. Difficulty should increase through reasoning demand, not obscure wording. Each question must test a stated learning outcome and require an explanation, intermediate step, calculation, prediction, or justified choice where appropriate. Avoid recall-only quizzes, questions answered by copying one sentence, artificial trick questions, and questions whose answer depends on an unstated convention.
+
+Reveal solutions only on request. A useful solution explains the reasoning, names assumptions, and diagnoses a plausible wrong answer; it is not merely a letter or final number. Do not invent questions to fill a fixed count: a concise, topic-appropriate check is better than a padded sequence. Link to the relevant collection in the bilingual exercise hub when available, using a topic-specific anchor. Clearly distinguish short embedded checks from substantial exercise collections, and never imply that planned exercises already exist.
