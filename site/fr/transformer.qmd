@@ -109,7 +109,7 @@ Supposons que le vocabulaire jouet ne contienne que quatre candidats. La project
 | `mange` | 0 | 8,7 % |
 | `joue` | −1 | 3,2 % |
 
-Les probabilités sont calculées par \\(p_i = \\exp(z_i)/\\sum_j\\exp(z_j)\\). Ces nombres sont choisis pour rendre le calcul lisible : ils ne proviennent ni du GPT de référence du dépôt ni d'un modèle entraîné. Un vrai modèle possède un vocabulaire bien plus vaste, et ses logits dépendent du contexte, des paramètres et de la position considérée.
+Les probabilités sont calculées par \(p_i = \exp(z_i)/\sum_j\exp(z_j)\). Ces nombres sont choisis pour rendre le calcul lisible : ils ne proviennent ni du GPT de référence du dépôt ni d'un modèle entraîné. Un vrai modèle possède un vocabulaire bien plus vaste, et ses logits dépendent du contexte, des paramètres et de la position considérée.
 
 Cette sortie correspond à **une passe avant** pour un contexte donné. La sélection du prochain token, l'ajout au contexte et la répétition du calcul appartiennent à la [boucle de génération](generation.qmd), pas à la passe avant elle-même.
 
