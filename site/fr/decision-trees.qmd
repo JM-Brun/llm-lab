@@ -10,7 +10,7 @@ id: "fr/decision-trees"
 scope: "Décrit les arbres de décision comme partitions récursives de l'espace des variables, les critères de split, les prédictions des feuilles et le contrôle de complexité."
 purpose: "Lire un arbre, expliquer une séparation gloutonne et distinguer critère local, objectif global et régularisation."
 suggested_route:
-  previous: "fr/bias-variance"
+  previous: "fr/model-capacity-data-regimes"
   next: "fr/gradient-boosting"
 hierarchy:
   parents: []
