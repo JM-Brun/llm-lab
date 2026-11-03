@@ -15,7 +15,7 @@ suggested_route:
   next: "en/transformer"
 hierarchy:
   parents: ["en/index"]
-  children: ["en/transformer", "en/transformer-architectures", "en/generation", "en/build-path", "en/mathematical-foundations", "en/llm-limits", "en/scaling-laws"]
+  children: ["en/transformer", "en/transformer-architectures", "en/generation", "en/build-path", "en/mathematical-foundations", "en/llm-limits"]
 related: ["en/transformer-history"]
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 -->
@@ -193,7 +193,7 @@ The 2017 Transformer emerged from a broader history of attention mechanisms, seq
 ## 8. Where to go next in LLM Lab
 
 - [**GPT and Transformer**](transformer.qmd) — follow an autoregressive GPT's computation from representations to logits.
-- [**Scaling laws**](scaling-laws.qmd) — understand what training at large scale means for parameters, data, and compute.
+- [**Further reading: scaling laws**](scaling-laws.qmd) — explore empirical relationships between parameters, data, compute, and performance.
 - [**Compare Transformer architectures**](transformer-architectures.qmd) — understand the differences between encoder, encoder–decoder, and decoder.
 - [**What next-token prediction does not prove**](llm-limits.qmd) — read performance without over-interpreting the objective.
 - [**Build a small GPT**](build-path.qmd) — follow the G0–G9 milestones.
