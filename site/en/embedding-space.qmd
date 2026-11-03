@@ -92,7 +92,7 @@ For a batch, the common shape transition is:
 
 where \(B\) is batch size, \(L\) sequence length, and \(d\) embedding dimension. Lookup does not mix information across positions: two occurrences of the same token ID retrieve the same row before positional information and contextual processing are applied.
 
-::: {.callout-note collapse="true" title="Optional implementation trace: text → IDs → embeddings"}
+::: {.callout-note collapse="true" title="Optional example"}
 
 ### One reproducible trace: text → token IDs → embedding rows
 The next example connects a real, named tokenizer encoding to a **synthetic** embedding table. It uses the GPT-2 byte-level BPE encoding distributed by `tiktoken`; the IDs below are asserted against the library's public tests. Install the pinned tokenizer version with `python -m pip install tiktoken==0.14.0`. NumPy is already a project dependency.
