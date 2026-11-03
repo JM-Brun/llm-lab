@@ -109,6 +109,25 @@ During generation, a selection rule picks the next token: maximum, sampling, or 
 
 A **forward pass** receives the available context and computes the logits for the processed positions. To pick the next token, you read the logits of the last position, then a decoding rule selects one token. The **generation loop** then repeats: forward pass → selection → append the token to the context → new forward pass. The network never computes the whole future answer in one pass.
 
+::: {.self-check}
+## Check your understanding
+
+[See the extended generation exercises](exercises.qmd#generation) — this short check reuses the numerical example on this page.
+
+1. If the four candidates' logits become $(3, 2, 1, 0)$ instead of $(2, 1, 0, -1)$, does the greedy token change? Do the probabilities stay the same?
+2. In the example, why is the token with 64.4% probability not necessarily selected by sampling?
+3. After selecting a token, why must the context be recomputed before predicting the next one?
+
+<details>
+<summary>Show answers and reasoning</summary>
+
+1. The argmax does not change: the first candidate remains maximal. The probabilities also remain unchanged because adding the same constant to every logit leaves softmax unchanged.
+2. Sampling draws a candidate according to the distribution: the other candidates have non-zero probability. The most probable token is therefore not guaranteed on every draw.
+3. The model is autoregressive: the next distribution is conditioned on the updated prefix, which now includes the appended token. A new forward pass on that updated context is therefore required.
+
+</details>
+:::
+
 ## Explore in practice
 
 The [GPT-2 exploration workshop](transformer-explainer.qmd) lets you observe these mechanisms on a real model: run controlled experiments and examine the limits of the visualization. It is an independent analysis exercise — useful, but not required to follow the flow described here.
