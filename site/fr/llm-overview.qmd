@@ -61,7 +61,7 @@ Le schéma distingue les transformations successives du contexte, le calcul effe
 
 *Figure — Vue d’ensemble conceptuelle. Les pourcentages de continuations sont illustratifs ; ils ne correspondent pas à la sortie mesurée d’un modèle particulier.*
 
-Pour situer cette représentation parmi d’autres approches pédagogiques, voir les ressources de [Hugging Face sur les étapes d’un pipeline](../references.qmd#pipeline-et-generation-autoregressive), [Jay Alammar sur la visualisation des Transformers](../references.qmd#visualiser-le-transformer) et [Raff, Farris et Biderman sur la transformation des entrées en sorties](../references.qmd#transformers-comment-les-entrees-deviennent-des-sorties).
+Pour situer cette représentation parmi d’autres approches pédagogiques, voir les ressources de [Hugging Face sur les étapes d’un pipeline](../references.qmd#pipeline-et-generation-autoregressive), [Jay Alammar sur la visualisation des Transformers](../references.qmd#visualiser-le-transformer) et [Raff, Farris et Biderman sur la transformation des entrées en sorties](../references.qmd#transformers-how-inputs-become-outputs).
 
 ### Les quatre grandes opérations
 
