@@ -1,0 +1,120 @@
+---
+title: "In-context learning"
+subtitle: "Adapting from a prompt without updating model parameters"
+keywords: ["type:concept-lesson", "destination:understand", "topic:in-context-learning", "level:advanced", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/in-context-learning"
+scope: "Introduces in-context learning, its differences from training and fine-tuning, its manifestations, and leading explanatory hypotheses."
+purpose: "Readers should explain how a model uses examples in a prompt without updating its parameters, distinguish zero-shot, one-shot, and few-shot settings, and recognize the limits of current mechanistic explanations."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/llm-overview", "en/generation", "en/contextualized-representations"]
+tags: ["type:concept-lesson", "destination:understand", "topic:in-context-learning", "level:advanced", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+**In-context learning (ICL)** is a model's ability to adapt its response to examples, instructions, or patterns provided directly in the prompt. This adaptation happens during inference: the model's parameters remain fixed. The model uses the supplied context; it does not thereby perform another fine-tuning step.
+:::
+
+## Zero-shot, one-shot, and few-shot
+
+These terms describe how many demonstration examples are included in the prompt:
+
+- **Zero-shot:** an instruction describes the task, with no solved example.
+- **One-shot:** one example illustrates the expected format or transformation.
+- **Few-shot:** several examples provide patterns for the model to continue.
+
+A classification example:
+
+```text
+Text: “The parcel arrived late.”
+Sentiment: negative
+
+Text: “Delivery was quick and careful.”
+Sentiment:
+```
+
+The first example provides a local demonstration. The model can use it to produce a consistent label for the second text even though no weight update occurs.
+
+## Why this is not fine-tuning
+
+| Operation | Where is adaptation information supplied? | Do parameters change? |
+|---|---|---|
+| Pretraining | Training corpus | Yes, through weight optimization |
+| Fine-tuning | Additional training examples | Yes |
+| In-context learning | Current prompt | No |
+| RAG | Retrieved documents added to the context | No, not through retrieval itself |
+
+ICL is temporary and conditioned on the prompt's content and layout. A new conversation or a different prompt can lead to different behavior. Fine-tuning changes parameters and can produce adaptation that persists beyond a particular prompt.
+
+## What does the model do with examples?
+
+The model receives a sequence containing both the task and the demonstrations. At each layer, attention and other network operations transform representations as a function of this context. When generating the continuation, the model conditions its output on the preceding examples.
+
+This describes the observable computation, but it is not a complete explanation of ICL. Several hypotheses are being studied: pattern recognition, inference about the rule that generated the examples, implicit learning of algorithms during pretraining, and attention circuits that facilitate copying or associations between examples.
+
+*Induction heads* are one mechanism studied in some Transformers: attention heads can help detect a previously seen sequence and continue its pattern. They illuminate some copying and continuation behaviors, but are not a universal explanation for every form of ICL.
+
+## What ICL enables — and its limits
+
+ICL can help change output formats quickly, provide a local convention, demonstrate a task with a few examples, or guide structured extraction without training a new adapter.
+
+However, results depend strongly on:
+
+- the quality, number, and order of examples;
+- instruction wording and the distribution of examples;
+- context length and information position;
+- similarity between examples and the case being solved;
+- the model's ability to generalize beyond superficial patterns.
+
+A model may reproduce a format without identifying the relevant rule. It may also be sensitive to example order, contradictory demonstrations, or irrelevant details. ICL therefore guarantees neither correct generalization nor human-like understanding of the task.
+
+## How to study it experimentally
+
+To distinguish rule learning from simple imitation:
+
+1. compare zero-shot, one-shot, and few-shot settings on the same tasks;
+2. permute example order and measure sensitivity;
+3. compare relevant examples with superficially similar but irrelevant ones;
+4. test novel cases that require applying the rule rather than copying;
+5. control prompt length and position effects;
+6. repeat trials with multiple phrasings and sampling seeds.
+
+A good protocol separates success on seen examples from generalization to unseen cases.
+
+## Key points
+
+- ICL uses the prompt as a temporary adaptation medium.
+- Model weights remain fixed during in-context adaptation.
+- Examples can specify a task, format, or local pattern.
+- The precise mechanisms are still under investigation; induction heads are only one possible component.
+- Success on a few examples does not demonstrate robust generalization.
+
+## References
+
+- Brown et al. (2020), [*Language Models are Few-Shot Learners*](https://arxiv.org/abs/2005.14165).
+- Olsson et al. (2022), [*In-context Learning and Induction Heads*](https://arxiv.org/abs/2209.11895).
+- Xie et al. (2022), [*An Explanation of In-context Learning as Implicit Bayesian Inference*](https://arxiv.org/abs/2111.02080).
+- Min et al. (2022), [*Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?*](https://arxiv.org/abs/2202.12837).
+
+::: {.self-check}
+## Check your understanding
+
+1. Why is ICL not a weight update?
+2. A demonstration improves output format but not accuracy. What does this indicate about imitation versus generalization?
+3. Design an experiment that distinguishes learning a rule from reproducing patterns present in the demonstrations.
+
+[Exercises and experiments](exercises.qmd).
+:::
+
+::: {.language-switch}
+**Language:** [Français](../fr/in-context-learning.qmd) · [English](in-context-learning.qmd)
+:::
