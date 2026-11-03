@@ -100,19 +100,19 @@ Under the simplifying assumption that query and key components are independent, 
 ```python
 import numpy as np
 
-# Simulate dot products for d_k = 64
+### Simulate dot products for d_k = 64
 np.random.seed(42)
 d_k = 64
 N = 10000
 
-# Independent standard normal random vectors
+### Independent standard normal random vectors
 q = np.random.randn(N, d_k)
 k = np.random.randn(N, d_k)
 
-# Raw dot products q . k
+### Raw dot products q . k
 raw_dots = np.sum(q * k, axis=1)
 
-# Compare raw vs scaled standard deviation
+### Compare raw vs scaled standard deviation
 std_raw = np.std(raw_dots)
 std_scaled = np.std(raw_dots / np.sqrt(d_k))
 
