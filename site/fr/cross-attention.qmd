@@ -43,6 +43,8 @@ Dans l'architecture encodeur-décodeur, deux flux coexistent :
 
 L'encodeur ne transmet donc pas directement des tokens au décodeur : il fournit une mémoire de vecteurs contextualisés.
 
+**Lecture du schéma :** il isole volontairement les chemins d'attention pour rendre les flux lisibles. Il ne représente pas toutes les sous-couches (normalisation, connexions résiduelles et réseaux feed-forward) de chaque bloc Transformer.
+
 ## Auto-attention ou attention croisée ?
 
 La différence essentielle ne tient pas à la formule de calcul, mais à **l'origine des trois matrices**.
@@ -133,6 +135,11 @@ Le mécanisme n'est pas réservé à la traduction. Il apparaît notamment dans 
 - **« L'attention croisée aligne nécessairement un token cible avec un token source. »** Non : chaque tête peut agréger plusieurs positions, sans alignement un-à-un.
 - **« La source est causale parce que la cible est générée token par token. »** Non : le masque causal concerne l'auto-attention du décodeur. La source complète est généralement accessible.
 - **« L'attention croisée est une simple concaténation des deux séquences. »** Non : elle calcule des scores entre requêtes et clés, puis agrège les valeurs.
+
+## Références
+
+- Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — architecture Transformer encodeur-décodeur et attention multi-tête.
+- Raffel et al. (2020), [*Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer*](https://jmlr.org/papers/v21/20-074.html) — modèle T5 et approche texte-vers-texte.
 
 ## Liens avec les autres concepts
 
