@@ -31,7 +31,13 @@ project:
     - fr/gradients.qmd
     - en/gradients.qmd
     - fr/llm-overview.qmd
+    - fr/scaling-laws.qmd
+    - fr/emergence.qmd
+    - fr/in-context-learning.qmd
     - en/llm-overview.qmd
+    - en/scaling-laws.qmd
+    - en/emergence.qmd
+    - en/in-context-learning.qmd
     - fr/scaling-laws.qmd
     - en/scaling-laws.qmd
     - fr/transformer-architectures.qmd
@@ -100,7 +106,6 @@ website:
         - section: "Comprendre les LLM"
           contents:
             - fr/llm-overview.qmd
-            - fr/scaling-laws.qmd
             - fr/transformer-architectures.qmd
             - fr/transformer.qmd
             - fr/generation.qmd
@@ -139,6 +144,9 @@ website:
             - fr/evaluation-experimentale.qmd
         - section: "Approfondir"
           contents:
+            - fr/scaling-laws.qmd
+            - fr/emergence.qmd
+            - fr/in-context-learning.qmd
             - fr/tensors.qmd
             - fr/cosine-similarity.qmd
             - fr/linearite-embeddings.qmd
@@ -156,7 +164,6 @@ website:
         - section: "Understand LLMs"
           contents:
             - en/llm-overview.qmd
-            - en/scaling-laws.qmd
             - en/transformer-architectures.qmd
             - en/transformer.qmd
             - en/generation.qmd
@@ -195,6 +202,9 @@ website:
             - en/experimental-evaluation.qmd
         - section: "Deepen your understanding"
           contents:
+            - en/scaling-laws.qmd
+            - en/emergence.qmd
+            - en/in-context-learning.qmd
             - en/tensors.qmd
             - en/cosine-similarity.qmd
             - en/embedding-linearity.qmd
