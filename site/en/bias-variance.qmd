@@ -11,7 +11,7 @@ scope: "Decomposes squared prediction error into bias, variance, and irreducible
 purpose: "Diagnose underfitting and overfitting and interpret model sensitivity to training samples."
 suggested_route:
   previous: null
-  next: "en/gradient-boosting"
+  next: "en/decision-trees"
 hierarchy:
   parents: []
   children: []
@@ -46,6 +46,8 @@ An overly constrained model may underfit; a flexible model may learn sample-spec
 | Gradient boosting | Successive loss corrections | Iterations can also overfit |
 
 Do not automatically infer “low bias = high variance”. Statistical bias is not the gradient of a loss function.
+
+See also [Decision Trees](decision-trees.qmd) and [Gradient Boosting](gradient-boosting.qmd).
 
 ## Evaluate the trade-off
 
