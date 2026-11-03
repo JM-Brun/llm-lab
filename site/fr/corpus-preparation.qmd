@@ -1,0 +1,88 @@
+---
+title: "Préparer un corpus pour le préentraînement"
+subtitle: "Provenance, filtrage, déduplication, partitions et ajustement du tokenizer"
+keywords: ["type:guided-build", "destination:build", "topic:corpus-preparation", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/corpus-preparation"
+scope: "Décrit les décisions d'ingénierie des données en amont du préentraînement : admissibilité et provenance des sources, parsing et filtrage, déduplication, partitions d'évaluation, ajustement/fixation du tokenizer et transfert vers les flux de tokens."
+purpose: "Construire un protocole de préparation de corpus traçable et adapté à l'objectif d'entraînement ou d'évaluation, en évitant les fuites entre partitions et en séparant les décisions de corpus des opérations internes au tokenizer et de la construction des exemples."
+suggested_route:
+  previous: "fr/build-path"
+  next: null
+hierarchy:
+  parents: ["fr/build-path"]
+  children: []
+related: ["fr/text-data", "fr/tokenization-strategies", "fr/tokenizer-design-evaluation", "fr/training-examples", "fr/evaluation-experimentale"]
+tags: ["type:guided-build", "destination:build", "topic:corpus-preparation", "level:core", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Un modèle ne s'entraîne pas directement sur « Internet » ou sur un ensemble abstrait de textes : il consomme des séquences construites à partir de sources sélectionnées et transformées. La préparation du corpus définit ce qui entre dans l'expérience, ce qui doit rester indépendant pour l'évaluation et les transformations qui doivent pouvoir être auditées. Ce travail est distinct de la tokenisation d'un prompt et de la construction des fenêtres d'entraînement.
+:::
+
+## Objectifs
+
+- Définir les sources admissibles et conserver leur provenance et leurs conditions d'utilisation.
+- Distinguer parsing, filtrage, déduplication et normalisation du tokenizer.
+- Choisir des partitions cohérentes avec la généralisation que l'évaluation doit mesurer.
+- Ajuster puis figer un tokenizer sans contaminer une évaluation held-out.
+- Transmettre un corpus préparé à l'encodage et à la construction des exemples.
+
+## 1. Une chaîne de décisions, pas une recette universelle
+
+| Étape | Question à documenter | Opérations possibles | Trace à conserver |
+|---|---|---|---|
+| **1. Définir le périmètre** | Quelles sources sont pertinentes et admissibles pour l'objectif ? | Sélection des sources, période, langues, domaines et unités documentaires | Identifiants des sources, provenance, licences/droits, dates de collecte et contraintes |
+| **2. Parser** | Comment extraire un contenu comparable des formats d'origine ? | Extraction du texte et des métadonnées, décodage, traitement des documents mal formés ou vides | Version du parseur, erreurs, champs extraits et règles de rejet |
+| **3. Filtrer** | Quels éléments sont hors périmètre ou de qualité insuffisante ? | Filtres documentés de langue, qualité, spam, sécurité ou conformité | Règles, seuils, volumes avant/après et échantillons audités |
+| **4. Dédupliquer** | Les répétitions ou quasi-copies surreprésentent-elles certains contenus ? | Déduplication exacte ; détection approximative si elle est justifiée | Méthode, seuils, groupes de doublons et décisions de conservation |
+| **5. Partitionner** | Quelle unité doit rester indépendante pour l'évaluation ? | Découpage par source, famille documentaire, utilisateur ou période ; audit des recouvrements | Identifiants de partitions, graine éventuelle, règles de groupement et résultats d'audit |
+| **6. Ajuster le tokenizer** | Quels textes peuvent influencer le vocabulaire et les règles ? | Entraînement sur les données autorisées, puis fixation d'une révision précise | Corpus d'ajustement, configuration, version, vocabulaire et empreinte |
+| **7. Encoder et transmettre** | Comment obtenir un flux de tokens reproductible ? | Encodage avec le tokenizer figé, gestion des frontières et sérialisation | Révision du tokenizer, paramètres d'encodage, statistiques et provenance |
+
+L'ordre exact dépend du corpus et du protocole. Par exemple, la déduplication peut précéder le partitionnement pour empêcher les copies exactes de traverser les partitions ; un découpage par groupes suivi d'un audit des quasi-doublons entre partitions peut être préférable dans d'autres contextes. L'exigence n'est pas un ordre dogmatique : il faut rendre explicite et vérifier la stratégie qui soutient l'affirmation de généralisation.
+
+## 2. Déduplication et fuite entre partitions
+
+Une fuite d'évaluation apparaît lorsque des informations qui devraient rester indépendantes influencent l'entraînement ou rendent l'évaluation artificiellement facile. Des copies exactes sont un cas évident ; des versions proches, des fragments recouvrants, des documents issus d'une même famille ou des éléments postérieurs à la date de coupure peuvent aussi créer une dépendance.
+
+- Définir l'unité de séparation à partir de la question évaluée : document, auteur, source, utilisateur, groupe ou période.
+- Ne pas supposer qu'un tirage aléatoire de fragments garantit l'indépendance des partitions.
+- Auditer les recouvrements exacts et approximatifs après le partitionnement, avec une méthode et des seuils documentés.
+- Conserver les identifiants et la provenance nécessaires pour expliquer pourquoi un document a été gardé, écarté ou regroupé.
+
+La déduplication n'est pas toujours bénéfique sans condition : supprimer des répétitions peut réduire la surreprésentation, mais peut aussi modifier la distribution naturelle d'un corpus ou retirer des occurrences légitimes. Il faut documenter le compromis et mesurer l'effet des règles choisies.
+
+## 3. Ajuster le tokenizer sans contaminer l'évaluation
+
+Pour une expérience held-out classique, le tokenizer appris est ajusté sur la partition d'entraînement uniquement, puis figé avant d'encoder validation et test. Sinon, le vocabulaire ou les règles peuvent incorporer des informations sur les textes réservés à l'évaluation. Cette précaution concerne les expériences où l'on prétend mesurer une généralisation vers des données non vues ; elle ne décrit pas nécessairement tous les pipelines industriels de préentraînement, qui peuvent utiliser d'autres conventions de constitution et de suivi des données.
+
+Il faut distinguer quatre opérations :
+
+1. **Préparation du corpus** : sélection, parsing, filtrage, déduplication et partitionnement des documents.
+2. **Apprentissage du tokenizer** : construction de son vocabulaire et de ses paramètres à partir du corpus d'ajustement.
+3. **Pipeline du tokenizer** : normalisation et pré-tokenisation configurées, appliquées lors de l'apprentissage puis de l'encodage.
+4. **Encodage** : transformation des textes en IDs avec une version figée du tokenizer.
+
+La normalisation et la pré-tokenisation ne remplacent pas le filtrage documentaire. Réciproquement, nettoyer un corpus ne définit pas à lui seul le comportement d'un tokenizer.
+
+## 4. Contrat de sortie vers les étapes suivantes
+
+À la fin de cette étape, on devrait pouvoir retrouver :
+
+- les sources, licences/droits, dates et règles de collecte ;
+- les versions des parseurs et filtres, avec volumes avant/après ;
+- les paramètres de déduplication et les audits de recouvrement ;
+- les définitions des partitions et les contrôles de fuite ;
+- la configuration et la révision exacte du tokenizer ;
+- les statistiques d'encodage et les règles de frontière documentaire.
+
+Le corpus préparé peut alors être encodé en flux de tokens. La page [Du corpus tokenisé aux exemples d'entraînement](training-examples.qmd) traite l'étape suivante : décalage entrée-cible, fenêtres, packing, padding et masques. La page [Texte et données](text-data.qmd) conserve le parcours d'inférence plus court, du texte fourni en prompt aux représentations initiales.
+
+## Limites
+
+Cette page définit un cadre de traçabilité et de séparation des responsabilités, pas une politique juridique, une recette universelle de filtrage ni un système de détection de contamination prêt à l'emploi. Les seuils, outils et unités de partition doivent être justifiés par les données, les droits applicables et l'affirmation expérimentale visée.
