@@ -672,3 +672,57 @@ details.spot-the-fallacy .fallacy-content {
   font-family: ui-monospace, monospace;
   font-weight: 600;
 }
+
+
+/* Shared embedded learning checks */
+.self-check {
+  margin: 2rem 0;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid #86B99A;
+  border-left: 5px solid #166534;
+  border-radius: 0.65rem;
+  background: #F6FBF7;
+  color: #17251C;
+}
+.self-check > :first-child { margin-top: 0; }
+.self-check > :last-child { margin-bottom: 0; }
+.self-check h2,
+.self-check h3 {
+  margin-top: 0;
+  color: #14532D;
+}
+.self-check .self-check-intro {
+  margin: 0.5rem 0 1rem;
+  color: #365344;
+}
+.self-check .self-check-exercises {
+  margin: 0.75rem 0 1rem;
+  font-size: 0.92rem;
+}
+.self-check details {
+  margin: 0.7rem 0;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid #D1E4D6;
+  border-radius: 0.45rem;
+  background: #FFFFFF;
+}
+.self-check details > summary {
+  color: #14532D;
+  font-weight: 650;
+  cursor: pointer;
+}
+.self-check details[open] > summary {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #E2EEE5;
+}
+.self-check details > :not(summary) {
+  margin-top: 0.65rem;
+}
+.self-check a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .self-check details { transition: border-color 0.15s ease; }
+  .self-check details:hover { border-color: #86B99A; }
+}
