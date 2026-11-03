@@ -21,7 +21,7 @@ tags: ["type:system-overview", "destination:understand", "topic:transformer", "l
 -->
 
 ::: {.chapter-lead}
-Un **GPT** est un modèle de langage fondé sur un Transformer autorégressif : il reçoit en entrée une séquence de tokens — le contexte — et estime, pour chaque token du vocabulaire, la probabilité qu'il soit le prochain. Trois éléments sont à distinguer pour comprendre le système : le chemin que suivent les données à travers le réseau, les paramètres appris qui déterminent ce chemin, et la boucle de génération qui répète le calcul.
+Un **GPT** est un modèle de langage fondé sur un Transformer autorégressif : il reçoit en entrée une séquence de tokens — le contexte — et estime, pour chaque token du vocabulaire, la probabilité qu'il soit le prochain. Cette page se concentre sur le calcul effectué par le réseau, des représentations d'entrée aux logits. Elle distingue ce calcul de la boucle d'inférence qui sélectionne et ajoute les tokens successifs.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
