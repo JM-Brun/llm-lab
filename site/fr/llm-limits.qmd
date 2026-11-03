@@ -47,7 +47,7 @@ Les performances observables peuvent étayer la première interprétation dans u
 
 ## 3. Capacités « émergentes » et effets d’échelle
 
-Les discussions sur les capacités dites *émergentes* demandent de préciser la tâche, la métrique, les seuils et les modèles comparés. Une capacité qui semble apparaître brutalement avec une métrique donnée peut dépendre de la résolution de mesure ou du protocole : des analyses récentes montrent que plusieurs effets « émergents » disparaissent lorsque la métrique est lissée ou remplacée. Examinez les résultats, les contrôles et les définitions avant de conclure à une transition qualitative. Pour approfondir le débat et les protocoles permettant de tester ces affirmations, voir [Émergence des capacités](emergence.qmd).
+Les discussions sur les capacités dites *émergentes* demandent de préciser la tâche, la métrique, les seuils et les modèles comparés. Une capacité qui semble apparaître brutalement avec une métrique donnée peut dépendre de la résolution de mesure ou du protocole : des analyses récentes montrent que plusieurs effets « émergents » disparaissent lorsque la métrique est lissée ou remplacée. Examinez les résultats, les contrôles et les définitions avant de conclure à une transition qualitative. Le [débat sur l’émergence des capacités](emergence.qmd) examine les protocoles et les métriques qui permettent de tester ces affirmations.
 
 La taille du modèle ne suffit pas non plus à expliquer ses performances. La qualité, la diversité et la provenance des données, l’objectif, l’architecture, le procédé d’entraînement, l’adaptation et le protocole d’évaluation contribuent ensemble aux résultats.
 
