@@ -12,16 +12,17 @@ These principles are the short version of the project's editorial and engineerin
 4. **Make each page useful on its own.** Do not replace explanations with links, and never require access to private repositories or notes to understand public content.
 5. **Synthesize, do not concatenate.** Combine strong pedagogical explanations, primary evidence, implementation details, and critical perspectives into one coherent account with consistent notation.
 6. **Use a flexible concept-page pattern.** Where relevant, move from intuition and motivation to definition, notation, assumptions, examples, applications, limitations, exercises, and implementation. Adapt the structure to the concept; do not force empty sections onto every page.
-7. **Maintain a useful glossary.** Define terms when first needed and link them to canonical concept explanations. Keep glossary entries concise, disambiguate overloaded terms, and maintain French/English terminology parity.
+7. **State learning outcomes only when they help.** Use the shared bilingual `.callout-note.learning-outcomes` component, with two to four observable, page-specific capabilities; style it centrally in `site/styles.scss`. Do not add generic “at the end of this page” notes, duplicate outcomes in multiple places, or confuse intended outcomes with a comprehension check.
+8. **Maintain a useful glossary.** Define terms when first needed and link them to canonical concept explanations. Keep glossary entries concise, disambiguate overloaded terms, and maintain French/English terminology parity.
 
 ## 2. Prefer scientific precision over apparent certainty
 
-8. **Scope every important claim.** State relevant assumptions, conventions, conditions, and limitations.
-9. **Separate intuition from evidence.** Analogies and diagrams can build intuition; they do not prove mathematical, implementation, or empirical claims.
-10. **Actively challenge misconceptions.** Identify common false equivalences and overgeneralizations, then use counterexamples, boundary cases, or alternative methods to show exactly where they fail. For example, cosine similarity measures angular alignment under a chosen representation; it is not, by itself, a measure of semantic similarity or human-perceived meaning.
-11. **Use mathematical notation consistently and correctly.** Define symbols, dimensions, domains, reductions, axes, and conventions. Check derivations and edge cases; distinguish definitions, assumptions, theorems, hypotheses, and empirical observations.
-12. **Cite sources for what they support.** Prefer primary papers and official documentation for technical claims; use pedagogical resources for teaching ideas. Check that a source supports the actual statement, not merely the general topic.
-13. **Make uncertainty and status visible.** Distinguish planned, illustrative, implemented, tested, and experimentally observed work. Do not overstate results or hide negative and inconclusive findings.
+9. **Scope every important claim.** State relevant assumptions, conventions, conditions, and limitations.
+10. **Separate intuition from evidence.** Analogies and diagrams can build intuition; they do not prove mathematical, implementation, or empirical claims.
+11. **Actively challenge misconceptions.** Identify common false equivalences and overgeneralizations, then use counterexamples, boundary cases, or alternative methods to show exactly where they fail. For example, cosine similarity measures angular alignment under a chosen representation; it is not, by itself, a measure of semantic similarity or human-perceived meaning.
+12. **Use mathematical notation consistently and correctly.** Define symbols, dimensions, domains, reductions, axes, and conventions. Check derivations and edge cases; distinguish definitions, assumptions, theorems, hypotheses, and empirical observations.
+13. **Cite sources for what they support.** Prefer primary papers and official documentation for technical claims; use pedagogical resources for teaching ideas. Check that a source supports the actual statement, not merely the general topic.
+14. **Make uncertainty and status visible.** Distinguish planned, illustrative, implemented, tested, and experimentally observed work. Do not overstate results or hide negative and inconclusive findings.
 
 ## 3. Connect explanations to inspectable practice
 
