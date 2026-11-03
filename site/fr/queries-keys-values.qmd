@@ -83,41 +83,52 @@ $$
 
 Les matrices $W_Q$, $W_K$ et $W_V$ sont apprises pendant l'entraînement. Elles transforment chaque représentation d'entrée pour lui donner un rôle différent dans le calcul de l'attention. Dans l'attention à produit scalaire standard, les valeurs $V$ ne déterminent pas directement les scores : ceux-ci sont calculés à partir de $Q$ et $K$.
 
-::: {.callout-note collapse="true" title="Projections en pratique : code et dimensions (facultatif)"}
 Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model}\times d_v}$, les formes obtenues sont $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$. Les biais éventuels sont omis ici.
 
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
-<span>MICRO-ATELIER NUMÉRIQUE · PROJECTIONS LINÉAIRES</span>
+<span>MICRO-ATELIER NUMÉRIQUE · CALCUL MATRICIEL ET FORMES TENSORIELLES</span>
 <span>Python 3.12+ / NumPy</span>
 :::
 ::: {.micro-workbench-body}
 ```python
 import numpy as np
 
-# 1. Représentations de trois positions (d_model = 4)
 X = np.array([
     [1.0, 0.5, 0.2, 0.1],  # position 0
     [0.1, 0.9, 0.8, 0.3],  # position 1
     [0.4, 0.2, 0.7, 0.9],  # position 2
 ])
-T = X.shape[0]
+T, d_model = X.shape
 
-# 2. Matrices de projection apprises
+# 2. Matrices de projection apprises : d_k=2, d_v=3
 W_Q = np.array([[0.5, 0.1], [0.2, 0.8], [0.1, 0.3], [0.9, 0.4]])
 W_K = np.array([[0.2, 0.7], [0.4, 0.1], [0.6, 0.5], [0.3, 0.2]])
 W_V = np.array([[1.0, 0.0, 0.2], [0.0, 1.0, 0.5], [0.5, 0.2, 0.0], [0.1, 0.8, 0.4]])
 
-# 3. Chaque position est projetée en Q, K et V
-Q = X @ W_Q
-K = X @ W_K
-V = X @ W_V
-assert Q.shape == (T, 2) and K.shape == (T, 2) and V.shape == (T, 3)
+# 3. Projections linéaires
+Q = X @ W_Q  # Forme (T, d_k)
+K = X @ W_K  # Forme (T, d_k)
+V = X @ W_V  # Forme (T, d_v)
+assert Q.shape == (3, 2) and K.shape == (3, 2) and V.shape == (3, 3)
+
+# 4. Scores d'attention S = Q K^T / sqrt(d_k)
+d_k = 2
+scores = (Q @ K.T) / np.sqrt(d_k)
+assert scores.shape == (3, 3)
+
+# 5. Poids softmax (somme = 1 sur chaque ligne)
+exp_scores = np.exp(scores - np.max(scores, axis=-1, keepdims=True))
+weights = exp_scores / np.sum(exp_scores, axis=-1, keepdims=True)
+assert np.allclose(weights.sum(axis=-1), 1.0)
+
+# 6. Agrégation finale O = A V
+output = weights @ V
+assert output.shape == (3, 3)
 ```
 :::
 ::: {.micro-workbench-footer}
-Invariant vérifié : chaque projection conserve le nombre de positions $T$ ; les dimensions des vecteurs projetés peuvent différer.
-:::
+Invariant vérifié : les dimensions respectent rigoureusement $(T, d_{model}) \to [(T, d_k), (T, d_v)] \to (T, d_v)$.
 :::
 :::
 
