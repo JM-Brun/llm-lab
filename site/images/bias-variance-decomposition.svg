@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" role="img" aria-labelledby="t d">
+<title id="t">Bias, variance, and prediction error / Biais, variance et erreur</title>
+<desc id="d">Conceptual curves: squared bias decreases with complexity, variance increases, their sum plus irreducible noise forms a U-shaped error curve. Not empirical data.</desc>
+<rect width="900" height="500" fill="#fff"/>
+<text x="450" y="34" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="700" fill="#173b2b">Conceptual decomposition / Décomposition conceptuelle</text>
+<path d="M95 400 V85 M95 400 H820" fill="none" stroke="#34495e" stroke-width="3"/>
+<text x="35" y="245" transform="rotate(-90 35 245)" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#34495e">Error / Erreur</text>
+<text x="460" y="455" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#34495e">Model complexity / Complexité du modèle</text>
+<path d="M110 120 C260 180 430 300 800 365" fill="none" stroke="#2878b5" stroke-width="5"/>
+<path d="M110 365 C350 350 560 230 800 100" fill="none" stroke="#c27a25" stroke-width="5"/>
+<path d="M110 200 C250 275 390 315 500 300 C630 270 720 190 800 155" fill="none" stroke="#23845b" stroke-width="6"/>
+<path d="M110 385 H800" stroke="#777" stroke-width="3" stroke-dasharray="9 7"/>
+<g font-family="sans-serif" font-size="16" fill="#253746">
+<text x="120" y="95">Bias² / Biais²</text><text x="690" y="90">Variance</text>
+<text x="560" y="245" fill="#23845b" font-weight="700">Total error / Erreur totale</text>
+<text x="620" y="378">Irreducible noise / Bruit irréductible</text>
+</g>
+<text x="450" y="485" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#666">Illustrative only — not measured data / Schéma illustratif — pas de données mesurées</text>
+</svg>
