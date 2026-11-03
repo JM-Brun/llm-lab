@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/build-path"]
   children: []
-related: ["en/queries-keys-values", "en/scaled-dot-product-attention", "en/causal-masking", "en/contextualized-representations"]
+related: ["en/transformer", "en/queries-keys-values", "en/scaled-dot-product-attention", "en/causal-masking", "en/contextualized-representations"]
 tags: ["type:guided-build", "destination:build", "topic:reference-transformer-block", "level:applied", "language:en", "status:published"]
 -->
 
@@ -180,7 +180,7 @@ Each position goes on its own through `d -> mlp_hidden_dim` (often `4d`), then G
 
 - **Previous stop**: [building-block operations (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
 - **Next stop**: [assembling the GPT (`gpt.py`)](gpt-model-walkthrough.qmd) — where blocks get stacked.
-- **Concept pages**: [Q/K/V](queries-keys-values.qmd), [scaled dot-product attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd), [contextualized representations](contextualized-representations.qmd).
+- **Concept pages**: [GPT and Transformer overview](transformer.qmd), [Q/K/V](queries-keys-values.qmd), [scaled dot-product attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd), [contextualized representations](contextualized-representations.qmd).
 - **Back to the path**: [Build a small GPT](build-path.qmd).
 - **Source**: [`transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py) · **Tests**: [`test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py).
 
