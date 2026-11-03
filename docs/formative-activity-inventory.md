@@ -46,3 +46,7 @@ The existing six-section draft remains the detailed answer-key source until the 
 2. Compare TR-C's absolute-position and RoPE claims against the canonical FR/EN lessons and primary sources.
 3. Integrate the three-bundle structure into the detailed answer-key document without losing the existing hints, worked solutions, or misconception feedback.
 4. Link the activities from the G3 evidence field and the relevant existing pages only after the #220/#87 coordination check.
+
+## Notation note
+
+The lookup exercise uses `d` for the embedding width in its small matrix example. The optional tensor reference uses `D` for the model feature width and `d_h` for a per-head width. In this G3 example, `d` and `D` denote the same feature-axis role; they are local notation choices, not different dimensions. Keep the mapping explicit when integrating the exercise into the tensor lesson. Do not infer that `d` and `D` are interchangeable in every formula or architecture.
