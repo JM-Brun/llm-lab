@@ -30,6 +30,16 @@ project:
     - en/loss.qmd
     - fr/gradients.qmd
     - en/gradients.qmd
+    - fr/bias-variance.qmd
+    - en/bias-variance.qmd
+    - fr/gradient-boosting.qmd
+    - en/gradient-boosting.qmd
+    - fr/xgboost.qmd
+    - en/xgboost.qmd
+    - fr/lightgbm.qmd
+    - en/lightgbm.qmd
+    - fr/catboost.qmd
+    - en/catboost.qmd
     - fr/llm-overview.qmd
     - fr/scaling-laws.qmd
     - fr/emergence.qmd
@@ -154,6 +164,13 @@ website:
                 - fr/tensors.qmd
                 - fr/cosine-similarity.qmd
                 - fr/linearite-embeddings.qmd
+            - section: "Fondamentaux du Machine Learning"
+              contents:
+                - fr/bias-variance.qmd
+                - fr/gradient-boosting.qmd
+                - fr/xgboost.qmd
+                - fr/lightgbm.qmd
+                - fr/catboost.qmd
         - section: "Références"
           contents:
             - fr/glossary.qmd
@@ -218,6 +235,13 @@ website:
                 - en/tensors.qmd
                 - en/cosine-similarity.qmd
                 - en/embedding-linearity.qmd
+            - section: "Machine Learning fundamentals"
+              contents:
+                - en/bias-variance.qmd
+                - en/gradient-boosting.qmd
+                - en/xgboost.qmd
+                - en/lightgbm.qmd
+                - en/catboost.qmd
         - section: "Reference"
           contents:
             - en/glossary.qmd
