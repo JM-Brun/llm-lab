@@ -74,7 +74,9 @@ $$
 
 Les positions futures reçoivent alors un poids nul en arithmétique idéale. En pratique, les bibliothèques peuvent représenter le masque sous forme booléenne ou employer une primitive d'attention qui intègre cette contrainte.
 
+::: {.callout-note collapse="true" title="Convention des API de code (approfondissement)"}
 En code, **la polarité d'un masque booléen dépend de l'API**. Par exemple, dans [l'attention à produit scalaire mise à l'échelle de PyTorch](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html), `True` signifie qu'une position peut participer à l'attention ; dans [PyTorch MultiheadAttention](https://docs.pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html), `True` dans `attn_mask` signifie que la position est masquée. Ne transférez pas un masque booléen d'une API à l'autre sans vérifier la convention documentée. Cela ne change pas la règle causale elle-même : les couples requête-clé autorisés doivent toujours exclure les clés futures.
+:::
 
 ![Masque causal à quatre positions.](../images/causal-attention-mask.svg){fig-alt="Matrice triangulaire inférieure : chaque position accède à elle-même et aux positions précédentes" width=100%}
 
@@ -104,8 +106,7 @@ Les Transformers décodeurs comme GPT utilisent cette contrainte pour apprendre 
 </div>
 </details>
 
-## Un test qui détecte les fuites
-
+::: {.callout-note collapse="true" title="Test d'invariance causale (facultatif)"}
 Pour vérifier rigoureusement l'absence de fuite d'information : gardez les tokens jusqu'à $t$ identiques, modifiez un token situé après $t$, puis vérifiez que les sorties des positions jusqu'à $t$ restent strictement identiques.
 
 ::: {.micro-workbench}
@@ -154,6 +155,7 @@ assert not np.allclose(out_ref[3], out_alt[3]), "La position 3 devait changer."
 Test formel d'invariance réussi : modifier le futur n'altère absolument aucun état passé ou présent.
 :::
 :::
+:::
 
 ## Liens avec les autres concepts
 
@@ -162,13 +164,13 @@ Test formel d'invariance réussi : modifier le futur n'altère absolument aucun 
 - [Objectif et fondations mathématiques](mathematical-foundations.qmd) relie la contrainte au prochain-token et à la loss.
 - [Synthèse Transformer](transformer.qmd) replace le masque dans l'architecture globale.
 
-## Code et état d'implémentation
-
+::: {.callout-note collapse="true" title="Code et tests de référence (approfondissement)"}
 Une implémentation de référence testée est disponible dans `src/llm_lab/foundations/attention.py` (`causal_mask` et `scaled_dot_product_attention`). La suite de tests `tests/unit/test_attention.py` intègre ce test d'invariance temporelle ainsi que la validation des formes et des bornes.
 
 - [Implémentation du masque causal](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
 - [Tests d'invariance temporelle](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
 - [Critères d'acceptation prévus](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+:::
 
 <div class="route-nav-cards">
   <a class="route-nav-card" href="scaled-dot-product-attention.qmd">
