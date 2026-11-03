@@ -1,6 +1,6 @@
 ---
 title: "The mathematics of language modeling"
-subtitle: "From possible continuations to sequence probabilities"
+subtitle: "The chain rule, autoregressive factorization, and soft targets"
 keywords: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
@@ -8,168 +8,138 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/language-modeling-math"
-scope: "Formalizes language modeling using conditional probabilities and autoregressive factorization; distinguishes the chain rule, a learned probabilistic model, and the maximum-likelihood objective. It then presents the soft-target variant of the objective and its connection to KL divergence."
-purpose: "Interpret a next-token conditional probability and its notation, reconstruct sequence probability through autoregressive factorization, and connect this formalization to the training objective, and explain why, for a fixed target, minimizing cross-entropy is equivalent to minimizing KL divergence."
+scope: "Deepens the probabilistic formalization of language modeling: derives autoregressive factorization from the probability chain rule, distinguishes a probabilistic identity from a learned model, briefly connects sequence likelihood to maximum likelihood, then treats soft-target cross-entropy and KL divergence."
+purpose: "Derive sequence probability from the chain rule, explain what a parameterized model learns, and show why minimizing cross-entropy for a fixed target is equivalent to minimizing KL divergence, with the required assumptions and limitations."
 suggested_route:
   previous: null
   next: null
 hierarchy:
   parents: ["en/llm-overview"]
   children: []
-related: ["en/probabilities", "en/likelihood", "en/cross-entropy", "en/loss", "en/training-examples", "en/mathematical-foundations"]
+related: ["en/probabilities", "en/likelihood", "en/cross-entropy", "en/loss", "en/mathematical-foundations"]
 tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
-In an autoregressive model, the probability of a token sequence factorizes into successive conditional probabilities: at each position, the model estimates the next token from the prefix already observed. This factorization formalizes the language-modeling problem introduced in the [LLM overview](llm-overview.qmd).
+This page does not reintroduce tokenization, the next-token distribution, or likelihood as foundational concepts: those have canonical lessons. It deepens two mathematical connections: the chain rule that justifies autoregressive factorization, and the relationship between soft-target cross-entropy and KL divergence.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this page, you will be able to:
-- interpret a next-token conditional probability and its notation;
-- explain the autoregressive factorization of a sequence probability;
-- distinguish the chain rule, the learned model, and the training objective;
-- explain the link between cross-entropy and KL divergence for a fixed target;
+- derive autoregressive factorization from the probability chain rule;
+- distinguish a probabilistic identity from the parameterized model that approximates its conditionals;
+- briefly connect likelihood, log-likelihood, and the training objective;
+- derive the identity between cross-entropy, target entropy, and KL divergence;
+- state the assumptions, direction, and cases in which these quantities become infinite.
 :::
 
-## 1. From a text sequence to a token sequence
+## 1. From the chain rule to autoregressive factorization
 
-Assume that text has already been converted by a tokenizer into a sequence of IDs:
+The [output probabilities](probabilities.qmd) lesson defines the conditional probability of the next token, \(P(x_t\mid x_{<t})\), and explains how the model constructs its distribution. Here, we use that quantity to derive the probability of a complete sequence.
 
-$$
-x_{1:T}=(x_1,x_2,\ldots,x_T).
-$$
+For any joint distribution, the probability chain rule gives:
 
-Each $x_t$ is an integer belonging to the vocabulary $\mathcal{V}$, whose size is $V$. The indices indicate positions in the sequence; they are not numerical values on which arithmetic operations are performed.
-
-Language modeling means constructing a probabilistic model that assigns probabilities to possible sequences. We therefore need to specify what a “sequence probability” means and how context enters the calculation.
-
-## 2. Conditional probability: the next token given its context
-
-For two events $A$ and $B$, with $P(B)>0$, conditional probability is defined as:
-
-$$
-P(A\mid B)=\frac{P(A\cap B)}{P(B)}.
-$$
-
-In a language model, event $B$ represents the prefix already observed and $A$ the next token. We write:
-
-$$
-P(x_t\mid x_{<t}),
-\qquad x_{<t}=(x_1,\ldots,x_{t-1}).
-$$
-
-This quantity is the probability assigned to token $x_t$ given the preceding tokens. For a given prefix, the model defines a distribution over the possible tokens in the vocabulary:
-
-$$
-\sum_{v\in\mathcal{V}}P(v\mid x_{<t})=1.
-$$
-
-In this page, $P(x_t\mid x_{<t})$ denotes the conditional probability of the observed token. When making the model parameters explicit, we write $P_\theta(x_t\mid x_{<t})$. In the computational lessons, this same probability is often written as $p_{b,t,y_{b,t}}$: $p_{b,t,:}$ denotes the probability vector over the vocabulary, and index $y_{b,t}$ selects the target-token entry. The uppercase $P$ emphasizes the probability of an event; lowercase $p$ denotes a component of the categorical distribution here.
-
-Probabilities depend on context: the same token can receive different probabilities after two different prefixes. It does not have an intrinsic probability independent of its surroundings.
-
-## 3. Factorizing a sequence probability
-
-The probability chain rule gives, for any joint distribution:
-
-$$
+\[
 P(x_1,\ldots,x_T)
 =P(x_1)P(x_2\mid x_1)\cdots
 P(x_T\mid x_1,\ldots,x_{T-1}).
-$$
+\]
 
-Using the notation $x_{<t}$, we obtain:
+Writing \(x_{<t}=(x_1,\ldots,x_{t-1})\), we obtain:
 
-$$
+\[
 \boxed{
 P(x_{1:T})=\prod_{t=1}^{T}P(x_t\mid x_{<t})
 }
-$$
+\]
 
-This is the autoregressive factorization. It expresses the probability of the sequence as the product of the conditional probabilities of each token, in order.
+This is the **autoregressive factorization**: the sequence probability is the product of the conditional probabilities of its tokens, in order.
 
-**Important:** the chain rule is a probabilistic identity, not an assumption specific to Transformers. The autoregressive aspect comes from the order in which the model represents and uses these conditionals: the token at position $t$ is predicted from the prefix, not from future tokens.
+**The chain rule is a probabilistic identity**, valid for any joint distribution. It does not by itself impose an architecture or a particular computation order. The autoregressive aspect comes from the model that represents and uses the conditionals in prefix order: at position \(t\), the token is predicted from preceding tokens, not future tokens.
 
-For the first token, the prefix is empty. In practice, a beginning-of-sequence token (BOS) may be made explicit, or an equivalent convention may be used.
+For the first token, the prefix is empty. In practice, a beginning-of-sequence token (BOS) may be explicit, or an equivalent convention may be used.
 
-## 4. What the model learns
+## 2. From a parameterized model to the training objective
 
-A model parameterized by $\theta$ approximates each conditional distribution:
+A model with parameters \(\theta\) approximates the conditionals:
 
-$$
+\[
 P_\theta(x_t\mid x_{<t}).
-$$
+\]
 
-For an observed sequence, its probability under the model is therefore:
+The factorization then implies:
 
-$$
+\[
 P_\theta(x_{1:T})
-=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}).
-$$
-
-The parameters $\theta$ are adjusted to assign high probability to sequences in the training corpus. A standard formulation maximizes the log-likelihood:
-
-$$
+=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}),
+\qquad
 \log P_\theta(x_{1:T})
 =\sum_{t=1}^{T}\log P_\theta(x_t\mid x_{<t}).
-$$
+\]
 
-Equivalently, one minimizes the negative log-likelihood, often averaged over tokens and examples. The exact aggregation, masking, and reduction conventions matter when comparing losses; they are detailed in the pages on [likelihood](likelihood.qmd), the [loss function](loss.qmd), and [the mathematical chain of LLM training](mathematical-foundations.qmd).
+Maximum likelihood seeks to increase the log-likelihood of observed sequences; its minimized form is negative log-likelihood (NLL). This equivalence does not determine reduction over tokens and examples, or how padding and ignored positions are handled. Those conventions belong to the canonical lessons on [likelihood](likelihood.qmd), [cross-entropy](cross-entropy.qmd), and aggregated [loss](loss.qmd).
 
-## 5. A conceptual example
+**Notation bridge.** Probabilistic lessons often use \(P\) for an event probability or conditional distribution. Computational lessons use \\(p_{b,t,v}\\) for component \\(v\\) of the probability vector at example \\(b\\) and position \\(t\\). The target ID \\(y_{b,t}\\) selects \\(p_{b,t,y_{b,t}}\\). These are compatible levels of description, not different probabilistic objects.
 
-Consider the sequence “The cat sleeps”. After tokenization, suppose it is represented by three tokens $x_1,x_2,x_3$. The model successively assigns:
+## 3. Soft targets and KL divergence
 
-- a probability to $x_1$ with no prefix (or after a BOS token);
-- a probability to $x_2$ given $x_1$;
-- a probability to $x_3$ given $x_1,x_2$.
+One-hot targets place all mass on a single category. Some methods instead use a target distribution \\(q\\)—for example, label smoothing or a distribution supplied by a teacher model—over the \\(V\\) tokens.
 
-The probability of the entire sequence is the product of these three terms. If one observed token receives a very low probability, the probability of the full product also decreases. This is why training examines probabilities of target tokens, not merely the subjective quality of generated sentences.
+For a target distribution \\(q\\) and predicted distribution \\(p\\), cross-entropy is:
 
-## 6. What this formalization does not tell us
-
-- **It does not define the tokenizer.** Text segmentation and vocabulary construction are separate choices ([tokenization strategies](tokenization-strategies.qmd)).
-- **It does not specify the architecture.** Several architectures can represent conditional distributions; factorization alone does not imply a Transformer.
-- **It does not guarantee truth.** A high probability expresses what the model learned to favor in its data, not factual validation.
-- **It does not determine the generation procedure.** Sampling, greedy selection, and other strategies operate after the distribution has been computed ([generation](generation.qmd)).
-
-## 7. Soft targets and KL divergence
-
-The previous section uses one-hot targets: a single category receives all the mass. A target can also be a distribution $q$ — label smoothing, a teacher distribution — over the $V$ tokens.
-
-For a target distribution $q$ and the predicted distribution $p$, cross-entropy is (terms with zero target mass contribute zero):
-
-$$
+\[
 H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
-$$
+\]
 
-With a one-hot target, the sum reduces to $-\log p_y$. With a soft target, multiple categories contribute. Assume $q_i\geq 0$, $\sum_i q_i=1$, and that $p$ is also normalized. Unless stated otherwise, $\log$ is the natural logarithm, so losses are measured in nats; using $\log_2$ gives bits.
+Terms with \(q_i=0\) contribute zero. With a one-hot target, the sum reduces to \(-\log p_y\); with a soft target, multiple categories contribute. Assume \(q_i\geq 0\), \(\sum_i q_i=1\), and that \(p\) is also normalized. Unless stated otherwise, \(\log\) is the natural logarithm, so losses are measured in nats; using \(\log_2\) gives bits.
 
-Define the target entropy as $H(q)=-\sum_i q_i\log q_i$. The identity $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$ explains why, for a fixed target, minimizing cross-entropy is equivalent to minimizing KL divergence toward the predicted distribution. When the quantities are finite, the identity follows directly from the definitions:
+Define target entropy as \(H(q)=-\sum_i q_i\log q_i\). The identity
 
-$$
+\[
+H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)
+\]
+
+explains why, for a fixed target \\(q\\), minimizing cross-entropy with respect to \\(p\\) is equivalent to minimizing KL divergence toward that target. For finite quantities, the identity follows directly from the definitions:
+
+\[
 \begin{aligned}
 D_{\mathrm{KL}}(q\Vert p)
 &=\sum_i q_i\log\frac{q_i}{p_i}\\
 &=\sum_i q_i\log q_i-\sum_i q_i\log p_i\\
 &=-H(q)+H(q,p).
 \end{aligned}
-$$
+\]
 
-Thus $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$. Here $q$ and $p$ are normalized distributions and zero-mass terms contribute zero; if $q_i>0$ but $p_i=0$, cross-entropy and $D_{\mathrm{KL}}(q\Vert p)$ are infinite under the usual extended-value convention. KL divergence is directional; cross-entropy is neither symmetric nor a metric distance. For example, with $q=(1,0)$ and $p=(0.9,0.1)$, $D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)\approx 0.105$ nats, whereas $D_{\mathrm{KL}}(p\Vert q)=+\infty$ because $p$ assigns positive mass where $q$ assigns zero. Stable log-softmax calculations help avoid accidental underflow in numerical implementations, but they do not change this mathematical condition.
+Thus \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\).
 
-This derivation extends the maximum-likelihood objective of Section 4; the per-token cross-entropy definition and its training conventions remain in the [Cross-entropy](cross-entropy.qmd) lesson.
+Here, \(q\) and \(p\) are normalized distributions and zero-mass terms contribute zero. If \(q_i>0\) but \(p_i=0\), cross-entropy and \(D_{\mathrm{KL}}(q\Vert p)\) are infinite under the usual extended-value convention. KL divergence is **directional**; cross-entropy is neither symmetric nor a metric distance.
+
+For example, with \(q=(1,0)\) and \(p=(0.9,0.1)\):
+
+\[
+D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)\approx 0.105\text{ nats},
+\qquad
+D_{\mathrm{KL}}(p\Vert q)=+\infty.
+\]
+
+The second quantity is infinite because \(p\) assigns positive mass to a category to which \(q\) assigns zero mass. In numerical computation, a stable log-softmax implementation helps avoid accidental underflow; it does not change this mathematical condition.
+
+The [Cross-entropy](cross-entropy.qmd) lesson remains the canonical home for per-token loss, the one-hot case, masks, and reduction conventions. This advanced page focuses on the derivation and the general soft-target case.
+
+## What this formalization does not determine
+
+- **The tokenizer:** text segmentation and vocabulary are covered in [text and data](text-data.qmd) and [tokenization strategies](tokenization-strategies.qmd).
+- **The architecture:** probabilistic factorization alone does not imply a Transformer.
+- **Truth of outputs:** a high probability is not factual validation.
+- **Generation strategy:** sampling and greedy selection occur after the distribution is computed ([generation](generation.qmd)).
 
 ## References and further study
 
-- [Output probabilities](probabilities.qmd): how logits become a distribution over the vocabulary.
-- [Likelihood](likelihood.qmd): how to evaluate the probability of observed tokens.
-- [Cross-entropy](cross-entropy.qmd): the per-token loss, its conventions, and the general soft-target case.
-- [Training examples](training-examples.qmd): how to construct inputs and shifted targets.
-- [The mathematical chain of LLM training](mathematical-foundations.qmd): connect logits, probabilities, loss, and gradients.
-
-General probability reference: Bishop, *Pattern Recognition and Machine Learning*, Chapters 1–2.
+- [Output probabilities](probabilities.qmd): the conditional next-token distribution.
+- [Likelihood](likelihood.qmd): probability of observed tokens and log-likelihood.
+- [Cross-entropy](cross-entropy.qmd): per-token loss and training conventions.
+- [The mathematical chain of LLM training](mathematical-foundations.qmd): a compact map from logits to gradients.
+- Bishop, *Pattern Recognition and Machine Learning*, Chapters 1–2, for probabilistic foundations.
 
 ::: {.language-switch}
 **Language:** [Français](../fr/language-modeling-math.qmd) · [English](language-modeling-math.qmd)
