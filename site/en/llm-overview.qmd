@@ -45,13 +45,19 @@ The model learns statistical regularities in its data; this objective does not, 
 - **Ambiguity and long-range dependencies:** a token's meaning often depends on distant words, syntax, discourse, and implicit knowledge.
 - **Combinatorial space:** the number of possible sequences grows rapidly with length; the model must generalize beyond exact examples seen during training.
 - **Heterogeneous data:** corpora mix styles, domains, quality levels, languages, and contradictions; not every learned regularity is relevant to a given task.
-- **Compute trade-offs:** increasing model capacity is not enough. Suitable data and compute are also needed to exploit it; gains depend on how these resources are allocated.
+- **Compute trade-offs:** increasing model capacity is not enough. Data quality and diversity, the training objective, compute allocation and task-specific evaluation all matter; scale alone does not guarantee reliable capability.
 
 
 
 ## 2. How a GPT approaches this problem
 
 **GPT** (*Generative Pre-trained Transformer*) names a family of pretrained generative models built on the Transformer architecture. In common usage, classic GPT models are **decoder-only** Transformers trained to predict the next token. GPT and Transformer are therefore not synonyms: Transformer names an architecture family; GPT names a family of models using a particular configuration.
+
+Modern LLMs sit within AI and machine learning: they are generally deep neural language models, often (but not definitionally) Transformer-based. NLP is a field, not an architecture. Earlier NLP systems often relied on linguistic rules, hand-engineered features, or task-specific statistical/neural models; large pretrained language models learn reusable patterns from broad corpora and can be adapted across tasks. They still require task-specific evaluation and do not make specialized systems obsolete.
+
+For a side-by-side comparison of encoder-only, encoder–decoder and decoder-only architectures, objectives and typical uses, see the [architecture comparison](transformer-architectures.qmd).
+
+LLM Lab builds small, inspectable components to expose data flow, tensor shapes, masks, loss and decoding. Educational-scale models are not intended to reproduce the data, compute or capability of production LLMs; a randomly initialized reference model is expected to produce incoherent text until it is trained.
 
 ## 3. The generation process, from text to the next token
 
@@ -74,6 +80,12 @@ For complementary pedagogical perspectives, see [Hugging Face on pipeline stages
 4. **Choose and repeat.** A decoding rule selects the next token from the evaluated possibilities. It does not necessarily select the token with the highest probability: some strategies also involve random sampling. The selected token is appended to the context, and the model repeats its computation to produce the next one. See [generation](generation.qmd).
 
 **The essential idea:** a GPT does not write its entire answer in one operation. It estimates a continuation, selects one token, appends it to the context, and repeats until a stopping condition is met. The visible text is built progressively.
+
+::: {.callout-note collapse="true" title="Optional: inference efficiency and the KV cache"}
+
+At each autoregressive step, the context grows. A straightforward implementation recomputes the full current window; the [reference GPT in this lab](build-path.qmd) deliberately does so for clarity and has no KV cache. Production inference engines commonly cache each layer's keys and values for past tokens, reducing repeated computation at the cost of memory and cache-management complexity. This changes inference efficiency, not the next-token objective.
+
+:::
 
 ## 4. Three dimensions not to conflate
 
