@@ -3,7 +3,8 @@
 The reference decoder-only GPT is split into focused modules, in reading
 order: ``gpt_config`` (dimensions), ``gpt_ops`` (building blocks),
 ``transformer_block`` (one block), ``gpt`` (the assembled model) and
-``generate`` (the decoding loop). This package-level module re-exports
+``generate`` (the decoding loop). ``training_examples`` builds the aligned
+input/target windows that pretraining consumes. This package-level module re-exports
 the public surface so callers can import from ``llm_lab.foundations``
 directly.
 """
@@ -21,6 +22,7 @@ from llm_lab.foundations.losses import (
     cross_entropy_from_logits,
     cross_entropy_gradient,
 )
+from llm_lab.foundations.training_examples import sliding_input_target_pairs
 from llm_lab.foundations.transformer_block import TransformerBlock
 
 __all__ = [
@@ -35,5 +37,6 @@ __all__ = [
     "layer_norm",
     "linear",
     "scaled_dot_product_attention",
+    "sliding_input_target_pairs",
     "softmax_with_temperature",
 ]
