@@ -34,7 +34,6 @@ Un tokenizer est un choix de représentation et d'ingénierie. Il doit couvrir l
 
 ## 1. Carte conceptuelle
 
-Le pipeline complet — du texte Unicode aux IDs puis à la lookup dans la matrice d'embeddings — est illustré dans la [page d'introduction](text-data.qmd). Cette page se concentre sur les choix de segmentation et leurs compromis plutôt que de répéter le même schéma.
 
 Pour observer concrètement les fusions BPE, ouvrez la [visualisation interactive originale de Müller et Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/). Elle montre le corpus en cours de segmentation, les paires candidates et la croissance du vocabulaire. La ressource est liée plutôt que copiée : les conditions de réutilisation de ses figures ne sont pas établies ici.
 
