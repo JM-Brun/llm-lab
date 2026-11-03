@@ -163,8 +163,10 @@ Common uses include text generation and rewriting, summarization, translation, s
 
 Reusing a general-purpose model is attractive when one base can cover several tasks, or when the labeled examples of a task are scarce. For knowledge that changes frequently, retrieving up-to-date documents (RAG) is often better suited than changing parameters; for a specific format, domain, or behavior, an adaptation may become worthwhile. The choice is evaluated on the real task: quality, errors, robustness, cost, latency, confidentiality, data provenance, and maintenance — a convincing demo on a few prompts is not an evaluation.
 
-<details>
-<summary>Check your understanding</summary>
+::: {.self-check}
+## Check your understanding
+
+[Exercises and practice](../en/exercises.qmd).
 
 Try to answer before opening the solutions. The goal is to manipulate the mental model, not to memorize labels.
 
@@ -175,7 +177,7 @@ Try to answer before opening the solutions. The goal is to manipulate the mental
 
 The token "cat" is appended to the context: it is this longer sequence that the model receives. It computes a new probability distribution over the vocabulary, from which a selection rule extracts the next token. What does not change: the model's parameters — inference reads them, it does not modify them.
 
-</details>
+:::
 
 2. An application must answer from documentation that changes daily. Compare adding document retrieval (RAG) with fine-tuning: which one can exploit the new documents without retraining the weights?
 
