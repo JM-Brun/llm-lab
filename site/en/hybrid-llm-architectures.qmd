@@ -1,6 +1,6 @@
 ---
-title: "Hybrid LLM architectures: the Nemotron case"
-subtitle: "Combining recurrent state, attention, and sparse computation"
+title: "Hybrid LLM architectures: Nemotron 3 and 3.5"
+subtitle: "Combining recurrent state, attention, experts, and numerical precision"
 keywords: ["type:concept-lesson", "destination:understand", "topic:hybrid-llm-architectures", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
@@ -21,16 +21,24 @@ tags: ["type:concept-lesson", "destination:understand", "topic:hybrid-llm-archit
 -->
 
 ::: {.chapter-lead}
-A capable model must also move and store data efficiently. **Nemotron 3** illustrates one response: combining Mamba-2 layers, selected attention layers, and *Mixture-of-Experts* (MoE), alongside generation and numerical-precision optimizations. This case study explains trade-offs; it is not a universal recipe.
+A capable model must also move and store data efficiently. **Nemotron 3** illustrates one response: combining Mamba-2 layers, selected attention layers, and *Mixture-of-Experts* (MoE), alongside generation and numerical-precision optimizations. This case study explains trade-offs; it is not a universal recipe. Beware of the shorthand “Transformer-based model” sometimes used in secondary summaries: Nemotron 3/3.5 is a **hybrid Mamba–Attention–MoE architecture**, not a conventional Transformer stack in which every block uses global attention.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 Explain the complementarity of recurrent state and attention; distinguish total and active parameters; relate GQA, MTP, and quantization to their cost drivers; and separate general principles from version-specific characteristics.
 :::
 
+
+
+## The general principles behind this case
+
+The mechanisms in this case illustrate general trade-offs: quadratic but parallelizable attention, recurrent state with linear work, a KV cache that grows with context, and sparse MoE computation with total weights still needing to be hosted. For a model-independent analysis — equations, training, prefill, decode, and hardware parallelism — see the [guide to LLM complexity and parallelism](llm-computational-complexity.qmd).
+
 ## Why combine architectures?
 
 During autoregressive generation, a Transformer with global attention maintains a *key-value* (KV) cache that grows with context length. Each new token also attends over a longer history.
+
+It is useful to distinguish the two inference phases. **Prefill** processes the full prompt: with dense global attention, interactions between positions grow quadratically with prompt length \(T\). During **decode**, the KV cache avoids recomputing keys and values already produced, but each new token still attends over the history: attention work per token therefore grows with context length, and the KV cache grows as well. For a prompt of length \(T\) followed by \(L\) generated tokens, decode attention work is approximately proportional to \(LT + L^2\), with architecture and dimensions held fixed.
 
 A state-space layer such as **Mamba-2** instead maintains a bounded recurrent state, updated at each token. Schematically:
 
@@ -61,7 +69,7 @@ A 30-billion-parameter MoE with roughly 3 billion active parameters per token is
 
 A conventional MoE routes a representation of dimension \(d\) to several experts. Even when only a few experts are active, moving representations and reading expert weights can become expensive. **LatentMoE**, used in Nemotron 3 Super and Ultra, adds a down-projection \(W_\downarrow : \mathbb{R}^{d} \rightarrow \mathbb{R}^{\ell}\), with \(\ell < d\). The router and experts operate in this reduced latent space; their outputs are aggregated and projected back to dimension \(d\).
 
-At a comparable budget, reducing the dimension of routed representations decreases expert-weight reads and *all-to-all* communication volume. NVIDIA uses this headroom to increase both the number of experts and the number activated per token. This is not simply “more experts”: it is a co-design of representation, routing, and hardware costs. The latent dimension cannot, however, be reduced arbitrarily without losing capacity.
+At a comparable budget, reducing the dimension of routed representations decreases expert-weight reads and *all-to-all* communication volume by a factor related to \(d/\ell\). NVIDIA reinvests this headroom to increase the total number of experts \(N\) and the number of active experts \(K\), approximately as \(N' = N\,d/\ell\) and \(K' = K\,d/\ell\). Non-routed parameters and other operations remain in the original dimension \(d\). The goal is to improve **accuracy per byte** without proportionally increasing compute and communication cost. This is not simply “more experts”: it is a co-design of representation, routing, and hardware costs. The latent dimension cannot, however, be reduced arbitrarily without losing capacity.
 
 ## GQA reduces the KV cache
 
@@ -76,6 +84,18 @@ M_{KV} \approx 2 B T n_{KV} d_h b,
 where $B$ is batch size, $T$ is context length, $n_{KV}$ is the number of K/V heads, $d_h$ is their dimension, and $b$ is bytes per element. The factor 2 accounts for keys and values; sum across attention layers.
 
 Reducing $n_{KV}$ reduces cache memory by approximately the same ratio. Thus, 32 query heads sharing 2 KV heads give a 16:1 ratio in head counts, but not necessarily a 16× latency gain: kernels, hardware, batch size, and memory transfers also matter.
+
+## Do not conflate Nemotron variants
+
+The figures and recipes below belong to distinct versions of the family. They should not be merged into one generic architecture.
+
+| Variant | Total / active parameters | Distinctive details |
+|---|---:|---|
+| **Nemotron 3.5 Lightning** | 30B / 3B | 128 routed experts, top-6; NVFP4 quantization with PTQ followed by QAD in the published recipe |
+| **Nemotron 3 Super** | 120.6B / 12.7B | 512 experts, top-22; two shared-weight MTP layers; NVFP4 pretraining |
+| **Nemotron 3 Ultra** | 550B / 55B | more than ten specialized teachers; MOPD post-training; MTP and LatentMoE |
+
+Lightning is particularly interesting for local inference and memory constraints; Super and Ultra illustrate scaling and agentic post-training recipes. Active parameter counts do not replace total parameter counts when estimating the memory needed to host the model.
 
 ## Reading Nemotron 3's choices together
 
@@ -94,19 +114,32 @@ NVIDIA's white paper describes an architecture made predominantly of Mamba-2 and
 
 **Multi-Token Prediction** (MTP) adds auxiliary objectives that train a model to predict multiple future tokens. At inference, these predictions can serve as proposals in speculative decoding: a lightweight mechanism proposes a continuation, then the main model verifies it. Several tokens may be accepted in one verification pass, reducing the number of sequential passes.
 
-MTP is a training objective; speculative decoding is an inference strategy that uses verified proposals. It does not remove generation's causal dependency.
+MTP is a training objective; speculative decoding is an inference strategy that uses verified proposals. It does not remove generation's causal dependency. In the **Nemotron 3 Super** report, two shared-weight MTP layers are used: parameter sharing allows the mechanism to be applied recursively across prediction horizons and aims to reduce the mismatch between training states derived from ground-truth sequences and states generated during speculative decoding. This is specific to that configuration.
 
 ### MOPD: distilling from multiple specialists on the student's own outputs
 
 Nemotron 3 Ultra also illustrates an evolution in post-training: **Multi-Teacher On-Policy Distillation** (MOPD). The student generates its own trajectories (*on-policy*); domain-specialized teachers then evaluate those trajectories and provide dense, token-level supervision. The student therefore learns from contexts and responses it actually generates, rather than only from prepared responses generated by another policy (*off-policy*).
 
+Conceptually, for each prefix \(s_t\) generated by the student, the objective brings its distribution closer to that of the domain-specialized teacher: \(\mathrm{D}_{KL}(\pi_\theta(\cdot\mid s_t)\,\|\,\pi_{T_i}(\cdot\mid s_t))\). This is a reverse-KL divergence evaluated on prefixes induced by the student's own generations; domain weights control the relative contribution of each teacher. The reported implementation uses a dense token-level signal rather than a single scalar reward at the end of a trajectory.
+
 This approach complements rather than replaces SFT and reinforcement learning with verifiable rewards (RLVR). It is specific to the Nemotron 3 Ultra recipe: it should not be presented as a universal training stage or a feature of every Nemotron variant.
 
 ### Quantization and numerical precision
 
-A lower-precision representation reduces weight storage and can reduce memory traffic, but introduces approximation. Layers do not all tolerate the same error.
+A lower-precision representation reduces weight storage and can reduce memory traffic, but introduces approximation. Layers do not all tolerate the same error. For Nemotron 3 Super, NVFP4 uses 4-bit E2M1 floating-point values, 16-value micro-blocks with E4M3 scaling factors, and a second-level FP32 global scale. The recipe is **mixed precision**: selected attention projections, MTP layers, embeddings, and parts of the network remain in BF16; the Mamba output projection uses MXFP8, while most linear layers use NVFP4. Saying “trained in FP4” therefore does not mean every tensor is represented with 4 bits.
 
 NVIDIA's white paper describes NVFP4 training for some Nemotron 3 variants and notes precision safeguards for sensitive projections. It would be incorrect to claim that all Nemotron models uniformly use NVFP4 or that quantization automatically preserves performance. The format, scaling, recipe, and metrics must be explicit.
+
+### QAD: recovering accuracy lost to quantization
+
+The published **Nemotron 3.5 Lightning** recipe adds *Quantization-Aware Distillation* (QAD) after post-training quantization (PTQ). PTQ first produces a quantized student from the BF16 checkpoint. The BF16 teacher remains frozen; the student runs forward passes with simulated quantization and learns to bring its logits closer to the teacher's, using a KL-divergence loss.
+
+QAD should not be confused with MOPD:
+- **QAD**: the teacher is the original BF16 model; the goal is to compensate for errors introduced by quantization.
+- **MOPD**: multiple specialized teachers guide a student on its own trajectories; the goal is to improve the model's capabilities and behavior.
+
+For the Lightning 3.5 checkpoint documented by NVIDIA, the reduction from 66 GB in BF16 to 22 GB in NVFP4 illustrates the storage gain; the report gives a median 99.24% recovery of BF16 accuracy under its evaluation protocol. These figures are specific to that checkpoint and protocol, not a general guarantee of FP4 quantization.
+
 
 ## Critically reading the numbers
 
