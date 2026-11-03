@@ -137,7 +137,7 @@ The project builds on existing educational work rather than presenting establish
 
 ## Status
 
-Current scope: a bilingual Quarto learning site, a tested NumPy reference implementation of a small decoder-only GPT — configuration, numerical building blocks, attention primitives, one pre-LN Transformer block, the assembled model and the autoregressive generation loop in `src/llm_lab/foundations/`, plus cross-entropy loss/gradient helpers and a minimal sliding-window input/target construction for training examples — and automated Python/Quarto checks. The reference covers inference and training-example construction: the corpus/tokenizer pipeline, the training loop and end-to-end evaluation remain planned; see [`docs/roadmap.md`](docs/roadmap.md) for verified status, priorities, and completion criteria. Passing CI verifies configured checks, not research claims or visual quality.
+Current scope: a bilingual Quarto learning site, a tested NumPy reference implementation of a small decoder-only GPT — configuration, numerical building blocks, attention primitives, one pre-LN Transformer block, the assembled model and the autoregressive generation loop in `src/llm_lab/foundations/`, plus cross-entropy loss/gradient helpers, a minimal sliding-window input/target construction for training examples, and top-k/top-p truncation filters for decoding distributions — and automated Python/Quarto checks. The reference covers inference and training-example construction: the corpus/tokenizer pipeline, the training loop and end-to-end evaluation remain planned; see [`docs/roadmap.md`](docs/roadmap.md) for verified status, priorities, and completion criteria. Passing CI verifies configured checks, not research claims or visual quality.
 
 ## License
 
