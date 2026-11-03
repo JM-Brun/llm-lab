@@ -21,7 +21,7 @@ tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level
 -->
 
 ::: {.chapter-lead}
-This page deepens the [LLM overview](llm-overview.qmd) by formalizing its central problem: a language model assigns a probability to a sequence of tokens. In an autoregressive model, this probability is built from successive conditional probabilities: at each position, the model estimates the next token from the prefix already observed. This page makes the mathematical objects behind that idea explicit; the overview does not assume that readers already know them.
+In an autoregressive model, the probability of a token sequence factorizes into successive conditional probabilities: at each position, the model estimates the next token from the prefix already observed. This factorization formalizes the language-modeling problem introduced in the [LLM overview](llm-overview.qmd).
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
