@@ -15,8 +15,8 @@ suggested_route:
   next: null
 hierarchy:
   parents: ["en/llm-overview"]
-  children: []
-related: ["en/transformer-history", "en/transformer"]
+  children: ["en/cross-attention"]
+related: ["en/transformer-history", "en/transformer", "en/cross-attention"]
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:en", "status:published"]
 -->
 
@@ -39,6 +39,12 @@ You will be able to:
 | **Encoder–decoder** | The encoder represents the input; the decoder produces a target sequence using that representation. | Encoder attention over the input; causal self-attention in the decoder; cross-attention to encoder states. | Reconstruction, denoising, or text-to-text learning, depending on the model. | Translation, summarization, and sequence-to-sequence transformation. | Original Transformer, T5 |
 | **Decoder-only** | The decoder extends a prefix by producing representations used to predict the next token. | Causal self-attention: a position cannot attend to future tokens. | Autoregressive next-token prediction in classic GPT models. | Prompt-conditioned continuation and generation. | GPT, GPT-2 |
 
+## The three architectures in one diagram
+
+![Comparison of information flow in encoder-only, decoder-only, and encoder–decoder architectures.](../images/transformer-attention-architectures.svg){fig-alt="Encoder-only: bidirectional self-attention. Decoder-only: causal self-attention. Encoder–decoder: encoder self-attention, causal decoder self-attention, and cross-attention to encoder memory." width=100%}
+
+The distinguishing feature of the encoder–decoder architecture is the **additional attention sublayer in the decoder**: it reads the memory produced by the encoder. For the precise origins of queries, keys, and values, see the dedicated [cross-attention page](cross-attention.qmd).
+
 ## What actually distinguishes the three families
 
 ### Encoder-only: contextualize an input
@@ -51,7 +57,7 @@ In BERT, the best-known pretraining objective predicts masked tokens from their 
 
 The encoder builds a representation of the input. The decoder then generates the output, usually autoregressively, combining its already-produced context with information from the encoder through *cross-attention*.
 
-This separation is natural when input and output play distinct roles: translating a sentence, summarizing a document, or converting text into another format. The original 2017 Transformer and T5 are important examples of this family.
+This separation is natural when input and output play distinct roles: translating a sentence, summarizing a document, or converting text into another format. The original 2017 Transformer and T5 are important examples of this family. The mechanism—including the distinct origins of Q, K, and V—is explained in the dedicated [cross-attention page](cross-attention.qmd).
 
 ### Decoder-only: extend a prefix
 
