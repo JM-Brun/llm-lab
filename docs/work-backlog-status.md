@@ -232,3 +232,18 @@ This addendum records work completed after the earlier snapshot in this register
 2. Validate #325, including the bilingual Quarto render, then complete #314 with an independent mathematical/content review before learner-facing integration.
 3. Correct the TokLens FR/EN synthesis in the advanced tokenizer-design page, preserving the distinction between fertility, character-normalized parity and downstream association.
 4. Keep #309/#310 and #316/#317 as separate rendered/accessibility audits; do not claim their browser evidence from source inspection.
+
+## 12. Source-audit and validation update — 2026-11-03
+
+- **#310:** targeted text-contrast correction is merged via PR #324. The issue remains open for remaining color pairs and rendered keyboard/responsive checks; no global WCAG claim is made.
+- **#313, #314 and #315:** closed after PRs #322, #325 and #330 were merged. The formative sequence now has three bilingual bundles, preserved detailed solutions and a recorded source-level review.
+- **#114:** primary-source rechecks for tokenization and embedding studies are documented in issue comments. PRs #326 and #332 are merged; the source-audit register reconciliation is proposed in [PR #333](https://github.com/JM-Brun/llm-lab/pull/333). Close #114 after this documentation PR is merged, unless a new concrete content gap is found.
+- **#320 (P2):** canonical prerequisite-page browser review remains deferred. **#329 (P2):** learner-facing exercise-page review is triggered only after those exercises are integrated into Quarto.
+- **#308:** closed after the source inventory of all 91 bilingual QMD pages; rendered component comparison remains #309.
+
+### Next recommended actions
+
+1. Review and merge #333 after source-audit document and bilingual links pass CI; then close #114.
+2. Continue #191 design-system rendered/contrast work in #309/#310 without claiming browser evidence from source inspection.
+3. Reassess #316/#317 after the design-system work; keep them separate from the tokenizer/embedding source audit.
+4. Keep #320 and #329 at P2 until the relevant pages exist in a browser-reviewable form and time is allocated.
