@@ -110,7 +110,7 @@ Common uses include text generation and rewriting, summarization, translation, s
 
 Reusing a general-purpose model is attractive when one base can cover several tasks, or when the labeled examples of a task are scarce. For knowledge that changes frequently, retrieving up-to-date documents (RAG) is often better suited than changing parameters; for a specific format, domain, or behavior, an adaptation may become worthwhile. The choice is evaluated on the real task: quality, errors, robustness, cost, latency, confidentiality, data provenance, and maintenance — a convincing demo on a few prompts is not an evaluation.
 
-::: {.callout-note collapse="true" title="Check your understanding"}
+::: {.self-check}
 
 [Exercises and practice](../en/exercises.qmd).
 
