@@ -40,6 +40,8 @@ An LLM does not write text in one block: it produces **one token at a time**. At
 4. **Append the token and repeat.** The selected token is added to the context, and the loop returns to step 2 with a context one token longer.
 5. **Stop.** Generation stops on an explicit criterion — an end-of-sequence token, a maximum length, or a rule imposed by the application — never because the model "finished thinking".
 
+Here, **decoding** specifically means the step that turns the next-token distribution into a selected token. The model computation (the [forward pass](transformer.qmd)) produces the scores; decoding then applies a selection rule. Filters such as top-k and top-p are more advanced variants, covered in the [advanced guide to decoding strategies](decoding-strategies.qmd).
+
 At each step, the context grows by one token: later predictions are therefore also conditioned on the tokens the model itself has just produced.
 
 ## Inference learns nothing
