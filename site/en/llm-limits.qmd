@@ -47,15 +47,9 @@ Observable performance can support the first interpretation within a given scope
 
 ## 3. "Emergent" abilities and scale effects
 
-Discussions of so-called *emergent* abilities require specifying the task, the metric, the thresholds, and the models compared. An ability that seems to appear abruptly under a given metric may depend on measurement resolution or protocol: recent analyses show that several "emergent" effects disappear when the metric is smoothed or replaced. Examine the results, controls, and definitions before concluding a qualitative transition. For a deeper discussion and protocols for testing such claims, see [Emergent capabilities](emergence.qmd).
+Discussions of so-called *emergent* abilities require specifying the task, the metric, the thresholds, and the models compared. An ability that seems to appear abruptly under a given metric may depend on measurement resolution or protocol: recent analyses show that several "emergent" effects disappear when the metric is smoothed or replaced. Examine the results, controls, and definitions before concluding a qualitative transition; [experimental evaluation](experimental-evaluation.qmd) makes these requirements explicit. The [debate over emergent abilities](emergence.qmd) examines the protocols and metrics used to test such claims.
 
 Model size alone does not explain performance either. Data quality, diversity, and provenance, the objective, the architecture, the training procedure, adaptation, and the evaluation protocol jointly shape the results.
-
-## Continue
-
-- [Panorama: what is an LLM?](llm-overview.qmd) — return to the mental model and the three dimensions.
-- [Experimental evaluation](experimental-evaluation.qmd) — define metrics, baselines, and interpretation limits.
-- [GPT and Transformer](transformer.qmd) — enter the computation that produces the distribution.
 
 ## Primary sources and their role
 
