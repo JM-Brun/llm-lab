@@ -63,7 +63,7 @@ Un MoE de 30 milliards de paramètres dont environ 3 milliards sont actifs par t
 
 Un MoE classique route une représentation de dimension \(d\) vers plusieurs experts. Même si peu d'experts sont activés, le transfert des représentations et la lecture des poids experts peuvent devenir coûteux. **LatentMoE**, utilisé dans Nemotron 3 Super et Ultra, ajoute une projection descendante \(W_\downarrow : \mathbb{R}^{d} \rightarrow \mathbb{R}^{\ell}\), avec \(\ell < d\). Le routeur et les experts travaillent dans cet espace latent réduit ; leurs sorties sont agrégées puis reprojetées vers la dimension \(d\).
 
-À budget comparable, réduire la dimension des représentations routées diminue les poids experts à lire et le volume de communication *all-to-all*. NVIDIA utilise cette marge pour augmenter le nombre d'experts et le nombre d'experts activés par token. Ce n'est donc pas simplement « davantage d'experts » : c'est une co-conception de la représentation, du routage et des coûts matériels. La dimension latente ne peut toutefois pas être réduite arbitrairement sans perte de capacité.
+À budget comparable, réduire la dimension des représentations routées diminue les poids experts à lire et le volume de communication *all-to-all* d'un facteur lié à \(d/\ell\). NVIDIA réinvestit cette marge pour augmenter le nombre total d'experts \(N\) et le nombre d'experts actifs \(K\), approximativement selon \(N' = N\,d/\ell\) et \(K' = K\,d/\ell\). Le nombre de paramètres non routés et les autres opérations restent dans la dimension initiale \(d\). L'objectif est d'améliorer l'**accuracy per byte** sans augmenter proportionnellement le coût de calcul et de communication. Ce n'est donc pas simplement « davantage d'experts » : c'est une co-conception de la représentation, du routage et des coûts matériels. La dimension latente ne peut toutefois pas être réduite arbitrairement sans perte de capacité.
 
 ## GQA réduit le cache KV
 
@@ -101,6 +101,8 @@ MTP est un objectif d'entraînement ; le décodage spéculatif est une stratégi
 ### MOPD : distiller plusieurs spécialistes sur les sorties du modèle
 
 Nemotron 3 Ultra illustre aussi une évolution du post-entraînement : la **Multi-Teacher On-Policy Distillation** (MOPD). Le modèle étudiant génère ses propres trajectoires (*on-policy*), puis des enseignants spécialisés par domaine évaluent ces trajectoires et fournissent un signal de supervision dense, token par token. Le modèle apprend ainsi à partir de contextes et de réponses qu'il produit réellement, plutôt qu'uniquement à partir de réponses préparées hors politique (*off-policy*).
+
+Conceptuellement, pour chaque préfixe \(s_t\) produit par l'étudiant, l'objectif rapproche sa distribution de celle de l'enseignant spécialisé du domaine : \(\mathrm{D}_{KL}(\pi_\theta(\cdot\mid s_t)\,\|\,\pi_{T_i}(\cdot\mid s_t))\). Il s'agit d'une divergence KL inversée (*reverse KL*) évaluée sur les préfixes issus des propres générations de l'étudiant ; les poids de domaine déterminent l'importance relative des enseignants. L'implémentation rapportée utilise un signal dense au niveau des tokens, et non une simple récompense scalaire en fin de trajectoire.
 
 Cette approche complète, sans les remplacer, le SFT et le RL avec récompenses vérifiables (RLVR). Elle est propre à la recette de Nemotron 3 Ultra : ne pas la présenter comme une étape universelle ni comme une caractéristique de toutes les variantes Nemotron.
 
