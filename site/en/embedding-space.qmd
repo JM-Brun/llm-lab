@@ -1,6 +1,6 @@
 ---
 title: "The embedding space"
-subtitle: "How tokens become vectors — and what their geometry can tell us"
+subtitle: "How token IDs select vectors and how context transforms them"
 keywords: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:en", "status:published"]
 lang: en
 ---
@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/embedding-space"
-scope: "Studies the embedding table as a learned mapping from token IDs to initial vectors, then examines the geometry of those vectors; distinguishes this lookup from contextual representations produced by network layers and from embeddings used in other architectures or tasks."
-purpose: "Readers should be able to explain how an ID selects a learned vector, distinguish vocabulary size from vector dimension, and interpret distance, similarity, and geometry in this space with appropriate caution."
+scope: "Explains the lookup that maps each token ID to an initial learned vector, then distinguishes this vector from contextualized representations produced by Transformer layers; introduces geometry cautiously without making it a prerequisite."
+purpose: "Readers should be able to explain how an ID selects a row in the embedding matrix, distinguish initial embeddings from contextualized representations, and understand why geometric properties require model- and task-dependent interpretation."
 suggested_route:
   previous: "en/tokenization-strategies"
   next: "en/positional-encoding"
@@ -27,9 +27,9 @@ An **embedding** is a numerical vector associated with an object, such as a toke
 ::: {.callout-tip title="The one-minute mental model"}
 An ID is a **row address**, not a semantic coordinate. The embedding matrix stores one learned vector per ID; lookup simply selects the corresponding row. Two occurrences of the same ID therefore retrieve the same initial vector. The Transformer then builds a context-dependent representation from it.
 
-**First pass:** understand the lookup in the small matrix and remember the difference between (V) (number of rows, vocabulary size) and (d) (coordinates per vector, embedding dimension).
+**First pass:** understand the lookup in the small matrix and remember that an ID selects a row; it is not itself a semantic coordinate.
 
-**Go deeper:** run the Python trace, then explore geometry, similarity, and their limitations. The geometry of initial embeddings alone does not explain meaning.
+**Go deeper:** the Python trace and parameter count are available in optional collapsed sections; geometric properties are developed in the cosine-similarity and linearity lessons.
 :::
 
 ## Where do the vectors come from?
@@ -92,8 +92,9 @@ For a batch, the common shape transition is:
 
 where \(B\) is batch size, \(L\) sequence length, and \(d\) embedding dimension. Lookup does not mix information across positions: two occurrences of the same token ID retrieve the same row before positional information and contextual processing are applied.
 
-### One reproducible trace: text → token IDs → embedding rows
+::: {.callout-note collapse="true" title="Optional example"}
 
+### One reproducible trace: text → token IDs → embedding rows
 The next example connects a real, named tokenizer encoding to a **synthetic** embedding table. It uses the GPT-2 byte-level BPE encoding distributed by `tiktoken`; the IDs below are asserted against the library's public tests. Install the pinned tokenizer version with `python -m pip install tiktoken==0.14.0`. NumPy is already a project dependency.
 
 ```python
@@ -137,9 +138,9 @@ Read the trace carefully:
 4. `P` illustrates one architecture's position-vector addition. `Z` remains shape `[L,d]`; this example does not run a Transformer block and therefore does not compute contextualized hidden states.
 
 The exact IDs are specific to the named encoding and library behaviour; another tokenizer may produce different fragments and IDs. The assertions make changes visible rather than silently treating tokenization as universal. See the [official tiktoken repository](https://github.com/openai/tiktoken) and its [encoding tests](https://github.com/openai/tiktoken/blob/0.14.0/tests/test_encoding.py) for the reference output.
+:::
 
-## Vocabulary size, dimension, and parameters
-
+::: {.callout-note collapse="true" title="Vocabulary size and parameter cost (advanced)"}
 Vocabulary size \(V\) and embedding dimension \(d\) are separate design choices. The embedding matrix \(E\in\mathbb{R}^{V\times d}\) has \(V\) rows—one per ID—and \(d\) components per row. For a sequence of length \(L\), lookup produces a matrix of shape \(L\times d\); for a batch of \(B\) sequences, the common shape is \(B\times L\times d\).
 
 - **\(V\)** depends on the tokenizer and its vocabulary, including special tokens.
@@ -151,6 +152,7 @@ Vocabulary size \(V\) and embedding dimension \(d\) are separate design choices.
 - IDs and their associated weights are coupled. Changing the vocabulary, ID assignments, or \(V\) requires an explicit adaptation or retraining strategy; it is not a neutral substitution.
 
 At each position, the output distribution generally has \(V\) logits. The [tensors page](tensors.qmd) explains how to read axes and shapes; the [logits page](logits.qmd) covers output scores in more depth.
+:::
 
 ## From token embeddings to contextualized states
 
@@ -170,42 +172,15 @@ During training, gradients can update the embedding-table rows used by the examp
 
 The same token ID retrieves the same initial embedding, but its representation can change as positional information and surrounding tokens are processed by the Transformer. This distinction is explored in a [focused companion lesson](contextualized-representations.qmd).
 
-## A map of representations
+## Interpreting geometry with care
 
 ![Schematic projection of an embedding space.](../images/embedding-space-en.svg){fig-alt="Points grouped in an abstract plane. The groups are illustrative; the axes do not necessarily correspond to human concepts." width=100%}
 
-This is a conceptual illustration in two dimensions. Real embeddings often have hundreds or thousands of coordinates; a 2D projection can distort distances and neighbourhoods.
+This projection is illustrative: real embeddings often have hundreds or thousands of coordinates, and a 2D representation can distort distances and neighbourhoods.
 
-## What does proximity mean?
+Geometric proximity depends on the model, layer, training objective, and metric. It does not prove that two texts are equivalent or that a document correctly answers a question—negation can reverse meaning even when most of the vocabulary is shared.
 
-Two vectors can be compared using a dot product, Euclidean distance, or cosine similarity. Cosine compares their directions:
-
-$$
-\operatorname{cos}(x,y)=\frac{x^\top y}{\|x\|_2\|y\|_2}.
-$$
-
-A high score means the directions are close. It does not prove that the texts are equivalent, imply the same conclusion, or that a document correctly answers a question.
-
-For example, “the treatment is effective” and “the treatment is not effective” share almost all their words, although negation changes the decisive meaning. Conversely, very different formulations can express the same information.
-
-## Learned geometry, not universal geometry
-
-Embedding dimensions generally do not have stable human-readable labels. For example, an orthogonal change of coordinates can mix dimensions while preserving dot products, distances, and cosine similarities; the same geometry is then expressed along different axes. This illustrates why an individual axis has no guaranteed human-readable meaning. Do not interpret a dimension as “sentiment” or “causality” without experiments supporting that interpretation.
-
-Geometry depends on the training objective, data, observed layer, normalization, metric, and task. **Anisotropy** (vectors concentrated in certain directions) and **hubness** (points becoming neighbours of many other points) can degrade similarity search. These are phenomena to measure, not explanations to assume automatically.
-
-## Can a 2D projection mislead?
-
-Yes. UMAP, t-SNE, and other dimensionality-reduction methods aim to preserve selected relationships, not the entire original geometry. Distances in the image should not be treated as exact distances in the original space. A visually clear separation also does not prove that the model distinguishes categories correctly on new data.
-
-To evaluate an embedding space, return to the actual task: document retrieval, annotated similarity, classification, and so on. For retrieval, measure metrics such as Recall@k, MRR, or nDCG; for annotated similarity scores, use an appropriate correlation measure. Also inspect false positives and out-of-distribution examples.
-
-## Common misconceptions
-
-- **“Each dimension corresponds to a concept.”** There is no such guarantee; a feature may be distributed across multiple dimensions.
-- **“Nearby vectors always represent nearby meanings.”** Negation, contradictions, and out-of-distribution uses can break this intuition.
-- **“A beautiful visualization demonstrates embedding quality.”** It illustrates a projection; task-specific evaluation measures usefulness for the task.
-- **“All embeddings should be compared with cosine.”** The choice depends on the model and its objective. Dot product and cosine induce the same ranking when vectors are normalized.
+For a deeper treatment without conflating geometry with the lookup mechanism, see the pages on [cosine similarity](cosine-similarity.qmd) and the [linearity hypothesis for representations](embedding-linearity.qmd).
 
 ::: {.self-check}
 ## Check your understanding

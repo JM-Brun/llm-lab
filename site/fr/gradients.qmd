@@ -29,7 +29,7 @@ La loss indique **ce qui doit être amélioré** ; le gradient indique **comment
 
 **Première lecture :** suivez le chemin loss → dérivée par rapport aux logits → dérivées par rapport aux paramètres → mise à jour. Le gradient décrit une variation locale : il ne garantit pas qu'un pas quelconque réduira la loss.
 
-Les différences finies permettent de contrôler numériquement les dérivées. Le taux d’apprentissage, le momentum et les optimiseurs adaptatifs déterminent ensuite comment le gradient est converti en mise à jour ; ils ne changent pas sa définition. La qualité du calcul du gradient reste distincte de la généralisation du modèle.
+La qualité du calcul du gradient reste distincte de la généralisation du modèle.
 :::
 ## Gradient par rapport aux logits
 
@@ -53,6 +53,10 @@ $$
 
 Dans un réseau profond, la rétropropagation applique efficacement cette règle de chaîne à travers le graphe de calcul. Les dimensions doivent être cohérentes : les dérivées sont des vecteurs ou tenseurs de même forme que les variables différentiées.
 
+::: {.callout-note collapse="true" title="Choix de l'optimiseur (approfondissement)"}
+Le taux d’apprentissage, le momentum, le clipping, la régularisation et les optimiseurs adaptatifs modifient la dynamique effective de l'entraînement, mais pas la définition du gradient.
+:::
+
 ## Mise à jour par descente de gradient
 
 Une mise à jour SGD élémentaire est :
@@ -63,8 +67,7 @@ $$
 
 où $\eta>0$ est le taux d'apprentissage. Le signe moins suit la direction de plus forte décroissance locale pour une petite mise à jour dans un espace euclidien. Des optimiseurs adaptatifs, le momentum, le clipping et la régularisation modifient la dynamique effective.
 
-## Vérifier le gradient par différences finies
-
+::: {.callout-note collapse="true" title="Vérification numérique des gradients (approfondissement)"}
 Pour une coordonnée $\theta_i$ :
 
 $$
@@ -74,6 +77,7 @@ g_i^{\mathrm{num}}=
 $$
 
 Comparer ce résultat au gradient analytique avec des tolérances absolue et relative. La vérification doit être faite en précision suffisante, sur une fonction déterministe et avec un $\epsilon$ adapté à l'échelle des paramètres. Trop petit, il amplifie les erreurs d'arrondi ; trop grand, il approxime mal la dérivée locale.
+:::
 
 ::: {.callout-warning title="Idées reçues"}
 - **« Un gradient nul signifie que le modèle est optimal. »** Il peut signaler un point stationnaire, une saturation, un chemin de gradient rompu ou une erreur d'implémentation.

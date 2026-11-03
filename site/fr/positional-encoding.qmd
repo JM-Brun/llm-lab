@@ -44,8 +44,7 @@ Ces approches injectent l'information positionnelle à des endroits différents 
 
 **Cas de RoPE.** L'information de position est injectée en faisant tourner les représentations des requêtes et des clés **après leurs projections et avant le produit $QK^\top$**. Elle modifie donc les scores d'attention eux-mêmes ; ce n'est pas une opération appliquée après l'attention. La section suivante détaille le calcul qui le montre.
 
-## L'intuition mathématique de RoPE
-
+::: {.callout-note collapse="true" title="Dérivation facultative : pourquoi RoPE encode un décalage relatif"}
 Pour une paire de coordonnées $(x_1,x_2)$, une rotation d'angle $\theta$ s'écrit :
 
 $$
@@ -69,6 +68,7 @@ $$
 Le score dépend donc du décalage $n-m$ pour cette paire et cette fréquence, plutôt que des positions absolues prises séparément. Dans RoPE, ce raisonnement s'applique paire par paire, avec une fréquence propre à chaque paire.
 
 Dans une tête d'attention, les rotations sont appliquées à $Q$ et $K$ avant le calcul de $QK^\top$. Les valeurs $V$ ne sont pas directement tournées par la version standard de RoPE.
+:::
 
 ## Ce que RoPE apporte — et ce qu'il ne garantit pas
 
@@ -83,9 +83,9 @@ Le comportement à grande longueur dépend aussi de la base de fréquences, de l
 - **« RoPE garantit les longues fenêtres de contexte. »** Non : les performances au-delà de la longueur d'entraînement dépendent de plusieurs choix et doivent être évaluées.
 - **« RoPE tourne aussi les valeurs $V$. »** Dans la version standard, l'opération agit sur $Q$ et $K$, puis l'attention agrège les valeurs selon les poids calculés.
 
-## Comment vérifier une implémentation
-
+::: {.callout-note collapse="true" title="Vérifications d'implémentation (approfondissement)"}
 Vérifier les dimensions, l'ordre des paires de coordonnées, les positions utilisées, la précision numérique et le comportement sur plusieurs longueurs. Une erreur d'indexation peut produire des tenseurs de forme correcte tout en encodant les mauvaises positions. Les tests doivent comparer les résultats à une référence connue et contrôler les scores d'attention.
+:::
 
 ## Références
 

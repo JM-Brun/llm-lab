@@ -58,12 +58,11 @@ Le token le plus probable est sélectionné systématiquement. Le résultat est 
 
 Le token est tiré au hasard selon les probabilités. Les textes varient d'une exécution à l'autre ; un token peu probable peut apparaître, parfois au prix de la cohérence.
 
-### Échantillonnage ajusté : température et troncature
+### Température : régler la dispersion
 
-- **Température.** Avant la normalisation, les logits sont divisés par une température $T$ : $p_i \propto e^{z_i/T}$. Une température basse concentre la distribution sur le token le plus probable ; une température élevée l'aplatit. Voir la page [logits](logits.qmd) pour l'effet de l'échelle.
-- **Top-k et top-p (nucleus).** On ne garde que les $k$ tokens les plus probables, ou le plus petit ensemble de tokens dont la probabilité cumulée dépasse un seuil $p$ ; le tirage se fait alors dans cet ensemble réduit.
+La température règle la concentration de la distribution : une valeur basse favorise davantage les tokens les plus probables ; une valeur élevée laisse plus de place aux alternatives. Elle modifie le choix du prochain token, pas les paramètres du modèle.
 
-Ces règles sont des **choix de décodage**, pas des propriétés du modèle : le même modèle peut produire des textes très différents selon la règle retenue et ses paramètres.
+Top-k et nucleus sampling (top-p) sont des filtres plus avancés qui restreignent l'ensemble des candidats. Ils sont présentés, avec leurs compromis et les méthodes de recherche de séquences, dans l'[approfondissement sur les stratégies de décodage](decoding-strategies.qmd).
 
 ::: {.callout-warning title="Idées reçues"}
 - **« Le modèle choisit toujours le meilleur token. »** Non : avec échantillonnage, un token moins probable peut être sélectionné ; et « meilleur » n'est pas défini sans une règle de décodage.

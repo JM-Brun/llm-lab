@@ -1,6 +1,6 @@
 ---
 title: "L'espace des embeddings"
-subtitle: "Comment les tokens deviennent des vecteurs — et ce que leur géométrie permet de dire"
+subtitle: "Comment les identifiants sélectionnent des vecteurs et comment le contexte les transforme"
 keywords: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/embedding-space"
-scope: "Étudie la table d’embeddings comme correspondance apprise entre IDs de tokens et vecteurs initiaux, puis les propriétés géométriques de ces vecteurs ; distingue ce lookup des représentations contextualisées produites par les couches du réseau et des embeddings utilisés dans d’autres architectures ou tâches."
-purpose: "Le lecteur doit pouvoir expliquer comment un ID sélectionne un vecteur appris, distinguer taille du vocabulaire et dimension vectorielle, et interpréter avec prudence les notions de distance, similarité et géométrie dans cet espace."
+scope: "Explique le lookup qui associe chaque ID de token à un vecteur initial appris, puis distingue ce vecteur des représentations contextualisées produites par les couches du Transformer ; introduit prudemment la géométrie sans en faire un prérequis."
+purpose: "Le lecteur doit pouvoir expliquer comment un ID sélectionne une ligne de la matrice d’embeddings, distinguer embedding initial et représentation contextualisée, et comprendre pourquoi les propriétés géométriques demandent une interprétation dépendante du modèle et de la tâche."
 suggested_route:
   previous: "fr/tokenization-strategies"
   next: "fr/positional-encoding"
@@ -27,9 +27,9 @@ Un **embedding** est un vecteur numérique associé à un objet, par exemple un 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice d'embeddings contient un vecteur appris par ID ; le lookup sélectionne simplement la bonne ligne. Deux occurrences du même ID récupèrent donc le même vecteur initial. C'est ensuite le traitement par le Transformer qui construit une représentation dépendant du contexte.
 
-**Première lecture :** comprenez le lookup sur la petite matrice et retenez la différence entre (V) (nombre de lignes, taille du vocabulaire) et (d) (coordonnées par vecteur, dimension de l'embedding).
+**Première lecture :** comprenez le lookup sur la petite matrice et retenez qu’un ID sélectionne une ligne, sans encoder lui-même une coordonnée sémantique.
 
-**Pour approfondir :** exécutez la trace Python, puis explorez la géométrie, les similarités et leurs limites. La géométrie des embeddings initiaux n'est pas, à elle seule, une explication du sens.
+**Pour approfondir :** la trace Python et le comptage des paramètres sont repliés dans des encadrés facultatifs ; les propriétés géométriques sont développées dans les pages sur la similarité cosinus et la linéarité.
 :::
 
 
@@ -93,8 +93,9 @@ Pour un lot de séquences, le changement de forme usuel est :
 
 où \(B\) est la taille du lot, \(L\) la longueur de séquence et \(d\) la dimension des embeddings. Le lookup ne mélange pas l'information entre les positions : deux occurrences du même identifiant récupèrent la même ligne avant l'ajout éventuel d'information positionnelle et le traitement contextuel.
 
-### Une trace reproductible : texte → IDs → lignes d'embedding
+::: {.callout-note collapse="true" title="Exemple facultatif"}
 
+### Une trace reproductible : texte → IDs → lignes d'embedding
 L'exemple relie un encodage de tokenizer réel et identifié à une table d'embeddings **synthétique**. Il utilise l'encodage BPE au niveau des octets de GPT-2 fourni par `tiktoken` ; les IDs ci-dessous sont vérifiés dans les tests publics de la bibliothèque. Installez la version figée avec `python -m pip install tiktoken==0.14.0`. NumPy est déjà une dépendance du projet.
 
 ```python
@@ -138,9 +139,9 @@ Voici comment lire cette trace :
 4. `P` illustre l'ajout de vecteurs positionnels dans une architecture donnée. `Z` garde la forme `[L,d]` ; cet exemple n'exécute pas de bloc Transformer et ne calcule donc pas les états cachés contextualisés.
 
 Les IDs exacts dépendent de l'encodage et du comportement de la bibliothèque ; un autre tokenizer peut produire des fragments et IDs différents. Les assertions rendent ces changements visibles au lieu de présenter la tokenisation comme universelle. Voir le [dépôt officiel de tiktoken](https://github.com/openai/tiktoken) et ses [tests d'encodage](https://github.com/openai/tiktoken/blob/0.14.0/tests/test_encoding.py) pour la sortie de référence.
+:::
 
-## Taille du vocabulaire, dimension et paramètres
-
+::: {.callout-note collapse="true" title="Taille du vocabulaire et coût en paramètres (approfondissement)"}
 La taille du vocabulaire \(V\) et la dimension d'embedding \(d\) sont deux choix distincts. La matrice d'embeddings \(E\in\mathbb{R}^{V\times d}\) contient \(V\) lignes — une par ID — et \(d\) composantes par ligne. Pour une séquence de longueur \(L\), le lookup produit une matrice de forme \(L\times d\) ; pour un lot de \(B\) séquences, la forme usuelle est \(B\times L\times d\).
 
 - **\(V\)** dépend du tokenizer et du vocabulaire qu'il définit, y compris les tokens spéciaux.
@@ -152,6 +153,7 @@ La taille du vocabulaire \(V\) et la dimension d'embedding \(d\) sont deux choix
 - Les IDs et les poids associés sont couplés. Modifier le vocabulaire, l'ordre des IDs ou \(V\) exige une stratégie explicite d'adaptation ou de réentraînement ; ce n'est pas une substitution neutre.
 
 À chaque position, la distribution de sortie comporte en général \(V\) logits. La [page sur les tenseurs](tensors.qmd) explique comment lire les axes et les formes ; la [page sur les logits](logits.qmd) approfondit les scores de sortie.
+:::
 
 ## Des embeddings de tokens aux représentations contextualisées
 
@@ -171,42 +173,15 @@ Pendant l'entraînement, les gradients peuvent modifier les lignes de la table d
 
 Un même ID récupère le même embedding initial, mais sa représentation peut évoluer lorsque le Transformer traite l'information positionnelle et les tokens environnants. Cette distinction est approfondie dans un [complément ciblé](contextualized-representations.qmd).
 
-## Une carte de représentations
+## Interpréter la géométrie avec prudence
 
 ![Projection schématique d'un espace d'embeddings.](../images/embedding-space-fr.svg){fig-alt="Points regroupés dans un plan abstrait. Les regroupements sont illustratifs et les axes ne correspondent pas nécessairement à des concepts humains." width=100%}
 
-Cette image est une illustration conceptuelle en deux dimensions. Les embeddings réels ont souvent des centaines ou des milliers de coordonnées ; une projection 2D peut déformer les distances et les voisinages.
+Cette projection est illustrative : les embeddings réels ont souvent des centaines ou des milliers de coordonnées, et une représentation 2D peut déformer les distances comme les voisinages.
 
-## Que signifie la proximité ?
+La proximité géométrique dépend du modèle, de la couche, de l'entraînement et de la métrique. Elle ne prouve pas que deux textes sont équivalents ni qu'un document répond correctement à une question — la négation suffit parfois à inverser le sens malgré un vocabulaire presque identique.
 
-On peut comparer deux vecteurs par produit scalaire, distance euclidienne ou similarité cosinus. Le cosinus compare leurs directions :
-
-$$
-\operatorname{cos}(x,y)=\frac{x^\top y}{\|x\|_2\|y\|_2}.
-$$
-
-Un score élevé signifie que les directions sont proches. Il ne prouve pas que les textes sont équivalents, qu'ils impliquent la même conclusion ou qu'un document répond correctement à une question.
-
-Par exemple, « le traitement est efficace » et « le traitement n'est pas efficace » partagent presque tous leurs mots, alors que la négation change le sens décisif. À l'inverse, deux formulations très différentes peuvent exprimer la même information.
-
-## Une géométrie apprise, pas universelle
-
-Les dimensions d'un embedding n'ont généralement pas d'étiquettes humaines stables. Par exemple, un changement orthogonal de coordonnées peut mélanger les dimensions tout en préservant les produits scalaires, les distances et les similarités cosinus ; la même géométrie s'exprime alors selon d'autres axes. Cela illustre pourquoi un axe isolé n'a pas de signification humaine garantie. Ne pas interpréter une dimension comme « le sentiment » ou « la causalité » sans expérience qui étaye cette interprétation.
-
-La géométrie dépend notamment de l'objectif d'entraînement, des données, de la couche observée, de la normalisation, de la métrique et de la tâche. L'**anisotropie** (vecteurs concentrés dans certaines directions) et la **hubness** (points qui deviennent voisins d'un grand nombre d'autres points) peuvent dégrader la recherche par similarité. Ce sont des phénomènes à mesurer, pas des explications à supposer systématiquement.
-
-## Une projection 2D peut-elle tromper ?
-
-Oui. UMAP, t-SNE et les autres méthodes de réduction de dimension cherchent à préserver certaines relations, pas toute la géométrie originale. Les distances sur l'image ne doivent pas être interprétées comme si elles étaient les distances exactes de l'espace initial. Une séparation visuelle nette ne prouve pas non plus que le modèle distingue correctement les catégories sur de nouvelles données.
-
-Pour évaluer un espace d'embeddings, revenir à la tâche réelle : recherche documentaire, similarité annotée, classification, etc. Mesurer par exemple Recall@k, MRR ou nDCG pour une tâche de recherche, ou une corrélation adaptée lorsque les scores de similarité sont annotés. Inspecter également les faux positifs et les exemples hors distribution.
-
-## Idées reçues
-
-- **« Chaque dimension correspond à un concept. »** Rien ne le garantit ; une caractéristique peut être distribuée entre plusieurs dimensions.
-- **« Deux vecteurs proches représentent toujours des sens proches. »** La négation, les contradictions et les usages hors distribution peuvent déjouer cette intuition.
-- **« Une belle visualisation démontre la qualité des embeddings. »** Elle illustre une projection ; une évaluation adaptée mesure l'utilité pour la tâche.
-- **« Tous les embeddings doivent être comparés au cosinus. »** Le choix dépend du modèle et de son objectif. Produit scalaire et cosinus donnent le même classement lorsque les vecteurs sont normalisés.
+Pour approfondir ces questions sans les confondre avec le mécanisme de lookup, voir la page sur la [similarité cosinus](cosine-similarity.qmd) et celle sur l'[hypothèse de linéarité des représentations](linearite-embeddings.qmd).
 
 ::: {.self-check}
 ## Vérifier sa compréhension

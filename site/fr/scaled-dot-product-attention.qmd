@@ -88,8 +88,7 @@ Cet exemple distingue les rôles : la requête et les clés déterminent les poi
 
 Le schéma montre aussi pourquoi trois objets ne doivent pas être confondus : **scores** (compatibilités brutes), **poids** (normalisés relativement aux positions accessibles) et **sorties** (combinaisons pondérées des valeurs). Dans une attention non causale, le masque peut être absent ou exprimer une autre contrainte. La normalisation du softmax ne transforme pas les poids en mesure universelle de pertinence sémantique.
 
-## Pourquoi diviser par $\sqrt{d_k}$ ?
-
+::: {.callout-note collapse="true" title="Dérivation et simulation numérique (facultatif)"}
 Sous l'hypothèse simplificatrice que les composantes des vecteurs de requête et de clé sont indépendantes, centrées et de variance unitaire, la variance d'un produit scalaire de $d_k$ termes vaut $\sum_{i=1}^{d_k} \operatorname{Var}(q_i k_i) = d_k$. Son écart-type est donc $\sqrt{d_k}$. Pour $d_k=64$, les scores typiques oscillent autour de $\pm 8$. Sans mise à l'échelle, de tels écarts saturent immédiatement le softmax (qui tend vers un one-hot), entraînant des gradients quasi nuls pour la rétropropagation.
 
 ::: {.micro-workbench}
@@ -101,19 +100,19 @@ Sous l'hypothèse simplificatrice que les composantes des vecteurs de requête e
 ```python
 import numpy as np
 
-# Simulation de produits scalaires pour d_k = 64
+### Simulation de produits scalaires pour d_k = 64
 np.random.seed(42)
 d_k = 64
 N = 10000
 
-# Vecteurs gaussiens standards indépendants
+### Vecteurs gaussiens standards indépendants
 q = np.random.randn(N, d_k)
 k = np.random.randn(N, d_k)
 
-# Produit scalaire brut q . k
+### Produit scalaire brut q . k
 raw_dots = np.sum(q * k, axis=1)
 
-# Écart-type empirique non normalisé vs normalisé
+### Écart-type empirique non normalisé vs normalisé
 std_raw = np.std(raw_dots)
 std_scaled = np.std(raw_dots / np.sqrt(d_k))
 
@@ -125,6 +124,7 @@ assert np.isclose(std_scaled, 1.0, atol=0.05)
 :::
 ::: {.micro-workbench-footer}
 La division par $\sqrt{d_k}$ ramène la variance des scores à l'unité, préservant la fluidité des gradients lors de l'apprentissage.
+:::
 :::
 :::
 
@@ -168,8 +168,7 @@ On divise d’abord les scores par $\sqrt{4}=2$, ce qui donne $(1,0)$. Le softma
 </details>
 :::
 
-## Implémentation et vérification
-
+::: {.callout-note collapse="true" title="Implémentation et vérification (approfondissement)"}
 Les dimensions des entrées et des sorties sont aussi importantes que la formule : voir [Tenseurs](tensors.qmd).
 
 Une implémentation de référence testée est accessible dans `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`). La suite `tests/unit/test_attention.py` valide numériquement le calcul, les dimensions et les propriétés d'invariance.
@@ -177,6 +176,7 @@ Une implémentation de référence testée est accessible dans `src/llm_lab/foun
 - [Implémentation de référence](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
 - [Tests unitaires](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
 - [Critères de vérification prévus](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+:::
 
 <div class="route-nav-cards">
   <a class="route-nav-card" href="queries-keys-values.qmd">

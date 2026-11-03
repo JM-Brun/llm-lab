@@ -9,8 +9,12 @@ project:
     - fr/unicode-text.qmd
     - en/unicode-text.qmd
     - fr/tokenization-strategies.qmd
+    - fr/tokenizer-design-evaluation.qmd
+    - fr/decoding-strategies.qmd
     - fr/training-examples.qmd
     - en/tokenization-strategies.qmd
+    - en/tokenizer-design-evaluation.qmd
+    - en/decoding-strategies.qmd
     - en/training-examples.qmd
     - fr/mathematical-foundations.qmd
     - en/mathematical-foundations.qmd
@@ -51,7 +55,9 @@ project:
     - en/emergence.qmd
     - en/in-context-learning.qmd
     - fr/transformer-architectures.qmd
+    - fr/hybrid-llm-architectures.qmd
     - en/transformer-architectures.qmd
+    - en/hybrid-llm-architectures.qmd
     - fr/transformer.qmd
     - fr/transformer-explainer.qmd
     - en/transformer.qmd
@@ -116,7 +122,6 @@ website:
         - section: "Comprendre les LLM"
           contents:
             - fr/llm-overview.qmd
-            - fr/language-modeling-math.qmd
             - fr/transformer-architectures.qmd
             - fr/transformer.qmd
             - fr/generation.qmd
@@ -144,7 +149,6 @@ website:
                 - fr/cross-entropy.qmd
                 - fr/loss.qmd
                 - fr/gradients.qmd
-                - fr/mathematical-foundations.qmd
         - section: "Construire un petit GPT"
           contents:
             - fr/build-path.qmd
@@ -169,6 +173,19 @@ website:
             - section: "Adaptation à l'inférence"
               contents:
                 - fr/in-context-learning.qmd
+            - section: "Architectures alternatives et efficacité"
+              contents:
+                - fr/hybrid-llm-architectures.qmd
+            - section: "Conception et évaluation des tokenizers"
+              contents:
+                - fr/tokenizer-design-evaluation.qmd
+            - section: "Génération et stratégies de décodage"
+              contents:
+                - fr/decoding-strategies.qmd
+            - section: "Formalisation et mathématiques de l'entraînement"
+              contents:
+                - fr/language-modeling-math.qmd
+                - fr/mathematical-foundations.qmd
             - section: "Outils mathématiques et géométrie"
               contents:
                 - fr/tensors.qmd
@@ -188,7 +205,6 @@ website:
         - section: "Understand LLMs"
           contents:
             - en/llm-overview.qmd
-            - en/language-modeling-math.qmd
             - en/transformer-architectures.qmd
             - en/transformer.qmd
             - en/generation.qmd
@@ -216,7 +232,6 @@ website:
                 - en/cross-entropy.qmd
                 - en/loss.qmd
                 - en/gradients.qmd
-                - en/mathematical-foundations.qmd
         - section: "Build a small GPT"
           contents:
             - en/build-path.qmd
@@ -241,6 +256,19 @@ website:
             - section: "Adaptation at inference"
               contents:
                 - en/in-context-learning.qmd
+            - section: "Alternative architectures and efficiency"
+              contents:
+                - en/hybrid-llm-architectures.qmd
+            - section: "Tokenizer design and evaluation"
+              contents:
+                - en/tokenizer-design-evaluation.qmd
+            - section: "Generation and decoding strategies"
+              contents:
+                - en/decoding-strategies.qmd
+            - section: "Formalization and training mathematics"
+              contents:
+                - en/language-modeling-math.qmd
+                - en/mathematical-foundations.qmd
             - section: "Mathematical tools and geometry"
               contents:
                 - en/tensors.qmd

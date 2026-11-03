@@ -1,0 +1,133 @@
+---
+title: "Hybrid LLM architectures: the Nemotron case"
+subtitle: "Combining recurrent state, attention, and sparse computation"
+keywords: ["type:concept-lesson", "destination:understand", "topic:hybrid-llm-architectures", "level:advanced", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/hybrid-llm-architectures"
+scope: "Uses Nemotron 3 to study trade-offs among Mamba-2, attention, MoE, GQA, MTP, and numerical precision; distinguishes general principles from version-specific choices."
+purpose: "Explain inference costs targeted by hybrid architectures, distinguish total and active parameters, and identify trade-offs in capacity, retrieval, and bandwidth."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/transformer-architectures", "en/transformer", "en/generation", "en/scaling-laws"]
+tags: ["type:concept-lesson", "destination:understand", "topic:hybrid-llm-architectures", "level:advanced", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+A capable model must also move and store data efficiently. **Nemotron 3** illustrates one response: combining Mamba-2 layers, selected attention layers, and *Mixture-of-Experts* (MoE), alongside generation and numerical-precision optimizations. This case study explains trade-offs; it is not a universal recipe.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+Explain the complementarity of recurrent state and attention; distinguish total and active parameters; relate GQA, MTP, and quantization to their cost drivers; and separate general principles from version-specific characteristics.
+:::
+
+## Why combine architectures?
+
+During autoregressive generation, a Transformer with global attention maintains a *key-value* (KV) cache that grows with context length. Each new token also attends over a longer history.
+
+A state-space layer such as **Mamba-2** instead maintains a bounded recurrent state, updated at each token. Schematically:
+
+\[
+s_t = f_\theta(s_{t-1}, x_t), \qquad y_t = g_\theta(s_t, x_t).
+\]
+
+There is no need to store a key-value pair for every past position. Sequence processing can be linear in sequence length, with bounded state during generation. The trade-off is that the state summarizes history: by itself, it does not provide the same direct access to a particular past position as explicit attention.
+
+The mechanisms are complementary:
+- **Mamba-2**: efficient sequential processing and compact state;
+- **attention**: flexible access to previous representations, with a cache that depends on context length.
+
+A hybrid architecture alternates them: Mamba processes much of the stream, while selected attention layers preserve explicit retrieval paths. Their proportion and placement require empirical evaluation.
+
+## MoE: total capacity and active computation
+
+A **Mixture-of-Experts** layer contains multiple expert networks; a router selects a subset for each token. If $N$ is the total number of experts and $K < N$ the number activated for one token, the model can have substantial capacity while performing only part of the expert computation per token.
+
+This is the distinction between **total parameters** and **active parameters**. Unselected parameters are not free: they generally still need to be stored or made accessible on accelerators. Active parameters mainly describe computation used per token; total parameters still affect model memory and weight transfers.
+
+::: {.callout-warning title="Sparsity is not compression"}
+A 30-billion-parameter MoE with roughly 3 billion active parameters per token is not a dense 3-billion-parameter model. The other experts still exist and must be hosted or made accessible.
+:::
+
+
+### LatentMoE: routing in a more compact space
+
+A conventional MoE routes a representation of dimension \(d\) to several experts. Even when only a few experts are active, moving representations and reading expert weights can become expensive. **LatentMoE**, used in Nemotron 3 Super and Ultra, adds a down-projection \(W_\downarrow : \mathbb{R}^{d} \rightarrow \mathbb{R}^{\ell}\), with \(\ell < d\). The router and experts operate in this reduced latent space; their outputs are aggregated and projected back to dimension \(d\).
+
+At a comparable budget, reducing the dimension of routed representations decreases expert-weight reads and *all-to-all* communication volume. NVIDIA uses this headroom to increase both the number of experts and the number activated per token. This is not simply “more experts”: it is a co-design of representation, routing, and hardware costs. The latent dimension cannot, however, be reduced arbitrarily without losing capacity.
+
+## GQA reduces the KV cache
+
+*Grouped-Query Attention* (GQA) shares keys and values across several query heads. It retains multiple Q heads while using fewer distinct K/V heads.
+
+For one layer, an approximate cache-memory requirement is:
+
+\[
+M_{KV} \approx 2 B T n_{KV} d_h b,
+\]
+
+where $B$ is batch size, $T$ is context length, $n_{KV}$ is the number of K/V heads, $d_h$ is their dimension, and $b$ is bytes per element. The factor 2 accounts for keys and values; sum across attention layers.
+
+Reducing $n_{KV}$ reduces cache memory by approximately the same ratio. Thus, 32 query heads sharing 2 KV heads give a 16:1 ratio in head counts, but not necessarily a 16× latency gain: kernels, hardware, batch size, and memory transfers also matter.
+
+## Reading Nemotron 3's choices together
+
+NVIDIA's white paper describes an architecture made predominantly of Mamba-2 and MoE layers, with a small number of self-attention layers.
+
+| Technique | Cost targeted | Principle | Trade-off |
+|---|---|---|---|
+| Mamba-2 | Context-dependent cache | Compact recurrent state | Less direct precise retrieval |
+| Attention | Access to history | Explicit weighting of positions | Context-dependent KV cache |
+| MoE | Feed-forward computation | Activate selected experts | Total weights, routing, and communication |
+| GQA | KV memory | Share K/V across Q heads | Reduces but does not remove the cache |
+| MTP / speculative decoding | Sequential passes | Propose multiple tokens, then verify | Gain depends on acceptance rate |
+| Quantization | Storage and memory traffic | Fewer bits per number | Numerical error and layer sensitivity |
+
+### MTP and speculative decoding
+
+**Multi-Token Prediction** (MTP) adds auxiliary objectives that train a model to predict multiple future tokens. At inference, these predictions can serve as proposals in speculative decoding: a lightweight mechanism proposes a continuation, then the main model verifies it. Several tokens may be accepted in one verification pass, reducing the number of sequential passes.
+
+MTP is a training objective; speculative decoding is an inference strategy that uses verified proposals. It does not remove generation's causal dependency.
+
+### MOPD: distilling from multiple specialists on the student's own outputs
+
+Nemotron 3 Ultra also illustrates an evolution in post-training: **Multi-Teacher On-Policy Distillation** (MOPD). The student generates its own trajectories (*on-policy*); domain-specialized teachers then evaluate those trajectories and provide dense, token-level supervision. The student therefore learns from contexts and responses it actually generates, rather than only from prepared responses generated by another policy (*off-policy*).
+
+This approach complements rather than replaces SFT and reinforcement learning with verifiable rewards (RLVR). It is specific to the Nemotron 3 Ultra recipe: it should not be presented as a universal training stage or a feature of every Nemotron variant.
+
+### Quantization and numerical precision
+
+A lower-precision representation reduces weight storage and can reduce memory traffic, but introduces approximation. Layers do not all tolerate the same error.
+
+NVIDIA's white paper describes NVFP4 training for some Nemotron 3 variants and notes precision safeguards for sensitive projections. It would be incorrect to claim that all Nemotron models uniformly use NVFP4 or that quantization automatically preserves performance. The format, scaling, recipe, and metrics must be explicit.
+
+## Critically reading the numbers
+
+Parameter, expert, and head counts, as well as context length, describe a particular version; they do not define the entire Nemotron family. Vendor throughput results depend on hardware, prefill and decode lengths, batch size, and protocol.
+
+A sound comparison controls hardware, precision, concurrency, throughput, time to first token, inter-token latency, and quality on identical tasks. **Inference efficiency is a systems problem**: FLOPs, bandwidth, memory capacity, communication, and sequential-pass count interact.
+
+Nemotron 3 does not make the Transformer obsolete. It shows that a system can combine mechanisms with different computational and representational properties. The right choice depends on context length, precise-retrieval needs, concurrency, hardware, and latency-versus-throughput goals.
+
+Connect this case to [Transformer architectures](transformer-architectures.qmd), the [Transformer block](transformer.qmd), [autoregressive generation](generation.qmd), and [scaling laws](scaling-laws.qmd).
+
+::: {.self-check}
+## Check your understanding
+
+1. **Why retain a few attention layers in a model dominated by Mamba?** To preserve explicit access paths to previous positions.
+2. **Does a 30B MoE with 3B active parameters require only 3B of weight memory?** No: the other experts remain parameters that must be hosted or made accessible.
+3. **Do GQA and Mamba reduce the same cost?** No: GQA reduces K/V heads and attention cache; Mamba maintains bounded recurrent state.
+4. **Does MTP make generation non-autoregressive?** No: proposals are verified by the target model.
+5. **Is a published throughput gain a general law?** No: it depends on hardware and protocol.
+:::
+
+::: {.language-switch}
+**Language:** [Français](../fr/hybrid-llm-architectures.qmd) · [English](hybrid-llm-architectures.qmd)
+:::

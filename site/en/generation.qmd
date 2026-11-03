@@ -58,12 +58,11 @@ The most likely token is selected every time. The result is reproducible, but ge
 
 The token is drawn at random according to the probabilities. Texts vary from one run to another; an unlikely token may appear, sometimes at the cost of coherence.
 
-### Adjusted sampling: temperature and truncation
+### Temperature: adjusting distribution sharpness
 
-- **Temperature.** Before normalization, logits are divided by a temperature $T$: $p_i \propto e^{z_i/T}$. A low temperature concentrates the distribution on the most likely token; a high temperature flattens it. See the [logits](logits.qmd) page for the effect of scale.
-- **Top-k and top-p (nucleus).** Only the $k$ most likely tokens are kept, or the smallest set of tokens whose cumulative probability exceeds a threshold $p$; the draw then happens within this reduced set.
+Temperature controls how concentrated the distribution is: a low value favours the most likely tokens more strongly, while a higher value leaves more room for alternatives. It changes next-token selection, not the model's parameters.
 
-These rules are **decoding choices**, not properties of the model: the same model can produce very different texts depending on the rule and its parameters.
+Top-k and nucleus sampling (top-p) are more advanced filters that restrict the candidate set. They are covered, together with their trade-offs and sequence-search methods, in the [advanced guide to decoding strategies](decoding-strategies.qmd).
 
 ::: {.callout-warning title="Common misconceptions"}
 - **"The model always picks the best token."** No: under sampling, a less likely token can be selected; and "best" is not defined without a decoding rule.
