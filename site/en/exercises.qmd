@@ -20,7 +20,7 @@ related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:en", "status:published"]
 -->
 
-Short self-checks with collapsed explanations are embedded in selected lesson pages; they provide immediate checks of individual concepts. **The collections below group more substantial exercises**, whose content remains to be developed after prerequisites and coverage have been reviewed.
+Lesson pages use a consistent **“Check your understanding”** component: short questions with collapsed solutions, progressing from retrieval to explanation, application and transfer where the topic supports it. Each check links here to its matching topic collection. **The collections below group more substantial exercises** (extended calculations, multi-step problems and transfer tasks); their development status is stated explicitly.
 
 ## How to use this space
 
