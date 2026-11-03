@@ -21,7 +21,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 -->
 
 ::: {.chapter-lead}
-À chaque position, le Transformer calcule trois vecteurs à partir de la représentation du token : une **requête** (Q), une **clé** (K) et une **valeur** (V). Les requêtes et les clés servent à calculer les poids d'attention ; ces poids déterminent ensuite comment combiner les valeurs.
+Les requêtes, clés et valeurs ne sont pas trois types de tokens. Ce sont trois **projections apprises** des représentations d'entrée, utilisées pour déterminer quelles positions contribuent à une représentation contextualisée.
 :::
 
 <div class="epistemic-badges">
@@ -49,6 +49,8 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 
 **Pour approfondir :** suivez le calcul complet dans [l'attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), puis la contrainte temporelle dans le [masque causal](causal-masking.qmd).
 :::
+
+## Intuition
 
 Imagine une collection de fiches. La **requête** est la question posée ; la **clé** est l'indice qui permet d'évaluer si une fiche correspond à cette question ; la **valeur** est le contenu de la fiche qui pourra être agrégé. Le score de correspondance n'est donc ni la clé ni la valeur. Cette analogie distingue les rôles, mais ne signifie pas que le modèle effectue une recherche symbolique explicite.
 

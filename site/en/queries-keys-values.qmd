@@ -68,6 +68,8 @@ The project currently uses several explanatory formulations. They describe the s
 This inventory covers analogies actually present in the current reference pages; it does not describe separate mechanisms.
 :::
 
+## The idea in one diagram
+
 ![Diagram of query, key, and value projections: Q and K determine attention weights, which are used to aggregate V.](../images/queries-keys-values-en.svg){fig-alt="Input representations are projected into queries, keys, and values. Queries and keys determine attention weights; the weights combine values into a context-enriched representation." width=100%}
 
 Q and K provide the information used to determine relative weights across accessible positions. Those weights then specify how to combine the V vectors. The precise computation of scores, masking, and softmax is covered on the scaled dot-product attention page.
