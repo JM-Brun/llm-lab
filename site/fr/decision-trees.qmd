@@ -23,7 +23,7 @@ Un arbre de décision représente une prédiction par une suite de tests sur les
 :::
 ## Structure d'un arbre
 
-Un nœud interne applique un test, par exemple (x_j < s). Les observations sont envoyées dans une branche ou l'autre ; les tests successifs définissent des régions de l'espace des variables. Une feuille contient une valeur prédite (régression) ou une distribution/étiquette de classe (classification).
+Un nœud interne applique un test, par exemple $x_j < s$. Les observations sont envoyées dans une branche ou l'autre ; les tests successifs définissent des régions de l'espace des variables. Une feuille contient une valeur prédite (régression) ou une distribution/étiquette de classe (classification).
 
 ## Choisir une séparation
 
@@ -33,7 +33,7 @@ Les arbres CART cherchent gloutonnement une variable et un seuil qui réduisent 
 G(S)=1-\sum_{k=1}^{K}p_k^2,
 \]
 
-où (p_k) est la proportion de la classe (k) dans le nœud. Le gain d'un split pondère l'impureté des enfants par leur taille. Un choix glouton optimal localement ne garantit pas l'arbre globalement optimal.
+où $p_k$ est la proportion de la classe $k$ dans le nœud. Le gain d'un split pondère l'impureté des enfants par leur taille. Un choix glouton optimal localement ne garantit pas l'arbre globalement optimal.
 
 ## Complexité et généralisation
 
