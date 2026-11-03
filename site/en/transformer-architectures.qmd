@@ -80,6 +80,14 @@ The Transformer is a major architecture, not a requirement. Other models use **r
 :::
 
 ::: {.self-check}
+
+
+## Complexity and parallelism: two different concepts
+
+Dense Transformer attention performs a number of interactions that grows as \(T^2\) with sequence length \(T\). Yet those interactions are highly parallelizable during training and prompt prefill. Conversely, a recurrence may require linear work in \(T\) while depending on the state computed at the previous step. Standard autoregressive generation remains sequential across tokens even though each step uses parallel operations.
+
+Keep three questions separate: **how much computation? how much memory? what dependency chain?** The [advanced guide to complexity and parallelism](llm-computational-complexity.qmd) examines them in detail.
+
 ## Check your understanding
 
 [Extended exercises on this topic](../en/exercises.qmd#transformer).
