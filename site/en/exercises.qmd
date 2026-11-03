@@ -33,7 +33,7 @@ Lesson pages use a consistent **“Check your understanding”** component: shor
 
 | Collection | Scope | Status |
 |---|---|---|
-| [Mathematical foundations](#foundations) | Tensors, probability, logits, entropy, cross-entropy, likelihood, gradients, numerical stability | Self-checks already present on logits, probabilities, and loss; extended exercises to be developed |
+| [Mathematical foundations](#foundations) | Tensors, probability, logits, entropy, cross-entropy, likelihood, gradients, numerical stability | 4 progressive exercises drafted; other topics and numerical checks remain to be developed |
 | [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Self-checks on IDs and tokenizers in text/embedding pages; extended exercises to be developed |
 | [Attention](#attention) | Q/K/V, scores, scaling, causal masks, multi-head attention, invariants | Self-checks on Q/K/V aggregation and scaling/masking; extended exercises to be developed |
 | [Transformer](#transformer) | Embeddings, position, residuals, normalization, MLP and architecture variants | Structure to be filled |
@@ -50,7 +50,99 @@ Lesson pages use a consistent **“Check your understanding”** component: shor
 
 **Prerequisites:** [mathematical foundations](mathematical-foundations.qmd), [tensors](tensors.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd), [entropy](entropy.qmd), [cross-entropy](cross-entropy.qmd), [likelihood](likelihood.qmd), [gradients](gradients.qmd).
 
-**Further work:** hand calculations, counterexample analysis, tensor shapes, and numerical checks. The embedded self-checks do not replace a progressive exercise collection.
+**Current scope:** four worked exercises cover softmax/NLL calculation, the effect of masking and reduction, the gradient with respect to logits, and the link between cross-entropy and KL divergence. They form an initial core, not an exhaustive treatment of tensors or numerical stability.
+
+#### Exercise 1 — From logits to loss
+
+Consider three logits $z=(0,\ln 3,\ln 5)$ and a target corresponding to the second class.
+
+1. Compute the softmax distribution.
+2. Compute the target's NLL, in nats.
+3. Give the gradient of the loss with respect to the three logits.
+
+<details>
+<summary>Show the worked solution</summary>
+
+The sum of exponentials is $1+3+5=9$. The distribution is therefore $p=(1/9,3/9,5/9)=(1/9,1/3,5/9)$.
+
+The target probability is $p_2=1/3$, so $\ell=-\ln(1/3)=\ln 3\approx 1.099$ nats.
+
+For a one-hot target, $\partial\ell/\partial z_i=p_i-\mathbb{1}[i=2]$. The gradient is $(1/9,-2/3,5/9)$. Its components sum to zero, as expected because adding the same constant to every logit leaves softmax unchanged.
+
+</details>
+
+#### Exercise 2 — Masking and the denominator
+
+A batch contains three valid target positions with losses $\ln 2$, $\ln 4$, and $\ln 8$, plus one padding position whose incorrectly computed loss would be $\ln 100$.
+
+1. Compute the correct mean over valid positions.
+2. Compute the incorrect mean if the padding position is excluded from the numerator but retained in the denominator.
+3. Explain why the mask must affect both.
+
+<details>
+<summary>Show the worked solution</summary>
+
+The correct mean is $(\ln 2+\ln 4+\ln 8)/3=(1+2+3)\ln 2/3=2\ln 2=\ln 4\approx 1.386$ nats.
+
+If padding remains in the denominator, the incorrect result is $(\ln 2+\ln 4+\ln 8)/4=1.5\ln 2\approx 1.040$ nats. This is not the mean over the three valid targets: it depends artificially on the number of ignored positions. The mask must therefore exclude those positions from both numerator **and** denominator.
+
+</details>
+
+#### Exercise 3 — From logit gradients to parameter gradients
+
+For one position, the gradient with respect to the logits is $g=\nabla_z\ell=(0.2,-0.3,0.1)$. In a simplified model, the logits depend on two parameters $\theta=(\theta_1,\theta_2)$ with Jacobian:
+
+$$
+J=\frac{\partial z}{\partial\theta}=
+\begin{pmatrix}
+1 & 0\\
+0 & 2\\
+1 & 1
+\end{pmatrix}.
+$$
+
+Compute $\nabla_\theta\ell=J^\top g$. Explain why this is not simply $g$.
+
+<details>
+<summary>Show the worked solution</summary>
+
+The product is:
+
+$$
+J^\top g=
+\begin{pmatrix}
+1 & 0 & 1\\
+0 & 2 & 1
+\end{pmatrix}
+\begin{pmatrix}0.2\\-0.3\\0.1\end{pmatrix}
+=
+\begin{pmatrix}0.3\\-0.5\end{pmatrix}.
+$$
+
+The gradient $g$ describes loss sensitivity to the three logits. The parameter gradient also accounts for how each parameter changes those logits, represented by the Jacobian. This is precisely the role of the chain rule.
+
+</details>
+
+#### Exercise 4 — Soft targets and KL divergence
+
+Consider a target $q=(3/4,1/4)$ and a prediction $p=(1/2,1/2)$.
+
+1. Compute $H(q,p)$.
+2. Write $H(q)$ and use it to derive $D_{\mathrm{KL}}(q\Vert p)$.
+3. Why does minimizing $H(q,p)$ with respect to $p$ also minimize $D_{\mathrm{KL}}(q\Vert p)$ here?
+
+<details>
+<summary>Show the worked solution</summary>
+
+Since both predicted probabilities are $1/2$, $H(q,p)=-\frac34\ln\frac12-\frac14\ln\frac12=\ln 2\approx0.693$ nats.
+
+The target entropy is $H(q)=-\frac34\ln\frac34-\frac14\ln\frac14\approx0.562$ nats. Therefore $D_{\mathrm{KL}}(q\Vert p)=H(q,p)-H(q)\approx0.131$ nats.
+
+For fixed $q$, $H(q)$ is constant with respect to $p$. Minimizing $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$ therefore also minimizes KL divergence. This equivalence does not make KL symmetric: the order $q\Vert p$ matters.
+
+</details>
+
+**Further work:** add exercises on tensor shapes, numerical stability of log-softmax, perplexity, and finite-difference gradient checking.
 
 ### Text data {#text-data}
 
