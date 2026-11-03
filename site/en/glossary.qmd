@@ -27,6 +27,7 @@ This glossary gives a concise first definition for terms used across the site. I
 - **Language model** — a model that assigns probabilities to text sequences or their next tokens, conditional on context. See the [LLM panorama](llm-overview.qmd).
 - **Generative model** — a model that defines a distribution from which new samples can be produced, possibly conditioned on an input; it is not necessarily a language model.
 - **LLM (*large language model*)** — a language model trained at large scale. No universal parameter threshold defines this category; see [scaling laws](scaling-laws.qmd).
+- **Scaling law** — an empirical relationship between a training resource (parameters, data, or compute) and a measure such as loss; it depends on the regime studied and does not establish a universal LLM threshold. See [scaling laws](scaling-laws.qmd).
 
 ## Text and data
 
@@ -72,13 +73,19 @@ These topics are grouped in the [Representation geometry and interpretability](e
 - **Autoregressive Transformer** — a Transformer trained to model a sequence from left to right, predicting each token conditioned on earlier tokens. “Autoregressive” describes the prediction objective; it does not require generating only one token at a time during training.
 - **Encoder** — a component that builds contextual representations of an input; in BERT, for example, attention can use context from both directions.
 - **Decoder** — a component designed to produce outputs from context; in an autoregressive decoder, a causal mask prevents access to future tokens.
-- **Embedding** — a learned vector representation of a token or other item.
-- **Positional encoding / position information** — a signal that lets the model distinguish token order.
-- **Scaling law** — an empirical relationship between a training resource (parameters, data, or compute) and a measure such as loss; it depends on the regime studied and does not establish a universal LLM threshold. See [scaling laws](scaling-laws.qmd).
+- **Embedding** — a learned vector representation of a token or other item. See [embedding space](embedding-space.qmd).
+- **Embedding space** — the vector space in which objects are represented by vectors; the observed geometry depends on the model and the task.
+- **Tensor** — an array of numbers organized along several axes. Its shape indicates the size of each axis; it does not by itself specify the meaning of the data. See [Tensors](tensors.qmd).
+- **Positional encoding / position information** — a mechanism that supplies the model with information about token order. Approaches include absolute encodings, relative biases, and RoPE. See [positional encoding and RoPE](positional-encoding.qmd).
+- **RoPE (*Rotary Position Embedding*)** — a positional encoding that applies position-dependent rotations to coordinate pairs of queries and keys.
 - **Parameter** — a value learned during training.
 - **Fine-tuning** — continuing training of a pretrained model on a particular objective or dataset.
 
 ## Related pages
+
+- [Tensors](tensors.qmd)
+- [Embedding space](embedding-space.qmd)
+- [Positional encoding and RoPE](positional-encoding.qmd)
 
 - [Mathematical foundations](mathematical-foundations.qmd)
 - [Transformer overview](transformer.qmd)
