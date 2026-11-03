@@ -4,6 +4,8 @@ These principles are the short version of the project's editorial and engineerin
 
 ## 1. Teach understanding, not just content
 
+**Editorial economy is mandatory.** Do not add generic meta-discourse that describes the page instead of teaching its subject: e.g. “this page gives an overview”, “the following sections explain…”, “each step links to a dedicated explanation”, or equivalent French formulations. Such sentences are usually portable to many pages and add no page-specific information. Keep an introduction, transition, or signpost only when it states a concrete problem, distinction, assumption, result, prerequisite, or useful reading choice. Cross-links must explain the specific question they answer here; do not announce vaguely that more detail is available elsewhere. When in doubt, remove the sentence and check whether any scientific meaning or useful navigation is lost. Apply this check to titles, leads, callouts, summaries, conclusions, and “next steps” in both languages.
+
 1. **Start from a learner question.** Every change should help a reader answer a concrete question or perform a defined investigation.
 2. **Explain the whole before the details.** Give the reader a useful mental model first, then provide optional depth through meaningful links.
 3. **Build a learning graph, not a compulsory sequence.** Make relationships between concepts explicit; distinguish essential prerequisites from helpful background and optional deep dives.
