@@ -11,7 +11,7 @@ id: "en/generation"
 scope: "Describes autoregressive inference for an already trained model treated as a black box: context, next-token distribution, decoding rule, token appending, and stopping; Transformer internals and parameter learning are outside its scope."
 purpose: "Readers should be able to step through token-by-token generation, explain why parameters remain fixed during inference, and predict how a decoding rule changes the output without retraining the model."
 suggested_route:
-  previous: "en/hybrid-llm-architectures"
+  previous: "en/transformer"
   next: "en/text-data"
 hierarchy:
   parents: ["en/llm-overview"]

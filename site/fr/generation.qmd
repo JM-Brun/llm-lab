@@ -11,7 +11,7 @@ id: "fr/generation"
 scope: "Décrit la boucle d’inférence autorégressive d’un modèle déjà entraîné, traité comme une boîte noire : contexte, distribution du prochain token, règle de décodage, ajout du token et arrêt ; les détails internes du Transformer et l’apprentissage des paramètres sont hors périmètre."
 purpose: "Le lecteur doit pouvoir dérouler une génération token par token, expliquer pourquoi les paramètres restent fixes pendant l’inférence et prévoir comment une règle de décodage modifie la sortie sans réentraîner le modèle."
 suggested_route:
-  previous: "fr/hybrid-llm-architectures"
+  previous: "fr/transformer"
   next: "fr/text-data"
 hierarchy:
   parents: ["fr/llm-overview"]

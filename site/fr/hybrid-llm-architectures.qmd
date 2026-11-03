@@ -12,7 +12,7 @@ scope: "Étudie les compromis entre Mamba-2, attention, MoE, GQA, MTP et précis
 purpose: "Expliquer les coûts d'inférence ciblés par une architecture hybride, distinguer paramètres totaux et actifs, et identifier les compromis de capacité, de rappel et de bande passante."
 suggested_route:
   previous: "fr/transformer-architectures"
-  next: "fr/generation"
+  next: null
 hierarchy:
   parents: ["fr/transformer-architectures"]
   children: []

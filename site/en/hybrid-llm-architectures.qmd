@@ -12,7 +12,7 @@ scope: "Uses Nemotron 3 to study trade-offs among Mamba-2, attention, MoE, GQA, 
 purpose: "Explain inference costs targeted by hybrid architectures, distinguish total and active parameters, and identify trade-offs in capacity, retrieval, and bandwidth."
 suggested_route:
   previous: "en/transformer-architectures"
-  next: "en/generation"
+  next: null
 hierarchy:
   parents: ["en/transformer-architectures"]
   children: []
