@@ -39,26 +39,26 @@ $$
 x_{1:T}=(x_1,x_2,\ldots,x_T).
 $$
 
-Each (x_t) is an integer belonging to the vocabulary \\(\mathcal{V}\\), whose size is (V). The indices indicate positions in the sequence; they are not numerical values on which arithmetic operations are performed.
+Each $x_t$ is an integer belonging to the vocabulary \\(\mathcal{V}\\), whose size is $V$. The indices indicate positions in the sequence; they are not numerical values on which arithmetic operations are performed.
 
 Language modeling means constructing a probabilistic model that assigns probabilities to possible sequences. We therefore need to specify what a “sequence probability” means and how context enters the calculation.
 
 ## 2. Conditional probability: the next token given its context
 
-For two events (A) and (B), with (P(B)>0), conditional probability is defined as:
+For two events $A$ and $B$, with (P$B$>0), conditional probability is defined as:
 
 $$
-P(A\mid B)=\frac{P(A\cap B)}{P(B)}.
+P(A\mid B)=\frac{P(A\cap B)}{P$B$}.
 $$
 
-In a language model, event (B) represents the prefix already observed and (A) the next token. We write:
+In a language model, event $B$ represents the prefix already observed and $A$ the next token. We write:
 
 $$
 P(x_t\mid x_{<t}),
 \qquad x_{<t}=(x_1,\ldots,x_{t-1}).
 $$
 
-This quantity is the probability assigned to token (x_t) given the preceding tokens. For a given prefix, the model defines a distribution over the possible tokens in the vocabulary:
+This quantity is the probability assigned to token $x_t$ given the preceding tokens. For a given prefix, the model defines a distribution over the possible tokens in the vocabulary:
 
 $$
 \sum_{v\in\mathcal{V}}P(v\mid x_{<t})=1.
@@ -72,11 +72,11 @@ The probability chain rule gives, for any joint distribution:
 
 $$
 P(x_1,\ldots,x_T)
-=P(x_1)P(x_2\mid x_1)\cdots
+=P$x_1$P(x_2\mid x_1)\cdots
 P(x_T\mid x_1,\ldots,x_{T-1}).
 $$
 
-Using the notation (x_{<t}), we obtain:
+Using the notation $x_{<t}$, we obtain:
 
 $$
 \boxed{
@@ -86,7 +86,7 @@ $$
 
 This is the autoregressive factorization. It expresses the probability of the sequence as the product of the conditional probabilities of each token, in order.
 
-**Important:** the chain rule is a probabilistic identity, not an assumption specific to Transformers. The autoregressive aspect comes from the order in which the model represents and uses these conditionals: the token at position (t) is predicted from the prefix, not from future tokens.
+**Important:** the chain rule is a probabilistic identity, not an assumption specific to Transformers. The autoregressive aspect comes from the order in which the model represents and uses these conditionals: the token at position $t$ is predicted from the prefix, not from future tokens.
 
 For the first token, the prefix is empty. In practice, a beginning-of-sequence token (BOS) may be made explicit, or an equivalent convention may be used.
 
@@ -116,11 +116,11 @@ Equivalently, one minimizes the negative log-likelihood, often averaged over tok
 
 ## 5. A conceptual example
 
-Consider the sequence “The cat sleeps”. After tokenization, suppose it is represented by three tokens (x_1,x_2,x_3). The model successively assigns:
+Consider the sequence “The cat sleeps”. After tokenization, suppose it is represented by three tokens $x_1,x_2,x_3$. The model successively assigns:
 
-- a probability to (x_1) with no prefix (or after a BOS token);
-- a probability to (x_2) given (x_1);
-- a probability to (x_3) given (x_1,x_2).
+- a probability to $x_1$ with no prefix (or after a BOS token);
+- a probability to $x_2$ given $x_1$;
+- a probability to $x_3$ given $x_1,x_2$.
 
 The probability of the entire sequence is the product of these three terms. If one observed token receives a very low probability, the probability of the full product also decreases. This is why training examines probabilities of target tokens, not merely the subjective quality of generated sentences.
 
