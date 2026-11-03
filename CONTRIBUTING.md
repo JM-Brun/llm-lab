@@ -8,6 +8,22 @@ This is a learning and experimentation repository. Prefer small, testable change
 
 Choose the mode that matches the change and identify it in the PR.
 
+### Editorial economy: remove generic meta-discourse
+
+Do not pad reader-facing pages with sentences that merely announce what the page, section, chapter, or learning path does. Avoid generic formulations such as “This page provides an overview”, “the following sections explore…”, “each step links to a dedicated explanation”, “to continue your learning journey…”, or equivalent wording in French. These statements are usually reusable on almost any page and therefore tell the reader little about the specific concept.
+
+Before keeping an orienting or transitional sentence, ask:
+
+- Does it state a page-specific problem, claim, distinction, assumption, result, or useful reading decision?
+- Does it explain why a linked concept is needed at this exact point, and what question that link answers?
+- Would removing it make the scientific explanation, scope, or navigation materially harder to understand?
+
+If the sentence only describes the document, repeats the heading, advertises that more detail exists elsewhere, or announces an obvious transition, delete it. Do not replace deleted filler with another generic sentence. Replace it only when a concrete learner need is left unmet—for example, explain the actual dependency, define the boundary of the current argument, or state the conceptual consequence.
+
+Use links contextually and sparingly. A link should identify the specific unresolved question or prerequisite it addresses; a list of related pages or a promise that “more detail” exists is not an explanation. Keep meaningful scope notes, learning outcomes, warnings, and transitions when they prevent a real misconception or help the reader make a useful choice.
+
+Apply this review to introductions, chapter leads, callouts, section endings, summaries, “next steps”, and navigation text in both French and English. During review, remove generic meta-discourse rather than merely shortening it. Prefer a page-specific scientific statement over a statement about the page.
+
 1. **Concept teaching page or synthesis** — first identify the reader question and page type. Use the [concept-page template](docs/concept-page-template.md) as a flexible guide, not a rigid form. Lead with the high-level purpose and mental model, then offer optional depth through meaningful links. Explain an LLM-specific concept, connect it to essential (not merely related) prerequisites, cite sources, state assumptions and limits, and include counterexamples where they clarify likely misconceptions. Do not put private Wiki URLs or concept IDs in public lesson content. If maintainers need cross-repository traceability, record it in the private `career-knowledge` repository; it must never be a reader or build dependency. Teach enough of the general mathematics locally for the page to stand alone; include the derivations and worked examples required by the LLM learning objective. Focus the selection, notation, examples, counterexamples, and interpretation on LLMs. **Every substantive concept page must include a clearly identifiable implementation/code section when the concept is computationally implementable.** For LLM topics, prefer a small, runnable Python/PyTorch example tied directly to the mathematics, with shape comments, explicit axis/mask/target conventions, and assertions or tests for key invariants. Link to maintained `src/llm_lab` code when it exists; do not let a long page snippet become a second untested implementation. For concepts that are genuinely theoretical or not meaningfully executable, state that boundary and provide an algorithm, symbolic derivation, or precise pseudocode instead. Do not add decorative or unrelated code merely to satisfy a checklist. It is acceptable—and sometimes necessary—to repeat a definition or derivation also present in the Wiki. Do not shorten or remove material solely to eliminate overlap.
 2. **French/English parity and navigation** — improve translations, glossary, cross-links, learning sequence, accessibility, or site structure. Keep substantive claims, caveats, examples, and references equivalent in both languages; do not translate a claim into a stronger one.
 3. **Reference implementation and numerical tests** — add or revise reusable code under `src/llm_lab`, with typed interfaces and tests for shapes, masks, gradients, numerical edge cases, or known values. Notebooks may explain the code but must not be its only implementation.
