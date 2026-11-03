@@ -55,7 +55,7 @@ C'est la distinction entre **paramètres totaux** et **paramètres actifs**. Les
 ::: {.callout-warning title="Sparsité n'est pas compression"}
 Un MoE de 30 milliards de paramètres dont environ 3 milliards sont actifs par token n'est pas un modèle dense de 3 milliards. Les autres experts existent toujours et doivent être hébergés ou rendus accessibles.
 :::
-
+\n### LatentMoE : déplacer le routage dans un espace plus compact\n\nLe MoE classique route une représentation de dimension $d$ vers plusieurs experts. Même si peu d'experts sont activés, le transfert des représentations et la lecture des poids experts peuvent devenir coûteux. **LatentMoE**, utilisé dans Nemotron 3 Super et Ultra, ajoute une projection descendante $W_\downarrow : \\mathbb{R}^{d} \\rightarrow \\mathbb{R}^{\\ell}$ avec $\\ell < d$. Le routeur et les experts travaillent dans cet espace latent réduit ; leurs sorties sont agrégées puis reprojetées vers la dimension $d$.\n\nÀ budget comparable, réduire la dimension des représentations routées diminue les poids experts à lire et le volume de communication *all-to-all*. NVIDIA utilise cette marge pour augmenter le nombre d'experts et le nombre d'experts activés par token. Ce n'est donc pas simplement « davantage d'experts » : c'est une co-conception de la représentation, du routage et des coûts matériels. La dimension latente ne peut toutefois pas être réduite arbitrairement sans perte de capacité.\n
 ## GQA réduit le cache KV
 
 La *Grouped-Query Attention* (GQA) fait partager les clés et valeurs entre plusieurs têtes de requête. Elle conserve plusieurs têtes Q, mais utilise moins de têtes K/V distinctes.
@@ -87,7 +87,7 @@ Le livre blanc NVIDIA décrit une architecture principalement composée de couch
 
 La **Multi-Token Prediction** (MTP) ajoute des objectifs auxiliaires qui apprennent au modèle à prédire plusieurs tokens futurs. À l'inférence, ces prédictions peuvent servir de propositions dans un schéma de décodage spéculatif : un mécanisme léger propose une suite, puis le modèle principal la vérifie. Plusieurs tokens peuvent être acceptés lors d'une même vérification, réduisant le nombre de passages séquentiels.
 
-MTP est un objectif d'entraînement ; le décodage spéculatif est une stratégie d'inférence qui exploite des propositions vérifiées. Il ne supprime pas la dépendance causale de la génération.
+MTP est un objectif d'entraînement ; le décodage spéculatif est une stratégie d'inférence qui exploite des propositions vérifiées. Il ne supprime pas la dépendance causale de la génération.\n### MOPD : distiller plusieurs spécialistes sur les sorties du modèle\n\nNemotron 3 Ultra illustre aussi une évolution du post-entraînement : la **Multi-Teacher On-Policy Distillation** (MOPD). Le modèle étudiant génère ses propres trajectoires (*on-policy*), puis des enseignants spécialisés par domaine évaluent ces trajectoires et fournissent un signal de supervision dense, token par token. Le modèle apprend ainsi à partir de contextes et de réponses qu'il produit réellement, plutôt qu'uniquement à partir de réponses préparées hors politique (*off-policy*).\n\nCette approche complète, sans les remplacer, le SFT et le RL avec récompenses vérifiables (RLVR). Elle est propre à la recette de Nemotron 3 Ultra : ne pas la présenter comme une étape universelle ni comme une caractéristique de toutes les variantes Nemotron.
 
 ### Quantification et précision numérique
 
