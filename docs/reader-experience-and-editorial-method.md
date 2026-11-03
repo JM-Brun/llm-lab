@@ -396,7 +396,7 @@ French and English versions must test the same learning outcomes at comparable d
 When a page benefits from an explicit statement of what the reader should be able to do, use one shared Quarto component in French and English:
 
 - French title: **Objectifs d’apprentissage**; English title: **Learning outcomes**.
-- Use the `.callout-note.learning-outcomes` classes. The shared `.learning-outcomes` selector in `site/styles.scss` owns the visual treatment; do not add page-specific inline styling or one-off variants.
+- Use the `.callout-note.learning-outcomes` classes with `collapse="true"`: the block is **collapsed by default** and opens on demand, like the comprehension-check sections. The shared `.learning-outcomes` selector in `site/styles.scss` owns the visual treatment; do not add page-specific inline styling or one-off variants.
 - Place the compact block after the chapter lead and before the main explanation. Do not repeat the same outcomes in a second introductory disclosure or a generic end-of-page note.
 - State two to four observable capabilities using precise verbs (distinguish, trace, calculate, predict, diagnose, compare, justify). Name the actual concepts, conditions, or outputs involved.
 - Keep each outcome specific to the page’s scope. Avoid vague promises such as “understand the topic”, “know the key ideas”, or “follow the page”.
