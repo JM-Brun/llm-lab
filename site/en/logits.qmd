@@ -196,7 +196,8 @@ At each position $t$, the output head provides $z_t\in\mathbb{R}^{V}$. The model
 
 A tested implementation of temperature-scaled softmax is available in `src/llm_lab/foundations/attention.py` (`softmax_with_temperature`) with unit tests in `tests/unit/test_attention.py`.
 
-## Self-check
+::: {.self-check}
+## Check your understanding
 
 [Open the related exercise space](exercises.qmd#foundations) — detailed exercises will be authored separately.
 
@@ -239,6 +240,7 @@ This reduces the risk of numerical overflow. Subtracting the same maximum from e
     <span class="nav-title">Probabilities: Normalizing and Interpreting</span>
   </a>
 </div>
+:::
 
 ## Further reading
 
