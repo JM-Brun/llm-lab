@@ -60,13 +60,11 @@ Les [lois d'échelle](scaling-laws.qmd) étudient empiriquement les relations en
 
 ## 2. Comment un GPT traite ce problème
 
-Un **GPT** signifie *Generative Pre-trained Transformer*. Le nom désigne une famille de modèles génératifs pré-entraînés fondés sur l'architecture Transformer. Dans l'usage courant, les GPT classiques sont des Transformers **décodeur seul**, entraînés à prédire le prochain token. GPT et Transformer ne sont donc pas synonymes : Transformer désigne une famille d'architectures ; GPT désigne une famille de modèles qui en utilise une configuration particulière.
-
-Le schéma suivant suit un GPT autorégressif. Il ne décrit pas tous les modèles de langage : certains ne sont pas génératifs, et d'autres architectures génératives existent.
+**GPT** (*Generative Pre-trained Transformer*) désigne une famille de modèles génératifs pré-entraînés fondés sur l'architecture Transformer. Dans l'usage courant, les GPT classiques sont des Transformers **décodeur seul**, entraînés à prédire le prochain token. GPT et Transformer ne sont donc pas synonymes : Transformer désigne une famille d'architectures ; GPT désigne une famille de modèles qui en utilise une configuration particulière.
 
 ## 3. Le chemin d’un GPT, du texte au prochain token
 
-Les flèches représentent des transformations distinctes, pas une succession de synonymes.
+Le schéma ci-dessous suit un GPT autorégressif. Il ne décrit pas tous les modèles de langage : certains ne sont pas génératifs, et d'autres architectures génératives existent. Les flèches représentent des transformations distinctes, pas une succession de synonymes.
 
 <div class="pipeline-stepper" role="navigation" aria-label="Étapes du pipeline d'un GPT">
   <a class="step-item" href="tokenization-strategies.qmd">1. Vocabulaire</a>
@@ -192,7 +190,20 @@ Le RAG peut récupérer les documents à l’inférence et les fournir dans le c
 
 La prédiction du prochain token ne garantit ni la vérité des sorties ni une compréhension humaine du monde. Ces questions, ainsi que les limites des affirmations sur les capacités émergentes, sont examinées dans [Ce que la prédiction du prochain token ne prouve pas](llm-limits.qmd).
 
+::: {.callout-note title="Repère historique"}
+Le Transformer de 2017 s’inscrit dans une histoire plus large des mécanismes d’attention, des modèles séquence-à-séquence et des objectifs de pré-entraînement. Pour cette chronologie, ses précautions de lecture et la place des LLM dans le paysage de l’IA, consultez [l’historique des Transformers](transformer-history.qmd).
+:::
 
+## 8. Où poursuivre dans LLM Lab ?
+
+- [**GPT et Transformer**](transformer.qmd) — suivre le calcul interne d’un GPT autorégressif, des représentations aux logits.
+- [**Lois d’échelle**](scaling-laws.qmd) — comprendre ce que « grande échelle » signifie pour les paramètres, les données et le calcul.
+- [**Comparer les architectures Transformer**](transformer-architectures.qmd) — comprendre les différences entre encodeur, encodeur-décodeur et décodeur.
+- [**Ce que la prédiction ne prouve pas**](llm-limits.qmd) — lire les performances sans surinterpréter l’objectif.
+- [**Construire un petit GPT**](build-path.qmd) — suivre les jalons G0–G9.
+- [**Évaluation expérimentale**](evaluation-experimentale.qmd) — définir des mesures, des baselines et des limites d’interprétation.
+- [**Fondations mathématiques**](mathematical-foundations.qmd) — relier logits, probabilités, loss et gradients.
+- [**Sources scientifiques**](../references.qmd) — retrouver les articles et travaux cités dans ce panorama.
 
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../en/llm-overview.qmd)
