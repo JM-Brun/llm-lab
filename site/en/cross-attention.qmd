@@ -43,6 +43,8 @@ In an encoder–decoder architecture, two streams coexist:
 
 The encoder therefore does not pass tokens directly to the decoder: it provides a memory of contextualized vectors.
 
+**How to read the diagram:** it deliberately isolates attention paths to make information flow visible. It does not show every sublayer (normalization, residual connections, and feed-forward networks) in each Transformer block.
+
 ## Self-attention or cross-attention?
 
 The essential difference is not the calculation formula, but **where the three matrices come from**.
@@ -133,6 +135,11 @@ The mechanism is not limited to translation. It also appears in multimodal model
 - **“Cross-attention necessarily aligns one target token with one source token.”** No: each head may aggregate several positions, without one-to-one alignment.
 - **“The source is causal because the target is generated token by token.”** No: the causal mask applies to decoder self-attention. The full source is generally accessible.
 - **“Cross-attention is just concatenation of the two sequences.”** No: it computes query–key scores, then aggregates values.
+
+## References
+
+- Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — the encoder–decoder Transformer and multi-head attention.
+- Raffel et al. (2020), [*Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer*](https://jmlr.org/papers/v21/20-074.html) — T5 and the text-to-text approach.
 
 ## Connections to other concepts
 
