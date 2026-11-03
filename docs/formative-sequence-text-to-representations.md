@@ -415,7 +415,7 @@ Le résultat du lookup a pour forme \((2,3,2)\) ; une séquence a pour forme \((
 Assume a deterministic tokenizer and a fixed model checkpoint. Consider the same token ID \(t\) in these situations:
 
 1. It occurs twice in the same input sequence.
-2. It occurs in two different input sequences with different surrounding tokens.
+2. It occurs in two different input sequences with different preceding (visible) context. For a decoder-only causal model, tokens to the right are masked and cannot affect this position.
 3. It is replaced by a different ID \(u\), while all other positions remain unchanged.
 
 For each situation, predict whether the following can change:
@@ -435,8 +435,8 @@ State any architectural qualification needed. Do not assume that a change at one
 **Worked solution**
 
 1. The same ID selects the same initial embedding row. If the architecture adds learned absolute position embeddings before the first block, the resulting input representation can differ by position. With a mechanism such as RoPE, the token embedding itself is not changed by a position vector; positional effects enter later inside attention. Contextualized states may differ because position and surrounding context matter.
-2. The initial lookup row remains the same for the same ID and fixed table. The positional mechanism may act on the token stream or inside attention, depending on the architecture. Contextualized states can differ because the surrounding sequence differs.
-3. A different ID generally selects a different row. Any positional mechanism is applied according to the architecture; contextualized states may change at that position and at other positions that depend on it.
+2. The initial lookup row remains the same for the same ID and fixed table. The positional mechanism may act on the token stream or inside attention, depending on the architecture. Contextualized states can differ when the preceding/visible context differs; in a causal decoder, tokens to the right cannot affect this position.
+3. A different ID generally selects a different row. If its position is unchanged, the positional operation itself need not change: an absolute scheme adds the same position vector, while RoPE applies the same position-dependent rotation to the newly computed query/key vectors. The resulting position-aware representations can nevertheless change because their content inputs changed. Contextualized states may change at that position and at other positions that depend on it.
 
 These are qualitative predictions, not guarantees about the magnitude of a numerical change. Exact effects depend on architecture, masking, position mechanism and model parameters.
 
@@ -453,7 +453,7 @@ These are qualitative predictions, not guarantees about the magnitude of a numer
 Supposez que le tokenizer soit déterministe et que le checkpoint du modèle soit fixe. Considérez le même ID \(t\) dans les situations suivantes :
 
 1. Il apparaît deux fois dans la même séquence d'entrée.
-2. Il apparaît dans deux séquences différentes, avec des tokens voisins différents.
+2. Il apparaît dans deux séquences différentes, avec un contexte précédent (visible) différent. Dans un modèle décodeur causal, les tokens situés à droite sont masqués et ne peuvent pas influer sur cette position.
 3. Il est remplacé par un autre ID \(u\), tous les autres emplacements restant inchangés.
 
 Pour chaque situation, prévoyez si les éléments suivants peuvent changer :
@@ -473,8 +473,8 @@ Précisez les réserves liées à l'architecture. Ne supposez pas qu'un changeme
 **Solution détaillée**
 
 1. Le même ID sélectionne la même ligne d'embedding initial. Si l'architecture ajoute des embeddings positionnels absolus appris avant le premier bloc, la représentation d'entrée qui en résulte peut différer selon la position. Avec un mécanisme comme RoPE, l'embedding du token n'est pas modifié par un vecteur positionnel ; les effets de position interviennent plus tard, dans l'attention. Les états contextualisés peuvent différer en raison de la position et du contexte.
-2. La ligne initiale sélectionnée reste la même pour un ID donné et une table fixe. Le mécanisme positionnel peut agir sur le flux de tokens ou à l'intérieur de l'attention, selon l'architecture. Les états contextualisés peuvent différer parce que le contexte de la séquence change.
-3. Un ID différent sélectionne généralement une autre ligne. Tout mécanisme positionnel est appliqué selon l'architecture ; les états contextualisés peuvent changer à cette position ainsi qu'à d'autres positions qui en dépendent.
+2. La ligne initiale sélectionnée reste la même pour un ID donné et une table fixe. Le mécanisme positionnel peut agir sur le flux de tokens ou à l'intérieur de l'attention, selon l'architecture. Les états contextualisés peuvent différer lorsque le contexte précédent/visible change ; dans un décodeur causal, les tokens situés à droite ne peuvent pas influer sur cette position.
+3. Un ID différent sélectionne généralement une autre ligne. Si sa position reste inchangée, l'opération positionnelle elle-même n'a pas besoin de changer : un mécanisme absolu ajoute le même vecteur de position, tandis que RoPE applique la même rotation dépendant de la position aux nouveaux vecteurs requête/clé calculés. Les représentations résultantes tenant compte de la position peuvent néanmoins changer puisque leur contenu d'entrée a changé. Les états contextualisés peuvent changer à cette position ainsi qu'à d'autres positions qui en dépendent.
 
 Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un changement numérique. Les effets exacts dépendent de l'architecture, du masque, du mécanisme positionnel et des paramètres du modèle.
 
