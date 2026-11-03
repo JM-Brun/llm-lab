@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/hybrid-llm-architectures"
-scope: "Étudie les compromis entre Mamba-2, attention, MoE, GQA, MTP et précision numérique à partir de Nemotron 3 ; distingue principes généraux et choix propres à une version."
-purpose: "Expliquer les coûts d'inférence ciblés par une architecture hybride, distinguer paramètres totaux et actifs, et identifier les compromis de capacité, de rappel et de bande passante."
+scope: "Uses Nemotron 3 to study trade-offs among Mamba-2, attention, MoE, GQA, MTP, and numerical precision; distinguishes general principles from version-specific choices."
+purpose: "Explain inference costs targeted by hybrid architectures, distinguish total and active parameters, and identify trade-offs in capacity, retrieval, and bandwidth."
 suggested_route:
   previous: "en/transformer-architectures"
   next: "en/generation"
@@ -17,15 +17,15 @@ hierarchy:
   parents: ["en/transformer-architectures"]
   children: []
 related: ["en/transformer", "en/generation", "en/scaling-laws"]
-tags: ["type:concept-lesson", "destination:understand", "topic:hybrid-llm-architectures", "level:advanced", "language:fr", "status:published"]
+tags: ["type:concept-lesson", "destination:understand", "topic:hybrid-llm-architectures", "level:advanced", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
-A capable model must also move and store data efficiently. **Nemotron 3** illustrates one response: combining des couches Mamba-2, quelques couches d'attention et des couches *Mixture of Experts* (MoE), puis optimiser la génération et la précision numérique. This case explains trade-offs; it is not a universal recipe.
+A capable model must also move and store data efficiently. **Nemotron 3** illustrates one response: combining Mamba-2 layers, selected attention layers, and *Mixture-of-Experts* (MoE), alongside generation and numerical-precision optimizations. This case study explains trade-offs; it is not a universal recipe.
 :::
 
-::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
-Expliquer la complémentarité entre état récurrent et attention ; distinguer paramètres totaux et actifs ; relier GQA, MTP et quantification à leurs coûts ; séparer principes généraux et caractéristiques d'une version précise.
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+Explain the complementarity of recurrent state and attention; distinguish total and active parameters; relate GQA, MTP, and quantization to their cost drivers; and separate general principles from version-specific characteristics.
 :::
 
 ## Why combine architectures?
@@ -41,16 +41,16 @@ s_t = f_\theta(s_{t-1}, x_t), \qquad y_t = g_\theta(s_t, x_t).
 There is no need to store a key-value pair for every past position. Sequence processing can be linear in sequence length, with bounded state during generation. The trade-off is that the state summarizes history: by itself, it does not provide the same direct access to a particular past position as explicit attention.
 
 The mechanisms are complementary:
-- **Mamba-2** : traitement séquentiel efficace et état compact ;
-- **attention** : accès flexible aux représentations passées, avec un cache dépendant du contexte.
+- **Mamba-2**: efficient sequential processing and compact state;
+- **attention**: flexible access to previous representations, with a cache that depends on context length.
 
-A hybrid architecture alternates these mechanisms: Mamba processes much of the stream, while selected attention layers preserve explicit retrieval paths. Their proportion and placement require empirical evaluation.
+A hybrid architecture alternates them: Mamba processes much of the stream, while selected attention layers preserve explicit retrieval paths. Their proportion and placement require empirical evaluation.
 
 ## MoE: total capacity and active computation
 
-A **Mixture-of-Experts** layer contains multiple expert networks; a router selects a subset for each token. If (N) est le nombre total d'experts et (K < N) le nombre activé pour un token, le modèle dispose d'une grande capacité tout en n'effectuant qu'une partie du calcul expert par token.
+A **Mixture-of-Experts** layer contains multiple expert networks; a router selects a subset for each token. If (N) is the total number of experts and (K < N) the number activated for one token, the model can have substantial capacity while performing only part of the expert computation per token.
 
-This is the distinction between **total parameters** and **active parameters**. Unselected parameters are not free: they generally still need to be stored or made accessible on accelerators. Active parameters mainly describe the computation used per token; total parameters still affect model memory and weight transfers.
+This is the distinction between **total parameters** and **active parameters**. Unselected parameters are not free: they generally still need to be stored or made accessible on accelerators. Active parameters mainly describe computation used per token; total parameters still affect model memory and weight transfers.
 
 ::: {.callout-warning title="Sparsity is not compression"}
 A 30-billion-parameter MoE with roughly 3 billion active parameters per token is not a dense 3-billion-parameter model. The other experts still exist and must be hosted or made accessible.
@@ -66,22 +66,22 @@ For one layer, an approximate cache-memory requirement is:
 M_{KV} \approx 2 B T n_{KV} d_h b,
 \]
 
-où (B) est le batch, (T) la longueur du contexte, (n_{KV}) le nombre de têtes K/V, (d_h) leur dimension et (b) le nombre d'octets par élément. Le facteur 2 correspond aux clés et aux valeurs ; il faut sommer les couches d'attention.
+where (B) is batch size, (T) is context length, (n_{KV}) is the number of K/V heads, (d_h) is their dimension, and (b) is bytes per element. The factor 2 accounts for keys and values; sum across attention layers.
 
-Réduire (n_{KV}) réduit approximativement le cache dans la même proportion. Ainsi, 32 têtes Q partageant 2 têtes KV donnent un ratio de 16 entre nombres de têtes, mais pas nécessairement un gain de latence de 16 : noyaux, matériel, batch et transferts mémoire interviennent aussi.
+Reducing (n_{KV}) reduces cache memory by approximately the same ratio. Thus, 32 query heads sharing 2 KV heads give a 16:1 ratio in head counts, but not necessarily a 16× latency gain: kernels, hardware, batch size, and memory transfers also matter.
 
 ## Reading Nemotron 3's choices together
 
 NVIDIA's white paper describes an architecture made predominantly of Mamba-2 and MoE layers, with a small number of self-attention layers.
 
-| Technique | Coût ciblé | Principe | Compromis |
+| Technique | Cost targeted | Principle | Trade-off |
 |---|---|---|---|
-| Mamba-2 | Cache dépendant du contexte | État récurrent compact | Récupération précise moins directe |
-| Attention | Accès à l'historique | Pondération explicite des positions | Cache KV dépendant du contexte |
-| MoE | Calcul feed-forward | Activer certains experts | Poids totaux, routage et communication |
-| GQA | Mémoire KV | Partager K/V entre têtes Q | Réduit le cache, ne l'élimine pas |
-| MTP / décodage spéculatif | Passages séquentiels | Proposer plusieurs tokens puis vérifier | Gain lié au taux d'acceptation |
-| Quantification | Stockage et trafic mémoire | Moins de bits par nombre | Erreur numérique et sensibilité des couches |
+| Mamba-2 | Context-dependent cache | Compact recurrent state | Less direct precise retrieval |
+| Attention | Access to history | Explicit weighting of positions | Context-dependent KV cache |
+| MoE | Feed-forward computation | Activate selected experts | Total weights, routing, and communication |
+| GQA | KV memory | Share K/V across Q heads | Reduces but does not remove the cache |
+| MTP / speculative decoding | Sequential passes | Propose multiple tokens, then verify | Gain depends on acceptance rate |
+| Quantization | Storage and memory traffic | Fewer bits per number | Numerical error and layer sensitivity |
 
 ### MTP and speculative decoding
 
