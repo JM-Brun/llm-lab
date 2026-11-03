@@ -31,6 +31,65 @@ x = x + self._attention(layer_norm(x, self.ln1_gamma, self.ln1_beta))
 return x + self._mlp(layer_norm(x, self.ln2_gamma, self.ln2_beta))
 ```
 
+```{=html}
+<figure class="wf-fig" id="wf-block-map" data-wf-default="The green stroke crosses the block unchanged: that is the residual trunk. Each branch (attention, MLP) only adds a correction computed on a normalized copy — GPT-2’s pre-LN order.">
+<figcaption class="wf-fig-title">The signal path through the block: every code line has its branch</figcaption>
+<div class="wf-stage">
+<div class="wf-diagram">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 300" role="img" aria-labelledby="wfb-title wfb-desc">
+<title id="wfb-title">Signal path through a pre-LN Transformer block: residual trunk, attention branch, MLP branch</title>
+<desc id="wfb-desc">The stream x crosses the block along the green trunk. The attention branch normalizes a copy, projects Q, K and V, slices into H heads of d/H columns, re-projects through w_o, and adds back to the trunk. The MLP branch normalizes a copy, widens, applies GELU, projects back, and also adds to the trunk. Branch weights are drawn with a depth-scaled standard deviation.</desc>
+<defs>
+<marker id="wfb-green" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#16A34A"/></marker>
+<marker id="wfb-ink" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#344054"/></marker>
+<marker id="wfb-violet" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#8B5CF6"/></marker>
+</defs>
+<g font-family="Arial,sans-serif">
+<g data-wf-part="br1 br2"><rect x="24" y="32" width="52" height="36" rx="8" fill="#DCFCE7" stroke="#16A34A" stroke-width="2"/><text x="50" y="56" text-anchor="middle" font-size="15" font-weight="700" fill="#14532D">x</text></g>
+<g data-wf-part="br1 br2"><path d="M76 50 H1044" stroke="#16A34A" stroke-width="6" fill="none" marker-end="url(#wfb-green)"/><text x="130" y="38" font-size="13" font-weight="700" fill="#14532D">residual trunk: x (B, T, d)</text></g>
+<g data-wf-part="br1"><path d="M120 50 V104" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
+<g data-wf-part="br1"><rect x="128" y="90" width="100" height="40" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="178" y="107" text-anchor="middle" font-size="13" font-weight="700" fill="#17212B">ln1</text><text x="178" y="123" text-anchor="middle" font-size="10" fill="#475569">normalizes a copy</text></g>
+<g data-wf-part="br1"><path d="M228 110 H252" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
+<g data-wf-part="br1"><rect x="256" y="84" width="120" height="52" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="316" y="103" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#4C1D95">w_q, w_k, w_v</text><text x="316" y="122" text-anchor="middle" font-size="10" fill="#6D28D9">each (d, d)</text></g>
+<g data-wf-part="br1 heads"><path d="M376 110 H404" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
+<g data-wf-part="heads"><rect x="408" y="70" width="170" height="80" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1.5"/><text x="493" y="88" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">H heads</text><rect x="418" y="96" width="150" height="10" rx="2" fill="#DDD6FE" stroke="#A78BFA" stroke-width="0.8"/><rect x="418" y="109" width="150" height="10" rx="2" fill="#EDE9FE" stroke="#A78BFA" stroke-width="0.8"/><rect x="418" y="122" width="150" height="10" rx="2" fill="#DDD6FE" stroke="#A78BFA" stroke-width="0.8"/><text x="493" y="146" text-anchor="middle" font-size="10" fill="#6D28D9">d/H columns each</text></g>
+<g data-wf-part="br1 heads"><path d="M578 110 H586" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
+<g data-wf-part="br1"><rect x="590" y="84" width="110" height="52" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="645" y="103" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#4C1D95">w_o (d, d)</text><text x="645" y="122" text-anchor="middle" font-size="10" fill="#6D28D9">mixes the heads</text></g>
+<g data-wf-part="br1"><path d="M700 92 C 688 70, 648 58, 616 54" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
+<g data-wf-part="br1 br2"><circle cx="600" cy="50" r="14" fill="#fff" stroke="#16A34A" stroke-width="2.5"/><text x="600" y="56" text-anchor="middle" font-size="17" font-weight="700" fill="#14532D">+</text></g>
+<g data-wf-part="br2"><path d="M780 50 V104" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
+<g data-wf-part="br2"><rect x="788" y="90" width="100" height="40" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="838" y="107" text-anchor="middle" font-size="13" font-weight="700" fill="#17212B">ln2</text><text x="838" y="123" text-anchor="middle" font-size="10" fill="#475569">normalizes a copy</text></g>
+<g data-wf-part="br2"><path d="M888 110 H912" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
+<g data-wf-part="br2"><rect x="916" y="76" width="150" height="68" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1.5"/><text x="991" y="94" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#4C1D95">fc1 : d &#8594; hidden</text><text x="991" y="112" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#6D28D9">gelu</text><text x="991" y="130" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#4C1D95">fc2 : hidden &#8594; d</text></g>
+<g data-wf-part="br2"><path d="M991 144 C 990 110, 982 78, 966 66" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
+<g data-wf-part="br1 br2"><circle cx="960" cy="50" r="14" fill="#fff" stroke="#16A34A" stroke-width="2.5"/><text x="960" y="56" text-anchor="middle" font-size="17" font-weight="700" fill="#14532D">+</text></g>
+<g data-wf-part="init"><rect x="270" y="240" width="330" height="40" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.8" stroke-dasharray="6 4"/><text x="435" y="265" text-anchor="middle" font-size="12.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#78350F">residual_std = 0.02 / √(2 × num_layers)</text></g>
+<g data-wf-part="init" stroke="#8B5CF6" stroke-width="1.6" stroke-dasharray="5 4" fill="none"><path d="M390 236 C 350 200, 320 170, 306 142" marker-end="url(#wfb-violet)"/><path d="M470 236 C 540 200, 608 164, 642 142" marker-end="url(#wfb-violet)"/><path d="M560 240 C 720 224, 900 176, 986 148" marker-end="url(#wfb-violet)"/></g>
+</g>
+</svg>
+</div>
+<div class="wf-panel">
+<p class="wf-hint">Hover over or select a code line: its branch lights up in the diagram while the rest dims. Keyboard: <kbd>Tab</kbd>, <kbd>Enter</kbd> to pin, <kbd>Esc</kbd> to release.</p>
+<div class="wf-chips" role="group" aria-label="Block lines">
+<button type="button" class="wf-chip" data-wf-links="br1" data-wf-note="Attention branch: ln1 prepares a normalized copy of x, and w_o’s output adds back to the trunk. Identity stays the default path: the block cannot destroy its input.">x + _attention(ln1(x))</button>
+<button type="button" class="wf-chip" data-wf-links="br2" data-wf-note="MLP branch: ln2 prepares a copy, fc1 widens (d → hidden), GELU activates, fc2 projects back (hidden → d), and the output adds to the trunk, position by position.">x + _mlp(ln2(x))</button>
+<button type="button" class="wf-chip" data-wf-links="heads" data-wf-note="Head h reads columns h·(d/H) to (h+1)·(d/H) of Q, K and V: contiguous slices of the same stream, never mixed before the w_o projection.">columns = slice(h·head_dim, …)</button>
+<button type="button" class="wf-chip" data-wf-links="init" data-wf-note="Depth L shrinks the standard deviation of both branches’ weights (0.02/√(2L)): the trunk’s variance stays ≈ constant across the whole stack of blocks.">residual_std = 0.02/√(2L)</button>
+</div>
+<p class="wf-note" aria-live="polite">The green stroke crosses the block unchanged: that is the residual trunk. Each branch (attention, MLP) only adds a correction computed on a normalized copy — GPT-2’s pre-LN order.</p>
+</div>
+</div>
+<figcaption class="wf-legend">
+<span class="wf-key"><span class="wf-swatch" style="background:#DCFCE7;border-color:#16A34A"></span>residual trunk (x passes through)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#F5F3FF;border-color:#8B5CF6"></span>branch parameters</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#FFFFFF;border-color:#334155"></span>branch read (normalized copy)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#FFFBEB;border-color:#B45309;border-top-style:dashed"></span>depth-scaled weight std</span>
+</figcaption>
+</figure>
+<script src="../includes/walkthrough-figures.js" defer></script>
+```
+
+
 The block applies two **additive** updates to the same stream `x`:
 
 1. `x + attention(ln(x))` — the attention branch;
