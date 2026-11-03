@@ -21,7 +21,13 @@ tags: ["type:guided-build", "destination:build", "topic:reference-transformer-bl
 -->
 
 ::: {.chapter-lead}
-Le bloc est l'unité répétée du réseau. Cette page suit le fichier ligne par ligne, de l'initialisation des paramètres jusqu'au `forward` complet. Code : [`src/llm_lab/foundations/transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py).
+Cette page est la troisième étape (3 sur 5) de la visite guidée du code de référence. Le bloc est l'unité répétée du réseau. Cette page suit le fichier ligne par ligne, de l'initialisation des paramètres jusqu'au `forward` complet. Code : [`src/llm_lab/foundations/transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py).
+:::
+:::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
+À l'issue de cette visite, vous pourrez :
+- tracer une forme `(B, T, d)` à travers le bloc, de l'entrée à la sortie ;
+- expliquer pourquoi la normalisation est dans la branche et non sur le tronc résiduel ;
+- décrire le rôle de chaque projection Q, K, V et O, et pourquoi les têtes restent isolées jusqu'à `w_o`.
 :::
 
 ## La recette du bloc : pré-LN avec résidus
@@ -116,6 +122,7 @@ Chaque position passe seule dans `d → mlp_hidden_dim` (souvent `4d`), puis GEL
 - **Étape précédente** : [les briques numériques (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
 - **Étape suivante** : [l'assemblage du GPT (`gpt.py`)](gpt-model-walkthrough.qmd) — où les blocs sont empilés.
 - **Pages conceptuelles** : [Q/K/V](queries-keys-values.qmd), [attention à produit scalaire mis à l'échelle](scaled-dot-product-attention.qmd), [masquage causal](causal-masking.qmd), [représentations contextualisées](contextualized-representations.qmd).
+- **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
 - **Code source** : [`transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py) · **Tests** : [`test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py).
 
 ::: {.language-switch}

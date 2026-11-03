@@ -21,7 +21,13 @@ tags: ["type:guided-build", "destination:build", "topic:reference-transformer-bl
 -->
 
 ::: {.chapter-lead}
-The block is the repeated unit of the network. This page follows the file line by line, from parameter initialization to the full `forward`. Source: [`src/llm_lab/foundations/transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py).
+This page is the third stop (3 of 5) of the guided tour. The block is the repeated unit of the network. This page follows the file line by line, from parameter initialization to the full `forward`. Source: [`src/llm_lab/foundations/transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py).
+:::
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this tour, you will be able to:
+- trace a `(B, T, d)` shape through the block, from input to output;
+- explain why normalization sits inside the branch instead of on the residual trunk;
+- describe the role of each Q, K, V and O projection, and why heads stay isolated until `w_o`.
 :::
 
 ## The block's recipe: pre-LN with residuals
@@ -116,6 +122,7 @@ Each position goes on its own through `d -> mlp_hidden_dim` (often `4d`), then G
 - **Previous stop**: [building-block operations (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
 - **Next stop**: [assembling the GPT (`gpt.py`)](gpt-model-walkthrough.qmd) — where blocks get stacked.
 - **Concept pages**: [Q/K/V](queries-keys-values.qmd), [scaled dot-product attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd), [contextualized representations](contextualized-representations.qmd).
+- **Back to the path**: [Build a small GPT](build-path.qmd).
 - **Source**: [`transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py) · **Tests**: [`test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py).
 
 ::: {.language-switch}

@@ -21,8 +21,16 @@ tags: ["type:guided-build", "destination:build", "topic:reference-gpt-ops", "lev
 -->
 
 ::: {.chapter-lead}
-Ce fichier rassemble les opérations que chaque bloc Transformer répète : initialisation des poids, projection linéaire, normalisation et activation. Les sortir du modèle a deux bénéfices : chaque opération est **testable seule**, et les fichiers du modèle se lisent **comme de l'architecture**. Code complet : [`src/llm_lab/foundations/gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_ops.py).
+Cette page est la deuxième étape (2 sur 5) de la visite guidée du code de référence. Ce fichier rassemble les opérations que chaque bloc Transformer répète : initialisation des poids, projection linéaire, normalisation et activation. Les sortir du modèle a deux bénéfices : chaque opération est **testable seule**, et les fichiers du modèle se lisent **comme de l'architecture**. Code complet : [`src/llm_lab/foundations/gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_ops.py).
 :::
+:::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
+À l'issue de cette visite, vous pourrez :
+- prédire la forme de sortie de chaque opération (`linear`, `layer_norm`, `gelu`) sans l'exécuter ;
+- expliquer pourquoi les poids sont petits à l'initialisation ;
+- justifier la convention `axis=-1` de la normalisation et l'approximation tanh de GELU.
+:::
+
+## Une convention pour tout le paquet : `float64`
 
 ```python
 FloatArray = NDArray[np.float64]
@@ -122,6 +130,7 @@ def linear(x: FloatArray, weight: FloatArray, bias: FloatArray) -> FloatArray:
 - **Étape précédente** : [la configuration (`gpt_config.py`)](gpt-config-walkthrough.qmd) — les dimensions utilisées ici.
 - **Étape suivante** : [le bloc Transformer (`transformer_block.py`)](transformer-block-walkthrough.qmd) — qui consomme ces briques.
 - **Pages conceptuelles** : [GPT et Transformer](transformer.qmd), [tenseurs et formes](tensors.qmd).
+- **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
 - **Code source** : [`gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_ops.py) · **Tests** : [`test_gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_ops.py).
 
 ::: {.language-switch}

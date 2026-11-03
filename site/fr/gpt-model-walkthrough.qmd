@@ -21,7 +21,13 @@ tags: ["type:guided-build", "destination:build", "topic:reference-gpt-model", "l
 -->
 
 ::: {.chapter-lead}
-Ce fichier assemble le modèle : les embeddings en entrée, les blocs empilés, la normalisation finale et la projection de sortie vers les logits. Lecture recommandée après la [configuration](gpt-config-walkthrough.qmd) et le [bloc](transformer-block-walkthrough.qmd). Code : [`src/llm_lab/foundations/gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py).
+Cette page est la quatrième étape (4 sur 5) de la visite guidée du code de référence. Ce fichier assemble le modèle : les embeddings en entrée, les blocs empilés, la normalisation finale et la projection de sortie vers les logits. Lecture recommandée après la [configuration](gpt-config-walkthrough.qmd) et le [bloc](transformer-block-walkthrough.qmd). Code : [`src/llm_lab/foundations/gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py).
+:::
+:::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
+À l'issue de cette visite, vous pourrez :
+- tracer les formes d'une passe avant, de `(B, T)` à `(B, T, V)` ;
+- expliquer l'ajout des positions absolues par diffusion sur le lot ;
+- décrire la preuve de causalité apportée par le test d'invariance de préfixe et le comptage explicite des paramètres.
 :::
 
 ## Construire : un seul générateur, un ordre fixe
@@ -109,6 +115,7 @@ Le voyage des formes, ligne par ligne :
 - **Étape précédente** : [le bloc Transformer (`transformer_block.py`)](transformer-block-walkthrough.qmd).
 - **Étape suivante** : [la génération (`generate.py`)](gpt-generation-walkthrough.qmd).
 - **Pages conceptuelles** : [GPT et Transformer](transformer.qmd), [espace des embeddings](embedding-space.qmd), [position](positional-encoding.qmd), [logits](logits.qmd).
+- **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
 - **Code source** : [`gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py) · **Tests** : [`test_gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt.py).
 
 ::: {.language-switch}

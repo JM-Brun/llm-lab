@@ -21,7 +21,13 @@ tags: ["type:guided-build", "destination:build", "topic:reference-gpt-config", "
 -->
 
 ::: {.chapter-lead}
-This page is the first stop of the guided tour of the reference code: the smallest file of the package, the one that defines **what the model is** before any other file defines **what it does**. Every code excerpt is commented line by line; the full source lives in [`src/llm_lab/foundations/gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py).
+This page is the first stop (1 of 5) of the guided tour of the reference code: the smallest file of the package, the one that defines **what the model is** before any other file defines **what it does**. Every code excerpt is commented line by line; the full source lives in [`src/llm_lab/foundations/gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py).
+:::
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this tour, you will be able to:
+- name every configuration dimension and what it determines elsewhere in the model;
+- map each field to the tensor shapes it controls;
+- explain why validation fails early with a named message instead of late with a shape error.
 :::
 
 ## The file's role in the module family
@@ -122,9 +128,9 @@ Line by line:
 
 ## Connections
 
-- **Parent page**: [Build a small GPT](build-path.qmd) — the path that motivates this code.
-- **Next tour stop**: [building-block operations (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
+- **Next stop**: [building-block operations (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
 - **Concept page**: [GPT and the Transformer](transformer.qmd) — the architecture these dimensions parametrize.
+- **Back to the path**: [Build a small GPT](build-path.qmd) — the path that motivates this code.
 - **Source**: [`gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py) · **Tests**: [`test_gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_config.py).
 
 ::: {.language-switch}

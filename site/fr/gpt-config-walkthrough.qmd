@@ -21,7 +21,13 @@ tags: ["type:guided-build", "destination:build", "topic:reference-gpt-config", "
 -->
 
 ::: {.chapter-lead}
-Cette page est la première étape de la visite guidée du code de référence : le fichier le plus petit du paquet, celui qui définit **ce qu'est le modèle** avant que tout autre fichier ne définisse **ce qu'il fait**. Chaque extrait de code est commenté ligne par ligne ; le code complet vit dans [`src/llm_lab/foundations/gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py).
+Cette page est la première étape (1 sur 5) de la visite guidée du code de référence : le fichier le plus petit du paquet, celui qui définit **ce qu'est le modèle** avant que tout autre fichier ne définisse **ce qu'il fait**. Chaque extrait de code est commenté ligne par ligne ; le code complet vit dans [`src/llm_lab/foundations/gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py).
+:::
+:::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
+À l'issue de cette visite, vous pourrez :
+- nommer chaque dimension de configuration et ce qu'elle détermine ailleurs dans le modèle ;
+- relier chaque champ aux formes de tenseurs qu'il contrôle ;
+- expliquer pourquoi la validation échoue tôt avec un message nommé plutôt que tard avec une erreur de forme.
 :::
 
 ## Le rôle du fichier dans la famille de modules
@@ -122,9 +128,9 @@ Ligne par ligne :
 
 ## Connexions
 
-- **Page parente** : [Construire un petit GPT](build-path.qmd) — le parcours qui motive ce code.
-- **Étape suivante de la visite** : [les briques numériques (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
+- **Étape suivante** : [les briques numériques (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
 - **Page conceptuelle** : [GPT et Transformer](transformer.qmd) — l'architecture que ces dimensions paramètrent.
+- **Retour au parcours** : [Construire un petit GPT](build-path.qmd) — le parcours qui motive ce code.
 - **Code source** : [`gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py) · **Tests** : [`test_gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_config.py).
 
 ::: {.language-switch}

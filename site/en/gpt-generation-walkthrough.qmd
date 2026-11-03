@@ -21,7 +21,13 @@ tags: ["type:guided-build", "destination:build", "topic:reference-gpt-generation
 -->
 
 ::: {.chapter-lead}
-This file turns logits into a sequence: at each step, reprocess the context, read the logits at the final position, pick one token, append it, repeat. This is the last stop of the tour; the [model](gpt-model-walkthrough.qmd) is assumed read. Source: [`src/llm_lab/foundations/generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py).
+This file turns logits into a sequence: at each step, reprocess the context, read the logits at the final position, pick one token, append it, repeat. This page is the fifth and last stop (5 of 5) of the tour; the [model](gpt-model-walkthrough.qmd) is assumed read. Source: [`src/llm_lab/foundations/generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py).
+:::
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this tour, you will be able to:
+- unroll a generation by hand, sliding window included;
+- explain why greedy mode is reproducible without a seed and why temperature does not change the model;
+- distinguish the deliberate limitations (no KV cache, no early stopping) from omissions.
 :::
 
 ## One step of the loop, in order

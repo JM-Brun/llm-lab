@@ -21,8 +21,16 @@ tags: ["type:guided-build", "destination:build", "topic:reference-gpt-ops", "lev
 -->
 
 ::: {.chapter-lead}
-This file gathers the operations every Transformer block repeats: weight initialization, linear projection, normalization and activation. Keeping them out of the model classes has two benefits: each operation is **testable alone**, and the model files read **like architecture**. Full source: [`src/llm_lab/foundations/gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_ops.py).
+This page is the second stop (2 of 5) of the guided tour. This file gathers the operations every Transformer block repeats: weight initialization, linear projection, normalization and activation. Keeping them out of the model classes has two benefits: each operation is **testable alone**, and the model files read **like architecture**. Full source: [`src/llm_lab/foundations/gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_ops.py).
 :::
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this tour, you will be able to:
+- predict each operation's output shape (`linear`, `layer_norm`, `gelu`) without running it;
+- explain why weights start small at initialization;
+- justify layer norm's `axis=-1` convention and the tanh approximation of GELU.
+:::
+
+## One convention for the whole package: `float64`
 
 ```python
 FloatArray = NDArray[np.float64]
@@ -122,6 +130,7 @@ def linear(x: FloatArray, weight: FloatArray, bias: FloatArray) -> FloatArray:
 - **Previous stop**: [GPT configuration (`gpt_config.py`)](gpt-config-walkthrough.qmd) — the dimensions used here.
 - **Next stop**: [the Transformer block (`transformer_block.py`)](transformer-block-walkthrough.qmd) — which consumes these blocks.
 - **Concept pages**: [GPT and the Transformer](transformer.qmd), [tensors and shapes](tensors.qmd).
+- **Back to the path**: [Build a small GPT](build-path.qmd).
 - **Source**: [`gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_ops.py) · **Tests**: [`test_gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_ops.py).
 
 ::: {.language-switch}
