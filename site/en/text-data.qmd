@@ -12,7 +12,7 @@ scope: "Introduces the stages and objects that connect source text to a model in
 purpose: "Readers should be able to trace the text → tokens → IDs → initial vectors chain, distinguish prompt encoding from training-data preparation, and identify what each stage does not establish."
 suggested_route:
   previous: "en/generation"
-  next: "en/unicode-text"
+  next: "en/tokenization-strategies"
 hierarchy:
   parents: []
   children: ["en/unicode-text", "en/tokenization-strategies", "en/embedding-space", "en/training-examples"]

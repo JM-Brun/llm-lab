@@ -11,7 +11,7 @@ id: "fr/tokenization-strategies"
 scope: "Compare les unités de segmentation et les familles d’algorithmes de tokenisation — notamment BPE, WordPiece et unigramme — ainsi que leurs compromis de couverture, longueur et coût ; suppose la chaîne d’entrée déjà représentée en texte et s’arrête avant le lookup des embeddings."
 purpose: "Le lecteur doit pouvoir décrire le principe des principales stratégies de segmentation, comparer leurs hypothèses et compromis, et expliquer pourquoi les tokens et IDs dépendent du tokenizer et de sa version."
 suggested_route:
-  previous: "fr/unicode-text"
+  previous: "fr/text-data"
   next: "fr/embedding-space"
 hierarchy:
   parents: ["fr/text-data"]

@@ -11,7 +11,7 @@ id: "en/tokenization-strategies"
 scope: "Compares segmentation units and tokenization algorithm families—including BPE, WordPiece, and unigram—and their coverage, sequence-length, and cost trade-offs; assumes the input is already represented as text and stops before embedding lookup."
 purpose: "Readers should be able to describe the principles behind major segmentation strategies, compare their assumptions and trade-offs, and explain why tokens and IDs depend on the tokenizer and its version."
 suggested_route:
-  previous: "en/unicode-text"
+  previous: "en/text-data"
   next: "en/embedding-space"
 hierarchy:
   parents: ["en/text-data"]
