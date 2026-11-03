@@ -90,6 +90,19 @@ Attention weights are not a complete explanation of a prediction: they describe 
 
 After the last block, an output projection produces the **logits**: one unnormalized score for every token in the vocabulary. The *softmax* turns them into a probability distribution over the next token. These probabilities say nothing, by themselves, about the truth of the text or the calibration of the model: see [logits](logits.qmd), [probabilities](probabilities.qmd), and [likelihood](likelihood.qmd).
 
+### Numerical example: from context to a distribution
+
+Suppose the context is "The cat" and a toy vocabulary contains only four candidates for the next token. The output projection produces the following **illustrative** logits:
+
+| Candidate token | Logit | Probability after softmax |
+|---|---:|---:|
+| \`sleeps\` | 2 | 64.4% |
+| \`runs\` | 1 | 23.7% |
+| \`eats\` | 0 | 8.7% |
+| \`plays\` | −1 | 3.2% |
+
+The probabilities are computed as \(p_i = \exp(z_i)/\sum_j\exp(z_j)\). These numbers are chosen to make the calculation readable: they do not come from the repository's reference GPT or from a trained language model. A real model has many more vocabulary candidates, and its logits depend on the context, parameters, and position being considered.
+
 During generation, a selection rule picks the next token: maximum, sampling, or a more elaborate method. The chosen token joins the context, and the computation starts again. Generation is therefore **autoregressive**: text is built token by token, not as a single prediction of a whole answer.
 
 ### A forward pass is not a generation loop
