@@ -24,8 +24,12 @@ tags: ["type:concept-lesson", "destination:understand", "topic:inference-generat
 **Generating text**, for an already trained LLM, means repeating one loop: represent the current context, estimate the distribution of the next token, select one, append it to the context, and start over. Throughout the loop, **the model's parameters stay fixed**: this is **inference** (or generation), to be distinguished from learning, which updates those parameters.
 :::
 
-::: {.callout-note}
-The model's parameters are treated as fixed. Generation transforms the current context into scores, then selects a token to append to that context; it does not update the parameters. The architecture determines how the scores are computed, while the decoding rule determines how a token is selected.
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this page, you will be able to:
+- step through autoregressive generation, from the context to the stopping criterion;
+- distinguish the forward pass, decoding, and generation;
+- explain why inference does not update model parameters;
+- predict how greedy selection, sampling, and temperature affect generated text.
 :::
 
 ::: {.callout-tip title="The idea to remember in one minute"}
