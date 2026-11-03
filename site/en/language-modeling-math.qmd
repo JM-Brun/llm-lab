@@ -79,13 +79,13 @@ P_\theta(x_{1:T})
 
 Maximum likelihood seeks to increase the log-likelihood of observed sequences; its minimized form is negative log-likelihood (NLL). This equivalence does not determine reduction over tokens and examples, or how padding and ignored positions are handled. Those conventions belong to the canonical lessons on [likelihood](likelihood.qmd), [cross-entropy](cross-entropy.qmd), and aggregated [loss](loss.qmd).
 
-**Notation bridge.** Probabilistic lessons often use \(P\) for an event probability or conditional distribution. Computational lessons use (p_{b,t,v}) for component (v) of the probability vector at example (b) and position (t). The target ID (y_{b,t}) selects (p_{b,t,y_{b,t}}). These are compatible levels of description, not different probabilistic objects.
+**Notation bridge.** Probabilistic lessons often use \(P\) for an event probability or conditional distribution. Computational lessons use \\(p_{b,t,v}\\) for component \\(v\\) of the probability vector at example \\(b\\) and position \\(t\\). The target ID \\(y_{b,t}\\) selects \\(p_{b,t,y_{b,t}}\\). These are compatible levels of description, not different probabilistic objects.
 
 ## 3. Soft targets and KL divergence
 
-One-hot targets place all mass on a single category. Some methods instead use a target distribution (q)—for example, label smoothing or a distribution supplied by a teacher model—over the (V) tokens.
+One-hot targets place all mass on a single category. Some methods instead use a target distribution \\(q\\)—for example, label smoothing or a distribution supplied by a teacher model—over the \\(V\\) tokens.
 
-For a target distribution (q) and predicted distribution (p), cross-entropy is:
+For a target distribution \\(q\\) and predicted distribution \\(p\\), cross-entropy is:
 
 \[
 H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
@@ -99,7 +99,7 @@ Define target entropy as \(H(q)=-\sum_i q_i\log q_i\). The identity
 H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)
 \]
 
-explains why, for a fixed target (q), minimizing cross-entropy with respect to (p) is equivalent to minimizing KL divergence toward that target. For finite quantities, the identity follows directly from the definitions:
+explains why, for a fixed target \\(q\\), minimizing cross-entropy with respect to \\(p\\) is equivalent to minimizing KL divergence toward that target. For finite quantities, the identity follows directly from the definitions:
 
 \[
 \begin{aligned}
