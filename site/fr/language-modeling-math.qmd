@@ -65,7 +65,7 @@ $$
 \sum_{v\in\mathcal{V}}P(v\mid x_{<t})=1.
 $$
 
-Dans cette page, $P_\theta(x_t\mid x_{<t})$ désigne la probabilité conditionnelle du token observé sous le modèle. Dans les pages consacrées au calcul, la même quantité est souvent notée $p_{b,t,y_{b,t}}$ : $p_{b,t,:}$ désigne alors le vecteur des probabilités sur le vocabulaire, et l'indice $y_{b,t}$ sélectionne celle de la cible. La majuscule $P$ met l'accent sur la probabilité d'un événement ; la minuscule $p$ désigne ici une composante de la distribution catégorielle.
+Dans cette page, $P(x_t\mid x_{<t})$ désigne la probabilité conditionnelle du token observé. Lorsqu'on explicite les paramètres du modèle, on écrit $P_\theta(x_t\mid x_{<t})$. Dans les pages consacrées au calcul, cette même probabilité est souvent notée $p_{b,t,y_{b,t}}$ : $p_{b,t,:}$ désigne le vecteur des probabilités sur le vocabulaire, et l'indice $y_{b,t}$ sélectionne celle de la cible. La majuscule $P$ met l'accent sur la probabilité d'un événement ; la minuscule $p$ désigne ici une composante de la distribution catégorielle.
 
 Les probabilités dépendent du contexte : le même token peut recevoir des probabilités différentes après deux préfixes différents. Il ne s'agit pas d'une probabilité intrinsèque du token, indépendante de son environnement.
 
