@@ -8,14 +8,14 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
-scope: "Présente le problème de modélisation du langage et sa difficulté ; définit les termes LLM, modèle de langage, modèle génératif, GPT et Transformer ; donne une carte de lecture du pipeline d’un GPT autorégressif et renvoie les mécanismes détaillés vers leurs pages dédiées."
-purpose: "À l’issue de cette page, le lecteur doit pouvoir expliquer le problème de modélisation du langage et ses difficultés, distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer, et retracer le calcul d’un GPT autorégressif en séparant embeddings et information positionnelle."
+scope: "Présente intuitivement le problème de modélisation du langage et sa difficulté ; définit les termes LLM, modèle de langage, modèle génératif, GPT et Transformer ; donne une carte de lecture du pipeline d’un GPT autorégressif et renvoie les formalismes et mécanismes détaillés vers leurs pages dédiées."
+purpose: "À l’issue de cette page, le lecteur doit pouvoir expliquer intuitivement le problème de modélisation du langage et ses difficultés, distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer, et retracer le calcul d’un GPT autorégressif en séparant embeddings et information positionnelle."
 suggested_route:
   previous: "fr/index"
   next: "fr/transformer"
 hierarchy:
   parents: ["fr/index"]
-  children: ["fr/transformer", "fr/transformer-architectures", "fr/generation", "fr/build-path", "fr/mathematical-foundations", "fr/llm-limits"]
+  children: ["fr/transformer", "fr/transformer-architectures", "fr/generation", "fr/build-path", "fr/language-modeling-math", "fr/mathematical-foundations", "fr/llm-limits"]
 related: ["fr/transformer-history"]
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
