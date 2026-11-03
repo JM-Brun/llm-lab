@@ -15,8 +15,8 @@ suggested_route:
   next: null
 hierarchy:
   parents: ["fr/llm-overview"]
-  children: []
-related: ["fr/transformer-history", "fr/transformer"]
+  children: ["fr/cross-attention"]
+related: ["fr/transformer-history", "fr/transformer", "fr/cross-attention"]
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:fr", "status:published"]
 -->
 
@@ -39,6 +39,12 @@ Vous pourrez :
 | **Encodeur-décodeur** | L'encodeur représente l'entrée ; le décodeur produit une séquence cible en s'appuyant sur cette représentation. | Attention de l'encodeur sur l'entrée ; auto-attention causale du décodeur ; attention croisée vers les états de l'encodeur. | Reconstruction, débruitage ou apprentissage texte-vers-texte, selon le modèle. | Traduction, résumé, transformation d'une séquence en une autre. | Transformer original, T5 |
 | **Décodeur seul** | Le décodeur prolonge un préfixe en produisant des représentations utiles à la prédiction suivante. | Auto-attention causale : une position ne consulte pas les tokens futurs. | Prédiction autorégressive du prochain token, dans les GPT classiques. | Continuation et génération conditionnée par un prompt. | GPT, GPT-2 |
 
+## Les trois architectures en un schéma
+
+![Comparaison des flux d'information dans les architectures encodeur seul, décodeur seul et encodeur-décodeur.](../images/transformer-attention-architectures.svg){fig-alt="Encodeur seul : auto-attention bidirectionnelle. Décodeur seul : auto-attention causale. Encodeur-décodeur : auto-attention dans l'encodeur, auto-attention causale dans le décodeur et attention croisée vers la mémoire de l'encodeur." width=100%}
+
+Le point distinctif de l'architecture encodeur-décodeur est la **troisième sous-couche d'attention du décodeur** : elle consulte la mémoire produite par l'encodeur. Pour comprendre précisément l'origine des requêtes, clés et valeurs, voir la page dédiée à [l'attention croisée](cross-attention.qmd).
+
 ## Ce qui différencie réellement les trois familles
 
 ### Encodeur seul : contextualiser une entrée
@@ -51,7 +57,7 @@ Dans BERT, l'objectif de pré-entraînement emblématique consiste à prédire d
 
 L'encodeur construit une représentation de l'entrée. Le décodeur génère ensuite la sortie, généralement de façon autorégressive, en combinant son propre contexte déjà produit et l'information issue de l'encodeur via l'attention croisée (*cross-attention*).
 
-Cette séparation est naturelle lorsque l'entrée et la sortie jouent des rôles distincts : traduire une phrase, résumer un document ou convertir un texte dans un autre format. L'article Transformer de 2017 et T5 sont des exemples importants de cette famille.
+Cette séparation est naturelle lorsque l'entrée et la sortie jouent des rôles distincts : traduire une phrase, résumer un document ou convertir un texte dans un autre format. L'article Transformer de 2017 et T5 sont des exemples importants de cette famille. Le détail du mécanisme — notamment la provenance distincte de Q, K et V — est expliqué dans la [page dédiée à l'attention croisée](cross-attention.qmd).
 
 ### Décodeur seul : prolonger un préfixe
 
