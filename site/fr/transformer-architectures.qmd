@@ -15,7 +15,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: ["fr/llm-overview"]
-  children: ["fr/cross-attention"]
+  children: []
 related: ["fr/transformer-history", "fr/transformer", "fr/cross-attention"]
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:fr", "status:published"]
 -->
@@ -27,7 +27,7 @@ Les Transformers ne forment pas une architecture unique. Selon que le réseau ut
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 Vous pourrez :
 - comparer encodeur seul, encodeur-décodeur et décodeur seul selon le contexte accessible et le flux d’information ;
-- distinguer l'accès bidirectionnel au contexte dans l'encodeur et l'accès causal dans le décodeur ;
+- distinguer attention bidirectionnelle, attention causale et attention croisée ;
 - séparer architecture, objectif d’entraînement et tâche, sans généraliser les associations typiques.
 :::
 
@@ -45,7 +45,7 @@ Vous pourrez :
 
 Le point distinctif de l'architecture encodeur-décodeur est que le décodeur peut consulter les représentations produites par l'encodeur. Ce mécanisme est appelé **attention croisée**. Son fonctionnement détaillé relève d'un [approfondissement avancé](cross-attention.qmd) : il n'est pas nécessaire pour comprendre la comparaison générale des architectures.
 
-## Ce qui différencie réellement les trois familles
+
 
 ### Encodeur seul : contextualiser une entrée
 
@@ -85,14 +85,13 @@ Pour une lecture facultative des architectures qui dépassent ce socle Transform
 Le Transformer est une architecture majeure, pas une obligation. D'autres modèles utilisent des **états récurrents** pour résumer le passé avec une mémoire compacte, ou combinent ces états avec quelques couches d'attention. D'autres encore utilisent une **activation parcimonieuse** : seuls certains réseaux experts traitent chaque token. Ces choix changent les compromis entre accès précis au contexte, mémoire, calcul et capacité. Il suffit ici de retenir que plusieurs architectures peuvent résoudre le problème de modélisation du langage ; les mécanismes de Mamba, MoE et les architectures hybrides sont détaillés dans l'[étude de cas Nemotron](hybrid-llm-architectures.qmd).
 :::
 
-::: {.self-check}
-
-
 ## Complexité et parallélisme : deux notions à ne pas confondre
 
 L'attention dense d'un Transformer effectue un nombre d'interactions qui croît comme \(T^2\) avec la longueur de séquence \(T\). Pourtant, ces interactions sont largement parallélisables pendant l'entraînement et le préremplissage (*prefill*). À l'inverse, une récurrence peut demander un travail linéaire en \(T\), tout en dépendant de l'état calculé à l'étape précédente. Enfin, la génération autorégressive standard reste séquentielle entre tokens, même si chaque étape utilise des opérations parallèles.
 
 Retenez trois questions distinctes : **combien de calcul ? quelle mémoire ? quelle chaîne de dépendances ?** Le [guide avancé sur la complexité et le parallélisme](llm-computational-complexity.qmd) les analyse en détail.
+
+::: {.self-check}
 
 ## Vérifier sa compréhension
 
