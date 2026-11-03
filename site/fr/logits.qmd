@@ -84,7 +84,7 @@ Pour $z=(0,\log 3)$, on obtient $p=(1/4,3/4)$. Les logits ne sont pas les probab
     Modifiez la température $T$ pour observer la transition entre un décodage concentré ($T < 1$) et une distribution uniforme ($T > 1$).
   </p>
   <div class="interactive-controls">
-    <label for="temp-slider-fr" style="font-weight: 700; font-size: 0.9rem;">Température (T) : <span id="temp-val-fr" style="color: var(--llm-brand); font-family: monospace;">1.00</span></label>
+    <label for="temp-slider-fr" style="font-weight: 700; font-size: 0.9rem;">Température (T) : <span id="temp-val-fr" style="color: var(--llm-brand-action); font-family: monospace;">1.00</span></label>
     <input type="range" id="temp-slider-fr" min="0.1" max="3.0" step="0.05" value="1.0" style="flex: 1; accent-color: var(--llm-brand);">
   </div>
   <div class="interactive-bars">
