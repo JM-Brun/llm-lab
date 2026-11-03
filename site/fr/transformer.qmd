@@ -90,6 +90,21 @@ Les poids d'attention ne sont pas une explication complète d'une prédiction : 
 
 Après le dernier bloc, une projection de sortie produit les **logits** : un score non normalisé pour chaque token du vocabulaire. Le *softmax* les transforme en distribution de probabilité sur le token suivant. Ces probabilités ne disent rien, en elles-mêmes, de la vérité du texte ni de la calibration du modèle : voir [logits](logits.qmd), [probabilités](probabilites.qmd) et [vraisemblance](vraisemblance.qmd).
 
+### Exemple numérique : du contexte à une distribution
+
+Supposons que le contexte soit « Le chat » et que le vocabulaire jouet ne contienne que quatre candidats pour le prochain token. La projection de sortie produit, à titre **illustratif**, les logits suivants :
+
+| Token candidat | Logit | Probabilité après softmax |
+|---|---:|---:|
+| \`dort\` | 2 | 64,4 % |
+| \`court\` | 1 | 23,7 % |
+| \`mange\` | 0 | 8,7 % |
+| \`joue\` | −1 | 3,2 % |
+
+Les probabilités sont calculées par \(p_i = \exp(z_i)/\sum_j\exp(z_j)\). Ces nombres sont choisis pour rendre le calcul lisible : ils ne proviennent ni du GPT de référence du dépôt ni d'un modèle linguistique entraîné. Dans un vrai modèle, le vocabulaire comporte beaucoup plus de candidats et les logits dépendent du contexte, des paramètres et de la position considérée.
+
+La règle de décodage intervient **après** cette distribution. En sélection gloutonne, \`dort\` serait choisi ici ; avec un échantillonnage, un autre candidat peut être tiré selon les probabilités. Le token sélectionné est ensuite ajouté au contexte.
+
 Pendant la génération, une règle de sélection choisit le token suivant : maximum, échantillonnage ou méthode plus élaborée. Le token choisi rejoint le contexte, et le calcul recommence. La génération est donc **autorégressive** : le texte se construit token par token, et non en une seule prédiction de toute la réponse.
 
 ### Une passe avant n'est pas une boucle de génération
