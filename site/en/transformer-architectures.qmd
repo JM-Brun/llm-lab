@@ -79,14 +79,13 @@ For an optional look beyond the Transformer foundations covered here, see the [N
 The Transformer is a major architecture, not a requirement. Other models use **recurrent states** to summarize the past in compact memory, or combine those states with selected attention layers. Others use **sparse activation**: only some expert networks process each token. These choices change the trade-offs between precise context access, memory, computation, and capacity. For now, the essential point is that several architectures can address language modeling; the mechanisms behind Mamba, MoE, and hybrid designs are explored in the [Nemotron case study](hybrid-llm-architectures.qmd).
 :::
 
-::: {.self-check}
-
-
 ## Complexity and parallelism: two different concepts
 
 Dense Transformer attention performs a number of interactions that grows as \(T^2\) with sequence length \(T\). Yet those interactions are highly parallelizable during training and prompt prefill. Conversely, a recurrence may require linear work in \(T\) while depending on the state computed at the previous step. Standard autoregressive generation remains sequential across tokens even though each step uses parallel operations.
 
 Keep three questions separate: **how much computation? how much memory? what dependency chain?** The [advanced guide to complexity and parallelism](llm-computational-complexity.qmd) examines them in detail.
+
+::: {.self-check}
 
 ## Check your understanding
 
