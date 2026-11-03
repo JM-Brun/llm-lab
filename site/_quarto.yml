@@ -142,12 +142,18 @@ website:
             - fr/evaluation-experimentale.qmd
         - section: "Approfondir"
           contents:
-            - fr/scaling-laws.qmd
-            - fr/emergence.qmd
-            - fr/in-context-learning.qmd
-            - fr/tensors.qmd
-            - fr/cosine-similarity.qmd
-            - fr/linearite-embeddings.qmd
+            - section: "Échelle et capacités"
+              contents:
+                - fr/scaling-laws.qmd
+                - fr/emergence.qmd
+            - section: "Adaptation à l'inférence"
+              contents:
+                - fr/in-context-learning.qmd
+            - section: "Outils mathématiques et géométrie"
+              contents:
+                - fr/tensors.qmd
+                - fr/cosine-similarity.qmd
+                - fr/linearite-embeddings.qmd
         - section: "Références"
           contents:
             - fr/glossary.qmd
@@ -200,12 +206,18 @@ website:
             - en/experimental-evaluation.qmd
         - section: "Deepen your understanding"
           contents:
-            - en/scaling-laws.qmd
-            - en/emergence.qmd
-            - en/in-context-learning.qmd
-            - en/tensors.qmd
-            - en/cosine-similarity.qmd
-            - en/embedding-linearity.qmd
+            - section: "Scale and capabilities"
+              contents:
+                - en/scaling-laws.qmd
+                - en/emergence.qmd
+            - section: "Adaptation at inference"
+              contents:
+                - en/in-context-learning.qmd
+            - section: "Mathematical tools and geometry"
+              contents:
+                - en/tensors.qmd
+                - en/cosine-similarity.qmd
+                - en/embedding-linearity.qmd
         - section: "Reference"
           contents:
             - en/glossary.qmd
