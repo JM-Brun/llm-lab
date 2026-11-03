@@ -15,7 +15,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: ["en/llm-overview"]
-  children: ["en/cross-attention"]
+  children: []
 related: ["en/transformer-history", "en/transformer", "en/cross-attention"]
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:en", "status:published"]
 -->
@@ -27,7 +27,7 @@ Transformers do not form a single architecture. Depending on whether a network u
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 You will be able to:
 - compare encoder-only, encoder–decoder, and decoder-only architectures by context visibility and information flow;
-- distinguish bidirectional context access in the encoder from causal access in the decoder;
+- distinguish bidirectional self-attention, causal self-attention, and cross-attention;
 - separate architecture, training objective, and task without treating typical pairings as rules.
 :::
 
@@ -45,7 +45,7 @@ You will be able to:
 
 The distinguishing feature of the encoder–decoder architecture is that its decoder can read representations produced by the encoder. This mechanism is called **cross-attention**. Its detailed operation belongs in an [advanced deep dive](cross-attention.qmd); it is not required to understand the broad architecture comparison.
 
-## What actually distinguishes the three families
+
 
 ### Encoder-only: contextualize an input
 
@@ -85,14 +85,13 @@ For an optional look beyond the Transformer foundations covered here, see the [N
 The Transformer is a major architecture, not a requirement. Other models use **recurrent states** to summarize the past in compact memory, or combine those states with selected attention layers. Others use **sparse activation**: only some expert networks process each token. These choices change the trade-offs between precise context access, memory, computation, and capacity. For now, the essential point is that several architectures can address language modeling; the mechanisms behind Mamba, MoE, and hybrid designs are explored in the [Nemotron case study](hybrid-llm-architectures.qmd).
 :::
 
-::: {.self-check}
-
-
 ## Complexity and parallelism: two different concepts
 
 Dense Transformer attention performs a number of interactions that grows as \(T^2\) with sequence length \(T\). Yet those interactions are highly parallelizable during training and prompt prefill. Conversely, a recurrence may require linear work in \(T\) while depending on the state computed at the previous step. Standard autoregressive generation remains sequential across tokens even though each step uses parallel operations.
 
 Keep three questions separate: **how much computation? how much memory? what dependency chain?** The [advanced guide to complexity and parallelism](llm-computational-complexity.qmd) examines them in detail.
+
+::: {.self-check}
 
 ## Check your understanding
 
