@@ -40,7 +40,7 @@ Le schéma montre le chemin conceptuel d'une génération. Il omet volontairemen
 ::: {.callout-tip title="L'idée directrice"}
 Tout GPT répète une même boucle : **représenter le contexte → estimer une distribution sur le token suivant → sélectionner un token → l'ajouter au contexte**. Le schéma ci-dessus la parcourt de bout en bout, et les sections 1 à 3 la décrivent pas à pas.
 
-Les équations, l'[atelier d'exploration](transformer-explainer.qmd) et les pages liées attendent une seconde visite, quand une question précise se posera. Pour situer les architectures et le parcours pré-entraînement → adaptation → inférence, revenez au [panorama des LLM](llm-overview.qmd) ; si le passage du texte aux tokens reste flou, consultez [Du texte aux tokens](text-data.qmd).
+Le [panorama des LLM](llm-overview.qmd) distingue les étapes de pré-entraînement, d’adaptation et d’inférence. La [comparaison des architectures Transformer](transformer-architectures.qmd) situe le décodeur seul parmi les autres configurations ; [la tokenisation du texte](text-data.qmd) explique comment le texte devient une séquence de tokens.
 :::
 
 ## 1. Du texte aux représentations
@@ -106,14 +106,7 @@ Cette distinction explique pourquoi « le modèle prédit le prochain token » r
 - **« Les poids d'attention révèlent à eux seuls le raisonnement du modèle. »** Non : ils ne suffisent pas à établir l'influence causale d'une information sur la sortie.
 - **« Tous les Transformers sont des GPT. »** Non : l'architecture originale de 2017 utilisait un encodeur et un décodeur ; GPT est une famille autorégressive de type décodeur seul.
 
-## Pour poursuivre
-
-- [Fondations mathématiques](mathematical-foundations.qmd) — relier logits, probabilités, vraisemblance et loss.
-- [Historique des Transformers](transformer-history.qmd) — replacer les choix architecturaux dans leur contexte.
-
 ## Pour approfondir
-
-Chaque ressource ci-dessous répond à un besoin différent. Choisissez celle qui correspond à votre question du moment ; revenez aux autres si nécessaire.
 
 ### Construire l'intuition avec des visualisations
 

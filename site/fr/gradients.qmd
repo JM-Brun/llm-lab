@@ -29,7 +29,7 @@ La loss indique **ce qui doit être amélioré** ; le gradient indique **comment
 
 **Première lecture :** suivez le chemin loss → dérivée par rapport aux logits → dérivées par rapport aux paramètres → mise à jour. Le gradient décrit une variation locale : il ne garantit pas qu'un pas quelconque réduira la loss.
 
-**Pour approfondir :** vérifiez les dérivées par différences finies, puis étudiez les effets du taux d'apprentissage, du momentum et des optimiseurs adaptatifs. Distinguez toujours la qualité du calcul du gradient de la qualité de la généralisation du modèle.
+Les différences finies permettent de contrôler numériquement les dérivées. Le taux d’apprentissage, le momentum et les optimiseurs adaptatifs déterminent ensuite comment le gradient est converti en mise à jour ; ils ne changent pas sa définition. La qualité du calcul du gradient reste distincte de la généralisation du modèle.
 :::
 ## Gradient par rapport aux logits
 

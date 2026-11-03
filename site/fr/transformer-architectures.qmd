@@ -73,7 +73,7 @@ Une même famille peut être entraînée avec plusieurs objectifs ; un objectif 
 
 Les trois familles décrites ici sont les grandes configurations du **Transformer**. Elles ne couvrent pas toutes les architectures de modèles de langage ou de séquence : des modèles à espace d'état, des architectures récurrentes et des systèmes hybrides existent également. Inversement, un Transformer n'est pas nécessairement un LLM : l'architecture ne renseigne pas à elle seule sur l'échelle, les données ou les capacités du modèle.
 
-Pour comprendre comment ces architectures s'inscrivent dans l'évolution de la recherche, consultez l'[historique des Transformers](transformer-history.qmd). Pour suivre le calcul interne du GPT décodeur seul choisi dans ce projet, poursuivez avec [GPT et Transformer](transformer.qmd).
+L’[historique des Transformers](transformer-history.qmd) situe ces architectures dans l’évolution de la recherche ; le calcul interne du [GPT décodeur seul retenu dans ce projet](transformer.qmd) en montre une réalisation particulière.
 
 ::: {.self-check}
 ## Vérifier sa compréhension

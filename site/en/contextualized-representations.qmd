@@ -98,7 +98,7 @@ The learning path is:
 4. Transformer layers produce context-dependent hidden states.
 5. Later layers and the output head use those states to predict the next token.
 
-For the full lookup example, matrix dimensions, parameter counts, and representation geometry, return to [The embedding space](embedding-space.qmd). For the surrounding sequence-processing mechanism, continue to [Queries, keys, and values](queries-keys-values.qmd) and [Scaled dot-product attention](scaled-dot-product-attention.qmd).
+The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors; [queries, keys, and values](queries-keys-values.qmd) and [scaled dot-product attention](scaled-dot-product-attention.qmd) describe how the sequence is processed contextually.
 
 ::: {.self-check}
 ## Check your understanding

@@ -29,7 +29,7 @@ The loss tells us **what should improve**; the gradient tells us **how the loss 
 
 **First pass:** follow the path loss → derivative with respect to logits → derivatives with respect to parameters → parameter update. A gradient describes a local change; it does not guarantee that an arbitrary step will reduce the loss.
 
-**Go deeper:** verify derivatives with finite differences, then study the effects of learning rate, momentum, and adaptive optimizers. Keep the correctness of gradient computation distinct from the model's generalization performance.
+Finite differences provide a numerical check of derivatives. The learning rate, momentum, and adaptive optimizers then determine how the gradient is converted into an update; they do not change the definition of the gradient. Correct gradient computation remains distinct from model generalization.
 :::
 ## Gradient with respect to logits
 

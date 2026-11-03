@@ -47,7 +47,7 @@ A **logit** is an unnormalized real-valued score associated with a class or voca
 
 **First pass:** follow “Transformer representation → output projection → vector of $V$ logits”. Check the two-class example: $(0,\log 3)$ becomes $(1/4,3/4)$ after softmax.
 
-**Go deeper:** study translation invariance and numerical stability. Then move to [output probabilities](probabilities.qmd) to understand the conditional distribution.
+Adding the same constant to every logit leaves the softmax distribution unchanged; numerical stability prevents overflow during its computation. The [conditional output distribution](probabilities.qmd) is obtained by normalizing these scores.
 :::
 ## Definition and shapes
 

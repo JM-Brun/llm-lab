@@ -75,10 +75,6 @@ NFC/NFD concern canonical forms; NFKC/NFKD also apply certain compatibility equi
 - [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/) — Unicode normalization forms.
 - [Official Unicode normalization charts](https://www.unicode.org/charts/normalization/) — visual examples of normalized forms.
 
-## Return to the overview
-
-The [From text to tokens](text-data.qmd) page returns to the conceptual level. [Tokenization strategies](tokenization-strategies.qmd) compares algorithm families and their trade-offs.
-
 :::: {.language-switch}
 **Language:** [Français](../fr/unicode-text.qmd) · [English](../en/unicode-text.qmd)
 ::::

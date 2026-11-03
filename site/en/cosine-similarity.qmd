@@ -20,7 +20,7 @@ related: []
 tags: ["type:deep-dive", "destination:deepen", "topic:cosine-similarity", "level:advanced", "language:en", "status:published"]
 -->
 
-This topic belongs to the [Representation geometry and interpretability](embedding-space.qmd) path. Start with [embedding space](embedding-space.qmd) to distinguish representation types, then continue to the [linearity hypothesis](embedding-linearity.qmd), which asks a different question: how are features represented and decoded?
+Cosine similarity must be interpreted within the geometry of [embedding space](embedding-space.qmd); it does not establish semantic proximity by itself. The [embedding-linearity hypothesis](embedding-linearity.qmd) addresses a different question: how are features represented and decoded?
 
 ## The question behind the default metric
 

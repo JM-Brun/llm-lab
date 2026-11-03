@@ -21,7 +21,7 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 -->
 
 ::: {.chapter-lead}
-Un **modèle de langage** est un modèle qui attribue une probabilité à des séquences de texte — ou, de façon équivalente dans une factorisation autorégressive, au prochain token sachant le contexte. Un **modèle génératif** peut produire de nouveaux échantillons à partir d'une distribution apprise ; il peut être conditionné par une entrée. Un **LLM** (*large language model*) est un modèle de langage entraîné à grande échelle : il n'existe pas de seuil universel de paramètres qui sépare mécaniquement les « petits » modèles des LLM. La taille n'est qu'une dimension de l'échelle ; les relations entre paramètres, données, calcul et performance sont étudiées par les [approfondissement facultatif sur les lois d’échelle](scaling-laws.qmd). La catégorie LLM ne présuppose pas une architecture particulière.
+Un **modèle de langage** est un modèle qui attribue une probabilité à des séquences de texte — ou, de façon équivalente dans une factorisation autorégressive, au prochain token sachant le contexte. Un **modèle génératif** peut produire de nouveaux échantillons à partir d'une distribution apprise ; il peut être conditionné par une entrée. Un **LLM** (*large language model*) est un modèle de langage entraîné à grande échelle : il n'existe pas de seuil universel de paramètres qui sépare mécaniquement les « petits » modèles des LLM. La [taille n’est qu’une dimension de l’échelle](scaling-laws.qmd). La catégorie LLM ne présuppose pas une architecture particulière.
 
 :::
 
@@ -36,7 +36,7 @@ Un **modèle de langage** est un modèle qui attribue une probabilité à des s�
 
 À partir d'un préfixe tel que « Le rapport indique que la concentration », le modèle doit estimer quels tokens pourraient suivre. Il ne s'agit pas de retrouver une unique suite correcte : plusieurs continuations peuvent être grammaticales et cohérentes, mais différer par leur sens, leur précision ou leur pertinence.
 
-Pour représenter cette incertitude, le modèle doit attribuer des scores relatifs aux continuations possibles, en tenant compte du contexte déjà fourni. Dans un GPT autorégressif, ce calcul est répété token après token : le token choisi est ajouté au contexte, puis le modèle évalue à nouveau les suites possibles. La formalisation probabiliste de cette idée — et les conventions nécessaires pour écrire les probabilités de séquences — est développée dans la page facultative [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd).
+Pour représenter cette incertitude, le modèle doit attribuer des scores relatifs aux continuations possibles, en tenant compte du contexte déjà fourni. Dans un GPT autorégressif, ce calcul est répété token après token : le token choisi est ajouté au contexte, puis le modèle évalue à nouveau les suites possibles. La [formalisation probabiliste de cette idée](language-modeling-math.qmd) repose sur les probabilités conditionnelles successives et les conventions nécessaires pour écrire les probabilités de séquences.
 
 Le modèle apprend des régularités statistiques des données ; cet objectif ne lui fournit pas, à lui seul, un mécanisme de vérification de la vérité.
 
@@ -47,7 +47,7 @@ Le modèle apprend des régularités statistiques des données ; cet objectif ne
 - **Données hétérogènes :** les corpus mélangent styles, domaines, niveaux de qualité, langues et contradictions ; leurs régularités ne sont pas toutes pertinentes pour une tâche donnée.
 - **Compromis de calcul :** augmenter la capacité du modèle ne suffit pas. Il faut aussi des données adaptées et du calcul pour les exploiter ; les gains dépendent de la manière dont ces ressources sont réparties.
 
-Les [lois d'échelle](scaling-laws.qmd) étudient empiriquement les relations entre ces ressources et la perte. Elles ne définissent pas un seuil universel à partir duquel un modèle deviendrait un LLM.
+
 
 ## 2. Comment un GPT traite ce problème
 
@@ -111,7 +111,7 @@ L'ID d'un token est un indice entier, pas une coordonnée qui porte du sens. La 
 
 ### Information positionnelle : représenter l'ordre
 
-Une séquence n'est pas un simple ensemble de tokens : l'ordre change le sens et les dépendances à apprendre. Le modèle doit donc disposer d'une information qui distingue les positions. Cette information peut être introduite de différentes manières dans le calcul ; les mécanismes et leurs différences sont expliqués dans [la page dédiée à la position](positional-encoding.qmd).
+Une séquence n'est pas un simple ensemble de tokens : l'ordre change le sens et les dépendances à apprendre. Le modèle doit donc disposer d'une information qui distingue les positions. Les [mécanismes de représentation positionnelle](positional-encoding.qmd) diffèrent notamment par l’endroit où cette information intervient dans le calcul.
 
 **Le point de jonction :** le passage des IDs aux logits correspond au calcul avant (*forward pass*) du modèle ; la transformation des logits en distribution et la sélection relèvent du décodage. Pendant l’inférence, les paramètres restent fixes. Leur apprentissage est une autre étape du cycle de vie, présentée plus loin.
 

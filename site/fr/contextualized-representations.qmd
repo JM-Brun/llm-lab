@@ -100,7 +100,7 @@ Le parcours est le suivant :
 4. Les couches du Transformer produisent des états cachés dépendants du contexte.
 5. Les couches suivantes et la tête de sortie utilisent ces états pour prédire le token suivant.
 
-Pour retrouver l'exemple complet de lookup, les dimensions matricielles, le nombre de paramètres et la géométrie des représentations, retournez à [la page principale sur l'espace des embeddings](embedding-space.qmd). Pour approfondir le traitement de la séquence, poursuivez avec [Requêtes, clés et valeurs](queries-keys-values.qmd) puis [Attention à produit scalaire redimensionné](scaled-dot-product-attention.qmd).
+Le [lookup dans l’espace des embeddings](embedding-space.qmd) associe les IDs aux vecteurs initiaux ; [requêtes, clés et valeurs](queries-keys-values.qmd) puis l’[attention à produit scalaire mise à l’échelle](scaled-dot-product-attention.qmd) décrivent le traitement contextuel de la séquence.
 
 ::: {.self-check}
 ## Vérifier sa compréhension
