@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer"
-scope: "Follows an autoregressive GPT computation inside the network—from the input token sequence through embeddings, positional information, Transformer blocks, attention, and output scores to logits; it does not treat generation as a black-box loop or parameter learning as its main subject."
+scope: "Follows an autoregressive GPT computation inside the network—from the input token sequence through embeddings, positional information, Transformer blocks, attention, MLP, residual paths, and normalization to logits; it does not treat generation as a black-box loop or parameter learning as its main subject."
 purpose: "Readers should be able to trace a token sequence through the network to the logits, explain the role of the main operations in a Transformer block, and distinguish initial embeddings, contextualized representations, and output scores."
 suggested_route:
   previous: "en/llm-overview"
