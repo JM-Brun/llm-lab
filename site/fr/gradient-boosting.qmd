@@ -33,7 +33,7 @@ où (h_m) est le nouvel arbre, (ho_m) ajuste la contribution de ses feuilles et
 
 ## Pourquoi « gradient » ?
 
-Pour une loss différentiable (L(y,F(x))), l'étape (m) calcule le gradient négatif par rapport à la prédiction courante :
+Pour une loss différentiable $L(y,F(x))$, l'étape $m$ calcule le gradient négatif par rapport à la prédiction courante :
 
 \[
 r_{im}=-\left[
