@@ -171,7 +171,7 @@ Do not create a new issue for every row. Route changes to existing owners: #130 
 Raschka Ch.5 confirms a **real implementation gap** in LLM Lab's G8 path, but the gap is already owned by #78/#79 and its data prerequisites by #58. No duplicate issue or implementation is created. The current public pages cover the mathematical objective and data alignment; they do not yet constitute a reproducible training workflow. Browser review of the learner-facing data/loss/generation path is deferred to [#347](https://github.com/JM-Brun/llm-lab/issues/347) (P2).
 
 
-## 7. Cross-page content ownership contract
+## 9. Cross-page content ownership contract
 
 The inventory above classifies destinations; this section assigns the **canonical home of explanations** across pages. A page may mention a concept owned elsewhere, but that mention must serve one of three explicit purposes: (1) introduce a prerequisite in one or two sentences, (2) show where the current mechanism sits in the system, or (3) retrieve a concept needed for a new derivation. It must not reproduce the owner's worked explanation, full sequence of steps, or exercise set.
 
