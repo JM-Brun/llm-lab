@@ -68,8 +68,19 @@ Si les probabilités attribuées à trois tokens observés sont $(0.5, 0.25, 0.8
 Pour voir comment la vraisemblance devient une fonction de perte, lire [Entropie croisée](cross-entropy.qmd) et [Loss](loss.qmd).
 
 1. Pourquoi utiliser la log-vraisemblance plutôt que le produit direct ?
-2. Quelle hypothèse permet d'écrire la séquence comme un produit de conditionnelles ?
+2. Quelle règle permet d'écrire la probabilité d'une séquence comme un produit de probabilités conditionnelles ? Faut-il supposer les tokens indépendants ?
 3. Pourquoi documenter le tokenizer et la réduction de la NLL lors d'une comparaison ?
+
+<details>
+<summary>Afficher les réponses</summary>
+
+1. Le produit de nombreuses probabilités peut devenir extrêmement petit et difficile à représenter numériquement. Le logarithme le transforme en somme, plus stable et plus simple à optimiser ; comme le logarithme est croissant, maximiser la log-vraisemblance conserve le classement des modèles donné par la vraisemblance.
+2. C'est la règle de chaîne : elle factorise toute probabilité jointe en probabilités conditionnelles successives. Aucune indépendance entre tokens n'est requise. Au contraire, chaque terme dépend du préfixe déjà observé. Une hypothèse d'indépendance entre séquences distinctes du jeu de données, parfois utilisée pour construire la vraisemblance totale, est une question séparée.
+3. Le tokenizer détermine les événements évalués et leur granularité. La somme de NLL dépend aussi du nombre de tokens ; la moyenne par token change l'échelle et doit être distinguée de la somme. Une comparaison n'a de sens que si ces conventions et les données évaluées sont compatibles.
+
+**Transfert numérique :** avec les probabilités $(0.5, 0.25, 0.8)$ de l'exemple, la vraisemblance vaut $0.1$, la NLL totale vaut environ $2.303$ nats et la NLL moyenne par token vaut environ $0.768$ nat. Cette moyenne correspond à la moyenne des cross-entropies des cibles one-hot pour ces trois positions ; une loss de lot ajoute ensuite une convention d'agrégation et de masquage.
+
+</details>
 
 **Suite :** [Cross-entropie](cross-entropy.qmd) · [Loss](loss.qmd)
 
