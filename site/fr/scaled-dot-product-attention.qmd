@@ -153,7 +153,10 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 - La fonction softmax est liée aux [probabilités](probabilites.qmd), mais une distribution normalisée n'est pas nécessairement calibrée.
 - La [synthèse Transformer](transformer.qmd) remet le calcul dans le flux du modèle.
 
-## Vérifier votre compréhension
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](exercises.qmd#attention).
 
 Une ligne de scores vaut $(2,0)$ et la dimension des clés est $d_k=4$. Calculez les poids softmax après mise à l’échelle. Que se passe-t-il si la deuxième position est interdite par un masque causal ?
 
@@ -163,6 +166,7 @@ Une ligne de scores vaut $(2,0)$ et la dimension des clés est $d_k=4$. Calculez
 On divise d’abord les scores par $\sqrt{4}=2$, ce qui donne $(1,0)$. Le softmax vaut environ $(0{,}731,0{,}269)$. Si la deuxième position est interdite, son score est masqué avant le softmax (conceptuellement $-\infty$) : les poids deviennent $(1,0)$. Le masque doit intervenir avant la normalisation ; mettre son poids à zéro après le softmax sans renormaliser ne produit pas la même distribution.
 
 </details>
+:::
 
 ## Implémentation et vérification
 
