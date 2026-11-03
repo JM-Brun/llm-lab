@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-overview"
-scope: "Places modern LLMs within AI/ML and NLP, distinguishes them from earlier task-specific NLP systems, defines language model, generative model, LLM, GPT, and Transformer; explains autoregressive inference, model families, the learning-to-inference lifecycle, and the role of KV caching while delegating technical detail to dedicated pages."
-purpose: "By the end of this page, readers should be able to place LLMs within AI/ML/NLP, distinguish them from task-specific NLP systems, distinguish language model, generative model, LLM, GPT, and Transformer, describe the main stages of autoregressive generation, and explain why inference optimizations do not change the next-token objective."
+scope: "Places modern LLMs within AI/ML and NLP; defines language model, generative model, LLM, GPT, and Transformer; distinguishes architecture, weight learning, and use; routes readers to dedicated pages without detailing the generation loop or internal mechanisms."
+purpose: "By the end of this page, readers should be able to place LLMs, distinguish the key terms and the three dimensions of architecture/weight learning/use, and choose the specialized page for understanding Transformer computation or autoregressive inference."
 suggested_route:
   previous: "en/index"
   next: "en/transformer"
@@ -36,10 +36,9 @@ By the end of this page, you will be able to:
 
 Given a prefix such as “The report indicates that the concentration”, the model must estimate which tokens could follow. There is not necessarily one uniquely correct continuation: several continuations may be grammatical and coherent while differing in meaning, precision, or relevance.
 
-To represent this uncertainty, the model estimates the plausibility of several continuations while taking the context into account. In an autoregressive GPT, this computation is repeated token by token: the selected token is appended to the context, and the model evaluates the possible next tokens again. The [probabilistic formalization of this principle](language-modeling-math.qmd) develops the mathematical description of these estimates.
+This language-modeling problem consists in assigning plausibility to sequences conditional on their context. For an autoregressive GPT, the probabilistic factorization of this estimate is presented in the [mathematical formalization of language modeling](language-modeling-math.qmd). How a trained model turns that estimate into text, one token at a time, belongs to the dedicated lesson on [generation](generation.qmd).
 
 The model learns statistical regularities in its data; this objective does not, by itself, provide a mechanism for verifying truth.
-
 
 ### Why is this problem difficult?
 
@@ -58,33 +57,19 @@ Modern LLMs are deep-learning models within AI and machine learning; NLP is a fi
 
 LLM Lab uses small, inspectable models to teach mechanisms, not to reproduce production-scale capabilities. An untrained reference model is expected to produce incoherent text.
 
-## 3. The generation process, from text to the next token
+## 3. Where generation fits in the system
 
-The diagram distinguishes the successive transformations of the context, the computation performed by the model, and the selection of the next token. The GPT does not move through this process: its parameters remain fixed during inference; it is the context that grows at each iteration.
+The diagram is a **system map**, not another explanation of every operation. It locates text preparation, network computation, and next-token selection; the corresponding mechanisms are developed in their canonical pages.
 
-![The autoregressive generation process: context is prepared, processed by a GPT with fixed parameters, then extended with the selected token.](../images/llm-generation-process-en.svg){#fig-gpt-generation-process fig-alt="Four phases: text and context, input preparation, processing by a GPT with fixed parameters, and token selection and context update. A loop indicates that the process repeats."}
+![The autoregressive generation process: context is prepared, processed by a GPT with fixed parameters, then extended with the selected token.](../images/llm-generation-process-en.svg){#fig-gpt-generation-process fig-alt="System overview: context is prepared, processed by the model, then extended with the selected token. The loop repeats."}
 
 *Figure — High-level conceptual overview. The continuation percentages are illustrative; they are not the measured output of any particular model.*
 
-For complementary pedagogical perspectives, see [Hugging Face on pipeline stages](../references.qmd#pipeline-et-generation-autoregressive), [Jay Alammar’s visual guide to Transformers](../references.qmd#visualiser-le-transformer), and [Raff, Farris, and Biderman on how inputs become outputs](../references.qmd#transformers-how-inputs-become-outputs).
+- **Prepare the text:** see [text and data](text-data.qmd) and [tokenization strategies](tokenization-strategies.qmd).
+- **Compute one forward pass:** see [GPT and Transformers](transformer.qmd), then the pages on [embeddings](embedding-space.qmd), [positional information](positional-encoding.qmd), and [attention](queries-keys-values.qmd).
+- **Produce a continuation:** see the canonical lesson on [autoregressive generation](generation.qmd), which explains the next-token distribution, decoding, context update, and stopping.
 
-### Four high-level operations
-
-1. **Prepare the input.** The prompt text and conversation context are split into units called *tokens*, then converted into representations the model can process. Token order is also taken into account. For deeper explanations: [vocabulary and tokenization](tokenization-strategies.qmd), [tokens and data](text-data.qmd), [embeddings](embedding-space.qmd), and [positional information](positional-encoding.qmd).
-
-2. **Process the context.** The [Transformer](transformer.qmd) combines information from different positions to build context-dependent representations. The model therefore does not treat each token as an isolated item.
-
-3. **Evaluate possible continuations.** From this computation, the model estimates how plausible the next tokens would be. [Output scores](logits.qmd) and [probabilities](probabilities.qmd) explain in more detail how these possibilities are evaluated.
-
-4. **Choose and repeat.** A decoding rule selects the next token from the evaluated possibilities. It does not necessarily select the token with the highest probability: some strategies also involve random sampling. The selected token is appended to the context, and the model repeats its computation to produce the next one. See [generation](generation.qmd).
-
-**The essential idea:** a GPT does not write its entire answer in one operation. It estimates a continuation, selects one token, appends it to the context, and repeats until a stopping condition is met. The visible text is built progressively.
-
-::: {.callout-note collapse="true" title="Optional: inference efficiency and the KV cache"}
-
-At each autoregressive step, the context grows. This lab's [reference GPT](build-path.qmd) recomputes the full current window for clarity and has no KV cache. Production engines often reuse per-layer keys and values from past tokens, trading memory and cache management for less repeated computation. This changes inference efficiency, not the next-token objective.
-
-:::
+Optimizations such as the **KV cache** reduce some repeated computation without changing the prediction objective; their compute and memory costs are covered in the [LLM computational complexity deep dive](llm-computational-complexity.qmd).
 
 ## 4. Three dimensions not to conflate
 
