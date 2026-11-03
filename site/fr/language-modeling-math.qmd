@@ -1,6 +1,6 @@
 ---
 title: "Formaliser mathématiquement la modélisation du langage"
-subtitle: "Des continuations possibles à la probabilité d’une séquence"
+subtitle: "Règle de chaîne, factorisation autorégressive et cibles souples"
 keywords: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
@@ -8,168 +8,138 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/language-modeling-math"
-scope: "Formalise le problème de modélisation du langage par les probabilités conditionnelles et la factorisation autorégressive ; distingue règle de chaîne, modèle probabiliste appris et objectif de maximum de vraisemblance. Elle présente la variante à cibles souples de l'objectif et son lien avec la divergence KL."
-purpose: "Lire et interpréter la probabilité d'un token sachant son contexte, reconstruire la probabilité d'une séquence par factorisation autorégressive et relier cette formalisation à l'objectif d'entraînement. Expliquer pourquoi, pour une cible fixe, minimiser l'entropie croisée revient à minimiser la divergence KL."
+scope: "Approfondit la formalisation probabiliste de la modélisation du langage : dérivation de la factorisation autorégressive par la règle de chaîne, distinction entre identité probabiliste et modèle appris, lien compact avec le maximum de vraisemblance, puis entropie croisée à cibles souples et divergence KL."
+purpose: "Dériver la probabilité d'une séquence à partir de la règle de chaîne, expliquer ce que le modèle paramétré apprend, et démontrer pourquoi, pour une cible fixe, minimiser l'entropie croisée revient à minimiser la divergence KL, avec les hypothèses et limites nécessaires."
 suggested_route:
   previous: null
   next: null
 hierarchy:
   parents: ["fr/llm-overview"]
   children: []
-related: ["fr/probabilites", "fr/vraisemblance", "fr/cross-entropy", "fr/loss", "fr/training-examples", "fr/mathematical-foundations"]
+related: ["fr/probabilites", "fr/vraisemblance", "fr/cross-entropy", "fr/loss", "fr/mathematical-foundations"]
 tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
-Dans un modèle autorégressif, la probabilité d’une séquence de tokens se factorise en probabilités conditionnelles successives : à chaque position, le modèle estime le token suivant à partir du préfixe déjà observé. Cette factorisation formalise le problème de modélisation du langage présenté dans le [panorama des LLM](llm-overview.qmd).
+Cette page ne réintroduit ni la tokenisation, ni la distribution du prochain token, ni la vraisemblance comme notions de base : ces objets ont déjà leurs leçons canoniques. Elle approfondit deux articulations mathématiques : la règle de chaîne qui justifie la factorisation autorégressive, puis la relation entre entropie croisée à cible souple et divergence KL.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À l’issue de cette page, vous pourrez :
-- interpréter une probabilité conditionnelle de prochain token et sa notation ;
-- expliquer la factorisation autorégressive d’une probabilité de séquence ;
-- distinguer la règle de chaîne, le modèle appris et l’objectif d’entraînement ;
-- expliquer le lien entre entropie croisée et divergence KL pour une cible fixe ;
+- dériver la factorisation autorégressive à partir de la règle de chaîne ;
+- distinguer une identité probabiliste du modèle paramétré qui approxime les conditionnelles ;
+- relier brièvement vraisemblance, log-vraisemblance et objectif d'entraînement ;
+- démontrer l'identité entre entropie croisée, entropie cible et divergence KL ;
+- préciser les hypothèses, la direction et les cas où les quantités deviennent infinies.
 :::
 
-## 1. De la séquence de texte à une séquence de tokens
+## 1. De la règle de chaîne à la factorisation autorégressive
 
-On suppose que le texte a déjà été converti par un tokenizer en une séquence d'identifiants :
+La page [Probabilités de sortie](probabilites.qmd) définit la probabilité conditionnelle du prochain token, notée (P(x_t\mid x_{<t})), et explique comment le modèle construit sa distribution. Ici, on part de cette quantité pour établir la probabilité d'une séquence complète.
 
-$$
-x_{1:T}=(x_1,x_2,\ldots,x_T).
-$$
+Pour toute distribution jointe, la règle de chaîne donne :
 
-Chaque $x_t$ est un entier appartenant au vocabulaire $\mathcal{V}$, de taille $V$. Les indices indiquent les positions dans la séquence, pas des valeurs numériques sur lesquelles on effectuerait des opérations arithmétiques.
-
-Le problème de modélisation du langage consiste à construire un modèle probabiliste qui attribue des probabilités aux séquences possibles. Il faut donc préciser ce que signifie « probabilité d'une séquence » et comment le contexte intervient.
-
-## 2. Probabilité conditionnelle : le prochain token sachant le contexte
-
-Pour deux événements $A$ et $B$, avec $P(B)>0$, la probabilité conditionnelle est définie par :
-
-$$
-P(A\mid B)=\frac{P(A\cap B)}{P(B)}.
-$$
-
-Dans un modèle de langage, l'événement $B$ correspond au préfixe déjà observé et $A$ au prochain token. On note :
-
-$$
-P(x_t\mid x_{<t}),
-\qquad x_{<t}=(x_1,\ldots,x_{t-1}).
-$$
-
-Cette quantité représente la probabilité attribuée au token $x_t$ sachant les tokens qui le précèdent. Pour un préfixe donné, le modèle définit une distribution sur les tokens possibles du vocabulaire :
-
-$$
-\sum_{v\in\mathcal{V}}P(v\mid x_{<t})=1.
-$$
-
-Dans cette page, $P(x_t\mid x_{<t})$ désigne la probabilité conditionnelle du token observé. Lorsqu'on explicite les paramètres du modèle, on écrit $P_\theta(x_t\mid x_{<t})$. Dans les pages consacrées au calcul, cette même probabilité est souvent notée $p_{b,t,y_{b,t}}$ : $p_{b,t,:}$ désigne le vecteur des probabilités sur le vocabulaire, et l'indice $y_{b,t}$ sélectionne celle de la cible. La majuscule $P$ met l'accent sur la probabilité d'un événement ; la minuscule $p$ désigne ici une composante de la distribution catégorielle.
-
-Les probabilités dépendent du contexte : le même token peut recevoir des probabilités différentes après deux préfixes différents. Il ne s'agit pas d'une probabilité intrinsèque du token, indépendante de son environnement.
-
-## 3. Factoriser la probabilité d'une séquence
-
-La règle de chaîne des probabilités donne, pour toute distribution jointe :
-
-$$
+\[
 P(x_1,\ldots,x_T)
 =P(x_1)P(x_2\mid x_1)\cdots
 P(x_T\mid x_1,\ldots,x_{T-1}).
-$$
+\]
 
-En utilisant la notation $x_{<t}$, on obtient :
+En posant (x_{<t}=(x_1,\ldots,x_{t-1})), on obtient :
 
-$$
+\[
 \boxed{
 P(x_{1:T})=\prod_{t=1}^{T}P(x_t\mid x_{<t})
 }
-$$
+\]
 
-C'est la factorisation autorégressive. Elle exprime la probabilité de la séquence comme le produit des probabilités conditionnelles de chacun de ses tokens, dans l'ordre.
+C'est la **factorisation autorégressive** : la probabilité de la séquence est le produit des probabilités conditionnelles de ses tokens, dans l'ordre.
 
-**Point important :** la règle de chaîne est une identité probabiliste, pas une hypothèse propre aux Transformers. Le caractère autorégressif vient de l'ordre dans lequel le modèle représente et utilise ces conditionnelles : le token à la position $t$ est prédit à partir du préfixe, et non des tokens futurs.
+**La règle de chaîne est une identité probabiliste**, valable pour toute distribution jointe. Elle n'impose pas à elle seule une architecture ni un ordre de calcul particulier. Le caractère autorégressif vient du modèle qui représente et utilise les conditionnelles dans l'ordre du préfixe : à la position (t), le token est prédit à partir des tokens précédents, pas des tokens futurs.
 
-Pour le premier token, le préfixe est vide. En pratique, on peut expliciter un token de début de séquence (BOS) ou adopter une convention équivalente.
+Pour le premier token, le préfixe est vide. En pratique, un token de début de séquence (BOS) peut être explicite, ou une convention équivalente peut être utilisée.
 
-## 4. Ce que le modèle apprend
+## 2. Du modèle paramétré à l'objectif d'entraînement
 
-Un modèle paramétré par $\theta$ approxime chaque distribution conditionnelle :
+Un modèle de paramètres (	heta) approxime les conditionnelles :
 
-$$
+\[
 P_\theta(x_t\mid x_{<t}).
-$$
+\]
 
-Pour une séquence observée, sa probabilité sous le modèle est donc :
+La factorisation implique alors :
 
-$$
+\[
 P_\theta(x_{1:T})
-=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}).
-$$
-
-Les paramètres $\theta$ sont ajustés pour attribuer une probabilité élevée aux séquences du corpus d'entraînement. Une formulation standard consiste à maximiser la log-vraisemblance :
-
-$$
+=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}),
+\qquad
 \log P_\theta(x_{1:T})
 =\sum_{t=1}^{T}\log P_\theta(x_t\mid x_{<t}).
-$$
+\]
 
-Équivalemment, on minimise la log-vraisemblance négative, souvent moyennée sur les tokens et les exemples. Les conventions exactes d'agrégation, de masquage et de réduction sont importantes pour comparer des pertes : elles sont détaillées dans les pages sur la [vraisemblance](vraisemblance.qmd), la [loss](loss.qmd) et la [chaîne mathématique de l'entraînement](mathematical-foundations.qmd).
+Le maximum de vraisemblance cherche à augmenter la log-vraisemblance des séquences observées ; sa formulation minimisée est la log-vraisemblance négative (NLL). Cette équivalence ne fixe pas la réduction sur les tokens et les exemples, ni le traitement du padding ou des positions ignorées. Ces conventions appartiennent aux pages canoniques sur la [vraisemblance](vraisemblance.qmd), la [cross-entropie](cross-entropy.qmd) et la [loss agrégée](loss.qmd).
 
-## 5. Exemple conceptuel
+**Notation.** Les pages probabilistes utilisent souvent (P) pour une probabilité d'événement ou une distribution conditionnelle. Les pages de calcul utilisent (p_{b,t,v}) pour la composante (v) du vecteur de probabilités à l'exemple (b) et la position (t). L'ID cible (y_{b,t}) sélectionne la composante (p_{b,t,y_{b,t}}). Il s'agit de deux notations pour des niveaux de description compatibles, pas de deux objets probabilistes différents.
 
-Considérons la séquence « Le chat dort ». Après tokenisation, supposons qu'elle soit représentée par trois tokens $x_1,x_2,x_3$. Le modèle attribue successivement :
+## 3. Cibles souples et divergence KL
 
-- une probabilité à $x_1$ sans préfixe (ou après un token BOS) ;
-- une probabilité à $x_2$ sachant $x_1$ ;
-- une probabilité à $x_3$ sachant $x_1,x_2$.
+Les cibles *one-hot* placent toute la masse sur une seule catégorie. Certaines méthodes utilisent plutôt une distribution cible (q) — par exemple pour le lissage des étiquettes ou une cible fournie par un modèle enseignant — sur les (V) tokens.
 
-La probabilité de la séquence entière est le produit de ces trois termes. Si l'un des tokens observés reçoit une probabilité très faible, la probabilité du produit complet diminue également. C'est pourquoi l'entraînement examine les probabilités des tokens cibles, et pas seulement la qualité subjective d'une phrase générée.
+Pour une distribution cible (q) et une distribution prédite (p), l'entropie croisée est :
 
-## 6. Ce que cette formalisation ne dit pas
-
-- **Elle ne définit pas le tokenizer.** Le découpage du texte et la construction du vocabulaire sont des choix distincts ([tokenisation](tokenization-strategies.qmd)).
-- **Elle ne spécifie pas l'architecture.** Plusieurs architectures peuvent représenter des distributions conditionnelles ; la factorisation n'implique pas à elle seule un Transformer.
-- **Elle ne garantit pas la vérité.** Une probabilité élevée exprime ce que le modèle a appris à privilégier dans ses données, pas une validation factuelle.
-- **Elle ne fixe pas la procédure de génération.** Échantillonnage, choix glouton et autres stratégies interviennent après le calcul de la distribution ([génération](generation.qmd)).
-
-## 7. Cibles souples et divergence KL
-
-La section précédente utilise des cibles one-hot : une seule catégorie reçoit toute la masse. Une cible peut aussi être une distribution $q$ — lissage de cible, distribution enseignante — sur les $V$ tokens.
-
-Pour une distribution cible $q$ et la distribution prédite $p$, l'entropie croisée est (les termes de masse cible nulle contribuent zéro) :
-
-$$
+\[
 H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
-$$
+\]
 
-Avec une cible one-hot, la somme se réduit à $-\log p_y$. Avec une cible souple, plusieurs catégories contribuent. On suppose $q_i\geq 0$, $\sum_i q_i=1$, et une distribution $p$ elle aussi normalisée. Sauf mention contraire, $\log$ désigne le logarithme naturel : les pertes sont exprimées en nats ; avec $\log_2$, en bits.
+Les termes tels que (q_i=0) contribuent zéro. Avec une cible one-hot, la somme se réduit à (-\log p_y) ; avec une cible souple, plusieurs catégories contribuent. On suppose (q_i\geq 0), (sum_i q_i=1), et (p) normalisée également. Sauf mention contraire, (log) désigne le logarithme naturel : les pertes sont exprimées en nats ; avec (log_2), en bits.
 
-Définissons l'entropie de la cible par $H(q)=-\sum_i q_i\log q_i$. La relation $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$ explique pourquoi, pour une cible fixe, minimiser l'entropie croisée revient à minimiser la divergence KL vers la distribution prédite. Lorsque les quantités sont finies, elle se déduit directement des définitions :
+Définissons l'entropie de la cible par (H(q)=-\sum_i q_i\log q_i). La relation
 
-$$
+\[
+H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)
+\]
+
+explique pourquoi, pour une cible (q) fixe, minimiser l'entropie croisée par rapport à (p) revient à minimiser la divergence KL vers cette cible. Pour des quantités finies, l'identité se déduit directement des définitions :
+
+\[
 \begin{aligned}
 D_{\mathrm{KL}}(q\Vert p)
 &=\sum_i q_i\log\frac{q_i}{p_i}\\
 &=\sum_i q_i\log q_i-\sum_i q_i\log p_i\\
 &=-H(q)+H(q,p).
 \end{aligned}
-$$
+\]
 
-Donc $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$. Ici, $q$ et $p$ sont des distributions normalisées et les termes de masse nulle contribuent zéro ; si $q_i>0$ mais $p_i=0$, l'entropie croisée et $D_{\mathrm{KL}}(q\Vert p)$ sont infinies selon la convention usuelle des valeurs étendues. La divergence KL est directionnelle ; l'entropie croisée n'est ni symétrique ni une distance métrique. Par exemple, avec $q=(1,0)$ et $p=(0.9,0.1)$, $D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)\approx 0.105$ nat, tandis que $D_{\mathrm{KL}}(p\Vert q)=+\infty$, car $p$ attribue une masse positive à une catégorie à laquelle $q$ attribue une masse nulle. En pratique, un calcul log-softmax stable aide à éviter un sous-débordement accidentel, sans modifier cette condition mathématique.
+Donc (H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)).
 
-Cette dérivation prolonge l'objectif de maximum de vraisemblance de la section 4 ; la définition de l'entropie croisée par token et ses conventions d'entraînement restent dans la page [Entropie croisée](cross-entropy.qmd).
+Ici, (q) et (p) sont des distributions normalisées et les termes de masse nulle contribuent zéro. Si (q_i>0) mais (p_i=0), l'entropie croisée et (D_{\mathrm{KL}}(q\Vert p)) sont infinies selon la convention usuelle des valeurs étendues. La divergence KL est **directionnelle** ; l'entropie croisée n'est ni symétrique ni une distance métrique.
+
+Par exemple, avec (q=(1,0)) et (p=(0.9,0.1)) :
+
+\[
+D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)\approx 0.105\text{ nat},
+\qquad
+D_{\mathrm{KL}}(p\Vert q)=+\infty.
+\]
+
+La seconde quantité est infinie parce que (p) attribue une masse positive à une catégorie à laquelle (q) attribue une masse nulle. En calcul numérique, une implémentation stable de log-softmax aide à éviter un sous-débordement accidentel ; elle ne modifie pas cette condition mathématique.
+
+La page [Entropie croisée](cross-entropy.qmd) reste la référence pour la perte par token, le cas one-hot, les masques et les conventions de réduction. Cette page avancée se concentre sur la dérivation et sur le cas général des cibles souples.
+
+## Ce que cette formalisation ne détermine pas
+
+- **Le tokenizer** : le découpage du texte et le vocabulaire sont traités dans [Texte et données](text-data.qmd) et [Stratégies de tokenisation](tokenization-strategies.qmd).
+- **L'architecture** : la factorisation probabiliste n'implique pas à elle seule un Transformer.
+- **La vérité des sorties** : une probabilité élevée n'est pas une validation factuelle.
+- **La stratégie de génération** : échantillonnage et choix glouton interviennent après le calcul de la distribution ([Génération](generation.qmd)).
 
 ## Références et prolongements
 
-- [Probabilités de sortie](probabilites.qmd) : comment les logits deviennent une distribution sur le vocabulaire.
-- [Vraisemblance](vraisemblance.qmd) : comment évaluer la probabilité des tokens observés.
-- [Entropie croisée](cross-entropy.qmd) : la perte par token, ses conventions, et le cas général à cibles souples.
-- [Exemples d'entraînement](training-examples.qmd) : comment construire les entrées et les cibles décalées.
-- [Chaîne mathématique de l'entraînement](mathematical-foundations.qmd) : relier logits, probabilités, loss et gradients.
-
-Référence probabiliste générale : Bishop, *Pattern Recognition and Machine Learning*, chapitres 1–2.
+- [Probabilités de sortie](probabilites.qmd) : distribution conditionnelle du prochain token.
+- [Vraisemblance](vraisemblance.qmd) : probabilité des tokens observés et log-vraisemblance.
+- [Entropie croisée](cross-entropy.qmd) : perte par token et conventions d'entraînement.
+- [Chaîne mathématique de l'entraînement](mathematical-foundations.qmd) : carte synthétique des logits aux gradients.
+- Bishop, *Pattern Recognition and Machine Learning*, chapitres 1–2, pour les fondements probabilistes.
 
 ::: {.language-switch}
 **Langue :** [Français](language-modeling-math.qmd) · [English](../en/language-modeling-math.qmd)
