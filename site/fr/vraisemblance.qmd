@@ -26,6 +26,8 @@ Pour des paramètres fixés, la vraisemblance indique la probabilité que le mod
 
 ## Factorisation autorégressive
 
+La dérivation de cette factorisation à partir de la règle de chaîne et l'interprétation des probabilités conditionnelles sont présentées dans la page de [formalisation mathématique de la modélisation du langage](language-modeling-math.qmd). Ici, on se concentre sur la vraisemblance comme critère d'évaluation des séquences observées et sur son lien avec la loss.
+
 Pour une séquence $x_{1:T}$ :
 
 $$
