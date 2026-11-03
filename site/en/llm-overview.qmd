@@ -39,17 +39,19 @@ This is the **first stage of the conceptual route**. You do not need to master e
 The diagram summarizes the computation of an **autoregressive GPT**. It does not describe every LLM: other architectures and objectives exist. The arrows represent distinct transformations, not successive synonyms.
 
 <div class="pipeline-stepper" role="navigation" aria-label="Stages in a GPT pipeline">
-  <a class="step-item" href="text-data.qmd">1. Text and tokens</a>
+  <a class="step-item" href="tokenization-strategies.qmd">1. Vocabulary</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
+  <a class="step-item" href="text-data.qmd">2. Tokens / IDs</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="transformer.qmd">3. Transformer</a>
+  <a class="step-item" href="embedding-space.qmd">3. Embeddings</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="logits.qmd">4. Logits</a>
+  <a class="step-item" href="transformer.qmd">4. Transformer</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="probabilities.qmd">5. Distribution</a>
+  <a class="step-item" href="logits.qmd">5. Logits</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="generation.qmd">6. Selection</a>
+  <a class="step-item" href="probabilities.qmd">6. Distribution</a>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="generation.qmd">7. Selection</a>
 </div>
 
 ```{mermaid}
