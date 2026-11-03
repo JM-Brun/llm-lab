@@ -211,6 +211,7 @@ Une comparaison exige notamment de contrôler le tokenizer et sa segmentation, l
 </details>
 
 **Pour aller plus loin :** un prochain lot pourra traiter la vérification de gradients par différences finies et les effets des conventions de réduction sur les gradients.
+
 ### Données textuelles {#donnees-textuelles}
 
 **Notions préalables :** [texte et tokenisation](text-data.qmd), [espace des embeddings](embedding-space.qmd) et [exemples d’entraînement et décalage entrée-cible](training-examples.qmd).
