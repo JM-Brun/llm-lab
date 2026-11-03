@@ -136,7 +136,7 @@ The figure illustrates that segmentation depends on a tokenizer’s rules and vo
 
 Token count is a measure of sequence length, not an overall quality score. A rigorous evaluation distinguishes representation efficiency, downstream task performance, differences across languages, and protocol reproducibility. Results depend on the corpus, task, model, and budgets being compared.
 
-[Tokenizer evaluation: metrics, downstream performance, and multilingual equity](tokenization-strategies.qmd#tokenizer-evaluation) compares these dimensions and the supporting research.
+[Tokenizer evaluation: metrics, downstream performance, and multilingual equity](tokenizer-design-evaluation.qmd#tokenizer-evaluation) compares these dimensions and the supporting research.
 
 ### Related technical concepts
 
