@@ -152,7 +152,7 @@ Vocabulary size \(V\) and embedding dimension \(d\) are separate design choices.
 - If the output projection has a separate weight matrix, it typically adds \(dV\) parameters, possibly plus a bias. Some models share input and output weights (*weight tying*), so check the architecture before counting both matrices.
 - IDs and their associated weights are coupled. Changing the vocabulary, ID assignments, or \(V\) requires an explicit adaptation or retraining strategy; it is not a neutral substitution.
 
-At each position, the output distribution generally has \(V\) logits. The [tensors page](tensors.qmd) explains how to read axes and shapes; the [logits page](logits.qmd) covers output scores in more depth. This section complements the [text-to-token overview](text-data.qmd) without conflating initial lookup with Transformer contextualization.
+At each position, the output distribution generally has \(V\) logits. The [tensors page](tensors.qmd) explains how to read axes and shapes; the [logits page](logits.qmd) covers output scores in more depth.
 
 ## From token embeddings to contextualized states
 
