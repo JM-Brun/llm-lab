@@ -207,7 +207,10 @@ To evaluate an embedding space, return to the actual task: document retrieval, a
 - **“A beautiful visualization demonstrates embedding quality.”** It illustrates a projection; task-specific evaluation measures usefulness for the task.
 - **“All embeddings should be compared with cosine.”** The choice depends on the model and its objective. Dot product and cosine induce the same ranking when vectors are normalized.
 
+::: {.self-check}
 ## Check your understanding
+
+[Extended exercises on this topic](../en/exercises.qmd#transformer).
 
 1. Two occurrences of the same token ID appear in different contexts. Before the Transformer, do they select the same embedding vector? After several layers, must their representations remain identical?
 
@@ -226,6 +229,7 @@ The initial lookup selects the same matrix row, so the initial embedding vector 
 No. A 2D projection preserves only selected aspects of the geometry and may create or exaggerate visual separation. Define a task, metric, and evaluation protocol on relevant held-out data; an exploratory plot is not evidence of predictive performance.
 
 </details>
+:::
 
 ## Continue learning
 
