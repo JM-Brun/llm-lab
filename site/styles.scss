@@ -726,3 +726,36 @@ details.spot-the-fallacy .fallacy-content {
   .self-check details { transition: border-color 0.15s ease; }
   .self-check details:hover { border-color: #86B99A; }
 }
+
+
+/* Shared learning-outcome callout: one selector controls every page and language. */
+.callout.learning-outcomes {
+  margin: 1.15rem 0 1.5rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid #BBF7D0;
+  border-left: 4px solid var(--llm-brand-dark);
+  border-radius: 0.5rem;
+  background: #F0FDF4;
+  box-shadow: none;
+  color: var(--llm-ink);
+}
+.callout.learning-outcomes .callout-title {
+  margin-bottom: 0.35rem;
+  color: var(--llm-brand-dark);
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+.callout.learning-outcomes .callout-body {
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+.callout.learning-outcomes .callout-body > p { margin: 0.15rem 0 0.4rem; }
+.callout.learning-outcomes .callout-body > ul,
+.callout.learning-outcomes .callout-body > ol {
+  margin: 0.25rem 0 0;
+  padding-left: 1.2rem;
+}
+.callout.learning-outcomes .callout-body li { margin: 0.12rem 0; }
+@media (max-width: 700px) {
+  .callout.learning-outcomes { padding: 0.7rem 0.8rem; }
+}
