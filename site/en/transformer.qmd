@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer"
 scope: "Follows an autoregressive GPT computation inside the network—from the input token sequence through embeddings, positional information, Transformer blocks, attention, MLP, residual paths, and normalization to logits; it does not treat generation as a black-box loop or parameter learning as its main subject."
-purpose: "Readers should be able to trace a token sequence through the network to the logits, explain the role of the main operations in a Transformer block, and distinguish initial embeddings, contextualized representations, and output scores."
+purpose: "Readers should be able to trace the computation to the logits, explain the main operations in a Transformer block, distinguish network depth from width, and separate representations, scores, and decoding."
 suggested_route:
   previous: "en/llm-overview"
   next: "en/generation"
@@ -28,7 +28,8 @@ A **GPT** is a language model built on an autoregressive Transformer: it receive
 You will be able to:
 - trace the computation from an input token sequence to the logits, identifying embeddings and positional information;
 - explain the distinct roles of self-attention and the MLP in a Transformer block;
-- distinguish contextualized representations, logits, and the selected token.
+- distinguish contextualized representations, logits, and the selected token;
+- distinguish depth, width, number of heads, and internal MLP dimensions.
 :::
 
 ## The whole path, in one diagram
@@ -73,6 +74,17 @@ To see these operations in a concrete implementation without mistaking them for 
 ![Comparison of the roles of self-attention and the feed-forward network in a Transformer block.](../images/attention-vs-mlp.svg){fig-alt="Self-attention allows exchanges between allowed positions; the same feed-forward network is applied separately to each position." width=100%}
 
 The useful distinction is not that attention "understands" the tokens while the MLP does not: both transformations are learned. Attention mixes information across positions; the MLP transforms each representation locally, with weights shared across positions.
+
+### Depth and width: two architectural dimensions
+
+Two terms are commonly used to describe the size of a Transformer:
+
+- **Depth:** the number of Transformer blocks stacked in the network.
+- **Width:** the dimension of the representations flowing between blocks. In a classic GPT, this usually corresponds to `d_model`, often called the *hidden size* or residual-stream dimension.
+
+These terms are not interchangeable with other internal dimensions: the **number of attention heads** tells you how many attention mechanisms run in parallel; `d_head` is the dimension of each head’s vectors; and `d_ff` is the intermediate MLP dimension, which can be larger than `d_model`.
+
+*Width* is sometimes used more broadly for other internal dimensions, so check which dimension an article or model card means. For tensor shapes and projection dimensions, see [Tensors](tensors.qmd); for a concrete configuration, see the [GPT configuration walkthrough](gpt-config-walkthrough.qmd). Depth and width describe network structure, but neither alone predicts model performance.
 
 ### Understanding the attention computation
 
