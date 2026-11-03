@@ -1,6 +1,6 @@
 ---
-title: "Architectures hybrides : le cas Nemotron"
-subtitle: "Combiner états récurrents, attention et calcul parcimonieux"
+title: "Architectures hybrides : Nemotron 3 et 3.5"
+subtitle: "Combiner états récurrents, attention, experts et précision numérique"
 keywords: ["type:concept-lesson", "destination:understand", "topic:hybrid-llm-architectures", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
@@ -21,7 +21,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:hybrid-llm-archit
 -->
 
 ::: {.chapter-lead}
-Un modèle performant doit aussi déplacer et stocker ses données efficacement. **Nemotron 3** illustre une réponse : combiner des couches Mamba-2, quelques couches d'attention et des couches *Mixture of Experts* (MoE), puis optimiser la génération et la précision numérique. Ce cas explique des compromis ; il ne constitue pas une recette universelle.
+Un modèle performant doit aussi déplacer et stocker ses données efficacement. **Nemotron 3** illustre une réponse : combiner des couches Mamba-2, quelques couches d'attention et des couches *Mixture of Experts* (MoE), puis optimiser la génération et la précision numérique. Ce cas explique des compromis ; il ne constitue pas une recette universelle. Attention au raccourci « modèle basé sur Transformer » parfois employé dans les synthèses secondaires : Nemotron 3/3.5 est une architecture **hybride Mamba–Attention–MoE**, pas une pile Transformer conventionnelle où chaque bloc utilise l'attention globale.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
@@ -79,6 +79,18 @@ où $B$ est le batch, $T$ la longueur du contexte, $n_{KV}$ le nombre de têtes 
 
 Réduire $n_{KV}$ réduit approximativement le cache dans la même proportion. Ainsi, 32 têtes Q partageant 2 têtes KV donnent un ratio de 16 entre nombres de têtes, mais pas nécessairement un gain de latence de 16 : noyaux, matériel, batch et transferts mémoire interviennent aussi.
 
+## Ne pas confondre les variantes Nemotron
+
+Les chiffres et les recettes ci-dessous appartiennent à des versions distinctes de la famille. Ils ne doivent pas être fusionnés en une architecture générique.
+
+| Variante | Paramètres totaux / actifs | Détails caractéristiques |
+|---|---:|---|
+| **Nemotron 3.5 Lightning** | 30B / 3B | 128 experts routés, top-6 ; quantification NVFP4 avec PTQ puis QAD dans la recette publiée |
+| **Nemotron 3 Super** | 120,6B / 12,7B | 512 experts, top-22 ; deux couches MTP à poids partagés ; pré-entraînement NVFP4 |
+| **Nemotron 3 Ultra** | 550B / 55B | plus de dix enseignants spécialisés ; post-entraînement MOPD ; MTP et LatentMoE |
+
+Le cas Lightning est particulièrement intéressant pour l'inférence locale et les contraintes de mémoire ; Super et Ultra illustrent davantage le passage à l'échelle et les recettes de post-entraînement agentique. Les tailles actives ne remplacent pas la taille totale lorsqu'on estime la mémoire nécessaire pour héberger le modèle.
+
 ## Lire ensemble les choix de Nemotron 3
 
 Le livre blanc NVIDIA décrit une architecture principalement composée de couches Mamba-2 et MoE, avec quelques couches d'auto-attention.
@@ -111,6 +123,17 @@ Cette approche complète, sans les remplacer, le SFT et le RL avec récompenses 
 Une représentation de faible précision réduit le volume des poids et peut réduire les transferts mémoire, mais introduit une approximation. Les couches ne tolèrent pas toutes la même erreur. Pour Nemotron 3 Super, NVFP4 utilise des valeurs flottantes E2M1 sur 4 bits, des micro-blocs de 16 valeurs avec facteurs d'échelle E4M3, puis une échelle globale FP32. La recette est **mixte** : certaines projections d'attention, les couches MTP, les embeddings et une partie du réseau restent en BF16 ; la projection de sortie Mamba utilise MXFP8, tandis que la plupart des couches linéaires utilisent NVFP4. Dire « modèle entraîné en FP4 » ne signifie donc pas que chaque tenseur est codé sur 4 bits.
 
 Le livre blanc NVIDIA décrit l'entraînement NVFP4 pour certaines variantes Nemotron 3 et mentionne des précautions de précision pour des projections sensibles. Il serait incorrect d'affirmer que tous les Nemotron utilisent uniformément NVFP4 ou que toute quantification préserve automatiquement les performances. Format, mise à l'échelle, recette et métriques doivent être précisés.
+
+### QAD : récupérer les pertes dues à la quantification
+
+La recette publiée pour **Nemotron 3.5 Lightning** ajoute une *Quantization-Aware Distillation* (QAD) après la quantification post-entraînement (PTQ). Le PTQ produit d'abord un étudiant quantifié à partir du checkpoint BF16. L'enseignant BF16 reste gelé ; l'étudiant effectue ses passes avec une quantification simulée et apprend à rapprocher ses logits de ceux de l'enseignant, au moyen d'une divergence KL.
+
+QAD ne doit pas être confondue avec MOPD :
+- **QAD** : le professeur est le modèle BF16 d'origine ; l'objectif est de compenser les erreurs introduites par la quantification.
+- **MOPD** : plusieurs enseignants spécialisés guident un étudiant sur ses propres trajectoires ; l'objectif est d'améliorer les capacités et le comportement du modèle.
+
+Pour le checkpoint Lightning 3.5 documenté par NVIDIA, le passage de 66 Go en BF16 à 22 Go en NVFP4 illustre le gain de stockage ; le rapport indique une récupération médiane de 99,24 % de la précision BF16 sur son protocole d'évaluation. Ces chiffres sont propres à ce checkpoint et à ce protocole, pas une garantie générale de la quantification FP4.
+
 
 ## Lire les chiffres avec esprit critique
 
