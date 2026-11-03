@@ -58,7 +58,7 @@ Speed comparisons require the same data, objective, validation, and documented h
 <details><summary>Show answer</summary>No. GOSS reduces observations used for some statistics; EFB bundles sparse features that are rarely active together.</details>
 :::
 ## References
-- [Ke et al. (2017), LightGBM: A Highly Efficient Gradient Boosting Decision Tree](https://proceedings.neurips.cc/paper/2017/hash/6449f44a102dod8eda4b4d2b6c5d2f9e-Abstract.html).
+- [Ke et al. (2017), LightGBM: A Highly Efficient Gradient Boosting Decision Tree](https://papers.neurips.cc/paper_files/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html).
 - [LightGBM documentation](https://lightgbm.readthedocs.io/en/stable/).
 - [AiEdge — GBM vs XGBoost vs LightGBM vs CatBoost](https://newsletter.theaiedge.io/p/gbm-vs-xgboost-vs-lightgbm-vs-catboost).
 ::: {.language-switch}
