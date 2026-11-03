@@ -79,12 +79,6 @@ To understand how these architectures fit into the research timeline, see the [h
 3. **Does next-token prediction define every Transformer?** No. It is a typical objective for autoregressive decoders, not a property of all Transformers.
 4. **Is a Transformer necessarily an LLM?** No. Architecture alone does not determine model scale or whether it qualifies as an LLM.
 
-## Where to go next
-
-- [LLM panorama](llm-overview.qmd) — place these families in the broader picture.
-- [GPT and Transformer](transformer.qmd) — follow the internal computation of an autoregressive decoder.
-- [History of Transformers](transformer-history.qmd) — place major milestones in the development of these architectures.
-
 ::: {.language-switch}
 **Language:** [Français](../fr/transformer-architectures.qmd) · [English](transformer-architectures.qmd)
 :::
