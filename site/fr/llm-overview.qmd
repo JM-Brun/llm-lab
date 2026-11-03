@@ -87,24 +87,22 @@ Pour décrire un LLM, trois questions indépendantes doivent être posées. Elle
 
 La boucle de la section 1 relève de l’inférence. L’entraînement relève de l’apprentissage. Un même modèle peut changer d’usage sans changer d’architecture : c’est ce que détaillent les sections suivantes.
 
-## 5. Le cycle de vie d’un modèle
+## 5. De l’apprentissage à l’inférence
 
-Du corpus à l’utilisation, le cycle de vie se résume en trois phases :
+Trois repères permettent de situer ce qui arrive aux paramètres d’un modèle, de son apprentissage à son utilisation. Ce schéma n’est pas un **cycle de vie complet** : il ne représente ni la constitution des jeux de données, ni l’évaluation, le déploiement ou la maintenance du système.
 
 ```{mermaid}
 flowchart LR
-  P["1. Pré-entraîner<br/>apprendre un objectif<br/>à grande échelle"] --> B["Modèle de base<br/>(base model)"]
-  B --> I["3. Inférer<br/>calculer une sortie avec<br/>des paramètres fixes"]
-  B --> A["2. Adapter les poids<br/>facultatif : SFT,<br/>préférences, fine-tuning"]
-  A --> I
-  R["Prompt et documents<br/>récupérés (RAG)"] --> I
+  P["1. Pré-entraînement<br/>Apprendre à partir d’un corpus"] --> A["2. Adaptation facultative<br/>Ajuster les paramètres"]
+  P -. "sans adaptation" .-> I
+  A --> I["3. Inférence<br/>Calculer une sortie<br/>avec des paramètres fixes"]
 ```
 
-1. **Pré-entraînement (*pretraining*).** Le modèle apprend à partir d’un corpus selon un objectif — pour un GPT, la prédiction du prochain token. L’apprentissage est dit *auto-supervisé* : les cibles sont construites à partir des données elles-mêmes, sans étiquettes humaines. Le résultat est un **modèle pré-entraîné**, souvent appelé *base model*. Le terme *foundation model* désigne plus largement un modèle conçu pour être réutilisé et adapté à de nombreuses tâches ; les deux expressions ne sont pas strictement synonymes.
-2. **Adaptation facultative des poids.** Après le pré-entraînement, on peut mettre à jour les paramètres : fine-tuning pour une tâche (par exemple la classification), SFT sur des exemples instruction-réponse, ou optimisation par préférences. Cette étape n'est pas obligatoire : un modèle pré-entraîné peut être utilisé directement.
-3. **Inférence.** On utilise les paramètres obtenus pour traiter une entrée et calculer une sortie — pour un modèle autorégressif, la boucle de la section 1. Le prompt fournit la consigne ; un système RAG peut récupérer des documents et les ajouter au contexte. Ces éléments conditionnent l'utilisation du modèle, sans constituer une mise à jour de ses poids.
+1. **[Pré-entraînement (*pretraining*)](build-path.qmd).** Le modèle apprend à partir d’un corpus selon un objectif — pour un GPT, la prédiction du prochain token. L’apprentissage est dit *auto-supervisé* : les cibles sont construites à partir des données elles-mêmes, sans étiquettes humaines. Il produit un modèle pré-entraîné, souvent appelé *base model*. Le terme *foundation model* désigne plus largement un modèle conçu pour être réutilisé et adapté à de nombreuses tâches ; les deux expressions ne sont pas strictement synonymes.
+2. **[Adaptation facultative des poids](build-path.qmd).** Après le pré-entraînement, on peut mettre à jour les paramètres : fine-tuning pour une tâche (par exemple la classification), SFT sur des exemples instruction-réponse, ou optimisation par préférences. Cette étape n’est pas obligatoire : un modèle pré-entraîné peut être utilisé directement.
+3. **[Inférence](generation.qmd).** On utilise les paramètres obtenus pour traiter une entrée et calculer une sortie. Pour un modèle autorégressif, cela correspond à la boucle de génération décrite plus haut. Le prompt et, éventuellement, des documents récupérés par un système RAG fournissent du contexte ; ils ne constituent pas une phase supplémentaire de l’apprentissage et ne modifient pas les poids du modèle.
 
-Le pré-entraînement et l’éventuelle adaptation des poids décrivent la fabrication du modèle ; le prompt et les documents récupérés sont fournis au système au moment de l’inférence. Ce n’est donc pas une chaîne obligatoire en trois étapes : un modèle de base peut être utilisé directement, avec un contexte adapté. L’ordre pédagogique reste distinct de l’ordre de fabrication : l’inférence se comprend avant l’entraînement. L’évaluation intervient à plusieurs moments ; le jeu de test doit rester tenu à l’écart jusqu’à l’évaluation finale, faute de quoi elle la biaiserait.
+L’adaptation est donc une branche facultative entre le pré-entraînement et l’utilisation, et non une étape obligatoire. Le RAG relève de la composition du contexte à l’inférence : il n’est ni une phase d’apprentissage ni une étape du cycle de vie du modèle. L’évaluation, quant à elle, intervient à plusieurs moments ; le jeu de test doit rester tenu à l’écart jusqu’à l’évaluation finale, faute de quoi cette évaluation serait biaisée.
 
 ## 6. À quoi servent ces modèles ?
 
@@ -112,8 +110,7 @@ Les usages courants comprennent la génération et la reformulation de texte, le
 
 La réutilisation d’un modèle généraliste est intéressante lorsqu’une même base peut couvrir plusieurs tâches ou lorsque les exemples d’une tâche sont limités. Pour des connaissances qui changent fréquemment, récupérer des documents à jour (RAG) est souvent plus adapté que modifier les paramètres ; pour un format, un domaine ou un comportement spécifique, une adaptation peut devenir pertinente. Le choix s’évalue sur la tâche réelle : qualité, erreurs, robustesse, coût, latence, confidentialité, provenance des données et maintenance — une démonstration convaincante sur quelques prompts n’est pas une évaluation.
 
-::: {.self-check}
-## Vérifier sa compréhension
+::: {.callout-note collapse="true" title="Vérifier sa compréhension"}
 
 [Exercices et mises en pratique](exercises.qmd).
 
