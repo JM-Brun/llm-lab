@@ -25,7 +25,7 @@ Un **modèle de langage** est un modèle qui attribue une probabilité à des s�
 
 :::
 
-::: {.callout-note .learning-outcomes title="Objectifs d’apprentissage"}
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À l’issue de cette page, vous pourrez :
 - formuler le problème de modélisation du langage comme l’estimation d’une distribution conditionnelle sur le prochain token ;
 - distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer ;
