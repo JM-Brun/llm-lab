@@ -29,7 +29,8 @@ By the end of this page, you will be able to:
 - explain intuitively why a model must compare multiple possible continuations;
 - place modern LLMs within AI/ML and NLP, and distinguish them from earlier task-specific NLP systems;
 - distinguish a language model, generative model, LLM, GPT, and Transformer;
-- describe the main stages by which a GPT turns context into the next token, and explain why the process repeats.
+- explain how the concepts language model, GPT, and Transformer relate;
+- identify the canonical page for the network computation or the generation process.
 :::
 
 ## 1. The problem: continue text from a context
@@ -81,7 +82,7 @@ Describing an LLM requires three independent questions. They answer one another,
 | **Weight learning** | How were the parameters obtained or modified? | The objectives and procedures that learn or adjust the parameters | Pretraining, fine-tuning/SFT, preference optimization |
 | **Inference and use** | What do you do with the model once its parameters are fixed? | Computing an output from an input, possibly within a system with retrieval or tools | Classification, scoring, autoregressive generation; prompting and RAG condition the context without changing weights |
 
-The loop of section 1 belongs to inference. Training belongs to learning. The same model can change use without changing architecture: that is what the following sections unpack.
+Autoregressive generation belongs to inference. Training belongs to learning. The same model can change use without changing architecture: that is what the following sections unpack.
 
 ## 5. From learning to inference
 
@@ -104,7 +105,7 @@ A **classic RLHF pipeline** (*reinforcement learning from human feedback*) commo
 **DPO** (*direct preference optimization*) is a different preference-optimization approach: it learns directly from preference comparisons without the separate reward-model-plus-PPO loop of that classic RLHF recipe ([Rafailov et al., 2023](https://arxiv.org/abs/2305.18290)). It is therefore more precise to treat RLHF and DPO as related approaches to preference-based post-training, not as mandatory consecutive stages.
 
 :::
-3. **[Inference](generation.qmd).** The obtained parameters are used to process an input and compute an output. For an autoregressive model, this is the generation loop described above. The prompt and, optionally, documents retrieved by a RAG system provide context; they are not an additional learning phase and do not update the model's weights.
+3. **[Inference](generation.qmd).** The obtained parameters are used to process an input and compute an output. For an autoregressive model, inference follows the generation loop described in the [dedicated lesson](generation.qmd). The prompt and, optionally, documents retrieved by a RAG system provide context; they are not an additional learning phase and do not update the model's weights.
 
 Adaptation is therefore an optional branch between pretraining and use, not a mandatory step. RAG belongs to context construction at inference time: it is neither a learning phase nor a stage in the model lifecycle. Evaluation, in turn, happens at several points; the test set must remain held out until the final evaluation, otherwise that evaluation would be biased.
 
