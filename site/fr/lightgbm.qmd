@@ -21,7 +21,7 @@ tags: ["type:concept-lesson", "destination:deepen", "topic:lightgbm", "level:adv
 ::: {.chapter-lead}
 LightGBM vise un entraînement efficace sur les données tabulaires volumineuses. Ses choix caractéristiques concernent la recherche des seuils, la croissance des arbres et le coût lié aux variables.
 :::
-## Histogrammes
+\n\n![Comparaison schématique des stratégies de croissance niveau par niveau, leaf-wise et symétrique.](../images/tree-growth-strategies.svg){fig-alt="Trois structures d'arbres illustrant les stratégies level-wise, leaf-wise et symétrique ; les formes sont indicatives."}\n\n## Histogrammes
 
 Les valeurs de chaque variable sont regroupées en un nombre limité de bins. Les statistiques de gradient et de Hessienne sont agrégées par bin ; les splits sont recherchés sur ces histogrammes. Cela réduit opérations et mémoire, au prix d'une recherche approximative dépendant notamment du nombre de bins.
 
