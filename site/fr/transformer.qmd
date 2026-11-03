@@ -60,7 +60,15 @@ Le cœur du réseau est un empilement de blocs identiques. Chaque bloc combine d
 - **Auto-attention :** chaque position puise dans les positions précédentes l'information qui affine sa représentation. Dans GPT, un masque causal interdit de lire les tokens futurs.
 - **Réseau feed-forward (MLP) :** un petit réseau de neurones appliqué à chaque position séparément, avec les mêmes poids partout.
 
-Les blocs incluent aussi des connexions résiduelles et des normalisations, dont l'ordre précis dépend de l'architecture : le schéma de cette page est une abstraction, pas la spécification d'un modèle particulier.
+Les blocs utilisent aussi des **connexions résiduelles** et des **normalisations**. Une connexion résiduelle ajoute à la représentation qui circule dans le réseau une correction calculée par une sous-couche, au lieu de remplacer entièrement cette représentation. Elle fournit ainsi un chemin direct à l'information et au gradient :
+
+\[
+x_{\text{sortie}} = x_{\text{entrée}} + F(x_{\text{entrée}}).
+\]
+
+La normalisation (*LayerNorm*, dans les GPT classiques) remet à l'échelle les composantes du vecteur d'une position avant ou après certaines sous-couches, selon l'architecture. Elle ne mélange pas les positions de la séquence. Dans un bloc **pré-LN** typique, on a par exemple $x' = x + \operatorname{Attention}(\operatorname{LN}(x))$, puis $x'' = x' + \operatorname{MLP}(\operatorname{LN}(x'))$. C'est un exemple de conception, pas une formule universelle : l'ordre pré-LN/post-LN et les variantes de normalisation diffèrent entre modèles.
+
+Pour voir ces opérations dans une implémentation concrète, sans les confondre avec les invariants de tous les Transformers, consulter la [visite guidée du bloc de référence](transformer-block-walkthrough.qmd).
 
 ![Comparaison des rôles de l'auto-attention et du réseau feed-forward dans un bloc Transformer.](../images/attention-vs-mlp.svg){fig-alt="L'auto-attention permet des échanges entre positions autorisées ; le même réseau feed-forward est appliqué séparément à chaque position." width=100%}
 
