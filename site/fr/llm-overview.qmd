@@ -111,7 +111,7 @@ Les usages courants comprennent la génération et la reformulation de texte, le
 
 La réutilisation d’un modèle généraliste est intéressante lorsqu’une même base peut couvrir plusieurs tâches ou lorsque les exemples d’une tâche sont limités. Pour des connaissances qui changent fréquemment, récupérer des documents à jour (RAG) est souvent plus adapté que modifier les paramètres ; pour un format, un domaine ou un comportement spécifique, une adaptation peut devenir pertinente. Le choix s’évalue sur la tâche réelle : qualité, erreurs, robustesse, coût, latence, confidentialité, provenance des données et maintenance — une démonstration convaincante sur quelques prompts n’est pas une évaluation.
 
-::: {.callout-note collapse="true" title="Vérifier sa compréhension"}
+::: {.self-check}
 
 [Exercices et mises en pratique](exercises.qmd).
 
