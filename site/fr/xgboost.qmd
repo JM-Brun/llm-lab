@@ -60,7 +60,7 @@ XGBoost évalue des seuils candidats. Ses méthodes historiques de colonnes pré
 Profondeur, nombre de feuilles, pénalités, learning rate, sous-échantillonnage et early stopping contrôlent des aspects distincts. La régularisation ne garantit pas la généralisation : validation, fuite et décalage de distribution restent déterminants.
 
 ::: {.callout-warning}
-**Ne pas confondre dérivées et biais-variance.** Le gradient mesure la pente locale de la loss ; la Hessienne sa courbure. Biais et variance décrivent la distribution des erreurs de prédiction à travers des échantillons possibles.
+**Ne pas confondre dérivées et biais-variance.** Le gradient mesure la pente locale de la loss ; la Hessienne sa courbure. Biais et variance décrivent la distribution des erreurs de prédiction à travers des échantillons possibles. L'information de courbure affine l'approximation locale et le calcul des scores de feuilles ; elle ne constitue pas une pénalité de variance statistique. La régularisation explicite de XGBoost est portée notamment par $\gamma$, $\lambda$ et les contraintes structurelles.
 :::
 ::: {.self-check}
 ## Vérifier sa compréhension
