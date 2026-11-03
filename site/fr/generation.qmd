@@ -40,7 +40,7 @@ Un LLM n'écrit pas un texte d'un bloc : il produit **un token à la fois**. À 
 4. **Ajouter le token et recommencer.** Le token sélectionné est ajouté au contexte, et la boucle repart à l'étape 2 avec un contexte rallongé d'un token.
 5. **Arrêter.** La génération s'arrête sur un critère explicite — token de fin, longueur maximale, ou règle imposée par l'application — jamais parce que le modèle « aurait fini de réfléchir ».
 
-Dans cette page, **décodage** désigne précisément l'étape qui transforme la distribution du prochain token en un token sélectionné. Le calcul du modèle (la [passe avant](transformer.qmd)) produit les scores ; le décodage applique ensuite une règle de sélection. Des filtres comme top-k et top-p sont des variantes plus avancées, présentées dans l'[approfondissement sur les stratégies de décodage](decoding-strategies.qmd).
+Dans cette page, **décodage** désigne le traitement de la sortie du modèle pour obtenir le prochain token : transformer éventuellement les logits ou la distribution, puis sélectionner un token (par maximum ou échantillonnage). La [passe avant](transformer.qmd) du modèle s'arrête aux logits ; le décodage intervient ensuite. Les filtres plus élaborés, comme top-k et top-p, sont présentés dans l'[approfondissement sur les stratégies de décodage](decoding-strategies.qmd).
 
 À chaque pas, le contexte s'allonge d'un token : les prédictions suivantes sont donc aussi conditionnées par les tokens que le modèle vient de produire lui-même.
 
