@@ -11,8 +11,8 @@ id: "en/unicode-text"
 scope: "Distinguishes abstract characters, Unicode code points, UTF-8 byte sequences, and normalized forms; explains why visually identical strings may have different representations before tokenization. It does not cover BPE/WordPiece algorithms or embeddings."
 purpose: "Readers should be able to distinguish code points from bytes, recognize composed and decomposed Unicode forms, and explain how encoding and normalization can change the string presented to a tokenizer."
 suggested_route:
-  previous: "en/text-data"
-  next: "en/tokenization-strategies"
+  previous: null
+  next: null
 hierarchy:
   parents: ["en/text-data"]
   children: []

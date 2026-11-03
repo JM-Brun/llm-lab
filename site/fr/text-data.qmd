@@ -12,7 +12,7 @@ scope: "Présente les étapes et objets qui relient un texte source à l’entr�
 purpose: "Le lecteur doit pouvoir retracer la chaîne texte → tokens → IDs → vecteurs initiaux, distinguer les opérations d’encodage d’un prompt de celles de préparation des données d’entraînement, et identifier ce que chaque étape ne permet pas de conclure."
 suggested_route:
   previous: "fr/generation"
-  next: "fr/unicode-text"
+  next: "fr/tokenization-strategies"
 hierarchy:
   parents: []
   children: ["fr/unicode-text", "fr/tokenization-strategies", "fr/embedding-space", "fr/training-examples"]
