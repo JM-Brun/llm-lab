@@ -45,7 +45,7 @@ Un modèle trop contraint peut sous-ajuster ; un modèle très flexible peut app
 | Forêt aléatoire | Agrégation réduisant souvent la variance | La corrélation entre arbres limite le gain |
 | Gradient Boosting | Corrections successives de la loss | Les itérations peuvent aussi surajuster |
 
-Il est faux de déduire automatiquement « faible biais = forte variance ». Le biais statistique n'est pas le gradient d'une fonction de perte.
+Il est faux de déduire automatiquement « faible biais = forte variance ». Le biais statistique n'est pas le gradient d'une fonction de perte. Dans XGBoost, gradient et Hessienne sont des dérivées locales utilisées pour approximer la loss et calculer les scores de feuilles ; ils ne mesurent pas le biais et la variance statistiques. Voir [XGBoost](xgboost.qmd).
 
 Voir aussi [les arbres de décision](decision-trees.qmd) et le [Gradient Boosting](gradient-boosting.qmd).
 
