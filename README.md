@@ -44,7 +44,8 @@ The rendered site is written to `site/_site/`. The Quarto CLI is a separate syst
 
 ## Page composition
 
-- Flexible page composition and reusable soft patterns: [page-template system](docs/page-template-system.md), [page patterns](docs/page-patterns.md), and [implementation-page patterns](docs/implementation-page-patterns.md).
+- Contributor entry point and template map: [page-template guide](docs/page-template-guide.md) and [page archetype map](docs/site-page-design-system.md).
+- Canonical soft composition model and reusable patterns: [page-template system](docs/page-template-system.md), [scientific page patterns](docs/page-patterns.md), and [implementation-page patterns](docs/implementation-page-patterns.md).
 
 ## Editorial and content principles
 

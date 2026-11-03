@@ -1,64 +1,42 @@
-# Reusable guided-build page template
+# Guided-build page quick start
 
-Use this archetype when the learner must **construct, inspect, or run a working artifact**. The page should connect conceptual understanding to reproducible implementation without pretending that an incomplete milestone is already available.
+Use this pattern when the reader should **construct, inspect, or run a working artifact** through a sequence of meaningful steps. It complements, rather than replaces, the code-facing guidance in [implementation-page patterns](implementation-page-patterns.md).
 
-## Suggested structure
+## Questions worth answering
 
-1. **Goal and expected artifact** — What will be built, inspected, or verified?
-2. **Prerequisites and environment** — Required concepts, dependencies, hardware, and setup.
-3. **Architecture / plan** — Show the components and their data flow before code.
-4. **Build steps** — Small ordered milestones, each with an observable result.
-5. **Verification** — Tests, invariants, expected shapes/outputs, and failure diagnosis.
-6. **Limitations and status** — What works, what is simplified, and what remains unfinished.
-7. **Further study** — Link to conceptual explanations, source files, tests, and next milestones.
-8. **Self-check** — Questions about design choices and failure modes, collapsed by default.
+- What should exist or work at the end, and what does that demonstrate?
+- Which concepts, tools, dependencies, hardware, and setup are genuinely required?
+- What is the architecture or data flow before implementation details?
+- Which small milestones produce observable intermediate results?
+- How can each important behavior be verified?
+- What is executable now, illustrative, simplified, or still planned?
+- Which source files, tests, conceptual explanations, and experiments are canonical?
 
-## Compact authoring skeleton
+## Possible composition
 
-```markdown
-::: {.chapter-lead}
-State what the learner will build and what the finished artifact demonstrates.
-:::
-
-::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
-By the end, you should be able to:
-- ...
-:::
-
+~~~markdown
 ## Goal and prerequisites
 
 ## Architecture and data flow
 
 ## Build milestones
 
-### 1. ...
+### A meaningful milestone
 
 **Expected result:** ...
 
 **Verify:** ...
+~~~
 
-## Tests and invariants
+Use only the milestones and verification steps that expose meaningful progress. A short walkthrough may need no separate architecture section; a complex build may need one.
 
-## Limitations and project status
+## Implementation safeguards
 
-::: {.callout-note collapse="true" title="Implementation detail"}
-Optional implementation detail or troubleshooting note.
-:::
+- State the execution contract: environment, dependencies, setup, command, inputs, outputs, shapes, dtypes, units, and conventions where relevant.
+- Keep canonical implementation in the appropriate source files and tests; do not create an unmaintained competing code sample.
+- Make every claimed behavior inspectable through a test, invariant, expected output, or explicit reasoning.
+- Distinguish pedagogical simplification from production-ready behavior.
+- Record unsupported cases, numerical assumptions, and failure modes.
+- Avoid large code dumps that do not explain design choices or invariants.
 
-## Further study
-
-- Concept:
-- Source:
-- Tests:
-
-::: {.callout-note collapse="true" title="Check your understanding"}
-...
-:::
-```
-
-## Editorial rules
-
-- Separate what the learner can run today from planned or illustrative code.
-- State tensor shapes, input/output contracts, random seeds, and numerical assumptions when relevant.
-- Every claimed behavior should have a verification path: test, assertion, expected output, or explicit reasoning.
-- Avoid large code dumps without explaining the purpose and invariants of each milestone.
+For experiments, performance work, integration, or debugging, choose the more specific workflow in [implementation-page patterns](implementation-page-patterns.md).
