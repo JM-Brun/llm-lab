@@ -45,7 +45,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 **Q et K calculent les poids ; V fournit ce qui est agrégé.** Pour chaque position, le modèle compare sa requête aux clés accessibles, transforme les scores en poids avec le softmax, puis applique ces poids aux vecteurs de valeur.
 
-**Première lecture :** retenez cette séparation des rôles et vérifiez le petit calcul numérique ci-dessous. Vous pourrez ensuite étudier les projections apprises et les dimensions des matrices.
+**Première lecture :** retenez cette séparation des rôles, puis observez comment les trois projections transforment les représentations d'entrée.
 
 **Pour approfondir :** suivez le calcul complet dans [l'attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), puis la contrainte temporelle dans le [masque causal](causal-masking.qmd).
 :::
@@ -56,22 +56,7 @@ Imagine une collection de fiches. Une **requête** exprime ce qu'une position ch
 
 ![Schéma des projections Q, K et V : Q et K calculent les poids d'attention, qui servent à combiner les valeurs V.](../images/queries-keys-values.svg){fig-alt="Les représentations d'entrée sont projetées en requêtes, clés et valeurs. Les requêtes sont comparées aux clés ; les poids obtenus pondèrent les valeurs pour produire une représentation contextualisée." width=100%}
 
-Le calcul se déroule en deux étapes :
-
-1. **Comparer.** La requête d'une position est comparée aux clés des positions auxquelles elle a le droit d'accéder. Ces comparaisons donnent des scores, mis à l'échelle puis éventuellement masqués avant d'être transformés en poids par le *softmax*. Le masque dépend du type d'attention ; il n'est pas nécessairement causal.
-2. **Combiner.** Le modèle calcule une somme pondérée des valeurs. Les positions qui reçoivent un poids plus élevé contribuent davantage à cette nouvelle représentation.
-
-Le vocabulaire vient d'une analogie avec la recherche d'information : une requête indique ce qu'on cherche, une clé permet de comparer les éléments disponibles, et une valeur contient l'information à récupérer. Dans un réseau neuronal, ces rôles sont portés par des vecteurs appris ; ils ne sont pas des étiquettes lisibles par un humain.
-
-## Un exemple numérique : les poids ne sont pas les valeurs
-
-Considérons une requête qui produit deux scores d'attention, \(s=(0,\ln 3)\). Après *softmax*, les poids valent \((0{,}25, 0{,}75)\). Si les deux vecteurs de valeur sont ici de simples scalaires \(v_1=2\) et \(v_2=10\), la sortie agrégée est :
-
-\[
-o=0{,}25\times 2+0{,}75\times 10=8.
-\]
-
-Cet exemple sépare les deux rôles : les scores issus de Q et K déterminent **les poids** ; les valeurs V fournissent **les contenus agrégés**. Il ne signifie pas que les valeurs sont toujours scalaires, ni que les poids révèlent à eux seuls une explication de la prédiction. Dans un vrai modèle, les scores et les valeurs sont des vecteurs calculés par des projections apprises.
+Q et K fournissent les informations utilisées pour déterminer les poids relatifs entre positions accessibles. Ces poids indiquent ensuite comment combiner les vecteurs V. Le calcul précis des scores, du masque et du softmax est détaillé dans la page sur l'attention à produit scalaire mise à l'échelle.
 
 ## D'où viennent Q, K et V ?
 
@@ -87,58 +72,50 @@ Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model
 
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
-<span>MICRO-ATELIER NUMÉRIQUE · CALCUL MATRICIEL ET FORMES TENSORIELLES</span>
+<span>MICRO-ATELIER NUMÉRIQUE · PROJECTIONS Q, K ET V</span>
 <span>Python 3.12+ / NumPy</span>
 :::
 ::: {.micro-workbench-body}
 ```python
 import numpy as np
 
+# Three input positions, each represented by a 4-dimensional vector
 X = np.array([
-    [1.0, 0.5, 0.2, 0.1],  # position 0
-    [0.1, 0.9, 0.8, 0.3],  # position 1
-    [0.4, 0.2, 0.7, 0.9],  # position 2
+    [1.0, 0.5, 0.2, 0.1],
+    [0.1, 0.9, 0.8, 0.3],
+    [0.4, 0.2, 0.7, 0.9],
 ])
 T, d_model = X.shape
 
-# 2. Matrices de projection apprises : d_k=2, d_v=3
+# Learned projections: keys/queries have dimension 2; values dimension 3
 W_Q = np.array([[0.5, 0.1], [0.2, 0.8], [0.1, 0.3], [0.9, 0.4]])
 W_K = np.array([[0.2, 0.7], [0.4, 0.1], [0.6, 0.5], [0.3, 0.2]])
 W_V = np.array([[1.0, 0.0, 0.2], [0.0, 1.0, 0.5], [0.5, 0.2, 0.0], [0.1, 0.8, 0.4]])
 
-# 3. Projections linéaires
-Q = X @ W_Q  # Forme (T, d_k)
-K = X @ W_K  # Forme (T, d_k)
-V = X @ W_V  # Forme (T, d_v)
-assert Q.shape == (3, 2) and K.shape == (3, 2) and V.shape == (3, 3)
+# Each projection transforms all positions independently
+Q = X @ W_Q
+K = X @ W_K
+V = X @ W_V
 
-# 4. Scores d'attention S = Q K^T / sqrt(d_k)
-d_k = 2
-scores = (Q @ K.T) / np.sqrt(d_k)
-assert scores.shape == (3, 3)
-
-# 5. Poids softmax (somme = 1 sur chaque ligne)
-exp_scores = np.exp(scores - np.max(scores, axis=-1, keepdims=True))
-weights = exp_scores / np.sum(exp_scores, axis=-1, keepdims=True)
-assert np.allclose(weights.sum(axis=-1), 1.0)
-
-# 6. Agrégation finale O = A V
-output = weights @ V
-assert output.shape == (3, 3)
+assert Q.shape == (T, 2)
+assert K.shape == (T, 2)
+assert V.shape == (T, 3)
+print("Q:", Q.shape, "K:", K.shape, "V:", V.shape)
 ```
 :::
 ::: {.micro-workbench-footer}
-Invariant vérifié : les dimensions respectent rigoureusement $(T, d_{model}) \to [(T, d_k), (T, d_v)] \to (T, d_v)$.
+Les projections transforment chaque représentation d'entrée. Le calcul des poids et l'agrégation des valeurs sont traités dans la page suivante.
 :::
 :::
 
 ## Pourquoi séparer ces trois rôles ?
 
-- **Q et K déterminent où regarder.** Les scores $QK^\top$ comparent chaque requête à chaque clé. Dans un Transformer autorégressif, le masque causal exclut les positions futures avant le *softmax*.
-- **V détermine quelle information est transmise.** Une fois les poids calculés, ils servent à combiner les vecteurs de valeur.
-- **Les trois sont appris ensemble.** Le modèle apprend les transformations utiles à son objectif ; il ne s'agit pas de champs définis à la main.
+Q, K et V sont appris conjointement, mais ils ont des rôles distincts :
 
-La formule complète d'une tête d'attention est présentée dans la page sur l'[attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd). La page sur le [masque causal](causal-masking.qmd) explique comment empêcher une position de consulter le futur.
+- **Q et K** : projections utilisées pour déterminer les poids d'attention.
+- **V** : projection qui fournit le contenu combiné à l'aide de ces poids.
+
+La page suivante détaille le calcul d'attention ; la page sur le [masque causal](causal-masking.qmd) explique comment certaines positions peuvent être rendues inaccessibles.
 
 ## Idées reçues et contre-exemples
 
@@ -173,12 +150,12 @@ Les mécanismes d'attention ont notamment été étudiés dans les modèles de t
 
 [Exercices approfondis sur ce thème](exercises.qmd#attention).
 
-Une position reçoit les poids d’attention $(0{,}75,\,0{,}25)$ et les vecteurs de valeur sont $v_1=(2,0)$ et $v_2=(0,4)$. Calculez la sortie. Si l’on échange $v_1$ et $v_2$ sans changer les poids, la sortie reste-t-elle identique ?
+Quelles projections déterminent les poids d'attention ? Quelle projection fournit les vecteurs dont le contenu sera agrégé ?
 
 <details>
 <summary>Afficher le raisonnement</summary>
 
-La sortie est la somme pondérée : $0{,}75(2,0)+0{,}25(0,4)=(1{,}5;1)$. Après échange des valeurs, elle devient $0{,}75(0,4)+0{,}25(2,0)=(0{,}5;3)$. Les poids déterminent la contribution relative des positions ; les valeurs déterminent le contenu agrégé. Les poids seuls ne suffisent donc pas à déterminer la sortie.
+Q et K déterminent les poids ; V fournit les vecteurs combinés avec ces poids. Modifier Q ou K peut modifier les poids. Modifier V peut modifier le contenu agrégé même si les poids restent identiques.
 
 </details>
 :::
