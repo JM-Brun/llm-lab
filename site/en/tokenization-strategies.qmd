@@ -174,7 +174,7 @@ The [overview page](text-data.qmd) illustrates Unicode normalization with precom
 
 | Input | Question to ask | Naive-approach risk |
 |---|---|---|
-| `unbelievable`, `unbelievably` | Do fragments reuse frequent substrings? | Boundaries do not guarantee morphological analysis |
+| `Hello world` and ` Hello world` | Does a leading space change segmentation? | Space handling may be part of pre-tokenization or token spelling |\n| `ChatGPT`, `chatgpt`, `CHATGPT` | Is casing normalized or preserved? | Case handling depends on tokenizer configuration |\n| `unbelievable`, `unbelievably` | Do fragments reuse frequent substrings? | Boundaries do not guarantee morphological analysis |
 | `café` and `cafe\u0301` | Which Unicode normalization is applied? | Same appearance, different code-point sequences |
 | `2026-10-29`, `123456789` | How are digits and separators split? | One token need not be a whole number |
 | `你好` | Does the system depend on spaces between words? | Whitespace splitting may yield no useful boundaries |
