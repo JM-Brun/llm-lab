@@ -21,7 +21,6 @@
 **Suggested teaching order:** TR-A → TR-B (lookup calculation → scaffolded shape completion → batch/axis generalization) → TR-C (claim diagnosis → controlled prediction). The original TR-01–TR-06 IDs remain traceability labels for the detailed prompts and answer keys; they are not six separate substantial activities.
 ---
 
-
 ## TR-A — Reconstruct the representation pipeline
 
 *Detailed draft section: TR-01.*
@@ -91,9 +90,6 @@ Le tokenizer transforme le texte en unités discrètes du vocabulaire. Les IDs i
 - « Tous les modèles ajoutent un vecteur de position juste après le lookup » : non, les mécanismes positionnels diffèrent.
 
 **Critère d'évaluation :** ordre correct ; distinction entre token, ID, vecteur initial et état contextualisé ; absence de généralisation abusive sur le traitement positionnel.
-
----
-
 
 ---
 
@@ -194,9 +190,6 @@ La forme est \((L,d)=(3,2)\) : trois positions de tokens et deux caractéristiqu
 
 **Critère d'évaluation :** matrice, forme et explication exactes sur l'absence de sens géométrique de l'arithmétique des IDs.
 
----
-
-
 ### Stage 2 — Complete a partially worked shape trace
 
 *Detailed draft section: TR-05.*
@@ -273,9 +266,6 @@ Le résultat du lookup a pour forme \((2,3,2)\) ; une séquence a pour forme \((
 
 **Critère d'évaluation :** les deux formes sont correctes et l'explication montre pourquoi le lookup élimine l'axe du vocabulaire du résultat sélectionné.
 
----
-
-
 ### Stage 3 — Trace batch shapes and axes
 
 *Detailed draft section: TR-03.*
@@ -345,9 +335,6 @@ Le lookup conserve les axes batch et position, et ajoute l'axe des caractéristi
 - Dire que le lookup contextualise les tokens attribue à la table d'embeddings un calcul réalisé plus tard par le Transformer.
 
 **Critère d'évaluation :** formes correctes, axes nommés selon leur rôle et distinction explicite entre lookup et contextualisation.
-
----
-
 
 ---
 
@@ -426,9 +413,6 @@ E. RoPE s'applique aux représentations requête/clé dans l'attention ; ce n'es
 La distinction décisive sépare une propriété du tokenizer, une propriété d'une table de lookup fixée et une propriété du calcul complet du réseau. Il ne faut pas déduire la troisième des deux premières.
 
 **Critère d'évaluation :** les classements et justifications distinguent les invariants du lookup fixe, les sorties dépendantes du contexte et les mécanismes propres à certaines architectures.
-
----
-
 
 ### Stage 2 — Predict what changes, and what stays invariant
 
@@ -514,23 +498,32 @@ Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un ch
 
 ---
 
-
 ## Review and release checklist
 
-- [ ] Verify every statement against the current canonical FR/EN pages.
-- [ ] Independently recompute the TR-02 matrix selection and TR-03 shapes.
-- [ ] Check mathematical notation, FR/EN content parity, and Quarto rendering in both languages.
-- [ ] Review the three bundles as one progression; do not turn every internal draft subpart into a separate compulsory activity.
-- [ ] Check that feedback diagnoses the reasoning error, not merely the wrong answer.
-- [ ] Review desktop and mobile rendering when the deferred #320 browser gate is completed.
+- [x] Verify every statement against the current canonical FR/EN pages.
+- [x] Independently recompute the TR-02 matrix selection and TR-03 shapes.
+- [x] Check mathematical notation and FR/EN content parity. The internal design document is not itself a learner-facing Quarto page.
+- [x] Review the three bundles as one progression; do not turn every internal draft subpart into a separate compulsory activity.
+- [x] Check that feedback diagnoses the reasoning error, not merely the wrong answer.
+- [ ] After integration into learner-facing pages, review desktop/mobile rendering under [#329](https://github.com/JM-Brun/llm-lab/issues/329); #320 covers the canonical prerequisite pages only.
 - [ ] Only then decide whether to embed these activities in existing pages or publish a separate practice destination.
-- [ ] Do not add transfer assessment until the first learning sequence is complete.
+- [x] No transfer assessment is included; revisit it only after the first learning sequence is complete.
+
+## Source-level review record — 2026-11-03
+
+- Recomputed the TR-02 lookup: IDs [2,0,3] select rows E₂, E₀, E₃ and yield the stated (3,2) matrix.
+- Verified TR-05 and TR-03 shapes: (2,3) IDs → (2,3,2) lookup result; one sequence → (3,2). The vocabulary axis indexes the source table and is not retained in the selected output.
+- Checked TR-04 classifications and TR-06 controlled predictions against the fixed-lookup/contextualization distinction, architecture-dependent position handling, and causal masking.
+- Compared all six English/French prompt sections: numbered prompts, scaffold stages, claims, hints and feedback have matching structural counts; the substantive conclusions and worked values match.
+- The d/D notation bridge is explicit. Here d in the toy exercise denotes the feature-width role represented by D in the tensor reference; d_h remains the per-head width.
+- This is a source-level review in this session, not a second human expert review or learner evaluation. The bilingual site-render workflow passed in PR #325, but this internal Markdown design document is not itself rendered as a learner page.
+- Browser review after learner-facing integration is tracked in [#329](https://github.com/JM-Brun/llm-lab/issues/329); the canonical prerequisite-page review remains in [#320](https://github.com/JM-Brun/llm-lab/issues/320).
 
 ## Ownership and evidence
 
 - Exercise design and answer keys: [#220](https://github.com/JM-Brun/llm-lab/issues/220).
-- Foundational source/content: [#82](https://github.com/JM-Brun/llm-lab/issues/82) (closed); deferred browser review: [#320](https://github.com/JM-Brun/llm-lab/issues/320).
+- Foundational source/content: [#82](https://github.com/JM-Brun/llm-lab/issues/82) (closed); canonical-page browser review: [#320](https://github.com/JM-Brun/llm-lab/issues/320); exercise-page browser review after integration: [#329](https://github.com/JM-Brun/llm-lab/issues/329).
 - Milestone mapping: [#87](https://github.com/JM-Brun/llm-lab/issues/87).
 - Reader-facing architecture: [#130](https://github.com/JM-Brun/llm-lab/issues/130).
 
-Authored content is not yet independently reviewed, rendered, browser-reviewed, or learner-evaluated. Those are separate evidence states.
+The source-level review above does not constitute a second human expert review or learner evidence. Learner-facing rendering and browser validation remain pending until integration.
