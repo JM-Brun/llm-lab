@@ -58,6 +58,8 @@ Imagine une collection de fiches. Une **requête** exprime ce qu'une position ch
 
 Q et K fournissent les informations utilisées pour déterminer les poids relatifs entre positions accessibles. Ces poids indiquent ensuite comment combiner les vecteurs V. Le calcul précis des scores, du masque et du softmax est détaillé dans la page sur l'attention à produit scalaire mise à l'échelle.
 
+On peut imaginer un ensemble de fiches : la **requête** est la question posée, la **clé** est l'indice qui permet de repérer une fiche pertinente, et la **valeur** est le contenu de cette fiche. Le score de correspondance n'est donc ni la clé ni la valeur. Cette analogie sert à distinguer les rôles ; le modèle n'effectue pas une recherche symbolique explicite.
+
 ## D'où viennent Q, K et V ?
 
 On part d'une matrice $X\in\mathbb{R}^{T\times d_{model}}$, qui rassemble les représentations des $T$ positions. Trois transformations apprises produisent :

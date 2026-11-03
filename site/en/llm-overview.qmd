@@ -100,6 +100,14 @@ flowchart LR
 
 1. **[Pretraining](build-path.qmd).** The model learns from a corpus according to an objective — for a GPT, next-token prediction. The learning is called *self-supervised*: the targets are built from the data itself, without human labels. It produces a pretrained model, often called a *base model*. The term *foundation model* more broadly refers to a model intended for reuse and adaptation across many tasks; the two expressions are not exact synonyms.
 2. **[Optional weight adaptation](build-path.qmd).** After pretraining, parameters can be updated: task fine-tuning (for example, classification), SFT on instruction–response examples, or preference optimization. This stage is not mandatory: a pretrained model can be used directly.
+
+::: {.callout-note collapse="true" title="Optional deeper dive: RLHF and direct preference optimization"}
+
+A **classic RLHF pipeline** (*reinforcement learning from human feedback*) commonly starts with supervised fine-tuning (SFT) on demonstrations. Human annotators then compare candidate responses; those preferences are used to train a **reward model**, which scores responses. A policy is subsequently optimized against that reward, historically often with a reinforcement-learning algorithm such as **PPO**, while controlling drift from a reference policy. This is one influential recipe, not a universal sequence used by every model or post-training system ([Ouyang et al., 2022](https://arxiv.org/abs/2203.02155)).
+
+**DPO** (*direct preference optimization*) is a different preference-optimization approach: it learns directly from preference comparisons without the separate reward-model-plus-PPO loop of that classic RLHF recipe ([Rafailov et al., 2023](https://arxiv.org/abs/2305.18290)). It is therefore more precise to treat RLHF and DPO as related approaches to preference-based post-training, not as mandatory consecutive stages.
+
+:::
 3. **[Inference](generation.qmd).** The obtained parameters are used to process an input and compute an output. For an autoregressive model, this is the generation loop described above. The prompt and, optionally, documents retrieved by a RAG system provide context; they are not an additional learning phase and do not update the model's weights.
 
 Adaptation is therefore an optional branch between pretraining and use, not a mandatory step. RAG belongs to context construction at inference time: it is neither a learning phase nor a stage in the model lifecycle. Evaluation, in turn, happens at several points; the test set must remain held out until the final evaluation, otherwise that evaluation would be biased.

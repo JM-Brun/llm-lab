@@ -52,7 +52,7 @@ Queries, keys, and values are not three kinds of tokens. They are three **learne
 
 ## Intuition
 
-Imagine a collection of index cards. A **query** expresses what a position is looking for; a **key** describes how a position can be matched as relevant; a **value** carries the information that will actually be aggregated. This analogy separates the roles, but does not imply that the model performs explicit symbolic search.
+Imagine a collection of index cards. A **query** expresses what a position is looking for; a **key** describes how a position can be matched as relevant; a **value** carries the information that will actually be aggregated. This analogy separates the roles, but does not imply that the model performs explicit symbolic search. In the analogy, the query is the question, the key is the note's matching label, and the value is the note's content—not the score of the match.
 
 ![Diagram of query, key, and value projections: Q and K determine attention weights, which are used to aggregate V.](../images/queries-keys-values-en.svg){fig-alt="Input representations are projected into queries, keys, and values. Queries and keys determine attention weights; the weights combine values into a context-enriched representation." width=100%}
 
