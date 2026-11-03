@@ -54,7 +54,7 @@ Vous pouvez vous arrêter après les deux premières étapes et avoir déjà une
 
 - **Comprendre** — suivre les explications conceptuelles et le fil recommandé ci-dessus.
 - **Construire** — implémenter progressivement un petit GPT avec le [parcours guidé](fr/build-path.qmd).
-- **Approfondir** — consulter les dérivations et analyses avancées, par exemple les [tenseurs](fr/tensors.qmd) ; aucun cours mathématique général n’est exigé à l’entrée.
+- **Approfondir** — consulter les dérivations et analyses avancées, par exemple les [tenseurs](fr/tensors.qmd), ou le détour facultatif sur les [fondamentaux du Machine Learning : biais-variance et arbres boostés](fr/bias-variance.qmd) ; aucun cours mathématique général n’est exigé à l’entrée.
 - **S’exercer et expérimenter** — tester les mécanismes avec les [exercices](fr/exercises.qmd), l’[explorateur GPT-2](fr/transformer-explainer.qmd) et l’[évaluation expérimentale](fr/evaluation-experimentale.qmd).
 
 Ces quatre destinations décrivent l’activité du lecteur. Les trois profondeurs — **panorama**, **construction guidée**, **approfondissements** — décrivent le niveau de détail. La pratique traverse ces trois profondeurs ; ce ne sont pas deux classifications concurrentes.
