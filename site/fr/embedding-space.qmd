@@ -228,13 +228,6 @@ Non. Une projection 2D ne préserve qu’une partie de la géométrie et peut cr
 
 </details>
 
-## Pour poursuivre
-
-- [Similarité cosinus](cosine-similarity.qmd) : métriques et limites.
-- [Linéarité des représentations](linearite-embeddings.qmd) : décodabilité, linéarité et interprétation.
-- [Tenseurs](tensors.qmd) : organisation des vecteurs dans les calculs du réseau.
-- [Encodage positionnel et RoPE](positional-encoding.qmd) : information de position dans le traitement des tokens.
-
 ## Références
 
 - [Mikolov et al. (2013), Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781).
