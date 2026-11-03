@@ -20,7 +20,7 @@ related: ["en/transformer-history"]
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 -->
 ::: {.chapter-lead}
-A **language model** assigns probabilities to text sequences—or, in an autoregressive factorization, to the next token given its context. A **generative model** can produce new samples from a learned distribution, possibly conditioned on an input. An **LLM** (*large language model*) is a language model trained at large scale: there is no universal parameter threshold that mechanically separates “small” models from LLMs. Parameter count is only one dimension of scale; relationships between parameters, data, compute, and performance are studied through [scaling laws](scaling-laws.qmd). The LLM category does not imply a particular architecture.
+A **language model** assigns probabilities to text sequences—or, in an autoregressive factorization, to the next token given its context. A **generative model** can produce new samples from a learned distribution, possibly conditioned on an input. An **LLM** (*large language model*) is a language model trained at large scale: there is no universal parameter threshold that mechanically separates “small” models from LLMs. Parameter count is only one dimension of scale; relationships between parameters, data, compute, and performance are studied through [optional further reading on scaling laws](scaling-laws.qmd). The LLM category does not imply a particular architecture.
 
 :::
 
@@ -50,7 +50,7 @@ At each position, it therefore estimates a distribution over the vocabulary from
 - **Heterogeneous data:** corpora mix styles, domains, quality levels, languages, and contradictions; not every learned regularity is relevant to a given task.
 - **Compute trade-offs:** increasing model capacity is not enough. Suitable data and compute are also needed to exploit it; gains depend on how these resources are allocated.
 
-[Scaling laws](scaling-laws.qmd) empirically study relationships between these resources and loss. They do not define a universal threshold at which a model becomes an LLM.
+Scaling laws empirically study relationships between these resources and loss. They do not define a universal threshold at which a model becomes an LLM.
 
 ## 2. How a GPT approaches this problem
 
@@ -145,7 +145,7 @@ flowchart LR
 
 1. **Pretraining.** The model learns from a corpus according to an objective — for a GPT, next-token prediction. The learning is called *self-supervised*: the targets are built from the data itself, without human labels. The result is a **pretrained model**, often called a *base model*. The term *foundation model* more broadly refers to a model intended for reuse and adaptation across many tasks; the two expressions are not exact synonyms.
 2. **Optional weight adaptation.** After pretraining, parameters can be updated: task fine-tuning (for example, classification), SFT on instruction–response examples, or preference optimization. This stage is not mandatory: a pretrained model can be used directly.
-3. **Inference.** You use the obtained parameters to process an input and compute an output — for an autoregressive model, the loop of section 1. A prompt supplies the instruction; a RAG system can retrieve documents and add them to the context. These elements condition the model's use without updating its weights.
+3. **Inference.** You use the obtained parameters to process an input and compute an output — for an autoregressive model, the loop of section 1. A prompt supplies the instruction; a RAG system can retrieve documents and add them to the context. Using examples supplied in the prompt is a form of [in-context learning](in-context-learning.qmd), an optional deeper topic. These elements condition the model's use without updating its weights.
 
 Pretraining and optional weight adaptation describe how a model is made; prompts and retrieved documents are supplied to the system at inference time. This is therefore not a mandatory three-step chain: a base model can be used directly with an appropriate context. The pedagogical order remains distinct from the order of model construction: inference can be understood before training. Evaluation happens at several points; the test set must remain held out until the final evaluation, otherwise that evaluation would be biased.
 
