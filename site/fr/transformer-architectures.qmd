@@ -79,12 +79,6 @@ Pour comprendre comment ces architectures s'inscrivent dans l'évolution de la r
 3. **Le prochain-token prediction définit-il tous les Transformers ?** Non. C'est un objectif typique des décodeurs autorégressifs, pas une propriété de tous les Transformers.
 4. **Un Transformer est-il nécessairement un LLM ?** Non. L'architecture ne détermine ni la taille du modèle ni son statut de LLM.
 
-## Pour continuer
-
-- [Panorama : qu'est-ce qu'un LLM ?](llm-overview.qmd) — replacer ces familles dans la vue d'ensemble.
-- [GPT et Transformer](transformer.qmd) — suivre le calcul interne d'un décodeur autorégressif.
-- [Historique des Transformers](transformer-history.qmd) — situer les principales étapes de l'évolution des architectures.
-
 ::: {.language-switch}
 **Langue :** [Français](transformer-architectures.qmd) · [English](../en/transformer-architectures.qmd)
 :::
