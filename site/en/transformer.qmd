@@ -58,8 +58,8 @@ To go further: [the embedding space](embedding-space.qmd) and its geometry — [
 
 The core of the network is a stack of identical blocks. Each block combines two operations:
 
-- **Self-attention:** each position draws from previous positions the information that refines its representation. In GPT, a causal mask forbids reading future tokens.
-- **Feed-forward network (MLP):** a small neural network applied to each position separately, with the same weights everywhere.
+- **Self-attention:** each position draws from previous positions the information that refines its representation. For example, when interpreting *it* in “Adam puts the ice cream in the freezer because it was melting”, attention can bring information about *the ice cream* into the representation at *it*. In GPT, a causal mask forbids reading future tokens.
+- **Feed-forward network (MLP):** a small neural network applied to each position separately, with the same weights everywhere. It typically combines linear projections with a nonlinear activation to produce a transformed representation; the exact design varies by architecture.
 
 Blocks also use **residual connections** and **normalization**. A residual connection adds a correction computed by a sublayer to the representation flowing through the network, rather than replacing that representation entirely. It therefore provides a direct path for information and gradients:
 
