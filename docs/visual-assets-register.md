@@ -57,6 +57,7 @@ The source-level scan found 32 SVG files. The table records source references fo
 | `embedding-space-en.svg`, `embedding-space-fr.svg` | EN/FR `embedding-space.qmd` | Project-managed SVG pair; verify authorship/history and licence |
 | `gpt-data-flow-en.svg`, `gpt-data-flow.svg` | EN/FR `transformer.qmd` | Project-managed SVG pair; verify authorship/history and licence |
 | `math-training-pipeline.svg` | EN/FR `mathematical-foundations.qmd` | Project-managed SVG; described as original in `site/references.qmd`; verify authorship/history and licence |
+| `positional-info-insertion-en.svg`, `positional-info-insertion-fr.svg` | EN/FR `positional-encoding.qmd` | Project-managed SVG pair; added in PR #253 as original diagrams; verify authorship/history and licence |
 | `queries-keys-values-en.svg`, `queries-keys-values.svg` | EN/FR `queries-keys-values.qmd` | Project-managed SVG pair; described as original in `site/references.qmd`; verify authorship/history and licence |
 | `rope-en.svg`, `rope-fr.svg` | EN/FR `positional-encoding.qmd` | Project-managed SVG pair; verify authorship/history and licence |
 | `softmax-axis-comparison-en.svg`, `softmax-axis-comparison-fr.svg` | EN/FR `tensors.qmd` | Project-managed SVG pair; verify authorship/history and licence |
@@ -126,7 +127,7 @@ Evidence:
 
 The exact remote path used by LLM Lab is `en/chapter6/tokenization_pipeline.svg` in the Hugging Face dataset repository `huggingface-course/documentation-images`. Its repository README declares Apache-2.0. The Hugging Face course repository's contribution instructions also direct course authors to place course images in this documentation-images repository and use this path pattern. This corroborates that the asset is intended to be distributed as part of the course image repository.
 
-The repository-level licence is therefore stronger evidence than a licence inferred only from the course page. However, the exact file's history/blame and any file-specific third-party notices or exclusions have not yet been inspected. The asset itself has no local copy or embedded metadata in LLM Lab; the current pages load it remotely and cite the course page.
+The repository-level licence is therefore stronger evidence than a licence inferred only from the course page. However, the exact file's history/blame and any file-specific third-party notices or exclusions have not been inspected. The asset itself has no local copy or embedded metadata in LLM Lab; the current pages load it remotely and cite the course page.
 
 **Assessment:** provisionally Apache-2.0 at repository level; verify exact-file provenance and notices before marking the asset fully cleared. Preserve the current remote embed unchanged.
 
@@ -162,7 +163,7 @@ A per-path GitHub commit-history investigation was performed for the 32 unique S
 | [`787581b`](https://github.com/JM-Brun/llm-lab/commit/787581b5402d006558314891f3c7e7f52ddfd39d) | `bpe-merges-en.svg`, `bpe-merges-fr.svg`, `tokenization-language-cost.svg` |
 | [`f43db86`](https://github.com/JM-Brun/llm-lab/commit/f43db862f7b1773cc3b56072e388e589b55bb1c8) | `causal-attention-mask.svg` |
 | [`bff079f`](https://github.com/JM-Brun/llm-lab/commit/bff079f0fe14c5cb52e470e2c6ff04cc2d99defc) | `math-training-pipeline.svg` |
-| [`f215226`](https://github.com/JM-Brun/llm-lab/commit/f215226bf995ab32d41fddf6a20e50979049cb96) | `tensors-en.svg` |
+| [`f215226`](https://github.com/JM-Brun/llm-lab/commit/f215226bf755ab32d41fddf6a20e50979049cb96) | `tensors-en.svg` |
 | [`1d23717`](https://github.com/JM-Brun/llm-lab/commit/1d23717bd9dfa73bc55c6b3607b63a9aeb8dad18) | `queries-keys-values-en.svg` |
 | [`415f106`](https://github.com/JM-Brun/llm-lab/commit/415f106a10bddbd62a6c259c01ba2e44cf8176be) | `attention-calculation-flow-en.svg`, `attention-calculation-flow.svg` |
 | [`c919373`](https://github.com/JM-Brun/llm-lab/commit/c9193738286b8655dd0ed129a62732ee156ab9b1) | `attention-vs-mlp-en.svg`, `gpt-data-flow-en.svg` |
@@ -172,7 +173,7 @@ A per-path GitHub commit-history investigation was performed for the 32 unique S
 | [`a6cc348`](https://github.com/JM-Brun/llm-lab/commit/a6cc348ad1995a1fd11a530e37210a7966f3d24e) | `embedding-space-en.svg` |
 | [`437b869`](https://github.com/JM-Brun/llm-lab/commit/437b8699751fe272aaf19f6580c6d1bca84e01ff) | `contextualized-embeddings-en.svg`, `contextualized-embeddings-fr.svg`, `unicode-utf8-tokenization-en.svg`, `unicode-utf8-tokenization-fr.svg` |
 | [`2c61357`](https://github.com/JM-Brun/llm-lab/commit/2c613573d9878e8a55b3334a8cb868b44e1ac44a) | `rope-en.svg` |
-| [`5cbfcfa`](https://github.com/JM-Brun/llm-lab/commit/5cbfcfaed446da2de5ebf4c01b438a4c654b300a) | `softmax-axis-comparison-en.svg`, `softmax-axis-comparison-fr.svg` |
+| [`5cbfcfa`](https://github.com/JM-Brun/llm-lab/commit/5cbfcfaed446da2de5ebf4c01b438e4c654b300a) | `softmax-axis-comparison-en.svg`, `softmax-axis-comparison-fr.svg` |
 
 The GitHub commit API attributes these path-changing commits to the `JM-Brun` account. This provides useful repository-level provenance: the recorded changes were committed through the project owner's account. It does **not**, by itself, establish that every diagram was drawn from scratch by the account owner, that no third-party visual design was adapted, or that the account owner holds all relevant rights. Commit attribution is not a substitute for the author's confirmation of creation/adaptation history.
 

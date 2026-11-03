@@ -21,7 +21,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 -->
 
 ::: {.chapter-lead}
-Attention compares token representations, but it does not inherently know their order. A positional mechanism supplies this information, allowing a model to distinguish, for example, “the cat chases the dog” from “the dog chases the cat”. Transformers use several approaches; **RoPE** (*Rotary Position Embedding*) encodes position by rotating pairs of coordinates in queries and keys.
+Attention compares token representations, but it does not inherently know their order. A positional mechanism supplies this information, allowing a model to distinguish, for example, "the cat chases the dog" from "the dog chases the cat". Transformers use several approaches; **RoPE** (*Rotary Position Embedding*) encodes position by rotating pairs of coordinates in queries and keys.
 :::
 
 ## Why add positional information?
@@ -39,6 +39,10 @@ The diagram shows a single pair of coordinates. In practice, RoPE acts on multip
 - **RoPE:** apply position-dependent rotations to queries and keys. The dot product used for the attention score then carries information about the relationship between their positions.
 
 These approaches inject positional information at different points and do not have exactly the same properties.
+
+![Where positional information enters the computation: at the input for an absolute encoding, inside queries and keys for RoPE.](../images/positional-info-insertion-en.svg){fig-alt="An absolute encoding is added to the embeddings at the input, before any projection. RoPE applies rotations to queries and keys after their projections, before the QK product, so the attention scores carry positional information." width=100%}
+
+**The RoPE case.** Positional information is injected by rotating the query and key representations **after their projections and before the $QK^\top$ product**. It therefore changes the attention scores themselves; it is not an operation applied after attention. The next section details the computation that shows this.
 
 ## The mathematical intuition behind RoPE
 
@@ -74,10 +78,10 @@ Long-context behaviour also depends on the frequency base, training sequence len
 
 ## Common misconceptions
 
-- **“Attention naturally knows which token comes first.”** Order must be supplied by a positional mechanism or an equivalent structure.
-- **“RoPE simply adds a position vector to the embeddings.”** No: in its common form, RoPE rotates pairs of query and key coordinates.
-- **“RoPE guarantees long context windows.”** No: performance beyond the training length depends on several design choices and must be evaluated.
-- **“RoPE also rotates the values $V$.”** In the standard version, the operation acts on $Q$ and $K$; attention then aggregates values using the computed weights.
+- **"Attention naturally knows which token comes first."** Order must be supplied by a positional mechanism or an equivalent structure.
+- **"RoPE simply adds a position vector to the embeddings."** No: in its common form, RoPE rotates pairs of query and key coordinates.
+- **"RoPE guarantees long context windows."** No: performance beyond the training length depends on several design choices and must be evaluated.
+- **"RoPE also rotates the values $V$."** In the standard version, the operation acts on $Q$ and $K$; attention then aggregates values using the computed weights.
 
 ## How to validate an implementation
 
