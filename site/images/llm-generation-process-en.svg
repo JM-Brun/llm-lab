@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
 <title id="title">The GPT generation process</title>
-<desc id="desc">Quatre étapes : le texte et le contexte sont préparés, traités par un GPT dont les paramètres restent fixes, puis une continuation est sélectionnée et ajoutée au contexte. La boucle se répète.</desc>
+<desc id="desc">Four stages: text and context are prepared and processed by a GPT whose parameters remain fixed; a continuation is selected and appended to the context. The loop repeats.</desc>
 <defs>
   <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#315f9f" stroke-width="2"/></marker>
   <marker id="greenArrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#16805b" stroke-width="2"/></marker>
