@@ -188,3 +188,32 @@ Use these rules when opening or executing child issues:
 ## 9. Status discipline
 
 This register records the state visible on 2026-11-03. Update it only when an issue changes status or a validation artifact is produced. For each completed lot, record the commit/PR, exact CI runs, browser/device/viewport where relevant, and unresolved limitations. Do not convert an automated success into a claim of visual quality, accessibility conformance, scientific correctness beyond the tested claims, or learner mastery.
+
+
+## 10. Execution update — 2026-11-03 (supersedes the immediate actions in §8)
+
+This addendum records work completed after the earlier snapshot in this register.
+
+### Closed or transferred
+
+- **#82 — source/content work:** closed after the source-level acceptance items were completed. Its remaining browser review was explicitly transferred to [#320](https://github.com/JM-Brun/llm-lab/issues/320); closing #82 does not mean the rendered review or learner validation is complete.
+- **#311 and #312:** closed as transferred lots. Their four bilingual page pairs are included in #320.
+- **#320 — deferred browser review:** created at **P2** for text-data, embedding-space, positional-encoding, and tensors, FR/EN, desktop/mobile. It is a later release check and no longer blocks source-level work.
+- **#296:** already closed; a source-level revalidation was added to its discussion.
+- **#308 — page-level colour inventory:** closed after a source scan of all 91 bilingual .qmd pages and classification of the actual inline/SVG colour declarations. No palette or SCSS change was justified. Rendered-component comparison remains with #309.
+- **#313 — formative activity inventory:** the three-activity inventory is proposed in [PR #322](https://github.com/JM-Brun/llm-lab/pull/322). The six detailed TR-01–TR-06 drafts are preserved and grouped as three bundles; #313 remains open until the PR is reviewed and merged.
+
+### Current recommended sequence
+
+1. **Review and validate PR #322.** Its scope is one 48-line design inventory, not learner-facing publication. Recheck CI on the rebased head before merge.
+2. **Continue #220 source review.** Independently review the detailed answer keys, then integrate the three-bundle sequence and verify FR/EN parity. Do not claim a second human expert review or learner evidence unless actually obtained.
+3. **Continue the source/design-system handoff:** #309 owns the rendered sample comparison; #310 owns targeted contrast, keyboard and responsive checks. Do not mark either complete from source inspection.
+4. **Keep #320 at P2** until browser inspection can be scheduled. Its delay must not be represented as a passed acceptance criterion.
+5. Reassess #316/#317 after the higher-priority source and design-system work; they are separate rendered pedagogical audits and should not be mixed into #308.
+
+### Updated evidence boundaries
+
+- Source inventory and source-level reasoning are recorded in the relevant issue discussions.
+- #308 did not change SCSS, palette tokens or page content.
+- PR #322 adds only the three-activity inventory; it does not rewrite or delete the six detailed exercise drafts.
+- Browser appearance, accessibility conformance and learner outcomes remain unverified wherever their dedicated issues remain open.
