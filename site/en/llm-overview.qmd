@@ -32,7 +32,6 @@ By the end of this page, you should be able to:
 - distinguish a language model, generative model, LLM, GPT, and Transformer;
 - trace the main stages of an autoregressive GPT computation.
 
-This page introduces the problem and its computational principle without assuming prior knowledge of equations or tensors. The next page, [GPT and Transformer](transformer.qmd), explains the internal computation that produces this prediction.
 
 </details>
 

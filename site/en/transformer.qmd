@@ -37,7 +37,7 @@ The diagram shows the conceptual path of one generation. It deliberately omits i
 ::: {.callout-tip title="The guiding idea"}
 Every GPT repeats one loop: **represent the context → compute a distribution over the next token → select one token → append it to the context**. The diagram above walks through it end to end, and sections 1 to 3 describe it step by step.
 
-The equations, the [exploration workshop](transformer-explainer.qmd), and the linked pages are for a second visit, once a specific question arises. To situate architectures and the pretraining → adaptation → inference path, return to the [LLM panorama](llm-overview.qmd); if the move from raw text to tokens remains unclear, consult [From text to tokens](text-data.qmd).
+To situate architectures and the pretraining → adaptation → inference path, return to the [LLM panorama](llm-overview.qmd); if the move from raw text to tokens remains unclear, consult [From text to tokens](text-data.qmd).
 :::
 
 ## 1. From text to representations
