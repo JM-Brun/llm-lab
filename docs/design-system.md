@@ -52,6 +52,19 @@ Green is the primary brand colour. It identifies the site, navigation, links, pr
 - Code blocks should support copying, preserve readable line lengths, and remain usable on narrow screens.
 - Cards should encode a meaningful action or content grouping, not merely decorate every paragraph.
 
+## 3.1 Navigation hierarchy
+
+Every page reached through the Quarto sidebar should expose a compact **breadcrumb** above its title. It is generated from the active sidebar hierarchy, so the labels and nesting remain aligned with the actual site navigation in both languages. The breadcrumb answers “where am I?”; it is not a claim that readers must follow every parent page in sequence.
+
+Keep navigation patterns distinct:
+
+- **Breadcrumb:** the page's location in the site's information architecture; generated globally from the sidebar.
+- **Sidebar:** the wider topic map and alternative entry points.
+- **Previous / next navigation:** a suggested local continuation, where the metadata defines a useful route.
+- **Pipeline stepper:** a domain-specific process or data-flow sequence inside a lesson. Use it only when the stages form a meaningful process; it is not a substitute for the breadcrumb and must not imply a universal learning order.
+
+Do not manually reproduce breadcrumb markup in individual pages. If the sidebar hierarchy changes, the breadcrumb should follow it automatically. Pages that are not represented in the sidebar (for example, a standalone reference page) may legitimately have no breadcrumb.
+
 ## 4. Interaction and motion
 
 - Interactive controls must identify the quantity they change and the output they affect.
