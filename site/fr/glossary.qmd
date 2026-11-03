@@ -86,6 +86,11 @@ Ces notions sont regroupées dans le parcours [Géométrie et interprétabilité
 - **RoPE (*Rotary Position Embedding*)** — encodage positionnel qui applique des rotations dépendant de la position aux paires de coordonnées des requêtes et des clés.
 - **Paramètre** — valeur apprise pendant l'entraînement.
 - **Fine-tuning** — poursuite de l'entraînement d'un modèle pré-entraîné sur un objectif ou un jeu de données particulier.
+- **Fine-tuning supervisé (SFT)** — adaptation à partir de démonstrations sélectionnées, sous forme d'exemples entrée-cible ou instruction-réponse.
+- **RLHF (*reinforcement learning from human feedback*)** — famille de méthodes de post-entraînement qui exploitent des préférences humaines ; un pipeline classique entraîne un modèle de récompense à partir de comparaisons, puis optimise une politique par rapport à ce modèle.
+- **Modèle de récompense (*reward model*)** — modèle entraîné à attribuer des scores aux réponses en fonction des données de préférences ; ces scores sont des approximations apprises, pas des mesures objectives de vérité ou de qualité.
+- **PPO (*proximal policy optimization*)** — algorithme d'apprentissage par renforcement fondé sur le gradient de politique, utilisé dans certains pipelines RLHF pour optimiser une politique en limitant l'ampleur des mises à jour.
+- **DPO (*direct preference optimization*)** — méthode qui optimise directement une politique à partir de comparaisons de préférences, sans la boucle distincte modèle de récompense + PPO du pipeline RLHF classique.
 
 ## Voir aussi
 

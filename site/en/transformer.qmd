@@ -77,7 +77,7 @@ The useful distinction is not that attention "understands" the tokens while the 
 
 A useful mental model is that **attention gathers a context-dependent mixture of information from other positions**, while the **MLP processes the representation now available at each position**. The first operation exchanges information across positions; the second transforms each position independently. This is only an analogy: attention computes weighted sums of learned value vectors, not a literal search or collection of human-readable notes.
 
-With **multi-head attention**, several attention operations run in parallel. Each head has its own learned query, key, and value projections, so heads *can* learn different matching patterns or focus on different relationships. Their outputs are then combined by an output projection. Do not assume that every head has a clean, human-interpretable specialization: that is an empirical question, not a guarantee of the architecture.
+With **multi-head attention**, several attention operations run in parallel. Each head has its own learned query, key, and value projections, so heads *can* learn different matching patterns or focus on different relationships. Their outputs are concatenated and then mixed by an output projection. Do not assume that every head has a clean, human-interpretable specialization: that is an empirical question, not a guarantee of the architecture.
 
 ### Depth and width: two architectural dimensions
 

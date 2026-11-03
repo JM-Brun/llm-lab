@@ -77,7 +77,7 @@ La distinction utile n'est pas que l'attention « comprendrait » les tokens et 
 
 Une image mentale utile : **l'attention rassemble un mélange contextuel d'informations provenant d'autres positions**, puis le **MLP traite la représentation ainsi enrichie à chaque position**. La première opération échange de l'information entre positions ; la seconde transforme chaque position indépendamment. L'analogie a ses limites : l'attention calcule des sommes pondérées de vecteurs de valeur appris, et non une recherche ou une collecte littérale de notes lisibles par un humain.
 
-Avec l'**attention multi-têtes**, plusieurs calculs d'attention sont effectués en parallèle. Chaque tête possède ses propres projections apprises des requêtes, clés et valeurs ; les têtes *peuvent donc* apprendre des motifs de correspondance ou exploiter des relations différentes. Leurs sorties sont ensuite combinées par une projection de sortie. Il ne faut toutefois pas supposer que chaque tête possède une spécialisation nette et interprétable par un humain : c'est une question empirique, pas une garantie de l'architecture.
+Avec l'**attention multi-têtes**, plusieurs calculs d'attention sont effectués en parallèle. Chaque tête possède ses propres projections apprises des requêtes, clés et valeurs ; les têtes *peuvent donc* apprendre des motifs de correspondance ou exploiter des relations différentes. Leurs sorties sont concaténées, puis mélangées par une projection de sortie. Il ne faut toutefois pas supposer que chaque tête possède une spécialisation nette et interprétable par un humain : c'est une question empirique, pas une garantie de l'architecture.
 
 ### Profondeur et largeur : deux dimensions de l’architecture
 

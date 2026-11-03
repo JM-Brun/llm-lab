@@ -317,6 +317,7 @@ Un [PDF miroir tiers fourni pour examen](https://dl.tehrandata.org/book/Build-a-
 - **Radford et al. (2019), [*Language Models are Unsupervised Multitask Learners*](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf)** — exemple GPT-2 de modèle autorégressif décodeur seul.
 - **Bommasani et al. (2021), [*On the Opportunities and Risks of Foundation Models*](https://arxiv.org/abs/2108.07258)** — cadrage des modèles de fondation et de leurs risques.
 - **Ouyang et al. (2022), [*Training language models to follow instructions with human feedback*](https://arxiv.org/abs/2203.02155)** — exemple de pipeline d'adaptation par démonstrations et préférences.
+- **Rafailov et al. (2023), [*Direct Preference Optimization: Your Language Model is Secretly a Reward Model*](https://arxiv.org/abs/2305.18290)** — optimisation directe d'une politique à partir de comparaisons de préférences, sans entraîner séparément un modèle de récompense puis utiliser PPO.
 - **Gu et Dao (2023), [*Mamba: Linear-Time Sequence Modeling with Selective State Spaces*](https://arxiv.org/abs/2312.00752)** — exemple d'architecture de modélisation de séquence non fondée sur l'attention Transformer standard.
 
 Ces sources ont des rôles différents — description d'architecture, objectifs d'entraînement, modèles de fondation et adaptation par préférences. Aucune ne définit à elle seule tous les usages actuels du terme « LLM ».
