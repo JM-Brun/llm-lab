@@ -21,7 +21,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 -->
 
 ::: {.chapter-lead}
-Attention compares token representations, but it does not inherently know their order. A positional mechanism supplies this information, allowing a model to distinguish, for example, "the cat chases the dog" from "the dog chases the cat". Transformers use several approaches; **RoPE** (*Rotary Position Embedding*) encodes position by rotating pairs of coordinates in queries and keys.
+Attention compares token representations, but it does not inherently know their order. A positional mechanism supplies this information, allowing a model to distinguish, for example, “the cat chases the dog” from “the dog chases the cat”. Transformers use several approaches; **RoPE** (*Rotary Position Embedding*) encodes position by rotating pairs of coordinates in queries and keys.
 :::
 
 ## Why add positional information?
@@ -78,10 +78,10 @@ Long-context behaviour also depends on the frequency base, training sequence len
 
 ## Common misconceptions
 
-- **"Attention naturally knows which token comes first."** Order must be supplied by a positional mechanism or an equivalent structure.
-- **"RoPE simply adds a position vector to the embeddings."** No: in its common form, RoPE rotates pairs of query and key coordinates.
-- **"RoPE guarantees long context windows."** No: performance beyond the training length depends on several design choices and must be evaluated.
-- **"RoPE also rotates the values $V$."** In the standard version, the operation acts on $Q$ and $K$; attention then aggregates values using the computed weights.
+- **“Attention naturally knows which token comes first.”** Order must be supplied by a positional mechanism or an equivalent structure.
+- **“RoPE simply adds a position vector to the embeddings.”** No: in its common form, RoPE rotates pairs of query and key coordinates.
+- **“RoPE guarantees long context windows.”** No: performance beyond the training length depends on several design choices and must be evaluated.
+- **“RoPE also rotates the values $V$.”** In the standard version, the operation acts on $Q$ and $K$; attention then aggregates values using the computed weights.
 
 ## How to validate an implementation
 

@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/positional-encoding"
-scope: "Présente les mécanismes qui injectent ou représentent l'ordre et la position des tokens dans un Transformer — encodages absolus et méthodes relatives telles que RoPE — et distingue information positionnelle et contenu des embeddings ; ne détaille pas le calcul complet de l'attention."
-purpose: "Le lecteur doit pouvoir expliquer pourquoi un Transformer a besoin d'information positionnelle, distinguer plusieurs façons de l'introduire et décrire à quel endroit du calcul elles interviennent."
+scope: "Présente les mécanismes qui injectent ou représentent l’ordre et la position des tokens dans un Transformer — encodages absolus et méthodes relatives telles que RoPE — et distingue information positionnelle et contenu des embeddings ; ne détaille pas le calcul complet de l’attention."
+purpose: "Le lecteur doit pouvoir expliquer pourquoi un Transformer a besoin d’information positionnelle, distinguer plusieurs façons de l’introduire et décrire à quel endroit du calcul elles interviennent."
 suggested_route:
   previous: "fr/embedding-space"
   next: "fr/contextualized-representations"
