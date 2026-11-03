@@ -53,6 +53,19 @@ Pour les arbres, la profondeur, le nombre de feuilles, les tailles de feuilles e
 
 **Précaution sur les notations asymptotiques :** écrire « complexité $O(N)$ » sans préciser l'objet compté, la famille de modèles, les hypothèses et l'algorithme est insuffisant. Il faut distinguer degrés de liberté statistiques, nombre de paramètres, coût mémoire et complexité temporelle d'entraînement.
 
+
+## Familles de modèles et capacité effective
+
+| Famille | Source de capacité / complexité | Tendance utile à connaître | Limite à ne pas oublier |
+|---|---|---|---|
+| Régression linéaire | Rang de la matrice de conception ; degrés de liberté effectifs sous pénalisation | Classe fonctionnelle contrainte, souvent stable | Biais si la relation est non linéaire ou si les interactions manquent |
+| Naive Bayes | Nombre de paramètres des distributions conditionnelles ; dépend du nombre de classes et du codage | Peut estimer des modèles simples avec peu de données | L'hypothèse de factorisation conditionnelle limite la représentation des dépendances entre variables |
+| Arbre de décision | Nombre de feuilles, profondeur, seuils testés et contraintes | Peut sélectionner des variables et représenter des interactions | La recherche parmi beaucoup de splits peut surajuster, même si peu de variables figurent dans l'arbre final |
+| Forêt aléatoire | Capacité des arbres, nombre de variables candidates et corrélation entre arbres | La moyenne stabilise souvent des arbres instables | Des arbres trop corrélés réduisent le bénéfice ; trop de randomisation affaiblit les arbres |
+| Gradient Boosting | Nombre d'étapes, profondeur/feuilles, learning rate et régularisation | Les corrections successives peuvent réduire le biais de représentation | L'ajout d'étapes peut finir par ajuster le bruit ; validation et early stopping restent essentiels |
+
+Le nombre de paramètres ou de degrés de liberté n'est pas directement comparable entre ces familles. Les hypothèses du modèle et le protocole d'apprentissage comptent autant que le décompte brut.
+
 ## La taille des données déplace le compromis
 
 ![Courbes conceptuelles de l'erreur d'entraînement et de validation en fonction de la complexité, pour deux tailles d'échantillon.](../images/complexity-sample-size.svg){fig-alt="Schéma qualitatif : l'erreur d'entraînement diminue avec la complexité ; l'erreur de validation atteint un minimum, situé plus à droite avec davantage de données. Ce n'est pas une loi empirique universelle."}
