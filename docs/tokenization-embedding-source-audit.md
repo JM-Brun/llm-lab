@@ -322,77 +322,69 @@ For the research papers below, the lesson currently captures the high-level prin
 
 ### 4.1 Mikolov et al. (2013) — [Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781)
 
-**Concepts in the source**
-- Learning vector representations of words from context/co-occurrence objectives.
-- Geometric relations between learned word vectors and the limits of treating a vector as a literal definition.
+**Primary-source coverage checked against the current bilingual page.**
 
-**LLM Lab coverage**
-- The embedding page explains learned vectors and similarity measures: **explained at introductory level**.
-- Historical Word2Vec objectives and the distinction between static word embeddings and modern token embeddings: **partial**.
+- Word2Vec learns static word-type vectors from context/co-occurrence. CBOW predicts a target word from its surrounding context; Skip-gram predicts surrounding words from a target word.
+- The current FR/EN embedding pages explicitly distinguish this one-vector-per-word-type representation from a Transformer table that maps token IDs (often subwords) to initial vectors, and from the contextualized hidden states produced by subsequent layers.
+- The page labels the contrast as conceptual and does not imply that Transformer embedding tables are initialized or trained like Word2Vec.
 
-**Gap / action**
-- Add a short contrast: Word2Vec-style static word vectors are not the same object as a Transformer token embedding table or a contextualized hidden state.
+**Coverage status:** the pedagogically necessary distinction is now **explained**. Negative-sampling and hierarchical-softmax derivations are not included; they are historical implementation details, not prerequisites for understanding the LLM lookup pipeline.
 
-**Visual decision:** the local original 2D embedding sketch is appropriate for intuition, provided it continues to label itself as schematic and warns that projection can distort distances. Do not copy paper figures.
+**Decision:** no further essential-path content or new figure. Keep the original embedding-space illustration schematic and preserve its projection caveat.
 
 ### 4.2 Ethayarajh (2019) — [How Contextual are Contextualized Word Representations?](https://arxiv.org/abs/1909.00512)
 
-**Concepts in the source**
-- Contextualized representations vary with context; the degree of contextualization differs by model/layer and is measurable.
-- Hidden representations should not be treated as static word types.
+**Primary source checked:** [ACL Anthology PDF](https://aclanthology.org/D19-1006.pdf).
 
-**LLM Lab coverage**
-- Token embeddings versus contextualized representations are **explicitly distinguished** in `embedding-space.qmd`.
-- The paper's quantitative analysis and model/layer-specific findings are **not deeply covered**.
+- Studies ELMo, BERT-base cased and GPT-2 by layer, using SemEval STS 2012–2016 sentences and words occurring in at least five distinct contexts.
+- Defines self-similarity (cosine between occurrences of the same word across contexts), intra-sentence similarity (word vectors against their sentence mean), and maximum explainable variance (MEV; variance of a word's contextual representations explained by its first principal component).
+- All non-input layers are anisotropic in the studied models. The authors subtract layer-specific random-vector baselines before interpreting contextuality; raw cosine values alone can therefore be misleading.
+- After anisotropy adjustment, self-similarity generally decreases in higher layers. GPT-2 is the most context-specific in its final layer in this study; ELMo, BERT and GPT-2 differ in how words within a sentence relate geometrically.
+- The anisotropy-adjusted MEV is below 5% on average, meaning a single static vector explains little of a word's context-dependent variation in this best-case PCA sense. This is not a general embedding-quality score.
 
-**Gap / action**
-- Cite it as evidence that contextual representations vary with context, not as proof that all models/layers contextualize equally.
+**LLM Lab coverage:** the original same-token/different-context diagram is now present in the FR/EN contextualized-representations pages; the advanced cosine-similarity page explains anisotropy and cautions against interpreting raw high cosine as semantic similarity.
 
-**Visual decision:** no copied paper chart. An original same-token/different-context diagram could be useful if the current embedding page does not already make this distinction visually.
+**Decision:** coverage is sufficient. Do not add the quantitative results to the essential path or copy the paper's plots; keep the study as motivation and a primary reference.
 
 ### 4.3 Li et al. (2020) — [On the Sentence Embeddings from Pre-trained Language Models](https://aclanthology.org/2020.emnlp-main.733/)
 
-**Concepts in the source**
-- Sentence embeddings derived from pretrained language models; properties and limitations of pooling/representing whole sentences.
-- Sentence-level vectors are a different target from token-level contextual states.
+**Primary source checked:** [ACL Anthology PDF](https://aclanthology.org/2020.emnlp-main.733.pdf).
 
-**LLM Lab coverage**
-- Token, contextualized, and sentence/document embeddings are **explicitly distinguished**.
-- Pooling choices and empirical comparisons are **partial**.
+- The paper studies sentence vectors obtained by mean-pooling the last one or two layers of BERT; in its setup this outperforms using the [CLS] vector. It does not study the token lookup operation itself.
+- It identifies anisotropy and frequency-related geometric distortions in BERT sentence embeddings and proposes BERT-flow: an invertible normalizing-flow transformation to a Gaussian latent space. The BERT parameters remain frozen; only the flow is optimized.
+- On seven STS benchmarks, BERT-flow reports up to +12.70 and an average +8.16 points in Spearman correlation over the BERT baseline in the reported configuration.
+- **Protocol caveat:** the `flow (target)` setting fits the flow on the target dataset's raw sentences (train + validation + test) without labels. This is unsupervised but transductive distribution adaptation, not a strictly inductive unseen-test evaluation. The paper also studies a flow fitted to raw NLI sentences without using their labels for the flow objective.
+- Results are specific to BERT-base/large, the tested pooling choices and STS tasks; they do not establish that BERT-flow improves every encoder or modern retrieval system.
 
-**Gap / action**
-- Keep sentence embeddings out of the main token-embedding lookup diagram. Add a link to a dedicated sentence-embedding resource only where semantic search/retrieval is taught.
+**LLM Lab coverage:** the advanced cosine-similarity page discusses BERT sentence-space anisotropy and links the paper. Token, contextualized and sentence/document embeddings are already distinguished.
 
-**Visual decision:** no figure integration needed for the current tokenization scope. A pooling diagram belongs in a future sentence-embedding deep dive.
+**Decision:** no new tokenization-page section. Keep BERT-flow as a sentence-embedding/post-processing example, not as a general correction for token embeddings or all LLMs.
 
 ### 4.4 Steck, Ekanadham & Kallus (2024) — [Is Cosine-Similarity of Embeddings Really About Similarity?](https://arxiv.org/abs/2403.05440)
 
-**Concepts in the source**
-- A critical analysis of interpreting cosine similarity as semantic similarity; the score's meaning depends on representation geometry and task context.
+**Primary source checked:** [arXiv PDF](https://arxiv.org/pdf/2403.05440) and [WWW 2024 Companion DOI](https://doi.org/10.1145/3589335.3651526).
 
-**LLM Lab coverage**
-- The embedding page states that a high cosine score does not prove textual equivalence or answer correctness: **explained at high level**.
-- The paper's formal argument and conditions are **partial**, owned by the related cosine-similarity deep dive.
+- The formal result concerns regularized linear matrix-factorization/linear-autoencoder models, not a direct theorem about all modern LLM embeddings.
+- With L2 regularization on the product of the factors, inverse diagonal rescalings can preserve the product and predictions while changing cosine similarities; some resulting similarities are therefore non-unique. With separate L2 regularization on each factor, the cosine solution is unique (up to irrelevant rotations), but uniqueness does not establish semantic correctness.
+- Experiments use simulated data with known five-cluster ground truth to illustrate how different regularization/rescaling choices alter cosine structure. They are not a user study or LLM benchmark.
+- The discussion of deep models is a caution about the implicit effects of combined regularizers, not a derivation for arbitrary deep architectures.
 
-**Gap / action**
-- Keep the overview cautious and link to the dedicated cosine-similarity page. Do not summarize the paper as “cosine is useless”; its result is a warning against unqualified interpretation.
+**LLM Lab coverage:** the advanced cosine-similarity page correctly bounds the claim to some regularized linear-model families and explicitly says this does not prove cosine fails for every modern encoder.
 
-**Visual decision:** use the existing original conceptual embedding-space illustration only as orientation. Do not use a 2D scatterplot to claim that cosine scores correspond to human semantic judgments.
+**Decision:** coverage is sufficient; no new essential-path content or figure.
 
 ### 4.5 Sentence Transformers — [Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html)
 
-**Concepts in the source**
-- Practical computation of sentence embeddings and similarity scores using a purpose-built library/model.
-- API usage and task-level interpretation of similarity.
+**Official documentation rechecked (2026-11-03):** [STS guide](https://www.sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html), [similarity API](https://www.sbert.net/docs/package_reference/util/similarity.html), and [model API](https://www.sbert.net/docs/package_reference/sentence_transformer/model.html).
 
-**LLM Lab coverage**
-- Sentence/document embeddings and the limits of cosine similarity are **explained conceptually**.
-- Concrete Sentence Transformers API usage is **not a core part of the tokenization lesson**.
+- The model exposes a configurable `similarity_fn_name`; common options include cosine, dot product, negative Euclidean distance and negative Manhattan distance. The STS guide presents cosine as the default in its example, not as a universal requirement.
+- For a model ending with a Normalize module, the documentation recommends dot product: dot product on normalized vectors is equivalent to cosine, but cosine re-normalizes and can be slower.
+- Current APIs also include MaxSim/MeanMaxSim for multi-vector/late-interaction use cases, reinforcing that a single pooled sentence vector and one cosine score are not universal.
+- The chosen metric must follow the specific model's training and model-card guidance.
 
-**Gap / action**
-- Keep it as a practical reference for sentence-level embeddings, not evidence that raw token embeddings are directly suitable for semantic search.
+**LLM Lab coverage:** the cosine-similarity page already tells readers to respect the encoder's documented scoring function and links to the official docs.
 
-**Visual decision:** documentation link/code example, not an imported figure.
+**Decision:** reference only; no API tutorial or exhaustive function catalogue in the tokenization lesson.
 
 ## 5. Current coverage map
 
@@ -663,5 +655,20 @@ Before turning the source inventory into lesson changes, the current `main` page
 
 1. **Completed:** checked the primary publication, [Takase et al., *Large Vocabulary Size Improves Large Language Models* (Findings of ACL 2025)](https://aclanthology.org/2025.findings-acl.57/), rather than relying on the secondary blog. The paper studies SentencePiece unigram vocabularies of 5k, 10k, 50k, 100k and 500k for English and Japanese, comparing a fixed 1T-token setup with a one-epoch setup. It reports better aggregate benchmark results for larger vocabularies in its tested configurations and notes that, at one epoch, smaller vocabularies yield more training tokens, especially for Japanese.
 2. **Completed:** added a compact, bilingual subsection to `site/en/tokenization-strategies.qmd` and `site/fr/tokenization-strategies.qmd`. It explains the \\(Vd\\) input-embedding parameter count, the output projection when weights are not tied, and why fixed token budgets and fixed data passes answer different questions.
-3. **Still needed:** check the exact definitions and experimental scope of the multilingual-fairness studies already cited on the pages. The “up to 15×” result must remain tied to the paper's tested language/model combinations and must not be presented as a universal language penalty.
-4. **Validation pending:** render the site and verify bilingual parity, links, figures, and code examples. No render or CI success is claimed by this audit update.
+3. **Completed (2026-11-03):** rechecked the primary sources for Ahia, Petrov, Wegmann, TokLens, Ali and Arnett. Their metrics, denominators, language/model samples and causal limits are documented in sections 3.2–3.5 and in the issue discussion. The 15× Petrov result remains tied to Shan vs English for ChatGPT/GPT-4; TokLens fertility and character-normalized parity are kept distinct.
+4. **Build validation:** the bilingual render and Python quality workflows passed on PRs #326 and #332. This is source/build evidence only, not browser inspection, accessibility certification or learner evidence; rendered browser checks remain tracked separately in #320 and #329.
+
+
+## 7. Source revalidation update — 2026-11-03
+
+- Tokenization sources Ahia, Petrov, Wegmann, TokLens, Ali and Arnett have been rechecked against the primary papers. The public advanced page now carries the key protocol limits and bilingual TokLens synthesis; the essential path was not expanded.
+- Embedding sources Mikolov, Ethayarajh, Li, Steck and Sentence Transformers documentation have been rechecked. Existing pages already cover the necessary distinctions: static Word2Vec word types vs Transformer token IDs/initial embeddings/contextualized states; anisotropy and cosine caveats; sentence-level embeddings vs token-level states; model-specific similarity functions.
+- The current conceptual same-token/different-context illustration is original and appropriately caveated. No paper figure reuse is required.
+- Build validation passed on the recent bilingual content PRs. No browser visual validation, global WCAG certification or learner-outcome evidence is claimed.
+
+### Remaining bounded work
+
+1. Reconcile the source-audit register with these findings and close only the sources whose coverage is now documented.
+2. Keep any further Word2Vec negative-sampling derivation or BERT-flow pooling details in a future advanced resource only if a concrete learner need appears; do not overload the essential tokenization/embedding path.
+3. If a dedicated sentence-embedding or semantic-search lesson is created, revisit the Sentence Transformers examples there rather than duplicating them in the token lookup lesson.
+4. Keep rendered browser checks in #320 (canonical pages) and #329 (future learner-facing exercise integration).
