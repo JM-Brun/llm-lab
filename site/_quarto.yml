@@ -10,9 +10,11 @@ project:
     - en/unicode-text.qmd
     - fr/tokenization-strategies.qmd
     - fr/tokenizer-design-evaluation.qmd
+    - fr/decoding-strategies.qmd
     - fr/training-examples.qmd
     - en/tokenization-strategies.qmd
     - en/tokenizer-design-evaluation.qmd
+    - en/decoding-strategies.qmd
     - en/training-examples.qmd
     - fr/mathematical-foundations.qmd
     - en/mathematical-foundations.qmd
@@ -177,6 +179,9 @@ website:
             - section: "Conception et évaluation des tokenizers"
               contents:
                 - fr/tokenizer-design-evaluation.qmd
+            - section: "Génération et stratégies de décodage"
+              contents:
+                - fr/decoding-strategies.qmd
             - section: "Formalisation et mathématiques de l'entraînement"
               contents:
                 - fr/language-modeling-math.qmd
@@ -257,6 +262,9 @@ website:
             - section: "Tokenizer design and evaluation"
               contents:
                 - en/tokenizer-design-evaluation.qmd
+            - section: "Generation and decoding strategies"
+              contents:
+                - en/decoding-strategies.qmd
             - section: "Formalization and training mathematics"
               contents:
                 - en/language-modeling-math.qmd
