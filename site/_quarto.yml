@@ -32,6 +32,8 @@ project:
     - en/gradients.qmd
     - fr/bias-variance.qmd
     - en/bias-variance.qmd
+    - fr/model-capacity-data-regimes.qmd
+    - en/model-capacity-data-regimes.qmd
     - fr/decision-trees.qmd
     - en/decision-trees.qmd
     - fr/gradient-boosting.qmd
@@ -169,6 +171,7 @@ website:
             - section: "Fondamentaux du Machine Learning"
               contents:
                 - fr/bias-variance.qmd
+                - fr/model-capacity-data-regimes.qmd
                 - fr/decision-trees.qmd
                 - fr/gradient-boosting.qmd
                 - fr/xgboost.qmd
@@ -241,6 +244,7 @@ website:
             - section: "Machine Learning fundamentals"
               contents:
                 - en/bias-variance.qmd
+                - en/model-capacity-data-regimes.qmd
                 - en/decision-trees.qmd
                 - en/gradient-boosting.qmd
                 - en/xgboost.qmd
