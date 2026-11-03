@@ -100,7 +100,10 @@ The learning path is:
 
 For the full lookup example, matrix dimensions, parameter counts, and representation geometry, return to [The embedding space](embedding-space.qmd). For the surrounding sequence-processing mechanism, continue to [Queries, keys, and values](queries-keys-values.qmd) and [Scaled dot-product attention](scaled-dot-product-attention.qmd).
 
+::: {.self-check}
 ## Check your understanding
+
+[Extended exercises on this topic](../en/exercises.qmd#transformer).
 
 Two occurrences of the **same token ID** appear in two different sentences. Assume the embedding matrix is unchanged:
 
@@ -112,4 +115,5 @@ You have understood this step if you can explain the difference between **identi
 
 ::: {.language-switch}
 **Language:** [Français](../fr/contextualized-representations.qmd) · [English](contextualized-representations.qmd)
+:::
 :::
