@@ -72,23 +72,11 @@ These are repository-maintenance guidelines, not reader-facing lessons; they bel
 
 ## Learning path
 
-The public site has a separate exercise-space entry point in French and English. The current pages define planned collections only; they do not claim that exercises or answer keys have been authored. The [full curriculum plan](docs/full-curriculum-plan.md) maps the intended scope to Raschka's book and distinguishes existing coverage from gaps.
+The [canonical learning path](docs/learning-path.md) is the single source of truth for module order, prerequisites, evidence and implementation status. The public site separates four destinations: Understand (conceptual explanations), Build (the G0–G9 from-scratch GPT route), Deepen (optional technical and mathematical depth), and Practice & experiment (exercises and evidence-producing investigations).
 
-The path is deliberately incremental. Modules can be revisited when tests or experiments expose gaps.
+The from-scratch route demonstrates inference before training, then prepares training examples and proceeds to learning and verification. G2 is a training-data branch, not a prerequisite for understanding inference. A1–A4 form a separate pretrained-model adaptation route; E1 covers evaluation across routes. These are not fixed calendar stages, and planned modules must not be read as completed implementations.
 
-| Stage | Focus | Evidence to produce |
-| --- | --- | --- |
-| 0 | Mathematical and numerical foundations | Loss and gradients checked against finite differences |
-| 1 | Text data and tokenization | Tested encode/decode, special tokens, and input-target windows |
-| 2 | Attention and Transformer blocks | Shape, causal-mask, and gradient tests |
-| 3 | A small GPT and pre-training loop | Training/validation curves and reproducible generation |
-| 4 | Reference implementation and pretrained weights | Numerical comparisons and a documented discrepancy analysis |
-| 5 | Supervised fine-tuning (SFT) | Fixed evaluation set and before/after error analysis |
-| 6 | LoRA, quantization, and memory trade-offs | Quality, memory, latency, and cost comparisons |
-| 7 | Preference optimization | Controlled experiment distinguishing SFT from preference learning |
-| 8 | Evaluation, efficiency, and robustness | Baselines, ablations, uncertainty, limitations, and failure analysis |
-
-See [the learning path](docs/learning-path.md) for module-level objectives, the [roadmap](docs/roadmap.md) for priorities and acceptance criteria, and the [experiment protocol](docs/experiment-protocol.md) for reporting requirements.
+See [the learning path](docs/learning-path.md) for the authoritative module-level objectives and evidence gates, the [roadmap](docs/roadmap.md) for priorities and acceptance criteria, and the [experiment protocol](docs/experiment-protocol.md) for reporting requirements.
 
 ## Repository layout
 
