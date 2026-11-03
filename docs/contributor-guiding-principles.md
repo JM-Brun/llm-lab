@@ -1,6 +1,6 @@
 # Contributor guiding principles
 
-These principles are the short version of the project's editorial and engineering contract. Use them when proposing a page, figure, implementation, experiment, or design change. For detailed procedures, see the [contributing guide](../CONTRIBUTING.md), the [reader-experience and editorial method](reader-experience-and-editorial-method.md), and the [concept-page template](concept-page-template.md).
+These principles are the short version of the project's editorial and engineering contract. Use them when proposing a page, figure, implementation, experiment, or design change. For detailed procedures, see the [contributing guide](../CONTRIBUTING.md), the [reader-experience and editorial method](reader-experience-and-editorial-method.md), and the [page-template guide](page-template-guide.md) and [page archetype implementation map](site-page-design-system.md).
 
 ## 1. Teach understanding, not just content
 
