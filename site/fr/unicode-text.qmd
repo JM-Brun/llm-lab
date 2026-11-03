@@ -1,7 +1,7 @@
 ---
 title: "Unicode, UTF-8 et normalisation du texte"
 subtitle: "Un approfondissement technique facultatif sur la représentation des chaînes"
-keywords: ["type:concept-lesson", "destination:understand", "topic:unicode-text", "level:core", "language:fr", "status:published"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:unicode-text", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -17,7 +17,7 @@ hierarchy:
   parents: ["fr/text-data"]
   children: []
 related: []
-tags: ["type:concept-lesson", "destination:understand", "topic:unicode-text", "level:core", "language:fr", "status:published"]
+tags: ["type:deep-dive", "destination:deepen", "topic:unicode-text", "level:advanced", "language:fr", "status:published"]
 -->
 
 Cette page est un **complément technique** à la [vue d'ensemble du parcours texte → tokens](text-data.qmd). Elle n'est pas nécessaire pour comprendre le pipeline général ; elle devient utile lorsqu'un texte semble identique à l'écran mais produit un encodage ou une tokenisation différents.
