@@ -28,6 +28,12 @@ A capable model must also move and store data efficiently. **Nemotron 3** illust
 Explain the complementarity of recurrent state and attention; distinguish total and active parameters; relate GQA, MTP, and quantization to their cost drivers; and separate general principles from version-specific characteristics.
 :::
 
+
+
+## The general principles behind this case
+
+The mechanisms in this case illustrate general trade-offs: quadratic but parallelizable attention, recurrent state with linear work, a KV cache that grows with context, and sparse MoE computation with total weights still needing to be hosted. For a model-independent analysis — equations, training, prefill, decode, and hardware parallelism — see the [guide to LLM complexity and parallelism](llm-computational-complexity.qmd).
+
 ## Why combine architectures?
 
 During autoregressive generation, a Transformer with global attention maintains a *key-value* (KV) cache that grows with context length. Each new token also attends over a longer history.
