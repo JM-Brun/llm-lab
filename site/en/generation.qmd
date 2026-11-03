@@ -35,12 +35,22 @@ An LLM does not write text in one block: it produces **one token at a time**. At
 ## The generation loop, step by step
 
 1. **Prepare the context.** The starting text is split into [tokens](text-data.qmd) and converted to token IDs. If the context exceeds the model's maximum window, it is truncated according to a model-specific rule.
-2. **Estimate the next-token distribution.** For every token in the vocabulary, the model produces a score and then a probability. This distribution depends on the current context: it is a conditional probability.
-3. **Select the next token.** A decoding rule (see below) turns the distribution into a single choice: either deterministic, or drawn at random according to the probabilities.
+2. **Run the forward pass.** The model processes the current context and computes, for the last position, an unnormalized score (*logit*) for every token in the vocabulary. The *softmax* transformation converts these scores into a probability distribution over the next token.
+3. **Decode and select the next token.** A decoding rule uses the logits or distribution to produce a choice: for example, the highest-probability token or a token drawn by sampling.
 4. **Append the token and repeat.** The selected token is added to the context, and the loop returns to step 2 with a context one token longer.
 5. **Stop.** Generation stops on an explicit criterion — an end-of-sequence token, a maximum length, or a rule imposed by the application — never because the model "finished thinking".
 
-Here, **decoding** means processing the model's output to obtain the next token: optionally transforming the logits or distribution, then selecting a token (by maximum probability or sampling). The model's [forward pass](transformer.qmd) ends with the logits; decoding follows it. More elaborate filters such as top-k and top-p are covered in the [advanced guide to decoding strategies](decoding-strategies.qmd).
+### What exactly does decoding include?
+
+**Decoding** is the procedure that turns the model output into the next token. It starts after the forward pass: the network computes logits, then decoding may transform those scores or the distribution (for example, with temperature or a filter) before selecting a token.
+
+Three levels should be distinguished:
+
+- **Forward pass:** network computation with fixed parameters, from the context to the logits.
+- **Decoding:** the procedure that uses those outputs to determine the next token — by maximum probability (*greedy decoding*) or sampling, possibly after transformation or filtering.
+- **Generation:** the complete iterative process that chains the forward pass, decoding, appending the token to the context, and checking the stopping criterion.
+
+The word *decoding* can cover different details across libraries and papers. Here, it refers to next-token selection and the processing that prepares it; it does not mean the Transformer's internal computation or the entire generation loop. More elaborate filters such as top-k and top-p are covered in the [advanced guide to decoding strategies](decoding-strategies.qmd).
 
 At each step, the context grows by one token: later predictions are therefore also conditioned on the tokens the model itself has just produced.
 
