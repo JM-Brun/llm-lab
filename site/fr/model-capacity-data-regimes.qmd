@@ -98,6 +98,8 @@ Ajouter des arbres à une forêt aléatoire standard réduit généralement le b
 
 Le boosting suit une autre logique : chaque arbre dépend du modèle courant et corrige une partie de la loss. La diversité vient de cette construction séquentielle, pas d'une moyenne de modèles indépendants. Ajouter des itérations peut d'abord améliorer la généralisation puis finir par ajuster du bruit ; le learning rate, la profondeur, les pénalités et l'early stopping sont donc importants.
 
+Les implémentations déplacent elles aussi le compromis. XGBoost pénalise explicitement le nombre de feuilles et les scores de feuilles. LightGBM choisit en général la feuille offrant le meilleur gain (*leaf-wise*) : il peut atteindre une baisse de loss importante avec moins de splits, mais produire des branches très profondes ; sur un petit échantillon, contrôler notamment `num_leaves`, `min_data_in_leaf` et éventuellement `max_depth` est important. CatBoost combine des statistiques catégorielles ordonnées et l'ordered boosting pour limiter certaines formes de fuite de cible et de prediction shift ; ses arbres symétriques contraignent aussi la forme des partitions. Ces mécanismes modifient les risques, sans établir un classement universel entre bibliothèques.
+
 Voir [arbres de décision](decision-trees.qmd), [Gradient Boosting](gradient-boosting.qmd), [XGBoost](xgboost.qmd), [LightGBM](lightgbm.qmd) et [CatBoost](catboost.qmd).
 
 ::: {.self-check}
