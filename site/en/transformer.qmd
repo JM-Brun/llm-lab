@@ -24,8 +24,11 @@ tags: ["type:system-overview", "destination:understand", "topic:transformer", "l
 A **GPT** is a language model built on an autoregressive Transformer: it receives a sequence of tokens — the context — and estimates, for every token in the vocabulary, the probability that it comes next. Three things are worth distinguishing to understand the system: the path the data follows through the network, the learned parameters that shape that path, and the generation loop that repeats the computation.
 :::
 
-::: {.callout-note title="What you should be able to do after this page"}
-You should be able to **follow a token's path through the network to the logits**, say what attention and the MLP each do, and tell apart the representations built along the way from the output scores. The final checkpoint recaps these three points.
+::: {.callout-note .learning-outcomes title="Learning outcomes"}
+You will be able to:
+- trace the computation from an input token sequence to the logits, identifying embeddings and positional information;
+- explain the distinct roles of self-attention and the MLP in a Transformer block;
+- distinguish contextualized representations, logits, and the selected token.
 :::
 
 ## The whole path, in one diagram
