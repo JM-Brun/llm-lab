@@ -15,7 +15,8 @@ The learner-facing course and the implementation dependency graph answer differe
 4. **Unpack representations and computation:** embeddings, positional information, contextual states, Transformer blocks, attention and causal masking.
 5. **Unpack prediction and decoding:** output logits, probabilities, selection strategies, stopping and inference-time efficiency.
 6. **Explain learning:** training corpora, context windows and shifted targets; then the next-token objective, loss, gradients, backpropagation, optimization, pretraining and validation. Only now introduce the full parameter-update loop.
-7. **Prepare and train:** when following the Build route, prepare a traceable corpus and tokenizer ([corpus preparation](../site/fr/corpus-preparation.qmd) / [EN](../site/en/corpus-preparation.qmd)), then construct context windows and shifted targets before implementing the training objective. This is not a prerequisite for understanding inference.\n8. **Explain adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation; keep these distinct.
+7. **Prepare and train:** when following the Build route, prepare a traceable corpus and tokenizer ([corpus preparation](../site/fr/corpus-preparation.qmd) / [EN](../site/en/corpus-preparation.qmd)), then construct context windows and shifted targets before implementing the training objective. This is not a prerequisite for understanding inference.
+8. **Explain adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation; keep these distinct.
 
 ## Page ownership: one canonical explanation, deliberate reminders
 
