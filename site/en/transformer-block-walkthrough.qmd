@@ -113,6 +113,8 @@ Normalization sits **inside the branch**, not on the trunk. The trunk (`x + ...`
 ```
 
 - The `rng` generator is supplied by the model and shared in stacking order: parameters become a **deterministic function of the configuration**.
+- `head_dim = d // H`: each head owns `d/H` contiguous columns — the slice bounds are recomputed in `_attention`.
+
 ::: {.callout-note collapse="true" title="GPT-2-specific initialization detail"}
 The reference implementation scales the standard deviation of residual projections according to depth:
 
@@ -122,7 +124,6 @@ residual_std = 0.02 / math.sqrt(2.0 * config.num_layers)
 
 This factor aims to control the scale of contributions accumulated along residual paths. It is an initialization choice inherited from GPT-2, not a mathematical requirement of Transformer blocks or a guarantee that variance remains exactly constant.
 :::
-- `head_dim = d // H`: each head owns `d/H` contiguous columns — the slice bounds are recomputed in `_attention`.
 
 Parameter creation follows: normalizations start at identity (`gamma` ones, `beta` zeros), then four `(d, d)` matrices for the Q, K, V and O projections, and two matrices for the MLP (`d -> mlp_hidden_dim -> d`).
 
