@@ -190,17 +190,6 @@ Next-token prediction guarantees neither the truth of a model's outputs nor huma
 The 2017 Transformer emerged from a broader history of attention mechanisms, sequence-to-sequence models, and pretraining objectives. For the timeline, its historiographical caveats, and the place of LLMs in the AI landscape, see the [history of Transformers](transformer-history.qmd).
 :::
 
-## 8. Where to go next in LLM Lab
-
-- [**GPT and Transformer**](transformer.qmd) — follow an autoregressive GPT's computation from representations to logits.
-- [**Further reading: scaling laws**](scaling-laws.qmd) — explore empirical relationships between parameters, data, compute, and performance.
-- [**Compare Transformer architectures**](transformer-architectures.qmd) — understand the differences between encoder, encoder–decoder, and decoder.
-- [**What next-token prediction does not prove**](llm-limits.qmd) — read performance without over-interpreting the objective.
-- [**Build a small GPT**](build-path.qmd) — follow the G0–G9 milestones.
-- [**Experimental evaluation**](experimental-evaluation.qmd) — define metrics, baselines, and interpretation limits.
-- [**Mathematical foundations**](mathematical-foundations.qmd) — connect logits, probabilities, loss, and gradients.
-- [**Research sources**](../references.qmd) — find the papers and studies cited in this panorama.
-
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-overview.qmd) · [English](llm-overview.qmd)
 :::
