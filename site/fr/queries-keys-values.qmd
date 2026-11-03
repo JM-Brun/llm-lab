@@ -30,15 +30,15 @@ Les requêtes, clés et valeurs ne sont pas trois types de tokens. Ce sont trois
   <span class="epistemic-badge badge-status">Architecture : Transformer</span>
 </div>
 
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes du pipeline LLM">
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes du parcours LLM">
   <a class="step-item" href="text-data.qmd">1. Texte</a>
-  <span class="step-arrow">→</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
-  <span class="step-arrow">→</span>
-  <span class="step-item active">3. Attention (Q, K, V)</span>
-  <span class="step-arrow">→</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">3. Attention (Q, K, V)</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="logits.qmd">4. Logits</a>
-  <span class="step-arrow">→</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="cross-entropy.qmd">5. Perte & Entraînement</a>
 </div>
 
