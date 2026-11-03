@@ -27,6 +27,7 @@ Ce glossaire donne une définition courte des termes rencontrés dans le site. I
 - **Modèle de langage** — modèle qui attribue une probabilité à une séquence de texte ou à ses prochains tokens, conditionnellement au contexte. Voir [Panorama : qu'est-ce qu'un LLM ?](llm-overview.qmd).
 - **Modèle génératif** — modèle qui définit une distribution permettant de produire de nouveaux échantillons, éventuellement conditionnés par une entrée ; il n'est pas nécessairement un modèle de langage.
 - **LLM (*large language model*)** — modèle de langage entraîné à grande échelle. Il n'existe pas de seuil universel de paramètres qui définisse cette catégorie ; voir [Lois d'échelle](scaling-laws.qmd).
+- **Loi d'échelle (*scaling law*)** — relation empirique entre une ressource d'entraînement (paramètres, données ou calcul) et une mesure telle que la perte ; elle dépend du régime étudié et ne fixe pas un seuil universel de LLM. Voir [Lois d'échelle](scaling-laws.qmd).
 
 ## Texte et données
 
@@ -77,7 +78,6 @@ Ces notions sont regroupées dans le parcours [Géométrie et interprétabilité
 - **Tenseur** — tableau de nombres organisé selon plusieurs axes. Sa forme indique la taille de chaque axe ; elle ne suffit pas à préciser le sens des données. Voir [Tenseurs](tensors.qmd).
 - **Encodage positionnel** — mécanisme qui fournit au modèle une information sur l'ordre des tokens. Les approches comprennent les encodages absolus, les biais relatifs et RoPE. Voir [Encodage positionnel et RoPE](positional-encoding.qmd).
 - **RoPE (*Rotary Position Embedding*)** — encodage positionnel qui applique des rotations dépendant de la position aux paires de coordonnées des requêtes et des clés.
-- **Loi d'échelle (*scaling law*)** — relation empirique entre une ressource d'entraînement (paramètres, données ou calcul) et une mesure telle que la perte ; elle dépend du régime étudié et ne fixe pas un seuil universel de LLM. Voir [Lois d'échelle](scaling-laws.qmd).
 - **Paramètre** — valeur apprise pendant l'entraînement.
 - **Fine-tuning** — poursuite de l'entraînement d'un modèle pré-entraîné sur un objectif ou un jeu de données particulier.
 
