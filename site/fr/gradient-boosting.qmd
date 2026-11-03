@@ -41,11 +41,11 @@ r_{im}=-\left[
 \right]_{F=F_{m-1}}.
 \]
 
-Ces valeurs sont les **pseudo-résidus**. Avec l'erreur quadratique, ils sont proportionnels aux résidus (y_i-F_{m-1}(x_i)). Avec d'autres losses, ils ne sont pas nécessairement la différence cible-prédiction.
+Ces valeurs sont les **pseudo-résidus**. Avec l'erreur quadratique, ils sont proportionnels aux résidus $y_i-F_{m-1}(x_i)$. Avec d'autres losses, ils ne sont pas nécessairement la différence cible-prédiction.
 
 ## Une itération
 
-1. Initialiser (F_0) par une constante minimisant la loss.
+1. Initialiser $F_0$ par une constante minimisant la loss.
 2. Calculer les pseudo-résidus du modèle courant.
 3. Ajuster un arbre à ces pseudo-résidus.
 4. Ajuster la contribution de ses feuilles selon la loss.
@@ -54,7 +54,11 @@ Ces valeurs sont les **pseudo-résidus**. Avec l'erreur quadratique, ils sont pr
 
 L'arbre suivant ne reconstruit pas toute la cible : il cherche une correction structurée des erreurs actuelles.
 
-\n\n![Une itération de Gradient Boosting, de l'ensemble courant à la correction ajoutée.](../images/gradient-boosting-iteration.svg){fig-alt="Schéma de la boucle : modèle courant, gradient négatif, arbre correctif, shrinkage, mise à jour et répétition."}\n\n## Boosting contre bagging
+
+
+![Une itération de Gradient Boosting, de l'ensemble courant à la correction ajoutée.](../images/gradient-boosting-iteration.svg){fig-alt="Schéma de la boucle : modèle courant, gradient négatif, arbre correctif, shrinkage, mise à jour et répétition."}
+
+## Boosting contre bagging
 
 | Bagging (forêt aléatoire) | Boosting |
 |---|---|
