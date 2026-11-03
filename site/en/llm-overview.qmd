@@ -54,11 +54,9 @@ The model learns statistical regularities in its data; this objective does not, 
 
 **GPT** (*Generative Pre-trained Transformer*) names a family of pretrained generative models built on the Transformer architecture. In common usage, classic GPT models are **decoder-only** Transformers trained to predict the next token. GPT and Transformer are therefore not synonyms: Transformer names an architecture family; GPT names a family of models using a particular configuration.
 
-Modern LLMs sit within AI and machine learning: they are generally deep neural language models, often (but not definitionally) Transformer-based. NLP is a field, not an architecture. Earlier NLP systems often relied on linguistic rules, hand-engineered features, or task-specific statistical/neural models; large pretrained language models learn reusable patterns from broad corpora and can be adapted across tasks. They still require task-specific evaluation and do not make specialized systems obsolete.
+Modern LLMs are deep-learning models within AI and machine learning; NLP is a field, not an architecture. Earlier NLP systems often relied on rules, hand-engineered features, or task-specific statistical/neural models. LLMs learn reusable patterns from broad corpora and can be adapted across tasks, but still require task-specific evaluation.
 
-For a side-by-side comparison of encoder-only, encoder–decoder and decoder-only architectures, objectives and typical uses, see the [architecture comparison](transformer-architectures.qmd).
-
-LLM Lab builds small, inspectable components to expose data flow, tensor shapes, masks, loss and decoding. Educational-scale models are not intended to reproduce the data, compute or capability of production LLMs; a randomly initialized reference model is expected to produce incoherent text until it is trained.
+LLM Lab uses small, inspectable models to teach mechanisms, not to reproduce production-scale capabilities. An untrained reference model is expected to produce incoherent text.
 
 ## 3. The generation process, from text to the next token
 
@@ -84,7 +82,7 @@ For complementary pedagogical perspectives, see [Hugging Face on pipeline stages
 
 ::: {.callout-note collapse="true" title="Optional: inference efficiency and the KV cache"}
 
-At each autoregressive step, the context grows. A straightforward implementation recomputes the full current window; the [reference GPT in this lab](build-path.qmd) deliberately does so for clarity and has no KV cache. Production inference engines commonly cache each layer's keys and values for past tokens, reducing repeated computation at the cost of memory and cache-management complexity. This changes inference efficiency, not the next-token objective.
+At each autoregressive step, the context grows. This lab's [reference GPT](build-path.qmd) recomputes the full current window for clarity and has no KV cache. Production engines often reuse per-layer keys and values from past tokens, trading memory and cache management for less repeated computation. This changes inference efficiency, not the next-token objective.
 
 :::
 
