@@ -20,7 +20,7 @@ related: []
 tags: ["type:historical-reference", "destination:reference", "topic:transformer-history", "level:reference", "language:fr", "status:published"]
 -->
 
-Le Transformer n'est pas apparu sans précurseurs. Son histoire combine les mécanismes d'attention développés pour la traduction neuronale, l'auto-attention, l'entraînement à grande échelle et des objectifs différents selon les familles de modèles. Cette chronologie est sélective : elle présente des jalons, pas une histoire exhaustive ni une causalité unique.
+Le Transformer de 2017 n'est pas apparu sans précurseurs. Son histoire combine les mécanismes d'attention développés pour la traduction neuronale, l'auto-attention, les modèles séquence-à-séquence, l'entraînement à grande échelle et des objectifs différents selon les familles de modèles. Cette chronologie est sélective : elle présente des jalons, pas une histoire exhaustive ni une causalité unique.
 
 ## Situer les LLM dans le paysage de l’IA
 
