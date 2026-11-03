@@ -21,7 +21,13 @@ tags: ["type:guided-build", "destination:build", "topic:reference-gpt-generation
 -->
 
 ::: {.chapter-lead}
-Ce fichier transforme les logits en séquence : à chaque étape, retraiter le contexte, lire les logits à la dernière position, choisir un token, l'ajouter, recommencer. C'est la dernière étape de la visite ; le [modèle](gpt-model-walkthrough.qmd) est supposé lu. Code : [`src/llm_lab/foundations/generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py).
+Ce fichier transforme les logits en séquence : à chaque étape, retraiter le contexte, lire les logits à la dernière position, choisir un token, l'ajouter, recommencer. Cette page est la cinquième et dernière étape (5 sur 5) de la visite guidée ; le [modèle](gpt-model-walkthrough.qmd) est supposé lu. Code : [`src/llm_lab/foundations/generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py).
+:::
+:::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
+À l'issue de cette visite, vous pourrez :
+- dérouler les étapes d'une génération à la main, fenêtre glissante comprise ;
+- expliquer pourquoi le mode glouton est reproductible sans graine et pourquoi la température ne change pas le modèle ;
+- distinguer les limites assumées (pas de cache KV, pas de règle d'arrêt) des oublis.
 :::
 
 ## Une étape de la boucle, dans l'ordre

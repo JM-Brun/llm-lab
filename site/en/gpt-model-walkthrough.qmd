@@ -21,7 +21,13 @@ tags: ["type:guided-build", "destination:build", "topic:reference-gpt-model", "l
 -->
 
 ::: {.chapter-lead}
-This file assembles the model: the input embeddings, the stacked blocks, the final normalization and the output projection to logits. Best read after the [configuration](gpt-config-walkthrough.qmd) and the [block](transformer-block-walkthrough.qmd). Source: [`src/llm_lab/foundations/gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py).
+This page is the fourth stop (4 of 5) of the guided tour. This file assembles the model: the input embeddings, the stacked blocks, the final normalization and the output projection to logits. Best read after the [configuration](gpt-config-walkthrough.qmd) and the [block](transformer-block-walkthrough.qmd). Source: [`src/llm_lab/foundations/gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py).
+:::
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this tour, you will be able to:
+- trace one forward pass's shapes, from `(B, T)` to `(B, T, V)`;
+- explain how learned absolute positions are added by broadcasting over the batch;
+- describe the causality evidence from the prefix-invariance test and the explicit parameter count.
 :::
 
 ## Building: one generator, one fixed order
@@ -109,6 +115,7 @@ The shape journey, line by line:
 - **Previous stop**: [the Transformer block (`transformer_block.py`)](transformer-block-walkthrough.qmd).
 - **Next stop**: [generation (`generate.py`)](gpt-generation-walkthrough.qmd).
 - **Concept pages**: [GPT and the Transformer](transformer.qmd), [embedding space](embedding-space.qmd), [position](positional-encoding.qmd), [logits](logits.qmd).
+- **Back to the path**: [Build a small GPT](build-path.qmd).
 - **Source**: [`gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py) · **Tests**: [`test_gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt.py).
 
 ::: {.language-switch}
