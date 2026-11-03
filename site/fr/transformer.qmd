@@ -9,7 +9,7 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/transformer"
 scope: "Suit le calcul d'un GPT autorégressif dans le réseau — embeddings, information de position, blocs Transformer, attention, MLP, chemins résiduels et normalisation — de la séquence de tokens en entrée jusqu'aux logits ; ne traite pas la génération comme simple boucle boîte noire ni l'apprentissage des paramètres comme sujet principal."
-purpose: "Le lecteur doit pouvoir retracer le chemin d'une séquence de tokens jusqu'aux logits, expliquer le rôle des principales opérations d'un bloc Transformer et distinguer représentations initiales, représentations contextualisées et scores de sortie."
+purpose: "Le lecteur doit pouvoir retracer le calcul jusqu’aux logits, expliquer les opérations principales d’un bloc Transformer, distinguer profondeur et largeur du réseau, et séparer représentations, scores et décodage."
 suggested_route:
   previous: "fr/llm-overview"
   next: "fr/generation"
@@ -28,7 +28,8 @@ Un **GPT** est un modèle de langage fondé sur un Transformer autorégressif : 
 Vous pourrez :
 - retracer le calcul depuis la séquence de tokens jusqu’aux logits, en repérant embeddings et information positionnelle ;
 - expliquer les rôles distincts de l’auto-attention et du MLP dans un bloc Transformer ;
-- distinguer représentations contextualisées, logits et token sélectionné.
+- distinguer représentations contextualisées, logits et token sélectionné ;
+- distinguer profondeur, largeur, nombre de têtes et dimensions internes du MLP.
 :::
 
 ## Le parcours complet, en un schéma
@@ -73,6 +74,17 @@ Pour voir ces opérations dans une implémentation concrète, sans les confondre
 ![Comparaison des rôles de l'auto-attention et du réseau feed-forward dans un bloc Transformer.](../images/attention-vs-mlp.svg){fig-alt="L'auto-attention permet des échanges entre positions autorisées ; le même réseau feed-forward est appliqué séparément à chaque position." width=100%}
 
 La distinction utile n'est pas que l'attention « comprendrait » les tokens et que le MLP ne le ferait pas : les deux transformations sont apprises. L'attention mélange l'information entre positions ; le MLP transforme chaque représentation localement, avec des poids partagés entre les positions.
+
+### Profondeur et largeur : deux dimensions de l’architecture
+
+Deux termes reviennent souvent pour décrire la taille d’un Transformer :
+
+- **Profondeur (*depth*) :** nombre de blocs Transformer empilés dans le réseau.
+- **Largeur (*width*) :** dimension des représentations qui circulent entre les blocs. Dans un GPT classique, elle correspond généralement à `d_model`, souvent appelée *hidden size* ou dimension du flux résiduel.
+
+Ces termes ne sont pas interchangeables avec les autres dimensions internes : le **nombre de têtes d’attention** indique combien de mécanismes sont calculés en parallèle ; `d_head` désigne la dimension des vecteurs d’une tête ; `d_ff` désigne la dimension intermédiaire du MLP, qui peut être plus grande que `d_model`.
+
+Le mot *width* est parfois utilisé plus largement pour d’autres dimensions internes : il faut donc vérifier quelle dimension est visée dans un article ou une fiche modèle. Pour les formes des tenseurs et les dimensions des projections, voir [Tenseurs](tensors.qmd) ; pour une configuration concrète, voir la [visite guidée de la configuration GPT](gpt-config-walkthrough.qmd). Profondeur et largeur décrivent la structure, mais ne suffisent pas à prédire les performances.
 
 ### Comprendre le calcul d'attention
 
