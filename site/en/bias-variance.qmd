@@ -45,7 +45,7 @@ An overly constrained model may underfit; a flexible model may learn sample-spec
 | Random forest | Aggregation often reduces variance | Tree correlation limits the gain |
 | Gradient boosting | Successive loss corrections | Iterations can also overfit |
 
-Do not automatically infer “low bias = high variance”. Statistical bias is not the gradient of a loss function.
+Do not automatically infer “low bias = high variance”. Statistical bias is not the gradient of a loss function. In XGBoost, the gradient and Hessian are local derivatives used to approximate the loss and compute leaf scores; they do not measure statistical bias and variance. See [XGBoost](xgboost.qmd).
 
 See also [Decision Trees](decision-trees.qmd) and [Gradient Boosting](gradient-boosting.qmd).
 
