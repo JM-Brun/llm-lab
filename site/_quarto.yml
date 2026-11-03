@@ -32,6 +32,8 @@ project:
     - en/gradients.qmd
     - fr/bias-variance.qmd
     - en/bias-variance.qmd
+    - fr/decision-trees.qmd
+    - en/decision-trees.qmd
     - fr/gradient-boosting.qmd
     - en/gradient-boosting.qmd
     - fr/xgboost.qmd
@@ -167,6 +169,7 @@ website:
             - section: "Fondamentaux du Machine Learning"
               contents:
                 - fr/bias-variance.qmd
+                - fr/decision-trees.qmd
                 - fr/gradient-boosting.qmd
                 - fr/xgboost.qmd
                 - fr/lightgbm.qmd
@@ -238,6 +241,7 @@ website:
             - section: "Machine Learning fundamentals"
               contents:
                 - en/bias-variance.qmd
+                - en/decision-trees.qmd
                 - en/gradient-boosting.qmd
                 - en/xgboost.qmd
                 - en/lightgbm.qmd
