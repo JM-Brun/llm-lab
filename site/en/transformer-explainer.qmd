@@ -21,7 +21,7 @@ tags: ["type:experiment-guide", "destination:practice", "topic:transformer-expla
 -->
 
 ::: {.chapter-lead}
-This activity does not explain GPT architecture a second time. It has you **observe a real GPT-2 run, test controlled hypotheses, and examine what the tool actually shows**. You will move from the interface to the computations, then to the limits of the experiment.
+Use the activity to **observe a real GPT-2 run, test controlled hypotheses, and examine what the tool actually shows**. Move from the interface to the computations, then assess the limits of the experiment.
 :::
 
 ::: {.callout-note}
