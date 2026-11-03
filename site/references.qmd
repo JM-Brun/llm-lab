@@ -370,3 +370,7 @@ Ces ressources sont utilisées dans l'étude de cas [Architectures hybrides : le
 - **Ainslie et al. (2023), [*GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints*](https://arxiv.org/abs/2305.13245)** — grouped-query attention.
 - **Leviathan et al. (2023), [*Fast Inference from Transformers via Speculative Decoding*](https://arxiv.org/abs/2211.17192)** — décodage spéculatif.
 - **Gloeckle et al. (2024), [*Better & Faster Large Language Models via Multi-token Prediction*](https://arxiv.org/abs/2404.19737)** — prédiction multi-token et génération.
+
+- **NVIDIA Developer Blog, [*Developing Nemotron 3.5 Lightning NVFP4 with QAD Using NVIDIA Model Optimizer*](https://developer.nvidia.com/blog/developing-nemotron-3-5-lightning-nvfp4-with-qad-using-nvidia-model-optimizer/)** — source primaire sur la quantification post-entraînement et la distillation QAD de Lightning 3.5.
+- **NVIDIA NeMo, [*Quantization (PTQ + QAD) — Nemotron 3.5 Lightning*](https://docs.nvidia.com/nemotron/latest/nemotron/lightning35/quantization.html)** — documentation de la recette PTQ puis QAD, du checkpoint et des métriques rapportées.
+- **NVIDIA, [*Nemotron 3.5 Super and Lightning*](https://research.nvidia.com/labs/nemotron/Nemotron-3.5-Super-and-Lightning/)** — page officielle de la famille 3.5 et de ses checkpoints.
