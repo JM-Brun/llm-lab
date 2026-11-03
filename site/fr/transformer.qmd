@@ -9,7 +9,7 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/transformer"
 scope: "Suit le calcul d'un GPT autorégressif dans le réseau — embeddings, information de position, blocs Transformer, attention, MLP, chemins résiduels et normalisation — de la séquence de tokens en entrée jusqu'aux logits ; ne traite pas la génération comme simple boucle boîte noire ni l'apprentissage des paramètres comme sujet principal."
-purpose: "Le lecteur doit pouvoir retracer le chemin d'une séquence de tokens jusqu'aux logits, expliquer le rôle des principales opérations d'un bloc Transformer et distinguer représentations initiales, représentations contextualisées et scores de sortie."
+purpose: "Le lecteur doit pouvoir retracer le calcul jusqu’aux logits, expliquer les opérations principales d’un bloc Transformer, distinguer profondeur et largeur du réseau, et séparer représentations, scores et décodage."
 suggested_route:
   previous: "fr/llm-overview"
   next: "fr/generation"
@@ -28,7 +28,8 @@ Un **GPT** est un modèle de langage fondé sur un Transformer autorégressif : 
 Vous pourrez :
 - retracer le calcul depuis la séquence de tokens jusqu’aux logits, en repérant embeddings et information positionnelle ;
 - expliquer les rôles distincts de l’auto-attention et du MLP dans un bloc Transformer ;
-- distinguer représentations contextualisées, logits et token sélectionné.
+- distinguer représentations contextualisées, logits et token sélectionné ;
+- distinguer profondeur, largeur, nombre de têtes et dimensions internes du MLP.
 :::
 
 ## Le parcours complet, en un schéma
@@ -74,6 +75,17 @@ Pour voir ces opérations dans une implémentation concrète, sans les confondre
 
 La distinction utile n'est pas que l'attention « comprendrait » les tokens et que le MLP ne le ferait pas : les deux transformations sont apprises. L'attention mélange l'information entre positions ; le MLP transforme chaque représentation localement, avec des poids partagés entre les positions.
 
+### Profondeur et largeur : deux dimensions de l’architecture
+
+Deux termes reviennent souvent pour décrire la taille d’un Transformer :
+
+- **Profondeur (*depth*) :** nombre de blocs Transformer empilés dans le réseau.
+- **Largeur (*width*) :** dimension des représentations qui circulent entre les blocs. Dans un GPT classique, elle correspond généralement à `d_model`, souvent appelée *hidden size* ou dimension du flux résiduel.
+
+Ces termes ne sont pas interchangeables avec les autres dimensions internes : le **nombre de têtes d’attention** indique combien de mécanismes sont calculés en parallèle ; `d_head` désigne la dimension des vecteurs d’une tête ; `d_ff` désigne la dimension intermédiaire du MLP, qui peut être plus grande que `d_model`.
+
+Le mot *width* est parfois utilisé plus largement pour d’autres dimensions internes : il faut donc vérifier quelle dimension est visée dans un article ou une fiche modèle. Pour les formes des tenseurs et les dimensions des projections, voir [Tenseurs](tensors.qmd) ; pour une configuration concrète, voir la [visite guidée de la configuration GPT](gpt-config-walkthrough.qmd). Profondeur et largeur décrivent la structure, mais ne suffisent pas à prédire les performances.
+
 ### Comprendre le calcul d'attention
 
 ![Étapes du calcul d'attention : scores, mise à l'échelle, masque, softmax et agrégation des valeurs.](../images/attention-calculation-flow.svg){fig-alt="Q et K produisent des scores qui sont mis à l'échelle et masqués avant le softmax. Les poids obtenus combinent les valeurs V pour produire les vecteurs de sortie." width=100%}
@@ -90,11 +102,43 @@ Les poids d'attention ne sont pas une explication complète d'une prédiction : 
 
 Après le dernier bloc, une projection de sortie produit les **logits** : un score non normalisé pour chaque token du vocabulaire. Le *softmax* les transforme en distribution de probabilité sur le token suivant. Ces probabilités ne disent rien, en elles-mêmes, de la vérité du texte ni de la calibration du modèle : voir [logits](logits.qmd), [probabilités](probabilites.qmd) et [vraisemblance](vraisemblance.qmd).
 
-Pendant la génération, une règle de sélection choisit le token suivant : maximum, échantillonnage ou méthode plus élaborée. Le token choisi rejoint le contexte, et le calcul recommence. La génération est donc **autorégressive** : le texte se construit token par token, et non en une seule prédiction de toute la réponse.
+### Exemple numérique : du contexte à une distribution
+
+Supposons que le contexte soit « Le chat » et que le vocabulaire jouet ne contienne que quatre candidats pour le prochain token. La projection de sortie produit, à titre **illustratif**, les logits suivants :
+
+| Token candidat | Logit | Probabilité après softmax |
+|---|---:|---:|
+| `dort` | 2 | 64,4 % |
+| `court` | 1 | 23,7 % |
+| `mange` | 0 | 8,7 % |
+| `joue` | −1 | 3,2 % |
+
+Les probabilités sont calculées par \(p_i = \exp(z_i)/\sum_j\exp(z_j)\). Ces nombres sont choisis pour rendre le calcul lisible : ils ne proviennent ni du GPT de référence du dépôt ni d'un modèle linguistique entraîné. Dans un vrai modèle, le vocabulaire comporte beaucoup plus de candidats et les logits dépendent du contexte, des paramètres et de la position considérée.
+
+Pendant la génération, une règle de sélection choisit le token suivant : maximum, échantillonnage ou méthode plus élaborée. Dans l'exemple jouet, la sélection gloutonne choisirait `dort`, tandis qu'un échantillonnage pourrait retenir un autre candidat selon les probabilités. Le token choisi rejoint le contexte, et le calcul recommence. La génération est donc **autorégressive** : le texte se construit token par token, et non en une seule prédiction de toute la réponse.
 
 ### Une passe avant n'est pas une boucle de génération
 
 Une **passe avant** (*forward pass*) reçoit le contexte disponible et calcule les logits pour les positions traitées. Pour choisir le token suivant, on lit les logits de la dernière position, puis une règle de décodage sélectionne un token. La **boucle de génération** répète ensuite : passe avant → sélection → ajout du token au contexte → nouvelle passe avant. Le réseau ne calcule jamais toute la réponse future en une seule passe.
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Voir les exercices approfondis sur la génération](exercises.qmd#generation) — cette vérification courte reprend l'exemple numérique de cette page.
+
+1. Si les logits des quatre candidats deviennent $(3, 2, 1, 0)$ au lieu de $(2, 1, 0, -1)$, le token glouton change-t-il ? Les probabilités restent-elles identiques ?
+2. Dans l'exemple, pourquoi le token ayant une probabilité de 64,4 % n'est-il pas nécessairement sélectionné lors d'un échantillonnage ?
+3. Après la sélection d'un token, pourquoi faut-il recalculer le contexte avant de prédire le suivant ?
+
+<details>
+<summary>Afficher les réponses et le raisonnement</summary>
+
+1. L'argmax ne change pas : le premier candidat reste maximal. Les probabilités restent également identiques, car ajouter la même constante à tous les logits ne change pas la softmax.
+2. L'échantillonnage tire un candidat selon la distribution : les autres candidats ont une probabilité non nulle. Le token le plus probable n'est donc pas garanti à chaque tirage.
+3. Le modèle est autorégressif : la distribution suivante est conditionnée par le nouveau préfixe, qui inclut le token ajouté. Il faut donc effectuer une nouvelle passe avant sur ce contexte actualisé.
+
+</details>
+:::
 
 ## Explorer en pratique
 

@@ -35,6 +35,9 @@ This glossary gives a concise first definition for terms used across the site. I
 - **Tokenization** — converting text into a sequence of token IDs.
 - **Vocabulary** — the set of tokens a tokenizer can represent.
 - **Prefix** — the part of a sequence already available to condition the next prediction.
+- **Forward pass** — the network computation that transforms the context into representations and logits while keeping model parameters fixed. See [GPT and Transformers](transformer.qmd).
+- **Decoding** — the procedure that uses logits or their distribution to select the next token; it follows the forward pass and is one step in generation. Do not confuse it with a **decoder**, a component of some Transformer architectures. See [Generating text](generation.qmd).
+- **Autoregressive generation** — an iterative process that selects a token, appends it to the context, and repeats until a stopping condition is met. See [Generating text](generation.qmd).
 - **Context window** — the amount of token context a model can process in a given input.
 
 ## Representations and geometry
@@ -61,6 +64,9 @@ These topics are grouped in the [Representation geometry and interpretability](e
 
 ## Transformer architecture
 
+- **Depth** — the number of Transformer blocks stacked in the network. See [GPT and Transformers](transformer.qmd).
+- **Width** — a term often used for the dimension of representations flowing between blocks (`d_model` or *hidden size* in a classic GPT); its meaning depends on context and should not be conflated with `d_ff` or `d_head`. See [GPT and Transformers](transformer.qmd).
+- **Hidden size** — the dimension of an internal representation vector; in classic GPT models, it usually corresponds to `d_model`, the residual-stream width.
 - **Transformer** — a family of neural architectures built around attention and representation transformations, introduced by Vaswani and colleagues in 2017. The term does not name a single model family. See the [Transformer overview](transformer.qmd) and [history](transformer-history.qmd).
 - **GPT (*Generative Pre-trained Transformer*)** — a family of pretrained generative models built on Transformers; classic GPT models use a decoder-only architecture and an autoregressive objective. GPT is not synonymous with Transformer. See [GPT and Transformer](transformer.qmd) and [Transformer architectures](transformer-architectures.qmd).
 - **Attention** — a mechanism that computes weights from queries and keys, then aggregates the corresponding values. See [Q, K, and V](queries-keys-values.qmd).

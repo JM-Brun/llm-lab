@@ -9,7 +9,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer"
 scope: "Follows an autoregressive GPT computation inside the network—from the input token sequence through embeddings, positional information, Transformer blocks, attention, MLP, residual paths, and normalization to logits; it does not treat generation as a black-box loop or parameter learning as its main subject."
-purpose: "Readers should be able to trace a token sequence through the network to the logits, explain the role of the main operations in a Transformer block, and distinguish initial embeddings, contextualized representations, and output scores."
+purpose: "Readers should be able to trace the computation to the logits, explain the main operations in a Transformer block, distinguish network depth from width, and separate representations, scores, and decoding."
 suggested_route:
   previous: "en/llm-overview"
   next: "en/generation"
@@ -28,7 +28,8 @@ A **GPT** is a language model built on an autoregressive Transformer: it receive
 You will be able to:
 - trace the computation from an input token sequence to the logits, identifying embeddings and positional information;
 - explain the distinct roles of self-attention and the MLP in a Transformer block;
-- distinguish contextualized representations, logits, and the selected token.
+- distinguish contextualized representations, logits, and the selected token;
+- distinguish depth, width, number of heads, and internal MLP dimensions.
 :::
 
 ## The whole path, in one diagram
@@ -74,6 +75,17 @@ To see these operations in a concrete implementation without mistaking them for 
 
 The useful distinction is not that attention "understands" the tokens while the MLP does not: both transformations are learned. Attention mixes information across positions; the MLP transforms each representation locally, with weights shared across positions.
 
+### Depth and width: two architectural dimensions
+
+Two terms are commonly used to describe the size of a Transformer:
+
+- **Depth:** the number of Transformer blocks stacked in the network.
+- **Width:** the dimension of the representations flowing between blocks. In a classic GPT, this usually corresponds to `d_model`, often called the *hidden size* or residual-stream dimension.
+
+These terms are not interchangeable with other internal dimensions: the **number of attention heads** tells you how many attention mechanisms run in parallel; `d_head` is the dimension of each head’s vectors; and `d_ff` is the intermediate MLP dimension, which can be larger than `d_model`.
+
+*Width* is sometimes used more broadly for other internal dimensions, so check which dimension an article or model card means. For tensor shapes and projection dimensions, see [Tensors](tensors.qmd); for a concrete configuration, see the [GPT configuration walkthrough](gpt-config-walkthrough.qmd). Depth and width describe network structure, but neither alone predicts model performance.
+
 ### Understanding the attention computation
 
 ![Steps of the attention computation: scores, scaling, masking, softmax, and aggregation of values.](../images/attention-calculation-flow.svg){fig-alt="Q and K produce scores that are scaled and masked before the softmax. The resulting weights combine the values V to produce the output vectors." width=100%}
@@ -90,11 +102,43 @@ Attention weights are not a complete explanation of a prediction: they describe 
 
 After the last block, an output projection produces the **logits**: one unnormalized score for every token in the vocabulary. The *softmax* turns them into a probability distribution over the next token. These probabilities say nothing, by themselves, about the truth of the text or the calibration of the model: see [logits](logits.qmd), [probabilities](probabilities.qmd), and [likelihood](likelihood.qmd).
 
-During generation, a selection rule picks the next token: maximum, sampling, or a more elaborate method. The chosen token joins the context, and the computation starts again. Generation is therefore **autoregressive**: text is built token by token, not as a single prediction of a whole answer.
+### Numerical example: from context to a distribution
+
+Suppose the context is "The cat" and a toy vocabulary contains only four candidates for the next token. The output projection produces the following **illustrative** logits:
+
+| Candidate token | Logit | Probability after softmax |
+|---|---:|---:|
+| `sleeps` | 2 | 64.4% |
+| `runs` | 1 | 23.7% |
+| `eats` | 0 | 8.7% |
+| `plays` | −1 | 3.2% |
+
+The probabilities are computed as \(p_i = \exp(z_i)/\sum_j\exp(z_j)\). These numbers are chosen to make the calculation readable: they do not come from the repository's reference GPT or from a trained language model. A real model has many more vocabulary candidates, and its logits depend on the context, parameters, and position being considered.
+
+During generation, a selection rule picks the next token: maximum, sampling, or a more elaborate method. In the toy example, greedy selection would choose `sleeps`, while sampling could select another candidate according to the probabilities. The chosen token joins the context, and the computation starts again. Generation is therefore **autoregressive**: text is built token by token, not as a single prediction of a whole answer.
 
 ### A forward pass is not a generation loop
 
 A **forward pass** receives the available context and computes the logits for the processed positions. To pick the next token, you read the logits of the last position, then a decoding rule selects one token. The **generation loop** then repeats: forward pass → selection → append the token to the context → new forward pass. The network never computes the whole future answer in one pass.
+
+::: {.self-check}
+## Check your understanding
+
+[See the extended generation exercises](exercises.qmd#generation) — this short check reuses the numerical example on this page.
+
+1. If the four candidates' logits become $(3, 2, 1, 0)$ instead of $(2, 1, 0, -1)$, does the greedy token change? Do the probabilities stay the same?
+2. In the example, why is the token with 64.4% probability not necessarily selected by sampling?
+3. After selecting a token, why must the context be recomputed before predicting the next one?
+
+<details>
+<summary>Show answers and reasoning</summary>
+
+1. The argmax does not change: the first candidate remains maximal. The probabilities also remain unchanged because adding the same constant to every logit leaves softmax unchanged.
+2. Sampling draws a candidate according to the distribution: the other candidates have non-zero probability. The most probable token is therefore not guaranteed on every draw.
+3. The model is autoregressive: the next distribution is conditioned on the updated prefix, which now includes the appended token. A new forward pass on that updated context is therefore required.
+
+</details>
+:::
 
 ## Explore in practice
 
