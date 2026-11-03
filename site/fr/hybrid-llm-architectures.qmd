@@ -48,7 +48,7 @@ Une architecture hybride alterne ces mécanismes : Mamba traite une grande parti
 
 ## MoE : capacité totale et calcul activé
 
-Une couche **Mixture of Experts** contient plusieurs réseaux experts ; un routeur sélectionne un sous-ensemble pour chaque token. Si (N) est le nombre total d'experts et (K < N) le nombre activé pour un token, le modèle dispose d'une grande capacité tout en n'effectuant qu'une partie du calcul expert par token.
+Une couche **Mixture of Experts** contient plusieurs réseaux experts ; un routeur sélectionne un sous-ensemble pour chaque token. Si $N$ est le nombre total d'experts et $K < N$ le nombre activé pour un token, le modèle dispose d'une grande capacité tout en n'effectuant qu'une partie du calcul expert par token.
 
 C'est la distinction entre **paramètres totaux** et **paramètres actifs**. Les paramètres non sélectionnés ne sont pas gratuits : ils doivent généralement rester stockés ou accessibles sur les accélérateurs. Le nombre actif renseigne surtout sur le calcul mobilisé par token ; le nombre total influence encore la mémoire nécessaire au modèle et les transferts de poids.
 
@@ -66,9 +66,9 @@ Pour une couche, une approximation de la mémoire du cache est :
 M_{KV} \approx 2 B T n_{KV} d_h b,
 \]
 
-où (B) est le batch, (T) la longueur du contexte, (n_{KV}) le nombre de têtes K/V, (d_h) leur dimension et (b) le nombre d'octets par élément. Le facteur 2 correspond aux clés et aux valeurs ; il faut sommer les couches d'attention.
+où $B$ est le batch, $T$ la longueur du contexte, $n_{KV}$ le nombre de têtes K/V, $d_h$ leur dimension et $b$ le nombre d'octets par élément. Le facteur 2 correspond aux clés et aux valeurs ; il faut sommer les couches d'attention.
 
-Réduire (n_{KV}) réduit approximativement le cache dans la même proportion. Ainsi, 32 têtes Q partageant 2 têtes KV donnent un ratio de 16 entre nombres de têtes, mais pas nécessairement un gain de latence de 16 : noyaux, matériel, batch et transferts mémoire interviennent aussi.
+Réduire $n_{KV}$ réduit approximativement le cache dans la même proportion. Ainsi, 32 têtes Q partageant 2 têtes KV donnent un ratio de 16 entre nombres de têtes, mais pas nécessairement un gain de latence de 16 : noyaux, matériel, batch et transferts mémoire interviennent aussi.
 
 ## Lire ensemble les choix de Nemotron 3
 

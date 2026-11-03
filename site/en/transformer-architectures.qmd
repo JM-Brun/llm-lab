@@ -12,10 +12,10 @@ scope: "Compares encoder-only, encoder–decoder, and decoder-only Transformer a
 purpose: "Readers should be able to explain how each family processes context, identify the differences between bidirectional self-attention, causal self-attention, and cross-attention, and understand why architecture alone does not determine a training objective or use."
 suggested_route:
   previous: null
-  next: "en/hybrid-llm-architectures"
+  next: null
 hierarchy:
   parents: ["en/llm-overview"]
-  children: ["en/hybrid-llm-architectures"]
+  children: []
 related: ["en/transformer-history", "en/transformer"]
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:en", "status:published"]
 -->
@@ -73,7 +73,7 @@ One family can be trained with several objectives; similar objectives can be imp
 
 The three families described here are major configurations of the **Transformer**. They do not cover every language- or sequence-modeling architecture: state-space models, recurrent architectures, and hybrids also exist. Conversely, a Transformer is not necessarily an LLM: architecture alone says nothing about model scale, data, or capabilities.
 
-The [hybrid architecture case study using Nemotron](hybrid-llm-architectures.qmd) shows how state-space layers, attention, and sparse computation can be combined. The [hybrid architecture case study using Nemotron](hybrid-llm-architectures.qmd) shows how state-space layers, attention, and sparse computation can be combined. The [hybrid architecture case study using Nemotron](hybrid-llm-architectures.qmd) shows how state-space layers, attention, and sparse computation can be combined. The [history of Transformers](transformer-history.qmd) places these architectures in the development of the field; the internal computation of the [decoder-only GPT used in this project](transformer.qmd) shows one particular implementation.
+For an optional look beyond the Transformer foundations covered here, see the [Nemotron hybrid architecture case study](hybrid-llm-architectures.qmd). For an optional look beyond the Transformer foundations covered here, see the [Nemotron hybrid architecture case study](hybrid-llm-architectures.qmd). For an optional look beyond the Transformer foundations covered here, see the [Nemotron hybrid architecture case study](hybrid-llm-architectures.qmd). The [history of Transformers](transformer-history.qmd) places these architectures in the development of the field; the internal computation of the [decoder-only GPT used in this project](transformer.qmd) shows one particular implementation.
 
 ::: {.self-check}
 ## Check your understanding

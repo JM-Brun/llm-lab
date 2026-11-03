@@ -77,10 +77,6 @@ These rules are **decoding choices**, not properties of the model: the same mode
 - **No memory across generations.** Each generation starts from the provided context; the model retains nothing beyond what appears in that context.
 - **Project status.** In this repository, generation from a local checkpoint remains planned work: the generation milestones of the [guided build](build-path.qmd) describe what is available and what remains to be built.
 
-
-
-For inference optimizations that accelerate this loop without removing its autoregressive nature, see the [Nemotron hybrid architecture and MTP case study](hybrid-llm-architectures.qmd).
-
 ::: {.self-check}
 ## Check your understanding
 

@@ -77,10 +77,6 @@ Ces règles sont des **choix de décodage**, pas des propriétés du modèle : l
 - **Pas de mémoire entre les générations.** Chaque génération repart du contexte fourni ; le modèle ne retient rien au-delà de ce qui figure dans ce contexte.
 - **État du projet.** Dans ce dépôt, la génération depuis un checkpoint local reste un chantier : les jalons de génération du [parcours guidé](build-path.qmd) décrivent ce qui est disponible et ce qui reste à construire.
 
-
-
-Pour approfondir les optimisations qui accélèrent cette boucle sans changer son caractère autorégressif, voir l’étude de cas sur [MTP et les architectures hybrides de Nemotron](hybrid-llm-architectures.qmd).
-
 ::: {.self-check}
 ## Vérifier sa compréhension
 

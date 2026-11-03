@@ -12,10 +12,10 @@ scope: "Compare les architectures Transformer encodeur seul, encodeur-décodeur 
 purpose: "Le lecteur doit pouvoir expliquer comment chaque famille traite le contexte, identifier les différences entre attention bidirectionnelle, causale et attention croisée, et comprendre pourquoi le choix d'architecture ne détermine pas à lui seul l'objectif d'entraînement ni l'usage."
 suggested_route:
   previous: null
-  next: "fr/hybrid-llm-architectures"
+  next: null
 hierarchy:
   parents: ["fr/llm-overview"]
-  children: ["fr/hybrid-llm-architectures"]
+  children: []
 related: ["fr/transformer-history", "fr/transformer"]
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:fr", "status:published"]
 -->
@@ -73,7 +73,7 @@ Une même famille peut être entraînée avec plusieurs objectifs ; un objectif 
 
 Les trois familles décrites ici sont les grandes configurations du **Transformer**. Elles ne couvrent pas toutes les architectures de modèles de langage ou de séquence : des modèles à espace d'état, des architectures récurrentes et des systèmes hybrides existent également. Inversement, un Transformer n'est pas nécessairement un LLM : l'architecture ne renseigne pas à elle seule sur l'échelle, les données ou les capacités du modèle.
 
-L’étude de cas sur les [architectures hybrides et Nemotron](hybrid-llm-architectures.qmd) montre comment des modèles à espace d’état, l’attention et le calcul parcimonieux peuvent être combinés. L’[historique des Transformers](transformer-history.qmd) situe ces architectures dans l’évolution de la recherche ; le calcul interne du [GPT décodeur seul retenu dans ce projet](transformer.qmd) en montre une réalisation particulière.
+Pour une lecture facultative des architectures qui dépassent ce socle Transformer, voir l’étude de cas sur les [architectures hybrides et Nemotron](hybrid-llm-architectures.qmd). L’[historique des Transformers](transformer-history.qmd) situe ces architectures dans l’évolution de la recherche ; le calcul interne du [GPT décodeur seul retenu dans ce projet](transformer.qmd) en montre une réalisation particulière.
 
 ::: {.self-check}
 ## Vérifier sa compréhension

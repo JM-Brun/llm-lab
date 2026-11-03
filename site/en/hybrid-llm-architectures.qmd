@@ -48,7 +48,7 @@ A hybrid architecture alternates them: Mamba processes much of the stream, while
 
 ## MoE: total capacity and active computation
 
-A **Mixture-of-Experts** layer contains multiple expert networks; a router selects a subset for each token. If (N) is the total number of experts and (K < N) the number activated for one token, the model can have substantial capacity while performing only part of the expert computation per token.
+A **Mixture-of-Experts** layer contains multiple expert networks; a router selects a subset for each token. If $N$ is the total number of experts and $K < N$ the number activated for one token, the model can have substantial capacity while performing only part of the expert computation per token.
 
 This is the distinction between **total parameters** and **active parameters**. Unselected parameters are not free: they generally still need to be stored or made accessible on accelerators. Active parameters mainly describe computation used per token; total parameters still affect model memory and weight transfers.
 
@@ -66,9 +66,9 @@ For one layer, an approximate cache-memory requirement is:
 M_{KV} \approx 2 B T n_{KV} d_h b,
 \]
 
-where (B) is batch size, (T) is context length, (n_{KV}) is the number of K/V heads, (d_h) is their dimension, and (b) is bytes per element. The factor 2 accounts for keys and values; sum across attention layers.
+where $B$ is batch size, $T$ is context length, $n_{KV}$ is the number of K/V heads, $d_h$ is their dimension, and $b$ is bytes per element. The factor 2 accounts for keys and values; sum across attention layers.
 
-Reducing (n_{KV}) reduces cache memory by approximately the same ratio. Thus, 32 query heads sharing 2 KV heads give a 16:1 ratio in head counts, but not necessarily a 16× latency gain: kernels, hardware, batch size, and memory transfers also matter.
+Reducing $n_{KV}$ reduces cache memory by approximately the same ratio. Thus, 32 query heads sharing 2 KV heads give a 16:1 ratio in head counts, but not necessarily a 16× latency gain: kernels, hardware, batch size, and memory transfers also matter.
 
 ## Reading Nemotron 3's choices together
 

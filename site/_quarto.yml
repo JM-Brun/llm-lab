@@ -120,7 +120,6 @@ website:
             - fr/llm-overview.qmd
             - fr/language-modeling-math.qmd
             - fr/transformer-architectures.qmd
-            - fr/hybrid-llm-architectures.qmd
             - fr/transformer.qmd
             - fr/generation.qmd
             - fr/llm-limits.qmd
@@ -172,6 +171,9 @@ website:
             - section: "Adaptation à l'inférence"
               contents:
                 - fr/in-context-learning.qmd
+            - section: "Architectures alternatives et efficacité"
+              contents:
+                - fr/hybrid-llm-architectures.qmd
             - section: "Outils mathématiques et géométrie"
               contents:
                 - fr/tensors.qmd
@@ -193,7 +195,6 @@ website:
             - en/llm-overview.qmd
             - en/language-modeling-math.qmd
             - en/transformer-architectures.qmd
-            - en/hybrid-llm-architectures.qmd
             - en/transformer.qmd
             - en/generation.qmd
             - en/llm-limits.qmd
@@ -245,6 +246,9 @@ website:
             - section: "Adaptation at inference"
               contents:
                 - en/in-context-learning.qmd
+            - section: "Alternative architectures and efficiency"
+              contents:
+                - en/hybrid-llm-architectures.qmd
             - section: "Mathematical tools and geometry"
               contents:
                 - en/tensors.qmd
