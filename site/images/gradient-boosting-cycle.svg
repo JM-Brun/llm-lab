@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 430" role="img" aria-labelledby="title desc">
+<title id="title">Gradient boosting: data, residuals, corrective trees, and additive updates</title>
+<desc id="desc">An original schematic: training data feed an initial predictor; predictions are compared with targets to calculate pseudo-residuals; a new tree is fitted to those values and added with shrinkage; the loop repeats.</desc>
+<rect width="1120" height="430" fill="#fff"/>
+<text x="560" y="35" text-anchor="middle" font-family="sans-serif" font-size="23" font-weight="700" fill="#173b2b">Gradient boosting: one corrective round</text>
+<g stroke="#286345" stroke-width="2.5" fill="#edf5ef">
+<rect x="25" y="120" width="160" height="130" rx="12"/>
+<rect x="230" y="120" width="160" height="130" rx="12"/>
+<rect x="435" y="120" width="160" height="130" rx="12"/>
+<rect x="640" y="120" width="160" height="130" rx="12"/>
+<rect x="845" y="120" width="235" height="130" rx="12"/>
+</g>
+<g font-family="sans-serif" fill="#183c2b" text-anchor="middle">
+<text x="105" y="151" font-size="17" font-weight="700">Training data</text>
+<text x="105" y="179" font-size="14">X and target y</text>
+<g stroke="#56816a" fill="#fff" stroke-width="1">
+<rect x="60" y="195" width="90" height="34"/><path d="M90 195 V229 M120 195 V229 M60 212 H150"/>
+</g>
+<text x="310" y="151" font-size="17" font-weight="700">Current model</text>
+<text x="310" y="179" font-size="14">Fₘ₋₁(x)</text>
+<text x="310" y="214" font-size="13">predictions ŷ</text>
+<text x="515" y="151" font-size="17" font-weight="700">Pseudo-residuals</text>
+<text x="515" y="179" font-size="14">− ∂ loss / ∂ prediction</text>
+<text x="515" y="214" font-size="13">correction targets</text>
+<text x="720" y="151" font-size="17" font-weight="700">Fit a tree</text>
+<text x="720" y="179" font-size="14">hₘ(x)</text>
+<path d="M720 198 V214 M720 202 L700 219 M720 202 L740 219" stroke="#286345" stroke-width="2" fill="none"/>
+<circle cx="720" cy="198" r="5" fill="#fff" stroke="#286345" stroke-width="2"/>
+<circle cx="700" cy="220" r="4" fill="#fff" stroke="#286345" stroke-width="2"/>
+<circle cx="740" cy="220" r="4" fill="#fff" stroke="#286345" stroke-width="2"/>
+<text x="962" y="151" font-size="17" font-weight="700">Add shrunken correction</text>
+<text x="962" y="179" font-size="14">Fₘ = Fₘ₋₁ + η hₘ</text>
+<text x="962" y="214" font-size="13">updated predictions</text>
+</g>
+<g stroke="#34495e" stroke-width="3" fill="none">
+<path d="M185 185 H225 M390 185 H430 M595 185 H635 M800 185 H840"/>
+</g>
+<g fill="#34495e">
+<path d="M218 177 L230 185 L218 193 Z"/><path d="M423 177 L435 185 L423 193 Z"/><path d="M628 177 L640 185 L628 193 Z"/><path d="M833 177 L845 185 L833 193 Z"/>
+</g>
+<path d="M962 255 V320 H105 V255" fill="none" stroke="#b16b25" stroke-width="2.5" stroke-dasharray="9 7"/>
+<path d="M96 265 L105 252 L114 265" fill="none" stroke="#b16b25" stroke-width="2.5"/>
+<text x="560" y="305" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#8a541f">Recompute the loss gradient and repeat; stop using validation / early stopping</text>
+<text x="560" y="390" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#666">Conceptual workflow. For a general loss, pseudo-residuals are not necessarily raw target-minus-prediction residuals.</text>
+</svg>
