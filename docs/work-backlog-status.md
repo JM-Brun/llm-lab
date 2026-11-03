@@ -248,3 +248,18 @@ This addendum records work completed after the earlier snapshot in this register
 2. Continue #191 design-system rendered/contrast work in #309/#310 without claiming browser evidence from source inspection.
 3. Reassess #316/#317 after the design-system work; keep them separate from the tokenizer/embedding source audit.
 4. Keep #320 and #329 at P2 until the relevant pages exist in a browser-reviewable form and time is allocated.
+
+## 13. Curriculum-map reconciliation — 2026-11-03
+
+- **#114:** closed after primary-source audits and the source register were reconciled in PR #333.
+- **#310:** the text-contrast fix (#324) and semantic SVG outline fixes (#335) are merged. The issue remains open for other color pairs and rendered/keyboard checks.
+- **#315:** closed after source-level exercise review; future learner-facing rendering is tracked in #329.
+- **#87:** milestone-to-page/source/code/test crosswalk is now reconciled in PR #336. Rendered EN/FR navigation inspection is moved to #337 (P2).
+- **#320 / #329 / #337:** all are deferred P2 browser-review tasks with distinct scopes; none is represented as completed.
+
+### Next sequence
+
+1. Validate and merge #336; then close the source-level curriculum-map lot #87 with the rendered navigation check transferred to #337.
+2. Continue #130/#78 source-level architecture and concept-to-code sequencing; #82 and #114 are no longer active source gates.
+3. Continue #191 remaining design-system checks; do not infer browser/accessibility compliance from source-level contrast ratios.
+4. Keep #316/#317 as separate rendered pedagogical audits; reassess after the source architecture and design-system work.
