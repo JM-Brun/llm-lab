@@ -11,10 +11,10 @@ scope: "Décompose l'erreur quadratique en biais, variance et bruit irréductibl
 purpose: "Diagnostiquer sous-ajustement et surapprentissage, et interpréter la sensibilité d'un modèle aux échantillons."
 suggested_route:
   previous: null
-  next: "fr/decision-trees"
+  next: "fr/model-capacity-data-regimes"
 hierarchy:
   parents: []
-  children: []
+  children: ["fr/model-capacity-data-regimes"]
 related: ["fr/gradient-boosting", "fr/xgboost"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:bias-variance", "level:applied", "language:fr", "status:published"]
 -->
