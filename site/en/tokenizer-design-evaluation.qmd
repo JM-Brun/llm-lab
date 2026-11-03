@@ -32,7 +32,7 @@ By the end of this page, you will be able to:
 - interpret metrics and studies of multilingual disparities with appropriate caution.
 :::
 
-### Vocabulary size is also an architecture and budget choice
+## 1. Vocabulary size: architecture and budget
 
 A larger subword vocabulary can represent some texts with fewer tokens, but it changes more than sequence length. With hidden dimension \\(d\\) and vocabulary size \\(V\\), an input embedding table has \\(Vd\\) parameters. A separate output projection over the vocabulary commonly has another \\(Vd\\) parameters; this second count does not apply in the same way when input and output weights are tied. A larger \\(V\\) can therefore increase parameter and memory costs even as it shortens sequences.
 
@@ -45,7 +45,7 @@ Takase et al. studied SentencePiece unigram vocabularies from 5k to 500k on Engl
 
 **Practical rule:** choose vocabulary size jointly with model architecture, language mix, data distribution, and compute budget. Compare both model quality and total system cost; token count alone is not enough.
 
-## 6. Reproducible comparison
+## 2. Reproducible comparison
 
 1. Fix the texts, encoding, cleaning, and document handling.
 2. Record the exact tokenizer, package version, encoding identifier, and parameters.
@@ -95,7 +95,7 @@ Research on multilingual tokenization costs does not always use the same metrics
 
 For fair comparison, report metrics by language and text type, and keep **representation cost**, **system cost**, and **task quality** separate. A shorter sequence is a real result, but it does not by itself demonstrate an overall improvement.
 
-## Evaluating a tokenizer: metrics, downstream performance, and multilingual equity {#tokenizer-evaluation}
+## 3. Evaluating a tokenizer: metrics, downstream performance, and multilingual equity {#tokenizer-evaluation}
 
 Comparing algorithms is not enough to establish whether a tokenizer is suitable for a use case. Several empirical questions must be separated; they do not collapse into one score.
 
