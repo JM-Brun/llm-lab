@@ -31,7 +31,7 @@ Think of a **catalogue with reference numbers**. The tokenizer splits text into 
 
 **First pass:** follow the diagram and keep the distinct roles of token, ID, and embedding in mind. You can leave Unicode details, BPE/WordPiece algorithms, and corpus preparation for later.
 
-**Go deeper:** compare real tokenizers, examine their trade-offs, then follow the lookup operation in [embedding space](embedding-space.qmd).
+[Tokenization strategies](tokenization-strategies.qmd) compare the trade-offs of real tokenizers; [embedding space](embedding-space.qmd) explains the lookup that maps each ID to a vector.
 :::
 
 ## Learning objectives
@@ -106,7 +106,7 @@ In the learning branch, the [training examples page](training-examples.qmd) expl
 | **Embedding** | A vector associated with an ID and used as an initial numerical representation. |
 | **Contextual representation** | A vector after neural-network processing, influenced by the other tokens in the sequence. |
 
-Low-level details are not required to follow this pipeline. To understand why visually identical strings can be encoded differently, see the [deep dive on Unicode, UTF-8, and normalization](unicode-text.qmd). For segmentation algorithms and their trade-offs, see [tokenization strategies](tokenization-strategies.qmd). Matrix dimensions and the precise role of embeddings are covered in [embedding space](embedding-space.qmd) and [tensors](tensors.qmd).
+Low-level details are not required to follow this pipeline. Visually identical strings can differ in their [Unicode representation, UTF-8 encoding, and normalization](unicode-text.qmd). Segmentation algorithms and their trade-offs are compared in [tokenization strategies](tokenization-strategies.qmd). Matrix dimensions and the role of embeddings belong to [embedding space](embedding-space.qmd) and [tensors](tensors.qmd).
 
 ### The same text, different segmentations
 
@@ -136,9 +136,9 @@ The figure illustrates that segmentation depends on a tokenizer’s rules and vo
 
 Token count is a measure of sequence length, not an overall quality score. A rigorous evaluation distinguishes representation efficiency, downstream task performance, differences across languages, and protocol reproducibility. Results depend on the corpus, task, model, and budgets being compared.
 
-For the definitions and research behind these dimensions, see **[Evaluating a tokenizer: metrics, downstream performance, and multilingual equity](tokenization-strategies.qmd#tokenizer-evaluation)**.
+[Tokenizer evaluation: metrics, downstream performance, and multilingual equity](tokenization-strategies.qmd#tokenizer-evaluation) compares these dimensions and the supporting research.
 
-### Where to explore the mechanisms
+### Related technical concepts
 
 
 
@@ -196,15 +196,7 @@ No. IDs are defined only within a tokenizer's vocabulary; ID 17 in one vocabular
 - **“An unknown string cannot be encoded.”** Not necessarily: byte-level tokenizers have base units that cover bytes, subject to their encoding rules.
 - **“The tokenizer is a Transformer layer.”** It is a separate stage, although the tokenizer and model must be compatible.
 
-## Go deeper: tokenization strategies
-
-The guide [Tokenization strategies: granularity, algorithms, and trade-offs](tokenization-strategies.qmd) compares word, character, byte, subword, BPE, WordPiece, and unigram approaches.
-
-## Next step
-
-Continue with [embedding space](embedding-space.qmd) to see how token IDs select rows from an embedding matrix, how tensor shapes change, and how later network layers produce contextualized representations.
-
-For the mathematical language used throughout the model, see [tensors](tensors.qmd) and [mathematical foundations](mathematical-foundations.qmd). The [full curriculum and source-coverage plan](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) gives the wider learning path.
+Each token ID selects a row from the [embedding matrix](embedding-space.qmd). [Tensors](tensors.qmd) describe the shapes and axes of these representations; [mathematical foundations](mathematical-foundations.qmd) make the operations used by the model explicit.
 
 :::: {.language-switch}
 **Language:** [Français](../fr/text-data.qmd) · [English](text-data.qmd)
