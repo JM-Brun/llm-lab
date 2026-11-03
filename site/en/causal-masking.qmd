@@ -74,7 +74,9 @@ $$
 
 Future positions then receive zero weight in ideal arithmetic. In practice, libraries may represent the mask as a boolean tensor or use an attention primitive that incorporates the constraint.
 
+::: {.callout-note collapse="true" title="Code API conventions (advanced)"}
 In code, **boolean-mask polarity is API-specific**. For example, in [PyTorch scaled dot-product attention](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html), `True` means that a position is allowed to participate in attention; in [PyTorch MultiheadAttention](https://docs.pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html), `True` in `attn_mask` means that the position is masked out. Do not transfer a boolean mask between APIs without checking its documented convention. This is separate from the causal rule itself: the allowed query-key pairs must still exclude future keys.
+:::
 
 ![Four-position causal mask.](../images/causal-attention-mask.svg){fig-alt="Lower-triangular matrix: each position can access itself and all earlier positions" width=100%}
 
@@ -104,8 +106,7 @@ Decoder-only Transformers such as GPT use this constraint to learn next-token pr
 </div>
 </details>
 
-## A decisive conceptual test
-
+::: {.callout-note collapse="true" title="Causal invariance test (optional)"}
 To strictly verify the absence of future information leakage: keep tokens up to position $t$ unchanged, modify a token at position $t' > t$, and verify that all outputs at positions $\le t$ remain numerically identical.
 
 ::: {.micro-workbench}
@@ -154,6 +155,7 @@ assert not np.allclose(out_ref[3], out_alt[3]), "Position 3 was expected to chan
 Formal invariance test passed: changing future representations has zero effect on past and present hidden states.
 :::
 :::
+:::
 
 ## Connections to other concepts
 
@@ -162,13 +164,13 @@ Formal invariance test passed: changing future representations has zero effect o
 - [Objective and mathematical foundations](mathematical-foundations.qmd) connects the constraint to next-token prediction and loss.
 - The [Transformer overview](transformer.qmd) places masking in the full architecture.
 
-## Code and implementation status
-
+::: {.callout-note collapse="true" title="Reference code and tests (advanced)"}
 A tested reference implementation is available in `src/llm_lab/foundations/attention.py` (`causal_mask` and `scaled_dot_product_attention`). The test suite in `tests/unit/test_attention.py` includes this causal invariance test, mask shape validations, and numerical checks.
 
 - [Causal mask implementation](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
 - [Temporal invariance unit tests](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
 - [Planned acceptance criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+:::
 
 <div class="route-nav-cards">
   <a class="route-nav-card" href="scaled-dot-product-attention.qmd">
