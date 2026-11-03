@@ -1,74 +1,66 @@
-# Reusable concept-page template
+# Concept-page quick start
 
-Use this as a **thinking scaffold**, not a mandatory page layout. Keep sections that serve the learner's question; omit or combine the rest. A short page with a clear scope is better than a long page padded to match a template.
+Use this file when creating or substantially revising a concept page. It is a **lightweight starting point**, not a required outline.
 
-## Suggested learning path
+The authoritative guidance is the [flexible page-template system](page-template-system.md); choose a more specific [page pattern](page-patterns.md) when the subject is primarily an algorithm, mathematical or physical concept, architecture, technology, method, or overview.
 
-1. **Question and motivation** — What problem does the concept solve? Why should an LLM learner care?
-2. **Intuition** — Give a mental model or concrete example, and state where the intuition stops being reliable.
-3. **Definition and notation** — Define the object precisely; introduce symbols, domains, dimensions, axes, and conventions before using them.
-4. **Worked example** — Trace a small example numerically or symbolically, showing intermediate steps.
-5. **Application in LLMs** — Explain where and why the concept is used; distinguish essential properties from common implementation choices.
-6. **Misconceptions and counterexamples** — Name common false beliefs or false equivalences, then demonstrate the limits with a counterexample or boundary case.
-7. **Implementation and verification** — Link to maintained code and tests where they exist. Explain tensor shapes, masks, numerical stability, invariants, and important edge cases. If not meaningfully executable, provide an algorithm or derivation and say why.
-8. **Exercises** — Ask questions that require recall, calculation, interpretation, or transfer. Hide answers by default using an accessible disclosure element; reveal a worked explanation, not only the final answer.
-9. **Limitations and open questions** — State assumptions, known failure modes, unresolved debates, and what the page does not establish.
-10. **Connections and next steps** — Link to prerequisites, related concepts, overview/synthesis pages, implementation, tests, and experiments in both directions where practical.
-11. **References and provenance** — Cite primary/official sources for claims, pedagogical sources for teaching approaches, and verified licences/attribution for reused assets.
+## Start with the question
 
-## Compact authoring skeleton
+Before choosing headings, write down:
 
-Adapt this structure to the site's existing Quarto conventions and page metadata; do not paste it blindly over a mature page.
+- **Question:** what should the reader understand?
+- **Context:** where does this concept matter in an LLM?
+- **Core idea:** what is the shortest accurate mental model?
+- **Boundary:** what important detail belongs elsewhere?
+
+Then select only the sections that support that outcome. A compact page may need just an intuition, definition, example, and limitation. A more technical page may need derivations, implementation details, or several examples. Do not add a heading merely because it appears in a suggested list.
+
+## Possible ingredients
+
+Use, combine, reorder, or omit as appropriate:
+
+1. Motivation and intuition.
+2. Definition, notation, assumptions, and conventions.
+3. Mechanism or formal derivation.
+4. Worked example or visual explanation.
+5. Application in an LLM.
+6. Properties, variants, and comparisons.
+7. Misconceptions, counterexamples, and limitations.
+8. Implementation, tests, or experiments when they exist.
+9. Exercises or a short self-check.
+10. Contextual connections and references.
+
+Keep essential assumptions and caveats visible. Put genuinely optional derivations, extended examples, and answer keys behind the existing accessible disclosure pattern.
+
+## Compact skeleton
+
+Adapt this skeleton; do not paste it over a mature page without review.
 
 ```markdown
-## The question
+<!-- State the specific question and scope in the opening. -->
 
 ## Intuition
 
-## Definition and notation
+## Definition and mechanism
 
-## Worked example
+## Example
 
-## Where it appears in LLMs
+## Application in LLMs
 
-## Common misconceptions and counterexamples
+## Limitations and common misconceptions
 
-## Implementation and tests
-
-## Exercises
-
-<details>
-<summary>Show answer and reasoning</summary>
-
-Explain the reasoning, assumptions, and any edge cases here.
-
-</details>
-
-## Limitations
-
-## Connections
-
-- Prerequisites:
-- Related concepts:
-- Implementation:
-- Tests or experiments:
-- Glossary terms:
+## Verify your understanding
 
 ## References
 ```
 
-## Editorial rules
+The headings above are suggestions, not mandatory sections. Delete, rename, merge, or add sections whenever the reader's question calls for it.
 
-- State the learner question and intended outcome near the top.
-- Separate formal claims from intuition, analogy, implementation conventions, and empirical findings.
-- Use one consistent notation throughout the page and across linked pages; explain any deliberate difference.
-- Prefer an original, legible visual when it reveals a structure that prose cannot show efficiently. Add captions, meaningful alt text, units/labels, provenance, and checked reuse rights.
-- Do not assert that cosine similarity is semantic similarity, that attention weights alone explain model reasoning, or that a projected embedding plot faithfully preserves the original geometry. Treat these as prompts to investigate assumptions, not slogans to repeat.
-- Use bidirectional links so readers can travel from explanation to canonical concept, code, tests, and back.
-- Consider glossary additions for stable technical terms, especially terms with multiple translations or overloaded meanings. The glossary should define briefly and point to the full explanation rather than duplicate it.
-- Keep the public page self-contained; links are for navigation and deeper study, not substitutes for necessary definitions or derivations.
-- Check the rendered page and the other language version, not just the source.
+## Before publishing
 
-## Acceptance question
-
-Can a reader explain the concept in their own words, use its notation correctly, work through a small example, identify at least one important limitation or misconception, and find the corresponding implementation or verification evidence when it exists?
+- Keep the page self-contained for its LLM-specific learning objective.
+- Use consistent notation and define symbols, dimensions, axes, and conventions.
+- Link to canonical neighbouring pages; do not duplicate their full explanations.
+- Maintain the `LLM-LAB-PAGE-MAP` comment and controlled tags from [page-metadata-schema.md](page-metadata-schema.md).
+- Reuse existing callouts and visual styles from [design-system.md](design-system.md).
+- Check the rendered page and its French/English counterpart.
