@@ -12,7 +12,7 @@ scope: "Guide la construction progressive d'un petit GPT décodeur seul à parti
 purpose: "Le lecteur doit pouvoir suivre l'ordre de construction module par module à travers les visites guidées, exécuter le code de référence et ses tests, vérifier chaque jalon disponible, et expliquer pourquoi un GPT initialisé aléatoirement génère un texte incohérent alors que sa mécanique fonctionne."
 suggested_route:
   previous: null
-  next: "fr/exercises"
+  next: "fr/corpus-preparation"
 hierarchy:
   parents: ["fr/index", "fr/llm-overview"]
   children: ["fr/gpt-config-walkthrough", "fr/gpt-ops-walkthrough", "fr/transformer-block-walkthrough", "fr/gpt-model-walkthrough", "fr/gpt-generation-walkthrough", "fr/corpus-preparation"]
