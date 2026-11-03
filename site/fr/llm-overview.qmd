@@ -57,17 +57,11 @@ Le modèle apprend des régularités statistiques des données ; cet objectif ne
 
 Le schéma distingue les transformations successives du contexte, le calcul effectué par le modèle et la sélection du prochain token. Le GPT ne se déplace pas dans ce processus : ses paramètres restent fixes pendant l’inférence ; c’est le contexte qui s’enrichit à chaque itération.
 
-```{mermaid}
-flowchart LR
-  A["Texte et contexte<br/>prompt + échanges précédents"] --> B["Préparer l'entrée<br/>découper et représenter le texte"]
-  subgraph GPT["Modèle GPT · paramètres fixes"]
-    C["Traiter le contexte<br/>combiner les informations utiles"] --> D["Évaluer les continuations<br/>estimer leur plausibilité"]
-  end
-  B --> C
-  D --> E["Choisir un token<br/>règle de décodage"]
-  E --> F["Enrichir le contexte<br/>ajouter le token choisi"]
-  F -. "répéter avec le nouveau contexte" .-> B
-```
+![Le processus autorégressif de génération : le contexte est préparé, traité par un GPT aux paramètres fixes, puis enrichi du token sélectionné.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Schéma en quatre phases : texte et contexte, préparation de l’entrée, traitement par un GPT aux paramètres fixes, sélection d’un token et ajout au contexte. Une boucle indique la répétition du processus."}
+
+*Figure — Vue d’ensemble conceptuelle. Les pourcentages de continuations sont illustratifs ; ils ne correspondent pas à la sortie mesurée d’un modèle particulier.*
+
+Pour situer cette représentation parmi d’autres approches pédagogiques, voir les ressources de [Hugging Face sur les étapes d’un pipeline](../references.qmd#pipeline-et-génération-autoregressive), [Jay Alammar sur la visualisation des Transformers](../references.qmd#visualiser-le-transformer) et [Raff, Farris et Biderman sur la transformation des entrées en sorties](../references.qmd#transformers-comment-les-entrees-deviennent-des-sorties).
 
 ### Les quatre grandes opérations
 
