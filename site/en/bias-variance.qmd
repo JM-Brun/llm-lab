@@ -1,0 +1,71 @@
+---
+title: "Bias, variance, and generalization"
+subtitle: "Underfitting, overfitting, and prediction stability"
+keywords: ["type:concept-lesson", "destination:deepen", "topic:bias-variance", "level:applied", "language:en", "status:published"]
+lang: en
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/bias-variance"
+scope: "Decomposes squared prediction error into bias, variance, and irreducible noise under classical regression assumptions."
+purpose: "Diagnose underfitting and overfitting and interpret model sensitivity to training samples."
+suggested_route:
+  previous: null
+  next: "en/gradient-boosting"
+hierarchy:
+  parents: []
+  children: []
+related: ["en/gradient-boosting", "en/xgboost"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:bias-variance", "level:applied", "language:en", "status:published"]
+-->
+::: {.chapter-lead}
+The bias-variance trade-off describes distinct sources of generalization error. It is not a universal model-selection rule.
+:::
+## Classical decomposition
+
+For regression with squared-error loss, at a fixed input (x):
+
+\[
+\mathbb{E}_{D,\varepsilon}[(Y-\hat f_D(x))^2]
+=\operatorname{Bias}(\hat f(x))^2+\operatorname{Var}(\hat f(x))+\sigma^2(x).
+\]
+
+(D) is a random training sample; (hat f_D) the learned model; (sigma^2(x)) conditional irreducible noise. This identity assumes a setting such as (Y=f(x)+\varepsilon), with zero-mean conditional noise.
+
+- **Bias**: gap between average prediction across possible samples and the target function.
+- **Variance**: sensitivity of predictions to changes in the training sample.
+- **Irreducible noise**: target uncertainty conditional on observed features.
+
+An overly constrained model may underfit; a flexible model may learn sample-specific fluctuations. A widening train-validation gap signals possible overfitting, but does not prove its cause. Complexity depends on depth, regularization, data, noise, and optimization; it is not a universal scalar.
+
+| Mechanism | Possible tendency | Qualification |
+|---|---|---|
+| Low-flexibility linear model | Higher bias | Misspecification may dominate |
+| Deep tree | Low training error, instability | Depth does not summarize all complexity |
+| Random forest | Aggregation often reduces variance | Tree correlation limits the gain |
+| Gradient boosting | Successive loss corrections | Iterations can also overfit |
+
+Do not automatically infer “low bias = high variance”. Statistical bias is not the gradient of a loss function.
+
+## Evaluate the trade-off
+
+Split training, validation, and test data before tuning; compare learning curves; repeat splits when needed; tune on validation and reserve test data for final estimation. Compare against a simple baseline.
+
+Deep trees represent interactions but are often unstable. Bagging aggregates independent trees; boosting builds successive corrections. See [Gradient Boosting](gradient-boosting.qmd).
+
+::: {.self-check}
+## Check your understanding
+1. Why cannot tree depth remove irreducible noise?
+<details><summary>Show answer</summary>Noise describes target variability conditional on observed features, not insufficient model capacity.</details>
+2. Does a train-validation gap prove high variance?
+<details><summary>Show answer</summary>No: leakage, distribution shift, or a small validation set can also distort the diagnosis.</details>
+3. Does this decomposition apply to every metric?
+<details><summary>Show answer</summary>No, the stated identity concerns squared-error loss under specific assumptions.</details>
+:::
+## References
+- [The Elements of Statistical Learning](https://hastie.su.domains/ElemStatLearn/), Chapters 2 and 7.
+- [Breiman (2001), Random Forests](https://www.stat.berkeley.edu/~breiman/randomforest2001.pdf).
+- [AiEdge — GBM vs XGBoost vs LightGBM vs CatBoost](https://newsletter.theaiedge.io/p/gbm-vs-xgboost-vs-lightgbm-vs-catboost).
+::: {.language-switch}
+[Français](../fr/bias-variance.qmd) · [English](bias-variance.qmd)
+:::
