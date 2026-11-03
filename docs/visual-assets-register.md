@@ -201,6 +201,6 @@ The following original SVG diagrams were added with the optional Machine Learnin
 |---|---|---|
 | `site/images/bias-variance-decomposition.svg` | FR/EN bias-variance pages | Illustrates the usual qualitative shape of squared bias, variance, total error, and irreducible noise. Curves are conceptual, not fitted or measured; the decomposition applies under stated regression/squared-loss assumptions. |
 | `site/images/gradient-boosting-iteration.svg` | FR/EN Gradient Boosting pages | Shows one additive boosting round: current model, negative gradient, weak tree, shrinkage, update, and repetition. Leaf fitting depends on the chosen loss and implementation. |
-| `site/images/tree-growth-strategies.svg` | FR/EN LightGBM and CatBoost pages | Contrasts level-wise, leaf-wise, and symmetric growth. Shapes are schematic, not exact algorithm traces or universal defaults. |
+| `site/images/tree-growth-strategies.svg` | FR/EN decision-tree, LightGBM, and CatBoost pages | Contrasts level-wise, leaf-wise, and symmetric growth. Shapes are schematic, not exact algorithm traces or universal defaults. |
 
 Attribution and licence status: these files are original project illustrations introduced in this contribution. The repository's general licence/provenance policy remains subject to the project-level decision recorded elsewhere; do not infer a separate asset licence from their presence in the repository. Review the rendered diagrams at desktop and mobile widths and keep their alt text/captions synchronized with the page explanations.
