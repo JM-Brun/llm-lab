@@ -40,6 +40,10 @@ Le dessin représente une seule paire de coordonnées. En pratique, RoPE agit su
 
 Ces approches injectent l'information positionnelle à des endroits différents et n'ont pas exactement les mêmes propriétés.
 
+![Où l'information de position entre dans le calcul : en entrée pour un encodage absolu, dans les requêtes et les clés pour RoPE.](../images/positional-info-insertion-fr.svg){fig-alt="Un encodage absolu est ajouté aux embeddings en entrée, avant toute projection. RoPE applique des rotations aux requêtes et aux clés après leurs projections, avant le produit QK, si bien que les scores d'attention portent l'information de position." width=100%}
+
+**Cas de RoPE.** L'information de position est injectée en faisant tourner les représentations des requêtes et des clés **après leurs projections et avant le produit $QK^\top$**. Elle modifie donc les scores d'attention eux-mêmes ; ce n'est pas une opération appliquée après l'attention. La section suivante détaille le calcul qui le montre.
+
 ## L'intuition mathématique de RoPE
 
 Pour une paire de coordonnées $(x_1,x_2)$, une rotation d'angle $\theta$ s'écrit :
