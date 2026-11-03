@@ -60,7 +60,7 @@ XGBoost evaluates candidate thresholds. Its historical pre-sorted columns and la
 Depth, leaf count, penalties, learning rate, subsampling, and early stopping control different aspects. Regularization does not guarantee generalization: validation design, leakage, and distribution shift still matter.
 
 ::: {.callout-warning}
-**Do not equate derivatives with bias-variance.** The gradient measures local loss slope; the Hessian measures local curvature. Bias and variance describe prediction-error distributions across possible training samples.
+**Do not equate derivatives with bias-variance.** The gradient measures local loss slope; the Hessian measures local curvature. Bias and variance describe prediction-error distributions across possible training samples. Curvature information refines the local approximation and leaf-score calculation; it is not a statistical-variance penalty. XGBoost's explicit regularization is provided by $\gamma$, $\lambda$, and structural constraints.
 :::
 ::: {.self-check}
 ## Check your understanding
