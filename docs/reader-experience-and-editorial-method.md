@@ -45,6 +45,8 @@ Use headings, concise callouts, diagrams, links, and—where it improves usabili
 
 ## 2. Page types have different jobs
 
+Use the [page-template guide](page-template-guide.md) for reusable starting structures and the [page archetype implementation map](site-page-design-system.md) to map the existing metadata types to those structures. These templates operationalize the distinctions below; they do not replace this editorial contract.
+
 Do not force every page into an identical chapter template. Choose the page type first and use the relevant contract.
 
 ### A. Orientation or system overview

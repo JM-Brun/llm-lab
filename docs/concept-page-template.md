@@ -1,6 +1,6 @@
 # Reusable concept-page template
 
-Use this as a **thinking scaffold**, not a mandatory page layout. Keep sections that serve the learner's question; omit or combine the rest. A short page with a clear scope is better than a long page padded to match a template.
+Use this as the **concept-page archetype** in the [page-template guide](page-template-guide.md), not as a mandatory page layout. The [page archetype implementation map](site-page-design-system.md) links this template to the existing editorial and visual rules. Keep sections that serve the learner's question; omit or combine the rest. A short page with a clear scope is better than a long page padded to match a template.
 
 ## Suggested learning path
 
@@ -11,8 +11,8 @@ Use this as a **thinking scaffold**, not a mandatory page layout. Keep sections 
 5. **Application in LLMs** — Explain where and why the concept is used; distinguish essential properties from common implementation choices.
 6. **Misconceptions and counterexamples** — Name common false beliefs or false equivalences, then demonstrate the limits with a counterexample or boundary case.
 7. **Implementation and verification** — Link to maintained code and tests where they exist. Explain tensor shapes, masks, numerical stability, invariants, and important edge cases. If not meaningfully executable, provide an algorithm or derivation and say why.
-8. **Exercises** — Ask questions that require recall, calculation, interpretation, or transfer. Hide answers by default using an accessible disclosure element; reveal a worked explanation, not only the final answer.
-9. **Limitations and open questions** — State assumptions, known failure modes, unresolved debates, and what the page does not establish.
+8. **Exercises and self-checks** — Ask questions that require recall, calculation, interpretation, or transfer. Keep the exercise area collapsed by default when it is supplementary to the main explanation; keep each answer hidden by default using an accessible disclosure element. Reveal a worked explanation, not only the final answer.
+9. **Limitations and open questions** — State assumptions, known failure modes, unresolved debates, and what the page does not establish. If this is a useful caveat rather than a core step, use a collapsed callout instead of a top-level section.
 10. **Connections and next steps** — Link to prerequisites, related concepts, overview/synthesis pages, implementation, tests, and experiments in both directions where practical.
 11. **References and provenance** — Cite primary/official sources for claims, pedagogical sources for teaching approaches, and verified licences/attribution for reused assets.
 
@@ -67,6 +67,7 @@ Explain the reasoning, assumptions, and any edge cases here.
 - Use bidirectional links so readers can travel from explanation to canonical concept, code, tests, and back.
 - Consider glossary additions for stable technical terms, especially terms with multiple translations or overloaded meanings. The glossary should define briefly and point to the full explanation rather than duplicate it.
 - Keep the public page self-contained; links are for navigation and deeper study, not substitutes for necessary definitions or derivations.
+- Use the shared Quarto patterns documented in [the page-template guide](page-template-guide.md): learning outcomes and supplementary checks are collapsed by default; core explanations remain visible.
 - Check the rendered page and the other language version, not just the source.
 
 ## Acceptance question

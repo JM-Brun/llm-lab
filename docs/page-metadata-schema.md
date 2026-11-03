@@ -12,6 +12,10 @@ Every reader-facing `.qmd` page carries the same information in two forms:
 
 The comment begins with `LLM-LAB-PAGE-MAP v1`. Keep the marker stable so scripts can locate the block.
 
+## Relationship to page templates
+
+The `type` tag is the stable editorial classification, not a filename convention. Its default relationship to reusable page structures is documented in the [page archetype implementation map](site-page-design-system.md). Do not add a parallel `archetype` field unless a demonstrated need cannot be expressed by the existing taxonomy.
+
 ## 2. Comment schema
 
 ```yaml
