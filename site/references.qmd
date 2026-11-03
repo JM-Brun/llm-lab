@@ -361,3 +361,15 @@ Les pages d'approfondissement consacrées au biais-variance et aux arbres boost�
 ### Figures du projet
 
 Les trois figures `bias-variance-decomposition.svg`, `gradient-boosting-iteration.svg` et `tree-growth-strategies.svg` sont des schémas explicatifs originaux créés pour LLM Lab. Elles sont décrites dans le registre du dépôt docs/visual-assets-register.md. Elles ne reproduisent pas les figures des sources citées.
+
+### Approfondissements AiEdge — arbres boostés
+
+- Damien Benveniste, [The Gradient Boosted Algorithm Explained!](https://newsletter.theaiedge.io/p/the-gradient-boosted-algorithm-explained) (24 mai 2024) — présentation publique de la boucle additive : prédiction courante, erreur/pseudo-résidu, arbre correctif, mise à jour et shrinkage. La figure de l'article représente schématiquement les données, l'arbre et les valeurs à corriger. L'illustration de LLM Lab est un redessin original de cette logique, pas une copie du visuel.
+- Damien Benveniste, [Understanding XGBoost from A to Z!](https://newsletter.theaiedge.io/p/understanding-xgboost-from-a-to-z) (31 mai 2024) — construction récursive, approximation de Taylor d'ordre deux, score optimal des feuilles, gain de split, recherche parallélisable et traitement des valeurs manquantes. Sa comparaison entre gradient/courbure et biais/variance doit être lue comme une analogie, non comme une équivalence statistique ; voir la discussion critique publiée sous l'article.
+- Damien Benveniste, [Why XGBoost is better than GBM?](https://newsletter.theaiedge.io/p/why-xgboost-is-better-than-gbm) (8 mars 2023) — différences d'objectif entre GBM classique et XGBoost, régularisation de la complexité et contraintes de parallélisation. Les complexités annoncées dépendent de la méthode de recherche de splits, de la structure de l'arbre et de l'implémentation.
+- Damien Benveniste, [Understanding CatBoost!](https://newsletter.theaiedge.io/p/understanding-catboost) (10 juin 2024) — target encoding ordonné, permutations, ordered boosting et prévention de la fuite de cible. À confronter à l'article CatBoost et à la documentation officielle.
+- Benveniste, [GBM vs XGBoost vs LightGBM vs CatBoost](https://newsletter.theaiedge.io/p/gbm-vs-xgboost-vs-lightgbm-vs-catboost) (15 janvier 2024) — introduction publique sur biais-variance, rapport $N/M$, degrés de liberté et choix de modèles ; les sections suivantes sont réservées aux abonnés et ne sont pas présentées ici comme consultées.
+
+### Figures et provenance
+
+Le schéma de cycle du Gradient Boosting dans LLM Lab est original. Il reprend uniquement l'idée pédagogique générale du schéma public de l'article *The Gradient Boosted Algorithm Explained!* (données d'entraînement → arbre → valeurs correctives → mise à jour), avec une représentation distincte et des légendes plus précises sur les pseudo-résidus. Le fichier source externe n'est pas incorporé au dépôt, car aucune licence de réutilisation n'a été identifiée.
