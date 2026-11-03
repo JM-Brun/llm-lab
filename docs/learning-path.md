@@ -24,7 +24,7 @@ The sequence above is a **route through concepts**, not permission to explain th
 - **LLM panorama:** terminology, model-family orientation, and the distinctions between architecture, weight learning, and use.
 - **Generation:** the complete autoregressive inference loop and the basic decoding choices.
 - **GPT/Transformer overview:** one forward pass through the network, with emphasis on Transformer blocks and the path to logits.
-- **Text/data:** the short path from raw text to token IDs; tokenizer algorithms and design trade-offs belong to their dedicated core and advanced pages.
+- **Text/data:** the short path from raw text to token IDs and initial embeddings; tokenizer algorithms and comparative examples belong to `tokenization-strategies`, while empirical design/evaluation belongs to its advanced page. Corpus curation remains a separate upstream concern (canonical page under review in #360).
 - **Component lessons:** embeddings, positional information, contextualized representations, attention mechanisms, logits, probabilities, likelihood, entropy, cross-entropy, loss, and gradients each have their own explanatory home.
 - **Training examples:** context windows, shifted targets, document boundaries, packing, and training masks belong to the training-data branch, not to the first explanation of inference input.
 
