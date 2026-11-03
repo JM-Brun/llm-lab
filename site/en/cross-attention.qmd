@@ -1,7 +1,7 @@
 ---
 title: "Cross-attention: connecting two sequences"
 subtitle: "How a decoder reads representations produced by an encoder"
-keywords: ["type:concept-lesson", "destination:understand", "topic:cross-attention", "level:core", "language:en", "status:published"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:cross-attention", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
 
@@ -9,22 +9,24 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/cross-attention"
 scope: "Explains cross-attention in encoder–decoder Transformers, distinguishing the sources of queries, keys, and values, dimensions, information flow, and possible masks."
-purpose: "Readers should be able to explain why Q comes from the decoder while K and V come from the encoder, write the cross-attention equation, and distinguish it from self-attention."
+purpose: "Advanced deep dive: formalize cross-attention, establish Q/K/V provenance and tensor dimensions, analyze masks, and place the mechanism in encoder–decoder and multimodal architectures."
 suggested_route:
-  previous: "en/transformer-architectures"
-  next: "en/scaled-dot-product-attention"
+  previous: null
+  next: null
 hierarchy:
   parents: ["en/transformer-architectures"]
   children: []
 related: ["en/queries-keys-values", "en/scaled-dot-product-attention", "en/causal-masking"]
-tags: ["type:concept-lesson", "destination:understand", "topic:cross-attention", "level:core", "language:en", "status:published"]
+tags: ["type:deep-dive", "destination:deepen", "topic:cross-attention", "level:advanced", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
+This page is an **advanced deep dive**. It assumes familiarity with the general attention mechanism, Q/K/V projections, and the main Transformer architecture families. For a first introduction, the [Transformer architectures](transformer-architectures.qmd) page is sufficient: simply remember that an encoder–decoder model's decoder can read representations produced by its encoder.
+
 Cross-attention lets one sequence read representations from another. In an encoder–decoder Transformer, the decoder produces the queries **Q**, while the keys **K** and values **V** come from the encoder output. This separation of sources is what distinguishes cross-attention from self-attention.
 :::
 
-::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+::: {.callout-note .learning-outcomes collapse="true" title="Deep-dive objectives"}
 You will be able to:
 - identify where Q, K, and V come from in cross-attention;
 - explain how each target position selects and aggregates information from the input;
