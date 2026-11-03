@@ -45,7 +45,7 @@ Notons $p_{b,t,:}$ la distribution prédite pour la position $(b,t)$ et $y_{b,t}
 
 $$
 \ell_{b,t}=-\log p_{b,t,y_{b,t}}.
-$
+$$
 
 Avec une cible one-hot, ce terme est le cas particulier de l'[entropie croisée](cross-entropy.qmd) où seule la probabilité du token cible contribue. La page dédiée en détaille la dérivation et le lien avec les logits ; ici, on s'intéresse à son agrégation en objectif de batch.
 
