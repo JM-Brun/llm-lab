@@ -8,7 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/transformer"
-scope: "Suit le calcul d'un GPT autorégressif dans le réseau — embeddings, information de position, blocs Transformer, attention et scores de sortie — de la séquence de tokens en entrée jusqu'aux logits ; ne traite pas la génération comme simple boucle boîte noire ni l'apprentissage des paramètres comme sujet principal."
+scope: "Suit le calcul d'un GPT autorégressif dans le réseau — embeddings, information de position, blocs Transformer, attention, MLP, chemins résiduels et normalisation — de la séquence de tokens en entrée jusqu'aux logits ; ne traite pas la génération comme simple boucle boîte noire ni l'apprentissage des paramètres comme sujet principal."
 purpose: "Le lecteur doit pouvoir retracer le chemin d'une séquence de tokens jusqu'aux logits, expliquer le rôle des principales opérations d'un bloc Transformer et distinguer représentations initiales, représentations contextualisées et scores de sortie."
 suggested_route:
   previous: "fr/llm-overview"
