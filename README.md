@@ -41,6 +41,10 @@ quarto render site
 
 The rendered site is written to `site/_site/`. The Quarto CLI is a separate system dependency; it is not installed by `uv`.
 
+## Page composition
+
+- Flexible page composition and reusable soft patterns: [page-template system](docs/page-template-system.md), [page patterns](docs/page-patterns.md), and [implementation-page patterns](docs/implementation-page-patterns.md).
+
 ## Editorial and content principles
 
 These are repository-maintenance guidelines, not reader-facing lessons; they belong here rather than on the public site homepages.
