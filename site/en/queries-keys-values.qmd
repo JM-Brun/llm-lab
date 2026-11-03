@@ -43,7 +43,7 @@ Queries, keys, and values are not three kinds of tokens. They are three **learne
 </div>
 
 ::: {.callout-tip title="The one-minute mental model"}
-**Q and K determine the weights; V supplies what gets aggregated.** At each position, the model compares its query with accessible keys, turns the scores into weights with softmax, then applies those weights to value vectors.
+**Q and K determine the weights; V supplies what gets aggregated.** Queries and keys determine relative weights across positions; those weights are then used to combine value vectors.
 
 **First pass:** keep these roles separate, then observe how the three projections transform the input representations.
 
@@ -68,7 +68,7 @@ $$
 
 With $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ and $W_V\in\mathbb{R}^{d_{model}\times d_v}$, we obtain $Q,K\in\mathbb{R}^{T\times d_k}$ and $V\in\mathbb{R}^{T\times d_v}$. Optional biases are omitted for clarity.
 
-The scores $QK^\top$ compare every query with every key. After scaling and applying any mask, the weights determine the combination of rows of $V$. In standard dot-product attention, values therefore do not directly determine the scores.
+In standard dot-product attention, Q and K determine the matching information, while V supplies the content to be aggregated. The next page formalizes how matching scores are computed and converted into weights.
 
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
