@@ -36,7 +36,7 @@ $D$ est l'échantillon d'entraînement aléatoire ; $\hat f_D$ le modèle appris
 - **Variance** : sensibilité des prédictions aux variations de l'échantillon d'entraînement.
 - **Bruit irréductible** : incertitude de la cible conditionnellement aux variables observées.
 
-Un modèle trop contraint peut sous-ajuster ; un modèle très flexible peut apprendre les fluctuations propres à l'échantillon. Un écart train-validation croissant signale un possible surapprentissage, sans en prouver la cause. La complexité dépend de la profondeur, de la régularisation, des données, du bruit et de l'optimisation : ce n'est pas un scalaire universel.
+Un modèle trop contraint peut sous-ajuster ; un modèle très flexible peut apprendre les fluctuations propres à l'échantillon. Un écart train-validation croissant signale un possible surapprentissage, sans en prouver la cause. La complexité dépend de la profondeur, de la régularisation, des données, du bruit et de l'optimisation : ce n'est pas un scalaire universel. Voir [Capacité, complexité et taille des données](model-capacity-data-regimes.qmd) pour le rôle de $N$, $M$ et des degrés de liberté effectifs.
 
 | Mécanisme | Tendance possible | Réserve |
 |---|---|---|
