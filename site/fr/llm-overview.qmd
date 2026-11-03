@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
-scope: "Situe les LLM modernes dans l’IA, l’apprentissage automatique et le TAL, les distingue des systèmes TAL antérieurs spécialisés par tâche, définit les termes LLM, modèle de langage, modèle génératif, GPT et Transformer ; explique l’inférence autorégressive, les familles de modèles, le cycle apprentissage-inférence et le rôle du cache KV, en renvoyant les détails techniques vers les pages dédiées."
-purpose: "À l’issue de cette page, le lecteur doit pouvoir situer les LLM dans l’IA, l’apprentissage automatique et le TAL, les distinguer des systèmes TAL spécialisés par tâche, distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer, décrire la génération autorégressive et expliquer pourquoi les optimisations d’inférence ne changent pas l’objectif de prédiction du prochain token."
+scope: "Situe les LLM modernes dans l’IA, l’apprentissage automatique et le TAL ; définit modèle de langage, modèle génératif, LLM, GPT et Transformer ; distingue architecture, apprentissage des poids et utilisation ; oriente vers les pages dédiées sans détailler la boucle de génération ni les mécanismes internes."
+purpose: "À l’issue de cette page, le lecteur doit pouvoir situer les LLM, distinguer les principaux termes et les trois dimensions architecture/apprentissage/utilisation, et choisir la page spécialisée pertinente pour comprendre le calcul Transformer ou l’inférence autorégressive."
 suggested_route:
   previous: "fr/index"
   next: "fr/transformer"
@@ -34,12 +34,11 @@ Un **modèle de langage** estime la plausibilité de séquences de texte à part
 
 ## 1. Le problème : continuer un texte à partir d'un contexte
 
-À partir d'un préfixe tel que « Le rapport indique que la concentration », le modèle doit estimer quels tokens pourraient suivre. Il ne s'agit pas de retrouver une unique suite correcte : plusieurs continuations peuvent être grammaticales et cohérentes, mais différer par leur sens, leur précision ou leur pertinence.
+À partir d'un préfixe tel que « Le rapport indique que la concentration », le modèle doit estimer quels tokens pourraient suivre. Il n'existe pas nécessairement une unique suite correcte : plusieurs continuations peuvent être grammaticales et cohérentes, tout en différant par leur sens, leur précision ou leur pertinence.
 
-Pour représenter cette incertitude, le modèle estime la plausibilité de plusieurs continuations en tenant compte du contexte. Dans un GPT autorégressif, ce calcul est répété token après token : le token choisi est ajouté au contexte, puis le modèle évalue à nouveau les suites possibles. La [formalisation probabiliste de ce principe](language-modeling-math.qmd) approfondit la manière de décrire mathématiquement ces estimations.
+Ce problème de modélisation du langage consiste à attribuer une plausibilité à des séquences conditionnellement au contexte. Pour un GPT autorégressif, la factorisation probabiliste de cette estimation est présentée dans la [formalisation mathématique du langage](language-modeling-math.qmd). La manière dont un modèle entraîné transforme cette estimation en texte, token après token, relève du cours dédié à la [génération](generation.qmd).
 
 Le modèle apprend des régularités statistiques des données ; cet objectif ne lui fournit pas, à lui seul, un mécanisme de vérification de la vérité.
-
 
 ### Pourquoi ce problème est-il difficile ?
 
@@ -58,33 +57,19 @@ Les LLM modernes sont généralement des modèles d'apprentissage profond au sei
 
 LLM Lab utilise de petits modèles inspectables pour expliquer les mécanismes, pas pour reproduire les capacités des modèles de production. Un modèle de référence non entraîné est censé produire un texte incohérent.
 
-## 3. Le processus de génération, du texte au prochain token
+## 3. Où se situe la génération dans le système ?
 
-Le schéma distingue les transformations successives du contexte, le calcul effectué par le modèle et la sélection du prochain token. Le GPT ne se déplace pas dans ce processus : ses paramètres restent fixes pendant l’inférence ; c’est le contexte qui s’enrichit à chaque itération.
+Le schéma donne une **carte d'ensemble**, pas une nouvelle explication de chaque opération. Il situe la préparation du texte, le calcul du réseau et la sélection du prochain token ; les mécanismes correspondants sont développés dans leurs pages de référence.
 
-![Le processus autorégressif de génération : le contexte est préparé, traité par un GPT aux paramètres fixes, puis enrichi du token sélectionné.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Schéma en quatre phases : texte et contexte, préparation de l’entrée, traitement par un GPT aux paramètres fixes, sélection d’un token et ajout au contexte. Une boucle indique la répétition du processus."}
+![Le processus autorégressif de génération : le contexte est préparé, traité par un GPT aux paramètres fixes, puis enrichi du token sélectionné.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Vue d'ensemble : le contexte est préparé, traité par le modèle, puis prolongé par le token sélectionné. La boucle se répète."}
 
-*Figure — Vue d’ensemble conceptuelle. Les pourcentages de continuations sont illustratifs ; ils ne correspondent pas à la sortie mesurée d’un modèle particulier.*
+*Figure — Vue d'ensemble conceptuelle. Les pourcentages de continuations sont illustratifs ; ils ne correspondent pas à la sortie mesurée d’un modèle particulier.*
 
-Pour situer cette représentation parmi d’autres approches pédagogiques, voir les ressources de [Hugging Face sur les étapes d’un pipeline](../references.qmd#pipeline-et-generation-autoregressive), [Jay Alammar sur la visualisation des Transformers](../references.qmd#visualiser-le-transformer) et [Raff, Farris et Biderman sur la transformation des entrées en sorties](../references.qmd#transformers-how-inputs-become-outputs).
+- **Préparer le texte :** voir [texte et données](text-data.qmd) et [stratégies de tokenisation](tokenization-strategies.qmd).
+- **Calculer une passe avant :** voir [GPT et Transformer](transformer.qmd), puis les pages sur les [embeddings](embedding-space.qmd), l'[information positionnelle](positional-encoding.qmd) et l'[attention](queries-keys-values.qmd).
+- **Produire une continuation :** voir la page de référence sur la [génération autorégressive](generation.qmd), qui explique la distribution du prochain token, le décodage, l'ajout au contexte et l'arrêt.
 
-### Les quatre grandes opérations
-
-1. **Préparer l’entrée.** Le texte du prompt et le contexte de la conversation sont découpés en unités appelées *tokens*, puis convertis en représentations que le modèle peut traiter. L’ordre des tokens est également pris en compte. Pour approfondir : [vocabulaire et tokenisation](tokenization-strategies.qmd), [tokens et données](text-data.qmd), [embeddings](embedding-space.qmd) et [information positionnelle](positional-encoding.qmd).
-
-2. **Traiter le contexte.** Le [Transformer](transformer.qmd) combine les informations portées par les différentes positions pour construire des représentations qui dépendent du contexte. Le modèle ne traite donc pas chaque token comme un élément isolé.
-
-3. **Évaluer les continuations possibles.** À partir de ce calcul, le modèle estime la plausibilité des tokens qui pourraient suivre. Les [scores de sortie](logits.qmd) et les [probabilités](probabilites.qmd) décrivent plus précisément comment ces possibilités sont évaluées.
-
-4. **Choisir et recommencer.** Une règle de décodage choisit le prochain token parmi les possibilités évaluées. Elle ne sélectionne pas nécessairement celui qui a la probabilité la plus élevée : certaines stratégies tiennent aussi compte d'un tirage aléatoire. Le token choisi est ajouté au contexte, puis le modèle recommence son calcul pour produire le suivant. Voir [la génération](generation.qmd).
-
-**L’idée essentielle :** un GPT ne rédige pas toute sa réponse d’un seul coup. Il estime une continuation, en sélectionne un token, l’ajoute au contexte, puis répète l’opération jusqu’à une condition d’arrêt. Le texte visible est ainsi construit progressivement.
-
-::: {.callout-note collapse="true" title="Approfondissement facultatif : efficacité de l'inférence et cache KV"}
-
-À chaque étape autorégressive, le contexte s'allonge. Le [GPT de référence de ce laboratoire](build-path.qmd) recalcule toute la fenêtre pour rendre le mécanisme inspectable et ne possède pas de cache KV. Les moteurs de production réutilisent souvent les clés et valeurs des tokens précédents à chaque couche : ils réduisent ainsi les calculs répétés, au prix de mémoire et d'une gestion du cache. Cela change l'efficacité de l'inférence, pas l'objectif de prédiction du prochain token.
-
-:::
+Les optimisations comme le **cache KV** réduisent certains calculs répétés sans changer l'objectif de prédiction ; leur coût en mémoire et en calcul est traité dans l'[approfondissement sur la complexité des LLM](llm-computational-complexity.qmd).
 
 ## 4. Trois dimensions à ne pas confondre
 
