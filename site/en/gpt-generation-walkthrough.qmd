@@ -59,7 +59,7 @@ By the end of this tour, you will be able to:
 <marker id="wfg-ink" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#344054"/></marker>
 </defs>
 <g font-family="Arial,sans-serif">
-<rect x="20" y="56" width="36" height="36" rx="6" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="5 3"/><rect x="60" y="56" width="36" height="36" rx="6" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="5 3"/><rect x="100" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0EA5E9" stroke-width="1.8"/><rect x="140" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0EA5E9" stroke-width="1.8"/><rect x="180" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0EA5E9" stroke-width="1.8"/><rect x="220" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0EA5E9" stroke-width="1.8"/><rect x="260" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0EA5E9" stroke-width="1.8"/><rect x="300" y="56" width="36" height="36" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.8"/><rect x="340" y="56" width="36" height="36" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.8"/><rect x="380" y="56" width="36" height="36" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.8"/>
+<rect x="20" y="56" width="36" height="36" rx="6" fill="#F1F5F9" stroke="#64748B" stroke-width="1.6" stroke-dasharray="5 3"/><rect x="60" y="56" width="36" height="36" rx="6" fill="#F1F5F9" stroke="#64748B" stroke-width="1.6" stroke-dasharray="5 3"/><rect x="100" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0369A1" stroke-width="1.8"/><rect x="140" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0369A1" stroke-width="1.8"/><rect x="180" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0369A1" stroke-width="1.8"/><rect x="220" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0369A1" stroke-width="1.8"/><rect x="260" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0369A1" stroke-width="1.8"/><rect x="300" y="56" width="36" height="36" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.8"/><rect x="340" y="56" width="36" height="36" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.8"/><rect x="380" y="56" width="36" height="36" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.8"/>
 <g data-wf-part="win"><text x="58" y="128" text-anchor="middle" font-size="11" fill="#64748B">outside the window</text></g>
 <g data-wf-part="win"><rect x="94" y="48" width="326" height="52" rx="8" fill="none" stroke="#16A34A" stroke-width="3"/><text x="257" y="42" text-anchor="middle" font-size="12.5" font-weight="700" fill="#14532D">window = the last context_length tokens</text></g>
 <g data-wf-part="win fwd"><path d="M272 104 C 340 150, 430 160, 508 160" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfg-ink)"/></g>
@@ -89,9 +89,9 @@ By the end of this tour, you will be able to:
 </div>
 </div>
 <figcaption class="wf-legend">
-<span class="wf-key"><span class="wf-swatch" style="background:#E0F2FE;border-color:#0EA5E9"></span>prompt (input)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#E0F2FE;border-color:#0369A1"></span>prompt (input)</span>
 <span class="wf-key"><span class="wf-swatch" style="background:#DCFCE7;border-color:#16A34A"></span>generated tokens</span>
-<span class="wf-key"><span class="wf-swatch" style="background:#F1F5F9;border-color:#94A3B8"></span>outside the window (excluded)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#F1F5F9;border-color:#64748B"></span>outside the window (excluded)</span>
 <span class="wf-key"><span class="wf-swatch" style="background:#FEF3C7;border-color:#B45309"></span>logits</span>
 </figcaption>
 </figure>
