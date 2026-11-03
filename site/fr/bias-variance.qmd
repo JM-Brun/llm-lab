@@ -1,0 +1,71 @@
+---
+title: "Biais, variance et généralisation"
+subtitle: "Sous-ajustement, surapprentissage et stabilité des prédictions"
+keywords: ["type:concept-lesson", "destination:deepen", "topic:bias-variance", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/bias-variance"
+scope: "Décompose l'erreur quadratique en biais, variance et bruit irréductible sous les hypothèses classiques de régression."
+purpose: "Diagnostiquer sous-ajustement et surapprentissage, et interpréter la sensibilité d'un modèle aux échantillons."
+suggested_route:
+  previous: null
+  next: "fr/gradient-boosting"
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/gradient-boosting", "fr/xgboost"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:bias-variance", "level:applied", "language:fr", "status:published"]
+-->
+::: {.chapter-lead}
+Le compromis biais-variance décrit deux sources distinctes d'erreur de généralisation. Ce n'est pas une règle universelle de choix de modèle.
+:::
+## Décomposition classique
+
+En régression à perte quadratique, pour une entrée fixée (x) :
+
+\[
+\mathbb{E}_{D,\varepsilon}[(Y-\hat f_D(x))^2]
+=\operatorname{Bias}(\hat f(x))^2+\operatorname{Var}(\hat f(x))+\sigma^2(x).
+\]
+
+(D) est l'échantillon d'entraînement aléatoire ; (hat f_D) le modèle appris ; (sigma^2(x)) le bruit conditionnel irréductible. Cette identité suppose notamment (Y=f(x)+\varepsilon) avec bruit conditionnel de moyenne nulle.
+
+- **Biais** : écart entre la prédiction moyenne sur les échantillons possibles et la fonction cible.
+- **Variance** : sensibilité des prédictions aux variations de l'échantillon d'entraînement.
+- **Bruit irréductible** : incertitude de la cible conditionnellement aux variables observées.
+
+Un modèle trop contraint peut sous-ajuster ; un modèle très flexible peut apprendre les fluctuations propres à l'échantillon. Un écart train-validation croissant signale un possible surapprentissage, sans en prouver la cause. La complexité dépend de la profondeur, de la régularisation, des données, du bruit et de l'optimisation : ce n'est pas un scalaire universel.
+
+| Mécanisme | Tendance possible | Réserve |
+|---|---|---|
+| Modèle linéaire peu flexible | Biais plus élevé | Une mauvaise spécification peut dominer |
+| Arbre profond | Faible erreur train, forte instabilité | La profondeur ne résume pas toute la complexité |
+| Forêt aléatoire | Agrégation réduisant souvent la variance | La corrélation entre arbres limite le gain |
+| Gradient Boosting | Corrections successives de la loss | Les itérations peuvent aussi surajuster |
+
+Il est faux de déduire automatiquement « faible biais = forte variance ». Le biais statistique n'est pas le gradient d'une fonction de perte.
+
+## Évaluer le compromis
+
+Séparer entraînement, validation et test avant le réglage ; comparer les courbes d'apprentissage ; répéter les partitions si nécessaire ; régler sur validation et réserver le test à l'estimation finale. Comparer à une baseline simple.
+
+Les arbres profonds représentent des interactions mais sont souvent instables. Le bagging agrège des arbres indépendants ; le boosting construit des corrections successives. Voir [Gradient Boosting](gradient-boosting.qmd).
+
+::: {.self-check}
+## Vérifier sa compréhension
+1. Pourquoi la profondeur ne supprime-t-elle pas le bruit irréductible ?
+<details><summary>Afficher la réponse</summary>Le bruit décrit la variabilité de la cible conditionnellement aux variables observées, non un manque de capacité du modèle.</details>
+2. Un écart train-validation prouve-t-il une variance élevée ?
+<details><summary>Afficher la réponse</summary>Non : fuite, décalage de distribution ou validation trop petite peuvent aussi fausser le diagnostic.</details>
+3. Cette décomposition s'applique-t-elle à toute métrique ?
+<details><summary>Afficher la réponse</summary>Non, l'identité donnée concerne la perte quadratique sous des hypothèses précises.</details>
+:::
+## Références
+- [The Elements of Statistical Learning](https://hastie.su.domains/ElemStatLearn/), chapitres 2 et 7.
+- [Breiman (2001), Random Forests](https://www.stat.berkeley.edu/~breiman/randomforest2001.pdf).
+- [AiEdge — GBM vs XGBoost vs LightGBM vs CatBoost](https://newsletter.theaiedge.io/p/gbm-vs-xgboost-vs-lightgbm-vs-catboost).
+::: {.language-switch}
+[Français](bias-variance.qmd) · [English](../en/bias-variance.qmd)
+:::
