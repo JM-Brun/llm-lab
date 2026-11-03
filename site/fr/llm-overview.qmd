@@ -39,17 +39,19 @@ C’est la **première étape du parcours conceptuel**. Il n’est pas nécessai
 Le schéma résume le calcul d’un **GPT autorégressif**. Il ne décrit pas tous les LLM : d’autres architectures et objectifs existent. Les flèches représentent des transformations distinctes, pas une succession de synonymes.
 
 <div class="pipeline-stepper" role="navigation" aria-label="Étapes du pipeline d'un GPT">
-  <a class="step-item" href="text-data.qmd">1. Texte et tokens</a>
+  <a class="step-item" href="tokenization-strategies.qmd">1. Vocabulaire</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
+  <a class="step-item" href="text-data.qmd">2. Tokens / IDs</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="transformer.qmd">3. Transformer</a>
+  <a class="step-item" href="embedding-space.qmd">3. Embeddings</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="logits.qmd">4. Logits</a>
+  <a class="step-item" href="transformer.qmd">4. Transformer</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="probabilites.qmd">5. Distribution</a>
+  <a class="step-item" href="logits.qmd">5. Logits</a>
   <span class="step-arrow">→</span>
-  <a class="step-item" href="generation.qmd">6. Sélection</a>
+  <a class="step-item" href="probabilites.qmd">6. Distribution</a>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="generation.qmd">7. Sélection</a>
 </div>
 
 ```{mermaid}
