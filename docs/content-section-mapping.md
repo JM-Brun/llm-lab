@@ -169,3 +169,33 @@ Do not create a new issue for every row. Route changes to existing owners: #130 
 ### Coverage decision
 
 Raschka Ch.5 confirms a **real implementation gap** in LLM Lab's G8 path, but the gap is already owned by #78/#79 and its data prerequisites by #58. No duplicate issue or implementation is created. The current public pages cover the mathematical objective and data alignment; they do not yet constitute a reproducible training workflow. Browser review of the learner-facing data/loss/generation path is deferred to [#347](https://github.com/JM-Brun/llm-lab/issues/347) (P2).
+
+
+## 7. Cross-page content ownership contract
+
+The inventory above classifies destinations; this section assigns the **canonical home of explanations** across pages. A page may mention a concept owned elsewhere, but that mention must serve one of three explicit purposes: (1) introduce a prerequisite in one or two sentences, (2) show where the current mechanism sits in the system, or (3) retrieve a concept needed for a new derivation. It must not reproduce the owner's worked explanation, full sequence of steps, or exercise set.
+
+| Conceptual object / reader question | Canonical owner | Other pages may do | Other pages must not do |
+|---|---|---|---|
+| What is an LLM, GPT, Transformer, and how do architecture, weight learning and use differ? | `llm-overview.qmd` (FR/EN) | Name the relevant family and link to the panorama | Re-teach the taxonomy or reproduce the model lifecycle |
+| Which Transformer family fits which information-flow pattern? | `transformer-architectures.qmd` (FR/EN) | State that the worked GPT is decoder-only | Reproduce the encoder-only / encoder–decoder / decoder-only comparison |
+| What does one GPT forward pass compute inside the network? | `transformer.qmd` (FR/EN) | Show a one-line system map and link to the component lesson | Re-explain tokenization, embedding geometry, positional variants, or the autoregressive generation loop |
+| How does a trained autoregressive model produce a continuation? | `generation.qmd` (FR/EN) | Mention that generation is iterative and parameters stay fixed | Reproduce the five-step loop, decoding explanation, or sampling tutorial |
+| How does raw text become token IDs and model input? | `text-data.qmd` (FR/EN) | Show the short text → tokens → IDs pipeline | Compare tokenizer algorithms in depth or explain corpus curation and training-window construction |
+| How do tokenization granularities and core algorithms differ? | `tokenization-strategies.qmd` (FR/EN) | Link to the advanced mechanisms/evaluation page | Reproduce the same BPE/WordPiece/Unigram tutorial in the text-data or Deepen page |
+| How should tokenizers be designed and empirically evaluated? | `tokenizer-design-evaluation.qmd` (FR/EN, Deepen) | Recall one algorithmic fact needed to interpret a metric | Re-teach the core tokenization lesson before discussing budgets, protocols, downstream effects or multilingual equity |
+| What do token embeddings, position and contextual states mean? | `embedding-space.qmd`, `positional-encoding.qmd`, `contextualized-representations.qmd` respectively (FR/EN) | Give the minimum transition needed to follow the forward pass | Present parallel mini-lessons on all three concepts in the Transformer overview |
+| How are context windows, targets, boundaries and training masks constructed? | `training-examples.qmd` (FR/EN) | Link from data preparation and the learning stage | Present these training-only details as prerequisites for inference |
+| What do likelihood, entropy, cross-entropy, loss and gradients mean? | Their dedicated core concept pages; `language-modeling-math.qmd` owns the formal synthesis | Use a compact dependency map in `mathematical-foundations.qmd` | Re-derive the complete chain in multiple Deepen pages |
+| What does the KV cache change? | `llm-computational-complexity.qmd` (FR/EN, Deepen) | State that it reuses past keys/values and link to the cost analysis | Repeat complexity and memory accounting in the LLM panorama |
+
+### Rules for intentional repetition
+
+- **First encounter:** give the learner the smallest accurate mental model and identify the canonical next page.
+- **Prerequisite reminder:** keep it short, explicitly name the prior concept, and link back when the reader may need the full explanation.
+- **System map:** show the concept's place in the pipeline without re-describing its internal mechanism.
+- **New derivation or application:** reuse the same notation and assumptions, then explain only what is new.
+- **Retrieval practice:** a question may revisit an earlier concept if it tests transfer or integration; do not copy the original exercise with different wording.
+- **Relocation:** before removing a passage, record its destination and verify that its unique examples, caveats, figures, references and scientific qualifications survive there.
+
+A useful editorial test is: **if a reader has completed the canonical page, does this second explanation teach a genuinely new thing?** If not, replace it with a short reminder and a contextual link. A repeated label or pipeline diagram is not automatically a defect; repeated explanatory work without a new learning objective is.
