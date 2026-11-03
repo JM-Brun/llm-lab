@@ -21,7 +21,7 @@ tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level
 -->
 
 ::: {.chapter-lead}
-Cette page approfondit le [panorama des LLM](llm-overview.qmd) et en formalise mathématiquement le problème central : un modèle de langage attribue une probabilité à une séquence de tokens. Dans un modèle autorégressif, cette probabilité est construite à partir de probabilités conditionnelles successives : à chaque position, le modèle estime le token suivant à partir du préfixe déjà observé. Cette page explicite les objets mathématiques derrière cette idée, sans les supposer acquis dans la page d’overview.
+Dans un modèle autorégressif, la probabilité d’une séquence de tokens se factorise en probabilités conditionnelles successives : à chaque position, le modèle estime le token suivant à partir du préfixe déjà observé. Cette factorisation formalise le problème de modélisation du langage présenté dans le [panorama des LLM](llm-overview.qmd).
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
