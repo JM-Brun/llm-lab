@@ -263,3 +263,17 @@ This addendum records work completed after the earlier snapshot in this register
 2. Continue #130/#78 source-level architecture and concept-to-code sequencing; #82 and #114 are no longer active source gates.
 3. Continue #191 remaining design-system checks; do not infer browser/accessibility compliance from source-level contrast ratios.
 4. Keep #316/#317 as separate rendered pedagogical audits; reassess after the source architecture and design-system work.
+
+## 14. Execution follow-up — 2026-11-03
+
+- **PR #336** ("docs: reconcile learning path with completed source gates") was squash-merged as `5b61d2f` on 2026-11-03 after the *Python quality checks* workflow passed ([run 41713706282](https://github.com/JM-Brun/llm-lab/actions/runs/41713706282)). Documentation-only; the change reconciled `learning-path.md`, `full-curriculum-plan.md` and `content-section-mapping.md` with the closed source gates #82/#114 and the current implementation/formative evidence states.
+- **#87** closed as completed at the source level: the milestone-to-pages/deep-dives/sources/code-tests crosswalk is reconciled, and the rendered EN/FR navigation inspection is explicitly transferred to [#337](https://github.com/JM-Brun/llm-lab/issues/337) (P2). Closure evidence and limits are recorded in the closing issue comment; no browser or learner evidence is claimed.
+- **#338** was opened in error during the same closure (duplicate of #337's scope) and immediately closed as a duplicate; no work lost.
+- The three deferred browser-review lots remain distinct: #320 (four canonical page pairs), #329 (learner-facing exercises after integration), #337 (rendered navigation vs the curriculum map).
+
+### Next sequence (supersedes §13 item 1)
+
+1. Continue #130/#78 source-level architecture and concept-to-code sequencing; #82, #114 and #87 are no longer active source gates.
+2. Continue #191 remaining design-system checks (#309/#310); do not infer browser/accessibility compliance from source inspection.
+3. Keep #316/#317 as separate rendered pedagogical audits; reassess after the architecture and design-system work.
+4. Keep #320/#329/#337 at P2 until dedicated browser sessions are scheduled.
