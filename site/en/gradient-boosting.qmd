@@ -56,7 +56,7 @@ The next tree does not reconstruct the whole target; it seeks a structured corre
 
 
 
-![One Gradient Boosting round, from the current ensemble to the added correction.](../images/gradient-boosting-iteration.svg){fig-alt="Workflow: current model, negative gradient, corrective tree, shrinkage, update, and repeat."}
+![Gradient Boosting cycle: data, predictions, pseudo-residuals, corrective tree, and additive update.](../images/gradient-boosting-cycle.svg){fig-alt="Workflow: training data, current model, pseudo-residuals, corrective tree, shrunken addition, and repetition."}
 
 ## Boosting versus bagging
 
