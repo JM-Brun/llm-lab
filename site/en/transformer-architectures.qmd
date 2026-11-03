@@ -27,7 +27,7 @@ Transformers do not form a single architecture. Depending on whether a network u
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 You will be able to:
 - compare encoder-only, encoder–decoder, and decoder-only architectures by context visibility and information flow;
-- distinguish bidirectional self-attention, causal self-attention, and cross-attention;
+- distinguish bidirectional context access in the encoder from causal access in the decoder;
 - separate architecture, training objective, and task without treating typical pairings as rules.
 :::
 
@@ -43,7 +43,7 @@ You will be able to:
 
 ![Comparison of information flow in encoder-only, decoder-only, and encoder–decoder architectures.](../images/transformer-attention-architectures.svg){fig-alt="Encoder-only: bidirectional self-attention. Decoder-only: causal self-attention. Encoder–decoder: encoder self-attention, causal decoder self-attention, and cross-attention to encoder memory." width=100%}
 
-The distinguishing feature of the encoder–decoder architecture is the **additional attention sublayer in the decoder**: it reads the memory produced by the encoder. For the precise origins of queries, keys, and values, see the dedicated [cross-attention page](cross-attention.qmd).
+The distinguishing feature of the encoder–decoder architecture is that its decoder can read representations produced by the encoder. This mechanism is called **cross-attention**. Its detailed operation belongs in an [advanced deep dive](cross-attention.qmd); it is not required to understand the broad architecture comparison.
 
 ## What actually distinguishes the three families
 
@@ -57,7 +57,7 @@ In BERT, the best-known pretraining objective predicts masked tokens from their 
 
 The encoder builds a representation of the input. The decoder then generates the output, usually autoregressively, combining its already-produced context with information from the encoder through *cross-attention*.
 
-This separation is natural when input and output play distinct roles: translating a sentence, summarizing a document, or converting text into another format. The original 2017 Transformer and T5 are important examples of this family. The mechanism—including the distinct origins of Q, K, and V—is explained in the dedicated [cross-attention page](cross-attention.qmd).
+This separation is natural when input and output play distinct roles: translating a sentence, summarizing a document, or converting text into another format. The original 2017 Transformer and T5 are important examples of this family. The mechanism—including the distinct origins of Q, K, and V—is covered in the [advanced cross-attention deep dive](cross-attention.qmd).
 
 ### Decoder-only: extend a prefix
 
