@@ -173,7 +173,9 @@ Un exemple de normalisation Unicode est traité dans [la page d'introduction](te
 
 | Entrée | Question à poser | Risque naïf |
 |---|---|---|
-| `Hello world` puis ` Hello world` | Un espace initial change-t-il la segmentation ? | Le traitement de l'espace peut relever de la pré-tokenisation ou de l'orthographe des tokens |\n| `ChatGPT`, `chatgpt`, `CHATGPT` | La casse est-elle normalisée ou conservée ? | Le traitement de la casse dépend de la configuration du tokenizer |\n| `unbelievable`, `unbelievably` | Les fragments réutilisent-ils des sous-chaînes fréquentes ? | Les frontières ne garantissent pas une analyse morphologique |
+| `Hello world` puis ` Hello world` | Un espace initial change-t-il la segmentation ? | Le traitement de l'espace peut relever de la pré-tokenisation ou de l'orthographe des tokens |
+| `ChatGPT`, `chatgpt`, `CHATGPT` | La casse est-elle normalisée ou conservée ? | Le traitement de la casse dépend de la configuration du tokenizer |
+| `unbelievable`, `unbelievably` | Les fragments réutilisent-ils des sous-chaînes fréquentes ? | Les frontières ne garantissent pas une analyse morphologique |
 | `café` et `cafe\u0301` | Quelle normalisation Unicode est appliquée ? | Même apparence, séquences de points de code différentes |
 | `2026-10-29`, `123456789` | Comment chiffres et séparateurs sont-ils segmentés ? | Un token n'est pas nécessairement un nombre entier |
 | `你好` | Le système dépend-il des espaces entre mots ? | La séparation sur espaces peut ne donner aucune frontière utile |
