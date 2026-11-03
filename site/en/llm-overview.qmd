@@ -60,7 +60,7 @@ The diagram distinguishes the successive transformations of the context, the com
 
 *Figure — High-level conceptual overview. The continuation percentages are illustrative; they are not the measured output of any particular model.*
 
-For complementary pedagogical perspectives, see [Hugging Face on pipeline stages](../references.qmd#pipeline-and-autoregressive-generation), [Jay Alammar’s visual guide to Transformers](../references.qmd#visualizing-the-transformer), and [Raff, Farris, and Biderman on how inputs become outputs](../references.qmd#transformers-how-inputs-become-outputs).
+For complementary pedagogical perspectives, see [Hugging Face on pipeline stages](../references.qmd#pipeline-et-generation-autoregressive), [Jay Alammar’s visual guide to Transformers](../references.qmd#visualiser-le-transformer), and [Raff, Farris, and Biderman on how inputs become outputs](../references.qmd#transformers-how-inputs-become-outputs).
 
 ### Four high-level operations
 
