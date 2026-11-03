@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-overview"
-scope: "Introduces the language-modeling problem intuitively and why it is difficult; defines language model, generative model, LLM, GPT, and Transformer; explains at a high level how a GPT turns context into the next token, and delegates technical concepts to dedicated pages."
-purpose: "By the end of this page, readers should be able to explain the language-modeling problem intuitively and its difficulties, distinguish language model, generative model, LLM, GPT, and Transformer, and describe the main stages of autoregressive generation without conflating the model, its representations, and the selection rule."
+scope: "Places modern LLMs within AI/ML and NLP, distinguishes them from earlier task-specific NLP systems, defines language model, generative model, LLM, GPT, and Transformer; explains autoregressive inference, model families, the learning-to-inference lifecycle, and the role of KV caching while delegating technical detail to dedicated pages."
+purpose: "By the end of this page, readers should be able to place LLMs within AI/ML/NLP, distinguish them from task-specific NLP systems, distinguish language model, generative model, LLM, GPT, and Transformer, describe the main stages of autoregressive generation, and explain why inference optimizations do not change the next-token objective."
 suggested_route:
   previous: "en/index"
   next: "en/transformer"
@@ -27,6 +27,7 @@ A **language model** estimates the plausibility of text sequences from a context
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this page, you will be able to:
 - explain intuitively why a model must compare multiple possible continuations;
+- place modern LLMs within AI/ML and NLP, and distinguish them from earlier task-specific NLP systems;
 - distinguish a language model, generative model, LLM, GPT, and Transformer;
 - describe the main stages by which a GPT turns context into the next token, and explain why the process repeats.
 :::
