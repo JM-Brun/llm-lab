@@ -113,7 +113,9 @@
   if (!relativePath || relativePath === "index.html" || relativePath === "en" || relativePath === "en/index.html") return;
 
   const language = document.documentElement.lang.toLowerCase().startsWith("en") ? "en" : "fr";
-  const sidebarLinks = Array.from(document.querySelectorAll(".sidebar a[href]"));
+  const sidebar = document.querySelector("#quarto-sidebar") || document.querySelector(".sidebar.sidebar-navigation");
+  if (!sidebar) return;
+  const sidebarLinks = Array.from(sidebar.querySelectorAll("a[href]"));
   const currentPath = new URL(window.location.href).pathname.replace(/\/+$/, "");
   const currentLink =
     sidebarLinks.find((link) => {
