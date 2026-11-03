@@ -11,7 +11,7 @@ id: "fr/cross-entropy"
 scope: "Définir l'entropie croisée entre une distribution cible et la distribution prédite par le modèle à une position cible, y compris le cas one-hot qui se réduit à la négative log-probabilité du token ; la distinguer de l'entropie de la prédiction et des conventions de masquage et de réduction de la loss sur un batch."
 purpose: "Dériver l'entropie croisée pour une distribution cible, retrouver la négative log-probabilité dans le cas one-hot et expliquer l'effet de l'alignement des tokens et du masquage des cibles valides pendant l'entraînement autorégressif."
 suggested_route:
-  previous: "fr/entropy"
+  previous: "fr/vraisemblance"
   next: "fr/loss"
 hierarchy:
   parents: ["fr/entropy"]

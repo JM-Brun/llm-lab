@@ -12,7 +12,7 @@ scope: "Define the probability assigned to an observed token sequence under fixe
 purpose: "Compute a sequence likelihood from conditional token probabilities, convert products to summed log-likelihoods, and explain why maximizing log-likelihood corresponds to minimizing negative log-likelihood for fixed observations."
 suggested_route:
   previous: "en/training-examples"
-  next: "en/entropy"
+  next: "en/cross-entropy"
 hierarchy:
   parents: ["en/probabilities"]
   children: []
