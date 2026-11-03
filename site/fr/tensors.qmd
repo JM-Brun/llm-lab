@@ -137,7 +137,7 @@ La compatibilité des formes ne garantit pas que la projection, le masque, le d�
 
 ## Pour les fondations générales
 
-Cette page applique les tenseurs au contexte des Transformers. Pour les notions réutilisables hors LLM — formes, axes, indexation, réductions, broadcasting et distinction entre tableaux logiciels et tenseurs mathématiques — voir la page canonique de [Wiki Knowledge : tenseurs et tableaux multidimensionnels](https://github.com/JM-Brun/wiki-knowledge/blob/main/wiki/concepts/tenseurs-et-tableaux-multidimensionnels.md). Le présent chapitre conserve ici les conventions (B,T,D,V,H), les formes propres aux modèles de langue et les erreurs de manipulation fréquentes dans ce contexte.
+Pour les notions réutilisables hors LLM — formes, axes, indexation, réductions, broadcasting et distinction entre tableaux logiciels et tenseurs mathématiques — voir la page canonique de [Wiki Knowledge : tenseurs et tableaux multidimensionnels](https://github.com/JM-Brun/wiki-knowledge/blob/main/wiki/concepts/tenseurs-et-tableaux-multidimensionnels.md). Le présent chapitre conserve ici les conventions (B,T,D,V,H), les formes propres aux modèles de langue et les erreurs de manipulation fréquentes dans ce contexte.
 
 ## Ouvertures vers d'autres domaines
 
