@@ -28,7 +28,7 @@ The sequence above is a **route through concepts**, not permission to explain th
 - **Component lessons:** embeddings, positional information, contextualized representations, attention mechanisms, logits, probabilities, likelihood, entropy, cross-entropy, loss, and gradients each have their own explanatory home.
 - **Training examples:** context windows, shifted targets, document boundaries, packing, and training masks belong to the training-data branch, not to the first explanation of inference input.
 
-Use [the cross-page content ownership contract](content-section-mapping.md#7-cross-page-content-ownership-contract) to decide whether a repeated passage is a useful reminder, a system-level map, retrieval practice, or avoidable duplication. The contract also records where advanced depth and implementation evidence belong.
+Use [the cross-page content ownership contract](content-section-mapping.md#9-cross-page-content-ownership-contract) to decide whether a repeated passage is a useful reminder, a system-level map, retrieval practice, or avoidable duplication. The contract also records where advanced depth and implementation evidence belong.
 
 Evaluation is cross-cutting: introduce the idea of a held-out test early, then deepen metrics, baselines, uncertainty, leakage and error analysis when the learner has a concrete model or claim to assess.
 
