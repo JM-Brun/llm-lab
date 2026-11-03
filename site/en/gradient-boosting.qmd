@@ -10,7 +10,7 @@ id: "en/gradient-boosting"
 scope: "Explains additive boosting and trees fitted to negative-loss-gradient pseudo-residuals."
 purpose: "Trace an iteration and interpret loss, pseudo-residuals, learning rate, and overfitting controls."
 suggested_route:
-  previous: "en/bias-variance"
+  previous: "en/decision-trees"
   next: "en/xgboost"
 hierarchy:
   parents: []
