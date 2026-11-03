@@ -35,7 +35,7 @@ An LLM does not write text in one block: it produces **one token at a time**. At
 ## The generation loop, step by step
 
 1. **Prepare the context.** The starting text is split into [tokens](text-data.qmd) and converted to token IDs. If the context exceeds the model's maximum window, it is truncated according to a model-specific rule.
-2. **Run the forward pass.** The model processes the current context and computes, for the last position, an unnormalized score (*logit*) for every token in the vocabulary. The *softmax* transformation converts these scores into a probability distribution over the next token.
+2. **Run the forward pass.** The model processes the current context and computes, for the last position, an unnormalized score (*logit*) for every token in the vocabulary. The *softmax* transformation converts these scores into a conditional probability distribution over the next token: it depends on the current context.
 3. **Decode and select the next token.** A decoding rule uses the logits or distribution to produce a choice: for example, the highest-probability token or a token drawn by sampling.
 4. **Append the token and repeat.** The selected token is added to the context, and the loop returns to step 2 with a context one token longer.
 5. **Stop.** Generation stops on an explicit criterion — an end-of-sequence token, a maximum length, or a rule imposed by the application — never because the model "finished thinking".
