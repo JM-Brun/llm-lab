@@ -11,8 +11,8 @@ id: "en/transformer-architectures"
 scope: "Compares encoder-only, encoder–decoder, and decoder-only Transformer architectures by information flow, masking, typical training objectives, and uses; explicitly distinguishes architecture, objective, and task without claiming these families cover every language-model architecture."
 purpose: "Readers should be able to explain how each family processes context, identify the differences between bidirectional self-attention, causal self-attention, and cross-attention, and understand why architecture alone does not determine a training objective or use."
 suggested_route:
-  previous: "en/llm-overview"
-  next: "en/transformer"
+  previous: null
+  next: null
 hierarchy:
   parents: ["en/llm-overview"]
   children: []
