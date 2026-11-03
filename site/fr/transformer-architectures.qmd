@@ -24,8 +24,11 @@ tags: ["type:concept-lesson", "destination:understand", "topic:transformer-archi
 Les Transformers ne forment pas une architecture unique. Selon que le réseau utilise un encodeur, un décodeur ou les deux, l'information circule différemment : une séquence peut être représentée dans les deux directions, transformée en une autre séquence, ou prolongée token par token. Ces choix influencent les usages possibles, mais ne déterminent pas à eux seuls l'objectif d'entraînement.
 :::
 
-::: {.callout-note title="À la fin de cette page"}
-Vous devriez pouvoir comparer les trois familles par **ce qu'elles peuvent regarder**, **la manière dont elles produisent une sortie** et **les tâches auxquelles elles se prêtent**. Vous devriez aussi pouvoir distinguer une architecture d'un objectif comme la prédiction masquée ou la prédiction du prochain token.
+::: {.callout-note .learning-outcomes title="Objectifs d’apprentissage"}
+Vous pourrez :
+- comparer encodeur seul, encodeur-décodeur et décodeur seul selon le contexte accessible et le flux d’information ;
+- distinguer attention bidirectionnelle, attention causale et attention croisée ;
+- séparer architecture, objectif d’entraînement et tâche, sans généraliser les associations typiques.
 :::
 
 ## Vue comparative
