@@ -53,6 +53,19 @@ For trees, depth, leaf count, leaf sizes, and split constraints describe aspects
 
 **Caution with asymptotic notation:** writing “complexity $O(N)$” without specifying the quantity being counted, model family, assumptions, and algorithm is insufficient. Statistical degrees of freedom, parameter count, memory cost, and training-time complexity are distinct quantities.
 
+
+## Model families and effective capacity
+
+| Family | Source of capacity / complexity | Useful tendency | Qualification |
+|---|---|---|---|
+| Linear regression | Design-matrix rank; effective degrees of freedom under regularization | Constrained function class, often stable | Bias when relationships are nonlinear or interactions are missing |
+| Naive Bayes | Number of conditional-distribution parameters; depends on class count and encoding | Can estimate simple models with limited data | Conditional factorization limits representation of dependencies between features |
+| Decision tree | Leaf count, depth, candidate thresholds, and constraints | Can select features and represent interactions | Searching many splits can overfit even if few features remain in the final tree |
+| Random forest | Tree capacity, candidate feature count, and inter-tree correlation | Averaging often stabilizes unstable trees | Highly correlated trees reduce the benefit; too much randomization weakens trees |
+| Gradient boosting | Number of rounds, depth/leaves, learning rate, and regularization | Successive corrections can reduce representational bias | Additional rounds can eventually fit noise; validation and early stopping remain essential |
+
+Parameter counts or degrees of freedom are not directly comparable across these families. Model assumptions and the learning protocol matter as much as raw counts.
+
 ## Data size shifts the trade-off
 
 ![Conceptual training and validation error curves against complexity for two sample sizes.](../images/complexity-sample-size.svg){fig-alt="Qualitative diagram: training error decreases with complexity; validation error reaches a minimum, located further right with more data. This is not a universal empirical law."}
