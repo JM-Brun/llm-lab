@@ -12,7 +12,7 @@ scope: "Guides the staged construction of a small decoder-only GPT from the test
 purpose: "The reader should be able to follow the module-by-module construction order through the guided tours, run the reference code and its tests, verify each available milestone, and explain why a randomly initialized GPT produces incoherent text while its mechanics work."
 suggested_route:
   previous: null
-  next: "en/exercises"
+  next: "en/corpus-preparation"
 hierarchy:
   parents: ["en/index", "en/llm-overview"]
   children: ["en/gpt-config-walkthrough", "en/gpt-ops-walkthrough", "en/transformer-block-walkthrough", "en/gpt-model-walkthrough", "en/gpt-generation-walkthrough", "en/corpus-preparation"]
