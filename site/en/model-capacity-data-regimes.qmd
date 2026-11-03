@@ -98,6 +98,8 @@ Adding trees to a standard random forest generally reduces Monte Carlo noise in 
 
 Boosting follows a different logic: each tree depends on the current model and corrects part of its loss. Diversity comes from this sequential construction, not from averaging independent models. Additional rounds can first improve generalization and eventually fit noise; learning rate, depth, penalties, and early stopping therefore matter.
 
+Implementations also shift the trade-off. XGBoost explicitly penalizes leaf count and leaf scores. LightGBM generally expands the leaf with the largest gain (*leaf-wise*): it can achieve a substantial loss reduction with fewer splits, but may create very deep branches; on small samples, controlling `num_leaves`, `min_data_in_leaf`, and sometimes `max_depth` matters. CatBoost combines ordered categorical statistics and ordered boosting to mitigate certain forms of target leakage and prediction shift; its symmetric trees also constrain partition shapes. These mechanisms change risks but do not establish a universal library ranking.
+
 See [Decision Trees](decision-trees.qmd), [Gradient Boosting](gradient-boosting.qmd), [XGBoost](xgboost.qmd), [LightGBM](lightgbm.qmd), and [CatBoost](catboost.qmd).
 
 ::: {.self-check}
