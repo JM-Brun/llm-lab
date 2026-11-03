@@ -211,6 +211,7 @@ A comparison requires checking, among other things, the tokenizer and its segmen
 </details>
 
 **Further work:** a later set can cover finite-difference gradient checking and how reduction conventions affect gradients.
+
 ### Text data {#text-data}
 
 **Prerequisites:** [text and tokenization](text-data.qmd), [embedding space](embedding-space.qmd), and [training examples and input-target shifting](training-examples.qmd).
