@@ -1,0 +1,146 @@
+---
+title: "Advanced decoding strategies"
+subtitle: "Temperature, truncated sampling, search, and quality-diversity trade-offs"
+keywords: ["type:deep-dive", "destination:deepen", "topic:decoding", "level:advanced", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/decoding-strategies"
+scope: "Studies transformations applied to next-token distributions and sequence-search methods: temperature, top-k, nucleus sampling, greedy/beam search, and contrastive decoding; discusses quality-diversity trade-offs and reproducibility requirements."
+purpose: "Readers should be able to distinguish distribution transformations from sequence search, explain temperature/top-k/top-p, analyze why likelihood maximization is insufficient for open-ended text quality, and document a decoding protocol."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/generation", "en/logits", "en/probabilities", "en/experimental-evaluation"]
+tags: ["type:deep-dive", "destination:deepen", "topic:decoding", "level:advanced", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+The [text generation](generation.qmd) lesson introduces the essential mechanism: produce a conditional distribution, select a token, append it to the context, and repeat. This optional page studies finer choices that transform that distribution or search over sequences. They do not update the model's parameters, but they change the effective output distribution and the trade-offs among diversity, coherence, and instruction fidelity.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this page, you will be able to:
+- distinguish token-level distribution shaping from sequence search;
+- explain temperature, top-k, and nucleus sampling;
+- understand why maximizing likelihood does not by itself optimize open-ended text quality;
+- compare method families without assuming one strategy is universally better;
+- document the parameters needed for a reproducible decoding experiment.
+:::
+
+## 1. Where decoding happens
+
+At a given step, the model produces logits $z$ for the next token. A processing chain may then:
+
+1. transform logits or probabilities (for example, with temperature);
+2. restrict the candidate set (for example, top-k or top-p);
+3. renormalize the retained probabilities;
+4. select the next token, using argmax or sampling.
+
+This is a conceptual representation. Libraries can apply several *logits processors* and *warpers* in an implementation-defined order. The order matters: applying temperature before or after truncation does not necessarily produce the same result.
+
+Distinguish two operations:
+
+- **Transforming a local distribution:** changing candidate probabilities at one position.
+- **Searching over sequences:** comparing several continuations across multiple steps while accumulating their scores.
+
+## 2. Temperature: controlling concentration
+
+For a temperature $T>0$, probabilities are computed from logits divided by $T$:
+
+\[
+p_i(T)=\operatorname{softmax}\left(\frac{z}{T}\right)_i.
+\]
+
+- $T=1$ preserves the distribution obtained from the logits.
+- $0<T<1$ amplifies differences: the distribution becomes more concentrated.
+- $T>1$ reduces differences: the distribution becomes flatter.
+- As $T$ approaches zero, selection approaches argmax (apart from ties and numerical effects).
+
+Temperature controls the spread of choices, not the model's intrinsic quality. A low temperature does not guarantee a truthful answer; a high temperature does not guarantee creativity. It can also affect probability calibration and sequence diversity.
+
+## 3. Truncated sampling: top-k and nucleus (top-p)
+
+Pure ancestral sampling can select very low-probability tokens. Truncation methods reduce the candidate set before sampling.
+
+### Top-k: a fixed number of candidates
+
+Top-k retains the $k$ tokens with the highest probabilities, sets all other probabilities to zero, and renormalizes the retained probabilities.
+
+The support size is fixed, but the retained probability mass varies with the distribution's shape. The same $k$ can therefore be highly restrictive at one step and much less restrictive at another.
+
+### Nucleus sampling: a target probability mass
+
+Top-p (or *nucleus sampling*) retains the smallest set of most probable tokens whose cumulative probability reaches or exceeds threshold $p$. The number of candidates therefore varies with the distribution:
+
+- highly concentrated distribution: the nucleus can be small;
+- flatter distribution: the nucleus can be larger.
+
+The method was proposed to avoid sampling from the unreliable long tail while retaining diversity adapted to local uncertainty. It does not, however, guarantee global coherence.
+
+### What these filters change
+
+Top-k and top-p redistribute conditional probability over a subset. They can reduce some undesirable tokens, but they also exclude possible continuations. This is a precision-recall trade-off over continuations: a filtered distribution is no longer the model's original distribution.
+
+## 4. Greedy selection, beam search, and open-ended generation
+
+**Greedy decoding** selects the most likely token at each step. It is simple and deterministic, but a local choice does not necessarily maximize the probability of the best complete sequence. A myopic choice can steer the entire continuation.
+
+**Beam search** retains several candidate prefixes and expands the best-scoring continuations according to an accumulated score. It performs approximate search in sequence space; it is not merely an independent argmax at each position. It is useful in some constrained problems (translation, transcription, structured outputs), but likelihood maximization can produce short, generic, or repetitive open-ended text.
+
+Holtzman et al. show that maximization methods, including beam search in their open-ended generation experiments, can degenerate despite high local likelihood. This does not mean beam search is always poor: task, score, constraints, and evaluation protocol determine its relevance.
+
+## 5. Contrastive decoding: comparing an expert and an amateur model
+
+*Contrastive decoding* proposes comparing the scores of a larger expert model and a smaller amateur model. The idea is to favor continuations better supported by the expert than by the amateur, while imposing a plausibility constraint to avoid tokens that are too unlikely under the expert.
+
+This method illustrates a change in scoring function rather than a simple transformation of one model's distribution. It does not necessarily require additional training, but it does require multiple models and increases inference cost. Published results depend on the models, tasks, and evaluation protocols; they do not demonstrate universal superiority.
+
+## 6. Evaluating the quality-diversity trade-off
+
+There is no optimal setting independent of the task. A strategy suited to creative completion may be unsuitable for factual extraction, translation, or constrained generation.
+
+Separate several dimensions during evaluation:
+
+- **Quality / relevance:** does the output answer the prompt and satisfy constraints?
+- **Coherence:** are local and global dependencies preserved?
+- **Diversity:** are outputs excessively similar to one another?
+- **Repetition:** does the text loop or repeat segments?
+- **Probabilistic fidelity:** what probability does the model assign to observed tokens or sequences?
+
+Perplexity does not summarize these dimensions. A strategy can improve some human judgments or sequence-level metrics while degrading other properties. Work on *sampling adapters* analyzes, in particular, the precision-recall trade-offs induced by local distribution transformations.
+
+::: {.callout-warning title="Interpretation caveat"}
+Holtzman et al.'s results primarily concern open-ended generation and the models/protocols studied. Their conclusions do not automatically transfer to translation, code, structured generation, or modern LLMs with complex post-processing. Comparing strategies requires holding the model, prompt, corpus, constraints, and evaluation protocol constant.
+:::
+
+## 7. Making comparisons reproducible
+
+For each comparison, record at least:
+
+- model identifier and version, tokenizer, and inference library;
+- exact prompt, available context, and truncation rules;
+- temperature, top-k, top-p, and processing order;
+- random seed, if the implementation allows it to be controlled;
+- maximum token count, stopping criteria, and any penalties;
+- number of generations per prompt and evaluation protocol;
+- automatic metrics and, where possible, human evaluation instructions.
+
+Parameter labels alone (such as “temperature 0.7” or “top-p 0.9”) are insufficient if other processors, their order, or software versions differ.
+
+## Research references
+
+- Holtzman et al. (2020), [*The Curious Case of Neural Text Degeneration*](https://arxiv.org/abs/1904.09751), ICLR — analysis of degeneration in open-ended generation and proposal of nucleus sampling.
+- Nadeem et al. (2020), [*A Systematic Characterization of Sampling Algorithms for Open-ended Language Generation*](https://aclanthology.org/2020.aacl-main.36/), AACL-IJCNLP — shared properties and quality-diversity trade-offs of sampling methods.
+- Meister et al. (2023), [*On the Efficacy of Sampling Adapters*](https://aclanthology.org/2023.acl-long.80/), ACL — unified framework for analyzing sampling-distribution transformations.
+- Li et al. (2023), [*Contrastive Decoding: Open-ended Text Generation as Optimization*](https://aclanthology.org/2023.acl-long.687/), ACL — contrastive scoring between expert and amateur models.
+- Welleck et al. (2020), [*Consistency of a Recurrent Language Model With Respect to Incomplete Decoding*](https://aclanthology.org/2020.emnlp-main.448/), EMNLP — theoretical analysis of inconsistency in certain decoding strategies for recurrent models; do not generalize without care to every Transformer architecture.
+
+::: {.language-switch}
+**Language:** [Français](../fr/decoding-strategies.qmd) · [English](decoding-strategies.qmd)
+:::
