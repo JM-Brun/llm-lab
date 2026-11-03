@@ -89,8 +89,7 @@ def generate(
         raise ValueError("prompt_ids must contain integer values")
     if ids.shape[0] > model.config.context_length:
         raise ValueError(
-            f"prompt length {ids.shape[0]} exceeds context_length "
-            f"{model.config.context_length}"
+            f"prompt length {ids.shape[0]} exceeds context_length {model.config.context_length}"
         )
     if np.any(ids < 0) or np.any(ids >= model.config.vocab_size):
         raise ValueError("prompt token ids are out of range [0, vocab_size)")
