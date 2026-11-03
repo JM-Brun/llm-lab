@@ -28,6 +28,12 @@ Un modèle performant doit aussi déplacer et stocker ses données efficacement.
 Expliquer la complémentarité entre état récurrent et attention ; distinguer paramètres totaux et actifs ; relier GQA, MTP et quantification à leurs coûts ; séparer principes généraux et caractéristiques d'une version précise.
 :::
 
+
+
+## Les principes génériques derrière ce cas
+
+Les mécanismes de cette étude illustrent des compromis généraux : attention quadratique mais parallélisable, état récurrent à travail linéaire, cache KV croissant avec le contexte, et calcul MoE parcimonieux mais poids totaux à héberger. Pour une analyse indépendante de Nemotron — formules, entraînement, préremplissage, décodage et parallélisme matériel — consulter le [guide sur la complexité et le parallélisme des LLM](llm-computational-complexity.qmd).
+
 ## Pourquoi hybrider l'architecture ?
 
 Lors de la génération autorégressive, un Transformer à attention globale conserve un cache *key-value* (KV) dont la taille augmente avec le contexte. À chaque nouveau token, l'attention consulte aussi un historique plus long.
