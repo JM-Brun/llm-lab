@@ -1,0 +1,81 @@
+---
+title: "XGBoost: building and regularizing trees"
+subtitle: "Gradients, Hessians, split gain, and split search"
+keywords: ["type:concept-lesson", "destination:deepen", "topic:xgboost", "level:advanced", "language:en", "status:published"]
+lang: en
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/xgboost"
+scope: "Describes XGBoost's regularized objective, second-order Taylor approximation, leaf score, and split gain."
+purpose: "Interpret gradients and Hessians, calculate split gain, and distinguish regularization, search, and missing-value handling."
+suggested_route:
+  previous: "en/gradient-boosting"
+  next: "en/lightgbm"
+hierarchy:
+  parents: ["en/gradient-boosting"]
+  children: []
+related: ["en/bias-variance", "en/lightgbm", "en/catboost"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:xgboost", "level:advanced", "language:en", "status:published"]
+-->
+::: {.chapter-lead}
+XGBoost optimizes an objective combining loss with a tree-complexity penalty. It makes first- and second-order derivatives explicit when constructing a new tree.
+:::
+## Adding a tree
+
+At step (t), \,\(\hat y_i^{(t)}=\hat y_i^{(t-1)}+f_t(x_i)\). XGBoost approximates the objective change with a second-order Taylor expansion:
+
+\[
+\mathcal{L}^{(t)}\simeq
+\sum_i\left[g_i f_t(x_i)+\frac12 h_i f_t(x_i)^2\right]+\Omega(f_t),
+\]
+
+where (g_i) and (h_i) are the gradient and Hessian (scalar second derivative) of the loss with respect to the current prediction. They are not statistical bias and variance.
+
+For a tree with (T) leaves and leaf scores (w_j):
+
+\[
+\Omega(f)=\gamma T+\frac12\lambda\sum_{j=1}^{T}w_j^2.
+\]
+
+Gamma penalizes leaf count; lambda penalizes squared leaf scores. L1 regularization is also available.
+
+## Leaf score and split gain
+
+With (G_j=\sum_{i\in I_j}g_i) and (H_j=\sum_{i\in I_j}h_i), without L1 the optimal score is (w_j^*=-G_j/(H_j+\lambda)). Split gain is:
+
+\[
+\mathrm{Gain}=\frac12\left[
+\frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}
+-\frac{G^2}{H+\lambda}
+\right]-\gamma.
+\]
+
+A split is kept when it improves the objective under configured constraints. L1 and other constraints modify the expression.
+
+## Search and missing values
+
+XGBoost evaluates candidate thresholds. Its historical pre-sorted columns and later approximate/histogram methods reduce cost; feature search can be parallelized, while boosting rounds remain dependent. For missing values, a split learns a default direction based on estimated gain. This does not correct a non-ignorable missingness mechanism.
+
+Depth, leaf count, penalties, learning rate, subsampling, and early stopping control different aspects. Regularization does not guarantee generalization: validation design, leakage, and distribution shift still matter.
+
+::: {.callout-warning}
+**Do not equate derivatives with bias-variance.** The gradient measures local loss slope; the Hessian measures local curvature. Bias and variance describe prediction-error distributions across possible training samples.
+:::
+::: {.self-check}
+## Check your understanding
+1. Why use a second-order approximation?
+<details><summary>Show answer</summary>The gradient gives slope and the Hessian curvature, refining the estimate of a candidate contribution.</details>
+2. What do gamma and lambda penalize?
+<details><summary>Show answer</summary>Gamma penalizes adding leaves; lambda penalizes squared leaf scores.</details>
+3. Does a default direction solve every missing-value problem?
+<details><summary>Show answer</summary>No, it optimizes a split but does not correct missingness mechanisms, leakage, or drift.</details>
+:::
+## References
+- [Chen & Guestrin (2016), XGBoost: A Scalable Tree Boosting System](https://arxiv.org/abs/1603.02754).
+- [XGBoost documentation](https://xgboost.readthedocs.io/en/stable/).
+- [AiEdge — Understanding XGBoost from A to Z](https://newsletter.theaiedge.io/p/understanding-xgboost-from-a-to-z).
+- [AiEdge — Why XGBoost is better than GBM?](https://newsletter.theaiedge.io/p/why-xgboost-is-better-than-gbm).
+::: {.language-switch}
+[Français](../fr/xgboost.qmd) · [English](xgboost.qmd)
+:::
