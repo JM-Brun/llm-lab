@@ -24,16 +24,12 @@ A **language model** assigns probabilities to text sequences—or, in an autoreg
 
 :::
 
-<details>
-<summary>Expected outcome — and where this page fits</summary>
-
-By the end of this page, you should be able to:
-- explain what a language model estimates;
+::: {.callout-note .learning-outcomes title="Learning outcomes"}
+By the end of this page, you will be able to:
+- formulate language modeling as estimating a conditional distribution over the next token;
 - distinguish a language model, generative model, LLM, GPT, and Transformer;
-- trace the main stages of an autoregressive GPT computation.
-
-
-</details>
+- trace a GPT pipeline and distinguish embeddings from positional information.
+:::
 
 ## 1. The problem: continue text from a context
 
