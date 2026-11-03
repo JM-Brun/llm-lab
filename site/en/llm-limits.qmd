@@ -1,0 +1,74 @@
+---
+title: "What next-token prediction does not prove"
+subtitle: "Reading an LLM's performance without over-interpreting the training objective"
+keywords: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/llm-limits"
+scope: "Examines what the next-token prediction objective guarantees and does not guarantee: truth of outputs, calibration, the meaning of “understanding”, so-called emergent abilities, the role of scale. Short critical companion to the panorama; it does not unpack Transformer mechanisms or experimental evaluation protocols."
+purpose: "By the end of this page, readers should be able to distinguish what follows from the training objective from what requires evaluation, specify the criterion behind the word “understand”, and explain why an apparent ability depends on the metric and protocol."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["en/llm-overview"]
+  children: []
+related: ["en/experimental-evaluation"]
+tags: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+Predicting the next token is a **training objective**. What a model gains from it is a matter of evaluation, not definition. This page separates what the objective guarantees — little beyond prediction itself — from what it merely makes plausible.
+:::
+
+::: {.callout-note}
+This page complements the [LLM panorama](llm-overview.qmd), which installs the mental model first: the context → distribution → token loop. The caveats below are read **after** that model; they qualify its scope, they do not replace it.
+:::
+
+## 1. What the objective guarantees — and does not
+
+A prediction objective learns to assign probabilities to observed token sequences. It can yield linguistic abilities and complex behaviors, but it does not guarantee:
+
+- that every generated statement is true;
+- that the probabilities are well calibrated;
+- that the model has a human-like understanding of the world;
+- that an observed ability generalizes to every task or context;
+- that a behavior is causally explained by an isolated attention pattern.
+
+These missing guarantees are not implementation defects: they follow from the objective itself. Each is addressed by an adapted evaluation — metrics, baselines, controls — whose method is the subject of the [Experimental evaluation](experimental-evaluation.qmd) page.
+
+## 2. What does "understand" mean?
+
+The word "understanding" must be made precise. It can denote:
+
+- an **operational competence**, measured on tasks — summarizing, classifying, explaining, or solving a problem;
+- a **stronger claim** about human-like understanding, experience, or intention.
+
+Observable performance can support the first interpretation within a given scope; it does not establish the second. State the criterion you use instead of treating "understands" as a single, directly measurable property.
+
+## 3. "Emergent" abilities and scale effects
+
+Discussions of so-called *emergent* abilities require specifying the task, the metric, the thresholds, and the models compared. An ability that seems to appear abruptly under a given metric may depend on measurement resolution or protocol: recent analyses show that several "emergent" effects disappear when the metric is smoothed or replaced. Examine the results, controls, and definitions before concluding a qualitative transition.
+
+Model size alone does not explain performance either. Data quality, diversity, and provenance, the objective, the architecture, the training procedure, adaptation, and the evaluation protocol jointly shape the results.
+
+## Continue
+
+- [Panorama: what is an LLM?](llm-overview.qmd) — return to the mental model and the three dimensions.
+- [Experimental evaluation](experimental-evaluation.qmd) — define metrics, baselines, and interpretation limits.
+- [GPT and Transformer](transformer.qmd) — enter the computation that produces the distribution.
+
+## Primary sources and their role
+
+- [Wei et al. (2022), *Emergent Abilities of Large Language Models*](https://arxiv.org/abs/2206.07682) — formulation of emergent abilities and examples of apparent transitions.
+- [Schaeffer et al. (2023), *Are Emergent Abilities of Large Language Models a Mirage?*](https://arxiv.org/abs/2304.15004) — how metric choices can create or dissolve emergence effects.
+- [Bommasani et al. (2021), *On the Opportunities and Risks of Foundation Models*](https://arxiv.org/abs/2108.07258) — framing of foundation models and their risks.
+
+These sources present complementary, sometimes tension-filled positions: the first documents the phenomenon, the second offers a metric-based explanation. Cite the protocol, not just the conclusion.
+
+::: {.language-switch}
+**Language:** [Français](../fr/llm-limits.qmd) · [English](llm-limits.qmd)
+:::

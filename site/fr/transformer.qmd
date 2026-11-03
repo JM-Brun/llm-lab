@@ -25,21 +25,7 @@ Un **GPT** est un modèle de langage fondé sur un Transformer autorégressif : 
 :::
 
 ::: {.callout-note title="À la fin de cette page"}
-Vous devriez pouvoir **retracer le calcul** d’un contexte de tokens jusqu’aux logits, expliquer ce que font l’attention et le MLP, et distinguer les représentations contextualisées des scores de sortie. Le checkpoint final permet de vérifier ces trois points.
-:::
-
-::: {.callout-note}
-Cette page zoome sur un **GPT de type Transformer** ; elle ne décrit pas toutes les familles de LLM. Pour situer les architectures, le pré-entraînement, l’adaptation et l’inférence, commencez par le [panorama des LLM](llm-overview.qmd).
-:::
-
-::: {.callout-tip title="L’essentiel en une minute"}
-Un GPT répète une même boucle : **représenter le contexte → calculer une distribution sur le prochain token → sélectionner un token → l’ajouter au contexte**. L’attention permet aux positions d’échanger de l’information ; les paramètres appris déterminent les transformations effectuées.
-
-**Première lecture :** regardez le schéma, lisez les sections 1 à 3 et retenez cette boucle. Vous pouvez laisser les équations et l’explorateur pour une seconde visite.
-
-**Situer cette page :** elle prend le relais du [panorama des LLM](llm-overview.qmd) et zoome sur le calcul d’un GPT. Si le passage du texte brut aux tokens et aux embeddings reste flou, consultez d’abord ou en parallèle [Du texte aux tokens](text-data.qmd) ; cette branche explique l’entrée du pipeline, tandis que la présente page suit le calcul dans le réseau.
-
-**Pour aller plus loin :** suivez le calcul d’attention, testez l’explorateur interactif, puis consultez les pages conceptuelles liées. Les détails mathématiques sont des approfondissements, pas un péage à l’entrée.
+Vous devriez pouvoir **retracer le calcul** d'un contexte de tokens jusqu'aux logits, expliquer ce que font l'attention et le MLP, et distinguer les représentations contextualisées des scores de sortie. Le bilan final permet de vérifier ces trois points.
 :::
 
 ## Le parcours complet, en un schéma
@@ -47,6 +33,12 @@ Un GPT répète une même boucle : **représenter le contexte → calculer une d
 ![Flux simplifié d'un GPT autorégressif, des tokens à la sélection du prochain token.](../images/gpt-data-flow.svg){fig-alt="Pipeline conceptuel : texte, tokenisation, embeddings et position, blocs Transformer répétés, logits, softmax, choix du prochain token puis ajout au contexte." width=100%}
 
 Le schéma montre le chemin conceptuel d'une génération. Il omet volontairement certains détails d'implémentation, notamment les connexions résiduelles, la normalisation, le cache des clés et valeurs (*KV cache*) et les variantes d'échantillonnage.
+
+::: {.callout-tip title="Première lecture"}
+Un GPT répète une même boucle : **représenter le contexte → calculer une distribution sur le prochain token → sélectionner un token → l'ajouter au contexte**. Le schéma ci-dessus la parcourt de bout en bout.
+
+Lisez les sections 1 à 3 et retenez cette boucle. Les équations, l'[atelier d'exploration](transformer-explainer.qmd) et les pages liées attendent une seconde visite. Pour situer les architectures et le parcours pré-entraînement → adaptation → inférence, revenez au [panorama des LLM](llm-overview.qmd) ; si le passage du texte aux tokens reste flou, consultez [Du texte aux tokens](text-data.qmd).
+:::
 
 ## 1. Du texte aux représentations
 
@@ -110,11 +102,6 @@ Cette distinction explique pourquoi « le modèle prédit le prochain token » r
 
 ## Pour poursuivre
 
-- [Tenseurs](tensors.qmd) — lire les formes et les axes des données.
-- [Espace des embeddings](embedding-space.qmd) — distinguer vecteurs initiaux et représentations contextualisées.
-- [Requêtes, clés et valeurs](queries-keys-values.qmd) — comprendre les projections de l'attention.
-- [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) — suivre les opérations mathématiques.
-- [Masque causal](causal-masking.qmd) — comprendre l'accès au contexte précédent.
 - [Fondations mathématiques](mathematical-foundations.qmd) — relier logits, probabilités, vraisemblance et loss.
 - [Historique des Transformers](transformer-history.qmd) — replacer les choix architecturaux dans leur contexte.
 
