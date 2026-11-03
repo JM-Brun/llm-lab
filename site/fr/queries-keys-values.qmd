@@ -50,7 +50,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 **Pour approfondir :** suivez le calcul complet dans [l'attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), puis la contrainte temporelle dans le [masque causal](causal-masking.qmd).
 :::
 
-Imagine une collection de fiches. Une **requête** exprime ce qu'une position cherche ; une **clé** aide à comparer les positions disponibles ; une **valeur** porte l'information qui sera agrégée. Cette analogie distingue les rôles, mais ne signifie pas que le modèle effectue une recherche symbolique explicite.
+Imagine une collection de fiches. La **requête** est la question posée ; la **clé** est l'indice qui permet d'évaluer si une fiche correspond à cette question ; la **valeur** est le contenu de la fiche qui pourra être agrégé. Le score de correspondance n'est donc ni la clé ni la valeur. Cette analogie distingue les rôles, mais ne signifie pas que le modèle effectue une recherche symbolique explicite.
 
 
 ::: {.callout-note collapse="true" title="Inventaire des analogies pour Q, K et V (approfondissement)"}

@@ -52,7 +52,7 @@ Queries, keys, and values are not three kinds of tokens. They are three **learne
 
 ## Intuition
 
-Imagine a collection of index cards. A **query** expresses what a position is looking for; a **key** describes how a position can be matched as relevant; a **value** carries the information that will actually be aggregated. This analogy separates the roles, but does not imply that the model performs explicit symbolic search.
+Imagine a collection of index cards. A **query** expresses what a position is looking for; a **key** describes how a position can be matched as relevant; a **value** carries the information that will actually be aggregated. This analogy separates the roles, but does not imply that the model performs explicit symbolic search. In the analogy, the query is the question, the key is the note's matching label, and the value is the note's content—not the score of the match.
 
 
 ::: {.callout-note collapse="true" title="Inventory of Q, K, and V analogies (advanced)"}

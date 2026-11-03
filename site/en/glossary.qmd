@@ -86,6 +86,13 @@ These topics are grouped in the [Representation geometry and interpretability](e
 - **RoPE (*Rotary Position Embedding*)** — a positional encoding that applies position-dependent rotations to coordinate pairs of queries and keys.
 - **Parameter** — a value learned during training.
 - **Fine-tuning** — continuing training of a pretrained model on a particular objective or dataset.
+- **Supervised fine-tuning (SFT)** — adaptation on curated input–target or instruction–response demonstrations.
+- **RLHF (*reinforcement learning from human feedback*)** — a family of post-training methods that use human preferences; a classic pipeline trains a reward model from comparisons and optimizes a policy against it.
+- **Reward model** — a model trained to score responses in a way that reflects preference data; its scores are learned proxies, not objective measures of truth or quality.
+- **PPO (*proximal policy optimization*)** — a policy-gradient reinforcement-learning algorithm used in some RLHF pipelines to optimize a policy while constraining update size.
+- **DPO (*direct preference optimization*)** — a method that optimizes a policy directly from preference comparisons, without the separate reward-model-plus-PPO loop of the classic RLHF recipe.
+- **GRPO (*group relative policy optimization*)** — a policy-optimization method that compares rewards across several sampled responses to the same prompt to form a relative learning signal. The reward may come from a verifier or another evaluator; GRPO does not specify its source.
+- **RLVR (*reinforcement learning with verifiable rewards*)** — reinforcement learning in which rewards are computed from checkable outcomes, such as exact answers, executable tests, or output-format validation.
 
 ## Related pages
 

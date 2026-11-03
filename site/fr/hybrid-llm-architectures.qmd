@@ -110,6 +110,18 @@ Le livre blanc NVIDIA décrit une architecture principalement composée de couch
 | MTP / décodage spéculatif | Passages séquentiels | Proposer plusieurs tokens puis vérifier | Gain lié au taux d'acceptation |
 | Quantification | Stockage et trafic mémoire | Moins de bits par nombre | Erreur numérique et sensibilité des couches |
 
+## Post-entraînement : du SFT à l'apprentissage par renforcement
+
+L'aperçu de ByteByteGo décrit une progression d'entraînement pour la recette **Nemotron Lightning** : pré-entraînement, fine-tuning supervisé (SFT), puis apprentissage par renforcement. Il décrit également un **curriculum de mélange des données** pendant le pré-entraînement : commencer par une couverture large, puis augmenter le poids d'échantillonnage de certains contenus de meilleure qualité. Il s'agit d'une modification de la distribution d'échantillonnage des exemples, pas de l'objectif de prédiction du prochain token. L'article ne donne pas assez de détails pour reconstruire le calendrier ou les proportions exactes ; il ne faut donc pas les extrapoler. En SFT, le contexte d'une conversation peut inclure les messages utilisateur et système, tandis que la perte d'entraînement porte sur les réponses de l'assistant. Le modèle apprend ainsi à produire la continuation attendue d'une conversation, et non à reproduire tous les tokens de l'entrée ([aperçu ByteByteGo](https://blog.bytebytego.com/p/how-nvidias-new-nemotron-model-works)).
+
+Pour la phase de renforcement, l'article rapporte **Group Relative Policy Optimization (GRPO)** : la politique échantillonne plusieurs réponses à un prompt, des évaluateurs propres aux tâches attribuent des récompenses, puis les réponses sont comparées au sein du groupe pour construire un signal d'apprentissage relatif. Les environnements décrits vérifient des réponses mathématiques, exécutent du code contre des tests, évaluent le respect des instructions et valident des schémas de sortie. Ces signaux sont vérifiables par programme : cette recette relève donc davantage du **RL avec récompenses vérifiables (RLVR)** que d'un RLHF fondé uniquement sur les préférences — sauf si un signal distinct de préférences humaines est explicitement documenté. GRPO est un algorithme d'optimisation ; il ne précise pas, à lui seul, l'origine de la récompense.
+
+La distinction est importante :
+- **RLHF (recette classique) :** des comparaisons humaines servent à entraîner un modèle de récompense, puis une politique est optimisée par rapport à cette récompense, souvent avec PPO.
+- **GRPO avec récompenses vérifiables :** plusieurs réponses échantillonnées sont notées par des vérificateurs de tâche ; leurs récompenses relatives guident la mise à jour de la politique. Cela n'exige ni étiquettes de préférences humaines ni modèle de récompense appris.
+
+Ne pas déduire que toutes les variantes Nemotron suivent les mêmes étapes ou utilisent les mêmes sources de récompense. L'article ByteByteGo est une source secondaire ; les recettes propres à un modèle doivent être vérifiées dans le rapport technique et la fiche de publication correspondants de NVIDIA. La méthode GRPO est présentée dans [DeepSeekMath (Shao et al., 2024)](https://arxiv.org/abs/2402.03300).
+
 ### MTP et décodage spéculatif
 
 La **Multi-Token Prediction** (MTP) ajoute des objectifs auxiliaires qui apprennent au modèle à prédire plusieurs tokens futurs. À l'inférence, ces prédictions peuvent servir de propositions dans un schéma de décodage spéculatif : un mécanisme léger propose une suite, puis le modèle principal la vérifie. Plusieurs tokens peuvent être acceptés lors d'une même vérification, réduisant le nombre de passages séquentiels.

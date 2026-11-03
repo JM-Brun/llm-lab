@@ -58,8 +58,8 @@ To go further: [the embedding space](embedding-space.qmd) and its geometry — [
 
 The core of the network is a stack of identical blocks. Each block combines two operations:
 
-- **Self-attention:** each position draws from previous positions the information that refines its representation. In GPT, a causal mask forbids reading future tokens.
-- **Feed-forward network (MLP):** a small neural network applied to each position separately, with the same weights everywhere.
+- **Self-attention:** each position draws from previous positions the information that refines its representation. For example, when interpreting *it* in “Adam puts the ice cream in the freezer because it was melting”, attention can bring information about *the ice cream* into the representation at *it*. In GPT, a causal mask forbids reading future tokens.
+- **Feed-forward network (MLP):** a small neural network applied to each position separately, with the same weights everywhere. It typically combines linear projections with a nonlinear activation to produce a transformed representation; the exact design varies by architecture.
 
 Blocks also use **residual connections** and **normalization**. A residual connection adds a correction computed by a sublayer to the representation flowing through the network, rather than replacing that representation entirely. It therefore provides a direct path for information and gradients:
 
@@ -74,6 +74,10 @@ To see these operations in a concrete implementation without mistaking them for 
 ![Comparison of the roles of self-attention and the feed-forward network in a Transformer block.](../images/attention-vs-mlp.svg){fig-alt="Self-attention allows exchanges between allowed positions; the same feed-forward network is applied separately to each position." width=100%}
 
 The useful distinction is not that attention "understands" the tokens while the MLP does not: both transformations are learned. Attention mixes information across positions; the MLP transforms each representation locally, with weights shared across positions.
+
+A useful mental model is that **attention gathers a context-dependent mixture of information from other positions**, while the **MLP processes the representation now available at each position**. The first operation exchanges information across positions; the second transforms each position independently. This is only an analogy: attention computes weighted sums of learned value vectors, not a literal search or collection of human-readable notes.
+
+With **multi-head attention**, several attention operations run in parallel. Each head has its own learned query, key, and value projections, so heads *can* learn different matching patterns or focus on different relationships. Their outputs are concatenated and then mixed by an output projection. Do not assume that every head has a clean, human-interpretable specialization: that is an empirical question, not a guarantee of the architecture.
 
 ### Depth and width: two architectural dimensions
 
