@@ -96,14 +96,14 @@ Suppose the context is "The cat" and a toy vocabulary contains only four candida
 
 | Candidate token | Logit | Probability after softmax |
 |---|---:|---:|
-| \`sleeps\` | 2 | 64.4% |
-| \`runs\` | 1 | 23.7% |
-| \`eats\` | 0 | 8.7% |
-| \`plays\` | −1 | 3.2% |
+| `sleeps` | 2 | 64.4% |
+| `runs` | 1 | 23.7% |
+| `eats` | 0 | 8.7% |
+| `plays` | −1 | 3.2% |
 
 The probabilities are computed as \(p_i = \exp(z_i)/\sum_j\exp(z_j)\). These numbers are chosen to make the calculation readable: they do not come from the repository's reference GPT or from a trained language model. A real model has many more vocabulary candidates, and its logits depend on the context, parameters, and position being considered.
 
-During generation, a selection rule picks the next token: maximum, sampling, or a more elaborate method. The chosen token joins the context, and the computation starts again. Generation is therefore **autoregressive**: text is built token by token, not as a single prediction of a whole answer.
+During generation, a selection rule picks the next token: maximum, sampling, or a more elaborate method. In the toy example, greedy selection would choose `sleeps`, while sampling could select another candidate according to the probabilities. The chosen token joins the context, and the computation starts again. Generation is therefore **autoregressive**: text is built token by token, not as a single prediction of a whole answer.
 
 ### A forward pass is not a generation loop
 
