@@ -20,9 +20,9 @@ Green is the primary brand colour. It identifies the site, navigation, links, pr
 
 | Token | Hex | Intended use |
 |---|---|---|
-| Brand green | #16A34A | Main identity, links, interactive accents |
+| Brand green | #16A34A | Main identity, borders, large accents and non-text interactive cues; not small text on pale surfaces |
 | Deep green | #14532D | Navbar, dark hero surfaces, strong brand surfaces |
-| Action green | #15803D | Primary buttons and high-emphasis actions |
+| Action green | #15803D | Text links, small emphasis labels on light surfaces, primary buttons and high-emphasis actions |
 | Bright green | #22C55E | Small highlights; not body text on white |
 | Pale green | #DCFCE7 | Selected states and subtle fills |
 | Dark ink | #17212B | Main text on light surfaces |
@@ -37,7 +37,7 @@ Green is the primary brand colour. It identifies the site, navigation, links, pr
 ### Usage rules
 
 - Keep long-form reading surfaces neutral. Do not turn every card, section, or page background green.
-- Use deep green for global navigation and dark hero surfaces; use action green for primary controls.
+- Use deep green for global navigation and dark hero surfaces; use action green for primary controls and small text on light surfaces.
 - Use pale green for low-emphasis fills. Do not put small white text on bright green.
 - Green must not mean both brand and success by default. Success, warning, error, and informational states retain explicit semantic labels/icons and accessible contrast.
 - In diagrams, define a stable legend. Green may identify the main data path, but tokens, tensor axes, masks, parameters, and outputs must not be distinguished by colour alone.
