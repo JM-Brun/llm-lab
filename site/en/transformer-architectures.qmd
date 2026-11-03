@@ -72,12 +72,16 @@ The three families described here are major configurations of the **Transformer*
 
 To understand how these architectures fit into the research timeline, see the [history of Transformers](transformer-history.qmd). To follow the internal computation of the decoder-only GPT chosen for this project, continue with [GPT and Transformer](transformer.qmd).
 
+::: {.self-check}
 ## Check your understanding
+
+[Extended exercises on this topic](../en/exercises.qmd#transformer).
 
 1. **Why can BERT use tokens that appear after the token being represented?** Its encoder generally uses bidirectional attention over the full input; it is not subject to GPT's causal mask.
 2. **Which operation particularly distinguishes an encoder–decoder from a decoder-only model?** The encoder–decoder's decoder has cross-attention to representations produced by the encoder.
 3. **Does next-token prediction define every Transformer?** No. It is a typical objective for autoregressive decoders, not a property of all Transformers.
 4. **Is a Transformer necessarily an LLM?** No. Architecture alone does not determine model scale or whether it qualifies as an LLM.
+:::
 
 ## Where to go next
 
