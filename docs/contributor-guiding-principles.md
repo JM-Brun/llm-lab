@@ -50,6 +50,26 @@ These principles are the short version of the project's editorial and engineerin
 30. **Respect provenance and reuse rights.** Attribute ideas and assets, verify licences, and do not copy substantial material without a clear legal basis.
 31. **Prefer useful completeness over volume.** Add a page, dependency, visual, exercise, or experiment only when it solves a real learning or verification need.
 
+## 6. Extract reusable knowledge from every model, method, and source
+
+Studying a new model, architecture, training or inference method, research paper, technical article, or implementation is also an opportunity to improve the **general LLM knowledge base**. Do not treat the resulting case study as an isolated destination, and do not turn every source into a new page. Extract and place reusable scientific knowledge where it best serves the existing learning graph.
+
+Use this editorial workflow:
+
+1. **Decompose the source into claims and mechanisms.** Identify what is genuinely new, what is an instance of an established concept, what is a measured result, what is a design choice, and what is a vendor or author claim. Record the source and the evidence supporting each important claim.
+2. **Test generality.** Ask whether the mechanism, mathematical result, systems constraint, trade-off, or evaluation method applies beyond the studied model or article. Separate general principles from model-specific configurations, names, benchmark results, and implementation details.
+3. **Find the canonical destination before creating content.** Inspect existing concept pages, overviews, implementation guides, deep dives, glossary entries, and references. Extend the best existing page when the new material belongs to its scope. Create a new conceptual page only when it answers a distinct, durable learner question that cannot be integrated coherently without overloading or distorting an existing page.
+4. **Choose the right pedagogical depth.**
+   - **Core learning path:** include only the minimum general mechanism needed to understand LLMs and the system-level relationships. Give the reader a correct mental model, define necessary terms, and link to deeper treatment. Do not put specialist optimizations or research-specific details in the core merely because they are interesting.
+   - **Advanced / deep-dive pages:** place derivations, complexity analysis, architectural variants, optimization techniques, systems trade-offs, detailed empirical evidence, and specialist implementation details here when they are useful but not prerequisites for the core mental model.
+   - **Case study:** retain model-specific architecture choices, recipes, configuration, training details, reported benchmarks, limitations, and source-specific claims. Link these to the generic concepts they instantiate; do not present one model's choices as universal practice.
+5. **Synthesize and connect.** Explain the mechanism in the project's own notation and pedagogical style. Add the relevant links in both directions where useful: generic concept to case study, and case study to generic explanation. Preserve French/English parity. Avoid copying the source's narrative or merely accumulating quotations and links.
+6. **Verify and maintain.** Prefer primary papers and official technical documentation for scientific claims; use secondary articles as discovery aids or pedagogical perspectives, not as sole evidence for specialist claims. Check equations, assumptions, complexity bounds, benchmark conditions, implementation behavior, and known limitations. Update references and tests/examples where appropriate.
+
+A useful classification test is: **Would this claim remain true, with the same conditions, if the named model or article disappeared?** If yes, it may belong in a generic concept page. If it depends on a particular model, dataset, hardware, training recipe, benchmark protocol, or source interpretation, keep that dependency explicit in the case study or experiment report. Some material legitimately belongs in both places at different levels: a concise general principle in the core, its rigorous treatment in a deep dive, and the concrete instantiation in the case study.
+
+This is a recurring editorial responsibility, not a mandatory page-production quota. Reuse existing pages where possible; do not create duplicate concepts, force every source into the curriculum, or promote a detail to the core path without a clear learner need.
+
 ## The practical review question
 
 > Will this change help a reader understand a specific LLM mechanism, inspect or verify its implementation, identify limitations, and navigate between explanation, code, tests, and evidence—without hiding assumptions or overstating the results?

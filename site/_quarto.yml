@@ -56,8 +56,10 @@ project:
     - en/in-context-learning.qmd
     - fr/transformer-architectures.qmd
     - fr/hybrid-llm-architectures.qmd
+    - fr/llm-computational-complexity.qmd
     - en/transformer-architectures.qmd
     - en/hybrid-llm-architectures.qmd
+    - en/llm-computational-complexity.qmd
     - fr/transformer.qmd
     - fr/transformer-explainer.qmd
     - en/transformer.qmd
@@ -173,6 +175,9 @@ website:
             - section: "Adaptation à l'inférence"
               contents:
                 - fr/in-context-learning.qmd
+            - section: "Calcul, complexité et parallélisme"
+              contents:
+                - fr/llm-computational-complexity.qmd
             - section: "Architectures alternatives et efficacité"
               contents:
                 - fr/hybrid-llm-architectures.qmd
@@ -256,6 +261,9 @@ website:
             - section: "Adaptation at inference"
               contents:
                 - en/in-context-learning.qmd
+            - section: "Computation, complexity, and parallelism"
+              contents:
+                - en/llm-computational-complexity.qmd
             - section: "Alternative architectures and efficiency"
               contents:
                 - en/hybrid-llm-architectures.qmd
