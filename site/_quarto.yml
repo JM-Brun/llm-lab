@@ -55,9 +55,11 @@ project:
     - en/emergence.qmd
     - en/in-context-learning.qmd
     - fr/transformer-architectures.qmd
+    - fr/cross-attention.qmd
     - fr/hybrid-llm-architectures.qmd
     - fr/llm-computational-complexity.qmd
     - en/transformer-architectures.qmd
+    - en/cross-attention.qmd
     - en/hybrid-llm-architectures.qmd
     - en/llm-computational-complexity.qmd
     - fr/transformer.qmd
@@ -125,6 +127,7 @@ website:
           contents:
             - fr/llm-overview.qmd
             - fr/transformer-architectures.qmd
+            - fr/cross-attention.qmd
             - fr/transformer.qmd
             - fr/generation.qmd
             - fr/llm-limits.qmd
@@ -211,6 +214,7 @@ website:
           contents:
             - en/llm-overview.qmd
             - en/transformer-architectures.qmd
+            - en/cross-attention.qmd
             - en/transformer.qmd
             - en/generation.qmd
             - en/llm-limits.qmd
