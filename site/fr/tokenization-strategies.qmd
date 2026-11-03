@@ -205,7 +205,7 @@ Ce tableau formule des questions à tester, pas des sorties exactes. Pour docume
 La taille du vocabulaire, les budgets d'entraînement et l'évaluation comparative des tokenizers soulèvent des questions de coût, de qualité et d'équité multilingue. Ces choix dépassent la compréhension du mécanisme de segmentation ; ils sont traités dans [l'approfondissement sur la conception et l'évaluation des tokenizers](tokenizer-design-evaluation.qmd).
 :::
 
-## 7. Contre-exemples
+## 6. Contre-exemples
 
 - **Moins de tokens = meilleur modèle.** Non : cela démontre d'abord une différence de longueur, pas de qualité.
 - **BPE découvre les morphèmes.** Non : aucune garantie d'analyse linguistique.
