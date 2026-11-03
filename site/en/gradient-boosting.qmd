@@ -54,7 +54,7 @@ These are **pseudo-residuals**. Under squared-error loss they are proportional t
 
 The next tree does not reconstruct the whole target; it seeks a structured correction to current errors.
 
-## Boosting versus bagging
+\n\n![One Gradient Boosting round, from the current ensemble to the added correction.](../images/gradient-boosting-iteration.svg){fig-alt="Workflow: current model, negative gradient, corrective tree, shrinkage, update, and repeat."}\n\n## Boosting versus bagging
 
 | Bagging (random forest) | Boosting |
 |---|---|
