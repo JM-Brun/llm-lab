@@ -1,0 +1,120 @@
+---
+title: "Hybrid LLM architectures: the Nemotron case"
+subtitle: "Combining recurrent state, attention, and sparse computation"
+keywords: ["type:concept-lesson", "destination:understand", "topic:hybrid-llm-architectures", "level:advanced", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/hybrid-llm-architectures"
+scope: "Étudie les compromis entre Mamba-2, attention, MoE, GQA, MTP et précision numérique à partir de Nemotron 3 ; distingue principes généraux et choix propres à une version."
+purpose: "Expliquer les coûts d'inférence ciblés par une architecture hybride, distinguer paramètres totaux et actifs, et identifier les compromis de capacité, de rappel et de bande passante."
+suggested_route:
+  previous: "en/transformer-architectures"
+  next: "en/generation"
+hierarchy:
+  parents: ["en/transformer-architectures"]
+  children: []
+related: ["en/transformer", "en/generation", "en/scaling-laws"]
+tags: ["type:concept-lesson", "destination:understand", "topic:hybrid-llm-architectures", "level:advanced", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+A capable model must also move and store data efficiently. **Nemotron 3** illustrates one response: combining des couches Mamba-2, quelques couches d'attention et des couches *Mixture of Experts* (MoE), puis optimiser la génération et la précision numérique. This case explains trade-offs; it is not a universal recipe.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+Expliquer la complémentarité entre état récurrent et attention ; distinguer paramètres totaux et actifs ; relier GQA, MTP et quantification à leurs coûts ; séparer principes généraux et caractéristiques d'une version précise.
+:::
+
+## Why combine architectures?
+
+During autoregressive generation, a Transformer with global attention maintains a *key-value* (KV) cache that grows with context length. Each new token also attends over a longer history.
+
+A state-space layer such as **Mamba-2** instead maintains a bounded recurrent state, updated at each token. Schematically:
+
+\[
+s_t = f_\theta(s_{t-1}, x_t), \qquad y_t = g_\theta(s_t, x_t).
+\]
+
+There is no need to store a key-value pair for every past position. Sequence processing can be linear in sequence length, with bounded state during generation. The trade-off is that the state summarizes history: by itself, it does not provide the same direct access to a particular past position as explicit attention.
+
+The mechanisms are complementary:
+- **Mamba-2** : traitement séquentiel efficace et état compact ;
+- **attention** : accès flexible aux représentations passées, avec un cache dépendant du contexte.
+
+A hybrid architecture alternates these mechanisms: Mamba processes much of the stream, while selected attention layers preserve explicit retrieval paths. Their proportion and placement require empirical evaluation.
+
+## MoE: total capacity and active computation
+
+A **Mixture-of-Experts** layer contains multiple expert networks; a router selects a subset for each token. If (N) est le nombre total d'experts et (K < N) le nombre activé pour un token, le modèle dispose d'une grande capacité tout en n'effectuant qu'une partie du calcul expert par token.
+
+This is the distinction between **total parameters** and **active parameters**. Unselected parameters are not free: they generally still need to be stored or made accessible on accelerators. Active parameters mainly describe the computation used per token; total parameters still affect model memory and weight transfers.
+
+::: {.callout-warning title="Sparsity is not compression"}
+A 30-billion-parameter MoE with roughly 3 billion active parameters per token is not a dense 3-billion-parameter model. The other experts still exist and must be hosted or made accessible.
+:::
+
+## GQA reduces the KV cache
+
+*Grouped-Query Attention* (GQA) shares keys and values across several query heads. It retains multiple Q heads while using fewer distinct K/V heads.
+
+For one layer, an approximate cache-memory requirement is:
+
+\[
+M_{KV} \approx 2 B T n_{KV} d_h b,
+\]
+
+où (B) est le batch, (T) la longueur du contexte, (n_{KV}) le nombre de têtes K/V, (d_h) leur dimension et (b) le nombre d'octets par élément. Le facteur 2 correspond aux clés et aux valeurs ; il faut sommer les couches d'attention.
+
+Réduire (n_{KV}) réduit approximativement le cache dans la même proportion. Ainsi, 32 têtes Q partageant 2 têtes KV donnent un ratio de 16 entre nombres de têtes, mais pas nécessairement un gain de latence de 16 : noyaux, matériel, batch et transferts mémoire interviennent aussi.
+
+## Reading Nemotron 3's choices together
+
+NVIDIA's white paper describes an architecture made predominantly of Mamba-2 and MoE layers, with a small number of self-attention layers.
+
+| Technique | Coût ciblé | Principe | Compromis |
+|---|---|---|---|
+| Mamba-2 | Cache dépendant du contexte | État récurrent compact | Récupération précise moins directe |
+| Attention | Accès à l'historique | Pondération explicite des positions | Cache KV dépendant du contexte |
+| MoE | Calcul feed-forward | Activer certains experts | Poids totaux, routage et communication |
+| GQA | Mémoire KV | Partager K/V entre têtes Q | Réduit le cache, ne l'élimine pas |
+| MTP / décodage spéculatif | Passages séquentiels | Proposer plusieurs tokens puis vérifier | Gain lié au taux d'acceptation |
+| Quantification | Stockage et trafic mémoire | Moins de bits par nombre | Erreur numérique et sensibilité des couches |
+
+### MTP and speculative decoding
+
+**Multi-Token Prediction** (MTP) adds auxiliary objectives that train a model to predict multiple future tokens. At inference, these predictions can serve as proposals in speculative decoding: a lightweight mechanism proposes a continuation, then the main model verifies it. Several tokens may be accepted in one verification pass, reducing the number of sequential passes.
+
+MTP is a training objective; speculative decoding is an inference strategy that uses verified proposals. It does not remove generation's causal dependency.
+
+### Quantization and numerical precision
+
+A lower-precision representation reduces weight storage and can reduce memory traffic, but introduces approximation. Layers do not all tolerate the same error.
+
+NVIDIA's white paper describes NVFP4 training for some Nemotron 3 variants and notes precision safeguards for sensitive projections. It would be incorrect to claim that all Nemotron models uniformly use NVFP4 or that quantization automatically preserves performance. The format, scaling, recipe, and metrics must be explicit.
+
+## Critically reading the numbers
+
+Parameter, expert, and head counts, as well as context length, describe a particular version; they do not define the entire Nemotron family. Vendor throughput results depend on hardware, prefill and decode lengths, batch size, and protocol.
+
+A sound comparison controls hardware, precision, concurrency, throughput, time to first token, inter-token latency, and quality on identical tasks. **Inference efficiency is a systems problem**: FLOPs, bandwidth, memory capacity, communication, and sequential-pass count interact.
+
+Nemotron 3 does not make the Transformer obsolete. It shows that a system can combine mechanisms with different computational and representational properties. The right choice depends on context length, precise-retrieval needs, concurrency, hardware, and latency-versus-throughput goals.
+
+Connect this case to [Transformer architectures](transformer-architectures.qmd), the [Transformer block](transformer.qmd), [autoregressive generation](generation.qmd), and [scaling laws](scaling-laws.qmd).
+
+::: {.self-check}
+## Check your understanding
+
+1. **Why retain a few attention layers in a model dominated by Mamba?** To preserve explicit access paths to previous positions.
+2. **Does a 30B MoE with 3B active parameters require only 3B of weight memory?** No: the other experts remain parameters that must be hosted or made accessible.
+3. **Do GQA and Mamba reduce the same cost?** No: GQA reduces K/V heads and attention cache; Mamba maintains bounded recurrent state.
+4. **Does MTP make generation non-autoregressive?** No: proposals are verified by the target model.
+5. **Is a published throughput gain a general law?** No: it depends on hardware and protocol.
+:::
+
+::: {.language-switch}
+**Language:** [Français](../fr/hybrid-llm-architectures.qmd) · [English](hybrid-llm-architectures.qmd)
+:::

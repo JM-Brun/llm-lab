@@ -51,7 +51,9 @@ project:
     - en/emergence.qmd
     - en/in-context-learning.qmd
     - fr/transformer-architectures.qmd
+    - fr/hybrid-llm-architectures.qmd
     - en/transformer-architectures.qmd
+    - en/hybrid-llm-architectures.qmd
     - fr/transformer.qmd
     - fr/transformer-explainer.qmd
     - en/transformer.qmd
@@ -118,6 +120,7 @@ website:
             - fr/llm-overview.qmd
             - fr/language-modeling-math.qmd
             - fr/transformer-architectures.qmd
+            - fr/hybrid-llm-architectures.qmd
             - fr/transformer.qmd
             - fr/generation.qmd
             - fr/llm-limits.qmd
@@ -190,6 +193,7 @@ website:
             - en/llm-overview.qmd
             - en/language-modeling-math.qmd
             - en/transformer-architectures.qmd
+            - en/hybrid-llm-architectures.qmd
             - en/transformer.qmd
             - en/generation.qmd
             - en/llm-limits.qmd
