@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/llm-overview"]
   children: []
-related: ["fr/mathematical-foundations", "fr/training-examples"]
+related: ["fr/probabilites", "fr/vraisemblance", "fr/loss", "fr/training-examples", "fr/mathematical-foundations"]
 tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:fr", "status:published"]
 -->
 
@@ -48,7 +48,7 @@ Le problème de modélisation du langage consiste à construire un modèle proba
 Pour deux événements $A$ et $B$, avec $P(B)>0$, la probabilité conditionnelle est définie par :
 
 $$
-P(A\mid B)=\frac{P(A\cap B)}{P$B$}.
+P(A\mid B)=\frac{P(A\cap B)}{P(B)}.
 $$
 
 Dans un modèle de langage, l'événement $B$ correspond au préfixe déjà observé et $A$ au prochain token. On note :
@@ -72,7 +72,7 @@ La règle de chaîne des probabilités donne, pour toute distribution jointe :
 
 $$
 P(x_1,\ldots,x_T)
-=P$x_1$P(x_2\mid x_1)\cdots
+=P(x_1)P(x_2\mid x_1)\cdots
 P(x_T\mid x_1,\ldots,x_{T-1}).
 $$
 
