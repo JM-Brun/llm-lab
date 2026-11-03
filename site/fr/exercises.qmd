@@ -33,7 +33,7 @@ Les pages de cours utilisent un composant homogène **« Vérifier sa compréhen
 
 | Collection | Périmètre | Statut |
 |---|---|---|
-| [Fondations mathématiques](#fondations) | Tenseurs, probabilités, logits, entropie, cross-entropie, vraisemblance, gradients, stabilité numérique | Auto-vérifications déjà présentes sur logits, probabilités et loss ; exercices approfondis à construire |
+| [Fondations mathématiques](#fondations) | Tenseurs, probabilités, logits, entropie, cross-entropie, vraisemblance, gradients, stabilité numérique | 4 exercices progressifs rédigés ; autres thèmes et vérifications numériques à compléter |
 | [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Auto-vérifications sur IDs et tokenizers dans les pages texte/embeddings ; exercices approfondis à construire |
 | [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Auto-vérifications sur agrégation Q/K/V et mise à l’échelle/masquage ; exercices approfondis à construire |
 | [Transformer](#transformer) | Embeddings, position, résidus, normalisation, MLP et variantes d’architecture | Structure à compléter |
@@ -50,7 +50,99 @@ Les pages de cours utilisent un composant homogène **« Vérifier sa compréhen
 
 **Notions préalables :** [fondations mathématiques](mathematical-foundations.qmd), [tenseurs](tensors.qmd), [logits](logits.qmd), [probabilités](probabilites.qmd), [entropie](entropy.qmd), [cross-entropie](cross-entropy.qmd), [vraisemblance](vraisemblance.qmd), [gradients](gradients.qmd).
 
-**À développer :** calculs sur papier, analyse de contre-exemples, formes de tenseurs et vérification numérique. Les auto-vérifications intégrées aux pages ne remplacent pas une collection progressive d’exercices.
+**Périmètre actuel :** quatre exercices corrigés couvrent le calcul softmax/NLL, l'effet du masquage et de la réduction, le gradient par rapport aux logits et le lien entre entropie croisée et divergence KL. Ils forment un premier noyau, pas une couverture exhaustive des tenseurs ni de la stabilité numérique.
+
+#### Exercice 1 — Du logit à la perte
+
+On considère trois logits $z=(0,\ln 3,\ln 5)$ et une cible correspondant à la deuxième classe.
+
+1. Calculer la distribution softmax.
+2. Calculer la perte NLL de cette cible, en nats.
+3. Donner le gradient de la perte par rapport aux trois logits.
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+La somme des exponentielles vaut $1+3+5=9$. La distribution est donc $p=(1/9,3/9,5/9)=(1/9,1/3,5/9)$.
+
+La probabilité de la cible est $p_2=1/3$, d'où $\ell=-\ln(1/3)=\ln 3\approx 1{,}099$ nat.
+
+Pour une cible one-hot, $\partial\ell/\partial z_i=p_i-\mathbb{1}[i=2]$. Le gradient vaut donc $(1/9,-2/3,5/9)$. La somme de ses composantes est nulle, propriété attendue puisque l'ajout d'une même constante à tous les logits ne change pas le softmax.
+
+</details>
+
+#### Exercice 2 — Masquage et dénominateur
+
+Un batch contient trois positions cibles valides, dont les pertes sont respectivement $\ln 2$, $\ln 4$ et $\ln 8$, ainsi qu'une position de padding dont la valeur de perte calculée par erreur serait $\ln 100$.
+
+1. Calculer la moyenne correcte sur les positions valides.
+2. Calculer la moyenne erronée si la position de padding est exclue du numérateur mais conservée dans le dénominateur.
+3. Expliquer pourquoi le masque doit agir sur les deux.
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+La moyenne correcte est $(\ln 2+\ln 4+\ln 8)/3=(1+2+3)\ln 2/3=2\ln 2=\ln 4\approx 1{,}386$ nats.
+
+Si le padding reste dans le dénominateur, on obtient à tort $(\ln 2+\ln 4+\ln 8)/4=1{,}5\ln 2\approx 1{,}040$ nat. Cette valeur n'est pas la moyenne des trois cibles valides : elle dépend artificiellement du nombre de positions ignorées. Le masque doit donc exclure les positions du numérateur **et** du dénominateur.
+
+</details>
+
+#### Exercice 3 — Du gradient des logits au gradient des paramètres
+
+Pour une position, on connaît le gradient par rapport aux logits $g=\nabla_z\ell=(0{,}2,-0{,}3,0{,}1)$. Dans un modèle simplifié, les logits dépendent de deux paramètres $\theta=(\theta_1,\theta_2)$ avec le jacobien :
+
+$$
+J=\frac{\partial z}{\partial\theta}=
+\begin{pmatrix}
+1 & 0\\
+0 & 2\\
+1 & 1
+\end{pmatrix}.
+$$
+
+Calculer $\nabla_\theta\ell=J^\top g$. Expliquer pourquoi ce résultat n'est pas simplement $g$.
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+Le produit donne :
+
+$$
+J^\top g=
+\begin{pmatrix}
+1 & 0 & 1\\
+0 & 2 & 1
+\end{pmatrix}
+\begin{pmatrix}0{,}2\\-0{,}3\\0{,}1\end{pmatrix}
+=
+\begin{pmatrix}0{,}3\\-0{,}5\end{pmatrix}.
+$$
+
+Le gradient $g$ décrit la sensibilité de la perte aux trois logits. Le gradient par rapport aux deux paramètres tient aussi compte de la manière dont chaque paramètre modifie les logits, représentée par le jacobien. C'est précisément le rôle de la règle de chaîne.
+
+</details>
+
+#### Exercice 4 — Cible souple et divergence KL
+
+On considère une cible $q=(3/4,1/4)$ et une prédiction $p=(1/2,1/2)$.
+
+1. Calculer $H(q,p)$.
+2. Écrire $H(q)$ et en déduire $D_{\mathrm{KL}}(q\Vert p)$.
+3. Pourquoi minimiser $H(q,p)$ par rapport à $p$ revient-il ici à minimiser $D_{\mathrm{KL}}(q\Vert p)$ ?
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+Comme les deux probabilités prédites valent $1/2$, $H(q,p)=-\frac34\ln\frac12-\frac14\ln\frac12=\ln 2\approx0{,}693$ nat.
+
+L'entropie cible vaut $H(q)=-\frac34\ln\frac34-\frac14\ln\frac14\approx0{,}562$ nat. Donc $D_{\mathrm{KL}}(q\Vert p)=H(q,p)-H(q)\approx0{,}131$ nat.
+
+Pour $q$ fixé, $H(q)$ est constant par rapport à $p$. Minimiser $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$ revient donc à minimiser la divergence KL. Cette équivalence ne rend pas la KL symétrique : l'ordre $q\Vert p$ compte.
+
+</details>
+
+**Pour aller plus loin :** ajouter des exercices sur les formes de tenseurs, la stabilité numérique de log-softmax, la perplexité et la vérification par différences finies.
 
 ### Données textuelles {#donnees-textuelles}
 
