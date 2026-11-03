@@ -90,7 +90,10 @@ Une température plus faible tend à concentrer la distribution ; une températu
 - Une entropie ou une perplexité calculée avec un tokenizer différent n'est pas directement comparable sans précautions.
 - L'entropie moyenne observée sous un modèle n'est pas automatiquement l'entropie vraie de la source des données.
 
-## Questions de contrôle
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](exercises.qmd#fondations).
 
 1. Une entropie faible garantit-elle que le token le plus probable est correct ?
 2. En quoi l'entropie diffère-t-elle de la surprise du token observé ?
@@ -104,6 +107,7 @@ Une température plus faible tend à concentrer la distribution ; une températu
 3. Les tokenizers segmentent différemment le texte, ce qui change les unités et les positions sur lesquelles la moyenne est calculée.
 
 </details>
+:::
 
 ## Pour poursuivre
 
