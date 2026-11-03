@@ -41,7 +41,7 @@ The parent is correctly decomposed already. Execute sequentially; do not combine
 | B | [#309](https://github.com/JM-Brun/llm-lab/issues/309) | Rendered review of 3–4 representative pages/components | Good: 45–60 min |
 | C | [#310](https://github.com/JM-Brun/llm-lab/issues/310) | Contrast measurements, keyboard, zoom/reflow and reduced motion | Good: 45–60 min |
 
-**Dependency:** confirm the design-token baseline from PR #189 is on `main` before treating it as authoritative. The output must distinguish measured failures, manual observations and untested criteria. A representative sample cannot establish site-wide WCAG conformance.
+**Dependency:** PR #189 was merged on 2026-10-30; use its integrated token baseline and verify the current source before making changes. The output must distinguish measured failures, manual observations and untested criteria. A representative sample cannot establish site-wide WCAG conformance.
 
 ### P1 — Finish the existing pedagogical-template pilot
 
@@ -52,7 +52,7 @@ Research, source audit and template hierarchy are integrated. The remaining pilo
 - [#316](https://github.com/JM-Brun/llm-lab/issues/316): entropy, cross-entropy and scaled-dot-product attention (three page pairs).
 - [#317](https://github.com/JM-Brun/llm-lab/issues/317): Transformer architecture and Transformer overview (two page pairs).
 
-Both lots should record FR/EN, desktop/mobile, viewport and reproducible observations. Three page pairs in #316 may exceed one hour if equations and interactive disclosures need detailed inspection; if so, split it into **#316-A: entropy/cross-entropy** and **#316-B: attention**, keeping the existing parent issue as the tracker. Do not create cosmetic fixes from preference alone.
+Both lots should record FR/EN, desktop/mobile, viewport and reproducible observations. The three page pairs in #316 are explicitly timeboxed to 45–60 minutes. Keep that boundary; if the inspection proves materially larger, split the remaining work into **entropy/cross-entropy** and **attention** rather than expanding the session. Do not create cosmetic fixes from preference alone.
 
 ### P1 — Formative exercise sequence, gated by #82
 
@@ -122,7 +122,7 @@ These issues remain open, but should not compete with the P0/P1 validation gates
 - **External resource curation:** [#266](https://github.com/JM-Brun/llm-lab/issues/266), [#147](https://github.com/JM-Brun/llm-lab/issues/147), [#86](https://github.com/JM-Brun/llm-lab/issues/86). Keep this selective; verify one candidate and its exact pedagogical role at a time. Do not create a resource catalogue or new page by default.
 - **Visual rights and project licensing:** [#156](https://github.com/JM-Brun/llm-lab/issues/156) and [#163](https://github.com/JM-Brun/llm-lab/issues/163). Split the remaining asset inventory from owner-level licence decisions. Preserve existing external illustrations; do not infer reuse permission from attribution or public availability. Licence selection requires explicit project-owner approval.
 - **Historical timeline:** [#197](https://github.com/JM-Brun/llm-lab/issues/197). Recheck the current timeline and acceptance criteria before treating the open issue as unimplemented; the timeline fragments and parity checks already exist.
-- **Raschka chapter/appendix coverage:** [#95–#106](https://github.com/JM-Brun/llm-lab/issues/95). Treat each chapter/appendix as its own small audit and keep P2/P3 items deferred behind the foundational route.
+- **Raschka chapter/appendix coverage:** issues #95–#106. Treat each chapter/appendix as its own small audit and keep P2/P3 items deferred behind the foundational route.
 
 ## 6. Canonical knowledge base — separate repository ownership
 
