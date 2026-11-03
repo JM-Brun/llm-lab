@@ -23,7 +23,7 @@ XGBoost optimizes an objective combining loss with a tree-complexity penalty. It
 :::
 ## Adding a tree
 
-At step $t$, $\\hat y_i^{(t)}=\\hat y_i^{(t-1)}+f_t(x_i)$.  XGBoost approximates the objective change with a second-order Taylor expansion:
+At step $t$, $\hat y_i^{(t)}=\hat y_i^{(t-1)}+f_t(x_i)$.  XGBoost approximates the objective change with a second-order Taylor expansion:
 
 \[
 \mathcal{L}^{(t)}\simeq
@@ -42,7 +42,7 @@ Gamma penalizes leaf count; lambda penalizes squared leaf scores. L1 regularizat
 
 ## Leaf score and split gain
 
-With $G_j=\\sum_{i\\in I_j}g_i$ and $H_j=\\sum_{i\\in I_j}h_i$, without L1 the optimal score is $w_j^*=-G_j/(H_j+\\lambda)$. Split gain is:
+With $G_j=\sum_{i\in I_j}g_i$ and $H_j=\sum_{i\in I_j}h_i$, without L1 the optimal score is $w_j^*=-G_j/(H_j+\lambda)$. Split gain is:
 
 \[
 \mathrm{Gain}=\frac12\left[
