@@ -15,7 +15,7 @@ suggested_route:
   next: "fr/exercises"
 hierarchy:
   parents: ["fr/llm-overview"]
-  children: []
+  children: ["fr/gpt-config-walkthrough", "fr/gpt-ops-walkthrough", "fr/transformer-block-walkthrough", "fr/gpt-model-walkthrough", "fr/gpt-generation-walkthrough"]
 related: []
 tags: ["type:guided-build", "destination:build", "topic:build-path", "level:applied", "language:fr", "status:published"]
 -->
@@ -29,7 +29,7 @@ Ce parcours relie les explications conceptuelles à la construction progressive 
 :::
 
 ::: {.callout-note}
-**État du projet.** Le parcours et les pages conceptuelles sont disponibles. Une implémentation de référence **limitée à l'inférence** est désormais disponible et testée dans `src/llm_lab/foundations/gpt.py` : elle couvre l'assemblage du modèle et la boucle de génération, mais pas l'entraînement. Un modèle complet avec entraînement reproductible de bout en bout et pipeline de données reste à construire. Les étapes ci-dessous distinguent donc les connaissances disponibles des réalisations pratiques encore à construire.
+**État du projet.** Le parcours et les pages conceptuelles sont disponibles. Une implémentation de référence **limitée à l'inférence** est désormais disponible et testée dans `src/llm_lab/foundations/` (modules `gpt_config.py`, `gpt_ops.py`, `transformer_block.py`, `gpt.py`, `generate.py`) : elle couvre l'assemblage du modèle et la boucle de génération, mais pas l'entraînement. Un modèle complet avec entraînement reproductible de bout en bout et pipeline de données reste à construire. Les étapes ci-dessous distinguent donc les connaissances disponibles des réalisations pratiques encore à construire. Chaque module est expliqué ligne par ligne dans une [visite guidée du code de référence](gpt-config-walkthrough.qmd).
 :::
 
 ## Le principe : apprendre juste ce qu'il faut, au bon moment
@@ -102,7 +102,7 @@ Ces critères sont des **objectifs pédagogiques**. Ils ne changent pas le statu
 | 1. Préparer l'entrée texte | Comprendre le tokenizer et encoder/décoder un prompt ; la constitution d'un corpus relève de la branche entraînement | [Texte et données](text-data.qmd), [Unicode](unicode-text.qmd), [tokenisation](tokenization-strategies.qmd) | **Conceptuel** — pas de pipeline tokenizer complet validé dans le dépôt |
 | 2. Représenter les tokens | Lookup d'embeddings et information de position | [Espace des embeddings](embedding-space.qmd), [position](positional-encoding.qmd) | **Référence partielle** — le lookup et la position sont implémentés dans le GPT de référence, sans validation pédagogique dédiée |
 | 3. Calculer l'attention | Projections Q/K/V, scores, softmax et masque causal | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd), [masquage causal](causal-masking.qmd) | **Composants de référence disponibles** — fonctions testées dans `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`, `causal_mask`, `softmax_with_temperature`) ; l'attention multi-têtes est assemblée dans le GPT de référence |
-| 4. Assembler le GPT | Blocs Transformer, résidus, normalisation, MLP et projection de sortie | [Transformer](transformer.qmd), [tenseurs](tensors.qmd) en référence si nécessaire | **Référence disponible** — GPT configurable et testé dans `src/llm_lab/foundations/gpt.py` (inférence uniquement, initialisation aléatoire) |
+| 4. Assembler le GPT | Blocs Transformer, résidus, normalisation, MLP et projection de sortie | [Transformer](transformer.qmd), [tenseurs](tensors.qmd) en référence si nécessaire | **Référence disponible** — GPT configurable et testé dans les modules `gpt_config.py`, `gpt_ops.py`, `transformer_block.py` et `gpt.py` (inférence uniquement, initialisation aléatoire) ; [visite guidée du code](gpt-config-walkthrough.qmd) |
 | 5. Prédire et sélectionner | Logits, probabilités et règle de décodage | [Logits](logits.qmd), [probabilités](probabilites.qmd), [Transformer](transformer.qmd), [génération pas à pas](generation.qmd) | **Référence disponible** — sélection gloutonne et échantillonnage avec température implémentés et testés dans `generate` |
 | 6. Générer avant l'entraînement | Exécuter la boucle autorégressive avec les paramètres aléatoires du GPT assemblé ; observer une sortie non entraînée | [Transformer](transformer.qmd), [logits](logits.qmd), [probabilités](probabilites.qmd), [génération pas à pas](generation.qmd) | **Référence disponible** — boucle autorégressive `generate` avec fenêtre de contexte glissante et tests ; la sortie non entraînée reste incohérente, ce qui est attendu |
 | 7. Préparer les données d'entraînement | Corpus documenté et partitionné ; fenêtres de contexte, entrées/cibles décalées, batches et masques | [Texte et données](text-data.qmd), [exemples d'entraînement](training-examples.qmd) | **Conceptuel** — les règles et pièges sont expliqués ; le pipeline exécutable complet reste à établir |
@@ -125,6 +125,7 @@ Le détail des prérequis, preuves attendues, dépendances et critères de valid
 
 - [Panorama des LLM](llm-overview.qmd) : situer les familles de modèles et leur cycle de vie.
 - [GPT et Transformer](transformer.qmd) : comprendre le modèle décodeur seul retenu comme fil conducteur du projet.
+- [Visite guidée du code de référence](gpt-config-walkthrough.qmd) : cinq pages expliquent chaque module ligne par ligne, de la configuration à la génération.
 - [Approfondir les tenseurs](tensors.qmd) : consulter les formes et axes quand ils deviennent utiles.
 - [S'exercer](exercises.qmd) : travailler les questions conceptuelles et les exercices pratiques séparément.
 - [Évaluer une expérience](evaluation-experimentale.qmd) : distinguer observation, interprétation et preuve.

@@ -1,0 +1,132 @@
+---
+title: "Visite guidée : la configuration du GPT (`gpt_config.py`)"
+subtitle: "Chaque dimension du modèle reçoit un nom et une validation"
+keywords: ["type:guided-build", "destination:build", "topic:reference-gpt-config", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/gpt-config-walkthrough"
+scope: "Explique ligne par ligne le fichier gpt_config.py : le rôle de l'objet GPTConfig, la raison d'être de chaque dimension, l'immuabilité et la validation à la construction. Exclut les calculs du modèle, le bloc Transformer et la boucle de génération."
+purpose: "Le lecteur doit pouvoir nommer chaque dimension de configuration, relier chaque champ aux formes de tenseurs qu'elle détermine, et expliquer pourquoi la validation échoue tôt avec un message nommé plutôt que tard avec une erreur de forme."
+suggested_route:
+  previous: null
+  next: "fr/gpt-ops-walkthrough"
+hierarchy:
+  parents: ["fr/build-path"]
+  children: []
+related: ["fr/transformer"]
+tags: ["type:guided-build", "destination:build", "topic:reference-gpt-config", "level:applied", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Cette page est la première étape de la visite guidée du code de référence : le fichier le plus petit du paquet, celui qui définit **ce qu'est le modèle** avant que tout autre fichier ne définisse **ce qu'il fait**. Chaque extrait de code est commenté ligne par ligne ; le code complet vit dans [`src/llm_lab/foundations/gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py).
+:::
+
+## Le rôle du fichier dans la famille de modules
+
+L'implémentation de référence est découpée en cinq modules, dans l'ordre de lecture :
+
+| Module | Contenu | Page de visite |
+|---|---|---|
+| `gpt_config.py` | les dimensions, leurs noms, leur validation | cette page |
+| `gpt_ops.py` | les briques numériques (initialisation, projection, normalisation, GELU) | [suivante](gpt-ops-walkthrough.qmd) |
+| `transformer_block.py` | un bloc Transformer pré-LN complet | [bloc](transformer-block-walkthrough.qmd) |
+| `gpt.py` | le modèle assemblé : embeddings, blocs, sortie | [modèle](gpt-model-walkthrough.qmd) |
+| `generate.py` | la boucle de décodage autorégressive | [génération](gpt-generation-walkthrough.qmd) |
+
+Isoler la configuration dans un petit objet immuable a trois bénéfices pédagogiques : un **seul lieu de définition** (chaque dimension surprenante a un nom ici), des erreurs **dès la construction** (plutôt qu'un crash de broadcasting au milieu d'une passe avant), et la **reproductibilité** (deux modèles configurés identiquement ont des paramètres identiques).
+
+## La déclaration : une dataclass gelée
+
+```python
+@dataclass(frozen=True)
+class GPTConfig:
+```
+
+- `@dataclass` génère le constructeur : inutile d'écrire six affectations à la main.
+- `frozen=True` rend l'objet **immuable**. La configuration est lue partout et n'est jamais modifiée : « quelque chose a-t-il changé la config en cours de route ? » devient une garantie au lieu d'une session de débogage. Toute affectation accidentelle lève `FrozenInstanceError` immédiatement.
+
+## Les sept champs, un par un
+
+```python
+    vocab_size: int
+    context_length: int
+    embedding_dim: int
+    num_heads: int
+    num_layers: int
+    mlp_hidden_dim: int
+    seed: int = 0
+```
+
+| Champ | Rôle | Ce qu'il détermine ailleurs |
+|---|---|---|
+| `vocab_size` (`V`) | taille du vocabulaire | lignes de la table d'embeddings ; nombre de logits par position |
+| `context_length` (`T`) | positions maximales traitées en une passe | lignes de la table de positions ; largeur de la fenêtre glissante de génération |
+| `embedding_dim` (`d`) | largeur du flux résiduel | doit être divisible par `num_heads` : chaque tête possède `d/H` colonnes contiguës |
+| `num_heads` (`H`) | nombre de têtes d'attention | l'attention multi-têtes = `H` attentions mono-tête indépendantes sur des tranches |
+| `num_layers` | profondeur (blocs empilés) | met aussi à l'échelle l'initialisation des poids résiduels |
+| `mlp_hidden_dim` | largeur cachée du MLP | GPT-2 utilise `4 * d` ; ici la valeur est explicite, donc visible et modifiable |
+| `seed` | graine d'initialisation | l'inférence est déterministe ; la graine ne contrôle que les tirages initiaux |
+
+::: {.callout-note}
+**Pourquoi `seed: int = 0` a une valeur par défaut ?** Les six autres dimensions décrivent l'architecture ; la graine décrit une expérience. Donner à la graine une valeur par défaut permet de construire le modèle sans y penser, puis de la changer pour observer que seuls les paramètres changent — pas les formes, pas les mécanismes.
+:::
+
+## La validation : échouer tôt, avec un nom
+
+```python
+    def __post_init__(self) -> None:
+        dimensions = {
+            "vocab_size": self.vocab_size,
+            "context_length": self.context_length,
+            "embedding_dim": self.embedding_dim,
+            "num_heads": self.num_heads,
+            "num_layers": self.num_layers,
+            "mlp_hidden_dim": self.mlp_hidden_dim,
+        }
+        for name, value in dimensions.items():
+            if value <= 0:
+                raise ValueError(f"{name} must be a positive integer")
+        if self.embedding_dim % self.num_heads != 0:
+            raise ValueError("embedding_dim must be divisible by num_heads")
+```
+
+Ligne par ligne :
+
+- `__post_init__` est appelé **automatiquement à la fin du constructeur** généré : c'est le dernier moment où l'appelant sait encore quelle valeur est fausse.
+- Le dictionnaire `dimensions` associe chaque valeur à **son nom de champ** ; sans lui, il faudrait six vérications presque identiques.
+- `raise ValueError(f"{name} ...")` : le message nomme le coupable (`"vocab_size must be a positive integer"`), au lieu d'un `shapes not aligned` lointain.
+- La **divisibilité** est vérifiée séparément : l'attention multi-têtes découpe le flux résiduel en `H` tranches égales de `d/H` colonnes. Un `d` non divisible rendrait le découpage impossible — l'erreur serait une erreur de forme au milieu de la première passe avant.
+
+::: {.callout-warning}
+**Idée reçue.** `context_length` n'est pas « la taille maximale de la sortie ». C'est le nombre de **positions** que le modèle peut traiter en une passe ; la génération peut produire des séquences plus longues en faisant glisser la fenêtre (voir la visite de `generate.py`).
+:::
+
+## Ce que les tests vérifient
+
+[`tests/unit/test_gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_config.py) vérifie exactement les promesses de ce fichier : les dimensions nulles ou négatives sont rejetées avec le bon message, la divisibilité est exigée, l'objet est réellement immuable (`FrozenInstanceError`), et la graine vaut `0` par défaut.
+
+## Exercices
+
+1. Quelle erreur obtient-on avec `embedding_dim=10, num_heads=4` ? Et avec `embedding_dim=12, num_heads=4` ?
+2. Combien de lignes a la table de positions d'une configuration `context_length=256, embedding_dim=64` ?
+
+<details>
+<summary>Afficher les réponses et le raisonnement</summary>
+
+1. `10 % 4 == 2` : la divisibilité échoue, donc `ValueError` à la construction. Avec `12 % 4 == 0` : configuration acceptée, chaque tête reçoit `12/4 = 3` colonnes.
+2. `256 × 64 = 16384` valeurs, soit 16384 paramètres appris — un par position et par dimension. Ce nombre est indépendant du vocabulaire et du nombre de têtes.
+</details>
+
+## Connexions
+
+- **Page parente** : [Construire un petit GPT](build-path.qmd) — le parcours qui motive ce code.
+- **Étape suivante de la visite** : [les briques numériques (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
+- **Page conceptuelle** : [GPT et Transformer](transformer.qmd) — l'architecture que ces dimensions paramètrent.
+- **Code source** : [`gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py) · **Tests** : [`test_gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_config.py).
+
+::: {.language-switch}
+**Langue :** [Français](gpt-config-walkthrough.qmd) · [English](../en/gpt-config-walkthrough.qmd)
+:::

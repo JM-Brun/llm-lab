@@ -1,0 +1,91 @@
+---
+title: "Guided tour: generation (`generate.py`)"
+subtitle: "The autoregressive loop, from prompt to generated text"
+keywords: ["type:guided-build", "destination:build", "topic:reference-gpt-generation", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/gpt-generation-walkthrough"
+scope: "Explains the generate.py file line by line: prompt validation, the sliding context window, reading the logits at the final position, greedy or temperature-sampled selection, and the deliberate absence of a KV cache and an early-stopping rule. Excludes the forward-pass computation."
+purpose: "Readers should be able to unroll a generation by hand, explain why the window slides past the context limit, and why greedy mode is reproducible without a seed."
+suggested_route:
+  previous: "en/gpt-model-walkthrough"
+  next: null
+hierarchy:
+  parents: ["en/build-path"]
+  children: []
+related: ["en/generation", "en/logits", "en/probabilities"]
+tags: ["type:guided-build", "destination:build", "topic:reference-gpt-generation", "level:applied", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+This file turns logits into a sequence: at each step, reprocess the context, read the logits at the final position, pick one token, append it, repeat. This is the last stop of the tour; the [model](gpt-model-walkthrough.qmd) is assumed read. Source: [`src/llm_lab/foundations/generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py).
+:::
+
+## One step of the loop, in order
+
+```python
+    context = ids.astype(np.int64, copy=True)
+    for _ in range(max_new_tokens):
+        window = context[-model.config.context_length :]
+        logits = model.forward(window[None, :])[0, -1, :]
+        if greedy:
+            next_token = int(np.argmax(logits))
+        else:
+            probs = softmax_with_temperature(logits, temperature=temperature)
+            next_token = int(rng.choice(model.config.vocab_size, p=probs))
+        context = np.append(context, np.int64(next_token))
+    return np.asarray(context, dtype=np.int64)
+```
+
+Line by line:
+
+- `astype(..., copy=True)`: the working sequence is a fresh int64 **copy** — the caller's array is never mutated, and the return type is stable.
+- `window = context[-context_length:]`: the **sliding window**. Once the sequence outgrows the context, only the last `context_length` tokens enter the pass — tokens that fell out of the window no longer influence what follows.
+- `window[None, :]`: a batch of **one** sequence; the forward pass expects `(B, T)`.
+- `[0, -1, :]`: batch 0, **last position**, all logits. Position `T-1` predicts the token after `T-1` — the only logit row useful for one more token.
+- `greedy`: `argmax` is **deterministic** — no seed needed; ties resolve to the lowest index (NumPy's convention).
+- sampling: temperature scales the logits **before** the softmax (`T < 1` sharpens, `T > 1` flattens), then `rng.choice` draws one id. Reproducibility comes from the caller's seeded `rng`.
+- `np.append`: the token becomes context; the loop repeats.
+
+::: {.callout-note}
+**`temperature` is validated even in greedy mode.** A call `greedy=True, temperature=0.0` fails: a hidden invalid value must not wait for a switch to sampling to reveal itself.
+:::
+
+## Two deliberate limitations, not two omissions
+
+- **No KV cache.** Each step recomputes attention over the whole window: `O(T^2)` work per token where a cache would make the incremental step much cheaper. The reference chooses inspectability; caching is an optimization topic, not a conceptual one.
+- **No early stopping.** The loop stops at `max_new_tokens`, never at an end-of-text token: that rule belongs to the vocabulary/tokenizer layer, outside this milestone's scope.
+
+::: {.callout-warning}
+**Common misconceptions.** (1) Temperature does **not change the model**: same parameters, same logits; it only changes the distribution you sample from. (2) The model does not "plan" several tokens ahead: it produces a score for **one** next token; everything else is the loop.
+:::
+
+## What the tests verify
+
+[`tests/unit/test_generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_generate.py): greedy mode is deterministic **and** matches an independently recomputed argmax chain; sampling is reproducible at equal seed; a prompt filling the whole window still generates (sliding); `max_new_tokens=0` returns the prompt unchanged; every validation error is named.
+
+## Exercises
+
+1. With a 16-token prompt, `context_length=16` and 4 tokens to generate: how many forward passes run, and with what window lengths?
+2. Why is an untrained model's output incoherent, and why is that an **expected** result rather than a bug?
+
+<details>
+<summary>Show answers and reasoning</summary>
+
+1. Four passes, each on a 16-token window: after the first appended token (17 tokens), the window keeps only the last 16 at every step.
+2. The parameters are random: the logits encode no language statistics. The loop itself works perfectly (shapes, causality, selection) — exactly what this milestone separates: **the mechanics** of generation from **the quality acquired through learning**.
+</details>
+
+## Connections
+
+- **Previous stop**: [assembling the GPT (`gpt.py`)](gpt-model-walkthrough.qmd).
+- **Concept pages**: [generating text step by step](generation.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd).
+- **Back to the path**: [Build a small GPT](build-path.qmd).
+- **Source**: [`generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py) · **Tests**: [`test_generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_generate.py).
+
+::: {.language-switch}
+**Language:** [Français](../fr/gpt-generation-walkthrough.qmd) · [English](gpt-generation-walkthrough.qmd)
+:::

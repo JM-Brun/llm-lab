@@ -15,7 +15,7 @@ suggested_route:
   next: "en/exercises"
 hierarchy:
   parents: ["en/llm-overview"]
-  children: []
+  children: ["en/gpt-config-walkthrough", "en/gpt-ops-walkthrough", "en/transformer-block-walkthrough", "en/gpt-model-walkthrough", "en/gpt-generation-walkthrough"]
 related: []
 tags: ["type:guided-build", "destination:build", "topic:build-path", "level:applied", "language:en", "status:published"]
 -->
@@ -29,7 +29,7 @@ This path connects conceptual explanations to the gradual construction of a smal
 :::
 
 ::: {.callout-note}
-**Project status.** The route and conceptual pages are available. A **reference implementation limited to inference** is now available and tested in `src/llm_lab/foundations/gpt.py`: it covers model assembly and the generation loop, but no training. A complete model with a reproducible end-to-end training run and data pipeline remains to be built. The milestones below distinguish existing knowledge from practical work that remains to be built.
+**Project status.** The route and conceptual pages are available. A **reference implementation limited to inference** is now available and tested in `src/llm_lab/foundations/` (modules `gpt_config.py`, `gpt_ops.py`, `transformer_block.py`, `gpt.py`, `generate.py`): it covers model assembly and the generation loop, but no training. A complete model with a reproducible end-to-end training run and data pipeline remains to be built. The milestones below distinguish existing knowledge from practical work that remains to be built. Every module is explained line by line in a [guided tour of the reference code](gpt-config-walkthrough.qmd).
 :::
 
 ## The principle: learn only what is needed, when it is needed
@@ -102,7 +102,7 @@ These criteria are **learning outcomes**, not a change in repository status: an 
 | 1. Prepare text input | Understand the tokenizer and encode/decode a prompt; corpus construction belongs to the training branch | [Text and data](text-data.qmd), [Unicode](unicode-text.qmd), [tokenization](tokenization-strategies.qmd) | **Conceptual** — no complete, validated tokenizer pipeline is established in the repository |
 | 2. Represent tokens | Embedding lookup and positional information | [Embedding space](embedding-space.qmd), [position](positional-encoding.qmd) | **Partial reference** — lookup and position are implemented inside the reference GPT, without dedicated pedagogical validation |
 | 3. Compute attention | Q/K/V projections, scores, softmax and causal mask | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd) | **Reference components available** — functions tested in `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`, `causal_mask`, `softmax_with_temperature`); multi-head attention is assembled inside the reference GPT |
-| 4. Assemble GPT | Transformer blocks, residuals, normalization, MLP and output projection | [Transformer](transformer.qmd), [tensors](tensors.qmd) as needed | **Reference available** — configurable, tested GPT in `src/llm_lab/foundations/gpt.py` (inference only, random initialization) |
+| 4. Assemble GPT | Transformer blocks, residuals, normalization, MLP and output projection | [Transformer](transformer.qmd), [tensors](tensors.qmd) as needed | **Reference available** — configurable, tested GPT across the `gpt_config.py`, `gpt_ops.py`, `transformer_block.py` and `gpt.py` modules (inference only, random initialization); [guided code tour](gpt-config-walkthrough.qmd) |
 | 5. Predict and select | Logits, probabilities and the decoding rule | [Logits](logits.qmd), [probabilities](probabilities.qmd), [Transformer](transformer.qmd), [generation step by step](generation.qmd) | **Reference available** — greedy selection and temperature sampling implemented and tested in `generate` |
 | 6. Generate before training | Run the autoregressive loop with the assembled GPT's random parameters; observe untrained output | [Transformer](transformer.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd), [generation step by step](generation.qmd) | **Reference available** — autoregressive `generate` loop with sliding context window and tests; untrained output remains incoherent, as expected |
 | 7. Prepare training data | Documented and partitioned corpus; context windows, shifted inputs/targets, batches and masks | [Text and data](text-data.qmd), [training examples](training-examples.qmd) | **Conceptual** — rules and pitfalls are explained; the complete executable pipeline remains to be established |
@@ -127,6 +127,7 @@ Detailed prerequisites, expected evidence, dependencies and validation criteria 
 - [GPT and Transformer](transformer.qmd): understand the decoder-only model used as this project's running example.
 - [Deepen tensor knowledge](tensors.qmd): consult shapes and axes when they become useful.
 - [Practice](exercises.qmd): distinguish conceptual checks from practical coding exercises.
+- [Guided tour of the reference code](gpt-config-walkthrough.qmd): five pages explaining every module line by line, from configuration to generation.
 - [Evaluate an experiment](experimental-evaluation.qmd): separate observation, interpretation and evidence.
 
 ::: {.callout-warning}

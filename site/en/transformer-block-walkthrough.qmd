@@ -1,0 +1,123 @@
+---
+title: "Guided tour: the Transformer block (`transformer_block.py`)"
+subtitle: "Multi-head attention, MLP and residual paths, in pre-LN order"
+keywords: ["type:guided-build", "destination:build", "topic:reference-transformer-block", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/transformer-block-walkthrough"
+scope: "Explains the transformer_block.py file line by line: the pre-LN order and its residual paths, the scaled initialization of residual weights, the column-slice head split, and the position-wise MLP. Excludes embeddings, the output head and the generation loop."
+purpose: "Readers should be able to trace a shape through the block, explain why normalization sits inside the branch instead of on the trunk, and describe the role of each Q, K, V and O projection."
+suggested_route:
+  previous: "en/gpt-ops-walkthrough"
+  next: "en/gpt-model-walkthrough"
+hierarchy:
+  parents: ["en/build-path"]
+  children: []
+related: ["en/queries-keys-values", "en/scaled-dot-product-attention", "en/causal-masking", "en/contextualized-representations"]
+tags: ["type:guided-build", "destination:build", "topic:reference-transformer-block", "level:applied", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+The block is the repeated unit of the network. This page follows the file line by line, from parameter initialization to the full `forward`. Source: [`src/llm_lab/foundations/transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py).
+:::
+
+## The block's recipe: pre-LN with residuals
+
+```python
+x = x + self._attention(layer_norm(x, self.ln1_gamma, self.ln1_beta))
+return x + self._mlp(layer_norm(x, self.ln2_gamma, self.ln2_beta))
+```
+
+The block applies two **additive** updates to the same stream `x`:
+
+1. `x + attention(ln(x))` — the attention branch;
+2. `x + mlp(ln(x))` — the MLP branch.
+
+Normalization sits **inside the branch**, not on the trunk. The trunk (`x + ...`) always carries an unmodified copy of the input towards the output: identity is the default, and each branch only *adds* a correction. This is the **pre-LN** order of GPT-2 — more stable than the original Transformer's post-LN order when many blocks are stacked.
+
+## Initializing: why `rng` is an argument
+
+```python
+    def __init__(self, config: GPTConfig, rng: np.random.Generator) -> None:
+        d = config.embedding_dim
+        residual_std = 0.02 / math.sqrt(2.0 * config.num_layers)
+        self.num_heads = config.num_heads
+        self.head_dim = d // config.num_heads
+```
+
+- The `rng` generator is supplied by the model and shared in stacking order: parameters become a **deterministic function of the configuration**.
+- `residual_std` divides the GPT-2 standard deviation by `sqrt(2 × num_layers)`: weights that feed a residual path start smaller as the stack deepens, keeping the residual stream's variance roughly constant (the GPT-2 paper's scaled residual-layer initialization).
+- `head_dim = d // H`: each head owns `d/H` contiguous columns — the slice bounds are recomputed in `_attention`.
+
+Parameter creation follows: normalizations start at identity (`gamma` ones, `beta` zeros), then four `(d, d)` matrices for the Q, K, V and O projections, and two matrices for the MLP (`d -> mlp_hidden_dim -> d`).
+
+## Attention: explicit loops, not by accident
+
+```python
+        q = linear(x, self.w_q, self.b_q)
+        k = linear(x, self.w_k, self.b_k)
+        v = linear(x, self.w_v, self.b_v)
+
+        mask = causal_mask(seq_len)
+        attended = np.empty_like(x)
+        for b in range(batch):
+            for h in range(self.num_heads):
+                columns = slice(h * self.head_dim, (h + 1) * self.head_dim)
+                head_out, _ = scaled_dot_product_attention(
+                    q[b, :, columns], k[b, :, columns], v[b, :, columns], mask=mask
+                )
+                attended[b, :, columns] = head_out
+        return linear(attended, self.w_o, self.b_o)
+```
+
+Line by line:
+
+- Q, K, V are three projections **of the same `x`**; each shape goes from `(B, T, d)` to `(B, T, d)`.
+- `causal_mask(seq_len)` lets position `i` attend to `j <= i`; future positions receive `-inf` (zero weight after softmax).
+- `columns = slice(h * head_dim, (h+1) * head_dim)`: head `h` works on its own columns — a **slice**, not a copy. The multi-head split is pure column bookkeeping over the same `d`.
+- Each `(b, h)` pair solves **one single-head attention problem** of shape `(T, head_dim)` — exactly the problem solved by the tested `scaled_dot_product_attention`. The explicit loops keep every intermediate shape inspectable (milestone G4's clarity-over-speed choice).
+- Heads never mix until the output projection `w_o`, which alone blends information across heads.
+
+## The MLP: widen, activate, project back
+
+```python
+    def _mlp(self, x: FloatArray) -> FloatArray:
+        hidden = gelu(linear(x, self.w_fc1, self.b_fc1))
+        return linear(hidden, self.w_fc2, self.b_fc2)
+```
+
+Each position goes on its own through `d -> mlp_hidden_dim` (often `4d`), then GELU, then back to `d`. The intermediate widening gives each position a larger space in which to compute its non-linear transformation.
+
+::: {.callout-warning}
+**Common misconceptions.** (1) "Heads see what the others do": no — each head is isolated until `w_o`. (2) "Normalization is cosmetic": no — it sits inside the branch to keep the residual trunk stable as the stack grows.
+:::
+
+## What the tests verify
+
+[`tests/unit/test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py): `forward` preserves the shape and stays finite; a non-3D input is rejected; a head count inconsistent with the width is rejected.
+
+## Exercises
+
+1. With `d=16` and `H=2`, which columns of `q` does head 1 read?
+2. Why is `attended` allocated with `np.empty_like(x)` instead of zeros?
+
+<details>
+<summary>Show answers and reasoning</summary>
+
+1. Columns 8 to 15 (`slice(8, 16)`): every column belongs to exactly one head, and the split is contiguous.
+2. Every cell of `attended` is written exactly once by the loop (each `(b, h)` pair writes its slice for all positions); no cell is read before being written, so zero-initialization would be wasted work.
+</details>
+
+## Connections
+
+- **Previous stop**: [building-block operations (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
+- **Next stop**: [assembling the GPT (`gpt.py`)](gpt-model-walkthrough.qmd) — where blocks get stacked.
+- **Concept pages**: [Q/K/V](queries-keys-values.qmd), [scaled dot-product attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd), [contextualized representations](contextualized-representations.qmd).
+- **Source**: [`transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py) · **Tests**: [`test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py).
+
+::: {.language-switch}
+**Language:** [Français](../fr/transformer-block-walkthrough.qmd) · [English](transformer-block-walkthrough.qmd)
+:::

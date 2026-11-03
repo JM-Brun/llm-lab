@@ -1,0 +1,123 @@
+---
+title: "Visite guidée : le bloc Transformer (`transformer_block.py`)"
+subtitle: "Attention multi-têtes, MLP et chemins résiduels, dans l'ordre pré-LN"
+keywords: ["type:guided-build", "destination:build", "topic:reference-transformer-block", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/transformer-block-walkthrough"
+scope: "Explique ligne par ligne le fichier transformer_block.py : l'ordre pré-LN et ses chemins résiduels, l'initialisation mise à l'échelle des poids résiduels, le découpage en têtes par tranches de colonnes et le MLP position par position. Exclut les embeddings, la tête de sortie et la boucle de génération."
+purpose: "Le lecteur doit pouvoir tracer une forme à travers le bloc, expliquer pourquoi la normalisation est dans la branche et non sur le tronc, et décrire le rôle de chaque projection Q, K, V et O."
+suggested_route:
+  previous: "fr/gpt-ops-walkthrough"
+  next: "fr/gpt-model-walkthrough"
+hierarchy:
+  parents: ["fr/build-path"]
+  children: []
+related: ["fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/causal-masking", "fr/contextualized-representations"]
+tags: ["type:guided-build", "destination:build", "topic:reference-transformer-block", "level:applied", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Le bloc est l'unité répétée du réseau. Cette page suit le fichier ligne par ligne, de l'initialisation des paramètres jusqu'au `forward` complet. Code : [`src/llm_lab/foundations/transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py).
+:::
+
+## La recette du bloc : pré-LN avec résidus
+
+```python
+x = x + self._attention(layer_norm(x, self.ln1_gamma, self.ln1_beta))
+return x + self._mlp(layer_norm(x, self.ln2_gamma, self.ln2_beta))
+```
+
+Le bloc calcule deux mises à jour **additives** du même flux `x` :
+
+1. `x + attention(ln(x))` — la branche d'attention ;
+2. `x + mlp(ln(x))` — la branche MLP.
+
+La normalisation est **dans la branche**, pas sur le tronc. Le tronc (`x + ...`) porte donc toujours une copie non modifiée de l'entrée vers la sortie : l'identité est le défaut, chaque branche ne fait qu'*ajouter* une correction. C'est l'ordre **pré-LN** de GPT-2 — plus stable quand on empile beaucoup de blocs que l'ordre post-LN du Transformer original.
+
+## Initialiser : pourquoi `rng` est un argument
+
+```python
+    def __init__(self, config: GPTConfig, rng: np.random.Generator) -> None:
+        d = config.embedding_dim
+        residual_std = 0.02 / math.sqrt(2.0 * config.num_layers)
+        self.num_heads = config.num_heads
+        self.head_dim = d // config.num_heads
+```
+
+- Le générateur `rng` est fourni par le modèle et partagé dans l'ordre d'empilement : les paramètres deviennent une **fonction déterministe de la configuration**.
+- `residual_std` divise l'écart-type GPT-2 par `sqrt(2 × num_layers)` : les poids qui alimentent un chemin résiduel sont plus petits quand la pile est profonde, pour que la variance du flux résiduel reste à peu près constante (l'initialisation « à échelle résiduelle » du papier GPT-2).
+- `head_dim = d // H` : chaque tête possède `d/H` colonnes contiguës — les bornes de tranches sont recalculées dans `_attention`.
+
+Vient ensuite la création des paramètres : les normalisations démarrent à l'identité (`gamma` à uns, `beta` à zéros), puis quatre matrices `(d, d)` pour les projections Q, K, V et O, et deux matrices pour le MLP (`d → mlp_hidden_dim → d`).
+
+## L'attention : des boucles explicites, pas par accident
+
+```python
+        q = linear(x, self.w_q, self.b_q)
+        k = linear(x, self.w_k, self.b_k)
+        v = linear(x, self.w_v, self.b_v)
+
+        mask = causal_mask(seq_len)
+        attended = np.empty_like(x)
+        for b in range(batch):
+            for h in range(self.num_heads):
+                columns = slice(h * self.head_dim, (h + 1) * self.head_dim)
+                head_out, _ = scaled_dot_product_attention(
+                    q[b, :, columns], k[b, :, columns], v[b, :, columns], mask=mask
+                )
+                attended[b, :, columns] = head_out
+        return linear(attended, self.w_o, self.b_o)
+```
+
+Ligne par ligne :
+
+- Q, K, V sont trois projections **du même `x`** ; chaque forme passe de `(B, T, d)` à `(B, T, d)`.
+- `causal_mask(seq_len)` autorise la position `i` à voir `j <= i` ; les positions futures reçoivent `-inf` (poids nuls après softmax).
+- `columns = slice(h * head_dim, (h+1) * head_dim)` : la tête `h` travaille sur ses propres colonnes — une **tranche**, pas une copie. Le découpage multi-têtes est de la simple répartition de colonnes sur les mêmes `d`.
+- Chaque paire `(b, h)` résout **un problème d'attention mono-tête** `(T, head_dim)` — exactement celui de la fonction testée `scaled_dot_product_attention`. Les boucles explicites rendent chaque forme inspectable (choix de clarté du jalon G4, pas de performance).
+- Les têtes ne se mélangent **jamais** jusqu'à la projection de sortie `w_o`, qui seule mélange l'information entre têtes.
+
+## Le MLP : élargir, activer, projeter
+
+```python
+    def _mlp(self, x: FloatArray) -> FloatArray:
+        hidden = gelu(linear(x, self.w_fc1, self.b_fc1))
+        return linear(hidden, self.w_fc2, self.b_fc2)
+```
+
+Chaque position passe seule dans `d → mlp_hidden_dim` (souvent `4d`), puis GELU, puis retour vers `d`. L'élargissement intermédiaire donne à chaque position un espace plus grand pour sa transformation non linéaire.
+
+::: {.callout-warning}
+**Idées reçues.** (1) « Les têtes voient ce que font les autres » : non — chaque tête est isolée jusqu'à `w_o`. (2) « La normalisation est cosmétique » : non — elle est dans la branche pour stabiliser le tronc résiduel quand la pile s'allonge.
+:::
+
+## Ce que les tests vérifient
+
+[`tests/unit/test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py) : le `forward` préserve la forme et reste fini ; une entrée non 3D est rejetée ; un nombre de têtes incohérent avec la largeur est rejeté.
+
+## Exercices
+
+1. Avec `d=16` et `H=2`, quelles colonnes de `q` la tête 1 lit-elle ?
+2. Pourquoi `attended` est-il alloué avec `np.empty_like(x)` plutôt que rempli de zéros ?
+
+<details>
+<summary>Afficher les réponses et le raisonnement</summary>
+
+1. Les colonnes 8 à 15 (`slice(8, 16)`) : chaque colonne n'appartient qu'à une tête, la répartition est contiguë.
+2. Chaque position de `attended` est écrite exactement une fois par la boucle (chaque couple `(b, h)` écrit sa tranche pour toutes les positions) ; aucune cellule n'est lue avant d'être écrite, donc l'initialisation à zéro serait du travail inutile.
+</details>
+
+## Connexions
+
+- **Étape précédente** : [les briques numériques (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
+- **Étape suivante** : [l'assemblage du GPT (`gpt.py`)](gpt-model-walkthrough.qmd) — où les blocs sont empilés.
+- **Pages conceptuelles** : [Q/K/V](queries-keys-values.qmd), [attention à produit scalaire mis à l'échelle](scaled-dot-product-attention.qmd), [masquage causal](causal-masking.qmd), [représentations contextualisées](contextualized-representations.qmd).
+- **Code source** : [`transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py) · **Tests** : [`test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py).
+
+::: {.language-switch}
+**Langue :** [Français](transformer-block-walkthrough.qmd) · [English](../en/transformer-block-walkthrough.qmd)
+:::
