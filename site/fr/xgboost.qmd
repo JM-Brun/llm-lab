@@ -1,0 +1,81 @@
+---
+title: "XGBoost : construire et régulariser les arbres"
+subtitle: "Gradients, Hessiennes, gain de séparation et recherche des splits"
+keywords: ["type:concept-lesson", "destination:deepen", "topic:xgboost", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/xgboost"
+scope: "Décrit l'objectif régularisé de XGBoost, l'approximation de Taylor d'ordre deux, le score des feuilles et le gain des splits."
+purpose: "Interpréter gradients et Hessiennes, calculer le gain d'une séparation et distinguer régularisation, recherche et valeurs manquantes."
+suggested_route:
+  previous: "fr/gradient-boosting"
+  next: "fr/lightgbm"
+hierarchy:
+  parents: ["fr/gradient-boosting"]
+  children: []
+related: ["fr/bias-variance", "fr/lightgbm", "fr/catboost"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:xgboost", "level:advanced", "language:fr", "status:published"]
+-->
+::: {.chapter-lead}
+XGBoost optimise un objectif combinant la loss et une pénalité de complexité de l'arbre. Il rend explicite le rôle des dérivées premières et secondes lors de la construction d'un nouvel arbre.
+:::
+## Ajouter un arbre
+
+À l'étape (t), \,\(\hat y_i^{(t)}=\hat y_i^{(t-1)}+f_t(x_i)\). XGBoost approxime la variation de l'objectif par Taylor à l'ordre deux :
+
+\[
+\mathcal{L}^{(t)}\simeq
+\sum_i\left[g_i f_t(x_i)+\frac12 h_i f_t(x_i)^2\right]+\Omega(f_t),
+\]
+
+où (g_i) et (h_i) sont gradient et Hessienne (dérivée seconde scalaire) de la loss par rapport à la prédiction courante. Ce ne sont pas le biais et la variance statistiques.
+
+Pour un arbre avec (T) feuilles et un score (w_j) par feuille :
+
+\[
+\Omega(f)=\gamma T+\frac12\lambda\sum_{j=1}^{T}w_j^2.
+\]
+
+Gamma pénalise le nombre de feuilles ; lambda pénalise les scores de feuilles au carré. Une pénalité L1 peut également être utilisée.
+
+## Score et gain
+
+Avec (G_j=\sum_{i\in I_j}g_i) et (H_j=\sum_{i\in I_j}h_i), sans pénalité L1, le score optimal est (w_j^*=-G_j/(H_j+\lambda)). Le gain d'une séparation est :
+
+\[
+\mathrm{Gain}=\frac12\left[
+\frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}
+-\frac{G^2}{H+\lambda}
+\right]-\gamma.
+\]
+
+Un split est retenu s'il améliore l'objectif sous les contraintes configurées. L1 et d'autres contraintes modifient la formule.
+
+## Recherche et valeurs manquantes
+
+XGBoost évalue des seuils candidats. Ses méthodes historiques de colonnes pré-triées, puis ses méthodes approximatives et histogrammes, réduisent le coût ; la recherche sur les variables peut être parallélisée, mais les tours de boosting restent dépendants. Pour les valeurs manquantes, un split apprend une direction par défaut selon le gain estimé. Cela ne corrige pas un mécanisme de données manquantes non ignorable.
+
+Profondeur, nombre de feuilles, pénalités, learning rate, sous-échantillonnage et early stopping contrôlent des aspects distincts. La régularisation ne garantit pas la généralisation : validation, fuite et décalage de distribution restent déterminants.
+
+::: {.callout-warning}
+**Ne pas confondre dérivées et biais-variance.** Le gradient mesure la pente locale de la loss ; la Hessienne sa courbure. Biais et variance décrivent la distribution des erreurs de prédiction à travers des échantillons possibles.
+:::
+::: {.self-check}
+## Vérifier sa compréhension
+1. Pourquoi une approximation d'ordre deux ?
+<details><summary>Afficher la réponse</summary>Le gradient donne la pente et la Hessienne la courbure, affinant l'estimation de l'effet d'une contribution candidate.</details>
+2. Que pénalisent gamma et lambda ?
+<details><summary>Afficher la réponse</summary>Gamma pénalise l'ajout de feuilles ; lambda pénalise les scores de feuilles au carré.</details>
+3. Une direction par défaut règle-t-elle tous les problèmes de valeurs manquantes ?
+<details><summary>Afficher la réponse</summary>Non, elle optimise un split mais ne corrige pas le mécanisme de données manquantes, une fuite ou une dérive.</details>
+:::
+## Références
+- [Chen & Guestrin (2016), XGBoost: A Scalable Tree Boosting System](https://arxiv.org/abs/1603.02754).
+- [Documentation XGBoost](https://xgboost.readthedocs.io/en/stable/).
+- [AiEdge — Understanding XGBoost from A to Z](https://newsletter.theaiedge.io/p/understanding-xgboost-from-a-to-z).
+- [AiEdge — Why XGBoost is better than GBM?](https://newsletter.theaiedge.io/p/why-xgboost-is-better-than-gbm).
+::: {.language-switch}
+[Français](xgboost.qmd) · [English](../en/xgboost.qmd)
+:::
