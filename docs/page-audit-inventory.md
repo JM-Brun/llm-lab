@@ -426,3 +426,16 @@ This pass reviewed the source files in both languages and cross-checked the buil
 | Contextualized representations | The same-token-ID premise is explicit; positional embeddings and RoPE are not conflated; the causal-context equation is explicitly scoped and conceptual. The bilingual explanations are aligned. | The overview figure's asset-level permission review remains pending in #156. Do not treat publication or attribution as permission clearance. Browser review remains open. |
 
 **Cross-document status correction:** `docs/learning-path.md` previously described the bilingual panorama as being on Draft PR #213. PR #213 was merged on 2026-11-02; the roadmap now records publication on `main` while keeping #108 acceptance and browser review pending. This is a status correction, not a closure of #108.
+
+### Review-implementation pass — panorama, Transformer, Transformer Explainer, llm-limits (2026-11-03)
+
+This pass applied the 2026-11-02 external review of the panorama and Transformer pages, merged via PR #248. It is a source-level change record; it is not a browser-render, accessibility, or acceptance certification.
+
+| Page pair | What changed | Evidence boundary / remaining action |
+|---|---|---|
+| LLM panorama | Rewritten around the context → distribution → token loop: affirmative definition opens the page, single central Mermaid loop with edges, three-phase lifecycle, architecture families moved to a "for orientation" callout after the loop, numbered sections 1–10 with the expected-outcome callout and final checkpoint of #245/#246 integrated, quiz refocused, caveats grouped at the end. | Source-level and CI validation only. Rendered review of the Mermaid diagrams, nested-sets figure, table and callouts in both languages remains open, as does #108 acceptance. |
+| New page `llm-limits.qmd` / `en/llm-limits.qmd` | Short critical companion of the panorama: what the next-token objective does not guarantee — truth of outputs, calibration, the meaning of "understanding", so-called emergent abilities, the role of scale. Sources verified: Wei et al. 2022 (arXiv:2206.07682), Schaeffer et al. 2023 (arXiv:2304.15004). | Source-level review only. Rendered review, sidebar placement and language-switch behavior to check on the published site. |
+| Transformer overview | Diagram first, merged "first reading" callout, two-link continue section, Markdown defects fixed (fused list after the top-p formula, glued language-switch block in FR, four-colon fence in EN), entry-outcome callout and final checkpoint of #245/#246 integrated. | Source-level. Rendered figure, callout and checkpoint review remains open. |
+| Transformer Explainer | The top-p audit is reframed as a documented design choice: upstream commit bfe50af truncates to 50 with an explicit display rationale, and top-k (Hugging Face default 50) then top-p composition is standard filtering. The page now states precisely what the composition computes instead of reporting a nonexistent defect. | Reframing verified against the pinned upstream commit. The external service and snapshot may change independently; browser review remains open. |
+
+**Scope note:** the review's sidebar-reduction recommendation (30+ entries) is an editorial navigation decision, recorded here as open, not applied in #248.
