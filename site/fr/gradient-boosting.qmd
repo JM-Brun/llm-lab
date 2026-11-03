@@ -10,7 +10,7 @@ id: "fr/gradient-boosting"
 scope: "Explique le boosting additif et les arbres ajustés aux pseudo-résidus issus du gradient négatif de la loss."
 purpose: "Tracer une itération et interpréter loss, pseudo-résidus, learning rate et contrôles du surapprentissage."
 suggested_route:
-  previous: "fr/bias-variance"
+  previous: "fr/decision-trees"
   next: "fr/xgboost"
 hierarchy:
   parents: []
