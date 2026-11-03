@@ -76,7 +76,7 @@ Cette page est la quatrième étape (4 sur 5) de la visite guidée du code de r�
 <desc id="wfm-desc">Les identifiants (B, T) s’indexent dans la table d’embeddings (V, d) pour donner (B, T, d) ; les positions (T, d) s’ajoutent ; les L blocs et la normalisation finale conservent (B, T, d) ; la projection w_head (d vers V) produit les logits (B, T, V).</desc>
 <defs><marker id="wfm-green" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#16A34A"/></marker></defs>
 <g font-family="Arial,sans-serif">
-<g data-wf-part="emb"><rect x="14" y="100" width="80" height="64" rx="10" fill="#E0F2FE" stroke="#0EA5E9" stroke-width="2"/><text x="54" y="126" text-anchor="middle" font-size="15" font-weight="700" fill="#0C4A6E">ids</text><text x="54" y="146" text-anchor="middle" font-size="11" fill="#0C4A6E">(B, T)</text></g>
+<g data-wf-part="emb"><rect x="14" y="100" width="80" height="64" rx="10" fill="#E0F2FE" stroke="#0369A1" stroke-width="2"/><text x="54" y="126" text-anchor="middle" font-size="15" font-weight="700" fill="#0C4A6E">ids</text><text x="54" y="146" text-anchor="middle" font-size="11" fill="#0C4A6E">(B, T)</text></g>
 <g data-wf-part="emb"><path d="M94 132 H120" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfm-green)"/></g>
 <g data-wf-part="emb"><rect x="124" y="100" width="170" height="64" rx="10" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="209" y="124" text-anchor="middle" font-size="12.5" font-family="ui-monospace,Menlo,Consolas,monospace" font-weight="700" fill="#4C1D95">token_embedding[ids]</text><text x="209" y="144" text-anchor="middle" font-size="10" fill="#6D28D9">indexation fantaisie : 1 ligne par id</text></g>
 <g data-wf-part="emb pos"><path d="M294 132 H314" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfm-green)"/></g>
@@ -111,7 +111,7 @@ Cette page est la quatrième étape (4 sur 5) de la visite guidée du code de r�
 </div>
 </div>
 <figcaption class="wf-legend">
-<span class="wf-key"><span class="wf-swatch" style="background:#E0F2FE;border-color:#0EA5E9"></span>identifiants</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#E0F2FE;border-color:#0369A1"></span>identifiants</span>
 <span class="wf-key"><span class="wf-swatch" style="background:#F5F3FF;border-color:#8B5CF6"></span>paramètres (tables, w_head)</span>
 <span class="wf-key"><span class="wf-swatch" style="background:#FEF3C7;border-color:#B45309"></span>logits (sortie)</span>
 <span class="wf-key"><span class="wf-swatch" style="background:#DCFCE7;border-color:#16A34A"></span>forme du tenseur</span>
