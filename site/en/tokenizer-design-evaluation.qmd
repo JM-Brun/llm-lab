@@ -34,6 +34,8 @@ By the end of this page, you will be able to:
 
 ## WordPiece and Unigram: detailed mechanisms
 
+The [Tokenization strategies](tokenization-strategies.qmd) page already introduces the essential conceptual differences between BPE, WordPiece, and Unigram. This section revisits them only to examine training and encoding procedures in more depth, including implementation caveats.
+
 ### How WordPiece differs from BPE
 
 In the common WordPiece training explanation, candidate adjacent units are ranked with a score related to how strongly they co-occur relative to the frequencies of their individual parts. A simplified form is:
@@ -52,9 +54,6 @@ A Unigram tokenizer starts from a relatively large candidate vocabulary with ass
 
 At encoding time, several segmentations may be possible. The Viterbi algorithm finds the highest-probability segmentation under the learned model. This contrasts with BPE's application of a learned merge order and WordPiece's common greedy longest-match procedure. See the [Hugging Face Unigram explanation](https://huggingface.co/learn/llm-course/en/chapter6/7) and [SentencePiece](https://github.com/google/sentencepiece).
 
-**In one sentence:** BPE applies ranked merges; WordPiece commonly uses greedy longest-match segmentation after likelihood-related vocabulary construction; Unigram selects the most probable complete segmentation under a learned probabilistic model.
-
-**SentencePiece** is a library that can train BPE or unigram models from raw text; it is not one algorithm. **Hugging Face Tokenizers** is a library of models and pipeline components. **tiktoken** is a BPE implementation with specific encodings. These names therefore do not all belong at the same comparison level.
 
 ## 1. Vocabulary size: architecture and budget
 
