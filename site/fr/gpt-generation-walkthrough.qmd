@@ -1,0 +1,91 @@
+---
+title: "Visite guidée : la génération (`generate.py`)"
+subtitle: "La boucle autorégressive, du prompt au texte généré"
+keywords: ["type:guided-build", "destination:build", "topic:reference-gpt-generation", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/gpt-generation-walkthrough"
+scope: "Explique ligne par ligne le fichier generate.py : validation du prompt, fenêtre glissante de contexte, lecture des logits à la dernière position, sélection gloutonne ou échantillonnée avec température, absence volontaire de cache KV et de règle d'arrêt. Exclut le calcul de la passe avant."
+purpose: "Le lecteur doit pouvoir dérouler les étapes d'une génération à la main, expliquer pourquoi la fenêtre glisse au-delà du contexte et pourquoi le mode glouton est reproductible sans graine."
+suggested_route:
+  previous: "fr/gpt-model-walkthrough"
+  next: null
+hierarchy:
+  parents: ["fr/build-path"]
+  children: []
+related: ["fr/generation", "fr/logits", "fr/probabilites"]
+tags: ["type:guided-build", "destination:build", "topic:reference-gpt-generation", "level:applied", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Ce fichier transforme les logits en séquence : à chaque étape, retraiter le contexte, lire les logits à la dernière position, choisir un token, l'ajouter, recommencer. C'est la dernière étape de la visite ; le [modèle](gpt-model-walkthrough.qmd) est supposé lu. Code : [`src/llm_lab/foundations/generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py).
+:::
+
+## Une étape de la boucle, dans l'ordre
+
+```python
+    context = ids.astype(np.int64, copy=True)
+    for _ in range(max_new_tokens):
+        window = context[-model.config.context_length :]
+        logits = model.forward(window[None, :])[0, -1, :]
+        if greedy:
+            next_token = int(np.argmax(logits))
+        else:
+            probs = softmax_with_temperature(logits, temperature=temperature)
+            next_token = int(rng.choice(model.config.vocab_size, p=probs))
+        context = np.append(context, np.int64(next_token))
+    return np.asarray(context, dtype=np.int64)
+```
+
+Ligne par ligne :
+
+- `astype(..., copy=True)` : la séquence de travail est une **copie** int64 — le tableau de l'appelant n'est jamais modifié, et le type de retour est stable.
+- `window = context[-context_length:]` : la **fenêtre glissante**. Une fois la séquence plus longue que le contexte, seuls les derniers `context_length` tokens entrent dans la passe — les tokens sortis de la fenêtre n'influencent plus la suite.
+- `window[None, :]` : un lot **d'une séquence** ; la passe avant attend `(B, T)`.
+- `[0, -1, :]` : lot 0, **dernière position**, tous les logits. La position `T-1` prédit le token qui suit `T-1` — c'est la seule ligne de logits utile pour un token de plus.
+- `greedy` : `argmax` est **déterministe** — pas besoin de graine ; les égalités se tranchent vers le plus petit indice (convention NumPy).
+- échantillonnage : la température met les logits à l'échelle **avant** la softmax (`T < 1` durcit, `T > 1` aplatit), puis `rng.choice` tire un id. La reproductibilité vient de la graine du `rng` fourni.
+- `np.append` : le token devient contexte ; la boucle recommence.
+
+::: {.callout-note}
+**`temperature` est validée même en mode glouton.** Un appel `greedy=True, temperature=0.0` échoue : une valeur invalide cachée ne doit pas attendre qu'on bascule en échantillonnage pour se révéler.
+:::
+
+## Deux limites assumées, pas deux oublis
+
+- **Pas de cache KV.** Chaque étape recalcule l'attention sur toute la fenêtre : un travail en `O(T²)` par token là où un cache rendrait l'étape incrémentale bien moins chère. La référence choisit l'inspectabilité ; le cache est un sujet d'optimisation, pas de concept.
+- **Pas de règle d'arrêt.** La boucle s'arrête à `max_new_tokens`, jamais sur un token de fin de texte : cette règle appartient à la couche vocabulaire/tokenizer, hors périmètre de ce jalon.
+
+::: {.callout-warning}
+**Idées reçues.** (1) La température **ne change pas le modèle** : mêmes paramètres, mêmes logits ; elle change seulement la distribution de laquelle on tire. (2) Le modèle ne « planifie pas » plusieurs tokens d'avance : il produit un score pour **un** prochain token ; tout le reste est boucle.
+:::
+
+## Ce que les tests vérifient
+
+[`tests/unit/test_generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_generate.py) : le mode glouton est déterministe **et** égal à une chaîne d'`argmax` recalculée indépendamment ; l'échantillonnage est reproductible à graine égale ; un prompt qui remplit toute la fenêtre fonctionne quand même (glissement) ; `max_new_tokens=0` renvoie le prompt inchangé ; toutes les erreurs de validation sont nommées.
+
+## Exercices
+
+1. Avec un prompt de 16 tokens, `context_length=16` et 4 tokens à générer : combien de passes avant sont exécutées, et avec quelles longueurs de fenêtre ?
+2. Pourquoi la sortie d'un modèle non entraîné est-elle incohérente, et pourquoi est-ce un résultat **attendu** plutôt qu'un bug ?
+
+<details>
+<summary>Afficher les réponses et le raisonnement</summary>
+
+1. Quatre passes, chacune sur une fenêtre de 16 tokens : après le premier token ajouté (17 tokens), la fenêtre ne retient que les 16 derniers à chaque étape.
+2. Les paramètres sont aléatoires : les logits n'encodent aucune statistique de langue. La boucle, elle, fonctionne parfaitement (formes, causalité, sélection) — c'est exactement ce que ce jalon sépare : **la mécanique** de génération de **la qualité acquise par l'apprentissage**.
+</details>
+
+## Connexions
+
+- **Étape précédente** : [l'assemblage du GPT (`gpt.py`)](gpt-model-walkthrough.qmd).
+- **Pages conceptuelles** : [générer du texte pas à pas](generation.qmd), [logits](logits.qmd), [probabilités](probabilites.qmd).
+- **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
+- **Code source** : [`generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py) · **Tests** : [`test_generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_generate.py).
+
+::: {.language-switch}
+**Langue :** [Français](gpt-generation-walkthrough.qmd) · [English](../en/gpt-generation-walkthrough.qmd)
+:::

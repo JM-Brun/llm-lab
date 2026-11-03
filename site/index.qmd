@@ -57,7 +57,7 @@ Vous pouvez vous arrêter après les deux premières étapes et avoir déjà une
 - **Approfondir** — consulter les dérivations et analyses avancées, par exemple les [tenseurs](fr/tensors.qmd) ; aucun cours mathématique général n’est exigé à l’entrée.
 - **S’exercer et expérimenter** — tester les mécanismes avec les [exercices](fr/exercises.qmd), l’[explorateur GPT-2](fr/transformer-explainer.qmd) et l’[évaluation expérimentale](fr/evaluation-experimentale.qmd).
 
-Ces quatre destinations décrivent l’activité du lecteur. Les trois profondeurs — **panorama**, **construction guidée**, **approfondissements** — décrivent le niveau de détail. La pratique traverse ces trois profondeurs ; ce ne sont pas deux classifications concurrentes.
+L’articulation entre ces destinations, les trois profondeurs pédagogiques et les jalons de construction est détaillée dans le [parcours d’apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
 
 ## Grille de lecture : distinguer intuition, code et statut
 
@@ -73,7 +73,7 @@ L’objectif pratique est de construire un **petit GPT décodeur seul, initialis
 
 <div class="learning-card learning-card-featured">
   <p class="eyebrow">PARCOURS GUIDÉ · EN CONSTRUCTION</p>
-  <p>Le parcours est organisé en jalons avec des critères de preuve. Le modèle complet et son entraînement reproductible ne sont pas encore disponibles. La provenance et la licence du corpus devront être établies avant toute expérience d’entraînement.</p>
+  <p>Le parcours est organisé en jalons avec des critères de preuve. Une implémentation de référence limitée à l’inférence est désormais disponible et testée dans le dépôt ; le modèle complet et son entraînement reproductible ne sont pas encore disponibles. La provenance et la licence du corpus devront être établies avant toute expérience d’entraînement.</p>
   [Voir le parcours de construction](fr/build-path.qmd){.card-link} · [Consulter les jalons et critères de preuve](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md){.card-link}
 </div>
 
@@ -132,7 +132,7 @@ Une page peut combiner intuition, dérivation mathématique, code, tests et exp�
 
 - un schéma rend une structure lisible, mais ne démontre pas une propriété ;
 - une dérivation établit un résultat sous des hypothèses explicites ;
-- un test vérifie les cas qu'il couvre, sans prouver à lui seul une règle générale ;
+- un test vérifie les cas qu’il couvre, sans prouver à lui seul une règle générale ;
 - une expérience compare des configurations selon un protocole, des métriques et des limites documentés.
 
 Les pages distinguent les explications disponibles, le code effectivement testé et les développements encore planifiés.

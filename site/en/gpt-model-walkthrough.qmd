@@ -1,0 +1,116 @@
+---
+title: "Guided tour: assembling the GPT (`gpt.py`)"
+subtitle: "Embeddings, stacked blocks and the projection to logits"
+keywords: ["type:guided-build", "destination:build", "topic:reference-gpt-model", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/gpt-model-walkthrough"
+scope: "Explains the gpt.py file line by line: the token and position embedding tables, the stacked blocks, the final normalization, the untied output head and the explicit parameter count. Excludes the generation loop."
+purpose: "Readers should be able to trace one forward pass from (B, T) to (B, T, V), explain how positions are added by broadcasting over the batch, and describe the causality evidence provided by the prefix-invariance test."
+suggested_route:
+  previous: "en/transformer-block-walkthrough"
+  next: "en/gpt-generation-walkthrough"
+hierarchy:
+  parents: ["en/build-path"]
+  children: []
+related: ["en/transformer", "en/embedding-space", "en/positional-encoding", "en/logits"]
+tags: ["type:guided-build", "destination:build", "topic:reference-gpt-model", "level:applied", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+This file assembles the model: the input embeddings, the stacked blocks, the final normalization and the output projection to logits. Best read after the [configuration](gpt-config-walkthrough.qmd) and the [block](transformer-block-walkthrough.qmd). Source: [`src/llm_lab/foundations/gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py).
+:::
+
+## Building: one generator, one fixed order
+
+```python
+        self.config = config
+        rng = np.random.default_rng(config.seed)
+        d = config.embedding_dim
+
+        self.token_embedding: FloatArray = _init_matrix(rng, (config.vocab_size, d))
+        self.position_embedding: FloatArray = _init_matrix(
+            rng, (config.context_length, d)
+        )
+        self.blocks = [TransformerBlock(config, rng) for _ in range(config.num_layers)]
+        self.ln_f_gamma: FloatArray = np.ones(d, dtype=np.float64)
+        self.ln_f_beta: FloatArray = np.zeros(d, dtype=np.float64)
+        self.w_head, self.b_head = _init_linear(rng, config.vocab_size, d, 0.02)
+```
+
+- A **single generator** walks the whole model in a fixed order (embeddings, blocks in stack order, head): every parameter becomes a deterministic function of the configuration.
+- `token_embedding`: a `(V, d)` table — one learned vector per vocabulary entry.
+- `position_embedding`: a `(T, d)` table of learned **absolute** positions, added to the token embeddings.
+- `blocks`: `num_layers` blocks, identical in structure, distinct in parameters.
+- The head `w_head` projects `d -> V`. It is **untied**: a separate matrix, distinct from the embedding table (unlike weight tying).
+
+## The forward pass: from `(B, T)` to `(B, T, V)`
+
+```python
+        ids = np.asarray(token_ids)
+        # ... full validation before any computation ...
+        seq_len = ids.shape[1]
+        x = self.token_embedding[ids] + self.position_embedding[:seq_len]
+        for block in self.blocks:
+            x = block.forward(x)
+        x = layer_norm(x, self.ln_f_gamma, self.ln_f_beta)
+        return linear(x, self.w_head, self.b_head)
+```
+
+The shape journey, line by line:
+
+1. **Validate first**: 2D, integers, non-empty, `seq_len <= context_length`, ids within `[0, V)`. A named error here beats an indexing crash three lines later.
+2. `token_embedding[ids]`: **fancy indexing** with `(B, T)` ids selects one row of the `(V, d)` table per id — output `(B, T, d)`.
+3. `+ position_embedding[:seq_len]`: the `(T, d)` table is sliced to the current length, then **broadcast over the batch** — every sequence shares the same absolute positions.
+4. The block loop: each block rewrites `x`; the residual paths inside the blocks guarantee `x` keeps a copy of its input.
+5. Final normalization then `linear`: `(B, T, d) -> (B, T, V)`. Position `t` holds the scores of the token that may follow `t`.
+
+::: {.callout-tip}
+**Causality is verified, not just declared.** The prefix-invariance test runs the model on a prefix, then on that same prefix extended: the earlier positions' logits must be **identical**. That is the experimental evidence the causal mask does its job.
+:::
+
+## Counting parameters: explicit accounting
+
+```python
+        return int(sum(array.size for array in arrays))
+```
+
+`num_parameters` walks **every array** instead of applying a formula. The test compares the result to an independent count derived from the configuration — per block:
+
+- 4 `(d, d)` matrices and their biases (Q, K, V, O);
+- the MLP: `(hidden, d)`, `(d, hidden)` and their biases;
+- 2 layer-norm parameter pairs.
+
+::: {.callout-warning}
+**Common misconceptions.** (1) Position does not enter the model "by magic": it is **added** to the token embeddings, in the line above. (2) The model does not output probabilities but **logits**; turning them into a distribution is a decoding choice (next page).
+:::
+
+## What the tests verify
+
+[`tests/unit/test_gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt.py): the expected `(B, T, V)` shape and finite values; every named validation error; determinism **at equal seed** (and difference at a different seed); prefix invariance; a parameter count matching the independent formula.
+
+## Exercises
+
+1. Why `position_embedding[:seq_len]` and not the whole `position_embedding`?
+2. With `V=50, T=16, d=16, H=2, L=2, hidden=32`, compute the total parameter count without running the code.
+
+<details>
+<summary>Show answers and reasoning</summary>
+
+1. The table always has `context_length` rows; a shorter sequence uses only the first `seq_len`. Without the slice, adding `(B, T, d) + (T_max, d)` would fail as soon as `T < T_max`.
+2. Per block: `4×16×16 + 4×16 + 2×32×16 + 32 + 16 + 4×16 = 1024+64+1024+48+64+64 = 2288`. Two blocks: `4576`. Embeddings: `2×50×16 = 1600` (table + untied head); positions `16×16 = 256`; final norm `32`; head bias `50`. Total: `4576 + 1600 + 256 + 32 + 50 = 6514`.
+</details>
+
+## Connections
+
+- **Previous stop**: [the Transformer block (`transformer_block.py`)](transformer-block-walkthrough.qmd).
+- **Next stop**: [generation (`generate.py`)](gpt-generation-walkthrough.qmd).
+- **Concept pages**: [GPT and the Transformer](transformer.qmd), [embedding space](embedding-space.qmd), [position](positional-encoding.qmd), [logits](logits.qmd).
+- **Source**: [`gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py) · **Tests**: [`test_gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt.py).
+
+::: {.language-switch}
+**Language:** [Français](../fr/gpt-model-walkthrough.qmd) · [English](gpt-model-walkthrough.qmd)
+:::

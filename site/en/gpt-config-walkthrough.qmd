@@ -1,0 +1,132 @@
+---
+title: "Guided tour: GPT configuration (`gpt_config.py`)"
+subtitle: "Where every model dimension gets a name and a validation"
+keywords: ["type:guided-build", "destination:build", "topic:reference-gpt-config", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/gpt-config-walkthrough"
+scope: "Explains the gpt_config.py file line by line: the role of the GPTConfig object, the purpose of each dimension, immutability and construction-time validation. Excludes the model computation, the Transformer block and the generation loop."
+purpose: "Readers should be able to name each configuration dimension, map each field to the tensor shapes it determines, and explain why validation fails early with a named message instead of late with a shape error."
+suggested_route:
+  previous: null
+  next: "en/gpt-ops-walkthrough"
+hierarchy:
+  parents: ["en/build-path"]
+  children: []
+related: ["en/transformer"]
+tags: ["type:guided-build", "destination:build", "topic:reference-gpt-config", "level:applied", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+This page is the first stop of the guided tour of the reference code: the smallest file of the package, the one that defines **what the model is** before any other file defines **what it does**. Every code excerpt is commented line by line; the full source lives in [`src/llm_lab/foundations/gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py).
+:::
+
+## The file's role in the module family
+
+The reference implementation is split into five modules, in reading order:
+
+| Module | Contents | Tour page |
+|---|---|---|
+| `gpt_config.py` | dimensions, their names, their validation | this page |
+| `gpt_ops.py` | numerical building blocks (init, projection, normalization, GELU) | [next](gpt-ops-walkthrough.qmd) |
+| `transformer_block.py` | one complete pre-LN Transformer block | [block](transformer-block-walkthrough.qmd) |
+| `gpt.py` | the assembled model: embeddings, blocks, output | [model](gpt-model-walkthrough.qmd) |
+| `generate.py` | the autoregressive decoding loop | [generation](gpt-generation-walkthrough.qmd) |
+
+Isolating configuration in one small immutable object has three pedagogical benefits: **one definition site** (every surprising dimension has a name here), errors **at construction time** (instead of a broadcasting crash mid-forward-pass), and **reproducibility** (two identically configured models are identical).
+
+## The declaration: a frozen dataclass
+
+```python
+@dataclass(frozen=True)
+class GPTConfig:
+```
+
+- `@dataclass` generates the constructor: no need to write six assignments by hand.
+- `frozen=True` makes the object **immutable**. The configuration is read everywhere and written nowhere: "did something mutate the config mid-run?" becomes a guarantee instead of a debugging session. Any accidental assignment raises `FrozenInstanceError` immediately.
+
+## The seven fields, one by one
+
+```python
+    vocab_size: int
+    context_length: int
+    embedding_dim: int
+    num_heads: int
+    num_layers: int
+    mlp_hidden_dim: int
+    seed: int = 0
+```
+
+| Field | Role | What it determines elsewhere |
+|---|---|---|
+| `vocab_size` (`V`) | vocabulary size | rows of the embedding table; number of logits per position |
+| `context_length` (`T`) | maximum positions per pass | rows of the position table; width of the sliding generation window |
+| `embedding_dim` (`d`) | residual-stream width | must be divisible by `num_heads`: each head owns `d/H` contiguous columns |
+| `num_heads` (`H`) | number of attention heads | multi-head attention = `H` independent single-head attentions over slices |
+| `num_layers` | depth (stacked blocks) | also scales the initialization of residual-path weights |
+| `mlp_hidden_dim` | MLP hidden width | GPT-2 uses `4 * d`; here the value is explicit, hence visible and changeable |
+| `seed` | initialization seed | inference is deterministic; the seed controls only the initial draws |
+
+::: {.callout-note}
+**Why does `seed: int = 0` have a default?** The other six dimensions describe the architecture; the seed describes an experiment. A default lets you build the model without thinking about it, then change it and observe that only the parameter values change — never the shapes, never the mechanics.
+:::
+
+## The validation: fail early, with a name
+
+```python
+    def __post_init__(self) -> None:
+        dimensions = {
+            "vocab_size": self.vocab_size,
+            "context_length": self.context_length,
+            "embedding_dim": self.embedding_dim,
+            "num_heads": self.num_heads,
+            "num_layers": self.num_layers,
+            "mlp_hidden_dim": self.mlp_hidden_dim,
+        }
+        for name, value in dimensions.items():
+            if value <= 0:
+                raise ValueError(f"{name} must be a positive integer")
+        if self.embedding_dim % self.num_heads != 0:
+            raise ValueError("embedding_dim must be divisible by num_heads")
+```
+
+Line by line:
+
+- `__post_init__` runs **automatically at the end of the generated constructor**: the last moment when the caller still knows which value is wrong.
+- The `dimensions` dict ties each value to **its field name**; without it, this would be six near-identical checks.
+- `raise ValueError(f"{name} ...")`: the message names the culprit (`"vocab_size must be a positive integer"`) instead of a distant `shapes not aligned`.
+- The **divisibility** check stands apart: multi-head attention slices the residual stream into `H` equal parts of `d/H` columns. A `d` that does not divide would make the split impossible — the failure would otherwise surface as a shape error in the middle of the first forward pass.
+
+::: {.callout-warning}
+**Common misconception.** `context_length` is not "the maximum output size". It is the number of **positions** the model can process in one pass; generation can produce longer sequences by sliding the window (see the `generate.py` tour).
+:::
+
+## What the tests verify
+
+[`tests/unit/test_gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_config.py) checks exactly this file's promises: zero or negative dimensions are rejected with the right message, divisibility is enforced, the object is genuinely immutable (`FrozenInstanceError`), and the seed defaults to `0`.
+
+## Exercises
+
+1. What error do you get with `embedding_dim=10, num_heads=4`? And with `embedding_dim=12, num_heads=4`?
+2. How many entries does the position table of a `context_length=256, embedding_dim=64` configuration have?
+
+<details>
+<summary>Show answers and reasoning</summary>
+
+1. `10 % 4 == 2`: divisibility fails, so `ValueError` at construction. With `12 % 4 == 0`: accepted, and each head receives `12/4 = 3` columns.
+2. `256 × 64 = 16384` values, i.e. 16384 learned parameters — one per position and per dimension. This count is independent of the vocabulary and the head count.
+</details>
+
+## Connections
+
+- **Parent page**: [Build a small GPT](build-path.qmd) — the path that motivates this code.
+- **Next tour stop**: [building-block operations (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
+- **Concept page**: [GPT and the Transformer](transformer.qmd) — the architecture these dimensions parametrize.
+- **Source**: [`gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py) · **Tests**: [`test_gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_config.py).
+
+::: {.language-switch}
+**Language:** [Français](../fr/gpt-config-walkthrough.qmd) · [English](gpt-config-walkthrough.qmd)
+:::

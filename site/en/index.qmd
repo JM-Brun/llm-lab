@@ -56,7 +56,7 @@ You can stop after the first two stages and already have a system-level map. Tec
 - **Deepen** — consult advanced derivations and analyses, such as [tensors](tensors.qmd); no general mathematics course is required at the entry point.
 - **Practice and experiment** — test mechanisms with [exercises](exercises.qmd), the [GPT-2 explorer](transformer-explainer.qmd), and [experimental evaluation](experimental-evaluation.qmd).
 
-These four destinations describe what the reader comes to do. The three learning depths — **panorama**, **guided build**, and **deep dives** — describe level of detail. Practice cuts across all three; these are not competing classifications.
+How these destinations fit with the three learning depths and the build milestones is detailed in the [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
 
 ## Transparent Reading System: Intuition, Code, and Epistemic Status
 
@@ -72,7 +72,7 @@ The practical goal is to build a **small decoder-only GPT from randomly initiali
 
 <div class="learning-card learning-card-featured">
   <p class="eyebrow">GUIDED PATH · IN PROGRESS</p>
-  <p>The path is organized into milestones with explicit evidence criteria. A complete model and reproducible training run are not yet available. Corpus provenance and licensing must be established before any training experiment.</p>
+  <p>The path is organized into milestones with explicit evidence criteria. A reference implementation limited to inference is now available and tested in the repository; a complete model and reproducible training run are not yet available. Corpus provenance and licensing must be established before any training experiment.</p>
   [Open the guided build](build-path.qmd){.card-link} · [See milestones and evidence criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md){.card-link}
 </div>
 
@@ -109,7 +109,7 @@ The same model is involved in several processes, but they have different objecti
 <text x="20" y="435" class="flow-kicker">EVALUATION · CROSS-CUTTING FUNCTION</text>
 <g class="flow-node"><a href="text-data.html" aria-label="Held-out data"><rect x="20" y="455" width="220" height="80" rx="12"/><text x="34" y="476" class="flow-kicker">EVALUATION DATA</text><text x="34" y="501" class="flow-title">Held-out data</text><text x="34" y="520" class="flow-subtitle">separate validation and test</text></a></g>
 <g class="flow-node"><a href="experimental-evaluation.html" aria-label="Metrics and uncertainty"><rect x="420" y="455" width="220" height="80" rx="12"/><text x="434" y="476" class="flow-kicker">METRICS + ERRORS</text><text x="434" y="501" class="flow-title">Metrics and uncertainty</text><text x="434" y="520" class="flow-subtitle">qualitative analysis</text></a></g>
-<g class="flow-node"><rect x="820" y="455" width="220" height="80" rx="12"/><text x="834" y="476" class="flow-kicker">DECISIONS + LIMITS</text><text x="834" y="501" class="flow-title">Interpret the findings</text><text x="834" y="520" class="flow-subtitle">revise choices, not the test set</text></g>
+<g class="flow-node"><rect x="820" y="455" width="220" height="80" rx="12"/><text x="834" y="476" class="flow-kicker">DECISIONS + LIMITES</text><text x="834" y="501" class="flow-title">Interpret the findings</text><text x="834" y="520" class="flow-subtitle">revise choices, not the test set</text></g>
 <text x="300" y="558" class="flow-note">Feedback to data, learning, and decoding choices</text>
 <text x="20" y="584" class="flow-hint">Validation may guide adjustments; the test set remains held out until final assessment.</text>
 <text x="20" y="610" class="flow-hint">Blocks open the currently available canonical pages.</text>
