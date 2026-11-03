@@ -39,13 +39,13 @@ $$
 x_{1:T}=(x_1,x_2,\ldots,x_T).
 $$
 
-Each $x_t$ is an integer belonging to the vocabulary \\(\mathcal{V}\\), whose size is $V$. The indices indicate positions in the sequence; they are not numerical values on which arithmetic operations are performed.
+Each $x_t$ is an integer belonging to the vocabulary $\mathcal{V}$, whose size is $V$. The indices indicate positions in the sequence; they are not numerical values on which arithmetic operations are performed.
 
 Language modeling means constructing a probabilistic model that assigns probabilities to possible sequences. We therefore need to specify what a “sequence probability” means and how context enters the calculation.
 
 ## 2. Conditional probability: the next token given its context
 
-For two events $A$ and $B$, with (P$B$>0), conditional probability is defined as:
+For two events $A$ and $B$, with $P(B)>0$, conditional probability is defined as:
 
 $$
 P(A\mid B)=\frac{P(A\cap B)}{P$B$}.
@@ -92,7 +92,7 @@ For the first token, the prefix is empty. In practice, a beginning-of-sequence t
 
 ## 4. What the model learns
 
-A model parameterized by \\(\theta\\) approximates each conditional distribution:
+A model parameterized by $\theta$ approximates each conditional distribution:
 
 $$
 P_\theta(x_t\mid x_{<t}).
@@ -105,7 +105,7 @@ P_\theta(x_{1:T})
 =\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}).
 $$
 
-The parameters \\(\theta\\) are adjusted to assign high probability to sequences in the training corpus. A standard formulation maximizes the log-likelihood:
+The parameters $\theta$ are adjusted to assign high probability to sequences in the training corpus. A standard formulation maximizes the log-likelihood:
 
 $$
 \log P_\theta(x_{1:T})
