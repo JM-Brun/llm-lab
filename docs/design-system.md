@@ -65,6 +65,20 @@ Keep navigation patterns distinct:
 
 Do not manually reproduce breadcrumb markup in individual pages. If the sidebar hierarchy changes, the breadcrumb should follow it automatically. Pages that are not represented in the sidebar (for example, a standalone reference page) may legitimately have no breadcrumb.
 
+## Callout semantics
+
+Use the same Quarto callout types for the same reader need, but do not require every page to contain the same number of callouts.
+
+- **Tip:** a compact mental model or the essential point to retain. The recurring “one-minute” callout belongs here when it genuinely helps the reader orient.
+- **Note:** a clarification, distinction, assumption, or contextual qualification that should remain visible without interrupting the main explanation.
+- **Warning / caution:** a likely error, limitation, or condition that could materially change the reader's interpretation.
+- **Important:** a constraint or consequence that must not be missed.
+- **Collapsed note:** genuinely supplementary material such as implementation references, extended derivations, or optional detail—not an essential definition or caveat.
+- **Learning outcomes:** use the shared `.callout-note.learning-outcomes` pattern only when explicit outcomes help the reader; keep it collapsed by default.
+- **Comprehension check:** use the dedicated `.self-check` structure, not a generic callout, and keep answer disclosures collapsed.
+
+A chapter lead states the page's central answer; it is not interchangeable with a callout. Avoid stacking multiple boxes that repeat the same idea. The target is consistent semantics and visual treatment, not identical page composition.
+
 ## 4. Interaction and motion
 
 - Interactive controls must identify the quantity they change and the output they affect.
