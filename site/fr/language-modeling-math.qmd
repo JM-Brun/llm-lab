@@ -39,13 +39,13 @@ $$
 x_{1:T}=(x_1,x_2,\ldots,x_T).
 $$
 
-Chaque $x_t$ est un entier appartenant au vocabulaire \\(\mathcal{V}\\), de taille $V$. Les indices indiquent les positions dans la séquence, pas des valeurs numériques sur lesquelles on effectuerait des opérations arithmétiques.
+Chaque $x_t$ est un entier appartenant au vocabulaire $\mathcal{V}$, de taille $V$. Les indices indiquent les positions dans la séquence, pas des valeurs numériques sur lesquelles on effectuerait des opérations arithmétiques.
 
 Le problème de modélisation du langage consiste à construire un modèle probabiliste qui attribue des probabilités aux séquences possibles. Il faut donc préciser ce que signifie « probabilité d'une séquence » et comment le contexte intervient.
 
 ## 2. Probabilité conditionnelle : le prochain token sachant le contexte
 
-Pour deux événements $A$ et $B$, avec (P$B$>0), la probabilité conditionnelle est définie par :
+Pour deux événements $A$ et $B$, avec $P(B)>0$, la probabilité conditionnelle est définie par :
 
 $$
 P(A\mid B)=\frac{P(A\cap B)}{P$B$}.
@@ -92,7 +92,7 @@ Pour le premier token, le préfixe est vide. En pratique, on peut expliciter un 
 
 ## 4. Ce que le modèle apprend
 
-Un modèle paramétré par \\(\theta\\) approxime chaque distribution conditionnelle :
+Un modèle paramétré par $\theta$ approxime chaque distribution conditionnelle :
 
 $$
 P_\theta(x_t\mid x_{<t}).
@@ -105,7 +105,7 @@ P_\theta(x_{1:T})
 =\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}).
 $$
 
-Les paramètres \\(\theta\\) sont ajustés pour attribuer une probabilité élevée aux séquences du corpus d'entraînement. Une formulation standard consiste à maximiser la log-vraisemblance :
+Les paramètres $\theta$ sont ajustés pour attribuer une probabilité élevée aux séquences du corpus d'entraînement. Une formulation standard consiste à maximiser la log-vraisemblance :
 
 $$
 \log P_\theta(x_{1:T})
