@@ -4,7 +4,9 @@ The reference decoder-only GPT is split into focused modules, in reading
 order: ``gpt_config`` (dimensions), ``gpt_ops`` (building blocks),
 ``transformer_block`` (one block), ``gpt`` (the assembled model) and
 ``generate`` (the decoding loop). ``training_examples`` builds the aligned
-input/target windows that pretraining consumes. This package-level module re-exports
+input/target windows that pretraining consumes, and ``decoding_filters`` implements
+the optional top-k/top-p truncations of the decoding deep dive. This package-level
+module re-exports
 the public surface so callers can import from ``llm_lab.foundations``
 directly.
 """
@@ -14,6 +16,7 @@ from llm_lab.foundations.attention import (
     scaled_dot_product_attention,
     softmax_with_temperature,
 )
+from llm_lab.foundations.decoding_filters import top_k_filter, top_p_filter
 from llm_lab.foundations.generate import generate
 from llm_lab.foundations.gpt import GPT
 from llm_lab.foundations.gpt_config import GPTConfig
@@ -39,4 +42,6 @@ __all__ = [
     "scaled_dot_product_attention",
     "sliding_input_target_pairs",
     "softmax_with_temperature",
+    "top_k_filter",
+    "top_p_filter",
 ]

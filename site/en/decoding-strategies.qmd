@@ -87,6 +87,14 @@ The method was proposed to avoid sampling from the unreliable long tail while re
 
 Top-k and top-p redistribute conditional probability over a subset. They can reduce some undesirable tokens, but they also exclude possible continuations. This is a precision-recall trade-off over continuations: a filtered distribution is no longer the model's original distribution.
 
+::: {.callout-note collapse="true" title="NumPy implementation and tests (deep dive)"}
+The [reference NumPy implementation](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/decoding_filters.py) and its [unit tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_decoding_filters.py) cover the two filters of this section: `top_k_filter` (a fixed support of $k$ candidates) and `top_p_filter` (the smallest set whose cumulative mass reaches or exceeds $p$, including the token that crosses the threshold). Both renormalize the retained distribution; ties are broken by the lowest original index (stable sort), so the result is deterministic.
+
+This reference filters an already-computed probability distribution at one position (for example the output of a temperature softmax). It is not wired into the generation loop, applies no chain of *logits processors*, and implements neither beam search, nor contrastive decoding, nor penalties. The "temperature then truncation" order followed here is a teaching convention, not an implementation standard.
+
+The tests check renormalization, top-k(1) equivalence with greedy selection, inclusion of the crossing token, nucleus size adapting to the distribution's shape, the effect of the temperature → filter order, determinism, absence of input mutation, and rejection of invalid distributions. They validate the announced scope, not the optimality of any setting for a given task.
+:::
+
 ## 4. Greedy selection, beam search, and open-ended generation
 
 **Greedy decoding** selects the most likely token at each step. It is simple and deterministic, but a local choice does not necessarily maximize the probability of the best complete sequence. A myopic choice can steer the entire continuation.

@@ -87,6 +87,14 @@ La méthode a été proposée pour éviter de choisir dans la longue traîne peu
 
 Top-k et top-p redistribuent la probabilité conditionnelle sur un sous-ensemble. Ils peuvent réduire certains tokens indésirables, mais ils excluent aussi des continuations possibles. C'est un compromis entre précision et rappel au niveau des continuations : une distribution filtrée n'est plus la distribution originale du modèle.
 
+::: {.callout-note collapse="true" title="Implémentation NumPy et tests (approfondissement)"}
+L'[implémentation de référence NumPy](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/decoding_filters.py) et ses [tests unitaires](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_decoding_filters.py) couvrent les deux filtres de cette section : `top_k_filter` (support fixe de $k$ candidats) et `top_p_filter` (plus petit ensemble dont la masse cumulée atteint ou dépasse $p$, token franchissant le seuil inclus). Les deux renormalisent la distribution conservée ; les égalités sont départagées par l'indice le plus bas (tri stable), donc de façon déterministe.
+
+Cette référence filtre une distribution de probabilités déjà calculée, à une position (par exemple la sortie d'un softmax avec température). Elle n'est pas branchée dans la boucle de génération, n'applique pas de chaîne de *logits processors* et n'implémente ni beam search, ni décodage contrastif, ni pénalités. L'ordre « température puis troncature » suivi ici est une convention pédagogique, pas un standard d'implémentation.
+
+Les tests vérifient la renormalisation, l'équivalence top-k(1) = sélection gloutonne, l'inclusion du token qui franchit le seuil, l'adaptation de la taille du noyau à la forme de la distribution, l'effet de l'ordre température → filtre, le déterminisme, la non-mutation de l'entrée et le rejet des distributions invalides. Ils valident le périmètre annoncé, pas l'optimalité d'un réglage pour une tâche donnée.
+:::
+
 ## 4. Sélection gloutonne, beam search et génération ouverte
 
 **Greedy decoding** sélectionne le token le plus probable à chaque étape. Il est simple et déterministe, mais le choix local ne maximise pas nécessairement la probabilité de la meilleure séquence complète. Une erreur ou un choix myope peut orienter toute la continuation.
