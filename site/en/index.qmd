@@ -53,7 +53,7 @@ You can stop after the first two stages and already have a system-level map. Tec
 
 - **Understand** — follow the conceptual explanations and recommended route above.
 - **Build** — implement a small GPT step by step with the [guided path](build-path.qmd).
-- **Deepen** — consult advanced derivations and analyses, such as [tensors](tensors.qmd); no general mathematics course is required at the entry point.
+- **Deepen** — consult advanced derivations and analyses, such as [tensors](tensors.qmd), or the optional [Machine Learning foundations detour: bias-variance and boosted trees](bias-variance.qmd); no general mathematics course is required at the entry point.
 - **Practice and experiment** — test mechanisms with [exercises](exercises.qmd), the [GPT-2 explorer](transformer-explainer.qmd), and [experimental evaluation](experimental-evaluation.qmd).
 
 These four destinations describe what the reader comes to do. The three learning depths — **panorama**, **guided build**, and **deep dives** — describe level of detail. Practice cuts across all three; these are not competing classifications.
