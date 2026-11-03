@@ -68,7 +68,7 @@ For complementary pedagogical perspectives, see [Hugging Face on pipeline stages
 
 2. **Process the context.** The [Transformer](transformer.qmd) combines information from different positions to build context-dependent representations. The model therefore does not treat each token as an isolated item.
 
-3. **Evaluate possible continuations.** From this computation, the model estimates how plausible the next tokens would be. [Logits](logits.qmd) and the [probability distribution](probabilities.qmd) describe in more detail how internal representations are mapped to possible outputs.
+3. **Evaluate possible continuations.** From this computation, the model estimates how plausible the next tokens would be. [Output scores](logits.qmd) and [probabilities](probabilities.qmd) explain in more detail how these possibilities are evaluated.
 
 4. **Choose and repeat.** A decoding rule selects the next token from the evaluated possibilities. It does not necessarily select the token with the highest probability: some strategies also involve random sampling. The selected token is appended to the context, and the model repeats its computation to produce the next one. See [generation](generation.qmd).
 
