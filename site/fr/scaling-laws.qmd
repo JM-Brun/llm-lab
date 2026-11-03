@@ -1,7 +1,7 @@
 ---
 title: "Lois d'échelle : paramètres, données et calcul"
 subtitle: "Ce que les régularités empiriques disent — et ne disent pas — sur la taille des modèles"
-keywords: ["type:concept-lesson", "destination:understand", "topic:scaling-laws", "level:core", "language:fr", "status:published"]
+keywords: ["type:concept-lesson", "destination:understand", "topic:scaling-laws", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -14,7 +14,7 @@ suggested_route:
   previous: null
   next: null
 hierarchy:
-  parents: ["fr/llm-overview"]
+  parents: []
   children: []
 related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:scaling-laws", "level:core", "language:fr", "status:published"]
