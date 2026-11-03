@@ -22,7 +22,7 @@ These principles are the short version of the project's editorial and engineerin
 11. **Actively challenge misconceptions.** Identify common false equivalences and overgeneralizations, then use counterexamples, boundary cases, or alternative methods to show exactly where they fail. For example, cosine similarity measures angular alignment under a chosen representation; it is not, by itself, a measure of semantic similarity or human-perceived meaning.
 12. **Use mathematical notation consistently and correctly.** Define symbols, dimensions, domains, reductions, axes, and conventions. Check derivations and edge cases; distinguish definitions, assumptions, theorems, hypotheses, and empirical observations.
 13. **Cite sources for what they support.** Prefer primary papers and official documentation for technical claims; use pedagogical resources for teaching ideas. Check that a source supports the actual statement, not merely the general topic.
-15. **Make uncertainty and status visible.** Distinguish planned, illustrative, implemented, tested, and experimentally observed work. Do not overstate results or hide negative and inconclusive findings.
+14. **Make uncertainty and status visible.** Distinguish planned, illustrative, implemented, tested, and experimentally observed work. Do not overstate results or hide negative and inconclusive findings.
 
 ## 3. Connect explanations to inspectable practice
 
