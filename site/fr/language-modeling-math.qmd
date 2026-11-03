@@ -83,9 +83,9 @@ Le maximum de vraisemblance cherche à augmenter la log-vraisemblance des séque
 
 ## 3. Cibles souples et divergence KL
 
-Les cibles *one-hot* placent toute la masse sur une seule catégorie. Certaines méthodes utilisent plutôt une distribution cible (q) — par exemple pour le lissage des étiquettes ou une cible fournie par un modèle enseignant — sur les (V) tokens.
+Les cibles *one-hot* placent toute la masse sur une seule catégorie. Certaines méthodes utilisent plutôt une distribution cible \\(q\\) — par exemple pour le lissage des étiquettes ou une cible fournie par un modèle enseignant — sur les \\(V\\) tokens.
 
-Pour une distribution cible (q) et une distribution prédite (p), l'entropie croisée est :
+Pour une distribution cible \\(q\\) et une distribution prédite \\(p\\), l'entropie croisée est :
 
 \[
 H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
@@ -99,7 +99,7 @@ Définissons l'entropie de la cible par \(H(q)=-\sum_i q_i\log q_i\). La relatio
 H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)
 \]
 
-explique pourquoi, pour une cible (q) fixe, minimiser l'entropie croisée par rapport à (p) revient à minimiser la divergence KL vers cette cible. Pour des quantités finies, l'identité se déduit directement des définitions :
+explique pourquoi, pour une cible \\(q\\) fixe, minimiser l'entropie croisée par rapport à \\(p\\) revient à minimiser la divergence KL vers cette cible. Pour des quantités finies, l'identité se déduit directement des définitions :
 
 \[
 \begin{aligned}
