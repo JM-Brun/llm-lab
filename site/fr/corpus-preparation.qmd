@@ -1,7 +1,7 @@
 ---
 title: "Préparer un corpus pour le préentraînement"
 subtitle: "Provenance, filtrage, déduplication, partitions et ajustement du tokenizer"
-keywords: ["type:build-guide", "destination:build", "topic:corpus-preparation", "level:core", "language:fr", "status:published"]
+keywords: ["type:guided-build", "destination:build", "topic:corpus-preparation", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -12,12 +12,12 @@ scope: "Décrit les décisions d'ingénierie des données en amont du préentra�
 purpose: "Construire un protocole de préparation de corpus traçable et adapté à l'objectif d'entraînement ou d'évaluation, en évitant les fuites entre partitions et en séparant les décisions de corpus des opérations internes au tokenizer et de la construction des exemples."
 suggested_route:
   previous: "fr/build-path"
-  next: "fr/training-examples"
+  next: null
 hierarchy:
   parents: ["fr/build-path"]
   children: []
 related: ["fr/text-data", "fr/tokenization-strategies", "fr/tokenizer-design-evaluation", "fr/training-examples", "fr/evaluation-experimentale"]
-tags: ["type:build-guide", "destination:build", "topic:corpus-preparation", "level:core", "language:fr", "status:published"]
+tags: ["type:guided-build", "destination:build", "topic:corpus-preparation", "level:core", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
