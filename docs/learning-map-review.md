@@ -18,15 +18,17 @@ The validator reads the explicit Quarto `project.render` inventory and checks:
 - acyclicity of the suggested-next graph and the conceptual hierarchy;
 - French/English counterpart parity using the stable `topic` identifier rather than translated slugs.
 
-### Current CI evidence
+### Current CI and audit evidence
 
-On `main` commit `64cb6fcf44508438fbea6ff2e90973baedaaa42e` (2026-11-04):
+The existing validator remains the source of truth for structural invariants. The topology audit in [learning-map-topology-audit.md](learning-map-topology-audit.md) was run against the published-page inventory on `main` commit `82606ee4a9c77f9be2dc5a1e8c8931bc79e370b1` (2026-11-04):
 
-- [Python CI](https://github.com/JM-Brun/llm-lab/actions/runs/41843482932) passed, including **Validate page metadata learning graph**.
-- [Quarto site workflow](https://github.com/JM-Brun/llm-lab/actions/runs/41843482902) passed, including metadata validation, bilingual site rendering, knowledge-graph export and local rendered-link checks.
-- [Site publication workflow](https://github.com/JM-Brun/llm-lab/actions/runs/41843482969) completed successfully.
+- 103 published pages were analyzed (51 FR, 51 EN, one shared reference page).
+- FR and EN each have six separate suggested-route chains, 28 route edges, 34 participating pages, and no convergence or unrooted route components.
+- 17 pages per language intentionally or potentially sit outside the suggested route; they are grouped by destination rather than labelled as orphans.
+- The structural validator reported no broken references, route/hierarchy reciprocity errors, cycles or FR/EN parity errors.
+- The hierarchy contains fan-out and multi-parent hubs; these are not prerequisites and are not merged into the route graph.
 
-**Interpretation:** no broken page references, route reciprocity violations, hierarchy reciprocity violations, cycles, or FR/EN metadata-parity violations were reported by the existing validator on this commit. This is structural evidence, not evidence that the recommended sequence is pedagogically optimal or that the rendered interaction is accessible.
+The report is being added with PR #429. Its first CI execution successfully ran the audit and printed the topology, but the workflow subsequently stopped at Ruff formatting; that formatting is being corrected. These are structural findings, not evidence that the route is pedagogically optimal or that rendered interactions are accessible.
 
 ## 2. Curriculum contract to preserve
 
@@ -57,20 +59,22 @@ The page-map schema correctly distinguishes route, hierarchy and related links. 
 
 ### P1 — topology report and curriculum reconciliation (#415)
 
-- [ ] Extend `scripts/audit_page_metadata.py` (rather than duplicating the validator) with a concise topology report: route starts/ends, route chains, hierarchy branches, high-degree hubs, isolated pages, and pages with intentionally null routes.
-- [ ] Separate observed graph facts from editorial interpretations. A null route can be a deliberate deep-dive entry; isolation is a review candidate, not automatically a defect.
-- [ ] Compare route chains to the conceptual sequence and Build branches in `docs/learning-path.md`.
-- [ ] Record deliberate exceptions: generation preview, Build hub, G2 data branch, Deepen pages, Practice pages, and reference resources.
-- [ ] Review whether the current BFS display rank should be replaced by a stable sort key or explicitly named `display_rank`. Do not use it to generate the guided curriculum.
-- [ ] Only change page metadata when a concrete semantic inconsistency is confirmed; preserve a useful `related` link when a hierarchy edge is removed.
+- [x] Extend the existing `scripts/audit_page_metadata.py` with a topology report; reuse the structural validator rather than duplicating it (PR #429).
+- [x] Separate suggested-route chains from hierarchy fan-out, multi-parent nodes and related links.
+- [x] Record route starts/ends, chains, convergence, unrooted components, route-free pages by destination and isolated pages.
+- [x] Compare the six-stage conceptual route with the G0–G9 Build milestones; record the deliberate G2 training-data branch and G1b corpus-preparation branch.
+- [ ] Repair the malformed G0–G9 tables in `docs/content-section-mapping.md`: remove the stray seven-column rows from the four-column table, correct the mislabeled training-examples milestone, and add the missing G2 evidence row to the detailed matrix.
+- [ ] Review the `glossary → transformer-history` suggested-route chain against the editorial rule that history is optional reference context.
+- [ ] Decide whether the three route-free Understand pages (entropy, LLM limits and Transformer architectures) are intentionally standalone; do not add route links merely to eliminate nulls.
+- [ ] Review the five fully isolated landing/reference pages and record why they intentionally sit outside the graph.
 
 ### P2 — guided route view (#415)
 
-- [ ] Define a small number of reader-facing stages from existing curriculum milestones, with objective, expected outcome, entry page, recommended continuation and optional deepening.
-- [ ] Model branches explicitly; do not turn every page into a step.
-- [ ] Keep the exhaustive page graph as a separate exploratory view.
-- [ ] Keep the practical small-GPT route connected to relevant conceptual stages without forcing it into one linear theoretical route.
-- [ ] Provide equivalent French and English labels and a textual alternative.
+- [x] Define six bilingual reader-facing conceptual stages with objectives, core pages and optional deepening (PR #424).
+- [x] Keep the exhaustive page graph separate from the guided route.
+- [x] Keep the small-GPT Build path as a practical companion and the G2 data branch separate from inference.
+- [x] Generate the guided route as native Quarto Markdown with Python and validate all bilingual page references.
+- [ ] Complete browser, mobile, keyboard and touch inspection; CI rendering is not a substitute for this evidence (#337/#417).
 
 ### P2 — concept graph (#416)
 
@@ -96,12 +100,11 @@ The page-map schema correctly distinguishes route, hierarchy and related links. 
 
 ## 5. Recommended execution order
 
-1. Produce the topology report using the existing metadata loader and validator.
-2. Reconcile the route topology with the canonical curriculum; record exceptions and only then correct confirmed metadata defects.
-3. Clarify the generator's display-order semantics and add focused tests.
-4. Implement the guided route view from explicit curriculum data.
-5. Rework the concept graph and interaction layer.
-6. Complete bilingual browser and accessibility inspection.
+1. Reconcile the site-tool relocation across PRs #422, #424 and #429 before merging: keep the audit and map generators, their imports, tests, workflow commands and local instructions together.
+2. Repair the G0–G9 crosswalk tables and review the two route exceptions identified above.
+3. Rework the concept graph relation semantics and layout (#416).
+4. Complete desktop/mobile, keyboard, focus, touch and screen-reader inspection (#337/#417).
+5. Only then consider any metadata changes justified by the editorial review.
 
 ## 6. Evidence boundaries
 
