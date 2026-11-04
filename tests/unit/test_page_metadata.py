@@ -157,6 +157,7 @@ def _graph_page(
     related: list[str] | None = None,
     language: str = "fr",
     topic: str | None = None,
+    destination: str = "understand",
 ) -> dict[str, Any]:
     """Build a minimal published node for semantic page-graph tests."""
     return {
@@ -171,10 +172,73 @@ def _graph_page(
             "language": language,
             "topic": topic or page_id.split("/", maxsplit=1)[-1],
             "type": "concept-lesson",
-            "destination": "understand",
+            "destination": destination,
             "level": "core",
         },
     }
+
+
+def test_route_topology_separates_route_chains_from_hierarchy() -> None:
+    pages = {
+        "fr/start": _graph_page(
+            "fr/start",
+            following="fr/middle",
+            children=["fr/branch-a", "fr/branch-b"],
+        ),
+        "fr/middle": _graph_page(
+            "fr/middle", previous="fr/start", following="fr/end"
+        ),
+        "fr/end": _graph_page("fr/end", previous="fr/middle"),
+        "fr/branch-a": _graph_page("fr/branch-a", destination="deepen"),
+        "fr/branch-b": _graph_page("fr/branch-b", destination="deepen"),
+        "en/start": _graph_page("en/start", following="en/end", language="en"),
+        "en/end": _graph_page("en/end", previous="en/start", language="en"),
+    }
+
+    result = AUDIT_MODULE["route_topology"](pages)
+
+    french = result["fr"]
+    assert french["route_starts"] == ["fr/start"]
+    assert french["route_ends"] == ["fr/end"]
+    assert french["chains"] == [["fr/start", "fr/middle", "fr/end"]]
+    assert french["outside_suggested_route_by_destination"]["deepen"] == [
+        "fr/branch-a",
+        "fr/branch-b",
+    ]
+    assert french["hierarchy_fan_out"] == [
+        {"page": "fr/start", "children": ["fr/branch-a", "fr/branch-b"]}
+    ]
+    assert result["en"]["chains"] == [["en/start", "en/end"]]
+
+
+def test_route_topology_reports_unrooted_components_and_convergence() -> None:
+    pages = {
+        "fr/a": _graph_page("fr/a", following="fr/c"),
+        "fr/b": _graph_page("fr/b", following="fr/c"),
+        "fr/c": _graph_page("fr/c", previous="fr/b"),
+        "fr/x": _graph_page("fr/x", previous="fr/y", following="fr/y"),
+        "fr/y": _graph_page("fr/y", previous="fr/x", following="fr/x"),
+    }
+
+    result = AUDIT_MODULE["route_topology"](pages)["fr"]
+
+    assert result["route_merges"] == [
+        {"page": "fr/c", "incoming_from": ["fr/a", "fr/b"]}
+    ]
+    assert result["unrooted_route_pages"] == ["fr/x", "fr/y"]
+
+
+def test_report_discloses_existing_metadata_validator_findings() -> None:
+    result = AUDIT_MODULE["audit_pages"](
+        {"fr/isolated": _graph_page("fr/isolated")},
+        ["topic 'attention': FR/EN suggested-route next differs"],
+    )
+
+    report = AUDIT_MODULE["render_report"](result)
+
+    assert "Structural metadata validator" in report
+    assert "FR/EN suggested-route next differs" in report
+    assert "Hierarchy fan-out is not a route" in report
 
 
 def test_accepts_reciprocal_page_hierarchy() -> None:
