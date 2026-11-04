@@ -35,11 +35,9 @@ The map offers two distinct graphs. The page graph represents resources and thei
 
 Six conceptual stages provide an entry point and a suggested progression. Primary links open the core pages; deep dives are optional. Pages within a stage are complementary resources, not a list of strict prerequisites.
 
-<ol class="guided-route-grid" data-guided-route aria-label="Six stages of the guided route"></ol>
+{{< include ../includes/generated-guided-route-en.qmd >}}
 
-<div class="guided-route-companion">
-  <strong>Practical companion:</strong> if you want to build a small GPT, follow the <a href="build-path.html">guided build path</a>. Corpus preparation and training-example construction form a dedicated model-learning branch, not a prerequisite for inference.
-</div>
+
 
 :::
 
