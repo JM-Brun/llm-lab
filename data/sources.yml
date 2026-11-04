@@ -33,7 +33,7 @@ sources:
     scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
-      - accessed_at: "2026-11-04T10:00:00Z"
+      - accessed_at: "2026-11-04"
         status: partially-scanned
         inspected_scope:
           - "Indexed article body: introduction, sections 1–6, and conclusion"
