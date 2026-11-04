@@ -14,3 +14,5 @@ This is a high-level inventory; the [learning path](learning-path.md) owns curri
 The inference implementation does not train its parameters. Tests check the cases and properties they exercise, not full model quality, general numerical safety, or learner mastery.
 
 A [learner-validation pilot protocol](learner-validation-pilot.md) is ready to run; it is not evidence that a participant has been observed.
+
+The [PR #422 follow-up](work-backlog-status.md#19-pr-422-closeout-and-remaining-work--2026-11-04) records the remaining minimal-versus-advanced code separation, human review and visual-rights work.
