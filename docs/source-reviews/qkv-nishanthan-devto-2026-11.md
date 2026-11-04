@@ -22,6 +22,7 @@ The article is a concise beginner-oriented walkthrough of:
 - the score → scaling → softmax → weighted-value aggregation sequence;
 - the high-level extension to multi-head attention;
 - simple lexical-ambiguity and pronoun-reference examples.
+- two interpretive caveats: query-key scores are not direct semantic-similarity measures, and standard attention performs weighted Value aggregation rather than winner-take-all selection.
 
 It is broadly consistent with the standard scaled dot-product attention formulation. It contributes no new technical result, implementation detail or empirical evidence. Its possible value is pedagogical: a concise verbal entry point, an introductory multi-head summary, and especially a two-example progression from lexical ambiguity to pronoun reference. These possibilities must be evaluated independently of topical novelty.
 
@@ -37,6 +38,8 @@ The canonical bilingual Q/K/V page was inspected in both languages, together wit
 | Score → scale → softmax → aggregation | Low | Low | Keep in the dedicated attention lesson, which provides stronger derivation and numerical treatment |
 | Multi-head summary | Low | Moderate as a simpler summary, but little additional learner value | Defer; current Transformer overview and block walkthrough already serve both levels |
 | bank ambiguity → pronoun it | Low | High: lexical ambiguity and cross-position dependency are distinct learner intuitions | Integrate the pronoun example into both contextualized-representations pages, with an explicit caveat that it does not establish attention-head coreference resolution |
+| Scores are not semantic similarity | Low | Moderate as a misconception guardrail; reinforces a distinction learners may miss | Defer; Q/K/V page already warns against nearest-neighbour and semantic-relevance interpretations |
+| Weighted aggregation is not argmax selection | Low | Moderate: explicit winner-take-all contrast can help beginners | Defer; the attention lesson's equation and numerical example already show weighted Value aggregation |
 | KV-cache follow-up | Not an article contribution | Not assessed as an article item | It appeared only in a reader comment; exclude from article extraction and attribution |
 
 ## 4. Technical assessment
