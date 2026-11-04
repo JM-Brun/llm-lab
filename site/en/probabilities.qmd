@@ -132,6 +132,8 @@ Adjust $\tau$ to observe how the distribution changes while the highest-scoring 
   </script>
 </div>
 
+```
+
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
 <span>NUMERICAL WORKBENCH · TEMPERATURE-SCALED SOFTMAX</span>
