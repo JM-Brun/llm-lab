@@ -267,9 +267,7 @@ def _escape_markdown_text(value: str) -> str:
     return "".join(f"\\{character}" if character in special else character for character in value)
 
 
-def render_guided_route_markdown(
-    stages: list[ResolvedGuidedRouteStage], language: str
-) -> str:
+def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], language: str) -> str:
     """Render the route as native Quarto Markdown; no browser-side route renderer."""
     if language not in {"fr", "en"}:
         raise ValueError(f"unsupported guided-route language: {language!r}")
