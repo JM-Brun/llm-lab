@@ -212,7 +212,6 @@ def test_symmetric_contrast_relation_uses_one_canonical_orientation() -> None:
     assert any("canonical lexical order" in error for error in errors)
 
 
-
 def test_registry_requires_bilingual_definitions_for_used_relation_types() -> None:
     data = _valid_registry()
     data["relation_types"]["implemented-by"]["descriptions"].pop("en")
