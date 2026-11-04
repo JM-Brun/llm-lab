@@ -19,7 +19,6 @@ FRONT_MATTER = re.compile(r"\A---\s*\n(.*?)\n---\s*(?:\n|\Z)", re.DOTALL)
 HEADING = re.compile(r"^#{2,3}\s+(.+?)\s*#*\s*$", re.MULTILINE)
 INLINE_MARKUP = re.compile(r"[*_]|<[^>]+>")
 EXCLUDED_HEADINGS = {
-    "objectifs d’apprentissage",
     "objectifs d'apprentissage",
     "learning objectives",
     "à retenir",
