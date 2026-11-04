@@ -95,6 +95,10 @@ Le parcours principal suit la logique **comprendre le fonctionnement avant d'ét
 <a href="fr/cross-entropy.html"><text x="338" y="307" class="flow-subtitle">Entropie croisée et perte</text></a>
 <a href="fr/gradients.html"><text x="338" y="325" class="flow-subtitle">Gradients et rétropropagation</text></a>
 </g>
+<g class="flow-node">
+<a href="fr/in-context-learning.html" aria-label="Ouvrir l'approfondissement sur l'apprentissage en contexte"><rect x="20" y="230" width="250" height="55" rx="10"/><text x="34" y="252" class="flow-kicker">8 · ADAPTER</text><text x="34" y="273" class="flow-title">Adaptation et usages</text></a>
+<a href="fr/build-path.html"><text x="28" y="307" class="flow-subtitle">Fine-tuning et construction</text></a>
+</g>
 <text x="20" y="405" class="flow-kicker">BRANCHE BUILD · G2 · PRÉPARER LES DONNÉES POUR ENTRAÎNER</text>
 <g class="flow-node flow-node-g2">
 <a href="fr/corpus-preparation.html" aria-label="Ouvrir la préparation du corpus"><rect x="20" y="465" width="250" height="55" rx="10"/><text x="34" y="487" class="flow-kicker">G2 · CORPUS</text><text x="34" y="508" class="flow-title">Préparer le corpus</text></a>
