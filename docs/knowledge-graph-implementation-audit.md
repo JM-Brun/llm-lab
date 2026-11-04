@@ -66,8 +66,8 @@ On merged PR #399 head 7bea7ec (2026-11-04), Python CI passed all 127 tests and 
 2. **Maintain concept-domain membership.** PR #404 merged `data/domains.yml`, many-to-many concept membership, and a canonical symmetry rule for `contrasts-with`. Review memberships as the concept seed expands; do not infer them from page-level classifications.
 3. **Introduce first-class resource records.** Define stable resource IDs distinct from page and concept IDs; include kind, language, status, provenance, and local path/external URL. Then make concept-resource associations many-to-many. Preserve page IDs as page identifiers.
 4. **Add referential-integrity tests across dimensions.** Check concept-domain membership, resource IDs, resource locations/status, and concept-resource endpoints. Include fixtures for one resource linked to multiple concepts and one concept linked to multiple resource kinds.
-5. **Extend the concept-map projection.** Add concept-domain membership and first-class resource kinds when their canonical records are available. Preserve IDs and edge types; keep this view distinct from page navigation and curriculum progression.
-6. **Extend and test the concept projection.** Add domain membership and first-class resource kinds when their canonical records are available; test deterministic output and ensure FR/EN labels do not create duplicate concept nodes.
+5. **Extend and test the existing concept-map projection.** Expose concept-domain membership from `data/domains.yml`, with deterministic bilingual output and no duplicate concept nodes or reinterpretation of prerequisites as navigation. Expose non-page resource kinds only when their canonical records exist; preserve concept IDs and typed relation directions.
+6. **Review the rendered interaction separately.** Check accessibility, meaningful relationship direction, browser behavior, and responsive layout after the data model and tests; Quarto rendering and static link checks alone do not establish those properties.
 
 ## Non-goals
 
