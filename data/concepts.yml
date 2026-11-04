@@ -53,29 +53,45 @@ concepts:
   - id: attention-score
     labels: {fr: "Score d'attention", en: "Attention score"}
     definitions:
-      fr: "Score de compatibilité calculé entre une requête et une clé avant sa conversion en poids d'attention normalisés."
-      en: "Compatibility score computed between a query and a key before conversion into normalized attention weights."
+      fr: >-
+        Score de compatibilité calculé entre une requête et une clé avant sa conversion en poids
+        d'attention normalisés.
+      en: >-
+        Compatibility score computed between a query and a key before conversion into normalized
+        attention weights.
     domains: [architectures-mechanisms, mathematical-tools-geometry]
     resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
   - id: attention-weight
     labels: {fr: "Poids d'attention", en: "Attention weight"}
     definitions:
-      fr: "Coefficient normalisé, après prise en compte du masque éventuel, qui pondère la contribution d'une valeur à une sortie d'attention."
-      en: "Normalized coefficient, after any applicable mask, that weights a value's contribution to an attention output."
+      fr: >-
+        Coefficient normalisé, après prise en compte du masque éventuel, qui pondère la contribution
+        d'une valeur à une sortie d'attention.
+      en: >-
+        Normalized coefficient, after any applicable mask, that weights a value's contribution
+        to an attention output.
     domains: [architectures-mechanisms, mathematical-tools-geometry]
     resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
   - id: scaled-dot-product-attention
     labels: {fr: "Attention à produit scalaire mise à l'échelle", en: "Scaled dot-product attention"}
     definitions:
-      fr: "Mécanisme qui calcule des scores par produit scalaire entre requêtes et clés, les met à l'échelle, les normalise et agrège les vecteurs de valeur."
-      en: "Mechanism that computes query–key dot-product scores, scales and normalizes them, and aggregates value vectors."
+      fr: >-
+        Mécanisme qui calcule des scores par produit scalaire entre requêtes et clés, les met à
+        l'échelle, les normalise et agrège les vecteurs de valeur.
+      en: >-
+        Mechanism that computes query–key dot-product scores, scales and normalizes them, and
+        aggregates value vectors.
     domains: [architectures-mechanisms, mathematical-tools-geometry]
     resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
   - id: multi-head-attention
     labels: {fr: "Attention multi-têtes", en: "Multi-head attention"}
     definitions:
-      fr: "Mécanisme qui exécute plusieurs calculs d'attention avec des projections propres à chaque tête, puis combine leurs sorties par concaténation et projection."
-      en: "Mechanism that runs multiple attention computations with per-head projections, then combines their outputs through concatenation and projection."
+      fr: >-
+        Mécanisme qui exécute plusieurs calculs d'attention avec des projections propres à chaque
+        tête, puis combine leurs sorties par concaténation et projection.
+      en: >-
+        Mechanism that runs multiple attention computations with per-head projections, then
+        combines their outputs through concatenation and projection.
     domains: [architectures-mechanisms]
     resources:
       - fr/transformer
@@ -88,7 +104,13 @@ concepts:
       fr: "Contrainte qui empêche une position de prendre en compte les positions futures."
       en: "Constraint preventing a position from attending to future positions."
     domains: [architectures-mechanisms]
-    resources: [fr/causal-masking, en/causal-masking, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/transformer-architectures, en/transformer-architectures]
+    resources:
+      - fr/causal-masking
+      - en/causal-masking
+      - fr/scaled-dot-product-attention
+      - en/scaled-dot-product-attention
+      - fr/transformer-architectures
+      - en/transformer-architectures
   - id: positional-encoding
     labels: {fr: "Encodage positionnel", en: "Positional encoding"}
     definitions:
@@ -116,7 +138,11 @@ concepts:
       fr: "Transformation qui convertit un vecteur de scores en une distribution de probabilité."
       en: "Transformation converting a score vector into a probability distribution."
     domains: [mathematical-tools-geometry, probabilistic-foundations-training]
-    resources: [fr/probabilites, en/probabilities, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+    resources:
+      - fr/probabilites
+      - en/probabilities
+      - fr/scaled-dot-product-attention
+      - en/scaled-dot-product-attention
   - id: cross-entropy
     labels: {fr: "Entropie croisée", en: "Cross-entropy"}
     definitions:
