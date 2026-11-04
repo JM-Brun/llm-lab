@@ -38,9 +38,11 @@ You will be able to:
 
 | Family | Information flow | Masking and attention | Typical objectives | Common uses | Examples |
 |---|---|---|---|---|---|
-| **Encoder-only** | The encoder transforms an entire input sequence into contextual representations. | Generally bidirectional self-attention: each position can use information from other positions in the input. | Masked language modeling, among other possible objectives. | Classification, semantic search, extraction, and text representation. | BERT, RoBERTa |
-| **Encoder–decoder** | The encoder represents the input; the decoder produces a target sequence using that representation. | Encoder attention over the input; causal self-attention in the decoder; cross-attention to encoder states. | Reconstruction, denoising, or text-to-text learning, depending on the model. | Translation, summarization, and sequence-to-sequence transformation. | Original Transformer, T5 |
-| **Decoder-only** | The decoder extends a prefix by producing representations used to predict the next token. | Causal self-attention: a position cannot attend to future tokens. | Autoregressive next-token prediction in classic GPT models. | Prompt-conditioned continuation and generation. | GPT, GPT-2 |
+| **Encoder-only** | The encoder transforms an entire input sequence into contextual representations. | Generally bidirectional self-attention: each position can use information from other positions in the input. | Masked language modeling, among other possible objectives. | Classification, semantic search, extraction, and text representation. | [BERT](https://huggingface.co/google-bert/bert-base-uncased), [RoBERTa](https://huggingface.co/FacebookAI/roberta-base) |
+| **Encoder–decoder** | The encoder represents the input; the decoder produces a target sequence using that representation. | Encoder attention over the input; causal self-attention in the decoder; cross-attention to encoder states. | Reconstruction, denoising, or text-to-text learning, depending on the model. | Translation, summarization, and sequence-to-sequence transformation. | [Original Transformer](https://arxiv.org/abs/1706.03762), [T5](https://huggingface.co/google-t5/t5-base) |
+| **Decoder-only** | The decoder extends a prefix by producing representations used to predict the next token. | Causal self-attention: a position cannot attend to future tokens. | Autoregressive next-token prediction in classic GPT models. | Prompt-conditioned continuation and generation. | [GPT (2018)](https://openai.com/index/language-unsupervised/), [GPT-2](https://huggingface.co/openai-community/gpt2) |
+
+Links point to model cards or original publications. Research papers: [BERT](https://arxiv.org/abs/1810.04805), [RoBERTa](https://arxiv.org/abs/1907.11692), [T5](https://jmlr.org/papers/v21/20-074.html), [GPT](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf), and [GPT-2](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf). **RoBERTa remains an encoder-only model**: it retains BERT's architectural basis while mainly changing the pretraining recipe; it is not a fourth configuration.
 
 ## The three architectures in one diagram
 
@@ -48,25 +50,23 @@ You will be able to:
 
 In an encoder–decoder architecture, the decoder reads representations produced by the encoder through **cross-attention**. The [dedicated lesson](cross-attention.qmd) explains the computation; it is not required to understand the broad architecture comparison.
 
-
-
 ### Encoder-only: contextualize an input
 
 The encoder processes the input sequence as a whole. With bidirectional attention, each position can use tokens both before and after it. This is useful for representing or classifying a complete text.
 
-BERT's best-known pretraining objective predicts masked tokens from their left and right context. This objective is associated with the architecture; it does not define every encoder.
+[BERT](https://huggingface.co/google-bert/bert-base-uncased)'s best-known pretraining objective predicts masked tokens from their left and right context. [RoBERTa](https://huggingface.co/FacebookAI/roberta-base) keeps this encoder-only configuration while optimizing, among other things, the pretraining setup. Masked prediction is associated with this architecture; it does not define every encoder.
 
 ### Encoder–decoder: transform one sequence into another
 
 The encoder builds representations of the input. The decoder then produces the target sequence, usually autoregressively, combining its generated context with information from the encoder through *cross-attention*.
 
-This organization suits tasks where input and output play distinct roles, such as translation, summarization, or text transformation. The original 2017 Transformer and T5 are examples. The [cross-attention lesson](cross-attention.qmd) explains the mechanism and the respective origins of Q, K, and V.
+This organization suits tasks where input and output play distinct roles, such as translation, summarization, or text transformation. The [original 2017 Transformer](https://arxiv.org/abs/1706.03762) and [T5](https://huggingface.co/google-t5/t5-base) are examples. The [cross-attention lesson](cross-attention.qmd) explains the mechanism and the respective origins of Q, K, and V.
 
 ### Decoder-only: extend a prefix
 
 The decoder uses a **causal mask**: a position cannot attend to future tokens. During training, each position is used to predict the next token. At inference, the model repeats this computation and appends each selected token to the context; [Generating text](generation.qmd) explains this loop.
 
-This is the configuration used by classic GPT models and by LLM Lab's small-GPT build. It makes generation easy to inspect step by step, but not every LLM is decoder-only.
+This is the configuration used by [GPT (2018)](https://openai.com/index/language-unsupervised/), [GPT-2](https://huggingface.co/openai-community/gpt2), and LLM Lab's small-GPT build. It makes generation easy to inspect step by step, but not every LLM is decoder-only.
 
 ## Architecture, objective, and task are different concepts
 
