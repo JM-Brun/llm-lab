@@ -4,10 +4,19 @@ pedagogical_model:
   reconstruction:
     status: complete
     basis:
-      - "The complete author-authored article body was directly retrieved from the canonical Medium URL on 2026-11-04, including its introduction, all explanatory sections, equations, worked linguistic example, conclusion and displayed figure captions."
-      - "The article metadata identifies Neha KK as author and 2025-12-31 as publication date."
-      - "Completeness applies to the retrievable author-authored text, not to visual inspection of embedded image files, linked resources, comments or rights verification."
-    inferred_elements:
+      - "The full author-authored text exposed by the indexed Medium search result was reconstructed on 2026-11-04, including its introduction, all visible sections, equations, worked linguistic example, conclusion and figure captions. The canonical page itself returned a cache miss and its HTML/DOM was not directly inspected."
+      - "The indexed article metadata identifies Neha KK as author, gives a five-minute reading estimate and lists 2025-12-31 as publication date."
+      - "Text completeness applies only to the author-authored text represented in the search-index snapshot. It does not establish live-page DOM completeness or inspection of media, links, comments or rights."
+    media_inventory:
+    retrieval_channel: search-index text; direct canonical page returned cache miss
+    in_body_slots:
+      - {id: src-figure-1, caption: 'Fig 1: Self-attention between tokens using queries, keys, and values.', status: identified-not-visually-inspected}
+      - {id: src-figure-2, caption: 'Fig 2: Linear projections into Q, K, and V.', status: identified-not-visually-inspected}
+      - {id: src-figure-2b, caption: null, status: placeholder-identified-not-visually-inspected, note: 'An additional full-size-image marker follows the text introducing three vectors; its content and relation to Fig. 2 cannot be established from the index snapshot.'}
+      - {id: src-figure-3, caption: 'Fig 3: Scaled dot-product attention computation.', status: identified-not-visually-inspected}
+    cover_or_hero: {status: unknown, note: 'The indexed article result does not establish whether a separate cover/hero asset exists.'}
+    rights: unknown
+  inferred_elements:
       - "Learning outcomes and prerequisites are inferred; the article does not publish a formal outcomes or prerequisite list."
   source_graph:
     nodes:
@@ -25,6 +34,10 @@ pedagogical_model:
       - {id: src-attention-map, kind: visualization, description: "Attention maps are proposed as a way to inspect token-to-token weights.", locator: "Why Q, K, and V Are So Powerful"}
       - {id: src-contextual-output, kind: representation, description: "Representation enriched by information aggregated from other positions.", locator: "Step 4 and conclusion"}
       - {id: src-transformer-applications, kind: application-domain, description: "Attention is described as a mechanism used in language, vision, speech and multimodal systems.", locator: "Why Q, K, and V Are So Powerful"}
+      - {id: src-figure-1, kind: visual-artifact, description: "Caption identifies a self-attention diagram between tokens using Q, K and V; visual content is unavailable.", locator: "Fig. 1 caption"}
+      - {id: src-figure-2, kind: visual-artifact, description: "Caption identifies a diagram of linear projections into Q, K and V; visual content is unavailable.", locator: "Fig. 2 caption"}
+      - {id: src-figure-2b, kind: visual-artifact, description: "An additional full-size-image placeholder appears after the introduction of three vectors; its subject is unknown.", locator: "After 'Three different vectors from the same embedding where:'"}
+      - {id: src-figure-3, kind: visual-artifact, description: "Caption identifies a scaled dot-product attention computation figure; visual content is unavailable.", locator: "Fig. 3 caption"}
     edges:
       - {from: src-token-representations, type: projected-into, to: src-query}
       - {from: src-token-representations, type: projected-into, to: src-key}
@@ -44,6 +57,9 @@ pedagogical_model:
       - {from: src-pronoun-example, type: illustrates, to: src-key}
       - {from: src-attention-map, type: visualizes, to: src-attention-weights}
       - {from: src-contextual-output, type: used-in, to: src-transformer-applications}
+      - {from: src-figure-1, type: intended-to-illustrate, to: src-query}
+      - {from: src-figure-2, type: intended-to-illustrate, to: src-projection-matrices}
+      - {from: src-figure-3, type: intended-to-illustrate, to: src-weighted-value-sum}
     interpretation: "Source-local reconstruction from article prose and equations; relationships are editorial interpretations, not an author-defined formal ontology. The article's database analogy does not establish literal retrieval or a nearest-neighbour algorithm."
   learning_outcomes:
     - {status: inferred, outcome: "Explain the functional distinction between query, key and value.", basis: "The article's analogy and role descriptions."}
@@ -76,6 +92,9 @@ pedagogical_model:
     - "The formula omits masking and does not distinguish self-attention from cross-attention."
     - "The input is called a word embedding; in deeper Transformer layers Q/K/V are projected from the current hidden representations, not necessarily the original token embedding."
     - "No numerical worked example, tensor shapes, multi-head decomposition, implementation, exercise or explicit assessment is provided."
+    - "The indexed snapshot exposes four in-body image placements, but none of the actual images can be visually inspected or evaluated."
+    - "The phrase that closest query-key matches determine which values to get risks implying hard top-1 retrieval; the subsequent weighted-sum formula instead describes a soft mixture over accessible value vectors."
+    - "The article calls attention directional and non-symmetric without showing a matrix example or qualifying that asymmetry is typical rather than universal for every possible parameter/input configuration."
   comparison:
     dossier: docs/source-reviews/qkv-neha-kk-medium-2026-11.md
     canonical_graph: "data/concepts.yml and generated JSON-LD projection"
@@ -101,7 +120,7 @@ items:
       applicability: {level: moderate, rationale: "Useful as an optional comparison in the source catalogue, not as a second core analogy on the lesson page."}
       redundancy: {level: high, rationale: "Same explanatory function and same Q/K matching versus V payload distinction as the current analogy."}
       evidence_quality: {level: moderate, rationale: "The analogy is clearly stated but is pedagogical framing rather than technical evidence."}
-    locator: {type: section, value: "63–75", label: "The Core Intuition—A Database Search Analogy"}
+    locator: {type: section, value: "The Core Intuition—A Database Search Analogy", label: "The Core Intuition—A Database Search Analogy"}
     evidence:
       kind: pedagogical-explanation
       confidence: well-supported
@@ -131,7 +150,7 @@ items:
       prerequisites: [query, key, value]
       distinctive_value: "Explains the benefit of separating the matching interface from the content payload."
       limitations: ["The article does not quantify the benefit or prove that three separate projections are uniquely optimal."]
-    locator: {type: section, value: "118–119", label: "Why Q, K, and V Are So Powerful"}
+    locator: {type: section, value: "Why Three Representations Instead of One?", label: "Why Q, K, and V Are So Powerful"}
     evidence: {kind: conceptual-claim, confidence: well-supported, scope: "Rationale for separate learned projections.", assumptions: ["Standard attention mechanism."], limitations: ["Does not establish that all attention architectures use exactly these three separately parameterized projections."]}
     classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv], concept_ids: [query, key, value, self-attention]}
     candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values], concepts: [query, key, value]}
@@ -148,7 +167,7 @@ items:
       applicability: {level: low, rationale: "The dedicated attention lesson is already the correct destination."}
       redundancy: {level: high, rationale: "Same operation order, equations and learner question as the existing page."}
       evidence_quality: {level: moderate, rationale: "Standard formula, but the article omits mask handling and detailed assumptions."}
-    locator: {type: section, value: "120–154", label: "How Attention Is Actually Computed"}
+    locator: {type: section, value: "How Attention Is Actually Computed", label: "How Attention Is Actually Computed"}
     evidence: {kind: mathematical-formulation, confidence: well-supported, scope: "Scaled dot-product attention at a high level.", assumptions: ["Softmax is applied row-wise over accessible positions."], limitations: ["Masking is omitted from the displayed formula; scaling is not derived."]}
     classification: {primary_theme: architectures-mechanisms, tags: [topic:scaled-dot-product-attention, method:softmax], concept_ids: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, softmax]}
     candidate_destinations: {pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention], concepts: [attention-score, attention-weight, scaled-dot-product-attention, softmax]}
@@ -173,7 +192,7 @@ items:
       applicability: {level: high, rationale: "A compact optional callout fits the existing Q/K/V concept lesson in both languages."}
       redundancy: {level: low, rationale: "The learner function differs from the current role analogy and numerical attention example."}
       evidence_quality: {level: low, rationale: "The linguistic example is illustrative only; the source provides no model, head, weights or experiment supporting the claimed preference."}
-    locator: {type: section, value: "156–160", label: "Consider the sentence"}
+    locator: {type: section, value: "Consider the sentence", label: "Consider the sentence"}
     evidence:
       kind: illustrative-example
       confidence: context-dependent
@@ -195,7 +214,7 @@ items:
       applicability: {level: moderate, rationale: "Retain in the extraction and link to the existing attention-weight fallacy; no additional page content is necessary."}
       redundancy: {level: high, rationale: "The correction is already directly covered in the scaled dot-product attention lesson."}
       evidence_quality: {level: high, rationale: "The source's own claim can be directly inspected and contrasted with the existing technically qualified treatment."}
-    locator: {type: section, value: "162–168", label: "Why Q, K, and V Are So Powerful"}
+    locator: {type: section, value: "Why Q, K, and V Are So Powerful", label: "Why Q, K, and V Are So Powerful"}
     evidence: {kind: claim-and-correction, confidence: well-supported, scope: "Claim about interpretability from attention maps.", assumptions: ["Attention maps expose weights from a particular layer/head and input."], limitations: ["The source does not define interpretability or provide an evaluation protocol."]}
     classification: {primary_theme: architectures-mechanisms, tags: [topic:attention-weight, method:interpretability], concept_ids: [attention-weight, scaled-dot-product-attention]}
     candidate_destinations: {pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention], concepts: [attention-weight]}
@@ -212,7 +231,7 @@ items:
       applicability: {level: moderate, rationale: "The distinction belongs in the architecture/generation lessons; this article does not provide enough detail to warrant editing them."}
       redundancy: {level: moderate, rationale: "The project treats causal masking and autoregressive generation elsewhere."}
       evidence_quality: {level: high, rationale: "The oversimplification is directly present in the article and can be checked against the canonical architecture."}
-    locator: {type: section, value: "52–61", label: "Why Attention Exists in the First Place"}
+    locator: {type: section, value: "Why Attention Exists in the First Place", label: "Why Attention Exists in the First Place"}
     evidence: {kind: limitation, confidence: well-supported, scope: "High-level comparison between recurrent and Transformer processing.", assumptions: ["Standard Transformer training and decoder-only autoregressive inference."], limitations: ["The article does not distinguish training parallelism from generation-time dependencies."]}
     classification: {primary_theme: architectures-mechanisms, tags: [topic:transformer, method:parallel-computation], concept_ids: [self-attention]}
     candidate_destinations: {pages: [fr/transformer, en/transformer, fr/causal-masking, en/causal-masking], concepts: [self-attention]}
@@ -229,7 +248,7 @@ items:
       applicability: {level: low, rationale: "The existing page already states the distinction adequately."}
       redundancy: {level: high, rationale: "No missing clarification remains in the canonical page."}
       evidence_quality: {level: high, rationale: "Direct comparison between article wording and the general Transformer computation."}
-    locator: {type: section, value: "89–101", label: "The Basis: Word Embeddings / Getting Q, K, and V"}
+    locator: {type: section, value: "The Basis: Word Embeddings / Getting Q, K, and V", label: "The Basis: Word Embeddings / Getting Q, K, and V"}
     evidence: {kind: technical-limitation, confidence: well-supported, scope: "Input representation to the Q/K/V projections.", assumptions: ["A multi-layer Transformer in which attention receives current hidden states."], limitations: ["The article's introductory simplification is not necessarily false for the first attention layer."]}
     classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, method:learned-linear-projection], concept_ids: [query, key, value]}
     candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values], concepts: [query, key, value]}
@@ -252,3 +271,153 @@ items:
     candidate_destinations: {pages: [fr/transformer-architectures, en/transformer-architectures], concepts: [self-attention]}
     disposition: link
     disposition_rationale: "Retain as a source-level scope observation; the project already treats architecture families and cross-attention without requiring another broad list."
+
+  - id: neha-kk-understanding-qkv-medium:soft-retrieval-not-hard-selection
+    kind: misconception
+    summary: "The article says the closest query-key matches determine which values to get. This is a useful search intuition but risks suggesting hard nearest-neighbour retrieval. In the displayed scaled-dot-product formulation, softmax weights all accessible values and the output is their weighted sum; it is not generally a single argmax-selected value."
+    pedagogical_profile:
+      learner_question: "Does attention select the single best-matching token or combine information from several positions?"
+      explanatory_lens: retrieval-versus-mixture
+      teaching_form: [misconception-check, contrast]
+      abstraction_level: introductory
+      prerequisites: [attention-score, attention-weight, softmax, value]
+      distinctive_value: "Makes the distinction between ranking candidates and aggregating a soft weighted mixture explicit."
+      limitations: ["The source's subsequent weighted-sum equation does describe aggregation; the risk arises from its earlier 'closest matches determine which values to get' wording."]
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The canonical attention lesson already explains weighted aggregation and rejects winner-take-all interpretations."}
+      complementarity: {level: moderate, rationale: "This source supplies a concrete wording example that can motivate the project's existing hard-selection misconception check."}
+      pedagogical_value: {level: moderate, rationale: "It helps prevent learners from interpreting the database/search analogy as discrete retrieval."}
+      applicability: {level: moderate, rationale: "Useful as a source-linked misconception in the audit; no additional page text is needed because the existing lesson already covers it."}
+      redundancy: {level: high, rationale: "The correction is already represented in the canonical attention lesson."}
+      evidence_quality: {level: high, rationale: "The contrast is directly checkable against the article's own four-step formula."}
+    locator: {type: section, value: "The Core Intuition—A Database Search Analogy", label: "The closest matches determine which values to get"}
+    evidence: {kind: claim-and-correction, confidence: well-supported, scope: "Distinguishing soft attention from hard nearest-neighbour retrieval.", assumptions: ["Standard softmax attention over accessible key positions."], limitations: ["Sparse or top-k attention variants can alter which positions are available, but the article does not discuss them."]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:attention-weight, method:softmax], concept_ids: [query, key, value, attention-weight, softmax]}
+    candidate_destinations: {pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention], concepts: [attention-weight, softmax]}
+    disposition: clarify
+    disposition_rationale: "No new content required: the existing lesson already distinguishes continuous weighted aggregation from winner-take-all selection. Record this wording as an additional source example of the misconception."
+
+  - id: neha-kk-understanding-qkv-medium:directional-asymmetry-claim
+    kind: claim
+    summary: "The article says separate projections allow different relationships to be learned and make attention directional and non-symmetric. For a given input, QKᵀ is generally not symmetric because Q and K are distinct projections, and row-wise softmax does not restore symmetry; however, non-symmetry is not universal for every possible parameterization or input."
+    pedagogical_profile:
+      learner_question: "Why can token A attend strongly to token B while token B attends weakly to token A?"
+      explanatory_lens: matrix-asymmetry
+      teaching_form: [conceptual-explanation, mathematical-qualification]
+      abstraction_level: intermediate
+      prerequisites: [query, key, matrix-transpose, attention-score]
+      distinctive_value: "Connects the separate Q/K roles to the directional structure of the score matrix."
+      limitations: ["The article asserts the property but does not show a matrix or derive conditions for symmetry."]
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The project already distinguishes Q and K and treats attention scores as directed query-to-key relations."}
+      complementarity: {level: moderate, rationale: "The article explicitly names directionality as a reason for separate representations, making the matrix implication more salient."}
+      pedagogical_value: {level: moderate, rationale: "This could motivate a matrix-level example, but the article itself supplies no worked example."}
+      applicability: {level: moderate, rationale: "Could be a future optional note or exercise on the attention-score matrix; not necessary for this source integration."}
+      redundancy: {level: moderate, rationale: "The underlying distinction is implicit in current Q/K definitions, but matrix asymmetry is not the focus of the current page."}
+      evidence_quality: {level: moderate, rationale: "The claim is mathematically typical under distinct Q/K projections, but the article does not substantiate it."}
+    locator: {type: section, value: "Why Three Representations Instead of One?", label: "Attention becomes directional and not symmetric"}
+    evidence: {kind: mathematical-claim, confidence: context-dependent, scope: "Asymmetry of the query-key score/attention matrix for a given input.", assumptions: ["Q and K are generated by distinct learned projections and are not constrained to produce symmetric scores."], limitations: ["Special parameter choices or inputs can yield symmetric matrices; the article provides no example or derivation."]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:attention-score, method:learned-linear-projection], concept_ids: [query, key, attention-score, self-attention]}
+    candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention], concepts: [query, key, attention-score]}
+    disposition: defer
+    disposition_rationale: "Preserve as a promising mathematical perspective for a future matrix example; do not expand this integration without a concrete worked illustration and a review of existing score-matrix coverage."
+
+  - id: neha-kk-understanding-qkv-medium:figure-1-self-attention
+    kind: figure
+    summary: "The indexed article exposes the caption 'Self-attention between tokens using queries, keys, and values.' The image itself, its labels, arrows, and visual structure were not retrieved."
+    pedagogical_profile:
+      learner_question: "How do Q, K and V connect token positions during self-attention?"
+      explanatory_lens: token-interaction-visualization
+      teaching_form: [diagram]
+      abstraction_level: introductory
+      prerequisites: [token, query, key, value]
+      distinctive_value: "The caption indicates a token-level overview of self-attention."
+      limitations: ["Caption alone cannot establish what the figure actually depicts or whether it adds value over existing diagrams."]
+    pedagogical_assessment:
+      novelty: {level: uncertain, rationale: "The image content is unavailable, so visual novelty cannot be assessed."}
+      complementarity: {level: uncertain, rationale: "No visual comparison is possible without the asset."}
+      pedagogical_value: {level: uncertain, rationale: "The caption suggests a potentially useful overview but does not reveal its encoding."}
+      applicability: {level: uncertain, rationale: "Exact asset URL and rights are unknown."}
+      redundancy: {level: uncertain, rationale: "Cannot compare the unseen image with current LLM Lab figures."}
+      evidence_quality: {level: low, rationale: "Only the indexed caption is visible; the visual itself is uninspected."}
+    locator: {type: figure, value: "Fig. 1 caption", label: "Self-attention between tokens using queries, keys, and values"}
+    evidence: {kind: visual-placeholder, confidence: unverified, scope: "Caption and placement in indexed article text only.", assumptions: [], limitations: ["No image bytes, stable URL, visual labels or author/rights metadata were available."]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, method:visual-explanation], concept_ids: [query, key, value, self-attention]}
+    candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values], concepts: [query, key, value]}
+    disposition: defer
+    disposition_rationale: "Do not embed, reproduce or assess the figure until the exact original asset is retrieved and visually inspected."
+
+  - id: neha-kk-understanding-qkv-medium:figure-2-projections
+    kind: figure
+    summary: "The indexed article exposes the caption 'Linear projections into Q, K, and V.' The image itself, its tensor dimensions and projection notation were not retrieved."
+    pedagogical_profile:
+      learner_question: "How does one input representation produce three learned projections?"
+      explanatory_lens: learned-projection-diagram
+      teaching_form: [diagram]
+      abstraction_level: introductory
+      prerequisites: [embedding, linear-projection, query, key, value]
+      distinctive_value: "The caption indicates a visual explanation of the three projection paths."
+      limitations: ["The caption does not reveal dimensions, bias terms, matrix orientation or mathematical accuracy."]
+    pedagogical_assessment:
+      novelty: {level: uncertain, rationale: "The actual diagram is not available for comparison."}
+      complementarity: {level: uncertain, rationale: "Cannot tell whether it clarifies the input-to-QKV transformation beyond current LLM Lab SVGs."}
+      pedagogical_value: {level: uncertain, rationale: "The learner question is useful, but the visual's quality is unknown."}
+      applicability: {level: uncertain, rationale: "Rights and exact asset URL remain unknown."}
+      redundancy: {level: uncertain, rationale: "No visual comparison can be made."}
+      evidence_quality: {level: low, rationale: "Caption-only evidence."}
+    locator: {type: figure, value: "Fig. 2 caption", label: "Linear projections into Q, K, and V"}
+    evidence: {kind: visual-placeholder, confidence: unverified, scope: "Caption and placement in indexed article text only.", assumptions: [], limitations: ["No image bytes, stable URL, visual labels or author/rights metadata were available."]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, method:visual-explanation], concept_ids: [query, key, value]}
+    candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values], concepts: [query, key, value]}
+    disposition: defer
+    disposition_rationale: "Do not embed or replace an existing project figure based on a caption; retrieve and inspect the original first."
+
+  - id: neha-kk-understanding-qkv-medium:figure-2b-unlabelled
+    kind: figure
+    summary: "A second full-size-image placeholder appears after the text 'Three different vectors from the same embedding where:' and before the explanation of Q, K and V roles. No caption or subject is exposed in the indexed snapshot."
+    pedagogical_profile:
+      learner_question: "Unknown; the image content is unavailable."
+      explanatory_lens: unknown
+      teaching_form: [unknown-visual]
+      abstraction_level: unknown
+      prerequisites: []
+      distinctive_value: "An additional in-body visual slot exists beyond the three captioned figures."
+      limitations: ["Do not infer that it is a formula, matrix, or duplicate of Fig. 2."]
+    pedagogical_assessment:
+      novelty: {level: uncertain, rationale: "The visual cannot be identified."}
+      complementarity: {level: uncertain, rationale: "No comparison is possible."}
+      pedagogical_value: {level: uncertain, rationale: "The learner function is unknown."}
+      applicability: {level: uncertain, rationale: "Asset identity and rights are unknown."}
+      redundancy: {level: uncertain, rationale: "Cannot compare."}
+      evidence_quality: {level: low, rationale: "Only an image placeholder is exposed."}
+    locator: {type: figure, value: "After 'Three different vectors from the same embedding where:'", label: "Uncaptioned in-body image placeholder"}
+    evidence: {kind: visual-placeholder, confidence: unverified, scope: "Placeholder occurrence in indexed text only.", assumptions: [], limitations: ["No caption, image bytes, stable URL or metadata were available."]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv], concept_ids: [query, key, value]}
+    candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values], concepts: [query, key, value]}
+    disposition: defer
+    disposition_rationale: "Preserve the unresolved media slot in the source inventory; do not invent its content or omit it from the scan accounting."
+
+  - id: neha-kk-understanding-qkv-medium:figure-3-scaled-attention
+    kind: figure
+    summary: "The indexed article exposes the caption 'Scaled dot-product attention computation.' The image itself, notation and computation flow were not retrieved."
+    pedagogical_profile:
+      learner_question: "How do score scaling, softmax and value aggregation fit together?"
+      explanatory_lens: attention-computation-flow
+      teaching_form: [diagram]
+      abstraction_level: introductory
+      prerequisites: [query, key, value, scaled-dot-product-attention]
+      distinctive_value: "The caption suggests an overview of the complete scaled-attention computation."
+      limitations: ["The caption does not establish whether masking, tensor dimensions, row-wise normalization or output projection are shown."]
+    pedagogical_assessment:
+      novelty: {level: uncertain, rationale: "The unseen image cannot be compared with the existing attention-flow diagram."}
+      complementarity: {level: uncertain, rationale: "Cannot inspect whether the figure presents a distinct scaffold."}
+      pedagogical_value: {level: uncertain, rationale: "The intended learner question is inferred from the caption only."}
+      applicability: {level: uncertain, rationale: "Asset URL and rights are unresolved."}
+      redundancy: {level: uncertain, rationale: "Existing page figures may cover the same sequence, but visual comparison is impossible."}
+      evidence_quality: {level: low, rationale: "Caption-only evidence."}
+    locator: {type: figure, value: "Fig. 3 caption", label: "Scaled dot-product attention computation"}
+    evidence: {kind: visual-placeholder, confidence: unverified, scope: "Caption and placement in indexed article text only.", assumptions: [], limitations: ["No image bytes, stable URL, visual labels or author/rights metadata were available."]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:scaled-dot-product-attention, method:visual-explanation], concept_ids: [query, key, value, scaled-dot-product-attention]}
+    candidate_destinations: {pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention], concepts: [query, key, value, scaled-dot-product-attention]}
+    disposition: defer
+    disposition_rationale: "Do not embed or recreate the unseen figure. Revisit only if the exact asset can be retrieved and rights checked."
