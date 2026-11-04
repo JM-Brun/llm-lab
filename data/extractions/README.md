@@ -53,4 +53,24 @@ Extraction records contain atomic, evidence-linked items; they are not a second 
 - disposition: pending is an extraction hand-off state, not a publication status.
 - Keep full text, copied figures, datasets, and code out of these records unless rights permit it. Prefer concise paraphrases and links to source locations.
 
+### Community-derived item example
+
+When a comment embedded in an article contributes a useful lead, preserve it as a separate item rather than blending it into the author's extraction:
+
+```yaml
+provenance:
+  voice: reader-comment
+  parent_source_id: example-article
+  locator:
+    type: comment
+    value: "Reader comment following section 4"
+  captured_at: "2026-11-04"
+verification:
+  status: corroborated
+  sources: [independent-documentation-source]
+  assessment: "The technical claim is supported by the independent source; this does not change who originally made the comment."
+```
+
+Use `unverified` or `not-assessed` until the claim has actually been checked. A corroborating source must have its own source record and extraction when its content is retained.
+
 The exact schema and validation contract is specified in docs/source-catalogue-schema.md.
