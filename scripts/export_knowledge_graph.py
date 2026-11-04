@@ -191,9 +191,9 @@ def build_graph() -> dict[str, Any]:
     export_uri = f"{BASE}/knowledge-graph.jsonld"
     activity_uri = f"{BASE}/id/activity/knowledge-graph-export"
     source_uris = [
-        f"{BASE}/source/data/concepts.yml",
-        f"{BASE}/source/data/domains.yml",
-        f"{BASE}/source/site-page-metadata",
+        "https://github.com/JM-Brun/llm-lab/blob/main/data/concepts.yml",
+        "https://github.com/JM-Brun/llm-lab/blob/main/data/domains.yml",
+        "https://github.com/JM-Brun/llm-lab/tree/main/site",
     ]
     graph.append(
         {
