@@ -175,9 +175,7 @@ def build_graph() -> dict[str, Any]:
         for item in resources_data["resources"]
         if item["status"] in {"published", "deprecated"}
     ]
-    resource_page_ids = {
-        page_id for item in active_resources for page_id in item["referenced_by"]
-    }
+    resource_page_ids = {page_id for item in active_resources for page_id in item["referenced_by"]}
     for page_id in sorted(set(page_concepts) | resource_page_ids):
         page = pages.get(page_id)
         if page is None:
@@ -193,8 +191,7 @@ def build_graph() -> dict[str, Any]:
             "llmlab:editorialLevel": page["level"],
         }
         concept_uris = sorted(
-            f"{BASE}/id/concept/{concept_id}"
-            for concept_id in page_concepts.get(page_id, set())
+            f"{BASE}/id/concept/{concept_id}" for concept_id in page_concepts.get(page_id, set())
         )
         if concept_uris:
             node["schema:about"] = [{"@id": uri} for uri in concept_uris]
