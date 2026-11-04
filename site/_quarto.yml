@@ -148,7 +148,6 @@ website:
                 - fr/probabilites.qmd
             - section: "Apprendre à partir des données"
               contents:
-                - fr/training-examples.qmd
                 - fr/vraisemblance.qmd
                 - fr/entropy.qmd
                 - fr/cross-entropy.qmd
@@ -157,7 +156,10 @@ website:
         - section: "Construire un petit GPT"
           contents:
             - fr/build-path.qmd
-            - fr/corpus-preparation.qmd
+            - section: "Préparer les données d'entraînement"
+              contents:
+                - fr/corpus-preparation.qmd
+                - fr/training-examples.qmd
             - section: "Visite guidée du code de référence"
               contents:
                 - fr/gpt-config-walkthrough.qmd
@@ -238,7 +240,6 @@ website:
                 - en/probabilities.qmd
             - section: "Learn from data"
               contents:
-                - en/training-examples.qmd
                 - en/likelihood.qmd
                 - en/entropy.qmd
                 - en/cross-entropy.qmd
@@ -247,7 +248,10 @@ website:
         - section: "Build a small GPT"
           contents:
             - en/build-path.qmd
-            - en/corpus-preparation.qmd
+            - section: "Prepare training data"
+              contents:
+                - en/corpus-preparation.qmd
+                - en/training-examples.qmd
             - section: "Guided tour of the reference code"
               contents:
                 - en/gpt-config-walkthrough.qmd

@@ -12,11 +12,11 @@ scope: "Covers data-engineering decisions upstream of pretraining: source eligib
 purpose: "Build a traceable corpus-preparation protocol suited to a training or evaluation objective, avoid split leakage, and distinguish corpus-level decisions from tokenizer internals and training-example construction."
 suggested_route:
   previous: null
-  next: null
+  next: "en/training-examples"
 hierarchy:
   parents: ["en/build-path"]
-  children: []
-related: ["en/text-data", "en/tokenization-strategies", "en/tokenizer-design-evaluation", "en/training-examples", "en/experimental-evaluation"]
+  children: ["en/training-examples"]
+related: ["en/text-data", "en/tokenization-strategies", "en/tokenizer-design-evaluation", "en/experimental-evaluation"]
 tags: ["type:guided-build", "destination:build", "topic:corpus-preparation", "level:core", "language:en", "status:published"]
 -->
 

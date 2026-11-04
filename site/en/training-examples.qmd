@@ -1,7 +1,7 @@
 ---
 title: "From tokenized corpus to training examples"
 subtitle: "Input-target shifting, windows, documents, padding, and tensor shapes"
-keywords: ["type:concept-bridge", "destination:understand", "topic:training-examples", "level:core", "language:en", "status:published"]
+keywords: ["type:concept-bridge", "destination:build", "topic:training-examples", "level:core", "language:en", "status:published"]
 lang: en
 ---
 
@@ -11,13 +11,13 @@ id: "en/training-examples"
 scope: "Covers the transformation of a tokenized stream into autoregressive input-target examples: one-token shifting, context windows and stride, document packing and boundaries, padding, attention and loss masks, and tensor shapes. It stops at correctly constructed training batches rather than deriving the probability and optimization objectives."
 purpose: "Construct aligned input-target batches from token IDs, distinguish windowing and masking decisions, verify tensor shapes, and diagnose common boundary or alignment errors that would change the training objective."
 suggested_route:
-  previous: "en/probabilities"
-  next: "en/likelihood"
+  previous: "en/corpus-preparation"
+  next: null
 hierarchy:
-  parents: ["en/text-data"]
+  parents: ["en/corpus-preparation"]
   children: []
 related: ["en/tokenization-strategies", "en/likelihood"]
-tags: ["type:concept-bridge", "destination:understand", "topic:training-examples", "level:core", "language:en", "status:published"]
+tags: ["type:concept-bridge", "destination:build", "topic:training-examples", "level:core", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
