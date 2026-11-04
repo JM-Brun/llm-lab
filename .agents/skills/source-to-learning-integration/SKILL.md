@@ -269,3 +269,158 @@ The task is complete only when:
 - rejected or deferred ideas have an explicit disposition.
 
 The final deliverable is an improved, coherent learning experience—not a pile of extracted notes.
+
+
+## Persistent source catalogue and structured extraction data
+
+A source that has been scanned must remain discoverable after the conversation or PR ends. **Do not leave the only record in chat history, a temporary analysis, or an unlinked PR description.** Maintain a repository-level, machine-readable catalogue and link it to the existing learning graph.
+
+### Canonical ownership and compatibility
+
+Before introducing a data file or schema:
+- inspect `docs/knowledge-graph-standards.md`, `docs/knowledge-graph-implementation-audit.md`, `data/concepts.yml`, `data/domains.yml`, `data/resources.yml`, `site/tools/export_knowledge_graph.py`, and their validators/tests;
+- preserve the current distinction between concepts, domains, page IDs, non-page learning resources, pedagogical route, and knowledge-map projection;
+- do not overload `data/resources.yml` implementation records with external-source bibliographic records, and do not treat a source URL as a concept or a page;
+- if a first-class source entity is not yet represented, propose a compatible extension (for example `data/sources.yml`) with stable IDs and explicit links to existing concepts/pages/resources. Keep YAML as the authoring source and JSON-LD as a generated interchange projection, consistent with the current standards profile;
+- do not add a second concept registry, independent graph database, or manually maintained JSON-LD.
+
+The source catalogue should be the canonical inventory of **external sources actually examined**. Existing curated discovery lists (such as `docs/references.md` and `docs/pedagogical-resource-library.md`) remain useful discovery/reference material, but inclusion there does not mean the source has been scanned. Distinguish `discovered`, `selected`, `scanned`, `partially-scanned`, `inaccessible`, `superseded`, and `rejected` states (or the repository's established equivalent). Never mark a source scanned based only on a title, link, or mention.
+
+### Required source record
+
+Each source must have a stable language-independent ID and, where known:
+- canonical URL, DOI, repository URL, or other stable locator;
+- title, creator/author/organization, source type, publication/update date, version/commit/release, and access date;
+- language, publisher/venue, licence, and rights/reuse status (unknown is a valid explicit value);
+- scan status, scope actually inspected, access limitations, and last verification date;
+- source quality/evidence assessment and whether primary or secondary;
+- links to the audit note, PR, issue, or extraction record;
+- related concept IDs, page IDs, and first-class resource IDs, using their existing namespaces.
+
+Deduplicate by canonical identity (DOI, normalized canonical URL, or repository plus pinned revision), not by title alone. Preserve alternate URLs, mirrors, versions, and citations as aliases or manifestations rather than silently merging distinct editions. A source can be rescanned: retain scan history/version and do not overwrite the fact that an earlier scan used a different version.
+
+### Structured extracted items
+
+Store extracted knowledge as data, not only prose. Each source may have zero or more independently addressable extracted items. Use stable IDs and controlled types such as:
+- `claim`, `definition`, `mechanism`, `derivation`, `assumption`, `result`, `limitation`, `counterexample`;
+- `analogy`, `mental-model`, `teaching-sequence`, `question`, `misconception`;
+- `figure`, `diagram`, `animation`, `visualization`;
+- `experiment`, `benchmark`, `dataset`, `code-example`, `implementation-pattern`;
+- `page-improvement`, `new-page-proposal`, `cross-link`, `open-question`.
+
+Each item should record, as applicable:
+- concise original synthesis (not copied prose);
+- precise source locator: section, page, timestamp, equation, figure/table number, code path/commit, notebook cell, or dataset identifier;
+- evidence kind, confidence, scope/generalizability, assumptions, and caveats;
+- pedagogical value: what learner difficulty it addresses or what new perspective it adds;
+- analogy mapping: source domain, target concept, correspondence, useful insight, and where the analogy breaks;
+- asset metadata for figures/diagrams: creator, original URL, caption/context, licence, permission, whether linked/embedded/recreated, and reuse restrictions;
+- experiment metadata: question/hypothesis, independent/dependent/control variables, dataset, model/version, protocol, metrics, baseline, compute/hardware, expected/observed result, reproducibility status, and limitations;
+- implementation/code metadata: repository, pinned commit/version, path, licence, dependencies, tests, and whether code was actually executed;
+- destination proposal and final disposition: integrate, create, link, cite, investigate, defer, or reject, with rationale;
+- links to existing concept IDs, page IDs, resource IDs, experiment IDs, and other extracted items.
+
+Do not require irrelevant fields to be populated. Use explicit null/unknown/not-checked states rather than inventing values. Keep large extracted datasets, images, or code out of YAML: store a compact record and link to the canonical artifact in its appropriate repository location.
+
+### Backfill the existing scanned-source corpus
+
+For a task that introduces or evolves this skill, or whenever the catalogue is first initialized:
+1. Search the whole repository for existing source audits, source inventories, reference pages, visual registers, experiment reports, and source links in page content.
+2. Identify which sources were actually examined, which were merely recommended/linked, and which have asset-level or claim-level review.
+3. Backfill every verifiably scanned source into the catalogue; preserve the exact scope and date of each existing audit. Do not upgrade a bibliography entry into a completed scan.
+4. Link existing audit notes (for example source-by-source audits, historical source audits, visual asset registers, and page audit inventories) rather than copying their entire prose into the registry.
+5. Record known extracted claims, analogies, figures, experiments, implementation patterns, and page-improvement ideas when the audit contains them. If an old audit only records a source title/link, record only that evidence and mark extraction as partial/not available.
+6. Produce a reconciliation report: scanned sources registered, sources mentioned but not scanned, duplicate/alias candidates, unlinked extractions, and unresolved provenance/licence questions.
+
+A source is not considered fully catalogued until its record, scan status, scope, provenance, and extracted-item links are present. Do not claim historical completeness until the repository-wide backfill has been performed and counted.
+
+## Explicit extraction of pedagogical and practical value
+
+Do not restrict extraction to factual claims. Look deliberately for the source's *teaching contribution* and its reusable artifacts.
+
+### Analogies and mental models
+
+Capture memorable analogies and intuitive explanations even when they are not formal definitions. For each:
+- identify what is mapped to what;
+- state exactly which relation or mechanism the analogy illuminates;
+- state where the mapping fails or can mislead;
+- decide whether it belongs in the core explanation, a callout, an optional intuition box, or an exercise;
+- credit the source and avoid copying its distinctive prose or illustration.
+
+Prefer a precise, bounded analogy over a catchy but structurally false metaphor. Never let an analogy replace the mathematical or computational definition.
+
+### Figures, diagrams, animations, and visualizations
+
+Inspect the actual figure or visual, not only its caption. Record what it explains, the visual encoding, assumptions, omitted dimensions, accessibility, source URL, creator, licence, and reuse constraints.
+
+Choose one of four actions:
+1. link to the original unchanged;
+2. embed the original only when platform behavior and rights permit;
+3. create an independently authored figure that communicates the underlying idea in LLM Lab's notation and visual system;
+4. omit it, with a short rationale.
+
+A recreation must not trace or cosmetically alter a protected figure. It must be an independently designed explanation based on the underlying facts/concepts, with attribution where the conceptual source warrants it. Preserve valuable existing project figures unless there is a justified replacement and provenance is understood. Update `docs/visual-assets-register.md` and the relevant references when asset status changes.
+
+### Experiments, benchmarks, and code
+
+Extract experiment ideas even if the source did not publish reusable code. Translate them into falsifiable, bounded protocols only when the project can execute them responsibly. Record the hypothesis, variables, controls, baseline, dataset, model/version, metrics, compute constraints, expected result, and interpretation risks.
+
+Distinguish:
+- proposed experiment (not run);
+- protocol implemented (not yet run);
+- run completed (with environment and artifacts);
+- independently reproduced (with explicit comparison to the source).
+
+Do not report a source's result as an LLM Lab result. Link experiments to existing experiment directories, tests, reports, and concepts. Reuse canonical implementations and test fixtures; avoid duplicate code paths.
+
+## Knowledge-map and page integration
+
+Every accepted extraction must be evaluated for its effect on the current knowledge map and pedagogical route.
+
+### Update the graph deliberately
+
+- Reuse existing concept IDs and relation types wherever they express the intended semantics.
+- Propose a new concept only when the extracted idea is a stable, reusable notion with a distinct definition and meaningful relations—not merely an example, source title, model name, section heading, or temporary research result.
+- Add or update concept relations only when the direction and semantics are justified by evidence. Do not convert analogies into equivalence, association into prerequisite, or historical succession into generalization.
+- Associate relevant pages and first-class resources with concepts through the existing canonical fields and validators.
+- Represent external sources and extracted artifacts using a compatible, explicitly typed extension of the current resource/provenance model; preserve source identity separately from the concept it discusses.
+- Update the JSON-LD knowledge-graph export and its tests when the canonical model changes. Keep the interactive knowledge-map UI and pedagogical path separate; only update the UI when source/resource nodes or new relations materially improve discovery.
+- Report graph changes as a before/after list of added, changed, and intentionally unchanged nodes/edges.
+
+### Decide whether to create a new page
+
+A new page is justified only when the source material reveals a durable learner question or a coherent subject that:
+- has a distinct learning outcome and canonical ownership;
+- is not already adequately covered by an existing page or a small extension;
+- fits a meaningful position in the core route, Deepen branch, case-study collection, or practice/experiment area;
+- can be supported with adequate evidence, examples, references, and (for published pages) FR/EN counterparts;
+- does not fragment a topic or create a second explanation of an existing concept.
+
+Before creating it, inspect the page inventory, content-section mapping, page archetypes/templates, neighbouring pages, and current open issues/PRs. Record why extending existing pages is inferior. If the material is valuable but not yet mature, keep it as a structured proposal/backlog item rather than publishing a speculative page.
+
+### Improve existing pages as a first-class outcome
+
+For each extraction, assess whether it can:
+- clarify a definition or boundary;
+- add an alternative mental model or a bounded analogy;
+- strengthen a derivation or expose an assumption;
+- add a counterexample, misconception, edge case, or failure mode;
+- add a useful original diagram, comparison table, or interactive visualization;
+- improve an existing figure's caption, labels, accessibility, or explanatory sequence;
+- add a worked example or a carefully scoped implementation detail;
+- motivate a reproducible experiment or test;
+- improve links between prerequisite, concept, implementation, and advanced material;
+- correct stale/version-specific information.
+
+Record accepted, deferred, and rejected ideas with rationale. A source may be fully scanned and catalogued while none of its ideas warrant a page change.
+
+## Additional definition of done
+
+In addition to the general definition of done above:
+- all previously scanned sources discovered in the repository have been reconciled with the canonical source catalogue;
+- scanned and merely referenced sources are explicitly distinguished;
+- extracted ideas, analogies, figures, experiments, and page-improvement proposals are represented as structured, traceable records;
+- each accepted item is linked to its source evidence and existing or proposed destination;
+- the knowledge-map impact has been evaluated and necessary canonical graph/projection updates are validated;
+- new-page decisions include a documented justification against extending existing pages;
+- the report states counts and lists for sources/items backfilled, not only qualitative claims.
