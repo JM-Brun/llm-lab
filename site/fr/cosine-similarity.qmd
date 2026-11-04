@@ -20,7 +20,7 @@ related: []
 tags: ["type:deep-dive", "destination:deepen", "topic:cosine-similarity", "level:advanced", "language:fr", "status:published"]
 -->
 
-La similarité cosinus s’interprète dans la géométrie de l’[espace des embeddings](embedding-space.qmd) ; elle ne suffit pas à établir une proximité sémantique. L’[hypothèse de linéarité des embeddings](linearite-embeddings.qmd) porte sur une autre question : comment les caractéristiques sont-elles représentées et décodables ?
+La similarité cosinus s’interprète dans la géométrie de l’[espace des embeddings (plongements)](embedding-space.qmd) ; elle ne suffit pas à établir une proximité sémantique. L’[hypothèse de linéarité des embeddings](linearite-embeddings.qmd) porte sur une autre question : comment les caractéristiques sont-elles représentées et décodables ?
 
 ## Que mesure vraiment le cosinus ?
 
