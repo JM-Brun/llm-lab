@@ -28,9 +28,9 @@ flowchart LR
     WQ["Learned W_Q"] --> Q["Queries Q"]
     WK["Learned W_K"] --> K["Keys K"]
     WV["Learned W_V"] --> V["Values V"]
-    X --> WQ
-    X --> WK
-    X --> WV
+    X --> Q
+    X --> K
+    X --> V
     Q --> S["Scores S = QKᵀ"]
     K --> S
     S --> SCALE["Scale by √d_k"]
