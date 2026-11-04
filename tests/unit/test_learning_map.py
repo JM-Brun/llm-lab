@@ -193,11 +193,10 @@ def test_load_guided_route_resolves_language_specific_page_links(tmp_path: Path)
     _write_page(site, page_id="en/overview", language="en", title="Overview")
     _write_page(site, page_id="en/generation", language="en", title="Generation")
     _write_page(site, page_id="en/tensors", language="en", title="Tensors")
-    route = tmp_path / "docs" / "learning-path.md"
+    route = tmp_path / "data" / "guided-route.yml"
     route.parent.mkdir(parents=True)
     route.write_text(
-        """<!--
-LLM-LAB-GUIDED-ROUTE v1
+        """schema_version: 1
 stages:
   - id: orientation
     title: {fr: "Situer le système", en: "Orient yourself"}
@@ -208,7 +207,6 @@ stages:
     optional_pages:
       fr: [fr/tensors]
       en: [en/tensors]
--->
 """,
         encoding="utf-8",
     )
@@ -251,11 +249,10 @@ stages:
 
 
 def test_load_guided_route_rejects_missing_published_page(tmp_path: Path) -> None:
-    route = tmp_path / "docs" / "learning-path.md"
+    route = tmp_path / "data" / "guided-route.yml"
     route.parent.mkdir(parents=True)
     route.write_text(
-        """<!--
-LLM-LAB-GUIDED-ROUTE v1
+        """schema_version: 1
 stages:
   - id: missing
     title: {fr: "Absent", en: "Missing"}
@@ -263,7 +260,6 @@ stages:
     pages:
       fr: [fr/not-published]
       en: [en/not-published]
--->
 """,
         encoding="utf-8",
     )
