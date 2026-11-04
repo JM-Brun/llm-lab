@@ -118,7 +118,6 @@ def load_pages() -> list[dict[str, Any]]:
     return pages
 
 
-
 def load_concept_graph(
     language: str, pages: list[dict[str, Any]]
 ) -> dict[str, list[dict[str, Any]]]:
@@ -149,6 +148,7 @@ def load_concept_graph(
         if edge["from"] in concept_ids and edge["to"] in concept_ids
     ]
     return {"concepts": concepts, "concept_relations": relations}
+
 
 def assign_route_rank(pages: list[dict[str, Any]], language: str) -> None:
     """Rank pages by a breadth-first walk of the suggested route and hierarchy."""
