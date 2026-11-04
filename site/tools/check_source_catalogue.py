@@ -39,12 +39,12 @@ COMMUNITY_VOICES = {
 VERIFICATION_STATUSES = {"unverified", "corroborated", "contradicted", "not-assessed"}
 
 
-def _load_yaml(path: Path, errors: list[str]) -> Any:
+def _load_yaml(path: Path, root: Path, errors: list[str]) -> Any:
     """Load YAML and collect a contextual error instead of raising."""
     try:
         return yaml.safe_load(path.read_text(encoding="utf-8"))
     except (OSError, yaml.YAMLError) as exc:
-        errors.append(f"{path.relative_to(ROOT)}: cannot load YAML ({exc})")
+        errors.append(f"{path.relative_to(root)}: cannot load YAML ({exc})")
         return None
 
 
@@ -80,12 +80,12 @@ def _validate_tags(value: Any, where: str, errors: list[str]) -> None:
             errors.append(f"{where}: invalid namespaced tag {tag!r}")
 
 
-def _page_ids() -> set[str]:
+def _page_ids(root: Path) -> set[str]:
     """Collect stable page IDs from bilingual page-map comments."""
     page_ids: set[str] = set()
     pattern = re.compile(r"^id:\s*['\"]?((?:fr|en)/[a-z0-9-]+)", re.MULTILINE)
     for language in ("fr", "en"):
-        for path in (ROOT / "site" / language).glob("*.qmd"):
+        for path in (root / "site" / language).glob("*.qmd"):
             source = path.read_text(encoding="utf-8")
             match = re.search(
                 r"<!--\s*\nLLM-LAB-PAGE-MAP v1\n(.*?)\n-->",
@@ -99,19 +99,17 @@ def _page_ids() -> set[str]:
 
 def validate_source_catalogue(root: Path = ROOT) -> list[str]:
     """Return structural and referential-integrity errors for sources and extractions."""
-    global ROOT, SOURCE_FILE, TAXONOMY_FILE, DOMAIN_FILE, CONCEPT_FILE, EXTRACTION_DIR
-    ROOT = root
-    SOURCE_FILE = root / "data" / "sources.yml"
-    TAXONOMY_FILE = root / "data" / "source-taxonomy.yml"
-    DOMAIN_FILE = root / "data" / "domains.yml"
-    CONCEPT_FILE = root / "data" / "concepts.yml"
-    EXTRACTION_DIR = root / "data" / "extractions"
+    source_file = root / "data" / "sources.yml"
+    taxonomy_file = root / "data" / "source-taxonomy.yml"
+    domain_file = root / "data" / "domains.yml"
+    concept_file = root / "data" / "concepts.yml"
+    extraction_dir = root / "data" / "extractions"
 
     errors: list[str] = []
-    taxonomy = _load_yaml(TAXONOMY_FILE, errors)
-    domains = _load_yaml(DOMAIN_FILE, errors)
-    concepts = _load_yaml(CONCEPT_FILE, errors)
-    sources_data = _load_yaml(SOURCE_FILE, errors)
+    taxonomy = _load_yaml(taxonomy_file, root, errors)
+    domains = _load_yaml(domain_file, root, errors)
+    concepts = _load_yaml(concept_file, root, errors)
+    sources_data = _load_yaml(source_file, root, errors)
     if errors:
         return errors
 
@@ -138,7 +136,7 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
         for item in concepts.get("concepts", [])
         if isinstance(item, dict) and isinstance(item.get("id"), str)
     }
-    pages = _page_ids()
+    pages = _page_ids(root)
 
     source_entries = sources_data.get("sources")
     if not isinstance(source_entries, list):
@@ -222,10 +220,10 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
             errors.append(f"{where}.related: expected a mapping")
 
     item_ids: set[str] = set()
-    extraction_files = sorted(EXTRACTION_DIR.glob("*.yml"))
+    extraction_files = sorted(extraction_dir.glob("*.yml"))
     for path in extraction_files:
         where = str(path.relative_to(ROOT))
-        data = _load_yaml(path, errors)
+        data = _load_yaml(path, root, errors)
         if not isinstance(data, dict) or data.get("schema_version") != 1:
             errors.append(f"{where}: expected schema_version: 1")
             continue
