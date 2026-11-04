@@ -199,6 +199,8 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
     return {
         "path": relative,
         "id": page_id,
+        "scope": metadata.get("scope", ""),
+        "purpose": metadata.get("purpose", ""),
         "route": {"previous": relations["previous"], "next": relations["next"]},
         "parents": relations["parents"],
         "children": relations["children"],
