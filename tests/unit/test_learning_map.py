@@ -185,6 +185,85 @@ def test_assign_route_rank_follows_suggested_route_and_hierarchy() -> None:
     }
 
 
+def test_load_guided_route_resolves_language_specific_page_links(tmp_path: Path) -> None:
+    site = tmp_path / "site"
+    _write_page(site, page_id="fr/overview", language="fr", title="Panorama")
+    _write_page(site, page_id="fr/generation", language="fr", title="Génération")
+    _write_page(site, page_id="en/overview", language="en", title="Overview")
+    _write_page(site, page_id="en/generation", language="en", title="Generation")
+    route = tmp_path / "docs" / "learning-path.md"
+    route.parent.mkdir(parents=True)
+    route.write_text(
+        """<!--
+LLM-LAB-GUIDED-ROUTE v1
+stages:
+  - id: orientation
+    title: {fr: "Situer le système", en: "Orient yourself"}
+    objective: {fr: "Observer le système.", en: "Observe the system."}
+    pages:
+      fr: [fr/overview, fr/generation]
+      en: [en/overview, en/generation]
+-->
+""",
+        encoding="utf-8",
+    )
+    MODULE["load_guided_route"].__globals__["ROOT"] = tmp_path
+
+    french = MODULE["load_guided_route"](
+        "fr",
+        [
+            {"id": "fr/overview", "title": "Panorama", "href": "overview.html"},
+            {"id": "fr/generation", "title": "Génération", "href": "generation.html"},
+        ],
+    )
+    english = MODULE["load_guided_route"](
+        "en",
+        [
+            {"id": "en/overview", "title": "Overview", "href": "overview.html"},
+            {"id": "en/generation", "title": "Generation", "href": "generation.html"},
+        ],
+    )
+
+    assert french == [
+        {
+            "id": "orientation",
+            "title": "Situer le système",
+            "objective": "Observer le système.",
+            "pages": [
+                {"id": "fr/overview", "title": "Panorama", "href": "overview.html"},
+                {"id": "fr/generation", "title": "Génération", "href": "generation.html"},
+            ],
+        }
+    ]
+    assert english[0]["title"] == "Orient yourself"
+    assert english[0]["pages"][0]["href"] == "overview.html"
+
+
+def test_load_guided_route_rejects_missing_published_page(tmp_path: Path) -> None:
+    route = tmp_path / "docs" / "learning-path.md"
+    route.parent.mkdir(parents=True)
+    route.write_text(
+        """<!--
+LLM-LAB-GUIDED-ROUTE v1
+stages:
+  - id: missing
+    title: {fr: "Absent", en: "Missing"}
+    objective: {fr: "Test.", en: "Test."}
+    pages:
+      fr: [fr/not-published]
+      en: [en/not-published]
+-->
+""",
+        encoding="utf-8",
+    )
+    MODULE["load_guided_route"].__globals__["ROOT"] = tmp_path
+
+    import pytest
+
+    with pytest.raises(ValueError, match="unpublished or missing page"):
+        MODULE["load_guided_route"]("fr", [])
+
+
 def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     site = tmp_path / "site"
     _write_page(site, page_id="fr/index", language="fr", title="Accueil", topic="overview")
