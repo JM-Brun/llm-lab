@@ -167,6 +167,7 @@ Candidate graph nodes/edges must be marked as proposals. Reuse known IDs and rel
 ## Definition of done
 
 - Each scanned source has stable identity, provenance, scope, status and limitations.
+- Items originating in comments or embedded community discussion preserve a distinct voice, parent-source locator and independent verification status; they are never silently attributed to the primary author.
 - Each retained item is atomic, traceable and scoped.
 - Analogies, visuals, experiments, datasets and code have relevant metadata and rights/reproducibility status.
 - Scanned, partial, linked-only, inaccessible and rejected sources are distinguished.
