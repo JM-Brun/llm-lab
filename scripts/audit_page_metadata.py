@@ -245,8 +245,9 @@ def render_report(result: dict[str, Any]) -> str:
         "## Suggested-route and hierarchy topology",
         "",
         "The suggested route is derived only from " + tick + "suggested_route.next" + tick + ".",
-        "Hierarchy (parents / children) and related links are reported separately; they are",
-        "not interpreted as learning prerequisites or merged into a global route.",
+        "Hierarchy (parents / children) is reported separately and is not interpreted as a",
+        "learning prerequisite. Related links do not define route or hierarchy edges; they",
+        "are considered only when deciding whether a page is fully isolated.",
         "",
     ]
     for language, label in (("fr", "French"), ("en", "English")):
