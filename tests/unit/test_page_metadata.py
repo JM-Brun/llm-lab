@@ -66,11 +66,6 @@ def test_does_not_flag_planned_or_rendered_sources(tmp_path: Path) -> None:
     assert not errors
 
 
-"""Tests for the review-oriented page metadata audit."""
-
-import runpy
-from pathlib import Path
-from typing import Any
 
 AUDIT_MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts" / "audit_page_metadata.py"
 AUDIT_MODULE: dict[str, Any] = runpy.run_path(
@@ -80,7 +75,9 @@ AUDIT_MODULE: dict[str, Any] = runpy.run_path(
 
 def _audit_page(
     scope: str = "A sufficiently detailed scope about language model attention mechanisms.",
-    purpose: str = "Explain how attention mechanisms combine contextual information for prediction.",
+    purpose: str = (
+        "Explain how attention mechanisms combine contextual information for prediction."
+    ),
     *,
     language: str = "en",
     next_page: str | None = None,
