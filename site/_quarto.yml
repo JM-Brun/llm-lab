@@ -139,16 +139,16 @@ website:
           contents:
             - fr/llm-overview.qmd
             - fr/transformer-architectures.qmd
-            - fr/transformer.qmd
             - fr/generation.qmd
             - fr/llm-limits.qmd
-            - section: "Du texte aux représentations"
+            - section: "Du texte aux représentations et au calcul"
               contents:
                 - fr/text-data.qmd
                 - fr/tokenization-strategies.qmd
                 - fr/embedding-space.qmd
                 - fr/positional-encoding.qmd
                 - fr/contextualized-representations.qmd
+                - fr/transformer.qmd
             - section: "Attention et sortie du Transformer"
               contents:
                 - fr/queries-keys-values.qmd
@@ -235,16 +235,16 @@ website:
           contents:
             - en/llm-overview.qmd
             - en/transformer-architectures.qmd
-            - en/transformer.qmd
             - en/generation.qmd
             - en/llm-limits.qmd
-            - section: "From text to representations"
+            - section: "From text to representations and computation"
               contents:
                 - en/text-data.qmd
                 - en/tokenization-strategies.qmd
                 - en/embedding-space.qmd
                 - en/positional-encoding.qmd
                 - en/contextualized-representations.qmd
+                - en/transformer.qmd
             - section: "Attention and the Transformer's output"
               contents:
                 - en/queries-keys-values.qmd
