@@ -291,3 +291,23 @@ This addendum records the two concept-to-code implementation lots merged after �
 1. Optional bounded follow-up within #84: wire `top_k_filter`/`top_p_filter` explicitly into the sampling path of `generate.py` as one small PR, keeping greedy + temperature as the default path and updating tests, bilingual pages and evidence matrices in the same lot.
 2. Continue the #58 remaining gaps (corpus loading, packing, padding/masks, batching, splits) as separate lots, one concept per PR.
 3. Keep #79/#80/#81 lesson-level iterations and the deferred browser reviews #320/#329/#337 distinct from this implementation line; no browser or learner evidence is claimed by any entry in §15.
+
+## 16. Continuation — 2026-11-04
+
+### Current coordination snapshot
+
+- **PR #419 — reliability and onboarding:** consolidated changes cover numerical edge cases, locked dependencies/CI, pinned Quarto tooling, a deterministic synthetic decoding experiment, README simplification and a learner-validation pilot proposal. The PR description reports successful local validation (154 tests, Ruff, formatting, mypy, bilingual Quarto render, link/history checks), but explicitly says GitHub-hosted CI/Pages actions have not yet been verified and the independent learner pilot has not run. Treat hosted checks, independent learner feedback, full responsive/accessibility review and project licence approval as outstanding; synthetic logits do not establish language quality.
+- **PR #414 / issue #413 — knowledge-graph standards projection:** the bounded JSON-LD/SKOS/Schema.org/PROV-O projection is implemented with YAML remaining canonical. Its PR description reports Python and Quarto checks passing on its latest stated head. The next model extension is separately scoped in [#418](https://github.com/JM-Brun/llm-lab/issues/418), and must wait for #414 to be merged.
+- **Interactive learning map:** the source-level findings and follow-up ownership are consolidated in [#337](https://github.com/JM-Brun/llm-lab/issues/337). Its implementation follow-ups are [#415](https://github.com/JM-Brun/llm-lab/issues/415) (guided route vs resource graph), [#416](https://github.com/JM-Brun/llm-lab/issues/416) (typed concept relations) and [#417](https://github.com/JM-Brun/llm-lab/issues/417) (keyboard/mouse/touch, responsive and recovery). The runtime fix is isolated in PR #412; rendered browser verification remains distinct.
+- **Editorial boundary audit:** the 2026-11-04 audit identified one substantive softmax/temperature duplication (F1), one text-data learning-outcome mismatch (F2), and two page pairs that should remain separate (F3/F4). Follow-up implementation is now tracked in [#420](https://github.com/JM-Brun/llm-lab/issues/420), coordinated with #79 and #147. No content was moved or deleted by the audit.
+- **Foundational text-to-representation chain:** #82 is closed at source level; its desktop/mobile review remains deferred to #320. Do not reopen the source work or treat the deferred browser check as passed.
+
+### Recommended next execution order
+
+1. Validate the current hosted CI and review the full diff of PR #419; resolve any failures before considering merge. Keep the licence proposal and learner pilot as explicit maintainer/owner decisions.
+2. Validate and merge PR #414 before starting #418. Do not mix the non-page resource registry into the existing JSON-LD projection PR.
+3. Continue the map work through #415–#417 in separate bounded changes; retain #337 as the rendered FR/EN coordination and evidence record.
+4. Implement #420 as a bilingual content-only lot, preserving the mathematical explanation and interaction while establishing one canonical softmax/temperature owner.
+5. Continue #78/#58/#79–#84 only within their existing ownership and prerequisite gates. In particular, no end-to-end training implementation is evidenced; the private prerequisite review still gates new implementation.
+6. Keep P2 browser reviews #320/#329/#337 and other rendered accessibility checks distinct from source-level completion. Do not claim browser, accessibility or learner evidence unless the corresponding review actually ran.
+

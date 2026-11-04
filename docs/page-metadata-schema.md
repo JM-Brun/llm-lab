@@ -165,7 +165,7 @@ The page graph and the concept graph answer different questions:
 - A **resource link** connects a concept to a page; it does not assert that the page is the concept's only owner.
 - A **concept relation** connects two concepts with an explicitly typed semantic relation. It is not a reading-order edge.
 
-The canonical seed lives in `data/concepts.yml`. Each concept has a stable kebab-case `id`, French and English labels and definitions, domain memberships, and at least one published French and one published English page ID in `resources`. Translations share one concept ID; do not create separate French and English concept nodes. These page references are not yet first-class typed resource entities.
+The canonical seed lives in `data/concepts.yml`. Each concept has a stable kebab-case `id`, French and English labels and definitions, domain memberships, and at least one published French and one published English page ID in `resources`. Translations share one concept ID; do not create separate French and English concept nodes. These page references remain page IDs and are not reinterpreted as non-page resource IDs. Non-page artifacts are separately identified in `data/resources.yml`.
 
 ### Relation vocabulary
 
@@ -194,7 +194,7 @@ Do not use a generic `related-to` relation as a substitute for deciding what the
 
 Run `python scripts/check_concept_registry.py` to check stable IDs, bilingual labels/definitions, FR/EN published-resource coverage, domain memberships, resource-ID syntax, relation vocabulary, endpoint existence, self-links, duplicate edges, and prerequisite/generalization cycles (iteratively). The same check runs in CI. This first registry is intentionally a seed, not a complete ontology: it covers a small set of central concepts and should grow only alongside reviewed page content.
 
-The interactive learning map now offers **separate page-graph and concept-graph modes**. The concept mode resolves localized page-resource links and displays typed relations; it does not turn concept prerequisites into page navigation instructions. Domain memberships are stored canonically but are not yet exposed as a dedicated concept filter, and non-page resources are not yet first-class entities.
+The interactive learning map offers **separate page-graph and concept-graph modes**. The concept mode resolves localized page-resource links and displays typed relations; it does not turn concept prerequisites into page navigation instructions. Domain memberships are stored canonically but are not yet exposed as a dedicated concept filter. Non-page resources are now first-class records in `data/resources.yml` and are included in the JSON-LD export; the interactive map UI does not yet render them.
 
 
 ## 11. Concept-to-domain membership
@@ -211,3 +211,12 @@ The domain registry defines stable IDs, bilingual labels, descriptions, and guid
 ## 12. Symmetric concept relations
 
 Concept relations are stored as directed triples. Most relation types are semantically directional and must not be reversed casually. `contrasts-with` is the exception: it is symmetric. Store it once, with the lexicographically smaller concept ID in `from` and the larger ID in `to`. Do not store a reciprocal duplicate. The validator enforces this canonical orientation.
+
+
+## 13. First-class non-page resources
+
+Non-page learning and research artifacts are maintained separately in `data/resources.yml`. This registry does not replace or change the meaning of `concepts[].resources`, which continues to contain published page IDs.
+
+Each resource has a stable language-independent ID, controlled kind, bilingual labels and descriptions, a BCP 47 tag for the human language used in the artifact, optional programming-language metadata, lifecycle status, a discriminated local-path or external-URL location, published page IDs that reference it, and concept IDs. Provenance fields are optional and must be omitted when unknown. The initial kind vocabulary contains only `implementation`; the first seed is limited to the five modules explicitly named by the bilingual guided-build route.
+
+The French and English walkthroughs reference one shared resource record rather than duplicate language-specific code resources. Published/deprecated resources require at least one published page reference; draft/retired records must have an empty `referenced_by` list. Run `python scripts/check_resource_registry.py` to validate IDs, controlled values, BCP 47 extension-singleton uniqueness, canonical local path segments and containment (including symlink resolution), external HTTP(S) URL syntax and port validity without network access, published-page references, concept references, and optional provenance. The JSON-LD projection uses `schema:SoftwareSourceCode` for implementation resources. The interactive concept-map UI is not yet extended to render non-page resources.
