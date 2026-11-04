@@ -1,0 +1,141 @@
+schema_version: 1
+source_id: nishanthan-k-qkv-transformers-devto
+items:
+  - id: nishanthan-k-qkv-transformers-devto:role-separation
+    kind: definition
+    summary: "Query is the representation compared against keys; Key is the representation against which queries are scored; Value is the representation aggregated using the resulting weights. Q, K, and V are learned representations of positions, not three token categories."
+    locator: {type: section, value: "1", label: "What Are Query, Key, and Value (QKV)?"}
+    evidence:
+      kind: pedagogical-explanation
+      confidence: well-supported
+      scope: "Conceptual role distinction in the article's introduction."
+      assumptions: ["Standard attention with learned query, key, and value projections."]
+      limitations: ["The search/document analogy is not a literal symbolic retrieval process.", "The article is a secondary tutorial, not a primary specification."]
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:qkv, topic:self-attention]
+      concept_ids: [query, key, value, self-attention]
+    candidate_destinations:
+      pages: [fr/queries-keys-values, en/queries-keys-values]
+      concepts: [query, key, value]
+    disposition: defer
+    disposition_rationale: "The bilingual canonical lesson already states this distinction and warns that Q/K/V are learned numerical vectors rather than readable questions, labels, or cards."
+
+  - id: nishanthan-k-qkv-transformers-devto:shared-input-projections
+    kind: mechanism
+    summary: "For self-attention, the same representation matrix X is projected through learned parameter matrices W_Q, W_K, and W_V to produce Q, K, and V."
+    locator: {type: section, value: "3", label: "How Are Q, K, and V Generated?"}
+    evidence:
+      kind: mathematical-formulation
+      confidence: well-supported
+      scope: "The article gives Q = X W_Q, K = X W_K, and V = X W_V."
+      assumptions: ["X is the representation stream entering the attention sublayer, not necessarily raw token embeddings.", "Optional biases are omitted."]
+      limitations: ["Fused QKV implementations and tensor reshaping are not discussed.", "The single-input formulation is specific to self-attention; cross-attention uses distinct source streams."]
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:qkv, method:learned-linear-projection]
+      concept_ids: [query, key, value, self-attention]
+    candidate_destinations:
+      pages: [fr/queries-keys-values, en/queries-keys-values, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [query, key, value]
+    disposition: defer
+    disposition_rationale: "The canonical Q/K/V page already gives the equations, matrix dimensions, shared representation stream, learned parameters, and self-attention/cross-attention distinction."
+
+  - id: nishanthan-k-qkv-transformers-devto:scaled-dot-product-computation
+    kind: mechanism
+    summary: "The article presents QK^T scores, scaling by sqrt(d_k), row-wise softmax, optional causal masking, and weighted aggregation A V."
+    locator: {type: section, value: "4-5", label: "How Do Queries and Keys Calculate Attention? / How Do Values Produce Contextual Information?"}
+    evidence:
+      kind: mathematical-formulation
+      confidence: well-supported
+      scope: "Equations for scores, scaled scores, attention weights, and output."
+      assumptions: ["Softmax is applied row-wise over accessible key positions."]
+      limitations: ["The scaling explanation omits its variance assumptions.", "Attention weights are not direct measures of semantic similarity or causal importance."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:scaled-dot-product-attention, method:softmax]
+      concept_ids: [query, key, value, self-attention, softmax]
+    candidate_destinations:
+      pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+      concepts: [self-attention, softmax]
+    disposition: defer
+    disposition_rationale: "The adjacent attention lesson already gives the mask-aware equation, tensor shapes, numerical example, scaling derivation and interpretive caveats. Duplicating it on the Q/K/V page would blur scope."
+
+  - id: nishanthan-k-qkv-transformers-devto:multi-head-attention
+    kind: mechanism
+    summary: "The article describes multi-head attention as parallel attention computations with per-head Q/K/V projections, followed by concatenation and an output projection."
+    locator: {type: section, value: "6", label: "QKV in Multi-Head Attention"}
+    evidence:
+      kind: architectural-description
+      confidence: context-dependent
+      scope: "High-level description of conventional multi-head attention."
+      assumptions: ["Distinct learned projections are used for each head."]
+      limitations: ["Head specialization examples are illustrative, not guaranteed.", "Fused projections, head dimensions, reshaping and the output projection's mixing role are not detailed.", "Grouped-query and multi-query variants are outside scope."]
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:multi-head-attention, topic:qkv]
+      concept_ids: [query, key, value, output-projection]
+    candidate_destinations:
+      pages: [fr/transformer, en/transformer, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [output-projection]
+    disposition: defer
+    disposition_rationale: "The overview already cautions against assuming interpretable head specialization; the implementation walkthrough explains head slicing and isolation until w_o."
+
+  - id: nishanthan-k-qkv-transformers-devto:document-search-analogy
+    kind: analogy
+    summary: "The article compares Q/K/V to a search process: a query expresses what is sought, keys provide matching features, and values provide the information retrieved."
+    locator: {type: section, value: "1", label: "What Are Query, Key, and Value (QKV)?"}
+    evidence:
+      kind: pedagogical-analogy
+      confidence: context-dependent
+      scope: "Introductory analogy for separating matching from information aggregation."
+      assumptions: ["The analogy is intended only to explain functional roles."]
+      limitations: ["It can suggest explicit documents or symbolic labels, which the attention equations do not use.", "It overlaps with the existing index-card analogy."]
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:qkv, modality:analogy]
+    candidate_destinations:
+      pages: [fr/queries-keys-values, en/queries-keys-values]
+      concepts: [query, key, value]
+    disposition: reject
+    disposition_rationale: "The canonical page already has a bounded index-card analogy and explains why it is not literal symbolic search. A second retrieval analogy adds redundancy."
+
+  - id: nishanthan-k-qkv-transformers-devto:context-examples
+    kind: question
+    summary: "The article uses lexical ambiguity (bank) and pronoun reference (it) to motivate why token representations need contextual information from other positions."
+    locator: {type: section, value: "2", label: "Why Do We Need Q, K, and V?"}
+    evidence:
+      kind: illustrative-example
+      confidence: context-dependent
+      scope: "Examples motivating contextual interaction between sequence positions."
+      assumptions: ["Examples illustrate possible contextual dependencies, not a specific model computation."]
+      limitations: ["They do not establish that one attention layer resolves lexical ambiguity or coreference.", "Attention alone is not a complete account of contextual representation or linguistic understanding."]
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:contextualization, topic:self-attention]
+      concept_ids: [self-attention, contextualized-representation]
+    candidate_destinations:
+      pages: [fr/contextualized-representations, en/contextualized-representations]
+      concepts: [contextualized-representation]
+    disposition: defer
+    disposition_rationale: "These are familiar motivation examples, not a new result. The dedicated contextualized-representations page owns this learner question."
+
+  - id: nishanthan-k-qkv-transformers-devto:kv-cache-reader-comment
+    kind: open-question
+    summary: "The indexed result included a reader comment suggesting a follow-up on KV caching during autoregressive decoding. This is not part of the article body and is not treated as an article claim."
+    locator: {type: comment, value: "Unattributed comment shown after the article body in the indexed result", label: "Commenter and full thread not verified"}
+    evidence:
+      kind: unverified-comment
+      confidence: unverified
+      scope: "A brief indexed comment only."
+      assumptions: []
+      limitations: ["The comment thread was not inspected.", "No technical claim is accepted from this comment."]
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:kv-cache, modality:community-comment]
+    candidate_destinations:
+      pages: [fr/llm-computational-complexity, en/llm-computational-complexity]
+      concepts: []
+    disposition: reject
+    disposition_rationale: "The comment is outside the article and unverified. The project already covers KV-cache costs; it must not be attributed to this source."
