@@ -94,7 +94,7 @@ Use these dimensions consistently:
 
 - **`type`**: `entry-point`, `system-overview`, `concept-lesson`, `concept-bridge`, `guided-build`, `deep-dive`, `exercise-hub`, `experiment-guide`, `glossary`, `historical-reference`, `bibliography`.
 - **`destination`**: `orient`, `understand`, `build`, `deepen`, `practice`, `reference`.
-- **`topic`**: a stable kebab-case concept identifier; use the same identifier for French and English counterparts even when their filenames differ.
+- **`topic`**: a stable kebab-case subject/grouping identifier for the page; use the same identifier for French and English counterparts even when their filenames differ. It is not a canonical concept ID.
 - **`level`**: `overview`, `core`, `applied`, `advanced`, `reference`.
 - **`language`**: `fr`, `en`, or `shared` for language-neutral resources.
 - **`status`**: `published`, `planned`, or `retired`. Do not label a planned page as published.
