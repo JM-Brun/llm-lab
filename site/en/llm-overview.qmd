@@ -114,12 +114,12 @@ Reusing a general-purpose model is attractive when one base can cover several ta
 
 Try to answer before opening the solutions. The goal is to manipulate the mental model, not to memorize labels.
 
-1. A GPT model is fine-tuned for classification. Does its architecture necessarily change? Distinguish what changes from what remains the same.
+1. Does fine-tuning a GPT necessarily change its architecture family? Distinguish parameter updates from a possible change to the model's structure.
 
 <details>
 <summary>Show the reasoning</summary>
 
-Fine-tuning updates learned parameters, and may also add or replace an output head for the task. By itself, it does not change the network's architecture family: a decoder-only GPT remains a decoder-only Transformer. Architecture and learning procedure are distinct dimensions.
+No. Fine-tuning primarily refers to a procedure for adapting parameters. Depending on the method, additional modules may also be introduced (for example, adapters or a classification head): the model family should therefore be distinguished from the full structure of the adapted system.
 
 </details>
 
