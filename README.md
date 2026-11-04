@@ -15,7 +15,7 @@ The aim is to learn from small, inspectable models and evidence, not to train a 
 - **Keep the public material complete and bilingual.** French and English should preserve the same claims and qualifications. The public lab must stand on its own even when general concepts are also developed in a separate private knowledge base; no private repository is a reading or build dependency.
 - **Respect provenance and reuse.** Cite the work that supports a claim, check rights for code, data, and figures, and avoid committing secrets, raw datasets, or model weights.
 
-The [learning path](docs/learning-path.md) owns curriculum order, prerequisites, milestones and evidence; the [content-section map](docs/content-section-mapping.md) defines destination boundaries and page ownership; the [roadmap](docs/roadmap.md) owns priorities and acceptance criteria; and the [experiment protocol](docs/experiment-protocol.md) defines reporting requirements. The [contributor principles](docs/contributor-guiding-principles.md) explain the detailed teaching and engineering practices. The interactive learning route and exploratory graphs are reader-facing projections; their source ownership and maintenance are indexed in [information architecture](docs/information-architecture.md).
+See [the learning path](docs/learning-path.md) for the authoritative module-level objectives and evidence gates, the [content-section map](docs/content-section-mapping.md) for destination boundaries and page ownership, the [roadmap](docs/roadmap.md) for priorities and acceptance criteria, and the [experiment protocol](docs/experiment-protocol.md) for reporting requirements. The interactive learning route and exploratory graphs are reader-facing projections; their source ownership and maintenance are indexed in [information architecture](docs/information-architecture.md).
 
 ## Inspiration and sources
 
@@ -55,7 +55,7 @@ The first command validates the canonical page/concept metadata and generates th
 
 **Architecture and maintenance entry point:** [Information architecture and metadata governance](docs/information-architecture.md). It is the index for the canonical sources, their ownership boundaries, the generated projections, and the maintenance workflow. Use the [contributor guide](CONTRIBUTING.md) for the practical change workflow; detailed rules remain in their owning documents.
 
-- Ownership, cross-document references, and update rules: [information architecture](docs/information-architecture.md). The map is an index; linked documents remain authoritative for their own subject.
+- Ownership, cross-document references, and update rules: [information architecture](docs/information-architecture.md). The map above is an index; the linked documents remain authoritative for their own subject.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution modes, setup, Git hooks, and checks. The toolchain uses pytest for tests, Ruff for linting and formatting, mypy for type checking, pre-commit hooks, and GitHub Actions for Python and site checks. Passing these checks or rendering the site does not by itself establish scientific correctness, learner understanding, or visual quality.
 
