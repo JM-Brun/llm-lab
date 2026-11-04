@@ -30,6 +30,11 @@ The same image is embedded in both language variants unless otherwise noted.
 
 ### Remote image links that are not currently embedded
 
+The following source illustration is linked from the bilingual Q/K/V lesson as an optional external visual reference. It is not copied into the repository or embedded as a local/remote image because the exact asset URL, visual contents and reuse permission could not be verified during the source scan:
+
+- Nishanthan K, [*How Query, Key, and Value (QKV) Work in Transformers*](https://nishanthan-k.medium.com/how-query-key-and-value-qkv-work-in-transformers-1274bfa14ea8), author-controlled Medium mirror of the [DEV Community article](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a). The Medium profile index lists two image entries under this article title, but neither the exact asset URL nor the original image bytes were available. **Status: linked-only; visual inspection and reuse rights pending.**
+
+
 These appear as source links in `site/references.qmd`; they are not current image embeds in the course pages and must not be counted as embedded assets:
 
 - Jay Alammar, [GPT-2 transformer block image](https://jalammar.github.io/images/gpt2/gpt2-transformer-block-vectors-2.png).
