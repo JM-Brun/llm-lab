@@ -1,0 +1,114 @@
+---
+title: "Approfondir : carte des connaissances"
+description: "Carte thématique des approfondissements avancés sur les LLM, organisée par questions et domaines."
+keywords: ["type:entry-point", "destination:deepen", "topic:deepen-hub", "level:overview", "language:fr", "status:published"]
+---
+
+<!-- LLM-LAB-PAGE-MAP v1
+id: "fr/deepen"
+scope: "Point d'entrée dans les approfondissements avancés : organise les pages par familles de questions et explicite leur place par rapport au parcours Understand."
+purpose: "Choisir un approfondissement selon une question, identifier les notions voisines et comprendre le niveau attendu sans transformer ces lectures en prérequis."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags:
+  - "type:entry-point"
+  - "destination:deepen"
+  - "topic:deepen-hub"
+  - "level:overview"
+  - "language:fr"
+  - "status:published"
+-->
+
+# Approfondir : une carte, pas une liste
+
+La partie **Approfondir** rassemble les traitements qui dépassent le modèle mental nécessaire pour suivre le parcours principal. Elle n'est ni une deuxième séquence obligatoire, ni un dépôt de sujets spécialisés sans liens entre eux.
+
+Chaque entrée répond à une question plus précise : pourquoi un mécanisme fonctionne, dans quelles conditions il reste valide, quels compromis il introduit, ou comment l'étudier rigoureusement. Les pages sont regroupées par **problème intellectuel**, pas alphabétiquement. Une page peut avoir des liens transversaux, mais conserve une seule rubrique principale pour stabiliser son point d'entrée.
+
+## Choisir par question
+
+| Votre question | Domaine |
+|---|---|
+| Comment une architecture spécialisée modifie-t-elle le flux d'information ? | [Architectures et mécanismes](#architectures-et-mecanismes) |
+| Comment concevoir et évaluer la représentation du texte ? | [Texte et tokenisation](#texte-et-tokenisation) |
+| Quels outils mathématiques permettent d'analyser les représentations ? | [Outils mathématiques et géométrie](#outils-mathematiques-et-geometrie) |
+| Comment relier probabilités, objectif d'apprentissage et gradients ? | [Fondements probabilistes et entraînement](#fondements-probabilistes-et-entrainement) |
+| Comment produire des sorties et quels coûts cela implique-t-il ? | [Inférence et efficacité](#inference-et-efficacite) |
+| Que peut-on conclure sur l'échelle et les capacités des modèles ? | [Échelle et questions de recherche](#echelle-et-questions-de-recherche) |
+
+## Architectures et mécanismes
+
+**Question directrice :** quelles variantes changent la circulation de l'information ou la structure de calcul ?
+
+- [Attention croisée](cross-attention.qmd) — transfert d'information entre deux séquences, notamment dans les architectures encodeur-décodeur et multimodales.
+- [Architectures hybrides : Nemotron 3 et 3.5](hybrid-llm-architectures.qmd) — combinaison de récurrence, attention, experts et prédiction multi-token dans un cas concret.
+
+Les variantes spécialisées ne rejoignent pas le parcours principal simplement parce qu'un modèle récent les utilise. Il faut démontrer qu'elles sont indispensables à la compréhension générale.
+
+## Texte et tokenisation
+
+**Question directrice :** comment les choix de représentation du texte influencent-ils les propriétés d'un système ?
+
+- [Unicode et représentation du texte](unicode-text.qmd) — couches de représentation des caractères et conséquences.
+- [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.qmd) — familles BPE, WordPiece et Unigramme, conception et protocole empirique.
+
+La page [Stratégies de tokenisation](tokenization-strategies.qmd) du parcours principal reste le point d'entrée conceptuel ; la conception et l'évaluation comparative sont des approfondissements.
+
+## Outils mathématiques et géométrie
+
+**Question directrice :** quelles opérations et propriétés mathématiques permettent d'analyser les représentations et les calculs ?
+
+- [Tenseurs](tensors.qmd) — dimensions, opérations et conventions.
+- [Similarité cosinus](cosine-similarity.qmd) — mesure angulaire et limites d'interprétation.
+- [Linéarité des embeddings](linearite-embeddings.qmd) — hypothèses et preuves empiriques associées aux relations linéaires dans les espaces de représentation.
+
+Ces pages fournissent des outils d'analyse ; elles ne constituent pas un cours de prérequis à terminer avant de construire un petit GPT.
+
+## Fondements probabilistes et entraînement
+
+**Question directrice :** comment relier distribution prédite, vraisemblance observée, fonction objectif et optimisation ?
+
+- [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd) — factorisation autorégressive, entropie croisée et divergence KL.
+- [La chaîne mathématique de l'entraînement d'un LLM](mathematical-foundations.qmd) — des logits aux gradients, en distinguant les objets mathématiques.
+
+Les pages canoniques du parcours principal restent propriétaires des définitions locales de vraisemblance, entropie, entropie croisée, loss et gradients. Ces approfondissements les relient ou les généralisent sans les remplacer.
+
+## Inférence et efficacité
+
+**Question directrice :** comment le modèle exploite-t-il le contexte, choisit-il ses sorties et mobilise-t-il ses ressources ?
+
+- [Apprentissage en contexte](in-context-learning.qmd) — exemples dans le prompt sans mise à jour des paramètres.
+- [Stratégies avancées de décodage](decoding-strategies.qmd) — transformations de distribution et recherche de séquences.
+- [Complexité et parallélisme dans les LLM](llm-computational-complexity.qmd) — calcul, mémoire et parallélisme en entraînement, préremplissage et décodage.
+
+Le parcours principal présente la génération autorégressive et ses opérations minimales. Cette rubrique traite les stratégies et coûts non nécessaires à cette première compréhension.
+
+## Échelle et questions de recherche
+
+**Question directrice :** quelles régularités empiriques et quelles affirmations sur les capacités sont soutenues par les données ?
+
+- [Lois d'échelle : paramètres, données et calcul](scaling-laws.qmd) — relations empiriques entre ressources d'entraînement et perte, et limites d'extrapolation.
+- [Émergence](emergence.qmd) — amélioration graduelle, effets de seuil liés aux métriques et véritables discontinuités.
+
+Distinguer systématiquement observations, hypothèses explicatives et conclusions dépendantes du protocole.
+
+## Classer une nouvelle notion
+
+Une entrée se classe selon son **objectif d'apprentissage principal**, pas selon le mot-clé de son titre.
+
+1. **Nécessité conceptuelle :** le mécanisme est-il indispensable au premier modèle mental ? Si oui, intégrer le minimum exact dans Understand et réserver ici les dérivations ou variantes. Sinon, le garder dans Approfondir.
+2. **Question traitée :** architecture/flux, texte/tokenisation, outil mathématique, fondement probabiliste/entraînement, inférence/efficacité, ou échelle/recherche.
+3. **Propriété du contenu :** étendre une page canonique si le nouvel apport relève de son périmètre. Créer une page seulement pour une question durable et distincte.
+4. **Nature du lien :** parent/enfant pour une généralisation ou décomposition ; related pour une connexion transversale ; suggested_route pour un ordre conseillé. Toute dépendance n'est pas une relation hiérarchique.
+5. **Niveau de preuve :** expliciter hypothèses et conventions des dérivations ; documenter données, métriques et protocoles empiriques ; séparer principes généraux et choix propres aux études de cas.
+
+### Règle de maintenance
+
+Toute nouvelle page avancée doit être ajoutée simultanément à cette carte, à la navigation FR/EN, à la liste de rendu Quarto, à l'inventaire éditorial et au graphe de métadonnées. La version anglaise conserve le même périmètre, niveau et relations. Créer une rubrique lorsqu'elle regroupe plusieurs pages ou représente un axe de recherche durable ; éviter les rubriques à entrée unique sauf justification.
+
+**Cette carte est une taxonomie de découverte, pas un nouveau parcours obligatoire.** L'ordre des rubriques ne crée aucun prérequis.
