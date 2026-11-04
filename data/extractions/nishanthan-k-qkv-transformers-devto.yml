@@ -1,5 +1,70 @@
 schema_version: 1
 source_id: nishanthan-k-qkv-transformers-devto
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Article body reconstructed from indexed DEV content and an author-controlled Medium mirror."
+      - "Canonical DEV HTML/API and embedded media were not directly retrievable in the latest scan."
+    inferred_elements:
+      - "Learning outcomes and prerequisites are inferred; the article does not state them formally."
+  source_graph:
+    nodes:
+      - {id: input-representations, kind: computational-object, description: "Position representations entering self-attention.", locator: "Section 3"}
+      - {id: query, kind: representation, description: "Learned query projections used to score keys.", locator: "Sections 1 and 3"}
+      - {id: key, kind: representation, description: "Learned key projections compared with queries.", locator: "Sections 1 and 3"}
+      - {id: value, kind: representation, description: "Learned value projections aggregated by attention weights.", locator: "Sections 1, 3 and 5"}
+      - {id: scores, kind: intermediate, description: "Query-key dot-product compatibility scores.", locator: "Section 4"}
+      - {id: scaled-scores, kind: intermediate, description: "Scores divided by the square root of the key dimension.", locator: "Section 4"}
+      - {id: attention-weights, kind: intermediate, description: "Softmax-normalized scores after applicable causal masking.", locator: "Section 4"}
+      - {id: weighted-aggregation, kind: operation, description: "Weighted aggregation of multiple Value vectors, not argmax selection.", locator: "Section 5"}
+      - {id: attention-output, kind: representation, description: "Contextual output of the weighted aggregation.", locator: "Section 5"}
+      - {id: multi-head, kind: architecture, description: "Parallel per-head projections, concatenation and output projection.", locator: "Section 6"}
+      - {id: contextual-examples, kind: pedagogical-anchor, description: "Bank ambiguity and it-to-the-animal pronoun reference motivate contextualization.", locator: "Section 2"}
+    edges:
+      - {from: input-representations, type: projected-into, to: query}
+      - {from: input-representations, type: projected-into, to: key}
+      - {from: input-representations, type: projected-into, to: value}
+      - {from: query, type: contributes-to, to: scores}
+      - {from: key, type: contributes-to, to: scores}
+      - {from: scores, type: scaled-into, to: scaled-scores}
+      - {from: scaled-scores, type: normalized-into, to: attention-weights}
+      - {from: attention-weights, type: weights, to: weighted-aggregation}
+      - {from: value, type: aggregated-by, to: weighted-aggregation}
+      - {from: weighted-aggregation, type: produces, to: attention-output}
+      - {from: attention-output, type: composed-with-other-head-outputs, to: multi-head}
+      - {from: contextual-examples, type: motivates, to: input-representations}
+    interpretation: "Source-local reconstruction from prose and equations; not an author-specified formal graph."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain the distinct computational roles of Query, Key and Value.", basis: "Sections 1 and 3."}
+    - {status: inferred, outcome: "Trace scaled dot-product attention from Q/K scores to weighted Value aggregation.", basis: "Sections 4 and 5."}
+    - {status: inferred, outcome: "Describe the high-level composition of multi-head attention.", basis: "Section 6."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic familiarity with token or position representations.", basis: "Used without a first-principles introduction."}
+    - {status: inferred, topic: "Basic matrix multiplication and softmax.", basis: "Equations and normalization are assumed."}
+  teaching_route:
+    - {order: 1, section: "What Are Query, Key, and Value (QKV)?", function: motivate-and-distinguish-roles, moves: ["Search/retrieval analogy", "Verbal role distinction"]}
+    - {order: 2, section: "Why Do We Need Q, K, and V?", function: motivate-contextualization, moves: ["Bank lexical ambiguity", "It-to-the-animal pronoun reference"]}
+    - {order: 3, section: "How Are Q, K, and V Generated?", function: introduce-learned-projections, moves: ["Q = XW_Q, K = XW_K, V = XW_V"]}
+    - {order: 4, section: "How Do Queries and Keys Calculate Attention?", function: derive-attention-weights, moves: ["QK transpose", "Scaling", "Softmax", "Causal masking"]}
+    - {order: 5, section: "How Do Values Produce Contextual Information?", function: explain-weighted-aggregation, moves: ["Weighted Value sum", "Contrast with argmax"]}
+    - {order: 6, section: "QKV in Multi-Head Attention", function: extend-to-multi-head, moves: ["Parallel per-head projections", "Concatenation", "Output projection"]}
+  pedagogical_strengths:
+    - "Compact progression from verbal intuition to equations and multi-head architecture."
+    - "Two distinct linguistic motivations for contextualization."
+    - "Explicit caveats against semantic-similarity and winner-take-all interpretations."
+  pedagogical_limits:
+    - "No formal objectives, prerequisite map, exercises, comprehension checks or worked tensor-shape example."
+    - "Scaling is stated rather than derived; variance assumptions are not developed."
+    - "Causal masking is mentioned but not developed as a separate mechanism."
+    - "Multi-head attention lacks detailed dimensions, reshaping and output-mixing analysis."
+    - "No implementation, numerical experiments, training dynamics or KV-cache treatment in the article body."
+  comparison:
+    dossier: docs/source-reviews/qkv-learning-graph-comparison-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Page-level suggested_route metadata and Build route"]
+    decision: "The source graph exposed missing intermediate nodes in the canonical concept registry; those were added. Its section order does not justify changing the canonical guided route or page navigation."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
 items:
   - id: nishanthan-k-qkv-transformers-devto:role-separation
     kind: definition
