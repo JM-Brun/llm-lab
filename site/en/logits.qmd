@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/logits"
-scope: "Defines logits as unnormalized scores over vocabulary tokens at the model output and examines their scale, differences, and transformations; distinguishes these scores from normalized probabilities and decoding rules."
+scope: "Defines logits as unnormalized real-valued scores associated with vocabulary tokens at the model output; explains their vector, dimensionality, and role in candidate ranking without developing probability normalization."
 purpose: "Readers should be able to interpret a V-dimensional logit vector, explain why its values are not probabilities, and distinguish score-based ranking from the conditional distribution used for generation."
 suggested_route:
   previous: "en/causal-masking"
