@@ -38,6 +38,9 @@ jobs:
       - name: Install history data validation dependency
         run: uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
 
+      - name: Validate source catalogue and extraction records
+        run: uv run python site/tools/check_source_catalogue.py
+
       - name: Validate page metadata learning graph
         run: uv run python site/tools/check_page_metadata.py
 
