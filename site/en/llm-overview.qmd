@@ -1,14 +1,14 @@
 ---
 title: "Panorama: what is an LLM?"
 subtitle: "From text to the next token: a conceptual map before the mechanisms"
-keywords: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
+description: "An overview of language models: definitions, architecture, parameter learning, and inference."
 lang: en
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-overview"
-scope: "Places modern LLMs within AI/ML and NLP; defines language model, generative model, LLM, GPT, and Transformer; distinguishes architecture, weight learning, and use; routes readers to dedicated pages without detailing the generation loop or internal mechanisms."
+scope: "Places LLMs within artificial intelligence and machine learning; defines language model, generative model, LLM, GPT, and Transformer; distinguishes architecture, weight learning, and use; routes readers to dedicated pages without detailing the generation loop or internal mechanisms."
 purpose: "By the end of this page, readers should be able to place LLMs, distinguish the key terms and the three dimensions of architecture/weight learning/use, and choose the specialized page for understanding Transformer computation or autoregressive inference."
 suggested_route:
   previous: "en/index"
@@ -27,7 +27,6 @@ A **language model** estimates the plausibility of text sequences from a context
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this page, you will be able to:
 - explain intuitively why a model must compare multiple possible continuations;
-- place modern LLMs within AI/ML and NLP, and distinguish them from earlier task-specific NLP systems;
 - distinguish a language model, generative model, LLM, GPT, and Transformer;
 - explain how the concepts language model, GPT, and Transformer relate;
 - identify the canonical page for the network computation or the generation process.
@@ -54,7 +53,7 @@ The model learns statistical regularities in its data; this objective does not, 
 
 **GPT** (*Generative Pre-trained Transformer*) names a family of pretrained generative models built on the Transformer architecture. In common usage, classic GPT models are **decoder-only** Transformers trained to predict the next token. GPT and Transformer are therefore not synonyms: Transformer names an architecture family; GPT names a family of models using a particular configuration.
 
-Modern LLMs are deep-learning models within AI and machine learning; NLP is a field, not an architecture. Earlier NLP systems often relied on rules, hand-engineered features, or task-specific statistical/neural models. LLMs learn reusable patterns from broad corpora and can be adapted across tasks, but still require task-specific evaluation.
+Modern LLMs are deep-learning models within artificial intelligence and machine learning. They learn reusable patterns from broad corpora and can be adapted across tasks, but still require task-specific evaluation. For the place of NLP and the approaches that preceded LLMs, see the [history of Transformers](transformer-history.qmd).
 
 LLM Lab uses small, inspectable models to teach mechanisms, not to reproduce production-scale capabilities. An untrained reference model is expected to produce incoherent text.
 
