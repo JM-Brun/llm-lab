@@ -6,7 +6,15 @@ import runpy
 from pathlib import Path
 from typing import Any
 
-MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts" / "check_page_metadata.py"
+REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
+MODULE_PATH = next(
+    path
+    for path in (
+        REPOSITORY_ROOT / "scripts" / "check_page_metadata.py",
+        REPOSITORY_ROOT / "site" / "tools" / "check_page_metadata.py",
+    )
+    if path.is_file()
+)
 MODULE: dict[str, Any] = runpy.run_path(str(MODULE_PATH), run_name="page_metadata_test")
 
 
@@ -66,7 +74,14 @@ def test_does_not_flag_planned_or_rendered_sources(tmp_path: Path) -> None:
     assert not errors
 
 
-AUDIT_MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts" / "audit_page_metadata.py"
+AUDIT_MODULE_PATH = next(
+    path
+    for path in (
+        REPOSITORY_ROOT / "scripts" / "audit_page_metadata.py",
+        REPOSITORY_ROOT / "site" / "tools" / "audit_page_metadata.py",
+    )
+    if path.is_file()
+)
 AUDIT_MODULE: dict[str, Any] = runpy.run_path(
     str(AUDIT_MODULE_PATH), run_name="page_metadata_audit_test"
 )
