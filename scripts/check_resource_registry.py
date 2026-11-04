@@ -193,11 +193,13 @@ def validate_resource_registry(
                     errors.append(f"{where}.referenced_by: page {page_id!r} is not published")
             if status in {"published", "deprecated"} and not referenced_by:
                 errors.append(
-                    f"{where}.referenced_by: published/deprecated resources need a published page reference"
+                    f"{where}.referenced_by: published/deprecated resources "
+                    "need a published page reference"
                 )
             if status in {"draft", "retired"} and referenced_by:
                 errors.append(
-                    f"{where}.referenced_by: draft/retired resources cannot be linked from published pages"
+                    f"{where}.referenced_by: draft/retired resources "
+                    "cannot be linked from published pages"
                 )
 
         concepts = resource.get("concepts")
