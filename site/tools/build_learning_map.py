@@ -4,6 +4,10 @@
 The generated page rank is a deterministic display-order heuristic only. It
 combines suggested-route and hierarchy edges to arrange the exploratory graph;
 it is not a curriculum sequence or a prerequisite/topological ordering.
+
+Structure (pages, navigation areas, concepts) is derived from authored sources;
+presentation artifacts are rendered by ``learning_map_renderers`` and written
+next to the JSON payloads, so the two layers evolve independently.
 """
 
 from __future__ import annotations
@@ -11,11 +15,13 @@ from __future__ import annotations
 import json
 import re
 import sys
+import unicodedata
 from collections import deque
 from pathlib import Path
 from typing import Any, Literal
 
 import yaml
+from learning_map_renderers import REPRESENTATIONS, escape_markdown_text, render_map_script
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -228,6 +234,67 @@ def load_pages() -> list[dict[str, Any]]:
     return pages
 
 
+def slugify_area_id(title: str) -> str:
+    """Return an ASCII slug used as a stable, language-scoped area identifier."""
+    folded = unicodedata.normalize("NFKD", title).encode("ascii", "ignore")
+    return re.sub(r"[^a-z0-9]+", "-", folded.decode("ascii").lower()).strip("-")
+
+
+def sidebar_page_id(entry: object, language: str) -> str | None:
+    """Resolve one Quarto sidebar entry to a published page identifier."""
+    if not isinstance(entry, str) or not entry.endswith(".qmd"):
+        return None
+    slug = entry.removesuffix(".qmd")
+    if "/" not in slug:
+        if slug == "references":
+            return "reference/references"
+        return f"{language}/{slug}"
+    return slug
+
+
+def load_navigation(language: str, pages: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Derive the drill-down area structure from the authored Quarto sidebar.
+
+    The sidebar is the only authored source of reader-facing grouping. Entries
+    that do not resolve to a published page identifier are ignored, and empty
+    groups are dropped, so the progressive map never shows a dead end.
+    """
+    config = yaml.safe_load((SITE / "_quarto.yml").read_text(encoding="utf-8"))
+    sidebars = (config or {}).get("website", {}).get("sidebar", [])
+    sidebar = next((entry for entry in sidebars if entry.get("id") == language), None)
+    if sidebar is None:
+        raise ValueError(f"missing Quarto sidebar for language: {language!r}")
+    published = {page["id"] for page in pages}
+
+    def collect(entries: list[object]) -> list[str]:
+        """Keep only sidebar entries that resolve to published pages."""
+        identifiers = (sidebar_page_id(entry, language) for entry in entries)
+        return [value for value in identifiers if value in published]
+
+    areas: list[dict[str, Any]] = []
+    for entry in sidebar.get("contents", []):
+        if not isinstance(entry, dict) or "section" not in entry:
+            continue
+        sections = [
+            {"title": str(item["section"]), "pages": collect(item.get("contents", []))}
+            for item in entry.get("contents", [])
+            if isinstance(item, dict) and "section" in item
+        ]
+        sections = [section for section in sections if section["pages"]]
+        area_pages = collect(entry.get("contents", []))
+        if not area_pages and not sections:
+            continue
+        areas.append(
+            {
+                "id": slugify_area_id(str(entry["section"])),
+                "title": str(entry["section"]),
+                "pages": area_pages,
+                "sections": sections,
+            }
+        )
+    return areas
+
+
 def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[ResolvedGuidedRouteStage]:
     """Validate the route source and resolve every reference to a published page."""
     if language not in {"fr", "en"}:
@@ -266,12 +333,6 @@ def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[Resolv
     return resolved
 
 
-def _escape_markdown_text(value: str) -> str:
-    """Escape Markdown syntax in titles and objectives originating in page metadata."""
-    special = "\\*_{}[]<>#+.!|" + chr(96)
-    return "".join(f"\\{character}" if character in special else character for character in value)
-
-
 def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], language: str) -> str:
     """Render the route as native Quarto Markdown; no browser-side route renderer."""
     if language not in {"fr", "en"}:
@@ -284,21 +345,21 @@ def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], languag
             [
                 "::: {.guided-route-stage}",
                 "",
-                f"### {index:02d} · {_escape_markdown_text(stage.title)}",
+                f"### {index:02d} · {escape_markdown_text(stage.title)}",
                 "",
-                _escape_markdown_text(stage.objective),
+                escape_markdown_text(stage.objective),
                 "",
                 f"**{core_label}**",
                 "",
             ]
         )
         lines.extend(
-            f"- [{_escape_markdown_text(page.title)}]({page.href})" for page in stage.pages
+            f"- [{escape_markdown_text(page.title)}]({page.href})" for page in stage.pages
         )
         if stage.optional_pages:
             lines.extend(["", f"**{optional_label}**", ""])
             lines.extend(
-                f"- [{_escape_markdown_text(page.title)}]({page.href})"
+                f"- [{escape_markdown_text(page.title)}]({page.href})"
                 for page in stage.optional_pages
             )
         lines.extend(["", ":::", ""])
@@ -312,6 +373,22 @@ def write_guided_route_fragment(language: str, stages: list[ResolvedGuidedRouteS
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(render_guided_route_markdown(stages, language), encoding="utf-8")
     return output
+
+
+def write_map_fragments(
+    language: str, navigation: list[dict[str, Any]], pages: list[dict[str, Any]]
+) -> None:
+    """Write every generated presentation artifact for one language."""
+    page_by_id = {page["id"]: page for page in pages}
+    includes = SITE / "includes"
+    includes.mkdir(parents=True, exist_ok=True)
+    (includes / "learning-map.html").write_text(render_map_script(), encoding="utf-8")
+    for representation in REPRESENTATIONS.values():
+        fragment = includes / f"generated-{representation.artifact}-{language}.qmd"
+        fragment.write_text(
+            representation.render(language, navigation, page_by_id),
+            encoding="utf-8",
+        )
 
 
 def load_concept_graph(
@@ -384,7 +461,7 @@ def assign_route_rank(pages: list[dict[str, Any]], language: str) -> None:
 
 
 def build(language: str) -> Path:
-    """Write the published page graph for one language."""
+    """Write the published page graph and every generated presentation artifact."""
     all_pages = load_pages()
     pages = [
         page for page in all_pages if page["language"] == language or page["language"] == "shared"
@@ -400,13 +477,16 @@ def build(language: str) -> Path:
     output = SITE / f"learning-map-data-{language}.json"
     concept_graph = load_concept_graph(language, pages)
     guided_route = load_guided_route(language, pages)
+    navigation = load_navigation(language, pages)
     write_guided_route_fragment(language, guided_route)
+    write_map_fragments(language, navigation, pages)
     output.write_text(
         json.dumps(
             {
                 "language": language,
                 "source": "LLM-LAB-PAGE-MAP v1 + data/guided-route.yml + data/concepts.yml",
                 "pages": pages,
+                "navigation": navigation,
                 **concept_graph,
             },
             ensure_ascii=False,

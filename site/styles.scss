@@ -1248,3 +1248,331 @@ details.spot-the-fallacy .fallacy-content {
 @media (max-width: 600px) {
   .learning-map-concept-legend ul { grid-template-columns: 1fr; }
 }
+
+// ---------------------------------------------------------------------------
+// Progressive learning map (territories -> sections -> pages)
+// ---------------------------------------------------------------------------
+
+.learning-map {
+  --map-accent: #475569;
+  --map-ink: #1e293b;
+  --map-muted: #64748b;
+  --map-line: #cbd5e1;
+  --map-surface: #ffffff;
+}
+
+.learning-map [data-destination="orient"] {
+  --map-accent: #15803d;
+}
+
+.learning-map [data-destination="understand"] {
+  --map-accent: #0f766e;
+}
+
+.learning-map [data-destination="build"] {
+  --map-accent: #1d4ed8;
+}
+
+.learning-map [data-destination="deepen"] {
+  --map-accent: #6d5aa7;
+}
+
+.learning-map [data-destination="practice"] {
+  --map-accent: #b45309;
+}
+
+.learning-map [data-destination="reference"] {
+  --map-accent: #475569;
+}
+
+.learning-map-viewport {
+  padding-right: 0.35rem;
+}
+
+.map-intro {
+  margin: 0.2rem 0 0.9rem;
+  color: var(--map-muted);
+}
+
+.map-crumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 0.9rem;
+}
+
+.map-crumbs-home {
+  border: 1px solid var(--map-line);
+  background: var(--map-surface);
+  color: var(--map-accent);
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.map-crumbs-home:hover,
+.map-crumbs-home:focus-visible {
+  border-color: var(--map-accent);
+}
+
+.map-crumbs-sep {
+  color: var(--map-muted);
+}
+
+.map-crumbs-current {
+  font-weight: 600;
+  color: var(--map-ink);
+  font-size: 0.9rem;
+}
+
+.map-areas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 0.75rem;
+}
+
+.map-area-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  text-align: left;
+  padding: 0.9rem 1rem;
+  background: var(--map-surface);
+  border: 1px solid var(--map-line);
+  border-left: 4px solid var(--map-accent);
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.map-area-card:hover,
+.map-area-card:focus-visible {
+  border-color: var(--map-accent);
+}
+
+.map-area-title {
+  font-weight: 600;
+  color: var(--map-ink);
+}
+
+.map-area-count {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--map-accent);
+}
+
+.map-area-preview {
+  font-size: 0.78rem;
+  color: var(--map-muted);
+}
+
+.map-entry-block {
+  margin: 0.9rem 0;
+}
+
+.map-entry-block .map-entry-label {
+  margin: 0 0 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--map-muted);
+}
+
+.map-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.75rem;
+}
+
+.map-section-card {
+  background: var(--map-surface);
+  border: 1px solid var(--map-line);
+  border-radius: 0.5rem;
+  padding: 0.75rem 0.9rem;
+}
+
+.map-section-card .map-section-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--map-ink);
+}
+
+.map-section-count {
+  margin-left: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--map-muted);
+}
+
+.map-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.map-chip {
+  display: inline-block;
+  padding: 0.24rem 0.65rem;
+  border: 1px solid var(--map-accent);
+  border-radius: 999px;
+  background: var(--map-surface);
+  color: var(--map-ink);
+  font-size: 0.83rem;
+  text-decoration: none;
+}
+
+.map-chip:hover,
+.map-chip:focus-visible {
+  background: var(--map-accent);
+  color: #ffffff;
+}
+
+.map-page-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 0.65rem;
+}
+
+.map-page-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem 0.9rem;
+  background: var(--map-surface);
+  border: 1px solid var(--map-line);
+  border-left: 3px solid var(--map-accent);
+  border-radius: 0.5rem;
+  text-decoration: none;
+}
+
+.map-page-card:hover,
+.map-page-card:focus-visible {
+  border-color: var(--map-accent);
+}
+
+.map-page-meta {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--map-accent);
+}
+
+.map-page-title {
+  font-weight: 600;
+  color: var(--map-ink);
+  font-size: 0.92rem;
+}
+
+.map-page-summary {
+  font-size: 0.8rem;
+  color: var(--map-muted);
+}
+
+.map-back {
+  border: 1px solid var(--map-line);
+  background: var(--map-surface);
+  border-radius: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.map-back:hover {
+  border-color: var(--map-accent);
+}
+
+.map-concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.6rem;
+}
+
+.map-concept-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-align: left;
+  padding: 0.7rem 0.85rem;
+  background: var(--map-surface);
+  border: 1px solid var(--map-line);
+  border-left: 3px solid var(--map-accent);
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.map-concept-item:hover,
+.map-concept-item:focus-visible {
+  border-color: var(--map-accent);
+}
+
+.map-concept-label {
+  font-weight: 600;
+  color: var(--map-ink);
+  font-size: 0.92rem;
+}
+
+.map-concept-def {
+  font-size: 0.78rem;
+  color: var(--map-muted);
+}
+
+.learning-map-details .map-empty {
+  margin: 0.4rem 0;
+  color: var(--map-muted);
+  font-style: italic;
+}
+
+.map-load-status {
+  color: var(--map-muted);
+}
+
+.map-detail-panel .map-detail-title {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+}
+
+.map-detail-panel .map-detail-meta {
+  margin: 0 0 0.5rem;
+}
+
+.map-detail-panel .map-detail-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--map-accent);
+}
+
+.map-detail-panel .map-detail-purpose {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+}
+
+.map-detail-panel .map-detail-heading {
+  margin: 0.8rem 0 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--map-muted);
+}
+
+.map-detail-panel .map-detail-sections {
+  margin: 0 0 0.4rem;
+  padding-left: 1.2rem;
+  font-size: 0.88rem;
+}
+
+.map-detail-panel .map-detail-section-item {
+  margin: 0.15rem 0;
+}
+
+.map-detail-panel .map-detail-relations {
+  margin: 0 0 0.4rem;
+  padding-left: 1.2rem;
+  font-size: 0.85rem;
+}
