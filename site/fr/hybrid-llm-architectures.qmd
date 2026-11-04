@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/hybrid-llm-architectures"
 scope: "Étudie les compromis entre Mamba-2, attention, MoE, GQA, MTP et précision numérique à partir de Nemotron 3 ; distingue principes généraux et choix propres à une version."
 purpose: "Expliquer les coûts d'inférence ciblés par une architecture hybride, distinguer paramètres totaux et actifs, et identifier les compromis de capacité, de rappel et de bande passante."
+domain: "architectures-mechanisms"
 suggested_route:
   previous: null
   next: null
