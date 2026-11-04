@@ -185,15 +185,14 @@ uv run python scripts/check_resource_registry.py
 # Deterministic knowledge-graph export
 uv run python scripts/export_knowledge_graph.py
 
-# Bilingual site build
+# Bilingual site build and rendered graph validation
 quarto render site
+uv run python scripts/check_knowledge_graph_rendered.py
 ```
 
 The standards profile documents the graph-export and rendered-output checks; use [knowledge-graph standards](knowledge-graph-standards.md) rather than duplicating their implementation details here.
 
 ## 11. Canonical documentation index
-
-## 10. Canonical documentation index
 
 | Concern | Canonical reference |
 |---|---|
