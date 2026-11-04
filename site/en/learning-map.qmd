@@ -1,6 +1,6 @@
 ---
 title: "Interactive learning map"
-subtitle: "Pages, concepts, and relationships across the LLM Lab learning path"
+subtitle: "A guided route followed by graphs for exploring pages and concepts"
 keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:en", "status:published"]
 lang: en
 toc: false
@@ -9,8 +9,8 @@ toc: false
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/learning-map"
-scope: "Interactive visual map of published pages, suggested progression, pedagogical hierarchy, page section headings, and a separate canonical concept graph."
-purpose: "Help readers understand the learning path architecture, find relevant pages and concepts, and open a page directly from its node in the graph."
+scope: "Six-stage conceptual guided route followed by two distinct exploratory graphs: published resources and canonical concepts."
+purpose: "Orient readers through a compact conceptual progression, then let them explore resources and relationships between concepts."
 suggested_route:
   previous: null
   next: null
@@ -21,7 +21,7 @@ related: []
 tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:en", "status:published"]
 -->
 
-The map distinguishes the **suggested reading route**, the **pedagogical hierarchy**, and **cross-links**. These relationships answer different questions; they do not define a mandatory sequence.
+This page separates a compact **guided route** from two **exploratory graphs**. The route is derived from the canonical curriculum; the graphs let readers explore resources and relationships without imposing one reading order.
 
 - **Route** — green arrow: suggested previous/next page.
 - **Parent / child** — blue arrow: pedagogical decomposition or inclusion.
@@ -29,10 +29,30 @@ The map distinguishes the **suggested reading route**, the **pedagogical hierarc
 
 The map offers two distinct graphs. The page graph represents resources and their pedagogical relationships; section headings shown inside page nodes are editorial landmarks, not canonical concepts. The concept graph is generated from the bilingual registry versioned in `data/concepts.yml`: its nodes have stable identifiers, definitions, and typed relationships. Selecting a concept reveals its resource pages. The two graphs must not be interpreted as one reading order.
 
+::: {.guided-route-section}
+
+## Guided route
+
+Six conceptual stages provide an entry point and a suggested progression. Primary links open the core pages; deep dives are optional. Pages within a stage are complementary resources, not a list of strict prerequisites.
+
+{{< include ../includes/generated-guided-route-en.qmd >}}
+
+::: {.guided-route-companion}
+
+**Practical companion:** If you want to build a small GPT, follow the [guided build path](build-path.html). Corpus preparation and training-example construction form a dedicated model-learning branch, not a prerequisite for inference.
+
+:::
+
+:::
+
+## Explore the resources
+
+The page graph retains the resource inventory and its route, hierarchy, and related links. The concept graph separately presents canonical concepts and their relationships. These views support exploration; they do not replace the guided route above.
+
 <div class="learning-map" data-learning-map data-language="en" data-source="../learning-map-data-en.json">
   <div class="learning-map-toolbar">
     <div class="learning-map-filter">
-      <label for="learning-map-mode">Graph type</label>
+      <label for="learning-map-mode">Exploratory view</label>
       <select id="learning-map-mode">
         <option value="pages">Page graph</option>
         <option value="concepts">Concept graph</option>

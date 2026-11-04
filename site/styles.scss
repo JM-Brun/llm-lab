@@ -1147,3 +1147,69 @@ details.spot-the-fallacy .fallacy-content {
 .learning-map [data-map-page-controls][hidden] {
   display: none;
 }
+
+
+/* Guided route: a compact conceptual sequence kept distinct from the resource graphs. */
+.guided-route-section {
+  margin: 1.6rem 0 2rem;
+}
+.guided-route-section > :first-child { margin-top: 0; }
+.guided-route-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .8rem;
+  margin: 1rem 0;
+}
+.guided-route-stage {
+  min-width: 0;
+  padding: .9rem 1rem;
+  border: 1px solid #CFE3D4;
+  border-top: 3px solid var(--llm-brand);
+  border-radius: .55rem;
+  background: #FBFDFC;
+}
+.guided-route-stage h3 {
+  margin: 0 0 .45rem;
+  color: var(--llm-brand-dark);
+  font-size: 1rem;
+  line-height: 1.3;
+}
+.guided-route-stage p {
+  margin: 0 0 .6rem;
+  color: #405347;
+  font-size: .87rem;
+  line-height: 1.45;
+}
+.guided-route-stage ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: .86rem;
+  line-height: 1.55;
+}
+.guided-route-stage li { margin: .12rem 0; }
+.guided-route-stage strong {
+  display: block;
+  margin: .65rem 0 .2rem;
+  color: #64748B;
+  font-size: .73rem;
+  font-weight: 750;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+.guided-route-companion {
+  margin: .9rem 0 1.4rem;
+  padding: .8rem 1rem;
+  border-left: 4px solid #2563A6;
+  border-radius: .35rem;
+  background: #F5F9FF;
+  font-size: .9rem;
+  line-height: 1.5;
+}
+@media (max-width: 900px) {
+  .guided-route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .guided-route-grid { grid-template-columns: 1fr; gap: .6rem; }
+  .guided-route-stage { padding: .8rem .85rem; }
+}
+
