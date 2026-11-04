@@ -55,11 +55,11 @@ sources:
         status: partially-scanned
         inspected_scope:
           - "Rechecked the full article body through indexed DEV search content and the author-controlled Medium mirror"
-          - "Inspected the author's Medium profile metadata, which lists two image entries under the QKV article title"
+          - "Inspected indexed Medium profile metadata listing two image entries under the QKV article title; direct profile retrieval returned a stale snapshot omitting the QKV article"
           - "Independently checked the KV-cache reader suggestion against the Hugging Face Transformers caching documentation recorded as a separate source"
         limitations:
           - "Direct article HTML and DEV API endpoints were not retrievable in this pass."
-          - "The Medium listing exposes image labels but not exact image bytes, a stable asset URL, figure placement or creator/rights metadata."
+          - "The indexed Medium listing exposes image labels but not exact image bytes, a stable asset URL, figure placement or creator/rights metadata; the directly opened profile snapshot is stale and omits the QKV article."
           - "The two image entries cannot yet be classified reliably as cover versus in-body figure or confirmed as the same asset."
           - "No article-image reuse rights were established."
     related:
