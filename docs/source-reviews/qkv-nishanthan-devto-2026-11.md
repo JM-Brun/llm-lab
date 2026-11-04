@@ -34,7 +34,7 @@ The canonical bilingual Q/K/V page was inspected in both languages, together wit
 | Shared input X and learned projections | Low | Low | Defer; canonical lesson already has equations, dimensions and self-/cross-attention caveats |
 | Score → scale → softmax → aggregation | Low | Low | Keep in the dedicated attention lesson, which provides stronger derivation and numerical treatment |
 | Multi-head summary | Low | Moderate as a simpler summary, but little additional learner value | Defer; current Transformer overview and block walkthrough already serve both levels |
-| bank ambiguity → pronoun it | Low | Moderate: potentially useful progression from lexical ambiguity to cross-position reference | Defer, not reject; compare the actual examples and sequence on the contextualized-representations page before deciding |
+| bank ambiguity → pronoun it | Low | High: lexical ambiguity and cross-position dependency are distinct learner intuitions | Integrate the pronoun example into both contextualized-representations pages, with an explicit caveat that it does not establish attention-head coreference resolution |
 | KV-cache follow-up | Not an article contribution | Not assessed as an article item | It appeared only in a reader comment in the indexed result; exclude from article extraction and attribution |
 
 ## 4. Technical assessment
@@ -49,14 +49,16 @@ The article's central equations and role distinctions are sound at the introduct
 
 ## 5. Integration decision
 
-**No immediate page edit is justified, but the source is not pedagogically empty.** The revised assessment identifies two possible complementary contributions: the article's concise verbal entry point for Q/K/V, and its paired examples moving from lexical ambiguity to pronoun reference. The latter is retained as a genuine candidate for a targeted comparison with the existing contextualized-representations page; it is deferred rather than dismissed.
+**A targeted page edit is justified.** The existing contextualized-representations lesson already uses lexical ambiguity (bank), while the pronoun example (it → the animal) adds a distinct cross-position dependency. Both language versions now include it as a bounded motivation, not as evidence that one attention head resolves coreference. The concise verbal Q/K/V framing remains deferred pending a separate learner-benefit comparison.
 
 The search analogy is rejected only after comparing its actual mapping and learner function with the existing index-card analogy. The mathematical and multi-head material remains deferred because the project already provides more complete treatments at the appropriate locations.
 
-No new concept, graph edge, page, figure, experiment or bibliography entry is created. A small existing-page improvement may still be warranted after a focused side-by-side review of the contextualized-representations examples. The reader comment remains excluded from article-derived content.
+No new concept, graph edge, page, figure, experiment or bibliography entry is created. The reader comment remains excluded from article-derived content.
 
 This is the intended workflow outcome: preserve plausible complementary value during extraction, then make a reasoned integration decision without forcing publication.
 
-## 6. Validation still required
+## 6. Integration update
 
-The source record and extraction file must be checked against the source-catalogue contract. Each extracted item now carries a qualitative pedagogical assessment across novelty, complementarity, learner value, applicability, redundancy and evidence quality. The Quarto pages remain unchanged pending the targeted comparison noted above.
+The targeted comparison found a real complementarity: the canonical page used lexical ambiguity (bank) but not cross-position pronoun reference. Both language versions now include the it → the animal example. The wording treats it as an illustration of contextual dependency, not evidence that a particular attention head performs coreference resolution. The extraction disposition is updated to integrate.
+
+The article remains partially scanned. Its licence, embedded visual assets, comments and linked materials remain unverified; no article figure or code was reused. The article is cited as the pedagogical origin of the example, not as a primary scientific source.
