@@ -14,7 +14,7 @@ suggested_route:
   previous: "fr/corpus-preparation"
   next: null
 hierarchy:
-  parents: ["fr/build-path"]
+  parents: ["fr/corpus-preparation"]
   children: []
 related: ["fr/corpus-preparation", "fr/tokenization-strategies", "fr/vraisemblance"]
 tags: ["type:concept-bridge", "destination:build", "topic:training-examples", "level:core", "language:fr", "status:published"]
