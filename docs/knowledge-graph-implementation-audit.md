@@ -58,7 +58,7 @@ The registry also contains more specific relations such as part-of, contributes-
 
 ### Validation evidence
 
-On PR #399 head 7bea7ec (2026-11-04), the Python quality workflow passed: page-metadata validation, concept-registry validation, history validation, embedding trace, Ruff format, Ruff lint, mypy, and pytest all completed successfully. The Quarto bilingual site render was still in progress at the latest status check; its final result remains to be confirmed.
+On PR #399 head 7bea7ec (2026-11-04), both workflows completed successfully. Python CI passed page-metadata validation, concept-registry validation, history validation, embedding trace, Ruff format, Ruff lint, mypy, and all 127 pytest tests. The Quarto workflow passed bilingual rendering, history timeline parity, and rendered local-link checks.
 
 ## Remaining gaps, ordered by dependency
 
