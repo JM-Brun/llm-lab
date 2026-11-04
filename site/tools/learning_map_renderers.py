@@ -758,7 +758,7 @@ def render_territory_map(
             "__SEARCH_LABEL__": html.escape(copy["searchLabel"]),
             "__LOADING__": html.escape(copy["loading"]),
             "__DETAILS_SUMMARY__": html.escape(copy["detailsSummary"]),
-        "__ASIDE_HINT__": html.escape(copy["asideHint"]),
+            "__ASIDE_HINT__": html.escape(copy["asideHint"]),
         },
     )
 
@@ -776,9 +776,7 @@ def render_resource_list(
             for page_id in section["pages"]:
                 page = page_by_id.get(page_id)
                 if page is not None:
-                    lines.append(
-                        f"    - [{escape_markdown_text(page['title'])}]({page['href']})"
-                    )
+                    lines.append(f"    - [{escape_markdown_text(page['title'])}]({page['href']})")
         for page_id in area["pages"]:
             page = page_by_id.get(page_id)
             if page is not None:

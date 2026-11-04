@@ -181,7 +181,6 @@ def _write_sidebar(site: Path) -> None:
     )
 
 
-
 def test_page_href_is_relative_to_language_map() -> None:
     assert page_href("fr/index", "fr") == "../index.html"
     assert page_href("fr/text-data", "fr") == "text-data.html"
@@ -362,7 +361,6 @@ def test_render_resource_list_nests_areas_sections_and_pages() -> None:
         "    - [Attention \\*elle\\*](attention.html)",
         "  - [Panorama](overview.html)",
     ]
-
 
 
 def test_load_guided_route_resolves_language_specific_page_links(tmp_path: Path) -> None:

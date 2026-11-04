@@ -353,9 +353,7 @@ def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], languag
                 "",
             ]
         )
-        lines.extend(
-            f"- [{escape_markdown_text(page.title)}]({page.href})" for page in stage.pages
-        )
+        lines.extend(f"- [{escape_markdown_text(page.title)}]({page.href})" for page in stage.pages)
         if stage.optional_pages:
             lines.extend(["", f"**{optional_label}**", ""])
             lines.extend(
