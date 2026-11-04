@@ -43,7 +43,7 @@ You will be able to:
 
 ![Comparison of information flow in encoder-only, decoder-only, and encoder–decoder architectures.](../images/transformer-attention-architectures.svg){fig-alt="Encoder-only: bidirectional self-attention. Decoder-only: causal self-attention. Encoder–decoder: encoder self-attention, causal decoder self-attention, and cross-attention to encoder memory." width=100%}
 
-The distinguishing feature of the encoder–decoder architecture is that its decoder can read representations produced by the encoder. This mechanism is called **cross-attention**. Its detailed operation belongs in an [advanced deep dive](cross-attention.qmd); it is not required to understand the broad architecture comparison.
+The distinguishing feature of the encoder–decoder architecture is that its decoder can read representations produced by the encoder. This mechanism is called [**cross-attention**](cross-attention.qmd){.concept-link}. Its detailed operation belongs in an [advanced deep dive](cross-attention.qmd); it is not required to understand the broad architecture comparison.
 
 
 
