@@ -172,3 +172,5 @@ The following gaps should be addressed incrementally:
 | Historical dataset | [History data model](history-data-model.md) |
 | Contributor process | [Contributing guide](../CONTRIBUTING.md) |
 | Repeatable information-architecture audits | [Knowledge architecture audit skill](../.agents/skills/knowledge-architecture-audit/SKILL.md) |
+| Page review evidence and remaining checks | [Page audit inventory](page-audit-inventory.md) |
+| Editorial ownership and core-route audits | [Editorial boundary audit](editorial-boundary-audit.md); [2026-11-04 core-route audit](editorial-boundary-audit-2026-11-04.md); [repeatable editorial audit skill](../.agents/skills/editorial-boundary-audit/SKILL.md) |
