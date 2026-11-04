@@ -108,9 +108,7 @@ class GuidedRouteStage(StrictModel):
                 getattr(self.optional_pages, language)
             )
             if overlap:
-                raise ValueError(
-                    f"{language} core and optional pages overlap: {sorted(overlap)}"
-                )
+                raise ValueError(f"{language} core and optional pages overlap: {sorted(overlap)}")
         return self
 
 
@@ -225,9 +223,7 @@ def load_pages() -> list[dict[str, Any]]:
     return pages
 
 
-def load_guided_route(
-    language: str, pages: list[dict[str, Any]]
-) -> list[ResolvedGuidedRouteStage]:
+def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[ResolvedGuidedRouteStage]:
     """Validate the route source and resolve every reference to a published page."""
     if language not in {"fr", "en"}:
         raise ValueError(f"unsupported guided-route language: {language!r}")
@@ -238,9 +234,7 @@ def load_guided_route(
     page_by_id = {page["id"]: page for page in pages}
     resolved: list[ResolvedGuidedRouteStage] = []
 
-    def resolve_pages(
-        page_ids: list[str], stage_id: str, role: str
-    ) -> list[ResolvedPage]:
+    def resolve_pages(page_ids: list[str], stage_id: str, role: str) -> list[ResolvedPage]:
         resources: list[ResolvedPage] = []
         for page_id in page_ids:
             page = page_by_id.get(page_id)
@@ -249,9 +243,7 @@ def load_guided_route(
                     f"guided-route stage {stage_id!r} references unpublished or "
                     f"missing {role} page {page_id!r}"
                 )
-            resources.append(
-                ResolvedPage(id=page_id, title=page["title"], href=page["href"])
-            )
+            resources.append(ResolvedPage(id=page_id, title=page["title"], href=page["href"]))
         return resources
 
     for stage in document.stages:
@@ -282,9 +274,7 @@ def render_guided_route_markdown(
     if language not in {"fr", "en"}:
         raise ValueError(f"unsupported guided-route language: {language!r}")
     core_label = "Pages centrales" if language == "fr" else "Core pages"
-    optional_label = (
-        "Approfondissements facultatifs" if language == "fr" else "Optional deep dives"
-    )
+    optional_label = "Approfondissements facultatifs" if language == "fr" else "Optional deep dives"
     lines = [":::: {.guided-route-grid}", ""]
     for index, stage in enumerate(stages, start=1):
         lines.extend(
@@ -313,9 +303,7 @@ def render_guided_route_markdown(
     return "\n".join(lines)
 
 
-def write_guided_route_fragment(
-    language: str, stages: list[ResolvedGuidedRouteStage]
-) -> Path:
+def write_guided_route_fragment(language: str, stages: list[ResolvedGuidedRouteStage]) -> Path:
     """Write a generated Quarto Markdown partial for the requested language."""
     output = SITE / "includes" / f"generated-guided-route-{language}.qmd"
     output.parent.mkdir(parents=True, exist_ok=True)
