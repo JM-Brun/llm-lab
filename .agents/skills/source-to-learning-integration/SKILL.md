@@ -91,6 +91,15 @@ Distinguish sources actually scanned from sources merely discovered, selected, l
 - Keep graph relations, pedagogical route, page navigation, source bibliography and learning-resource registry distinct but linked.
 - Maintain substantive French/English parity for published changes.
 
+## Route comparison contract
+
+For every instructional source with a discernible teaching sequence, compare three route levels explicitly:
+1. the source-local section/lesson sequence;
+2. the target page's local suggested route and its immediate previous/next pages;
+3. the end-to-end project learning route, including any separate Build/implementation path.
+
+Map source steps to canonical pages and stages. Record where the source compresses concepts that the project separates, where examples live elsewhere, and where deeper material is deliberately delegated. Decide independently whether to change page content, page navigation, the guided route, the implementation route, or none of them. A source route is not automatically a project prerequisite graph or site-navigation graph.
+
 ## Completion report
 
 For instructional sources, include the reconstructed source graph and route, their differential against LLM Lab's canonical graph and learning route, and separate decisions for graph changes, route changes and intentional non-changes.
