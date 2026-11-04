@@ -97,6 +97,10 @@ When comparing with LLM Lab, identify the exact existing page/section and compar
 
 Keep useful alternative perspectives in the extraction record even when Phase B decides not to publish them. Phase A should preserve options, not prematurely filter for novelty.
 
+### Extract for compilation across sources
+
+Assume most useful sources will overlap with the project's subject matter. The purpose of a source collection is to build a traceable compilation of complementary explanations, not to find one supposedly novel source and discard the rest. For each pedagogically relevant item, record the learner question, explanatory lens (mathematical, computational, geometric, linguistic, historical, empirical, engineering, etc.), teaching form, abstraction level, assumed prerequisites, distinct learning value, limitations and exact locator. Do not force every source into a unique perspective. Record useful convergence and meaningful disagreement, but keep source-specific claims distinguishable. Phase A records ingredients and provenance; it does not merge them into an unattributed composite. Flag groups of items that may warrant cross-source synthesis.
+
 ## 4. Capture teaching contributions
 
 ### Analogies and mental models
