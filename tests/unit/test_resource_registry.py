@@ -100,7 +100,7 @@ def test_rejects_invalid_external_urls_without_network_access(tmp_path: Path) ->
 def test_rejects_unknown_status_and_invalid_language_tag(tmp_path: Path) -> None:
     resource = _valid_resource()
     resource["status"] = "available"
-    resource["language"] = "english"
+    resource["language"] = "en-a"
     errors = _validate(tmp_path, resource)
     assert any("lifecycle status" in error for error in errors)
     assert any("BCP 47" in error for error in errors)
@@ -112,6 +112,7 @@ def test_concept_to_resource_links_are_many_to_many(tmp_path: Path) -> None:
     second["id"] = "second-transformer-code"
     second["location"] = {"type": "local", "path": "src/second.py"}
     (tmp_path / "src").mkdir(exist_ok=True)
+    (tmp_path / "src" / "example.py").write_text("value = 1\n", encoding="utf-8")
     (tmp_path / "src" / "second.py").write_text("value = 2\n", encoding="utf-8")
     errors = validate_resource_registry(
         {"schema_version": 1, "resources": [first, second]},
