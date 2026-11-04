@@ -1,6 +1,6 @@
 ---
 title: "Carte interactive du parcours"
-subtitle: "Pages, notions et relations pour explorer LLM Lab dans son ensemble"
+subtitle: "Un parcours guidé, puis des graphes pour explorer les pages et les notions"
 keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:fr", "status:published"]
 lang: fr
 toc: false
