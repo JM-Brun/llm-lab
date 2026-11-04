@@ -130,7 +130,7 @@ Non. Les IDs ne sont définis qu’à l’intérieur du vocabulaire de leur toke
 - **[Espace des embeddings](embedding-space.qmd)** : lookup des IDs et géométrie des vecteurs.
 - **[Exemples d'entraînement](training-examples.qmd)** : fenêtres, cibles décalées, packing et masques.
 
-La préparation du corpus (collecte, filtrage, déduplication et partitions) est une étape amont distincte de la tokenisation d'une entrée. Le contenu de transition présent plus haut est conservé provisoirement ici ; son emplacement canonique est examiné séparément dans [l'issue #360](https://github.com/JM-Brun/llm-lab/issues/360).
+La préparation du corpus (provenance, filtrage, déduplication, partitions et ajustement du tokenizer) a désormais sa page de référence : [Préparer un corpus pour le préentraînement](corpus-preparation.qmd). Cette page conserve uniquement la distinction nécessaire pour situer l'encodage d'un prompt.
 
 ::: {.language-switch}
 **Langue :** [Français](text-data.qmd) · [English](../en/text-data.qmd)
