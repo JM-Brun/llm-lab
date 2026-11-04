@@ -122,7 +122,7 @@ def test_load_pages_extracts_published_pages_and_heading_concepts(tmp_path: Path
     assert french["href"] == "attention.html"
     assert french["scope"] == "A concise scope."
     assert french["purpose"] == "A concise pedagogical purpose."
-    assert french["concepts"] == [
+    assert french["section_labels"] == [
         "Intuition",
         "Query, Key and Value",
         "Calcul des scores",
@@ -173,4 +173,4 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     assert payload["source"] == "LLM-LAB-PAGE-MAP v1"
     assert {page["id"] for page in payload["pages"]} == {"fr/index", "fr/attention"}
     assert all(page["href"] for page in payload["pages"])
-    assert all(isinstance(page["concepts"], list) for page in payload["pages"])
+    assert all(isinstance(page["section_labels"], list) for page in payload["pages"])
