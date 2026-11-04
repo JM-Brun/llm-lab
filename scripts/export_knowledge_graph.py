@@ -246,7 +246,7 @@ def main() -> int:
     )
     args = parser.parse_args()
     output = write_export(args.output)
-    sys.stdout.write(f"Exported JSON-LD knowledge graph to {output}\\n")
+    sys.stdout.write(f"Exported JSON-LD knowledge graph to {output}\n")
     return 0
 
 
