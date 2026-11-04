@@ -87,7 +87,7 @@ A useful scope can mention an adjacent topic, but only to establish a boundary. 
 
 ## 4. Tag vocabulary
 
-The `topic` tag is a stable page-grouping identifier shared by translated counterparts. It is not a concept record and does not provide definitions, synonyms, broader/narrower relations, or concept identity across multiple pages. Section headings extracted for the learning map are display labels only; they are not taxonomy entries. See [the information architecture contract](information-architecture.md) for the ownership boundary and criteria for a future SKOS-aligned concept scheme.
+The `topic` tag is a stable page-grouping identifier shared by translated counterparts. It is not a concept record and does not provide definitions, synonyms, broader/narrower relations, or concept identity across multiple pages. Section headings extracted for the learning map are display labels only; they are not taxonomy entries. See [the information architecture contract](information-architecture.md) for the ownership boundary and the SKOS-aligned concept scheme.
 
 Use these dimensions consistently:
 
@@ -132,31 +132,13 @@ The validator reads the actual `project.render` list from `site/_quarto.yml` and
 - French/English counterpart coverage, matching editorial dimensions, and equivalent relations after mapping translated IDs to canonical topic tags;
 - published status for every page in the render list.
 
-The validator runs in both the Python quality workflow and the Quarto workflow, before site rendering. It reports the source page and offending field or target. It deliberately does not generate navigation or treat a suggested reading route as a prerequisite graph.
+The validator runs in both the Python quality workflow and the Quarto workflow, before site rendering. It deliberately does not generate navigation or treat a suggested reading route as a prerequisite graph.
 
 ## 8. Coverage boundary
 
 The baseline covers every page in the current `site/_quarto.yml` render list, including the French root landing page, the bilingual inference/generation lesson, and the shared references page. The inference lesson is now published and must carry `status:published`. New pages must receive complete metadata in the same change that adds them to the render list.
 
-
-## 9. Advanced knowledge domains
-
-Pages with `destination:deepen` and a content-page type (not an entry point) must declare one top-level `domain` in the page-map comment. This field assigns the page to exactly one primary discovery domain; it is not a prerequisite, a graph edge, or a claim that the page has no cross-domain relevance.
-
-Controlled values:
-
-| Identifier | Primary learning question |
-|---|---|
-| `architectures-mechanisms` | How do specialized mechanisms and architectures change information flow or computation? |
-| `text-tokenization` | How do text representation and tokenizer design affect model inputs? |
-| `mathematical-tools-geometry` | Which mathematical tools help analyze tensors and representation spaces? |
-| `probabilistic-foundations-training` | How do probabilistic quantities, objectives, and optimization connect? |
-| `inference-efficiency` | How does a model use context, select outputs, and consume compute or memory? |
-| `scale-research` | What empirical regularities and capability claims are supported by evidence? |
-
-The domain is exported into the generated learning-map JSON and can be used as a discovery filter. French and English counterparts must use the same identifier. Pages outside Deepen must not declare this field. Use `related` for cross-domain connections instead of assigning multiple primary domains.
-
-## 10. Language-independent concept registry
+## 9. Language-independent concept registry
 
 The page graph and the concept graph answer different questions:
 
@@ -190,24 +172,19 @@ Relations are directed from `from` to `to`; their direction is part of their def
 
 Do not use a generic `related-to` relation as a substitute for deciding what the connection means. Add a relation type only when multiple real examples justify it and its direction can be stated unambiguously.
 
-### Validation and scope
+Run `python scripts/check_concept_registry.py` to check stable IDs, bilingual labels/definitions, resource-ID syntax, relation vocabulary, endpoint existence, self-links, and duplicate edges. The same check runs in CI. This registry is the canonical source for the concept graph; its JSON-LD interoperability projection is specified in [knowledge-graph-standards.md](knowledge-graph-standards.md).
 
-Run `python scripts/check_concept_registry.py` to check stable IDs, bilingual labels/definitions, resource-ID syntax, relation vocabulary, endpoint existence, self-links, and duplicate edges. The same check runs in CI. This first registry is intentionally a seed, not a complete ontology: it covers a small set of central concepts and should grow only alongside reviewed page content.
-
-The concept registry is not yet rendered as a second interactive graph. The existing learning map remains a page graph; a later integration should expose concept-to-page links and concept relations without conflating them with page navigation or the Understand/Build/Deepen destinations.
-
-
-## 11. Concept-to-domain membership
+## 10. Concept-to-domain membership
 
 The controlled domain vocabulary is maintained in `data/domains.yml`. Concept membership is recorded separately in each concept's `domains` list in `data/concepts.yml`. A concept may belong to more than one domain when it genuinely contributes to multiple lines of inquiry.
 
-This is deliberately distinct from the page-level `domain` field:
-- A Deepen page has one primary editorial/discovery domain, used to classify that page.
-- A concept may have multiple knowledge-domain memberships, used to organize the knowledge graph and cross-domain exploration.
-- Membership does not imply prerequisite, containment, or exclusivity. Use typed concept relations for semantic connections.
+This is distinct from the page-level `domain` field:
+- A Deepen page has one primary editorial/discovery domain.
+- A concept may have multiple knowledge-domain memberships.
+- Membership does not imply prerequisite, containment, or exclusivity.
 
 The domain registry defines stable IDs, bilingual labels, descriptions, and guiding questions. All six controlled IDs must be present. A concept must declare at least one valid domain; the validator rejects unknown or duplicate memberships.
 
-## 12. Symmetric concept relations
+## 11. Symmetric concept relations
 
 Concept relations are stored as directed triples. Most relation types are semantically directional and must not be reversed casually. `contrasts-with` is the exception: it is symmetric. Store it once, with the lexicographically smaller concept ID in `from` and the larger ID in `to`. Do not store a reciprocal duplicate. The validator enforces this canonical orientation.
