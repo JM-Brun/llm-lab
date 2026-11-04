@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/in-context-learning"
 scope: "Introduces in-context learning, its differences from training and fine-tuning, its manifestations, and leading explanatory hypotheses."
 purpose: "Readers should explain how a model uses examples in a prompt without updating its parameters, distinguish zero-shot, one-shot, and few-shot settings, and recognize the limits of current mechanistic explanations."
+domain: "inference-efficiency"
 suggested_route:
   previous: null
   next: null
