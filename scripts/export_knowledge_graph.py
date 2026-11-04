@@ -84,6 +84,10 @@ def _page_records() -> dict[str, dict[str, Any]]:
             "purpose": str(metadata.get("purpose", "")),
             "type": tags.get("type", "concept-lesson"),
             "level": tags.get("level", "core"),
+            "source_uri": (
+                "https://github.com/JM-Brun/llm-lab/blob/main/site/"
+                f"{path.relative_to(SITE).as_posix()}"
+            ),
         }
     return records
 
@@ -190,10 +194,20 @@ def build_graph() -> dict[str, Any]:
     # canonical source artifacts; it does not assert claim-level evidence.
     export_uri = f"{BASE}/knowledge-graph.jsonld"
     activity_uri = f"{BASE}/id/activity/knowledge-graph-export"
+    referenced_page_ids = {
+        page_id for concept in concepts_data["concepts"] for page_id in concept["resources"]
+    }
+    page_source_uris = sorted(
+        {
+            pages[page_id]["source_uri"]
+            for page_id in referenced_page_ids
+            if page_id in pages
+        }
+    )
     source_uris = [
         "https://github.com/JM-Brun/llm-lab/blob/main/data/concepts.yml",
         "https://github.com/JM-Brun/llm-lab/blob/main/data/domains.yml",
-        "https://github.com/JM-Brun/llm-lab/tree/main/site",
+        *page_source_uris,
     ]
     graph.append(
         {
