@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import json
 import sys
-from pathlib
-from tempfile import TemporaryDirectory import Path
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
