@@ -61,6 +61,43 @@ def test_softmax_with_temperature_invalid() -> None:
         softmax_with_temperature(np.array([1.0, np.nan]))
 
 
+def test_softmax_extreme_finite_logits_stays_normalized() -> None:
+    with np.errstate(over="raise", invalid="raise"):
+        result = softmax_with_temperature(np.array([1e308, 0.0]), temperature=0.1)
+        wide_result = softmax_with_temperature(np.array([-1e308, 1e308]), temperature=0.1)
+    np.testing.assert_array_equal(result, [1.0, 0.0])
+    np.testing.assert_array_equal(wide_result, [0.0, 1.0])
+
+
+@pytest.mark.parametrize("temperature", [np.nan, np.inf, -np.inf])
+def test_softmax_rejects_nonfinite_temperature(temperature: float) -> None:
+    with pytest.raises(ValueError, match="temperature must be"):
+        softmax_with_temperature(np.array([1.0, 0.0]), temperature=temperature)
+
+
+@pytest.mark.parametrize("bad_mask", [np.nan, np.inf])
+def test_attention_rejects_invalid_mask_entries(bad_mask: float) -> None:
+    with pytest.raises(ValueError, match="mask"):
+        scaled_dot_product_attention(
+            np.ones((1, 1)),
+            np.ones((2, 1)),
+            np.ones((2, 1)),
+            mask=np.array([[bad_mask, 0.0]]),
+        )
+
+
+def test_fully_masked_attention_row_returns_zeros_without_warning() -> None:
+    with np.errstate(invalid="raise"):
+        output, weights = scaled_dot_product_attention(
+            np.ones((1, 1)),
+            np.ones((2, 1)),
+            np.ones((2, 1)),
+            mask=np.full((1, 2), -np.inf),
+        )
+    np.testing.assert_array_equal(weights, [[0.0, 0.0]])
+    np.testing.assert_array_equal(output, [[0.0]])
+
+
 def test_scaled_dot_product_attention_shapes_and_invariants() -> None:
     t_q, t_k, d_k, d_v = 3, 4, 8, 12
     q = np.random.randn(t_q, d_k)

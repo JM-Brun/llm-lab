@@ -1,0 +1,62 @@
+{
+  "synthetic_logits": [
+    2.0,
+    1.0,
+    0.0,
+    -1.0
+  ],
+  "python": "3.12.12",
+  "numpy": "2.5.4",
+  "platform": "macOS-26.7.1-arm64-arm-64bit",
+  "randomness": "none",
+  "results": [
+    {
+      "temperature": 0.5,
+      "top_k": null,
+      "probabilities": [
+        0.8649548767993754,
+        0.11705891323853293,
+        0.01584220117850692,
+        0.002144008783584634
+      ],
+      "entropy_nats": 0.45542862285338365,
+      "retained_mass_before_renormalization": 1.0
+    },
+    {
+      "temperature": 1.0,
+      "top_k": null,
+      "probabilities": [
+        0.6439142598879724,
+        0.23688281808991013,
+        0.08714431874203257,
+        0.03205860328008499
+      ],
+      "entropy_nats": 0.9475369639754255,
+      "retained_mass_before_renormalization": 1.0
+    },
+    {
+      "temperature": 2.0,
+      "top_k": null,
+      "probabilities": [
+        0.45505423392341127,
+        0.27600434470659363,
+        0.16740509727844333,
+        0.1015363240915518
+      ],
+      "entropy_nats": 1.2450504274673975,
+      "retained_mass_before_renormalization": 1.0
+    },
+    {
+      "temperature": 1.0,
+      "top_k": 2,
+      "probabilities": [
+        0.7310585786300049,
+        0.2689414213699951,
+        0.0,
+        0.0
+      ],
+      "entropy_nats": 0.5822031088882179,
+      "retained_mass_before_renormalization": 0.8807970779778824
+    }
+  ]
+}

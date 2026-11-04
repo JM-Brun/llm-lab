@@ -26,7 +26,7 @@ L'attention à produit scalaire compare les requêtes aux clés pour calculer de
 
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Concept vérifié</span>
-  <span class="epistemic-badge badge-code">Micro-code exécutable</span>
+  <span class="epistemic-badge badge-code">Python · à exécuter localement</span>
   <span class="epistemic-badge badge-status">Architecture : Attention standard</span>
 </div>
 

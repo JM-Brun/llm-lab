@@ -30,7 +30,7 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: uv sync --dev
+        run: uv sync --locked --dev
 
       - name: Install documentation example dependency
         run: uv pip install --python .venv/bin/python -r docs/requirements-tokenizer-example.txt

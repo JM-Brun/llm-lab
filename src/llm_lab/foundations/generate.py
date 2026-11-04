@@ -72,7 +72,7 @@ def generate(
         prompt_ids: 1D integer array of prompt ids, with
             1 <= length <= context_length and values in [0, vocab_size).
         max_new_tokens: Number of tokens to generate (>= 0).
-        temperature: Sampling temperature (> 0); it only affects sampling,
+        temperature: Finite sampling temperature (> 0); it only affects sampling,
             but is validated in both modes so that a latent invalid value
             cannot hide behind greedy decoding.
         greedy: If True, select the argmax token at each step.
@@ -111,8 +111,8 @@ def generate(
         raise ValueError("prompt token ids are out of range [0, vocab_size)")
     if max_new_tokens < 0:
         raise ValueError("max_new_tokens must be >= 0")
-    if temperature <= 0:
-        raise ValueError("temperature must be strictly positive")
+    if not np.isfinite(temperature) or temperature <= 0:
+        raise ValueError("temperature must be strictly positive and finite")
     if top_k is not None and (top_k < 1 or not np.issubdtype(np.asarray(top_k).dtype, np.integer)):
         raise ValueError("top_k must be an integer >= 1 when provided")
     if top_p is not None and not 0.0 < top_p <= 1.0:

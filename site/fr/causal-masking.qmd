@@ -26,7 +26,7 @@ Pour prédire le token suivant à la position $t+1$, le modèle ne doit utiliser
 
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Concept vérifié</span>
-  <span class="epistemic-badge badge-code">Test d'invariance exécutable</span>
+  <span class="epistemic-badge badge-code">Test d'invariance · à exécuter localement</span>
   <span class="epistemic-badge badge-status">Architecture : Décodeur autorégressif</span>
 </div>
 

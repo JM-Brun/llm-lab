@@ -36,21 +36,22 @@ def softmax_with_temperature(
 
     Args:
         logits: Input array containing real-valued scores.
-        temperature: Temperature parameter > 0. Values < 1 make the distribution
+        temperature: Finite temperature parameter > 0. Values < 1 make the distribution
             sharper; values > 1 make it more uniform.
         axis: Dimension along which softmax is applied.
 
     Raises:
-        ValueError: If logits contains non-finite values or temperature <= 0.
+        ValueError: If logits contains non-finite values or temperature is not finite and positive.
     """
-    if temperature <= 0:
-        raise ValueError("temperature must be strictly positive")
+    if not np.isfinite(temperature) or temperature <= 0:
+        raise ValueError("temperature must be strictly positive and finite")
     if not np.all(np.isfinite(logits)):
         raise ValueError("logits must contain only finite values")
 
-    scaled = logits / temperature
-    max_val = np.max(scaled, axis=axis, keepdims=True)
-    shifted = scaled - max_val
+    # Subtract before division: scaling a large positive logit can overflow.
+    # A negative difference may overflow to -inf, correctly giving zero mass.
+    with np.errstate(over="ignore"):
+        shifted = (logits - np.max(logits, axis=axis, keepdims=True)) / temperature
     exp_vals = np.exp(shifted)
     sum_exp = np.sum(exp_vals, axis=axis, keepdims=True)
     return np.asarray(exp_vals / sum_exp, dtype=np.float64)
@@ -70,13 +71,14 @@ def scaled_dot_product_attention(
         queries: Array of shape (T_q, d_k).
         keys: Array of shape (T_k, d_k).
         values: Array of shape (T_k, d_v).
-        mask: Optional additive mask of shape (T_q, T_k), where 0.0 allows
-            attention and -inf forbids it.
+        mask: Optional additive mask of shape (T_q, T_k), with finite biases
+            or -inf to forbid attention. NaN and +inf are invalid.
 
     Returns:
         A tuple (output, weights) where:
             output has shape (T_q, d_v),
-            weights has shape (T_q, T_k).
+            weights has shape (T_q, T_k). Fully masked rows have zero weights
+            and zero output (a deliberate convention, not a probability distribution).
 
     Raises:
         ValueError: If array dimensions or shapes do not match the attention contract.
@@ -105,6 +107,8 @@ def scaled_dot_product_attention(
     if mask is not None:
         if mask.shape != (t_q, t_k):
             raise ValueError(f"mask shape {mask.shape} does not match expected ({t_q}, {t_k})")
+        if np.any(np.isnan(mask)) or np.any(np.isposinf(mask)):
+            raise ValueError("mask must contain only finite values or -inf")
         scores = scores + mask
 
     # Handle numerical stability for softmax
@@ -112,7 +116,7 @@ def scaled_dot_product_attention(
     # If a row is fully masked (-inf), max_scores is -inf; avoid nan
     valid_rows = np.isfinite(max_scores)
     shifted = np.zeros_like(scores)
-    shifted[valid_rows.squeeze(-1)] = (scores - max_scores)[valid_rows.squeeze(-1)]
+    np.subtract(scores, max_scores, out=shifted, where=valid_rows)
     exp_scores = np.exp(shifted)
     exp_scores[~np.isfinite(scores)] = 0.0
 
