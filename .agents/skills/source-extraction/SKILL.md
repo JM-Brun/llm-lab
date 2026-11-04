@@ -13,7 +13,7 @@ A scanned source may yield many independent items—or none worth integrating. E
 
 ## Inspect repository conventions
 
-Read the current graph standards and implementation audit, source/reference inventories, pedagogical resource library, visual-asset register, existing source audits, data schemas, validators and related skills. Reuse an established model if one exists. Otherwise propose a canonical source catalogue (e.g. `data/sources.yml`) and structured extraction records (e.g. `data/extractions/<source-id>.yml`). Do not overload implementation-oriented `data/resources.yml`, create another concept registry, or hand-maintain JSON-LD. Keep records compact; link large artifacts to canonical files.
+Read the current graph standards and implementation audit, `docs/source-catalogue-schema.md`, `data/source-taxonomy.yml`, `data/domains.yml`, `data/sources.yml`, source/reference inventories, the pedagogical resource library, visual-asset register, existing source audits, validators and related skills. Use `data/sources.yml` as the canonical source catalogue and `data/extractions/<source-id>.yml` for atomic extraction records. Do not create a parallel catalogue, overload implementation-oriented `data/resources.yml`, create another concept registry, or hand-maintain JSON-LD. Keep records compact; link large artifacts to canonical files.
 
 ## 1. Identify and register each source
 ## Classification contract: themes, tags and metadata
