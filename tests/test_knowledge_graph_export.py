@@ -14,6 +14,7 @@ from export_knowledge_graph import (  # noqa: E402
     CONCEPT_SCHEME,
     DOMAIN_SCHEME,
     build_graph,
+    relation_predicate,
 )
 
 
@@ -43,17 +44,11 @@ def test_export_describes_published_pages() -> None:
     assert all("llmlab:editorialLevel" in node for node in pages)
 
 
-def test_only_generalization_uses_skos_hierarchy() -> None:
-    payload = build_graph()
-    concept_nodes = [
-        node
-        for node in payload["@graph"]
-        if str(node.get("@id", "")).startswith(f"{BASE}/id/concept/")
-    ]
-
-    assert any("skos:narrower" in node for node in concept_nodes)
-    assert any("llmlab:prerequisite" in node for node in concept_nodes)
-    assert all("skos:related" not in node for node in concept_nodes)
+def test_relation_mapping_preserves_non_taxonomic_semantics() -> None:
+    assert relation_predicate("generalizes") == "skos:narrower"
+    assert relation_predicate("prerequisite") == "llmlab:prerequisite"
+    assert relation_predicate("part-of") == "llmlab:partOf"
+    assert relation_predicate("contrasts-with") == "llmlab:contrastsWith"
 
 
 def test_export_provenance_names_canonical_sources() -> None:
