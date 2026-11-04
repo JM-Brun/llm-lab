@@ -239,7 +239,9 @@ def build_graph() -> dict[str, Any]:
         if "publisher" in provenance:
             node["dcterms:publisher"] = provenance["publisher"]
         if "source_url" in provenance:
-            node["dcterms:source"] = {"@id": provenance["source_url"]}
+            source_uri = provenance["source_url"]
+            node["dcterms:source"] = {"@id": source_uri}
+            graph.append({"@id": source_uri, "@type": "prov:Entity"})
         if "license" in provenance:
             node["dcterms:license"] = provenance["license"]
         graph.append(node)
