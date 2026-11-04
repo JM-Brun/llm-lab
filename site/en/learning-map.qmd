@@ -96,6 +96,7 @@ The page graph retains the resource inventory and its route, hierarchy, and rela
     <span><i class="map-key map-key-hierarchy"></i> Hierarchy</span>
     <span><i class="map-key map-key-related"></i> Cross-link</span>
   </div>
+  <div class="learning-map-concept-legend" hidden></div>
   <div class="learning-map-layout">
     <div class="learning-map-canvas" tabindex="0" aria-label="Page graph. Scroll horizontally and vertically to explore.">
       <svg class="learning-map-svg" role="group" aria-label="Interactive map of pages and their relationships"></svg>

@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 REGISTRY = ROOT / "data" / "concepts.yml"
 DOMAINS = ROOT / "data" / "domains.yml"
 IDENTIFIER = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+SYMMETRIC_RELATION_TYPES = {"contrasts-with", "analogy"}
 RELATION_TYPES = {
     "prerequisite",
     "part-of",
@@ -239,15 +240,48 @@ def validate_registry(
                 errors.append(f"{where}: duplicate relation {key!r}")
             seen.add(key)
             if source in identifiers and target in identifiers:
-                if kind == "contrasts-with" and source >= target:
+                if kind in SYMMETRIC_RELATION_TYPES and source >= target:
                     errors.append(
-                        f"{where}: contrasts-with must use canonical lexical order "
+                        f"{where}: {kind} must use canonical lexical order "
                         "(from < to) because it is symmetric"
                     )
                 if kind == "prerequisite":
                     prerequisite_edges.setdefault(source, []).append(target)
                 elif kind == "generalizes":
                     generalization_edges.setdefault(source, []).append(target)
+
+    relation_types = data.get("relation_types")
+    used_types = {kind for _, kind, _ in seen}
+    if not isinstance(relation_types, dict):
+        errors.append("relation_types: expected a mapping")
+    else:
+        unknown_definitions = set(relation_types) - RELATION_TYPES
+        missing_definitions = used_types - set(relation_types)
+        if unknown_definitions:
+            errors.append(f"relation_types: unsupported definitions {sorted(unknown_definitions)}")
+        if missing_definitions:
+            errors.append(
+                f"relation_types: missing definitions for used types {sorted(missing_definitions)}"
+            )
+        for kind, definition in relation_types.items():
+            where = f"relation_types.{kind}"
+            if not isinstance(definition, dict):
+                errors.append(f"{where}: expected mapping")
+                continue
+            if definition.get("direction") not in {"directed", "symmetric"}:
+                errors.append(f"{where}.direction: expected directed or symmetric")
+            for field in ("labels", "descriptions"):
+                values = definition.get(field)
+                if not isinstance(values, dict) or set(values) != {"fr", "en"}:
+                    errors.append(f"{where}.{field}: expected exactly fr and en")
+                elif not all(isinstance(value, str) and value.strip() for value in values.values()):
+                    errors.append(f"{where}.{field}: values must be non-empty strings")
+            if kind in SYMMETRIC_RELATION_TYPES and definition.get("direction") != "symmetric":
+                errors.append(f"{where}.direction: {kind} must be symmetric")
+            elif (
+                kind not in SYMMETRIC_RELATION_TYPES and definition.get("direction") == "symmetric"
+            ):
+                errors.append(f"{where}.direction: {kind} is not defined as symmetric")
 
     if _has_cycle(prerequisite_edges):
         errors.append("relations: prerequisite graph must be acyclic")

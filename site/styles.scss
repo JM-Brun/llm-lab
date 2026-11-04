@@ -1141,6 +1141,7 @@ details.spot-the-fallacy .fallacy-content {
   stroke-width: 1.6;
   opacity: .5;
 }
+.map-edge-concept-symmetric { stroke-dasharray: 4 3; }
 .map-concept-node .map-node-card {
   fill: #F5F3FF;
   stroke: #C4B5FD;
@@ -1220,3 +1221,30 @@ details.spot-the-fallacy .fallacy-content {
   .guided-route-stage { padding: .8rem .85rem; }
 }
 
+
+
+/* Concept relation legend: definitions are generated from the canonical registry. */
+.learning-map-concept-legend {
+  margin: .75rem 0 1rem;
+  padding: .75rem 1rem;
+  border: 1px solid #DDD6FE;
+  border-radius: .5rem;
+  background: #FAF9FF;
+  font-size: .86rem;
+}
+.learning-map-concept-legend h4 {
+  margin: 0 0 .45rem;
+  color: #51427D;
+  font-size: .92rem;
+}
+.learning-map-concept-legend ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .35rem 1.25rem;
+  margin: 0;
+  padding-left: 1.1rem;
+}
+.learning-map-concept-legend li { line-height: 1.45; }
+@media (max-width: 600px) {
+  .learning-map-concept-legend ul { grid-template-columns: 1fr; }
+}

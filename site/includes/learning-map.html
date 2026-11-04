@@ -89,6 +89,7 @@
   const domain = root.querySelector("#learning-map-domain");
   const mode = root.querySelector("#learning-map-mode");
   const pageControls = [...root.querySelectorAll("[data-map-page-controls]")];
+  const conceptLegend = root.querySelector(".learning-map-concept-legend");
   const relationInputs = [...root.querySelectorAll("[data-map-relation]")];
   const NS = "http://www.w3.org/2000/svg";
   const WIDTH = 244;
@@ -100,6 +101,7 @@
   let pages = [];
   let concepts = [];
   let conceptRelations = [];
+  let conceptRelationTypes = {};
   let selectedId = null;
 
   const syncSelection = () => {
@@ -342,7 +344,9 @@
         const source = concepts.find(item => item.id === edge.from);
         const target = concepts.find(item => item.id === edge.to);
         if (!source || !target) return;
-        item.textContent = source.label + " — " + edge.type + " → " + target.label;
+        const relation = conceptRelationTypes[edge.type];
+        const arrow = relation && relation.direction === "symmetric" ? " ↔ " : " → ";
+        item.textContent = source.label + " — " + (relation ? relation.label : edge.type) + arrow + target.label;
         list.appendChild(item);
       });
       details.appendChild(list);
@@ -368,12 +372,35 @@
     details.appendChild(resources);
   };
 
+  const renderConceptLegend = () => {
+    if (!conceptLegend) return;
+    conceptLegend.replaceChildren();
+    const heading = document.createElement("h4");
+    heading.textContent = language === "fr" ? "Sens des relations (source → cible)" : "Relationship meaning (source → target)";
+    conceptLegend.appendChild(heading);
+    const list = document.createElement("ul");
+    Object.entries(conceptRelationTypes).forEach(([type, relation]) => {
+      const item = document.createElement("li");
+      const direction = document.createElement("span");
+      direction.className = "map-relation-direction";
+      direction.textContent = relation.direction === "symmetric" ? "↔ " : "→ ";
+      const label = document.createElement("strong");
+      label.textContent = relation.label;
+      const description = document.createElement("span");
+      description.textContent = " — " + relation.description;
+      item.append(direction, label, description);
+      list.appendChild(item);
+    });
+    conceptLegend.appendChild(list);
+  };
+
   const renderConceptGraph = () => {
     const query = search.value.trim().toLocaleLowerCase();
     const visible = concepts.filter(concept =>
       !query || [concept.id, concept.label, concept.definition].join(" ").toLocaleLowerCase().includes(query)
     );
     pageControls.forEach(element => { element.hidden = true; });
+    if (conceptLegend) conceptLegend.hidden = false;
     const columns = 3;
     const nodeWidth = 220;
     const nodeHeight = 76;
@@ -413,11 +440,13 @@
       const dx = toCenter.x - fromCenter.x;
       const dy = toCenter.y - fromCenter.y;
       const scale = 1 / Math.max(Math.abs(dx) / (nodeWidth / 2), Math.abs(dy) / (nodeHeight / 2));
+      const relation = conceptRelationTypes[edge.type];
+      const symmetric = relation && relation.direction === "symmetric";
       const path = svgElement("path", {
         d: "M " + (fromCenter.x + dx * scale) + " " + (fromCenter.y + dy * scale)
           + " L " + (toCenter.x - dx * scale) + " " + (toCenter.y - dy * scale),
-        class: "map-edge map-edge-concept",
-        "marker-end": "url(#map-arrow-concept)",
+        class: "map-edge map-edge-concept" + (symmetric ? " map-edge-concept-symmetric" : ""),
+        "marker-end": symmetric ? "none" : "url(#map-arrow-concept)",
         "aria-hidden": "true"
       });
       svg.appendChild(path);
@@ -469,6 +498,7 @@
       return;
     }
     pageControls.forEach(element => { element.hidden = false; });
+    if (conceptLegend) conceptLegend.hidden = true;
     const visible = visiblePages();
     const relations = activeRelations();
     const grouped = [[], [], [], []];
@@ -567,6 +597,8 @@
       pages = Array.isArray(payload.pages) ? payload.pages : [];
       concepts = Array.isArray(payload.concepts) ? payload.concepts : [];
       conceptRelations = Array.isArray(payload.concept_relations) ? payload.concept_relations : [];
+      conceptRelationTypes = payload.concept_relation_types || {};
+      renderConceptLegend();
       if (!pages.length) throw new Error("No page metadata found");
       selectedId = pages.some(page => page.id === language + "/llm-overview")
         ? language + "/llm-overview"

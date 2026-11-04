@@ -97,6 +97,16 @@ def _write_concept_registry(root: Path) -> None:
                 "resources": ["fr/attention", "en/attention"],
             },
         ],
+        "relation_types": {
+            "part-of": {
+                "direction": "directed",
+                "labels": {"fr": "fait partie de", "en": "is part of"},
+                "descriptions": {
+                    "fr": "La source est une partie de la cible.",
+                    "en": "The source is part of the target.",
+                },
+            }
+        },
         "relations": [{"from": "query", "type": "part-of", "to": "attention"}],
     }
     registry = root / "data" / "concepts.yml"
@@ -465,3 +475,41 @@ def test_learning_map_keyboard_activation_uses_node_selection() -> None:
     assert script.count("node.click();") == 1
     assert script.count("anchor.click();") == 1
     assert "renderConceptGraph(); });" not in script
+
+
+def test_load_concept_graph_serializes_localized_relation_semantics(tmp_path: Path) -> None:
+    _write_concept_registry(tmp_path)
+    MODULE["load_concept_graph"].__globals__["ROOT"] = tmp_path
+    pages = [
+        {"id": "fr/attention", "title": "Attention", "href": "attention.html"},
+        {"id": "fr/queries", "title": "Requêtes", "href": "queries.html"},
+    ]
+
+    french = MODULE["load_concept_graph"]("fr", pages)
+    english = MODULE["load_concept_graph"](
+        "en",
+        [
+            {"id": "en/attention", "title": "Attention", "href": "attention.html"},
+            {"id": "en/queries", "title": "Queries", "href": "queries.html"},
+        ],
+    )
+
+    assert french["concept_relation_types"]["part-of"] == {
+        "direction": "directed",
+        "label": "fait partie de",
+        "description": "La source est une partie de la cible.",
+    }
+    assert english["concept_relation_types"]["part-of"] == {
+        "direction": "directed",
+        "label": "is part of",
+        "description": "The source is part of the target.",
+    }
+
+
+def test_concept_graph_script_exposes_direction_and_relation_legend() -> None:
+    script_path = MODULE_PATH.parents[2] / "site" / "includes" / "learning-map.html"
+    source = script_path.read_text(encoding="utf-8")
+    assert "Relationship meaning (source → target)" in source
+    assert 'const arrow = relation && relation.direction === "symmetric" ? " ↔ " : " → ";' in source
+    assert 'marker-end": symmetric ? "none" : "url(#map-arrow-concept)"' in source
+    assert "conceptLegend.hidden = false" in source

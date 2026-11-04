@@ -343,7 +343,20 @@ def load_concept_graph(
         for edge in registry["relations"]
         if edge["from"] in concept_ids and edge["to"] in concept_ids
     ]
-    return {"concepts": concepts, "concept_relations": relations}
+    relation_types = {
+        kind: {
+            "direction": definition["direction"],
+            "label": definition["labels"][language],
+            "description": definition["descriptions"][language],
+        }
+        for kind, definition in registry["relation_types"].items()
+        if any(edge["type"] == kind for edge in relations)
+    }
+    return {
+        "concepts": concepts,
+        "concept_relations": relations,
+        "concept_relation_types": relation_types,
+    }
 
 
 def assign_route_rank(pages: list[dict[str, Any]], language: str) -> None:
