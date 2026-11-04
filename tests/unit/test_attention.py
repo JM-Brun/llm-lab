@@ -109,7 +109,7 @@ def test_softmax_mixes_overflow_and_close_values_along_axis() -> None:
 def test_attention_rejects_overflowed_scores(
     query: float, key: float, mask: np.ndarray | None
 ) -> None:
-    with np.errstate(over="ignore", invalid="ignore"), pytest.raises(ValueError, match="scores"):
+    with np.errstate(over="raise", invalid="raise"), pytest.raises(ValueError, match="scores"):
         scaled_dot_product_attention(
             np.array([[query]]), np.array([[key]]), np.ones((1, 1)), mask=mask
         )

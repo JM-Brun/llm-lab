@@ -1,6 +1,6 @@
 # Project status
 
-This is the current inventory; the [learning path](learning-path.md) owns curriculum order and the [roadmap](roadmap.md) owns priorities. Update this table when evidence or scope changes. A historical snapshot in either document is not a replacement for this inventory.
+This is a high-level inventory; the [learning path](learning-path.md) owns curriculum order, module-level status, and evidence, while the [roadmap](roadmap.md) owns priorities. Update this summary when the underlying evidence or scope changes. A historical snapshot in either document is not a replacement for the current inventory.
 
 | Area | Implemented and tested | Demonstrated | Still planned or incomplete |
 |---|---|---|---|
