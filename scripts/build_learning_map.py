@@ -118,6 +118,52 @@ def load_pages() -> list[dict[str, Any]]:
     return pages
 
 
+def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Resolve the canonical curriculum stages to published bilingual page links."""
+    source_path = ROOT / "docs" / "learning-path.md"
+    if not source_path.exists():
+        return []
+    matches = GUIDED_ROUTE_COMMENT.findall(source_path.read_text(encoding="utf-8"))
+    if len(matches) != 1:
+        raise ValueError("docs/learning-path.md must contain exactly one guided-route block")
+
+    payload = yaml.safe_load(matches[0])
+    stages = payload.get("stages") if isinstance(payload, dict) else None
+    if not isinstance(stages, list) or not stages:
+        raise ValueError("guided-route block must define a non-empty stages list")
+
+    page_by_id = {page["id"]: page for page in pages}
+    resolved: list[dict[str, Any]] = []
+    seen_ids: set[str] = set()
+    for stage in stages:
+        if not isinstance(stage, dict):
+            raise ValueError("each guided-route stage must be a mapping")
+        stage_id = stage.get("id")
+        title = stage.get("title", {}).get(language)
+        objective = stage.get("objective", {}).get(language)
+        page_ids = stage.get("pages", {}).get(language)
+        if not isinstance(stage_id, str) or stage_id in seen_ids:
+            raise ValueError(f"guided-route stage ID is missing or duplicated: {stage_id!r}")
+        if not isinstance(title, str) or not isinstance(objective, str):
+            raise ValueError(f"guided-route stage {stage_id!r} lacks {language} copy")
+        if not isinstance(page_ids, list) or not page_ids:
+            raise ValueError(f"guided-route stage {stage_id!r} lacks {language} page IDs")
+
+        resources = []
+        for page_id in page_ids:
+            page = page_by_id.get(page_id)
+            if page is None:
+                raise ValueError(
+                    f"guided-route stage {stage_id!r} references unpublished or missing page {page_id!r}"
+                )
+            resources.append({"id": page_id, "title": page["title"], "href": page["href"]})
+        resolved.append(
+            {"id": stage_id, "title": title, "objective": objective, "pages": resources}
+        )
+        seen_ids.add(stage_id)
+    return resolved
+
+
 def load_concept_graph(
     language: str, pages: list[dict[str, Any]]
 ) -> dict[str, list[dict[str, Any]]]:
@@ -190,12 +236,14 @@ def build(language: str) -> Path:
     )
     output = SITE / f"learning-map-data-{language}.json"
     concept_graph = load_concept_graph(language, pages)
+    guided_route = load_guided_route(language, pages)
     output.write_text(
         json.dumps(
             {
                 "language": language,
                 "source": "LLM-LAB-PAGE-MAP v1 + data/concepts.yml",
                 "pages": pages,
+                "guided_route": guided_route,
                 **concept_graph,
             },
             ensure_ascii=False,
