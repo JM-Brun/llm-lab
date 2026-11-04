@@ -1,8 +1,6 @@
 project:
   type: website
   output-dir: _site
-  pre-render:
-    - uv run --no-project --with-requirements ../docs/requirements-history-validation.txt --python 3.12 python tools/build_learning_map.py
   resources:
     - learning-map-data-fr.json
     - learning-map-data-en.json

@@ -13,9 +13,10 @@ import re
 import sys
 from collections import deque
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import yaml
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
@@ -42,6 +43,110 @@ COLUMN_ORDER = {
     "practice": 3,
     "reference": 3,
 }
+
+
+class StrictModel(BaseModel):
+    """Base model for repository-authored, strictly typed metadata."""
+
+    model_config = ConfigDict(extra="forbid", strict=True)
+
+
+class LocalizedCopy(StrictModel):
+    """Required French and English copy for a guided-route field."""
+
+    fr: str = Field(min_length=1)
+    en: str = Field(min_length=1)
+
+    @field_validator("fr", "en")
+    @classmethod
+    def reject_blank_copy(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("localized copy must not be blank")
+        return value
+
+
+class LocalizedPageIds(StrictModel):
+    """Non-empty, language-specific list of core page identifiers."""
+
+    fr: list[str] = Field(min_length=1)
+    en: list[str] = Field(min_length=1)
+
+    @field_validator("fr", "en")
+    @classmethod
+    def validate_page_ids(cls, value: list[str]) -> list[str]:
+        if any(not page_id.strip() for page_id in value):
+            raise ValueError("page identifiers must not be blank")
+        if len(value) != len(set(value)):
+            raise ValueError("page identifiers must be unique within a language")
+        return value
+
+
+class OptionalLocalizedPageIds(StrictModel):
+    """Optional, language-specific deep-dive page identifiers."""
+
+    fr: list[str] = Field(default_factory=list)
+    en: list[str] = Field(default_factory=list)
+
+    @field_validator("fr", "en")
+    @classmethod
+    def validate_page_ids(cls, value: list[str]) -> list[str]:
+        if any(not page_id.strip() for page_id in value):
+            raise ValueError("page identifiers must not be blank")
+        if len(value) != len(set(value)):
+            raise ValueError("page identifiers must be unique within a language")
+        return value
+
+
+class GuidedRouteStage(StrictModel):
+    """One conceptual stage with bilingual copy and page references."""
+
+    id: str = Field(pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+    title: LocalizedCopy
+    objective: LocalizedCopy
+    pages: LocalizedPageIds
+    optional_pages: OptionalLocalizedPageIds = Field(default_factory=OptionalLocalizedPageIds)
+
+    @model_validator(mode="after")
+    def core_and_optional_pages_are_disjoint(self) -> GuidedRouteStage:
+        for language in ("fr", "en"):
+            overlap = set(getattr(self.pages, language)) & set(
+                getattr(self.optional_pages, language)
+            )
+            if overlap:
+                raise ValueError(f"{language} core and optional pages overlap: {sorted(overlap)}")
+        return self
+
+
+class GuidedRouteDocument(StrictModel):
+    """Versioned source document for the reader-facing conceptual route."""
+
+    schema_version: Literal[1]
+    stages: list[GuidedRouteStage] = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def stage_ids_are_unique(self) -> GuidedRouteDocument:
+        ids = [stage.id for stage in self.stages]
+        if len(ids) != len(set(ids)):
+            raise ValueError("guided-route stage identifiers must be unique")
+        return self
+
+
+class ResolvedPage(StrictModel):
+    """Published page link resolved from the canonical page metadata."""
+
+    id: str
+    title: str
+    href: str
+
+
+class ResolvedGuidedRouteStage(StrictModel):
+    """A validated stage ready for rendering into Quarto Markdown."""
+
+    id: str
+    title: str
+    objective: str
+    pages: list[ResolvedPage]
+    optional_pages: list[ResolvedPage] = Field(default_factory=list)
 
 
 def page_href(page_id: str, language: str) -> str:
@@ -123,6 +228,92 @@ def load_pages() -> list[dict[str, Any]]:
     return pages
 
 
+def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[ResolvedGuidedRouteStage]:
+    """Validate the route source and resolve every reference to a published page."""
+    if language not in {"fr", "en"}:
+        raise ValueError(f"unsupported guided-route language: {language!r}")
+
+    source_path = ROOT / "data" / "guided-route.yml"
+    payload = yaml.safe_load(source_path.read_text(encoding="utf-8"))
+    document = GuidedRouteDocument.model_validate(payload)
+    page_by_id = {page["id"]: page for page in pages}
+    resolved: list[ResolvedGuidedRouteStage] = []
+
+    def resolve_pages(page_ids: list[str], stage_id: str, role: str) -> list[ResolvedPage]:
+        resources: list[ResolvedPage] = []
+        for page_id in page_ids:
+            page = page_by_id.get(page_id)
+            if page is None:
+                raise ValueError(
+                    f"guided-route stage {stage_id!r} references unpublished or "
+                    f"missing {role} page {page_id!r}"
+                )
+            resources.append(ResolvedPage(id=page_id, title=page["title"], href=page["href"]))
+        return resources
+
+    for stage in document.stages:
+        resolved.append(
+            ResolvedGuidedRouteStage(
+                id=stage.id,
+                title=getattr(stage.title, language),
+                objective=getattr(stage.objective, language),
+                pages=resolve_pages(getattr(stage.pages, language), stage.id, "core"),
+                optional_pages=resolve_pages(
+                    getattr(stage.optional_pages, language), stage.id, "optional"
+                ),
+            )
+        )
+    return resolved
+
+
+def _escape_markdown_text(value: str) -> str:
+    """Escape Markdown syntax in titles and objectives originating in page metadata."""
+    special = "\\*_{}[]<>#+.!|" + chr(96)
+    return "".join(f"\\{character}" if character in special else character for character in value)
+
+
+def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], language: str) -> str:
+    """Render the route as native Quarto Markdown; no browser-side route renderer."""
+    if language not in {"fr", "en"}:
+        raise ValueError(f"unsupported guided-route language: {language!r}")
+    core_label = "Pages centrales" if language == "fr" else "Core pages"
+    optional_label = "Approfondissements facultatifs" if language == "fr" else "Optional deep dives"
+    lines = [":::: {.guided-route-grid}", ""]
+    for index, stage in enumerate(stages, start=1):
+        lines.extend(
+            [
+                "::: {.guided-route-stage}",
+                "",
+                f"### {index:02d} · {_escape_markdown_text(stage.title)}",
+                "",
+                _escape_markdown_text(stage.objective),
+                "",
+                f"**{core_label}**",
+                "",
+            ]
+        )
+        lines.extend(
+            f"- [{_escape_markdown_text(page.title)}]({page.href})" for page in stage.pages
+        )
+        if stage.optional_pages:
+            lines.extend(["", f"**{optional_label}**", ""])
+            lines.extend(
+                f"- [{_escape_markdown_text(page.title)}]({page.href})"
+                for page in stage.optional_pages
+            )
+        lines.extend(["", ":::", ""])
+    lines.extend(["::::", ""])
+    return "\n".join(lines)
+
+
+def write_guided_route_fragment(language: str, stages: list[ResolvedGuidedRouteStage]) -> Path:
+    """Write a generated Quarto Markdown partial for the requested language."""
+    output = SITE / "includes" / f"generated-guided-route-{language}.qmd"
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(render_guided_route_markdown(stages, language), encoding="utf-8")
+    return output
+
+
 def load_concept_graph(
     language: str, pages: list[dict[str, Any]]
 ) -> dict[str, list[dict[str, Any]]]:
@@ -195,11 +386,13 @@ def build(language: str) -> Path:
     )
     output = SITE / f"learning-map-data-{language}.json"
     concept_graph = load_concept_graph(language, pages)
+    guided_route = load_guided_route(language, pages)
+    write_guided_route_fragment(language, guided_route)
     output.write_text(
         json.dumps(
             {
                 "language": language,
-                "source": "LLM-LAB-PAGE-MAP v1 + data/concepts.yml",
+                "source": "LLM-LAB-PAGE-MAP v1 + data/guided-route.yml + data/concepts.yml",
                 "pages": pages,
                 **concept_graph,
             },

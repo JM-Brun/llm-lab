@@ -183,3 +183,42 @@ def test_accepts_bcp47_language_tags_and_rejects_invalid_extensions(tmp_path: Pa
     resource["language"] = "en-a"
     errors = _validate(tmp_path, resource)
     assert any("BCP 47" in error for error in errors)
+
+
+def test_rejects_malformed_url_ports_and_accepts_valid_ports(tmp_path: Path) -> None:
+    resource = _valid_resource()
+    for url in (
+        "https://example.org:bad/resource",
+        "https://example.org:65536/resource",
+        "https://example.org:-1/resource",
+    ):
+        resource["location"] = {"type": "external", "url": url}
+        errors = _validate(tmp_path, resource)
+        assert any("absolute HTTP(S) URL" in error for error in errors)
+
+    for url in (
+        "https://example.org/resource",
+        "https://example.org:443/resource",
+        "http://example.org:8080/resource",
+    ):
+        resource["location"] = {"type": "external", "url": url}
+        assert _validate(tmp_path, resource) == []
+
+
+def test_rejects_noncanonical_raw_local_path_segments(tmp_path: Path) -> None:
+    resource = _valid_resource()
+    for path in ("src//example.py", "src/./example.py", "src/example.py/"):
+        resource["location"] = {"type": "local", "path": path}
+        errors = _validate(tmp_path, resource)
+        assert any("empty, dot, and parent segments" in error for error in errors)
+
+
+def test_rejects_duplicate_bcp47_extension_singletons(tmp_path: Path) -> None:
+    resource = _valid_resource()
+    for language in ("en-a-foo-a-bar", "zh-Hant-TW-u-ca-gregory-u-nu-latn"):
+        resource["language"] = language
+        errors = _validate(tmp_path, resource)
+        assert any("BCP 47" in error for error in errors)
+
+    resource["language"] = "en-a-foo-b-bar"
+    assert _validate(tmp_path, resource) == []

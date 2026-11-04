@@ -8,7 +8,7 @@ The goal is not to train a production-scale LLM from scratch. It is to implement
 
 Contributions can improve concept explanations, French/English parity, reference implementations, numerical tests, reproducible experiments, critical reviews, figures/references, or developer tooling. Each mode has its own acceptance criteria; see [CONTRIBUTING.md](CONTRIBUTING.md) and use the PR template to state which mode your change follows.
 
-The information architecture, metadata ownership boundaries, and knowledge-graph maintenance rules are documented in [docs/information-architecture.md](docs/information-architecture.md).
+**Architecture and maintenance entry point:** [Information architecture and metadata governance](docs/information-architecture.md). It is the index for the canonical sources, their ownership boundaries, the generated projections, and the maintenance workflow. Use the [contributor guide](CONTRIBUTING.md) for the practical change workflow; detailed rules remain in their owning documents.
 
 ## Learn through the Quarto site
 
@@ -38,19 +38,21 @@ The project includes a bilingual Quarto website organized around LLM-specific ex
 - Core-route editorial boundary audit (2026-11-04): [`docs/editorial-boundary-audit-2026-11-04.md`](docs/editorial-boundary-audit-2026-11-04.md) — page-level overlap evidence, canonical ownership, and core-versus-optional recommendations.
 - Separate exercise-space entry points (navigation scaffolding only; exercises not yet written): [French](site/fr/exercises.qmd) · [English](site/en/exercises.qmd)
 
-The site uses carefully attributed illustrations embedded from their original source when suitable. It does not mirror or redistribute external image files. An accessible URL is not a licence: check reuse terms before copying or modifying a figure. Generate the history fragments, then render with the [Quarto CLI](https://quarto.org/docs/get-started/):
+The site uses carefully attributed illustrations embedded from their original source when suitable. It does not mirror or redistribute external image files. An accessible URL is not a licence: check reuse terms before copying or modifying a figure. Generate the history fragments, page/concept graph data, and bilingual guided-route Markdown partials before rendering with the [Quarto CLI](https://quarto.org/docs/get-started/). Quarto expands Markdown includes before rendering, so these fragments must already exist.
 
 ```bash
 uv run --no-project --with-requirements docs/requirements-history-validation.txt python site/tools/render_history_pilot.py
+uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py
 quarto render site
 ```
 
-The rendered site is written to `site/_site/`. The Quarto CLI is a separate system dependency; it is not installed by `uv`.
+The generated page/concept JSON files are ignored build artifacts. The bilingual guided-route Markdown partials are intentionally tracked: Quarto expands their include directives before project pre-render hooks, so the partials must already exist at checkout time. The generator refreshes them from `data/guided-route.yml`; commit any resulting partial changes together with route-source edits. The rendered site is written to `site/_site/`. The Quarto CLI is a separate system dependency; it is not installed by `uv`.
 
 ## Page composition
 
 - Contributor entry point and template map: [page-template guide](docs/page-template-guide.md) and [page archetype map](docs/site-page-design-system.md).
 - Canonical soft composition model and reusable patterns: [page-template system](docs/page-template-system.md), [scientific page patterns](docs/page-patterns.md), and [implementation-page patterns](docs/implementation-page-patterns.md).
+- Ownership, cross-document references, and update rules: [information architecture](docs/information-architecture.md). The map above is an index; the linked documents remain authoritative for their own subject.
 
 ## Editorial and content principles
 
@@ -81,7 +83,7 @@ The [canonical learning path](docs/learning-path.md) is the single source of tru
 
 The from-scratch route demonstrates inference before training, then prepares training examples and proceeds to learning and verification. G2 is a training-data branch, not a prerequisite for understanding inference. A1–A4 form a separate pretrained-model adaptation route; E1 covers evaluation across routes. These are not fixed calendar stages, and planned modules must not be read as completed implementations.
 
-See [the learning path](docs/learning-path.md) for the authoritative module-level objectives and evidence gates, the [roadmap](docs/roadmap.md) for priorities and acceptance criteria, and the [experiment protocol](docs/experiment-protocol.md) for reporting requirements.
+See [the learning path](docs/learning-path.md) for the authoritative module-level objectives and evidence gates, the [content-section map](docs/content-section-mapping.md) for destination boundaries and page ownership, the [roadmap](docs/roadmap.md) for priorities and acceptance criteria, and the [experiment protocol](docs/experiment-protocol.md) for reporting requirements. The interactive learning route and exploratory graphs are reader-facing projections; their source ownership and maintenance are indexed in [information architecture](docs/information-architecture.md).
 
 ## Repository layout
 

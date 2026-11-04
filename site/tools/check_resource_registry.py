@@ -63,8 +63,12 @@ def _valid_http_url(value: Any) -> bool:
         return False
     try:
         parsed = urlsplit(value)
+        # Accessing .port is required: urlsplit alone accepts malformed and
+        # out-of-range ports without raising.
+        port = parsed.port
         return (
             parsed.scheme in {"http", "https"}
+            and (port is None or 0 <= port <= 65535)
             and bool(parsed.netloc)
             and parsed.hostname is not None
             and parsed.username is None
@@ -72,6 +76,17 @@ def _valid_http_url(value: Any) -> bool:
         )
     except ValueError:
         return False
+
+
+def _valid_bcp47(value: Any) -> bool:
+    """Check BCP 47 structure offline, including extension singleton uniqueness."""
+    if not isinstance(value, str) or not BCP47.fullmatch(value):
+        return False
+    subtags = value.lower().split("-")[1:]
+    if "x" in subtags:
+        subtags = subtags[: subtags.index("x")]
+    singletons = [subtag for subtag in subtags if len(subtag) == 1]
+    return len(singletons) == len(set(singletons))
 
 
 def _validate_location(location: Any, root: Path, where: str) -> list[str]:
@@ -86,8 +101,11 @@ def _validate_location(location: Any, root: Path, where: str) -> list[str]:
         if not isinstance(value, str) or not value or "\\" in value:
             return [f"{where}.path: expected a repository-relative POSIX path"]
         pure_path = PurePosixPath(value)
-        if pure_path.is_absolute() or any(part in {"", ".", ".."} for part in pure_path.parts):
-            return [f"{where}.path: absolute, empty, dot, and parent segments are not allowed"]
+        if pure_path.is_absolute():
+            return [f"{where}.path: absolute paths are not allowed"]
+        raw_segments = value.split("/")
+        if any(part in {"", ".", ".."} for part in raw_segments):
+            return [f"{where}.path: empty, dot, and parent segments are not allowed"]
         try:
             resolved_root = root.resolve(strict=True)
             resolved_path = (root / Path(*pure_path.parts)).resolve(strict=True)
@@ -170,7 +188,7 @@ def validate_resource_registry(
                 errors.append(f"{where}.{field}: values must be non-empty strings")
 
         language = resource.get("language")
-        if not isinstance(language, str) or not BCP47.fullmatch(language):
+        if not _valid_bcp47(language):
             errors.append(f"{where}.language: expected a valid BCP 47 language tag")
 
         programming_language = resource.get("programming_language")
