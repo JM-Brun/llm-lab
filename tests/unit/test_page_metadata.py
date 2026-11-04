@@ -67,7 +67,9 @@ def test_does_not_flag_planned_or_rendered_sources(tmp_path: Path) -> None:
 
 
 
-AUDIT_MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts" / "audit_page_metadata.py"
+AUDIT_MODULE_PATH = (
+    Path(__file__).resolve().parents[2] / "scripts" / "audit_page_metadata.py"
+)
 AUDIT_MODULE: dict[str, Any] = runpy.run_path(
     str(AUDIT_MODULE_PATH), run_name="page_metadata_audit_test"
 )
