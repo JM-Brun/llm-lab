@@ -97,6 +97,129 @@ def _page_ids(root: Path) -> set[str]:
     return page_ids
 
 
+def _validate_pedagogical_model(model: Any, where: str, errors: list[str]) -> None:
+    """Validate a source-local instructional graph and learning route."""
+    if not isinstance(model, dict):
+        errors.append(f"{where}: expected a mapping")
+        return
+
+    reconstruction = model.get("reconstruction")
+    if not isinstance(reconstruction, dict):
+        errors.append(f"{where}.reconstruction: expected a mapping")
+    else:
+        if reconstruction.get("status") not in {"complete", "partial", "not-applicable"}:
+            errors.append(f"{where}.reconstruction.status: unsupported status")
+        _strings(reconstruction.get("basis"), f"{where}.reconstruction.basis", errors)
+        _strings(
+            reconstruction.get("inferred_elements"),
+            f"{where}.reconstruction.inferred_elements",
+            errors,
+        )
+
+    graph = model.get("source_graph")
+    if not isinstance(graph, dict):
+        errors.append(f"{where}.source_graph: expected a mapping")
+        graph = {}
+    nodes = graph.get("nodes")
+    node_ids: set[str] = set()
+    if not isinstance(nodes, list) or not nodes:
+        errors.append(f"{where}.source_graph.nodes: expected a non-empty list")
+    else:
+        for index, node in enumerate(nodes):
+            node_where = f"{where}.source_graph.nodes[{index}]"
+            if not isinstance(node, dict):
+                errors.append(f"{node_where}: expected a mapping")
+                continue
+            node_id = node.get("id")
+            if not isinstance(node_id, str) or not ID_PATTERN.fullmatch(node_id):
+                errors.append(f"{node_where}.id: expected a kebab-case local ID")
+            elif node_id in node_ids:
+                errors.append(f"{node_where}.id: duplicate local node ID {node_id!r}")
+            else:
+                node_ids.add(node_id)
+            for field in ("kind", "description", "locator"):
+                if not isinstance(node.get(field), str) or not node[field].strip():
+                    errors.append(f"{node_where}.{field}: expected non-empty text")
+
+    edges = graph.get("edges")
+    if not isinstance(edges, list):
+        errors.append(f"{where}.source_graph.edges: expected a list")
+    else:
+        for index, edge in enumerate(edges):
+            edge_where = f"{where}.source_graph.edges[{index}]"
+            if not isinstance(edge, dict):
+                errors.append(f"{edge_where}: expected a mapping")
+                continue
+            for endpoint in ("from", "to"):
+                if edge.get(endpoint) not in node_ids:
+                    errors.append(
+                        f"{edge_where}.{endpoint}: unknown source-local node "
+                        f"{edge.get(endpoint)!r}"
+                    )
+            if not isinstance(edge.get("type"), str) or not edge["type"].strip():
+                errors.append(f"{edge_where}.type: expected a non-empty relation label")
+    if not isinstance(graph.get("interpretation"), str) or not graph["interpretation"].strip():
+        errors.append(f"{where}.source_graph.interpretation: expected a boundary note")
+
+    for field in ("learning_outcomes", "assumed_prerequisites"):
+        entries = model.get(field)
+        if not isinstance(entries, list) or not entries:
+            errors.append(f"{where}.{field}: expected a non-empty list")
+            continue
+        for index, entry in enumerate(entries):
+            entry_where = f"{where}.{field}[{index}]"
+            if not isinstance(entry, dict) or entry.get("status") not in {"declared", "inferred"}:
+                errors.append(f"{entry_where}: expected a mapping with declared/inferred status")
+                continue
+            content_key = "outcome" if field == "learning_outcomes" else "topic"
+            for key in (content_key, "basis"):
+                if not isinstance(entry.get(key), str) or not entry[key].strip():
+                    errors.append(f"{entry_where}.{key}: expected non-empty text")
+
+    route = model.get("teaching_route")
+    if not isinstance(route, list) or not route:
+        errors.append(f"{where}.teaching_route: expected a non-empty list")
+    else:
+        orders: list[int] = []
+        for index, step in enumerate(route):
+            step_where = f"{where}.teaching_route[{index}]"
+            if not isinstance(step, dict):
+                errors.append(f"{step_where}: expected a mapping")
+                continue
+            order = step.get("order")
+            if not isinstance(order, int) or order < 1:
+                errors.append(f"{step_where}.order: expected a positive integer")
+            else:
+                orders.append(order)
+            for field in ("section", "function"):
+                if not isinstance(step.get(field), str) or not step[field].strip():
+                    errors.append(f"{step_where}.{field}: expected non-empty text")
+            _strings(step.get("moves"), f"{step_where}.moves", errors)
+        if orders and sorted(orders) != list(range(1, len(orders) + 1)):
+            errors.append(f"{where}.teaching_route: order values must be unique and contiguous")
+
+    for field in ("pedagogical_strengths", "pedagogical_limits",):
+        _strings(model.get(field), f"{where}.{field}", errors)
+
+    comparison = model.get("comparison")
+    if not isinstance(comparison, dict):
+        errors.append(f"{where}.comparison: expected a mapping")
+    else:
+        for field in ("dossier", "canonical_graph", "decision"):
+            if not isinstance(comparison.get(field), str) or not comparison[field].strip():
+                errors.append(f"{where}.comparison.{field}: expected non-empty text")
+        _strings(
+            comparison.get("canonical_routes"),
+            f"{where}.comparison.canonical_routes",
+            errors,
+        )
+        _strings(
+            comparison.get("structures_kept_separate"),
+            f"{where}.comparison.structures_kept_separate",
+            errors,
+        )
+
+
 def validate_source_catalogue(root: Path = ROOT) -> list[str]:
     """Return structural and referential-integrity errors for sources and extractions."""
     source_file = root / "data" / "sources.yml"
