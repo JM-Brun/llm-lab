@@ -197,10 +197,10 @@
     details.appendChild(sectionHeading);
 
     const sectionList = document.createElement("ul");
-    sectionList.className = "map-concept-list";
-    (page.section_labels || []).forEach(concept => {
+    sectionList.className = "map-section-list";
+    (page.section_labels || []).forEach(label => {
       const item = document.createElement("li");
-      item.textContent = concept;
+      item.textContent = label;
       sectionList.appendChild(item);
     });
     if (!sectionList.childElementCount) {
@@ -290,12 +290,12 @@
       topic.textContent = page.topic || page.destination;
       anchor.appendChild(topic);
       appendText(anchor, position.x + 13, position.y + 39, wrap(page.title, 30, 2), "map-node-title");
-      const concepts = (page.section_labels || []).slice(0, 2).join(" · ");
-      const conceptLine = svgElement("text", {
-        x: position.x + 13, y: position.y + 84, class: "map-node-concepts"
+      const sectionLabels = (page.section_labels || []).slice(0, 2).join(" · ");
+      const sectionLine = svgElement("text", {
+        x: position.x + 13, y: position.y + 84, class: "map-node-section-labels"
       });
-      conceptLine.textContent = concepts.length > 44 ? concepts.slice(0, 43) + "…" : concepts;
-      anchor.appendChild(conceptLine);
+      sectionLine.textContent = sectionLabels.length > 44 ? sectionLabels.slice(0, 43) + "…" : sectionLabels;
+      anchor.appendChild(sectionLine);
       anchor.addEventListener("pointerenter", () => updateDetails(page));
       anchor.addEventListener("focus", () => updateDetails(page));
       svg.appendChild(anchor);
