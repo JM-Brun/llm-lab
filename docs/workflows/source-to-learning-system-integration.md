@@ -250,7 +250,31 @@ The overall scan status should remain partial while any in-scope component is un
 - [ ] Validation evidence tied to the final commit
 - [ ] Topic collection index with open follow-ups
 
-## 7. Q/K/V worked application
+
+
+## 8. Standard deliverable templates
+
+Use the templates in [`docs/workflows/templates/`](templates/) as starting points. They are deliberately separate because each artifact has a different responsibility:
+
+| Template | Use | Canonical destination |
+|---|---|---|
+| [Source registration](templates/source-registration-template.yml) | Register provenance, metadata, licence, scan history and project relations | One entry in `data/sources.yml` |
+| [Structured source extraction](templates/source-extraction-template.yml) | Record scan coverage, source-local graph/route and atomic evidence-backed contributions | One file under `data/extractions/` |
+| [Source review](templates/source-review-template.md) | Human-readable technical and pedagogical audit with bounded integration decision | One file under `docs/source-reviews/` |
+| [Multi-source comparison](templates/multi-source-comparison-template.md) | Compare sources consistently and explain aggregate impact on the learning system | One living topic dossier under `docs/source-reviews/` |
+| [Visual asset audit](templates/visual-asset-audit-template.md) | Inspect exact figure assets, provenance, accessibility and reuse rights | One audit per source or figure set |
+
+### Template use rules
+
+- Copy a template and replace every placeholder; do not leave template placeholders in a published record.
+- Keep the structured extraction as the evidence-oriented record and the Markdown review as its human-readable interpretation. Avoid maintaining two competing copies of the same facts.
+- The source register is the canonical bibliographic/provenance inventory; do not duplicate the full extraction into `data/sources.yml`.
+- Use one cross-source dossier per topic, not one comparison file per pair of sources.
+- Use the visual audit only when the source actually contains relevant media; unresolved figures remain explicitly unknown/link-only.
+- Template files are examples, not schemas. Run the repository's actual validators against completed records and update templates when the canonical data model changes.
+- Preserve unknown values as null/unknown and distinguish `not-inspected`, `unavailable`, `not-applicable` and `not-verified` where relevant.
+
+## 9. Q/K/V worked application
 
 The Q/K/V comparison is the initial worked application of this workflow:
 - DEV / Nishanthan provides a compact end-to-end sequence and a multi-head summary; the comparison exposed four canonical concepts already taught but absent from the registry.
