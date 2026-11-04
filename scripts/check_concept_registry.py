@@ -132,9 +132,7 @@ def validate_registry(data: Any, published_pages: set[str] | None = None) -> lis
             if not isinstance(page_id, str) or not PAGE_ID.fullmatch(page_id):
                 errors.append(f"{where}.resources: invalid page ID {page_id!r}")
             elif published_pages is not None and page_id not in published_pages:
-                errors.append(
-                    f"{where}.resources: page {page_id!r} is not a published page"
-                )
+                errors.append(f"{where}.resources: page {page_id!r} is not a published page")
 
     relations = data.get("relations")
     if not isinstance(relations, list):
