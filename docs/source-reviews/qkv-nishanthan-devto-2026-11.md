@@ -70,3 +70,14 @@ The article is cited as the pedagogical origin of the example, not as a primary 
 The direct retrieval performed after the initial review supersedes the earlier cache-miss limitation for the article body. The two visible reader comments and the author's reply were also inspected. One comment suggests KV-cache as a follow-up; this is reader commentary, not part of the article's claims, and remains excluded from the extraction. The article author's reply acknowledges the suggestion but does not provide a technical explanation, so no KV-cache knowledge is attributed to this source.
 
 The source catalogue retains both scan events to preserve provenance rather than rewriting the initial inspection history. The current scan status remains partially-scanned, while the integration status is partially-integrated.
+
+
+## 8. Visual asset follow-up
+
+The article's visual was explicitly flagged for a separate pedagogical review because it may communicate the Q/K/V mechanism more effectively than the current project illustration. This is a meaningful lead, not yet a completed visual inspection.
+
+The currently available indexed article text does not expose a stable image URL, figure locator, caption or creator/rights metadata. Search results for the article and its Medium mirror confirm the article identity and text, but do not provide enough evidence to identify the exact visual asset unambiguously. The earlier inspection record already notes that embedded assets were not inspected separately. No unrelated QKV image found through generic image search is being substituted for the article's own figure.
+
+**Current decision: visual inspection pending.** Do not copy, embed, trace or redraw the figure at this stage. The next inspection must retrieve the exact image from the article, record its original URL and position, inspect it at full resolution, and assess its visual encoding, omissions, accessibility and rights independently of the article text. Only then compare its explanatory function with `site/images/queries-keys-values.svg` and `site/images/queries-keys-values-en.svg`. If the figure is pedagogically stronger but reuse rights are unclear, retain a source link and create a genuinely independent project illustration from the underlying concept—not a traced or cosmetically altered derivative.
+
+This gap exposed a workflow weakness: a successful text scan could be mistaken for a complete media scan. The `.agents/skills/source-extraction/SKILL.md` now includes a **Visual-first inspection checkpoint** requiring a separate inventory and inspection of cover and in-body media, exact asset provenance, rights checks, and an explicit not-visually-inspected state when retrieval fails. This is a reusable workflow improvement, not a source-specific exception.
