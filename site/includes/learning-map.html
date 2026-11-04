@@ -10,6 +10,11 @@
     hierarchy: "Hiérarchie pédagogique",
     related: "Pages associées",
     concepts: "Notions repérées dans la page",
+    modePages: "Graphe des pages",
+    modeConcepts: "Graphe conceptuel",
+    conceptRelations: "Relations conceptuelles",
+    resources: "Pages ressources",
+    noResources: "Aucune page associée.",
     purpose: "Rôle dans le parcours",
     open: "Ouvrir la page",
     empty: "Aucune page ne correspond à ces filtres.",
@@ -38,7 +43,12 @@
     route: "Suggested route",
     hierarchy: "Pedagogical hierarchy",
     related: "Related pages",
-    concepts: "Concepts identified on this page",
+    concepts: "Section headings on this page",
+    modePages: "Page graph",
+    modeConcepts: "Concept graph",
+    conceptRelations: "Concept relationships",
+    resources: "Resource pages",
+    noResources: "No linked pages.",
     purpose: "Role in the learning path",
     open: "Open page",
     empty: "No pages match these filters.",
@@ -71,6 +81,8 @@
   const search = root.querySelector("#learning-map-search");
   const destination = root.querySelector("#learning-map-destination");
   const domain = root.querySelector("#learning-map-domain");
+  const mode = root.querySelector("#learning-map-mode");
+  const pageControls = [...root.querySelectorAll("[data-map-page-controls]")];
   const relationInputs = [...root.querySelectorAll("[data-map-relation]")];
   const NS = "http://www.w3.org/2000/svg";
   const WIDTH = 244;
@@ -80,6 +92,8 @@
   const X_START = 18;
   const Y_START = 78;
   let pages = [];
+  let concepts = [];
+  let conceptRelations = [];
   let selectedId = null;
 
   const svgElement = (name, attributes = {}) => {
@@ -138,7 +152,7 @@
           : page.destination === selectedDestination);
       const searchable = [
         page.title, page.scope, page.purpose, page.topic, page.domain,
-        ...(page.concepts || [])
+        ...(page.section_headings || [])
       ].join(" ").toLocaleLowerCase();
       const domainMatches = selectedDomain === "all" || (page.destination === "deepen" && page.domain === selectedDomain);
       return destinationMatches && domainMatches && (!query || searchable.includes(query));
@@ -235,7 +249,7 @@
 
     const conceptList = document.createElement("ul");
     conceptList.className = "map-concept-list";
-    (page.concepts || []).forEach(concept => {
+    (page.section_headings || []).forEach(concept => {
       const item = document.createElement("li");
       item.textContent = concept;
       conceptList.appendChild(item);
@@ -279,7 +293,143 @@
     });
   };
 
+
+  const updateConceptDetails = concept => {
+    selectedId = concept.id;
+    details.replaceChildren();
+    const eyebrow = document.createElement("p");
+    eyebrow.className = "map-detail-eyebrow";
+    eyebrow.textContent = "CONCEPT · " + concept.id;
+    details.appendChild(eyebrow);
+    const heading = document.createElement("h3");
+    heading.textContent = concept.label;
+    details.appendChild(heading);
+    const definition = document.createElement("p");
+    definition.textContent = concept.definition;
+    details.appendChild(definition);
+
+    const related = conceptRelations.filter(edge => edge.from === concept.id || edge.to === concept.id);
+    if (related.length) {
+      const title = document.createElement("h4");
+      title.textContent = copy.conceptRelations;
+      details.appendChild(title);
+      const list = document.createElement("ul");
+      list.className = "map-related-list";
+      related.forEach(edge => {
+        const otherId = edge.from === concept.id ? edge.to : edge.from;
+        const other = concepts.find(item => item.id === otherId);
+        if (!other) return;
+        const item = document.createElement("li");
+        item.textContent = edge.from === concept.id
+          ? edge.type + " → " + other.label
+          : other.label + " → " + edge.type;
+        list.appendChild(item);
+      });
+      details.appendChild(list);
+    }
+    const resourceTitle = document.createElement("h4");
+    resourceTitle.textContent = copy.resources;
+    details.appendChild(resourceTitle);
+    const resources = document.createElement("ul");
+    resources.className = "map-related-list";
+    concept.resources.forEach(resource => {
+      const item = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = resource.href;
+      link.textContent = resource.title;
+      item.appendChild(link);
+      resources.appendChild(item);
+    });
+    if (!resources.childElementCount) {
+      const item = document.createElement("li");
+      item.textContent = copy.noResources;
+      resources.appendChild(item);
+    }
+    details.appendChild(resources);
+  };
+
+  const renderConceptGraph = () => {
+    const query = search.value.trim().toLocaleLowerCase();
+    const visible = concepts.filter(concept =>
+      !query || [concept.id, concept.label, concept.definition].join(" ").toLocaleLowerCase().includes(query)
+    );
+    pageControls.forEach(element => { element.hidden = true; });
+    const columns = 3;
+    const nodeWidth = 220;
+    const nodeHeight = 76;
+    const gapX = 54;
+    const gapY = 36;
+    const startX = 24;
+    const startY = 48;
+    const rows = Math.max(1, Math.ceil(visible.length / columns));
+    const width = startX * 2 + columns * nodeWidth + (columns - 1) * gapX;
+    const height = startY + rows * (nodeHeight + gapY) + 20;
+    svg.replaceChildren();
+    svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+    svg.setAttribute("width", String(width));
+    svg.setAttribute("height", String(height));
+    const positions = new Map();
+    visible.forEach((concept, index) => {
+      positions.set(concept.id, {
+        x: startX + (index % columns) * (nodeWidth + gapX),
+        y: startY + Math.floor(index / columns) * (nodeHeight + gapY)
+      });
+    });
+    conceptRelations.forEach(edge => {
+      const from = positions.get(edge.from);
+      const to = positions.get(edge.to);
+      if (!from || !to) return;
+      const path = svgElement("path", {
+        d: "M " + (from.x + nodeWidth / 2) + " " + (from.y + nodeHeight / 2)
+          + " L " + (to.x + nodeWidth / 2) + " " + (to.y + nodeHeight / 2),
+        class: "map-edge map-edge-concept",
+        "aria-hidden": "true"
+      });
+      svg.appendChild(path);
+    });
+    visible.forEach(concept => {
+      const position = positions.get(concept.id);
+      const node = svgElement("g", {
+        class: "map-node map-concept-node" + (selectedId === concept.id ? " is-selected" : ""),
+        tabindex: "0",
+        role: "button",
+        "aria-label": concept.label + ". " + concept.definition
+      });
+      node.appendChild(svgElement("rect", {
+        x: position.x, y: position.y, width: nodeWidth, height: nodeHeight, rx: 9,
+        class: "map-node-card"
+      }));
+      appendText(node, position.x + 12, position.y + 27, wrap(concept.label, 27, 1), "map-node-title");
+      const meta = svgElement("text", {
+        x: position.x + 12, y: position.y + 55, class: "map-node-topic"
+      });
+      meta.textContent = concept.id;
+      node.appendChild(meta);
+      node.addEventListener("click", () => { updateConceptDetails(concept); renderConceptGraph(); });
+      node.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          updateConceptDetails(concept);
+          renderConceptGraph();
+        }
+      });
+      svg.appendChild(node);
+    });
+    status.textContent = copy.count(visible.length, concepts.length).replace(/page\(s\)|pages/g, "concepts");
+    if (!visible.length) {
+      const empty = svgElement("text", { x: 24, y: 115, class: "map-empty" });
+      empty.textContent = copy.empty;
+      svg.appendChild(empty);
+    }
+    if (!visible.some(item => item.id === selectedId) && visible.length) updateConceptDetails(visible[0]);
+  };
+
   const render = () => {
+    if (mode && mode.value === "concepts") {
+      renderConceptGraph();
+      return;
+    }
+    pageControls.forEach(element => { element.hidden = false; });
     const visible = visiblePages();
     const relations = activeRelations();
     const grouped = [[], [], [], []];
@@ -312,7 +462,7 @@
       const anchor = svgElement("a", {
         href: page.href,
         class: "map-node map-node-" + page.destination + (selectedId === page.id ? " is-selected" : ""),
-        "aria-label": page.title + ". " + (page.concepts || []).slice(0, 3).join(", ")
+        "aria-label": page.title + ". " + (page.section_headings || []).slice(0, 3).join(", ")
       });
       const title = svgElement("title");
       title.textContent = page.title;
@@ -327,11 +477,11 @@
       topic.textContent = (page.domain && copy.domainShort[page.domain]) || page.topic || page.destination;
       anchor.appendChild(topic);
       appendText(anchor, position.x + 13, position.y + 39, wrap(page.title, 30, 2), "map-node-title");
-      const concepts = (page.concepts || []).slice(0, 2).join(" · ");
+      const headings = (page.section_headings || []).slice(0, 2).join(" · ");
       const conceptLine = svgElement("text", {
         x: position.x + 13, y: position.y + 84, class: "map-node-concepts"
       });
-      conceptLine.textContent = concepts.length > 44 ? concepts.slice(0, 43) + "…" : concepts;
+      conceptLine.textContent = headings.length > 44 ? headings.slice(0, 43) + "…" : headings;
       anchor.appendChild(conceptLine);
       anchor.addEventListener("pointerenter", () => updateDetails(page));
       anchor.addEventListener("focus", () => updateDetails(page));
@@ -349,6 +499,7 @@
   };
 
   search.addEventListener("input", render);
+  if (mode) mode.addEventListener("change", render);
   destination.addEventListener("change", () => {
     if (domain && destination.value !== "deepen") domain.value = "all";
     render();
@@ -366,6 +517,8 @@
     })
     .then(payload => {
       pages = Array.isArray(payload.pages) ? payload.pages : [];
+      concepts = Array.isArray(payload.concepts) ? payload.concepts : [];
+      conceptRelations = Array.isArray(payload.concept_relations) ? payload.concept_relations : [];
       if (!pages.length) throw new Error("No page metadata found");
       selectedId = pages.some(page => page.id === language + "/llm-overview")
         ? language + "/llm-overview"
