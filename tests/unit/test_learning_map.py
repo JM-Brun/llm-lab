@@ -1,4 +1,4 @@
-"""Unit tests for extracting and serializing the bilingual learning map."""
+""""Unit tests for extracting and serializing the bilingual learning map."""
 
 from __future__ import annotations
 
@@ -56,9 +56,9 @@ def _write_page(
     }
     front_yaml = yaml.safe_dump(front, allow_unicode=True, sort_keys=False).strip()
     metadata_yaml = yaml.safe_dump(metadata, allow_unicode=True, sort_keys=False).strip()
-    body = "\n".join(headings)
+    body = "\\n".join(headings)
     path.write_text(
-        f"---\n{front_yaml}\n---\n\n<!--\nLLM-LAB-PAGE-MAP v1\n{metadata_yaml}\n-->\n\n{body}\n",
+        f"---\\n{front_yaml}\\n---\\n\\n<!--\\nLLM-LAB-PAGE-MAP v1\\n{metadata_yaml}\\n-->\\n\\n{body}\\n",
         encoding="utf-8",
     )
 
@@ -152,7 +152,7 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     _write_page(site, page_id="en/index", language="en", title="Home", topic="overview")
     _write_page(site, page_id="en/attention", language="en", title="Attention")
 
-    MODULE["SITE"] = site
+    MODULE["build"].__globals__["SITE"] = site
     output = MODULE["build"]("fr")
     payload = json.loads(output.read_text(encoding="utf-8"))
 
@@ -162,3 +162,4 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     assert {page["id"] for page in payload["pages"]} == {"fr/index", "fr/attention"}
     assert all(page["href"] for page in payload["pages"])
     assert all(isinstance(page["concepts"], list) for page in payload["pages"])
+"
