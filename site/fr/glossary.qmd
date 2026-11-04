@@ -22,17 +22,31 @@ tags: ["type:glossary", "destination:reference", "topic:glossary", "level:refere
 
 Ce glossaire donne une définition courte des termes rencontrés dans le site. Il ne remplace pas les pages de référence : chaque lien renvoie vers une explication plus approfondie lorsqu'elle existe.
 
+## Modèles de langage et génération
+
+- **Modèle de langage** — modèle qui attribue une probabilité à une séquence de texte ou à ses prochains tokens, conditionnellement au contexte. Voir [Panorama : qu'est-ce qu'un LLM ?](llm-overview.qmd).
+- **Modèle génératif** — modèle qui définit une distribution permettant de produire de nouveaux échantillons, éventuellement conditionnés par une entrée ; il n'est pas nécessairement un modèle de langage.
+- **LLM (*large language model*)** — modèle de langage entraîné à grande échelle. Il n'existe pas de seuil universel de paramètres qui définisse cette catégorie ; voir [Lois d'échelle](scaling-laws.qmd).
+- **Loi d'échelle (*scaling law*)** — relation empirique entre une ressource d'entraînement (paramètres, données ou calcul) et une mesure telle que la perte ; elle dépend du régime étudié et ne fixe pas un seuil universel de LLM. Voir [Lois d'échelle](scaling-laws.qmd).
+
 ## Texte et données
 
 - **Token** — unité discrète manipulée par le modèle ; elle peut correspondre à un mot, une partie de mot, un caractère ou un autre segment.
 - **Tokenisation** — transformation du texte en une séquence d'identifiants de tokens.
 - **Vocabulaire** — ensemble des tokens que le tokenizer peut représenter.
 - **Préfixe** — partie déjà disponible d'une séquence, utilisée pour conditionner la prédiction suivante.
+- **Passe avant (*forward pass*)** — calcul du réseau qui transforme le contexte en représentations et en logits, avec les paramètres du modèle fixés. Voir [GPT et Transformer](transformer.qmd).
+- **Décodage (*decoding*)** — procédure qui exploite les logits ou leur distribution pour sélectionner le prochain token ; elle intervient après la passe avant et constitue une étape de la génération. Ne pas confondre avec le **décodeur** (*decoder*), partie de certaines architectures Transformer. Voir [Générer du texte](generation.qmd).
+- **Génération autorégressive** — processus itératif qui sélectionne un token, l’ajoute au contexte, puis recommence jusqu’à une condition d’arrêt. Voir [Générer du texte](generation.qmd).
 - **Fenêtre de contexte** — quantité de tokens que le modèle peut prendre en compte dans une entrée donnée.
 
 ## Représentations et géométrie
 
-- **Embedding / plongement** — vecteur associé à un token, un texte ou un autre objet selon le modèle. Voir [l'espace des embeddings](embedding-space.qmd).
+- **Embedding / plongement** — représentation vectorielle d'un objet. Le terme désigne des objets différents selon le contexte ; les entrées suivantes distinguent les principaux cas. Voir [l'espace des embeddings](embedding-space.qmd).
+- **Plongement initial d'un token** — vecteur récupéré dans la matrice d'embeddings à partir de l'identifiant du token ; avant contextualisation, le même identifiant sélectionne le même vecteur indépendamment de la phrase. Voir [Espace des embeddings](embedding-space.qmd).
+- **Représentation contextualisée** — vecteur produit par le réseau pour une position donnée après prise en compte du contexte ; contrairement au plongement initial, il dépend des autres tokens accessibles et des transformations du modèle. Voir [Représentations contextualisées](contextualized-representations.qmd).
+- **Embedding de phrase ou de document** — vecteur représentant un texte entier, obtenu par un encodeur ou une méthode d'agrégation ; il ne doit pas être confondu avec le plongement initial d'un token ni avec l'état caché d'une position. Voir [Similarité cosinus](cosine-similarity.qmd).
+- **Espace des embeddings (espace de plongement)** — espace vectoriel dans lequel les vecteurs associés aux objets sont comparés ; sa géométrie dépend du modèle, de la couche et de la méthode de représentation. Voir [Espace des embeddings](embedding-space.qmd).
 - **Similarité cosinus** — cosinus de l'angle entre deux vecteurs non nuls ; voir [définition, hypothèses et limites](cosine-similarity.qmd).
 - **Anisotropie** — distribution des vecteurs privilégiant certaines directions de l'espace ; elle peut affecter les scores et le classement des voisins.
 - **Hubness** — phénomène où certains points deviennent les plus proches voisins d'un grand nombre d'autres points.
@@ -54,7 +68,11 @@ Ces notions sont regroupées dans le parcours [Géométrie et interprétabilité
 
 ## Architecture Transformer
 
-- **Transformer** — architecture neuronale fondée sur l'attention et des transformations de représentations, introduite par Vaswani et ses collègues en 2017. Voir [synthèse du Transformer](transformer.qmd) et [historique](transformer-history.qmd).
+- **Profondeur (*depth*)** — nombre de blocs Transformer empilés dans le réseau. Voir [GPT et Transformer](transformer.qmd).
+- **Largeur (*width*)** — terme souvent utilisé pour désigner la dimension des représentations qui circulent entre les blocs (`d_model` ou *hidden size* dans un GPT classique) ; son sens dépend du contexte et ne doit pas être confondu avec `d_ff` ou `d_head`. Voir [GPT et Transformer](transformer.qmd).
+- **Dimension cachée (*hidden size*)** — dimension du vecteur de représentation interne ; dans les GPT classiques, elle correspond généralement à `d_model`, la largeur du flux résiduel.
+- **Transformer** — famille d'architectures neuronales fondées sur l'attention et des transformations de représentations, introduite par Vaswani et ses collègues en 2017. Ce terme ne désigne pas une famille de modèles unique. Voir [synthèse du Transformer](transformer.qmd) et [historique](transformer-history.qmd).
+- **GPT (*Generative Pre-trained Transformer*)** — famille de modèles génératifs pré-entraînés fondés sur le Transformer ; les GPT classiques utilisent une architecture décodeur seul et un objectif autorégressif. GPT n'est pas synonyme de Transformer. Voir [GPT et Transformer](transformer.qmd) et [architectures Transformer](transformer-architectures.qmd).
 - **Attention** — mécanisme qui calcule des poids à partir de requêtes et de clés, puis agrège les valeurs correspondantes. Voir [Q, K et V](queries-keys-values.qmd).
 - **Requête (Q)** — projection utilisée pour calculer les compatibilités avec les clés.
 - **Clé (K)** — projection comparée à une requête pour obtenir un score.
@@ -65,13 +83,18 @@ Ces notions sont regroupées dans le parcours [Géométrie et interprétabilité
 - **Transformer autorégressif** — Transformer entraîné à modéliser la séquence de gauche à droite : il estime chaque token conditionnellement aux tokens précédents. « Autorégressif » décrit l'objectif de prédiction, pas une obligation de générer un seul token à la fois pendant l'entraînement.
 - **Encodeur** — partie qui construit des représentations contextualisées d'une entrée ; dans BERT, par exemple, l'attention peut exploiter le contexte des deux côtés.
 - **Décodeur** — partie conçue pour produire des sorties à partir d'un contexte ; dans un décodeur autorégressif, le masque causal interdit l'accès aux tokens futurs.
-- **Embedding / plongement** — vecteur appris représentant un token ou un autre élément. Voir [l'espace des embeddings](embedding-space.qmd).
-- **Espace des embeddings** — espace vectoriel dans lequel les objets sont représentés par des vecteurs ; la géométrie observée dépend du modèle et de la tâche.
 - **Tenseur** — tableau de nombres organisé selon plusieurs axes. Sa forme indique la taille de chaque axe ; elle ne suffit pas à préciser le sens des données. Voir [Tenseurs](tensors.qmd).
 - **Encodage positionnel** — mécanisme qui fournit au modèle une information sur l'ordre des tokens. Les approches comprennent les encodages absolus, les biais relatifs et RoPE. Voir [Encodage positionnel et RoPE](positional-encoding.qmd).
 - **RoPE (*Rotary Position Embedding*)** — encodage positionnel qui applique des rotations dépendant de la position aux paires de coordonnées des requêtes et des clés.
 - **Paramètre** — valeur apprise pendant l'entraînement.
 - **Fine-tuning** — poursuite de l'entraînement d'un modèle pré-entraîné sur un objectif ou un jeu de données particulier.
+- **Fine-tuning supervisé (SFT)** — adaptation à partir de démonstrations sélectionnées, sous forme d'exemples entrée-cible ou instruction-réponse.
+- **RLHF (*reinforcement learning from human feedback*)** — famille de méthodes de post-entraînement qui exploitent des préférences humaines ; un pipeline classique entraîne un modèle de récompense à partir de comparaisons, puis optimise une politique par rapport à ce modèle.
+- **Modèle de récompense (*reward model*)** — modèle entraîné à attribuer des scores aux réponses en fonction des données de préférences ; ces scores sont des approximations apprises, pas des mesures objectives de vérité ou de qualité.
+- **PPO (*proximal policy optimization*)** — algorithme d'apprentissage par renforcement fondé sur le gradient de politique, utilisé dans certains pipelines RLHF pour optimiser une politique en limitant l'ampleur des mises à jour.
+- **DPO (*direct preference optimization*)** — méthode qui optimise directement une politique à partir de comparaisons de préférences, sans la boucle distincte modèle de récompense + PPO du pipeline RLHF classique.
+- **GRPO (*group relative policy optimization*)** — méthode d'optimisation d'une politique qui compare les récompenses de plusieurs réponses échantillonnées pour un même prompt afin de construire un signal d'apprentissage relatif. La récompense peut provenir d'un vérificateur ou d'un autre évaluateur ; GRPO n'en spécifie pas l'origine.
+- **RLVR (*reinforcement learning with verifiable rewards*)** — apprentissage par renforcement où les récompenses sont calculées à partir de résultats vérifiables, par exemple une réponse exacte, des tests exécutables ou la validation d'un format de sortie.
 
 ## Voir aussi
 

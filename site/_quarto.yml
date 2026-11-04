@@ -1,23 +1,45 @@
 project:
   type: website
   output-dir: _site
+  pre-render:
+    - uv run --no-project --with-requirements ../docs/requirements-history-validation.txt --python 3.12 python tools/build_learning_map.py
+  resources:
+    - learning-map-data-fr.json
+    - learning-map-data-en.json
+    - knowledge-graph.jsonld
   render:
     - index.qmd
+    - fr/learning-map.qmd
     - en/index.qmd
+    - en/learning-map.qmd
     - fr/text-data.qmd
     - en/text-data.qmd
     - fr/unicode-text.qmd
     - en/unicode-text.qmd
     - fr/tokenization-strategies.qmd
-    - fr/tokenizer-evaluation.qmd
+    - fr/tokenizer-design-evaluation.qmd
+    - fr/decoding-strategies.qmd
     - fr/training-examples.qmd
     - en/tokenization-strategies.qmd
-    - en/tokenizer-evaluation.qmd
+    - en/tokenizer-design-evaluation.qmd
+    - en/decoding-strategies.qmd
     - en/training-examples.qmd
     - fr/mathematical-foundations.qmd
     - en/mathematical-foundations.qmd
     - fr/build-path.qmd
+    - fr/corpus-preparation.qmd
     - en/build-path.qmd
+    - en/corpus-preparation.qmd
+    - fr/gpt-config-walkthrough.qmd
+    - en/gpt-config-walkthrough.qmd
+    - fr/gpt-ops-walkthrough.qmd
+    - en/gpt-ops-walkthrough.qmd
+    - fr/transformer-block-walkthrough.qmd
+    - en/transformer-block-walkthrough.qmd
+    - fr/gpt-model-walkthrough.qmd
+    - en/gpt-model-walkthrough.qmd
+    - fr/gpt-generation-walkthrough.qmd
+    - en/gpt-generation-walkthrough.qmd
     - fr/logits.qmd
     - en/logits.qmd
     - fr/probabilites.qmd
@@ -33,13 +55,33 @@ project:
     - fr/gradients.qmd
     - en/gradients.qmd
     - fr/llm-overview.qmd
+    - fr/deepen.qmd
+    - fr/language-modeling-math.qmd
+    - fr/scaling-laws.qmd
+    - fr/emergence.qmd
+    - fr/in-context-learning.qmd
     - en/llm-overview.qmd
+    - en/deepen.qmd
+    - en/language-modeling-math.qmd
+    - en/scaling-laws.qmd
+    - en/emergence.qmd
+    - en/in-context-learning.qmd
+    - fr/transformer-architectures.qmd
+    - fr/cross-attention.qmd
+    - fr/hybrid-llm-architectures.qmd
+    - fr/llm-computational-complexity.qmd
+    - en/transformer-architectures.qmd
+    - en/cross-attention.qmd
+    - en/hybrid-llm-architectures.qmd
+    - en/llm-computational-complexity.qmd
     - fr/transformer.qmd
     - fr/transformer-explainer.qmd
     - en/transformer.qmd
     - en/transformer-explainer.qmd
     - fr/generation.qmd
+    - fr/llm-limits.qmd
     - en/generation.qmd
+    - en/llm-limits.qmd
     - fr/glossary.qmd
     - en/glossary.qmd
     - fr/transformer-history.qmd
@@ -61,7 +103,9 @@ project:
     - fr/contextualized-representations.qmd
     - en/contextualized-representations.qmd
     - fr/positional-encoding.qmd
+    - fr/rope.qmd
     - en/positional-encoding.qmd
+    - en/rope.qmd
     - fr/exercises.qmd
     - en/exercises.qmd
     - fr/evaluation-experimentale.qmd
@@ -93,53 +137,84 @@ website:
       collapse-level: 1
       contents:
         - index.qmd
+        - fr/learning-map.qmd
         - section: "Comprendre les LLM"
           contents:
             - fr/llm-overview.qmd
-            - fr/transformer.qmd
+            - fr/transformer-architectures.qmd
             - fr/generation.qmd
-            - section: "Du texte aux représentations"
+            - fr/llm-limits.qmd
+            - section: "Du texte aux représentations et au calcul"
               contents:
                 - fr/text-data.qmd
-                - fr/unicode-text.qmd
                 - fr/tokenization-strategies.qmd
                 - fr/embedding-space.qmd
                 - fr/positional-encoding.qmd
                 - fr/contextualized-representations.qmd
-            - section: "Dans le Transformer"
+                - fr/transformer.qmd
+            - section: "Attention et sortie du Transformer"
               contents:
                 - fr/queries-keys-values.qmd
                 - fr/scaled-dot-product-attention.qmd
                 - fr/causal-masking.qmd
-            - section: "Prédire et générer"
-              contents:
                 - fr/logits.qmd
                 - fr/probabilites.qmd
             - section: "Apprendre à partir des données"
               contents:
-                - fr/training-examples.qmd
                 - fr/vraisemblance.qmd
                 - fr/entropy.qmd
                 - fr/cross-entropy.qmd
                 - fr/loss.qmd
                 - fr/gradients.qmd
-            - section: "Repères mathématiques (facultatifs)"
-              contents:
-                - fr/mathematical-foundations.qmd
         - section: "Construire un petit GPT"
           contents:
             - fr/build-path.qmd
-        - section: "S’exercer et expérimenter"
+            - section: "Préparer les données d'entraînement"
+              contents:
+                - fr/corpus-preparation.qmd
+                - fr/training-examples.qmd
+            - section: "Visite guidée du code de référence"
+              contents:
+                - fr/gpt-config-walkthrough.qmd
+                - fr/gpt-ops-walkthrough.qmd
+                - fr/transformer-block-walkthrough.qmd
+                - fr/gpt-model-walkthrough.qmd
+                - fr/gpt-generation-walkthrough.qmd
+        - section: "S'exercer et expérimenter"
           contents:
             - fr/exercises.qmd
-            - fr/evaluation-experimentale.qmd
             - fr/transformer-explainer.qmd
+            - fr/evaluation-experimentale.qmd
         - section: "Approfondir"
           contents:
-            - fr/tensors.qmd
-            - fr/tokenizer-evaluation.qmd
-            - fr/cosine-similarity.qmd
-            - fr/linearite-embeddings.qmd
+            - fr/deepen.qmd
+            - section: "Architectures et mécanismes"
+              contents:
+                - fr/cross-attention.qmd
+                - fr/rope.qmd
+                - fr/hybrid-llm-architectures.qmd
+            - section: "Texte et tokenisation"
+              contents:
+                - fr/unicode-text.qmd
+                - fr/tokenizer-design-evaluation.qmd
+            - section: "Outils mathématiques et géométrie"
+              contents:
+                - fr/tensors.qmd
+                - fr/cosine-similarity.qmd
+                - fr/linearite-embeddings.qmd
+            - section: "Fondements probabilistes et entraînement"
+              contents:
+                - fr/language-modeling-math.qmd
+                - fr/mathematical-foundations.qmd
+            - section: "Inférence et efficacité"
+              contents:
+                - fr/in-context-learning.qmd
+                - fr/decoding-strategies.qmd
+                - fr/llm-computational-complexity.qmd
+            - section: "Échelle et questions de recherche"
+              contents:
+                - fr/scaling-laws.qmd
+                - fr/emergence.qmd
         - section: "Références"
           contents:
             - fr/glossary.qmd
@@ -151,53 +226,84 @@ website:
       collapse-level: 1
       contents:
         - en/index.qmd
+        - en/learning-map.qmd
         - section: "Understand LLMs"
           contents:
             - en/llm-overview.qmd
-            - en/transformer.qmd
+            - en/transformer-architectures.qmd
             - en/generation.qmd
-            - section: "From text to representations"
+            - en/llm-limits.qmd
+            - section: "From text to representations and computation"
               contents:
                 - en/text-data.qmd
-                - en/unicode-text.qmd
                 - en/tokenization-strategies.qmd
                 - en/embedding-space.qmd
                 - en/positional-encoding.qmd
                 - en/contextualized-representations.qmd
-            - section: "Inside the Transformer"
+                - en/transformer.qmd
+            - section: "Attention and the Transformer's output"
               contents:
                 - en/queries-keys-values.qmd
                 - en/scaled-dot-product-attention.qmd
                 - en/causal-masking.qmd
-            - section: "Predict and generate"
-              contents:
                 - en/logits.qmd
                 - en/probabilities.qmd
             - section: "Learn from data"
               contents:
-                - en/training-examples.qmd
                 - en/likelihood.qmd
                 - en/entropy.qmd
                 - en/cross-entropy.qmd
                 - en/loss.qmd
                 - en/gradients.qmd
-            - section: "Mathematical orientation (optional)"
-              contents:
-                - en/mathematical-foundations.qmd
         - section: "Build a small GPT"
           contents:
             - en/build-path.qmd
+            - section: "Prepare training data"
+              contents:
+                - en/corpus-preparation.qmd
+                - en/training-examples.qmd
+            - section: "Guided tour of the reference code"
+              contents:
+                - en/gpt-config-walkthrough.qmd
+                - en/gpt-ops-walkthrough.qmd
+                - en/transformer-block-walkthrough.qmd
+                - en/gpt-model-walkthrough.qmd
+                - en/gpt-generation-walkthrough.qmd
         - section: "Practice and experiment"
           contents:
             - en/exercises.qmd
-            - en/experimental-evaluation.qmd
             - en/transformer-explainer.qmd
+            - en/experimental-evaluation.qmd
         - section: "Deepen your understanding"
           contents:
-            - en/tensors.qmd
-            - en/tokenizer-evaluation.qmd
-            - en/cosine-similarity.qmd
-            - en/embedding-linearity.qmd
+            - en/deepen.qmd
+            - section: "Architectures and mechanisms"
+              contents:
+                - en/cross-attention.qmd
+                - en/rope.qmd
+                - en/hybrid-llm-architectures.qmd
+            - section: "Text and tokenization"
+              contents:
+                - en/unicode-text.qmd
+                - en/tokenizer-design-evaluation.qmd
+            - section: "Mathematical tools and geometry"
+              contents:
+                - en/tensors.qmd
+                - en/cosine-similarity.qmd
+                - en/embedding-linearity.qmd
+            - section: "Probabilistic foundations and training"
+              contents:
+                - en/language-modeling-math.qmd
+                - en/mathematical-foundations.qmd
+            - section: "Inference and efficiency"
+              contents:
+                - en/in-context-learning.qmd
+                - en/decoding-strategies.qmd
+                - en/llm-computational-complexity.qmd
+            - section: "Scale and research questions"
+              contents:
+                - en/scaling-laws.qmd
+                - en/emergence.qmd
         - section: "Reference"
           contents:
             - en/glossary.qmd
@@ -214,7 +320,9 @@ format:
     theme:
       - cosmo
       - styles.scss
-    include-after-body: includes/language-switch.html
+    include-after-body:
+      - includes/language-switch.html
+      - includes/learning-map.html
     toc: true
     toc-depth: 3
     code-copy: true

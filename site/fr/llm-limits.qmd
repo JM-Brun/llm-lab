@@ -1,0 +1,64 @@
+---
+title: "Ce que la prédiction du prochain token ne prouve pas"
+subtitle: "Lire les performances d’un LLM sans surinterpréter l’objectif d’entraînement"
+keywords: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/llm-limits"
+scope: "Examine ce que l’objectif de prédiction du prochain token garantit et ne garantit pas : vérité des sorties, calibration, sens du mot « comprendre », capacités dites émergentes, rôle de la taille. Court complément critique du panorama ; ne détaille ni les mécanismes du Transformer ni les protocoles d’évaluation expérimentale."
+purpose: "À l’issue de cette page, le lecteur doit pouvoir distinguer ce qui se déduit de l’objectif d’entraînement de ce qui exige une évaluation, préciser le critère derrière le mot « comprendre » et expliquer pourquoi une capacité apparente dépend de la métrique et du protocole."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/llm-overview"]
+  children: []
+related: ["fr/evaluation-experimentale"]
+tags: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Prédire le prochain token est un **objectif d’entraînement**. Ce qu’un modèle en retire relève de l’évaluation, pas de la définition. Cette page sépare ce que l’objectif garantit — pas grand-chose au-delà de la prédiction elle-même — de ce qu’il rend seulement plausible.
+:::
+
+## 1. Ce que l’objectif garantit — et ne garantit pas
+
+Un objectif de prédiction apprend à attribuer des probabilités aux suites de tokens observées. Il peut conduire à des capacités linguistiques et à des comportements complexes, mais il ne garantit pas :
+
+- que chaque affirmation générée soit vraie ;
+- que les probabilités soient bien calibrées ;
+- que le modèle possède une compréhension humaine du monde ;
+- qu’une capacité observée se généralise à toute tâche ou tout contexte ;
+- qu’un comportement soit causalement expliqué par un motif d’attention isolé.
+
+Ces absences de garantie ne sont pas des défauts de réalisation : elles découlent de l’objectif lui-même. Chacune se traite par une évaluation adaptée — mesures, baselines, contrôles — dont la méthode fait l’objet de la page [Évaluation expérimentale](evaluation-experimentale.qmd).
+
+## 2. Que veut dire « comprendre » ?
+
+Le mot « compréhension » doit être précisé. Il peut désigner :
+
+- une **compétence opérationnelle**, mesurée sur des tâches — résumer, classer, expliquer ou résoudre un problème ;
+- une **thèse plus forte** sur la compréhension humaine, l’expérience ou l’intention.
+
+Les performances observables peuvent étayer la première interprétation dans un périmètre donné ; elles ne suffisent pas à établir la seconde. Annoncez le critère utilisé plutôt que de traiter « comprend » comme une propriété unique et directement mesurable.
+
+## 3. Capacités « émergentes » et effets d’échelle
+
+Les discussions sur les capacités dites *émergentes* demandent de préciser la tâche, la métrique, les seuils et les modèles comparés. Une capacité qui semble apparaître brutalement avec une métrique donnée peut dépendre de la résolution de mesure ou du protocole : des analyses récentes montrent que plusieurs effets « émergents » disparaissent lorsque la métrique est lissée ou remplacée. Examinez les résultats, les contrôles et les définitions avant de conclure à une transition qualitative ; l’[évaluation expérimentale](evaluation-experimentale.qmd) explicite ces exigences. Le [débat sur l’émergence des capacités](emergence.qmd) examine les protocoles et les métriques qui permettent de tester ces affirmations.
+
+La taille du modèle ne suffit pas non plus à expliquer ses performances. La qualité, la diversité et la provenance des données, l’objectif, l’architecture, le procédé d’entraînement, l’adaptation et le protocole d’évaluation contribuent ensemble aux résultats.
+
+## Sources principales et rôle
+
+- [Wei et al. (2022), *Emergent Abilities of Large Language Models*](https://arxiv.org/abs/2206.07682) — formulation des capacités émergentes et exemples de transitions apparentes.
+- [Schaeffer et al. (2023), *Are Emergent Abilities of Large Language Models a Mirage?*](https://arxiv.org/abs/2304.15004) — comment des choix de métrique peuvent créer ou dissoudre des effets d’émergence.
+- [Bommasani et al. (2021), *On the Opportunities and Risks of Foundation Models*](https://arxiv.org/abs/2108.07258) — cadrage des modèles de fondation et de leurs risques.
+
+Ces sources présentent des positions complémentaires, parfois en tension : la première documente le phénomène, la seconde en propose une explication métrique. Citez le protocole, pas seulement la conclusion.
+
+::: {.language-switch}
+**Langue :** [Français](llm-limits.qmd) · [English](../en/llm-limits.qmd)
+:::

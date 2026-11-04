@@ -8,15 +8,15 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/logits"
-scope: "Defines logits as unnormalized scores over vocabulary tokens at the model output and examines their scale, differences, and transformations; distinguishes these scores from normalized probabilities and decoding rules."
-purpose: "Readers should be able to interpret a logit vector, explain why its values are not probabilities, and describe how temperature and softmax transform scores before token selection."
+scope: "Defines logits as unnormalized real-valued scores associated with vocabulary tokens at the model output; explains their vector, dimensionality, and role in candidate ranking without developing probability normalization."
+purpose: "Readers should be able to interpret a V-dimensional logit vector, explain why its values are not probabilities, and distinguish score-based ranking from the conditional distribution used for generation."
 suggested_route:
   previous: "en/causal-masking"
   next: "en/probabilities"
 hierarchy:
-  parents: ["en/transformer", "en/causal-masking", "en/generation"]
+  parents: ["en/transformer", "en/generation"]
   children: ["en/probabilities"]
-related: []
+related: ["en/causal-masking"]
 tags: ["type:concept-lesson", "destination:understand", "topic:logits", "level:core", "language:en", "status:published"]
 -->
 
@@ -24,208 +24,82 @@ tags: ["type:concept-lesson", "destination:understand", "topic:logits", "level:c
 A **logit** is an unnormalized real-valued score associated with a class or vocabulary token. In an LLM, the final projection usually produces a vector $z\in\mathbb{R}^{V}$ at each prediction position.
 :::
 
-<div class="epistemic-badges">
-  <span class="epistemic-badge badge-concept">Verified Concept</span>
-  <span class="epistemic-badge badge-code">Interactive Explorer & Code</span>
-  <span class="epistemic-badge badge-status">Stage: Prediction & Decoding</span>
-</div>
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this page, you will be able to:
+- interpret a logit vector and explain why its values are not probabilities;
+- distinguish score-based candidate ranking from the probability distribution used for generation;
+- identify the vector dimension from the vocabulary size.
+:::
 
-<div class="pipeline-stepper" role="navigation" aria-label="LLM pipeline stages">
+<div class="pipeline-stepper" role="navigation" aria-label="LLM learning path stages">
   <a class="step-item" href="text-data.qmd">1. Text</a>
-  <span class="step-arrow">→</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="queries-keys-values.qmd">3. Attention</a>
-  <span class="step-arrow">→</span>
-  <span class="step-item active">4. Logits & Probabilities</span>
-  <span class="step-arrow">→</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="queries-keys-values.qmd">3. Attention (Q, K, V)</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">4. Logits</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="cross-entropy.qmd">5. Loss & Training</a>
 </div>
 
 ::: {.callout-tip title="The one-minute mental model"}
-**Logits are scores, not probabilities.** At one position, the model produces one score per vocabulary token. The largest score identifies the top-ranked candidate, but logits are neither bounded between 0 and 1 nor normalized.
+**Logits are scores, not probabilities.** At one position, the model produces one score per vocabulary token. The largest score identifies the top-ranked candidate; by itself, it is neither a probability nor a measure of truth.
 
-**First pass:** follow “Transformer representation → output projection → vector of $V$ logits”. Check the two-class example: $(0,\log 3)$ becomes $(1/4,3/4)$ after softmax.
-
-**Go deeper:** study translation invariance and numerical stability. Then move to [output probabilities](probabilities.qmd) to understand the conditional distribution.
-:::
-## Definition and shapes
-
-At one position, $z=(z_1,\ldots,z_V)$, where $V$ is the vocabulary size. No logit is constrained to $[0,1]$, and the logits do not need to sum to one.
-
-Softmax turns these scores into a distribution:
-
-$$
-p_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}}.
-$$
-
-Differences between logits determine probability ratios:
-
-$$
-\frac{p_i}{p_j}=e^{z_i-z_j}.
-$$
-
-A logit gap of $\log 2$ therefore implies a probability ratio of 2, all else equal.
-
-## Two-class example
-
-For $z=(0,\log 3)$, softmax gives $p=(1/4,3/4)$. Logits are not probabilities; softmax performs the normalization.
-
-## Useful properties
-
-- **Translation invariance:** $\operatorname{softmax}(z+c\mathbf{1})=\operatorname{softmax}(z)$. Only differences matter.
-- **Order is preserved:** if $z_i>z_j$, then $p_i>p_j$.
-- **Scale and temperature:** dividing logits by temperature $T > 0$ alters distribution concentration ($p_i \propto e^{z_i / T}$) without changing relative ranking. As $T \to 0$, probabilities collapse into greedy argmax; as $T \to \infty$, the distribution flattens toward uniform $1/V$.
-
-```{=html}
-<div class="interactive-toy-box" id="temp-explorer-en">
-  <h4>INTERACTIVE EXPLORER · TEMPERATURE SCALING ON LOGITS</h4>
-  <p style="font-size: 0.9rem; color: #475569;">
-    Adjust temperature $T$ to observe the transition between sharp decoding ($T < 1$) and uniform distribution ($T > 1$).
-  </p>
-  <div class="interactive-controls">
-    <label for="temp-slider-en" style="font-weight: 700; font-size: 0.9rem;">Temperature (T): <span id="temp-val-en" style="color: var(--llm-brand); font-family: monospace;">1.00</span></label>
-    <input type="range" id="temp-slider-en" min="0.1" max="3.0" step="0.05" value="1.0" style="flex: 1; accent-color: var(--llm-brand);">
-  </div>
-  <div class="interactive-bars">
-    <div class="prob-bar-row">
-      <span class="prob-bar-label">Token A (z=3.0)</span>
-      <div class="prob-bar-track"><div class="prob-bar-fill" id="bar-en-0" style="width: 70.5%;"></div></div>
-      <span class="prob-bar-value" id="val-en-0">70.5%</span>
-    </div>
-    <div class="prob-bar-row">
-      <span class="prob-bar-label">Token B (z=1.5)</span>
-      <div class="prob-bar-track"><div class="prob-bar-fill" id="bar-en-1" style="width: 15.7%;"></div></div>
-      <span class="prob-bar-value" id="val-en-1">15.7%</span>
-    </div>
-    <div class="prob-bar-row">
-      <span class="prob-bar-label">Token C (z=1.0)</span>
-      <div class="prob-bar-track"><div class="prob-bar-fill" id="bar-en-2" style="width: 9.5%;"></div></div>
-      <span class="prob-bar-value" id="val-en-2">9.5%</span>
-    </div>
-    <div class="prob-bar-row">
-      <span class="prob-bar-label">Token D (z=0.2)</span>
-      <div class="prob-bar-track"><div class="prob-bar-fill" id="bar-en-3" style="width: 4.3%;"></div></div>
-      <span class="prob-bar-value" id="val-en-3">4.3%</span>
-    </div>
-  </div>
-  <script>
-    (function() {
-      const slider = document.getElementById('temp-slider-en');
-      const tempVal = document.getElementById('temp-val-en');
-      const logits = [3.0, 1.5, 1.0, 0.2];
-      function update() {
-        if (!slider) return;
-        const T = parseFloat(slider.value);
-        if (tempVal) tempVal.textContent = T.toFixed(2);
-        const scaled = logits.map(z => z / T);
-        const maxVal = Math.max(...scaled);
-        const exp = scaled.map(s => Math.exp(s - maxVal));
-        const sumExp = exp.reduce((a, b) => a + b, 0);
-        const probs = exp.map(e => e / sumExp);
-        probs.forEach((p, idx) => {
-          const bar = document.getElementById('bar-en-' + idx);
-          const val = document.getElementById('val-en-' + idx);
-          const pct = (p * 100).toFixed(1) + '%';
-          if (bar) bar.style.width = pct;
-          if (val) val.textContent = pct;
-        });
-      }
-      if (slider) slider.addEventListener('input', update);
-    })();
-  </script>
-</div>
-```
-
-::: {.micro-workbench}
-::: {.micro-workbench-header}
-<span>NUMERICAL WORKBENCH · TEMPERATURE-SCALED SOFTMAX</span>
-<span>Python 3.12+ / NumPy</span>
-:::
-::: {.micro-workbench-body}
-```python
-import numpy as np
-
-logits = np.array([3.0, 1.5, 1.0, 0.2])
-
-def stable_softmax(z, temperature=1.0):
-    scaled = z / temperature
-    exp_z = np.exp(scaled - np.max(scaled))
-    return exp_z / np.sum(exp_z)
-
-# 1. Standard temperature (T=1.0)
-p_standard = stable_softmax(logits, temperature=1.0)
-
-# 2. Cold temperature (T=0.2): sharpens dominant token (greedy behavior)
-p_cold = stable_softmax(logits, temperature=0.2)
-
-# 3. Hot temperature (T=5.0): flattens distribution toward uniform
-p_hot = stable_softmax(logits, temperature=5.0)
-
-print(f"Top-token probability (T=1.0): {p_standard[0]:.2%}")
-print(f"Top-token probability (T=0.2): {p_cold[0]:.2%}")
-print(f"Top-token probability (T=5.0): {p_hot[0]:.2%}")
-
-assert p_cold[0] > p_standard[0] > p_hot[0]
-assert np.allclose(p_hot, 0.25, atol=0.1)
-```
-:::
-::: {.micro-workbench-footer}
-Temperature modulates distribution entropy without altering token ranking ($z_i > z_j \implies p_i > p_j$).
-:::
+**First pass:** follow “Transformer representation → output projection → vector of $V$ logits”. The next page explains how these scores become a conditional distribution.
 :::
 
-For numerical stability, implementations subtract the maximum before exponentiation: $e^{z_i-m}/\sum_j e^{z_j-m}$, where $m=\max_j z_j$.
+## Definition and dimensions
 
-::: {.callout-warning title="Misconceptions"}
-- **“A positive logit means high probability.”** No: the sign depends on the score reference level. A logit of 10 can be less probable than another logit of 12.
-- **“The largest logit measures the confidence gap.”** The maximum determines the argmax, but uncertainty depends on all logits and their scale.
-- **“Logits are directly comparable across models.”** Not necessarily: architectures, temperatures, and training can produce different scales.
-:::
+At a given position, write the score vector as:
+\[
+z=(z_1,\ldots,z_V)\in\mathbb{R}^{V},
+\]
+where $V$ is the vocabulary size. Each component $z_i$ is associated with token ID $i$. Logits may be positive or negative; they are not constrained to $[0,1]$ and do not need to sum to one.
 
-<details class="spot-the-fallacy">
-<summary>Common Fallacy: “Two models outputting the exact same top logit score share the same prediction confidence”</summary>
-<div class="fallacy-content">
-<p><strong>Counterexample:</strong> Model A outputs logits $(10, 2, 1)$ while Model B outputs $(10, 9.9, 9.8)$. Both have the same maximum logit ($z_1 = 10$). After softmax, model A assigns over 99% probability to the first token, compared with about 36.7% for model B. The distribution depends on all score differences, not the absolute maximum. A high probability does not establish calibration or the truth of a prediction.</p>
-</div>
-</details>
+For a batch of sequences, the output head may produce a tensor of shape $(B,T,V)$: $B$ sequences, $T$ positions, and $V$ scores per position. During autoregressive generation, the scores at the current position are typically used to choose the next token.
+
+## What logits tell us
+
+- **Local ranking:** within one vector, the largest logit identifies the maximum-score candidate (the argmax).
+- **Score gaps:** differences between scores describe their relative separation within that vector.
+- **Not absolute confidence:** a raw logit depends on the scores' scale and offset. It is not a percentage and cannot, by itself, establish confidence or factual truth.
+
+Converting scores into a probability distribution is a separate operation. It is covered in [Output probabilities](probabilities.qmd), the canonical page for softmax, temperature, and distribution interpretation.
 
 ## In an LLM
 
-At each position $t$, the output head provides $z_t\in\mathbb{R}^{V}$. The model then selects or samples a token from the associated distribution. During training, logits are compared with the target token ID using a loss such as [cross-entropy](cross-entropy.qmd).
+The final hidden representation is projected to a vector of dimension $V$, usually through a linear output layer. During training, logits can be passed directly to a loss function such as [cross-entropy](cross-entropy.qmd): an explicit softmax calculation is not required beforehand when the loss function incorporates it in a numerically stable way.
 
-A tested implementation of temperature-scaled softmax is available in `src/llm_lab/foundations/attention.py` (`softmax_with_temperature`) with unit tests in `tests/unit/test_attention.py`.
+The [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) documentation specifies unnormalized logits as the expected input.
 
-## Self-check
+::: {.self-check}
+## Check your understanding
 
-[Open the related exercise space](exercises.qmd#foundations) — detailed exercises will be authored separately.
-
-To follow the vector and matrix shapes used in these calculations, see [Tensors](tensors.qmd).
-
-1. Why does adding a constant to all logits leave probabilities unchanged?
+1. If the vocabulary contains $V$ tokens, how many components does the logit vector contain at one position?
 
 <details>
 <summary>Show answer</summary>
 
-In softmax, every exponential is multiplied by $e^c$; the common factor cancels between numerator and denominator.
+It contains $V$ components, one for each vocabulary token.
 
 </details>
 
-2. Can two logit vectors have the same argmax but very different distributions?
+2. Why does a logit with value 8 not mean an 80% probability?
 
 <details>
 <summary>Show answer</summary>
 
-Yes. For example, $(2,1)$ and $(20,10)$ have the same maximal index, but the larger scale makes the second softmax distribution much more concentrated.
+A logit is an unnormalized real-valued score. It is neither bounded between 0 and 1 nor constrained to sum to one. A separate transformation is needed to obtain a probability distribution.
 
 </details>
 
-3. Why does a numerically stable implementation subtract the maximum before exponentiation?
+3. What does the argmax of a logit vector identify?
 
 <details>
 <summary>Show answer</summary>
 
-This reduces the risk of numerical overflow. Subtracting the same maximum from every logit leaves softmax unchanged because softmax is translation-invariant.
+It identifies the token with the highest score in that vector. By itself, it does not measure confidence or truth.
 
 </details>
 
@@ -239,10 +113,7 @@ This reduces the risk of numerical overflow. Subtracting the same maximum from e
     <span class="nav-title">Probabilities: Normalizing and Interpreting</span>
   </a>
 </div>
-
-## Further reading
-
-- [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html): documents that the loss accepts unnormalized logits and defines its input/target conventions. This is an implementation reference, not a replacement for the mathematical definition above.
+:::
 
 :::: {.language-switch}
 [Français](../fr/logits.qmd) · [English](logits.qmd)

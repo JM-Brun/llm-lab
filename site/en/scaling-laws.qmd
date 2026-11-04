@@ -1,0 +1,85 @@
+---
+title: "Scaling laws: parameters, data, and compute"
+subtitle: "What empirical regularities tell us — and do not tell us — about model scale"
+keywords: ["type:concept-lesson", "destination:deepen", "topic:scaling-laws", "level:advanced", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/scaling-laws"
+scope: "Introduces empirical scaling laws for language models, relationships between parameter count, data, compute, and loss, and limits to extrapolation; does not establish a universal threshold defining an LLM."
+purpose: "Readers should be able to explain what scaling laws describe, why parameter count alone does not characterize scale, and why an empirical relationship does not define a universal boundary between LLMs and other models."
+domain: "scale-research"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-lesson", "destination:deepen", "topic:scaling-laws", "level:advanced", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+**Scaling laws** describe empirical regularities between the resources used to train a model—notably parameter count, data volume, and compute—and a performance measure such as prediction loss. They help compare training regimes and allocate a compute budget. They do not define a universal minimum size for a model to count as an LLM.
+:::
+
+## Why discuss scale?
+
+Two models with the same parameter count can behave very differently if their data, training duration, architecture, or optimization procedure differ. Conversely, a smaller model trained on more relevant data with a better-used budget can achieve lower validation loss than a larger, undertrained model.
+
+Parameter count is therefore an indicator of capacity and cost, not a sufficient measure of quality or a definition of the LLM category.
+
+## What do scaling laws describe?
+
+In some experimental regimes, loss decreases regularly as resources increase. A commonly studied idealized form is a power law:
+
+$$
+L(N) \approx L_\infty + aN^{-\alpha},
+$$
+
+where $N$ is a scale variable (for example, parameter count), $L_\infty$ is an asymptotic limit, and $a$ and $\alpha$ are empirically fitted constants. This expression is illustrative: actual studies examine multiple variables, correction terms, and domains of validity.
+
+Three resources must be considered jointly:
+
+- **Parameters ($N$):** model capacity and the associated inference cost.
+- **Data ($D$):** the number of training tokens, but also their quality, diversity, deduplication, and fit to the objective.
+- **Compute ($C$):** operations available for training, related to model size, the number of processed tokens, and implementation efficiency.
+
+An experiment that varies only $N$ cannot establish a universal rule about optimal size.
+
+## A compute budget changes the question
+
+The relevant question is not only “how large can the model be made?” but “how should a fixed compute budget be divided between model size and data volume?”
+
+Kaplan et al. (2020) documented power-law relationships between loss and model, data, and compute scales. Hoffmann et al. (2022), in the study known as *Chinchilla*, showed that many large models were trained on too few tokens relative to their size and proposed a different allocation of compute. These results shifted attention from parameter count alone to the parameters–data–compute trade-off.
+
+An allocation rule derived under a particular protocol should not be treated as a universal constant: outcomes depend on model family, data, optimizer, objective, budget, and chosen metric.
+
+## Why is there no universal LLM threshold?
+
+A scaling law describes a trend measured across a set of experiments; it does not provide a natural taxonomic boundary. “LLM” is used for language models trained at large scale, but:
+
+- no parameter count alone separates LLMs from other models in every context;
+- parameter count does not tell us how much distinct data was used or how much compute was spent;
+- prediction loss on one distribution does not summarize capabilities, robustness, factuality, or usefulness on a task;
+- results can change with architecture, data, training, and evaluation.
+
+It is therefore more rigorous to describe a model along several dimensions—parameters, training tokens, compute, data, and measured results—than to assign its status using an arbitrary threshold.
+
+## Limitations and cautions
+
+Scaling laws are empirical models, not physical laws. Extrapolation can fail outside the observed regime. Average loss can hide important differences between domains or subpopulations; it does not guarantee uniform improvement on downstream tasks. Changes in data, architecture, or training procedure can also shift the curves.
+
+When comparing results, check the metric, evaluation distribution, compute budget, token count, model size, and experimental conditions. A loss curve does not replace task-specific evaluation.
+
+## References
+
+- Kaplan et al. (2020), [*Scaling Laws for Neural Language Models*](https://arxiv.org/abs/2001.08361).
+- Hoffmann et al. (2022), [*Training Compute-Optimal Large Language Models*](https://arxiv.org/abs/2203.15556).
+- Henighan et al. (2020), [*Scaling Laws for Autoregressive Generative Modeling*](https://arxiv.org/abs/2010.14701).
+
+::: {.language-switch}
+**Language:** [Français](../fr/scaling-laws.qmd) · [English](scaling-laws.qmd)
+:::

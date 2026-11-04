@@ -20,11 +20,31 @@ related: []
 tags: ["type:historical-reference", "destination:reference", "topic:transformer-history", "level:reference", "language:fr", "status:published"]
 -->
 
-Le Transformer n'est pas apparu sans précurseurs. Son histoire combine les mécanismes d'attention développés pour la traduction neuronale, l'auto-attention, l'entraînement à grande échelle et des objectifs différents selon les familles de modèles. Cette chronologie est sélective : elle présente des jalons, pas une histoire exhaustive ni une causalité unique.
+Le Transformer de 2017 n'est pas apparu sans précurseurs. Son histoire combine les mécanismes d'attention développés pour la traduction neuronale, l'auto-attention, les modèles séquence-à-séquence, l'entraînement à grande échelle et des objectifs différents selon les familles de modèles. Cette chronologie est sélective : elle présente des jalons, pas une histoire exhaustive ni une causalité unique.
 
-Parmi ces jalons, [Bahdanau, Cho et Bengio (2014)](https://arxiv.org/abs/1409.0473) étudient une attention pour la traduction neuronale. [Vaswani et al. (2017)](https://arxiv.org/abs/1706.03762) placent l'auto-attention au cœur du Transformer et décrivent l'attention à produit scalaire mise à l'échelle. Les deux mécanismes et architectures ne sont pas identiques.
+## Situer les LLM dans le paysage de l’IA
+
+Cette classification aide à comprendre **de quel type de méthode** relève un LLM et **dans quel domaine de problèmes** il est utilisé. Elle complète la chronologie : elle ne décrit pas une étape du fonctionnement d’un modèle.
+
+```{mermaid}
+flowchart TB
+  subgraph IA["Intelligence artificielle"]
+    subgraph AA["Apprentissage automatique"]
+      subgraph AP["Apprentissage profond<br/>(réseaux neuronaux)"]
+        LLM["LLM"]
+      end
+    end
+  end
+  TAL["TAL / NLP : un domaine de problèmes<br/>(règles, statistique, modèles, LLM…)"]
+```
+
+- L’**apprentissage profond** (*deep learning*) désigne une famille de méthodes : des réseaux neuronaux à plusieurs couches. Les LLM actuels en font partie.
+- Le **traitement automatique des langues** (TAL / NLP) désigne un domaine de problèmes : traiter ou produire du langage. Il se résout par des méthodes très différentes — règles linguistiques, modèles statistiques, systèmes spécialisés, réseaux neuronaux. Les LLM y sont une réponse dominante mais non exclusive : un système de production peut combiner règles, modèles spécialisés, recherche documentaire, outils et LLM.
+- Le terme **LLM** ne possède pas de seuil numérique universel : il désigne généralement des modèles de langage entraînés à grande échelle, avec des données et des capacités de calcul importantes. Le concept de *foundation model* insiste plutôt sur la réutilisation d'un modèle comme base pour de nombreuses applications ; les deux notions sont liées, mais ne sont pas synonymes.
 
 ## Chronologie
+
+Les familles d’architectures mentionnées dans ces jalons sont comparées dans la [synthèse des architectures Transformer](transformer-architectures.qmd).
 
 Les dates distinguent soumission, annonce et mise à disposition. Les jalons sont regroupés par domaine ; leur ordre chronologique ne signifie pas qu'ils forment une chaîne causale.
 
@@ -38,11 +58,9 @@ Les dates distinguent soumission, annonce et mise à disposition. Les jalons son
 - **L'échelle n'explique pas tout.** Données, objectifs, tokenisation, architecture, procédure d'entraînement et évaluation influencent aussi les capacités observées.
 - **Une date de publication n'est pas une preuve de priorité absolue.** Cette page choisit quelques jalons pédagogiques et ne prétend pas recenser toutes les contributions parallèles.
 
-## Pour approfondir
+## Source primaire
 
-- Lire d'abord le papier original [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
-- Comparer les objectifs avec les pages [masque causal](causal-masking.qmd), [attention](scaled-dot-product-attention.qmd) et [fondations mathématiques](mathematical-foundations.qmd).
-- Consulter le [glossaire](glossary.qmd) pour les termes utilisés dans cette chronologie.
+- [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
 
 ::: {.language-switch}
 [Français](transformer-history.qmd) · [English](../en/transformer-history.qmd)

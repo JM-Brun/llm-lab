@@ -2,6 +2,21 @@
 
 **Purpose:** make LLM Lab a navigable explanation system, not a textbook that must be read from page one to the end. This document is the shared editorial contract for public pages, concepts, learning stages, and contributions. It complements the scientific and implementation criteria in the [full curriculum plan](full-curriculum-plan.md), [roadmap](roadmap.md), and [contributing guide](../CONTRIBUTING.md); it does not replace them. The source-level page map and controlled tag vocabulary are specified in the [page metadata contract](page-metadata-schema.md); keep suggested reading order distinct from conceptual parent/child relations.
 
+## Editorial economy: page-specific information only
+
+Reader-facing prose must teach, orient through a real decision, or establish a meaningful conceptual connection. Do not add generic meta-discourse that merely describes the document or the learning platform. Avoid statements such as “this page provides an overview”, “the following sections explore…”, “each step links to a dedicated explanation”, “to continue the learning journey…”, and their French equivalents. These formulations can be pasted into almost any page without changing their meaning; that is a strong signal that they carry no useful information.
+
+A sentence about page structure is justified only when it conveys something specific that the reader needs: the precise question answered here, a genuine prerequisite, a scope boundary, a deliberate simplification, a reason to choose one branch over another, or the distinct purpose of a linked resource. A cross-link should say what question it resolves or what concept it supplies—not simply promise more detail.
+
+Use this deletion test during drafting and review:
+
+1. Remove the sentence temporarily.
+2. Ask whether the reader loses a scientific claim, definition, assumption, interpretation, useful warning, or actionable navigation choice.
+3. If not, leave it out. Do not replace it with a synonym or another generic transition.
+4. If something important is lost, rewrite the sentence to name that exact information.
+
+Apply the test especially to chapter leads, introductory paragraphs, callouts, section transitions, recaps, conclusions, and “next step” blocks. This is not a demand for terse prose: retain explanations, examples, and caveats that carry knowledge, even when they take space. The goal is higher information density, not shorter pages. Keep French and English versions equivalent in substance and apply the same standard to both.
+
 ## 1. The learning model: a graph with progressive depth
 
 The site has an overall direction—from the problem an LLM solves to its mechanisms, mathematical details, implementations, and evidence—but it is **not a single mandatory reading sequence**. Readers arrive with different questions and backgrounds. They must be able to enter at a useful level, understand where they are, and follow only the branches they need.
@@ -29,6 +44,8 @@ Use headings, concise callouts, diagrams, links, and—where it improves usabili
 **Example — RoPE:** a reader of the Transformer overview needs to know that attention needs positional information and that RoPE is one way to introduce it. That reader should be able to continue without deriving the rotation identity. The dedicated RoPE page can then offer geometric intuition, the relative-position derivation, implementation conventions, long-context limitations, and references. The overview must link to the deep dive, but it should not reproduce it.
 
 ## 2. Page types have different jobs
+
+Use the [page-template guide](page-template-guide.md) for reusable starting structures and the [page archetype implementation map](site-page-design-system.md) to map the existing metadata types to those structures. These templates operationalize the distinctions below; they do not replace this editorial contract.
 
 Do not force every page into an identical chapter template. Choose the page type first and use the relevant contract.
 
@@ -337,3 +354,55 @@ A published page, completed exercise, immediate quiz score, or positive impressi
 - Weinstein, Y., Madan, C. R., & Sumeracki, M. A. (2018). [Teaching the science of learning](https://doi.org/10.1186/s41235-017-0087-y). *Cognitive Research: Principles and Implications*, 3, 2. A tutorial review of spaced practice, interleaving, retrieval practice, elaboration, concrete examples, and dual coding.
 - Roediger, H. L., & Karpicke, J. D. (2006). [The Power of Testing Memory: Basic Research and Implications for Educational Practice](https://doi.org/10.1111/j.1745-6916.2006.00012.x). *Perspectives on Psychological Science*, 1(3), 181–210. Review of retrieval/testing effects and their educational implications.
 - Dunlosky, J., et al. (2013). [Improving Students' Learning With Effective Learning Techniques](https://doi.org/10.1111/j.1539-6053.2013.01002.x). *Psychological Science in the Public Interest*, 14(1), 4–58. Comparative review of learning techniques and the conditions that affect their utility.
+
+
+## 10. Standardize embedded learning checks
+
+Every lesson page that includes a learner-facing comprehension check must use one recognizable structure in both languages. The check is a distinct instructional component—not an ordinary paragraph, a miscellaneous list, or a second conclusion.
+
+### Shared presentation contract
+
+- Use the canonical heading **“Vérifier sa compréhension”** in French and **“Check your understanding”** in English. Avoid competing variants such as “Questions de contrôle”, “Self-check”, or “Vérifier votre compréhension”.
+- Wrap the complete activity in the `.self-check` Quarto div so the shared site stylesheet can give it a consistent visual boundary, spacing, and accessible contrast.
+- Number questions consistently. Keep each prompt visually separate from its answer; use native `<details>` / `<summary>` disclosure for solutions, collapsed by default.
+- Place a concise link near the start or end of the activity to the matching topic collection in the exercise hub (`exercises.qmd` / `../en/exercises.qmd`), using the collection's stable anchor. The link must be relevant to the topic, not a generic invitation to browse unrelated material.
+- Do not add the component to a page when it would repeat an existing interactive investigation or when no meaningful check can be written. Do not confuse implementation verification, research checklists, or operational acceptance criteria with learner comprehension questions.
+
+### Cognitive progression
+
+Choose questions according to the learning objective, normally progressing from simpler retrieval to more demanding reasoning:
+
+1. **Identify / retrieve:** define, distinguish, locate a quantity, or recall a condition essential to the concept. Use only when retrieval itself is useful.
+2. **Explain / calculate:** reconstruct a mechanism, derive a step, calculate a small example, or predict a shape or output.
+3. **Apply / diagnose:** change an input or assumption, compare alternatives, diagnose an error, or explain why a tempting answer fails.
+4. **Transfer / critique:** apply the principle to a new context, identify a boundary case, challenge an overclaim, or state what evidence would be needed.
+
+This is a progression of cognitive demand, not a mandatory four-question quota. Use two or three questions when that is sufficient; omit levels that do not fit the topic. Avoid artificial difficulty, trivia, ambiguous prompts, and questions that can be answered by copying a nearby sentence. Increase reasoning demand rather than linguistic complexity.
+
+### Answer and feedback contract
+
+- Keep answer keys collapsed by default and make each disclosure label identify which question it answers.
+- Explain the reasoning and relevant intermediate steps; include units, tensor axes, conventions, assumptions, or numerical tolerances where relevant.
+- Explain why a plausible misconception is wrong when it helps distinguish neighboring concepts.
+- A correct numeric result without interpretation is insufficient when the learning objective includes interpretation.
+- Distinguish what a hand calculation, numerical check, unit test, or thought experiment establishes—and what it does not establish.
+- Keep embedded checks short and immediate. The exercise hub is for longer calculations, multi-step problems, transfer tasks, and integrated practice. Its status must remain honest: planned collections are not published exercises.
+
+### Bilingual parity and review
+
+French and English versions must test the same learning outcomes at comparable difficulty, with equivalent assumptions, data, answer reasoning, and links to the corresponding exercise collection. Wording may differ naturally. During review, check that every check is scientifically answerable, its solution is correct, all disclosures are closed by default, and the exercise link resolves to the intended anchor.
+
+
+## 11. Standardize page learning outcomes
+
+When a page benefits from an explicit statement of what the reader should be able to do, use one shared Quarto component in French and English:
+
+- French title: **Objectifs d’apprentissage**; English title: **Learning outcomes**.
+- Use the `.callout-note.learning-outcomes` classes with `collapse="true"`: the block is **collapsed by default** and opens on demand, like the comprehension-check sections. The shared `.learning-outcomes` selector in `site/styles.scss` owns the visual treatment; do not add page-specific inline styling or one-off variants.
+- Place the compact block after the chapter lead and before the main explanation. Do not repeat the same outcomes in a second introductory disclosure or a generic end-of-page note.
+- State two to four observable capabilities using precise verbs (distinguish, trace, calculate, predict, diagnose, compare, justify). Name the actual concepts, conditions, or outputs involved.
+- Keep each outcome specific to the page’s scope. Avoid vague promises such as “understand the topic”, “know the key ideas”, or “follow the page”.
+- Include the block only when it helps readers decide what to attend to or gives them a useful target. It is not mandatory on every page and must not become a checklist that forces empty content.
+- Keep outcomes distinct from a comprehension check: outcomes state the intended capability; a `.self-check` tests whether the learner can demonstrate it.
+
+The block is a compact learning contract, not a summary, navigation list, or claim that mastery has been measured. French and English versions must express equivalent capabilities.

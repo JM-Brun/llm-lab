@@ -29,7 +29,7 @@ La loss indique **ce qui doit être amélioré** ; le gradient indique **comment
 
 **Première lecture :** suivez le chemin loss → dérivée par rapport aux logits → dérivées par rapport aux paramètres → mise à jour. Le gradient décrit une variation locale : il ne garantit pas qu'un pas quelconque réduira la loss.
 
-**Pour approfondir :** vérifiez les dérivées par différences finies, puis étudiez les effets du taux d'apprentissage, du momentum et des optimiseurs adaptatifs. Distinguez toujours la qualité du calcul du gradient de la qualité de la généralisation du modèle.
+La qualité du calcul du gradient reste distincte de la généralisation du modèle.
 :::
 ## Gradient par rapport aux logits
 
@@ -45,6 +45,8 @@ La formule est un résultat de la combinaison softmax + cross-entropie. Elle ne 
 
 Si les logits dépendent des paramètres $z=z(\theta)$, alors :
 
+Ici, $z$ représente l'ensemble des logits concernés par l'objectif (par exemple, tous les logits des positions valides du batch), et non un seul score scalaire. On peut voir ces logits comme un vecteur obtenu en aplatissant le tenseur ; la formule ci-dessous utilise alors le jacobien correspondant. La rétropropagation effectue ce produit jacobien-vecteur sans construire explicitement le jacobien complet.
+
 $$
 \nabla_\theta\mathcal{L}
 =\left(\frac{\partial z}{\partial\theta}\right)^\top
@@ -52,6 +54,10 @@ $$
 $$
 
 Dans un réseau profond, la rétropropagation applique efficacement cette règle de chaîne à travers le graphe de calcul. Les dimensions doivent être cohérentes : les dérivées sont des vecteurs ou tenseurs de même forme que les variables différentiées.
+
+::: {.callout-note collapse="true" title="Choix de l'optimiseur (approfondissement)"}
+Le taux d’apprentissage, le momentum, le clipping, la régularisation et les optimiseurs adaptatifs modifient la dynamique effective de l'entraînement, mais pas la définition du gradient.
+:::
 
 ## Mise à jour par descente de gradient
 
@@ -63,8 +69,7 @@ $$
 
 où $\eta>0$ est le taux d'apprentissage. Le signe moins suit la direction de plus forte décroissance locale pour une petite mise à jour dans un espace euclidien. Des optimiseurs adaptatifs, le momentum, le clipping et la régularisation modifient la dynamique effective.
 
-## Vérifier le gradient par différences finies
-
+::: {.callout-note collapse="true" title="Vérification numérique des gradients (approfondissement)"}
 Pour une coordonnée $\theta_i$ :
 
 $$
@@ -74,6 +79,7 @@ g_i^{\mathrm{num}}=
 $$
 
 Comparer ce résultat au gradient analytique avec des tolérances absolue et relative. La vérification doit être faite en précision suffisante, sur une fonction déterministe et avec un $\epsilon$ adapté à l'échelle des paramètres. Trop petit, il amplifie les erreurs d'arrondi ; trop grand, il approxime mal la dérivée locale.
+:::
 
 ::: {.callout-warning title="Idées reçues"}
 - **« Un gradient nul signifie que le modèle est optimal. »** Il peut signaler un point stationnaire, une saturation, un chemin de gradient rompu ou une erreur d'implémentation.
@@ -81,7 +87,8 @@ Comparer ce résultat au gradient analytique avec des tolérances absolue et rel
 - **« Une différence finie qui passe prouve tout le backward pass. »** Elle vérifie un cas, une fonction, une précision et une configuration ; elle ne remplace pas les tests de formes, de cas limites et d'intégration.
 :::
 
-## Questions de contrôle
+::: {.self-check}
+## Vérifier sa compréhension
 
 Pour des exercices complémentaires séparés du cours, voir l’[espace d’exercices — fondations mathématiques](exercises.qmd#fondations).
 
@@ -113,6 +120,7 @@ Le gradient décrit une variation locale. Un pas trop grand peut dépasser la r�
 </details>
 
 **Retour :** [Vue d'ensemble](mathematical-foundations.qmd) · [Loss](loss.qmd)
+:::
 
 ## Pour approfondir
 

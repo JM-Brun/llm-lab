@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/embedding-linearity"
 scope: "Distinguishes linear representation, linear accessibility/decodability, and functional use of a feature in a network; examines representation dependence, superposition, probing, and counterexamples such as XOR. It does not claim that all concepts are linearly encoded or that a successful probe establishes causal use."
 purpose: "Explain the distinct claims grouped under the linearity hypothesis, use a counterexample to reason about representation dependence, and evaluate what probing or steering evidence does—and does not—establish."
+domain: "mathematical-tools-geometry"
 suggested_route:
   previous: "en/cosine-similarity"
   next: null
@@ -19,8 +20,6 @@ hierarchy:
 related: []
 tags: ["type:deep-dive", "destination:deepen", "topic:linearite-embeddings", "level:advanced", "language:en", "status:published"]
 -->
-
-This page belongs to the [Representation geometry and interpretability](embedding-space.qmd) path. [Embedding space](embedding-space.qmd) introduces the geometric objects; the [cosine similarity](cosine-similarity.qmd) page examines a metric often applied to them, without treating it as a direct measure of meaning.
 
 ## What kind of linearity are we talking about?
 

@@ -12,7 +12,7 @@ scope: "Explains how Transformer layers turn initial embeddings into context-dep
 purpose: "Readers should be able to explain why two occurrences of the same token share an initial embedding but can have different contextualized representations, and connect this difference to processing by Transformer layers."
 suggested_route:
   previous: "en/positional-encoding"
-  next: "en/queries-keys-values"
+  next: "en/transformer"
 hierarchy:
   parents: ["en/embedding-space", "en/positional-encoding", "en/transformer"]
   children: ["en/queries-keys-values"]
@@ -24,13 +24,9 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 The same token ID always selects the same row from a fixed embedding matrix. Yet the token can play different roles in different sentences. The distinction is that **lookup provides an initial vector; the Transformer subsequently builds representations that depend on context**.
 :::
 
-This is a focused companion to [The embedding space](embedding-space.qmd). It answers one question without interrupting the main path from token IDs to vectors and then to the geometry of representations.
-
 ![Overview of the path from text and token IDs through an embedding table and positional information to contextual representations.](https://media.licdn.com/dms/image/v2/D4D12AQHkmEd7fMhztQ/article-cover_image-shrink_720_1280/B4DZ3YWKZfI0AM-/0/1777451187827?e=2147483647&t=ETNuRHmhKfKe0FYbI-a9g2NaUZ3QNv9xue4OYjI1qUs&v=beta){fig-alt="A schematic pipeline: text is tokenized into IDs, IDs select rows in a learned embedding table, positional information is handled, attention layers process the sequence, and contextual representations are produced." fig-cap="Overview illustration by Rushang Chauhan. The position-handling stage is schematic: architectures such as RoPE do not simply add a position vector to each token embedding. See the explanation below and the page on positional encoding." width=100%}
 
 The figure is reproduced from Rushang Chauhan's LinkedIn article, [*Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/). It provides an orientation map; the sections below specify the architectural distinctions that a high-level diagram necessarily compresses. Asset-level reuse review is pending in [#156](https://github.com/JM-Brun/llm-lab/issues/156); the existing illustration is retained unchanged while its provenance and applicable permissions are checked.
-
-The canonical text → token IDs → embedding lookup pipeline is shown in the [text-to-token overview](text-data.qmd). This page focuses on the additional distinction between an initial token embedding and a context-dependent hidden state; the original example below provides the relevant visual comparison.
 
 ## Start with what stays the same
 
@@ -102,8 +98,22 @@ The learning path is:
 4. Transformer layers produce context-dependent hidden states.
 5. Later layers and the output head use those states to predict the next token.
 
-For the full lookup example, matrix dimensions, parameter counts, and representation geometry, return to [The embedding space](embedding-space.qmd). For the surrounding sequence-processing mechanism, continue to [Queries, keys, and values](queries-keys-values.qmd) and [Scaled dot-product attention](scaled-dot-product-attention.qmd).
+The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors; [queries, keys, and values](queries-keys-values.qmd) and [scaled dot-product attention](scaled-dot-product-attention.qmd) describe how the sequence is processed contextually.
+
+::: {.self-check}
+## Check your understanding
+
+[Extended exercises on this topic](../en/exercises.qmd#transformer).
+
+Two occurrences of the **same token ID** appear in two different sentences. Assume the embedding matrix is unchanged:
+
+1. Are the vectors returned by the embedding lookup identical?
+2. Must the hidden states after the Transformer layers also be identical? Why?
+3. At which stage does contextual information enter the computation?
+
+You have understood this step if you can explain the difference between **identity of the initial vector** and **context-dependence of hidden states**, without attributing sentence understanding to the lookup itself.
 
 ::: {.language-switch}
 **Language:** [Français](../fr/contextualized-representations.qmd) · [English](contextualized-representations.qmd)
+:::
 :::

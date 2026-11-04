@@ -1,0 +1,178 @@
+---
+title: "Visite guidée : l'assemblage du GPT (`gpt.py`)"
+subtitle: "Embeddings, empilement de blocs et projection vers les logits"
+keywords: ["type:guided-build", "destination:build", "topic:reference-gpt-model", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/gpt-model-walkthrough"
+scope: "Explique ligne par ligne le fichier gpt.py : les tables d'embeddings de tokens et de positions, l'empilement des blocs, la normalisation finale, la tête de sortie non liée et le comptage explicite des paramètres. Exclut la boucle de génération."
+purpose: "Le lecteur doit pouvoir tracer les formes d'une passe avant de (B, T) à (B, T, V), expliquer l'ajout des positions comme diffusion sur le lot et la causalité prouvée par l'invariance de préfixe."
+suggested_route:
+  previous: "fr/transformer-block-walkthrough"
+  next: "fr/gpt-generation-walkthrough"
+hierarchy:
+  parents: ["fr/build-path"]
+  children: []
+related: ["fr/transformer", "fr/embedding-space", "fr/positional-encoding", "fr/logits"]
+tags: ["type:guided-build", "destination:build", "topic:reference-gpt-model", "level:applied", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Cette page est la quatrième étape (4 sur 5) de la visite guidée du code de référence. Ce fichier assemble le modèle : les embeddings en entrée, les blocs empilés, la normalisation finale et la projection de sortie vers les logits. Lecture recommandée après la [configuration](gpt-config-walkthrough.qmd) et le [bloc](transformer-block-walkthrough.qmd). Code : [`src/llm_lab/foundations/gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py).
+:::
+:::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
+À l'issue de cette visite, vous pourrez :
+- tracer les formes d'une passe avant, de `(B, T)` à `(B, T, V)` ;
+- expliquer l'ajout des positions absolues par diffusion sur le lot ;
+- décrire la preuve de causalité apportée par le test d'invariance de préfixe et le comptage explicite des paramètres.
+:::
+
+## Construire : un seul générateur, un ordre fixe
+
+```python
+        self.config = config
+        rng = np.random.default_rng(config.seed)
+        d = config.embedding_dim
+
+        self.token_embedding: FloatArray = _init_matrix(rng, (config.vocab_size, d))
+        self.position_embedding: FloatArray = _init_matrix(
+            rng, (config.context_length, d)
+        )
+        self.blocks = [TransformerBlock(config, rng) for _ in range(config.num_layers)]
+        self.ln_f_gamma: FloatArray = np.ones(d, dtype=np.float64)
+        self.ln_f_beta: FloatArray = np.zeros(d, dtype=np.float64)
+        self.w_head, self.b_head = _init_linear(rng, config.vocab_size, d, 0.02)
+```
+
+- Un **unique générateur** parcourt tout le modèle dans un ordre fixe (embeddings, blocs dans l'ordre de pile, tête) : chaque paramètre devient une fonction déterministe de la configuration.
+- `token_embedding` : une table `(V, d)` — un vecteur appris par entrée de vocabulaire.
+- `position_embedding` : une table `(T, d)` de positions **absolues apprises**, ajoutée aux embeddings de tokens.
+- `blocks` : `num_layers` blocs identiques dans leur structure, distincts dans leurs paramètres.
+- La tête `w_head` projette `d → V`. Elle est **non liée** (*untied*) : une matrice séparée, distincte de la table d'embeddings (contrairement au *weight tying*).
+
+## La passe avant : de `(B, T)` à `(B, T, V)`
+
+```python
+        ids = np.asarray(token_ids)
+        # ... validation complète avant tout calcul ...
+        seq_len = ids.shape[1]
+        x = self.token_embedding[ids] + self.position_embedding[:seq_len]
+        for block in self.blocks:
+            x = block.forward(x)
+        x = layer_norm(x, self.ln_f_gamma, self.ln_f_beta)
+        return linear(x, self.w_head, self.b_head)
+```
+
+```{=html}
+<figure class="wf-fig" id="wf-model-map" data-wf-default="La forme change à deux moments seulement : l’indexation des embeddings (ids → vecteurs d) et la projection de sortie (d → V). Entre les deux, (B, T, d) traverse L blocs et la normalisation finale sans changer.">
+<figcaption class="wf-fig-title">Le voyage des formes : chaque ligne de la passe avant a son étape</figcaption>
+<div class="wf-stage">
+<div class="wf-diagram">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 250" role="img" aria-labelledby="wfm-title wfm-desc">
+<title id="wfm-title">Voyage des formes dans gpt.py : les identifiants traversent les blocs et deviennent des logits</title>
+<desc id="wfm-desc">Les identifiants (B, T) s’indexent dans la table d’embeddings (V, d) pour donner (B, T, d) ; les positions (T, d) s’ajoutent ; les L blocs et la normalisation finale conservent (B, T, d) ; la projection w_head (d vers V) produit les logits (B, T, V).</desc>
+<defs><marker id="wfm-green" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#16A34A"/></marker></defs>
+<g font-family="Arial,sans-serif">
+<g data-wf-part="emb"><rect x="14" y="100" width="80" height="64" rx="10" fill="#E0F2FE" stroke="#0369A1" stroke-width="2"/><text x="54" y="126" text-anchor="middle" font-size="15" font-weight="700" fill="#0C4A6E">ids</text><text x="54" y="146" text-anchor="middle" font-size="11" fill="#0C4A6E">(B, T)</text></g>
+<g data-wf-part="emb"><path d="M94 132 H120" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfm-green)"/></g>
+<g data-wf-part="emb"><rect x="124" y="100" width="170" height="64" rx="10" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="209" y="124" text-anchor="middle" font-size="12.5" font-family="ui-monospace,Menlo,Consolas,monospace" font-weight="700" fill="#4C1D95">token_embedding[ids]</text><text x="209" y="144" text-anchor="middle" font-size="10" fill="#6D28D9">indexation fantaisie : 1 ligne par id</text></g>
+<g data-wf-part="emb pos"><path d="M294 132 H314" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfm-green)"/></g>
+<g data-wf-part="pos"><rect x="318" y="100" width="190" height="64" rx="10" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="413" y="124" text-anchor="middle" font-size="12.5" font-family="ui-monospace,Menlo,Consolas,monospace" font-weight="700" fill="#4C1D95">+ position_embedding[:T]</text><text x="413" y="144" text-anchor="middle" font-size="10" fill="#6D28D9">T lignes tranchées, diffusées sur le lot</text></g>
+<g data-wf-part="pos blk"><path d="M508 132 H528" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfm-green)"/></g>
+<g data-wf-part="blk"><rect x="532" y="100" width="140" height="64" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="602" y="122" text-anchor="middle" font-size="13" font-weight="700" fill="#17212B">blocs &#215; L</text><text x="602" y="142" text-anchor="middle" font-size="10" fill="#475569">pr&#233;-LN + r&#233;sidus</text></g>
+<g data-wf-part="blk lnf"><path d="M672 132 H690" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfm-green)"/></g>
+<g data-wf-part="lnf"><rect x="694" y="100" width="95" height="64" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="741" y="126" text-anchor="middle" font-size="13" font-weight="700" fill="#17212B">ln_f</text><text x="741" y="146" text-anchor="middle" font-size="10" fill="#475569">(&#947;f, &#946;f)</text></g>
+<g data-wf-part="lnf head"><path d="M789 132 H807" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfm-green)"/></g>
+<g data-wf-part="head"><rect x="811" y="100" width="110" height="64" rx="10" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="866" y="126" text-anchor="middle" font-size="12.5" font-family="ui-monospace,Menlo,Consolas,monospace" font-weight="700" fill="#4C1D95">w_head</text><text x="866" y="146" text-anchor="middle" font-size="10" fill="#6D28D9">d &#8594; V</text></g>
+<g data-wf-part="head"><path d="M921 132 H939" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfm-green)"/></g>
+<g data-wf-part="head"><rect x="943" y="100" width="123" height="64" rx="10" fill="#FEF3C7" stroke="#B45309" stroke-width="2"/><text x="1004" y="126" text-anchor="middle" font-size="14" font-weight="700" fill="#78350F">logits</text><text x="1004" y="146" text-anchor="middle" font-size="10" fill="#92400E">(B, T, V)</text></g>
+<g data-wf-part="emb"><rect x="2" y="196" width="104" height="26" rx="13" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.4"/><text x="54" y="213" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">(B, T)</text></g>
+<g data-wf-part="emb"><rect x="157" y="196" width="104" height="26" rx="13" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.4"/><text x="209" y="213" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">(B, T, d)</text></g>
+<g data-wf-part="pos"><rect x="361" y="196" width="104" height="26" rx="13" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.4"/><text x="413" y="213" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">(B, T, d)</text></g>
+<g data-wf-part="blk"><rect x="550" y="196" width="104" height="26" rx="13" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.4"/><text x="602" y="213" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">(B, T, d)</text></g>
+<g data-wf-part="lnf"><rect x="689" y="196" width="104" height="26" rx="13" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.4"/><text x="741" y="213" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">(B, T, d)</text></g>
+<g data-wf-part="head"><rect x="943" y="196" width="104" height="26" rx="13" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.4"/><text x="995" y="213" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">(B, T, V)</text></g>
+</g>
+</svg>
+</div>
+<div class="wf-panel">
+<p class="wf-hint">Survolez ou sélectionnez une ligne : l’étape correspondante s’allume et la forme du tenseur se lit dans le badge vert. Au clavier : <kbd>Tab</kbd>, <kbd>Entrée</kbd> pour épingler, <kbd>Échap</kbd> pour libérer.</p>
+<div class="wf-chips" role="group" aria-label="Lignes de la passe avant">
+<button type="button" class="wf-chip" data-wf-links="emb" data-wf-note="Indexation fantaisie : chaque id de (B, T) sélectionne une ligne de la table (V, d). La forme passe de (B, T) à (B, T, d) — un vecteur appris par position.">token_embedding[ids]</button>
+<button type="button" class="wf-chip" data-wf-links="pos" data-wf-note="La table (T, d) est tranchée à seq_len puis diffusée sur le lot : toutes les séquences partagent les mêmes positions absolues, la forme reste (B, T, d).">+ position_embedding[:seq_len]</button>
+<button type="button" class="wf-chip" data-wf-links="blk" data-wf-note="Chaque bloc réécrit x en conservant (B, T, d) ; son tronc résiduel garde une copie de l’entrée — répété L fois, la largeur ne change jamais.">for block in self.blocks</button>
+<button type="button" class="wf-chip" data-wf-links="lnf" data-wf-note="Normalisation finale par position : la dernière transformation avant la projection de sortie. Forme inchangée, (B, T, d).">layer_norm(x, ln_f_γ, ln_f_β)</button>
+<button type="button" class="wf-chip" data-wf-links="head" data-wf-note="La tête non liée projette d → V : chaque position porte V scores, et la position t prédit le token qui suit t. Sortie : (B, T, V).">linear(x, w_head, b_head)</button>
+</div>
+<p class="wf-note" aria-live="polite">La forme change à deux moments seulement : l’indexation des embeddings (ids → vecteurs d) et la projection de sortie (d → V). Entre les deux, (B, T, d) traverse L blocs et la normalisation finale sans changer.</p>
+</div>
+</div>
+<figcaption class="wf-legend">
+<span class="wf-key"><span class="wf-swatch" style="background:#E0F2FE;border-color:#0369A1"></span>identifiants</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#F5F3FF;border-color:#8B5CF6"></span>paramètres (tables, w_head)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#FEF3C7;border-color:#B45309"></span>logits (sortie)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#DCFCE7;border-color:#16A34A"></span>forme du tenseur</span>
+</figcaption>
+</figure>
+<script src="../includes/walkthrough-figures.js" defer></script>
+```
+
+
+Le voyage des formes, ligne par ligne :
+
+1. **Validation d'abord** : 2D, entiers, non vide, `seq_len <= context_length`, ids dans `[0, V)`. Une erreur nommée ici vaut mieux qu'un crash d'indexation trois lignes plus bas.
+2. `token_embedding[ids]` : l'**indexation fantaisie** avec des ids `(B, T)` sélectionne une ligne de la table `(V, d)` par id — sortie `(B, T, d)`.
+3. `+ position_embedding[:seq_len]` : la table `(T, d)` est tronquée à la longueur courante puis **diffusée sur le lot** — chaque séquence partage les mêmes positions absolues.
+4. La boucle des blocs : chaque bloc réécrit `x` ; les chemins résiduels internes garantissent que `x` conserve une copie de son entrée.
+5. Normalisation finale puis `linear` : `(B, T, d) → (B, T, V)`. La position `t` porte les scores du token susceptible de suivre `t`.
+
+::: {.callout-tip}
+**La causalité se vérifie, pas seulement se déclare.** Le test d'invariance de préfixe exécute le modèle sur un préfixe, puis sur ce même préfixe prolongé : les logits des positions antérieures doivent être **identiques**. C'est la preuve expérimentale que le masque causal fait son travail.
+:::
+
+## Compter les paramètres : une comptabilité explicite
+
+```python
+        return int(sum(array.size for array in arrays))
+```
+
+`num_parameters` parcourt **chaque tableau** au lieu d'appliquer une formule. Le test compare le résultat à un décompte indépendant dérivé de la configuration — pour un bloc :
+
+- 4 matrices `(d, d)` et leurs biais (Q, K, V, O) ;
+- le MLP : `(hidden, d)`, `(d, hidden)` et leurs biais ;
+- 2 paires de paramètres de normalisation.
+
+::: {.callout-warning}
+**Idées reçues.** (1) Les positions n'entrent pas « par magie » dans le modèle : elles sont **additionnées** aux embeddings de tokens, ligne visible ci-dessus. (2) Le modèle ne produit pas des probabilités mais des **logits** ; la conversion en distribution est un choix de décodage (page suivante).
+:::
+
+## Ce que les tests vérifient
+
+[`tests/unit/test_gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt.py) : formes `(B, T, V)` attendues et valeurs finies ; toutes les erreurs de validation nommées ; déterminisme **à graine égale** (et différence à graine différente) ; invariance de préfixe ; comptage de paramètres conforme à la formule indépendante.
+
+## Exercices
+
+1. Pourquoi `position_embedding[:seq_len]` et non `position_embedding` tout court ?
+2. Avec `V=50, T=16, d=16, H=2, L=2, hidden=32`, calculez le nombre total de paramètres sans exécuter le code.
+
+<details>
+<summary>Afficher les réponses et le raisonnement</summary>
+
+1. La table a toujours `context_length` lignes ; une séquence plus courte n'utilise que les premières `seq_len`. Sans la tranche, l'addition `(B, T, d) + (T_max, d)` échouerait dès que `T < T_max`.
+2. Par bloc : `4×16×16 + 4×16 + 2×32×16 + 32 + 16 + 4×16 = 1024+64+1024+48+64+64 = 2288`. Deux blocs : `4576`. Embeddings : `2×50×16 = 1600` (table + tête non liée) ; positions `16×16 = 256` ; norme finale `32` ; biais de sortie `50`. Total : `4576 + 1600 + 256 + 32 + 50 = 6514`.
+</details>
+
+## Connexions
+
+- **Étape précédente** : [le bloc Transformer (`transformer_block.py`)](transformer-block-walkthrough.qmd).
+- **Étape suivante** : [la génération (`generate.py`)](gpt-generation-walkthrough.qmd).
+- **Pages conceptuelles** : [GPT et Transformer](transformer.qmd), [espace des embeddings](embedding-space.qmd), [position](positional-encoding.qmd), [logits](logits.qmd).
+- **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
+- **Code source** : [`gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py) · **Tests** : [`test_gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt.py).
+
+::: {.language-switch}
+**Langue :** [Français](gpt-model-walkthrough.qmd) · [English](../en/gpt-model-walkthrough.qmd)
+:::

@@ -20,7 +20,7 @@ related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:en", "status:published"]
 -->
 
-This page is the entry point for extended exercises. Short self-checks with collapsed explanations are now embedded in selected lesson pages; they provide immediate checks of individual concepts. **The collections below remain navigation scaffolding for more substantial exercises**, to be developed after prerequisites and coverage have been reviewed.
+Lesson pages use a consistent **“Check your understanding”** component: short questions with collapsed solutions, progressing from retrieval to explanation, application and transfer where the topic supports it. Each check links here to its matching topic collection. **The collections below group more substantial exercises** (extended calculations, multi-step problems and transfer tasks); their development status is stated explicitly.
 
 ## How to use this space
 
@@ -33,7 +33,7 @@ This page is the entry point for extended exercises. Short self-checks with coll
 
 | Collection | Scope | Status |
 |---|---|---|
-| [Mathematical foundations](#foundations) | Tensors, probability, logits, entropy, cross-entropy, likelihood, gradients, numerical stability | Self-checks already present on logits, probabilities, and loss; extended exercises to be developed |
+| [Mathematical foundations](#foundations) | Tensors, probability, logits, entropy, cross-entropy, likelihood, gradients, numerical stability | 7 progressive exercises drafted; gradient checking and other topics remain to be developed |
 | [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Self-checks on IDs and tokenizers in text/embedding pages; extended exercises to be developed |
 | [Attention](#attention) | Q/K/V, scores, scaling, causal masks, multi-head attention, invariants | Self-checks on Q/K/V aggregation and scaling/masking; extended exercises to be developed |
 | [Transformer](#transformer) | Embeddings, position, residuals, normalization, MLP and architecture variants | Structure to be filled |
@@ -50,7 +50,167 @@ This page is the entry point for extended exercises. Short self-checks with coll
 
 **Prerequisites:** [mathematical foundations](mathematical-foundations.qmd), [tensors](tensors.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd), [entropy](entropy.qmd), [cross-entropy](cross-entropy.qmd), [likelihood](likelihood.qmd), [gradients](gradients.qmd).
 
-**Further work:** hand calculations, counterexample analysis, tensor shapes, and numerical checks. The embedded self-checks do not replace a progressive exercise collection.
+**Current scope:** seven worked exercises cover softmax/NLL, masking and reduction, gradients, soft targets and KL, tensor shapes, log-sum-exp/log-softmax stability, and perplexity. Finite-difference gradient checking remains to be developed.
+
+#### Exercise 1 — From logits to loss
+
+Consider three logits $z=(0,\ln 3,\ln 5)$ and a target corresponding to the second class.
+
+1. Compute the softmax distribution.
+2. Compute the target's NLL, in nats.
+3. Give the gradient of the loss with respect to the three logits.
+
+<details>
+<summary>Show the worked solution</summary>
+
+The sum of exponentials is $1+3+5=9$. The distribution is therefore $p=(1/9,3/9,5/9)=(1/9,1/3,5/9)$.
+
+The target probability is $p_2=1/3$, so $\ell=-\ln(1/3)=\ln 3\approx 1.099$ nats.
+
+For a one-hot target, $\partial\ell/\partial z_i=p_i-\mathbb{1}[i=2]$. The gradient is $(1/9,-2/3,5/9)$. Its components sum to zero, as expected because adding the same constant to every logit leaves softmax unchanged.
+
+</details>
+
+#### Exercise 2 — Masking and the denominator
+
+A batch contains three valid target positions with losses $\ln 2$, $\ln 4$, and $\ln 8$, plus one padding position whose incorrectly computed loss would be $\ln 100$.
+
+1. Compute the correct mean over valid positions.
+2. Compute the incorrect mean if the padding position is excluded from the numerator but retained in the denominator.
+3. Explain why the mask must affect both.
+
+<details>
+<summary>Show the worked solution</summary>
+
+The correct mean is $(\ln 2+\ln 4+\ln 8)/3=(1+2+3)\ln 2/3=2\ln 2=\ln 4\approx 1.386$ nats.
+
+If padding remains in the denominator, the incorrect result is $(\ln 2+\ln 4+\ln 8)/4=1.5\ln 2\approx 1.040$ nats. This is not the mean over the three valid targets: it depends artificially on the number of ignored positions. The mask must therefore exclude those positions from both numerator **and** denominator.
+
+</details>
+
+#### Exercise 3 — From logit gradients to parameter gradients
+
+For one position, the gradient with respect to the logits is $g=\nabla_z\ell=(0.2,-0.3,0.1)$. In a simplified model, the logits depend on two parameters $\theta=(\theta_1,\theta_2)$ with Jacobian:
+
+$$
+J=\frac{\partial z}{\partial\theta}=
+\begin{pmatrix}
+1 & 0\\
+0 & 2\\
+1 & 1
+\end{pmatrix}.
+$$
+
+Compute $\nabla_\theta\ell=J^\top g$. Explain why this is not simply $g$.
+
+<details>
+<summary>Show the worked solution</summary>
+
+The product is:
+
+$$
+J^\top g=
+\begin{pmatrix}
+1 & 0 & 1\\
+0 & 2 & 1
+\end{pmatrix}
+\begin{pmatrix}0.2\\-0.3\\0.1\end{pmatrix}
+=
+\begin{pmatrix}0.3\\-0.5\end{pmatrix}.
+$$
+
+The gradient $g$ describes loss sensitivity to the three logits. The parameter gradient also accounts for how each parameter changes those logits, represented by the Jacobian. This is precisely the role of the chain rule.
+
+</details>
+
+#### Exercise 4 — Soft targets and KL divergence
+
+Consider a target $q=(3/4,1/4)$ and a prediction $p=(1/2,1/2)$.
+
+1. Compute $H(q,p)$.
+2. Write $H(q)$ and use it to derive $D_{\mathrm{KL}}(q\Vert p)$.
+3. Why does minimizing $H(q,p)$ with respect to $p$ also minimize $D_{\mathrm{KL}}(q\Vert p)$ here?
+
+<details>
+<summary>Show the worked solution</summary>
+
+Since both predicted probabilities are $1/2$, $H(q,p)=-\frac34\ln\frac12-\frac14\ln\frac12=\ln 2\approx0.693$ nats.
+
+The target entropy is $H(q)=-\frac34\ln\frac34-\frac14\ln\frac14\approx0.562$ nats. Therefore $D_{\mathrm{KL}}(q\Vert p)=H(q,p)-H(q)\approx0.131$ nats.
+
+For fixed $q$, $H(q)$ is constant with respect to $p$. Minimizing $H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)$ therefore also minimizes KL divergence. This equivalence does not make KL symmetric: the order $q\Vert p$ matters.
+
+</details>
+
+#### Exercise 5 — Track a batch's shapes
+
+A batch contains $B=2$ sequences of length $T=4$. The hidden dimension is $D=6$ and the vocabulary contains $V=10$ tokens. Activations $X$ have shape $(B,T,D)$ and the output projection $W$ has shape $(D,V)$.
+
+1. Give the shape of the logits $Z=XW$.
+2. Give the shape of the target IDs $Y$ and the per-position losses.
+3. If two padding positions are ignored, how many positions contribute to a mean over valid targets?
+4. Along which axis should softmax operate to obtain a vocabulary distribution at every position?
+
+<details>
+<summary>Show the worked solution</summary>
+
+The projection transforms the final axis from $D$ to $V$ and preserves batch and sequence axes, so $Z$ has shape $(2,4,10)$. Targets are integer IDs of shape $(2,4)$; after selecting the target probability, per-position losses also have shape $(2,4)$.
+
+The batch contains $2\times4=8$ positions. If two are ignored, six contribute to the mean: the denominator is $6$, not $8$. Softmax must operate along the final, vocabulary axis $V$, independently for each (example, position) pair.
+
+Shape compatibility alone does not guarantee that targets are shifted correctly or that the correct axis was selected: the semantics of the axes must also be checked.
+
+</details>
+
+#### Exercise 6 — Stabilize log-sum-exp and log-softmax
+
+Consider logits $z=(1000,1001,999)$.
+
+1. Why can directly computing $\sum_i\exp(z_i)$ cause a numerical problem in floating-point arithmetic?
+2. With $m=\max_i z_i$, rewrite $\log\sum_i\exp(z_i)$ in a more numerically stable form.
+3. Compute the NLL of the second class as the target using this form.
+
+<details>
+<summary>Show the worked solution</summary>
+
+Exponentials of numbers near $1000$ exceed the representable range of ordinary floating-point formats by a wide margin. They can overflow to $+\infty$, even though the final softmax distribution is perfectly well-defined.
+
+Subtract the maximum before exponentiating:
+
+$$
+\operatorname{LSE}(z)=m+\log\sum_i\exp(z_i-m).
+$$
+
+Here, $m=1001$ and the stabilized sum is $S=\exp(-1)+1+\exp(-2)\approx1.5032$. Thus, $\operatorname{LSE}(z)=1001+\log S\approx1001.4076$.
+
+For the second class, $\log p_2=z_2-\operatorname{LSE}(z)=-\log S\approx-0.4076$. Its NLL is therefore about $0.4076$ nats. This avoids exponentiating the large logits; subtracting a common constant does not change the softmax distribution.
+
+</details>
+
+#### Exercise 7 — From mean NLL to perplexity
+
+On an evaluation corpus, mean per-token NLL is $1.2$ nats, computed with the natural logarithm and averaged over valid targets only.
+
+1. Compute perplexity.
+2. Interpret this value without confusing it with an error rate.
+3. Name at least two conditions to check before comparing this perplexity with another model's.
+
+<details>
+<summary>Show the worked solution</summary>
+
+Perplexity is:
+
+$$
+\operatorname{PPL}=\exp(1.2)\approx3.32.
+$$
+
+It is the exponential of mean NLL: it summarizes the model's average probabilistic uncertainty on target tokens under the chosen corpus and tokenizer. It is neither a percentage of incorrect tokens nor a direct measure of factual answer quality.
+
+A comparison requires checking, among other things, the tokenizer and its segmentation, corpus and preprocessing, target alignment, ignored-position mask, reduction convention, and logarithm base. Perplexities computed with different tokenizations are generally not directly comparable.
+
+</details>
+
+**Further work:** a later set can cover finite-difference gradient checking and how reduction conventions affect gradients.
 
 ### Text data {#text-data}
 
@@ -67,8 +227,6 @@ This page is the entry point for extended exercises. Short self-checks with coll
 ### Transformer {#transformer}
 
 **Prerequisites:** [Transformer overview](transformer.qmd), [embedding space](embedding-space.qmd), [position and RoPE](positional-encoding.qmd).
-
-**Available activity:** [observe and question a Transformer](transformer-explainer.qmd), with guided observations and a critical audit of an external demonstration. This activity is not a complete collection of exercises with solutions.
 
 **Planned focus:** trace representations through a block, compare attention and MLP roles, and distinguish architecture families.
 

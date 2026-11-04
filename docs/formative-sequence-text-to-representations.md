@@ -1,10 +1,10 @@
 # Formative sequence: text to representations
 
-> **Status: design draft — not learner-release ready.** This document operationalizes issue [#220](https://github.com/JM-Brun/llm-lab/issues/220). It reuses canonical lesson content; it is not a new concept chapter. Release remains gated by the desktop/mobile browser review in [#82](https://github.com/JM-Brun/llm-lab/issues/82).
+> **Status: design draft — not learner-release ready.** This document operationalizes issue [#220](https://github.com/JM-Brun/llm-lab/issues/220). It reuses canonical lesson content; it is not a new concept chapter. Release remains gated by the deferred desktop/mobile browser review in [#320](https://github.com/JM-Brun/llm-lab/issues/320); source-level foundational work is tracked separately in the now-closed [#82](https://github.com/JM-Brun/llm-lab/issues/82).
 
 ## Design contract
 
-- Stable activity IDs are shared by French and English.
+- Three stable activity IDs (TR-A, TR-B, TR-C) are shared by French and English; the original TR-01–TR-06 IDs remain as traceable draft subparts.
 - Every prompt targets an observable operation: reconstruct, calculate, trace, predict, or diagnose.
 - Solutions distinguish what follows mathematically from what depends on an architecture or tokenizer.
 - The numerical embedding values are synthetic and reused from the canonical [embedding-space lesson](../site/en/embedding-space.qmd); they are not model parameters.
@@ -12,20 +12,18 @@
 
 ## Sequence map
 
-| ID | Activity | Observable outcome | Prerequisite | Canonical pages | G milestone |
+| ID | Activity bundle | Observable outcome | Prerequisite | Canonical pages | G milestone |
 |---|---|---|---|---|---|
-| TR-01 | Reconstruct the pipeline | Put transformations in order and distinguish their outputs | First-pass text/token lesson | text-data; embedding-space | G1–G3 |
-| TR-02 | Perform an embedding lookup | Select matrix rows and state the output shape | Matrix and index notation | embedding-space; tensors (optional) | G3 |
-| TR-03 | Trace batch and axes | Infer shapes and explain what lookup does not do | TR-02 | embedding-space; tensors | G3 |
-| TR-04 | Diagnose identity vs context | Reject invalid claims about IDs, initial vectors, position and hidden states | Pipeline and contextualization overview | contextualized-representations; positional-encoding | G3 |
-| TR-05 | Complete a partially worked shape trace | Complete shapes while distinguishing vocabulary, sequence and feature axes | TR-02 | embedding-space; tensors | G3 |
-| TR-06 | Predict what changes and what remains invariant | Separate lookup invariants from positional and contextual effects | TR-01–TR-03 and the positional/contextualization overview | contextualized-representations; positional-encoding | G3 |
+| TR-A | Reconstruct the representation pipeline (TR-01) | Order the stages and distinguish token strings, IDs, initial vectors and contextualized states | First pass through text/token lessons | text-data; embedding-space | G1–G3 |
+| TR-B | Calculate lookup and trace tensor shapes (TR-02 → TR-05 → TR-03) | Calculate a lookup, complete a scaffolded trace, then generalize to batch/sequence/feature axes | TR-A; matrix and index notation | embedding-space; tensors (optional reference) | G3 |
+| TR-C | Diagnose identity, position and context (TR-04 → TR-06) | Classify claims and predict which representations can change under controlled changes | TR-A and TR-B; contextualization/position overview | contextualized-representations; positional-encoding | G3 |
 
-**Suggested teaching order:** TR-01 → TR-02 → TR-05 → TR-03 → TR-06 → TR-04. The stable IDs identify activities across languages and references; they do not prescribe a numerical order. The sequence deliberately moves from reconstruction to a worked calculation, scaffolded completion, less-scaffolded tracing, prediction, and finally misconception diagnosis.
-
+**Suggested teaching order:** TR-A → TR-B (lookup calculation → scaffolded shape completion → batch/axis generalization) → TR-C (claim diagnosis → controlled prediction). The original TR-01–TR-06 IDs remain traceability labels for the detailed prompts and answer keys; they are not six separate substantial activities.
 ---
 
-## TR-01 — Reconstruct the pipeline
+## TR-A — Reconstruct the representation pipeline
+
+*Detailed draft section: TR-01.*
 
 **Outcome:** reconstruct the path from a text string to context-dependent hidden states and identify the object produced at each stage.
 
@@ -95,7 +93,11 @@ Le tokenizer transforme le texte en unités discrètes du vocabulaire. Les IDs i
 
 ---
 
-## TR-02 — Perform an embedding lookup
+## TR-B — Calculate lookup and trace tensor shapes
+
+### Stage 1 — Perform an embedding lookup
+
+*Detailed draft section: TR-02.*
 
 **Outcome:** calculate a lookup result from a matrix and explain its dimensions.
 
@@ -112,7 +114,7 @@ E = \begin{bmatrix}
 \in \mathbb{R}^{5\times 2}.
 \]
 
-### English prompt
+#### English prompt
 
 For token IDs \([2,0,3]\):
 
@@ -150,7 +152,7 @@ The shape is \((L,d)=(3,2)\): three token positions and two features per token. 
 
 **Assessment criterion:** exact matrix, shape and explanation of why ID arithmetic is not embedding geometry.
 
-### Consigne française
+#### Consigne française
 
 Pour les IDs \([2,0,3]\) :
 
@@ -188,13 +190,89 @@ La forme est \((L,d)=(3,2)\) : trois positions de tokens et deux caractéristiqu
 
 **Critère d'évaluation :** matrice, forme et explication exactes sur l'absence de sens géométrique de l'arithmétique des IDs.
 
----
+### Stage 2 — Complete a partially worked shape trace
 
-## TR-03 — Trace batch shapes and axes
+*Detailed draft section: TR-05.*
+
+**Outcome:** complete a scaffolded representation trace without confusing the vocabulary axis, sequence axis and feature axis.
+
+#### English prompt
+
+A batch contains two sequences, each represented by three token IDs. The embedding table has vocabulary size \(V=5\) and embedding dimension \(d=2\).
+
+Complete the missing entries:
+
+| Object | Shape | Meaning |
+|---|---:|---|
+| Embedding table \(E\) | \((5,2)\) | vocabulary entries × features |
+| Token IDs | \((2,3)\) | batch × sequence |
+| Lookup result | ? | batch × sequence × features |
+| One sequence after lookup | ? | sequence × features |
+
+Then explain why the vocabulary size \(V\) does not appear as an axis in the lookup result.
+
+**Progressive hints**
+
+1. Each of the six IDs selects one row of \(E\).
+2. The selected row has length \(d=2\).
+3. The lookup output contains one vector for each batch-position pair, not the entire vocabulary table.
+
+**Worked solution**
+
+The lookup result has shape \((2,3,2)\); one sequence has shape \((3,2)\). The vocabulary axis indexes the source table. After row selection, the output axes describe the batch, sequence positions and features. The vocabulary dimension is therefore not retained as an output axis.
+
+**Notation note:** this activity uses \(d\) for the embedding width. The tensor reference uses \(D\) for the model feature width and \(d_h\) for a per-head width. Here, \(d\) and \(D\) denote the same feature-axis role; they are local notation choices, not universally interchangeable symbols.
+
+**Misconception feedback**
+
+- \((2,3,5,2)\) would incorrectly retain the whole vocabulary table as an extra output axis.
+- \((2,3,5)\) confuses vocabulary size with embedding width.
+- \((2,2,3)\) swaps the sequence and feature axes.
+
+**Assessment criterion:** both shapes are correct and the learner explains why lookup removes the vocabulary axis from the selected output.
+
+#### Consigne française
+
+Un batch contient deux séquences de trois IDs chacune. La table d'embeddings possède un vocabulaire de taille \(V=5\) et une dimension d'embedding \(d=2\).
+
+Complétez les formes manquantes :
+
+| Objet | Forme | Signification |
+|---|---:|---|
+| Table d'embeddings \(E\) | \((5,2)\) | entrées du vocabulaire × caractéristiques |
+| IDs des tokens | \((2,3)\) | batch × séquence |
+| Résultat du lookup | ? | batch × séquence × caractéristiques |
+| Une séquence après lookup | ? | séquence × caractéristiques |
+
+Expliquez ensuite pourquoi la taille du vocabulaire \(V\) ne figure pas parmi les axes du résultat du lookup.
+
+**Indices progressifs**
+
+1. Chacun des six IDs sélectionne une ligne de \(E\).
+2. La ligne sélectionnée possède une longueur \(d=2\).
+3. Le résultat contient un vecteur par couple batch-position, et non toute la table du vocabulaire.
+
+**Solution détaillée**
+
+Le résultat du lookup a pour forme \((2,3,2)\) ; une séquence a pour forme \((3,2)\). L'axe du vocabulaire indexe la table source. Après sélection des lignes, les axes du résultat décrivent le batch, les positions de séquence et les caractéristiques. La dimension du vocabulaire n'est donc pas conservée comme axe de sortie.
+
+**Note de notation :** cet exercice utilise \(d\) pour la largeur d'embedding. La référence sur les tenseurs utilise \(D\) pour la largeur des caractéristiques du modèle et \(d_h\) pour la largeur par tête. Ici, \(d\) et \(D\) désignent le même rôle d'axe de caractéristiques ; ce sont des conventions locales, pas des symboles universellement interchangeables.
+
+**Retour sur les erreurs fréquentes**
+
+- \((2,3,5,2)\) conserverait à tort toute la table du vocabulaire comme axe supplémentaire.
+- \((2,3,5)\) confond la taille du vocabulaire et la largeur des embeddings.
+- \((2,2,3)\) échange les axes séquence et caractéristiques.
+
+**Critère d'évaluation :** les deux formes sont correctes et l'explication montre pourquoi le lookup élimine l'axe du vocabulaire du résultat sélectionné.
+
+### Stage 3 — Trace batch shapes and axes
+
+*Detailed draft section: TR-03.*
 
 **Outcome:** infer common tensor shapes and identify which axes lookup preserves.
 
-### English prompt
+#### English prompt
 
 A batch contains \(B=2\) sequences, each with \(L=3\) token IDs. The embedding dimension is \(d=2\).
 
@@ -226,7 +304,7 @@ Lookup preserves batch and sequence-position axes and adds the feature axis. It 
 
 **Assessment criterion:** correct shapes, axes named by meaning, and explicit separation of lookup from contextualization.
 
-### Consigne française
+#### Consigne française
 
 Un batch contient \(B=2\) séquences, chacune composée de \(L=3\) IDs. La dimension d'embedding vaut \(d=2\).
 
@@ -260,11 +338,15 @@ Le lookup conserve les axes batch et position, et ajoute l'axe des caractéristi
 
 ---
 
-## TR-04 — Diagnose identity, position and context
+## TR-C — Diagnose identity, position and context
+
+### Stage 1 — Diagnose identity, position and context
+
+*Detailed draft section: TR-04.*
 
 **Outcome:** evaluate claims against the pipeline and architectural qualifications.
 
-### English prompt
+#### English prompt
 
 For a fixed tokenizer and fixed embedding matrix, classify each statement as **valid**, **invalid**, or **architecture-dependent**, and justify your choice. No specific model configuration is supplied: when a statement refers to “this model”, decide whether the information given is sufficient to determine its behavior.
 
@@ -298,7 +380,7 @@ The decisive distinction is between a property of the tokenizer, a property of a
 
 **Assessment criterion:** classifications and justifications distinguish fixed lookup invariants from context-dependent outputs and architecture-specific mechanisms.
 
-### Consigne française
+#### Consigne française
 
 Pour un tokenizer et une matrice d'embeddings fixés, classez chaque affirmation comme **valide**, **invalide** ou **dépendante de l'architecture**, puis justifiez votre choix. Aucune configuration de modèle particulière n'est fournie : lorsqu'une affirmation parle de « ce modèle », déterminez si les informations données suffisent pour établir son comportement.
 
@@ -332,90 +414,18 @@ La distinction décisive sépare une propriété du tokenizer, une propriété d
 
 **Critère d'évaluation :** les classements et justifications distinguent les invariants du lookup fixe, les sorties dépendantes du contexte et les mécanismes propres à certaines architectures.
 
----
+### Stage 2 — Predict what changes, and what stays invariant
 
-## TR-05 — Complete a partially worked shape trace
-
-**Outcome:** complete a scaffolded representation trace without confusing the vocabulary axis, sequence axis and feature axis.
-
-### English prompt
-
-A batch contains two sequences, each represented by three token IDs. The embedding table has vocabulary size \(V=5\) and embedding dimension \(d=2\).
-
-Complete the missing entries:
-
-| Object | Shape | Meaning |
-|---|---:|---|
-| Embedding table \(E\) | \((5,2)\) | vocabulary entries × features |
-| Token IDs | \((2,3)\) | batch × sequence |
-| Lookup result | ? | batch × sequence × features |
-| One sequence after lookup | ? | sequence × features |
-
-Then explain why the vocabulary size \(V\) does not appear as an axis in the lookup result.
-
-**Progressive hints**
-
-1. Each of the six IDs selects one row of \(E\).
-2. The selected row has length \(d=2\).
-3. The lookup output contains one vector for each batch-position pair, not the entire vocabulary table.
-
-**Worked solution**
-
-The lookup result has shape \((2,3,2)\); one sequence has shape \((3,2)\). The vocabulary axis indexes the source table. After row selection, the output axes describe the batch, sequence positions and features. The vocabulary dimension is therefore not retained as an output axis.
-
-**Misconception feedback**
-
-- \((2,3,5,2)\) would incorrectly retain the whole vocabulary table as an extra output axis.
-- \((2,3,5)\) confuses vocabulary size with embedding width.
-- \((2,2,3)\) swaps the sequence and feature axes.
-
-**Assessment criterion:** both shapes are correct and the learner explains why lookup removes the vocabulary axis from the selected output.
-
-### Consigne française
-
-Un batch contient deux séquences de trois IDs chacune. La table d'embeddings possède un vocabulaire de taille \(V=5\) et une dimension d'embedding \(d=2\).
-
-Complétez les formes manquantes :
-
-| Objet | Forme | Signification |
-|---|---:|---|
-| Table d'embeddings \(E\) | \((5,2)\) | entrées du vocabulaire × caractéristiques |
-| IDs des tokens | \((2,3)\) | batch × séquence |
-| Résultat du lookup | ? | batch × séquence × caractéristiques |
-| Une séquence après lookup | ? | séquence × caractéristiques |
-
-Expliquez ensuite pourquoi la taille du vocabulaire \(V\) ne figure pas parmi les axes du résultat du lookup.
-
-**Indices progressifs**
-
-1. Chacun des six IDs sélectionne une ligne de \(E\).
-2. La ligne sélectionnée possède une longueur \(d=2\).
-3. Le résultat contient un vecteur par couple batch-position, et non toute la table du vocabulaire.
-
-**Solution détaillée**
-
-Le résultat du lookup a pour forme \((2,3,2)\) ; une séquence a pour forme \((3,2)\). L'axe du vocabulaire indexe la table source. Après sélection des lignes, les axes du résultat décrivent le batch, les positions de séquence et les caractéristiques. La dimension du vocabulaire n'est donc pas conservée comme axe de sortie.
-
-**Retour sur les erreurs fréquentes**
-
-- \((2,3,5,2)\) conserverait à tort toute la table du vocabulaire comme axe supplémentaire.
-- \((2,3,5)\) confond la taille du vocabulaire et la largeur des embeddings.
-- \((2,2,3)\) échange les axes séquence et caractéristiques.
-
-**Critère d'évaluation :** les deux formes sont correctes et l'explication montre pourquoi le lookup élimine l'axe du vocabulaire du résultat sélectionné.
-
----
-
-## TR-06 — Predict what changes, and what stays invariant
+*Detailed draft section: TR-06.*
 
 **Outcome:** predict which representation changes when token identity, position or surrounding context changes, while holding the tokenizer and parameters fixed.
 
-### English prompt
+#### English prompt
 
 Assume a deterministic tokenizer and a fixed model checkpoint. Consider the same token ID \(t\) in these situations:
 
 1. It occurs twice in the same input sequence.
-2. It occurs in two different input sequences with different surrounding tokens.
+2. It occurs in two different input sequences with different preceding (visible) context. For a decoder-only causal model, tokens to the right are masked and cannot affect this position.
 3. It is replaced by a different ID \(u\), while all other positions remain unchanged.
 
 For each situation, predict whether the following can change:
@@ -435,8 +445,8 @@ State any architectural qualification needed. Do not assume that a change at one
 **Worked solution**
 
 1. The same ID selects the same initial embedding row. If the architecture adds learned absolute position embeddings before the first block, the resulting input representation can differ by position. With a mechanism such as RoPE, the token embedding itself is not changed by a position vector; positional effects enter later inside attention. Contextualized states may differ because position and surrounding context matter.
-2. The initial lookup row remains the same for the same ID and fixed table. The positional mechanism may act on the token stream or inside attention, depending on the architecture. Contextualized states can differ because the surrounding sequence differs.
-3. A different ID generally selects a different row. Any positional mechanism is applied according to the architecture; contextualized states may change at that position and at other positions that depend on it.
+2. The initial lookup row remains the same for the same ID and fixed table. The positional mechanism may act on the token stream or inside attention, depending on the architecture. Contextualized states can differ when the preceding/visible context differs; in a causal decoder, tokens to the right cannot affect this position.
+3. A different ID generally selects a different row. If its position is unchanged, the positional operation itself need not change: an absolute scheme adds the same position vector, while RoPE applies the same position-dependent rotation to the newly computed query/key vectors. The resulting position-aware representations can nevertheless change because their content inputs changed. Contextualized states may change at that position and at other positions that depend on it.
 
 These are qualitative predictions, not guarantees about the magnitude of a numerical change. Exact effects depend on architecture, masking, position mechanism and model parameters.
 
@@ -448,12 +458,12 @@ These are qualitative predictions, not guarantees about the magnitude of a numer
 
 **Assessment criterion:** the learner separates lookup invariance from position- and context-dependent representations, and avoids unsupported claims about the magnitude or propagation of changes.
 
-### Consigne française
+#### Consigne française
 
 Supposez que le tokenizer soit déterministe et que le checkpoint du modèle soit fixe. Considérez le même ID \(t\) dans les situations suivantes :
 
 1. Il apparaît deux fois dans la même séquence d'entrée.
-2. Il apparaît dans deux séquences différentes, avec des tokens voisins différents.
+2. Il apparaît dans deux séquences différentes, avec un contexte précédent (visible) différent. Dans un modèle décodeur causal, les tokens situés à droite sont masqués et ne peuvent pas influer sur cette position.
 3. Il est remplacé par un autre ID \(u\), tous les autres emplacements restant inchangés.
 
 Pour chaque situation, prévoyez si les éléments suivants peuvent changer :
@@ -473,8 +483,8 @@ Précisez les réserves liées à l'architecture. Ne supposez pas qu'un changeme
 **Solution détaillée**
 
 1. Le même ID sélectionne la même ligne d'embedding initial. Si l'architecture ajoute des embeddings positionnels absolus appris avant le premier bloc, la représentation d'entrée qui en résulte peut différer selon la position. Avec un mécanisme comme RoPE, l'embedding du token n'est pas modifié par un vecteur positionnel ; les effets de position interviennent plus tard, dans l'attention. Les états contextualisés peuvent différer en raison de la position et du contexte.
-2. La ligne initiale sélectionnée reste la même pour un ID donné et une table fixe. Le mécanisme positionnel peut agir sur le flux de tokens ou à l'intérieur de l'attention, selon l'architecture. Les états contextualisés peuvent différer parce que le contexte de la séquence change.
-3. Un ID différent sélectionne généralement une autre ligne. Tout mécanisme positionnel est appliqué selon l'architecture ; les états contextualisés peuvent changer à cette position ainsi qu'à d'autres positions qui en dépendent.
+2. La ligne initiale sélectionnée reste la même pour un ID donné et une table fixe. Le mécanisme positionnel peut agir sur le flux de tokens ou à l'intérieur de l'attention, selon l'architecture. Les états contextualisés peuvent différer lorsque le contexte précédent/visible change ; dans un décodeur causal, les tokens situés à droite ne peuvent pas influer sur cette position.
+3. Un ID différent sélectionne généralement une autre ligne. Si sa position reste inchangée, l'opération positionnelle elle-même n'a pas besoin de changer : un mécanisme absolu ajoute le même vecteur de position, tandis que RoPE applique la même rotation dépendant de la position aux nouveaux vecteurs requête/clé calculés. Les représentations résultantes tenant compte de la position peuvent néanmoins changer puisque leur contenu d'entrée a changé. Les états contextualisés peuvent changer à cette position ainsi qu'à d'autres positions qui en dépendent.
 
 Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un changement numérique. Les effets exacts dépendent de l'architecture, du masque, du mécanisme positionnel et des paramètres du modèle.
 
@@ -490,20 +500,30 @@ Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un ch
 
 ## Review and release checklist
 
-- [ ] Verify every statement against the current canonical FR/EN pages.
-- [ ] Independently recompute the TR-02 matrix selection and TR-03 shapes.
-- [ ] Check mathematical notation and Quarto rendering in both languages.
-- [ ] Review whether the activity sequence is cognitively progressive without making the first pass too long.
-- [ ] Check that feedback diagnoses the reasoning error, not merely the wrong answer.
-- [ ] Review desktop and mobile rendering after the #82 browser gate is completed.
+- [x] Verify every statement against the current canonical FR/EN pages.
+- [x] Independently recompute the TR-02 matrix selection and TR-03 shapes.
+- [x] Check mathematical notation and FR/EN content parity. The internal design document is not itself a learner-facing Quarto page.
+- [x] Review the three bundles as one progression; do not turn every internal draft subpart into a separate compulsory activity.
+- [x] Check that feedback diagnoses the reasoning error, not merely the wrong answer.
+- [ ] After integration into learner-facing pages, review desktop/mobile rendering under [#329](https://github.com/JM-Brun/llm-lab/issues/329); #320 covers the canonical prerequisite pages only.
 - [ ] Only then decide whether to embed these activities in existing pages or publish a separate practice destination.
-- [ ] Do not add transfer assessment until the first learning sequence is complete.
+- [x] No transfer assessment is included; revisit it only after the first learning sequence is complete.
+
+## Source-level review record — 2026-11-03
+
+- Recomputed the TR-02 lookup: IDs [2,0,3] select rows E₂, E₀, E₃ and yield the stated (3,2) matrix.
+- Verified TR-05 and TR-03 shapes: (2,3) IDs → (2,3,2) lookup result; one sequence → (3,2). The vocabulary axis indexes the source table and is not retained in the selected output.
+- Checked TR-04 classifications and TR-06 controlled predictions against the fixed-lookup/contextualization distinction, architecture-dependent position handling, and causal masking.
+- Compared all six English/French prompt sections: numbered prompts, scaffold stages, claims, hints and feedback have matching structural counts; the substantive conclusions and worked values match.
+- The d/D notation bridge is explicit. Here d in the toy exercise denotes the feature-width role represented by D in the tensor reference; d_h remains the per-head width.
+- This is a source-level review in this session, not a second human expert review or learner evaluation. The bilingual site-render workflow passed in PR #325, but this internal Markdown design document is not itself rendered as a learner page.
+- Browser review after learner-facing integration is tracked in [#329](https://github.com/JM-Brun/llm-lab/issues/329); the canonical prerequisite-page review remains in [#320](https://github.com/JM-Brun/llm-lab/issues/320).
 
 ## Ownership and evidence
 
 - Exercise design and answer keys: [#220](https://github.com/JM-Brun/llm-lab/issues/220).
-- Foundational source/content and browser gate: [#82](https://github.com/JM-Brun/llm-lab/issues/82).
+- Foundational source/content: [#82](https://github.com/JM-Brun/llm-lab/issues/82) (closed); canonical-page browser review: [#320](https://github.com/JM-Brun/llm-lab/issues/320); exercise-page browser review after integration: [#329](https://github.com/JM-Brun/llm-lab/issues/329).
 - Milestone mapping: [#87](https://github.com/JM-Brun/llm-lab/issues/87).
 - Reader-facing architecture: [#130](https://github.com/JM-Brun/llm-lab/issues/130).
 
-Authored content is not yet independently reviewed, rendered, browser-reviewed, or learner-evaluated. Those are separate evidence states.
+The source-level review above does not constitute a second human expert review or learner evidence. Learner-facing rendering and browser validation remain pending until integration.

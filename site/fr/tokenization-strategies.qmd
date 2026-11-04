@@ -9,25 +9,19 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/tokenization-strategies"
 scope: "Compare les unités de segmentation et les familles d’algorithmes de tokenisation — notamment BPE, WordPiece et unigramme — ainsi que leurs compromis de couverture, longueur et coût ; suppose la chaîne d’entrée déjà représentée en texte et s’arrête avant le lookup des embeddings."
-purpose: "Le lecteur doit pouvoir décrire le principe des principales stratégies de segmentation, comparer leurs hypothèses et compromis, et expliquer pourquoi les tokens et IDs dépendent du tokenizer et de sa version."
+purpose: "Le lecteur doit pouvoir décrire le principe des principales stratégies de segmentation, comparer leurs hypothèses et compromis, expliquer pourquoi les tokens et IDs dépendent du tokenizer et de sa version, et montrer les limites d’un découpage fondé uniquement sur les espaces."
 suggested_route:
-  previous: "fr/unicode-text"
+  previous: "fr/text-data"
   next: "fr/embedding-space"
 hierarchy:
   parents: ["fr/text-data"]
-  children: ["fr/training-examples", "fr/tokenizer-evaluation"]
-related: []
+  children: []
+related: ["fr/training-examples"]
 tags: ["type:concept-lesson", "destination:understand", "topic:tokenization-strategies", "level:core", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
 Un tokenizer est un choix de représentation et d'ingénierie. Il doit couvrir les entrées attendues et maîtriser la taille du vocabulaire et le coût en séquence. Aucun découpage — mot, caractère, octet ou sous-mot — n'est optimal sur tous les corpus et toutes les tâches.
-:::
-
-::: {.callout-tip title="Choisir sa profondeur de lecture"}
-**Première lecture :** retenez les points ci-dessous, comparez les granularités et les composants du pipeline, puis poursuivez vers l'[espace des embeddings](embedding-space.qmd). Les comparaisons détaillées d'algorithmes, protocoles, études et ressources sont facultatives pour comprendre le passage des tokens aux vecteurs.
-
-**Pour étudier les compromis :** revenez aux exemples BPE et à l'[évaluation des tokenizers](#tokenizer-evaluation) ; les résultats empiriques dépendent des corpus et protocoles étudiés.
 :::
 
 ## À retenir
@@ -40,11 +34,22 @@ Un tokenizer est un choix de représentation et d'ingénierie. Il doit couvrir l
 
 ## 1. Carte conceptuelle
 
-Le pipeline complet — du texte Unicode aux IDs puis à la lookup dans la matrice d'embeddings — est illustré dans la [page d'introduction](text-data.qmd). Cette page se concentre sur les choix de segmentation et leurs compromis plutôt que de répéter le même schéma.
 
 Pour observer concrètement les fusions BPE, ouvrez la [visualisation interactive originale de Müller et Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/). Elle montre le corpus en cours de segmentation, les paires candidates et la croissance du vocabulaire. La ressource est liée plutôt que copiée : les conditions de réutilisation de ses figures ne sont pas établies ici.
 
 « Token » désigne l'unité discrète produite par le système, pas nécessairement une unité linguistique. Les frontières initiales, les espaces, la normalisation et les tokens spéciaux peuvent changer le résultat autant que le nom de l'algorithme.
+
+### Pourquoi un découpage uniquement sur les espaces ne suffit pas
+
+Un découpage naïf comme `str.split()` traite les suites de caractères séparées par des espaces comme des unités. Il ne constitue pas un tokenizer général :
+
+| Texte d'entrée | Résultat d'un `str.split()` simplifié | Limite |
+|---|---|---|
+| `Hello, world!` | `Hello,` · `world!` | La ponctuation reste attachée aux chaînes obtenues. |
+| `New  York` | `New` · `York` | Les espaces répétés sont absorbés ; leur information n'est pas conservée dans les unités. |
+| `你好世界` | `你好世界` | En l'absence d'espaces, aucune frontière n'est produite. |
+
+Ces exemples illustrent les limites d'une règle unique, pas les sorties attendues d'un tokenizer réel. Un tokenizer peut appliquer une pré-tokenisation, traiter la ponctuation et les espaces selon sa configuration, puis découper les segments en sous-mots ou en octets. Il ne cherche pas nécessairement à retrouver des mots linguistiques : son objectif est de produire une représentation discrète compatible avec son vocabulaire et son modèle.
 
 ## 2. Comparer les granularités
 
@@ -56,19 +61,6 @@ Pour observer concrètement les fusions BPE, ouvrez la [visualisation interactiv
 | **Sous-mots appris** | Compromis entre vocabulaire et longueur ; formes rares décomposables si les unités de base les couvrent | Frontières parfois arbitraires ; coût variable selon langues/scripts ; morphologie non garantie | Nombreux LLM modernes |
 
 Ces catégories sont des idéaux-types. Les systèmes réels peuvent combiner pré-tokenisation, sous-mots et représentation byte-level. « Caractère » doit être défini précisément : point de code Unicode, unité de code et graphème ne sont pas interchangeables.
-
-### La taille du vocabulaire est aussi un choix d'architecture et de budget
-
-Un vocabulaire de sous-mots plus grand peut représenter certains textes avec moins de tokens, mais son effet ne se limite pas à la longueur des séquences. Avec une dimension cachée \\(d\\) et un vocabulaire de taille \\(V\\), la matrice d'embeddings d'entrée contient \\(Vd\\) paramètres. Une projection de sortie distincte sur le vocabulaire en contient couramment autant ; ce second terme ne s'applique pas de la même manière lorsque les poids d'entrée et de sortie sont partagés. Augmenter \\(V\\) peut donc accroître le nombre de paramètres et la mémoire, même si les séquences raccourcissent.
-
-Le budget d'entraînement change également le sens de la comparaison :
-
-- **Budget fixe en tokens :** les modèles traitent le même nombre de positions-token, mais ne parcourent pas nécessairement le corpus brut le même nombre de fois.
-- **Nombre de passes sur les données fixé (époques) :** les modèles parcourent le même corpus, mais un tokenizer qui produit des séquences plus longues génère davantage de tokens d'entraînement et peut demander plus de calcul.
-
-Takase et al. ont étudié des vocabulaires unigrammes SentencePiece de 5 000 à 500 000 unités en anglais et en japonais, avec un budget fixé en tokens puis un budget fixé en époques. Les vocabulaires plus grands ont obtenu de meilleurs résultats dans ces expériences ; à nombre d'époques fixé, les petits vocabulaires produisaient beaucoup plus de tokens d'entraînement, particulièrement en japonais. Ces résultats concernent les modèles, langues, données et protocoles étudiés : ils ne prouvent pas que le vocabulaire le plus grand est toujours préférable. Voir [Takase et al. (Findings of ACL 2025)](https://aclanthology.org/2025.findings-acl.57/).
-
-**Règle pratique :** choisir la taille du vocabulaire conjointement avec l'architecture du modèle, le mélange de langues, la distribution des données et le budget de calcul. Comparer la qualité du modèle et le coût total du système ; le seul nombre de tokens ne suffit pas.
 
 ## 3. Les composants d'un tokenizer
 
@@ -126,28 +118,11 @@ Une distinction connexe est importante pour la couverture : un tokenizer fondé 
 | **WordPiece** | Sélection d'unités liée à un critère de vraisemblance, puis encodage selon des règles propres à l'implémentation | Ce n'est pas simplement BPE sous un autre nom ; certains systèmes marquent les continuations avec `##` |
 | **Unigramme** | Modèle probabiliste sur des sous-mots candidats, souvent réduit par élagage | Le résultat dépend du modèle, des candidats et des conventions |
 
-### En quoi WordPiece diffère de BPE
+### WordPiece et Unigramme en bref
 
-Dans l'explication courante de l'apprentissage WordPiece, les paires d'unités adjacentes sont classées au moyen d'un score lié à leur cooccurrence relativement à la fréquence de chaque unité prise séparément. Une forme simplifiée est :
+WordPiece construit son vocabulaire selon un critère lié à la vraisemblance, puis utilise couramment une segmentation gloutonne par plus long fragment. Unigramme apprend un modèle probabiliste sur des segmentations candidates et sélectionne la segmentation complète la plus probable. Ces familles ne se distinguent donc pas seulement par leur nom : leurs procédures d'apprentissage et d'encodage diffèrent. Les mécanismes détaillés, leurs réserves d'implémentation et les références sont présentés dans l'approfondissement sur la [conception et l'évaluation des tokenizers](tokenizer-design-evaluation.qmd).
 
-\\[\\operatorname{score}(a,b)=\\frac{f(ab)}{f(a)\\,f(b)}\\]
-
-où les fréquences sont estimées sur le corpus d'apprentissage. Ce score favorise une paire dont la fréquence conjointe est élevée relativement à celle de ses composants ; il ne sélectionne donc pas simplement la paire la plus fréquente, comme dans le BPE de base. **Réserve :** la procédure originale d'apprentissage WordPiece de Google n'est pas entièrement spécifiée dans une implémentation publique de référence. Hugging Face présente sa description comme une reconstruction : cette formule est explicative et ne garantit pas que tous les entraîneurs WordPiece l'utilisent exactement.
-
-À l'encodage, les implémentations WordPiece courantes utilisent une recherche gloutonne du **plus long fragment correspondant** au vocabulaire. Dans les tokenizers de type BERT, les fragments de continuation sont conventionnellement préfixés par `##`. Si un mot entier ne peut pas être segmenté selon les règles configurées, un tokenizer tel que BERT peut produire un unique `[UNK]` pour ce mot plutôt que de conserver une segmentation partielle. Ce sont des conventions d'implémentation, pas des propriétés universelles de tout tokenizer WordPiece.
-
-Voir l'[explication WordPiece de Hugging Face](https://huggingface.co/learn/llm-course/fr/chapter6/6) et la [documentation du modèle WordPiece](https://huggingface.co/docs/tokenizers/python/latest/api/reference.html#tokenizers.models.WordPiece).
-
-### En quoi Unigramme diffère des tokenizers fondés sur des fusions
-
-Un tokenizer Unigramme commence avec un vocabulaire candidat relativement large, auquel sont associées des probabilités. L'apprentissage retire progressivement les candidats dont la suppression entraîne la plus faible augmentation de la loss du modèle, afin de réduire le vocabulaire vers la taille visée. Il s'agit d'un élagage dans un modèle probabiliste de segmentation, et non d'une succession de fusions de paires.
-
-À l'encodage, plusieurs segmentations peuvent être possibles. L'algorithme de Viterbi détermine la segmentation de probabilité maximale selon le modèle appris. Cela contraste avec l'application d'un ordre de fusions appris par BPE et avec la recherche gloutonne courante du plus long fragment de WordPiece. Voir l'[explication Unigram de Hugging Face](https://huggingface.co/learn/llm-course/fr/chapter6/7) et [SentencePiece](https://github.com/google/sentencepiece).
-
-**En une phrase :** BPE applique des fusions classées ; WordPiece utilise couramment une segmentation gloutonne par plus long fragment après une construction de vocabulaire liée à la vraisemblance ; Unigramme sélectionne la segmentation complète la plus probable selon un modèle probabiliste appris.
-
-**SentencePiece** est une bibliothèque pouvant entraîner BPE ou unigramme à partir de texte brut ; ce n'est pas un algorithme unique. **Hugging Face Tokenizers** est une bibliothèque de plusieurs modèles et composants. **tiktoken** est une implémentation BPE avec des encodages précis. Ces noms ne se situent donc pas tous au même niveau de comparaison.
-
+SentencePiece est une bibliothèque pouvant entraîner BPE ou unigramme à partir de texte brut ; ce n'est pas un algorithme unique. Hugging Face Tokenizers est une bibliothèque de plusieurs modèles et composants. tiktoken est une implémentation BPE avec des encodages précis. Ces noms ne se situent donc pas tous au même niveau de comparaison.
 
 ### Exemple pas à pas : fusions BPE sur un petit corpus
 
@@ -210,6 +185,8 @@ Un exemple de normalisation Unicode est traité dans [la page d'introduction](te
 
 | Entrée | Question à poser | Risque naïf |
 |---|---|---|
+| `Hello world` puis ` Hello world` | Un espace initial change-t-il la segmentation ? | Le traitement de l'espace peut relever de la pré-tokenisation ou de l'orthographe des tokens |
+| `ChatGPT`, `chatgpt`, `CHATGPT` | La casse est-elle normalisée ou conservée ? | Le traitement de la casse dépend de la configuration du tokenizer |
 | `unbelievable`, `unbelievably` | Les fragments réutilisent-ils des sous-chaînes fréquentes ? | Les frontières ne garantissent pas une analyse morphologique |
 | `café` et `cafe\u0301` | Quelle normalisation Unicode est appliquée ? | Même apparence, séquences de points de code différentes |
 | `2026-10-29`, `123456789` | Comment chiffres et séparateurs sont-ils segmentés ? | Un token n'est pas nécessairement un nombre entier |
@@ -219,30 +196,13 @@ Un exemple de normalisation Unicode est traité dans [la page d'introduction](te
 
 Ce tableau formule des questions à tester, pas des sorties exactes. Pour documenter un résultat, noter tokenizer/version, chaîne d'entrée, tokens visibles et nombre de tokens.
 
-<!-- Stable anchors for sections moved to the tokenizer-evaluation page. -->
-<span id="comparaison-reproductible"></span>
-<span id="petit-protocole-reproductible-en-python"></span>
-<span id="mesurer-un-tokenizer-sans-réduire-la-qualité-au-nombre-de-tokens"></span>
-<span id="quatre-dimensions-à-séparer"></span>
-<span id="figure-de-recherche-externe-la-fertilité-varie-selon-la-langue"></span>
-<span id="ce-que-montrent-et-ne-montrent-pas-les-études"></span>
-<span id="figure-de-recherche-externe-longueur-de-représentation-et-temps-dexécution"></span>
-<span id="construire-un-protocole-de-comparaison"></span>
-<span id="ressources-et-travaux-connexes"></span>
-<span id="ressources-visuelles-recommandées"></span>
-<span id="repères-temporels-utiles-dans-la-vidéo-de-karpathy"></span>
-<span id="ordre-de-lecture-conseillé"></span>
-<span id="illustration-externe-du-pipeline"></span>
-<span id="références-de-recherche-complémentaires"></span>
-<span id="code-pédagogique-et-références-historiques"></span>
 
-## Comparer et évaluer un tokenizer {#tokenizer-evaluation}
 
-Le nombre de tokens mesure une longueur, pas à lui seul la qualité du modèle. Pour une comparaison utile, documentez les textes et les versions des tokenizers, puis distinguez longueur de représentation, coût système et qualité sur la tâche. Ces résultats peuvent varier selon la langue et le corpus.
+::: {.callout-note title="Pour approfondir"}
+La taille du vocabulaire, les budgets d'entraînement et l'évaluation comparative des tokenizers soulèvent des questions de coût, de qualité et d'équité multilingue. Ces choix dépassent la compréhension du mécanisme de segmentation ; ils sont traités dans [l'approfondissement sur la conception et l'évaluation des tokenizers](tokenizer-design-evaluation.qmd).
+:::
 
-La page facultative [Évaluer et comparer les tokenizers](tokenizer-evaluation.qmd) conserve le protocole reproductible, les métriques, les études multilingues et les ressources détaillées.
-
-## Contre-exemples
+## 6. Contre-exemples
 
 - **Moins de tokens = meilleur modèle.** Non : cela démontre d'abord une différence de longueur, pas de qualité.
 - **BPE découvre les morphèmes.** Non : aucune garantie d'analyse linguistique.
@@ -251,14 +211,12 @@ La page facultative [Évaluer et comparer les tokenizers](tokenizer-evaluation.q
 - **Les IDs se transfèrent entre modèles.** Non en général : un même ID peut désigner des fragments différents.
 - **Byte-level = indépendant de la langue.** Non : la couverture ne garantit ni coût ni qualité uniformes.
 
-## Pour poursuivre
+## Ressources externes
 
-- [Vue d'ensemble et exemple BPE](text-data.qmd)
-- [Exemples d'entraînement, fenêtres et cibles décalées](training-examples.qmd)
-- [Espace des embeddings](embedding-space.qmd)
 - [Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/index)
 - [SentencePiece](https://github.com/google/sentencepiece)
 - [tiktoken](https://github.com/openai/tiktoken)
+
 
 ::: {.language-switch}
 **Langue :** [Français](tokenization-strategies.qmd) · [English](../en/tokenization-strategies.qmd)

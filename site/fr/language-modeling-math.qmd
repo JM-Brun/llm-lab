@@ -1,0 +1,147 @@
+---
+title: "Formaliser mathématiquement la modélisation du langage"
+subtitle: "Règle de chaîne, factorisation autorégressive et cibles souples"
+keywords: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/language-modeling-math"
+scope: "Approfondit la formalisation probabiliste de la modélisation du langage : dérivation de la factorisation autorégressive par la règle de chaîne, distinction entre identité probabiliste et modèle appris, lien compact avec le maximum de vraisemblance, puis entropie croisée à cibles souples et divergence KL."
+purpose: "Dériver la probabilité d'une séquence à partir de la règle de chaîne, expliquer ce que le modèle paramétré apprend, et démontrer pourquoi, pour une cible fixe, minimiser l'entropie croisée revient à minimiser la divergence KL, avec les hypothèses et limites nécessaires."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/llm-overview"]
+  children: []
+related: ["fr/probabilites", "fr/vraisemblance", "fr/cross-entropy", "fr/loss", "fr/mathematical-foundations"]
+tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Cette page ne réintroduit ni la tokenisation, ni la distribution du prochain token, ni la vraisemblance comme notions de base : ces objets ont déjà leurs leçons canoniques. Elle approfondit deux articulations mathématiques : la règle de chaîne qui justifie la factorisation autorégressive, puis la relation entre entropie croisée à cible souple et divergence KL.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+À l’issue de cette page, vous pourrez :
+- dériver la factorisation autorégressive à partir de la règle de chaîne ;
+- distinguer une identité probabiliste du modèle paramétré qui approxime les conditionnelles ;
+- relier brièvement vraisemblance, log-vraisemblance et objectif d'entraînement ;
+- démontrer l'identité entre entropie croisée, entropie cible et divergence KL ;
+- préciser les hypothèses, la direction et les cas où les quantités deviennent infinies.
+:::
+
+## 1. De la règle de chaîne à la factorisation autorégressive
+
+La page [Probabilités de sortie](probabilites.qmd) définit la probabilité conditionnelle du prochain token, notée \(P(x_t\mid x_{<t})\), et explique comment le modèle construit sa distribution. Ici, on part de cette quantité pour établir la probabilité d'une séquence complète.
+
+Pour toute distribution jointe, la règle de chaîne donne :
+
+\[
+P(x_1,\ldots,x_T)
+=P(x_1)P(x_2\mid x_1)\cdots
+P(x_T\mid x_1,\ldots,x_{T-1}).
+\]
+
+En posant \(x_{<t}=(x_1,\ldots,x_{t-1})\), on obtient :
+
+\[
+\boxed{
+P(x_{1:T})=\prod_{t=1}^{T}P(x_t\mid x_{<t})
+}
+\]
+
+C'est la **factorisation autorégressive** : la probabilité de la séquence est le produit des probabilités conditionnelles de ses tokens, dans l'ordre.
+
+**La règle de chaîne est une identité probabiliste**, valable pour toute distribution jointe. Elle n'impose pas à elle seule une architecture ni un ordre de calcul particulier. Le caractère autorégressif vient du modèle qui représente et utilise les conditionnelles dans l'ordre du préfixe : à la position \(t\), le token est prédit à partir des tokens précédents, pas des tokens futurs.
+
+Pour le premier token, le préfixe est vide. En pratique, un token de début de séquence (BOS) peut être explicite, ou une convention équivalente peut être utilisée.
+
+## 2. Du modèle paramétré à l'objectif d'entraînement
+
+Un modèle de paramètres \(\theta\) approxime les conditionnelles :
+
+\[
+P_\theta(x_t\mid x_{<t}).
+\]
+
+La factorisation implique alors :
+
+\[
+P_\theta(x_{1:T})
+=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}),
+\qquad
+\log P_\theta(x_{1:T})
+=\sum_{t=1}^{T}\log P_\theta(x_t\mid x_{<t}).
+\]
+
+Le maximum de vraisemblance cherche à augmenter la log-vraisemblance des séquences observées ; sa formulation minimisée est la log-vraisemblance négative (NLL). Cette équivalence ne fixe pas la réduction sur les tokens et les exemples, ni le traitement du padding ou des positions ignorées. Ces conventions appartiennent aux pages canoniques sur la [vraisemblance](vraisemblance.qmd), la [cross-entropie](cross-entropy.qmd) et la [loss agrégée](loss.qmd).
+
+**Notation.** Les pages probabilistes utilisent souvent \(P\) pour une probabilité d'événement ou une distribution conditionnelle. Les pages de calcul utilisent \(p_{b,t,v}\) pour la composante \(v\) du vecteur de probabilités à l'exemple \(b\) et la position \(t\). L'ID cible \(y_{b,t}\) sélectionne la composante \(p_{b,t,y_{b,t}}\). Il s'agit de deux notations pour des niveaux de description compatibles, pas de deux objets probabilistes différents.
+
+## 3. Cibles souples et divergence KL
+
+Les cibles *one-hot* placent toute la masse sur une seule catégorie. Certaines méthodes utilisent plutôt une distribution cible \\(q\\) — par exemple pour le lissage des étiquettes ou une cible fournie par un modèle enseignant — sur les \\(V\\) tokens.
+
+Pour une distribution cible \\(q\\) et une distribution prédite \\(p\\), l'entropie croisée est :
+
+\[
+H(q,p)=-\sum_{i=1}^{V}q_i\log p_i.
+\]
+
+Les termes tels que \(q_i=0\) contribuent zéro. Avec une cible one-hot, la somme se réduit à \(-\log p_y\) ; avec une cible souple, plusieurs catégories contribuent. On suppose \(q_i\geq 0\), \(\sum_i q_i=1\), et \(p\) normalisée également. Sauf mention contraire, \(\log\) désigne le logarithme naturel : les pertes sont exprimées en nats ; avec \(\log_2\), en bits.
+
+Définissons l'entropie de la cible par \(H(q)=-\sum_i q_i\log q_i\). La relation
+
+\[
+H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)
+\]
+
+explique pourquoi, pour une cible \\(q\\) fixe, minimiser l'entropie croisée par rapport à \\(p\\) revient à minimiser la divergence KL vers cette cible. Pour des quantités finies, l'identité se déduit directement des définitions :
+
+\[
+\begin{aligned}
+D_{\mathrm{KL}}(q\Vert p)
+&=\sum_i q_i\log\frac{q_i}{p_i}\\
+&=\sum_i q_i\log q_i-\sum_i q_i\log p_i\\
+&=-H(q)+H(q,p).
+\end{aligned}
+\]
+
+Donc \(H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)\).
+
+Ici, \(q\) et \(p\) sont des distributions normalisées et les termes de masse nulle contribuent zéro. Si \(q_i>0\) mais \(p_i=0\), l'entropie croisée et \(D_{\mathrm{KL}}(q\Vert p)\) sont infinies selon la convention usuelle des valeurs étendues. La divergence KL est **directionnelle** ; l'entropie croisée n'est ni symétrique ni une distance métrique.
+
+Par exemple, avec \(q=(1,0)\) et \(p=(0.9,0.1)\) :
+
+\[
+D_{\mathrm{KL}}(q\Vert p)=-\log(0.9)\approx 0.105\text{ nat},
+\qquad
+D_{\mathrm{KL}}(p\Vert q)=+\infty.
+\]
+
+La seconde quantité est infinie parce que \(p\) attribue une masse positive à une catégorie à laquelle \(q\) attribue une masse nulle. En calcul numérique, une implémentation stable de log-softmax aide à éviter un sous-débordement accidentel ; elle ne modifie pas cette condition mathématique.
+
+La page [Entropie croisée](cross-entropy.qmd) reste la référence pour la perte par token, le cas one-hot, les masques et les conventions de réduction. Cette page avancée se concentre sur la dérivation et sur le cas général des cibles souples.
+
+## Ce que cette formalisation ne détermine pas
+
+- **Le tokenizer** : le découpage du texte et le vocabulaire sont traités dans [Texte et données](text-data.qmd) et [Stratégies de tokenisation](tokenization-strategies.qmd).
+- **L'architecture** : la factorisation probabiliste n'implique pas à elle seule un Transformer.
+- **La vérité des sorties** : une probabilité élevée n'est pas une validation factuelle.
+- **La stratégie de génération** : échantillonnage et choix glouton interviennent après le calcul de la distribution ([Génération](generation.qmd)).
+
+## Références et prolongements
+
+- [Probabilités de sortie](probabilites.qmd) : distribution conditionnelle du prochain token.
+- [Vraisemblance](vraisemblance.qmd) : probabilité des tokens observés et log-vraisemblance.
+- [Entropie croisée](cross-entropy.qmd) : perte par token et conventions d'entraînement.
+- [Chaîne mathématique de l'entraînement](mathematical-foundations.qmd) : carte synthétique des logits aux gradients.
+- Bishop, *Pattern Recognition and Machine Learning*, chapitres 1–2, pour les fondements probabilistes.
+
+::: {.language-switch}
+**Langue :** [Français](language-modeling-math.qmd) · [English](../en/language-modeling-math.qmd)
+:::

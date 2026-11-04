@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/mathematical-foundations"
 scope: "Provides a compact mathematical map linking logits, softmax probabilities, observed-token likelihood, cross-entropy, aggregated loss, and gradients, with shared notation and key caveats. It orients readers toward canonical concept lessons rather than serving as a prerequisite course or replacing their detailed derivations."
 purpose: "Follow the mathematical quantities from model scores to parameter gradients, interpret the shared notation and equations, and explain why likelihood, entropy, cross-entropy, loss, and gradients are related but not interchangeable."
+domain: "probabilistic-foundations-training"
 suggested_route:
   previous: null
   next: "en/tensors"
@@ -23,11 +24,6 @@ tags: ["type:deep-dive", "destination:deepen", "topic:mathematical-foundations",
 ::: {.chapter-lead}
 An autoregressive model produces **logits** for the next token. Softmax turns them into probabilities; the observed target defines a likelihood and a loss; differentiating that loss gives gradients used to update the parameters. These concepts are connected, but they are not interchangeable.
 :::
-
-::: {.callout-note}
-**How to use this page.** This is a compact map of the mathematical quantities used in next-token training, not a prerequisite course or a substitute for the linked concept lessons. Read it for orientation, then follow only the derivations needed for your current question.
-:::
-
 
 ![Original diagram of the mathematical chain: logits, probabilities, likelihood, loss, and gradients.](../images/math-training-pipeline.svg){fig-alt="Computation chain: logits z, softmax to p, target-token probability, negative log-likelihood, then loss gradient with respect to parameters." width=100%}
 
@@ -91,6 +87,7 @@ Each concept page derives one step, gives a calculable example, and states its a
 - Connect observed probabilities to [likelihood](likelihood.qmd) and [cross-entropy](cross-entropy.qmd).
 - Distinguish per-token loss from the aggregated [loss function](loss.qmd).
 - Finish with [gradients](gradients.qmd), the chain rule, and numerical verification.
+- For a detailed probabilistic treatment — autoregressive factorization, maximum likelihood, soft targets, and KL divergence — see [the mathematics of language modeling](language-modeling-math.qmd).
 
 ## Foundational references
 

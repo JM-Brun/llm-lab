@@ -11,12 +11,12 @@ id: "fr/entropy"
 scope: "Définir l'entropie de Shannon de la distribution du prochain token pour un contexte fixé comme mesure de dispersion prédictive avant l'observation du token ; la distinguer de la surprise du token effectivement observé, de la vraisemblance d'une séquence et de l'entropie croisée avec une distribution cible."
 purpose: "Calculer et interpréter l'entropie d'une distribution catégorielle sur les prochains tokens, énoncer ses bornes pour un vocabulaire fini et distinguer l'incertitude prédictive moyenne de la surprise d'un token observé."
 suggested_route:
-  previous: "fr/vraisemblance"
-  next: "fr/cross-entropy"
+  previous: null
+  next: null
 hierarchy:
-  parents: ["fr/vraisemblance"]
+  parents: []
   children: ["fr/cross-entropy"]
-related: []
+related: ["fr/vraisemblance"]
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:fr", "status:published"]
 -->
 
@@ -90,7 +90,10 @@ Une température plus faible tend à concentrer la distribution ; une températu
 - Une entropie ou une perplexité calculée avec un tokenizer différent n'est pas directement comparable sans précautions.
 - L'entropie moyenne observée sous un modèle n'est pas automatiquement l'entropie vraie de la source des données.
 
-## Questions de contrôle
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](exercises.qmd#fondations).
 
 1. Une entropie faible garantit-elle que le token le plus probable est correct ?
 2. En quoi l'entropie diffère-t-elle de la surprise du token observé ?
@@ -104,6 +107,7 @@ Une température plus faible tend à concentrer la distribution ; une températu
 3. Les tokenizers segmentent différemment le texte, ce qui change les unités et les positions sur lesquelles la moyenne est calculée.
 
 </details>
+:::
 
 ## Pour poursuivre
 

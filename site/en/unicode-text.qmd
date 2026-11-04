@@ -1,7 +1,7 @@
 ---
 title: "Unicode, UTF-8, and text normalization"
 subtitle: "An optional technical deep dive into string representation"
-keywords: ["type:concept-lesson", "destination:understand", "topic:unicode-text", "level:core", "language:en", "status:published"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:unicode-text", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
 
@@ -10,14 +10,15 @@ LLM-LAB-PAGE-MAP v1
 id: "en/unicode-text"
 scope: "Distinguishes abstract characters, Unicode code points, UTF-8 byte sequences, and normalized forms; explains why visually identical strings may have different representations before tokenization. It does not cover BPE/WordPiece algorithms or embeddings."
 purpose: "Readers should be able to distinguish code points from bytes, recognize composed and decomposed Unicode forms, and explain how encoding and normalization can change the string presented to a tokenizer."
+domain: "text-tokenization"
 suggested_route:
-  previous: "en/text-data"
-  next: "en/tokenization-strategies"
+  previous: null
+  next: null
 hierarchy:
   parents: ["en/text-data"]
   children: []
 related: []
-tags: ["type:concept-lesson", "destination:understand", "topic:unicode-text", "level:core", "language:en", "status:published"]
+tags: ["type:deep-dive", "destination:deepen", "topic:unicode-text", "level:advanced", "language:en", "status:published"]
 -->
 
 This page is a **technical companion** to the [overview of the text-to-token path](text-data.qmd). It is not required to understand the general pipeline; it becomes useful when text looks identical on screen but produces different encodings or tokenization.
@@ -74,10 +75,6 @@ NFC/NFD concern canonical forms; NFKC/NFKD also apply certain compatibility equi
 - [UTF-8, RFC 3629](https://www.rfc-editor.org/rfc/rfc3629) — specification of UTF-8 encoding.
 - [Unicode Standard Annex #15](https://www.unicode.org/reports/tr15/) — Unicode normalization forms.
 - [Official Unicode normalization charts](https://www.unicode.org/charts/normalization/) — visual examples of normalized forms.
-
-## Return to the overview
-
-The [From text to tokens](text-data.qmd) page returns to the conceptual level. [Tokenization strategies](tokenization-strategies.qmd) compares algorithm families and their trade-offs.
 
 :::: {.language-switch}
 **Language:** [Français](../fr/unicode-text.qmd) · [English](../en/unicode-text.qmd)

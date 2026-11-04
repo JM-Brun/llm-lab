@@ -11,11 +11,11 @@ id: "fr/generation"
 scope: "Décrit la boucle d’inférence autorégressive d’un modèle déjà entraîné, traité comme une boîte noire : contexte, distribution du prochain token, règle de décodage, ajout du token et arrêt ; les détails internes du Transformer et l’apprentissage des paramètres sont hors périmètre."
 purpose: "Le lecteur doit pouvoir dérouler une génération token par token, expliquer pourquoi les paramètres restent fixes pendant l’inférence et prévoir comment une règle de décodage modifie la sortie sans réentraîner le modèle."
 suggested_route:
-  previous: "fr/transformer"
+  previous: "fr/llm-overview"
   next: "fr/text-data"
 hierarchy:
   parents: ["fr/llm-overview"]
-  children: ["fr/logits", "fr/probabilites"]
+  children: ["fr/text-data", "fr/logits", "fr/probabilites"]
 related: ["fr/build-path", "fr/training-examples"]
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:fr", "status:published"]
 -->
@@ -24,8 +24,12 @@ tags: ["type:concept-lesson", "destination:understand", "topic:inference-generat
 **Générer du texte**, pour un LLM déjà entraîné, c'est répéter une même boucle : représenter le contexte courant, estimer la distribution du prochain token, en sélectionner un, l'ajouter au contexte, puis recommencer. Pendant toute la boucle, **les paramètres du modèle restent fixes** : on parle d'**inférence** (ou de génération), à distinguer de l'apprentissage, qui modifie ces paramètres.
 :::
 
-::: {.callout-note}
-Cette page suit un modèle **déjà entraîné, traité comme une boîte noire** : aucun détail d'architecture ni d'entraînement n'est nécessaire ici. Les pages [logits](logits.qmd) et [probabilités](probabilites.qmd) détaillent ensuite la distribution produite à chaque pas ; la suite du parcours explique comment ces paramètres sont appris.
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+À l’issue de cette page, vous pourrez :
+- dérouler les étapes d’une génération autorégressive, du contexte au critère d’arrêt ;
+- distinguer passe avant, décodage et génération ;
+- expliquer pourquoi l’inférence ne modifie pas les paramètres du modèle ;
+- prévoir l’effet de la sélection gloutonne, de l’échantillonnage et de la température sur le texte produit.
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
@@ -34,17 +38,29 @@ Un LLM n'écrit pas un texte d'un bloc : il produit **un token à la fois**. À 
 
 ## La boucle de génération, étape par étape
 
-1. **Préparer le contexte.** Le texte de départ est découpé en [tokens](text-data.qmd) et converti en identifiants. Si le contexte dépasse la fenêtre maximale, l'application doit gérer cette limite, par exemple en tronquant ou en arrêtant la génération.
-2. **Estimer la distribution du prochain token.** Le modèle produit, pour chaque token du vocabulaire, un score puis une probabilité. Cette distribution dépend du contexte courant : c'est une probabilité conditionnelle.
-3. **Sélectionner le prochain token.** Une règle de décodage (voir ci-dessous) transforme la distribution en un unique choix : soit déterministe, soit tiré au hasard selon les probabilités.
-4. **Ajouter le token et recommencer.** Le token sélectionné est ajouté au contexte, puis la boucle repart à l'étape 2, sous réserve de la limite de contexte.
-5. **Arrêter.** La génération s'arrête sur un critère explicite — token de fin, longueur maximale, ou règle imposée par l'application — jamais parce que le modèle « aurait fini de réfléchir ».
+1. **Préparer le contexte.** Le texte de départ est découpé en [tokens](text-data.qmd) et converti en identifiants. Si le contexte dépasse la fenêtre maximale du modèle, il est tronqué selon une règle propre à chaque modèle.
+2. **Effectuer la passe avant (*forward pass*).** Le modèle traite le contexte courant et calcule, pour la dernière position, un score non normalisé (*logit*) pour chaque token du vocabulaire. La transformation *softmax* convertit ces scores en une distribution de probabilité sur le prochain token.
+3. **Décoder et sélectionner le prochain token.** Une règle de décodage exploite les logits ou la distribution pour produire un choix : par exemple le token de probabilité maximale, ou un token tiré par échantillonnage.
+4. **Ajouter le token et recommencer.** Le token sélectionné est ajouté au contexte, et la boucle repart à l’étape 2 avec un contexte rallongé d’un token.
+5. **Arrêter.** La génération s’arrête sur un critère explicite — token de fin, longueur maximale, ou règle imposée par l’application — jamais parce que le modèle « aurait fini de réfléchir ».
 
-Les prédictions suivantes sont donc aussi conditionnées par les tokens produits qui restent dans le contexte utilisé.
+### Que recouvre exactement le décodage ?
+
+Le **décodage (*decoding*)** est le traitement qui transforme la sortie du modèle en prochain token. Il commence après la passe avant : le réseau calcule les logits, puis le décodage peut modifier ces scores ou la distribution (par exemple avec une température ou un filtre) avant de sélectionner un token.
+
+Trois niveaux doivent être distingués :
+
+- **Passe avant (*forward pass*) :** calcul du réseau à paramètres fixes, du contexte jusqu’aux logits.
+- **Décodage (*decoding*) :** procédure qui exploite ces sorties pour déterminer le prochain token — par maximum (*greedy decoding*) ou échantillonnage (*sampling*), éventuellement après transformation ou filtrage.
+- **Génération (*generation*) :** processus complet et itératif qui enchaîne passe avant, décodage, ajout du token au contexte et vérification du critère d’arrêt.
+
+Le mot *décodage* peut couvrir des détails différents selon les bibliothèques et les articles. Ici, il désigne la sélection du prochain token et les traitements qui la préparent ; il ne désigne ni le calcul interne du Transformer, ni toute la boucle de génération. Les filtres plus élaborés, comme top-k et top-p, sont présentés dans l’[approfondissement sur les stratégies de décodage](decoding-strategies.qmd).
+
+À chaque pas, le contexte s'allonge d'un token : les prédictions suivantes sont donc aussi conditionnées par les tokens que le modèle vient de produire lui-même.
 
 ## L'inférence n'apprend rien
 
-Dans la génération ordinaire, les paramètres du modèle restent fixes. Avec le même contexte, les mêmes paramètres et un calcul déterministe, une règle de décodage déterministe produit la même suite ; l'échantillonnage ou des calculs non déterministes peuvent introduire de la variabilité. Générer du texte ne met pas à jour les poids, même si une application peut conserver l'historique ou d'autres données en dehors du modèle.
+Contrairement à l'apprentissage, la boucle de génération **ne modifie aucun paramètre**. Avec une règle déterministe, le même contexte produit toujours la même suite ; seule une règle aléatoire (échantillonnage) introduit de la variabilité. Générer beaucoup de texte n'entraîne pas le modèle : rien de ce qui est produit n'est mémorisé au-delà du contexte courant.
 
 C'est la distinction reprise par le [parcours de construction](build-path.qmd) : **générer avec des paramètres fixes**, ou **évaluer une loss puis modifier les paramètres**.
 
@@ -52,18 +68,17 @@ C'est la distinction reprise par le [parcours de construction](build-path.qmd) :
 
 ### Sélection gloutonne (argmax)
 
-Le token le plus probable est sélectionné systématiquement. À calcul déterministe et conditions identiques, le résultat est reproductible. Une répétition peut persister jusqu'à ce qu'un critère d'arrêt ou une limite intervienne.
+Le token le plus probable est sélectionné systématiquement. Le résultat est reproductible, mais les textes générés sont souvent répétitifs : une fois engagé dans une boucle, le modèle peut la parcourir indéfiniment.
 
 ### Échantillonnage selon la distribution
 
-Le token est tiré au hasard selon les probabilités. Les textes peuvent varier d'une exécution à l'autre ; un token peu probable peut apparaître, parfois au prix de la cohérence. Une graine et un calcul déterministes permettent de reproduire un tirage dans les mêmes conditions.
+Le token est tiré au hasard selon les probabilités. Les textes varient d'une exécution à l'autre ; un token peu probable peut apparaître, parfois au prix de la cohérence.
 
-### Échantillonnage ajusté : température et troncature
+### Température : régler la dispersion
 
-- **Température.** Avant la normalisation, les logits sont divisés par une température $T$ : $p_i \propto e^{z_i/T}$. Une température basse concentre la distribution sur le token le plus probable ; une température élevée l'aplatit. Voir la page [logits](logits.qmd) pour l'effet de l'échelle.
-- **Top-k et top-p (nucleus).** On ne garde que les $k$ tokens les plus probables, ou le plus petit ensemble de tokens dont la probabilité cumulée dépasse un seuil $p$ ; le tirage se fait alors dans cet ensemble réduit.
+La température règle la concentration de la distribution : une valeur basse favorise davantage les tokens les plus probables ; une valeur élevée laisse plus de place aux alternatives. Elle modifie le choix du prochain token, pas les paramètres du modèle.
 
-Ces règles sont des **choix de décodage**, pas des propriétés du modèle : le même modèle peut produire des textes très différents selon la règle retenue et ses paramètres.
+Top-k et nucleus sampling (top-p) sont des filtres plus avancés qui restreignent l'ensemble des candidats. Ils sont présentés, avec leurs compromis et les méthodes de recherche de séquences, dans l'[approfondissement sur les stratégies de décodage](decoding-strategies.qmd).
 
 ::: {.callout-warning title="Idées reçues"}
 - **« Le modèle choisit toujours le meilleur token. »** Non : avec échantillonnage, un token moins probable peut être sélectionné ; et « meilleur » n'est pas défini sans une règle de décodage.
@@ -77,7 +92,10 @@ Ces règles sont des **choix de décodage**, pas des propriétés du modèle : l
 - **Pas de mémoire entre les générations.** Chaque génération repart du contexte fourni ; le modèle ne retient rien au-delà de ce qui figure dans ce contexte.
 - **État du projet.** Dans ce dépôt, la génération depuis un checkpoint local reste un chantier : les jalons de génération du [parcours guidé](build-path.qmd) décrivent ce qui est disponible et ce qui reste à construire.
 
-## Questions de contrôle
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](exercises.qmd#generation).
 
 1. Pourquoi un même modèle avec un même contexte peut-il produire des textes différents ?
 
@@ -110,4 +128,5 @@ Les paramètres restent fixes pendant l'inférence : aucune mise à jour n'a lie
 
 ::: {.language-switch}
 [Français](generation.qmd) · [English](../en/generation.qmd)
+:::
 :::

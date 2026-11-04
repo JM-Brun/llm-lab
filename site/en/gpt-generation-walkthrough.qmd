@@ -1,0 +1,155 @@
+---
+title: "Guided tour: generation (`generate.py`)"
+subtitle: "The autoregressive loop, from prompt to generated text"
+keywords: ["type:guided-build", "destination:build", "topic:reference-gpt-generation", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/gpt-generation-walkthrough"
+scope: "Explains the generate.py file line by line: prompt validation, the sliding context window, reading the logits at the final position, greedy or temperature-sampled selection, and the deliberate absence of a KV cache and an early-stopping rule. Excludes the forward-pass computation."
+purpose: "Readers should be able to unroll a generation by hand, explain why the window slides past the context limit, and why greedy mode is reproducible without a seed."
+suggested_route:
+  previous: "en/gpt-model-walkthrough"
+  next: null
+hierarchy:
+  parents: ["en/build-path"]
+  children: []
+related: ["en/generation", "en/logits", "en/probabilities"]
+tags: ["type:guided-build", "destination:build", "topic:reference-gpt-generation", "level:applied", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+This file turns logits into a sequence: at each step, reprocess the context, read the logits at the final position, pick one token, append it, repeat. This page is the fifth and last stop (5 of 5) of the tour; the [model](gpt-model-walkthrough.qmd) is assumed read. Source: [`src/llm_lab/foundations/generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py).
+:::
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this tour, you will be able to:
+- unroll a generation by hand, sliding window included;
+- explain why greedy mode is reproducible without a seed and why temperature does not change the model;
+- distinguish the deliberate limitations (no KV cache, no early stopping) from omissions.
+:::
+
+## One step of the loop, in order
+
+```python
+    context = ids.astype(np.int64, copy=True)
+    for _ in range(max_new_tokens):
+        window = context[-model.config.context_length :]
+        logits = model.forward(window[None, :])[0, -1, :]
+        if greedy:
+            next_token = int(np.argmax(logits))
+        else:
+            probs = softmax_with_temperature(logits, temperature=temperature)
+            if top_k is not None:
+                probs = top_k_filter(probs, k=top_k)
+            if top_p is not None:
+                probs = top_p_filter(probs, p=top_p)
+            next_token = int(rng.choice(model.config.vocab_size, p=probs))
+        context = np.append(context, np.int64(next_token))
+    return np.asarray(context, dtype=np.int64)
+```
+
+```{=html}
+<figure class="wf-fig" id="wf-gen-map" data-wf-default="One full step: slice the window, run the model, read the last position, pick a token, append it to the context — then repeat, up to max_new_tokens.">
+<figcaption class="wf-fig-title">The decoding loop: every loop line has its stage in the diagram</figcaption>
+<div class="wf-stage">
+<div class="wf-diagram">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 320" role="img" aria-labelledby="wfg-title wfg-desc">
+<title id="wfg-title">The generate.py decoding loop: sliding window, last-position read, token selection, and append to the context</title>
+<desc id="wfg-desc">The context is a queue of tokens: the window keeps the last context_length of them, the forward pass produces (1, T, V) logits, only the last row is read, a token is chosen by argmax or temperature sampling, then appended to the context; the loop repeats until max_new_tokens.</desc>
+<defs>
+<marker id="wfg-green" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#16A34A"/></marker>
+<marker id="wfg-ink" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#344054"/></marker>
+</defs>
+<g font-family="Arial,sans-serif">
+<rect x="20" y="56" width="36" height="36" rx="6" fill="#F1F5F9" stroke="#64748B" stroke-width="1.6" stroke-dasharray="5 3"/><rect x="60" y="56" width="36" height="36" rx="6" fill="#F1F5F9" stroke="#64748B" stroke-width="1.6" stroke-dasharray="5 3"/><rect x="100" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0369A1" stroke-width="1.8"/><rect x="140" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0369A1" stroke-width="1.8"/><rect x="180" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0369A1" stroke-width="1.8"/><rect x="220" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0369A1" stroke-width="1.8"/><rect x="260" y="56" width="36" height="36" rx="6" fill="#E0F2FE" stroke="#0369A1" stroke-width="1.8"/><rect x="300" y="56" width="36" height="36" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.8"/><rect x="340" y="56" width="36" height="36" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.8"/><rect x="380" y="56" width="36" height="36" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="1.8"/>
+<g data-wf-part="win"><text x="58" y="128" text-anchor="middle" font-size="11" fill="#64748B">outside the window</text></g>
+<g data-wf-part="win"><rect x="94" y="48" width="326" height="52" rx="8" fill="none" stroke="#16A34A" stroke-width="3"/><text x="257" y="42" text-anchor="middle" font-size="12.5" font-weight="700" fill="#14532D">window = the last context_length tokens</text></g>
+<g data-wf-part="win fwd"><path d="M272 104 C 340 150, 430 160, 508 160" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfg-ink)"/></g>
+<g data-wf-part="fwd"><rect x="460" y="162" width="150" height="56" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="535" y="186" text-anchor="middle" font-size="13" font-weight="700" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#17212B">model.forward</text><text x="535" y="206" text-anchor="middle" font-size="11" fill="#475569">(1, T)</text></g>
+<g data-wf-part="fwd"><path d="M610 190 H640" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfg-ink)"/></g>
+<g data-wf-part="fwd"><rect x="646" y="162" width="114" height="56" rx="10" fill="#FEF3C7" stroke="#B45309" stroke-width="2"/><text x="703" y="186" text-anchor="middle" font-size="13" font-weight="700" fill="#78350F">logits</text><text x="703" y="206" text-anchor="middle" font-size="11" fill="#92400E">(1, T, V)</text></g>
+<g data-wf-part="fwd last"><path d="M760 190 H790" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfg-ink)"/></g>
+<g data-wf-part="last"><rect x="796" y="162" width="140" height="56" rx="10" fill="#FFFFFF" stroke="#B45309" stroke-width="2"/><text x="866" y="186" text-anchor="middle" font-size="12" font-weight="700" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#78350F">logits[0, -1, :]</text><text x="866" y="206" text-anchor="middle" font-size="11" fill="#92400E">(V,)</text></g>
+<g data-wf-part="sel"><path d="M936 178 C 958 176, 962 172, 969 169" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfg-ink)"/><path d="M936 202 C 958 205, 962 209, 969 213" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfg-ink)"/></g>
+<g data-wf-part="sel"><rect x="975" y="150" width="92" height="38" rx="8" fill="#F0FDF4" stroke="#15803D" stroke-width="1.8"/><text x="1021" y="174" text-anchor="middle" font-size="12.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">argmax</text><rect x="975" y="200" width="92" height="38" rx="8" fill="#F0FDF4" stroke="#15803D" stroke-width="1.8"/><text x="1021" y="224" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">temp + choice</text></g>
+<g data-wf-part="app"><rect x="424" y="56" width="34" height="36" rx="6" fill="#DCFCE7" stroke="#16A34A" stroke-width="2" stroke-dasharray="5 3"/><text x="441" y="80" text-anchor="middle" font-size="16" font-weight="700" fill="#14532D">+</text><text x="441" y="128" text-anchor="middle" font-size="11" fill="#64748B">new token</text></g>
+<g data-wf-part="app"><path d="M973 219 C 940 280, 780 302, 640 302 H441 V100" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfg-green)"/></g>
+<g data-wf-part="app"><path d="M441 52 C 441 18, 340 14, 264 44" stroke="#16A34A" stroke-width="2.5" stroke-dasharray="6 4" fill="none" marker-end="url(#wfg-green)"/><text x="352" y="12" text-anchor="middle" font-size="12" font-weight="700" fill="#14532D">loop × max_new_tokens</text></g>
+</g>
+</svg>
+</div>
+<div class="wf-panel">
+<p class="wf-hint">Hover over or select a loop line: its stage lights up. Keyboard: <kbd>Tab</kbd>, <kbd>Enter</kbd> to pin, <kbd>Esc</kbd> to release.</p>
+<div class="wf-chips" role="group" aria-label="Loop lines">
+<button type="button" class="wf-chip" data-wf-links="win" data-wf-note="Once the sequence grows past the context, only the last context_length tokens enter the pass; the tokens that slid out (grey) no longer influence anything.">window = context[-context_length:]</button>
+<button type="button" class="wf-chip" data-wf-links="fwd" data-wf-note="The window becomes a one-sequence batch (1, T); the forward pass computes the logits for all positions in a single call.">model.forward(window[None, :])</button>
+<button type="button" class="wf-chip" data-wf-links="last" data-wf-note="Only the last logits row is useful: position T-1 predicts the next token. Without a KV cache, everything is recomputed each step — an inspectability choice.">[0, -1, :]</button>
+<button type="button" class="wf-chip" data-wf-links="sel" data-wf-note="Greedy: argmax, deterministic, no seed needed. Sampled: temperature then softmax, reproducible at equal seed. Temperature changes the distribution, never the logits.">argmax / rng.choice</button>
+<button type="button" class="wf-chip" data-wf-links="app" data-wf-note="The chosen token joins the context and the window slides; the loop repeats. Stopping comes from max_new_tokens, never from an end-of-text token (a deliberate choice).">np.append(context, next_token)</button>
+</div>
+<p class="wf-note" aria-live="polite">One full step: slice the window, run the model, read the last position, pick a token, append it to the context — then repeat, up to max_new_tokens.</p>
+</div>
+</div>
+<figcaption class="wf-legend">
+<span class="wf-key"><span class="wf-swatch" style="background:#E0F2FE;border-color:#0369A1"></span>prompt (input)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#DCFCE7;border-color:#16A34A"></span>generated tokens</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#F1F5F9;border-color:#64748B"></span>outside the window (excluded)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#FEF3C7;border-color:#B45309"></span>logits</span>
+</figcaption>
+</figure>
+<script src="../includes/walkthrough-figures.js" defer></script>
+```
+
+
+Line by line:
+
+- `astype(..., copy=True)`: the working sequence is a fresh int64 **copy** — the caller's array is never mutated, and the return type is stable.
+- `window = context[-context_length:]`: the **sliding window**. Once the sequence outgrows the context, only the last `context_length` tokens enter the pass — tokens that fell out of the window no longer influence what follows.
+- `window[None, :]`: a batch of **one** sequence; the forward pass expects `(B, T)`.
+- `[0, -1, :]`: batch 0, **last position**, all logits. Position `T-1` predicts the token after `T-1` — the only logit row useful for one more token.
+- `greedy`: `argmax` is **deterministic** — no seed needed; ties resolve to the lowest index (NumPy's convention).
+- sampling: temperature scales the logits **before** the softmax (`T < 1` sharpens, `T > 1` flattens), then `rng.choice` draws one id. Reproducibility comes from the caller's seeded `rng`.
+- optional truncation: `top_k` then `top_p` cut the distribution **after** temperature and renormalize the retained probabilities before the draw; in greedy mode they are validated but ignored.
+- `np.append`: the token becomes context; the loop repeats.
+
+::: {.callout-note}
+**`temperature`, `top_k`, and `top_p` are validated even in greedy mode.** A call `greedy=True, temperature=0.0` or `top_k=0` fails: a hidden invalid value must not wait for a switch to sampling to reveal itself.
+:::
+
+## Two deliberate limitations, not two omissions
+
+- **No KV cache.** Each step recomputes attention over the whole window: `O(T^2)` work per token where a cache would make the incremental step much cheaper. The reference chooses inspectability; caching is an optimization topic, not a conceptual one.
+- **No early stopping.** The loop stops at `max_new_tokens`, never at an end-of-text token: that rule belongs to the vocabulary/tokenizer layer, outside this milestone's scope.
+
+::: {.callout-warning}
+**Common misconceptions.** (1) Temperature does **not change the model**: same parameters, same logits; it only changes the distribution you sample from. (2) The model does not "plan" several tokens ahead: it produces a score for **one** next token; everything else is the loop.
+:::
+
+## What the tests verify
+
+[`tests/unit/test_generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_generate.py): greedy mode is deterministic **and** matches an independently recomputed argmax chain; sampling is reproducible at equal seed; the optional truncations follow an independently recomputed temperature → top-k → top-p chain, with `top_k=1` (and a very tight `top_p` nucleus) reproducing the greedy chain; a prompt filling the whole window still generates (sliding); `max_new_tokens=0` returns the prompt unchanged; every validation error is named.
+
+## Exercises
+
+1. With a 16-token prompt, `context_length=16` and 4 tokens to generate: how many forward passes run, and with what window lengths?
+2. Why is an untrained model's output incoherent, and why is that an **expected** result rather than a bug?
+
+<details>
+<summary>Show answers and reasoning</summary>
+
+1. Four passes, each on a 16-token window: after the first appended token (17 tokens), the window keeps only the last 16 at every step.
+2. The parameters are random: the logits encode no language statistics. The loop itself works perfectly (shapes, causality, selection) — exactly what this milestone separates: **the mechanics** of generation from **the quality acquired through learning**.
+</details>
+
+## Connections
+
+- **Previous stop**: [assembling the GPT (`gpt.py`)](gpt-model-walkthrough.qmd).
+- **Concept pages**: [generating text step by step](generation.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd).
+- **Back to the path**: [Build a small GPT](build-path.qmd).
+- **Source**: [`generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py) · **Tests**: [`test_generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_generate.py).
+
+::: {.language-switch}
+**Language:** [Français](../fr/gpt-generation-walkthrough.qmd) · [English](gpt-generation-walkthrough.qmd)
+:::

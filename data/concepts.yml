@@ -1,0 +1,107 @@
+schema_version: 1
+# Stable concept IDs are language-independent. Labels and descriptions are bilingual.
+concepts:
+  - id: token
+    labels: {fr: "Token", en: "Token"}
+    definitions:
+      fr: "Unité discrète produite par la tokenisation et consommée par le modèle."
+      en: "Discrete unit produced by tokenization and consumed by the model."
+    domains: [text-tokenization]
+    resources: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies]
+  - id: token-embedding
+    labels: {fr: "Plongement initial du token", en: "Initial token embedding"}
+    definitions:
+      fr: "Vecteur obtenu par consultation de la matrice de plongements à partir de l’identifiant du token."
+      en: "Vector retrieved from the embedding matrix using the token ID."
+    domains: [text-tokenization, mathematical-tools-geometry]
+    resources: [fr/embedding-space, en/embedding-space]
+  - id: contextualized-representation
+    labels: {fr: "Représentation contextualisée", en: "Contextualized representation"}
+    definitions:
+      fr: "État vectoriel dont la valeur dépend du token, de son contexte et des calculs du réseau."
+      en: "Vector state whose value depends on the token, its context, and the network computation."
+    domains: [architectures-mechanisms, mathematical-tools-geometry]
+    resources: [fr/contextualized-representations, en/contextualized-representations]
+  - id: query
+    labels: {fr: "Query (requête)", en: "Query"}
+    definitions:
+      fr: "Projection qui encode ce qu’une position cherche à récupérer dans les autres positions."
+      en: "Projection encoding what a position seeks to retrieve from other positions."
+    domains: [architectures-mechanisms, mathematical-tools-geometry]
+    resources: [fr/queries-keys-values, en/queries-keys-values]
+  - id: key
+    labels: {fr: "Key (clé)", en: "Key"}
+    definitions:
+      fr: "Projection qui rend une position adressable par les requêtes des autres positions."
+      en: "Projection that makes a position addressable by queries from other positions."
+    domains: [architectures-mechanisms, mathematical-tools-geometry]
+    resources: [fr/queries-keys-values, en/queries-keys-values]
+  - id: value
+    labels: {fr: "Value (valeur)", en: "Value"}
+    definitions:
+      fr: "Projection porteuse de l’information agrégée selon les poids d’attention."
+      en: "Projection carrying the information aggregated according to attention weights."
+    domains: [architectures-mechanisms, mathematical-tools-geometry]
+    resources: [fr/queries-keys-values, en/queries-keys-values]
+  - id: self-attention
+    labels: {fr: "Auto-attention", en: "Self-attention"}
+    definitions:
+      fr: "Mécanisme qui calcule des poids entre positions d’une même séquence et agrège leurs valeurs."
+      en: "Mechanism that computes weights between positions in one sequence and aggregates their values."
+    domains: [architectures-mechanisms]
+    resources: [fr/queries-keys-values, en/queries-keys-values]
+  - id: causal-mask
+    labels: {fr: "Masque causal", en: "Causal mask"}
+    definitions:
+      fr: "Contrainte qui empêche une position de prendre en compte les positions futures."
+      en: "Constraint preventing a position from attending to future positions."
+    domains: [architectures-mechanisms]
+    resources: [fr/queries-keys-values, en/queries-keys-values]
+  - id: positional-encoding
+    labels: {fr: "Encodage positionnel", en: "Positional encoding"}
+    definitions:
+      fr: "Mécanisme qui injecte ou expose l’information de position dans les calculs du modèle."
+      en: "Mechanism that injects or exposes positional information in model computations."
+    domains: [architectures-mechanisms, mathematical-tools-geometry]
+    resources: [fr/positional-encoding, en/positional-encoding]
+  - id: output-projection
+    labels: {fr: "Projection de sortie", en: "Output projection"}
+    definitions:
+      fr: "Transformation qui projette l’état final d’une position vers les scores du vocabulaire."
+      en: "Transformation projecting a position's final state to vocabulary scores."
+    domains: [architectures-mechanisms, mathematical-tools-geometry]
+    resources: [fr/logits, en/logits]
+  - id: logits
+    labels: {fr: "Logits", en: "Logits"}
+    definitions:
+      fr: "Scores non normalisés produits pour les tokens du vocabulaire avant conversion en probabilités."
+      en: "Unnormalized scores produced for vocabulary tokens before conversion to probabilities."
+    domains: [architectures-mechanisms, probabilistic-foundations-training]
+    resources: [fr/logits, en/logits]
+  - id: softmax
+    labels: {fr: "Softmax", en: "Softmax"}
+    definitions:
+      fr: "Transformation qui convertit un vecteur de scores en une distribution de probabilité."
+      en: "Transformation converting a score vector into a probability distribution."
+    domains: [mathematical-tools-geometry, probabilistic-foundations-training]
+    resources: [fr/probabilites, en/probabilities]
+  - id: cross-entropy
+    labels: {fr: "Entropie croisée", en: "Cross-entropy"}
+    definitions:
+      fr: "Quantité qui mesure le coût probabiliste d’une distribution prédite relativement à une cible."
+      en: "Quantity measuring the probabilistic cost of a predicted distribution relative to a target."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/cross-entropy, en/cross-entropy]
+relations:
+  - {from: token, type: represented-by, to: token-embedding}
+  - {from: token-embedding, type: prerequisite, to: contextualized-representation}
+  - {from: query, type: part-of, to: self-attention}
+  - {from: key, type: part-of, to: self-attention}
+  - {from: value, type: part-of, to: self-attention}
+  - {from: causal-mask, type: constrains, to: self-attention}
+  - {from: positional-encoding, type: contributes-to, to: self-attention}
+  - {from: self-attention, type: contributes-to, to: contextualized-representation}
+  - {from: contextualized-representation, type: mapped-by, to: output-projection}
+  - {from: output-projection, type: produces, to: logits}
+  - {from: logits, type: normalized-by, to: softmax}
+  - {from: softmax, type: evaluated-by, to: cross-entropy}

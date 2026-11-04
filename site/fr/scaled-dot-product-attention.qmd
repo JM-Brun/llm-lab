@@ -52,7 +52,7 @@ L'attention n'est pas une opération unique : elle enchaîne **scores → mise �
 
 ## Calcul en quatre étapes
 
-Pour une tête d'auto-attention sur $T$ positions, $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$. Une attention entre deux séquences peut avoir des nombres différents de requêtes et de clés.
+Pour une tête, $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$.
 
 1. **Scores :** $S=QK^\top$, de forme $T\times T$.
 2. **Mise à l'échelle :** $S/\sqrt{d_k}$.
@@ -88,33 +88,31 @@ Cet exemple distingue les rôles : la requête et les clés déterminent les poi
 
 Le schéma montre aussi pourquoi trois objets ne doivent pas être confondus : **scores** (compatibilités brutes), **poids** (normalisés relativement aux positions accessibles) et **sorties** (combinaisons pondérées des valeurs). Dans une attention non causale, le masque peut être absent ou exprimer une autre contrainte. La normalisation du softmax ne transforme pas les poids en mesure universelle de pertinence sémantique.
 
-## Pourquoi diviser par $\sqrt{d_k}$ ?
+::: {.callout-note collapse="true" title="Dérivation et simulation numérique (facultatif)"}
+Sous l'hypothèse simplificatrice que les composantes des vecteurs de requête et de clé sont indépendantes, centrées et de variance unitaire, la variance d'un produit scalaire de $d_k$ termes vaut $\sum_{i=1}^{d_k} \operatorname{Var}(q_i k_i) = d_k$. Son écart-type est donc $\sqrt{d_k}$. Pour $d_k=64$, les scores typiques oscillent autour de $\pm 8$. Sans mise à l'échelle, de tels écarts saturent immédiatement le softmax (qui tend vers un one-hot), entraînant des gradients quasi nuls pour la rétropropagation.
 
-Sous l'hypothèse simplificatrice que toutes les composantes de requête et de clé sont indépendantes, centrées et de variance unitaire, la variance du produit scalaire vaut $\sum_{i=1}^{d_k} \operatorname{Var}(q_i k_i) = d_k$. Son écart-type est donc $\sqrt{d_k}$ : pour $d_k=64$, il vaut 8. Des écarts importants entre scores d'une même ligne peuvent concentrer le softmax et réduire ses gradients. Diviser par $\sqrt{d_k}$ atténue ce risque dans ce modèle simplifié ; ni la saturation ni son absence ne sont garanties pour des projections apprises.
-
-:::: {.callout-note title="Simulation facultative : échelle des scores" collapse="true"}
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
-<span>MICRO-ATELIER NUMÉRIQUE · ÉCHELLE DES SCORES</span>
+<span>MICRO-ATELIER NUMÉRIQUE · ÉCHELLE DES SCORES ET GRADIENTS DU SOFTMAX</span>
 <span>Python 3.12+ / NumPy</span>
 :::
 ::: {.micro-workbench-body}
 ```python
 import numpy as np
 
-# Simulation de produits scalaires pour d_k = 64
+### Simulation de produits scalaires pour d_k = 64
 np.random.seed(42)
 d_k = 64
 N = 10000
 
-# Vecteurs gaussiens standards indépendants
+### Vecteurs gaussiens standards indépendants
 q = np.random.randn(N, d_k)
 k = np.random.randn(N, d_k)
 
-# Produit scalaire brut q . k
+### Produit scalaire brut q . k
 raw_dots = np.sum(q * k, axis=1)
 
-# Écart-type empirique non normalisé vs normalisé
+### Écart-type empirique non normalisé vs normalisé
 std_raw = np.std(raw_dots)
 std_scaled = np.std(raw_dots / np.sqrt(d_k))
 
@@ -125,10 +123,10 @@ assert np.isclose(std_scaled, 1.0, atol=0.05)
 ```
 :::
 ::: {.micro-workbench-footer}
-Dans cette simulation, la division par $\sqrt{d_k}$ ramène approximativement la variance des scores à l'unité. Elle ne mesure ni les poids softmax ni les gradients.
+La division par $\sqrt{d_k}$ ramène la variance des scores à l'unité, préservant la fluidité des gradients lors de l'apprentissage.
 :::
 :::
-::::
+:::
 
 ## Origine et rôle
 
@@ -144,7 +142,7 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 <details class="spot-the-fallacy">
 <summary>Piège fréquent : « Si l'on augmente la dimension des têtes $d_k$, l'attention devient automatiquement plus expressive sans précaution »</summary>
 <div class="fallacy-content">
-<p><strong>Limite :</strong> Sous les hypothèses ci-dessus et sans mise à l'échelle, passer de $d_k=64$ à 512 multiplierait l'écart-type des scores par $\sqrt{8} \approx 2{,}83$. Des différences plus grandes entre scores peuvent concentrer le softmax et réduire ses dérivées locales ; cela ne prouve ni une saturation systématique ni un blocage total de l'apprentissage.</p>
+<p><strong>Contre-exemple :</strong> Si l'on omettait la division par $\sqrt{d_k}$, augmenter $d_k$ de 64 à 512 multiplierait l'écart-type des scores par près de 3 ($\sqrt{512} \approx 22{,}6$). Les scores extrêmes feraient basculer le softmax dans ses régions à dérivée quasi nulle, bloquant totalement l'apprentissage des couches inférieures par évanouissement de gradient (vanishing gradient).</p>
 </div>
 </details>
 
@@ -155,7 +153,10 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 - La fonction softmax est liée aux [probabilités](probabilites.qmd), mais une distribution normalisée n'est pas nécessairement calibrée.
 - La [synthèse Transformer](transformer.qmd) remet le calcul dans le flux du modèle.
 
-## Vérifier votre compréhension
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](exercises.qmd#attention).
 
 Une ligne de scores vaut $(2,0)$ et la dimension des clés est $d_k=4$. Calculez les poids softmax après mise à l’échelle. Que se passe-t-il si la deuxième position est interdite par un masque causal ?
 
@@ -165,9 +166,9 @@ Une ligne de scores vaut $(2,0)$ et la dimension des clés est $d_k=4$. Calculez
 On divise d’abord les scores par $\sqrt{4}=2$, ce qui donne $(1,0)$. Le softmax vaut environ $(0{,}731,0{,}269)$. Si la deuxième position est interdite, son score est masqué avant le softmax (conceptuellement $-\infty$) : les poids deviennent $(1,0)$. Le masque doit intervenir avant la normalisation ; mettre son poids à zéro après le softmax sans renormaliser ne produit pas la même distribution.
 
 </details>
+:::
 
-## Implémentation et vérification
-
+::: {.callout-note collapse="true" title="Implémentation et vérification (approfondissement)"}
 Les dimensions des entrées et des sorties sont aussi importantes que la formule : voir [Tenseurs](tensors.qmd).
 
 Une implémentation de référence testée est accessible dans `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`). La suite `tests/unit/test_attention.py` valide numériquement le calcul, les dimensions et les propriétés d'invariance.
@@ -175,6 +176,7 @@ Une implémentation de référence testée est accessible dans `src/llm_lab/foun
 - [Implémentation de référence](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
 - [Tests unitaires](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
 - [Critères de vérification prévus](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+:::
 
 <div class="route-nav-cards">
   <a class="route-nav-card" href="queries-keys-values.qmd">

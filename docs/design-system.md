@@ -4,6 +4,10 @@
 **Decision date:** 2026-10-30  
 **Brand direction:** scientific learning environment, with green as the primary brand colour.
 
+## Relationship to page templates
+
+The visual system is implemented through the existing Quarto classes and site stylesheet. The [page-template guide](page-template-guide.md) provides reusable structures; the [page archetype implementation map](site-page-design-system.md) connects those structures to the metadata taxonomy and the editorial contract. Templates must reuse this system rather than introduce competing visual conventions.
+
 ## 1. Design intent
 
 LLM Lab should feel like a scientific instrument for learning: precise, calm, legible, exploratory, and technically credible. The visual language may take inspiration from [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) for direct manipulation and visual explanation, but must not imitate its interface or imply equivalent model-specific capabilities.
@@ -16,9 +20,9 @@ Green is the primary brand colour. It identifies the site, navigation, links, pr
 
 | Token | Hex | Intended use |
 |---|---|---|
-| Brand green | #16A34A | Main identity, links, interactive accents |
+| Brand green | #16A34A | Main identity, borders, large accents and non-text interactive cues; not small text on pale surfaces |
 | Deep green | #14532D | Navbar, dark hero surfaces, strong brand surfaces |
-| Action green | #15803D | Primary buttons and high-emphasis actions |
+| Action green | #15803D | Text links, small emphasis labels on light surfaces, primary buttons and high-emphasis actions |
 | Bright green | #22C55E | Small highlights; not body text on white |
 | Pale green | #DCFCE7 | Selected states and subtle fills |
 | Dark ink | #17212B | Main text on light surfaces |
@@ -30,10 +34,12 @@ Green is the primary brand colour. It identifies the site, navigation, links, pr
 | Blue | #0EA5E9 | Distinct data category or external/system reference, not the brand |
 | Violet | #8B5CF6 | Distinct data category only where a legend defines its meaning |
 
+**Text-contrast rule:** on the reading surface `#F8FAFC`, brand green `#16A34A` has a calculated contrast ratio of 3.15:1 and must not be used for normal-size text. Action green `#15803D` reaches 4.79:1 and is the preferred green for links and small labels on light surfaces. This pairwise calculation is not a global WCAG conformance claim.
+
 ### Usage rules
 
 - Keep long-form reading surfaces neutral. Do not turn every card, section, or page background green.
-- Use deep green for global navigation and dark hero surfaces; use action green for primary controls.
+- Use deep green for global navigation and dark hero surfaces; use action green for primary controls and small text on light surfaces.
 - Use pale green for low-emphasis fills. Do not put small white text on bright green.
 - Green must not mean both brand and success by default. Success, warning, error, and informational states retain explicit semantic labels/icons and accessible contrast.
 - In diagrams, define a stable legend. Green may identify the main data path, but tokens, tensor axes, masks, parameters, and outputs must not be distinguished by colour alone.
@@ -47,6 +53,33 @@ Green is the primary brand colour. It identifies the site, navigation, links, pr
 - Equations need whitespace; define symbols and tensor dimensions before use.
 - Code blocks should support copying, preserve readable line lengths, and remain usable on narrow screens.
 - Cards should encode a meaningful action or content grouping, not merely decorate every paragraph.
+
+## Navigation hierarchy
+
+Every page reached through the Quarto sidebar should expose a compact **breadcrumb** above its title. It is generated from the active sidebar hierarchy, so the labels and nesting remain aligned with the actual site navigation in both languages. The breadcrumb answers “where am I?”; it is not a claim that readers must follow every parent page in sequence.
+
+Keep navigation patterns distinct:
+
+- **Breadcrumb:** the page's location in the site's information architecture; generated globally from the sidebar.
+- **Sidebar:** the wider topic map and alternative entry points.
+- **Previous / next navigation:** a suggested local continuation, where the metadata defines a useful route.
+- **Pipeline stepper:** a domain-specific process or data-flow sequence inside a lesson. Use it only when the stages form a meaningful process; it is not a substitute for the breadcrumb and must not imply a universal learning order.
+
+Do not manually reproduce breadcrumb markup in individual pages. If the sidebar hierarchy changes, the breadcrumb should follow it automatically. Pages that are not represented in the sidebar (for example, a standalone reference page) may legitimately have no breadcrumb.
+
+## Callout semantics
+
+Use the same Quarto callout types for the same reader need, but do not require every page to contain the same number of callouts.
+
+- **Tip:** a compact mental model or the essential point to retain. The recurring “one-minute” callout belongs here when it genuinely helps the reader orient.
+- **Note:** a clarification, distinction, assumption, or contextual qualification that should remain visible without interrupting the main explanation.
+- **Warning / caution:** a likely error, limitation, or condition that could materially change the reader's interpretation.
+- **Important:** a constraint or consequence that must not be missed.
+- **Collapsed note:** genuinely supplementary material such as implementation references, extended derivations, or optional detail—not an essential definition or caveat.
+- **Learning outcomes:** use the shared `.callout-note.learning-outcomes` pattern only when explicit outcomes help the reader; keep it collapsed by default.
+- **Comprehension check:** use the dedicated `.self-check` structure, not a generic callout, and keep answer disclosures collapsed.
+
+A chapter lead states the page's central answer; it is not interchangeable with a callout. Avoid stacking multiple boxes that repeat the same idea. The target is consistent semantics and visual treatment, not identical page composition.
 
 ## 4. Interaction and motion
 

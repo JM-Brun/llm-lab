@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/cosine-similarity"
 scope: "Étudie la similarité cosinus comme alignement angulaire entre vecteurs de représentation non nuls, avec les hypothèses de normalisation, l’anisotropie, le hubness, les effets sur les plus proches voisins et le choix de métrique selon la tâche. Elle distingue proximité géométrique et équivalence sémantique, sans traiter un score élevé comme une preuve de pertinence ou de vérité."
 purpose: "Calculer et interpréter une similarité cosinus, expliquer quelle information la normalisation des vecteurs retire, repérer les conditions qui peuvent déformer les classements et concevoir des vérifications adaptées à la tâche plutôt que de supposer que le cosinus mesure directement le sens."
+domain: "mathematical-tools-geometry"
 suggested_route:
   previous: "fr/tensors"
   next: "fr/linearite-embeddings"
@@ -20,11 +21,11 @@ related: []
 tags: ["type:deep-dive", "destination:deepen", "topic:cosine-similarity", "level:advanced", "language:fr", "status:published"]
 -->
 
-Ce sujet s’inscrit dans le parcours [Géométrie et interprétabilité des représentations](embedding-space.qmd). Commencez par [l’espace des embeddings](embedding-space.qmd) pour distinguer les types de représentations, puis poursuivez avec l’[hypothèse de linéarité](linearite-embeddings.qmd), qui porte sur une autre question : comment les caractéristiques sont-elles représentées et décodables ?
+La similarité cosinus s’interprète dans la géométrie de l’[espace des embeddings (plongements)](embedding-space.qmd) ; elle ne suffit pas à établir une proximité sémantique. L’[hypothèse de linéarité des embeddings](linearite-embeddings.qmd) porte sur une autre question : comment les caractéristiques sont-elles représentées et décodables ?
 
 ## Que mesure vraiment le cosinus ?
 
-La similarité cosinus compare souvent des embeddings de phrases, de documents ou de requêtes. Elle est simple à calculer et ne dépend pas de la norme des vecteurs. Elle mesure toutefois l'angle entre deux représentations produites par un modèle donné, pas directement leur « similarité sémantique ».
+La similarité cosinus compare souvent des plongements (embeddings) de phrases, de documents ou de requêtes. Elle est simple à calculer et ne dépend pas de la norme des vecteurs. Elle mesure toutefois l'angle entre deux représentations produites par un modèle donné, pas directement leur « similarité sémantique ».
 
 Cette distinction compte. La métrique ne peut être interprétée indépendamment de **la tâche, de l'encodeur, de la distribution des données et de l'objectif d'entraînement**.
 

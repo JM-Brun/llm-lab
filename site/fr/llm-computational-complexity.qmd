@@ -1,0 +1,191 @@
+---
+title: "Complexité et parallélisme dans les LLM"
+subtitle: "Où le calcul est-il linéaire ou quadratique, parallèle ou séquentiel ?"
+keywords: ["type:deep-dive", "destination:deepen", "topic:llm-computational-complexity", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/llm-computational-complexity"
+scope: "Analyse la complexité en longueur de séquence, la mémoire et le parallélisme des opérations des LLM, en distinguant entraînement, préremplissage et décodage."
+purpose: "Distinguer travail total, profondeur séquentielle et mémoire ; expliquer les coûts de l'attention, du MLP, du cache KV et des architectures récurrentes."
+domain: "inference-efficiency"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/llm-overview"]
+  children: []
+related: ["fr/transformer", "fr/generation", "fr/hybrid-llm-architectures", "fr/scaling-laws"]
+tags: ["type:deep-dive", "destination:deepen", "topic:llm-computational-complexity", "level:advanced", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+La performance d'un LLM ne dépend pas seulement du nombre d'opérations. Elle dépend aussi de **la façon dont elles croissent avec la longueur du contexte**, de la quantité de données à stocker ou déplacer, et de la possibilité de les exécuter simultanément. Une opération quadratique peut être fortement parallélisée ; une opération linéaire peut conserver une dépendance séquentielle.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs"}
+- Distinguer complexité de calcul, complexité mémoire et profondeur séquentielle.
+- Expliquer les coûts de l'attention dense, du MLP, du cache KV et du décodage.
+- Différencier entraînement, préremplissage (*prefill*) et génération (*decode*).
+- Comparer attention, états récurrents, attention linéaire et experts parcimonieux.
+- Identifier les formes de parallélisme utilisées dans les systèmes LLM.
+:::
+
+## 1. Trois questions différentes
+
+Une analyse de performance doit séparer trois grandeurs :
+
+1. **Travail total (*work*)** : nombre d'opérations nécessaires, souvent décrit avec \(O(\cdot)\).
+2. **Profondeur ou chemin critique (*span*)** : longueur de la chaîne de dépendances qui doit être exécutée dans l'ordre. Elle limite le parallélisme théorique.
+3. **Mémoire et trafic mémoire** : taille des tenseurs à conserver et quantité de données à déplacer entre mémoire et unités de calcul.
+
+La notation asymptotique ne donne pas directement un temps d'exécution : constantes, dimensions, bande passante, communications, matériel et parallélisme disponible comptent aussi.
+
+| Symbole | Signification |
+|---|---|
+| \(B\) | taille du batch |
+| \(T\) | longueur de séquence ou de contexte |
+| \(d\) | dimension du modèle |
+| \(d_{ff}\) | dimension interne du MLP |
+| \(H\), \(H_{KV}\) | nombre de têtes de requête et de têtes clé/valeur |
+| \(N_L\) | nombre de couches |
+| \(G\) | nombre de tokens générés après le prompt |
+| \(K\) | nombre d'experts activés par token |
+
+Sauf indication contraire, on étudie la croissance en \(T\), à dimensions du modèle fixées.
+
+## 2. Transformer dense : où se trouve le quadratique ?
+
+| Opération | Travail dominant en fonction de \(T\) | Pourquoi ? |
+|---|---:|---|
+| Projections \(Q,K,V\) et sortie | \(O(BTd^2)\) | Une projection par token |
+| MLP / réseau feed-forward | \(O(BTdd_{ff})\) | Même calcul à chaque position |
+| Scores \(QK^\top\) | \(O(BT^2d)\) | Chaque requête compare les positions du contexte |
+| Agrégation attention-valeurs | \(O(BT^2d)\) | Chaque sortie combine les valeurs accessibles |
+| Stockage naïf des poids d'attention | \(O(BHT^2)\) | Une matrice de scores par tête |
+
+Le **terme quadratique en longueur de séquence** vient des interactions entre paires de positions dans l'attention dense. Projections et MLP croissent linéairement avec \(T\), à largeur fixée.
+
+Pour l'attention causale, les positions futures sont masquées : les paires utiles forment un triangle, environ \(T(T+1)/2\). Cela change une constante, pas l'ordre asymptotique \(O(T^2)\).
+
+Dire « le Transformer est quadratique » est donc imprécis : **l'attention dense est quadratique en \(T\)** ; toutes les opérations du Transformer ne le sont pas. Si \(d\) augmente aussi, les coûts des projections et du MLP augmentent également.
+
+## 3. Quadratique ne veut pas dire séquentiel
+
+Pendant le préremplissage, les représentations de toutes les positions sont disponibles. Dans une couche d'attention, les produits matriciels entre requêtes, clés et valeurs peuvent être calculés en parallèle sur de nombreux blocs de positions et de têtes.
+
+Le travail total reste quadratique, mais les GPU exécutent de nombreuses opérations matricielles simultanément. La contrainte séquentielle majeure d'un Transformer standard se situe **entre les couches** : la couche \(l+1\) attend les représentations de la couche \(l\).
+
+Le masque causal interdit de consulter le futur ; il n'oblige pas à calculer les positions une par une pendant l'entraînement. Les prédictions de toutes les positions d'une séquence d'entraînement peuvent être calculées en parallèle, avec le décalage approprié des cibles.
+
+### FlashAttention : réduire les mouvements mémoire, pas le travail quadratique
+
+FlashAttention conserve l'attention exacte et son travail \(O(T^2d)\), mais découpe le calcul en blocs (*tiling*) pour éviter de matérialiser toute la matrice d'attention en mémoire haute bande passante. Il réduit les lectures/écritures coûteuses et la mémoire intermédiaire, sans rendre l'attention dense linéaire en \(T\).
+
+**Une optimisation peut accélérer une opération sans changer sa classe de complexité arithmétique.**
+
+## 4. Entraînement, prefill et decode : trois régimes distincts
+
+### Entraînement
+
+Les positions d'une séquence sont traitées en parallèle dans chaque couche. L'attention dense coûte \(O(T^2d)\) en travail par couche ; projections et MLP sont linéaires en \(T\), à largeur fixée. La rétropropagation ajoute travail et mémoire, mais conserve les dépendances fondamentales entre couches.
+
+### Préremplissage (*prefill*)
+
+Le prompt complet est traité d'un seul coup. Ses positions sont parallélisables au sein d'une couche ; l'attention dense effectue toujours un travail quadratique en longueur de prompt. Un long prompt peut donc augmenter le délai avant le premier token.
+
+### Décodage (*decode*)
+
+En génération autorégressive standard, le token suivant dépend du token déjà sélectionné : les pas de génération sont **séquentiels entre eux**. Le cache KV évite de recalculer les clés et valeurs du passé, mais chaque nouveau token doit encore consulter l'historique conservé.
+
+Pour un prompt de longueur \(T\) et \(G\) tokens générés, le travail attentionnel du décodage avec cache KV croît comme :
+
+\[
+\sum_{i=0}^{G-1}(T+i)
+= GT+\frac{G(G-1)}{2}
+= O(GT+G^2)
+\]
+
+Cette expression décrit les interactions attentionnelles, pas le coût total du modèle : projections, MLP, couches et vocabulaire ajoutent leurs propres coûts. À chaque pas, les opérations sur un token peuvent être parallélisées à l'intérieur du réseau, mais les pas successifs restent dépendants.
+
+Le cache KV évite le recalcul du passé ; il ne supprime ni le parcours du contexte par chaque nouveau token, ni la croissance de sa mémoire avec la longueur totale du contexte.
+
+## 5. Pourquoi les architectures récurrentes peuvent être linéaires
+
+Un modèle récurrent met à jour un état compact à chaque position :
+
+\[
+h_t = f(h_{t-1}, x_t)
+\]
+
+À dimensions et taille d'état fixées, le travail total croît linéairement avec \(T\). En inférence en flux, un token peut être traité en conservant l'état précédent, sans relire tout l'historique. La mémoire d'état ne croît donc pas nécessairement avec la longueur du contexte.
+
+Mais la récurrence naïve impose une dépendance : \(h_t\) attend \(h_{t-1}\). **Travail linéaire ne signifie pas parallélisme intégral.**
+
+Certaines récurrences ont une structure associative permettant un *parallel scan* : les préfixes peuvent être calculés en parallèle, avec une profondeur théorique logarithmique en \(T\), tout en conservant un travail linéaire. Mamba et les modèles à espace d'état sélectifs utilisent des scans adaptés à leur structure ; cela ne signifie pas que chaque opération ou chaque variante de Mamba est dépourvue de dépendance séquentielle.
+
+## 6. Attention linéaire et autres compromis
+
+Des méthodes d'attention linéaire réorganisent ou approximent le calcul pour éviter de construire toutes les interactions entre paires de tokens. Sous certaines formulations, le travail croît linéairement avec \(T\), à dimensions fixées.
+
+Le gain a des contreparties possibles : approximation du noyau, contraintes de normalisation, difficulté à reproduire exactement certaines interactions ou qualité dépendante de la tâche. Toute « attention linéaire » n'est pas équivalente à l'attention softmax exacte.
+
+Les architectures hybrides peuvent conserver quelques couches d'attention pour l'accès explicite à des positions du contexte, et utiliser des états récurrents ailleurs. C'est l'un des compromis illustrés par [l'étude de cas Nemotron](hybrid-llm-architectures.qmd).
+
+## 7. MoE : calcul parcimonieux, capacité totale
+
+Un réseau *Mixture of Experts* (MoE) contient plusieurs réseaux experts, mais un routeur n'en active qu'une partie pour chaque token. Avec \(N\) experts et \(K\) experts activés, le calcul expert par token dépend surtout de \(K\), et non de \(N\), à taille d'expert comparable.
+
+Cela ne signifie pas que la mémoire des poids ne dépend que des experts actifs : les paramètres de tous les experts doivent être stockés ou rendus accessibles. En distribution multi-GPU, le routage peut déclencher des communications *all-to-all*. Le coût réel dépend donc du placement des experts, de l'équilibrage de charge et de la taille des lots.
+
+**Parcimonie du calcul activé ≠ parcimonie de la capacité hébergée.**
+
+## 8. Où le parallélisme intervient-il ?
+
+| Forme | Ce qui est réparti | Limite ou coût |
+|---|---|---|
+| Données | Exemples ou lots entre réplicas | Synchronisation des gradients |
+| Tenseurs | Dimensions des matrices et têtes entre GPU | Communications collectives |
+| Pipeline | Groupes de couches entre appareils | Bulles de pipeline et dépendances entre micro-lots |
+| Séquence | Positions ou blocs d'une longue séquence | Communication entre partitions |
+| Experts | Experts MoE sur différents appareils | Routage et échanges *all-to-all* |
+
+Le parallélisme ne supprime pas les dépendances algorithmiques : il distribue le travail disponible. Les communications ajoutées peuvent aussi annuler une partie du gain théorique.
+
+## 9. Synthèse : travail, dépendances et mémoire
+
+| Mécanisme | Travail en \(T\), dimensions fixes | Dépendance séquentielle | Mémoire liée au contexte |
+|---|---|---|---|
+| Attention dense exacte | Quadratique \(O(T^2)\) | Entre couches ; positions parallèles en entraînement/prefill | Cache KV \(O(T)\) en decode ; intermédiaire naïf \(O(T^2)\) |
+| FlashAttention | Quadratique \(O(T^2)\) | Même structure que l'attention dense | Réduit les intermédiaires ; ne supprime pas le cache KV |
+| Récurrence / SSM | Linéaire \(O(T)\) à état fixé | Récurrence en flux ; scan parallélisable pour certaines structures | État récurrent borné en flux |
+| Attention linéaire | Souvent linéaire \(O(T)\), selon la formulation | Dépend de l'algorithme | État ou intermédiaires compacts possibles |
+| MoE | Calcul expert lié à \(K\), pas aux \(N\) experts | Routage par token et communications | Poids totaux liés à \(N\) |
+
+Ce tableau donne des tendances, pas un benchmark. Constantes, dimensions, bande passante, qualité, batch et matériel peuvent inverser un classement pratique.
+
+## 10. Règles de lecture à retenir
+
+- **Quadratique** décrit ici le nombre d'interactions entre positions, pas l'impossibilité de les paralléliser.
+- **Linéaire** décrit le travail total en fonction de \(T\), pas l'absence de dépendances entre tokens.
+- **Séquentiel** décrit un chemin de dépendances ; il peut limiter la latence même si chaque étape est peu coûteuse.
+- **Mémoire** et **calcul** ne sont pas interchangeables : FlashAttention réduit le trafic mémoire sans supprimer le travail quadratique ; GQA réduit le cache KV ; MoE réduit le calcul activé sans supprimer tous les poids.
+- **Latence** et **débit** diffèrent : traiter beaucoup de requêtes en parallèle peut améliorer le débit sans accélérer la génération d'une requête isolée.
+
+Pour appliquer ces distinctions à des choix d'architecture : [architectures hybrides et Nemotron](hybrid-llm-architectures.qmd), [génération autorégressive](generation.qmd), [bloc Transformer](transformer.qmd) et [lois d'échelle](scaling-laws.qmd).
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+1. **L'attention dense est quadratique : pourquoi peut-elle être calculée en parallèle ?** Les interactions entre positions sont des opérations matricielles parallélisables ; travail total et profondeur séquentielle sont différents.
+2. **Pourquoi la génération standard reste-t-elle séquentielle ?** Le token suivant dépend du token qui vient d'être sélectionné.
+3. **FlashAttention rend-elle l'attention linéaire ?** Non : elle conserve le travail quadratique mais réduit les mouvements mémoire et les intermédiaires.
+4. **Un modèle récurrent à travail linéaire en \(T\) est-il entièrement parallèle ?** Non : une récurrence naïve dépend de l'état précédent, même si certaines structures permettent un scan parallèle.
+5. **Un MoE avec peu d'experts actifs ne stocke-t-il que ces experts ?** Non : tous les poids experts doivent être hébergés ou accessibles.
+:::
+
+::: {.language-switch}
+**Langue :** [Français](llm-computational-complexity.qmd) · [English](../en/llm-computational-complexity.qmd)
+:::

@@ -11,12 +11,12 @@ id: "en/likelihood"
 scope: "Define the probability assigned to an observed token sequence under fixed model parameters, using the autoregressive chain-rule factorization and its logarithm; distinguish sequence likelihood and log-likelihood from one-step predictive uncertainty, cross-entropy as a target-distribution measure, and dataset-level loss reduction."
 purpose: "Compute a sequence likelihood from conditional token probabilities, convert products to summed log-likelihoods, and explain why maximizing log-likelihood corresponds to minimizing negative log-likelihood for fixed observations."
 suggested_route:
-  previous: "en/training-examples"
-  next: "en/entropy"
+  previous: "en/probabilities"
+  next: "en/cross-entropy"
 hierarchy:
-  parents: ["en/training-examples", "en/probabilities"]
-  children: ["en/entropy", "en/cross-entropy"]
-related: []
+  parents: ["en/probabilities"]
+  children: []
+related: ["en/entropy", "en/cross-entropy"]
 tags: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:en", "status:published"]
 -->
 
@@ -25,6 +25,8 @@ Likelihood measures the probability of observed data for fixed parameters. In au
 :::
 
 ## Autoregressive factorization
+
+The derivation of this factorization from the chain rule, and the interpretation of conditional probabilities, are developed in [the mathematical formalization of language modeling](language-modeling-math.qmd). Here, the focus is on likelihood as an evaluation criterion for observed sequences and on its connection to the loss.
 
 For a sequence $x_{1:T}$:
 
@@ -61,15 +63,28 @@ If the probabilities assigned to three observed tokens are $(0.5, 0.25, 0.8)$, t
 - **“NLL is comparable without specifying the tokenizer.”** Not always: different segmentations change the number and granularity of evaluated events.
 :::
 
-## Self-check
+::: {.self-check}
+## Check your understanding
 
 [Open the related exercise space](exercises.qmd#foundations) — detailed exercises will be authored separately.
 
 1. Why use log-likelihood rather than the direct product?
-2. What justifies factorizing a sequence into conditional probabilities?
+2. Which rule factorizes a sequence probability into conditional probabilities? Does it require token independence?
 3. Why document the tokenizer and NLL reduction when comparing models?
 
+<details>
+<summary>Show answers</summary>
+
+1. A product of many probabilities can become extremely small and difficult to represent numerically. The logarithm turns it into a sum, which is more stable and easier to optimize. Because the logarithm is increasing, maximizing log-likelihood preserves the ranking induced by likelihood.
+2. The chain rule factorizes any joint probability into successive conditional probabilities. It does not require independence between tokens. Each term is conditioned on the preceding prefix. An independence assumption between separate dataset sequences, sometimes used when constructing total likelihood, is a different issue.
+3. The tokenizer determines which events are evaluated and their granularity. Summed NLL also depends on token count; averaging per token changes the scale and must be distinguished from the sum. Comparisons are meaningful only when these conventions and the evaluated data are compatible.
+
+**Numerical transfer:** for the example probabilities $(0.5, 0.25, 0.8)$, likelihood is $0.1$, total NLL is approximately $2.303$ nats, and mean NLL per token is approximately $0.768$ nat. This mean is the average of the one-hot target cross-entropies at the three positions; a batch loss then adds an aggregation and masking convention.
+
+</details>
+
 **Next:** [Cross-entropy](cross-entropy.qmd) · [Loss](loss.qmd)
+:::
 
 ## Further reading
 

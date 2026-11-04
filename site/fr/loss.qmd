@@ -29,11 +29,15 @@ La *loss* mesure l'écart entre les prédictions et les **tokens cibles attendus
 
 **Première lecture :** comprenez la perte d'un token, puis sa moyenne sur les seules positions valides. Les positions ignorées (par exemple le padding) ne doivent contribuer ni à la somme ni au dénominateur.
 
-**Pour approfondir :** examinez les conventions de réduction, la perplexité et les diagnostics de validation. La loss fournit ensuite le signal différentiable utilisé pour calculer les [gradients](gradients.qmd).
+Les conventions de réduction déterminent comment les pertes par token sont agrégées. La perplexité est l’exponentielle de la perte moyenne par token ; le gradient de la loss fournit le signal utilisé pour mettre à jour les paramètres ([gradients](gradients.qmd)).
 
-**Repère d'implémentation :** les fonctions usuelles de cross-entropie attendent des logits non normalisés ; ne leur appliquez pas une softmax préalable si l'API attend directement les logits.
+
 :::
 Avant d’interpréter la perte, vérifier la construction des [entrées et cibles d’entraînement](training-examples.qmd) : une formule correcte ne corrige pas un décalage de tokens erroné.
+
+::: {.callout-note collapse="true" title="Détail d'implémentation des API (facultatif)"}
+**Repère d'implémentation :** les fonctions usuelles de cross-entropie attendent des logits non normalisés ; ne leur appliquez pas une softmax préalable si l'API attend directement les logits.
+:::
 
 ## De la perte locale à la loss du batch
 
@@ -42,6 +46,8 @@ Notons $p_{b,t,:}$ la distribution prédite pour la position $(b,t)$ et $y_{b,t}
 $$
 \ell_{b,t}=-\log p_{b,t,y_{b,t}}.
 $$
+
+Avec une cible one-hot, ce terme est le cas particulier de l'[entropie croisée](cross-entropy.qmd) où seule la probabilité du token cible contribue. La page dédiée en détaille la dérivation et le lien avec les logits ; ici, on s'intéresse à son agrégation en objectif de batch.
 
 La moyenne sur les positions valides est :
 
@@ -74,11 +80,12 @@ La formule avec $\exp$ suppose que la NLL moyenne est calculée avec le logarith
 - **« La loss moyenne est toujours comparable entre expériences. »** Il faut vérifier tokenizer, données, masques, longueur des séquences, réduction et objectif exact.
 :::
 
-## Diagnostic minimal
-
+::: {.callout-note collapse="true" title="Diagnostic de pipeline (approfondissement)"}
 Avant d'interpréter une courbe, documenter : définition de l'objectif, décalage entrée/cible, masque d'ignorance, réduction, split train/validation, et éventuels termes de régularisation. Vérifier qu'un mini-batch peut être surappris est un test de pipeline utile, mais pas une validation de la généralisation.
+:::
 
-## Questions de contrôle
+::: {.self-check}
+## Vérifier sa compréhension
 
 Pour des exercices complémentaires séparés du cours, voir l’[espace d’exercices — fondations mathématiques](exercises.qmd#fondations).
 
@@ -112,6 +119,7 @@ Il faut notamment une même convention de logarithme et de réduction, un tokeni
 </details>
 
 **Suite :** [Gradients](gradients.qmd) · [Vraisemblance](vraisemblance.qmd)
+:::
 
 ## Pour approfondir
 

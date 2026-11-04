@@ -12,17 +12,27 @@ scope: "Présente les étapes et objets qui relient un texte source à l’entr�
 purpose: "Le lecteur doit pouvoir retracer la chaîne texte → tokens → IDs → vecteurs initiaux, distinguer les opérations d’encodage d’un prompt de celles de préparation des données d’entraînement, et identifier ce que chaque étape ne permet pas de conclure."
 suggested_route:
   previous: "fr/generation"
-  next: "fr/unicode-text"
+  next: "fr/tokenization-strategies"
 hierarchy:
-  parents: ["fr/transformer"]
-  children: ["fr/unicode-text", "fr/tokenization-strategies", "fr/embedding-space", "fr/training-examples"]
-related: []
+  parents: ["fr/generation"]
+  children: ["fr/unicode-text", "fr/tokenization-strategies", "fr/embedding-space"]
+related: ["fr/transformer"]
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
 Un modèle de langage reçoit une séquence d'identifiants numériques, pas du texte brut. La tokenisation définit comment le texte est converti en identifiants et comment ceux-ci sont décodés. Elle est distincte du réseau neuronal, mais conditionne son vocabulaire, la longueur des séquences, le coût de calcul et certains comportements observables.
 :::
+
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes de l'entrée du modèle">
+  <span class="step-item active" aria-current="step">1. Texte, tokens et IDs</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="positional-encoding.qmd">3. Information positionnelle</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="contextualized-representations.qmd">4. Représentations contextualisées</a>
+</div>
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 Pensez à un **catalogue avec des numéros de référence**. Le tokenizer découpe le texte en unités (les tokens) et attribue à chacune un ID. L'ID sert à retrouver une ligne dans la table d'embeddings : ce n'est ni un score, ni une mesure de sens. Le Transformer transforme ensuite ces vecteurs en tenant compte du contexte.
@@ -31,17 +41,15 @@ Pensez à un **catalogue avec des numéros de référence**. Le tokenizer décou
 
 **Première lecture :** suivez le schéma et retenez le rôle distinct du token, de l'ID et de l'embedding. Vous pouvez remettre à plus tard les détails Unicode, les algorithmes BPE/WordPiece et le pipeline de préparation des corpus.
 
-**Pour approfondir :** comparez des tokenizers réels, examinez leurs compromis, puis suivez le calcul du lookup dans [l'espace des embeddings](embedding-space.qmd).
+Les [stratégies de tokenisation](tokenization-strategies.qmd) comparent les compromis de tokenizers réels ; l’[espace des embeddings](embedding-space.qmd) décrit le lookup qui associe ensuite un vecteur à chaque ID.
 :::
 
-Cette page détaille l'entrée du modèle : le [panorama des LLM](llm-overview.qmd) situe le système dans son ensemble, tandis que [GPT et Transformer](transformer.qmd) reprend le flux à partir des représentations et explique les calculs du réseau. Vous pouvez lire ces pages dans cet ordre ou revenir à chacune selon votre question.
-## Objectifs
-
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 - Distinguer texte Unicode, octets, tokens, identifiants et embeddings.
-- Expliquer pourquoi un découpage par espaces ne suffit pas.
 - Décrire les conséquences de la segmentation sur la longueur, le coût et la compatibilité.
 - Identifier les pages spécialisées adaptées à un approfondissement technique.
 - Identifier ce que la tokenisation ne permet pas de conclure sur le sens ou les capacités du modèle.
+:::
 
 ## 1. Le parcours, du texte au modèle
 
@@ -70,101 +78,27 @@ Le dernier bloc regroupe volontairement le traitement positionnel et le Transfor
 Ce schéma est conceptuel : les tokeniseurs réels diffèrent par leurs unités de base, leur normalisation, leur pré-tokenisation, leur vocabulaire et leurs tokens spéciaux.
 
 ::: {.callout-note}
-**Deux sens différents du prétraitement.** La préparation du corpus (par exemple filtrer les documents, dédupliquer les quasi-copies et définir les frontières entre entraînement et validation) relève de l'ingénierie des données en amont. La normalisation et la pré-tokenisation relèvent du pipeline du tokenizer et s'appliquent au texte d'entrée. Il ne faut pas confondre ces opérations. De même, l'entraînement du tokenizer apprend un vocabulaire et des règles ; l'encodage d'une nouvelle entrée les réutilise sans réentraîner le tokenizer. Pour une évaluation avec données tenues à l'écart, ajuster le tokenizer appris sur la seule partition d'entraînement afin que le vocabulaire ne soit pas influencé par les textes de validation ou de test. Cette page se concentre sur l'étape du tokenizer ; voir les [exemples d'entraînement](training-examples.qmd) pour comprendre comment le texte encodé devient des fenêtres d'entrée et des cibles décalées.
+**Ne pas confondre préparation du corpus et pipeline du tokenizer.** La sélection, le filtrage, la déduplication et le partitionnement concernent les documents ; la normalisation et la pré-tokenisation sont des composants du tokenizer appliqués au texte. Les décisions de préparation du corpus et d'ajustement du tokenizer sont détaillées dans [Préparer un corpus pour le préentraînement](corpus-preparation.qmd).
 :::
 
+## Deux usages, deux parcours
 
-::: {.callout-note}
-**Branche entraînement — pas un préalable à l'inférence.** La tokenisation sert aussi bien à encoder un prompt qu'à préparer un corpus. En revanche, le partitionnement des documents, les fenêtres de contexte et les cibles décalées sont des opérations propres à la préparation des exemples d'entraînement. Vous pouvez les étudier après avoir compris comment un modèle reçoit un prompt et génère une réponse.
-:::
+Le même tokenizer sert à encoder un prompt à l'inférence et à convertir les documents d'un corpus en IDs pour l'apprentissage. Mais les étapes en amont diffèrent :
 
-## Branche apprentissage : des documents aux séquences d'entraînement
+- **Inférence :** texte du prompt → tokenizer déjà défini → IDs → lookup des embeddings. C'est le parcours décrit sur cette page.
+- **Pré-entraînement :** préparation et partitionnement du corpus, ajustement puis fixation du tokenizer ([préparation du corpus](corpus-preparation.qmd)), puis construction de fenêtres, de cibles et de masques à partir du flux d'IDs ([exemples d'entraînement](training-examples.qmd)).
 
-Le tokenizer n'est qu'un élément d'un pipeline de données plus large. Avant de devenir des IDs, les textes doivent être rassemblés et préparés. Les étapes ci-dessous décrivent les principales décisions, pas un ordre d'exécution universel : certaines opérations sont itératives et leur ordre dépend des sources, du protocole d'évaluation et de l'objectif d'entraînement.
+La seconde branche n'est pas un prérequis pour comprendre comment un modèle encode un prompt.
+## 2. Ce que la tokenisation change — et ce qu'elle ne dit pas
 
-| Étape | Question principale | Décisions typiques |
-|---|---|---|
-| **1. Collecter et délimiter les sources** | Quels contenus sont admissibles pour ce modèle et cet objectif ? | Sélectionner les sources ; conserver leur provenance, les droits d'utilisation, les licences et les contraintes de collecte. |
-| **2. Parser et filtrer les documents** | Chaque élément est-il exploitable et approprié ? | Extraire texte et métadonnées ; traiter les documents mal formés ou vides ; appliquer des filtres documentés de qualité, de langue, de sécurité et de conformité. |
-| **3. Détecter les doublons** | Des documents identiques ou proches sont-ils surreprésentés ? | Effectuer une déduplication exacte et, si elle est justifiée, approximative. Conserver assez de provenance pour auditer les suppressions. |
-| **4. Définir les partitions** | Quelles données doivent rester inconnues lors de l'évaluation ? | Découper à une unité adaptée (par exemple source, famille de documents, utilisateur ou période), plutôt que de répartir aléatoirement des fragments d'un même document. |
-| **5. Entraîner et figer le tokenizer** | Quels textes peuvent influencer son vocabulaire et ses règles ? | Pour une évaluation held-out, apprendre le tokenizer uniquement sur la partition d'entraînement, puis le figer et utiliser la même version pour toutes les partitions. |
-| **6. Encoder et construire les exemples** | Comment les documents deviennent-ils des entrées et des cibles ? | Encoder avec le tokenizer figé ; appliquer les conventions choisies pour les frontières de documents, fenêtres, packing et masques. Voir [les exemples d'entraînement](training-examples.qmd). |
+La segmentation détermine la séquence d'IDs fournie au modèle. Elle influe notamment sur la couverture des entrées, la longueur de séquence et la compatibilité entre tokenizer et poids. Elle ne constitue ni une analyse linguistique garantie, ni une mesure du sens, ni un score de qualité du modèle.
 
-**La déduplication et le partitionnement doivent être conçus ensemble.** Dédupliquer avant le découpage peut empêcher que des copies soient réparties entre plusieurs partitions ; un partitionnement par groupes suivi d'un audit des quasi-doublons entre partitions est une autre approche possible. L'exigence centrale est d'éviter que des copies ou fragments apparentés rendent l'évaluation artificiellement facile. L'unité et l'ordre adaptés dépendent de la généralisation que l'on souhaite mesurer.
+Un même texte peut produire des séquences différentes selon le vocabulaire, la pré-tokenisation et les règles du tokenizer. Pour comprendre et comparer ces mécanismes, consultez la page canonique sur les [stratégies de tokenisation](tokenization-strategies.qmd), qui rassemble les granularités, les composants, les algorithmes et les exemples comparatifs. Les métriques empiriques et les compromis avancés sont traités dans [la conception et l'évaluation des tokenizers](tokenizer-design-evaluation.qmd).
 
-Dans un protocole held-out classique, les documents de validation et de test ne doivent pas influencer le vocabulaire d'un tokenizer appris. C'est une précaution d'évaluation, pas l'affirmation que tout pipeline de préentraînement en production possède la même structure train/validation/test. De même, le filtrage et la déduplication concernent le corpus ; la normalisation et la pré-tokenisation sont des transformations propres au tokenizer, utilisées lors de son apprentissage puis réappliquées à l'encodage.
+::: {.self-check}
+## Vérifier sa compréhension
 
-Dans la branche consacrée à l'apprentissage, la page sur les [exemples d'entraînement](training-examples.qmd) explique comment les flux de tokens deviennent des paires entrée-cible, des fenêtres, des séquences packées et des masques. Elle ne prescrit pas une stratégie universelle de packing.
-
-### Le vocabulaire minimal
-
-| Terme | Rôle dans le pipeline |
-|---|---|
-| **Texte** | Entrée lisible par un humain. |
-| **Token** | Unité discrète définie par un tokeniseur : mot, sous-mot, ponctuation, fragment d'octets ou token spécial. |
-| **ID** | Entier identifiant un token dans un vocabulaire donné. |
-| **Embedding** | Vecteur associé à un ID, utilisé comme représentation numérique initiale. |
-| **Représentation contextualisée** | Vecteur après traitement par le réseau, influencé par les autres tokens de la séquence. |
-
-Les détails de bas niveau ne sont pas nécessaires pour suivre ce parcours. Pour comprendre pourquoi deux chaînes visuellement identiques peuvent être encodées différemment, consultez le [complément sur Unicode, UTF-8 et la normalisation](unicode-text.qmd). Pour les algorithmes de segmentation et leurs compromis, consultez la [page dédiée aux stratégies de tokenisation](tokenization-strategies.qmd). Les dimensions des matrices et le rôle exact des embeddings sont détaillés dans [l'espace des embeddings](embedding-space.qmd) et [la page sur les tenseurs](tensors.qmd).
-
-### Un même texte, plusieurs segmentations
-
-Un même texte peut être découpé en un nombre différent de tokens selon le tokenizer. Les fragments et les IDs exacts dépendent de son vocabulaire et de sa configuration ; il n'existe pas de découpage universel à déduire du texte seul.
-
-À retenir : les tokens sont des unités de représentation, pas nécessairement des mots ni des unités de sens. La figure ci-dessous donne un exemple schématique de segmentation ; elle ne prétend pas reproduire la sortie d'un tokenizer réel. Pour une comparaison réelle, il faut indiquer le tokenizer et sa version, puis mesurer la séquence obtenue.
-
-## 2. Pourquoi la tokenisation compte
-
-Le découpage par espaces ne suffit pas : la ponctuation, les contractions, les noms rares, le code et les langues dont l'écriture ne sépare pas systématiquement les mots posent des problèmes différents. Les tokeniseurs découpent donc le texte en unités réutilisables, selon des règles et un vocabulaire propres à chaque modèle.
-
-Cette décision de représentation a plusieurs conséquences :
-
-- **Couverture** : les unités de base permettent-elles de représenter les entrées attendues ?
-- **Longueur de séquence** : combien de tokens sont nécessaires pour encoder un même texte ?
-- **Coût** : la longueur influence la mémoire et le calcul, mais le nombre de tokens ne suffit pas à comparer le coût total de deux systèmes.
-- **Comportement linguistique** : le découpage peut varier selon la langue, l'orthographe, les nombres et le domaine.
-- **Compatibilité** : les IDs n'ont de sens que dans le vocabulaire associé ; le tokenizer et les poids du modèle doivent correspondre.
-
-La segmentation n'est ni une analyse linguistique parfaite, ni une mesure du sens. Une segmentation plus courte n'implique pas à elle seule un meilleur modèle.
-
-![Exemple schématique d’une même chaîne découpée différemment selon le tokenizer.](../images/tokenization-language-cost-fr.svg){fig-alt="Le mot anglais unbelievable est représenté par deux fragments dans une segmentation illustrative, puis par trois fragments dans une autre. Ces découpages ne sont pas des sorties réelles d’un tokenizer identifié." fig-cap="Une chaîne peut avoir plusieurs segmentations possibles. La figure est illustrative : elle ne reproduit pas la sortie d’un tokenizer réel ni une mesure expérimentale." width=100%}
-
-Cette figure illustre la dépendance du découpage aux règles et au vocabulaire du tokenizer ; elle ne démontre pas qu’une segmentation est meilleure. Pour une comparaison empirique, utilisez les mêmes textes, consignez le tokenizer et sa version, puis rapportez les mesures par langue et type de texte. Voir [Ahia et al. (2023)](https://aclanthology.org/2023.emnlp-main.614/) pour une étude des coûts de tokenisation entre langues.
-
-### Évaluer les compromis au-delà du nombre de tokens
-
-Le nombre de tokens est un indicateur de longueur, pas un score global de qualité. Une évaluation rigoureuse distingue l'efficacité de représentation, les performances sur des tâches en aval, les écarts entre langues et la reproductibilité du protocole. Les résultats dépendent du corpus, de la tâche, du modèle et des budgets comparés.
-
-Pour comprendre ces dimensions et examiner les travaux scientifiques associés, consultez **[Évaluer et comparer les tokenizers](tokenizer-evaluation.qmd#tokenizer-evaluation)**.
-
-### Pour approfondir les mécanismes
-
-La page principale reste centrée sur le parcours. Les détails techniques sont traités dans des pages dédiées :
-
-- [Stratégies de tokenisation](tokenization-strategies.qmd) : pré-tokenisation, BPE, WordPiece, unigramme, exemples, comparaisons et limites.
-- [Unicode, UTF-8 et normalisation](unicode-text.qmd) : points de code, octets et chaînes visuellement identiques.
-- [Espace des embeddings](embedding-space.qmd) et [tenseurs](tensors.qmd) : dimensions, tables de poids et formes des représentations.
-
-Pour une vue visuelle des particularités de la tokenisation, voir [How LLMs See the World](https://blog.bytebytego.com/p/how-llms-see-the-world) de ByteByteGo. Pour une pratique guidée de BPE avec des notebooks, Vizuara propose [Tokenization from Scratch: Building Byte-Pair Encoding by Hand](https://pods.vizuara.ai/courses/build-llm/tokenization-from-scratch-building-byte-pair-encoding-by-han). Ce sont des ressources pédagogiques facultatives, pas des prérequis ni des substituts aux définitions et précautions de ce projet.
-
-## 3. Mini-laboratoire de comparaison
-
-Comparer les mêmes chaînes avec au moins deux tokenizers, en s'appuyant sur les exemples et outils présentés dans la [page sur les stratégies de tokenisation](tokenization-strategies.qmd). Noter les différences ; ne pas comparer les IDs bruts entre vocabulaires comme s'ils avaient une signification commune.
-
-| Entrée à tester | Question pédagogique | Ce qu'il faut observer |
-|---|---|---|
-| `Hello world` puis ` Hello world` | L'espace initial compte-t-il ? | Les règles de pré-découpage et les tokens incluant un espace |
-| `ChatGPT`, `chatgpt`, `CHATGPT` | La casse change-t-elle le découpage ? | Segmentation et normalisation éventuelle |
-| `2026-10-28` et `123456789` | Les chiffres sont-ils toujours un token ? | Le découpage des nombres varie selon les tokenizers et les chaînes |
-| `café` et `cafe\u0301` | Deux chaînes visuellement proches sont-elles identiques ? | Unicode composé/décomposé et éventuelle normalisation |
-| Une phrase en français, anglais et une langue sans espaces usuels entre mots | Le coût en tokens est-il uniforme ? | Longueur de séquence et dépendance à la langue |
-| Un extrait de code | Les noms et symboles sont-ils segmentés intuitivement ? | Tokens partiels, ponctuation et effets sur la longueur |
-
-**Compte rendu minimal :** pour chaque chaîne, noter le tokenizer/version, les tokens visibles, le nombre de tokens et une limite d'interprétation. Le nombre de tokens seul ne mesure ni la qualité linguistique ni la qualité du modèle.
-
-## Vérifier votre compréhension
+[Exercices approfondis sur ce thème](exercises.qmd#donnees-textuelles).
 
 1. Un tokenizer attribue l’ID `17` au token `chat`. Dans une séquence, cet ID apparaît deux fois. Les deux occurrences sélectionnent-elles le même vecteur initial ? Peut-on conclure que le nombre 17 encode une quantité de sens ?
 
@@ -183,25 +117,17 @@ Oui : un même ID sélectionne la même ligne de la table d’embeddings, donc l
 Non. Les IDs ne sont définis qu’à l’intérieur du vocabulaire de leur tokenizer ; l’ID 17 dans un vocabulaire n’a aucune raison de désigner le même token dans un autre. Il faut comparer les tokens décodés, les conventions et les propriétés mesurées (longueur, couverture, coût), en documentant la version de chaque tokenizer.
 
 </details>
+:::
 
-## 4. Contre-exemples et erreurs fréquentes
+## Frontières entre les pages
 
-- **« Un token est un mot. »** Faux : il peut s'agir d'un sous-mot, de ponctuation, d'un fragment avec espace, d'octets ou d'un token spécial.
-- **« BPE reconnaît les racines et suffixes. »** Pas nécessairement : il fusionne selon une procédure statistique, sans analyse morphologique garantie.
-- **« Deux tokenizers BPE produisent les mêmes identifiants. »** Faux en général : vocabulaire, pré-découpage et règles peuvent différer.
-- **« L'identifiant contient du sens. »** Pas en soi : c'est une étiquette discrète ; les vecteurs sont appris.
-- **« Une chaîne inconnue ne peut pas être encodée. »** Pas nécessairement : un tokenizer byte-level dispose d'unités de base couvrant les octets, sous réserve de ses règles d'encodage.
-- **« Le tokenizer est une couche du Transformer. »** C'est une étape distincte, même si modèle et tokenizer doivent être compatibles.
+- **Cette page** : chaîne texte → tokens → IDs → vecteurs initiaux ; rôle de chaque objet et compatibilité du tokenizer avec le modèle.
+- **[Stratégies de tokenisation](tokenization-strategies.qmd)** : granularités, pré-tokenisation, BPE, WordPiece, unigramme et exemples à tester.
+- **[Unicode, UTF-8 et normalisation](unicode-text.qmd)** : représentation des chaînes, octets et normalisation.
+- **[Espace des embeddings](embedding-space.qmd)** : lookup des IDs et géométrie des vecteurs.
+- **[Exemples d'entraînement](training-examples.qmd)** : fenêtres, cibles décalées, packing et masques.
 
-## Pour approfondir : stratégies de tokenisation
-
-Le guide [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.qmd) compare mots, caractères, octets, sous-mots, BPE, WordPiece et unigramme.
-
-## Étape suivante
-
-Poursuivez avec [l'espace des embeddings](embedding-space.qmd) pour voir comment les IDs sélectionnent des lignes dans une matrice d'embeddings, comment évoluent les formes des tenseurs et comment les couches suivantes du réseau produisent des représentations contextualisées.
-
-Pour le langage mathématique utilisé dans le modèle, consultez les pages [tenseurs](tensors.qmd) et [fondations mathématiques](mathematical-foundations.qmd). Le [plan complet du programme et de couverture des sources](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) présente le parcours plus large.
+La préparation du corpus (provenance, filtrage, déduplication, partitions et ajustement du tokenizer) a désormais sa page de référence : [Préparer un corpus pour le préentraînement](corpus-preparation.qmd). Cette page conserve uniquement la distinction nécessaire pour situer l'encodage d'un prompt.
 
 ::: {.language-switch}
 **Langue :** [Français](text-data.qmd) · [English](../en/text-data.qmd)

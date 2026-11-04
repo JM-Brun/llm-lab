@@ -20,11 +20,31 @@ related: []
 tags: ["type:historical-reference", "destination:reference", "topic:transformer-history", "level:reference", "language:en", "status:published"]
 -->
 
-The Transformer did not emerge without predecessors. Its history combines attention mechanisms developed for neural machine translation, self-attention, large-scale training, and different objectives across model families. This selective timeline highlights milestones; it is neither exhaustive nor a claim of a single causal path.
+The 2017 Transformer did not emerge without predecessors. Its history combines attention mechanisms developed for neural machine translation, self-attention, sequence-to-sequence models, large-scale training, and different objectives across model families. This selective timeline highlights milestones; it is neither exhaustive nor a claim of a single causal path.
 
-Among these milestones, [Bahdanau, Cho, and Bengio (2014)](https://arxiv.org/abs/1409.0473) studied attention for neural translation. [Vaswani et al. (2017)](https://arxiv.org/abs/1706.03762) placed self-attention at the center of the Transformer and described scaled dot-product attention. The two mechanisms and architectures are not identical.
+## Placing LLMs in the AI landscape
+
+This classification helps distinguish **the kind of method** an LLM belongs to from **the problem domain** in which it is used. It complements the timeline; it is not a step in a model's computation.
+
+```{mermaid}
+flowchart TB
+  subgraph AI["Artificial intelligence"]
+    subgraph ML["Machine learning"]
+      subgraph DL["Deep learning<br/>(neural networks)"]
+        LLM["LLM"]
+      end
+    end
+  end
+  NLP["NLP: a domain of problems<br/>(rules, statistics, models, LLMs…)"]
+```
+
+- **Deep learning** denotes a family of methods: neural networks with multiple layers. Current LLMs belong to it.
+- **Natural language processing** (NLP) denotes a domain of problems: processing or producing language. It is addressed by very different methods — linguistic rules, statistical models, specialized systems, and neural networks. LLMs are a dominant but not exclusive answer: a production system can combine rules, specialized models, document retrieval, tools, and LLMs.
+- The term **LLM** has no universal numerical threshold: it generally refers to language models trained at large scale, using substantial data and compute. The *foundation model* concept instead emphasizes reuse: a model serving as a base for many applications. The concepts are related, but they are not synonyms.
 
 ## Timeline
+
+The architecture families mentioned in these milestones are compared in the [Transformer architecture overview](transformer-architectures.qmd).
 
 Dates distinguish submissions, announcements, and releases. Milestones are grouped by research area; chronological order does not imply a single causal chain.
 
@@ -38,11 +58,9 @@ Dates distinguish submissions, announcements, and releases. Milestones are group
 - **Scale does not explain everything.** Data, objectives, tokenization, architecture, training procedure, and evaluation also shape observed capabilities.
 - **A publication date is not proof of absolute priority.** This page selects a few pedagogical milestones and does not attempt to catalogue every parallel contribution.
 
-## Where to go next
+## Primary source
 
-- Start with the original [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
-- Compare objectives using [causal masking](causal-masking.qmd), [attention](scaled-dot-product-attention.qmd), and [mathematical foundations](mathematical-foundations.qmd).
-- Use the [glossary](glossary.qmd) for terminology in this timeline.
+- [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
 
 :::: {.language-switch}
 [Français](../fr/transformer-history.qmd) · [English](transformer-history.qmd)

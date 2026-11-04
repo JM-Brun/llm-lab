@@ -34,6 +34,14 @@ DESTINATIONS = {"orient", "understand", "build", "deepen", "practice", "referenc
 LEVELS = {"overview", "core", "applied", "advanced", "reference"}
 LANGUAGES = {"fr", "en", "shared"}
 STATUSES = {"published", "planned", "retired"}
+DEEPEN_DOMAINS = {
+    "architectures-mechanisms",
+    "text-tokenization",
+    "mathematical-tools-geometry",
+    "probabilistic-foundations-training",
+    "inference-efficiency",
+    "scale-research",
+}
 LIST_FIELDS = ("parents", "children", "related")
 RELATION_FIELDS = ("previous", "next", "parents", "children", "related")
 
@@ -180,6 +188,14 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
             errors.append(f"{relative}.{field}: a page cannot reference itself")
 
     tags = _tag_map(metadata.get("tags"), relative, errors)
+    domain = metadata.get("domain")
+    if tags.get("destination") == "deepen" and tags.get("type") != "entry-point":
+        if domain not in DEEPEN_DOMAINS:
+            errors.append(
+                f"{relative}.domain: advanced pages must use one of {sorted(DEEPEN_DOMAINS)}"
+            )
+    elif domain is not None:
+        errors.append(f"{relative}.domain: only Deepen content pages may declare a domain")
     keywords = front.get("keywords") if isinstance(front, dict) else None
     if not isinstance(keywords, list) or not all(isinstance(tag, str) for tag in keywords):
         errors.append(f"{relative}.keywords: expected a YAML list of strings")
@@ -199,16 +215,41 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
     return {
         "path": relative,
         "id": page_id,
+        "scope": metadata.get("scope", ""),
+        "purpose": metadata.get("purpose", ""),
         "route": {"previous": relations["previous"], "next": relations["next"]},
         "parents": relations["parents"],
         "children": relations["children"],
         "related": relations["related"],
         "tags": tags,
+        "domain": domain,
     }
 
 
 def _validate_relations(pages: dict[str, dict[str, Any]], errors: list[str]) -> None:
     """Validate relation targets, reciprocal edges, and hierarchy acyclicity."""
+    # Suggested-route next edges must also be acyclic. Reciprocal previous/next
+    # checks alone would still allow a closed loop of otherwise valid edges.
+    route_visiting: set[str] = set()
+    route_visited: set[str] = set()
+
+    def visit_route(page_id: str, trail: list[str]) -> None:
+        if page_id in route_visiting:
+            cycle = " -> ".join([*trail, page_id])
+            errors.append(f"suggested_route: cycle detected: {cycle}")
+            return
+        if page_id in route_visited:
+            return
+        route_visiting.add(page_id)
+        following = pages[page_id]["route"]["next"]
+        if following in pages:
+            visit_route(following, [*trail, page_id])
+        route_visiting.remove(page_id)
+        route_visited.add(page_id)
+
+    for page_id in pages:
+        visit_route(page_id, [])
+
     for page_id, page in pages.items():
         relations = {
             "previous": [page["route"]["previous"]] if page["route"]["previous"] else [],
@@ -307,6 +348,37 @@ def _validate_bilingual_parity(pages: dict[str, dict[str, Any]], errors: list[st
                 errors.append(f"topic {topic!r}: FR/EN {field} relations differ")
 
 
+def _validate_render_coverage(site_dir: Path, rendered_paths: set[str], errors: list[str]) -> None:
+    """Require every source page marked published to be included in Quarto rendering."""
+    for path in sorted(site_dir.rglob("*.qmd")):
+        relative = path.relative_to(site_dir).as_posix()
+        if relative in rendered_paths:
+            continue
+        source = path.read_text(encoding="utf-8")
+        comments = COMMENT.findall(source)
+        if len(comments) != 1:
+            continue
+        try:
+            metadata = yaml.safe_load(comments[0])
+        except yaml.YAMLError:
+            continue
+        if not isinstance(metadata, dict):
+            continue
+        tags = metadata.get("tags")
+        if not isinstance(tags, list):
+            continue
+        dimensions = {
+            key: value
+            for tag in tags
+            if isinstance(tag, str) and ":" in tag
+            for key, value in [tag.split(":", maxsplit=1)]
+        }
+        if dimensions.get("status") == "published":
+            errors.append(
+                f"{relative}: page is marked status:published but is absent from project.render"
+            )
+
+
 def validate(site_dir: Path) -> list[str]:
     """Return all page metadata contract violations under a Quarto site directory."""
     config_path = site_dir / "_quarto.yml"
@@ -344,6 +416,7 @@ def validate(site_dir: Path) -> list[str]:
         else:
             pages[page_id] = page
 
+    _validate_render_coverage(site_dir, seen_paths, errors)
     _validate_relations(pages, errors)
     _validate_bilingual_parity(pages, errors)
     return errors

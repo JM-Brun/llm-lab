@@ -11,12 +11,12 @@ id: "en/entropy"
 scope: "Define Shannon entropy of the model's next-token distribution for a fixed context as a measure of predictive dispersion before the next token is observed; distinguish it from the realized token's surprisal, sequence likelihood, and cross-entropy against a target distribution."
 purpose: "Calculate and interpret the entropy of a categorical next-token distribution, state its bounds for a finite vocabulary, and distinguish expected predictive uncertainty from the surprisal of an observed token."
 suggested_route:
-  previous: "en/likelihood"
-  next: "en/cross-entropy"
+  previous: null
+  next: null
 hierarchy:
-  parents: ["en/likelihood"]
+  parents: []
   children: ["en/cross-entropy"]
-related: []
+related: ["en/likelihood"]
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:en", "status:published"]
 -->
 
@@ -90,7 +90,10 @@ Lower temperature tends to concentrate the distribution; higher temperature tend
 - Entropy or perplexity computed with different tokenizers is not directly comparable without care.
 - The average entropy observed under a model is not automatically the true entropy of the data source.
 
-## Self-check
+::: {.self-check}
+## Check your understanding
+
+[Extended exercises on this topic](../en/exercises.qmd#foundations).
 
 1. Does low entropy guarantee that the most likely token is correct?
 2. How does entropy differ from the surprisal of the observed token?
@@ -104,6 +107,7 @@ Lower temperature tends to concentrate the distribution; higher temperature tend
 3. Tokenizers segment text differently, changing the units and positions over which the average is computed.
 
 </details>
+:::
 
 ## Further reading
 

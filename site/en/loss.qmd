@@ -29,11 +29,15 @@ The *loss* measures the mismatch between predictions and **target tokens**. In a
 
 **First pass:** understand the penalty for one token, then its mean over valid positions only. Ignored positions (such as padding) must contribute neither to the sum nor to the denominator.
 
-**Go deeper:** examine reduction conventions, perplexity, and validation diagnostics. The loss then provides the differentiable signal used to compute [gradients](gradients.qmd).
+Reduction conventions determine how per-token losses are aggregated. Perplexity is the exponential of mean per-token loss; the loss gradient supplies the signal used to update parameters ([gradients](gradients.qmd)).
 
-**Implementation note:** standard cross-entropy functions expect unnormalized logits; do not apply softmax first when the API expects logits directly.
+
 :::
 Before interpreting the loss, check how [training inputs and targets are constructed](training-examples.qmd): a correct formula cannot fix a token-shift error.
+
+::: {.callout-note collapse="true" title="API implementation detail (optional)"}
+**Implementation note:** standard cross-entropy functions expect unnormalized logits; do not apply softmax first when the API expects logits directly.
+:::
 
 ## From local penalty to batch loss
 
@@ -42,6 +46,8 @@ Let $p_{b,t,:}$ be the predicted distribution at position $(b,t)$ and $y_{b,t}$ 
 $$
 \ell_{b,t}=-\log p_{b,t,y_{b,t}}.
 $$
+
+For a one-hot target, this term is the special case of [cross-entropy](cross-entropy.qmd) in which only the target token's probability contributes. The dedicated lesson derives it and connects it to logits; here, the focus is on aggregating it into a batch objective.
 
 The mean over valid positions is:
 
@@ -74,11 +80,12 @@ The formula with $\exp$ assumes mean NLL is computed with the natural logarithm 
 - **“Mean loss is always comparable across experiments.”** Check tokenizer, data, masks, sequence length, reduction, and the exact objective.
 :::
 
-## Minimal diagnostic
-
+::: {.callout-note collapse="true" title="Pipeline diagnostics (advanced)"}
 Before interpreting a curve, document the objective, input/target shift, ignore mask, reduction, train/validation split, and any regularization terms. Overfitting a tiny batch is a useful pipeline sanity check, but not evidence of generalization.
+:::
 
-## Self-check
+::: {.self-check}
+## Check your understanding
 
 For additional practice outside the lesson, see the [exercise space — mathematical foundations](exercises.qmd#foundations).
 
@@ -112,6 +119,7 @@ At minimum, use compatible logarithm and reduction conventions, tokenizer, ignor
 </details>
 
 **Next:** [Gradients](gradients.qmd) · [Likelihood](likelihood.qmd)
+:::
 
 ## Further reading
 

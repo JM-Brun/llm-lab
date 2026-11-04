@@ -29,7 +29,7 @@ The loss tells us **what should improve**; the gradient tells us **how the loss 
 
 **First pass:** follow the path loss → derivative with respect to logits → derivatives with respect to parameters → parameter update. A gradient describes a local change; it does not guarantee that an arbitrary step will reduce the loss.
 
-**Go deeper:** verify derivatives with finite differences, then study the effects of learning rate, momentum, and adaptive optimizers. Keep the correctness of gradient computation distinct from the model's generalization performance.
+Correct gradient computation remains distinct from model generalization.
 :::
 ## Gradient with respect to logits
 
@@ -45,6 +45,8 @@ This formula follows from combining softmax and cross-entropy. It does not mean 
 
 If logits depend on parameters $z=z(\theta)$, then:
 
+Here, $z$ denotes all logits involved in the objective (for example, the logits at every valid position in the batch), not a single scalar score. They can be viewed as a vector obtained by flattening the tensor; the formula below then uses the corresponding Jacobian. Backpropagation computes this Jacobian–vector product without explicitly constructing the full Jacobian.
+
 $$
 \nabla_\theta\mathcal{L}
 =\left(\frac{\partial z}{\partial\theta}\right)^\top
@@ -52,6 +54,10 @@ $$
 $$
 
 In a deep network, backpropagation applies this chain rule efficiently through the computation graph. Shapes must agree: derivatives are vectors or tensors with the same shape as the variable being differentiated.
+
+::: {.callout-note collapse="true" title="Optimizer choices (advanced)"}
+Learning rate, momentum, clipping, regularization, and adaptive optimizers change the effective training dynamics, not the definition of the gradient.
+:::
 
 ## Gradient-descent update
 
@@ -63,8 +69,7 @@ $$
 
 where $\eta>0$ is the learning rate. The minus sign follows the direction of steepest local decrease for a small update in Euclidean space. Adaptive optimizers, momentum, clipping, and regularization alter the effective dynamics.
 
-## Finite-difference verification
-
+::: {.callout-note collapse="true" title="Numerical gradient checking (advanced)"}
 For parameter coordinate $\theta_i$:
 
 $$
@@ -74,6 +79,7 @@ g_i^{\mathrm{num}}=
 $$
 
 Compare this with the analytical gradient using absolute and relative tolerances. Verification should use sufficient precision, a deterministic function, and an $\epsilon$ appropriate to parameter scale. Too small, and rounding error dominates; too large, and the estimate poorly approximates the local derivative.
+:::
 
 ::: {.callout-warning title="Misconceptions"}
 - **“A zero gradient means the model is optimal.”** It may indicate a stationary point, saturation, a broken gradient path, or an implementation error.
@@ -81,7 +87,8 @@ Compare this with the analytical gradient using absolute and relative tolerances
 - **“One passing finite-difference check proves the entire backward pass.”** It verifies one function, case, precision, and configuration; it does not replace shape, edge-case, and integration tests.
 :::
 
-## Self-check
+::: {.self-check}
+## Check your understanding
 
 For additional practice outside the lesson, see the [exercise space — mathematical foundations](exercises.qmd#foundations).
 
@@ -113,6 +120,7 @@ The gradient describes a local change. A step that is too large can leave the re
 </details>
 
 **Return to:** [Overview](mathematical-foundations.qmd) · [Loss](loss.qmd)
+:::
 
 ## Further reading
 

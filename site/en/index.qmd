@@ -16,7 +16,7 @@ suggested_route:
   next: "en/llm-overview"
 hierarchy:
   parents: []
-  children: ["en/llm-overview", "en/exercises", "en/experimental-evaluation", "en/glossary", "en/transformer-history"]
+  children: ["en/llm-overview", "en/build-path", "en/transformer", "en/exercises", "en/experimental-evaluation", "en/glossary", "en/transformer-history"]
 related: []
 tags: ["type:entry-point", "destination:orient", "topic:index", "level:overview", "language:en", "status:published"]
 -->
@@ -31,136 +31,160 @@ Large language models (LLMs) are a family of neural models trained on large amou
 **LLM Lab connects these mechanisms to their mathematical explanations and observable behaviour.** The goal is not to trust an intuition because a diagram looks convincing: it is to understand what a component computes, verify what can be tested, and identify what remains an assumption or limitation.
 
 <div class="hero-actions">
-[Explore the LLM panorama](llm-overview.qmd){.btn .btn-primary}
-[Build a small GPT](build-path.qmd){.btn .btn-outline-primary}
-[Deepen your understanding (optional)](tensors.qmd){.btn .btn-outline-primary}
-[Practice and experiment](exercises.qmd){.btn .btn-outline-primary}
+[Start the guided route: understand what an LLM is](llm-overview.qmd){.btn .btn-primary}
+[See the GPT build project](build-path.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
-## Choose your path
+## Choose how to proceed
 
-::: {.learning-grid}
-::: {.learning-card}
-<p class="eyebrow">UNDERSTAND · CONCEPTS & MECHANISMS</p>
-### Understand LLMs
-From the panorama to Transformer operations, generation, and learning.
-[Explore concepts](llm-overview.qmd){.card-link}
-:::
+- **Understand** — Start with the [LLM panorama](llm-overview.qmd) to place model families, objectives, learning and inference.
+- **Build** — Follow the [guided path](build-path.qmd) to implement a small decoder-only GPT from random initialization. **Current status:** reference inference code is tested; a complete training loop and reproducible training run are not yet available. Corpus provenance and licensing must be established before training.
+- **Deepen** — Explore optional derivations and technical references, such as [tensors](tensors.qmd). These are not prerequisites for the main route.
+- **Practice and experiment** — Use [exercises](exercises.qmd) and [experimental evaluation](experimental-evaluation.qmd) to test explanations against calculations and documented protocols.
 
-::: {.learning-card}
-<p class="eyebrow">BUILD · GUIDED</p>
-### Build a small GPT
-A milestone-based build path with status and expected checks.
-[Follow the build](build-path.qmd){.card-link}
-:::
+Practice supports all three learning depths; it is not a fourth depth. The conceptual route and the implementation route have different orders. Their relationship is documented in the [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
 
-::: {.learning-card}
-<p class="eyebrow">DEEPEN · OPTIONAL</p>
-### Deepen your understanding
-Tensors, representation geometry, and the limits of interpretation.
-[Explore deeper topics](tensors.qmd){.card-link}
-:::
-:::
+To explore the pages, concepts, and their relationships visually, open the [interactive learning map](learning-map.qmd).
 
-## Transparent Reading System: Intuition, Code, and Epistemic Status
+## Interactive learning map
 
-To preserve scientific rigor while keeping the learning experience fluid, lessons use standardized visual markers:
+The main route follows the logic **understand how the system works before studying how it learns**. Each block opens its canonical lesson; the smaller links open focused companion pages. The G2 branch is separate: it prepares the data required for training, but is not a prerequisite for understanding inference.
+
+<figure class="llm-flow-figure">
+<svg class="llm-flow" viewBox="0 0 1260 610" role="img" aria-labelledby="route-title-en route-desc-en" xmlns="http://www.w3.org/2000/svg">
+<title id="route-title-en">Interactive LLM Lab learning path</title>
+<desc id="route-desc-en">Main route: overview, generation, text and tokens, representations, Transformer computation, prediction, learning, adaptation and use. Separate G2 branch: corpus preparation, training examples, guided build. Each block and secondary link opens a canonical lesson.</desc>
+<defs><marker id="route-arrow-en" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7b91a6"/></marker></defs>
+<g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#route-arrow-en)">
+<path d="M270 85 H330"/><path d="M580 85 H640"/><path d="M890 85 H950"/>
+<path d="M1075 155 V230"/>
+<path d="M950 255 H890"/><path d="M640 255 H580"/><path d="M330 255 H270"/>
+<path d="M270 495 H330"/><path d="M580 495 H640"/>
+</g>
+<g class="flow-connectors flow-child-connectors" fill="none" stroke="#7b91a6" stroke-width="1.4" stroke-dasharray="2 3" marker-end="url(#route-arrow-en)">
+<path d="M145 110 V122"/><path d="M455 110 V122"/><path d="M765 110 V122"/><path d="M1075 110 V122"/>
+<path d="M1075 285 V297"/><path d="M765 285 V297"/><path d="M455 285 V297"/><path d="M145 285 V297"/>
+</g>
+<text x="20" y="30" class="flow-kicker">CONCEPTUAL ROUTE · UNDERSTAND</text>
+<g class="flow-node">
+<a href="llm-overview.html" aria-label="Open the LLM panorama"><rect x="20" y="55" width="250" height="55" rx="10"/><text x="34" y="77" class="flow-kicker">1 · ORIENT</text><text x="34" y="98" class="flow-title">LLM panorama</text></a>
+<a href="transformer-architectures.html"><text x="28" y="132" class="flow-subtitle">Architectures</text></a>
+<a href="llm-limits.html"><text x="145" y="132" class="flow-subtitle">Limits</text></a>
+</g>
+<g class="flow-node">
+<a href="generation.html" aria-label="Open the generation lesson"><rect x="330" y="55" width="250" height="55" rx="10"/><text x="344" y="77" class="flow-kicker">2 · PREVIEW</text><text x="344" y="98" class="flow-title">Autoregressive generation</text></a>
+<a href="decoding-strategies.html"><text x="338" y="132" class="flow-subtitle">Advanced decoding</text></a>
+</g>
+<g class="flow-node">
+<a href="text-data.html" aria-label="Open the text and tokens lesson"><rect x="640" y="55" width="250" height="55" rx="10"/><text x="654" y="77" class="flow-kicker">3 · ENCODE INPUT</text><text x="654" y="98" class="flow-title">Text, tokens and IDs</text></a>
+<a href="tokenization-strategies.html"><text x="648" y="132" class="flow-subtitle">Tokenization strategies</text></a>
+</g>
+<g class="flow-node">
+<a href="embedding-space.html" aria-label="Open the embedding lesson"><rect x="950" y="55" width="250" height="55" rx="10"/><text x="964" y="77" class="flow-kicker">4 · REPRESENT</text><text x="964" y="98" class="flow-title">Embeddings and position</text></a>
+<a href="positional-encoding.html"><text x="958" y="132" class="flow-subtitle">Positional information</text></a>
+<a href="contextualized-representations.html"><text x="958" y="150" class="flow-subtitle">Contextualized states</text></a>
+</g>
+<g class="flow-node">
+<a href="transformer.html" aria-label="Open the Transformer overview"><rect x="950" y="230" width="250" height="55" rx="10"/><text x="964" y="252" class="flow-kicker">5 · COMPUTE</text><text x="964" y="273" class="flow-title">Transformer computation</text></a>
+<a href="queries-keys-values.html"><text x="958" y="307" class="flow-subtitle">Queries, keys and values</text></a>
+<a href="scaled-dot-product-attention.html"><text x="958" y="325" class="flow-subtitle">Attention and scores</text></a>
+<a href="causal-masking.html"><text x="958" y="343" class="flow-subtitle">Causal masking</text></a>
+</g>
+<g class="flow-node">
+<a href="logits.html" aria-label="Open the logits lesson"><rect x="640" y="230" width="250" height="55" rx="10"/><text x="654" y="252" class="flow-kicker">6 · PREDICT</text><text x="654" y="273" class="flow-title">Logits and probabilities</text></a>
+<a href="probabilities.html"><text x="648" y="307" class="flow-subtitle">Next-token distribution</text></a>
+</g>
+<g class="flow-node">
+<a href="likelihood.html" aria-label="Open the likelihood lesson"><rect x="330" y="230" width="250" height="55" rx="10"/><text x="344" y="252" class="flow-kicker">7 · LEARN</text><text x="344" y="273" class="flow-title">Objective and optimization</text></a>
+<a href="cross-entropy.html"><text x="338" y="307" class="flow-subtitle">Cross-entropy and loss</text></a>
+<a href="gradients.html"><text x="338" y="325" class="flow-subtitle">Gradients and backpropagation</text></a>
+</g>
+<g class="flow-node">
+<a href="in-context-learning.html" aria-label="Open the in-context learning deep dive"><rect x="20" y="230" width="250" height="55" rx="10"/><text x="34" y="252" class="flow-kicker">8 · ADAPT</text><text x="34" y="273" class="flow-title">Adaptation and use</text></a>
+<a href="build-path.html"><text x="28" y="307" class="flow-subtitle">Fine-tuning and building</text></a>
+</g>
+<text x="20" y="405" class="flow-kicker">BUILD BRANCH · G2 · PREPARE DATA FOR TRAINING</text>
+<g class="flow-node flow-node-g2"><a href="corpus-preparation.html" aria-label="Open corpus preparation"><rect x="20" y="465" width="250" height="55" rx="10"/><text x="34" y="487" class="flow-kicker">G2 · CORPUS</text><text x="34" y="508" class="flow-title">Prepare the corpus</text></a></g>
+<g class="flow-node flow-node-g2"><a href="training-examples.html" aria-label="Open training examples"><rect x="330" y="465" width="250" height="55" rx="10"/><text x="344" y="487" class="flow-kicker">G2 · EXAMPLES</text><text x="344" y="508" class="flow-title">Windows and targets</text></a></g>
+<g class="flow-node flow-node-g2"><a href="build-path.html" aria-label="Open the guided build"><rect x="640" y="465" width="250" height="55" rx="10"/><text x="654" y="487" class="flow-kicker">BUILD</text><text x="654" y="508" class="flow-title">Guided build path</text></a></g>
+<text x="20" y="555" class="flow-note">The G2 branch is required to train a model, not to follow the inference route.</text>
+<text x="20" y="580" class="flow-hint">Solid arrows: recommended order · Dotted arrows: main page to its companion pages · Blocks and links: clickable lessons.</text>
+</svg>
+<figcaption>Main conceptual route and separate training-data branch.</figcaption>
+</figure>
+
+
+## How to read a lesson
+
+Lessons use three markers to distinguish different kinds of material:
 
 - <span class="epistemic-badge badge-concept">Verified Concept</span> Formal definitions, equations, and explicit mathematical assumptions.
 - <span class="epistemic-badge badge-code">Executable Micro-code</span> Inspectable Python/NumPy workbenches with shape invariants and assertion checks.
 - <span class="epistemic-badge badge-status">Architecture / Status</span> Explicit architectural scope and roadmap milestone state.
 
-## Guided project: a small GPT
+These markers describe the evidence available; they do not make all evidence equivalent. A diagram makes a structure readable but does not prove a property; a derivation establishes a result under stated assumptions; a test checks the cases it covers; an experiment compares configurations under a documented protocol, metrics and limitations.
 
-The practical goal is to build a **small decoder-only GPT from randomly initialized parameters**, then validate it and generate text. Mathematical and tensor operations are introduced when needed; a general prerequisite course is not assumed.
+## Two operational pathways and cross-cutting evaluation
 
-<div class="learning-card learning-card-featured">
-  <p class="eyebrow">GUIDED PATH · IN PROGRESS</p>
-  <p>The path is organized into milestones with explicit evidence criteria. A complete model and reproducible training run are not yet available. Corpus provenance and licensing must be established before any training experiment.</p>
-  [Open the guided build](build-path.qmd){.card-link} · [See milestones and evidence criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md){.card-link}
-</div>
-
-## Three processes to distinguish
-
-The same model is involved in several processes, but they have different objectives and dynamics:
+The same model participates in several processes, but their objectives and dynamics differ:
 
 <figure class="llm-flow-figure">
-<svg class="llm-flow" viewBox="0 0 1060 620" role="img" aria-labelledby="llm-flow-title-en llm-flow-desc-en" xmlns="http://www.w3.org/2000/svg">
-<title id="llm-flow-title-en">Two operational processes, with cross-cutting evaluation</title><desc id="llm-flow-desc-en">Inference uses fixed parameters, while learning updates them. Evaluation analyzes held-out data; its findings can inform data, learning, and decoding choices. The test set remains reserved for final assessment.</desc>
-<defs><marker id="flow-arrow-en" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7b91a6"/></marker><marker id="flow-feedback-en" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#39845b"/></marker></defs>
+<svg class="llm-flow" viewBox="0 0 1220 650" role="img" aria-labelledby="llm-flow-title-en llm-flow-desc-en" xmlns="http://www.w3.org/2000/svg">
+<title id="llm-flow-title-en">Interactive map of inference, learning, and evaluation</title>
+<desc id="llm-flow-desc-en">The top lane describes autoregressive inference with fixed parameters, from text context through next-token selection and appending it to the context. The second lane describes learning: corpus and tokenizer, examples, forward pass, loss, gradients, and parameter updates. The third lane shows evaluation on held-out data. Each clickable block opens a canonical lesson.</desc>
+<defs>
+<marker id="flow-arrow-en" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7b91a6"/></marker>
+<marker id="flow-feedback-en" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#39845b"/></marker>
+</defs>
+<text x="20" y="28" class="flow-kicker">1 · INFERENCE / GENERATION — FIXED PARAMETERS</text>
 <g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#flow-arrow-en)">
-<path d="M240 105 H280"/><path d="M500 105 H540"/><path d="M760 105 H800"/><path d="M910 145 V174 H130 V145"/>
-<path d="M240 285 H280"/><path d="M500 285 H540"/><path d="M760 285 H800"/><path d="M910 325 V355 H390 V325"/>
+<path d="M150 105 H170"/><path d="M300 105 H320"/><path d="M450 105 H470"/><path d="M600 105 H620"/><path d="M750 105 H770"/><path d="M900 105 H920"/><path d="M1050 105 H1070"/>
+<path d="M1135 150 V194 H85 V150"/>
 </g>
+<g class="flow-node"><a href="text-data.html" aria-label="Text and data: context and tokens"><rect x="20" y="60" width="130" height="90" rx="12"/><text x="32" y="82" class="flow-kicker">INPUT</text><text x="32" y="108" class="flow-title">Text / prompt</text><text x="32" y="130" class="flow-subtitle">tokenization → IDs</text></a></g>
+<g class="flow-node"><a href="embedding-space.html" aria-label="Embedding space"><rect x="170" y="60" width="130" height="90" rx="12"/><text x="182" y="82" class="flow-kicker">VECTORS</text><text x="182" y="108" class="flow-title">Embeddings</text><text x="182" y="130" class="flow-subtitle">lookup</text></a></g>
+<g class="flow-node"><a href="positional-encoding.html" aria-label="Positional information"><rect x="320" y="60" width="130" height="90" rx="12"/><text x="332" y="82" class="flow-kicker">POSITION</text><text x="332" y="108" class="flow-title">Position</text><text x="332" y="130" class="flow-subtitle">encoding / RoPE</text></a></g>
+<g class="flow-node"><a href="transformer.html" aria-label="Transformer computation"><rect x="470" y="60" width="130" height="90" rx="12"/><text x="482" y="82" class="flow-kicker">NETWORK</text><text x="482" y="108" class="flow-title">Transformer</text><text x="482" y="130" class="flow-subtitle">attention + MLP</text></a></g>
+<g class="flow-node"><a href="contextualized-representations.html" aria-label="Contextualized representations"><rect x="620" y="60" width="130" height="90" rx="12"/><text x="632" y="82" class="flow-kicker">HIDDEN OUTPUT</text><text x="632" y="108" class="flow-title">Contextualized</text><text x="632" y="130" class="flow-subtitle">hidden states</text></a></g>
+<g class="flow-node"><a href="logits.html" aria-label="Logits"><rect x="770" y="60" width="130" height="90" rx="12"/><text x="782" y="82" class="flow-kicker">SCORES</text><text x="782" y="108" class="flow-title">Logits</text><text x="782" y="130" class="flow-subtitle">unnormalized</text></a></g>
+<g class="flow-node"><a href="probabilities.html" aria-label="Probabilities"><rect x="920" y="60" width="130" height="90" rx="12"/><text x="932" y="82" class="flow-kicker">DISTRIBUTION</text><text x="932" y="108" class="flow-title">Probabilities</text><text x="932" y="130" class="flow-subtitle">softmax</text></a></g>
+<g class="flow-node"><a href="generation.html" aria-label="Generation and next-token selection"><rect x="1070" y="60" width="130" height="90" rx="12"/><text x="1082" y="82" class="flow-kicker">DECODING</text><text x="1082" y="108" class="flow-title">Selection</text><text x="1082" y="130" class="flow-subtitle">or sampling</text></a></g>
+<text x="430" y="174" class="flow-note">Append the selected token to the context, then repeat — without changing θ</text>
+<text x="20" y="216" class="flow-note">Depending on the architecture, position is added to embeddings or integrated into attention (e.g. RoPE).</text>
+
+<text x="20" y="238" class="flow-kicker">2 · LEARNING — PARAMETER UPDATES</text>
 <g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#flow-arrow-en)">
-<path d="M240 495 H420"/><path d="M640 495 H820"/>
+<path d="M240 315 H260"/><path d="M480 315 H500"/><path d="M720 315 H740"/><path d="M960 315 H980"/>
+<path d="M1090 360 V392 H610 V360"/>
 </g>
-<g class="flow-connectors flow-feedback" fill="none" stroke="#39845b" stroke-width="2.4" stroke-dasharray="7 6" marker-end="url(#flow-feedback-en)">
-<path d="M840 455 C790 400 300 380 130 325"/><path d="M900 455 C920 405 915 365 910 325"/><path d="M1000 455 C1060 360 1060 200 910 145"/>
+<g class="flow-node"><a href="corpus-preparation.html" aria-label="Corpus and tokenizer preparation"><rect x="20" y="270" width="220" height="90" rx="12"/><text x="34" y="292" class="flow-kicker">DATA</text><text x="34" y="318" class="flow-title">Corpus + tokenizer</text><text x="34" y="340" class="flow-subtitle">provenance, filtering, splits</text></a></g>
+<g class="flow-node"><a href="training-examples.html" aria-label="Training examples"><rect x="260" y="270" width="220" height="90" rx="12"/><text x="274" y="292" class="flow-kicker">SEQUENCES</text><text x="274" y="318" class="flow-title">Inputs + targets</text><text x="274" y="340" class="flow-subtitle">windows and shifting</text></a></g>
+<g class="flow-node"><a href="transformer.html" aria-label="Model forward pass"><rect x="500" y="270" width="220" height="90" rx="12"/><text x="514" y="292" class="flow-kicker">PREDICTIONS</text><text x="514" y="318" class="flow-title">Forward pass</text><text x="514" y="340" class="flow-subtitle">using parameters θ</text></a></g>
+<g class="flow-node"><a href="loss.html" aria-label="Loss function"><rect x="740" y="270" width="220" height="90" rx="12"/><text x="754" y="292" class="flow-kicker">OBJECTIVE</text><text x="754" y="318" class="flow-title">Loss</text><text x="754" y="340" class="flow-subtitle">prediction error against targets</text></a></g>
+<g class="flow-node"><a href="gradients.html" aria-label="Gradients and parameter update"><rect x="980" y="270" width="220" height="90" rx="12"/><text x="994" y="292" class="flow-kicker">OPTIMIZATION</text><text x="994" y="318" class="flow-title">Gradients + update</text><text x="994" y="340" class="flow-subtitle">modify parameters θ</text></a></g>
+<text x="650" y="414" class="flow-note">Updated parameters are used in the next computation</text>
+
+<text x="20" y="448" class="flow-kicker">3 · EVALUATION — CROSS-CUTTING FUNCTION</text>
+<g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#flow-arrow-en)">
+<path d="M240 525 H420"/><path d="M640 525 H820"/>
 </g>
-<text x="20" y="42" class="flow-kicker">INFERENCE / GENERATION · FIXED PARAMETERS</text>
-<g class="flow-node"><a href="text-data.html" aria-label="Previously generated tokens"><rect x="20" y="65" width="220" height="80" rx="12"/><text x="34" y="86" class="flow-kicker">CONTEXT</text><text x="34" y="111" class="flow-title">Previously generated tokens</text><text x="34" y="130" class="flow-subtitle">and current input</text></a></g>
-<g class="flow-node"><a href="transformer.html" aria-label="Transformer with θ"><rect x="280" y="65" width="220" height="80" rx="12"/><text x="294" y="86" class="flow-kicker">PARAMETERIZED MODEL</text><text x="294" y="111" class="flow-title">Transformer with θ</text><text x="294" y="130" class="flow-subtitle">weights unchanged</text></a></g>
-<g class="flow-node"><a href="logits.html" aria-label="Next-token"><rect x="540" y="65" width="220" height="80" rx="12"/><text x="554" y="86" class="flow-kicker">DISTRIBUTION</text><text x="554" y="111" class="flow-title">Next-token</text><text x="554" y="130" class="flow-subtitle">probabilities</text></a></g>
-<g class="flow-node flow-node-planned"><rect x="800" y="65" width="220" height="80" rx="12"/><text x="814" y="86" class="flow-kicker">DECODING · PLANNED</text><text x="814" y="111" class="flow-title">Select / sample</text><text x="814" y="130" class="flow-subtitle">the next token</text></g>
-<text x="350" y="169" class="flow-note">Append the token to the context, then repeat</text>
-<text x="20" y="225" class="flow-kicker">LEARNING · PARAMETER UPDATES</text>
-<g class="flow-node"><a href="training-examples.html" aria-label="Input sequences"><rect x="20" y="245" width="220" height="80" rx="12"/><text x="34" y="266" class="flow-kicker">EXAMPLES + TARGETS</text><text x="34" y="291" class="flow-title">Input sequences</text><text x="34" y="310" class="flow-subtitle">and expected tokens</text></a></g>
-<g class="flow-node"><a href="transformer.html" aria-label="Predictions using"><rect x="280" y="245" width="220" height="80" rx="12"/><text x="294" y="266" class="flow-kicker">FORWARD PASS</text><text x="294" y="291" class="flow-title">Predictions using</text><text x="294" y="310" class="flow-subtitle">parameters θ</text></a></g>
-<g class="flow-node"><a href="cross-entropy.html" aria-label="Difference between predictions and targets"><rect x="540" y="245" width="220" height="80" rx="12"/><text x="554" y="266" class="flow-kicker">LOSS FUNCTION</text><text x="554" y="291" class="flow-title">Difference between</text><text x="554" y="310" class="flow-subtitle">predictions and targets</text></a></g>
-<g class="flow-node"><a href="gradients.html" aria-label="Compute ∇θ L, then"><rect x="800" y="245" width="220" height="80" rx="12"/><text x="814" y="266" class="flow-kicker">GRADIENTS / UPDATE</text><text x="814" y="291" class="flow-title">Compute ∇θ L, then</text><text x="814" y="310" class="flow-subtitle">modify θ</text></a></g>
-<text x="470" y="380" class="flow-note">Updated parameters are used for the next step</text>
-<text x="20" y="435" class="flow-kicker">EVALUATION · CROSS-CUTTING FUNCTION</text>
-<g class="flow-node"><a href="text-data.html" aria-label="Held-out data"><rect x="20" y="455" width="220" height="80" rx="12"/><text x="34" y="476" class="flow-kicker">EVALUATION DATA</text><text x="34" y="501" class="flow-title">Held-out data</text><text x="34" y="520" class="flow-subtitle">separate validation and test</text></a></g>
-<g class="flow-node"><a href="experimental-evaluation.html" aria-label="Metrics and uncertainty"><rect x="420" y="455" width="220" height="80" rx="12"/><text x="434" y="476" class="flow-kicker">METRICS + ERRORS</text><text x="434" y="501" class="flow-title">Metrics and uncertainty</text><text x="434" y="520" class="flow-subtitle">qualitative analysis</text></a></g>
-<g class="flow-node"><rect x="820" y="455" width="220" height="80" rx="12"/><text x="834" y="476" class="flow-kicker">DECISIONS + LIMITS</text><text x="834" y="501" class="flow-title">Interpret the findings</text><text x="834" y="520" class="flow-subtitle">revise choices, not the test set</text></g>
-<text x="300" y="558" class="flow-note">Feedback to data, learning, and decoding choices</text>
-<text x="20" y="584" class="flow-hint">Validation may guide adjustments; the test set remains held out until final assessment.</text>
-<text x="20" y="610" class="flow-hint">Blocks open the currently available canonical pages.</text>
-</svg><figcaption>Inference: fixed parameters · Learning: updated parameters · Dashed arrows: evaluation feedback</figcaption></figure>
+<g class="flow-node"><a href="corpus-preparation.html" aria-label="Validation and test splits"><rect x="20" y="480" width="220" height="90" rx="12"/><text x="34" y="502" class="flow-kicker">HELD-OUT DATA</text><text x="34" y="528" class="flow-title">Validation / test</text><text x="34" y="550" class="flow-subtitle">separate, leakage-free splits</text></a></g>
+<g class="flow-node"><a href="experimental-evaluation.html" aria-label="Metrics and error analysis"><rect x="420" y="480" width="220" height="90" rx="12"/><text x="434" y="502" class="flow-kicker">MEASUREMENT</text><text x="434" y="528" class="flow-title">Metrics + errors</text><text x="434" y="550" class="flow-subtitle">uncertainty and analysis</text></a></g>
+<g class="flow-node"><a href="experimental-evaluation.html" aria-label="Interpret evaluation results"><rect x="820" y="480" width="220" height="90" rx="12"/><text x="834" y="502" class="flow-kicker">INTERPRETATION</text><text x="834" y="528" class="flow-title">Informed decisions</text><text x="834" y="550" class="flow-subtitle">adjust without contaminating test</text></a></g>
+<text x="20" y="606" class="flow-hint">Validation results may guide data, training, and decoding choices; the test set remains reserved for final assessment.</text>
+<text x="20" y="630" class="flow-hint">Every bordered block is clickable and opens a canonical lesson. Solid arrows show computation flow; loops show repetition or parameter updates.</text>
+</svg>
+<figcaption>Inference: fixed parameters · Learning: updated parameters · Evaluation: cross-cutting analysis on held-out data</figcaption>
+</figure>
 
-## Conceptual route
+## Explore further
 
-The **Understand** path offers a suggested order, not a mandatory reading list. The sidebar contains the full sequence; each lesson can also be read on its own.
+**In LLM Lab:** [Glossary](glossary.qmd) · [Exercises](exercises.qmd) · [Transformer history](transformer-history.qmd) · [Experimental evaluation](experimental-evaluation.qmd) · [Annotated bibliography](../references.qmd).
 
-1. [LLM panorama](llm-overview.qmd), [GPT and Transformer](transformer.qmd), then [generation](generation.qmd): orient yourself in the system and its use.
-2. [Text to tokens](text-data.qmd), then embeddings, position, and contextualized representations: understand the model's inputs.
-3. [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd), and [causal masking](causal-masking.qmd): follow how context is processed.
-4. [Logits](logits.qmd) and [probabilities](probabilities.qmd): understand prediction. Generation uses these concepts without requiring prior study of training.
-5. [Training examples](training-examples.qmd), then likelihood, entropy, cross-entropy, loss, and gradients: understand how parameters are learned.
+**External references:** [3Blue1Brown — Transformers](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s) for visual intuition; [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch/) for implementation detail; [Jay Alammar — Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) and [Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) for visual explanations.
 
-The [build path](build-path.qmd) connects these mechanisms to practical milestones. [Evaluation](experimental-evaluation.qmd) applies across the work, and [history](transformer-history.qmd) is optional reference material.
-
-The detailed map of the three learning depths and implementation milestones lives in the [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md). Tensor references and advanced mathematical derivations are optional, not prerequisites.
-
-::: {.callout-note}
-**Current scope.** Conceptual explanations of generation are available. A complete GPT, an integrated generation loop, reproducible pretraining, and adaptation of a pretrained model remain to be built.
-:::
-
-## Verify, do not only visualize
-
-A page may combine intuition, mathematical derivation, code, tests, and experiments. These provide different kinds of evidence:
-
-- a diagram makes a structure readable but does not prove a property;
-- a derivation establishes a result under explicit assumptions;
-- a test checks the cases it covers but does not by itself prove a general rule;
-- an experiment compares configurations under a documented protocol, metrics, and limitations.
-
-Pages distinguish available explanations, code that has actually been tested, and work that remains planned.
-
-## Further resources
-
-- [3Blue1Brown — Transformers](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s): visual intuition and the big picture.
-- [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch/): a detailed model-building path and associated code.
-- [Jay Alammar — The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) and [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/): visual explanations of model mechanisms.
-- [Annotated bibliography](../references.qmd): scientific sources, technical documentation, and teaching resources, with their roles and limitations.
-
-## Explore by question
-
-[Glossary](glossary.qmd) · [Exercises](exercises.qmd) · [Transformer history](transformer-history.qmd) · [Experimental evaluation](experimental-evaluation.qmd)
-
-For the full programme: [curriculum map](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) · [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) · [roadmap](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md)
+For the complete programme, see the [curriculum map](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) and [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
 
 ::: {.language-switch}
 [Français](../index.qmd) · [English](index.qmd)

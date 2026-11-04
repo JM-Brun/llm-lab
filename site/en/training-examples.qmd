@@ -1,7 +1,7 @@
 ---
 title: "From tokenized corpus to training examples"
 subtitle: "Input-target shifting, windows, documents, padding, and tensor shapes"
-keywords: ["type:concept-bridge", "destination:understand", "topic:training-examples", "level:core", "language:en", "status:published"]
+keywords: ["type:concept-bridge", "destination:build", "topic:training-examples", "level:core", "language:en", "status:published"]
 lang: en
 ---
 
@@ -11,13 +11,13 @@ id: "en/training-examples"
 scope: "Covers the transformation of a tokenized stream into autoregressive input-target examples: one-token shifting, context windows and stride, document packing and boundaries, padding, attention and loss masks, and tensor shapes. It stops at correctly constructed training batches rather than deriving the probability and optimization objectives."
 purpose: "Construct aligned input-target batches from token IDs, distinguish windowing and masking decisions, verify tensor shapes, and diagnose common boundary or alignment errors that would change the training objective."
 suggested_route:
-  previous: "en/probabilities"
-  next: "en/likelihood"
+  previous: "en/corpus-preparation"
+  next: null
 hierarchy:
-  parents: ["en/text-data", "en/tokenization-strategies"]
-  children: ["en/likelihood"]
-related: []
-tags: ["type:concept-bridge", "destination:understand", "topic:training-examples", "level:core", "language:en", "status:published"]
+  parents: ["en/corpus-preparation"]
+  children: []
+related: ["en/tokenization-strategies", "en/likelihood"]
+tags: ["type:concept-bridge", "destination:build", "topic:training-examples", "level:core", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
@@ -82,6 +82,14 @@ flowchart LR
 The table describes **input windows only**. For next-token training, each window also needs a one-token-shifted target; the last input token therefore needs a successor in the source stream. The corpus tail must be handled explicitly (for example, by dropping an incomplete example or using a deliberate end-of-sequence convention).
 
 A smaller stride generally increases the number of examples and overlap. There is no universally optimal stride: the choice depends on the pipeline, compute budget, and handling of the corpus tail. A pedagogical sliding window does not necessarily represent a production pipeline.
+
+::: {.callout-note collapse="true" title="NumPy implementation and tests (deep dive)"}
+The [reference NumPy implementation](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/training_examples.py) and its [unit tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_training_examples.py) deliberately cover a restricted case: building sliding input windows with one-token-shifted targets (`sliding_input_target_pairs`). A window is kept only when its target is complete; an incomplete corpus tail is dropped, with no padding and no invented end-of-stream token.
+
+This reference does **not** implement corpus loading or tokenization, document packing, boundary markers, padding, attention or loss masks, batching through a `Dataset`/`DataLoader`, or train/validation splits. Production windowing choices do not follow directly from it.
+
+The tests check exact alignment of every target with the following token in the source stream, window counts and overlap for several strides, explicit corpus-tail handling, determinism, absence of input mutation, and rejection of invalid inputs. They support the announced scope of this reference; they do not prove that any stride is optimal or representative of a production pretraining pipeline.
+:::
 
 ## 3. Document boundaries and packing
 

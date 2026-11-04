@@ -1,0 +1,200 @@
+---
+title: "Visite guidée : la configuration du GPT (`gpt_config.py`)"
+subtitle: "Chaque dimension du modèle reçoit un nom et une validation"
+keywords: ["type:guided-build", "destination:build", "topic:reference-gpt-config", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/gpt-config-walkthrough"
+scope: "Explique ligne par ligne le fichier gpt_config.py : le rôle de l'objet GPTConfig, la raison d'être de chaque dimension, l'immuabilité et la validation à la construction. Exclut les calculs du modèle, le bloc Transformer et la boucle de génération."
+purpose: "Le lecteur doit pouvoir nommer chaque dimension de configuration, relier chaque champ aux formes de tenseurs qu'elle détermine, et expliquer pourquoi la validation échoue tôt avec un message nommé plutôt que tard avec une erreur de forme."
+suggested_route:
+  previous: null
+  next: "fr/gpt-ops-walkthrough"
+hierarchy:
+  parents: ["fr/build-path"]
+  children: []
+related: ["fr/transformer"]
+tags: ["type:guided-build", "destination:build", "topic:reference-gpt-config", "level:applied", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Cette page est la première étape (1 sur 5) de la visite guidée du code de référence : le fichier le plus petit du paquet, celui qui définit **ce qu'est le modèle** avant que tout autre fichier ne définisse **ce qu'il fait**. Chaque extrait de code est commenté ligne par ligne ; le code complet vit dans [`src/llm_lab/foundations/gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py).
+:::
+:::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
+À l'issue de cette visite, vous pourrez :
+- nommer chaque dimension de configuration et ce qu'elle détermine ailleurs dans le modèle ;
+- relier chaque champ aux formes de tenseurs qu'il contrôle ;
+- expliquer pourquoi la validation échoue tôt avec un message nommé plutôt que tard avec une erreur de forme.
+:::
+
+## Le rôle du fichier dans la famille de modules
+
+L'implémentation de référence est découpée en cinq modules, dans l'ordre de lecture :
+
+| Module | Contenu | Page de visite |
+|---|---|---|
+| `gpt_config.py` | les dimensions, leurs noms, leur validation | cette page |
+| `gpt_ops.py` | les briques numériques (initialisation, projection, normalisation, GELU) | [suivante](gpt-ops-walkthrough.qmd) |
+| `transformer_block.py` | un bloc Transformer pré-LN complet | [bloc](transformer-block-walkthrough.qmd) |
+| `gpt.py` | le modèle assemblé : embeddings, blocs, sortie | [modèle](gpt-model-walkthrough.qmd) |
+| `generate.py` | la boucle de décodage autorégressive | [génération](gpt-generation-walkthrough.qmd) |
+
+Isoler la configuration dans un petit objet immuable a trois bénéfices pédagogiques : un **seul lieu de définition** (chaque dimension surprenante a un nom ici), des erreurs **dès la construction** (plutôt qu'un crash de broadcasting au milieu d'une passe avant), et la **reproductibilité** (deux modèles configurés identiquement ont des paramètres identiques).
+
+## La déclaration : une dataclass gelée
+
+```python
+@dataclass(frozen=True)
+class GPTConfig:
+```
+
+- `@dataclass` génère le constructeur : inutile d'écrire six affectations à la main.
+- `frozen=True` rend l'objet **immuable**. La configuration est lue partout et n'est jamais modifiée : « quelque chose a-t-il changé la config en cours de route ? » devient une garantie au lieu d'une session de débogage. Toute affectation accidentelle lève `FrozenInstanceError` immédiatement.
+
+## Les sept champs, un par un
+
+```python
+    vocab_size: int
+    context_length: int
+    embedding_dim: int
+    num_heads: int
+    num_layers: int
+    mlp_hidden_dim: int
+    seed: int = 0
+```
+
+```{=html}
+<figure class="wf-fig" id="wf-config-map" data-wf-default="Une passe avant complète : les identifiants deviennent des vecteurs d, traversent L blocs, ressortent en V logits. Sélectionnez un champ pour voir la forme qu’il contrôle.">
+<figcaption class="wf-fig-title">La carte des dimensions : où vit chaque champ de <code>GPTConfig</code></figcaption>
+<div class="wf-stage">
+<div class="wf-diagram">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 430" role="img" aria-labelledby="wfc-title wfc-desc">
+<title id="wfc-title">Carte des dimensions : où vit chaque champ de GPTConfig dans le modèle</title>
+<desc id="wfc-desc">Schéma d'une passe avant : identifiants (B, T), table d'embeddings (V, d), table de positions (T, d), L blocs contenant une attention à H têtes de d/H colonnes et un MLP de largeur cachée mlp_hidden_dim, projection w_head (V, d) vers les logits (B, T, V). La graine initialise le générateur qui tire tous les paramètres.</desc>
+<defs>
+<marker id="wfa-green" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#16A34A"/></marker>
+<marker id="wfa-ink" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#344054"/></marker>
+<marker id="wfa-grey" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748B"/></marker>
+</defs>
+<g font-family="Arial,sans-serif">
+<g data-wf-part="voc"><rect x="14" y="196" width="112" height="68" rx="10" fill="#E0F2FE" stroke="#0369A1" stroke-width="2"/><text x="70" y="222" text-anchor="middle" font-size="16" font-weight="700" fill="#0C4A6E">ids</text><text x="70" y="243" text-anchor="middle" font-size="13" fill="#0C4A6E">(B, T)</text><text x="70" y="259" text-anchor="middle" font-size="11" fill="#0369A1">&#8712; [0, V)</text></g>
+<g data-wf-part="voc dim"><text x="226" y="146" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">token_embedding</text><rect x="160" y="152" width="132" height="100" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><g stroke="#DDD6FE" stroke-width="1"><path d="M160 177 H292"/><path d="M160 202 H292"/><path d="M160 227 H292"/><path d="M193 152 V252"/><path d="M226 152 V252"/><path d="M259 152 V252"/></g><text x="226" y="212" text-anchor="middle" font-size="14" font-weight="700" fill="#4C1D95">(V, d)</text></g>
+<g data-wf-part="ctx dim"><text x="226" y="282" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">position_embedding</text><rect x="160" y="288" width="132" height="76" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><g stroke="#DDD6FE" stroke-width="1"><path d="M160 313 H292"/><path d="M160 338 H292"/><path d="M204 288 V364"/><path d="M248 288 V364"/></g><text x="226" y="332" text-anchor="middle" font-size="14" font-weight="700" fill="#4C1D95">(T, d)</text></g>
+<g data-wf-part="voc dim"><path d="M126 230 C 140 230, 146 216, 156 206" stroke="#344054" stroke-width="2" fill="none" marker-end="url(#wfa-ink)"/></g>
+<g data-wf-part="voc dim"><path d="M292 202 C 302 206, 308 212, 312 222" stroke="#16A34A" stroke-width="2.5" fill="none" marker-end="url(#wfa-green)"/></g>
+<g data-wf-part="ctx dim"><path d="M292 326 C 302 322, 308 244, 312 242" stroke="#16A34A" stroke-width="2.5" fill="none" marker-end="url(#wfa-green)"/></g>
+<g data-wf-part="dim ctx"><circle cx="322" cy="232" r="15" fill="#fff" stroke="#16A34A" stroke-width="2.5"/><text x="322" y="239" text-anchor="middle" font-size="20" font-weight="700" fill="#14532D">+</text></g>
+<g data-wf-part="dim"><path d="M338 232 H442" stroke="#16A34A" stroke-width="5" fill="none" marker-end="url(#wfa-green)"/><text x="390" y="216" text-anchor="middle" font-size="14" font-weight="700" fill="#14532D">x : (B, T, d)</text></g>
+<g data-wf-part="lay"><rect x="456" y="118" width="336" height="298" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/><text x="624" y="142" text-anchor="middle" font-size="16" font-weight="700" fill="#334155">Blocs empilés</text><rect x="744" y="126" width="34" height="24" rx="6" fill="#EDE9FE" stroke="#A78BFA"/><text x="761" y="142" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">&#215; L</text><text x="624" y="404" text-anchor="middle" font-size="12" font-style="italic" fill="#64748B">W ~ N(0, 0.02&#178; / 2L)</text></g>
+<g data-wf-part="lay"><rect x="470" y="158" width="308" height="222" rx="10" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1.5"/><text x="624" y="180" text-anchor="middle" font-size="12" fill="#6D28D9">1 bloc</text></g>
+<g data-wf-part="hea dim"><rect x="482" y="192" width="140" height="140" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1.5"/><text x="552" y="212" text-anchor="middle" font-size="14" font-weight="700" fill="#4C1D95">Attention</text><rect x="490" y="224" width="124" height="18" rx="3" fill="#EDE9FE" stroke="#A78BFA" stroke-width="0.8"/><rect x="490" y="246" width="124" height="18" rx="3" fill="#DDD6FE" stroke="#A78BFA" stroke-width="0.8"/><rect x="490" y="268" width="124" height="18" rx="3" fill="#EDE9FE" stroke="#A78BFA" stroke-width="0.8"/><rect x="490" y="290" width="124" height="18" rx="3" fill="#DDD6FE" stroke="#A78BFA" stroke-width="0.8"/><text x="552" y="322" text-anchor="middle" font-size="12" fill="#6D28D9">H têtes × d/H colonnes</text></g>
+<g data-wf-part="mlp dim"><rect x="646" y="192" width="120" height="140" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1.5"/><text x="706" y="212" text-anchor="middle" font-size="14" font-weight="700" fill="#4C1D95">MLP</text><rect x="654" y="224" width="104" height="18" rx="4" fill="#DDD6FE" stroke="#A78BFA" stroke-width="0.8"/><text x="706" y="237" text-anchor="middle" font-size="11" fill="#4C1D95">d</text><rect x="654" y="256" width="104" height="22" rx="4" fill="#EDE9FE" stroke="#A78BFA" stroke-width="0.8"/><text x="706" y="271" text-anchor="middle" font-size="11" fill="#4C1D95">mlp_hidden_dim</text><rect x="654" y="292" width="104" height="18" rx="4" fill="#DDD6FE" stroke="#A78BFA" stroke-width="0.8"/><text x="706" y="305" text-anchor="middle" font-size="11" fill="#4C1D95">d</text><text x="706" y="322" text-anchor="middle" font-size="12" fill="#6D28D9">d &#8594; hidden &#8594; d</text></g>
+<g data-wf-part="dim"><path d="M552 332 C 570 350, 595 360, 613 362" stroke="#344054" stroke-width="2" fill="none" marker-end="url(#wfa-ink)"/><path d="M706 332 C 688 350, 653 360, 635 362" stroke="#344054" stroke-width="2" fill="none" marker-end="url(#wfa-ink)"/><circle cx="624" cy="368" r="13" fill="#fff" stroke="#16A34A" stroke-width="2.5"/><text x="624" y="374" text-anchor="middle" font-size="18" font-weight="700" fill="#14532D">+</text></g>
+<g data-wf-part="dim"><path d="M446 232 H454" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfa-green)"/><path d="M792 232 H802" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfa-green)"/></g>
+<g data-wf-part="voc dim"><text x="858" y="200" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">w_head</text><rect x="806" y="206" width="104" height="52" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="858" y="228" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">(V, d)</text><text x="858" y="246" text-anchor="middle" font-size="11" fill="#6D28D9">d &#8594; V</text></g>
+<g data-wf-part="dim"><path d="M910 232 H928" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfa-green)"/></g>
+<g data-wf-part="voc ctx dim"><rect x="932" y="206" width="134" height="52" rx="8" fill="#FEF3C7" stroke="#B45309" stroke-width="2"/><text x="999" y="228" text-anchor="middle" font-size="14" font-weight="700" fill="#78350F">logits</text><text x="999" y="246" text-anchor="middle" font-size="12" fill="#92400E">(B, T, V)</text></g>
+<g data-wf-part="seed"><rect x="452" y="18" width="212" height="42" rx="21" fill="#ECFDF5" stroke="#15803D" stroke-width="2"/><text x="558" y="44" text-anchor="middle" font-size="14" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">default_rng(seed)</text></g>
+<g data-wf-part="seed" stroke="#64748B" stroke-width="1.6" stroke-dasharray="5 4" fill="none"><path d="M500 60 C 420 100, 300 112, 230 148" marker-end="url(#wfa-grey)"/><path d="M540 60 C 460 170, 330 230, 232 284" marker-end="url(#wfa-grey)"/><path d="M592 60 C 602 78, 612 94, 622 114" marker-end="url(#wfa-grey)"/><path d="M640 60 C 730 100, 800 160, 852 202" marker-end="url(#wfa-grey)"/></g>
+</g>
+</svg>
+</div>
+<div class="wf-panel">
+<p class="wf-hint">Survolez ou sélectionnez un champ : le schéma s’assombrit partout sauf aux endroits que ce champ détermine. Au clavier : <kbd>Tab</kbd> pour parcourir, <kbd>Entrée</kbd> pour épingler, <kbd>Échap</kbd> pour libérer.</p>
+<div class="wf-chips" role="group" aria-label="Champs de configuration">
+<button type="button" class="wf-chip" data-wf-links="voc" data-wf-note="V lignes dans token_embedding (V × d) ; les identifiants vivent dans [0, V) ; w_head produit V logits par position — le même V aux deux bouts du modèle.">vocab_size (V)</button>
+<button type="button" class="wf-chip" data-wf-links="ctx" data-wf-note="T lignes dans position_embedding (T × d) ; fenêtre maximale d’une passe avant ; les logits portent T positions (B, T, V).">context_length (T)</button>
+<button type="button" class="wf-chip" data-wf-links="dim" data-wf-note="Largeur du flux résiduel : d colonnes dans les deux tables, d entrées dans chaque bloc, divisées en H tranches de d/H — la contrainte d % H == 0 naît ici.">embedding_dim (d)</button>
+<button type="button" class="wf-chip" data-wf-links="hea" data-wf-note="H bandes contiguës de d/H colonnes dans l’attention ; les têtes ne se mélangent qu’en sortie, via la projection w_o.">num_heads (H)</button>
+<button type="button" class="wf-chip" data-wf-links="lay" data-wf-note="L blocs empilés sur le flux ; la profondeur réduit aussi l’écart-type des poids résiduels : 0.02 / √(2L) à l’initialisation.">num_layers (L)</button>
+<button type="button" class="wf-chip" data-wf-links="mlp" data-wf-note="Largeur du goulot caché du MLP : d → mlp_hidden_dim → d (GPT-2 choisit 4d) ; explicite dans la configuration, donc visible et modifiable.">mlp_hidden_dim</button>
+<button type="button" class="wf-chip" data-wf-links="seed" data-wf-note="Graine de l’unique générateur : tous les tirages initiaux en dépendent, dans un ordre fixe. Changer la graine change les valeurs des paramètres, jamais leurs formes.">seed</button>
+</div>
+<p class="wf-note" aria-live="polite">Une passe avant complète : les identifiants deviennent des vecteurs d, traversent L blocs, ressortent en V logits. Sélectionnez un champ pour voir la forme qu’il contrôle.</p>
+</div>
+</div>
+<figcaption class="wf-legend">
+<span class="wf-key"><span class="wf-swatch" style="background:#DCFCE7;border-color:#16A34A"></span>flux de données (résiduel)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#F5F3FF;border-color:#8B5CF6"></span>paramètres appris</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#E0F2FE;border-color:#0369A1"></span>entrée (identifiants)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#FEF3C7;border-color:#B45309"></span>sortie (logits)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#FFFFFF;border-color:#64748B;border-top-style:dashed"></span>tirages initiaux (seed)</span>
+</figcaption>
+</figure>
+<script src="../includes/walkthrough-figures.js" defer></script>
+```
+
+
+| Champ | Rôle | Ce qu'il détermine ailleurs |
+|---|---|---|
+| `vocab_size` (`V`) | taille du vocabulaire | lignes de la table d'embeddings ; nombre de logits par position |
+| `context_length` (`T`) | positions maximales traitées en une passe | lignes de la table de positions ; largeur de la fenêtre glissante de génération |
+| `embedding_dim` (`d`) | largeur du flux résiduel | doit être divisible par `num_heads` : chaque tête possède `d/H` colonnes contiguës |
+| `num_heads` (`H`) | nombre de têtes d'attention | l'attention multi-têtes = `H` attentions mono-tête indépendantes sur des tranches |
+| `num_layers` | profondeur (blocs empilés) | met aussi à l'échelle l'initialisation des poids résiduels |
+| `mlp_hidden_dim` | largeur cachée du MLP | GPT-2 utilise `4 * d` ; ici la valeur est explicite, donc visible et modifiable |
+| `seed` | graine d'initialisation | l'inférence est déterministe ; la graine ne contrôle que les tirages initiaux |
+
+::: {.callout-note}
+**Pourquoi `seed: int = 0` a une valeur par défaut ?** Les six autres dimensions décrivent l'architecture ; la graine décrit une expérience. Donner à la graine une valeur par défaut permet de construire le modèle sans y penser, puis de la changer pour observer que seuls les paramètres changent — pas les formes, pas les mécanismes.
+:::
+
+## La validation : échouer tôt, avec un nom
+
+```python
+    def __post_init__(self) -> None:
+        dimensions = {
+            "vocab_size": self.vocab_size,
+            "context_length": self.context_length,
+            "embedding_dim": self.embedding_dim,
+            "num_heads": self.num_heads,
+            "num_layers": self.num_layers,
+            "mlp_hidden_dim": self.mlp_hidden_dim,
+        }
+        for name, value in dimensions.items():
+            if value <= 0:
+                raise ValueError(f"{name} must be a positive integer")
+        if self.embedding_dim % self.num_heads != 0:
+            raise ValueError("embedding_dim must be divisible by num_heads")
+```
+
+Ligne par ligne :
+
+- `__post_init__` est appelé **automatiquement à la fin du constructeur** généré : c'est le dernier moment où l'appelant sait encore quelle valeur est fausse.
+- Le dictionnaire `dimensions` associe chaque valeur à **son nom de champ** ; sans lui, il faudrait six vérications presque identiques.
+- `raise ValueError(f"{name} ...")` : le message nomme le coupable (`"vocab_size must be a positive integer"`), au lieu d'un `shapes not aligned` lointain.
+- La **divisibilité** est vérifiée séparément : l'attention multi-têtes découpe le flux résiduel en `H` tranches égales de `d/H` colonnes. Un `d` non divisible rendrait le découpage impossible — l'erreur serait une erreur de forme au milieu de la première passe avant.
+
+::: {.callout-warning}
+**Idée reçue.** `context_length` n'est pas « la taille maximale de la sortie ». C'est le nombre de **positions** que le modèle peut traiter en une passe ; la génération peut produire des séquences plus longues en faisant glisser la fenêtre (voir la visite de `generate.py`).
+:::
+
+## Ce que les tests vérifient
+
+[`tests/unit/test_gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_config.py) vérifie exactement les promesses de ce fichier : les dimensions nulles ou négatives sont rejetées avec le bon message, la divisibilité est exigée, l'objet est réellement immuable (`FrozenInstanceError`), et la graine vaut `0` par défaut.
+
+## Exercices
+
+1. Quelle erreur obtient-on avec `embedding_dim=10, num_heads=4` ? Et avec `embedding_dim=12, num_heads=4` ?
+2. Combien de lignes a la table de positions d'une configuration `context_length=256, embedding_dim=64` ?
+
+<details>
+<summary>Afficher les réponses et le raisonnement</summary>
+
+1. `10 % 4 == 2` : la divisibilité échoue, donc `ValueError` à la construction. Avec `12 % 4 == 0` : configuration acceptée, chaque tête reçoit `12/4 = 3` colonnes.
+2. `256 × 64 = 16384` valeurs, soit 16384 paramètres appris — un par position et par dimension. Ce nombre est indépendant du vocabulaire et du nombre de têtes.
+</details>
+
+## Connexions
+
+- **Étape suivante** : [les briques numériques (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
+- **Page conceptuelle** : [GPT et Transformer](transformer.qmd) — l'architecture que ces dimensions paramètrent.
+- **Retour au parcours** : [Construire un petit GPT](build-path.qmd) — le parcours qui motive ce code.
+- **Code source** : [`gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py) · **Tests** : [`test_gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_config.py).
+
+::: {.language-switch}
+**Langue :** [Français](gpt-config-walkthrough.qmd) · [English](../en/gpt-config-walkthrough.qmd)
+:::

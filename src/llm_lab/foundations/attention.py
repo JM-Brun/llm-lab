@@ -1,14 +1,9 @@
 """Small reference implementations of attention mechanisms and score transformations."""
 
 import numpy as np
+from numpy.typing import NDArray
 
-from llm_lab.foundations.types import FloatArray
-
-__all__ = [
-    "causal_mask",
-    "scaled_dot_product_attention",
-    "softmax_with_temperature",
-]
+FloatArray = NDArray[np.float64]
 
 
 def causal_mask(seq_len: int) -> FloatArray:
@@ -46,16 +41,20 @@ def softmax_with_temperature(
         axis: Dimension along which softmax is applied.
 
     Raises:
-        ValueError: If logits contains non-finite values or temperature <= 0.
+        ValueError: If logits or temperature are non-finite, or temperature <= 0.
     """
+    if not np.isfinite(temperature):
+        raise ValueError("temperature must be finite")
     if temperature <= 0:
         raise ValueError("temperature must be strictly positive")
     if not np.all(np.isfinite(logits)):
         raise ValueError("logits must contain only finite values")
 
-    scaled = logits / temperature
-    max_val = np.max(scaled, axis=axis, keepdims=True)
-    shifted = scaled - max_val
+    # Shift before scaling so a large common offset cannot overflow the logits.
+    # A very negative difference can overflow to -inf, whose exponential is zero.
+    max_val = np.max(logits, axis=axis, keepdims=True)
+    with np.errstate(over="ignore"):
+        shifted = (logits - max_val) / temperature
     exp_vals = np.exp(shifted)
     sum_exp = np.sum(exp_vals, axis=axis, keepdims=True)
     return np.asarray(exp_vals / sum_exp, dtype=np.float64)

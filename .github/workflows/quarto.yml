@@ -34,11 +34,17 @@ jobs:
       - name: Validate page metadata learning graph
         run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/check_page_metadata.py
 
+      - name: Validate first-class learning resources
+        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/check_resource_registry.py
+
       - name: Generate bilingual history timeline fragments
         run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/render_history_pilot.py
 
       - name: Render site
         run: quarto render site
+
+      - name: Check rendered knowledge graph export
+        run: python3 site/tools/check_knowledge_graph_rendered.py site/_site
 
       - name: Check rendered history timeline parity
         run: python3 site/tools/check_history_rendered.py

@@ -61,9 +61,21 @@ def test_softmax_with_temperature_invalid() -> None:
         softmax_with_temperature(np.array([1.0, np.nan]))
 
 
+@pytest.mark.parametrize("temperature", [float("nan"), float("inf")])
+def test_softmax_rejects_nonfinite_temperature(temperature: float) -> None:
+    with pytest.raises(ValueError, match="temperature"):
+        softmax_with_temperature(np.array([1.0, 2.0]), temperature=temperature)
+
+
+def test_softmax_large_finite_logits_at_low_temperature() -> None:
+    logits = np.array([[1e308, 1e308], [1e308, -1e308]])
+    with np.errstate(over="raise", invalid="raise"):
+        probabilities = softmax_with_temperature(logits, temperature=0.1)
+    np.testing.assert_allclose(probabilities, [[0.5, 0.5], [1.0, 0.0]])
+
+
 def test_scaled_dot_product_attention_shapes_and_invariants() -> None:
     t_q, t_k, d_k, d_v = 3, 4, 8, 12
-    np.random.seed(123)
     q = np.random.randn(t_q, d_k)
     k = np.random.randn(t_k, d_k)
     v = np.random.randn(t_k, d_v)

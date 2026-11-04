@@ -9,6 +9,12 @@
   const frenchToEnglish = {
     "mathematical-foundations": "mathematical-foundations",
     "build-path": "build-path",
+    "corpus-preparation": "corpus-preparation",
+    "gpt-config-walkthrough": "gpt-config-walkthrough",
+    "gpt-ops-walkthrough": "gpt-ops-walkthrough",
+    "transformer-block-walkthrough": "transformer-block-walkthrough",
+    "gpt-model-walkthrough": "gpt-model-walkthrough",
+    "gpt-generation-walkthrough": "gpt-generation-walkthrough",
     "logits": "logits",
     "probabilites": "probabilities",
     "vraisemblance": "likelihood",
@@ -17,6 +23,10 @@
     "loss": "loss",
     "gradients": "gradients",
     "transformer": "transformer",
+    "transformer-architectures": "transformer-architectures",
+    "cross-attention": "cross-attention",
+    "hybrid-llm-architectures": "hybrid-llm-architectures",
+    "llm-computational-complexity": "llm-computational-complexity",
     "transformer-explainer": "transformer-explainer",
     "generation": "generation",
     "glossary": "glossary",
@@ -27,15 +37,24 @@
     "cosine-similarity": "cosine-similarity",
     "linearite-embeddings": "embedding-linearity",
     "llm-overview": "llm-overview",
+    "learning-map": "learning-map",
+    "language-modeling-math": "language-modeling-math",
+    "scaling-laws": "scaling-laws",
+    "emergence": "emergence",
+    "in-context-learning": "in-context-learning",
+    "llm-limits": "llm-limits",
     "tensors": "tensors",
     "text-data": "text-data",
     "unicode-text": "unicode-text",
     "tokenization-strategies": "tokenization-strategies",
-    "tokenizer-evaluation": "tokenizer-evaluation",
+    "tokenizer-design-evaluation": "tokenizer-design-evaluation",
+    "decoding-strategies": "decoding-strategies",
+    "deepen": "deepen",
     "training-examples": "training-examples",
     "embedding-space": "embedding-space",
     "contextualized-representations": "contextualized-representations",
     "positional-encoding": "positional-encoding",
+    "rope": "rope",
     "exercises": "exercises",
     "evaluation-experimentale": "experimental-evaluation"
   };
@@ -86,5 +105,85 @@
   const githubItem = navbar.querySelector('a[href="https://github.com/JM-Brun/llm-lab"]')?.closest("li");
   if (githubItem) navbar.insertBefore(item, githubItem);
   else navbar.appendChild(item);
+})();
+
+/* Build a real breadcrumb from the active Quarto sidebar hierarchy.
+   The topic-specific pipeline steppers remain separate: they describe a process,
+   not the reader's location in the site. */
+(() => {
+  const pathname = window.location.pathname;
+  const basePath = pathname.startsWith("/llm-lab/") ? "/llm-lab/" : "/";
+  const siteRoot = new URL(basePath, window.location.origin);
+  const relativePath = pathname.slice(siteRoot.pathname.length).replace(/^\/+|\/+$/g, "");
+  if (!relativePath || relativePath === "index.html" || relativePath === "en" || relativePath === "en/index.html") return;
+
+  const language = document.documentElement.lang.toLowerCase().startsWith("en") ? "en" : "fr";
+  const sidebar = document.querySelector("#quarto-sidebar") || document.querySelector(".sidebar.sidebar-navigation");
+  if (!sidebar) return;
+  const sidebarLinks = Array.from(sidebar.querySelectorAll("a[href]"));
+  const currentPath = new URL(window.location.href).pathname.replace(/\/+$/, "");
+  const currentLink =
+    sidebarLinks.find((link) => {
+      try {
+        return new URL(link.href, document.baseURI).pathname.replace(/\/+$/, "") === currentPath;
+      } catch {
+        return false;
+      }
+    }) ||
+    sidebarLinks.find((link) => link.classList.contains("active") || link.getAttribute("aria-current") === "page");
+  if (!currentLink) return;
+
+  const trail = [];
+  let item = currentLink.closest("li");
+  while (item) {
+    const container = Array.from(item.children).find((child) => child.classList.contains("sidebar-item-container"));
+    const labelNode =
+      (container && Array.from(container.children).find((child) =>
+        child.matches("a, button, .sidebar-item-text, .sidebar-item-section")
+      )) ||
+      Array.from(item.children).find((child) => child.matches("a, button, .sidebar-item-text"));
+    const label = (labelNode?.textContent || "").replace(/\s+/g, " ").trim();
+    if (label && !trail.some((entry) => entry.label === label)) {
+      const rawHref = labelNode?.matches("a[href]") ? labelNode.getAttribute("href") : null;
+      const href = rawHref && !rawHref.startsWith("#") ? new URL(rawHref, document.baseURI).href : null;
+      trail.push({ label, href });
+    }
+    item = item.parentElement?.closest("li") || null;
+  }
+  trail.reverse();
+  if (!trail.length) return;
+
+  const homeLabel = language === "en" ? "Home" : "Accueil";
+  const homeTarget = language === "en" ? "en/index.html" : "index.html";
+  const nav = document.createElement("nav");
+  nav.className = "llm-breadcrumb";
+  nav.setAttribute("aria-label", language === "en" ? "Breadcrumb" : "Fil d’Ariane");
+  const list = document.createElement("ol");
+
+  const entries = [{ label: homeLabel, href: new URL(homeTarget, siteRoot).href }, ...trail];
+  entries.forEach((entry, index) => {
+    const listItem = document.createElement("li");
+    const isCurrent = index === entries.length - 1;
+    if (isCurrent) {
+      const current = document.createElement("span");
+      current.textContent = entry.label;
+      current.setAttribute("aria-current", "page");
+      listItem.appendChild(current);
+    } else if (entry.href) {
+      const link = document.createElement("a");
+      link.href = entry.href;
+      link.textContent = entry.label;
+      listItem.appendChild(link);
+    } else {
+      const label = document.createElement("span");
+      label.textContent = entry.label;
+      listItem.appendChild(label);
+    }
+    list.appendChild(listItem);
+  });
+
+  nav.appendChild(list);
+  const main = document.querySelector("main.content");
+  if (main && !main.querySelector(".llm-breadcrumb")) main.insertBefore(nav, main.firstChild);
 })();
 </script>

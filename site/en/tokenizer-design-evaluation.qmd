@@ -1,30 +1,75 @@
 ---
-title: "Evaluating and comparing tokenizers"
-subtitle: "Protocols, metrics, and multilingual evidence for interpreting trade-offs"
-keywords: ["type:deep-dive", "destination:deepen", "topic:tokenizer-evaluation", "level:advanced", "language:en", "status:published"]
+title: "Designing and evaluating a tokenizer"
+subtitle: "Vocabulary size, budgets, metrics, and multilingual equity"
+keywords: ["type:deep-dive", "destination:deepen", "topic:tokenization", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "en/tokenizer-evaluation"
-scope: "Covers tokenizer comparison protocols, metrics, limits of empirical results, and research and teaching resources; the concept lesson remains the source for segmentation strategies."
-purpose: "Readers should be able to choose metrics suited to a question, document a reproducible comparison, and distinguish representation length, system cost, and downstream quality."
+id: "en/tokenizer-design-evaluation"
+scope: "Explores the mechanisms of BPE, WordPiece, and Unigram families, then tokenizer design choices and empirical evaluation: vocabulary size, budgets, reproducibility, metrics, downstream results, and multilingual disparities."
+purpose: "Explain training and encoding differences between BPE, WordPiece, and Unigram; build an interpretable comparison protocol; and distinguish representation cost, system cost, and downstream quality without generalizing beyond the studied data and protocols."
+domain: "text-tokenization"
 suggested_route:
   previous: null
   next: null
 hierarchy:
-  parents: ["en/tokenization-strategies"]
+  parents: []
   children: []
-related: ["en/experimental-evaluation"]
-tags: ["type:deep-dive", "destination:deepen", "topic:tokenizer-evaluation", "level:advanced", "language:en", "status:published"]
+related: ["en/tokenization-strategies", "en/text-data", "en/unicode-text", "en/embedding-space", "en/scaling-laws"]
+tags: ["type:deep-dive", "destination:deepen", "topic:tokenization", "level:advanced", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
-This optional page develops a question raised by [tokenization strategies](tokenization-strategies.qmd): how can tokenizers be compared without conflating length, cost, and quality? The observations and studies depend on their corpora, languages, models, and protocols. See also [Experimental evaluation](experimental-evaluation.qmd) for general methodology.
+Understanding how a tokenizer segments text is not enough to select one or compare systems. Vocabulary size affects both sequence length and some model costs; compression metrics do not summarize downstream quality or differences across languages. This page brings together the design and evaluation questions that require a more advanced level of analysis.
 :::
 
-## Reproducible comparison
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this page, you will be able to:
+- explain how vocabulary size interacts with model parameters and training budgets;
+- build a reproducible comparison protocol;
+- distinguish representation length, system cost, and downstream quality;
+- interpret metrics and studies of multilingual disparities with appropriate caution.
+:::
+
+## WordPiece and Unigram: detailed mechanisms
+
+The [Tokenization strategies](tokenization-strategies.qmd) page already introduces the essential conceptual differences between BPE, WordPiece, and Unigram. This section revisits them only to examine training and encoding procedures in more depth, including implementation caveats.
+
+### How WordPiece differs from BPE
+
+In the common WordPiece training explanation, candidate adjacent units are ranked with a score related to how strongly they co-occur relative to the frequencies of their individual parts. A simplified form is:
+
+\\[\\operatorname{score}(a,b)=\\frac{f(ab)}{f(a)\\,f(b)}\\]
+
+where frequencies are estimated from the training corpus. This favours a pair whose joint frequency is high relative to the frequencies of its parts; it is not simply the most frequent pair, as in basic BPE. **Caveat:** Google's original WordPiece training procedure is not fully specified in a public reference implementation. Hugging Face presents its account as a reconstruction, so this formula is explanatory rather than a guarantee that every WordPiece trainer uses exactly this procedure.
+
+At encoding time, common WordPiece implementations use greedy **longest-match-first** search over the vocabulary. In BERT-style tokenizers, continuation pieces are conventionally prefixed with `##`. If the complete input word cannot be segmented under the configured rules, a tokenizer such as BERT may emit one `[UNK]` for the whole word rather than retain a partial segmentation. These are implementation conventions, not universal properties of every WordPiece tokenizer.
+
+See the [Hugging Face WordPiece explanation](https://huggingface.co/learn/llm-course/en/chapter6/6) and [WordPiece model documentation](https://huggingface.co/docs/tokenizers/python/latest/api/reference.html#tokenizers.models.WordPiece).
+
+### How Unigram differs from merge-based tokenizers
+
+A Unigram tokenizer starts from a relatively large candidate vocabulary with associated probabilities. Training iteratively removes candidates whose removal causes the smallest increase in the model's loss, reducing the vocabulary toward the target size. This is pruning over a probabilistic segmentation model—not a sequence of pair merges.
+
+At encoding time, several segmentations may be possible. The Viterbi algorithm finds the highest-probability segmentation under the learned model. This contrasts with BPE's application of a learned merge order and WordPiece's common greedy longest-match procedure. See the [Hugging Face Unigram explanation](https://huggingface.co/learn/llm-course/en/chapter6/7) and [SentencePiece](https://github.com/google/sentencepiece).
+
+
+## 1. Vocabulary size: architecture and budget
+
+A larger subword vocabulary can represent some texts with fewer tokens, but it changes more than sequence length. With hidden dimension \\(d\\) and vocabulary size \\(V\\), an input embedding table has \\(Vd\\) parameters. A separate output projection over the vocabulary commonly has another \\(Vd\\) parameters; this second count does not apply in the same way when input and output weights are tied. A larger \\(V\\) can therefore increase parameter and memory costs even as it shortens sequences.
+
+The training budget also changes what a comparison means:
+
+- **Fixed token budget:** models process the same number of token positions, but not necessarily the same number of passes over the same raw corpus.
+- **Fixed data passes (epochs):** models see the same corpus passes, but a tokenizer that produces longer sequences creates more training tokens and may require more computation.
+
+Takase et al. studied SentencePiece unigram vocabularies from 5k to 500k on English and Japanese, under both a fixed-token and a fixed-epoch setup. Larger vocabularies performed better in those experiments; with a fixed epoch, the smaller vocabularies produced substantially more training tokens, especially for Japanese. This is evidence about those models, languages, datasets, and training protocols—not a universal rule that the largest vocabulary is always best. See [Takase et al. (Findings of ACL 2025)](https://aclanthology.org/2025.findings-acl.57/).
+
+**Practical rule:** choose vocabulary size jointly with model architecture, language mix, data distribution, and compute budget. Compare both model quality and total system cost; token count alone is not enough.
+
+## 2. Reproducible comparison
 
 1. Fix the texts, encoding, cleaning, and document handling.
 2. Record the exact tokenizer, package version, encoding identifier, and parameters.
@@ -74,7 +119,7 @@ Research on multilingual tokenization costs does not always use the same metrics
 
 For fair comparison, report metrics by language and text type, and keep **representation cost**, **system cost**, and **task quality** separate. A shorter sequence is a real result, but it does not by itself demonstrate an overall improvement.
 
-## Evaluating a tokenizer: metrics, downstream performance, and multilingual equity {#tokenizer-evaluation}
+## 3. Evaluating a tokenizer: metrics, downstream performance, and multilingual equity {#tokenizer-evaluation}
 
 Comparing algorithms is not enough to establish whether a tokenizer is suitable for a use case. Several empirical questions must be separated; they do not collapse into one score.
 
@@ -102,10 +147,12 @@ The following papers are complementary: they do not all measure the same object 
 |---|---|---|---|
 | **Goldman et al. (2024)**, [*Unpacking Tokenization: Evaluating Text Compression and its Correlation with Model Performance*](https://aclanthology.org/2024.findings-acl.134/) | Is compression associated with model performance? | Empirically analyses the relationship between text compression and downstream results in the studied settings. | An experimental correlation does not establish a universal causal selection rule. |
 | **Schmidt et al. (2024)**, [*Tokenization Is More Than Compression*](https://aclanthology.org/2024.emnlp-main.40/) | Can a tokenizer be selected by minimizing length alone? | Highlights the limits of an objective reduced to compression and motivates other relevant properties. | This does not make length irrelevant: it answers a specific representation and cost question. |
-| **Arnett et al. (2025)**, [*Explaining and Mitigating Crosslingual Tokenizer Inequities*](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html) | Why do tokenization costs differ across languages? | Studies cross-lingual disparities and design factors that may mitigate them. | Findings depend on the languages, corpora, tokenizers, and protocols considered. |
-| **Chiu (ACL 2026)**, [*TokLens: A Multilingual Lens on Tokenizer Quality for LLMs*](https://aclanthology.org/2026.acl-srw.18/) | How can tokenizers be compared across languages and dimensions? | Proposes six intrinsic metrics and evaluates 24 tokenizers across 15 languages. The study finds no intrinsic metric predicts English benchmark results after controlling for model size; some metrics, especially single-token retention rate, are associated with per-language results on a multilingual benchmark. | A set of intrinsic metrics does not replace evaluation on the target tasks and deployment constraints. |
+| **Ali et al. (2024)**, [*Tokenizer Choice For LLM Training: Negligible or Crucial?*](https://aclanthology.org/2024.findings-naacl.247/) | Does tokenizer choice change decoder-only model performance and training cost? | Trains 2.6B decoder-only models with 24 tokenizer configurations on matched English-only and five-language corpora; downstream effects vary by task, language, tokenizer library/algorithm and vocabulary size. | Five European Latin-script languages, zero-shot evaluation, one seed and no per-tokenizer hyperparameter search; the reported 68% is one German training-cost comparison, not a universal inference penalty. |
+| **Wegmann et al. (2025)**, [*Tokenization is Sensitive to Language Variation*](https://aclanthology.org/2025.findings-acl.572/) | How do tokenizer components interact with variation within a language and task goals? | Controlled BERT-base/BPE experiments vary training corpus, pre-tokenizer and vocabulary size across lexical, orthographic, syntactic, dialectal and register variation; pre-tokenization has the largest aggregate effect in the tested tasks. | English encoder/classification experiments, not multilingual parity or decoder-only generation; effects are task-dependent and aggregate differences are modest. |
+| **Arnett et al. (2025)**, [*Explaining and Mitigating Crosslingual Tokenizer Inequities*](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html) | Why do tokenization costs differ across languages, even with comparable monolingual training? | Trains about 7,000 monolingual BPE/Unigram tokenizers across 97 languages; distinguishes crosslingual differences among monolingual tokenizers from multilingual shared-tokenizer effects. Language-specific vocabulary sizes and whitespace-crossing SuperBPE merges reduce token-premium variation in the tested compression setup. | Measures compression with CTC on FLORES-200; no LMs are trained, so downstream quality is not established. Parallel-data intervention covers seven languages and FLORES is translated from English. |
+| **Chiu (ACL 2026)**, [*TokLens: A Multilingual Lens on Tokenizer Quality for LLMs*](https://aclanthology.org/2026.acl-srw.18/) | How can tokenizers be compared across languages and dimensions? | Defines six intrinsic metrics and evaluates 24 model/tokenizer configurations across 15 languages (some models share a tokenizer). No metric predicts English benchmark results after controlling for model size; STRR, characters per token and parity are associated with per-language results on MMLU-ProX. | The MMLU-ProX analysis covers only 7 models and 11 languages. Associations are correlational and partly confounded by pretraining-data composition; they do not establish a causal tokenizer effect. |
 
-Goldman et al. and Schmidt et al. should not be reduced to a simplistic contradiction. The former studies empirical associations between compression and downstream results; the latter reminds us that compression does not summarize every relevant property. TokLens adds a complementary finding: observed relationships differ between English and multilingual benchmarks and remain correlational, with possible confounders such as pretraining-data composition. The methodological conclusion is to **measure separately the dimensions that correspond to the decision being made**.
+Goldman et al. and Schmidt et al. should not be reduced to a simplistic contradiction. The former studies empirical associations between compression and downstream results; the latter reminds us that compression does not summarize every relevant property. TokLens adds a complementary finding: observed relationships differ between English and multilingual benchmarks. Its MMLU-ProX analysis covers 7 models and 11 languages; the reported associations remain correlational and partly confounded by pretraining-data composition. The null result on English benchmarks may reflect a metric/benchmark mismatch and limited variation in English tokenizer metrics, not proof that tokenization is irrelevant. The methodological conclusion is to **measure separately the dimensions that correspond to the decision being made**.
 
 
 #### External research figure: representation length and execution time
@@ -196,10 +243,6 @@ This published illustration comes from the [Hugging Face course, “Building a t
 - [Raschka — repository, Chapter 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02): implementations and text-data preparation.
 - [Gage (1994), *A New Algorithm for Data Compression*](https://dl.acm.org/doi/10.5555/177910.177914): historical reference for byte-pair compression. Modern LLM tokenizers add conventions not fully specified by that paper alone.
 
-
-
-[Return to tokenization strategies](tokenization-strategies.qmd) · [Continue to embeddings](embedding-space.qmd)
-
 ::: {.language-switch}
-**Language:** [Français](../fr/tokenizer-evaluation.qmd) · [English](tokenizer-evaluation.qmd)
+**Language:** [Français](../fr/tokenizer-design-evaluation.qmd) · [English](tokenizer-design-evaluation.qmd)
 :::

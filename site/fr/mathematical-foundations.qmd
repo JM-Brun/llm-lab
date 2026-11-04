@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/mathematical-foundations"
 scope: "Fournit une carte mathématique synthétique reliant logits, probabilités par softmax, vraisemblance des tokens observés, cross-entropie, loss agrégée et gradients, avec une notation commune et les principales précautions d’interprétation. Elle oriente vers les pages canoniques sans constituer un cours de prérequis ni remplacer leurs démonstrations détaillées."
 purpose: "Suivre les grandeurs mathématiques des scores du modèle jusqu’aux gradients des paramètres, interpréter la notation et les équations communes, et expliquer pourquoi vraisemblance, entropie, cross-entropie, loss et gradients sont liés sans être interchangeables."
+domain: "probabilistic-foundations-training"
 suggested_route:
   previous: null
   next: "fr/tensors"
@@ -22,10 +23,6 @@ tags: ["type:deep-dive", "destination:deepen", "topic:mathematical-foundations",
 
 ::: {.chapter-lead}
 Un modèle autorégressif produit des **logits** pour le token suivant. Le softmax les transforme en probabilités ; le token observé détermine la vraisemblance et la perte ; le gradient de cette perte indique comment ajuster les paramètres. Ces étapes sont liées, mais chacune a un rôle précis.
-:::
-
-::: {.callout-note}
-**Rôle de cette page.** Il s'agit d'une carte synthétique des grandeurs mathématiques mobilisées pour la prédiction du token suivant, et non d'un cours de prérequis ni d'un substitut aux pages consacrées à chaque notion. Utilisez-la pour vous orienter, puis suivez les dérivations utiles à votre question.
 :::
 
 
@@ -91,6 +88,7 @@ Les pages individuelles dérivent chaque étape, donnent un exemple calculable e
 - Relier les probabilités observées à la [vraisemblance](vraisemblance.qmd) et à la [cross-entropie](cross-entropy.qmd).
 - Distinguer la perte par token de la [loss agrégée](loss.qmd).
 - Terminer par les [gradients](gradients.qmd), la règle de chaîne et la vérification numérique.
+- Pour la formalisation probabiliste détaillée — factorisation autorégressive, maximum de vraisemblance, cibles souples et divergence KL — consulter [les mathématiques de la modélisation du langage](language-modeling-math.qmd).
 
 ## Pour poursuivre
 

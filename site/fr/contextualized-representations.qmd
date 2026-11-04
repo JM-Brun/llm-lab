@@ -12,7 +12,7 @@ scope: "Explique comment les couches du Transformer transforment les embeddings 
 purpose: "Le lecteur doit pouvoir expliquer pourquoi deux occurrences d’un même token partagent un embedding initial mais peuvent avoir des représentations contextualisées différentes, et relier cette différence au traitement par les couches du Transformer."
 suggested_route:
   previous: "fr/positional-encoding"
-  next: "fr/queries-keys-values"
+  next: "fr/transformer"
 hierarchy:
   parents: ["fr/embedding-space", "fr/positional-encoding", "fr/transformer"]
   children: ["fr/queries-keys-values"]
@@ -21,16 +21,14 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 -->
 
 ::: {.chapter-lead}
-Un même ID de token sélectionne toujours la même ligne dans une matrice d'embeddings fixe. Pourtant, ce token peut jouer des rôles différents selon la phrase. La distinction essentielle est la suivante : **le lookup fournit un vecteur initial ; le Transformer construit ensuite des représentations qui dépendent du contexte**.
+Un même ID de token sélectionne toujours la même ligne dans une matrice d'embeddings (ou table de plongements) fixe. Pourtant, ce token peut jouer des rôles différents selon la phrase. La distinction essentielle est la suivante : **le lookup fournit un vecteur de plongement initial ; le Transformer construit ensuite des représentations qui dépendent du contexte**.
 :::
 
-Ce complément répond à une question précise, en marge de [la page principale sur l'espace des embeddings](embedding-space.qmd). Il approfondit un mécanisme sans interrompre le parcours principal des IDs vers les vecteurs, puis vers la géométrie des représentations.
 
 ![Vue d'ensemble du parcours du texte et des IDs à travers une table d'embeddings et le traitement positionnel jusqu'aux représentations contextualisées.](https://media.licdn.com/dms/image/v2/D4D12AQHkmEd7fMhztQ/article-cover_image-shrink_720_1280/B4DZ3YWKZfI0AM-/0/1777451187827?e=2147483647&t=ETNuRHmhKfKe0FYbI-a9g2NaUZ3QNv9xue4OYjI1qUs&v=beta){fig-alt="Pipeline schématique : le texte est tokenisé en IDs, les IDs sélectionnent des lignes d'une table d'embeddings apprise, l'information positionnelle est traitée, les couches d'attention traitent la séquence et produisent des représentations contextualisées." fig-cap="Vue d'ensemble de Rushang Chauhan. Le traitement positionnel est schématique : des architectures comme RoPE n'ajoutent pas simplement un vecteur de position à chaque embedding de token. Voir les explications ci-dessous et la page sur l'encodage positionnel." width=100%}
 
 Cette figure provient de l'article LinkedIn de Rushang Chauhan, [*Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/). Elle sert de carte d'orientation ; les sections suivantes précisent les distinctions architecturales qu'un schéma général simplifie nécessairement. La vérification des droits de réutilisation de cet actif précis est en attente dans [#156](https://github.com/JM-Brun/llm-lab/issues/156) ; l'illustration existante est conservée sans modification pendant cette vérification.
 
-Le pipeline de référence texte → IDs → lookup dans la table d'embeddings est présenté dans la [vue d'ensemble du texte aux tokens](text-data.qmd). Cette page se concentre sur la distinction supplémentaire entre embedding initial d'un token et état caché dépendant du contexte ; l'exemple original ci-dessous fournit la comparaison visuelle utile.
 
 ## Ce qui reste identique
 
@@ -39,7 +37,7 @@ Supposons que le token visible `bank` soit représenté par le même ID dans deu
 - “The river bank eroded.”
 - “The financial bank collapsed.”
 
-Sous cette hypothèse explicite, les deux occurrences récupèrent le même embedding initial :
+Sous cette hypothèse explicite, les deux occurrences récupèrent le même **vecteur de plongement initial** (embedding) :
 
 \[
 e_{\text{bank}} = E[\text{ID}_{\text{bank}}].
@@ -82,7 +80,7 @@ Cette illustration originale s'inspire de [Ethayarajh (2019), *How Contextual ar
 | Objet | De quoi dépend-il ? | Dépend-il du contexte ? |
 |---|---|---|
 | ID du token | Vocabulaire et règles du tokenizer | Non ; il identifie une entrée du vocabulaire |
-| Embedding initial du token | Ligne sélectionnée dans la matrice d'embeddings | Non, pour une matrice et un ID fixes |
+| Vecteur de plongement initial du token (embedding) | Ligne sélectionnée dans la matrice de plongements | Non, pour une matrice et un ID fixes |
 | État caché contextualisé | Représentation initiale, traitement positionnel, séquence environnante, architecture et couche | Oui, en général |
 
 Deux confusions fréquentes viennent du mélange de ces étapes :
@@ -97,13 +95,27 @@ Cela ne garantit pas non plus que le modèle représente les sens interprétés 
 Le parcours est le suivant :
 
 1. Le tokenizer transforme le texte en IDs de tokens.
-2. La table d'embeddings associe un vecteur initial à chaque ID.
+2. La table de plongements (table d'embeddings) associe un vecteur initial à chaque ID.
 3. L'architecture introduit l'information positionnelle selon ses choix.
 4. Les couches du Transformer produisent des états cachés dépendants du contexte.
 5. Les couches suivantes et la tête de sortie utilisent ces états pour prédire le token suivant.
 
-Pour retrouver l'exemple complet de lookup, les dimensions matricielles, le nombre de paramètres et la géométrie des représentations, retournez à [la page principale sur l'espace des embeddings](embedding-space.qmd). Pour approfondir le traitement de la séquence, poursuivez avec [Requêtes, clés et valeurs](queries-keys-values.qmd) puis [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd).
+Le [lookup dans l’espace des plongements (embeddings)](embedding-space.qmd) associe les IDs aux vecteurs initiaux ; [requêtes, clés et valeurs](queries-keys-values.qmd) puis l’[attention à produit scalaire mise à l’échelle](scaled-dot-product-attention.qmd) décrivent le traitement contextuel de la séquence.
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](exercises.qmd#transformer).
+
+Deux occurrences du **même ID de token** apparaissent dans deux phrases différentes. Sans changement de matrice d'embeddings :
+
+1. Les vecteurs obtenus par lookup sont-ils identiques ?
+2. Les états cachés après les couches du Transformer doivent-ils être identiques ? Pourquoi ?
+3. À quelle étape l'information du contexte intervient-elle ?
+
+Vous avez compris cette étape si vous pouvez expliquer la différence entre **identité du vecteur initial** et **dépendance contextuelle des états cachés**, sans attribuer au lookup lui-même une compréhension de la phrase.
 
 ::: {.language-switch}
 **Langue :** [Français](contextualized-representations.qmd) · [English](../en/contextualized-representations.qmd)
+:::
 :::

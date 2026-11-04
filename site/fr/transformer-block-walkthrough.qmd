@@ -1,0 +1,197 @@
+---
+title: "Visite guidée : le bloc Transformer (`transformer_block.py`)"
+subtitle: "Attention multi-têtes, MLP et chemins résiduels, dans l'ordre pré-LN"
+keywords: ["type:guided-build", "destination:build", "topic:reference-transformer-block", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/transformer-block-walkthrough"
+scope: "Explique ligne par ligne le fichier transformer_block.py : l'ordre pré-LN et ses chemins résiduels, l'initialisation mise à l'échelle des poids résiduels, le découpage en têtes par tranches de colonnes et le MLP position par position. Exclut les embeddings, la tête de sortie et la boucle de génération."
+purpose: "Le lecteur doit pouvoir tracer une forme à travers le bloc, expliquer pourquoi la normalisation est dans la branche et non sur le tronc, et décrire le rôle de chaque projection Q, K, V et O."
+suggested_route:
+  previous: "fr/gpt-ops-walkthrough"
+  next: "fr/gpt-model-walkthrough"
+hierarchy:
+  parents: ["fr/build-path"]
+  children: []
+related: ["fr/transformer", "fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/causal-masking", "fr/contextualized-representations"]
+tags: ["type:guided-build", "destination:build", "topic:reference-transformer-block", "level:applied", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Cette page est la troisième étape (3 sur 5) de la visite guidée du code de référence. Le bloc est l'unité répétée du réseau. Cette page suit le fichier ligne par ligne, de l'initialisation des paramètres jusqu'au `forward` complet. Code : [`src/llm_lab/foundations/transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py).
+:::
+:::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
+À l'issue de cette visite, vous pourrez :
+- tracer une forme `(B, T, d)` à travers le bloc, de l'entrée à la sortie ;
+- expliquer pourquoi la normalisation est dans la branche et non sur le tronc résiduel ;
+- décrire le rôle de chaque projection Q, K, V et O, et pourquoi les têtes restent isolées jusqu'à `w_o`.
+:::
+
+## La recette du bloc : pré-LN avec résidus
+
+```python
+x = x + self._attention(layer_norm(x, self.ln1_gamma, self.ln1_beta))
+return x + self._mlp(layer_norm(x, self.ln2_gamma, self.ln2_beta))
+```
+
+```{=html}
+<figure class="wf-fig" id="wf-block-map" data-wf-default="Le trait vert traverse le bloc sans transformation : c’est le tronc résiduel. Chaque branche (attention, MLP) ne fait qu’ajouter une correction calculée sur une copie normalisée — l’ordre pré-LN de GPT-2.">
+<figcaption class="wf-fig-title">Le chemin du signal dans le bloc : chaque ligne de code a sa branche</figcaption>
+<div class="wf-stage">
+<div class="wf-diagram">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 300" role="img" aria-labelledby="wfb-title wfb-desc">
+<title id="wfb-title">Chemin du signal dans un bloc Transformer pré-LN : tronc résiduel, branche d’attention, branche MLP</title>
+<desc id="wfb-desc">Le flux x traverse le bloc par le tronc vert. La branche d’attention normalise une copie, projette Q, K et V, découpe en H têtes de d/H colonnes, re-projette par w_o et s’ajoute au tronc. La branche MLP normalise une copie, élargit, active par GELU, re-projette et s’ajoute aussi. Les poids des branches sont tirés avec un écart-type réduit par la profondeur.</desc>
+<defs>
+<marker id="wfb-green" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#16A34A"/></marker>
+<marker id="wfb-ink" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#344054"/></marker>
+<marker id="wfb-violet" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#8B5CF6"/></marker>
+</defs>
+<g font-family="Arial,sans-serif">
+<g data-wf-part="br1 br2"><rect x="24" y="32" width="52" height="36" rx="8" fill="#DCFCE7" stroke="#16A34A" stroke-width="2"/><text x="50" y="56" text-anchor="middle" font-size="15" font-weight="700" fill="#14532D">x</text></g>
+<g data-wf-part="br1 br2"><path d="M76 50 H1044" stroke="#16A34A" stroke-width="6" fill="none" marker-end="url(#wfb-green)"/><text x="130" y="38" font-size="13" font-weight="700" fill="#14532D">tronc résiduel : x (B, T, d)</text></g>
+<g data-wf-part="br1"><path d="M120 50 V104" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
+<g data-wf-part="br1"><rect x="128" y="90" width="100" height="40" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="178" y="107" text-anchor="middle" font-size="13" font-weight="700" fill="#17212B">ln1</text><text x="178" y="123" text-anchor="middle" font-size="10" fill="#475569">normalise une copie</text></g>
+<g data-wf-part="br1"><path d="M228 110 H252" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
+<g data-wf-part="br1"><rect x="256" y="84" width="120" height="52" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="316" y="103" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#4C1D95">w_q, w_k, w_v</text><text x="316" y="122" text-anchor="middle" font-size="10" fill="#6D28D9">(d, d) chacune</text></g>
+<g data-wf-part="br1 heads"><path d="M376 110 H404" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
+<g data-wf-part="heads"><rect x="408" y="70" width="170" height="80" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1.5"/><text x="493" y="88" text-anchor="middle" font-size="13" font-weight="700" fill="#4C1D95">H têtes</text><rect x="418" y="96" width="150" height="10" rx="2" fill="#DDD6FE" stroke="#A78BFA" stroke-width="0.8"/><rect x="418" y="109" width="150" height="10" rx="2" fill="#EDE9FE" stroke="#A78BFA" stroke-width="0.8"/><rect x="418" y="122" width="150" height="10" rx="2" fill="#DDD6FE" stroke="#A78BFA" stroke-width="0.8"/><text x="493" y="146" text-anchor="middle" font-size="10" fill="#6D28D9">d/H colonnes chacune</text></g>
+<g data-wf-part="br1 heads"><path d="M578 110 H586" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
+<g data-wf-part="br1"><rect x="590" y="84" width="110" height="52" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="645" y="103" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#4C1D95">w_o (d, d)</text><text x="645" y="122" text-anchor="middle" font-size="10" fill="#6D28D9">mélange les têtes</text></g>
+<g data-wf-part="br1"><path d="M700 92 C 688 70, 648 58, 616 54" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
+<g data-wf-part="br1 br2"><circle cx="600" cy="50" r="14" fill="#fff" stroke="#16A34A" stroke-width="2.5"/><text x="600" y="56" text-anchor="middle" font-size="17" font-weight="700" fill="#14532D">+</text></g>
+<g data-wf-part="br2"><path d="M780 50 V104" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
+<g data-wf-part="br2"><rect x="788" y="90" width="100" height="40" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="838" y="107" text-anchor="middle" font-size="13" font-weight="700" fill="#17212B">ln2</text><text x="838" y="123" text-anchor="middle" font-size="10" fill="#475569">normalise une copie</text></g>
+<g data-wf-part="br2"><path d="M888 110 H912" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
+<g data-wf-part="br2"><rect x="916" y="76" width="150" height="68" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1.5"/><text x="991" y="94" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#4C1D95">fc1 : d &#8594; hidden</text><text x="991" y="112" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#6D28D9">gelu</text><text x="991" y="130" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#4C1D95">fc2 : hidden &#8594; d</text></g>
+<g data-wf-part="br2"><path d="M991 144 C 990 110, 982 78, 966 66" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
+<g data-wf-part="br1 br2"><circle cx="960" cy="50" r="14" fill="#fff" stroke="#16A34A" stroke-width="2.5"/><text x="960" y="56" text-anchor="middle" font-size="17" font-weight="700" fill="#14532D">+</text></g>
+<g data-wf-part="init"><rect x="270" y="240" width="330" height="40" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.8" stroke-dasharray="6 4"/><text x="435" y="265" text-anchor="middle" font-size="12.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#78350F">residual_std = 0.02 / √(2 × num_layers)</text></g>
+<g data-wf-part="init" stroke="#8B5CF6" stroke-width="1.6" stroke-dasharray="5 4" fill="none"><path d="M390 236 C 350 200, 320 170, 306 142" marker-end="url(#wfb-violet)"/><path d="M470 236 C 540 200, 608 164, 642 142" marker-end="url(#wfb-violet)"/><path d="M560 240 C 720 224, 900 176, 986 148" marker-end="url(#wfb-violet)"/></g>
+</g>
+</svg>
+</div>
+<div class="wf-panel">
+<p class="wf-hint">Survolez ou sélectionnez une ligne du code : sa branche s’allume dans le schéma, le reste s’assombrit. Au clavier : <kbd>Tab</kbd>, <kbd>Entrée</kbd> pour épingler, <kbd>Échap</kbd> pour libérer.</p>
+<div class="wf-chips" role="group" aria-label="Lignes du bloc">
+<button type="button" class="wf-chip" data-wf-links="br1" data-wf-note="Branche d’attention : ln1 prépare une copie normalisée de x, la sortie de w_o vient s’ajouter au tronc. L’identité reste le chemin par défaut : le bloc ne peut pas détruire son entrée.">x + _attention(ln1(x))</button>
+<button type="button" class="wf-chip" data-wf-links="br2" data-wf-note="Branche MLP : ln2 prépare une copie, fc1 élargit (d → hidden), GELU active, fc2 re-projette (hidden → d), puis la sortie s’ajoute au tronc, position par position.">x + _mlp(ln2(x))</button>
+<button type="button" class="wf-chip" data-wf-links="heads" data-wf-note="La tête h lit les colonnes h·(d/H) à (h+1)·(d/H) de Q, K et V : des tranches contiguës du même flux, jamais mélangées avant la projection w_o.">columns = slice(h·head_dim, …)</button>
+<button type="button" class="wf-chip" data-wf-links="init" data-wf-note="La profondeur L réduit l’écart-type des poids des deux branches (0.02/√(2L)) : la variance du tronc reste ≈ constante à travers toute la pile de blocs.">residual_std = 0.02/√(2L)</button>
+</div>
+<p class="wf-note" aria-live="polite">Le trait vert traverse le bloc sans transformation : c’est le tronc résiduel. Chaque branche (attention, MLP) ne fait qu’ajouter une correction calculée sur une copie normalisée — l’ordre pré-LN de GPT-2.</p>
+</div>
+</div>
+<figcaption class="wf-legend">
+<span class="wf-key"><span class="wf-swatch" style="background:#DCFCE7;border-color:#16A34A"></span>tronc résiduel (x traverse)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#F5F3FF;border-color:#8B5CF6"></span>paramètres des branches</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#FFFFFF;border-color:#334155"></span>lecture de branche (copie normalisée)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#FFFBEB;border-color:#B45309;border-top-style:dashed"></span>écart-type calibré par la profondeur</span>
+</figcaption>
+</figure>
+<script src="../includes/walkthrough-figures.js" defer></script>
+```
+
+
+Le bloc calcule deux mises à jour **additives** du même flux `x` :
+
+1. `x + attention(ln(x))` — la branche d'attention ;
+2. `x + mlp(ln(x))` — la branche MLP.
+
+La normalisation est **dans la branche**, pas sur le tronc. Le tronc (`x + ...`) porte donc toujours une copie non modifiée de l'entrée vers la sortie : l'identité est le défaut, chaque branche ne fait qu'*ajouter* une correction. C'est l'ordre **pré-LN** de GPT-2 — plus stable quand on empile beaucoup de blocs que l'ordre post-LN du Transformer original.
+
+## Initialiser : pourquoi `rng` est un argument
+
+```python
+    def __init__(self, config: GPTConfig, rng: np.random.Generator) -> None:
+        d = config.embedding_dim
+        self.num_heads = config.num_heads
+        self.head_dim = d // config.num_heads
+```
+
+- Le générateur `rng` est fourni par le modèle et partagé dans l'ordre d'empilement : les paramètres deviennent une **fonction déterministe de la configuration**.
+- `head_dim = d // H` : chaque tête possède `d/H` colonnes contiguës — les bornes de tranches sont recalculées dans `_attention`.
+
+::: {.callout-note collapse="true" title="Détail d'initialisation propre à GPT-2"}
+La variante de référence met à l'échelle l'écart-type des projections résiduelles en fonction de la profondeur :
+
+```python
+residual_std = 0.02 / math.sqrt(2.0 * config.num_layers)
+```
+
+Ce facteur vise à contrôler l'échelle des contributions accumulées le long des chemins résiduels. Il s'agit d'un choix d'initialisation hérité de GPT-2, pas d'une propriété mathématique nécessaire des blocs Transformer ni d'une garantie que la variance reste exactement constante.
+:::
+
+Vient ensuite la création des paramètres : les normalisations démarrent à l'identité (`gamma` à uns, `beta` à zéros), puis quatre matrices `(d, d)` pour les projections Q, K, V et O, et deux matrices pour le MLP (`d → mlp_hidden_dim → d`).
+
+## L'attention : des boucles explicites, pas par accident
+
+```python
+        q = linear(x, self.w_q, self.b_q)
+        k = linear(x, self.w_k, self.b_k)
+        v = linear(x, self.w_v, self.b_v)
+
+        mask = causal_mask(seq_len)
+        attended = np.empty_like(x)
+        for b in range(batch):
+            for h in range(self.num_heads):
+                columns = slice(h * self.head_dim, (h + 1) * self.head_dim)
+                head_out, _ = scaled_dot_product_attention(
+                    q[b, :, columns], k[b, :, columns], v[b, :, columns], mask=mask
+                )
+                attended[b, :, columns] = head_out
+        return linear(attended, self.w_o, self.b_o)
+```
+
+Ligne par ligne :
+
+- Q, K, V sont trois projections **du même `x`** ; chaque forme passe de `(B, T, d)` à `(B, T, d)`.
+- `causal_mask(seq_len)` autorise la position `i` à voir `j <= i` ; les positions futures reçoivent `-inf` (poids nuls après softmax).
+- `columns = slice(h * head_dim, (h+1) * head_dim)` : la tête `h` travaille sur ses propres colonnes — une **tranche**, pas une copie. Le découpage multi-têtes est de la simple répartition de colonnes sur les mêmes `d`.
+- Chaque paire `(b, h)` résout **un problème d'attention mono-tête** `(T, head_dim)` — exactement celui de la fonction testée `scaled_dot_product_attention`. Les boucles explicites rendent chaque forme inspectable (choix de clarté du jalon G4, pas de performance).
+- Les têtes ne se mélangent **jamais** jusqu'à la projection de sortie `w_o`, qui seule mélange l'information entre têtes.
+
+## Le MLP : élargir, activer, projeter
+
+```python
+    def _mlp(self, x: FloatArray) -> FloatArray:
+        hidden = gelu(linear(x, self.w_fc1, self.b_fc1))
+        return linear(hidden, self.w_fc2, self.b_fc2)
+```
+
+Chaque position passe seule dans `d → mlp_hidden_dim` (souvent `4d`), puis GELU, puis retour vers `d`. L'élargissement intermédiaire donne à chaque position un espace plus grand pour sa transformation non linéaire.
+
+::: {.callout-warning}
+**Idées reçues.** (1) « Les têtes voient ce que font les autres » : non — chaque tête est isolée jusqu'à `w_o`. (2) « La normalisation est cosmétique » : non — elle est dans la branche pour stabiliser le tronc résiduel quand la pile s'allonge.
+:::
+
+## Ce que les tests vérifient
+
+[`tests/unit/test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py) : le `forward` préserve la forme et reste fini ; une entrée non 3D est rejetée ; un nombre de têtes incohérent avec la largeur est rejeté.
+
+## Exercices
+
+1. Avec `d=16` et `H=2`, quelles colonnes de `q` la tête 1 lit-elle ?
+2. Pourquoi `attended` est-il alloué avec `np.empty_like(x)` plutôt que rempli de zéros ?
+
+<details>
+<summary>Afficher les réponses et le raisonnement</summary>
+
+1. Les colonnes 8 à 15 (`slice(8, 16)`) : chaque colonne n'appartient qu'à une tête, la répartition est contiguë.
+2. Chaque position de `attended` est écrite exactement une fois par la boucle (chaque couple `(b, h)` écrit sa tranche pour toutes les positions) ; aucune cellule n'est lue avant d'être écrite, donc l'initialisation à zéro serait du travail inutile.
+</details>
+
+## Connexions
+
+- **Étape précédente** : [les briques numériques (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
+- **Étape suivante** : [l'assemblage du GPT (`gpt.py`)](gpt-model-walkthrough.qmd) — où les blocs sont empilés.
+- **Pages conceptuelles** : [vue d'ensemble GPT et Transformer](transformer.qmd), [Q/K/V](queries-keys-values.qmd), [attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), [masquage causal](causal-masking.qmd), [représentations contextualisées](contextualized-representations.qmd).
+- **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
+- **Code source** : [`transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py) · **Tests** : [`test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py).
+
+::: {.language-switch}
+**Langue :** [Français](transformer-block-walkthrough.qmd) · [English](../en/transformer-block-walkthrough.qmd)
+:::

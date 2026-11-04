@@ -8,140 +8,146 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer"
-scope: "Follows an autoregressive GPT computation inside the network—from token context through embeddings, positional information, Transformer blocks, attention, and output scores to logits; it does not treat generation as a black-box loop or parameter learning as its main subject."
-purpose: "Readers should be able to trace a token context through the network to the logits, explain the role of the main operations in a Transformer block, and distinguish initial embeddings, contextualized representations, and output scores."
+scope: "Follows an autoregressive GPT computation inside the network, from input representations to logits, focusing on Transformer blocks, self-attention, the MLP, residual connections, and normalization; text preparation and the generation loop are located but not retaught."
+purpose: "Readers should be able to describe one forward pass, explain the operations in a Transformer block, distinguish depth from width, and identify logits as the network output without conflating that pass with decoding or generation."
 suggested_route:
-  previous: "en/llm-overview"
-  next: "en/generation"
+  previous: "en/contextualized-representations"
+  next: "en/queries-keys-values"
 hierarchy:
-  parents: ["en/llm-overview"]
-  children: ["en/text-data", "en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/queries-keys-values", "en/logits", "en/tensors", "en/transformer-explainer"]
-related: []
+  parents: ["en/index", "en/llm-overview"]
+  children: ["en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/queries-keys-values", "en/logits", "en/tensors", "en/transformer-explainer"]
+related: ["en/text-data", "en/transformer-block-walkthrough"]
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
-A **GPT** is a language model based on an autoregressive Transformer: given a context of tokens, it estimates a distribution over the next token. To understand the system, distinguish the data flow, the learned parameters, and the generation loop. This page provides the overview; linked concept pages explain individual operations.
+A **GPT** is a language model built on an autoregressive Transformer: it receives a sequence of tokens — the context — and computes, at each position, an unnormalized score (*logit*) for every token in the vocabulary. A probability distribution can be derived from these scores. This page focuses on the computation performed by the network, from input representations to logits. It distinguishes that computation from the inference loop that selects and appends successive tokens.
 :::
 
-::: {.callout-note}
-This page focuses on a **Transformer-based GPT**; it does not describe every LLM family. For the broader picture of architectures, pretraining, adaptation, and inference, start with the [LLM panorama](llm-overview.qmd).
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+You will be able to:
+- trace the computation from an input token sequence to the logits, identifying embeddings and positional information;
+- explain the distinct roles of self-attention and the MLP in a Transformer block;
+- distinguish contextualized representations, logits, and the selected token;
+- distinguish depth, width, number of heads, and internal MLP dimensions.
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
-A GPT repeats the same loop: **represent the context → compute a distribution over the next token → select a token → append it to the context**. Attention lets positions exchange information; learned parameters determine the transformations being applied.
+## The whole path, in one diagram
 
-**First pass:** inspect the diagram, read sections 1–3, and remember this loop. You can leave the equations and interactive explorer for a second visit.
+![Simplified flow of an autoregressive GPT, from tokens to next-token selection.](../images/gpt-data-flow.svg){fig-alt="Conceptual pipeline: text, tokenization, embeddings and position, repeated Transformer blocks, logits, softmax, next-token choice, then addition to the context." width=100%}
 
-**Where this page fits:** it follows the [LLM panorama](llm-overview.qmd) and zooms in on a GPT computation. If the transition from raw text to tokens and embeddings is still unclear, read [From text to tokens](text-data.qmd) first or alongside it: that page explains the pipeline's input, while this page follows computation inside the network.
+This diagram locates the Transformer within the complete system. **This page zooms in on the computation performed by the network**, from its input representations to the logits; it does not reteach text preparation or the next-token selection loop.
 
-**Go deeper:** follow the attention calculation, try the interactive explorer, then use the linked concept pages. The mathematical details are optional depth, not an entry fee.
-:::
+For the model-family overview and learning stages, see the [LLM panorama](llm-overview.qmd). For the inference loop and decoding, see [generating text](generation.qmd). The [architecture comparison](transformer-architectures.qmd) places decoder-only GPT among the other families.
 
-## The full path, at a glance
+## 1. From token IDs to input representations
 
-![Simplified data flow of an autoregressive GPT, from tokens to next-token selection.](../images/gpt-data-flow-en.svg){fig-alt="Conceptual pipeline: text, tokenization, embeddings and position, repeated Transformer blocks, logits, softmax, next-token selection, then adding the token to the context." width=100%}
+The network does not receive raw text: it receives a sequence of token IDs, mapped to vectors by an embedding table. Positional information is also incorporated, either into the embeddings or into the attention computation, depending on the architecture. Transformer blocks then turn these vectors into contextualized representations: the same token can contribute to different states depending on its context.
 
-The diagram shows the conceptual path of generation. It intentionally omits implementation details such as residual connections, normalization, the key-value cache (KV cache), and sampling variants.
-
-## 1. From text to representations
-
-A tokenizer maps text to token IDs. An embedding matrix maps each ID to a learned vector. Positional information is also supplied, for example by adding a positional vector or by integrating position into attention as in [RoPE](positional-encoding.qmd).
-
-An initial token embedding is not the same as a **contextual representation**: Transformer layers progressively update vectors using context. See [embedding space](embedding-space.qmd) for the representation basics, then explore [representation geometry and interpretability](embedding-space.qmd): [cosine similarity](cosine-similarity.qmd) and the [linearity hypothesis](embedding-linearity.qmd). [Tensors](tensors.qmd) explain how these representations are organised in computation.
+This section provides only the landmarks needed to follow the network computation. The canonical explanations are separate: [text and tokenization](text-data.qmd), [embedding space](embedding-space.qmd), [positional information](positional-encoding.qmd), and [contextualized representations](contextualized-representations.qmd). For tensor shapes and dimensions, see [Tensors](tensors.qmd).
 
 ## 2. Transformer blocks
 
-A block combines two main operations:
+The core of the network is a stack of identical blocks. Each block combines two operations:
 
-- **Self-attention:** each position combines information from allowed positions. In GPT, a causal mask prevents access to future tokens.
-- **Feed-forward network (MLP):** applies the same learned transformation independently to each position at this stage.
+- **Self-attention:** each position draws from previous positions the information that refines its representation. For example, when interpreting *it* in “Adam puts the ice cream in the freezer because it was melting”, attention can bring information about *the ice cream* into the representation at *it*. In GPT, a causal mask forbids reading future tokens.
+- **Feed-forward network (MLP):** a small neural network applied to each position separately, with the same weights everywhere. It typically combines linear projections with a nonlinear activation to produce a transformed representation; the exact design varies by architecture.
 
-Blocks also include residual connections and normalization. Their exact order depends on the architecture: the diagram is an abstraction, not a specification of any particular model.
+Blocks also use **residual connections** and **normalization**. A residual connection adds a correction computed by a sublayer to the representation flowing through the network, rather than replacing that representation entirely. It therefore provides a direct path for information and gradients:
 
-![Comparison of the roles of self-attention and the feed-forward network in a Transformer block.](../images/attention-vs-mlp-en.svg){fig-alt="Self-attention allows information to flow between allowed positions; the same feed-forward network is applied independently at each position." width=100%}
+\[
+x_{\text{out}} = x_{\text{in}} + F(x_{\text{in}}).
+\]
 
-The important distinction is not that attention “understands” tokens while the MLP does not: both transformations are learned. Attention mixes information across positions; the MLP transforms each representation locally, with shared weights across positions.
+Normalization (*LayerNorm* in classic GPT models) centers and normalizes the hidden-vector components of each position independently of other positions. Depending on the architecture, it is placed before or after selected sublayers. A typical **pre-LN** block, for example, uses $x' = x + \operatorname{Attention}(\operatorname{LN}(x))$, followed by $x'' = x' + \operatorname{MLP}(\operatorname{LN}(x'))$. This is one design, not a universal formula: pre-LN/post-LN order and normalization variants differ across models.
 
-### Follow the attention calculation
+To see these operations in a concrete implementation without mistaking them for invariants of every Transformer, consult the [guided tour of the reference block](transformer-block-walkthrough.qmd).
 
-![Visual steps of attention: scores, optional mask, softmax and weighted sum of values.](../images/attention-calculation-flow-en.svg){fig-alt="Queries and keys produce scores. After scaling and optional masking, softmax creates weights that combine values into output vectors." width=100%}
+![Comparison of the roles of self-attention and the feed-forward network in a Transformer block.](../images/attention-vs-mlp.svg){fig-alt="Self-attention allows exchanges between allowed positions; the same feed-forward network is applied separately to each position." width=100%}
 
-These links suggest a reading order, not the order of every model operation: for example, RoPE acts on Q and K before their scores are calculated.
+The useful distinction is not that attention "understands" the tokens while the MLP does not: both transformations are learned. Attention mixes information across positions; the MLP transforms each representation locally, with weights shared across positions.
 
-1. [**Queries, keys, and values (Q, K, V)**](queries-keys-values.qmd) — three learned projections give representations distinct roles.
-2. [**Scaled dot-product attention**](scaled-dot-product-attention.qmd) — scores from $QK^\top$ are scaled by $\sqrt{d_k}$ and converted into weights by softmax.
-3. [**Causal masking**](causal-masking.qmd) — excludes future positions before softmax.
-4. [**Positional information**](positional-encoding.qmd) — supplies information about token order; the [positional encoding and RoPE lesson](positional-encoding.qmd) explains the mechanism in detail.
+A useful mental model is that **attention gathers a context-dependent mixture of information from other positions**, while the **MLP processes the representation now available at each position**. The first operation exchanges information across positions; the second transforms each position independently. This is only an analogy: attention computes weighted sums of learned value vectors, not a literal search or collection of human-readable notes.
 
-Attention weights are not a complete explanation of a prediction. They describe one aggregation step; projections, values, other heads, later layers, and the output projection also contribute.
+**Multi-head attention** performs several attention computations in parallel and then combines their results. For the essential learning path, it is enough to remember that it provides multiple complementary computational pathways.
 
-## 3. From representations to probabilities
+::: {.callout-note collapse="true" title="Going deeper: how attention heads work"}
+Each head has its own learned query, key, and value projections. Heads *can* therefore learn different matching patterns or exploit different relationships. Their outputs are concatenated and then mixed by an output projection. Do not assume that every head has a clean, human-interpretable specialization: that is an empirical question, not a guarantee of the architecture.
+:::
 
-After the blocks, an output projection produces **logits**—unnormalized scores associated with the vocabulary. Softmax converts them into a probability distribution. A normalized distribution is not automatically calibrated or factually reliable: see [logits](logits.qmd), [probabilities](probabilities.qmd), and [likelihood](likelihood.qmd).
+### Depth and width: two architectural dimensions
 
-During generation, a selection rule chooses the next token: greedy selection, sampling, or a more elaborate method. The selected token is appended to the context, and the model runs again. Generation is therefore **autoregressive**; the model does not produce the whole response in a single prediction.
+Two terms are commonly used to describe the size of a Transformer:
 
-<!-- Stable anchors for material moved to the guided exploration. -->
-<span id="a-guided-four-part-exploration"></span>
-<span id="controlled-experiments-move-from-observation-to-testing"></span>
-<span id="read-transformer-explainers-source-code"></span>
-<span id="critical-audit-a-visualization-is-not-a-specification"></span>
-<span id="what-this-demonstration-does-and-does-not-establish"></span>
+- **Depth:** the number of Transformer blocks stacked in the network.
+- **Width:** the dimension of the representations flowing between blocks. In a classic GPT, this usually corresponds to `d_model`, often called the *hidden size* or residual-stream dimension.
 
-## Observe a Transformer in action
+These terms are not interchangeable with other internal dimensions: the **number of attention heads** tells you how many attention mechanisms run in parallel; `d_head` is the dimension of each head’s vectors; and `d_ff` is the intermediate MLP dimension, which can be larger than `d_model`.
 
-The external **Transformer Explainer** shows an execution of GPT-2 small. It illustrates a specific model and is neither causal proof nor a test of LLM Lab code. The [guided exploration and audit of its limitations](transformer-explainer.qmd) are optional.
+*Width* is sometimes used more broadly for other internal dimensions, so check which dimension an article or model card means. For tensor shapes and projection dimensions, see [Tensors](tensors.qmd); for a concrete configuration, see the [GPT configuration walkthrough](gpt-config-walkthrough.qmd). Depth and width describe network structure, but neither alone predicts model performance.
 
-## Training and generation are not the same computation
+Self-attention allows permitted positions to exchange information. Its detailed computation — Q/K/V projections, scores, scaling, softmax, and causal masking — is covered in the canonical lessons on [Q/K/V](queries-keys-values.qmd), [scaled dot-product attention](scaled-dot-product-attention.qmd), and [causal masking](causal-masking.qmd). Positional information may be added to embeddings or incorporated into queries and keys (see [positional information](positional-encoding.qmd)).
 
-During training, positions in an autoregressive sequence can be processed in parallel because the input-target shift and causal mask prevent future-token leakage. During ordinary generation, each next token depends on the context currently available, so the model advances step by step. Optimizations such as the KV cache avoid recomputing keys and values that have already been produced.
+## 3. From representations to logits
 
-The objective—predicting the next token—remains the same, but the computation is organized differently.
+After the final block, an output projection produces the **logits**: one unnormalized score per vocabulary token. The [logits lesson](logits.qmd) explains how to interpret them; the [output probabilities lesson](probabilities.qmd) covers their transformation into a distribution. This page stops at the network output: selecting the next token, appending it to the context, and repeating the process belong to [autoregressive generation](generation.qmd).
 
-## Limitations and common misconceptions
+## Check your understanding
 
-- **“A GPT is just an attention layer.”** No. It is an architecture with embeddings, repeated blocks, feed-forward transformations, residual connections, normalization, and an output head.
-- **“Tokens are words.”** Not necessarily: a token can be a word, word fragment, punctuation mark, or another text fragment.
-- **“A high probability guarantees a true answer.”** No. The distribution is learned to predict tokens in training data; factuality and calibration require separate evaluation.
-- **“Attention weights reveal the model's reasoning by themselves.”** No. They do not establish the causal influence of a piece of information on the final output.
-- **“All Transformers are GPTs.”** No. The original 2017 architecture used an encoder and a decoder; GPT is an autoregressive decoder-only family.
+This check focuses on the network computation, not on decoding, which is covered in the [generation lesson](generation.qmd).
 
-## Continue learning
+1. Which operation lets a position incorporate information from other positions, and which one transforms each position independently?
+2. Why does a residual connection not replace the transformation computed by a sublayer?
 
-- [Tensors](tensors.qmd) — read data shapes and axes.
-- [Embedding space](embedding-space.qmd) — distinguish initial vectors from contextual representations.
-- [Queries, keys, and values](queries-keys-values.qmd) — understand attention projections.
-- [Scaled dot-product attention](scaled-dot-product-attention.qmd) — follow the mathematical operations.
-- [Causal masking](causal-masking.qmd) — understand access to the preceding context.
-- [Mathematical foundations](mathematical-foundations.qmd) — connect logits, probabilities, likelihood, and loss.
-- [History of Transformers](transformer-history.qmd) — place architecture choices in context.
+<details>
+<summary>Show answers and reasoning</summary>
 
-## Further reading, selected by purpose
+1. Self-attention mixes information across permitted positions; the MLP applies a position-wise transformation with shared weights.
+2. The residual connection adds the sublayer output to its input: $x_{out}=x_{in}+F(x_{in})$. It preserves a direct path through the block while allowing the sublayer to contribute a learned transformation.
 
-You do not need to consume every resource. Choose one that answers your current question; return to the others when you want a different explanation or more technical depth.
+</details>
 
-### Build intuition with visuals
+## Explore in practice
 
-- [3Blue1Brown — *Transformers, the tech behind LLMs*](https://www.3blue1brown.com/lessons/gpt/): an animated system-level explanation of embeddings, Transformer blocks, logits, and generation.
+The [GPT-2 exploration workshop](transformer-explainer.qmd) lets you observe these mechanisms on a real model: run controlled experiments and examine the limits of the visualization. It is an independent analysis exercise — useful, but not required to follow the flow described here.
+
+## Training and inference: two different organizations of computation
+
+During autoregressive training, the causal mask allows predictions for different positions in a sequence to be computed in parallel, using shifted inputs and targets. During generation, successive **token-production steps** are sequential because each new token depends on the previous one; a forward pass can nevertheless process all positions in the currently available context in parallel.
+
+Window construction, shifted inputs and targets, and training masks are detailed in [Training examples](training-examples.qmd). The costs of prefill, decoding, and the KV cache are covered in the [computational complexity deep dive](llm-computational-complexity.qmd).
+
+## Limits and misconceptions
+
+- **"A GPT is just an attention layer."** No: it is an architecture with embeddings, repeated blocks, feed-forward transformations, residual connections, normalizations, and an output head.
+- **"Tokens are words."** Not necessarily: a token can be a word, a word fragment, a punctuation sign, or another fragment.
+- **"A high probability guarantees a true answer."** No: the distribution is learned to predict tokens observed in the data; factual truth and calibration require other evaluations.
+- **"Attention weights alone reveal the model's reasoning."** No: they do not establish the causal influence of a piece of information on the output.
+- **"All Transformers are GPTs."** No: the original 2017 architecture used an encoder and a decoder; GPT is an autoregressive decoder-only family.
+
+## To go further
+
+### Building intuition with visualizations
+
+- [3Blue1Brown — *Transformers, the tech behind LLMs*](https://www.3blue1brown.com/lessons/gpt/): an animated explanation of the system, from embeddings through Transformer blocks to logits and generation.
 - [3Blue1Brown — *Attention in transformers, step by step*](https://www.3blue1brown.com/lessons/attention/): a focused visual explanation of attention, masking, multiple heads, and cross-attention.
-- [Jay Alammar — *The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/): a step-by-step visual explanation of the **original encoder–decoder Transformer**. Use it to understand the 2017 design, not as a diagram of every modern GPT.
-- [Jay Alammar — *The Illustrated GPT-2*](https://jalammar.github.io/illustrated-gpt2/): a more directly relevant visual walkthrough of a decoder-only GPT-style model.
+- [Jay Alammar — *The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/): a step-by-step visual explanation of the **original encoder–decoder Transformer**. It illuminates the 2017 design but does not represent all modern GPTs.
+- [Jay Alammar — *The Illustrated GPT-2*](https://jalammar.github.io/illustrated-gpt2/): a visual presentation more directly related to decoder-only GPT-style models.
 
-### Connect equations to an implementation
+### Connecting equations to an implementation
 
-- [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762): the primary paper for the original Transformer formulation. It describes an encoder–decoder architecture; GPT is a later decoder-only family.
-- [Harvard NLP — *The Annotated Transformer*](https://nlp.seas.harvard.edu/annotated-transformer/): an annotated, executable implementation aligned with the original paper. It is valuable for connecting equations to code, but its architecture and training choices should not be treated as a specification for all modern LLMs.
-- [PyTorch — Scaled dot-product attention](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html): the API contract for one operation, not a full explanation or implementation of a Transformer.
+- [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762): the primary paper describing the original Transformer formulation. It presents an encoder–decoder architecture; GPT is a later decoder-only family.
+- [Harvard NLP — *The Annotated Transformer*](https://nlp.seas.harvard.edu/annotated-transformer/): an executable, annotated implementation tied to the original paper. It helps connect equations to code, but its architecture and training choices do not define all modern LLMs.
+- [PyTorch — scaled dot-product attention](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html): the API contract of one operation, not a full explanation or implementation of a Transformer.
 
-### Follow a structured learning path
+### Following a structured path
 
 - [Sebastian Raschka — *Build a Large Language Model (From Scratch)*](https://www.sebastianraschka.com/llms-from-scratch/) and [the source repository](https://github.com/rasbt/LLMs-from-scratch): a book-and-code path through data, attention, GPT implementation, pretraining, and fine-tuning. Use it as a substantial reference, not as the mandatory order of this site.
 - [Raschka — reading recommendations](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch01/reading-recommendations.md): advice on first building a big-picture understanding, then reading alongside code.
-- [DeepLearning.AI — *How Transformer LLMs Work*](https://www.deeplearning.ai/courses/how-transformer-llms-work): a compact video course by Jay Alammar and Maarten Grootendorst, including tokenization, embeddings, attention, modern block components, and selected efficiency variants. Course access and terms may change.
+- [DeepLearning.AI — *How Transformer LLMs Work*](https://www.deeplearning.ai/courses/how-transformer-llms-work): a compact video course by Jay Alammar and Maarten Grootendorst covering tokenization, embeddings, attention, modern block components, and selected efficiency variants. Course access and terms may change.
 
-These sources have different jobs: visual resources build intuition, the primary paper records the original formulation, annotated code exposes implementation choices, and API documentation specifies one library contract. They are complementary, not interchangeable. Where an explanation simplifies or an implementation makes a convention-specific choice, check the assumptions and scope before generalizing it.
+These resources are complementary, not interchangeable: visualizations build intuition, the primary paper records the original formulation, annotated code exposes implementation choices, and API documentation specifies one library contract.
 
-:::: {.language-switch}
+::: {.language-switch}
 **Language:** [Français](../fr/transformer.qmd) · [English](transformer.qmd)
-::::
+:::

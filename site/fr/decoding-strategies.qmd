@@ -1,0 +1,155 @@
+---
+title: "Stratégies avancées de décodage"
+subtitle: "Température, échantillonnage tronqué, recherche et compromis qualité-diversité"
+keywords: ["type:deep-dive", "destination:deepen", "topic:decoding", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/decoding-strategies"
+scope: "Étudie les transformations appliquées à la distribution du prochain token et les méthodes de recherche de séquences : température, top-k, nucleus sampling, greedy/beam search et décodage contrastif ; discute les compromis qualité-diversité et les exigences de reproductibilité."
+purpose: "Le lecteur doit pouvoir distinguer transformation de distribution et recherche de séquence, expliquer les mécanismes de température/top-k/top-p, analyser les limites des objectifs de vraisemblance pour la génération ouverte et documenter un protocole de décodage."
+domain: "inference-efficiency"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/generation", "fr/logits", "fr/probabilites", "fr/evaluation-experimentale"]
+tags: ["type:deep-dive", "destination:deepen", "topic:decoding", "level:advanced", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+La page [Générer du texte](generation.qmd) présente le mécanisme indispensable : produire une distribution conditionnelle, sélectionner un token, l'ajouter au contexte et recommencer. Cette page facultative étudie les choix plus fins qui transforment cette distribution ou recherchent des séquences. Ils ne modifient pas les paramètres du modèle, mais changent la distribution effective des sorties et les compromis entre diversité, cohérence et fidélité à la consigne.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+À l’issue de cette page, vous pourrez :
+- distinguer réglage de la distribution token par token et recherche de séquences ;
+- expliquer température, top-k et nucleus sampling ;
+- comprendre pourquoi maximiser la vraisemblance ne suffit pas à optimiser la qualité d'un texte ouvert ;
+- comparer les familles de méthodes sans supposer qu'une stratégie est universellement meilleure ;
+- documenter les paramètres nécessaires à une expérience reproductible.
+:::
+
+## 1. Où intervient le décodage ?
+
+À une étape donnée, le modèle produit des logits $z$ pour le prochain token. Une chaîne de traitements peut ensuite :
+
+1. transformer les logits ou les probabilités (par exemple avec une température) ;
+2. restreindre l'ensemble des tokens candidats (par exemple top-k ou top-p) ;
+3. renormaliser les probabilités conservées ;
+4. sélectionner le prochain token, par argmax ou échantillonnage.
+
+Cette représentation est conceptuelle. Les bibliothèques peuvent appliquer plusieurs *logits processors* et *warpers* dans un ordre déterminé par l'implémentation. Cet ordre compte : appliquer une température avant ou après une troncature ne produit pas nécessairement le même résultat.
+
+Il faut distinguer deux opérations :
+
+- **Transformer une distribution locale :** modifier les probabilités candidates à une position.
+- **Rechercher une séquence :** comparer plusieurs continuations sur plusieurs étapes, en accumulant leurs scores.
+
+## 2. Température : contrôler la concentration
+
+Pour une température $T>0$, les probabilités sont calculées à partir des logits divisés par $T$ :
+
+\[
+p_i(T)=\operatorname{softmax}\left(\frac{z}{T}\right)_i.
+\]
+
+- $T=1$ conserve la distribution issue des logits.
+- $0<T<1$ accentue les écarts : la distribution devient plus concentrée.
+- $T>1$ réduit les écarts : la distribution devient plus plate.
+- Lorsque $T$ tend vers zéro, la sélection se rapproche d'un argmax (hors cas d'égalité et effets numériques).
+
+La température règle la dispersion des choix, pas la qualité intrinsèque du modèle. Une température basse ne garantit pas une réponse vraie ; une température élevée ne garantit pas la créativité. Elle peut aussi modifier la calibration des probabilités et la diversité des séquences.
+
+## 3. Échantillonnage tronqué : top-k et nucleus (top-p)
+
+L'échantillonnage ancestral pur peut sélectionner des tokens de très faible probabilité. Les méthodes de troncature réduisent l'ensemble des candidats avant de tirer au sort.
+
+### Top-k : un nombre fixe de candidats
+
+Top-k conserve les $k$ tokens ayant les probabilités les plus élevées, met les autres probabilités à zéro, puis renormalise les probabilités restantes.
+
+La taille du support est fixe, mais la masse de probabilité conservée varie selon la forme de la distribution. Le même $k$ peut donc être très restrictif à une étape et beaucoup moins à une autre.
+
+### Nucleus sampling : une masse de probabilité cible
+
+Top-p (ou *nucleus sampling*) conserve le plus petit ensemble de tokens les plus probables dont la masse cumulée atteint ou dépasse le seuil $p$. Le nombre de candidats varie donc avec la distribution :
+
+- distribution très concentrée : le noyau peut être petit ;
+- distribution plus diffuse : le noyau peut être plus grand.
+
+La méthode a été proposée pour éviter de choisir dans la longue traîne peu fiable tout en conservant une diversité adaptée à l'incertitude locale. Elle ne constitue toutefois pas une garantie de cohérence globale.
+
+### Ce que ces filtres changent
+
+Top-k et top-p redistribuent la probabilité conditionnelle sur un sous-ensemble. Ils peuvent réduire certains tokens indésirables, mais ils excluent aussi des continuations possibles. C'est un compromis entre précision et rappel au niveau des continuations : une distribution filtrée n'est plus la distribution originale du modèle.
+
+::: {.callout-note collapse="true" title="Implémentation NumPy et tests (approfondissement)"}
+L'[implémentation de référence NumPy](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/decoding_filters.py) et ses [tests unitaires](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_decoding_filters.py) couvrent les deux filtres de cette section : `top_k_filter` (support fixe de $k$ candidats) et `top_p_filter` (plus petit ensemble dont la masse cumulée atteint ou dépasse $p$, token franchissant le seuil inclus). Les deux renormalisent la distribution conservée ; les égalités sont départagées par l'indice le plus bas (tri stable), donc de façon déterministe.
+
+Cette référence filtre une distribution de probabilités déjà calculée, à une position (par exemple la sortie d'un softmax avec température). Depuis le branchement optionnel dans la boucle de génération, `generate(..., greedy=False, top_k=..., top_p=...)` applique la température puis la troncature (top-k puis top-p) avant le tirage ; en mode glouton, les filtres sont validés mais ignorés. Il n'y a ni chaîne configurable de *logits processors*, ni beam search, ni décodage contrastif, ni pénalités. L'ordre « température puis troncature » appliqué est une convention pédagogique, pas un standard d'implémentation.
+
+Les tests vérifient la renormalisation, l'équivalence top-k(1) = sélection gloutonne, l'inclusion du token qui franchit le seuil, l'adaptation de la taille du noyau à la forme de la distribution, l'effet de l'ordre température → filtre, le déterminisme, la non-mutation de l'entrée et le rejet des distributions invalides. Ils valident le périmètre annoncé, pas l'optimalité d'un réglage pour une tâche donnée.
+:::
+
+## 4. Sélection gloutonne, beam search et génération ouverte
+
+**Greedy decoding** sélectionne le token le plus probable à chaque étape. Il est simple et déterministe, mais le choix local ne maximise pas nécessairement la probabilité de la meilleure séquence complète. Une erreur ou un choix myope peut orienter toute la continuation.
+
+**Beam search** conserve plusieurs préfixes candidats et développe les continuations les mieux notées selon un score cumulé. Il effectue une recherche approximative dans l'espace des séquences ; ce n'est pas simplement un argmax indépendant à chaque position. Il est utile dans certains problèmes contraints (traduction, transcription, sorties structurées), mais la maximisation de vraisemblance peut produire des textes ouverts courts, génériques ou répétitifs.
+
+Holtzman et al. montrent que les méthodes de maximisation, notamment beam search dans leurs expériences de génération ouverte, peuvent dégénérer malgré une bonne vraisemblance locale. Leur résultat ne signifie pas que beam search est toujours mauvais : la tâche, le score, les contraintes et le protocole d'évaluation déterminent sa pertinence.
+
+## 5. Décodage contrastif : comparer un modèle expert et un modèle amateur
+
+Le *contrastive decoding* propose de comparer les scores d'un modèle expert plus grand et d'un modèle amateur plus petit. L'idée est de favoriser les continuations mieux soutenues par l'expert que par l'amateur, tout en imposant une contrainte de plausibilité pour éviter des tokens trop improbables selon l'expert.
+
+Cette méthode illustre un changement de fonction de score, plutôt qu'une simple transformation de la distribution d'un modèle unique. Elle ne nécessite pas nécessairement un nouvel entraînement, mais elle demande plusieurs modèles et augmente le coût d'inférence. Les résultats publiés sont dépendants des modèles, des tâches et des protocoles évalués ; ils ne démontrent pas une supériorité universelle.
+
+## 6. Évaluer le compromis qualité-diversité
+
+Il n'existe pas de réglage optimal indépendant de la tâche. Une stratégie adaptée à une complétion créative peut être inadaptée à une extraction factuelle, une traduction ou une génération sous contraintes.
+
+Les évaluations doivent séparer plusieurs dimensions :
+
+- **Qualité / adéquation :** la sortie répond-elle à la consigne et respecte-t-elle les contraintes ?
+- **Cohérence :** les dépendances locales et globales sont-elles préservées ?
+- **Diversité :** les sorties se ressemblent-elles excessivement entre elles ?
+- **Répétition :** le texte boucle-t-il ou répète-t-il des segments ?
+- **Fidélité probabiliste :** quelle probabilité le modèle attribue-t-il aux tokens ou séquences observés ?
+
+La perplexité ne résume pas ces dimensions. Une stratégie peut améliorer certains jugements humains ou certaines métriques de séquence tout en dégradant d'autres propriétés. Les travaux sur les *sampling adapters* analysent notamment les compromis entre précision et rappel induits par la modification des distributions locales.
+
+::: {.callout-warning title="Précaution d'interprétation"}
+Les résultats de Holtzman et al. concernent principalement la génération ouverte et les modèles/protocoles étudiés. Les conclusions ne se transfèrent pas automatiquement à la traduction, au code, à la génération structurée ou aux LLM modernes avec post-traitement complexe. Comparer des stratégies exige de garder constants le modèle, le prompt, le corpus, les contraintes et le protocole d'évaluation.
+:::
+
+## 7. Rendre une comparaison reproductible
+
+Pour comparer deux configurations, consigner au minimum :
+
+- identifiant et version du modèle, tokenizer et bibliothèque d'inférence ;
+- prompt exact, contexte disponible et règles de troncature ;
+- température, top-k, top-p et ordre des traitements ;
+- graine aléatoire, si l'implémentation permet de la contrôler ;
+- nombre maximal de tokens, critères d'arrêt et pénalités éventuelles ;
+- nombre de générations par prompt et protocole d'évaluation ;
+- métriques automatiques et, si possible, consignes d'évaluation humaine.
+
+Ne comparer que les noms de paramètres (« température 0,7 » ou « top-p 0,9 ») est insuffisant si les autres traitements, leurs ordres ou les versions logicielles diffèrent.
+
+## Références de recherche
+
+- Holtzman et al. (2020), [*The Curious Case of Neural Text Degeneration*](https://arxiv.org/abs/1904.09751), ICLR — analyse de la dégénérescence en génération ouverte et proposition du nucleus sampling.
+- Nadeem et al. (2020), [*A Systematic Characterization of Sampling Algorithms for Open-ended Language Generation*](https://aclanthology.org/2020.aacl-main.36/), AACL-IJCNLP — propriétés communes et compromis qualité-diversité des méthodes d'échantillonnage.
+- Meister et al. (2023), [*On the Efficacy of Sampling Adapters*](https://aclanthology.org/2023.acl-long.80/), ACL — cadre unifié pour analyser les transformations des distributions d'échantillonnage.
+- Li et al. (2023), [*Contrastive Decoding: Open-ended Text Generation as Optimization*](https://aclanthology.org/2023.acl-long.687/), ACL — fonction de score contrastive entre modèle expert et amateur.
+- Welleck et al. (2020), [*Consistency of a Recurrent Language Model With Respect to Incomplete Decoding*](https://aclanthology.org/2020.emnlp-main.448/), EMNLP — analyse théorique de l'incohérence de certaines stratégies de décodage pour les modèles récurrents ; ne pas généraliser sans précaution à toute architecture Transformer.
+
+::: {.language-switch}
+**Langue :** [Français](decoding-strategies.qmd) · [English](../en/decoding-strategies.qmd)
+:::

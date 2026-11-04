@@ -26,9 +26,12 @@ SOFTWARE.
 
 ## Content — Creative Commons Attribution-ShareAlike 4.0
 
-All non-code content (Quarto pages, documentation, illustrations, and text)
-is licensed under the
+Project-owned non-code content (Quarto pages, documentation, illustrations,
+and text) is licensed under the
 [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
 
 You are free to share and adapt the material, provided you give appropriate
 credit, indicate changes, and distribute contributions under the same license.
+
+Third-party material retains its own licence or other applicable terms. This
+licence does not grant rights that the project or its contributors do not hold.
