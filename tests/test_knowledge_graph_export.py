@@ -54,7 +54,7 @@ def test_relation_mapping_preserves_non_taxonomic_semantics() -> None:
 def test_export_provenance_names_canonical_sources() -> None:
     payload = build_graph()
     export = next(
-        node for node in payload["@graph"] if node.get("@id") == f"{BASE}/data/knowledge-graph.jsonld"
+        node for node in payload["@graph"] if node.get("@id") == f"{BASE}/knowledge-graph.jsonld"
     )
 
     assert export["@type"] == "prov:Entity"
