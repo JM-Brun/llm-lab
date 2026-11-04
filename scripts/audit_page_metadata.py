@@ -131,8 +131,7 @@ def render_report(result: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "A page with no graph relations is not necessarily misplaced: "
-            "independent entry points",
+            "A page with no graph relations is not necessarily misplaced: independent entry points",
             "reference resources, and optional branches may be intentionally weakly connected.",
             "",
             "## Possible scope or purpose overlap",
