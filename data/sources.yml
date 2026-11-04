@@ -75,6 +75,7 @@ sources:
       concepts: [query, key, value, self-attention, softmax, contextualized-representation]
       audit_records:
         - docs/source-reviews/qkv-nishanthan-devto-2026-11.md
+        - docs/source-reviews/qkv-learning-graph-comparison-2026-11.md
 
   - id: huggingface-transformers-kv-cache-explanation
     title: "Caching"
