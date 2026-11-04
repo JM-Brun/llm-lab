@@ -190,6 +190,7 @@ Candidate graph nodes/edges must be marked as proposals. Reuse known IDs and rel
 - Each scanned source has stable identity, provenance, scope, status and limitations.
 - Items originating in comments or embedded community discussion preserve a distinct voice, parent-source locator and independent verification status; they are never silently attributed to the primary author.
 - Each retained item is atomic, traceable and scoped.
+- For instructional sources, the local concept/process graph and pedagogical route are reconstructed, or explicitly marked not applicable; inferred outcomes and edges are labelled.
 - Analogies, visuals, experiments, datasets and code have relevant metadata and rights/reproducibility status.
 - Scanned, partial, linked-only, inaccessible and rejected sources are distinguished.
 - Historical sources are reconciled when initialization is in scope.
