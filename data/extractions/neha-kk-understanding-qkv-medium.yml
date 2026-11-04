@@ -34,10 +34,10 @@ pedagogical_model:
       - {id: src-attention-map, kind: visualization, description: "Attention maps are proposed as a way to inspect token-to-token weights.", locator: "Why Q, K, and V Are So Powerful"}
       - {id: src-contextual-output, kind: representation, description: "Representation enriched by information aggregated from other positions.", locator: "Step 4 and conclusion"}
       - {id: src-transformer-applications, kind: application-domain, description: "Attention is described as a mechanism used in language, vision, speech and multimodal systems.", locator: "Why Q, K, and V Are So Powerful"}
-      - {id: src-figure-1, kind: visual-artifact, description: "Caption identifies a self-attention diagram between tokens using Q, K and V; visual content is unavailable.", locator: "Fig. 1 caption"}
-      - {id: src-figure-2, kind: visual-artifact, description: "Caption identifies a diagram of linear projections into Q, K and V; visual content is unavailable.", locator: "Fig. 2 caption"}
-      - {id: src-figure-2b, kind: visual-artifact, description: "An additional full-size-image placeholder appears after the introduction of three vectors; its subject is unknown.", locator: "After 'Three different vectors from the same embedding where:'"}
-      - {id: src-figure-3, kind: visual-artifact, description: "Caption identifies a scaled dot-product attention computation figure; visual content is unavailable.", locator: "Fig. 3 caption"}
+      - {id: src-figure-1, kind: visualization, description: "Caption identifies a self-attention diagram between tokens using Q, K and V; visual content is unavailable.", locator: "Fig. 1 caption"}
+      - {id: src-figure-2, kind: visualization, description: "Caption identifies a diagram of linear projections into Q, K and V; visual content is unavailable.", locator: "Fig. 2 caption"}
+      - {id: src-figure-2b, kind: visualization, description: "An additional full-size-image placeholder appears after the introduction of three vectors; its subject is unknown.", locator: "After 'Three different vectors from the same embedding where:'"}
+      - {id: src-figure-3, kind: visualization, description: "Caption identifies a scaled dot-product attention computation figure; visual content is unavailable.", locator: "Fig. 3 caption"}
     edges:
       - {from: src-token-representations, type: projected-into, to: src-query}
       - {from: src-token-representations, type: projected-into, to: src-key}
@@ -57,9 +57,6 @@ pedagogical_model:
       - {from: src-pronoun-example, type: illustrates, to: src-key}
       - {from: src-attention-map, type: visualizes, to: src-attention-weights}
       - {from: src-contextual-output, type: used-in, to: src-transformer-applications}
-      - {from: src-figure-1, type: intended-to-illustrate, to: src-query}
-      - {from: src-figure-2, type: intended-to-illustrate, to: src-projection-matrices}
-      - {from: src-figure-3, type: intended-to-illustrate, to: src-weighted-value-sum}
     interpretation: "Source-local reconstruction from article prose and equations; relationships are editorial interpretations, not an author-defined formal ontology. The article's database analogy does not establish literal retrieval or a nearest-neighbour algorithm."
   learning_outcomes:
     - {status: inferred, outcome: "Explain the functional distinction between query, key and value.", basis: "The article's analogy and role descriptions."}
