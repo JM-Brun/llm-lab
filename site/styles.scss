@@ -152,6 +152,11 @@ details > :last-child { margin-bottom: .15rem; }
   stroke: #B45309;
   stroke-dasharray: 5 3;
 }
+.llm-flow .flow-node-g2 rect {
+  fill: #FFFBEB;
+  stroke: #B45309;
+  stroke-dasharray: 5 3;
+}
 .llm-flow .flow-node a:hover rect,
 .llm-flow .flow-node a:focus rect {
   fill: #DCFCE7;
