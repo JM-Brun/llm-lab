@@ -27,7 +27,8 @@ for tools_dir in (SCRIPT_DIR, ROOT / "site" / "tools"):
         sys.path.insert(0, str(tools_dir))
         break
 
-from check_page_metadata import _load_page, validate as validate_page_metadata
+from check_page_metadata import _load_page  # noqa: E402
+from check_page_metadata import validate as validate_page_metadata  # noqa: E402
 
 TOKEN = re.compile(r"[^\W\d_]{3,}", re.UNICODE)
 STOPWORDS = {
@@ -258,10 +259,12 @@ def render_report(result: dict[str, Any]) -> str:
                 "",
                 f"- Published language pages: **{topology['page_count']}**",
                 f"- Suggested-route edges: **{topology['route_edge_count']}**",
-                f"- Pages participating in a suggested route: **{topology['route_participant_count']}**",
+                "- Pages participating in a suggested route: "
+                f"**{topology['route_participant_count']}**",
                 f"- Route starts: **{len(topology['route_starts'])}**",
                 f"- Route ends: **{len(topology['route_ends'])}**",
-                f"- Pages outside the suggested route: **{len(topology['outside_suggested_route'])}**",
+                "- Pages outside the suggested route: "
+                f"**{len(topology['outside_suggested_route'])}**",
                 f"- Unrooted route participants: **{len(topology['unrooted_route_pages'])}**",
                 "",
                 "**Starts**",
@@ -348,7 +351,10 @@ def render_report(result: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "A page with no graph relations is not necessarily misplaced: independent entry points,",
+            (
+                "A page with no graph relations is not necessarily misplaced: "
+                "independent entry points,"
+            ),
             "reference resources, and optional branches may be intentionally weakly connected.",
             "",
             "## Possible scope or purpose overlap",
