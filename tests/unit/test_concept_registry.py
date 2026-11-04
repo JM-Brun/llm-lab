@@ -121,7 +121,6 @@ def test_generalization_cycles_are_rejected_but_application_cycles_are_allowed()
     assert not any("applies-to" in error for error in errors)
 
 
-
 def test_domain_registry_rejects_missing_bilingual_fields_and_duplicate_ids() -> None:
     data = {
         "schema_version": 1,
