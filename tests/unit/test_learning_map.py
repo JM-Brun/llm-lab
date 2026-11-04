@@ -269,6 +269,7 @@ def test_build_serializes_deepen_domain(tmp_path: Path) -> None:
 
     assert rope["domain"] == "architectures-mechanisms"
 
+
 def test_learning_map_browser_script_has_valid_javascript_and_fallback_target() -> None:
     """Catch syntax errors that would prevent the browser map from initializing."""
     import shutil
