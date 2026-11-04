@@ -47,6 +47,8 @@ A homepage visit does not mean the whole site was scanned. Register exact pages 
 
 Read beyond the abstract, introduction, README or conclusion. Inspect relevant equations, tables, figures, appendices, supplementary material, linked primary sources, code and tests.
 
+Record the retrieval channel for each inspected artifact: direct canonical page, publisher API/feed, author-controlled mirror, repository source, or search index. Search-index text is useful for discovery and partial extraction, but it is not direct page retrieval; label it explicitly, retain the index/mirror limitations, and do not promote a source to `scanned` when intended content or media remains uninspected. If a mirror or profile snapshot conflicts with current indexed metadata, record the discrepancy and prefer neither silently.
+
 Assess according to source type:
 - research: methods, assumptions, data, supplementary material, replication and later critique;
 - APIs/implementation: official documentation and pinned source;
