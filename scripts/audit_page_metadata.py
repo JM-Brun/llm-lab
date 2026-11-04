@@ -16,6 +16,8 @@ from typing import Any
 
 import yaml
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
 from check_page_metadata import _load_page
 
 ROOT = Path(__file__).resolve().parents[1]
