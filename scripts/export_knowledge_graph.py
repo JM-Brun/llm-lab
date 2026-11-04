@@ -91,6 +91,15 @@ def _jsonld_literal(value: str, language: str) -> dict[str, str]:
     return {"@value": value, "@language": language}
 
 
+def relation_predicate(kind: str) -> str:
+    """Return the SKOS or project predicate for a typed concept relation."""
+    if kind not in RELATION_TYPES:
+        raise ValueError(f"Unsupported relation type: {kind}")
+    if kind == "generalizes":
+        return "skos:narrower"
+    return "llmlab:" + re.sub(r"-(.)", lambda match: match.group(1).upper(), kind)
+
+
 def build_graph() -> dict[str, Any]:
     """Build a stable JSON-LD graph from canonical YAML and published pages."""
     concepts_data = yaml.safe_load(CONCEPTS.read_text(encoding="utf-8"))
@@ -174,17 +183,12 @@ def build_graph() -> dict[str, Any]:
         source = f"{BASE}/id/concept/{relation['from']}"
         target = f"{BASE}/id/concept/{relation['to']}"
         kind = relation["type"]
-        if kind not in RELATION_TYPES:
-            raise ValueError(f"Unsupported relation type: {kind}")
-        if kind == "generalizes":
-            graph.append({"@id": source, "skos:narrower": {"@id": target}})
-        else:
-            predicate = re.sub(r"-(.)", lambda match: match.group(1).upper(), kind)
-            graph.append({"@id": source, f"llmlab:{predicate}": {"@id": target}})
+        predicate = relation_predicate(kind)
+        graph.append({"@id": source, predicate: {"@id": target}})
 
     # Provenance is intentionally limited to the generated export and its
     # canonical source artifacts; it does not assert claim-level evidence.
-    export_uri = f"{BASE}/data/knowledge-graph.jsonld"
+    export_uri = f"{BASE}/knowledge-graph.jsonld"
     activity_uri = f"{BASE}/id/activity/knowledge-graph-export"
     source_uris = [
         f"{BASE}/source/data/concepts.yml",
