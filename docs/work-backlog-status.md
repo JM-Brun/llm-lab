@@ -311,3 +311,25 @@ This addendum records the two concept-to-code implementation lots merged after �
 5. Continue #78/#58/#79–#84 only within their existing ownership and prerequisite gates. In particular, no end-to-end training implementation is evidenced; the private prerequisite review still gates new implementation.
 6. Keep P2 browser reviews #320/#329/#337 and other rendered accessibility checks distinct from source-level completion. Do not claim browser, accessibility or learner evidence unless the corresponding review actually ran.
 
+
+
+## 17. Follow-up execution — 2026-11-04
+
+### Updated evidence and status
+
+- **PR #419 — reliability and onboarding:** the latest head `5e149e8380f0f04ffa80f8ca6d29a5e0033b4212` passes both hosted workflows: [Python CI](https://github.com/JM-Brun/llm-lab/actions/runs/41845168934) and [Quarto site](https://github.com/JM-Brun/llm-lab/actions/runs/41845169222). Its description reports 162 local tests plus Ruff, formatting and mypy. The independent learner pilot and full responsive/accessibility review remain outstanding. **Do not merge the new `LICENSE.md` terms until the maintainer explicitly confirms rights ownership and approves MIT for project-owned code plus CC BY-SA 4.0 for project-owned prose.** Third-party and unresolved visual material remain excluded.
+- **PR #424 — guided route vs exploratory graphs (#415):** source implementation is complete and the PR is ready for review. It defines six bilingual conceptual stages and optional deep dives in the canonical `docs/learning-path.md` block; resolves core/optional page IDs against published metadata; renders a semantic route above the page and concept graphs; and preserves the separate practical Build path. The latest head `43a5ff408149f484bb11bdda1456ee5365d5776a` passes [Python CI](https://github.com/JM-Brun/llm-lab/actions/runs/41847174648) and [bilingual Quarto render, graph export and local-link checks](https://github.com/JM-Brun/llm-lab/actions/runs/41847174106). **#415 remains open** until review/merge; rendered browser, mobile, keyboard and touch inspection remains under #337/#417 and is not established by CI.
+- **PR #421 — backlog reconciliation:** merged; this section supersedes the earlier §16 statement that hosted CI for #419 had not yet run.
+- **PR #414 / #418:** keep the dependency recorded in §16; do not start the extension until #414 is merged.
+- **#420:** bilingual softmax/temperature ownership and text-data/tokenization learning-outcome correction remain the next editorial implementation lot, coordinated with #79 and #147.
+- **#416 / #417:** remain separate from #415. #416 owns typed concept-relation semantics and layout; #417 owns interaction parity, focus recovery, responsive behavior and error/reset states.
+
+### Next recommended execution order
+
+1. Complete the maintainer's licence-scope decision on #419; merge only after that decision and final diff review.
+2. Review and merge #424 after its source diff review. Then schedule the dedicated rendered FR/EN browser session under #337/#417; do not claim this from the successful Quarto render.
+3. Continue #416 as a bounded concept-graph semantics/layout change, reusing `data/concepts.yml` and avoiding a false prerequisite DAG.
+4. Continue #417 as a separate interaction/accessibility change after the graph view is stable.
+5. Implement #420 as a bilingual content-only lot, preserving mathematical detail and interactive learning value.
+6. Keep #320/#329 and other P2 rendered reviews separate from source-level completion. Preserve the #78/#58/#79–#84 implementation ownership and prerequisite gates.
+
