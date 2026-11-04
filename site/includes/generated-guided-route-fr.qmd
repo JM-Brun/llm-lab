@@ -15,7 +15,7 @@ Comprendre ce qu'est un LLM et observer une génération complète avant d'en é
 
 - [Architectures Transformer : encodeur, encodeur-décodeur et décodeur](transformer-architectures.html)
 
-::
+:::
 
 ::: {.guided-route-stage}
 
@@ -33,7 +33,7 @@ Distinguer texte, tokenisation, vocabulaire et identifiants de tokens dans la co
 - [Unicode, UTF-8 et normalisation du texte](unicode-text.html)
 - [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.html)
 
-::
+:::
 
 ::: {.guided-route-stage}
 
@@ -52,7 +52,7 @@ Suivre la consultation des embeddings, l'information positionnelle et la context
 - [Tenseurs dans un Transformer : formes et axes](tensors.html)
 - [RoPE : géométrie, dérivation et limites](rope.html)
 
-::
+:::
 
 ::: {.guided-route-stage}
 
@@ -71,7 +71,7 @@ Relier Q/K/V, les poids d'attention, l'agrégation et le masquage causal sans co
 
 - [Attention croisée : faire communiquer deux séquences](cross-attention.html)
 
-::
+:::
 
 ::: {.guided-route-stage}
 
@@ -90,7 +90,7 @@ Relier logits, distribution de probabilité, vraisemblance et sélection du proc
 
 - [Stratégies avancées de décodage](decoding-strategies.html)
 
-::
+:::
 
 ::: {.guided-route-stage}
 
@@ -109,6 +109,6 @@ Découvrir les objectifs de perte et les gradients, puis examiner les preuves, m
 
 - [Lois d'échelle : paramètres, données et calcul](scaling-laws.html)
 
-::
+:::
 
 ::::

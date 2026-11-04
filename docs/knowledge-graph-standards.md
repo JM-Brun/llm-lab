@@ -2,7 +2,7 @@
 
 **Status:** implemented projection, 2026-11-04  
 **Canonical sources:** `data/concepts.yml`, `data/domains.yml`, `data/resources.yml`, and published `LLM-LAB-PAGE-MAP v1` blocks.  
-**Generated interchange:** `site/knowledge-graph.jsonld` via `scripts/export_knowledge_graph.py`.
+**Generated interchange:** `site/knowledge-graph.jsonld` via `site/tools/export_knowledge_graph.py`.
 
 ## 1. Design decision
 
@@ -93,14 +93,14 @@ This establishes dataset-level build provenance. It does **not** establish which
 From the repository root:
 
 ```bash
-uv run python scripts/check_resource_registry.py
-uv run python scripts/export_knowledge_graph.py
+uv run python site/tools/check_resource_registry.py
+uv run python site/tools/export_knowledge_graph.py
 uv run pytest
 ```
 
 The exporter is deterministic: it does not embed wall-clock timestamps or environment-specific paths. The generated `site/knowledge-graph.jsonld` must not be hand-edited.
 
-`scripts/check_concept_registry.py` continues to validate concept/page relations; `scripts/check_resource_registry.py` validates resource identity, controlled kind/status, BCP 47 structural syntax including unique extension singletons (without a live IANA registry lookup), bilingual metadata, local/external locations, published-page references, provenance fields, and concept-resource links. Local paths must use canonical repository-relative POSIX segments and resolve to files inside the repository after symlink resolution; external HTTP(S) URLs are syntax-checked, including port validity, without network access. Export tests check the standards projection, stable identifiers, bilingual labels, resource/page/concept links and provenance structure. After Quarto rendering, `scripts/check_knowledge_graph_rendered.py` verifies that the JSON-LD resource was copied into the published output, required node types are present, and internal graph references resolve. A future SHACL layer is justified only if the RDF graph itself becomes a maintained validation boundary.
+`site/tools/check_concept_registry.py` continues to validate concept/page relations; `site/tools/check_resource_registry.py` validates resource identity, controlled kind/status, BCP 47 structural syntax including unique extension singletons (without a live IANA registry lookup), bilingual metadata, local/external locations, published-page references, provenance fields, and concept-resource links. Local paths must use canonical repository-relative POSIX segments and resolve to files inside the repository after symlink resolution; external HTTP(S) URLs are syntax-checked, including port validity, without network access. Export tests check the standards projection, stable identifiers, bilingual labels, resource/page/concept links and provenance structure. After Quarto rendering, `site/tools/check_knowledge_graph_rendered.py` verifies that the JSON-LD resource was copied into the published output, required node types are present, and internal graph references resolve. A future SHACL layer is justified only if the RDF graph itself becomes a maintained validation boundary.
 
 ## 7. Model ownership boundaries
 
@@ -110,6 +110,6 @@ The exporter is deterministic: it does not embed wall-clock timestamps or enviro
 - Non-page resource identities and concept/page associations: `data/resources.yml`.
 - Learning sequence, implementation prerequisites and milestone evidence: `docs/learning-path.md`.
 - Historical events, source evidence and genealogy: `data/history-pilot.yml` and `docs/history-data-model.md`.
-- Reader-facing projections: `scripts/build_learning_map.py` and the JSON-LD exporter.
+- Reader-facing projections: `site/tools/build_learning_map.py` and the JSON-LD exporter.
 
 Never infer a concept from a page heading, a prerequisite from sidebar order, or historical influence from chronology alone.

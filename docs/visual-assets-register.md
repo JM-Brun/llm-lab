@@ -13,13 +13,9 @@ Attribution establishes provenance; it does not by itself grant permission. Conv
 
 ## Repository-level licensing finding
 
-At the snapshot date, GitHub repository metadata reported no declared repository licence (`license: null`), and no root `LICENSE`, `COPYING`, or `NOTICE` file was found. The later [LICENSE.md](../LICENSE.md) specifies terms for project-owned code and prose, but excludes third-party material and images with unestablished provenance. This update does not resolve the asset-level questions below or assert what GitHub's license detector will report.
+[LICENSE.md](../LICENSE.md) offers project code under MIT and original project-authored prose in Quarto pages and documentation under CC BY-SA 4.0. The CC BY-SA grant explicitly excludes all non-text assets, including the 32 local SVGs under `site/images/`, until authorship, adaptation history, and rights are confirmed and an asset-level licence is recorded. Externally hosted figures and other third-party material remain subject to their respective rights holders' terms; attribution or a source link is not, by itself, permission to reuse an asset.
 
-Consequences:
-- Do not assume that the project's own SVGs are automatically available for third-party reuse merely because they are versioned here or described as original.
-- Establish the authorship/provenance of each local asset from its history and contribution context before applying an asset-specific licence.
-- Do not claim that external figures are covered by the repository licence.
-- This is a project governance issue, not a reason to remove or disable any current asset.
+The licence boundary does not resolve the asset-level questions below, and it does not imply that any unresolved visual asset has been cleared. Do not remove, replace, hide, or disable an existing illustration solely because its rights are uncertain. Preserve it unchanged while provenance and permissions are investigated.
 
 ## Externally hosted images currently embedded
 
