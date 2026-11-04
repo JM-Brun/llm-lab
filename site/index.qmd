@@ -46,6 +46,8 @@ Les grands modèles de langage (LLM) sont une famille de modèles neuronaux entr
 
 La pratique soutient les trois profondeurs pédagogiques ; elle ne constitue pas une quatrième profondeur. Le parcours conceptuel et le parcours d’implémentation suivent des ordres différents. Leur articulation est documentée dans le [parcours d’apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
 
+Pour visualiser les pages, leurs notions et leurs relations, consultez la [carte interactive du parcours](fr/learning-map.qmd).
+
 ## Lire une leçon
 
 Les leçons utilisent trois repères pour distinguer les types de contenu :

@@ -1,0 +1,338 @@
+<script>
+(() => {
+  const root = document.querySelector("[data-learning-map]");
+  if (!root) return;
+
+  const language = root.dataset.language || "en";
+  const copy = language === "fr" ? {
+    columns: ["Comprendre", "Construire", "Approfondir", "Pratiquer et consulter"],
+    route: "Parcours suggéré",
+    hierarchy: "Hiérarchie pédagogique",
+    related: "Pages associées",
+    concepts: "Notions repérées dans la page",
+    purpose: "Rôle dans le parcours",
+    open: "Ouvrir la page",
+    empty: "Aucune page ne correspond à ces filtres.",
+    count: (shown, total) => shown + " page(s) affichée(s) sur " + total + ".",
+    loadError: "La carte n’a pas pu être chargée. Vérifiez que les données ont été générées pendant le rendu Quarto.",
+    unknown: "Page"
+  } : {
+    columns: ["Understand", "Build", "Deepen", "Practice and reference"],
+    route: "Suggested route",
+    hierarchy: "Pedagogical hierarchy",
+    related: "Related pages",
+    concepts: "Concepts identified on this page",
+    purpose: "Role in the learning path",
+    open: "Open page",
+    empty: "No pages match these filters.",
+    count: (shown, total) => shown + " of " + total + " pages shown.",
+    loadError: "The map could not be loaded. Check that the data files were generated during the Quarto render.",
+    unknown: "Page"
+  };
+
+  const svg = root.querySelector(".learning-map-svg");
+  const canvas = root.querySelector(".learning-map-canvas");
+  const details = root.querySelector(".learning-map-details");
+  const status = root.querySelector(".learning-map-status");
+  const search = root.querySelector("#learning-map-search");
+  const destination = root.querySelector("#learning-map-destination");
+  const relationInputs = [...root.querySelectorAll("[data-map-relation]")];
+  const NS = "http://www.w3.org/2000/svg";
+  const WIDTH = 244;
+  const HEIGHT = 98;
+  const X_GAP = 285;
+  const Y_GAP = 116;
+  const X_START = 18;
+  const Y_START = 78;
+  let pages = [];
+  let selectedId = null;
+
+  const svgElement = (name, attributes = {}) => {
+    const element = document.createElementNS(NS, name);
+    Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, String(value)));
+    return element;
+  };
+
+  const appendText = (parent, x, y, lines, className) => {
+    const text = svgElement("text", { x, y, class: className });
+    lines.forEach((line, index) => {
+      const span = svgElement("tspan", { x, dy: index === 0 ? 0 : 16 });
+      span.textContent = line;
+      text.appendChild(span);
+    });
+    parent.appendChild(text);
+    return text;
+  };
+
+  const wrap = (value, maxLength, maxLines = 2) => {
+    const words = String(value || "").split(/\s+/).filter(Boolean);
+    const lines = [];
+    let line = "";
+    for (const word of words) {
+      const candidate = line ? line + " " + word : word;
+      if (candidate.length > maxLength && line) {
+        lines.push(line);
+        line = word;
+      } else {
+        line = candidate;
+      }
+      if (lines.length === maxLines) break;
+    }
+    if (line && lines.length < maxLines) lines.push(line);
+    if (words.join(" ").length > lines.join(" ").length && lines.length) {
+      lines[lines.length - 1] = lines[lines.length - 1].replace(/[.,;:]?$/, "…");
+    }
+    return lines;
+  };
+
+  const columnFor = page => {
+    if (page.destination === "orient" || page.destination === "understand") return 0;
+    if (page.destination === "build") return 1;
+    if (page.destination === "deepen") return 2;
+    return 3;
+  };
+
+  const visiblePages = () => {
+    const query = search.value.trim().toLocaleLowerCase();
+    const selectedDestination = destination.value;
+    return pages.filter(page => {
+      const destinationMatches = selectedDestination === "all"
+        || (selectedDestination === "understand"
+          ? ["orient", "understand"].includes(page.destination)
+          : page.destination === selectedDestination);
+      const searchable = [
+        page.title, page.scope, page.purpose, page.topic,
+        ...(page.concepts || [])
+      ].join(" ").toLocaleLowerCase();
+      return destinationMatches && (!query || searchable.includes(query));
+    });
+  };
+
+  const activeRelations = () => Object.fromEntries(
+    relationInputs.map(input => [input.dataset.mapRelation, input.checked])
+  );
+
+  const renderDefs = () => {
+    const defs = svgElement("defs");
+    [["route", "#16834a"], ["hierarchy", "#2563a6"], ["related", "#94a3b8"]].forEach(([id, color]) => {
+      const marker = svgElement("marker", {
+        id: "map-arrow-" + id, markerWidth: 8, markerHeight: 8,
+        refX: 6, refY: 3, orient: "auto", markerUnits: "strokeWidth"
+      });
+      marker.appendChild(svgElement("path", { d: "M0,0 L6,3 L0,6 Z", fill: color }));
+      defs.appendChild(marker);
+    });
+    svg.appendChild(defs);
+  };
+
+  const buildEdges = (visible, positions, relations) => {
+    const visibleIds = new Set(visible.map(page => page.id));
+    const edges = [];
+    const seen = new Set();
+    const add = (from, to, type) => {
+      if (!relations[type] || !visibleIds.has(from) || !visibleIds.has(to)) return;
+      const key = type + ":" + from + ":" + to;
+      if (seen.has(key)) return;
+      seen.add(key);
+      edges.push({ from, to, type });
+    };
+    visible.forEach(page => {
+      if (page.route && page.route.next) add(page.id, page.route.next, "route");
+      (page.children || []).forEach(child => add(page.id, child, "hierarchy"));
+      (page.related || []).forEach(other => {
+        if (page.id < other) add(page.id, other, "related");
+      });
+    });
+
+    edges.forEach(edge => {
+      const from = positions.get(edge.from);
+      const to = positions.get(edge.to);
+      if (!from || !to) return;
+      const forward = to.x >= from.x;
+      let x1 = from.x + WIDTH / 2;
+      let x2 = to.x + WIDTH / 2;
+      if (from.column !== to.column) {
+        x1 = from.x + (forward ? WIDTH : 0);
+        x2 = to.x + (forward ? 0 : WIDTH);
+      }
+      const y1 = from.y + HEIGHT / 2;
+      const y2 = to.y + HEIGHT / 2;
+      const bend = from.column === to.column ? 74 : 0;
+      const controlX = (x1 + x2) / 2 + (from.column === to.column ? (y2 >= y1 ? bend : -bend) : 0);
+      const path = svgElement("path", {
+        d: "M " + x1 + " " + y1 + " C " + controlX + " " + y1 + ", " + controlX + " " + y2 + ", " + x2 + " " + y2,
+        class: "map-edge map-edge-" + edge.type,
+        "marker-end": "url(#map-arrow-" + edge.type + ")",
+        "aria-hidden": "true"
+      });
+      svg.appendChild(path);
+    });
+  };
+
+  const updateDetails = page => {
+    if (!page) return;
+    selectedId = page.id;
+    details.replaceChildren();
+
+    const eyebrow = document.createElement("p");
+    eyebrow.className = "map-detail-eyebrow";
+    eyebrow.textContent = page.topic || copy.unknown;
+    details.appendChild(eyebrow);
+
+    const heading = document.createElement("h3");
+    heading.textContent = page.title;
+    details.appendChild(heading);
+
+    const role = document.createElement("p");
+    role.className = "map-detail-label";
+    role.textContent = copy.purpose;
+    details.appendChild(role);
+
+    const summary = document.createElement("p");
+    summary.textContent = page.scope || page.purpose || "";
+    details.appendChild(summary);
+
+    const conceptHeading = document.createElement("h4");
+    conceptHeading.textContent = copy.concepts;
+    details.appendChild(conceptHeading);
+
+    const conceptList = document.createElement("ul");
+    conceptList.className = "map-concept-list";
+    (page.concepts || []).forEach(concept => {
+      const item = document.createElement("li");
+      item.textContent = concept;
+      conceptList.appendChild(item);
+    });
+    if (!conceptList.childElementCount) {
+      const item = document.createElement("li");
+      item.textContent = page.topic || copy.unknown;
+      conceptList.appendChild(item);
+    }
+    details.appendChild(conceptList);
+
+    const open = document.createElement("a");
+    open.className = "map-open-page";
+    open.href = page.href;
+    open.textContent = copy.open;
+    details.appendChild(open);
+
+    const relations = [
+      [copy.route, [page.route && page.route.previous, page.route && page.route.next]],
+      [copy.hierarchy, [...(page.parents || []), ...(page.children || [])]],
+      [copy.related, page.related || []]
+    ];
+    const byId = new Map(pages.map(item => [item.id, item]));
+    relations.forEach(([label, ids]) => {
+      const targets = ids.map(id => byId.get(id)).filter(Boolean);
+      if (!targets.length) return;
+      const subheading = document.createElement("h4");
+      subheading.textContent = label;
+      details.appendChild(subheading);
+      const list = document.createElement("ul");
+      list.className = "map-related-list";
+      targets.forEach(target => {
+        const item = document.createElement("li");
+        const link = document.createElement("a");
+        link.href = target.href;
+        link.textContent = target.title;
+        item.appendChild(link);
+        list.appendChild(item);
+      });
+      details.appendChild(list);
+    });
+  };
+
+  const render = () => {
+    const visible = visiblePages();
+    const relations = activeRelations();
+    const grouped = [[], [], [], []];
+    visible.forEach(page => grouped[columnFor(page)].push(page));
+    grouped.forEach(group => group.sort((a, b) => a.rank - b.rank || a.title.localeCompare(b.title)));
+
+    const maxRows = Math.max(1, ...grouped.map(group => group.length));
+    const viewHeight = Y_START + maxRows * Y_GAP + 32;
+    svg.replaceChildren();
+    svg.setAttribute("viewBox", "0 0 " + (X_START * 2 + 4 * X_GAP) + " " + viewHeight);
+    svg.setAttribute("width", String(X_START * 2 + 4 * X_GAP));
+    svg.setAttribute("height", String(viewHeight));
+    renderDefs();
+
+    const positions = new Map();
+    grouped.forEach((group, column) => {
+      const x = X_START + column * X_GAP;
+      const heading = svgElement("text", { x, y: 34, class: "map-column-heading" });
+      heading.textContent = copy.columns[column];
+      svg.appendChild(heading);
+      group.forEach((page, index) => {
+        positions.set(page.id, { x, y: Y_START + index * Y_GAP, column });
+      });
+    });
+
+    buildEdges(visible, positions, relations);
+
+    grouped.forEach(group => group.forEach(page => {
+      const position = positions.get(page.id);
+      const anchor = svgElement("a", {
+        href: page.href,
+        class: "map-node map-node-" + page.destination + (selectedId === page.id ? " is-selected" : ""),
+        "aria-label": page.title + ". " + (page.concepts || []).slice(0, 3).join(", ")
+      });
+      const title = svgElement("title");
+      title.textContent = page.title;
+      anchor.appendChild(title);
+      anchor.appendChild(svgElement("rect", {
+        x: position.x, y: position.y, width: WIDTH, height: HEIGHT, rx: 10,
+        class: "map-node-card"
+      }));
+      const topic = svgElement("text", {
+        x: position.x + 13, y: position.y + 18, class: "map-node-topic"
+      });
+      topic.textContent = page.topic || page.destination;
+      anchor.appendChild(topic);
+      appendText(anchor, position.x + 13, position.y + 39, wrap(page.title, 30, 2), "map-node-title");
+      const concepts = (page.concepts || []).slice(0, 2).join(" · ");
+      const conceptLine = svgElement("text", {
+        x: position.x + 13, y: position.y + 84, class: "map-node-concepts"
+      });
+      conceptLine.textContent = concepts.length > 44 ? concepts.slice(0, 43) + "…" : concepts;
+      anchor.appendChild(conceptLine);
+      anchor.addEventListener("pointerenter", () => updateDetails(page));
+      anchor.addEventListener("focus", () => updateDetails(page));
+      svg.appendChild(anchor);
+    }));
+
+    status.textContent = copy.count(visible.length, pages.length);
+    if (!visible.length) {
+      const empty = svgElement("text", { x: 24, y: 115, class: "map-empty" });
+      empty.textContent = copy.empty;
+      svg.appendChild(empty);
+    }
+    const current = pages.find(page => page.id === selectedId);
+    if (!current && visible.length) updateDetails(visible[0]);
+  };
+
+  search.addEventListener("input", render);
+  destination.addEventListener("change", render);
+  relationInputs.forEach(input => input.addEventListener("change", render));
+
+  fetch(root.dataset.source)
+    .then(response => {
+      if (!response.ok) throw new Error("HTTP " + response.status);
+      return response.json();
+    })
+    .then(payload => {
+      pages = Array.isArray(payload.pages) ? payload.pages : [];
+      if (!pages.length) throw new Error("No page metadata found");
+      selectedId = pages.some(page => page.id === language + "/llm-overview")
+        ? language + "/llm-overview"
+        : pages[0].id;
+      render();
+      updateDetails(pages.find(page => page.id === selectedId));
+    })
+    .catch(error => {
+      console.error("Learning map:", error);
+      status.textContent = copy.loadError;
+      canvas.classList.add("map-load-error");
+    });
+})();
+</script>

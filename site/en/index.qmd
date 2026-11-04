@@ -45,6 +45,8 @@ Large language models (LLMs) are a family of neural models trained on large amou
 
 Practice supports all three learning depths; it is not a fourth depth. The conceptual route and the implementation route have different orders. Their relationship is documented in the [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
 
+To explore the pages, concepts, and their relationships visually, open the [interactive learning map](learning-map.qmd).
+
 ## How to read a lesson
 
 Lessons use three markers to distinguish different kinds of material:

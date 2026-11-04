@@ -1,0 +1,75 @@
+---
+title: "Interactive learning map"
+subtitle: "Pages, concepts, and relationships across the LLM Lab learning path"
+keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:en", "status:published"]
+lang: en
+toc: false
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/learning-map"
+scope: "Interactive visual map of published pages, suggested progression, pedagogical hierarchy, and concepts identified from page sections."
+purpose: "Help readers understand the learning path architecture, find relevant pages and concepts, and open a page directly from its node in the graph."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:en", "status:published"]
+-->
+
+The map distinguishes the **suggested reading route**, the **pedagogical hierarchy**, and **cross-links**. These relationships answer different questions; they do not define a mandatory sequence.
+
+- **Route** — green arrow: suggested previous/next page.
+- **Parent / child** — blue arrow: pedagogical decomposition or inclusion.
+- **Related** — dotted grey line: conceptual connection without an imposed reading order.
+
+Blocks represent pages. The concepts displayed inside each block are extracted from the page section headings: they are useful landmarks, not an exhaustive taxonomy. The data is generated from each published page's metadata.
+
+<div class="learning-map" data-learning-map data-language="en" data-source="../learning-map-data-en.json">
+  <div class="learning-map-toolbar">
+    <div class="learning-map-search">
+      <label for="learning-map-search">Search pages and concepts</label>
+      <input id="learning-map-search" type="search" placeholder="E.g. embeddings, attention, generation…" autocomplete="off">
+    </div>
+    <div class="learning-map-filter">
+      <label for="learning-map-destination">Show a branch</label>
+      <select id="learning-map-destination">
+        <option value="all">All branches</option>
+        <option value="understand">Understand</option>
+        <option value="build">Build</option>
+        <option value="deepen">Deepen</option>
+        <option value="practice">Practice</option>
+        <option value="reference">References</option>
+      </select>
+    </div>
+  </div>
+  <div class="learning-map-relations" aria-label="Visible relationships">
+    <label><input type="checkbox" data-map-relation="route" checked> Route</label>
+    <label><input type="checkbox" data-map-relation="hierarchy" checked> Parent / child</label>
+    <label><input type="checkbox" data-map-relation="related" checked> Related links</label>
+  </div>
+  <div class="learning-map-legend" aria-hidden="true">
+    <span><i class="map-key map-key-route"></i> Suggested progression</span>
+    <span><i class="map-key map-key-hierarchy"></i> Hierarchy</span>
+    <span><i class="map-key map-key-related"></i> Cross-link</span>
+  </div>
+  <div class="learning-map-layout">
+    <div class="learning-map-canvas" tabindex="0" aria-label="Page graph. Scroll horizontally and vertically to explore.">
+      <svg class="learning-map-svg" role="group" aria-label="Interactive map of pages and their relationships"></svg>
+    </div>
+    <aside class="learning-map-details" aria-live="polite" aria-atomic="true">
+      <p class="map-detail-eyebrow">EXPLORE A NODE</p>
+      <h3>Select a page</h3>
+      <p>Hover over a block or focus it to inspect its purpose, concepts, and relationships. Click the block to open the page directly.</p>
+    </aside>
+  </div>
+  <p class="learning-map-status" role="status" aria-live="polite">Loading map…</p>
+</div>
+
+Use this map for orientation, not as a strict prerequisite graph. Advanced pages can be consulted directly when they address the question at hand.
+
+[Browse the glossary](glossary.qmd) · [Explore the GPT build path](build-path.qmd) · [Version française](../fr/learning-map.html)

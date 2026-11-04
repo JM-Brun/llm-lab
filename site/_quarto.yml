@@ -1,9 +1,16 @@
 project:
   type: website
   output-dir: _site
+  pre-render:
+    - uv run --no-project --with-requirements ../docs/requirements-history-validation.txt --python 3.12 python ../scripts/build_learning_map.py
+  resources:
+    - learning-map-data-fr.json
+    - learning-map-data-en.json
   render:
     - index.qmd
+    - fr/learning-map.qmd
     - en/index.qmd
+    - en/learning-map.qmd
     - fr/text-data.qmd
     - en/text-data.qmd
     - fr/unicode-text.qmd
@@ -125,6 +132,7 @@ website:
       collapse-level: 1
       contents:
         - index.qmd
+        - fr/learning-map.qmd
         - section: "Comprendre les LLM"
           contents:
             - fr/llm-overview.qmd
@@ -217,6 +225,7 @@ website:
       collapse-level: 1
       contents:
         - en/index.qmd
+        - en/learning-map.qmd
         - section: "Understand LLMs"
           contents:
             - en/llm-overview.qmd
@@ -314,7 +323,9 @@ format:
     theme:
       - cosmo
       - styles.scss
-    include-after-body: includes/language-switch.html
+    include-after-body:
+      - includes/language-switch.html
+      - includes/learning-map.html
     toc: true
     toc-depth: 3
     code-copy: true

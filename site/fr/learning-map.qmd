@@ -1,0 +1,75 @@
+---
+title: "Carte interactive du parcours"
+subtitle: "Pages, notions et relations pour explorer LLM Lab dans son ensemble"
+keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:fr", "status:published"]
+lang: fr
+toc: false
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/learning-map"
+scope: "Carte visuelle et interactive des pages publiées, de leur progression suggérée, de leur hiérarchie pédagogique et des notions repérées dans leurs sections."
+purpose: "Permettre au lecteur de comprendre l’architecture du parcours, d’identifier les pages et notions pertinentes, puis d’ouvrir directement une page depuis sa brique dans le graphe."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:fr", "status:published"]
+-->
+
+La carte distingue le **fil de lecture conseillé**, la **hiérarchie pédagogique** et les **liens transversaux**. Ces relations répondent à des questions différentes : elles ne définissent pas une séquence obligatoire.
+
+- **Parcours** — flèche verte : page suggérée avant/après.
+- **Parent / enfant** — flèche bleue : décomposition ou inclusion pédagogique.
+- **Associé** — liaison grise en pointillés : proximité conceptuelle, sans ordre imposé.
+
+Les blocs représentent des pages. Les notions affichées dans chaque bloc sont extraites des titres de sections de la page : elles servent de repères, pas de taxonomie exhaustive. Les données sont générées depuis les métadonnées de chaque page publiée.
+
+<div class="learning-map" data-learning-map data-language="fr" data-source="../learning-map-data-fr.json">
+  <div class="learning-map-toolbar">
+    <div class="learning-map-search">
+      <label for="learning-map-search">Rechercher une page ou une notion</label>
+      <input id="learning-map-search" type="search" placeholder="Ex. : embeddings, attention, génération…" autocomplete="off">
+    </div>
+    <div class="learning-map-filter">
+      <label for="learning-map-destination">Afficher une branche</label>
+      <select id="learning-map-destination">
+        <option value="all">Toutes les branches</option>
+        <option value="understand">Comprendre</option>
+        <option value="build">Construire</option>
+        <option value="deepen">Approfondir</option>
+        <option value="practice">Pratiquer</option>
+        <option value="reference">Références</option>
+      </select>
+    </div>
+  </div>
+  <div class="learning-map-relations" aria-label="Relations affichées">
+    <label><input type="checkbox" data-map-relation="route" checked> Parcours</label>
+    <label><input type="checkbox" data-map-relation="hierarchy" checked> Parent / enfant</label>
+    <label><input type="checkbox" data-map-relation="related" checked> Liens associés</label>
+  </div>
+  <div class="learning-map-legend" aria-hidden="true">
+    <span><i class="map-key map-key-route"></i> Progression suggérée</span>
+    <span><i class="map-key map-key-hierarchy"></i> Hiérarchie</span>
+    <span><i class="map-key map-key-related"></i> Relation transversale</span>
+  </div>
+  <div class="learning-map-layout">
+    <div class="learning-map-canvas" tabindex="0" aria-label="Graphe des pages. Faire défiler horizontalement et verticalement pour explorer.">
+      <svg class="learning-map-svg" role="group" aria-label="Carte interactive des pages et de leurs relations"></svg>
+    </div>
+    <aside class="learning-map-details" aria-live="polite" aria-atomic="true">
+      <p class="map-detail-eyebrow">EXPLORER UNE BRIQUE</p>
+      <h3>Sélectionner une page</h3>
+      <p>Passez sur un bloc ou placez-y le focus pour afficher son rôle, ses notions et ses relations. Cliquez sur le bloc pour ouvrir directement la page.</p>
+    </aside>
+  </div>
+  <p class="learning-map-status" role="status" aria-live="polite">Chargement de la carte…</p>
+</div>
+
+La carte est un outil d’orientation : elle n’indique pas qu’une page est un prérequis strict. Les pages de niveau avancé peuvent être consultées directement lorsque la question le justifie.
+
+[Consulter le glossaire](glossary.qmd) · [Voir le parcours de construction du GPT](build-path.qmd) · [English version](../en/learning-map.html)
