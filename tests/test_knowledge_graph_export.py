@@ -11,6 +11,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
+from check_knowledge_graph_rendered import validate_graph  # noqa: E402
 from export_knowledge_graph import (  # noqa: E402
     BASE,
     CONCEPT_SCHEME,
@@ -93,3 +94,32 @@ def test_export_writes_valid_jsonld_deterministically() -> None:
         assert json.loads(first)["@context"]["skos"] == "http://www.w3.org/2004/02/skos/core#"
         write_export(output)
         assert output.read_text(encoding="utf-8") == first
+
+
+def test_rendered_graph_validator_accepts_complete_references() -> None:
+    payload = {
+        "@context": {"skos": "urn:skos:", "schema": "urn:schema:", "prov": "urn:prov:", "dcterms": "urn:dcterms:", "llmlab": "urn:llmlab:"},
+        "@graph": [
+            {"@id": "urn:scheme", "@type": "skos:ConceptScheme"},
+            {"@id": "urn:concept", "@type": "skos:Concept", "skos:inScheme": {"@id": "urn:scheme"}},
+            {"@id": "urn:page", "@type": ["schema:WebPage", "schema:LearningResource"], "schema:about": {"@id": "urn:concept"}},
+            {"@id": "urn:export", "@type": "prov:Entity"},
+        ],
+    }
+
+    assert validate_graph(payload) == []
+
+
+def test_rendered_graph_validator_reports_dangling_references() -> None:
+    payload = {
+        "@context": {"skos": "urn:skos:", "schema": "urn:schema:", "prov": "urn:prov:", "dcterms": "urn:dcterms:", "llmlab": "urn:llmlab:"},
+        "@graph": [
+            {"@id": "urn:scheme", "@type": "skos:ConceptScheme"},
+            {"@id": "urn:concept", "@type": "skos:Concept", "skos:inScheme": {"@id": "urn:missing"}},
+            {"@id": "urn:page", "@type": ["schema:WebPage", "schema:LearningResource"], "schema:about": {"@id": "urn:concept"}},
+            {"@id": "urn:export", "@type": "prov:Entity"},
+        ],
+    }
+
+    errors = validate_graph(payload)
+    assert any("urn:missing" in error for error in errors)
