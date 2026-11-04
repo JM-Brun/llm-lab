@@ -51,6 +51,17 @@ sources:
           - "Linked series articles and other external materials were not inspected."
           - "Embedded visual assets were not separately inspected; no reuse rights were established."
           - "No licence or reuse permission was established."
+      - accessed_at: "2026-11-04"
+        status: partially-scanned
+        inspected_scope:
+          - "Rechecked the full article body through indexed DEV search content and the author-controlled Medium mirror"
+          - "Inspected the author's Medium profile metadata, which lists two image entries under the QKV article title"
+          - "Independently checked the KV-cache reader suggestion against the Hugging Face Transformers caching documentation recorded as a separate source"
+        limitations:
+          - "Direct article HTML and DEV API endpoints were not retrievable in this pass."
+          - "The Medium listing exposes image labels but not exact image bytes, a stable asset URL, figure placement or creator/rights metadata."
+          - "The two image entries cannot yet be classified reliably as cover versus in-body figure or confirmed as the same asset."
+          - "No article-image reuse rights were established."
     related:
       pages:
         - fr/queries-keys-values
@@ -91,7 +102,7 @@ sources:
       contribution_types: [architecture, implementation]
       audiences: [learner, practitioner, maintainer]
     scan_status: partially-scanned
-    integration_status: reviewed
+    integration_status: deferred
     scan_history:
       - accessed_at: "2026-11-04"
         status: partially-scanned
