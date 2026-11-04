@@ -62,7 +62,7 @@ $$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
 $$
 
-The matrices $W_Q$, $W_K$, and $W_V$ are learned jointly during training. They transform each input representation, but play distinct roles in the mechanism.
+The matrices $W_Q$, $W_K$, and $W_V$ are learned jointly during training. They transform each input representation, but play distinct roles in the mechanism. Keeping these projections separate lets the model learn how positions should be matched (Q and K) independently from the content carried forward (V); using one shared representation for both roles would couple matching and information transfer.
 
 With $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ and $W_V\in\mathbb{R}^{d_{model}\times d_v}$, the resulting shapes are:
 
