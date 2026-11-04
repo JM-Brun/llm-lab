@@ -34,6 +34,14 @@ DESTINATIONS = {"orient", "understand", "build", "deepen", "practice", "referenc
 LEVELS = {"overview", "core", "applied", "advanced", "reference"}
 LANGUAGES = {"fr", "en", "shared"}
 STATUSES = {"published", "planned", "retired"}
+DEEPEN_DOMAINS = {
+    "architectures-mechanisms",
+    "text-tokenization",
+    "mathematical-tools-geometry",
+    "probabilistic-foundations-training",
+    "inference-efficiency",
+    "scale-research",
+}
 LIST_FIELDS = ("parents", "children", "related")
 RELATION_FIELDS = ("previous", "next", "parents", "children", "related")
 
@@ -180,6 +188,14 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
             errors.append(f"{relative}.{field}: a page cannot reference itself")
 
     tags = _tag_map(metadata.get("tags"), relative, errors)
+    domain = metadata.get("domain")
+    if tags.get("destination") == "deepen" and tags.get("type") != "entry-point":
+        if domain not in DEEPEN_DOMAINS:
+            errors.append(
+                f"{relative}.domain: advanced pages must use one of {sorted(DEEPEN_DOMAINS)}"
+            )
+    elif domain is not None:
+        errors.append(f"{relative}.domain: only Deepen content pages may declare a domain")
     keywords = front.get("keywords") if isinstance(front, dict) else None
     if not isinstance(keywords, list) or not all(isinstance(tag, str) for tag in keywords):
         errors.append(f"{relative}.keywords: expected a YAML list of strings")
@@ -204,6 +220,7 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
         "children": relations["children"],
         "related": relations["related"],
         "tags": tags,
+        "domain": domain,
     }
 
 
