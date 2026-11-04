@@ -81,7 +81,7 @@ Ces trois familles décrivent les principales configurations du **Transformer**,
 
 Le Transformer n'est pas non plus synonyme de LLM : l'architecture ne détermine ni l'échelle, ni les données, ni les capacités du modèle. Pour un exemple d'architecture hybride combinant plusieurs mécanismes, voir l'[étude de cas Nemotron](hybrid-llm-architectures.qmd). Pour replacer ces familles dans l'évolution du domaine, consulter l'[historique des Transformers](transformer-history.qmd).
 
-L'attention dense effectue un nombre d'interactions en \(O(T^2)\), mais ces interactions sont parallélisables pendant l'entraînement et le préremplissage. La génération autorégressive reste séquentielle entre tokens. Le [guide sur la complexité et le parallélisme](llm-computational-complexity.qmd) détaille ces compromis, y compris ceux des architectures récurrentes.
+L'attention dense effectue un nombre d'interactions en \(O(T^2)\), mais ces interactions sont parallélisables pendant l'entraînement et le préremplissage. À l'inverse, une récurrence peut réduire le travail à \(O(T)\), tout en dépendant de l'état calculé à l'étape précédente. La génération autorégressive reste séquentielle entre tokens. Le [guide sur la complexité et le parallélisme](llm-computational-complexity.qmd) détaille ces compromis de calcul, de mémoire et de dépendances. Le calcul interne du GPT décodeur seul du projet est présenté dans [GPT et Transformer](transformer.qmd).
 
 ::: {.self-check}
 
