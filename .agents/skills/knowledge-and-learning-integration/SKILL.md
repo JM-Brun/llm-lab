@@ -26,6 +26,21 @@ The current branch is authoritative. Audits and extraction recommendations are d
 
 ## 2. Review and disposition every item
 
+### Evaluate incremental learning value before disposition
+
+Compare each extraction with actual existing coverage, but compare explanatory function rather than topic labels alone. A source may have low novelty and high complementarity: that is a legitimate reason to improve an existing lesson.
+
+For each item, inspect the extraction's independent assessment of novelty, complementarity, pedagogical value, applicability, redundancy and evidence quality. Re-evaluate it against the current branch; do not accept its initial assessment uncritically. Record the exact existing page/section and the learner question it serves.
+
+Use these distinctions:
+- **New knowledge**: a missing or materially more precise fact, derivation, limitation, result or implementation detail.
+- **Complementary perspective**: a different mental model, analogy, example, narrative sequence, visualization or connection that improves understanding despite overlapping subject matter.
+- **Reinforcement**: another explanation of the same point with little additional learning benefit; usually cite or retain as an optional resource rather than adding it to the page.
+- **Redundancy**: substantially the same explanation, example and learner function, with no meaningful improvement.
+- **Correction**: a source exposes an error, ambiguity, omission or overstatement in the project (verify independently before changing it).
+
+Do not reject an item solely because the concept or topic is already covered. Conversely, do not integrate it merely because it is different. Ask what learner difficulty it solves and whether it does so better or differently enough to justify the added cognitive load.
+
 Compare each extraction with actual existing coverage. Record one disposition:
 - `integrate`, `correct`, `clarify`, `link`, `cite`, `case-study`, `experiment`, `defer`, or `reject`.
 
@@ -99,8 +114,11 @@ Inspect page inventory, archetypes/templates, content-section mapping, neighbour
 
 ## 6. Integrate analogies, visuals, experiments and code responsibly
 
-### Analogies
-Use only when structurally sound and useful for a defined learner difficulty. Explain mapping and failure boundary; credit the source; do not copy distinctive wording or illustration. Analogy supplements, never replaces, formal or computational definitions.
+### Analogies and alternative explanations
+
+Do not compare analogies by topic alone. Compare their mappings, highlighted mechanism, learner entry point, valid scope, failure boundary and likely misconception. Two analogies can be complementary when they illuminate different aspects; they are redundant when they induce the same mental model without improving clarity.
+
+Prefer one canonical explanation with a clearly labelled alternative perspective, optional expandable note or cross-link over a sequence of competing analogies. Do not accumulate analogies merely to demonstrate source coverage. Explain why the alternative helps and when not to use it. Credit the source; synthesize original wording; do not copy distinctive prose or illustrations. An analogy supplements, never replaces, formal or computational definitions.
 
 ### Figures and visualizations
 Choose: link original, embed with verified rights, create an independently authored figure, or omit. Never trace/cosmetically alter protected visuals. Preserve useful existing project assets unless replacement is justified. Update `docs/visual-assets-register.md`, references, accessibility text and affected pages.
@@ -137,7 +155,7 @@ Do not create a parallel bibliography. A source reference is not a concept node 
 
 For broad changes, prepare a reviewable plan:
 
-| Extraction item | Evidence/confidence | Existing coverage | Disposition | Graph impact | Page/asset/experiment destination | FR/EN |
+| Extraction item | Evidence/confidence | Novelty / complementarity / pedagogical value | Existing explanatory coverage | Disposition + rationale | Graph/page/asset/experiment impact | FR/EN |
 |---|---|---|---|---|---|---|
 
 Run narrow checks, then broader checks for shared systems:
