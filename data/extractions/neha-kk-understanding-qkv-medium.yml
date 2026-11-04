@@ -91,6 +91,7 @@ pedagogical_model:
     - "The scaling rationale is stated qualitatively; variance assumptions and the relationship to softmax concentration/gradients are not derived."
     - "The formula omits masking and does not distinguish self-attention from cross-attention."
     - "The input is called a word embedding; in deeper Transformer layers Q/K/V are projected from the current hidden representations, not necessarily the original token embedding."
+    - "The article describes an embedding as a compact vector reflecting semantic meaning, which is a useful simplification but can suggest that embedding coordinates are explicit semantic features. Token embeddings are learned parameters; positional information and contextual processing are also needed to form the representations used by attention."
     - "No numerical worked example, tensor shapes, multi-head decomposition, implementation, exercise or explicit assessment is provided."
     - "The indexed snapshot exposes four in-body image placements, but none of the actual images can be visually inspected or evaluated."
     - "The phrase that closest query-key matches determine which values to get risks implying hard top-1 retrieval; the subsequent weighted-sum formula instead describes a soft mixture over accessible value vectors."
@@ -240,7 +241,7 @@ items:
 
   - id: neha-kk-understanding-qkv-medium:projection-input-qualification
     kind: limitation
-    summary: "The article calls the shared input to Q/K/V a word embedding. This is suitable as an initial intuition but is too narrow for a general Transformer layer: projections operate on the current layer's input hidden states, which may already be contextualized."
+    summary: "The article describes token embeddings as compact vectors reflecting semantic meaning and presents them as the shared input to Q/K/V. This is a first-layer intuition, not a general layer-level description: embeddings are learned vectors rather than explicit semantic feature lists, the attention sublayer receives its current input representation, and deeper layers project hidden states that may already be contextualized. Positional information is also absent from the article's account."
     pedagogical_assessment:
       novelty: {level: low, rationale: "The canonical lesson already correctly calls X a representation stream rather than raw word embeddings."}
       complementarity: {level: moderate, rationale: "It identifies why the project's more precise wording matters for deeper layers."}
@@ -249,7 +250,7 @@ items:
       redundancy: {level: high, rationale: "No missing clarification remains in the canonical page."}
       evidence_quality: {level: high, rationale: "Direct comparison between article wording and the general Transformer computation."}
     locator: {type: section, value: "The Basis: Word Embeddings / Getting Q, K, and V", label: "The Basis: Word Embeddings / Getting Q, K, and V"}
-    evidence: {kind: technical-limitation, confidence: well-supported, scope: "Input representation to the Q/K/V projections.", assumptions: ["A multi-layer Transformer in which attention receives current hidden states."], limitations: ["The article's introductory simplification is not necessarily false for the first attention layer."]}
+    evidence: {kind: technical-limitation, confidence: well-supported, scope: "Input representation to the Q/K/V projections.", assumptions: ["A multi-layer Transformer in which attention receives current hidden states."], limitations: ["The article's introductory simplification is not necessarily false for the first attention layer.", "The article does not explain how positional information enters the representation or attention computation.", "The phrase 'reflects semantic meaning' should not be read as a coordinate-wise semantic interpretation."]}
     classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, method:learned-linear-projection], concept_ids: [query, key, value]}
     candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values], concepts: [query, key, value]}
     disposition: reject
