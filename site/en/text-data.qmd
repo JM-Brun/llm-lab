@@ -81,36 +81,17 @@ The final box deliberately groups positional handling with Transformer processin
 This is a conceptual diagram. Real tokenizers differ in base units, normalization, pre-tokenization, vocabulary, and special tokens.
 
 ::: {.callout-note}
-**Two different meanings of preprocessing.** Corpus preparation (for example, filtering documents, deduplicating near-copies, and defining train/validation boundaries) is an upstream data-engineering stage. Tokenizer normalization and pre-tokenization are part of the tokenizer pipeline and operate on input text. They should not be treated as the same operation. Likewise, tokenizer training learns a vocabulary and rules; encoding a new input reuses them and does not retrain the tokenizer. For a held-out evaluation, fit a learned tokenizer on the training partition only, rather than letting validation or test text influence its vocabulary. Source preparation, filtering, deduplication, and splitting are covered in [Preparing a corpus for pretraining](corpus-preparation.qmd).
+**Do not conflate corpus preparation with the tokenizer pipeline.** Source selection, filtering, deduplication, and splitting apply to documents; normalization and pre-tokenization are tokenizer components applied to text. Corpus-preparation and tokenizer-fitting decisions are covered in [Preparing a corpus for pretraining](corpus-preparation.qmd).
 :::
 
+## Two uses, two paths
 
-::: {.callout-note}
-**Training branch — not a prerequisite for inference.** Tokenization is used both to encode a prompt and to prepare a corpus. By contrast, document partitioning, context windows, and shifted targets are operations for preparing training examples. You can study them after understanding how a model receives a prompt and generates a response.
-:::
+The same tokenizer is used to encode an inference prompt and to convert corpus documents into IDs for learning. The upstream steps, however, differ:
 
-## The learning branch: from documents to training sequences
+- **Inference:** prompt text → already-defined tokenizer → IDs → embedding lookup. This is the path described on this page.
+- **Pretraining:** corpus preparation and splitting, tokenizer fitting and freezing ([corpus preparation](corpus-preparation.qmd)), then construction of windows, targets, and masks from the ID stream ([training examples](training-examples.qmd)).
 
-This branch is separate from the inference path. For upstream decisions—provenance, parsing, filtering, deduplication, splits, and tokenizer fitting—use the dedicated [Preparing a corpus for pretraining](corpus-preparation.qmd) page. The [Training examples](training-examples.qmd) page starts after corpus preparation and covers the construction of windows, targets, and masks.
-
-### Essential vocabulary
-
-| Term | Role in the pipeline |
-|---|---|
-| **Text** | Human-readable input. |
-| **Token** | A discrete unit defined by a tokenizer: a word, subword, punctuation, byte fragment, or special token. |
-| **ID** | An integer identifying a token within a particular vocabulary. |
-| **Embedding** | A vector associated with an ID and used as an initial numerical representation. |
-| **Contextual representation** | A vector after neural-network processing, influenced by the other tokens in the sequence. |
-
-Low-level details are not required to follow this pipeline. Visually identical strings can differ in their [Unicode representation, UTF-8 encoding, and normalization](unicode-text.qmd). Segmentation algorithms and their trade-offs are compared in [tokenization strategies](tokenization-strategies.qmd). Matrix dimensions and the role of embeddings belong to [embedding space](embedding-space.qmd) and [tensors](tensors.qmd).
-
-### The same text, different segmentations
-
-The same text can be split into different numbers of tokens by different tokenizers. Exact fragments and IDs depend on the vocabulary and configuration; there is no universal segmentation that can be inferred from the text alone.
-
-Remember: tokens are representation units, not necessarily words or units of meaning. The figure below gives a schematic segmentation example; it does not claim to reproduce a real tokenizer's output. A real comparison must identify the tokenizer and its version, then measure the resulting sequence.
-
+The second branch is not a prerequisite for understanding how a model encodes a prompt.
 ## 2. What tokenization changes — and what it does not tell us
 
 Segmentation determines the sequence of IDs supplied to the model. It affects input coverage, sequence length, and compatibility between tokenizer and model weights. It is not guaranteed linguistic analysis, a measure of meaning, or a model-quality score.
@@ -149,7 +130,7 @@ No. IDs are defined only within a tokenizer's vocabulary; ID 17 in one vocabular
 - **[Embedding space](embedding-space.qmd):** ID lookup and vector geometry.
 - **[Training examples](training-examples.qmd):** windows, shifted targets, packing, and masks.
 
-Corpus preparation (collection, filtering, deduplication, and splits) is an upstream activity distinct from tokenizing an input. The transitional material currently retained above remains here provisionally; its canonical home is being assessed separately in [issue #360](https://github.com/JM-Brun/llm-lab/issues/360).
+Corpus preparation (provenance, filtering, deduplication, splits, and tokenizer fitting) now has a canonical home: [Preparing a corpus for pretraining](corpus-preparation.qmd). This page retains only the distinction needed to situate prompt encoding.
 
 :::: {.language-switch}
 **Language:** [Français](../fr/text-data.qmd) · [English](text-data.qmd)
