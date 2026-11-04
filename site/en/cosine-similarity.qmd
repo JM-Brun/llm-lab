@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/cosine-similarity"
 scope: "Examines cosine similarity as angular alignment between non-zero representation vectors, including normalization assumptions, anisotropy, hubness, nearest-neighbour effects, and task-dependent metric choice. It distinguishes geometric similarity from semantic equivalence and does not treat a high score as evidence of relevance or truth."
 purpose: "Compute and interpret cosine similarity, explain what vector normalization removes, identify conditions that can distort rankings, and design task-specific checks rather than assuming cosine directly measures meaning."
+domain: "mathematical-tools-geometry"
 suggested_route:
   previous: "en/tensors"
   next: "en/embedding-linearity"
