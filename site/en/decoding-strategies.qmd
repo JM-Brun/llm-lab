@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/decoding-strategies"
 scope: "Studies transformations applied to next-token distributions and sequence-search methods: temperature, top-k, nucleus sampling, greedy/beam search, and contrastive decoding; discusses quality-diversity trade-offs and reproducibility requirements."
 purpose: "Readers should be able to distinguish distribution transformations from sequence search, explain temperature/top-k/top-p, analyze why likelihood maximization is insufficient for open-ended text quality, and document a decoding protocol."
+domain: "inference-efficiency"
 suggested_route:
   previous: null
   next: null
