@@ -15,7 +15,13 @@ ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "data" / "resources.yml"
 CONCEPTS = ROOT / "data" / "concepts.yml"
 IDENTIFIER = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
-BCP47 = re.compile(r"(?:[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*|x(?:-[A-Za-z0-9]{1,8})+)")
+BCP47 = re.compile(
+    r"(?i)(?:(?:[a-z]{2,3}(?:-[a-z]{3}){0,3}|[a-z]{4}|[a-z]{5,8})"
+    r"(?:-[a-z]{4})?(?:-(?:[a-z]{2}|[0-9]{3}))?"
+    r"(?:-(?:[a-z0-9]{5,8}|[0-9][a-z0-9]{3}))*"
+    r"(?:-[0-9a-wy-z](?:-[a-z0-9]{2,8})+)*"
+    r"(?:-x(?:-[a-z0-9]{1,8})+)?|x(?:-[a-z0-9]{1,8})+)"
+)
 KINDS = {"implementation"}
 STATUSES = {"published", "draft", "deprecated", "retired"}
 PROVENANCE_FIELDS = {"creator", "publisher", "source_url", "license"}
