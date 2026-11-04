@@ -165,7 +165,7 @@ The page graph and the concept graph answer different questions:
 - A **resource link** connects a concept to a page; it does not assert that the page is the concept's only owner.
 - A **concept relation** connects two concepts with an explicitly typed semantic relation. It is not a reading-order edge.
 
-The initial registry lives in `data/concepts.yml`. Each concept has a stable kebab-case `id`, French and English labels and definitions, and zero or more page IDs in `resources`. Translations share one concept ID; do not create separate French and English concept nodes.
+The canonical seed lives in `data/concepts.yml`. Each concept has a stable kebab-case `id`, French and English labels and definitions, domain memberships, and at least one published French and one published English page ID in `resources`. Translations share one concept ID; do not create separate French and English concept nodes. These page references are not yet first-class typed resource entities.
 
 ### Relation vocabulary
 
@@ -192,9 +192,9 @@ Do not use a generic `related-to` relation as a substitute for deciding what the
 
 ### Validation and scope
 
-Run `python scripts/check_concept_registry.py` to check stable IDs, bilingual labels/definitions, resource-ID syntax, relation vocabulary, endpoint existence, self-links, and duplicate edges. The same check runs in CI. This first registry is intentionally a seed, not a complete ontology: it covers a small set of central concepts and should grow only alongside reviewed page content.
+Run `python scripts/check_concept_registry.py` to check stable IDs, bilingual labels/definitions, FR/EN published-resource coverage, domain memberships, resource-ID syntax, relation vocabulary, endpoint existence, self-links, duplicate edges, and prerequisite/generalization cycles (iteratively). The same check runs in CI. This first registry is intentionally a seed, not a complete ontology: it covers a small set of central concepts and should grow only alongside reviewed page content.
 
-The concept registry is not yet rendered as a second interactive graph. The existing learning map remains a page graph; a later integration should expose concept-to-page links and concept relations without conflating them with page navigation or the Understand/Build/Deepen destinations.
+The interactive learning map now offers **separate page-graph and concept-graph modes**. The concept mode resolves localized page-resource links and displays typed relations; it does not turn concept prerequisites into page navigation instructions. Domain memberships are stored canonically but are not yet exposed as a dedicated concept filter, and non-page resources are not yet first-class entities.
 
 
 ## 11. Concept-to-domain membership
