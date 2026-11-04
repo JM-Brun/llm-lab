@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Build bilingual, reader-facing learning-map data from Quarto page metadata."""
+"""Build bilingual, reader-facing learning-map data from Quarto page metadata.
+
+The generated page rank is a deterministic display-order heuristic only. It
+combines suggested-route and hierarchy edges to arrange the exploratory graph;
+it is not a curriculum sequence or a prerequisite/topological ordering.
+"""
 
 from __future__ import annotations
 
@@ -151,7 +156,7 @@ def load_concept_graph(
 
 
 def assign_route_rank(pages: list[dict[str, Any]], language: str) -> None:
-    """Rank pages by a breadth-first walk of the suggested route and hierarchy."""
+    """Assign a display rank using route and hierarchy edges, not a learning order."""
     by_id = {page["id"]: page for page in pages}
     queue = deque([f"{language}/index"])
     seen: set[str] = set()
