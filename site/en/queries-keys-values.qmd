@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/queries-keys-values"
-scope: "Defines the projections that produce queries, keys, and values from input representations, and their distinct roles in attention; leaves dot-product scoring, masking, and normalization to the scaled dot-product attention page."
+scope: "Introduces Q, K, and V projections for self-attention, where all three originate from the same representation stream; leaves score computation, masking, and normalization to the scaled dot-product attention page, and refers cross-attention to its dedicated advanced lesson."
 purpose: "Readers should be able to distinguish Q, K, and V, identify the learned projections that produce them, and explain how they contribute respectively to attention-weight calculation and information aggregation."
 suggested_route:
   previous: "en/contextualized-representations"
@@ -16,12 +16,12 @@ suggested_route:
 hierarchy:
   parents: ["en/contextualized-representations", "en/transformer"]
   children: ["en/scaled-dot-product-attention"]
-related: []
+related: ["en/cross-attention"]
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
-Queries, keys, and values are not three kinds of tokens. They are three **learned projections** of input representations, used to compute which positions contribute to a contextualized representation.
+Queries, keys, and values are not three kinds of tokens. In the case covered here—**self-attention**—they are three **learned projections of the same representation stream**, used to determine which positions contribute to a contextualized representation. Cross-attention, where Q and K/V come from different streams, is covered in a dedicated [advanced lesson](cross-attention.qmd).
 :::
 
 <div class="epistemic-badges">
@@ -30,15 +30,15 @@ Queries, keys, and values are not three kinds of tokens. They are three **learne
   <span class="epistemic-badge badge-status">Architecture: Transformer</span>
 </div>
 
-<div class="pipeline-stepper" role="navigation" aria-label="LLM learning path stages">
+<div class="pipeline-stepper" role="navigation" aria-label="LLM pipeline stages">
   <a class="step-item" href="text-data.qmd">1. Text</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-arrow">→</span>
   <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">3. Attention (Q, K, V)</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-arrow">→</span>
+  <span class="step-item active">3. Attention (Q, K, V)</span>
+  <span class="step-arrow">→</span>
   <a class="step-item" href="logits.qmd">4. Logits</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-arrow">→</span>
   <a class="step-item" href="cross-entropy.qmd">5. Loss & Training</a>
 </div>
 
@@ -74,17 +74,19 @@ This inventory covers analogies actually present in the current reference pages;
 
 Q and K provide the information used to determine relative weights across accessible positions. Those weights then specify how to combine the V vectors. The precise computation of scores, masking, and softmax is covered on the scaled dot-product attention page.
 
-## Definition and dimensions
+## Where do Q, K, and V come from in self-attention?
 
-For $X\in\mathbb{R}^{T\times d_{model}}$, the projections for one head are:
+In self-attention, we start from a single matrix $X\in\mathbb{R}^{T\times d_{model}}$, which contains the representations of the $T$ positions. Three learned projections produce:
 
 $$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
 $$
 
-With $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ and $W_V\in\mathbb{R}^{d_{model}\times d_v}$, we obtain $Q,K\in\mathbb{R}^{T\times d_k}$ and $V\in\mathbb{R}^{T\times d_v}$. Optional biases are omitted for clarity.
+The matrices $W_Q$, $W_K$, and $W_V$ are learned during training. They transform each input representation to give it a distinct role in the attention computation. In standard dot-product attention, values $V$ do not directly determine the scores: scores are computed from $Q$ and $K$.
 
-In standard dot-product attention, Q and K determine the matching information, while V supplies the content to be aggregated. The next page formalizes how matching scores are computed and converted into weights.
+With $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ and $W_V\in\mathbb{R}^{d_{model}\times d_v}$, the resulting shapes are $Q,K\in\mathbb{R}^{T\times d_k}$ and $V\in\mathbb{R}^{T\times d_v}$. Optional biases are omitted for clarity.
+
+**Cross-attention:** the same single-$X$ formula does not describe this case. Queries come from a target sequence, while keys and values come from a source sequence. This separation is covered in the [advanced cross-attention lesson](cross-attention.qmd).
 
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
