@@ -24,7 +24,7 @@ La similarité cosinus s’interprète dans la géométrie de l’[espace des em
 
 ## Que mesure vraiment le cosinus ?
 
-La similarité cosinus compare souvent des embeddings de phrases, de documents ou de requêtes. Elle est simple à calculer et ne dépend pas de la norme des vecteurs. Elle mesure toutefois l'angle entre deux représentations produites par un modèle donné, pas directement leur « similarité sémantique ».
+La similarité cosinus compare souvent des plongements (embeddings) de phrases, de documents ou de requêtes. Elle est simple à calculer et ne dépend pas de la norme des vecteurs. Elle mesure toutefois l'angle entre deux représentations produites par un modèle donné, pas directement leur « similarité sémantique ».
 
 Cette distinction compte. La métrique ne peut être interprétée indépendamment de **la tâche, de l'encodeur, de la distribution des données et de l'objectif d'entraînement**.
 
