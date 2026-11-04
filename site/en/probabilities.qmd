@@ -67,6 +67,126 @@ p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i.
 
 Lower temperature tends to make the distribution more concentrated; higher temperature tends to flatten it. For \(\tau>0\), logit ordering and argmax remain unchanged, but probabilities change. Temperature changes the distribution used for decoding, not the model parameters; it cannot establish the truth of an output.
 
+Softmax also has two useful properties: it preserves logit ordering and is invariant to adding the same constant to every score. At $\tau=1$, probability ratios satisfy $p_i/p_j=e^{z_i-z_j}$; more generally, $p_i^{(\tau)}/p_j^{(\tau)}=e^{(z_i-z_j)/\tau}$.
+
+### Explore the effect of temperature
+
+Adjust $\tau$ to observe how the distribution changes while the highest-scoring token remains the same.
+
+```{=html}
+<div class="interactive-toy-box" id="temp-explorer-en">
+  <h4>INTERACTIVE EXPLORER · TEMPERATURE SCALING ON LOGITS</h4>
+  <p style="font-size: 0.9rem; color: #475569;">
+    Adjust temperature $T$ to observe the transition between sharp decoding ($T < 1$) and uniform distribution ($T > 1$).
+  </p>
+  <div class="interactive-controls">
+    <label for="temp-slider-en" style="font-weight: 700; font-size: 0.9rem;">Temperature (T): <span id="temp-val-en" style="color: var(--llm-brand-action); font-family: monospace;">1.00</span></label>
+    <input type="range" id="temp-slider-en" min="0.1" max="3.0" step="0.05" value="1.0" style="flex: 1; accent-color: var(--llm-brand);">
+  </div>
+  <div class="interactive-bars">
+    <div class="prob-bar-row">
+      <span class="prob-bar-label">Token A (z=3.0)</span>
+      <div class="prob-bar-track"><div class="prob-bar-fill" id="bar-en-0" style="width: 70.5%;"></div></div>
+      <span class="prob-bar-value" id="val-en-0">70.5%</span>
+    </div>
+    <div class="prob-bar-row">
+      <span class="prob-bar-label">Token B (z=1.5)</span>
+      <div class="prob-bar-track"><div class="prob-bar-fill" id="bar-en-1" style="width: 15.7%;"></div></div>
+      <span class="prob-bar-value" id="val-en-1">15.7%</span>
+    </div>
+    <div class="prob-bar-row">
+      <span class="prob-bar-label">Token C (z=1.0)</span>
+      <div class="prob-bar-track"><div class="prob-bar-fill" id="bar-en-2" style="width: 9.5%;"></div></div>
+      <span class="prob-bar-value" id="val-en-2">9.5%</span>
+    </div>
+    <div class="prob-bar-row">
+      <span class="prob-bar-label">Token D (z=0.2)</span>
+      <div class="prob-bar-track"><div class="prob-bar-fill" id="bar-en-3" style="width: 4.3%;"></div></div>
+      <span class="prob-bar-value" id="val-en-3">4.3%</span>
+    </div>
+  </div>
+  <script>
+    (function() {
+      const slider = document.getElementById('temp-slider-en');
+      const tempVal = document.getElementById('temp-val-en');
+      const logits = [3.0, 1.5, 1.0, 0.2];
+      function update() {
+        if (!slider) return;
+        const T = parseFloat(slider.value);
+        if (tempVal) tempVal.textContent = T.toFixed(2);
+        const scaled = logits.map(z => z / T);
+        const maxVal = Math.max(...scaled);
+        const exp = scaled.map(s => Math.exp(s - maxVal));
+        const sumExp = exp.reduce((a, b) => a + b, 0);
+        const probs = exp.map(e => e / sumExp);
+        probs.forEach((p, idx) => {
+          const bar = document.getElementById('bar-en-' + idx);
+          const val = document.getElementById('val-en-' + idx);
+          const pct = (p * 100).toFixed(1) + '%';
+          if (bar) bar.style.width = pct;
+          if (val) val.textContent = pct;
+        });
+      }
+      if (slider) slider.addEventListener('input', update);
+    })();
+  </script>
+</div>
+
+```
+
+::: {.micro-workbench}
+::: {.micro-workbench-header}
+<span>NUMERICAL WORKBENCH · TEMPERATURE-SCALED SOFTMAX</span>
+<span>Python 3.12+ / NumPy</span>
+:::
+::: {.micro-workbench-body}
+```python
+import numpy as np
+
+logits = np.array([3.0, 1.5, 1.0, 0.2])
+
+def stable_softmax(z, temperature=1.0):
+    scaled = z / temperature
+    exp_z = np.exp(scaled - np.max(scaled))
+    return exp_z / np.sum(exp_z)
+
+# 1. Standard temperature (T=1.0)
+p_standard = stable_softmax(logits, temperature=1.0)
+
+# 2. Cold temperature (T=0.2): sharpens dominant token (greedy behavior)
+p_cold = stable_softmax(logits, temperature=0.2)
+
+# 3. Hot temperature (T=5.0): flattens distribution toward uniform
+p_hot = stable_softmax(logits, temperature=5.0)
+
+print(f"Top-token probability (T=1.0): {p_standard[0]:.2%}")
+print(f"Top-token probability (T=0.2): {p_cold[0]:.2%}")
+print(f"Top-token probability (T=5.0): {p_hot[0]:.2%}")
+
+assert p_cold[0] > p_standard[0] > p_hot[0]
+assert np.allclose(p_hot, 0.25, atol=0.1)
+```
+:::
+::: {.micro-workbench-footer}
+Temperature modulates distribution entropy without altering token ranking ($z_i > z_j \implies p_i > p_j$).
+:::
+:::
+
+::: {.callout-warning title="Misconceptions"}
+- **“A positive logit means high probability.”** No: the sign depends on the score reference level. A logit of 10 can be less probable than another logit of 12.
+- **“The largest logit measures the confidence gap.”** The maximum determines the argmax, but uncertainty depends on all logits and their scale.
+- **“Logits are directly comparable across models.”** Not necessarily: architectures, temperatures, and training can produce different scales.
+:::
+
+<details class="spot-the-fallacy">
+<summary>Common Fallacy: “Two models outputting the exact same top logit score share the same prediction confidence”</summary>
+<div class="fallacy-content">
+<p><strong>Counterexample:</strong> Model A outputs logits $(10, 2, 1)$ while Model B outputs $(10, 9.9, 9.8)$. Both have identical maximum logit ($z_1 = 10$). However, after softmax, Model A assigns over 99% probability to the top token (high certainty), whereas Model B divides probability almost equally among all three tokens ($\approx 34\%$, high uncertainty). Epistemic certainty depends on score margins, not absolute logit height.</p>
+</div>
+</details>
+
+To reduce numerical overflow, implementations usually subtract the maximum before exponentiation: $e^{z_i-m}/\sum_j e^{z_j-m}$, where $m=\max_j z_j$. A tested implementation of temperature-scaled softmax is available in `src/llm_lab/foundations/attention.py` (`softmax_with_temperature`) and covered by `tests/unit/test_attention.py`.
+
 Selecting the argmax token at each position is not equivalent to globally searching for the best sequence, and can produce text different from sampling. Decoding strategy is distinct from training.
 
 ## Normalization, calibration, and truth
