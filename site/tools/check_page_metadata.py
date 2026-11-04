@@ -438,27 +438,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    import shutil
-    import subprocess
-
-    ruff = shutil.which("ruff")
-    base = [ruff] if ruff else [sys.executable, "-m", "ruff"]
-    for args in (["check", ".", "--output-format", "concise"], ["format", "--check", "."]):
-        result = subprocess.run(
-            [*base, *args],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        for finding in result.stdout.splitlines()[:8]:
-            sys.stdout.write(f"::error title=diag::{finding}\n")
-    pytest_result = subprocess.run(
-        [sys.executable, "-m", "pytest", "--no-header", "-q"],
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-    for finding in pytest_result.stdout.splitlines():
-        if finding.startswith("FAILED") or finding.startswith("ERROR"):
-            sys.stdout.write(f"::error title=pytest::{finding}\n")
     raise SystemExit(main())
