@@ -1,0 +1,95 @@
+schema_version: 1
+source_id: "stable-source-id"
+
+# Extraction coverage is multidimensional. A complete author-text scan does not
+# imply inspected figures, comments, links, code, metadata or reuse rights.
+scan:
+  accessed_at: "YYYY-MM-DD"
+  retrieval_method: "direct-page | api | indexed-text | author-mirror | repository | other"
+  author_text: {status: not-inspected, coverage: null, notes: []}
+  figures_media: {status: not-inspected, coverage: null, notes: []}
+  code_data: {status: not-inspected, coverage: null, notes: []}
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources: {status: not-inspected, coverage: null, notes: []}
+  metadata: {status: not-inspected, coverage: null, notes: []}
+  rights: {status: unknown, coverage: null, notes: []}
+  unresolved_questions: []
+
+pedagogical_model:
+  reconstruction:
+    status: not-assessed # not-assessed | partial | complete
+    basis: []
+    inferred_elements: []
+  source_graph:
+    nodes:
+      - id: "src-concept-or-operation"
+        kind: "concept | representation | parameter | operation | intermediate | constraint | example | visualization"
+        description: "Concise paraphrase of the source-local element."
+        locator: "Heading, section, timestamp, page or code symbol."
+        inferred: false
+    edges:
+      - from: "src-node-a"
+        type: "typed-relation"
+        to: "src-node-b"
+        inferred: false
+    interpretation: "Explain that this is an editorial reconstruction unless the author defines a formal graph."
+  learning_outcomes:
+    - status: inferred # explicit | inferred
+      outcome: "Observable learner capability."
+      basis: "Source evidence or reason for inference."
+  assumed_prerequisites:
+    - status: inferred
+      topic: "Required prior knowledge."
+      basis: "Source evidence or reason for inference."
+  teaching_route:
+    - order: 1
+      section: "Source heading or segment"
+      function: "pedagogical-function"
+      moves: ["What this segment asks the learner to do."]
+  pedagogical_strengths: []
+  pedagogical_limits: []
+
+# One item per atomic contribution. Include useful, redundant, rejected and deferred items.
+items:
+  - id: "source-id:atomic-contribution-id"
+    kind: "definition | distinction | claim | equation | derivation | example | analogy | misconception | method | experiment | implementation | visualization | community-suggestion"
+    summary: "Faithful concise paraphrase; do not copy extended source wording."
+    locator: {type: section, value: "section or line locator", label: "Heading"}
+    provenance:
+      contributor: "author | commenter | linked-resource-author | editor-inference"
+      component: "author-text | comment | figure | code | linked-resource | metadata"
+    evidence:
+      kind: "direct-statement | equation | example | code | comment | inferred"
+      confidence: medium # high | medium | low
+      assumptions: []
+      limitations: []
+    technical_assessment:
+      status: not-reviewed # correct | qualified | disputed | incorrect | not-reviewed
+      rationale: ""
+      corroborating_sources: []
+    pedagogical_assessment:
+      learner_question: ""
+      explanatory_lens: ""
+      teaching_form: []
+      novelty: {level: unknown, rationale: ""}
+      complementarity: {level: unknown, rationale: ""}
+      learner_value: {level: unknown, rationale: ""}
+      redundancy: {level: unknown, rationale: ""}
+      integration_cost: {level: unknown, rationale: ""}
+    classification:
+      primary_theme: "canonical-theme-id"
+      tags: []
+      concept_ids: []
+    candidate_destinations:
+      pages: []
+      concepts: []
+      route_ids: []
+    disposition: defer # integrate | integrate-by-reference | already-covered | defer | reject
+    disposition_rationale: ""
+
+# Never equate source-local graph IDs with canonical concept IDs.
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: ""
