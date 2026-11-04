@@ -176,8 +176,8 @@ Relations are directed from `from` to `to`; their direction is part of their def
 | `generalizes` | The source is a more general concept that subsumes the target. |
 | `contrasts-with` | The source is meaningfully distinguished from the target; do not infer opposition from mere difference. |
 | `analogy` | The source is used as an analogy for the target, not as a mathematical equivalence. |
-| `implemented-by` | The source is realized or operationalized by the target in the stated context. |
-| `applies-to` | The source mechanism or method is applied to the target object/process. |
+| `implemented-by` | The source is realized or operationalized by the target in the stated context. |\n| `represented-by` | The target is a representation of the source, without implying identity. |
+| `applies-to` | The source mechanism or method is applied to the target object/process. |\n| `contributes-to` | The source is one contributing mechanism or factor in the target; it is not necessarily sufficient on its own. |\n| `mapped-by` | The source is transformed into or mapped to a target representation by the named operation. |
 | `constrains` | The source imposes a constraint on the target. |
 | `produces` | The source operation or process produces the target quantity/state. |
 | `normalized-by` | The source quantity is transformed/normalized by the target operation. |
