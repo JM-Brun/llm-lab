@@ -66,23 +66,27 @@ def _published_page_ids() -> set[str]:
 
 
 def _has_cycle(edges: dict[str, list[str]]) -> bool:
-    """Return whether a directed adjacency list contains a cycle."""
-    visiting: set[str] = set()
+    """Detect cycles iteratively, including in long dependency chains."""
+    active: set[str] = set()
     visited: set[str] = set()
-
-    def visit(node: str) -> bool:
-        if node in visiting:
-            return True
-        if node in visited:
-            return False
-        visiting.add(node)
-        if any(visit(target) for target in edges.get(node, [])):
-            return True
-        visiting.remove(node)
-        visited.add(node)
-        return False
-
-    return any(visit(node) for node in edges)
+    for root in edges:
+        if root in visited:
+            continue
+        active.add(root)
+        stack = [(root, iter(edges.get(root, [])))]
+        while stack:
+            node, targets = stack[-1]
+            target = next(targets, None)
+            if target is None:
+                stack.pop()
+                active.remove(node)
+                visited.add(node)
+            elif target in active:
+                return True
+            elif target not in visited:
+                active.add(target)
+                stack.append((target, iter(edges.get(target, []))))
+    return False
 
 
 def validate_domains(data: Any) -> tuple[set[str], list[str]]:
@@ -193,11 +197,19 @@ def validate_registry(
             set(resources)
         ):
             errors.append(f"{where}.resources: duplicate resource IDs")
+        resource_languages: set[str] = set()
         for page_id in resources:
             if not isinstance(page_id, str) or not PAGE_ID.fullmatch(page_id):
                 errors.append(f"{where}.resources: invalid page ID {page_id!r}")
-            elif published_pages is not None and page_id not in published_pages:
-                errors.append(f"{where}.resources: page {page_id!r} is not a published page")
+            else:
+                resource_languages.add(page_id.split("/", maxsplit=1)[0])
+                if published_pages is not None and page_id not in published_pages:
+                    errors.append(f"{where}.resources: page {page_id!r} is not a published page")
+        missing_languages = {"fr", "en"} - resource_languages
+        if missing_languages:
+            errors.append(
+                f"{where}.resources: missing language(s) {', '.join(sorted(missing_languages))}"
+            )
 
     relations = data.get("relations")
     if not isinstance(relations, list):
