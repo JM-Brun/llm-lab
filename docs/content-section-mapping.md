@@ -201,3 +201,35 @@ The inventory above classifies destinations; this section assigns the **canonica
 - **Relocation:** before removing a passage, record its destination and verify that its unique examples, caveats, figures, references and scientific qualifications survive there.
 
 A useful editorial test is: **if a reader has completed the canonical page, does this second explanation teach a genuinely new thing?** If not, replace it with a short reminder and a contextual link. A repeated label or pipeline diagram is not automatically a defect; repeated explanatory work without a new learning objective is.
+
+
+## 10. Deepen taxonomy and placement contract — 2026-11-04
+
+The advanced destination is organized around six durable question families, mirrored in the bilingual landing map and Quarto sidebar:
+
+1. **Architectures and mechanisms:** specialized information-flow mechanisms and architectural combinations.
+2. **Text and tokenization:** Unicode/text representation, tokenizer design, and empirical tokenizer evaluation.
+3. **Mathematical tools and geometry:** tensor operations and analysis of representation geometry.
+4. **Probabilistic foundations and training:** formal language-model probabilities, objective functions, and their mathematical connections.
+5. **Inference and efficiency:** in-context learning, decoding strategies, computational cost, memory, and parallelism.
+6. **Scale and research questions:** scaling laws and evidence-based analysis of capability/emergence claims.
+
+This is a **discovery taxonomy**, not a prerequisite graph or a new linear curriculum. Each page has one primary sidebar category; cross-domain connections belong in the page's reciprocal metadata relations and contextual links. The category is chosen by the page's primary learning objective, not by every topic it mentions.
+
+### Admission and placement rule
+
+For every proposed advanced entry, answer in order:
+
+- Is the minimum mechanism necessary to understand the general LLM mental model? If yes, keep that minimum in Understand and link to the advanced treatment; do not move the whole concept out of the core.
+- Does an existing canonical page already own the question? Extend it unless doing so would overload or distort its scope.
+- Which of the six question families best describes the page's main learning outcome? Assign one primary category only.
+- Are the proposed graph edges true conceptual containment/decomposition, cross-topic relevance, or merely a suggested reading order? Use hierarchy, related, and suggested_route respectively.
+- What evidence supports the claims, and which assumptions, model-specific choices, or protocol limits must remain visible?
+
+A new sidebar category should normally require at least two relevant pages or a durable domain with a clear expansion rationale. Avoid one-page categories and avoid creating categories just to mirror individual paper/model names.
+
+### Current inventory and known extension point
+
+The six groups account for the current advanced entries: cross-attention and hybrid architectures; Unicode and tokenizer design/evaluation; tensors, cosine similarity and embedding linearity; language-modeling mathematics and mathematical foundations; in-context learning, decoding and computational complexity; scaling laws and emergence. The RoPE deep dive introduced in PR #387 belongs under **Architectures and mechanisms** once that PR is merged; do not duplicate or prematurely list a page that is not yet on the base branch.
+
+The bilingual map pages are `site/fr/deepen.qmd` and `site/en/deepen.qmd`. The Quarto sidebar is a concise navigation mirror; the map page explains the rationale and helps readers choose by question.
