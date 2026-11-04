@@ -55,7 +55,7 @@ def clean_heading(value: str) -> str:
 
 
 def load_pages() -> list[dict[str, Any]]:
-    """Read published page maps and extract section headings as page concepts."""
+    """Read published page maps and extract editorial section headings."""
     pages: list[dict[str, Any]] = []
     for path in sorted(SITE.rglob("*.qmd")):
         source = path.read_text(encoding="utf-8")
@@ -82,12 +82,16 @@ def load_pages() -> list[dict[str, Any]]:
         if language not in {"fr", "en"} and page_id != "reference/references":
             continue
 
-        concepts: list[str] = []
+        section_headings: list[str] = []
         for heading in HEADING.findall(source):
-            concept = clean_heading(heading)
-            if concept and concept.casefold() not in EXCLUDED_HEADINGS and concept not in concepts:
-                concepts.append(concept)
-            if len(concepts) == 6:
+            heading_text = clean_heading(heading)
+            if (
+                heading_text
+                and heading_text.casefold() not in EXCLUDED_HEADINGS
+                and heading_text not in section_headings
+            ):
+                section_headings.append(heading_text)
+            if len(section_headings) == 6:
                 break
 
         title = str(front.get("title", page_id.rsplit("/", maxsplit=1)[-1]))
@@ -104,7 +108,7 @@ def load_pages() -> list[dict[str, Any]]:
                 "domain": metadata.get("domain"),
                 "scope": str(metadata.get("scope", "")),
                 "purpose": str(metadata.get("purpose", "")),
-                "concepts": concepts,
+                "section_headings": section_headings,
                 "route": metadata.get("suggested_route", {}),
                 "parents": metadata.get("hierarchy", {}).get("parents", []),
                 "children": metadata.get("hierarchy", {}).get("children", []),
@@ -113,6 +117,38 @@ def load_pages() -> list[dict[str, Any]]:
         )
     return pages
 
+
+
+def load_concept_graph(language: str, pages: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+    """Load the reviewed concept registry and resolve language-specific page links."""
+    registry_path = ROOT / "data" / "concepts.yml"
+    registry = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
+    page_by_id = {page["id"]: page for page in pages}
+    concepts = []
+    concept_ids = set()
+    for item in registry["concepts"]:
+        resources = []
+        for page_id in item["resources"]:
+            page = page_by_id.get(page_id)
+            if page is not None:
+                resources.append(
+                    {"id": page_id, "title": page["title"], "href": page["href"]}
+                )
+        concepts.append(
+            {
+                "id": item["id"],
+                "label": item["labels"][language],
+                "definition": item["definitions"][language],
+                "resources": resources,
+            }
+        )
+        concept_ids.add(item["id"])
+    relations = [
+        {"from": edge["from"], "type": edge["type"], "to": edge["to"]}
+        for edge in registry["relations"]
+        if edge["from"] in concept_ids and edge["to"] in concept_ids
+    ]
+    return {"concepts": concepts, "concept_relations": relations}
 
 def assign_route_rank(pages: list[dict[str, Any]], language: str) -> None:
     """Rank pages by a breadth-first walk of the suggested route and hierarchy."""
@@ -153,9 +189,15 @@ def build(language: str) -> Path:
         )
     )
     output = SITE / f"learning-map-data-{language}.json"
+    concept_graph = load_concept_graph(language, pages)
     output.write_text(
         json.dumps(
-            {"language": language, "source": "LLM-LAB-PAGE-MAP v1", "pages": pages},
+            {
+                "language": language,
+                "source": "LLM-LAB-PAGE-MAP v1 + data/concepts.yml",
+                "pages": pages,
+                **concept_graph,
+            },
             ensure_ascii=False,
             indent=2,
         )
