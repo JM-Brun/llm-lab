@@ -37,13 +37,13 @@ def test_source_graph_rejects_edges_to_unknown_local_nodes() -> None:
         "source_graph": {
             "nodes": [
                 {
-                    "id": "query",
+                    "id": "src-query",
                     "kind": "representation",
                     "description": "A query vector.",
                     "locator": "Section 1",
                 }
             ],
-            "edges": [{"from": "query", "type": "compared-with", "to": "missing"}],
+            "edges": [{"from": "src-query", "type": "compared-with", "to": "missing"}],
             "interpretation": "A source-local reconstruction.",
         },
         "learning_outcomes": [
