@@ -7,6 +7,9 @@ Extraction records contain atomic, evidence-linked items; they are not a second 
 
 ## Top-level shape
 
+Instructional sources may include a top-level `pedagogical_model` alongside atomic `items`. It preserves the source's local concept/process graph and teaching route without creating a second canonical graph. See the QKV extraction record for a complete example. Source-local node IDs and relation labels are not canonical concept IDs or project relation types. Mark inferred learning outcomes and prerequisites explicitly, and record access limitations in the reconstruction basis.
+
+
     schema_version: 1
     source_id: example-source
     items:
