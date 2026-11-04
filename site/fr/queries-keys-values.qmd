@@ -1,6 +1,6 @@
 ---
 title: "Requêtes, clés et valeurs (Q, K, V)"
-subtitle: "Comment le modèle choisit quelles informations combiner"
+subtitle: "Trois projections apprises, trois rôles dans l'auto-attention"
 keywords: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
@@ -8,190 +8,93 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/queries-keys-values"
-scope: "Présente les projections Q, K et V dans le cas de l’auto-attention, où elles proviennent du même flux de représentations ; laisse le calcul des scores, le masquage et la normalisation à la page sur l’attention à produit scalaire, et renvoie l’attention croisée à l’approfondissement avancé dédié."
-purpose: "Le lecteur doit pouvoir distinguer Q, K et V, identifier les projections apprises qui les produisent et expliquer comment ils contribuent respectivement au calcul des poids d’attention et à la combinaison de l’information."
+scope: "Explique les rôles et les projections apprises Q, K et V dans l'auto-attention, leur entrée commune et leurs dimensions ; laisse le calcul des scores et de l'agrégation à l'attention à produit scalaire, la contrainte temporelle au masque causal, l'implémentation au parcours de construction et le contexte historique à la page dédiée."
+purpose: "Le lecteur doit pouvoir distinguer les projections Q/K qui déterminent les poids de la projection V qui fournit le contenu, écrire les trois projections de l'auto-attention, en déduire les dimensions et prévoir l'effet d'une modification de V à Q et K constants."
 suggested_route:
   previous: "fr/transformer"
   next: "fr/scaled-dot-product-attention"
 hierarchy:
-  parents: ["fr/contextualized-representations", "fr/transformer"]
-  children: ["fr/scaled-dot-product-attention"]
-related: ["fr/cross-attention"]
+  parents: ["fr/transformer"]
+  children: []
+related: ["fr/contextualized-representations", "fr/scaled-dot-product-attention", "fr/cross-attention", "fr/transformer-block-walkthrough"]
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
-Les requêtes, clés et valeurs ne sont pas trois types de tokens. Dans le cas étudié ici — l'**auto-attention** — ce sont trois **projections apprises d'un même flux de représentations**, utilisées pour déterminer quelles positions contribuent à une représentation contextualisée. L'attention croisée, où Q et K/V proviennent de flux différents, est traitée dans un [approfondissement avancé](cross-attention.qmd).
+La page précédente, [GPT et Transformer : architecture et flux des données](transformer.qmd), situe l'auto-attention dans la passe avant du réseau. Ici, on isole les trois projections qui l'alimentent : **Q**, **K** et **V**. Ce ne sont pas trois catégories de tokens, mais trois transformations apprises d'une représentation. Q et K déterminent les poids ; V fournit le contenu agrégé. La page suivante détaille le calcul de ces poids et de cette agrégation.
 :::
 
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Concept vérifié</span>
-  <span class="epistemic-badge badge-code">Python · à exécuter localement</span>
   <span class="epistemic-badge badge-status">Architecture : Transformer</span>
 </div>
 
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes du pipeline LLM">
-  <a class="step-item" href="text-data.qmd">1. Texte</a>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
-  <span class="step-arrow">→</span>
-  <span class="step-item active">3. Attention (Q, K, V)</span>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="logits.qmd">4. Logits</a>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="cross-entropy.qmd">5. Perte & Entraînement</a>
-</div>
-
-::: {.callout-tip title="L'idée à retenir en une minute"}
-**Q et K calculent les poids ; V fournit ce qui est agrégé.** Les requêtes et les clés déterminent les poids relatifs entre positions ; ces poids servent ensuite à combiner les vecteurs de valeur.
-
-**Première lecture :** retenez cette séparation des rôles, puis observez comment les trois projections transforment les représentations d'entrée.
-
-**Pour approfondir :** suivez le calcul complet dans [l'attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), puis la contrainte temporelle dans le [masque causal](causal-masking.qmd).
+::: {.callout-tip title="L'idée à retenir"}
+**Q et K déterminent les poids ; V fournit le contenu agrégé.** C'est la distinction essentielle à retenir avant d'étudier le calcul de l'attention.
 :::
 
-## Intuition
+## L'intuition : comparer, puis transmettre
 
-Imagine une collection de fiches. La **requête** est la question posée ; la **clé** est l'indice qui permet d'évaluer si une fiche correspond à cette question ; la **valeur** est le contenu de la fiche qui pourra être agrégé. Le score de correspondance n'est donc ni la clé ni la valeur. Cette analogie distingue les rôles, mais ne signifie pas que le modèle effectue une recherche symbolique explicite.
+Imagine une collection de fiches :
 
+- la **requête Q** exprime ce qu'une position cherche ;
+- la **clé K** fournit le vecteur avec lequel cette position peut être comparée ;
+- la **valeur V** porte l'information qui pourra être transmise et agrégée.
 
-::: {.callout-note collapse="true" title="Inventaire des analogies pour Q, K et V (approfondissement)"}
-Plusieurs formulations imagées coexistent dans les pages du projet. Elles décrivent les mêmes rôles sous des angles complémentaires ; ce ne sont pas des mécanismes littéraux du modèle.
+L'analogie aide à distinguer les fonctions, mais elle ne décrit pas une recherche symbolique : le modèle ne manipule pas des questions, des étiquettes ou des fiches lisibles. Q, K et V sont des vecteurs numériques appris.
 
-| Analogie déjà utilisée | Q — requête | K — clé | V — valeur |
-|---|---|---|---|
-| **Collection de fiches** (cette page) | Ce qu'une position cherche | Ce qui permet de comparer les fiches et d'identifier celles qui correspondent | Le contenu de la fiche retenue et agrégé |
-| **Verbes fonctionnels** (synthèse du Transformer) | Chercher l'information | Être trouvé / présenter ce qui permet d'être repéré | Transmettre l'information |
+![Schéma des projections Q, K et V : Q et K déterminent les poids d'attention, qui servent à combiner les valeurs V.](../images/queries-keys-values.svg){fig-alt="Une représentation d'entrée est projetée en requête, clé et valeur. Les requêtes sont comparées aux clés ; les poids obtenus pondèrent les valeurs." width=100%}
 
-**À retenir :** Q et K participent à l'appariement qui détermine les poids ; V porte le contenu agrégé avec ces poids. Les termes « chercher », « correspondre » ou « être trouvé » sont des raccourcis pédagogiques : les vecteurs sont des projections apprises, pas des questions, étiquettes ou fiches lisibles par le modèle.
+Pour situer historiquement les mécanismes d'attention avant l'architecture Transformer, voir [l'historique des Transformers](transformer-history.qmd).
 
-Cette liste recense les analogies effectivement présentes dans les pages de référence actuelles ; elle ne constitue pas une liste de mécanismes distincts.
-:::
+## D'où viennent Q, K et V ?
 
-## L'idée en un schéma
-
-![Schéma des projections Q, K et V : Q et K calculent les poids d'attention, qui servent à combiner les valeurs V.](../images/queries-keys-values.svg){fig-alt="Les représentations d'entrée sont projetées en requêtes, clés et valeurs. Les requêtes sont comparées aux clés ; les poids obtenus pondèrent les valeurs pour produire une représentation contextualisée." width=100%}
-
-Q et K fournissent les informations utilisées pour déterminer les poids relatifs entre positions accessibles. Ces poids indiquent ensuite comment combiner les vecteurs V. Le calcul précis des scores, du masque et du softmax est détaillé dans la page sur l'attention à produit scalaire mise à l'échelle.
-
-## D'où viennent Q, K et V dans l'auto-attention ?
-
-Dans l'auto-attention, on part d'une même matrice $X\in\mathbb{R}^{T\times d_{model}}$, qui rassemble les représentations des $T$ positions. Trois transformations apprises produisent :
+Dans l'auto-attention, les trois projections partent du même flux de représentations. Pour une séquence de $T$ positions, on note cette matrice $X\in\mathbb{R}^{T\times d_{model}}$ :
 
 $$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
 $$
 
-Les matrices $W_Q$, $W_K$ et $W_V$ sont apprises pendant l'entraînement. Elles transforment chaque représentation d'entrée pour lui donner un rôle différent dans le calcul de l'attention. Dans l'attention à produit scalaire standard, les valeurs $V$ ne déterminent pas directement les scores : ceux-ci sont calculés à partir de $Q$ et $K$.
+Les matrices $W_Q$, $W_K$ et $W_V$ sont des paramètres appris conjointement pendant l'entraînement. Elles transforment chaque représentation d'entrée, mais remplissent des rôles distincts dans le mécanisme.
 
-Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model}\times d_v}$, les formes obtenues sont $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$. Les biais éventuels sont omis ici.
+Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model}\times d_v}$, les formes sont :
 
-**Attention croisée :** la même formule avec un seul $X$ ne décrit pas ce cas. Les requêtes proviennent d'une séquence cible, tandis que clés et valeurs proviennent d'une séquence source. Cette séparation est étudiée dans l'[approfondissement sur l'attention croisée](cross-attention.qmd).
+- $Q,K\in\mathbb{R}^{T\times d_k}$ ;
+- $V\in\mathbb{R}^{T\times d_v}$.
 
-::: {.micro-workbench}
-::: {.micro-workbench-header}
-<span>MICRO-ATELIER NUMÉRIQUE · PROJECTIONS Q, K ET V</span>
-<span>Python 3.12+ / NumPy</span>
-:::
-::: {.micro-workbench-body}
-```python
-import numpy as np
+Les dimensions $d_k$ et $d_v$ ne sont donc pas nécessairement égales. Les biais éventuels sont omis dans cette écriture. Pour suivre ces projections dans le code réel du bloc, voir la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd) ; les conventions générales de dimensions et d'axes sont détaillées dans [Tenseurs](tensors.qmd).
 
-# Three input positions, each represented by a 4-dimensional vector
-X = np.array([
-    [1.0, 0.5, 0.2, 0.1],
-    [0.1, 0.9, 0.8, 0.3],
-    [0.4, 0.2, 0.7, 0.9],
-])
-T, d_model = X.shape
+**Attention croisée :** cette formule à entrée unique décrit l'auto-attention, pas tous les mécanismes d'attention. En attention croisée, Q provient du flux qui consulte, tandis que K et V proviennent du flux consulté. Voir l'[approfondissement sur l'attention croisée](cross-attention.qmd).
 
-# Learned projections: keys/queries have dimension 2; values dimension 3
-W_Q = np.array([[0.5, 0.1], [0.2, 0.8], [0.1, 0.3], [0.9, 0.4]])
-W_K = np.array([[0.2, 0.7], [0.4, 0.1], [0.6, 0.5], [0.3, 0.2]])
-W_V = np.array([[1.0, 0.0, 0.2], [0.0, 1.0, 0.5], [0.5, 0.2, 0.0], [0.1, 0.8, 0.4]])
+## Ce qu'il faut distinguer
 
-# Each projection transforms all positions independently
-Q = X @ W_Q
-K = X @ W_K
-V = X @ W_V
+| Objet | Rôle dans le calcul |
+|---|---|
+| Q et K | Déterminent les scores de comparaison, puis les poids d'attention |
+| V | Fournit les vecteurs combinés à l'aide de ces poids |
+| Poids d'attention | Déterminent la contribution relative de chaque valeur à une sortie |
 
-assert Q.shape == (T, 2)
-assert K.shape == (T, 2)
-assert V.shape == (T, 3)
-print("Q:", Q.shape, "K:", K.shape, "V:", V.shape)
-```
-:::
-::: {.micro-workbench-footer}
-Les projections transforment chaque représentation d'entrée. Le calcul des poids et l'agrégation des valeurs sont traités dans la page suivante.
-:::
-:::
-
-## Pourquoi séparer ces trois rôles ?
-
-Q, K et V sont appris conjointement, mais ils ont des rôles distincts :
-
-- **Q et K** : projections utilisées pour déterminer les poids d'attention.
-- **V** : projection qui fournit le contenu combiné à l'aide de ces poids.
-
-La page suivante détaille le calcul d'attention ; la page sur le [masque causal](causal-masking.qmd) explique comment certaines positions peuvent être rendues inaccessibles.
-
-## Idées reçues et contre-exemples
-
-- **« Une clé est une étiquette sémantique lisible. »** En général, non : ses coordonnées sont apprises et n'ont pas d'interprétation humaine directe garantie.
-- **« La valeur la plus proche est forcément la plus utile. »** Les poids ne sont pas calculés à partir d'une distance universelle entre les valeurs : ils dépendent des requêtes et des clés.
-- **« Q, K et V ont toujours la même dimension. »** Pas nécessairement : la dimension des clés peut différer de celle des valeurs, selon l'architecture.
-- **« Un poids d'attention élevé explique à lui seul une prédiction. »** Il décrit une étape de l'agrégation, pas l'effet de cette information sur la sortie finale du modèle.
-
-<details class="spot-the-fallacy">
-<summary>Piège fréquent : « Un poids d'attention de 0,95 prouve que ce token est la cause principale de la réponse »</summary>
-<div class="fallacy-content">
-<p><strong>Réfutation rigoureuse :</strong> Le poids d'attention $\alpha_{ij}$ mesure uniquement l'alignement relatif entre la requête $q_i$ et la clé $k_j$. Si le vecteur de valeur $v_j$ correspondant a une norme faible ou est orthogonal à la direction utile pour la prédiction, cette position aura une contribution marginale. De plus, la sortie d'attention traverse ensuite une connexion résiduelle, une normalisation et un réseau MLP, qui modifient profondément l'information transmise.</p>
-</div>
-</details>
-
-## Repères historiques
-
-Les mécanismes d'attention ont notamment été étudiés dans les modèles de traduction neuronale de Bahdanau, Cho et Bengio (2014). *Attention Is All You Need* (Vaswani et al., 2017) a placé l'auto-attention au cœur de l'architecture Transformer et formalisé l'attention à produit scalaire mise à l'échelle.
-
-- [Bahdanau et al. (2014), *Neural Machine Translation by Jointly Learning to Align and Translate*](https://arxiv.org/abs/1409.0473)
-- [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762)
-
-## Liens avec les autres concepts
-
-- Comprendre les scores et le *softmax* dans [l'attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd).
-- Voir comment le [masque causal](causal-masking.qmd) bloque l'accès aux positions futures.
-- Replacer ces opérations dans la [synthèse du Transformer](transformer.qmd).
-- Relier le *softmax* aux [probabilités](probabilites.qmd).
+Une clé n'est pas une étiquette sémantique lisible, et l'attention n'est pas une recherche du plus proche voisin dans l'espace des embeddings initiaux : les scores sont calculés entre des projections apprises. De même, la valeur la plus proche d'une requête n'est pas automatiquement la plus utile : les poids sont déterminés par Q et K, puis appliqués aux vecteurs V ; les valeurs ne sont pas comparées entre elles pour choisir la plus proche. Les poids ne sont ni les valeurs, ni une mesure universelle de pertinence sémantique. Leur calcul et leurs limites d'interprétation sont expliqués dans la page sur l'[attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd).
 
 ::: {.self-check}
-## Vérifier sa compréhension
+## Vérifier l'idée essentielle
 
-[Exercices approfondis sur ce thème](exercises.qmd#attention).
+[Exercices approfondis sur Q/K/V et l'attention](exercises.qmd#attention).
 
-Quelles projections déterminent les poids d'attention ? Quelle projection fournit les vecteurs dont le contenu sera agrégé ?
+**Quelles projections déterminent les poids d'attention, et laquelle fournit les vecteurs agrégés ? Que se passe-t-il si V change alors que Q et K restent fixes ?**
 
 <details>
 <summary>Afficher le raisonnement</summary>
 
-Q et K déterminent les poids ; V fournit les vecteurs combinés avec ces poids. Modifier Q ou K peut modifier les poids. Modifier V peut modifier le contenu agrégé même si les poids restent identiques.
+Q et K déterminent les poids d'attention ; V fournit les vecteurs dont le contenu est agrégé. Modifier Q ou K peut modifier les poids. Si V change seul, les poids restent identiques puisque les scores dépendent de Q et K ; le contenu agrégé change, car la combinaison porte sur les nouveaux vecteurs V.
 
 </details>
-:::
-
-::: {.callout-note collapse="true" title="Code et tests de référence (approfondissement)"}
-Pour comprendre les formes des matrices et des vecteurs utilisés ici, voir [Tenseurs](tensors.qmd).
-
-Une implémentation de référence testée numériquement est disponible dans `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`). Les tests unitaires associés dans `tests/unit/test_attention.py` vérifient la préservation des formes, la somme unitaire des poids et la stabilité numérique.
-
-- [Implémentation de référence](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
-- [Tests unitaires](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
-- [État actuel de l'implémentation et de sa validation](https://github.com/JM-Brun/llm-lab/blob/main/docs/project-status.md)
 :::
 
 <div class="route-nav-cards">
   <a class="route-nav-card" href="transformer.qmd">
     <span class="nav-direction">← Étape précédente</span>
-    <span class="nav-title">GPT et Transformer : architecture et flux de données</span>
+    <span class="nav-title">GPT et Transformer : architecture et flux des données</span>
   </a>
   <a class="route-nav-card" href="scaled-dot-product-attention.qmd">
     <span class="nav-direction">Étape suivante →</span>
