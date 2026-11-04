@@ -98,13 +98,6 @@ flowchart LR
 1. **[Pré-entraînement (*pretraining*)](build-path.qmd).** Le modèle apprend à partir d’un corpus selon un objectif — pour un GPT, la prédiction du prochain token. L’apprentissage est dit *auto-supervisé* : les cibles sont construites à partir des données elles-mêmes, sans étiquettes humaines. Il produit un modèle pré-entraîné, souvent appelé *base model*. Le terme *foundation model* désigne plus largement un modèle conçu pour être réutilisé et adapté à de nombreuses tâches ; les deux expressions ne sont pas strictement synonymes.
 2. **[Adaptation facultative des poids](build-path.qmd).** Après le pré-entraînement, on peut mettre à jour les paramètres : fine-tuning pour une tâche (par exemple la classification), SFT sur des exemples instruction-réponse, ou optimisation par préférences. Cette étape n’est pas obligatoire : un modèle pré-entraîné peut être utilisé directement.
 
-::: {.callout-note collapse="true" title="Pour approfondir : RLHF et optimisation directe des préférences"}
-
-Un **pipeline classique de RLHF** (*reinforcement learning from human feedback*, apprentissage par renforcement à partir de retours humains) commence souvent par un fine-tuning supervisé (SFT) sur des démonstrations. Des annotateurs humains comparent ensuite des réponses candidates ; ces préférences servent à entraîner un **modèle de récompense** qui attribue des scores aux réponses. Une politique est alors optimisée par rapport à cette récompense, historiquement souvent avec un algorithme de renforcement comme **PPO**, tout en limitant son éloignement d'une politique de référence. C'est une recette influente, pas une séquence universelle suivie par tous les modèles ou systèmes de post-entraînement ([Ouyang et al., 2022](https://arxiv.org/abs/2203.02155)).
-
-**DPO** (*direct preference optimization*, optimisation directe des préférences) est une autre approche : elle apprend directement à partir des comparaisons de préférences, sans la boucle distincte modèle de récompense + PPO de ce pipeline classique de RLHF ([Rafailov et al., 2023](https://arxiv.org/abs/2305.18290)). Il est donc plus exact de considérer RLHF et DPO comme des approches apparentées du post-entraînement par préférences, et non comme des étapes successives obligatoires.
-
-:::
 3. **[Inférence](generation.qmd).** On utilise les paramètres obtenus pour traiter une entrée et calculer une sortie. Pour un modèle autorégressif, l’inférence suit la boucle de génération décrite dans [la page dédiée](generation.qmd). Le prompt et, éventuellement, des documents récupérés par un système RAG fournissent du contexte ; ils ne constituent pas une phase supplémentaire de l’apprentissage et ne modifient pas les poids du modèle.
 
 L’adaptation est donc une branche facultative entre le pré-entraînement et l’utilisation, et non une étape obligatoire. Le RAG relève de la composition du contexte à l’inférence : il n’est ni une phase d’apprentissage ni une étape du cycle de vie du modèle. L’évaluation, quant à elle, intervient à plusieurs moments ; le jeu de test doit rester tenu à l’écart jusqu’à l’évaluation finale, faute de quoi cette évaluation serait biaisée.
@@ -121,12 +114,12 @@ La réutilisation d’un modèle généraliste est intéressante lorsqu’une m�
 
 Essayez de répondre avant d’ouvrir les raisonnements. L’objectif est de manipuler le modèle mental, pas de mémoriser des étiquettes.
 
-1. Un modèle vient de générer le token « chat » et prépare le suivant. Décrivez ce qui se passe entre ces deux tokens : que reçoit le modèle, que calcule-t-il, et qu’est-ce qui ne change pas ?
+1. Le fine-tuning d'un GPT modifie-t-il nécessairement sa famille d'architecture ? Distinguez la mise à jour des paramètres d'une éventuelle modification de la structure du modèle.
 
 <details>
 <summary>Afficher le raisonnement</summary>
 
-Le token « chat » est ajouté au contexte : c’est cette séquence allongée que le modèle reçoit. Il calcule une nouvelle distribution de probabilité sur le vocabulaire, dont une règle de sélection extrait le token suivant. Ce qui ne change pas : les paramètres du modèle — l’inférence les lit, elle ne les modifie pas.
+Non. Le fine-tuning désigne d'abord une procédure d'adaptation des paramètres. Selon la méthode, on peut aussi ajouter des modules (par exemple des adaptateurs ou une tête de classification) : il faut donc distinguer la famille du modèle de la structure complète du système adapté.
 
 </details>
 

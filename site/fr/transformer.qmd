@@ -82,57 +82,24 @@ Ces termes ne sont pas interchangeables avec les autres dimensions internes : le
 
 Le mot *width* est parfois utilisé plus largement pour d’autres dimensions internes : il faut donc vérifier quelle dimension est visée dans un article ou une fiche modèle. Pour les formes des tenseurs et les dimensions des projections, voir [Tenseurs](tensors.qmd) ; pour une configuration concrète, voir la [visite guidée de la configuration GPT](gpt-config-walkthrough.qmd). Profondeur et largeur décrivent la structure, mais ne suffisent pas à prédire les performances.
 
-### Comprendre le calcul d'attention
-
-![Étapes du calcul d'attention : scores, mise à l'échelle, masque, softmax et agrégation des valeurs.](../images/attention-calculation-flow.svg){fig-alt="Q et K produisent des scores qui sont mis à l'échelle et masqués avant le softmax. Les poids obtenus combinent les valeurs V pour produire les vecteurs de sortie." width=100%}
-
-1. [**Requêtes, clés et valeurs (Q, K, V)**](queries-keys-values.qmd) — trois projections apprises donnent aux représentations des rôles distincts : chercher l'information, s'en laisser trouver, la transmettre.
-2. [**Attention à produit scalaire mise à l'échelle**](scaled-dot-product-attention.qmd) — les scores issus de $QK^\top$ sont normalisés par $\sqrt{d_k}$, puis convertis en poids par le *softmax*.
-3. [**Masque causal**](causal-masking.qmd) — exclut les positions futures avant le *softmax*.
-
-L'information de position intervient également ici : selon le modèle, elle a été ajoutée aux embeddings ou est intégrée aux requêtes et aux clés (voir [Encodage positionnel](positional-encoding.qmd)).
-
-Les poids d'attention ne sont pas une explication complète d'une prédiction : ils décrivent une étape d'agrégation. Les projections, les valeurs, les autres têtes, les couches suivantes et la sortie finale contribuent toutes au résultat.
+L'auto-attention est l'opération qui permet aux positions autorisées d'échanger de l'information. Son calcul détaillé — projections Q/K/V, scores, mise à l'échelle, softmax et masque causal — est traité dans les pages de référence sur [Q/K/V](queries-keys-values.qmd), l'[attention à produit scalaire](scaled-dot-product-attention.qmd) et le [masque causal](causal-masking.qmd). L'information de position peut être ajoutée aux embeddings ou intégrée aux requêtes et aux clés (voir [information positionnelle](positional-encoding.qmd)).
 
 ## 3. Des représentations aux logits
 
-Après le dernier bloc, une projection de sortie produit les **logits** : un score non normalisé pour chaque token du vocabulaire. Une *softmax* appliquée à ces scores définit une distribution de probabilité sur les candidats au prochain token. Ces objets sont distincts : les logits sont les sorties numériques du réseau ; la distribution est leur transformation probabiliste. Voir les pages de référence sur les [logits](logits.qmd), les [probabilités](probabilites.qmd) et la [vraisemblance](vraisemblance.qmd).
-
-### Exemple numérique : d'un vecteur de logits à une distribution
-
-Supposons que le vocabulaire jouet ne contienne que quatre candidats. La projection de sortie produit, à titre **illustratif**, les logits suivants :
-
-| Token candidat | Logit | Probabilité après softmax |
-|---|---:|---:|
-| `dort` | 2 | 64,4 % |
-| `court` | 1 | 23,7 % |
-| `mange` | 0 | 8,7 % |
-| `joue` | −1 | 3,2 % |
-
-Les probabilités sont calculées par \(p_i = \exp(z_i)/\sum_j\exp(z_j)\). Ces nombres sont choisis pour rendre le calcul lisible : ils ne proviennent ni du GPT de référence du dépôt ni d'un modèle entraîné. Un vrai modèle possède un vocabulaire bien plus vaste, et ses logits dépendent du contexte, des paramètres et de la position considérée.
-
-Cette sortie correspond à **une passe avant** pour un contexte donné. La sélection du prochain token, l'ajout au contexte et la répétition du calcul appartiennent à la [boucle de génération](generation.qmd), pas à la passe avant elle-même.
-
-### Une passe avant n'est pas une boucle de génération
-
-Une **passe avant** transforme le contexte fourni en logits ; elle ne choisit pas, à elle seule, le token qui sera ajouté et ne calcule pas toute la réponse future. Le décodage et la répétition autorégressive sont décrits dans la page dédiée à la [génération](generation.qmd).
-
-
+Après le dernier bloc, une projection de sortie produit les **logits**, c'est-à-dire un score non normalisé par token du vocabulaire. La [page dédiée aux logits](logits.qmd) explique leur interprétation ; la [page sur les probabilités de sortie](probabilites.qmd) détaille leur transformation en distribution. Cette page s'arrête à la sortie du réseau : la sélection du prochain token, l'ajout au contexte et la répétition relèvent de la [génération autorégressive](generation.qmd).
 
 ## Vérifier sa compréhension
 
-[Voir les exercices approfondis sur la génération](exercises.qmd#generation) — cette vérification courte reprend l'exemple numérique de cette page.
+Cette vérification porte sur le calcul interne, et non sur le décodage traité dans [la leçon sur la génération](generation.qmd).
 
-1. Si les logits des quatre candidats deviennent $(3, 2, 1, 0)$ au lieu de $(2, 1, 0, -1)$, le token glouton change-t-il ? Les probabilités restent-elles identiques ?
-2. Dans l'exemple, pourquoi le token ayant une probabilité de 64,4 % n'est-il pas nécessairement sélectionné lors d'un échantillonnage ?
-3. Après la sélection d'un token, pourquoi faut-il recalculer le contexte avant de prédire le suivant ?
+1. Quelle opération permet à une position d'intégrer de l'information provenant d'autres positions, et laquelle transforme chaque position indépendamment ?
+2. Pourquoi les connexions résiduelles ne remplacent-elles pas la transformation calculée par une sous-couche ?
 
 <details>
 <summary>Afficher les réponses et le raisonnement</summary>
 
-1. L'argmax ne change pas : le premier candidat reste maximal. Les probabilités restent également identiques, car ajouter la même constante à tous les logits ne change pas la softmax.
-2. L'échantillonnage tire un candidat selon la distribution : les autres candidats ont une probabilité non nulle. Le token le plus probable n'est donc pas garanti à chaque tirage.
-3. Le modèle est autorégressif : la distribution suivante est conditionnée par le nouveau préfixe, qui inclut le token ajouté. Il faut donc effectuer une nouvelle passe avant sur ce contexte actualisé.
+1. L'auto-attention mélange l'information entre positions autorisées ; le MLP applique une transformation position par position, avec des poids partagés.
+2. La connexion résiduelle additionne la sortie de la sous-couche à son entrée : $x_{sortie}=x_{entrée}+F(x_{entrée})$. Elle préserve un chemin direct à travers le bloc tout en laissant la sous-couche apporter une transformation apprise.
 
 </details>
 :::
