@@ -14,6 +14,8 @@ This page is the entry point for the Q/K/V source collection. It is intentionall
 | `neha-kk-understanding-qkv-medium` | [Neha KK — Understanding Queries, Keys and Values in Transformers](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) | 2025-12-31 | [YAML extraction](../../data/extractions/neha-kk-understanding-qkv-medium.yml) | [Review](qkv-neha-kk-medium-2026-11.md) | Partially scanned: author text reconstructed; actual figure files, linked resources and rights unresolved |
 | `huggingface-transformers-kv-cache-explanation` | [Hugging Face Transformers — Caching](https://huggingface.co/docs/transformers/main/en/cache_explanation) | Living documentation | [Source catalogue](../../data/sources.yml) | [DEV review, community follow-up](qkv-nishanthan-devto-2026-11.md#7-follow-up-scan-reconciliation) | Partially scanned; technical follow-up source, not a third Q/K/V tutorial |
 
+**Medium scan refinement:** the indexed text exposes four in-body image placements (three captioned figures and one uncaptioned placeholder), but none was retrieved as image bytes or visually inspected. The live page DOM, cover/hero asset, comments and reuse rights remain unresolved. The current scan record also distinguishes the index snapshot from direct page retrieval.
+
 **Important provenance rule:** the KV-cache suggestion is a reader-comment contribution associated with the DEV discussion. It is not part of Nishanthan's author-authored article and must not be attributed to him. Hugging Face documentation is a separate corroborating source.
 
 ## 2. Cross-source synthesis
@@ -38,6 +40,9 @@ That agreement is useful pedagogical convergence, not independent experimental v
 | Multi-head attention | Concise architecture summary | Follow-on topic only | Preserve the project's depth split: overview first, tensor implementation in Build |
 | Interpretability | Warns against semantic-similarity / winner-take-all readings | Broadly suggests attention maps aid interpretation | Retain the project's stronger caveat: weights are not, by themselves, causal explanations |
 | Input representation | Shared representation stream | Uses “word embeddings” as shorthand | Use the canonical general notation for the current attention input; distinguish first-layer embeddings from later hidden states |
+| Input representations / positional information | Uses word embeddings as Q/K/V input shorthand | Does not explain positional-information injection | The current bilingual Q/K/V pages now clarify current hidden states, first-block embeddings, and input-level versus RoPE-style positional mechanisms |
+| Soft versus hard retrieval | “Closest matches” wording risks implying discrete selection | Four-step formula shows softmax-weighted aggregation | Preserve the distinction; existing attention lesson already teaches the weighted mixture |
+| Directionality / asymmetry | Claims attention is directional/non-symmetric without a matrix example | Not developed | Defer a worked matrix example; qualify that distinct Q/K projections typically yield non-symmetric scores, not universally |
 | KV cache | Reader comment, not article body | Not covered | Track as a separately sourced inference-efficiency topic |
 
 ## 3. What changed in LLM Lab
