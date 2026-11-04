@@ -3,7 +3,6 @@ title: "Approfondir : carte des connaissances"
 description: "Carte thématique des approfondissements avancés sur les LLM, organisée par questions et domaines."
 keywords: ["type:entry-point", "destination:deepen", "topic:deepen-hub", "level:overview", "language:fr", "status:published"]
 ---
-
 <!-- LLM-LAB-PAGE-MAP v1
 id: "fr/deepen"
 scope: "Point d'entrée dans les approfondissements avancés : organise les pages par familles de questions et explicite leur place par rapport au parcours Understand."
