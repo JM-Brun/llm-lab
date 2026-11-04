@@ -10,7 +10,7 @@
 
 ## 1. Scan scope and evidence
 
-The canonical Medium article was opened directly. Its author-authored text was available from the title and introductory motivation through the final paragraph. The retrieved page exposes the following structure:
+The canonical Medium URL was queried directly, but page retrieval returned a cache miss. The complete article text available to this pass came from the search-index result, not from direct HTML/DOM inspection. That indexed snapshot contains the title, author, publication date, all visible section text, equations, the pronoun example, conclusion, three figure captions and one additional full-size-image placeholder. The following structure is reconstructed from that indexed snapshot:
 
 1. Why attention exists.
 2. Database-search analogy.
@@ -21,23 +21,28 @@ The canonical Medium article was opened directly. Its author-authored text was a
 7. Claimed benefits, attention maps and language/vision/speech/multimodal scope.
 8. Conclusion.
 
-The page metadata gives the author and publication date (31 December 2025). The page reports no responses/comments.
+The indexed metadata identifies Neha KK and lists 31 December 2025 as the publication date, with a five-minute reading estimate. The indexed result does not expose a comments area; comments and replies were not inspected.
 
 ### Separate scan boundaries
 
 | Component | Status | Evidence / limitation |
 |---|---|---|
-| Author-authored text | Complete | Directly retrieved article body, lines 43–173 in the opened page snapshot |
+| Author-authored text | Complete within retrieved snapshot | Full text reconstructed from indexed search result; live article HTML/DOM was not retrieved |
+| Page DOM / live-page completeness | Not verified | Canonical Medium retrieval returned a cache miss |
+| Article metadata | Partially inspected | Indexed author, title, five-minute reading estimate and 2025-12-31 publication date |
 | Section/teaching sequence | Complete | Reconstructed from the article's visible headings and transitions |
-| Displayed figure captions | Partially inspected | Three in-body figure references/captions are visible, but the actual image assets are not resolved |
+| In-body visual placements | Partially inventoried | Three captioned figures plus one additional uncaptioned full-size-image placeholder are visible in indexed text |
+| Cover / hero image | Unknown | Search-index text does not establish whether a separate cover asset exists |
 | Actual image bytes and visual composition | Not inspected | The page reader did not expose stable image URLs or downloadable image bytes |
-| Linked resources | Not inspected | No substantive outbound technical references are included in the author-authored body |
-| Comments | No comments shown | The retrieved snapshot states there are no responses yet |
+| Linked resources | Not inspected | The indexed text does not expose a substantive bibliography or outbound technical references; live-page links and targets were not inspected |
+| Comments | Not inspected | The indexed result does not expose the comment area; absence of indexed comments is not evidence that no comments exist |
 | Rights/reuse | Unknown | No licence or figure-reuse permission was established |
 
-The source therefore remains **partially scanned**, even though its author-authored text reconstruction is complete. The article and its illustrations may be linked, but its images must not be copied, traced or recreated from an unseen thumbnail.
+The source therefore remains **partially scanned**. The text reconstruction is complete only for the retrieved search-index snapshot; it has not been reconciled against the live page DOM. The article and its illustrations may be linked, but its images must not be copied, traced or recreated from an unseen thumbnail.
 
 ## 2. Extracted contributions
+
+The follow-up extraction adds two claim-level items: (a) the article's 'closest matches' wording can imply hard retrieval, although its own formula computes a soft weighted mixture; and (b) its claim that attention is directional/non-symmetric is a useful matrix-level observation, but is not demonstrated in the article. Four visual placeholders are now represented as separate extraction items, without pretending that the images were inspected.
 
 The complete structured extraction is in [`data/extractions/neha-kk-understanding-qkv-medium.yml`](../../data/extractions/neha-kk-understanding-qkv-medium.yml). It records the source-local graph, eight-step teaching route, inferred outcomes/prerequisites, atomic items, evidence, caveats and dispositions.
 
@@ -49,8 +54,11 @@ The complete structured extraction is in [`data/extractions/neha-kk-understandin
 | Pronoun/context example | Concrete cross-token contextual dependency | Integrate as a short optional bilingual example, with a caveat |
 | Attention-map interpretability claim | Example of a common overstatement | Clarify by linking to existing fallacy treatment; no new text needed |
 | Parallelism comparison | Risks conflating training parallelism with autoregressive generation | Link to existing architecture/causal-mask material |
-| “Word embedding” input phrasing | Too narrow for deeper layers using current hidden states | Reject: canonical lesson already uses a general representation stream |
+| “Word embedding” input phrasing and omitted positional mechanism | Too narrow for deeper layers; does not explain where positional information enters | Clarify the current hidden-state input and distinguish input positional embeddings from RoPE-style Q/K transformations |
 | Cross-domain application list | Reminder that attention extends beyond text | Link only; project already covers architecture families and cross-attention |
+| Soft retrieval wording | “Closest matches” can imply hard selection | Clarify in extraction; existing attention lesson already explains soft weighted aggregation |
+| Directional/asymmetric attention | Names an important matrix property but does not demonstrate it | Defer a worked matrix example; no new graph edge or page section yet |
+| Four in-body visual placements | Three captions and one uncaptioned image placeholder | Inventory as unresolved; no reuse until exact assets and rights are verified |
 
 ## 3. Technical review
 
@@ -68,8 +76,11 @@ The complete structured extraction is in [`data/extractions/neha-kk-understandin
 2. **Pronoun resolution.** The article says that the query for “it” favours “animal” over “road”, but gives no model, layer, head, score, visualization or experiment. It is a conceptual illustration, not evidence that a model or attention head resolves coreference.
 3. **Interpretability.** An attention map exposes weights, not a complete explanation or causal attribution. This is already addressed in the project's counterexample on attention weights.
 4. **Scaling.** The article states that scaling avoids large scores and unstable training but does not derive the variance argument. The existing lesson gives the simplifying assumptions and the relation to softmax concentration/gradients.
-5. **Embedding terminology.** The first attention layer can consume token embeddings plus positional information, but deeper layers project their current hidden-state representations. The project's notation is already more general.
-6. **Database analogy.** It must not be interpreted as exact lookup, a symbolic index or selection of one nearest value. Attention computes compatibility scores and aggregates multiple V vectors.
+5. **Embedding terminology and positional information.** The article describes an embedding as a compact vector reflecting semantic meaning and uses it as the Q/K/V input. This is an introductory simplification: embedding coordinates are not explicit semantic features, and the input to a deeper attention layer is its current hidden state. The article also omits how positional information enters. The bilingual Q/K/V lesson now clarifies the distinction between input-level positional embeddings and attention-internal mechanisms such as RoPE.
+6. **Hard retrieval versus soft aggregation.** “The closest matches determine which values to get” can suggest discrete nearest-neighbour selection. The article's own softmax and weighted-sum equations instead describe a soft mixture of accessible value vectors. The existing attention lesson already explains this distinction.
+7. **Directional/asymmetric attention.** With distinct Q and K projections, the score matrix QKᵀ is generally non-symmetric for a given input, but special parameter/input configurations can be symmetric. The article asserts directionality without a matrix example or derivation. This remains a deferred opportunity for a worked matrix illustration.
+8. **Database analogy.** It must not be interpreted as exact lookup, a symbolic index or selection of one nearest value. Attention computes compatibility scores and aggregates multiple V vectors.
+9. **Missing scope.** The article does not discuss masking, self- versus cross-attention distinctions, tensor shapes, multi-head decomposition, implementation, exercises or explicit assessment. These topics are already distributed across the project's dedicated lessons.
 
 ## 4. Source pedagogical graph
 
@@ -144,10 +155,10 @@ The article does not introduce a durable concept absent from the current concept
 
 ## 8. Rights and visual handling
 
-The retrieved page exposes three figure captions/placements, but not stable original asset URLs or image bytes. Visual composition, authorship and licence are therefore unverified. The article may be linked as a reading reference; no image is embedded, copied, traced or described as visually inspected. Attribution does not itself grant reuse rights.
+The indexed text exposes four in-body image placements: Fig. 1 (self-attention between tokens using Q/K/V), Fig. 2 (linear projections into Q/K/V), an additional uncaptioned full-size-image placeholder after the introduction of three vectors, and Fig. 3 (scaled dot-product attention computation). A separate cover/hero image is not established. None of the four assets was visually inspected; exact URLs, bytes, composition, creator and rights remain unknown. No image is embedded, copied, traced or described as visually inspected. Attribution does not itself grant reuse rights.
 
 ## 9. Validation and completion
 
-The integration is limited to source data and two existing bilingual page files. Run the repository source-catalogue validator, page-metadata checks, Quarto render and local-link checks in CI. CI results must be recorded from the actual PR run; they are not inferred from successful API writes.
+This follow-up changes the source record, extraction, audit dossier, visual-assets register and annotated bibliography. It also clarifies in both Q/K/V lessons that X is the current attention input, distinguishes first-block token embeddings from later contextualized states, and locates positional information either at the input or inside attention (e.g. RoPE). The earlier bounded pronoun example and role-decoupling clarification remain from PR #453. Run the repository source-catalogue validator, page-metadata checks, Quarto render and local-link checks in CI. CI results must be recorded from the actual PR run; they are not inferred from successful API writes.
 
-The source remains partially scanned because the actual figures and reuse rights were not inspected. Its textual extraction and all author-authored contribution dispositions are complete.
+The source remains partially scanned because the live page DOM, four in-body images, possible cover image, comments, link targets and figure reuse rights were not inspected. Text extraction is complete for the search-index snapshot; new items preserve the visual placeholders and technical qualifications without guessing at missing media.

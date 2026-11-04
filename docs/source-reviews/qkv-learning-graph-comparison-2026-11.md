@@ -277,13 +277,38 @@ The sources' agreement on the four-step attention computation is pedagogical con
 
 ### 9.3 Integrated learning experience
 
-The resulting bilingual Q/K/V lesson keeps a single core mental model and adds two bounded improvements:
+The resulting bilingual Q/K/V lesson keeps a single core mental model and adds three bounded improvements:
 
 1. A concise rationale for separate projections: Q/K learn the matching interface, while V learns the payload representation; separating them decouples matching from information transfer.
 2. An optional linguistic example that connects a token's query to candidate contextual keys and weighted values, with explicit caveats that the source supplies no measured attention or coreference evidence.
+3. A precise account of the input representation: X is the current input to the attention sublayer, not always a raw token embedding; positional information may be added at the input or injected inside attention (for example, by RoPE acting on Q/K).
 
 The attention calculation remains on the next page. No new concept IDs, semantic edges, prerequisite links, navigation edges, curriculum stages, Build steps, figures or experiments are justified.
 
 ### 9.4 Provenance and scan status
 
 The Nishanthan DEV article remains partially scanned because the embedded illustration and parts of its comment history/metadata remain unresolved. The Neha KK Medium article also remains partially scanned because the actual figure files and reuse rights were not retrievable. Both sources can be cited and linked; neither article's illustrations are copied or represented as visually inspected.
+
+
+## 10. Neha KK follow-up scan — media and claim-level refinement
+
+A second pass on 2026-11-04 used the indexed Medium result after direct canonical page retrieval returned a cache miss. It reconstructed the full text represented in that index snapshot and identified **four in-body image placements**: three captioned figures (self-attention; Q/K/V projections; scaled dot-product attention) and one additional uncaptioned full-size-image placeholder. The cover/hero asset is not established. No actual image URL, image bytes, visual composition, comment thread or rights evidence was recovered. The source remains partially scanned; the text reconstruction is complete only for the index snapshot.
+
+The extraction now preserves each of the four visual slots as a distinct figure item with unverified visual evidence, and the pedagogical model includes a separate media inventory. These records deliberately do not infer what the images look like from captions. The visual-assets register records the source as link-only, and the annotated references list includes the article with its scan limitation.
+
+Two claim-level refinements were also extracted:
+
+- **Soft retrieval, not hard selection:** the article's phrase “closest matches determine which values to get” risks suggesting a nearest-neighbour/argmax operation. Its own subsequent softmax and weighted-sum formulation is a soft mixture over accessible values. This is already explained in the project's attention lesson; no extra page content is required.
+- **Directional/asymmetric scores:** the article states that attention is directional and non-symmetric. With distinct Q and K projections, QKᵀ is generally non-symmetric for a given input, but symmetry remains possible under special parameter/input configurations. The source provides no matrix example. This is retained as a deferred mathematical teaching opportunity rather than expanding the current page without a worked example.
+
+The page integration remains bounded. The follow-up clarifies the Q/K/V input representation in both languages, but adds no figure, canonical concept, graph edge or route change. Existing explanations and caveats are preserved.
+
+
+## 11. Input representations and positional information
+
+The Medium article treats a word embedding as the direct Q/K/V input and describes it as a compact representation of semantic meaning. This is acceptable as an introductory first-layer simplification, but it leaves out two distinctions:
+
+- An embedding table supplies learned token vectors; its coordinates are not explicit, human-readable semantic features.
+- The input to an attention sublayer is the current representation. In the first block this begins with token embeddings; positional information may be added at the input or introduced within attention (for example, RoPE transforms Q and K). In later blocks, the input is a contextualized hidden state.
+
+The project already covers positional mechanisms in its dedicated lesson and the Transformer overview. The Q/K/V lesson now adds a short bilingual clarification at the point where X is introduced. This is a local integration of a source omission, not a new concept or graph relation.

@@ -40,6 +40,14 @@ The repository is an independent learning and experimentation project. These sou
    - Book overview: https://ayinedjimi-consultants.fr/ouvrages/construire-llm-from-scratch-fr
    - **Use for:** a second explanation in French and visual intuition. Treat implementation details as claims to verify against primary papers, framework documentation, and tests.
 
+## Q/K/V and attention perspectives
+
+- **Neha KK — Understanding Queries, Keys and Values in Transformers** (Medium, 31 December 2025): https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b
+  - **Use for:** a concise introductory database-search analogy, an explicit motivation for separating Q/K matching from V payload, and a pronoun-context illustration.
+  - **Review status:** text reconstructed from an indexed search result; direct page HTML, four in-body image slots, comments and figure rights remain unverified. See [the source review](source-reviews/qkv-neha-kk-medium-2026-11.md). The figures are not reused.
+- **Nishanthan K — How Query, Key, and Value (QKV) Work in Transformers**: https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a
+  - **Use for:** a complementary Q/K/V explanation and source comparison; see [the QKV synthesis dossier](source-reviews/qkv-learning-graph-comparison-2026-11.md).
+
 ## Practical model training
 
 6. **Hugging Face LLM Course**

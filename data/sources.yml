@@ -122,15 +122,19 @@ sources:
       - accessed_at: "2026-11-04"
         status: partially-scanned
         inspected_scope:
-          - "Directly retrieved canonical Medium article: introduction, all explanatory sections, equations, pronoun example and conclusion"
-          - "Article metadata: author, publication date and displayed figure captions/placements"
-          - "Reconstructed source-local pedagogical graph and ordered teaching route"
-          - "Compared against the bilingual Q/K/V and scaled-dot-product-attention lessons, canonical concept graph, guided route, page routes and Build route"
+          - "Full author-authored article text reconstructed from the indexed Medium search result: introduction, all visible sections, equations, pronoun example and conclusion"
+          - "Indexed article metadata: author, five-minute reading estimate and publication date (31 December 2025)"
+          - "Four in-body image placements identified in indexed text: three captioned figures (Fig. 1–3) and one additional full-size-image placeholder"
+          - "Reconstructed source-local pedagogical graph and ordered teaching route from the indexed text"
+          - "Compared source sequence and claims against the bilingual Q/K/V and scaled-dot-product-attention lessons, canonical concept graph, guided route, page routes and Build route"
         limitations:
-          - "The actual embedded image files were not retrieved as stable URLs or bytes and were not visually inspected."
-          - "Figure creators and reuse rights are unknown; figures are link-only."
-          - "No independent model, head, attention weights or experiment supports the article's pronoun-resolution example."
-          - "No linked technical resources or external evidence are provided in the author-authored article body."
+          - "Direct canonical Medium page retrieval returned a cache miss; article text was retrieved through a search-index result, not direct HTML inspection."
+          - "The four in-body image placements are identified by captions/placeholders only; exact asset URLs, image bytes, visual composition, cover image and creator metadata remain unresolved."
+          - "No comments or replies were exposed in the indexed result; the comment area and full discussion were not inspected."
+          - "No linked technical resources or outbound primary references were exposed in the reconstructed author-authored body; link targets were not independently inspected."
+          - "No licence or permission for article figures was established; figures remain link-only."
+          - "No independent model, layer, head, measured attention weights or experiment supports the article's pronoun-resolution claim."
+          - "The indexed article text and metadata may omit content not represented in the search snapshot; text reconstruction is complete for the retrieved snapshot, not verified against the live page DOM."
     related:
       pages:
         - fr/queries-keys-values

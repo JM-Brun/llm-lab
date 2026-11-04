@@ -56,7 +56,7 @@ For the historical development of attention before the Transformer architecture,
 
 ## Where do Q, K, and V come from?
 
-In self-attention, all three projections start from the same representation stream. For a sequence of $T$ positions, let this matrix be $X\in\mathbb{R}^{T\times d_{model}}$:
+In self-attention, all three projections start from the same representation stream. Here, $X$ denotes the current input to the attention sublayer, not necessarily a raw token embedding. In the first block it starts from token embeddings; positional information is supplied either at the input (for example, by adding positional embeddings) or inside attention (for example, RoPE rotates queries and keys). In later blocks, $X$ is an already contextualized hidden state. For a sequence of $T$ positions, let this matrix be $X\in\mathbb{R}^{T\times d_{model}}$:
 
 $$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
