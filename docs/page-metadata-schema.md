@@ -87,7 +87,7 @@ A useful scope can mention an adjacent topic, but only to establish a boundary. 
 
 ## 4. Tag vocabulary
 
-The `topic` tag is a stable page-grouping identifier shared by translated counterparts. It is not a concept record and does not provide definitions, synonyms, broader/narrower relations, or concept identity across multiple pages. Section headings extracted for the learning map are display labels only; they are not taxonomy entries. See [the information architecture contract](information-architecture.md) for the ownership boundary and criteria for a future SKOS-aligned concept scheme.
+The `topic` tag is a stable page-grouping identifier shared by translated counterparts. It is not a concept record and does not provide definitions, synonyms, broader/narrower relations, or concept identity across multiple pages. Section headings extracted for the learning map are display labels only; they are not taxonomy entries. See [the information architecture contract](information-architecture.md) for the ownership boundary and the implemented SKOS-aligned concept scheme.
 
 Use these dimensions consistently:
 

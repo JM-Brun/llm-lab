@@ -208,10 +208,14 @@ def build(language: str) -> Path:
 
 
 def main() -> None:
-    """Generate both language-specific datasets."""
+    """Generate bilingual learning maps and the linked-data export."""
     for language in ("fr", "en"):
         output = build(language)
         sys.stdout.write(f"Generated {output.relative_to(ROOT)}\n")
+    from export_knowledge_graph import write_export
+
+    export = write_export(SITE / "knowledge-graph.jsonld")
+    sys.stdout.write(f"Generated {export.relative_to(ROOT)}\n")
 
 
 if __name__ == "__main__":
