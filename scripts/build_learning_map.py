@@ -101,6 +101,7 @@ def load_pages() -> list[dict[str, Any]]:
                 "level": tags.get("level", "reference"),
                 "type": tags.get("type", "concept-lesson"),
                 "topic": tags.get("topic", "misc"),
+                "domain": metadata.get("domain"),
                 "scope": str(metadata.get("scope", "")),
                 "purpose": str(metadata.get("purpose", "")),
                 "concepts": concepts,
