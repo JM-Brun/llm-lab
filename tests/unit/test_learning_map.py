@@ -162,4 +162,3 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     assert {page["id"] for page in payload["pages"]} == {"fr/index", "fr/attention"}
     assert all(page["href"] for page in payload["pages"])
     assert all(isinstance(page["concepts"], list) for page in payload["pages"])
-"
