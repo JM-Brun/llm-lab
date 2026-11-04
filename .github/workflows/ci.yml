@@ -41,6 +41,9 @@ jobs:
       - name: Validate page metadata learning graph
         run: uv run python scripts/check_page_metadata.py
 
+      - name: Validate bilingual concept registry
+        run: uv run python scripts/check_concept_registry.py
+
       - name: Validate bilingual history pilot dataset
         run: uv run python scripts/check_history_pilot.py
 
