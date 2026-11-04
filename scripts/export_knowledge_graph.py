@@ -151,8 +151,7 @@ def build_graph() -> dict[str, Any]:
                 _jsonld_literal(concept["definitions"][lang], lang) for lang in ("fr", "en")
             ],
             "dcterms:subject": [
-                {"@id": f"{BASE}/id/domain/{domain_id}"}
-                for domain_id in concept["domains"]
+                {"@id": f"{BASE}/id/domain/{domain_id}"} for domain_id in concept["domains"]
             ],
         }
         graph.append(node)
