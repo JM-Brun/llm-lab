@@ -291,4 +291,3 @@ def test_learning_map_browser_script_has_valid_javascript_and_fallback_target() 
     assert result.returncode == 0, result.stderr
     assert "conceptList.appendChild" not in script
     assert "sectionHeadingList.appendChild(item)" in script
-
