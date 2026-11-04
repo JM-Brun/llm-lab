@@ -1,0 +1,114 @@
+:::: {.guided-route-grid}
+
+::: {.guided-route-stage}
+
+### 01 · Situer le système
+
+Comprendre ce qu'est un LLM et observer une génération complète avant d'en étudier les mécanismes internes\.
+
+**Pages centrales**
+
+- [Panorama : qu’est-ce qu’un LLM ?](llm-overview.html)
+- [Générer du texte : l'inférence pas à pas](generation.html)
+
+**Approfondissements facultatifs**
+
+- [Architectures Transformer : encodeur, encodeur-décodeur et décodeur](transformer-architectures.html)
+
+::
+
+::: {.guided-route-stage}
+
+### 02 · Du texte aux tokens
+
+Distinguer texte, tokenisation, vocabulaire et identifiants de tokens dans la construction de l'entrée du modèle\.
+
+**Pages centrales**
+
+- [Du texte aux tokens : représenter le langage](text-data.html)
+- [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.html)
+
+**Approfondissements facultatifs**
+
+- [Unicode, UTF-8 et normalisation du texte](unicode-text.html)
+- [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.html)
+
+::
+
+::: {.guided-route-stage}
+
+### 03 · Des identifiants aux représentations
+
+Suivre la consultation des embeddings, l'information positionnelle et la contextualisation des états\.
+
+**Pages centrales**
+
+- [L'espace des embeddings (ou plongements)](embedding-space.html)
+- [Encodage positionnel : donner un ordre aux tokens](positional-encoding.html)
+- [Pourquoi un même token peut-il avoir plusieurs représentations contextualisées ?](contextualized-representations.html)
+
+**Approfondissements facultatifs**
+
+- [Tenseurs dans un Transformer : formes et axes](tensors.html)
+- [RoPE : géométrie, dérivation et limites](rope.html)
+
+::
+
+::: {.guided-route-stage}
+
+### 04 · Comprendre le calcul du Transformer
+
+Relier Q/K/V, les poids d'attention, l'agrégation et le masquage causal sans confondre mécanisme et ordre d'apprentissage\.
+
+**Pages centrales**
+
+- [GPT et Transformer : architecture et flux des données](transformer.html)
+- [Requêtes, clés et valeurs (Q, K, V)](queries-keys-values.html)
+- [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.html)
+- [Masque causal](causal-masking.html)
+
+**Approfondissements facultatifs**
+
+- [Attention croisée : faire communiquer deux séquences](cross-attention.html)
+
+::
+
+::: {.guided-route-stage}
+
+### 05 · Des états aux prédictions
+
+Relier logits, distribution de probabilité, vraisemblance et sélection du prochain token\.
+
+**Pages centrales**
+
+- [Logits : les scores avant normalisation](logits.html)
+- [Probabilités de sortie : des logits aux tokens](probabilites.html)
+- [Vraisemblance et log-vraisemblance](vraisemblance.html)
+- [Générer du texte : l'inférence pas à pas](generation.html)
+
+**Approfondissements facultatifs**
+
+- [Stratégies avancées de décodage](decoding-strategies.html)
+
+::
+
+::: {.guided-route-stage}
+
+### 06 · Comprendre l'apprentissage et évaluer
+
+Découvrir les objectifs de perte et les gradients, puis examiner les preuves, métriques et limites d'une évaluation\.
+
+**Pages centrales**
+
+- [Entropie croisée : l'objectif de prédiction des tokens](cross-entropy.html)
+- [Loss : de la perte par token à l'objectif](loss.html)
+- [Gradients : relier la perte aux paramètres](gradients.html)
+- [Évaluer un modèle : du score au protocole expérimental](evaluation-experimentale.html)
+
+**Approfondissements facultatifs**
+
+- [Lois d'échelle : paramètres, données et calcul](scaling-laws.html)
+
+::
+
+::::
