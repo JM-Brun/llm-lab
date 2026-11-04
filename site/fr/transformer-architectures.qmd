@@ -25,6 +25,8 @@ tags: ["type:concept-lesson", "destination:understand", "topic:transformer-archi
 Un Transformer peut utiliser un encodeur, un décodeur ou les deux. Ce choix détermine quelles positions peuvent échanger de l'information et comment le modèle traite une séquence. Il ne fixe pas, à lui seul, l'objectif d'entraînement ni la tâche réalisée.
 :::
 
+Cette comparaison est facultative : pour suivre le fil principal, passer directement du [panorama des LLM](llm-overview.qmd) à la [génération](generation.qmd).
+
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 Vous pourrez :
 - comparer encodeur seul, encodeur-décodeur et décodeur seul selon le contexte accessible et le flux d’information ;
