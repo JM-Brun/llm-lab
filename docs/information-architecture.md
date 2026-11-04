@@ -9,7 +9,7 @@ This document is the architectural entry point for the repository's information 
 
 Maintain **one canonical source per kind of information**, then derive reader-facing views from it. A page, a concept, a tag, a route and a template are different entities and must not be used as substitutes for one another.
 
-The repository already has a useful page-level contract (`LLM-LAB-PAGE-MAP v1`) and a generated bilingual learning map. The next step is not to add another catalogue or graph. It is to make the boundaries between existing mechanisms explicit and prevent page metadata from silently becoming a concept ontology.
+The repository already has a navigable, bilingual page graph generated from `LLM-LAB-PAGE-MAP v1`, a curriculum source of truth, and a six-domain taxonomy being integrated through PR #391. The intended knowledge architecture has three distinct dimensions—domains, concepts, and resources—and two complementary graph projections: a pedagogical path and a non-sequential knowledge map. Preserve these as distinct models and views. Do not add a competing graph or duplicate taxonomy. This audit distinguishes the intended domain model from what the currently inspected page-map implementation actually serializes; implementation gaps must be recorded, not hidden by renaming page-level metadata as a concept ontology.
 
 ## 2. System inventory and ownership
 
@@ -19,11 +19,12 @@ The repository already has a useful page-level contract (`LLM-LAB-PAGE-MAP v1`) 
 | Page identity and editorial metadata | One `LLM-LAB-PAGE-MAP` block per page, governed by `docs/page-metadata-schema.md` | Stable page ID, scope, purpose, editorial type, destination, level, language, status, page relations | A concept record or a second archetype taxonomy |
 | Search keywords | Quarto `keywords` front matter | Search/indexing projection of controlled page tags | An independent tag vocabulary |
 | Page classification | Controlled `type`, `destination`, `level`, `language`, `status` tags | Facets for filtering and site organization | A taxonomy of scientific concepts |
-| Topic identifier | Controlled `topic:<id>` tag | Bilingual page grouping / subject key | A complete concept definition or a list of all concepts on a page |
+| Topic identifier | Controlled `topic:<id>` tag | Bilingual page grouping / subject key for a page | A canonical concept entity or a substitute for concept IDs |
 | Suggested learning route | `suggested_route.previous/next` in page metadata | Optional reader navigation | Hard prerequisites or conceptual parenthood |
 | Conceptual page hierarchy | `hierarchy.parents/children` in page metadata | Genuine broader/narrower page relationships | Sequence, data flow, implementation dependency or mere association |
 | Cross-links | `related` in page metadata | Useful non-hierarchical page relationships | A generic catch-all for every possible edge |
-| Learning map | Generated `learning-map-data-{fr,en}.json` from page metadata | Reader-facing projection of published pages | An editable source of truth |
+| Interactive page map | Generated `learning-map-data-{fr,en}.json` from page metadata | Reader-facing projection of published pages, their route/hierarchy/related edges, and extracted section headings | The complete three-dimensional knowledge graph or an editable source of truth |
+| Knowledge graph (domain model) | Existing project-level model as specified by the project owner; canonical storage/schema must be verified against the active implementation | Six domains, concept entities with typed semantic relations, and reusable resource entities | The page metadata graph or a list of page headings |
 | Section labels in map | Extracted headings from page bodies | A small visual summary of page contents | Canonical concepts, ontology nodes or stable IDs |
 | Page composition | `docs/page-template-system.md` and quick starts | Soft editorial prompts and reusable structures | Required page schemas or competing metadata types |
 | Visual language | `docs/design-system.md` | Components, typography, spacing, accessibility and responsive behavior | Per-template design systems |
@@ -33,9 +34,17 @@ The repository already has a useful page-level contract (`LLM-LAB-PAGE-MAP v1`) 
 
 ### Important boundary: page tags are not a concept taxonomy
 
-The `topic` tag is a stable subject key attached to a page. It does not define a concept, its preferred label, synonyms, definition, broader/narrower concepts, provenance or links to multiple pages. Likewise, headings extracted into the learning-map `section_labels` array are display hints, not identified concepts.
+The `topic` tag is a stable subject key attached to a page. It is not interchangeable with a concept entity ID. Likewise, headings extracted into the page-map `section_labels` array are display hints, not identified concepts.
 
-Do not describe either mechanism as a complete knowledge graph or ontology. If a reusable concept registry becomes necessary, introduce it as a separate, explicitly modelled dataset (see section 6), and link pages to concept IDs. Do not overload existing page tags.
+The project's intended knowledge graph has three dimensions:
+
+- **Domains:** six controlled knowledge families that classify concepts. Domain membership is classification, not a semantic edge or a reading prerequisite.
+- **Concepts:** stable, language-independent entities with bilingual preferred labels, definitions, aliases, provenance, and typed relations such as prerequisite, generalization, application, and opposition.
+- **Resources:** pages, demonstrations, experiments, implementations, and references. A resource can support several concepts, and a concept can be supported by several resources; model this as a many-to-many association with an explicit relation role where useful.
+
+It also has two distinct projections: (1) the **pedagogical path**, which represents learning sequence and prerequisites needed to understand/build an LLM; and (2) the **knowledge map**, which exposes domains, concepts, advanced material, and cross-cutting relations without imposing a reading order. These projections must not be conflated with one another or with the page-level map.
+
+The currently inspected `LLM-LAB-PAGE-MAP v1` implementation is narrower: its nodes are published pages; its edges are suggested route, page hierarchy, and related-page links; its displayed `section_labels` are extracted headings. PR #391 adds a six-value `domain` classification for Deepen pages, but that field is currently page metadata, not proof of a separately serialized domain/concept/resource graph. The typed concept relations and reusable resource entities must be audited against their actual canonical source and schema before changing or duplicating them. This distinction is an implementation audit finding, not a recommendation to create a second graph.
 
 ## 3. Relationship semantics
 
@@ -80,17 +89,9 @@ SKOS is appropriate if a true concept taxonomy is added. It is not a replacement
 
 Do not introduce RDF triple stores, graph databases, CASE exports or a full ontology toolchain for the current static bilingual site. A versioned YAML source plus JSON projection and deterministic validators is proportionate.
 
-## 6. Criteria for introducing a canonical concept registry
+## 6. Concept and resource model: audit before extension
 
-Do not create a registry merely because many pages mention concepts. Introduce one only when at least one use case becomes real:
-
-- one concept has multiple canonical pages or language-specific labels that must be resolved consistently;
-- synonyms, abbreviations, translations or deprecated terms need central management;
-- broader/narrower concept navigation is required independently of page hierarchy;
-- concepts need evidence/provenance records or links to historical events;
-- external tools need stable concept identifiers.
-
-If introduced, use a single language-neutral concept ID and a bilingual record, for example:
+Do not introduce a new concept registry or resource catalogue until the existing canonical implementation has been located and assessed. The project-level model requires stable language-neutral concept IDs and bilingual records, for example:
 
 ```yaml
 id: attention.scaled_dot_product
@@ -115,7 +116,7 @@ sources: []
 status: active
 ```
 
-This is an illustrative project record, not a claim that SKOS is already implemented. A future schema should map these fields explicitly to SKOS rather than invent incompatible relation semantics. Page metadata would reference concept IDs; it would not repeat labels or definitions.
+This is an illustrative shape for evaluating the existing model, not an instruction to create a parallel dataset and not a claim that SKOS is already implemented. If the current model has equivalent fields, document and validate them in place. Map its concept scheme to SKOS where useful. Page metadata and resource records should reference concept IDs; they should not duplicate concept labels or definitions.
 
 ## 7. Templates and page roles
 
@@ -154,13 +155,16 @@ The following gaps should be addressed incrementally:
 3. **Make generated outputs explicitly generated.** Keep learning-map JSON out of hand-maintained source and ensure it is ignored or reproducibly refreshed in CI/builds.
 4. **Formalize machine-readable schemas when stable.** Extract page metadata shape and controlled vocabularies to JSON Schema Draft 2020-12; validate both shape and graph semantics.
 5. **Add an automated architecture consistency check.** Detect duplicate ownership, unknown tag dimensions, unused vocabularies, stale generated data and links to missing source records.
-6. **Do not merge the historical model into the page graph.** It is a separate domain model with different entities, evidence requirements and edge types; connect through stable concept IDs only if/when a canonical concept registry exists.
+6. **Keep graph projections separate.** The page-level navigation graph, pedagogical path, and domain/concept/resource knowledge graph have different node and edge semantics. Integrate them through stable IDs and generated projections; do not merge their relations into one generic `related` edge.
+7. **Verify the canonical knowledge-graph source.** Locate the existing domain/concept/resource records and typed relation schema, then make the ownership table and validators point to those exact files before proposing structural changes.
+8. **Keep historical data separate.** The history model has its own event/source semantics and evidence requirements; connect it through canonical concept IDs only where the existing model supports it.
 
 ## 10. Canonical documentation index
 
 | Concern | Canonical reference |
 |---|---|
 | Overall information architecture | This document |
+| Domain/concept/resource knowledge graph | Existing canonical model: path and schema to be verified in the implementation audit |
 | Page metadata, tags and page graph | [Page metadata schema](page-metadata-schema.md) |
 | Learning-map implementation | `scripts/build_learning_map.py`, `tests/unit/test_learning_map.py` |
 | Metadata validation | `scripts/check_page_metadata.py`, `tests/unit/test_page_metadata.py` |
