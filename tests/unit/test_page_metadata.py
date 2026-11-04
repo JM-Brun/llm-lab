@@ -107,7 +107,10 @@ def test_detects_high_scope_overlap_only_within_same_language() -> None:
     )
     pages = {
         "en/a": _audit_page(scope=shared_scope),
-        "en/b": _audit_page(scope=shared_scope),
+        "en/b": _audit_page(
+            scope=shared_scope,
+            purpose="A distinct learner outcome about sequence modelling and evaluation.",
+        ),
         "fr/c": _audit_page(scope=shared_scope, language="fr"),
     }
 
