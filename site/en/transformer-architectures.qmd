@@ -25,6 +25,8 @@ tags: ["type:concept-lesson", "destination:understand", "topic:transformer-archi
 A Transformer can use an encoder, a decoder, or both. This choice determines which positions can exchange information and how the model processes a sequence. It does not, by itself, determine the training objective or the task being performed.
 :::
 
+This comparison is optional: to follow the main route, move directly from the [LLM panorama](llm-overview.qmd) to [generation](generation.qmd).
+
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 You will be able to:
 - compare encoder-only, encoder–decoder, and decoder-only architectures by context visibility and information flow;
