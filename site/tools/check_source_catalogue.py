@@ -153,8 +153,7 @@ def _validate_pedagogical_model(model: Any, where: str, errors: list[str]) -> No
             for endpoint in ("from", "to"):
                 if edge.get(endpoint) not in node_ids:
                     errors.append(
-                        f"{edge_where}.{endpoint}: unknown source-local node "
-                        f"{edge.get(endpoint)!r}"
+                        f"{edge_where}.{endpoint}: unknown source-local node {edge.get(endpoint)!r}"
                     )
             if not isinstance(edge.get("type"), str) or not edge["type"].strip():
                 errors.append(f"{edge_where}.type: expected a non-empty relation label")
@@ -198,7 +197,10 @@ def _validate_pedagogical_model(model: Any, where: str, errors: list[str]) -> No
         if orders and sorted(orders) != list(range(1, len(orders) + 1)):
             errors.append(f"{where}.teaching_route: order values must be unique and contiguous")
 
-    for field in ("pedagogical_strengths", "pedagogical_limits",):
+    for field in (
+        "pedagogical_strengths",
+        "pedagogical_limits",
+    ):
         _strings(model.get(field), f"{where}.{field}", errors)
 
     comparison = model.get("comparison")
