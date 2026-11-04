@@ -437,3 +437,31 @@ def test_learning_map_browser_script_has_valid_javascript_and_fallback_target() 
     assert result.returncode == 0, result.stderr
     assert "conceptList.appendChild" not in script
     assert "sectionHeadingList.appendChild(item)" in script
+
+
+def test_learning_map_node_selection_is_separate_from_navigation() -> None:
+    """Page and concept nodes select in place; navigation uses the details link."""
+    script_path = MODULE_PATH.parents[2] / "site" / "includes" / "learning-map.html"
+    source = script_path.read_text(encoding="utf-8")
+    script = source.split("<script>", maxsplit=1)[1].split("</script>", maxsplit=1)[0]
+
+    assert '"data-map-node-id": page.id' in script
+    assert '"data-map-node-id": concept.id' in script
+    assert 'role: "button"' in script
+    assert 'node.addEventListener("click", () => updateConceptDetails(concept));' in script
+    assert 'anchor.addEventListener("click", () => updateDetails(page));' in script
+    assert "href: page.href" not in script
+    assert "const syncSelection = () =>" in script
+
+
+def test_learning_map_keyboard_activation_uses_node_selection() -> None:
+    """Enter and Space activate selection without replacing the focused SVG node."""
+    script_path = MODULE_PATH.parents[2] / "site" / "includes" / "learning-map.html"
+    source = script_path.read_text(encoding="utf-8")
+    script = source.split("<script>", maxsplit=1)[1].split("</script>", maxsplit=1)[0]
+
+    assert script.count('event.key === "Enter" || event.key === " "') == 2
+    assert script.count("event.preventDefault();") >= 2
+    assert script.count("node.click();") == 1
+    assert script.count("anchor.click();") == 1
+    assert "renderConceptGraph(); });" not in script

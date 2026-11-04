@@ -103,7 +103,7 @@ The page graph retains the resource inventory and its route, hierarchy, and rela
     <aside class="learning-map-details" aria-live="polite" aria-atomic="true">
       <p class="map-detail-eyebrow">EXPLORE A NODE</p>
       <h3>Select a page</h3>
-      <p>Hover over a block or focus it to inspect its purpose, section headings, and relationships. Click the block to open the page directly.</p>
+      <p>Select a node (click, touch, Enter, or Space) to inspect its purpose, section headings, and relationships. Then use “Open page” to navigate.</p>
     </aside>
   </div>
   <p class="learning-map-status" role="status" aria-live="polite">Loading map…</p>
