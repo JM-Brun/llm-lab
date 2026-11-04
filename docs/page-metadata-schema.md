@@ -40,6 +40,28 @@ tags:
 
 The source comment is YAML-like documentation, not a second Quarto front matter block. Keep it simple and avoid relying on it as executable YAML unless a validator explicitly parses it.
 
+## 2.1 Reader-facing visibility contract
+
+The controlled page tags are **editorial metadata for the publishing and discovery system**, not reader-facing labels. Keep them in Quarto `keywords` and the page-map comment so Quarto, validators, map generators, search, and future filters can use them. Do not render the raw keys or values as a visible tag list, badge row, category cloud, or repeated page footer.
+
+In particular, do not display technical labels such as `type:concept-lesson`, `destination:understand`, `topic:transformer-architectures`, `level:core`, `language:fr`, `status:published`, or the page-level `domain` as if they were learning content. Their presence in source metadata is intentional and must not be removed to solve a presentation problem. Quarto `keywords` remain a machine-readable/search projection; the hidden page-map block remains the richer source record.
+
+Reader-facing orientation is a separate editorial decision. Use natural-language elements only when they help answer a reader question—for example, a concise prerequisite, a meaningful learning outcome, or a clearly labelled optional deep dive. Never expose internal field names or force every page to display the same metadata panel.
+
+Interactive visualizations follow the same rule. Stable IDs such as `topic`, `destination`, concept IDs, and graph node IDs may remain in generated JSON, SVG attributes, search indexes, and event-handling code. They must not be copied into visible text. Render localized human-readable labels for page destinations and concept categories; when no meaningful label exists, omit the label or use a neutral localized fallback rather than exposing an identifier.
+
+### Concept terms are not editorial tags
+
+When a scientific term deserves emphasis, treat it as **content**, not as another page tag:
+
+- Prefer the canonical bilingual concept label and definition in `data/concepts.yml` when a matching concept exists.
+- Emphasize a term in context, normally at its first pedagogically meaningful occurrence, and link it to the canonical explanation or glossary entry when that link helps the reader.
+- Use the existing page-to-concept/resource associations and typed concept relations for discovery. Do not infer concept identity, hierarchy, or prerequisite status merely because a word appears in a page.
+- Do not generate a tag cloud from every concept associated with a page. A small number of contextual links is more useful than an exhaustive keyword inventory.
+- Do not add a new `keywords`, `tags`, `archetype`, or concept-list field to the page metadata merely to control visual emphasis.
+
+This policy preserves the machine-readable graph while keeping the reading flow focused on explanations and meaningful connections.
+
 ## 3. Relation semantics
 
 These fields must not be conflated:

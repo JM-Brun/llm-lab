@@ -24,6 +24,9 @@
     emptyConcepts: "Aucun concept ne correspond à cette recherche.",
     loadError: "La carte n’a pas pu être chargée. Vérifiez que les données ont été générées pendant le rendu Quarto.",
     unknown: "Page",
+    conceptLabel: "Notion",
+    noSectionHeadings: "Aucun titre de section disponible.",
+    destinations: { orient: "S’orienter", understand: "Comprendre", build: "Construire", deepen: "Approfondir", practice: "Pratiquer", reference: "Référence" },
     domainLabel: "Domaine d’approfondissement",
     domains: {
       "architectures-mechanisms": "Architectures et mécanismes",
@@ -61,6 +64,9 @@
     emptyConcepts: "No concepts match this search.",
     loadError: "The map could not be loaded. Check that the data files were generated during the Quarto render.",
     unknown: "Page",
+    conceptLabel: "Concept",
+    noSectionHeadings: "No section headings available.",
+    destinations: { orient: "Orientation", understand: "Understand", build: "Build", deepen: "Deepen", practice: "Practice", reference: "Reference" },
     domainLabel: "Deepen domain",
     domains: {
       "architectures-mechanisms": "Architectures and mechanisms",
@@ -242,7 +248,7 @@
 
     const eyebrow = document.createElement("p");
     eyebrow.className = "map-detail-eyebrow";
-    eyebrow.textContent = (page.domain && copy.domains[page.domain]) || page.topic || copy.unknown;
+    eyebrow.textContent = (page.domain && copy.domains[page.domain]) || copy.destinations[page.destination] || copy.unknown;
     details.appendChild(eyebrow);
 
     const heading = document.createElement("h3");
@@ -276,7 +282,7 @@
     });
     if (!sectionHeadingList.childElementCount) {
       const item = document.createElement("li");
-      item.textContent = page.topic || copy.unknown;
+      item.textContent = copy.noSectionHeadings;
       sectionHeadingList.appendChild(item);
     }
     details.appendChild(sectionHeadingList);
@@ -320,7 +326,7 @@
     details.replaceChildren();
     const eyebrow = document.createElement("p");
     eyebrow.className = "map-detail-eyebrow";
-    eyebrow.textContent = "CONCEPT · " + concept.id;
+    eyebrow.textContent = copy.conceptLabel;
     details.appendChild(eyebrow);
     const heading = document.createElement("h3");
     heading.textContent = concept.label;
@@ -465,11 +471,6 @@
         class: "map-node-card"
       }));
       appendText(node, position.x + 12, position.y + 27, wrap(concept.label, 27, 1), "map-node-title");
-      const meta = svgElement("text", {
-        x: position.x + 12, y: position.y + 55, class: "map-node-topic"
-      });
-      meta.textContent = concept.id;
-      node.appendChild(meta);
       node.addEventListener("click", () => updateConceptDetails(concept));
       node.addEventListener("keydown", event => {
         if (event.key === "Enter" || event.key === " ") {
@@ -545,7 +546,7 @@
       const topic = svgElement("text", {
         x: position.x + 13, y: position.y + 18, class: "map-node-topic"
       });
-      topic.textContent = (page.domain && copy.domainShort[page.domain]) || page.topic || page.destination;
+      topic.textContent = (page.domain && copy.domainShort[page.domain]) || copy.destinations[page.destination] || copy.unknown;
       anchor.appendChild(topic);
       appendText(anchor, position.x + 13, position.y + 39, wrap(page.title, 30, 2), "map-node-title");
       const headings = (page.section_headings || []).slice(0, 2).join(" · ");

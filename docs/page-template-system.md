@@ -113,6 +113,8 @@ Templates guide content; they do not replace page metadata or the learning graph
 - Link to canonical explanations rather than duplicating substantial material.
 - Keep each public page self-contained for its LLM-specific learning objective; a link is not a substitute for a necessary definition or derivation.
 - Add implementation, tests, exercises, or experiments only when they exist; label planned work honestly.
+- Keep editorial tags machine-readable and out of the visible reading flow; see the [page metadata visibility contract](page-metadata-schema.md#21-reader-facing-visibility-contract).
+- Highlight only a small number of important scientific terms in context, preferably linking their first useful occurrence to a canonical explanation. Do not add keyword clouds or a repeated list of page tags.
 - Maintain substantive French/English parity.
 
 The [content-section map](content-section-mapping.md) remains the inventory of page roles and content boundaries. If a template conflicts with a canonical page's scope, the content map and reader-experience method take precedence.

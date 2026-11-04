@@ -193,6 +193,10 @@ def test_load_pages_extracts_published_pages_and_section_headings(tmp_path: Path
     assert french["href"] == "attention.html"
     assert french["scope"] == "A concise scope."
     assert french["purpose"] == "A concise pedagogical purpose."
+    assert french["destination"] == "understand"
+    assert french["level"] == "core"
+    assert french["type"] == "concept-lesson"
+    assert french["topic"] == "attention"
     assert french["section_headings"] == [
         "Intuition",
         "Query, Key and Value",
@@ -447,6 +451,13 @@ def test_learning_map_browser_script_has_valid_javascript_and_fallback_target() 
     assert result.returncode == 0, result.stderr
     assert "conceptList.appendChild" not in script
     assert "sectionHeadingList.appendChild(item)" in script
+
+    assert "page.topic || copy.unknown" not in script
+    assert "page.topic || page.destination" not in script
+    assert '"CONCEPT · " + concept.id' not in script
+    assert "meta.textContent = concept.id" not in script
+    assert "copy.destinations[page.destination]" in script
+    assert "copy.noSectionHeadings" in script
 
 
 def test_learning_map_node_selection_is_separate_from_navigation() -> None:

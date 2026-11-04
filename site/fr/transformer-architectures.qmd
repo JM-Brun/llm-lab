@@ -46,7 +46,7 @@ Vous pourrez :
 
 ![Comparaison des flux d'information dans les architectures encodeur seul, décodeur seul et encodeur-décodeur.](../images/transformer-attention-architectures.svg){fig-alt="Encodeur seul : auto-attention bidirectionnelle. Décodeur seul : auto-attention causale. Encodeur-décodeur : auto-attention dans l'encodeur, auto-attention causale dans le décodeur et attention croisée vers la mémoire de l'encodeur." width=100%}
 
-Dans l'architecture encodeur-décodeur, le décodeur consulte les représentations produites par l'encodeur au moyen de l'**attention croisée**. La [page dédiée](cross-attention.qmd) en détaille le calcul ; il n'est pas nécessaire pour comprendre la comparaison générale.
+Dans l'architecture encodeur-décodeur, le décodeur consulte les représentations produites par l'encodeur au moyen de l'[**attention croisée**](cross-attention.qmd){.concept-link}. La [page dédiée](cross-attention.qmd) en détaille le calcul ; il n'est pas nécessaire pour comprendre la comparaison générale.
 
 
 
