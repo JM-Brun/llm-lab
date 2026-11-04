@@ -17,6 +17,7 @@
     noResources: "Aucune page associée.",
     purpose: "Rôle dans le parcours",
     open: "Ouvrir la page",
+    selectHint: "Sélectionnez un bloc pour afficher ses détails ; utilisez ensuite « Ouvrir la page » pour naviguer.",
     empty: "Aucune page ne correspond à ces filtres.",
     count: (shown, total) => shown + " page(s) affichée(s) sur " + total + ".",
     countConcepts: (shown, total) => shown + " concept(s) affiché(s) sur " + total + ".",
@@ -53,6 +54,7 @@
     noResources: "No linked pages.",
     purpose: "Role in the learning path",
     open: "Open page",
+    selectHint: "Select a node to inspect its details, then use “Open page” to navigate.",
     empty: "No pages match these filters.",
     count: (shown, total) => shown + " of " + total + " pages shown.",
     countConcepts: (shown, total) => shown + " of " + total + " concepts shown.",
@@ -99,6 +101,12 @@
   let concepts = [];
   let conceptRelations = [];
   let selectedId = null;
+
+  const syncSelection = () => {
+    svg.querySelectorAll("[data-map-node-id]").forEach(node => {
+      node.classList.toggle("is-selected", node.dataset.mapNodeId === selectedId);
+    });
+  };
 
   const svgElement = (name, attributes = {}) => {
     const element = document.createElementNS(NS, name);
@@ -227,6 +235,7 @@
   const updateDetails = page => {
     if (!page) return;
     selectedId = page.id;
+    syncSelection();
     details.replaceChildren();
 
     const eyebrow = document.createElement("p");
@@ -246,6 +255,11 @@
     const summary = document.createElement("p");
     summary.textContent = page.scope || page.purpose || "";
     details.appendChild(summary);
+
+    const instruction = document.createElement("p");
+    instruction.className = "map-selection-hint";
+    instruction.textContent = copy.selectHint;
+    details.appendChild(instruction);
 
     const sectionHeadingTitle = document.createElement("h4");
     sectionHeadingTitle.textContent = copy.sectionHeadings;
@@ -300,6 +314,7 @@
 
   const updateConceptDetails = concept => {
     selectedId = concept.id;
+    syncSelection();
     details.replaceChildren();
     const eyebrow = document.createElement("p");
     eyebrow.className = "map-detail-eyebrow";
@@ -411,6 +426,7 @@
       const position = positions.get(concept.id);
       const node = svgElement("g", {
         class: "map-node map-concept-node" + (selectedId === concept.id ? " is-selected" : ""),
+        "data-map-node-id": concept.id,
         tabindex: "0",
         role: "button",
         "aria-label": concept.label + ". " + concept.definition
@@ -425,12 +441,11 @@
       });
       meta.textContent = concept.id;
       node.appendChild(meta);
-      node.addEventListener("click", () => { updateConceptDetails(concept); renderConceptGraph(); });
+      node.addEventListener("click", () => updateConceptDetails(concept));
       node.addEventListener("keydown", event => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
-          updateConceptDetails(concept);
-          renderConceptGraph();
+          node.click();
         }
       });
       svg.appendChild(node);
@@ -441,7 +456,11 @@
       empty.textContent = copy.emptyConcepts;
       svg.appendChild(empty);
     }
-    if (!visible.some(item => item.id === selectedId) && visible.length) updateConceptDetails(visible[0]);
+    if (!visible.some(item => item.id === selectedId) && visible.length) {
+      updateConceptDetails(visible[0]);
+    } else if (visible.length) {
+      updateConceptDetails(visible.find(item => item.id === selectedId));
+    }
   };
 
   const render = () => {
@@ -479,9 +498,11 @@
 
     grouped.forEach(group => group.forEach(page => {
       const position = positions.get(page.id);
-      const anchor = svgElement("a", {
-        href: page.href,
+      const anchor = svgElement("g", {
         class: "map-node map-node-" + page.destination + (selectedId === page.id ? " is-selected" : ""),
+        "data-map-node-id": page.id,
+        tabindex: "0",
+        role: "button",
         "aria-label": page.title + ". " + (page.section_headings || []).slice(0, 3).join(", ")
       });
       const title = svgElement("title");
@@ -505,6 +526,13 @@
       anchor.appendChild(conceptLine);
       anchor.addEventListener("pointerenter", () => updateDetails(page));
       anchor.addEventListener("focus", () => updateDetails(page));
+      anchor.addEventListener("click", () => updateDetails(page));
+      anchor.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          anchor.click();
+        }
+      });
       svg.appendChild(anchor);
     }));
 
