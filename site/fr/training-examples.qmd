@@ -1,7 +1,7 @@
 ---
 title: "Du corpus tokenisé aux exemples d’entraînement"
 subtitle: "Décalage entrée-cible, fenêtres, documents, padding et dimensions"
-keywords: ["type:concept-bridge", "destination:understand", "topic:training-examples", "level:core", "language:fr", "status:published"]
+keywords: ["type:concept-bridge", "destination:build", "topic:training-examples", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -11,13 +11,13 @@ id: "fr/training-examples"
 scope: "Couvre la transformation d’un flux de tokens en exemples entrée-cible autorégressifs : décalage d’un token, fenêtres de contexte et stride, packing et frontières de documents, padding, masques d’attention et de loss, et dimensions des tenseurs. La page s’arrête à la construction correcte des lots d’entraînement, sans dériver les objectifs probabilistes et d’optimisation."
 purpose: "Construire des lots entrée-cible alignés à partir d’identifiants de tokens, distinguer les choix de fenêtrage et de masquage, vérifier les dimensions des tenseurs et diagnostiquer les erreurs courantes de frontière ou d’alignement qui modifieraient l’objectif d’entraînement."
 suggested_route:
-  previous: "fr/probabilites"
-  next: "fr/vraisemblance"
+  previous: "fr/corpus-preparation"
+  next: null
 hierarchy:
-  parents: ["fr/text-data"]
+  parents: ["fr/build-path"]
   children: []
-related: ["fr/tokenization-strategies", "fr/vraisemblance"]
-tags: ["type:concept-bridge", "destination:understand", "topic:training-examples", "level:core", "language:fr", "status:published"]
+related: ["fr/corpus-preparation", "fr/tokenization-strategies", "fr/vraisemblance"]
+tags: ["type:concept-bridge", "destination:build", "topic:training-examples", "level:core", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
