@@ -282,13 +282,9 @@ def test_guided_route_schema_rejects_duplicate_or_unknown_fields() -> None:
         "pages": {"fr": ["fr/a"], "en": ["en/a"]},
     }
     with pytest.raises(ValueError, match="identifiers must be unique"):
-        model.model_validate(
-            {"schema_version": 1, "stages": [valid_stage, valid_stage]}
-        )
+        model.model_validate({"schema_version": 1, "stages": [valid_stage, valid_stage]})
     with pytest.raises(ValueError):
-        model.model_validate(
-            {"schema_version": 1, "stages": [valid_stage], "unexpected": True}
-        )
+        model.model_validate({"schema_version": 1, "stages": [valid_stage], "unexpected": True})
 
 
 def test_render_guided_route_markdown_uses_native_quarto_blocks() -> None:
