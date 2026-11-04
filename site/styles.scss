@@ -167,7 +167,7 @@ details > :last-child { margin-bottom: .15rem; }
 @media (max-width: 700px) {
   .llm-flow-figure { padding: .35rem; }
   /* Preserve diagram text size on narrow screens; allow the diagram itself to scroll. */
-  .llm-flow { width: 900px; max-width: none; }
+  .llm-flow { width: 1220px; max-width: none; }
   .llm-flow .flow-kicker { font-size: 12px; }
   .llm-flow .flow-title { font-size: 16px; }
   .llm-flow .flow-subtitle { font-size: 12px; }
