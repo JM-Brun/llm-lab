@@ -55,7 +55,7 @@ def clean_heading(value: str) -> str:
 
 
 def load_pages() -> list[dict[str, Any]]:
-    """Read published page maps and extract section headings as page concepts."""
+    """Read published page maps and extract section headings as display labels."""
     pages: list[dict[str, Any]] = []
     for path in sorted(SITE.rglob("*.qmd")):
         source = path.read_text(encoding="utf-8")
@@ -87,7 +87,7 @@ def load_pages() -> list[dict[str, Any]]:
             concept = clean_heading(heading)
             if concept and concept.casefold() not in EXCLUDED_HEADINGS and concept not in section_labels:
                 section_labels.append(concept)
-            if len(concepts) == 6:
+            if len(section_labels) == 6:
                 break
 
         title = str(front.get("title", page_id.rsplit("/", maxsplit=1)[-1]))
