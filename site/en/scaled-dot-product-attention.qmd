@@ -14,9 +14,9 @@ suggested_route:
   previous: "en/queries-keys-values"
   next: "en/causal-masking"
 hierarchy:
-  parents: ["en/queries-keys-values"]
+  parents: ["en/transformer"]
   children: ["en/causal-masking"]
-related: []
+related: ["en/queries-keys-values"]
 tags: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:en", "status:published"]
 -->
 
@@ -136,6 +136,12 @@ The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Ne
 
 - **“Softmax measures absolute similarity.”** No: it produces a distribution relative to the scores in a row. Adding the same constant to every score in a row leaves the weights unchanged.
 - **“A weight of 0.8 means 80% semantic relevance.”** No: it is a weight in this aggregation, conditional on the other scores and learned projections.
+<details class="spot-the-fallacy">
+<summary>Common Fallacy: “An attention weight of 0.95 proves this token is the primary cause of the answer”</summary>
+<div class="fallacy-content">
+<p><strong>Rigorous refutation:</strong> The weight $\alpha_{ij}$ is obtained by applying softmax to the score $q_i^\top k_j/\sqrt{d_k}$: it expresses a relative weighting among accessible positions, not causality. Before the output projection, position $j$ contributes the direct aggregation term $\alpha_{ij}v_j$, whose norm is $\alpha_{ij}\lVert v_j\rVert$. A high weight therefore does not even guarantee a large-norm aggregation term. Nor is that term the effect on the final prediction: the output projection, residual connections, normalization, and MLP further transform the signal. Establishing causal importance requires an appropriate intervention-based analysis, not merely reading attention weights.</p>
+</div>
+</details>
 - **“The scale factor is an empirical constant with no rationale.”** It follows from reasoning about dot-product scale; the assumptions are simplified, but the factor addresses a specific numerical issue.
 - **“Softmax alone makes attention causal.”** No: without a causal mask, a position can still assign weight to future tokens.
 
@@ -169,12 +175,13 @@ First divide the scores by $\sqrt{4}=2$, giving $(1,0)$. Softmax is approximatel
 :::
 
 ::: {.callout-note collapse="true" title="Implementation and verification (advanced)"}
-A numerically tested reference implementation is available in `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`). The test suite in `tests/unit/test_attention.py` validates tensor dimensions, row-wise unit sums, and numerical invariants.
+A numerically tested reference implementation is available in `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`). The test suite in `tests/unit/test_attention.py` checks shape preservation, row-wise unit-sum weights, and numerical stability.
 
 Input and output dimensions matter as much as the formula; see [tensors](tensors.qmd).
 
 - [Reference implementation](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
 - [Unit tests](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
+- [Current implementation and validation status](https://github.com/JM-Brun/llm-lab/blob/main/docs/project-status.md)
 - [Planned verification criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
 :::
 

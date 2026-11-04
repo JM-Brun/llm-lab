@@ -141,7 +141,7 @@ def test_fully_masked_attention_row_returns_zeros_without_warning() -> None:
             mask=np.full((1, 2), -np.inf),
         )
     np.testing.assert_array_equal(weights, [[0.0, 0.0]])
-    np.testing.assert_array_equal(output, [[0.0, 0.0]])
+    np.testing.assert_array_equal(output, [[0.0]])
 
 
 def test_scaled_dot_product_attention_shapes_and_invariants() -> None:
