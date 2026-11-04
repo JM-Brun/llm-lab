@@ -61,7 +61,7 @@ This organization suits tasks where input and output play distinct roles, such a
 
 ### Decoder-only: extend a prefix
 
-The decoder uses a **causal mask**: a position cannot attend to future tokens. During training, each position is used to predict the next token. At inference, the model repeats this computation and appends each selected token to the context.
+The decoder uses a **causal mask**: a position cannot attend to future tokens. During training, each position is used to predict the next token. At inference, the model repeats this computation and appends each selected token to the context; [Generating text](generation.qmd) explains this loop.
 
 This is the configuration used by classic GPT models and by LLM Lab's small-GPT build. It makes generation easy to inspect step by step, but not every LLM is decoder-only.
 
