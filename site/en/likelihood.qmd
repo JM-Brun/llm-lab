@@ -11,12 +11,12 @@ id: "en/likelihood"
 scope: "Define the probability assigned to an observed token sequence under fixed model parameters, using the autoregressive chain-rule factorization and its logarithm; distinguish sequence likelihood and log-likelihood from one-step predictive uncertainty, cross-entropy as a target-distribution measure, and dataset-level loss reduction."
 purpose: "Compute a sequence likelihood from conditional token probabilities, convert products to summed log-likelihoods, and explain why maximizing log-likelihood corresponds to minimizing negative log-likelihood for fixed observations."
 suggested_route:
-  previous: "en/training-examples"
+  previous: "en/probabilities"
   next: "en/cross-entropy"
 hierarchy:
   parents: ["en/probabilities"]
   children: []
-related: ["en/training-examples", "en/entropy", "en/cross-entropy"]
+related: ["en/entropy", "en/cross-entropy"]
 tags: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:en", "status:published"]
 -->
 
