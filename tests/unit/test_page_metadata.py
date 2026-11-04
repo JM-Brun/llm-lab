@@ -73,7 +73,9 @@ from pathlib import Path
 from typing import Any
 
 AUDIT_MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts" / "audit_page_metadata.py"
-AUDIT_MODULE: dict[str, Any] = runpy.run_path(str(AUDIT_MODULE_PATH), run_name="page_metadata_audit_test")
+AUDIT_MODULE: dict[str, Any] = runpy.run_path(
+    str(AUDIT_MODULE_PATH), run_name="page_metadata_audit_test"
+)
 
 
 def _audit_page(
