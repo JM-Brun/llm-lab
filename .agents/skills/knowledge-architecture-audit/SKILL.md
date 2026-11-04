@@ -34,13 +34,13 @@ The repository is autonomous. Do not import or depend on the taxonomy or runtime
 
 - Read `docs/information-architecture.md`, `docs/page-metadata-schema.md`, `docs/learning-path.md`, `docs/full-curriculum-plan.md`, `docs/page-template-system.md`, `docs/design-system.md`, and `CONTRIBUTING.md`. Inspect `data/concepts.yml` and `scripts/check_concept_registry.py` as the canonical concept registry and validator; inspect `data/domains.yml` and its integration status when present.
 - Inspect the current default branch, all relevant open PRs, and the exact branch/commit being modified.
-- Locate the canonical source and schema for each of the three graph dimensions and both projections. `data/concepts.yml` is the canonical but intentionally incomplete concept seed. `data/domains.yml` defines the six controlled domains when merged; until then, verify whether concept-domain membership is still proposed in an open PR. Do not infer that a model exists in code merely because it is described in prose.
+- Locate the canonical source and schema for each of the three graph dimensions and both projections. `data/concepts.yml` is the canonical but intentionally incomplete concept seed. `data/domains.yml` is the canonical bilingual registry for the six controlled domains; each concept's `domains` list expresses potentially many-to-many membership. Keep this distinct from a page's single primary Deepen `domain`. Do not infer that a model exists in code merely because it is described in prose.
 - Record exact file paths, schema versions, ID namespaces, relation vocabularies, generators, consumers, tests, and CI jobs.
 - Distinguish confirmed implementation, documented intent, generated projection, and unresolved assumption.
 
 ### 2. Build a traceability matrix
 
-Treat the six Deepen `domain` values carried by page metadata as a single primary page-classification facet. Keep them distinct from concept-level `domains` membership in the concept registry and controlled domain records; the latter may be many-to-many. Do not assume page `domain` is equivalent to concept domain membership. The current concept `resources` arrays contain page IDs. Record these as page-resource associations only; they do not yet model independent demonstrations, experiments, implementations, or external references as resource entities.
+Treat the six Deepen `domain` values carried by page metadata as a single primary page-classification facet. Keep them distinct from concept-level `domains` membership in `data/concepts.yml` and `data/domains.yml`; the latter may be many-to-many. Do not assume page `domain` is equivalent to concept domain membership. The current concept `resources` arrays contain page IDs. Record these as page-resource associations only; they do not yet model independent demonstrations, experiments, implementations, or external references as resource entities.
 
 For each entity/relation, record:
 
