@@ -16,12 +16,12 @@ suggested_route:
 hierarchy:
   parents: ["fr/llm-overview"]
   children: ["fr/cross-attention"]
-related: ["fr/transformer-history", "fr/transformer"]
+related: ["fr/transformer-history", "fr/transformer", "fr/hybrid-llm-architectures", "fr/llm-computational-complexity"]
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
-Les Transformers ne forment pas une architecture unique. Selon que le réseau utilise un encodeur, un décodeur ou les deux, l'information circule différemment : une séquence peut être représentée dans les deux directions, transformée en une autre séquence, ou prolongée token par token. Ces choix influencent les usages possibles, mais ne déterminent pas à eux seuls l'objectif d'entraînement.
+Un Transformer peut utiliser un encodeur, un décodeur ou les deux. Ce choix détermine quelles positions peuvent échanger de l'information et comment le modèle traite une séquence. Il ne fixe pas, à lui seul, l'objectif d'entraînement ni la tâche réalisée.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
@@ -91,7 +91,7 @@ L'attention dense effectue un nombre d'interactions en \(O(T^2)\), mais ces inte
 
 1. **Pourquoi BERT peut-il exploiter des tokens situés après le token à représenter ?** Parce que son encodeur utilise généralement une attention bidirectionnelle sur toute l'entrée ; il n'est pas soumis au masque causal d'un GPT.
 2. **Quelle opération distingue particulièrement un décodeur d'un encodeur-décodeur ?** Dans le second, le décodeur dispose d'une attention croisée vers les représentations produites par l'encodeur.
-3. **Le prochain-token prediction définit-il tous les Transformers ?** Non. C'est un objectif typique des décodeurs autorégressifs, pas une propriété de tous les Transformers.
+3. **La prédiction du prochain token définit-elle tous les Transformers ?** Non. C'est un objectif typique des décodeurs autorégressifs, pas une propriété de tous les Transformers.
 4. **Un Transformer est-il nécessairement un LLM ?** Non. L'architecture ne détermine ni la taille du modèle ni son statut de LLM.
 :::
 
