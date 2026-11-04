@@ -42,7 +42,7 @@ La carte propose deux graphes distincts. Le graphe des pages représente les res
       <label for="learning-map-search">Rechercher une page ou une notion</label>
       <input id="learning-map-search" type="search" placeholder="Ex. : embeddings, attention, génération…" autocomplete="off">
     </div>
-    <div class="learning-map-filter">
+    <div class="learning-map-filter" data-map-page-controls>
       <label for="learning-map-domain">Filtrer par domaine avancé</label>
       <select id="learning-map-domain">
         <option value="all">Tous les domaines</option>
@@ -54,7 +54,7 @@ La carte propose deux graphes distincts. Le graphe des pages représente les res
         <option value="scale-research">Échelle et questions de recherche</option>
       </select>
     </div>
-    <div class="learning-map-filter">
+    <div class="learning-map-filter" data-map-page-controls>
       <label for="learning-map-destination">Afficher une branche</label>
       <select id="learning-map-destination">
         <option value="all">Toutes les branches</option>
