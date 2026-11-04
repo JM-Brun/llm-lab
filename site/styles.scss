@@ -1011,6 +1011,13 @@ details.spot-the-fallacy .fallacy-content {
   filter: drop-shadow(0 2px 3px rgba(20,83,45,.12));
 }
 .map-node:focus { outline: none; }
+.map-selection-hint {
+  padding: .45rem .55rem;
+  border-left: 3px solid var(--llm-brand);
+  background: #EEF7F0;
+  color: #334155;
+  font-size: .8rem !important;
+}
 .map-node-topic {
   fill: #64748B;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
