@@ -33,7 +33,7 @@ La carte propose deux graphes distincts. Le graphe des pages représente les res
 
 ## Parcours guidé
 
-Six étapes conceptuelles donnent un point d'entrée et une progression conseillée. Les pages d'une même étape sont des ressources complémentaires, pas une liste de prérequis stricts.
+Six étapes conceptuelles donnent un point d'entrée et une progression conseillée. Les liens principaux ouvrent les pages centrales ; les approfondissements sont facultatifs. Les pages d'une même étape sont des ressources complémentaires, pas une liste de prérequis stricts.
 
 <ol class="guided-route-grid" data-guided-route aria-label="Six étapes du parcours guidé"></ol>
 
