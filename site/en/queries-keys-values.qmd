@@ -73,6 +73,12 @@ The dimensions $d_k$ and $d_v$ therefore need not be equal. Optional biases are 
 
 **Cross-attention:** this single-input formula describes self-attention, not every attention mechanism. In cross-attention, Q comes from the stream doing the querying, while K and V come from the stream being queried. See the [advanced cross-attention lesson](cross-attention.qmd).
 
+::: {.callout-note collapse="true" title="A linguistic example: when a token needs context"}
+Consider: “The animal didn't cross the road because it was tired.” The pronoun **it** is understood in context. As an intuition, a query formed at that position can be compared with keys from several earlier tokens; the resulting weights then combine their value vectors.
+
+This is an illustration of contextual information flow, not a report of measured attention. The article by [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) gives this example but reports no model, head, attention weights or experiment. It therefore does not establish that a particular attention head resolves coreference, nor that an attention map explains the model's decision.
+:::
+
 ## Keep these objects distinct
 
 | Object | Role in the computation |
