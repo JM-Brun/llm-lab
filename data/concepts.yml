@@ -55,6 +55,12 @@ concepts:
       fr: "Mécanisme qui injecte ou expose l’information de position dans les calculs du modèle."
       en: "Mechanism that injects or exposes positional information in model computations."
     resources: [fr/positional-encoding, en/positional-encoding]
+  - id: output-projection
+    labels: {fr: "Projection de sortie", en: "Output projection"}
+    definitions:
+      fr: "Transformation qui projette l’état final d’une position vers les scores du vocabulaire."
+      en: "Transformation projecting a position's final state to vocabulary scores."
+    resources: [fr/logits, en/logits]
   - id: logits
     labels: {fr: "Logits", en: "Logits"}
     definitions:
@@ -74,14 +80,14 @@ concepts:
       en: "Quantity measuring the probabilistic cost of a predicted distribution relative to a target."
     resources: [fr/cross-entropy, en/cross-entropy]
 relations:
-  - {from: token, type: implemented-by, to: token-embedding}
+  - {from: token, type: represented-by, to: token-embedding}
   - {from: token-embedding, type: prerequisite, to: contextualized-representation}
   - {from: query, type: part-of, to: self-attention}
   - {from: key, type: part-of, to: self-attention}
   - {from: value, type: part-of, to: self-attention}
   - {from: causal-mask, type: constrains, to: self-attention}
-  - {from: positional-encoding, type: applies-to, to: self-attention}
-  - {from: self-attention, type: produces, to: contextualized-representation}
-  - {from: contextualized-representation, type: produces, to: logits}
+  - {from: positional-encoding, type: contributes-to, to: self-attention}
+  - {from: self-attention, type: contributes-to, to: contextualized-representation}
+  - {from: contextualized-representation, type: mapped-by, to: output-projection}\n  - {from: output-projection, type: produces, to: logits}
   - {from: logits, type: normalized-by, to: softmax}
   - {from: softmax, type: evaluated-by, to: cross-entropy}
