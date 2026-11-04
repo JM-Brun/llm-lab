@@ -74,10 +74,10 @@ pedagogical_model:
     - "Explicitly states that projection matrices are learned through backpropagation and gradient-based optimization."
     - "Includes useful interpretive guardrails about semantic similarity and winner-take-all selection."
   pedagogical_limits:
-    - "No formal objectives, prerequisite map, exercises, comprehension checks or worked tensor-shape example."
+    - "No formal objectives, prerequisite map, exercises or comprehension checks."
     - "Scaling is stated rather than derived; variance assumptions are not developed."
     - "Multi-head attention lacks detailed dimensions, reshaping and output-mixing analysis."
-    - "No implementation, numerical experiments, tensor-shape walkthrough, worked numerical example or derivation of the scaling factor."
+    - "No implementation, numerical experiments, tensor-shape walkthrough or worked numerical example."
     - "Backpropagation is named but the optimization process and parameter updates are not explained."
     - "Causal masking is mentioned but not developed as a separate operation."
     - "No KV-cache treatment appears in the author-authored article body; it is a reader-comment follow-up."
