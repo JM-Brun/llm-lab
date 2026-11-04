@@ -33,92 +33,10 @@ Evaluation is cross-cutting. Validation results may inform model, data, and deco
 
 ## Reader-facing guided route — machine-readable map source
 
-The compact route shown above the exploratory graphs on the bilingual learning-map pages is generated from this block. Keep this as the **single route-stage source**; do not maintain a second hand-edited stage list in JavaScript or in the Quarto pages. The route is conceptual and status-aware: it is not a strict prerequisite DAG. Page links are supporting destinations within a stage, not a claim that every linked page must be read in sequence.
+The compact route shown above the exploratory graphs on the bilingual learning-map pages is generated from [`data/guided-route.yml`](../data/guided-route.yml). That versioned YAML file is the single machine-readable source for the six reader-facing stages; this document remains the canonical narrative curriculum. The generator validates every bilingual page reference against published page metadata before producing native Quarto Markdown. No route definition is embedded in an HTML comment or duplicated in page JavaScript.
 
 The practical GPT construction route remains the separate [Build path](../site/fr/build-path.qmd) / [EN](../site/en/build-path.qmd). In particular, G2 corpus preparation and training-example construction form a branch for training, not a prerequisite for understanding inference.
 
-<!--
-LLM-LAB-GUIDED-ROUTE v1
-stages:
-  - id: orientation
-    title:
-      fr: "Situer le système"
-      en: "Orient yourself"
-    objective:
-      fr: "Comprendre ce qu'est un LLM et observer une génération complète avant d'en étudier les mécanismes internes."
-      en: "Understand what an LLM is and observe a complete generation loop before studying its internal mechanisms."
-    pages:
-      fr: [fr/llm-overview, fr/generation]
-      en: [en/llm-overview, en/generation]
-    optional_pages:
-      fr: [fr/transformer-architectures]
-      en: [en/transformer-architectures]
-  - id: text-input
-    title:
-      fr: "Du texte aux tokens"
-      en: "From text to tokens"
-    objective:
-      fr: "Distinguer texte, tokenisation, vocabulaire et identifiants de tokens dans la construction de l'entrée du modèle."
-      en: "Distinguish text, tokenization, vocabulary, and token IDs in the construction of model input."
-    pages:
-      fr: [fr/text-data, fr/tokenization-strategies]
-      en: [en/text-data, en/tokenization-strategies]
-    optional_pages:
-      fr: [fr/unicode-text, fr/tokenizer-design-evaluation]
-      en: [en/unicode-text, en/tokenizer-design-evaluation]
-  - id: representations
-    title:
-      fr: "Des identifiants aux représentations"
-      en: "From IDs to representations"
-    objective:
-      fr: "Suivre la consultation des embeddings, l'information positionnelle et la contextualisation des états."
-      en: "Trace embedding lookup, positional information, and the contextualization of hidden states."
-    pages:
-      fr: [fr/embedding-space, fr/positional-encoding, fr/contextualized-representations]
-      en: [en/embedding-space, en/positional-encoding, en/contextualized-representations]
-    optional_pages:
-      fr: [fr/tensors, fr/rope]
-      en: [en/tensors, en/rope]
-  - id: computation
-    title:
-      fr: "Comprendre le calcul du Transformer"
-      en: "Understand Transformer computation"
-    objective:
-      fr: "Relier Q/K/V, les poids d'attention, l'agrégation et le masquage causal sans confondre mécanisme et ordre d'apprentissage."
-      en: "Connect Q/K/V, attention weights, aggregation, and causal masking without confusing mechanism with learning order."
-    pages:
-      fr: [fr/transformer, fr/queries-keys-values, fr/scaled-dot-product-attention, fr/causal-masking]
-      en: [en/transformer, en/queries-keys-values, en/scaled-dot-product-attention, en/causal-masking]
-    optional_pages:
-      fr: [fr/cross-attention]
-      en: [en/cross-attention]
-  - id: prediction
-    title:
-      fr: "Des états aux prédictions"
-      en: "From hidden states to predictions"
-    objective:
-      fr: "Relier logits, distribution de probabilité, vraisemblance et sélection du prochain token."
-      en: "Connect logits, probability distributions, likelihood, and next-token selection."
-    pages:
-      fr: [fr/logits, fr/probabilites, fr/vraisemblance, fr/generation]
-      en: [en/logits, en/probabilities, en/likelihood, en/generation]
-    optional_pages:
-      fr: [fr/decoding-strategies]
-      en: [en/decoding-strategies]
-  - id: learning-evaluation
-    title:
-      fr: "Comprendre l'apprentissage et évaluer"
-      en: "Understand learning and evaluate"
-    objective:
-      fr: "Découvrir les objectifs de perte et les gradients, puis examiner les preuves, métriques et limites d'une évaluation."
-      en: "Explore loss objectives and gradients, then examine the evidence, metrics, and limits of evaluation."
-    pages:
-      fr: [fr/cross-entropy, fr/loss, fr/gradients, fr/evaluation-experimentale]
-      en: [en/cross-entropy, en/loss, en/gradients, en/experimental-evaluation]
-    optional_pages:
-      fr: [fr/scaling-laws]
-      en: [en/scaling-laws]
--->
 
 ## Page ownership: one canonical explanation, deliberate reminders
 
