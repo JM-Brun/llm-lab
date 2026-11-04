@@ -27,7 +27,6 @@
     pageLabel: "Page",
     conceptLabel: "Notion",
     noSectionHeadings: "Aucun titre de section disponible.",
-    destinations: { orient: "S’orienter", understand: "Comprendre", build: "Construire", deepen: "Approfondir", practice: "Pratiquer", reference: "Référence" },
   } : {
     columns: ["Understand", "Build", "Deepen", "Practice and reference"],
     route: "Suggested route",
@@ -51,7 +50,6 @@
     pageLabel: "Page",
     conceptLabel: "Concept",
     noSectionHeadings: "No section headings available.",
-    destinations: { orient: "Orientation", understand: "Understand", build: "Build", deepen: "Deepen", practice: "Practice", reference: "Reference" },
   };
 
   const svg = root.querySelector(".learning-map-svg");
@@ -511,12 +509,7 @@
         x: position.x, y: position.y, width: WIDTH, height: HEIGHT, rx: 10,
         class: "map-node-card"
       }));
-      const topic = svgElement("text", {
-        x: position.x + 13, y: position.y + 18, class: "map-node-topic"
-      });
-      
-      anchor.appendChild(topic);
-      appendText(anchor, position.x + 13, position.y + 39, wrap(page.title, 30, 2), "map-node-title");
+      appendText(anchor, position.x + 13, position.y + 31, wrap(page.title, 30, 2), "map-node-title");
       const headings = (page.section_headings || []).slice(0, 2).join(" · ");
       const conceptLine = svgElement("text", {
         x: position.x + 13, y: position.y + 76, class: "map-node-section-headings"
