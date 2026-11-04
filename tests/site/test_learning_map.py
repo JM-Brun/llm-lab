@@ -146,42 +146,6 @@ def _write_guided_route(
     route.write_text(yaml.safe_dump(source, allow_unicode=True, sort_keys=False), encoding="utf-8")
 
 
-def _write_sidebar(site: Path) -> None:
-    """Write minimal Quarto sidebars so build() can derive the navigation areas."""
-    config = {
-        "website": {
-            "sidebar": [
-                {
-                    "id": "fr",
-                    "contents": [
-                        {
-                            "section": "Comprendre",
-                            "contents": [
-                                {
-                                    "section": "Sous-rubrique",
-                                    "contents": ["fr/attention.qmd", "fr/unpublished.qmd"],
-                                }
-                            ],
-                        }
-                    ],
-                },
-                {
-                    "id": "en",
-                    "contents": [
-                        {"section": "Understand", "contents": ["en/attention.qmd"]}
-                    ],
-                },
-            ]
-        }
-    }
-    config_path = site / "_quarto.yml"
-    config_path.parent.mkdir(parents=True, exist_ok=True)
-    config_path.write_text(
-        yaml.safe_dump(config, allow_unicode=True, sort_keys=False), encoding="utf-8"
-    )
-
-
-
 def test_page_href_is_relative_to_language_map() -> None:
     assert page_href("fr/index", "fr") == "../index.html"
     assert page_href("fr/text-data", "fr") == "text-data.html"
@@ -262,107 +226,6 @@ def test_assign_route_rank_follows_suggested_route_and_hierarchy() -> None:
         "fr/tokenization": 3,
         "fr/unlinked": 4,
     }
-
-
-def test_load_navigation_derives_areas_from_sidebar(tmp_path: Path) -> None:
-    site = tmp_path / "site"
-    _write_page(site, page_id="fr/attention", language="fr", title="Attention")
-    _write_sidebar(site)
-    MODULE["load_pages"].__globals__["SITE"] = site
-    pages = MODULE["load_pages"]()
-    MODULE["load_navigation"].__globals__["SITE"] = site
-
-    navigation = MODULE["load_navigation"]("fr", pages)
-
-    assert navigation == [
-        {
-            "id": "comprendre",
-            "title": "Comprendre",
-            "pages": [],
-            "sections": [{"title": "Sous-rubrique", "pages": ["fr/attention"]}],
-        }
-    ]
-
-
-def test_load_navigation_requires_matching_sidebar(tmp_path: Path) -> None:
-    site = tmp_path / "site"
-    _write_sidebar(site)
-    MODULE["load_navigation"].__globals__["SITE"] = site
-
-    with pytest.raises(ValueError, match="missing Quarto sidebar"):
-        MODULE["load_navigation"]("de", [])
-
-
-def test_representation_registry_covers_territory_and_list_forms() -> None:
-    representations = MODULE["REPRESENTATIONS"]
-
-    assert set(representations) == {"territories", "list"}
-    assert representations["territories"].interactive is True
-    assert representations["list"].interactive is False
-    assert len({representation.artifact for representation in representations.values()}) == 2
-
-
-def test_render_map_script_bakes_bilingual_copy() -> None:
-    script = MODULE["render_map_script"]()
-
-    assert script.count("<script>") == 1
-    assert "Tous les territoires" in script
-    assert "All territories" in script
-    assert "__LEARNING_MAP_COPY__" not in script
-    assert "sectionHeadingList.appendChild(item)" in script
-
-
-def test_render_territory_map_localizes_the_shell_markup() -> None:
-    render = MODULE["render_territory_map"]
-
-    french = render("fr", [], {})
-    english = render("en", [], {})
-
-    assert 'data-language="fr"' in french
-    assert 'data-source="../learning-map-data-fr.json"' in french
-    assert "Carte des territoires" in french
-    assert "Notions canoniques" in french
-    assert "map-selection-hint" in french
-    assert "Un clic sélectionne" in french
-    assert 'data-language="en"' in english
-    assert 'data-source="../learning-map-data-en.json"' in english
-    assert "Territory map" in english
-    assert "Clicking selects" in english
-
-
-def test_render_territory_map_rejects_unknown_language() -> None:
-    with pytest.raises(ValueError, match="unsupported learning-map language"):
-        MODULE["render_territory_map"]("de", [], {})
-
-
-def test_render_resource_list_nests_areas_sections_and_pages() -> None:
-    navigation = [
-        {
-            "id": "comprendre",
-            "title": "Comprendre",
-            "pages": ["fr/overview"],
-            "sections": [{"title": "Sous-rubrique", "pages": ["fr/attention", "fr/missing"]}],
-        }
-    ]
-    page_by_id = {
-        "fr/overview": {"id": "fr/overview", "title": "Panorama", "href": "overview.html"},
-        "fr/attention": {
-            "id": "fr/attention",
-            "title": "Attention *elle*",
-            "href": "attention.html",
-        },
-    }
-
-    listing = MODULE["render_resource_list"]("fr", navigation, page_by_id)
-
-    assert listing.splitlines() == [
-        "<!-- Generated by site/tools/build_learning_map.py; do not edit by hand. -->",
-        "- **Comprendre**",
-        "  - Sous-rubrique",
-        "    - [Attention \\*elle\\*](attention.html)",
-        "  - [Panorama](overview.html)",
-    ]
-
 
 
 def test_load_guided_route_resolves_language_specific_page_links(tmp_path: Path) -> None:
@@ -479,7 +342,6 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     _write_page(site, page_id="en/index", language="en", title="Home", topic="overview")
     _write_page(site, page_id="en/attention", language="en", title="Attention")
     _write_guided_route(tmp_path)
-    _write_sidebar(site)
 
     MODULE["build"].__globals__["SITE"] = site
     MODULE["build"].__globals__["ROOT"] = tmp_path
@@ -494,31 +356,9 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     assert {page["id"] for page in payload["pages"]} == {"fr/index", "fr/attention"}
     assert all(page["href"] for page in payload["pages"])
     assert all(isinstance(page["section_headings"], list) for page in payload["pages"])
-    assert payload["navigation"] == [
-        {
-            "id": "comprendre",
-            "title": "Comprendre",
-            "pages": [],
-            "sections": [{"title": "Sous-rubrique", "pages": ["fr/attention"]}],
-        }
-    ]
     fragment = site / "includes" / "generated-guided-route-fr.qmd"
     assert fragment.exists()
     assert "[Attention](attention.html)" in fragment.read_text(encoding="utf-8")
-    script_include = site / "includes" / "learning-map.html"
-    script_source = script_include.read_text(encoding="utf-8")
-    assert script_source.count("<script>") == 1
-    assert "__LEARNING_MAP_COPY__" not in script_source
-    assert "Tous les territoires" in script_source
-    shell = site / "includes" / "generated-map-territories-fr.qmd"
-    shell_source = shell.read_text(encoding="utf-8")
-    assert 'data-language="fr"' in shell_source
-    assert 'data-source="../learning-map-data-fr.json"' in shell_source
-    assert "Carte des territoires" in shell_source
-    listing = site / "includes" / "generated-map-list-fr.qmd"
-    listing_source = listing.read_text(encoding="utf-8")
-    assert "**Comprendre**" in listing_source
-    assert "[Attention](attention.html)" in listing_source
     assert payload["concepts"] == [
         {
             "id": "attention",
@@ -575,7 +415,6 @@ def test_build_serializes_deepen_domain(tmp_path: Path) -> None:
     )
     _write_page(site, page_id="en/index", language="en", title="Home", topic="overview")
     _write_guided_route(tmp_path, fr_core=["fr/rope"], en_core=["en/index"])
-    _write_sidebar(site)
     MODULE["build"].__globals__["SITE"] = site
     MODULE["build"].__globals__["ROOT"] = tmp_path
     _write_concept_registry(tmp_path)
@@ -611,27 +450,31 @@ def test_learning_map_browser_script_has_valid_javascript_and_fallback_target() 
 
 
 def test_learning_map_node_selection_is_separate_from_navigation() -> None:
-    """Chips and search cards select in place; navigation uses the open-page link."""
+    """Page and concept nodes select in place; navigation uses the details link."""
     script_path = MODULE_PATH.parents[2] / "site" / "includes" / "learning-map.html"
     source = script_path.read_text(encoding="utf-8")
     script = source.split("<script>", maxsplit=1)[1].split("</script>", maxsplit=1)[0]
 
-    assert script.count("showPageDetails(page.id);") == 2
-    assert "showConceptDetails(concept.id);" in script
-    assert "event.preventDefault();" in script
-    assert "chip.href = page.href;" in script
-    assert 'el("a", "map-open-page", copy.openPage)' in script
+    assert '"data-map-node-id": page.id' in script
+    assert '"data-map-node-id": concept.id' in script
+    assert 'role: "button"' in script
+    assert 'node.addEventListener("click", () => updateConceptDetails(concept));' in script
+    assert 'anchor.addEventListener("click", () => updateDetails(page));' in script
+    assert "href: page.href" not in script
+    assert "const syncSelection = () =>" in script
 
 
 def test_learning_map_keyboard_activation_uses_node_selection() -> None:
-    """Buttons give native keyboard activation; Escape drills back up one level."""
+    """Enter and Space activate selection without replacing the focused SVG node."""
     script_path = MODULE_PATH.parents[2] / "site" / "includes" / "learning-map.html"
     source = script_path.read_text(encoding="utf-8")
     script = source.split("<script>", maxsplit=1)[1].split("</script>", maxsplit=1)[0]
 
-    assert 'el("button", "map-area-card")' in script
-    assert 'el("button", "map-concept-item")' in script
-    assert 'if (event.key !== "Escape" || !data) {' in script
+    assert script.count('event.key === "Enter" || event.key === " "') == 2
+    assert script.count("event.preventDefault();") >= 2
+    assert script.count("node.click();") == 1
+    assert script.count("anchor.click();") == 1
+    assert "renderConceptGraph(); });" not in script
 
 
 def test_load_concept_graph_serializes_localized_relation_semantics(tmp_path: Path) -> None:
@@ -667,8 +510,6 @@ def test_concept_graph_script_exposes_direction_and_relation_legend() -> None:
     script_path = MODULE_PATH.parents[2] / "site" / "includes" / "learning-map.html"
     source = script_path.read_text(encoding="utf-8")
     assert "Relationship meaning (source → target)" in source
-    assert "Sens des relations (source → cible)" in source
-    assert 'conceptLegend.hidden = state.mode !== "concepts";' in source
-    assert "renderConceptLegend();" in source
-    assert "var label = type ? type.label : relation.type;" in source
-    assert 'relation.direction === "symmetric" ? "↔ " : "→ "' in source
+    assert 'const arrow = relation && relation.direction === "symmetric" ? " ↔ " : " → ";' in source
+    assert 'marker-end": symmetric ? "none" : "url(#map-arrow-concept)"' in source
+    assert "conceptLegend.hidden = false" in source
