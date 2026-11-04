@@ -139,6 +139,16 @@ items:
   - id: nishanthan-k-qkv-transformers-devto:context-examples
     kind: mental-model
     summary: "The article uses lexical ambiguity (bank) and pronoun reference (it) to motivate why token representations need contextual information from other positions."
+    pedagogical_profile:
+      learner_question: "Why does a token representation need information from other positions in the sequence?"
+      explanatory_lens: linguistic
+      teaching_form: [worked-example, mental-model]
+      abstraction_level: introductory
+      prerequisites: [tokenization, contextualized-representation]
+      distinctive_value: "Pairs lexical ambiguity (bank) with cross-position pronoun reference (it → the animal), illustrating two distinct motivations for contextualization."
+      limitations:
+        - "Illustrative motivation, not evidence that one attention head resolves coreference."
+        - "Does not establish that attention alone accounts for linguistic reference resolution."
     pedagogical_assessment:
       novelty: {level: low, rationale: "Lexical ambiguity and pronoun reference are established motivation examples."}
       complementarity: {level: high, rationale: "The pronoun example adds a distinct cross-position dependency to the page's existing lexical-ambiguity example."}
