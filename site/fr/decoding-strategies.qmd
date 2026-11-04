@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/decoding-strategies"
 scope: "Étudie les transformations appliquées à la distribution du prochain token et les méthodes de recherche de séquences : température, top-k, nucleus sampling, greedy/beam search et décodage contrastif ; discute les compromis qualité-diversité et les exigences de reproductibilité."
 purpose: "Le lecteur doit pouvoir distinguer transformation de distribution et recherche de séquence, expliquer les mécanismes de température/top-k/top-p, analyser les limites des objectifs de vraisemblance pour la génération ouverte et documenter un protocole de décodage."
+domain: "inference-efficiency"
 suggested_route:
   previous: null
   next: null
