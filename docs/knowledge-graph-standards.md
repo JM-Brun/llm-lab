@@ -38,11 +38,11 @@ Standards references:
 
 ### Concepts
 
-Concept IDs are language-independent and resolve to `https://jm-brun.github.io/llm-lab/id/concept/{id}`. French and English labels are language-tagged values on one concept node, not duplicate concepts.
+Concept IDs are language-independent and receive stable absolute identifiers under `https://jm-brun.github.io/llm-lab/id/concept/{id}`. These identifiers are currently used in the JSON-LD graph; dereferenceable concept landing pages are not yet published. French and English labels are language-tagged values on one concept node, not duplicate concepts.
 
 ### Domains
 
-The six controlled knowledge domains resolve to `https://jm-brun.github.io/llm-lab/id/domain/{id}`. They are represented as a separate SKOS concept scheme. A concept can be associated with multiple domains using `dcterms:subject`; membership does not imply prerequisite, containment or exclusivity.
+The six controlled knowledge domains receive stable identifiers under `https://jm-brun.github.io/llm-lab/id/domain/{id}`. They are represented as a separate SKOS concept scheme. A concept can be associated with multiple domains using `dcterms:subject`; membership does not imply prerequisite, containment or exclusivity.
 
 ### Learning resources
 
