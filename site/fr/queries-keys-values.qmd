@@ -73,6 +73,12 @@ Les dimensions $d_k$ et $d_v$ ne sont donc pas nécessairement égales. Les biai
 
 **Attention croisée :** cette formule à entrée unique décrit l'auto-attention, pas tous les mécanismes d'attention. En attention croisée, Q provient du flux qui consulte, tandis que K et V proviennent du flux consulté. Voir l'[approfondissement sur l'attention croisée](cross-attention.qmd).
 
+::: {.callout-note collapse="true" title="Exemple linguistique : un token qui a besoin de contexte"}
+Considérons : « L'animal n'a pas traversé la route parce qu'il était fatigué. » Le pronom **il** s'interprète dans son contexte. Pour se représenter le mécanisme, une requête construite à cette position peut être comparée aux clés de plusieurs tokens précédents ; les poids obtenus servent ensuite à combiner leurs vecteurs de valeurs.
+
+Il s'agit d'une illustration du flux d'information contextuel, pas d'un résultat d'observation. L'article de [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) propose cet exemple, mais ne fournit ni modèle, ni tête d'attention, ni poids mesurés, ni expérience. Il ne démontre donc pas qu'une tête donnée résout la coréférence, ni qu'une carte d'attention explique la décision du modèle.
+:::
+
 ## Ce qu'il faut distinguer
 
 | Objet | Rôle dans le calcul |
