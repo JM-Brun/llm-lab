@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from collections import deque
 from pathlib import Path
 from typing import Any
@@ -155,7 +156,7 @@ def main() -> None:
     """Generate both language-specific datasets."""
     for language in ("fr", "en"):
         output = build(language)
-        print(f"Generated {output.relative_to(ROOT)}")
+        sys.stdout.write(f"Generated {output.relative_to(ROOT)}\n")
 
 
 if __name__ == "__main__":
