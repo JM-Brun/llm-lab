@@ -32,15 +32,15 @@ The repository is autonomous. Do not import or depend on the taxonomy or runtime
 
 ### 1. Establish the baseline before editing
 
-- Read `docs/information-architecture.md`, `docs/page-metadata-schema.md`, `docs/learning-path.md`, `docs/full-curriculum-plan.md`, `docs/page-template-system.md`, `docs/design-system.md`, and `CONTRIBUTING.md`. When present, inspect `data/concepts.yml` and `scripts/check_concept_registry.py` as the candidate canonical concept registry and validator.
+- Read `docs/information-architecture.md`, `docs/page-metadata-schema.md`, `docs/learning-path.md`, `docs/full-curriculum-plan.md`, `docs/page-template-system.md`, `docs/design-system.md`, and `CONTRIBUTING.md`. Inspect `data/concepts.yml` and `scripts/check_concept_registry.py` as the canonical concept registry and validator; inspect `data/domains.yml` and its integration status when present.
 - Inspect the current default branch, all relevant open PRs, and the exact branch/commit being modified.
-- Locate the canonical source and schema for each of the three graph dimensions and both projections. The initial `data/concepts.yml` registry, if present, is a seed: verify its ownership and completeness rather than assuming it represents the full graph. Do not infer that a model exists in code merely because it is described in prose.
+- Locate the canonical source and schema for each of the three graph dimensions and both projections. `data/concepts.yml` is the canonical but intentionally incomplete concept seed. `data/domains.yml` defines the six controlled domains when merged; until then, verify whether concept-domain membership is still proposed in an open PR. Do not infer that a model exists in code merely because it is described in prose.
 - Record exact file paths, schema versions, ID namespaces, relation vocabularies, generators, consumers, tests, and CI jobs.
 - Distinguish confirmed implementation, documented intent, generated projection, and unresolved assumption.
 
 ### 2. Build a traceability matrix
 
-Treat the six Deepen `domain` values currently carried by page metadata as a page-classification facet until a canonical concept-to-domain membership model is demonstrated. Do not assume page `domain` is equivalent to concept domain membership. Likewise, if concept `resources` currently contains page IDs, record that as a page-resource association only; it does not yet model independent demonstrations, experiments, implementations, or external references as resource entities.
+Treat the six Deepen `domain` values carried by page metadata as a single primary page-classification facet. Keep them distinct from concept-level `domains` membership in the concept registry and controlled domain records; the latter may be many-to-many. Do not assume page `domain` is equivalent to concept domain membership. The current concept `resources` arrays contain page IDs. Record these as page-resource associations only; they do not yet model independent demonstrations, experiments, implementations, or external references as resource entities.
 
 For each entity/relation, record:
 
@@ -65,7 +65,7 @@ Check at minimum:
 - Every relation endpoint resolves to an entity of the expected type.
 - Relation types belong to a controlled vocabulary; directionality and inverse semantics are explicit.
 - Prerequisite and hierarchy relations are acyclic where the model requires a DAG. Do not impose acyclicity on inherently symmetric or cyclic relations such as opposition or application without a domain justification.
-- Inverse/reciprocal constraints are enforced only for relation types whose semantics require them.
+- Inverse/reciprocal constraints are enforced only for relation types whose semantics require them. The symmetric `contrasts-with` relation uses one canonical lexical orientation (`from` ID < `to` ID) rather than reciprocal stored edges.
 - FR/EN labels exist for published concepts; translations share entity identity rather than duplicate entities.
 - Every published concept has at least one useful resource, unless explicitly marked abstract/non-resource-backed.
 - Resources can support multiple concepts; concepts can have multiple resources.
@@ -89,7 +89,7 @@ Check at minimum:
 Prefer small deterministic tests at the layer where an invariant belongs:
 
 - **Schema/unit tests:** required fields, types, controlled vocabularies, ID format, uniqueness, and version compatibility.
-- **Graph-integrity tests:** dangling endpoints, duplicate edges, illegal relation types, inverse/reciprocity rules, self-loops, and justified cycle constraints. Validate page-resource references against published page IDs; keep this separate from future non-page resource-ID validation.
+- **Graph-integrity tests:** dangling endpoints, duplicate edges, illegal relation types, inverse/reciprocity rules, self-loops, and justified cycle constraints. Validate current page-resource references against published page IDs; when a first-class resource registry is introduced, validate its own IDs and locations separately.
 - **Bilingual tests:** shared canonical IDs, required labels, equivalent relation topology, and valid resource language.
 - **Resource-link tests:** local path existence, external URL syntax, status consistency, and many-to-many association coverage.
 - **Projection tests:** stable IDs, deterministic output, expected node/edge counts, and no accidental collapse of distinct relation types.
@@ -98,7 +98,7 @@ Prefer small deterministic tests at the layer where an invariant belongs:
 
 Use fixtures with small synthetic graphs. Include both valid examples and one failing fixture per invariant. Assert actionable error messages containing the entity ID and relation/field. Avoid snapshot tests for large generated files unless snapshots are deliberately normalized and reviewed.
 
-Do not add tests for hypothetical schemas that have not been located. If the canonical concept/resource model is not yet machine-readable, first document the gap and propose the smallest source-compatible contract; do not create a competing registry just to make tests possible.
+Do not add tests for hypothetical schemas that have not been located. The concept registry is machine-readable; first-class resource entities are not yet modelled. Document that gap and propose a source-compatible extension rather than overloading page IDs or creating a competing registry.
 
 ### 6. CI policy
 
