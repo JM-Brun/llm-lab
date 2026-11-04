@@ -1,10 +1,34 @@
 # Contributing
 
-**Start here:** [Contributor guiding principles](docs/contributor-guiding-principles.md) — the short decision-making rules for teaching quality, scientific rigour, code, experiments, accessibility, design, and bilingual parity.
+**Start here:** [Contributor guiding principles](docs/contributor-guiding-principles.md) — the short decision-making rules for teaching quality, scientific rigour, code, experiments, accessibility, design, and bilingual parity. For the repository's source-of-truth map, metadata ownership, graph semantics, and maintenance responsibilities, use [Information architecture and metadata governance](docs/information-architecture.md).
 
 Use the [page-template guide](docs/page-template-guide.md) and [page archetype implementation map](docs/site-page-design-system.md) when creating or substantially restructuring a page. They connect reusable starting structures to the existing metadata taxonomy, editorial method, and visual design system; they are soft targets, not mandatory section checklists.
 
 This is a learning and experimentation repository. Prefer small, testable changes that make the reasoning, implementation, and evidence inspectable. Follow the shared [reader-experience and editorial method](docs/reader-experience-and-editorial-method.md): the site is a navigable learning graph with progressive depth, not a mandatory linear book. The Wiki is the canonical home for reusable, domain-general concepts; LLM Lab is a separate public, bilingual learning site whose explanations must be complete without access to the private Wiki. The repositories have different purposes, not a shared runtime or reading dependency. Reusing a concept in both is intentional when LLM Lab needs to teach it to explain language models. Public readers must never need a Wiki URL, private definition, or private file to understand a page or render the site. Cite accessible public sources and include all definitions, assumptions, derivations, examples, caveats, and exercises needed by the LLM Lab learning experience—even when that creates deliberate overlap with the Wiki.
+
+## Choose the right source before editing
+
+Use this routing sequence; do not create a second registry or copy a rule into a neighbouring guide.
+
+1. **Reader-facing page and destination:** consult [Content-section mapping](docs/content-section-mapping.md) for Understand / Build / Deepen / Practice & experiment, and [Learning path](docs/learning-path.md) for sequence, prerequisites, milestones, and evidence.
+2. **Page identity and graph metadata:** consult [Page metadata schema](docs/page-metadata-schema.md). The page map owns page IDs, page roles, destinations, tags, and page-to-page navigation relations.
+3. **Concepts, domains, and non-page resources:** consult [Information architecture](docs/information-architecture.md) for ownership boundaries, then edit only the canonical source it identifies: `data/concepts.yml`, `data/domains.yml`, or `data/resources.yml`. Do not infer concepts from headings or resources from every code file.
+4. **Page composition:** start with the [Page-template guide](docs/page-template-guide.md); use the [site page-design map](docs/site-page-design-system.md) to select an archetype and the [soft template system](docs/page-template-system.md) for composition. These are guidance, not mandatory section checklists.
+5. **Visual treatment:** use the [design system](docs/design-system.md); do not create page-specific styling when a shared component is appropriate.
+6. **Experiments and evidence:** use the [experiment protocol](docs/experiment-protocol.md), and keep configurations, reports, and source artifacts in their designated locations.
+
+## Maintenance and validation workflow
+
+For a change that affects page metadata, concepts, resources, curriculum, templates, or generated maps:
+
+1. Update the canonical source only; update its owning documentation only when its contract or maintenance procedure changes.
+2. Run the validator for the changed registry and the relevant unit/integration tests. The [information-architecture index](docs/information-architecture.md) links each source to its validator and generated projection.
+3. Regenerate derived outputs using the documented generator. Never hand-edit generated JSON, route fragments, or graph projections.
+4. Render the bilingual site when Quarto sources, navigation, metadata, or generated includes change: `quarto render site`.
+5. Check rendered local links and the affected FR/EN pages. For interactive maps, also check keyboard, touch, responsive behavior, empty/error states, and the textual alternative.
+6. In the PR, distinguish source review, automated tests, Quarto rendering, browser inspection, accessibility checks, and learner evidence. Do not claim one as proof of another.
+
+For routine prose-only edits, run proportionate checks; do not run unrelated graph migrations. When a schema or controlled vocabulary changes, document compatibility/migration implications and update fixtures and validators in the same change. See [information architecture §8](docs/information-architecture.md#8-scalability-and-maintenance-requirements) for the governing maintenance principles.
 
 ## Contribution modes
 
