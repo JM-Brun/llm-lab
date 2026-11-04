@@ -61,6 +61,12 @@ def test_resource_concept_and_bilingual_page_links_resolve() -> None:
         for reference in block[key]:
             assert reference["@id"] in identifiers
 
+    logits_uri = "https://jm-brun.github.io/llm-lab/id/concept/logits"
+    model = by_id["gpt-model-module"]
+    generation = by_id["gpt-generation-module"]
+    assert logits_uri in {item["@id"] for item in model["schema:about"]}
+    assert logits_uri in {item["@id"] for item in generation["schema:about"]}
+
 
 def test_page_nodes_are_unique_and_registry_is_in_export_provenance() -> None:
     payload = build_graph()
