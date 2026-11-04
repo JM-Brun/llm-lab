@@ -33,7 +33,7 @@ Evaluation is cross-cutting. Validation results may inform model, data, and deco
 
 ## Page ownership: one canonical explanation, deliberate reminders
 
-The sequence above is a **route through concepts**, not permission to explain the same mechanism in every chapter. Each concept has a canonical page; the panorama and system overviews provide orientation, while component lessons carry the substantive explanation. A later page may recall a prerequisite, but should not repeat its worked example or complete explanation unless it adds a distinct learning outcome.
+The sequence above is a **route through concepts**, not permission to explain the same mechanism in every chapter. Each concept has a canonical page; the panorama and system overviews provide orientation, while component lessons carry the substantive explanation. The Understand route contains only the minimum conceptual model needed to follow the system. Mathematical derivations, architectural variants, and implementation edge cases belong in Deepen, even when they could fit inside a collapsed callout. A later page may recall a prerequisite, but should not repeat its worked example or complete explanation unless it adds a distinct learning outcome.
 
 - **LLM panorama:** terminology, model-family orientation, and the distinctions between architecture, weight learning, and use.
 - **Generation:** the complete autoregressive inference loop and the basic decoding choices.
