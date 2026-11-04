@@ -189,9 +189,9 @@ Une implémentation de référence testée numériquement est disponible dans `s
 :::
 
 <div class="route-nav-cards">
-  <a class="route-nav-card" href="contextualized-representations.qmd">
+  <a class="route-nav-card" href="transformer.qmd">
     <span class="nav-direction">← Étape précédente</span>
-    <span class="nav-title">Représentations contextualisées</span>
+    <span class="nav-title">GPT et Transformer : architecture et flux de données</span>
   </a>
   <a class="route-nav-card" href="scaled-dot-product-attention.qmd">
     <span class="nav-direction">Étape suivante →</span>

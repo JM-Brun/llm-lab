@@ -189,9 +189,9 @@ A numerically tested reference implementation is available in `src/llm_lab/found
 :::
 
 <div class="route-nav-cards">
-  <a class="route-nav-card" href="contextualized-representations.qmd">
+  <a class="route-nav-card" href="transformer.qmd">
     <span class="nav-direction">← Previous Step</span>
-    <span class="nav-title">Contextualized Representations</span>
+    <span class="nav-title">GPT and Transformers: architecture and data flow</span>
   </a>
   <a class="route-nav-card" href="scaled-dot-product-attention.qmd">
     <span class="nav-direction">Next Step →</span>
