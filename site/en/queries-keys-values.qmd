@@ -1,6 +1,6 @@
 ---
 title: "Queries, keys, and values (Q, K, V)"
-subtitle: "Three learned roles for matching positions and aggregating information"
+subtitle: "Three learned projections, three roles in self-attention"
 keywords: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:en", "status:published"]
 lang: en
 ---
@@ -8,197 +8,100 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/queries-keys-values"
-scope: "Introduces Q, K, and V projections for self-attention, where all three originate from the same representation stream; leaves score computation, masking, and normalization to the scaled dot-product attention page, and refers cross-attention to its dedicated advanced lesson."
-purpose: "Readers should be able to distinguish Q, K, and V, identify the learned projections that produce them, and explain how they contribute respectively to attention-weight calculation and information aggregation."
+scope: "Explains the roles and learned Q, K, and V projections in self-attention, their shared input and output dimensions; delegates score and aggregation computation to scaled dot-product attention, the temporal constraint to causal masking, implementation to the guided build, and historical context to the dedicated reference."
+purpose: "Readers should be able to distinguish Q/K projections that determine the weights from the V projection that supplies content, write the three self-attention projections, infer their shapes, and predict the effect of changing V while Q and K stay fixed."
 suggested_route:
   previous: "en/transformer"
   next: "en/scaled-dot-product-attention"
 hierarchy:
-  parents: ["en/contextualized-representations", "en/transformer"]
-  children: ["en/scaled-dot-product-attention"]
-related: ["en/cross-attention"]
+  parents: ["en/transformer"]
+  children: []
+related: ["en/contextualized-representations", "en/scaled-dot-product-attention", "en/cross-attention", "en/transformer-block-walkthrough"]
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
-Queries, keys, and values are not three kinds of tokens. In the case covered here—**self-attention**—they are three **learned projections of the same representation stream**, used to determine which positions contribute to a contextualized representation. Cross-attention, where Q and K/V come from different streams, is covered in a dedicated [advanced lesson](cross-attention.qmd).
+The previous page, [GPT and Transformers: architecture and data flow](transformer.qmd), places self-attention within the network's forward pass. Here we isolate the three projections that feed it: **Q**, **K**, and **V**. These are not three token categories, but three learned transformations of a representation. Q and K determine the weights; V supplies the aggregated content. The next page derives the weights and aggregation themselves.
 :::
 
 <div class="epistemic-badges">
-  <span class="epistemic-badge badge-concept">Verified Concept</span>
-  <span class="epistemic-badge badge-code">Python · run locally</span>
+  <span class="epistemic-badge badge-concept">Verified concept</span>
   <span class="epistemic-badge badge-status">Architecture: Transformer</span>
 </div>
 
-<div class="pipeline-stepper" role="navigation" aria-label="LLM pipeline stages">
-  <a class="step-item" href="text-data.qmd">1. Text</a>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
-  <span class="step-arrow">→</span>
-  <span class="step-item active">3. Attention (Q, K, V)</span>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="logits.qmd">4. Logits</a>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="cross-entropy.qmd">5. Loss & Training</a>
-</div>
-
-::: {.callout-tip title="The one-minute mental model"}
-**Q and K determine the weights; V supplies what gets aggregated.** Queries and keys determine relative weights across positions; those weights are then used to combine value vectors.
-
-**First pass:** keep these roles separate, then observe how the three projections transform the input representations.
-
-**Go deeper:** follow the full computation in [scaled dot-product attention](scaled-dot-product-attention.qmd), then the information constraint in [causal masking](causal-masking.qmd).
+::: {.callout-tip title="The essential idea"}
+**Q and K determine the weights; V supplies the aggregated content.** This is the key distinction to retain before studying the attention computation.
 :::
 
-## Intuition
+## Intuition: compare, then transmit
 
-Imagine a collection of index cards. A **query** expresses what a position is looking for; a **key** describes how a position can be matched as relevant; a **value** carries the information that will actually be aggregated. This analogy separates the roles, but does not imply that the model performs explicit symbolic search. In the analogy, the query is the question, the key is the note's matching label, and the value is the note's content—not the score of the match.
+Imagine a collection of index cards:
 
+- the **query Q** expresses what a position is looking for;
+- the **key K** provides the vector against which that position can be compared;
+- the **value V** carries the information that may be transmitted and aggregated.
 
-::: {.callout-note collapse="true" title="Inventory of Q, K, and V analogies (advanced)"}
-The project currently uses several explanatory formulations. They describe the same roles from complementary angles; they are not literal mechanisms inside the model.
+The analogy separates the roles, but it is not a literal symbolic search: the model does not manipulate readable questions, labels, or cards. Q, K, and V are learned numerical vectors.
 
-| Existing analogy | Q — query | K — key | V — value |
-|---|---|---|---|
-| **Collection of index cards** (this page) | What a position is looking for | What allows cards to be compared and matching ones to be identified | The card's content, which is aggregated |
-| **Functional verbs** (Transformer overview) | Look for information | Be found / provide what makes a position matchable | Carry information |
+![Diagram of query, key, and value projections: Q and K determine attention weights, which are used to aggregate V.](../images/queries-keys-values-en.svg){fig-alt="An input representation is projected into a query, key, and value. Queries are compared with keys; the resulting weights are applied to values." width=100%}
 
-**Takeaway:** Q and K participate in the matching operation that determines the weights; V carries the content aggregated with those weights. Words such as “look for,” “match,” and “be found” are pedagogical shorthand: the vectors are learned projections, not literal questions, labels, or cards that the model can read.
+For the historical development of attention before the Transformer architecture, see [A history of Transformers](transformer-history.qmd).
 
-This inventory covers analogies actually present in the current reference pages; it does not describe separate mechanisms.
-:::
+## Where do Q, K, and V come from?
 
-## The idea in one diagram
-
-![Diagram of query, key, and value projections: Q and K determine attention weights, which are used to aggregate V.](../images/queries-keys-values-en.svg){fig-alt="Input representations are projected into queries, keys, and values. Queries and keys determine attention weights; the weights combine values into a context-enriched representation." width=100%}
-
-Q and K provide the information used to determine relative weights across accessible positions. Those weights then specify how to combine the V vectors. The precise computation of scores, masking, and softmax is covered on the scaled dot-product attention page.
-
-## Where do Q, K, and V come from in self-attention?
-
-In self-attention, we start from a single matrix $X\in\mathbb{R}^{T\times d_{model}}$, which contains the representations of the $T$ positions. Three learned projections produce:
+In self-attention, all three projections start from the same representation stream. For a sequence of $T$ positions, let this matrix be $X\in\mathbb{R}^{T\times d_{model}}$:
 
 $$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
 $$
 
-The matrices $W_Q$, $W_K$, and $W_V$ are learned during training. They transform each input representation to give it a distinct role in the attention computation. In standard dot-product attention, values $V$ do not directly determine the scores: scores are computed from $Q$ and $K$.
+The matrices $W_Q$, $W_K$, and $W_V$ are learned jointly during training. They transform each input representation, but play distinct roles in the mechanism.
 
-With $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ and $W_V\in\mathbb{R}^{d_{model}\times d_v}$, the resulting shapes are $Q,K\in\mathbb{R}^{T\times d_k}$ and $V\in\mathbb{R}^{T\times d_v}$. Optional biases are omitted for clarity.
+With $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ and $W_V\in\mathbb{R}^{d_{model}\times d_v}$, the resulting shapes are:
 
-**Cross-attention:** the same single-$X$ formula does not describe this case. Queries come from a target sequence, while keys and values come from a source sequence. This separation is covered in the [advanced cross-attention lesson](cross-attention.qmd).
+- $Q,K\in\mathbb{R}^{T\times d_k}$;
+- $V\in\mathbb{R}^{T\times d_v}$.
 
-::: {.micro-workbench}
-::: {.micro-workbench-header}
-<span>NUMERICAL WORKBENCH · Q, K, AND V PROJECTIONS</span>
-<span>Python 3.12+ / NumPy</span>
-:::
-::: {.micro-workbench-body}
-```python
-import numpy as np
+The dimensions $d_k$ and $d_v$ therefore need not be equal. Optional biases are omitted here. To trace these projections in the actual block implementation, see the [guided Transformer-block walkthrough](transformer-block-walkthrough.qmd); general dimension and axis conventions are covered in the [tensor reference](tensors.qmd).
 
-# Three input positions, each represented by a 4-dimensional vector
-X = np.array([
-    [1.0, 0.5, 0.2, 0.1],
-    [0.1, 0.9, 0.8, 0.3],
-    [0.4, 0.2, 0.7, 0.9],
-])
-T, d_model = X.shape
+**Cross-attention:** this single-input formula describes self-attention, not every attention mechanism. In cross-attention, Q comes from the stream doing the querying, while K and V come from the stream being queried. See the [advanced cross-attention lesson](cross-attention.qmd).
 
-# Learned projections: keys/queries have dimension 2; values dimension 3
-W_Q = np.array([[0.5, 0.1], [0.2, 0.8], [0.1, 0.3], [0.9, 0.4]])
-W_K = np.array([[0.2, 0.7], [0.4, 0.1], [0.6, 0.5], [0.3, 0.2]])
-W_V = np.array([[1.0, 0.0, 0.2], [0.0, 1.0, 0.5], [0.5, 0.2, 0.0], [0.1, 0.8, 0.4]])
+## Keep these objects distinct
 
-# Each projection transforms all positions independently
-Q = X @ W_Q
-K = X @ W_K
-V = X @ W_V
+| Object | Role in the computation |
+|---|---|
+| Q and K | Determine comparison scores and then attention weights |
+| V | Supplies the vectors combined using those weights |
+| Attention weights | Determine each value's relative contribution to an output |
 
-assert Q.shape == (T, 2)
-assert K.shape == (T, 2)
-assert V.shape == (T, 3)
-print("Q:", Q.shape, "K:", K.shape, "V:", V.shape)
-```
-:::
-::: {.micro-workbench-footer}
-The projections transform each input representation. Computing attention weights and aggregating values are covered on the next page.
-:::
-:::
-
-## Why separate these roles?
-
-Q, K, and V are learned jointly, but they have distinct roles:
-
-- **Q and K**: projections used to determine attention weights.
-- **V**: the projection that supplies the content combined using those weights.
-
-The next page details the attention computation; the [causal-masking page](causal-masking.qmd) explains how some positions can be made inaccessible.
-
-## Misconceptions and counterexamples
-
-- **“A key is a human-readable semantic identifier.”** No: its coordinates are learned jointly with the objective and generally do not correspond to interpretable human labels.
-- **“The nearest value must be the most useful.”** Scores depend on projected queries and keys, not on a universal distance between the original representations.
-- **“Q, K, and V must always have the same dimension.”** Not necessarily: key and value dimensions may differ, although multi-head architectures impose precise shape constraints.
-- **“A high weight reveals the cause of a prediction.”** It describes one aggregation step, not by itself the causal effect on the final output.
-
-<details class="spot-the-fallacy">
-<summary>Common Fallacy: “An attention weight of 0.95 proves this token is the primary cause of the model's output”</summary>
-<div class="fallacy-content">
-<p><strong>Rigorous Refutation:</strong> The attention weight $\alpha_{ij}$ merely measures relative alignment between query $q_i$ and key $k_j$. If the corresponding value vector $v_j$ has small norm or aligns with a suppressed projection subspace, its impact on the output may be negligible. Furthermore, downstream MLP transformations, residual additions, and layer normalizations drastically reshape token representations before final prediction.</p>
-</div>
-</details>
-
-## Historical context
-
-Attention mechanisms were studied in neural encoder–decoder translation models, notably by Bahdanau, Cho, and Bengio (2014). *Attention Is All You Need* (Vaswani et al., 2017) made self-attention central to the Transformer architecture and formalized scaled dot-product attention. This distinction matters: attention predates the Transformer, while the Transformer combined self-attention with a specific architecture and efficient multi-head computation.
-
-- [Bahdanau et al. (2014), *Neural Machine Translation by Jointly Learning to Align and Translate*](https://arxiv.org/abs/1409.0473)
-- [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762)
-
-## Connections to other concepts
-
-- Follow scores and softmax in [scaled dot-product attention](scaled-dot-product-attention.qmd).
-- Understand the ordering constraint in [causal masking](causal-masking.qmd).
-- See how the operations fit into the [Transformer overview](transformer.qmd).
-- Connect softmax to [probabilities](probabilities.qmd).
+A key is not a human-readable semantic label, and attention is not nearest-neighbour search in the initial embedding space: scores are computed between learned projections. Likewise, the value closest to a query is not automatically the most useful: Q and K determine the weights, which are then applied to V vectors; values are not compared with one another to select the nearest one. The weights are neither the values nor a universal measure of semantic relevance. Their computation and interpretive limits are explained in [scaled dot-product attention](scaled-dot-product-attention.qmd).
 
 ::: {.self-check}
-## Check your understanding
+## Check the essential idea
 
-[Extended exercises on this topic](../en/exercises.qmd#attention).
+[Extended exercises on Q/K/V and attention](exercises.qmd#attention).
 
-Which projections determine the attention weights? Which projection supplies the vectors whose content is aggregated?
+**Which projections determine attention weights, and which one supplies the aggregated vectors? What happens if V changes while Q and K stay the same?**
 
 <details>
 <summary>Show the reasoning</summary>
 
-Q and K determine the weights; V supplies the vectors combined using those weights. Changing Q or K can change the weights. Changing V can change the aggregated content even if the weights stay fixed.
+Q and K determine the attention weights; V supplies the vectors whose content is aggregated. Changing Q or K can change the weights. If only V changes, the weights remain unchanged because the scores depend on Q and K; the aggregated content changes because the weighted combination now uses different V vectors.
 
 </details>
 :::
 
-::: {.callout-note collapse="true" title="Reference code and tests (advanced)"}
-To follow the vector and matrix shapes used in these calculations, see [Tensors](tensors.qmd).
-
-A numerically tested reference implementation is available in `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`). Associated unit tests in `tests/unit/test_attention.py` verify shape preservation, unit row sums, and numerical stability.
-
-- [Reference implementation](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
-- [Unit tests](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
-- [Current implementation and validation status](https://github.com/JM-Brun/llm-lab/blob/main/docs/project-status.md)
-:::
-
 <div class="route-nav-cards">
   <a class="route-nav-card" href="transformer.qmd">
-    <span class="nav-direction">← Previous Step</span>
+    <span class="nav-direction">← Previous step</span>
     <span class="nav-title">GPT and Transformers: architecture and data flow</span>
   </a>
   <a class="route-nav-card" href="scaled-dot-product-attention.qmd">
-    <span class="nav-direction">Next Step →</span>
-    <span class="nav-title">Scaled Dot-Product Attention</span>
+    <span class="nav-direction">Next step →</span>
+    <span class="nav-title">Scaled dot-product attention</span>
   </a>
 </div>
 
-:::: {.language-switch}
+::: {.language-switch}
 **Language:** [Français](../fr/queries-keys-values.qmd) · [English](queries-keys-values.qmd)
-::::
+:::

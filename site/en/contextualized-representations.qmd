@@ -15,8 +15,8 @@ suggested_route:
   next: "en/transformer"
 hierarchy:
   parents: ["en/embedding-space", "en/positional-encoding", "en/transformer"]
-  children: ["en/queries-keys-values"]
-related: []
+  children: []
+related: ["en/queries-keys-values"]
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:en", "status:published"]
 -->
 

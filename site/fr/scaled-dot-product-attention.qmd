@@ -14,9 +14,9 @@ suggested_route:
   previous: "fr/queries-keys-values"
   next: "fr/causal-masking"
 hierarchy:
-  parents: ["fr/queries-keys-values"]
+  parents: ["fr/transformer"]
   children: ["fr/causal-masking"]
-related: []
+related: ["fr/queries-keys-values"]
 tags: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:fr", "status:published"]
 -->
 
@@ -136,6 +136,12 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 
 - **« Le softmax mesure la similarité absolue. »** Non : il produit une distribution relative aux scores d'une ligne. Ajouter une constante à tous les scores d'une ligne ne change pas les poids.
 - **« Un poids de 0,8 signifie 80 % de pertinence sémantique. »** Non : c'est une fraction de poids dans cette agrégation, conditionnée par les autres scores et les projections apprises.
+<details class="spot-the-fallacy">
+<summary>Piège fréquent : « Un poids d'attention de 0,95 prouve que ce token est la cause principale de la réponse »</summary>
+<div class="fallacy-content">
+<p><strong>Réfutation rigoureuse :</strong> Le poids $\alpha_{ij}$ est obtenu par softmax à partir du score $q_i^\top k_j/\sqrt{d_k}$ : il exprime une pondération relative parmi les positions accessibles, pas une causalité. Avant la projection de sortie, la contribution directe de la position $j$ à l'agrégation est $\alpha_{ij}v_j$ ; sa norme vaut $\alpha_{ij}\lVert v_j\rVert$. Un poids élevé ne garantit donc même pas un terme agrégé de grande norme. Et ce terme n'est pas l'effet sur la prédiction finale : la projection de sortie, les connexions résiduelles, la normalisation et le MLP transforment encore le signal. Établir une importance causale exige une analyse interventionnelle adaptée, pas la seule lecture des poids.</p>
+</div>
+</details>
 - **« Le facteur d'échelle est une constante empirique sans justification. »** Il découle d'un raisonnement sur l'échelle des produits scalaires ; les hypothèses sont simplificatrices, mais le facteur répond à un problème numérique précis.
 - **« Le softmax suffit à rendre l'attention causale. »** Non : sans masque causal, une position peut encore attribuer du poids aux tokens futurs.
 
@@ -171,10 +177,11 @@ On divise d’abord les scores par $\sqrt{4}=2$, ce qui donne $(1,0)$. Le softma
 ::: {.callout-note collapse="true" title="Implémentation et vérification (approfondissement)"}
 Les dimensions des entrées et des sorties sont aussi importantes que la formule : voir [Tenseurs](tensors.qmd).
 
-Une implémentation de référence testée est accessible dans `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`). La suite `tests/unit/test_attention.py` valide numériquement le calcul, les dimensions et les propriétés d'invariance.
+Une implémentation de référence testée est accessible dans `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`). La suite `tests/unit/test_attention.py` vérifie la préservation des formes, la somme unitaire des poids sur chaque ligne et la stabilité numérique.
 
 - [Implémentation de référence](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
 - [Tests unitaires](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
+- [État actuel de l'implémentation et de sa validation](https://github.com/JM-Brun/llm-lab/blob/main/docs/project-status.md)
 - [Critères de vérification prévus](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
 :::
 

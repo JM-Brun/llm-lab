@@ -28,35 +28,35 @@ concepts:
       fr: "Projection qui encode ce qu’une position cherche à récupérer dans les autres positions."
       en: "Projection encoding what a position seeks to retrieve from other positions."
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/queries-keys-values, en/queries-keys-values]
+    resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention]
   - id: key
     labels: {fr: "Key (clé)", en: "Key"}
     definitions:
       fr: "Projection qui rend une position adressable par les requêtes des autres positions."
       en: "Projection that makes a position addressable by queries from other positions."
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/queries-keys-values, en/queries-keys-values]
+    resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention]
   - id: value
     labels: {fr: "Value (valeur)", en: "Value"}
     definitions:
       fr: "Projection porteuse de l’information agrégée selon les poids d’attention."
       en: "Projection carrying the information aggregated according to attention weights."
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/queries-keys-values, en/queries-keys-values]
+    resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention]
   - id: self-attention
     labels: {fr: "Auto-attention", en: "Self-attention"}
     definitions:
       fr: "Mécanisme qui calcule des poids entre positions d’une même séquence et agrège leurs valeurs."
       en: "Mechanism that computes weights between positions in one sequence and aggregates their values."
     domains: [architectures-mechanisms]
-    resources: [fr/queries-keys-values, en/queries-keys-values]
+    resources: [fr/transformer, en/transformer, fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
   - id: causal-mask
     labels: {fr: "Masque causal", en: "Causal mask"}
     definitions:
       fr: "Contrainte qui empêche une position de prendre en compte les positions futures."
       en: "Constraint preventing a position from attending to future positions."
     domains: [architectures-mechanisms]
-    resources: [fr/queries-keys-values, en/queries-keys-values]
+    resources: [fr/causal-masking, en/causal-masking]
   - id: positional-encoding
     labels: {fr: "Encodage positionnel", en: "Positional encoding"}
     definitions:
