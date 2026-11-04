@@ -167,9 +167,7 @@ def _write_sidebar(site: Path) -> None:
                 },
                 {
                     "id": "en",
-                    "contents": [
-                        {"section": "Understand", "contents": ["en/attention.qmd"]}
-                    ],
+                    "contents": [{"section": "Understand", "contents": ["en/attention.qmd"]}],
                 },
             ]
         }
