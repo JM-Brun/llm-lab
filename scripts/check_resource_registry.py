@@ -191,12 +191,12 @@ def validate_resource_registry(
             for page_id in referenced_by:
                 if page_id not in published_pages:
                     errors.append(f"{where}.referenced_by: page {page_id!r} is not published")
-            if status in {"published", "deprecated"} and not referenced_by:
+            if (status == "published" or status == "deprecated") and not referenced_by:
                 errors.append(
                     f"{where}.referenced_by: published/deprecated resources "
                     "need a published page reference"
                 )
-            if status in {"draft", "retired"} and referenced_by:
+            if (status == "draft" or status == "retired") and referenced_by:
                 errors.append(
                     f"{where}.referenced_by: draft/retired resources "
                     "cannot be linked from published pages"
