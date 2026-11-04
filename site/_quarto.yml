@@ -186,7 +186,9 @@ website:
             - section: "Mécanismes d'attention avancés"
               contents:
                 - fr/cross-attention.qmd
-            - fr/rope.qmd
+            - section: "Position et séquences longues"
+              contents:
+                - fr/rope.qmd
             - section: "Calcul, complexité et parallélisme"
               contents:
                 - fr/llm-computational-complexity.qmd
@@ -279,7 +281,9 @@ website:
             - section: "Advanced attention mechanisms"
               contents:
                 - en/cross-attention.qmd
-            - en/rope.qmd
+            - section: "Position and long sequences"
+              contents:
+                - en/rope.qmd
             - section: "Computation, complexity, and parallelism"
               contents:
                 - en/llm-computational-complexity.qmd
