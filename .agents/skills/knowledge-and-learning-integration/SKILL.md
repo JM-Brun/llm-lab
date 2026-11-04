@@ -30,7 +30,7 @@ The current branch is authoritative. Audits and extraction recommendations are d
 
 Compare each extraction with actual existing coverage, but compare explanatory function rather than topic labels alone. A source may have low novelty and high complementarity: that is a legitimate reason to improve an existing lesson.
 
-For each item, inspect the extraction's independent assessment of novelty, complementarity, pedagogical value, applicability, redundancy and evidence quality. Re-evaluate it against the current branch; do not accept its initial assessment uncritically. Record the exact existing page/section and the learner question it serves.
+For each item, inspect the extraction's `pedagogical_assessment` of novelty, complementarity, pedagogical value, applicability, redundancy and evidence quality. If an older extraction has no such field, assess these dimensions during Phase B and add the field when updating the record. Re-evaluate it against the current branch; do not accept its initial assessment uncritically. Record the exact existing page/section and the learner question it serves.
 
 Use these distinctions:
 - **New knowledge**: a missing or materially more precise fact, derivation, limitation, result or implementation detail.
