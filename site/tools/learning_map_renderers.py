@@ -136,7 +136,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
   function detectLanguage() {
     var lang = String(document.documentElement.lang || "").slice(0, 2).toLowerCase();
     if (lang !== "fr" && lang !== "en") {
-      lang = /\\/fr\\//.test(window.location.pathname) ? "fr" : "en";
+      lang = /\/fr\//.test(window.location.pathname) ? "fr" : "en";
     }
     return lang;
   }

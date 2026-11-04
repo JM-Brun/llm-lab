@@ -21,7 +21,13 @@ from pathlib import Path
 from typing import Any, Literal
 
 import yaml
-from learning_map_renderers import REPRESENTATIONS, escape_markdown_text, render_map_script
+from learning_map_renderers import (
+    REPRESENTATIONS,
+    escape_markdown_text,
+    render_map_script,
+    render_resource_list,
+    render_territory_map,
+)
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 ROOT = Path(__file__).resolve().parents[2]

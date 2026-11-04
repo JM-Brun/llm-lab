@@ -438,17 +438,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    import shutil
-    import subprocess
-
-    pytest = shutil.which("pytest")
-    if pytest:
-        findings = subprocess.run(
-            [pytest, "tests", "--tb=line", "-q"],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        for finding in (findings.stdout + findings.stderr).splitlines()[:12]:
-            sys.stdout.write(f"::error title=pytest::{finding}\n")
     raise SystemExit(main())
