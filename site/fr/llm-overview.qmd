@@ -114,12 +114,12 @@ La réutilisation d’un modèle généraliste est intéressante lorsqu’une m�
 
 Essayez de répondre avant d’ouvrir les raisonnements. L’objectif est de manipuler le modèle mental, pas de mémoriser des étiquettes.
 
-1. Un modèle GPT reçoit un fine-tuning pour la classification. Son architecture devient-elle nécessairement différente ? Distinguez ce qui change de ce qui reste identique.
+1. Le fine-tuning d'un GPT modifie-t-il nécessairement sa famille d'architecture ? Distinguez la mise à jour des paramètres d'une éventuelle modification de la structure du modèle.
 
 <details>
 <summary>Afficher le raisonnement</summary>
 
-Le fine-tuning modifie les paramètres appris, et peut aussi ajouter ou remplacer une tête de sortie selon la tâche. Il ne transforme pas, par lui-même, la famille d'architecture du réseau : un GPT décodeur seul reste un Transformer décodeur seul. Architecture et procédure d'apprentissage sont deux dimensions distinctes.
+Non. Le fine-tuning désigne d'abord une procédure d'adaptation des paramètres. Selon la méthode, on peut aussi ajouter des modules (par exemple des adaptateurs ou une tête de classification) : il faut donc distinguer la famille du modèle de la structure complète du système adapté.
 
 </details>
 
