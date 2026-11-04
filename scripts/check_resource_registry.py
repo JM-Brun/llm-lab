@@ -65,9 +65,10 @@ def _valid_http_url(value: Any) -> bool:
         parsed = urlsplit(value)
         # Accessing .port is required: urlsplit alone accepts malformed and
         # out-of-range ports without raising.
-        parsed.port
+        port = parsed.port
         return (
             parsed.scheme in {"http", "https"}
+            and (port is None or 0 <= port <= 65535)
             and bool(parsed.netloc)
             and parsed.hostname is not None
             and parsed.username is None
