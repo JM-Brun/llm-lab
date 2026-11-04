@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/mathematical-foundations"
 scope: "Provides a compact mathematical map linking logits, softmax probabilities, observed-token likelihood, cross-entropy, aggregated loss, and gradients, with shared notation and key caveats. It orients readers toward canonical concept lessons rather than serving as a prerequisite course or replacing their detailed derivations."
 purpose: "Follow the mathematical quantities from model scores to parameter gradients, interpret the shared notation and equations, and explain why likelihood, entropy, cross-entropy, loss, and gradients are related but not interchangeable."
+domain: "probabilistic-foundations-training"
 suggested_route:
   previous: null
   next: "en/tensors"
