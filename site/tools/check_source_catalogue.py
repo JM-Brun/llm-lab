@@ -182,7 +182,9 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
             errors.append(f"{where}.classification: duplicate or overlapping themes")
         for domain_id in secondary:
             if domain_id not in domain_ids:
-                errors.append(f"{where}.classification.secondary_themes: unknown domain {domain_id!r}")
+                errors.append(
+                    f"{where}.classification.secondary_themes: unknown domain {domain_id!r}"
+                )
         _validate_tags(classification.get("tags"), f"{where}.classification.tags", errors)
         for concept_id in _strings(
             classification.get("concept_ids"),
@@ -204,7 +206,9 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
                 if not _is_date(event.get("accessed_at")):
                     errors.append(f"{event_where}.accessed_at: expected ISO 8601 date or datetime")
                 if event.get("status") not in scan_statuses:
-                    errors.append(f"{event_where}.status: unsupported value {event.get('status')!r}")
+                    errors.append(
+                        f"{event_where}.status: unsupported value {event.get('status')!r}"
+                    )
                 _strings(event.get("inspected_scope"), f"{event_where}.inspected_scope", errors)
                 _strings(event.get("limitations"), f"{event_where}.limitations", errors)
 
@@ -213,7 +217,9 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
             for page_id in _strings(related.get("pages"), f"{where}.related.pages", errors):
                 if page_id not in pages:
                     errors.append(f"{where}.related.pages: unknown page {page_id!r}")
-            for concept_id in _strings(related.get("concepts"), f"{where}.related.concepts", errors):
+            for concept_id in _strings(
+                related.get("concepts"), f"{where}.related.concepts", errors
+            ):
                 if concept_id not in concept_ids:
                     errors.append(f"{where}.related.concepts: unknown concept {concept_id!r}")
         else:
@@ -270,14 +276,18 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
                 primary = classification.get("primary_theme")
                 if primary is not None and primary not in domain_ids:
                     errors.append(f"{item_where}.classification.primary_theme: unknown domain")
-                _validate_tags(classification.get("tags"), f"{item_where}.classification.tags", errors)
+                _validate_tags(
+                    classification.get("tags"), f"{item_where}.classification.tags", errors
+                )
                 for concept_id in _strings(
                     classification.get("concept_ids"),
                     f"{item_where}.classification.concept_ids",
                     errors,
                 ):
                     if concept_id not in concept_ids:
-                        errors.append(f"{item_where}.classification.concept_ids: unknown concept {concept_id!r}")
+                        errors.append(
+                            f"{item_where}.classification.concept_ids: unknown concept {concept_id!r}"
+                        )
 
             provenance = item.get("provenance")
             if provenance is not None:
@@ -291,7 +301,9 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
                     if not isinstance(provenance.get("locator"), dict):
                         errors.append(f"{item_where}.provenance.locator: expected a mapping")
                     if not _is_date(provenance.get("captured_at")):
-                        errors.append(f"{item_where}.provenance.captured_at: expected ISO 8601 date")
+                        errors.append(
+                            f"{item_where}.provenance.captured_at: expected ISO 8601 date"
+                        )
 
             verification = item.get("verification")
             if verification is not None:
@@ -305,8 +317,12 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
                         f"{item_where}.verification.sources",
                         errors,
                     ):
-                        if reference not in source_ids and not reference.startswith(("https://", "http://")):
-                            errors.append(f"{item_where}.verification.sources: unknown source {reference!r}")
+                        if reference not in source_ids and not reference.startswith(
+                            ("https://", "http://")
+                        ):
+                            errors.append(
+                                f"{item_where}.verification.sources: unknown source {reference!r}"
+                            )
 
             destinations = item.get("candidate_destinations", {})
             if isinstance(destinations, dict):
@@ -316,7 +332,9 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
                     errors,
                 ):
                     if page_id not in pages:
-                        errors.append(f"{item_where}.candidate_destinations.pages: unknown page {page_id!r}")
+                        errors.append(
+                            f"{item_where}.candidate_destinations.pages: unknown page {page_id!r}"
+                        )
 
     return errors
 
