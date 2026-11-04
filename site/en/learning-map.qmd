@@ -33,7 +33,7 @@ The map offers two distinct graphs. The page graph represents resources and thei
 
 ## Guided route
 
-Six conceptual stages provide an entry point and a suggested progression. Pages within a stage are complementary resources, not a list of strict prerequisites.
+Six conceptual stages provide an entry point and a suggested progression. Primary links open the core pages; deep dives are optional. Pages within a stage are complementary resources, not a list of strict prerequisites.
 
 <ol class="guided-route-grid" data-guided-route aria-label="Six stages of the guided route"></ol>
 
