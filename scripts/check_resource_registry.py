@@ -124,8 +124,17 @@ def validate_resource_registry(
 
     identifiers: set[str] = set()
     allowed_fields = {
-        "id", "kind", "labels", "descriptions", "language", "programming_language",
-        "status", "location", "referenced_by", "concepts", "provenance",
+        "id",
+        "kind",
+        "labels",
+        "descriptions",
+        "language",
+        "programming_language",
+        "status",
+        "location",
+        "referenced_by",
+        "concepts",
+        "provenance",
     }
     for index, resource in enumerate(entries):
         where = f"resources[{index}]"
@@ -163,9 +172,7 @@ def validate_resource_registry(
         if programming_language is not None and (
             not isinstance(programming_language, str) or not programming_language.strip()
         ):
-            errors.append(
-                f"{where}.programming_language: expected a non-empty string when present"
-            )
+            errors.append(f"{where}.programming_language: expected a non-empty string when present")
 
         status = resource.get("status")
         if not isinstance(status, str) or status not in STATUSES:
@@ -175,9 +182,7 @@ def validate_resource_registry(
 
         referenced_by = resource.get("referenced_by")
         if not isinstance(referenced_by, list) or not referenced_by:
-            errors.append(
-                f"{where}.referenced_by: expected a non-empty list of published page IDs"
-            )
+            errors.append(f"{where}.referenced_by: expected a non-empty list of published page IDs")
         elif not all(isinstance(page_id, str) for page_id in referenced_by):
             errors.append(f"{where}.referenced_by: values must be strings")
         else:
@@ -189,9 +194,7 @@ def validate_resource_registry(
 
         concepts = resource.get("concepts")
         if not isinstance(concepts, list):
-            errors.append(
-                f"{where}.concepts: expected a list of concept IDs (possibly empty)"
-            )
+            errors.append(f"{where}.concepts: expected a list of concept IDs (possibly empty)")
         elif not all(isinstance(item, str) for item in concepts):
             errors.append(f"{where}.concepts: values must be strings")
         else:
