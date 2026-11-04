@@ -46,6 +46,69 @@ Les grands modèles de langage (LLM) sont une famille de modèles neuronaux entr
 
 La pratique soutient les trois profondeurs pédagogiques ; elle ne constitue pas une quatrième profondeur. Le parcours conceptuel et le parcours d’implémentation suivent des ordres différents. Leur articulation est documentée dans le [parcours d’apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
 
+## Carte interactive du parcours
+
+Le parcours principal suit la logique **comprendre le fonctionnement avant d'étudier l'apprentissage**. Chaque bloc ouvre sa page de référence ; les petits liens donnent accès aux pages spécialisées. La branche G2 est distincte : elle prépare les données nécessaires à l'entraînement, mais n'est pas un prérequis pour comprendre l'inférence.
+
+<figure class="llm-flow-figure">
+<svg class="llm-flow" viewBox="0 0 1260 610" role="img" aria-labelledby="route-title-fr route-desc-fr" xmlns="http://www.w3.org/2000/svg">
+<title id="route-title-fr">Carte interactive du parcours d'apprentissage LLM Lab</title>
+<desc id="route-desc-fr">Parcours principal : panorama, génération, texte et tokens, représentations, calcul Transformer, prédiction, apprentissage, adaptation et usages. Branche G2 séparée : préparation du corpus, exemples d'entraînement, parcours de construction. Chaque bloc et lien secondaire ouvre une page de référence.</desc>
+<defs><marker id="route-arrow-fr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7b91a6"/></marker></defs>
+<g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#route-arrow-fr)">
+<path d="M270 85 H330"/><path d="M580 85 H640"/><path d="M890 85 H950"/>
+<path d="M1075 155 V230"/>
+<path d="M950 255 H890"/><path d="M640 255 H580"/><path d="M330 255 H270"/>
+<path d="M270 495 H330"/><path d="M580 495 H640"/>
+</g>
+<text x="20" y="30" class="flow-kicker">PARCOURS CONCEPTUEL · COMPRENDRE</text>
+<g class="flow-node">
+<a href="fr/llm-overview.html" aria-label="Ouvrir le panorama des LLM"><rect x="20" y="55" width="250" height="55" rx="10"/><text x="34" y="77" class="flow-kicker">1 · ORIENTER</text><text x="34" y="98" class="flow-title">Panorama des LLM</text></a>
+<a href="fr/transformer-architectures.html"><text x="28" y="132" class="flow-subtitle">Architectures</text></a>
+<a href="fr/llm-limits.html"><text x="145" y="132" class="flow-subtitle">Limites</text></a>
+</g>
+<g class="flow-node">
+<a href="fr/generation.html" aria-label="Ouvrir la leçon sur la génération"><rect x="330" y="55" width="250" height="55" rx="10"/><text x="344" y="77" class="flow-kicker">2 · PRÉVISUALISER</text><text x="344" y="98" class="flow-title">Génération autorégressive</text></a>
+<a href="fr/decoding-strategies.html"><text x="338" y="132" class="flow-subtitle">Décodage avancé</text></a>
+</g>
+<g class="flow-node">
+<a href="fr/text-data.html" aria-label="Ouvrir la leçon sur le texte et les tokens"><rect x="640" y="55" width="250" height="55" rx="10"/><text x="654" y="77" class="flow-kicker">3 · ENCODER L'ENTRÉE</text><text x="654" y="98" class="flow-title">Texte, tokens et IDs</text></a>
+<a href="fr/tokenization-strategies.html"><text x="648" y="132" class="flow-subtitle">Stratégies de tokenisation</text></a>
+</g>
+<g class="flow-node">
+<a href="fr/embedding-space.html" aria-label="Ouvrir la leçon sur les embeddings"><rect x="950" y="55" width="250" height="55" rx="10"/><text x="964" y="77" class="flow-kicker">4 · REPRÉSENTER</text><text x="964" y="98" class="flow-title">Embeddings et position</text></a>
+<a href="fr/positional-encoding.html"><text x="958" y="132" class="flow-subtitle">Information positionnelle</text></a>
+<a href="fr/contextualized-representations.html"><text x="958" y="150" class="flow-subtitle">États contextualisés</text></a>
+</g>
+<g class="flow-node">
+<a href="fr/transformer.html" aria-label="Ouvrir la vue d'ensemble du Transformer"><rect x="950" y="230" width="250" height="55" rx="10"/><text x="964" y="252" class="flow-kicker">5 · CALCULER</text><text x="964" y="273" class="flow-title">Calcul du Transformer</text></a>
+<a href="fr/queries-keys-values.html"><text x="958" y="307" class="flow-subtitle">Requêtes, clés et valeurs</text></a>
+<a href="fr/scaled-dot-product-attention.html"><text x="958" y="325" class="flow-subtitle">Attention et scores</text></a>
+<a href="fr/causal-masking.html"><text x="958" y="343" class="flow-subtitle">Masquage causal</text></a>
+</g>
+<g class="flow-node">
+<a href="fr/logits.html" aria-label="Ouvrir la leçon sur les logits"><rect x="640" y="230" width="250" height="55" rx="10"/><text x="654" y="252" class="flow-kicker">6 · PRÉDIRE</text><text x="654" y="273" class="flow-title">Logits et probabilités</text></a>
+<a href="fr/probabilites.html"><text x="648" y="307" class="flow-subtitle">Distribution du prochain token</text></a>
+</g>
+<g class="flow-node">
+<a href="fr/vraisemblance.html" aria-label="Ouvrir la leçon sur la vraisemblance"><rect x="330" y="230" width="250" height="55" rx="10"/><text x="344" y="252" class="flow-kicker">7 · APPRENDRE</text><text x="344" y="273" class="flow-title">Objectif et optimisation</text></a>
+<a href="fr/cross-entropy.html"><text x="338" y="307" class="flow-subtitle">Entropie croisée et perte</text></a>
+<a href="fr/gradients.html"><text x="338" y="325" class="flow-subtitle">Gradients et rétropropagation</text></a>
+</g>
+<g class="flow-node">
+<a href="fr/in-context-learning.html" aria-label="Ouvrir l'approfondissement sur l'apprentissage en contexte"><rect x="20" y="230" width="250" height="55" rx="10"/><text x="34" y="252" class="flow-kicker">8 · ADAPTER</text><text x="34" y="273" class="flow-title">Adaptation et usages</text></a>
+<a href="fr/build-path.html"><text x="28" y="307" class="flow-subtitle">Fine-tuning et construction</text></a>
+</g>
+<text x="20" y="405" class="flow-kicker">BRANCHE BUILD · G2 · PRÉPARER LES DONNÉES POUR ENTRAÎNER</text>
+<g class="flow-node flow-node-g2"><a href="fr/corpus-preparation.html" aria-label="Ouvrir la préparation du corpus"><rect x="20" y="465" width="250" height="55" rx="10"/><text x="34" y="487" class="flow-kicker">G2 · CORPUS</text><text x="34" y="508" class="flow-title">Préparer le corpus</text></a></g>
+<g class="flow-node flow-node-g2"><a href="fr/training-examples.html" aria-label="Ouvrir les exemples d'entraînement"><rect x="330" y="465" width="250" height="55" rx="10"/><text x="344" y="487" class="flow-kicker">G2 · EXEMPLES</text><text x="344" y="508" class="flow-title">Fenêtres et cibles</text></a></g>
+<g class="flow-node flow-node-g2"><a href="fr/build-path.html" aria-label="Ouvrir le parcours de construction"><rect x="640" y="465" width="250" height="55" rx="10"/><text x="654" y="487" class="flow-kicker">CONSTRUIRE</text><text x="654" y="508" class="flow-title">Parcours de construction</text></a></g>
+<text x="20" y="555" class="flow-note">La branche G2 est nécessaire pour entraîner un modèle, pas pour suivre le parcours d'inférence.</text>
+<text x="20" y="580" class="flow-hint">Flèches pleines : ordre de lecture conseillé · Blocs et liens secondaires : pages de référence cliquables.</text>
+</svg>
+<figcaption>Parcours conceptuel principal et branche de préparation des données d'entraînement.</figcaption>
+</figure>
+
 ## Lire une leçon
 
 Les leçons utilisent trois repères pour distinguer les types de contenu :
