@@ -299,3 +299,8 @@ def test_attention_subgraph_exports_intermediate_concepts_and_typed_relations() 
         "llmlab:constrains",
         f"{BASE}/id/concept/scaled-dot-product-attention",
     ) in relations
+    assert (
+        f"{BASE}/id/concept/scaled-dot-product-attention",
+        "llmlab:appliesTo",
+        f"{BASE}/id/concept/self-attention",
+    ) in relations
