@@ -37,7 +37,11 @@ Six étapes conceptuelles donnent un point d'entrée et une progression conseill
 
 {{< include ../includes/generated-guided-route-fr.qmd >}}
 
+::: {.guided-route-companion}
 
+**Fil pratique complémentaire :** If you want to build a small GPT, follow the [parcours de construction](build-path.html). La préparation du corpus et des exemples d'entraînement constitue une branche dédiée à l'apprentissage du modèle, et non un prérequis à l'inférence.
+
+:::
 
 :::
 
