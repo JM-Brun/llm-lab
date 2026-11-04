@@ -15,9 +15,7 @@ build_graph = MODULE["build_graph"]
 def test_exports_first_class_resources_with_stable_ids_and_typed_metadata() -> None:
     payload = build_graph()
     graph = payload["@graph"]
-    resources = [
-        node for node in graph if node.get("@type") == "schema:SoftwareSourceCode"
-    ]
+    resources = [node for node in graph if node.get("@type") == "schema:SoftwareSourceCode"]
     assert len(resources) == 5
     by_id = {node["@id"].rsplit("/", maxsplit=1)[-1]: node for node in resources}
     assert set(by_id) == {
@@ -79,7 +77,4 @@ def test_page_nodes_are_unique_and_registry_is_in_export_provenance() -> None:
         if node.get("@id") == "https://jm-brun.github.io/llm-lab/knowledge-graph.jsonld"
     )
     derived_from = {item["@id"] for item in export["prov:wasDerivedFrom"]}
-    assert (
-        "https://github.com/JM-Brun/llm-lab/blob/main/data/resources.yml"
-        in derived_from
-    )
+    assert "https://github.com/JM-Brun/llm-lab/blob/main/data/resources.yml" in derived_from
