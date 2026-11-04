@@ -21,7 +21,7 @@ tags: ["type:system-overview", "destination:understand", "topic:transformer", "l
 -->
 
 ::: {.chapter-lead}
-A **GPT** is a language model built on an autoregressive Transformer: it receives a sequence of tokens — the context — and estimates, for every token in the vocabulary, the probability that it comes next. This page focuses on the computation performed by the network, from input representations to logits. It distinguishes that computation from the inference loop that selects and appends successive tokens.
+A **GPT** is a language model built on an autoregressive Transformer: it receives a sequence of tokens — the context — and computes, at each position, an unnormalized score (*logit*) for every token in the vocabulary. A probability distribution can be derived from these scores. This page focuses on the computation performed by the network, from input representations to logits. It distinguishes that computation from the inference loop that selects and appends successive tokens.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
