@@ -96,6 +96,7 @@ Le graphe des pages conserve l'inventaire des ressources et leurs liens de progr
     <span><i class="map-key map-key-hierarchy"></i> Hiérarchie</span>
     <span><i class="map-key map-key-related"></i> Relation transversale</span>
   </div>
+  <div class="learning-map-concept-legend" hidden></div>
   <div class="learning-map-layout">
     <div class="learning-map-canvas" tabindex="0" aria-label="Graphe des pages. Faire défiler horizontalement et verticalement pour explorer.">
       <svg class="learning-map-svg" role="group" aria-label="Carte interactive des pages et de leurs relations"></svg>
