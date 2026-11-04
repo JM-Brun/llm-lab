@@ -130,7 +130,7 @@ No. IDs are defined only within a tokenizer's vocabulary; ID 17 in one vocabular
 - **[Embedding space](embedding-space.qmd):** ID lookup and vector geometry.
 - **[Training examples](training-examples.qmd):** windows, shifted targets, packing, and masks.
 
-Corpus preparation (collection, filtering, deduplication, and splits) is an upstream activity distinct from tokenizing an input. The transitional material currently retained above remains here provisionally; its canonical home is being assessed separately in [issue #360](https://github.com/JM-Brun/llm-lab/issues/360).
+Corpus preparation (provenance, filtering, deduplication, splits, and tokenizer fitting) now has a canonical home: [Preparing a corpus for pretraining](corpus-preparation.qmd). This page retains only the distinction needed to situate prompt encoding.
 
 :::: {.language-switch}
 **Language:** [Français](../fr/text-data.qmd) · [English](text-data.qmd)
