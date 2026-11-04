@@ -81,7 +81,7 @@ These three families describe the main **Transformer** configurations, not every
 
 Nor is Transformer synonymous with LLM: architecture alone does not determine scale, data, or model capabilities. For an example of a hybrid architecture combining several mechanisms, see the [Nemotron case study](hybrid-llm-architectures.qmd). For the historical development of these families, see the [history of Transformers](transformer-history.qmd).
 
-Dense attention performs \(O(T^2)\) interactions, but these interactions can be parallelized during training and prompt prefill. Autoregressive generation remains sequential across tokens. The [guide to computational complexity and parallelism](llm-computational-complexity.qmd) examines these trade-offs, including those of recurrent architectures.
+Dense attention performs \(O(T^2)\) interactions, but these interactions can be parallelized during training and prompt prefill. By contrast, a recurrence may reduce work to \(O(T)\) while depending on the state computed at the previous step. Autoregressive generation remains sequential across tokens. The [guide to computational complexity and parallelism](llm-computational-complexity.qmd) examines these compute, memory, and dependency trade-offs. The internal computation of the project's decoder-only GPT is explained in [GPT and Transformer](transformer.qmd).
 
 ::: {.self-check}
 
