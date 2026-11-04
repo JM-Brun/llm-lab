@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import yaml
 from pathlib import Path
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[2]
