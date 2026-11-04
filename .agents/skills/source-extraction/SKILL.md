@@ -179,6 +179,7 @@ Produce a reconciliation report: counts by status, duplicates/aliases, unlinked 
 Provide:
 1. source records with scope and scan status;
 2. atomic extraction items with locators, evidence, confidence, scope and caveats;
+2a. for instructional sources, a validated top-level `pedagogical_model` containing the source-local graph, ordered teaching route, declared/inferred outcomes and prerequisites, strengths, limits and a comparison-dossier pointer;
 3. candidate concepts, graph relations, pages, assets, experiments and cross-links;
 4. rights/reproducibility constraints and unknowns;
 5. a source-to-item index and summary.
