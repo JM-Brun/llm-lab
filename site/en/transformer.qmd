@@ -82,57 +82,23 @@ These terms are not interchangeable with other internal dimensions: the **number
 
 *Width* is sometimes used more broadly for other internal dimensions, so check which dimension an article or model card means. For tensor shapes and projection dimensions, see [Tensors](tensors.qmd); for a concrete configuration, see the [GPT configuration walkthrough](gpt-config-walkthrough.qmd). Depth and width describe network structure, but neither alone predicts model performance.
 
-### Understanding the attention computation
-
-![Steps of the attention computation: scores, scaling, masking, softmax, and aggregation of values.](../images/attention-calculation-flow.svg){fig-alt="Q and K produce scores that are scaled and masked before the softmax. The resulting weights combine the values V to produce the output vectors." width=100%}
-
-1. [**Queries, keys and values (Q, K, V)**](queries-keys-values.qmd) — three learned projections give the representations distinct roles: look for information, be found by it, carry it.
-2. [**Scaled dot-product attention**](scaled-dot-product-attention.qmd) — the scores from $QK^\top$ are normalized by $\sqrt{d_k}$, then turned into weights by the *softmax*.
-3. [**Causal mask**](causal-masking.qmd) — excludes future positions before the *softmax*.
-
-Positional information also plays a part here: depending on the model, it was added to the embeddings or is built into the queries and keys (see [Positional encoding](positional-encoding.qmd)).
-
-Attention weights are not a complete explanation of a prediction: they describe one aggregation step. The projections, the values, the other heads, the following layers, and the final output all contribute to the result.
-
+Self-attention allows permitted positions to exchange information. Its detailed computation — Q/K/V projections, scores, scaling, softmax, and causal masking — is covered in the canonical lessons on [Q/K/V](queries-keys-values.qmd), [scaled dot-product attention](scaled-dot-product-attention.qmd), and [causal masking](causal-masking.qmd). Positional information may be added to embeddings or incorporated into queries and keys (see [positional information](positional-encoding.qmd)).
 ## 3. From representations to logits
 
-After the final block, an output projection produces the **logits**: one unnormalized score for every token in the vocabulary. Applying *softmax* to these scores defines a probability distribution over next-token candidates. These are distinct objects: logits are the network's numerical output; the distribution is their probabilistic transformation. See the canonical pages on [logits](logits.qmd), [probabilities](probabilities.qmd), and [likelihood](likelihood.qmd).
-
-### Numerical example: from a logit vector to a distribution
-
-Suppose a toy vocabulary contains only four candidates. The output projection produces the following **illustrative** logits:
-
-| Candidate token | Logit | Probability after softmax |
-|---|---:|---:|
-| `sleeps` | 2 | 64.4% |
-| `runs` | 1 | 23.7% |
-| `eats` | 0 | 8.7% |
-| `plays` | −1 | 3.2% |
-
-The probabilities are computed as \(p_i = \exp(z_i)/\sum_j\exp(z_j)\). These values are chosen for readability: they do not come from the repository's reference GPT or from a trained model. A real model has a much larger vocabulary, and its logits depend on the context, parameters, and position being considered.
-
-This output corresponds to **one forward pass** for a given context. Selecting the next token, appending it to the context, and repeating the computation belong to the [generation loop](generation.qmd), not to the forward pass itself.
-
-### A forward pass is not a generation loop
-
-A **forward pass** transforms the supplied context into logits; it does not, by itself, choose the token to append or compute the entire future answer. Decoding and autoregressive repetition are described in the dedicated [generation lesson](generation.qmd).
-
-
+After the final block, an output projection produces the **logits**: one unnormalized score per vocabulary token. The [logits lesson](logits.qmd) explains how to interpret them; the [output probabilities lesson](probabilities.qmd) covers their transformation into a distribution. This page stops at the network output: selecting the next token, appending it to the context, and repeating the process belong to [autoregressive generation](generation.qmd).
 
 ## Check your understanding
 
-[See the extended generation exercises](exercises.qmd#generation) — this short check reuses the numerical example on this page.
+This check focuses on the network computation, not on decoding, which is covered in the [generation lesson](generation.qmd).
 
-1. If the four candidates' logits become $(3, 2, 1, 0)$ instead of $(2, 1, 0, -1)$, does the greedy token change? Do the probabilities stay the same?
-2. In the example, why is the token with 64.4% probability not necessarily selected by sampling?
-3. After selecting a token, why must the context be recomputed before predicting the next one?
+1. Which operation lets a position incorporate information from other positions, and which one transforms each position independently?
+2. Why does a residual connection not replace the transformation computed by a sublayer?
 
 <details>
 <summary>Show answers and reasoning</summary>
 
-1. The argmax does not change: the first candidate remains maximal. The probabilities also remain unchanged because adding the same constant to every logit leaves softmax unchanged.
-2. Sampling draws a candidate according to the distribution: the other candidates have non-zero probability. The most probable token is therefore not guaranteed on every draw.
-3. The model is autoregressive: the next distribution is conditioned on the updated prefix, which now includes the appended token. A new forward pass on that updated context is therefore required.
+1. Self-attention mixes information across permitted positions; the MLP applies a position-wise transformation with shared weights.
+2. The residual connection adds the sublayer output to its input: $x_{out}=x_{in}+F(x_{in})$. It preserves a direct path through the block while allowing the sublayer to contribute a learned transformation.
 
 </details>
 :::
