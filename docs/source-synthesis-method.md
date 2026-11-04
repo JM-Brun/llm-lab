@@ -31,6 +31,14 @@ Identifier les pages canoniques, les prérequis attendus et la position dans le 
 
 Ne pas imposer à chaque source un angle unique. Plusieurs sources peuvent renforcer une même explication ; cette convergence peut être utile, mais des tutoriels dérivés les uns des autres ne constituent pas des confirmations indépendantes. Des sources peuvent aussi être en désaccord : conserver le désaccord et l'examiner plutôt que de le masquer.
 
+### Reconstituer le modèle pédagogique d'une source
+
+Pour un tutoriel ou un cours, reconstruire en parallèle :
+- le graphe local des concepts, objets, opérations, exemples et relations ;
+- le parcours d'apprentissage implicite ou explicite : motivations, prérequis, ordre des explications, objectifs, exemples, exercices et approfondissements.
+
+Comparer ensuite ce modèle à la fois au sous-graphe canonique du projet et à ses parcours pédagogiques. Distinguer graphe sémantique, ordre pédagogique et navigation du site. Les relations de motivation ou d'illustration ne sont pas des prérequis ; l'ordre des sections d'une source ne constitue pas automatiquement un meilleur parcours. Consigner les écarts et décider séparément des changements au graphe, aux pages et au parcours. Une représentation Mermaid dans le dossier de revue suffit : ne pas créer une base de graphe parallèle.
+
 ## 4. Construire une carte des contributions
 
 Pour un sujet couvert par plusieurs sources pertinentes, créer un dossier dans docs/source-syntheses/ en suivant son README. La carte doit rendre visibles la question d'apprentissage et la couverture canonique ; les sources et identifiants exacts des éléments extraits ; la contribution de chaque source ; les perspectives complémentaires, convergences et désaccords ; la décision d'intégration et sa destination ; les éléments optionnels, liés, différés ou exclus ; les lacunes restantes.
