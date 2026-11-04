@@ -12,7 +12,7 @@ The initial review used indexed article content covering the introduction, secti
 
 A follow-up inspection on 2026-11-04 successfully retrieved the DEV article directly. It confirmed the same complete article body and allowed inspection of the two visible reader comments and the author's reply. The publication year and update metadata remain unverified. Linked series articles, other external materials and embedded visual assets were not inspected separately. The source therefore remains **partially scanned**, not fully scanned.
 
-No reuse licence was established. The project records a link and short paraphrased extraction only; no article prose, code or illustration is reproduced.
+No reuse licence was established. The project records links and short paraphrased extraction only; it does not reproduce article prose, code or image files. The original visual is now linked from both bilingual Q/K/V lessons, so readers can consult it at its source.
 
 ## 2. What the source contributes
 
@@ -84,7 +84,7 @@ The visual remains the most important unresolved part of this source scan. The i
 
 The canonical DEV article HTML and its API endpoints were not retrievable in this recheck. The Medium mirror's indexed article text and profile metadata are insufficient to inspect the actual illustration. Therefore the image is still **not visually inspected**. The user's observation that it is more attractive than the current project diagram remains a useful review lead, not a verified visual comparison. No generic image-search result is substituted.
 
-**Decision: inspection pending; no reuse.** The next successful retrieval must identify the exact image URL and its position in the article, download/open the original at readable resolution, compare the visual's information design with `site/images/queries-keys-values.svg` and `site/images/queries-keys-values-en.svg`, and separately establish creator and reuse rights. If the visual is pedagogically stronger but reuse rights remain unclear, link to it and design an independent visual from the underlying concept without tracing or cosmetically altering the source.
+**Decision: use as an externally hosted visual reference; do not copy the file.** Both bilingual Q/K/V lessons now provide an explicitly attributed link to the author's Medium mirror, where the article and its associated illustration can be consulted. The original image bytes and stable asset URL are still unavailable to this scan, so the visual has not been independently inspected and cannot yet be compared on visual-design merits with `site/images/queries-keys-values.svg` and `site/images/queries-keys-values-en.svg`. This is a source link, not a claim that the image has been embedded or that reuse permission exists. If a direct asset URL and reuse permission are later established, the project can reconsider local embedding.
 
 The extraction workflow now has explicit procedures for a retrieval ladder (canonical HTML/metadata, documented publisher API/RSS/JSON, then confirmed author-controlled mirror), exact media identity, and separate provenance for comments embedded in a parent source. A text scan, a mirror's image labels, and a visual inspection are three different evidence states.
 
@@ -132,3 +132,19 @@ A final public-web recheck on 2026-11-04 again returned a cache miss for the can
 The Medium profile search result now lists the QKV article and two image entries under its title. Opening the profile itself still returns a stale page snapshot that omits the QKV article; the image entries do not expose a stable original asset URL, image bytes, caption/placement or rights-holder information. Thus the visual inspection remains blocked. The direct DEV page and profile snapshot are evidence of access limitations, not grounds to infer the figure's content.
 
 **Final scan boundary:** the article's text and visible comment are reconciled; the source-local graph and route are compared; all author-authored extraction items have final integration dispositions. The source remains partially scanned only for external linked material, publication metadata, the actual visual asset and rights. No figure reuse is permitted on the current evidence.
+
+
+## 12. Complete text extraction and remaining scan boundary
+
+The author-authored text reconstruction is now marked **complete** in the extraction's `pedagogical_model.reconstruction`. It covers the introduction, all six numbered sections and the conclusion, using the full indexed DEV result and the matching author-controlled Medium mirror. This is deliberately distinct from the source record's `scan_status`, which remains `partially-scanned` because the asset/comment/metadata boundary is not fully resolved.
+
+The extraction now explicitly records three details that were previously represented only indirectly:
+- the Q/K/V projection matrices are learned through backpropagation and gradient-based optimization (Section 3);
+- the scaling factor is motivated qualitatively by preventing large scores and overly peaked softmax distributions, without deriving the variance argument (Section 4);
+- causal masking is mentioned as a future-position restriction before softmax, but is not developed as a separate mechanism (Section 4).
+
+The source-local graph also now connects Q/K/V projections to a learning-process node for gradient-based optimization. These additions preserve the article's full instructional content without creating duplicate explanations in the public lessons.
+
+The currently indexed result exposes the substantive KV-cache reader comment, which remains a separate community item. An earlier scan recorded a second visible comment and an author reply, but their exact text is not recoverable from the current snapshot. They are not reconstructed from memory or guessed. The parent source remains partially scanned until this thread can be re-opened and reconciled.
+
+**Illustration handling:** the two Q/K/V lessons now link directly to the author-controlled Medium article and cite Nishanthan K and the DEV Community publication. This makes the source illustration accessible to readers at its origin without copying an uninspected image or implying a reuse licence. It is not yet an embedded project asset.
