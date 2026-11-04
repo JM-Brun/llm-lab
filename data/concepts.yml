@@ -72,7 +72,7 @@ concepts:
     definitions:
       fr: "Transformation qui convertit un vecteur de scores en une distribution de probabilité."
       en: "Transformation converting a score vector into a probability distribution."
-    resources: [fr/logits, en/logits]
+    resources: [fr/probabilites, en/probabilities]
   - id: cross-entropy
     labels: {fr: "Entropie croisée", en: "Cross-entropy"}
     definitions:
