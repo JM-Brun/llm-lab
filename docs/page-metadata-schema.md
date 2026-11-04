@@ -89,7 +89,6 @@ A useful scope can mention an adjacent topic, but only to establish a boundary. 
 
 The `topic` tag is a stable page-grouping identifier shared by translated counterparts. It is not a concept record and does not provide definitions, synonyms, broader/narrower relations, or concept identity across multiple pages. Section headings extracted for the learning map are display labels only; they are not taxonomy entries. See [the information architecture contract](information-architecture.md) for the ownership boundary and criteria for a future SKOS-aligned concept scheme.
 
-
 Use these dimensions consistently:
 
 - **`type`**: `entry-point`, `system-overview`, `concept-lesson`, `concept-bridge`, `guided-build`, `deep-dive`, `exercise-hub`, `experiment-guide`, `glossary`, `historical-reference`, `bibliography`.
@@ -138,3 +137,77 @@ The validator runs in both the Python quality workflow and the Quarto workflow, 
 ## 8. Coverage boundary
 
 The baseline covers every page in the current `site/_quarto.yml` render list, including the French root landing page, the bilingual inference/generation lesson, and the shared references page. The inference lesson is now published and must carry `status:published`. New pages must receive complete metadata in the same change that adds them to the render list.
+
+
+## 9. Advanced knowledge domains
+
+Pages with `destination:deepen` and a content-page type (not an entry point) must declare one top-level `domain` in the page-map comment. This field assigns the page to exactly one primary discovery domain; it is not a prerequisite, a graph edge, or a claim that the page has no cross-domain relevance.
+
+Controlled values:
+
+| Identifier | Primary learning question |
+|---|---|
+| `architectures-mechanisms` | How do specialized mechanisms and architectures change information flow or computation? |
+| `text-tokenization` | How do text representation and tokenizer design affect model inputs? |
+| `mathematical-tools-geometry` | Which mathematical tools help analyze tensors and representation spaces? |
+| `probabilistic-foundations-training` | How do probabilistic quantities, objectives, and optimization connect? |
+| `inference-efficiency` | How does a model use context, select outputs, and consume compute or memory? |
+| `scale-research` | What empirical regularities and capability claims are supported by evidence? |
+
+The domain is exported into the generated learning-map JSON and can be used as a discovery filter. French and English counterparts must use the same identifier. Pages outside Deepen must not declare this field. Use `related` for cross-domain connections instead of assigning multiple primary domains.
+
+## 10. Language-independent concept registry
+
+The page graph and the concept graph answer different questions:
+
+- A **page** is a maintained learning resource with a scope, audience, language, and pedagogical role.
+- A **concept** is a language-independent knowledge entity that may be explained by several pages and recur across the curriculum.
+- A **resource link** connects a concept to a page; it does not assert that the page is the concept's only owner.
+- A **concept relation** connects two concepts with an explicitly typed semantic relation. It is not a reading-order edge.
+
+The initial registry lives in `data/concepts.yml`. Each concept has a stable kebab-case `id`, French and English labels and definitions, and zero or more page IDs in `resources`. Translations share one concept ID; do not create separate French and English concept nodes.
+
+### Relation vocabulary
+
+Relations are directed from `from` to `to`; their direction is part of their definition.
+
+| Type | Meaning |
+|---|---|
+| `prerequisite` | Understanding the source is needed to understand the target. Use sparingly; this is a conceptual dependency, not a suggested reading order. |
+| `part-of` | The source is a constituent or structural component of the target. |
+| `generalizes` | The source is a more general concept that subsumes the target. |
+| `contrasts-with` | The source is meaningfully distinguished from the target; do not infer opposition from mere difference. |
+| `analogy` | The source is used as an analogy for the target, not as a mathematical equivalence. |
+| `implemented-by` | The source is realized or operationalized by the target in the stated context. |
+| `represented-by` | The target is a representation of the source, without implying identity. |
+| `applies-to` | The source mechanism or method is applied to the target object/process. |
+| `contributes-to` | The source is one contributing mechanism or factor in the target; it is not necessarily sufficient on its own. |
+| `mapped-by` | The source is transformed into or mapped to a target representation by the named operation. |
+| `constrains` | The source imposes a constraint on the target. |
+| `produces` | The source operation or process produces the target quantity/state. |
+| `normalized-by` | The source quantity is transformed/normalized by the target operation. |
+| `evaluated-by` | The source prediction/distribution is evaluated using the target criterion. |
+
+Do not use a generic `related-to` relation as a substitute for deciding what the connection means. Add a relation type only when multiple real examples justify it and its direction can be stated unambiguously.
+
+### Validation and scope
+
+Run `python scripts/check_concept_registry.py` to check stable IDs, bilingual labels/definitions, resource-ID syntax, relation vocabulary, endpoint existence, self-links, and duplicate edges. The same check runs in CI. This first registry is intentionally a seed, not a complete ontology: it covers a small set of central concepts and should grow only alongside reviewed page content.
+
+The concept registry is not yet rendered as a second interactive graph. The existing learning map remains a page graph; a later integration should expose concept-to-page links and concept relations without conflating them with page navigation or the Understand/Build/Deepen destinations.
+
+
+## 11. Concept-to-domain membership
+
+The controlled domain vocabulary is maintained in `data/domains.yml`. Concept membership is recorded separately in each concept's `domains` list in `data/concepts.yml`. A concept may belong to more than one domain when it genuinely contributes to multiple lines of inquiry.
+
+This is deliberately distinct from the page-level `domain` field:
+- A Deepen page has one primary editorial/discovery domain, used to classify that page.
+- A concept may have multiple knowledge-domain memberships, used to organize the knowledge graph and cross-domain exploration.
+- Membership does not imply prerequisite, containment, or exclusivity. Use typed concept relations for semantic connections.
+
+The domain registry defines stable IDs, bilingual labels, descriptions, and guiding questions. All six controlled IDs must be present. A concept must declare at least one valid domain; the validator rejects unknown or duplicate memberships.
+
+## 12. Symmetric concept relations
+
+Concept relations are stored as directed triples. Most relation types are semantically directional and must not be reversed casually. `contrasts-with` is the exception: it is symmetric. Store it once, with the lexicographically smaller concept ID in `from` and the larger ID in `to`. Do not store a reciprocal duplicate. The validator enforces this canonical orientation.

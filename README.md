@@ -29,10 +29,12 @@ The project includes a bilingual Quarto website organized around LLM-specific ex
 - Prioritized roadmap and acceptance criteria: [`docs/roadmap.md`](docs/roadmap.md)
 - Shared reader-experience and editorial method: [`docs/reader-experience-and-editorial-method.md`](docs/reader-experience-and-editorial-method.md) — progressive disclosure, non-linear navigation, page types, and review criteria.
 - [Information architecture and metadata governance](docs/information-architecture.md) — ownership boundaries, source-of-truth rules, standards and scalability policy.
+- Reusable editorial-boundary audit skill: [`.agents/skills/editorial-boundary-audit/SKILL.md`](.agents/skills/editorial-boundary-audit/SKILL.md) — evidence-based overlap analysis, canonical concept ownership, and core-versus-advanced decisions.
 - Page metadata and learning-graph contract: [`docs/page-metadata-schema.md`](docs/page-metadata-schema.md) — hidden source map, Quarto keywords, tag vocabulary, and relation semantics.
 - Full curriculum plan and source-coverage audit (Raschka is a source, not the table-of-contents authority): [`docs/full-curriculum-plan.md`](docs/full-curriculum-plan.md)
 - Page-by-page audit status and source-role log (partial; rendered review still pending): [`docs/page-audit-inventory.md`](docs/page-audit-inventory.md)
 - First-pass audit separating general foundations from LLM-specific applications: [`docs/editorial-boundary-audit.md`](docs/editorial-boundary-audit.md)
+- Core-route editorial boundary audit (2026-11-04): [`docs/editorial-boundary-audit-2026-11-04.md`](docs/editorial-boundary-audit-2026-11-04.md) — page-level overlap evidence, canonical ownership, and core-versus-optional recommendations.
 - Separate exercise-space entry points (navigation scaffolding only; exercises not yet written): [French](site/fr/exercises.qmd) · [English](site/en/exercises.qmd)
 
 The site uses carefully attributed illustrations embedded from their original source when suitable. It does not mirror or redistribute external image files. An accessible URL is not a licence: check reuse terms before copying or modifying a figure. The site can be rendered locally with the [Quarto CLI](https://quarto.org/docs/get-started/).

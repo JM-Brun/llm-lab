@@ -30,6 +30,7 @@ def _write_page(
     children: list[str] | None = None,
     parents: list[str] | None = None,
     related: list[str] | None = None,
+    domain: str | None = None,
     headings: tuple[str, ...] = ("## Core idea", "### Query, Key, Value"),
 ) -> None:
     """Create a minimal Quarto page carrying the repository page-map contract."""
@@ -54,6 +55,8 @@ def _write_page(
         "related": related or [],
         "tags": tags,
     }
+    if domain is not None:
+        metadata["domain"] = domain
     front_yaml = yaml.safe_dump(front, allow_unicode=True, sort_keys=False).strip()
     metadata_yaml = yaml.safe_dump(metadata, allow_unicode=True, sort_keys=False).strip()
     body = "\n".join(headings)
@@ -75,6 +78,31 @@ def _write_page(
     path.write_text(page_content, encoding="utf-8")
 
 
+def _write_concept_registry(root: Path) -> None:
+    """Write a minimal bilingual concept registry for generator tests."""
+    data = {
+        "schema_version": 1,
+        "concepts": [
+            {
+                "id": "attention",
+                "labels": {"fr": "Attention", "en": "Attention"},
+                "definitions": {"fr": "Mécanisme.", "en": "Mechanism."},
+                "resources": ["fr/attention", "en/attention"],
+            },
+            {
+                "id": "query",
+                "labels": {"fr": "Requête", "en": "Query"},
+                "definitions": {"fr": "Projection.", "en": "Projection."},
+                "resources": ["fr/attention", "en/attention"],
+            },
+        ],
+        "relations": [{"from": "query", "type": "part-of", "to": "attention"}],
+    }
+    registry = root / "data" / "concepts.yml"
+    registry.parent.mkdir(parents=True, exist_ok=True)
+    registry.write_text(yaml.safe_dump(data, allow_unicode=True), encoding="utf-8")
+
+
 def test_page_href_is_relative_to_language_map() -> None:
     assert page_href("fr/index", "fr") == "../index.html"
     assert page_href("fr/text-data", "fr") == "text-data.html"
@@ -87,7 +115,7 @@ def test_clean_heading_removes_lightweight_markdown() -> None:
     assert clean_heading("  Attention mechanisms:  ") == "Attention mechanisms"
 
 
-def test_load_pages_extracts_published_pages_and_section_labels(tmp_path: Path) -> None:
+def test_load_pages_extracts_published_pages_and_section_headings(tmp_path: Path) -> None:
     site = tmp_path / "site"
     _write_page(
         site,
@@ -122,7 +150,7 @@ def test_load_pages_extracts_published_pages_and_section_labels(tmp_path: Path) 
     assert french["href"] == "attention.html"
     assert french["scope"] == "A concise scope."
     assert french["purpose"] == "A concise pedagogical purpose."
-    assert french["section_labels"] == [
+    assert french["section_headings"] == [
         "Intuition",
         "Query, Key and Value",
         "Calcul des scores",
@@ -165,12 +193,78 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     _write_page(site, page_id="en/attention", language="en", title="Attention")
 
     MODULE["build"].__globals__["SITE"] = site
+    MODULE["build"].__globals__["ROOT"] = tmp_path
+    _write_concept_registry(tmp_path)
     output = MODULE["build"]("fr")
     payload = json.loads(output.read_text(encoding="utf-8"))
 
     assert output.name == "learning-map-data-fr.json"
     assert payload["language"] == "fr"
-    assert payload["source"] == "LLM-LAB-PAGE-MAP v1"
+    assert payload["source"] == "LLM-LAB-PAGE-MAP v1 + data/concepts.yml"
     assert {page["id"] for page in payload["pages"]} == {"fr/index", "fr/attention"}
     assert all(page["href"] for page in payload["pages"])
-    assert all(isinstance(page["section_labels"], list) for page in payload["pages"])
+    assert all(isinstance(page["section_headings"], list) for page in payload["pages"])
+    assert payload["concepts"] == [
+        {
+            "id": "attention",
+            "label": "Attention",
+            "definition": "Mécanisme.",
+            "resources": [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}],
+        },
+        {
+            "id": "query",
+            "label": "Requête",
+            "definition": "Projection.",
+            "resources": [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}],
+        },
+    ]
+    assert payload["concept_relations"] == [{"from": "query", "type": "part-of", "to": "attention"}]
+
+
+def test_load_pages_preserves_primary_deepen_domain(tmp_path: Path) -> None:
+    site = tmp_path / "site"
+    _write_page(
+        site,
+        page_id="fr/rope",
+        language="fr",
+        title="RoPE",
+        destination="deepen",
+        topic="rope",
+        domain="architectures-mechanisms",
+    )
+    MODULE["load_pages"].__globals__["SITE"] = site
+
+    pages = MODULE["load_pages"]()
+
+    assert len(pages) == 1
+    assert pages[0]["domain"] == "architectures-mechanisms"
+
+
+def test_build_serializes_deepen_domain(tmp_path: Path) -> None:
+    site = tmp_path / "site"
+    _write_page(
+        site,
+        page_id="fr/index",
+        language="fr",
+        title="Accueil",
+        topic="overview",
+    )
+    _write_page(
+        site,
+        page_id="fr/rope",
+        language="fr",
+        title="RoPE",
+        destination="deepen",
+        topic="rope",
+        domain="architectures-mechanisms",
+    )
+    _write_page(site, page_id="en/index", language="en", title="Home", topic="overview")
+    MODULE["build"].__globals__["SITE"] = site
+    MODULE["build"].__globals__["ROOT"] = tmp_path
+    _write_concept_registry(tmp_path)
+
+    output = MODULE["build"]("fr")
+    payload = json.loads(output.read_text(encoding="utf-8"))
+    rope = next(page for page in payload["pages"] if page["id"] == "fr/rope")
+
+    assert rope["domain"] == "architectures-mechanisms"

@@ -1023,7 +1023,7 @@ details.spot-the-fallacy .fallacy-content {
   font-size: 12px;
   font-weight: 750;
 }
-.map-node-section-labels {
+.map-node-concepts {
   fill: #526174;
   font-size: 9.5px;
 }
@@ -1074,7 +1074,7 @@ details.spot-the-fallacy .fallacy-content {
   font-size: .76rem !important;
   font-weight: 750;
 }
-.map-section-list,
+.map-concept-list,
 .map-related-list {
   margin: .25rem 0 .5rem;
   padding-left: 1.1rem;
@@ -1118,4 +1118,32 @@ details.spot-the-fallacy .fallacy-content {
 }
 @media (prefers-reduced-motion: reduce) {
   .map-node-card { transition: none; }
+}
+
+
+.llm-flow .flow-node-g2 rect {
+  fill: #FFFBEB;
+  stroke: #B45309;
+  stroke-dasharray: 5 3;
+}
+
+
+/* Concept graph: distinct visual grammar from the page-route graph. */
+.map-edge-concept {
+  stroke: #7C6BB1;
+  stroke-width: 1.6;
+  opacity: .5;
+}
+.map-concept-node .map-node-card {
+  fill: #F5F3FF;
+  stroke: #C4B5FD;
+}
+.map-concept-node:hover .map-node-card,
+.map-concept-node:focus-visible .map-node-card,
+.map-concept-node.is-selected .map-node-card {
+  fill: #EDE9FE;
+  stroke: #6D5AA7;
+}
+.learning-map [data-map-page-controls][hidden] {
+  display: none;
 }

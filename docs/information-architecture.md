@@ -34,7 +34,7 @@ The repository already has a navigable, bilingual page graph generated from `LLM
 
 ### Important boundary: page tags are not a concept taxonomy
 
-The `topic` tag is a stable subject key attached to a page. It is not interchangeable with a concept entity ID. Likewise, headings extracted into the page-map `section_labels` array are display hints, not identified concepts.
+The `topic` tag is a stable subject key attached to a page. It is not interchangeable with a concept entity ID. Likewise, headings extracted into the page-map `section_headings` array are display hints, not identified concepts.
 
 The project's intended knowledge graph has three dimensions:
 
@@ -44,7 +44,7 @@ The project's intended knowledge graph has three dimensions:
 
 It also has two distinct projections: (1) the **pedagogical path**, which represents learning sequence and prerequisites needed to understand/build an LLM; and (2) the **knowledge map**, which exposes domains, concepts, advanced material, and cross-cutting relations without imposing a reading order. These projections must not be conflated with one another or with the page-level map.
 
-The currently inspected `LLM-LAB-PAGE-MAP v1` implementation is narrower: its nodes are published pages; its edges are suggested route, page hierarchy, and related-page links; its displayed `section_labels` are extracted headings. PR #391 adds a six-value `domain` classification for Deepen pages, but that field is currently page metadata, not proof of a separately serialized domain/concept/resource graph. The typed concept relations and reusable resource entities must be audited against their actual canonical source and schema before changing or duplicating them. This distinction is an implementation audit finding, not a recommendation to create a second graph.
+The currently inspected `LLM-LAB-PAGE-MAP v1` implementation is narrower: its nodes are published pages; its edges are suggested route, page hierarchy, and related-page links; its displayed `section_headings` are extracted headings. PR #391 adds a six-value `domain` classification for Deepen pages, but that field is currently page metadata, not proof of a separately serialized domain/concept/resource graph. The typed concept relations and reusable resource entities must be audited against their actual canonical source and schema before changing or duplicating them. This distinction is an implementation audit finding, not a recommendation to create a second graph.
 
 ## 3. Relationship semantics
 
@@ -151,7 +151,7 @@ The current implementation already has strong foundations: a documented page met
 The following gaps should be addressed incrementally:
 
 1. **Make the ownership map discoverable.** This document is the index for the information architecture; detailed documents remain canonical for their individual concerns.
-2. **Use semantically accurate map fields.** The learning-map payload and UI now call extracted headings `section_labels`; they are navigation landmarks, not concept records.
+2. **Use semantically accurate map fields.** The learning-map payload and UI now call extracted headings `section_headings`; they are navigation landmarks, not concept records.
 3. **Make generated outputs explicitly generated.** Keep learning-map JSON out of hand-maintained source and ensure it is ignored or reproducibly refreshed in CI/builds.
 4. **Formalize machine-readable schemas when stable.** Extract page metadata shape and controlled vocabularies to JSON Schema Draft 2020-12; validate both shape and graph semantics.
 5. **Add an automated architecture consistency check.** Detect duplicate ownership, unknown tag dimensions, unused vocabularies, stale generated data and links to missing source records.
@@ -176,3 +176,4 @@ The following gaps should be addressed incrementally:
 | Historical dataset | [History data model](history-data-model.md) |
 | Contributor process | [Contributing guide](../CONTRIBUTING.md) |
 | Repeatable information-architecture audits | [Knowledge architecture audit skill](../.agents/skills/knowledge-architecture-audit/SKILL.md) |
+
