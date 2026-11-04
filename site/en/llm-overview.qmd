@@ -2,6 +2,7 @@
 title: "Panorama: what is an LLM?"
 subtitle: "From text to the next token: a conceptual map before the mechanisms"
 description: "An overview of language models: definitions, architecture, parameter learning, and inference."
+keywords: ["type:system-overview","destination:understand","topic:llm-overview","level:overview","language:en","status:published"]
 lang: en
 ---
 
