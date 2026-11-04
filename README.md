@@ -33,6 +33,7 @@ The project includes a bilingual Quarto website organized around LLM-specific ex
 - Full curriculum plan and source-coverage audit (Raschka is a source, not the table-of-contents authority): [`docs/full-curriculum-plan.md`](docs/full-curriculum-plan.md)
 - Page-by-page audit status and source-role log (partial; rendered review still pending): [`docs/page-audit-inventory.md`](docs/page-audit-inventory.md)
 - First-pass audit separating general foundations from LLM-specific applications: [`docs/editorial-boundary-audit.md`](docs/editorial-boundary-audit.md)
+- Core-route editorial boundary audit (2026-11-04): [`docs/editorial-boundary-audit-2026-11-04.md`](docs/editorial-boundary-audit-2026-11-04.md) — page-level overlap evidence, canonical ownership, and core-versus-optional recommendations.
 - Separate exercise-space entry points (navigation scaffolding only; exercises not yet written): [French](site/fr/exercises.qmd) · [English](site/en/exercises.qmd)
 
 The site uses carefully attributed illustrations embedded from their original source when suitable. It does not mirror or redistribute external image files. An accessible URL is not a licence: check reuse terms before copying or modifying a figure. The site can be rendered locally with the [Quarto CLI](https://quarto.org/docs/get-started/).
