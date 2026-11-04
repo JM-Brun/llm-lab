@@ -28,7 +28,7 @@ The existing validator remains the source of truth for structural invariants. Th
 - The structural validator reported no broken references, route/hierarchy reciprocity errors, cycles or FR/EN parity errors.
 - The hierarchy contains fan-out and multi-parent hubs; these are not prerequisites and are not merged into the route graph.
 
-The report and topology audit are included in PR #429. Python CI now passes on head `ce6237a86c2c8d81794ffb8aeb60a6e0443f5c4a`, including the audit step, formatting, lint, type checks and tests; the Quarto site workflow is still pending. These are structural findings, not evidence that the route is pedagogically optimal or that rendered interactions are accessible.
+The report and topology audit are included in PR #429. On reviewed head `a8167f8680765974ede347dbb653f896d8a78635`, both Python CI (including the topology audit, formatting, lint, type checks and tests) and the Quarto site workflow passed, including bilingual rendering, knowledge-graph export, history parity and rendered local-link checks. These are structural findings, not evidence that the route is pedagogically optimal or that rendered interactions are accessible.
 
 ## 2. Curriculum contract to preserve
 
@@ -101,7 +101,7 @@ The page-map schema correctly distinguishes route, hierarchy and related links. 
 ## 5. Recommended execution order
 
 1. Reconcile the site-tool relocation across PRs #422, #424 and #429 before merging: keep the audit and map generators, their imports, tests, workflow commands and local instructions together.
-2. Repair the G0–G9 crosswalk tables and review the two route exceptions identified above.
+2. Review the corrected G0–G9 crosswalk and decide the two route exceptions identified above.
 3. Rework the concept graph relation semantics and layout (#416).
 4. Complete desktop/mobile, keyboard, focus, touch and screen-reader inspection (#337/#417).
 5. Only then consider any metadata changes justified by the editorial review.
