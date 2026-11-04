@@ -25,8 +25,14 @@ def test_export_has_stable_skos_schemes_and_bilingual_labels() -> None:
     payload = build_graph()
     nodes = [node for node in payload["@graph"] if "@id" in node]
 
-    assert any(node.get("@id") == CONCEPT_SCHEME and node.get("@type") == "skos:ConceptScheme" for node in nodes)
-    assert any(node.get("@id") == DOMAIN_SCHEME and node.get("@type") == "skos:ConceptScheme" for node in nodes)
+    assert any(
+        node.get("@id") == CONCEPT_SCHEME and node.get("@type") == "skos:ConceptScheme"
+        for node in nodes
+    )
+    assert any(
+        node.get("@id") == DOMAIN_SCHEME and node.get("@type") == "skos:ConceptScheme"
+        for node in nodes
+    )
     concept = next(
         node
         for node in nodes
