@@ -233,6 +233,7 @@ def test_page_nodes_are_unique_and_resource_registry_is_in_provenance() -> None:
     derived_from = {item["@id"] for item in export["prov:wasDerivedFrom"]}
     assert "https://github.com/JM-Brun/llm-lab/blob/main/data/resources.yml" in derived_from
 
+
 def test_attention_subgraph_exports_intermediate_concepts_and_typed_relations() -> None:
     payload = build_graph()
     graph = payload["@graph"]
@@ -250,8 +251,7 @@ def test_attention_subgraph_exports_intermediate_concepts_and_typed_relations() 
     pages = {
         node["@id"]: node
         for node in graph
-        if isinstance(node.get("@type"), list)
-        and "schema:LearningResource" in node["@type"]
+        if isinstance(node.get("@type"), list) and "schema:LearningResource" in node["@type"]
     }
     expected_pages = {
         f"{BASE}/fr/scaled-dot-product-attention.html": {
@@ -271,8 +271,7 @@ def test_attention_subgraph_exports_intermediate_concepts_and_typed_relations() 
     }
     for page_uri, expected_concepts in expected_pages.items():
         about = {
-            item["@id"].rsplit("/", maxsplit=1)[-1]
-            for item in pages[page_uri]["schema:about"]
+            item["@id"].rsplit("/", maxsplit=1)[-1] for item in pages[page_uri]["schema:about"]
         }
         assert expected_concepts.issubset(about)
 
@@ -280,9 +279,7 @@ def test_attention_subgraph_exports_intermediate_concepts_and_typed_relations() 
         (node["@id"], predicate, value["@id"])
         for node in graph
         for predicate, value in node.items()
-        if predicate.startswith("llmlab:")
-        and isinstance(value, dict)
-        and "@id" in value
+        if predicate.startswith("llmlab:") and isinstance(value, dict) and "@id" in value
     }
     assert (
         f"{BASE}/id/concept/softmax",
