@@ -16,7 +16,7 @@ IDENTIFIER = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 RELATION_TYPES = {
     "prerequisite", "part-of", "generalizes", "contrasts-with",
     "analogy", "implemented-by", "applies-to", "constrains",
-    "produces", "normalized-by", "evaluated-by",
+    "produces", "normalized-by", "evaluated-by", "represented-by",\n    "contributes-to", "mapped-by",
 }
 PAGE_ID = re.compile(r"(?:fr|en)/[a-z0-9]+(?:-[a-z0-9]+)*")
 
