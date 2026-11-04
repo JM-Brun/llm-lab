@@ -171,3 +171,14 @@ def test_rejects_invalid_optional_provenance_without_inventing_defaults(
     errors = _validate(tmp_path, resource)
     assert any("non-empty string" in error for error in errors)
     assert any("absolute HTTP(S) URL" in error for error in errors)
+
+
+def test_accepts_bcp47_language_tags_and_rejects_invalid_extensions(tmp_path: Path) -> None:
+    resource = _valid_resource()
+    for language in ("en", "fr-CA", "zh-Hant-TW", "mul", "und", "x-private"):
+        resource["language"] = language
+        assert _validate(tmp_path, resource) == []
+
+    resource["language"] = "en-a"
+    errors = _validate(tmp_path, resource)
+    assert any("BCP 47" in error for error in errors)
