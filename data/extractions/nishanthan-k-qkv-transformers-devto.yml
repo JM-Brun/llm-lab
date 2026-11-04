@@ -217,3 +217,66 @@ items:
       concepts: [key, value]
     disposition: defer
     disposition_rationale: "Preserve the community lead and its independent verification, but do not add KV-cache detail to the introductory Q/K/V page. Revisit when the inference-efficiency curriculum has a canonical destination."
+
+  - id: nishanthan-k-qkv-transformers-devto:attention-score-not-semantic-similarity
+    kind: limitation
+    summary: "The article cautions that a larger query-key dot product can lead to a larger attention weight, but the learned score is not a direct measure of semantic similarity between tokens."
+    locator:
+      type: section
+      value: "4, Step 1"
+      label: "Calculate Attention Scores"
+    evidence:
+      kind: interpretive-caveat
+      confidence: well-supported
+      scope: "The article explicitly limits the interpretation of query-key dot products."
+      assumptions: ["The scores are produced by learned Q and K projections."]
+      limitations:
+        - "The caveat does not by itself explain all factors that determine the final attention output."
+        - "Attention weights remain relative to the other accessible positions after masking and softmax."
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The bilingual Q/K/V page already warns that attention is not nearest-neighbour search and weights are not universal semantic relevance."}
+      complementarity: {level: moderate, rationale: "It independently reinforces the distinction between learned compatibility scores and semantic similarity."}
+      pedagogical_value: {level: moderate, rationale: "This is a useful misconception guardrail for learners who interpret dot products linguistically."}
+      applicability: {level: low, rationale: "The canonical page already expresses the caveat in a broader and more precise form."}
+      redundancy: {level: high, rationale: "The learner question and explanatory function are already covered."}
+      evidence_quality: {level: moderate, rationale: "The source states a correct interpretive caveat, but does not provide an empirical or theoretical analysis of attention interpretability."}
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:attention, topic:interpretability]
+      concept_ids: [query, key, self-attention]
+    candidate_destinations:
+      pages: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+      concepts: [query, key, self-attention]
+    disposition: defer
+    disposition_rationale: "Keep as convergent evidence in the extraction record; do not duplicate the existing misconception guardrail."
+
+  - id: nishanthan-k-qkv-transformers-devto:weighted-aggregation-not-argmax
+    kind: misconception
+    summary: "The article explicitly distinguishes attention's weighted aggregation of multiple Value vectors from a winner-take-all selection of the single token with the largest score."
+    locator:
+      type: section
+      value: "5"
+      label: "How Do Values Produce Contextual Information?"
+    evidence:
+      kind: conceptual-explanation
+      confidence: well-supported
+      scope: "The attention output is described as a weighted combination of Values according to the attention weights."
+      assumptions: ["The usual softmax-weighted attention formulation is used."]
+      limitations:
+        - "Some specialized attention mechanisms may alter the normalization or aggregation pattern; the statement describes the standard formulation in this article."
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The canonical attention lesson already derives O = AV and explains weighted aggregation."}
+      complementarity: {level: moderate, rationale: "The explicit contrast with winner-take-all selection can help diagnose a common beginner misconception."}
+      pedagogical_value: {level: moderate, rationale: "It makes clear that softmax weights distribute contributions rather than selecting one token by argmax."}
+      applicability: {level: low, rationale: "The current numerical example and shape explanation already show a weighted sum."}
+      redundancy: {level: high, rationale: "The mechanism and learner question are already treated directly in the attention lesson."}
+      evidence_quality: {level: moderate, rationale: "The statement is mathematically consistent with standard scaled dot-product attention, though presented in a secondary tutorial."}
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:attention, topic:weighted-aggregation]
+      concept_ids: [value, self-attention]
+    candidate_destinations:
+      pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+      concepts: [value, self-attention]
+    disposition: defer
+    disposition_rationale: "Preserve the source's clear anti-argmax phrasing as convergent pedagogical evidence; the existing numerical example already teaches the same point."
