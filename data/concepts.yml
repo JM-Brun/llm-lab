@@ -49,14 +49,14 @@ concepts:
       fr: "Mécanisme qui calcule des poids entre positions d’une même séquence et agrège leurs valeurs."
       en: "Mechanism that computes weights between positions in one sequence and aggregates their values."
     domains: [architectures-mechanisms]
-    resources: [fr/transformer, en/transformer, fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+    resources: [fr/transformer, en/transformer, fr/transformer-architectures, en/transformer-architectures, fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
   - id: causal-mask
     labels: {fr: "Masque causal", en: "Causal mask"}
     definitions:
       fr: "Contrainte qui empêche une position de prendre en compte les positions futures."
       en: "Constraint preventing a position from attending to future positions."
     domains: [architectures-mechanisms]
-    resources: [fr/causal-masking, en/causal-masking]
+    resources: [fr/causal-masking, en/causal-masking, fr/transformer-architectures, en/transformer-architectures]
   - id: positional-encoding
     labels: {fr: "Encodage positionnel", en: "Positional encoding"}
     definitions:
