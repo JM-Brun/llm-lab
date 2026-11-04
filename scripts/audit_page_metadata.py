@@ -381,14 +381,17 @@ def render_report(result: dict[str, Any]) -> str:
             "## Method and limits",
             "",
             "- Only published pages represented in the explicit Quarto render list are analyzed.",
-            "- French and English route graphs are described separately; structural parity is delegated to the existing validator.",
+            "- French and English route graphs are described separately; "
+            "structural parity is delegated to the existing validator.",
             "- Suggested-route chains use only "
             + tick
             + "suggested_route.next"
             + tick
             + "; hierarchy and related links are not used to rank or order the route.",
-            "- Route-free pages are reported by destination and must not be called orphans without editorial review.",
-            "- The report does not infer prerequisites, semantic equivalence, or pedagogical redundancy.",
+            "- Route-free pages are reported by destination and must not be called "
+            "orphans without editorial review.",
+            "- The report does not infer prerequisites, semantic equivalence, or "
+            "pedagogical redundancy.",
             "- Review candidates require inspection of page objectives and actual body content.",
             "",
         ]
