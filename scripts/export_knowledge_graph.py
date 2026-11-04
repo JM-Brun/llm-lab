@@ -226,6 +226,17 @@ def build_graph() -> dict[str, Any]:
     }
 
 
+def write_export(output: Path = SITE / "knowledge-graph.jsonld") -> Path:
+    """Write the deterministic JSON-LD projection and return its path."""
+    payload = build_graph()
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    return output
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -235,13 +246,8 @@ def main() -> int:
         help="Output JSON-LD path (default: site/knowledge-graph.jsonld)",
     )
     args = parser.parse_args()
-    payload = build_graph()
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
-    print(f"Exported {len(payload['@graph'])} JSON-LD nodes to {args.output}")
+    output = write_export(args.output)
+    print(f"Exported JSON-LD knowledge graph to {output}")
     return 0
 
 
