@@ -311,3 +311,46 @@ This addendum records the two concept-to-code implementation lots merged after �
 5. Continue #78/#58/#79–#84 only within their existing ownership and prerequisite gates. In particular, no end-to-end training implementation is evidenced; the private prerequisite review still gates new implementation.
 6. Keep P2 browser reviews #320/#329/#337 and other rendered accessibility checks distinct from source-level completion. Do not claim browser, accessibility or learner evidence unless the corresponding review actually ran.
 
+
+
+## 17. Follow-up execution — 2026-11-04
+
+### Updated evidence and status
+
+- **PR #419 — reliability and onboarding:** the latest head `5e149e8380f0f04ffa80f8ca6d29a5e0033b4212` passes both hosted workflows: [Python CI](https://github.com/JM-Brun/llm-lab/actions/runs/41845168934) and [Quarto site](https://github.com/JM-Brun/llm-lab/actions/runs/41845169222). Its description reports 162 local tests plus Ruff, formatting and mypy. The independent learner pilot and full responsive/accessibility review remain outstanding. **Do not merge the new `LICENSE.md` terms until the maintainer explicitly confirms rights ownership and approves MIT for project-owned code plus CC BY-SA 4.0 for project-owned prose.** Third-party and unresolved visual material remain excluded.
+- **PR #424 — guided route vs exploratory graphs (#415):** source implementation is complete and the PR is ready for review. The single versioned machine-readable source is `data/guided-route.yml`, validated with strict Pydantic models; `docs/learning-path.md` remains the narrative curriculum. The generator resolves core and optional page IDs against published bilingual metadata and produces native Quarto Markdown partials. The guided route is displayed above the page and concept graphs; the practical Build path remains separate. The latest head `a9a0fc50c510b84bc71f56e9738fe8711a3ad3a6` passes [Python CI](https://github.com/JM-Brun/llm-lab/actions/runs/41849689030) and [bilingual Quarto render, route generation, graph export and local-link checks](https://github.com/JM-Brun/llm-lab/actions/runs/41849689500). **#415 remains open** until review/merge; rendered browser, mobile, keyboard and touch inspection remains under #337/#417 and is not established by CI.
+- **PR #421 — backlog reconciliation:** merged; this section supersedes the earlier §16 statement that hosted CI for #419 had not yet run.
+- **PR #414 / #418:** keep the dependency recorded in §16; do not start the extension until #414 is merged.
+- **#420:** bilingual softmax/temperature ownership and text-data/tokenization learning-outcome correction remain the next editorial implementation lot, coordinated with #79 and #147.
+- **#416 / #417:** remain separate from #415. #416 owns typed concept-relation semantics and layout; #417 owns interaction parity, focus recovery, responsive behavior and error/reset states.
+
+### Next recommended execution order
+
+1. Complete the maintainer's licence-scope decision on #419; merge only after that decision and final diff review.
+2. Review and merge #424 after its source diff review. Then schedule the dedicated rendered FR/EN browser session under #337/#417; do not claim this from the successful Quarto render.
+3. Continue #416 as a bounded concept-graph semantics/layout change, reusing `data/concepts.yml` and avoiding a false prerequisite DAG.
+4. Continue #417 as a separate interaction/accessibility change after the graph view is stable.
+5. Implement #420 as a bilingual content-only lot, preserving mathematical detail and interactive learning value.
+6. Keep #320/#329 and other P2 rendered reviews separate from source-level completion. Preserve the #78/#58/#79–#84 implementation ownership and prerequisite gates.
+
+
+
+## 18. Follow-up execution — 2026-11-04 (learning-map topology and PR review)
+
+### Updated evidence and status
+
+- **PR #423 — metadata audit documentation:** merged on 2026-11-04. Its validator discovery and BFS display-rank caveat are now on `main`.
+- **PR #424 — guided route vs exploratory graphs (#415):** ready for review, not merged. The four review threads were answered and resolved. The latest head `d169b126de828a41f8f46a5c04170bec0f3635ea` passes [Python CI](https://github.com/JM-Brun/llm-lab/actions/runs/41851633171) and [Quarto site](https://github.com/JM-Brun/llm-lab/actions/runs/41851633162). The route is sourced from `data/guided-route.yml`, validated with strict Pydantic models and generated as Quarto Markdown by Python. The existing exploratory graphs retain JavaScript for browser interactions; the guided route itself does not.
+- **PR #429 — topology audit and G0–G9 reconciliation (#415):** remains draft pending Quarto. Python CI passes on head `a8167f8680765974ede347dbb653f896d8a78635` ([run](https://github.com/JM-Brun/llm-lab/actions/runs/41854264493)); [Quarto site](https://github.com/JM-Brun/llm-lab/actions/runs/41854264459) is still running. The audit analyzes 103 published pages (51 FR, 51 EN, one shared reference): each language has six separate suggested-route chains, 28 route edges, 34 participating pages, six starts/ends, no route convergence and no unrooted components. The structural validator reports no reference, cycle, reciprocity or FR/EN parity errors. The report is in `docs/learning-map-topology-audit.md`.
+- **G0–G9 documentation:** PR #429 repairs the malformed Build summary table, removes the duplicate/mislabeled training-examples row, adds the missing G2 evidence row to the detailed matrix, clarifies G1 vs G1b, and aligns G6 top-k/top-p claims with `generate.py`.
+- **PR #422 — learning-path/tooling reorganization:** its two review comments were answered and resolved. `.serena/project.yml` is retained as shared project configuration but reduced to explicit settings; local overrides/cache remain ignored. `tokenization-strategies` remains the core Understand lesson and `tokenizer-evaluation` is a separate optional Deepen page. The PR is still non-mergeable (`mergeable_state=dirty`) because its base is stale. Its planned `scripts/` → `site/tools/` move must be reconciled with #424 and #429: the audit script/tests now tolerate the validator move, but `build_learning_map.py`, its tests, CI and README commands still need coordinated relocation if that boundary is retained.
+- **Rendered inspection:** still outstanding. Successful Quarto rendering and local-link checks do not establish browser, mobile, keyboard, touch or screen-reader quality (#337/#417).
+
+### Next recommended execution order
+
+1. Wait for PR #429's Quarto workflow; keep it draft until both hosted workflows pass.
+2. Review PR #424 and PR #429 source diffs; merge only with explicit maintainer approval.
+3. Reconcile PR #422's base conflicts and tooling relocation with #424/#429 before merging it. Do not leave `audit_page_metadata.py` or `build_learning_map.py` with broken sibling imports or stale workflow paths.
+4. Complete the dedicated rendered FR/EN browser session under #337/#417, including keyboard, focus and touch behaviour.
+5. Continue #416 (concept-relation semantics/layout) and #417 (interaction/accessibility) as separate bounded changes.
+6. Continue #420 and the existing #78/#58/#79–#84 implementation gates without claiming a complete training pipeline.
