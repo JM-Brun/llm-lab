@@ -85,7 +85,11 @@ def load_pages() -> list[dict[str, Any]]:
         section_labels: list[str] = []
         for heading in HEADING.findall(source):
             concept = clean_heading(heading)
-            if concept and concept.casefold() not in EXCLUDED_HEADINGS and concept not in section_labels:
+            if (
+                concept
+                and concept.casefold() not in EXCLUDED_HEADINGS
+                and concept not in section_labels
+            ):
                 section_labels.append(concept)
             if len(section_labels) == 6:
                 break
