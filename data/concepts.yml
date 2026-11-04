@@ -181,6 +181,12 @@ relation_types:
     descriptions:
       fr: "La source contribue à la construction ou au fonctionnement de la cible."
       en: "The source contributes to the construction or operation of the target."
+  applies-to:
+    direction: directed
+    labels: {fr: "s'applique à", en: "applies to"}
+    descriptions:
+      fr: "Le mécanisme source peut être utilisé dans le contexte ou le mécanisme cible."
+      en: "The source mechanism can be used within the target context or mechanism."
   mapped-by:
     direction: directed
     labels: {fr: "est projeté par", en: "is mapped by"}
@@ -219,7 +225,7 @@ relations:
   - {from: attention-score, type: normalized-by, to: softmax}
   - {from: softmax, type: produces, to: attention-weight}
   - {from: causal-mask, type: constrains, to: scaled-dot-product-attention}
-  - {from: scaled-dot-product-attention, type: contributes-to, to: self-attention}
+  - {from: scaled-dot-product-attention, type: applies-to, to: self-attention}
   - {from: scaled-dot-product-attention, type: part-of, to: multi-head-attention}
   - {from: multi-head-attention, type: contributes-to, to: contextualized-representation}
   - {from: causal-mask, type: constrains, to: self-attention}
