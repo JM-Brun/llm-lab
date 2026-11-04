@@ -47,6 +47,12 @@ Le lookup est un accès à une table. Il n'examine pas les mots voisins, ne déd
 
 Une précision est nécessaire : un mot visible ne correspond pas nécessairement à un seul token. Un tokenizer peut le découper en plusieurs tokens. Cet exemple isole le principe de contextualisation en supposant un ID commun.
 
+### Une autre dépendance : la référence pronominale
+
+Considérons maintenant : *“The animal was tired because it had been running.”* Le pronom `it` renvoie ici à `the animal`. Ce cas ne porte pas sur les deux sens possibles d'un même mot : il illustre une dépendance entre des positions différentes de la séquence. Pour construire une représentation contextuelle de `it`, le modèle peut exploiter des informations provenant d'autres tokens du contexte.
+
+Cet exemple est repris comme motivation pédagogique dans le tutoriel de [Nishanthan K sur Q, K et V](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers). Il ne démontre pas qu'une tête d'attention particulière identifie nécessairement l'antécédent, ni que l'attention seule réalise toute la résolution de coréférence. Il sert à distinguer deux motivations complémentaires : lever une ambiguïté lexicale (*bank*) et exploiter une relation entre tokens (*it* / *the animal*).
+
 ## Ce qui change avec la position et le contexte
 
 Les deux occurrences occupent des positions différentes et sont entourées de tokens différents. Le traitement exact de la position dépend de l'architecture.
