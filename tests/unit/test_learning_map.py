@@ -1,4 +1,4 @@
-""""Unit tests for extracting and serializing the bilingual learning map."""
+"""Unit tests for extracting and serializing the bilingual learning map."""
 
 from __future__ import annotations
 
