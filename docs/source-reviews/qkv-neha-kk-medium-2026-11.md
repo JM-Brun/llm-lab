@@ -34,7 +34,7 @@ The indexed metadata identifies Neha KK and lists 31 December 2025 as the public
 | In-body visual placements | Partially inventoried | Three captioned figures plus one additional uncaptioned full-size-image placeholder are visible in indexed text |
 | Cover / hero image | Unknown | Search-index text does not establish whether a separate cover asset exists |
 | Actual image bytes and visual composition | Not inspected | The page reader did not expose stable image URLs or downloadable image bytes |
-| Linked resources | Not inspected | No substantive outbound technical references are included in the author-authored body |
+| Linked resources | Not inspected | The indexed text does not expose a substantive bibliography or outbound technical references; live-page links and targets were not inspected |
 | Comments | Not inspected | The indexed result does not expose the comment area; absence of indexed comments is not evidence that no comments exist |
 | Rights/reuse | Unknown | No licence or figure-reuse permission was established |
 
@@ -153,6 +153,6 @@ The indexed text exposes four in-body image placements: Fig. 1 (self-attention b
 
 ## 9. Validation and completion
 
-The integration is limited to source data and two existing bilingual page files. Run the repository source-catalogue validator, page-metadata checks, Quarto render and local-link checks in CI. CI results must be recorded from the actual PR run; they are not inferred from successful API writes.
+This follow-up changes the source record, extraction, audit dossier, visual-assets register and annotated bibliography; it does not change published pages. The earlier bilingual page integration is tracked separately in PR #453. Run the repository source-catalogue validator, page-metadata checks, Quarto render and local-link checks in CI. CI results must be recorded from the actual PR run; they are not inferred from successful API writes.
 
 The source remains partially scanned because the live page DOM, four in-body images, possible cover image, comments, link targets and figure reuse rights were not inspected. Text extraction is complete for the search-index snapshot; new items preserve the visual placeholders and technical qualifications without guessing at missing media.
