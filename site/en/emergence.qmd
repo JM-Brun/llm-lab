@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/emergence"
 scope: "Examines emergent capabilities in language models, observations associated with scale, and the debate over whether they are discontinuous."
 purpose: "Readers should distinguish gradual improvement, a metric-induced success threshold, and a genuinely discontinuous transition, and identify the evidence needed to support an emergence claim."
+domain: "scale-research"
 suggested_route:
   previous: null
   next: null
