@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import json
+import runpy
 from pathlib import Path
 from typing import Any
 
-import runpy
+import yaml
 
 MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts" / "build_learning_map.py"
 MODULE: dict[str, Any] = runpy.run_path(str(MODULE_PATH), run_name="learning_map_test")
@@ -43,8 +44,6 @@ def _write_page(
         f"language:{language}",
         "status:published",
     ]
-    import yaml
-
     front = {"title": title, "keywords": tags}
     metadata = {
         "id": page_id,
