@@ -28,7 +28,7 @@ def test_export_has_stable_skos_schemes_and_bilingual_labels() -> None:
     assert {item["@language"] for item in concept["skos:prefLabel"]} == {"fr", "en"}
 
 
-def test_export_describes_existing_pages_without_inventing_concept_ids() -> None:
+def test_export_describes_published_pages() -> None:
     payload = build_graph()
     pages = [
         node
@@ -38,19 +38,22 @@ def test_export_describes_existing_pages_without_inventing_concept_ids() -> None
 
     assert pages
     assert all(node["schema:inLanguage"] in {"fr", "en"} for node in pages)
-    assert all(node["schema:about"]["@id"].startswith(f"{BASE}/id/concept/") for node in pages)
+    assert all(node["schema:about"] for node in pages)
+    assert all("schema:educationalLevel" not in node for node in pages)
+    assert all("llmlab:editorialLevel" in node for node in pages)
 
 
 def test_only_generalization_uses_skos_hierarchy() -> None:
     payload = build_graph()
-    triples = [
+    concept_nodes = [
         node
         for node in payload["@graph"]
-        if "skos:narrower" in node or "llmlab:prerequisite" in node
+        if str(node.get("@id", "")).startswith(f"{BASE}/id/concept/")
     ]
 
-    assert triples
-    assert all("skos:narrower" not in node or "llmlab:prerequisite" not in node for node in triples)
+    assert any("skos:narrower" in node for node in concept_nodes)
+    assert any("llmlab:prerequisite" in node for node in concept_nodes)
+    assert all("skos:related" not in node for node in concept_nodes)
 
 
 def test_export_provenance_names_canonical_sources() -> None:
