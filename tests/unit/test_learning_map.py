@@ -136,6 +136,41 @@ def _write_guided_route(
     route.write_text(yaml.safe_dump(source, allow_unicode=True, sort_keys=False), encoding="utf-8")
 
 
+def _write_sidebar(site: Path) -> None:
+    """Write minimal Quarto sidebars so build() can derive the navigation areas."""
+    config = {
+        "website": {
+            "sidebar": [
+                {
+                    "id": "fr",
+                    "contents": [
+                        {
+                            "section": "Comprendre",
+                            "contents": [
+                                {
+                                    "section": "Sous-rubrique",
+                                    "contents": ["fr/attention.qmd", "fr/unpublished.qmd"],
+                                }
+                            ],
+                        }
+                    ],
+                },
+                {
+                    "id": "en",
+                    "contents": [
+                        {"section": "Understand", "contents": ["en/attention.qmd"]}
+                    ],
+                },
+            ]
+        }
+    }
+    config_path = site / "_quarto.yml"
+    config_path.parent.mkdir(parents=True, exist_ok=True)
+    config_path.write_text(
+        yaml.safe_dump(config, allow_unicode=True, sort_keys=False), encoding="utf-8"
+    )
+
+
 def test_page_href_is_relative_to_language_map() -> None:
     assert page_href("fr/index", "fr") == "../index.html"
     assert page_href("fr/text-data", "fr") == "text-data.html"
@@ -216,6 +251,35 @@ def test_assign_route_rank_follows_suggested_route_and_hierarchy() -> None:
         "fr/tokenization": 3,
         "fr/unlinked": 4,
     }
+
+
+def test_load_navigation_derives_areas_from_sidebar(tmp_path: Path) -> None:
+    site = tmp_path / "site"
+    _write_page(site, page_id="fr/attention", language="fr", title="Attention")
+    _write_sidebar(site)
+    MODULE["load_pages"].__globals__["SITE"] = site
+    pages = MODULE["load_pages"]()
+    MODULE["load_navigation"].__globals__["SITE"] = site
+
+    navigation = MODULE["load_navigation"]("fr", pages)
+
+    assert navigation == [
+        {
+            "id": "comprendre",
+            "title": "Comprendre",
+            "pages": [],
+            "sections": [{"title": "Sous-rubrique", "pages": ["fr/attention"]}],
+        }
+    ]
+
+
+def test_load_navigation_requires_matching_sidebar(tmp_path: Path) -> None:
+    site = tmp_path / "site"
+    _write_sidebar(site)
+    MODULE["load_navigation"].__globals__["SITE"] = site
+
+    with pytest.raises(ValueError, match="missing Quarto sidebar"):
+        MODULE["load_navigation"]("de", [])
 
 
 def test_load_guided_route_resolves_language_specific_page_links(tmp_path: Path) -> None:
@@ -332,6 +396,7 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     _write_page(site, page_id="en/index", language="en", title="Home", topic="overview")
     _write_page(site, page_id="en/attention", language="en", title="Attention")
     _write_guided_route(tmp_path)
+    _write_sidebar(site)
 
     MODULE["build"].__globals__["SITE"] = site
     MODULE["build"].__globals__["ROOT"] = tmp_path
@@ -346,6 +411,14 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     assert {page["id"] for page in payload["pages"]} == {"fr/index", "fr/attention"}
     assert all(page["href"] for page in payload["pages"])
     assert all(isinstance(page["section_headings"], list) for page in payload["pages"])
+    assert payload["navigation"] == [
+        {
+            "id": "comprendre",
+            "title": "Comprendre",
+            "pages": [],
+            "sections": [{"title": "Sous-rubrique", "pages": ["fr/attention"]}],
+        }
+    ]
     fragment = site / "includes" / "generated-guided-route-fr.qmd"
     assert fragment.exists()
     assert "[Attention](attention.html)" in fragment.read_text(encoding="utf-8")
@@ -405,6 +478,7 @@ def test_build_serializes_deepen_domain(tmp_path: Path) -> None:
     )
     _write_page(site, page_id="en/index", language="en", title="Home", topic="overview")
     _write_guided_route(tmp_path, fr_core=["fr/rope"], en_core=["en/index"])
+    _write_sidebar(site)
     MODULE["build"].__globals__["SITE"] = site
     MODULE["build"].__globals__["ROOT"] = tmp_path
     _write_concept_registry(tmp_path)

@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+import unicodedata
 from collections import deque
 from pathlib import Path
 from typing import Any, Literal
@@ -228,6 +229,67 @@ def load_pages() -> list[dict[str, Any]]:
     return pages
 
 
+def slugify_area_id(title: str) -> str:
+    """Return an ASCII slug used as a stable, language-scoped area identifier."""
+    folded = unicodedata.normalize("NFKD", title).encode("ascii", "ignore")
+    return re.sub(r"[^a-z0-9]+", "-", folded.decode("ascii").lower()).strip("-")
+
+
+def sidebar_page_id(entry: object, language: str) -> str | None:
+    """Resolve one Quarto sidebar entry to a published page identifier."""
+    if not isinstance(entry, str) or not entry.endswith(".qmd"):
+        return None
+    slug = entry.removesuffix(".qmd")
+    if "/" not in slug:
+        if slug == "references":
+            return "reference/references"
+        return f"{language}/{slug}"
+    return slug
+
+
+def load_navigation(language: str, pages: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Derive the drill-down area structure from the authored Quarto sidebar.
+
+    The sidebar is the only authored source of reader-facing grouping. Entries
+    that do not resolve to a published page identifier are ignored, and empty
+    groups are dropped, so the progressive map never shows a dead end.
+    """
+    config = yaml.safe_load((SITE / "_quarto.yml").read_text(encoding="utf-8"))
+    sidebars = (config or {}).get("website", {}).get("sidebar", [])
+    sidebar = next((entry for entry in sidebars if entry.get("id") == language), None)
+    if sidebar is None:
+        raise ValueError(f"missing Quarto sidebar for language: {language!r}")
+    published = {page["id"] for page in pages}
+
+    def collect(entries: list[object]) -> list[str]:
+        """Keep only sidebar entries that resolve to published pages."""
+        identifiers = (sidebar_page_id(entry, language) for entry in entries)
+        return [value for value in identifiers if value in published]
+
+    areas: list[dict[str, Any]] = []
+    for entry in sidebar.get("contents", []):
+        if not isinstance(entry, dict) or "section" not in entry:
+            continue
+        sections = [
+            {"title": str(item["section"]), "pages": collect(item.get("contents", []))}
+            for item in entry.get("contents", [])
+            if isinstance(item, dict) and "section" in item
+        ]
+        sections = [section for section in sections if section["pages"]]
+        area_pages = collect(entry.get("contents", []))
+        if not area_pages and not sections:
+            continue
+        areas.append(
+            {
+                "id": slugify_area_id(str(entry["section"])),
+                "title": str(entry["section"]),
+                "pages": area_pages,
+                "sections": sections,
+            }
+        )
+    return areas
+
+
 def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[ResolvedGuidedRouteStage]:
     """Validate the route source and resolve every reference to a published page."""
     if language not in {"fr", "en"}:
@@ -387,6 +449,7 @@ def build(language: str) -> Path:
     output = SITE / f"learning-map-data-{language}.json"
     concept_graph = load_concept_graph(language, pages)
     guided_route = load_guided_route(language, pages)
+    navigation = load_navigation(language, pages)
     write_guided_route_fragment(language, guided_route)
     output.write_text(
         json.dumps(
@@ -394,6 +457,7 @@ def build(language: str) -> Path:
                 "language": language,
                 "source": "LLM-LAB-PAGE-MAP v1 + data/guided-route.yml + data/concepts.yml",
                 "pages": pages,
+                "navigation": navigation,
                 **concept_graph,
             },
             ensure_ascii=False,

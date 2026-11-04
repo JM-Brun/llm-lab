@@ -1,6 +1,6 @@
 ---
 title: "Carte interactive du parcours"
-subtitle: "Un parcours guidé, puis des graphes pour explorer les pages et les notions"
+subtitle: "Un parcours guidé, puis une carte progressive : territoires, rubriques, pages et notions"
 keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:fr", "status:published"]
 lang: fr
 toc: false
@@ -9,8 +9,8 @@ toc: false
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/learning-map"
-scope: "Parcours guidé en six étapes conceptuelles, suivi de deux graphes exploratoires distincts : ressources publiées et concepts canoniques."
-purpose: "Orienter le lecteur dans une progression conceptuelle compacte, puis lui permettre d’explorer les ressources et les relations entre concepts."
+scope: "Parcours guidé en six étapes conceptuelles, suivi d'une carte progressive : territoires, rubriques, pages et notions canoniques."
+purpose: "Orienter le lecteur dans une progression conceptuelle compacte, puis lui permettre d'explorer les ressources territoire par territoire, rubrique par rubrique, ainsi que les notions canoniques."
 suggested_route:
   previous: null
   next: null
@@ -21,13 +21,14 @@ related: []
 tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:fr", "status:published"]
 -->
 
-La page distingue un **parcours guidé** compact de deux **graphes exploratoires**. Le parcours est dérivé du curriculum canonique ; les graphes permettent ensuite d’explorer les ressources et les relations sans imposer un ordre unique.
+La page distingue un **parcours guidé** compact d'une **carte progressive**. Le parcours est dérivé du curriculum canonique ; la carte commence par les territoires de haut niveau, puis révèle rubriques et pages au fil des clics.
 
-- **Parcours** — flèche verte : page suggérée avant/après.
-- **Parent / enfant** — flèche bleue : décomposition ou inclusion pédagogique.
-- **Associé** — liaison grise en pointillés : proximité conceptuelle, sans ordre imposé.
+- **Territoires** — les grandes parties du site : Comprendre, Construire, S'exercer, Approfondir, Références.
+- **Rubriques** — un clic sur un territoire affiche ses sous-parties ; le fil d'Ariane ou la touche Échap permet de remonter d'un niveau.
+- **Pages** — un clic sur une page affiche ses détails (objectif, sections, liens) ; « Ouvrir la page » y conduit directement.
+- **Notions** — la vue « Notions canoniques » liste les concepts du registre bilingue versionné dans `data/concepts.yml`, avec leurs définitions, relations typées et pages ressources.
 
-La carte propose deux graphes distincts. Le graphe des pages représente les ressources et leurs relations pédagogiques ; les intitulés de sections affichés dans les blocs sont des repères éditoriaux, pas des concepts canoniques. Le graphe conceptuel provient du registre bilingue versionné dans `data/concepts.yml` : ses nœuds ont des identifiants stables, des définitions et des relations typées. La sélection d’un concept affiche ses pages ressources. Les deux graphes ne doivent pas être interprétés comme un même ordre de lecture.
+Les intitulés de sections affichés dans les détails d'une page sont des repères éditoriaux, pas des concepts canoniques. La carte ne doit pas être interprétée comme un ordre de lecture unique : le parcours guidé ci-dessous joue ce rôle.
 
 ::: {.guided-route-section}
 
@@ -47,68 +48,36 @@ Six étapes conceptuelles donnent un point d'entrée et une progression conseill
 
 ## Explorer les ressources
 
-Le graphe des pages conserve l'inventaire des ressources et leurs liens de progression, de hiérarchie et d'association. Le graphe conceptuel présente séparément les notions canoniques et leurs relations. Ces vues servent à explorer ; elles ne remplacent pas le parcours guidé ci-dessus.
+La carte progressive remplace l'ancien graphe dense : elle affiche d'abord les territoires, puis révèle chaque rubrique au clic, puis les pages. La vue « Notions canoniques » présente séparément les concepts du registre. Ces vues servent à explorer ; elles ne remplacent pas le parcours guidé ci-dessus.
 
 <div class="learning-map" data-learning-map data-language="fr" data-source="../learning-map-data-fr.json">
   <div class="learning-map-toolbar">
     <div class="learning-map-filter">
-      <label for="learning-map-mode">Vue exploratoire</label>
-      <select id="learning-map-mode">
-        <option value="pages">Graphe des pages</option>
-        <option value="concepts">Graphe conceptuel</option>
+      <label for="learning-map-mode">Vue</label>
+      <select id="learning-map-mode" data-map-mode>
+        <option value="pages">Carte des territoires</option>
+        <option value="concepts">Notions canoniques</option>
       </select>
     </div>
     <div class="learning-map-search">
       <label for="learning-map-search">Rechercher une page ou une notion</label>
-      <input id="learning-map-search" type="search" placeholder="Ex. : embeddings, attention, génération…" autocomplete="off">
+      <input id="learning-map-search" data-map-search type="search" autocomplete="off">
     </div>
-    <div class="learning-map-filter" data-map-page-controls>
-      <label for="learning-map-domain">Filtrer par domaine avancé</label>
-      <select id="learning-map-domain">
-        <option value="all">Tous les domaines</option>
-        <option value="architectures-mechanisms">Architectures et mécanismes</option>
-        <option value="text-tokenization">Texte et tokenisation</option>
-        <option value="mathematical-tools-geometry">Outils mathématiques et géométrie</option>
-        <option value="probabilistic-foundations-training">Fondements probabilistes et entraînement</option>
-        <option value="inference-efficiency">Inférence et efficacité</option>
-        <option value="scale-research">Échelle et questions de recherche</option>
-      </select>
-    </div>
-    <div class="learning-map-filter" data-map-page-controls>
-      <label for="learning-map-destination">Afficher une branche</label>
-      <select id="learning-map-destination">
-        <option value="all">Toutes les branches</option>
-        <option value="understand">Comprendre</option>
-        <option value="build">Construire</option>
-        <option value="deepen">Approfondir</option>
-        <option value="practice">Pratiquer</option>
-        <option value="reference">Références</option>
-      </select>
-    </div>
-  </div>
-  <div class="learning-map-relations" data-map-page-controls aria-label="Relations affichées">
-    <label><input type="checkbox" data-map-relation="route" checked> Parcours</label>
-    <label><input type="checkbox" data-map-relation="hierarchy" checked> Parent / enfant</label>
-    <label><input type="checkbox" data-map-relation="related" checked> Liens associés</label>
-  </div>
-  <div class="learning-map-legend" data-map-page-controls aria-hidden="true">
-    <span><i class="map-key map-key-route"></i> Progression suggérée</span>
-    <span><i class="map-key map-key-hierarchy"></i> Hiérarchie</span>
-    <span><i class="map-key map-key-related"></i> Relation transversale</span>
   </div>
   <div class="learning-map-layout">
-    <div class="learning-map-canvas" tabindex="0" aria-label="Graphe des pages. Faire défiler horizontalement et verticalement pour explorer.">
-      <svg class="learning-map-svg" role="group" aria-label="Carte interactive des pages et de leurs relations"></svg>
+    <div class="learning-map-canvas learning-map-viewport" data-map-viewport>
+      <p class="map-load-status">Chargement de la carte…</p>
     </div>
     <aside class="learning-map-details" aria-live="polite" aria-atomic="true">
-      <p class="map-detail-eyebrow">EXPLORER UNE BRIQUE</p>
-      <h3>Sélectionner une page</h3>
-      <p>Passez sur un bloc ou placez-y le focus pour afficher son rôle, ses titres de section et ses relations. Cliquez sur le bloc pour ouvrir directement la page.</p>
+      <details data-map-details open>
+        <summary>Détails</summary>
+        <div class="map-detail-panel" data-map-detail-panel></div>
+      </details>
     </aside>
   </div>
-  <p class="learning-map-status" role="status" aria-live="polite">Chargement de la carte…</p>
+  <p class="learning-map-status" data-map-status role="status" aria-live="polite">Chargement de la carte…</p>
 </div>
 
-La carte est un outil d’orientation : elle n’indique pas qu’une page est un prérequis strict. Les pages de niveau avancé peuvent être consultées directement lorsque la question le justifie.
+La carte est un outil d'orientation : elle n'indique pas qu'une page est un prérequis strict. Les pages de niveau avancé peuvent être consultées directement lorsque la question le justifie.
 
 [Consulter le glossaire](glossary.qmd) · [Voir le parcours de construction du GPT](build-path.qmd) · [English version](../en/learning-map.html)
