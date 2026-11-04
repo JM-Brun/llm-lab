@@ -69,7 +69,7 @@ Do not manually reproduce breadcrumb markup in individual pages. If the sidebar 
 
 ## Reader-facing metadata and concept emphasis
 
-Page-classification metadata is not part of the reading interface. The controlled `type`, `destination`, `topic`, `level`, `language`, `status`, and `domain` values remain in the source and generated data for tools, filters, search, and graph construction. Do not display their raw identifiers as chips, badges, a metadata strip, or a tag cloud. This is a presentation rule, not a reason to delete or weaken the metadata contract.
+Page-classification metadata is not part of the reading interface. The controlled `type`, `destination`, `topic`, `level`, `language`, `status`, and `domain` values remain in the source and generated data for tools, filters, search, and graph construction. Do not display their raw identifiers as chips, badges, a metadata strip, or a tag cloud. This is a presentation rule, not a reason to delete or weaken the metadata contract. The Quarto `keywords` field currently mirrors these controlled tags for machine-readable HTML metadata, but Quarto also renders it in the title block by default. The site therefore overrides the version-pinned `title-metadata.html` partial to omit only the visible keywords section; keep the front-matter keywords and page-map tags synchronized. The HTML `<meta name="keywords">` element remains available to machines.
 
 Show reader-facing orientation only when it has a concrete pedagogical purpose. Use natural language (for example, “Prerequisites”, “What you will learn”, or “Optional deep dive”) rather than exposing internal field names. Reuse existing callouts and page patterns; do not add a uniform metadata panel to every page.
 
