@@ -24,26 +24,10 @@
     emptyConcepts: "Aucun concept ne correspond à cette recherche.",
     loadError: "La carte n’a pas pu être chargée. Vérifiez que les données ont été générées pendant le rendu Quarto.",
     unknown: "Page",
+    pageLabel: "Page",
     conceptLabel: "Notion",
     noSectionHeadings: "Aucun titre de section disponible.",
     destinations: { orient: "S’orienter", understand: "Comprendre", build: "Construire", deepen: "Approfondir", practice: "Pratiquer", reference: "Référence" },
-    domainLabel: "Domaine d’approfondissement",
-    domains: {
-      "architectures-mechanisms": "Architectures et mécanismes",
-      "text-tokenization": "Texte et tokenisation",
-      "mathematical-tools-geometry": "Outils mathématiques et géométrie",
-      "probabilistic-foundations-training": "Fondements probabilistes et entraînement",
-      "inference-efficiency": "Inférence et efficacité",
-      "scale-research": "Échelle et questions de recherche"
-    },
-    domainShort: {
-      "architectures-mechanisms": "Architectures",
-      "text-tokenization": "Texte / tokens",
-      "mathematical-tools-geometry": "Maths / géométrie",
-      "probabilistic-foundations-training": "Probabilités / entraînement",
-      "inference-efficiency": "Inférence / efficacité",
-      "scale-research": "Échelle / recherche"
-    }
   } : {
     columns: ["Understand", "Build", "Deepen", "Practice and reference"],
     route: "Suggested route",
@@ -64,26 +48,10 @@
     emptyConcepts: "No concepts match this search.",
     loadError: "The map could not be loaded. Check that the data files were generated during the Quarto render.",
     unknown: "Page",
+    pageLabel: "Page",
     conceptLabel: "Concept",
     noSectionHeadings: "No section headings available.",
     destinations: { orient: "Orientation", understand: "Understand", build: "Build", deepen: "Deepen", practice: "Practice", reference: "Reference" },
-    domainLabel: "Deepen domain",
-    domains: {
-      "architectures-mechanisms": "Architectures and mechanisms",
-      "text-tokenization": "Text and tokenization",
-      "mathematical-tools-geometry": "Mathematical tools and geometry",
-      "probabilistic-foundations-training": "Probabilistic foundations and training",
-      "inference-efficiency": "Inference and efficiency",
-      "scale-research": "Scale and research questions"
-    },
-    domainShort: {
-      "architectures-mechanisms": "Architectures",
-      "text-tokenization": "Text / tokens",
-      "mathematical-tools-geometry": "Math / geometry",
-      "probabilistic-foundations-training": "Probability / training",
-      "inference-efficiency": "Inference / efficiency",
-      "scale-research": "Scale / research"
-    }
   };
 
   const svg = root.querySelector(".learning-map-svg");
@@ -248,7 +216,7 @@
 
     const eyebrow = document.createElement("p");
     eyebrow.className = "map-detail-eyebrow";
-    eyebrow.textContent = (page.domain && copy.domains[page.domain]) || copy.destinations[page.destination] || copy.unknown;
+    eyebrow.textContent = copy.pageLabel;
     details.appendChild(eyebrow);
 
     const heading = document.createElement("h3");
@@ -546,12 +514,12 @@
       const topic = svgElement("text", {
         x: position.x + 13, y: position.y + 18, class: "map-node-topic"
       });
-      topic.textContent = (page.domain && copy.domainShort[page.domain]) || copy.destinations[page.destination] || copy.unknown;
+      
       anchor.appendChild(topic);
       appendText(anchor, position.x + 13, position.y + 39, wrap(page.title, 30, 2), "map-node-title");
       const headings = (page.section_headings || []).slice(0, 2).join(" · ");
       const conceptLine = svgElement("text", {
-        x: position.x + 13, y: position.y + 84, class: "map-node-section-headings"
+        x: position.x + 13, y: position.y + 76, class: "map-node-section-headings"
       });
       conceptLine.textContent = headings.length > 44 ? headings.slice(0, 43) + "…" : headings;
       anchor.appendChild(conceptLine);
