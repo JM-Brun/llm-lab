@@ -330,9 +330,7 @@ def _validate_bilingual_parity(pages: dict[str, dict[str, Any]], errors: list[st
                 errors.append(f"topic {topic!r}: FR/EN {field} relations differ")
 
 
-def _validate_render_coverage(
-    site_dir: Path, rendered_paths: set[str], errors: list[str]
-) -> None:
+def _validate_render_coverage(site_dir: Path, rendered_paths: set[str], errors: list[str]) -> None:
     """Require every source page marked published to be included in Quarto rendering."""
     for path in sorted(site_dir.rglob("*.qmd")):
         relative = path.relative_to(site_dir).as_posix()
