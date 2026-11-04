@@ -72,7 +72,7 @@ sources:
         - en/transformer-block-walkthrough
         - fr/contextualized-representations
         - en/contextualized-representations
-      concepts: [query, key, value, self-attention, softmax, contextualized-representation]
+      concepts: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax, multi-head-attention, contextualized-representation]
       audit_records:
         - docs/source-reviews/qkv-nishanthan-devto-2026-11.md
         - docs/source-reviews/qkv-learning-graph-comparison-2026-11.md
