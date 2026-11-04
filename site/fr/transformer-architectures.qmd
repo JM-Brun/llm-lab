@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/llm-overview"]
   children: ["fr/cross-attention"]
-related: ["fr/transformer-history", "fr/transformer", "fr/hybrid-llm-architectures", "fr/llm-computational-complexity"]
+related: ["fr/transformer-history", "fr/transformer", "fr/generation", "fr/hybrid-llm-architectures", "fr/llm-computational-complexity"]
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:fr", "status:published"]
 -->
 
