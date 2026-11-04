@@ -249,3 +249,41 @@ Do not add every source node to the canonical graph. Add only stable concepts or
 - **Pages:** no new page and no duplicated example.
 - **Source:** remains partially scanned; exact article image and reuse rights remain unresolved.
 - **Traceability:** this comparison is linked from the source review and extraction hand-off.
+
+
+## 9. Second tutorial comparison — Neha KK (Medium)
+
+A second introductory source was scanned on 2026-11-04: [Neha KK, *Understanding Queries, Keys and Values in Transformers*](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b), published 2025-12-31. Its full text reconstruction and source-local graph are recorded in `data/extractions/neha-kk-understanding-qkv-medium.yml`; the source-specific review is [qkv-neha-kk-medium-2026-11.md](qkv-neha-kk-medium-2026-11.md).
+
+### 9.1 Contribution comparison
+
+| Learner question / perspective | Nishanthan K (DEV) | Neha KK (Medium) | Existing LLM Lab coverage | Synthesis decision |
+|---|---|---|---|---|
+| What are Q, K and V? | Search/retrieval analogy and role definitions | Database search analogy: request, descriptor, payload | Existing index-card analogy plus formal learned projections | Keep one core analogy; retain the database variant as an alternative in the extraction catalogue |
+| Why three representations? | Role distinction and trainable projections | Explicitly motivates separating matching from content transfer | Existing page states roles but can make the decoupling rationale more explicit | Add one sentence explaining that separate projections let matching and payload representations be learned independently |
+| Why does context matter? | Bank ambiguity and pronoun reference | Pronoun “it” with “animal” and “road” | Contextualized-representations page already motivates cross-token dependencies; Q/K/V page has no short linguistic example | Add a compact optional pronoun example to the Q/K/V page, explicitly not a measured result |
+| How is attention computed? | Scores, scaling, softmax, weighted aggregation; masking mentioned | Same four-step sequence | Dedicated page provides shapes, mask semantics, numerical example and scaling derivation | No additional computation text |
+| Do attention maps explain decisions? | Cautions against semantic similarity and winner-take-all interpretations | Broadly claims attention maps aid interpretability | Existing attention lesson refutes causal and semantic overinterpretation | Keep the stronger existing counterexample; record the Medium claim as a cautionary example |
+| How do Transformers parallelize? | Compact attention pipeline | Says Transformers inspect all words simultaneously | Architecture, causal mask and generation content separate parallel training from autoregressive decoding | No Q/K/V page edit; link to existing architecture/masking coverage |
+| What is the input to Q/K/V? | Uses input representations and projection matrices | Calls them word embeddings | Existing lesson correctly uses the current representation stream, including deeper hidden states | Preserve the more general formulation |
+
+### 9.2 Complementary perspectives versus repeated explanations
+
+The two tutorials largely converge on the same introductory Q/K/V model. Their retrieval analogies are not materially distinct enough to stack on the public page. The Medium article's most useful addition is not a new definition or equation: it foregrounds the design question “why three representations?” and gives a concise pronoun-context illustration.
+
+The pronoun example complements the project's existing index-card analogy because it shifts the learner's attention from role naming to information flow across token positions. However, neither tutorial provides measured attention weights or a model experiment for its linguistic examples. The published synthesis therefore uses the pronoun scenario only to illustrate a plausible computation path and explicitly warns against inferring coreference resolution or interpretability from it.
+
+The sources' agreement on the four-step attention computation is pedagogical convergence, not independent empirical validation. The primary technical formulation remains Vaswani et al. (2017), and the project lesson provides the mathematical and computational detail absent from both short tutorials.
+
+### 9.3 Integrated learning experience
+
+The resulting bilingual Q/K/V lesson keeps a single core mental model and adds two bounded improvements:
+
+1. A concise rationale for separate projections: Q/K learn the matching interface, while V learns the payload representation; separating them decouples matching from information transfer.
+2. An optional linguistic example that connects a token's query to candidate contextual keys and weighted values, with explicit caveats that the source supplies no measured attention or coreference evidence.
+
+The attention calculation remains on the next page. No new concept IDs, semantic edges, prerequisite links, navigation edges, curriculum stages, Build steps, figures or experiments are justified.
+
+### 9.4 Provenance and scan status
+
+The Nishanthan DEV article remains partially scanned because the embedded illustration and parts of its comment history/metadata remain unresolved. The Neha KK Medium article also remains partially scanned because the actual figure files and reuse rights were not retrievable. Both sources can be cited and linked; neither article's illustrations are copied or represented as visually inspected.
