@@ -219,9 +219,7 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
             "resources": [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}],
         },
     ]
-    assert payload["concept_relations"] == [
-        {"from": "query", "type": "part-of", "to": "attention"}
-    ]
+    assert payload["concept_relations"] == [{"from": "query", "type": "part-of", "to": "attention"}]
 
 
 def test_load_pages_preserves_primary_deepen_domain(tmp_path: Path) -> None:
