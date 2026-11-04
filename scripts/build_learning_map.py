@@ -82,11 +82,11 @@ def load_pages() -> list[dict[str, Any]]:
         if language not in {"fr", "en"} and page_id != "reference/references":
             continue
 
-        concepts: list[str] = []
+        section_labels: list[str] = []
         for heading in HEADING.findall(source):
             concept = clean_heading(heading)
-            if concept and concept.casefold() not in EXCLUDED_HEADINGS and concept not in concepts:
-                concepts.append(concept)
+            if concept and concept.casefold() not in EXCLUDED_HEADINGS and concept not in section_labels:
+                section_labels.append(concept)
             if len(concepts) == 6:
                 break
 
@@ -103,7 +103,7 @@ def load_pages() -> list[dict[str, Any]]:
                 "topic": tags.get("topic", "misc"),
                 "scope": str(metadata.get("scope", "")),
                 "purpose": str(metadata.get("purpose", "")),
-                "concepts": concepts,
+                "section_labels": section_labels,
                 "route": metadata.get("suggested_route", {}),
                 "parents": metadata.get("hierarchy", {}).get("parents", []),
                 "children": metadata.get("hierarchy", {}).get("children", []),
