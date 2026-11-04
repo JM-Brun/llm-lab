@@ -9,7 +9,7 @@ This document is the architectural entry point for the repository's information 
 
 Maintain **one canonical source per kind of information**, then derive reader-facing views from it. A page, a concept, a tag, a route and a template are different entities and must not be used as substitutes for one another.
 
-The repository already has a navigable, bilingual page graph generated from `LLM-LAB-PAGE-MAP v1`, a curriculum source of truth, and six controlled page-level Deepen domains (PR #391, merged), and a bilingual concept registry (PR #399, merged). Concept-to-domain membership is proposed in PR #404. The intended knowledge architecture has three distinct dimensions—domains, concepts, and resources—and two complementary graph projections: a pedagogical path and a non-sequential knowledge map. Preserve these as distinct models and views. Do not add a competing graph or duplicate taxonomy. This audit distinguishes the intended domain model from what the currently inspected page-map implementation actually serializes; implementation gaps must be recorded, not hidden by renaming page-level metadata as a concept ontology.
+The repository already has a navigable, bilingual page graph generated from `LLM-LAB-PAGE-MAP v1`, a curriculum source of truth, and six controlled page-level Deepen domains (PR #391, merged), and a bilingual concept registry (PR #399, merged). Concept-to-domain membership and the canonical bilingual domain registry were merged in PR #404. The intended knowledge architecture has three distinct dimensions—domains, concepts, and resources—and two complementary graph projections: a pedagogical path and a non-sequential knowledge map. Preserve these as distinct models and views. Do not add a competing graph or duplicate taxonomy. This audit distinguishes the intended domain model from what the currently inspected page-map implementation actually serializes; implementation gaps must be recorded, not hidden by renaming page-level metadata as a concept ontology.
 
 ## 2. System inventory and ownership
 
@@ -38,13 +38,13 @@ The `topic` tag is a stable subject key attached to a page. It is not interchang
 
 The project's intended knowledge graph has three dimensions:
 
-- **Domains:** six controlled knowledge families. Page-level `domain` metadata classifies a Deepen page into one primary discovery domain. Concept-level membership is a separate association and may be many-to-many; PR #404 proposes this in `data/domains.yml` and each concept's `domains` field. Do not infer concept membership from a page's primary domain.
+- **Domains:** six controlled knowledge families. Page-level `domain` metadata classifies a Deepen page into one primary discovery domain. Concept-level membership is a separate association and may be many-to-many; PR #404 implements this in `data/domains.yml` and each concept's `domains` field. Do not infer concept membership from a page's primary domain.
 - **Concepts:** stable, language-independent entities with bilingual preferred labels, definitions, aliases, provenance, and typed relations such as prerequisite, generalization, application, and opposition.
 - **Resources:** pages, demonstrations, experiments, implementations, and references. A resource can support several concepts, and a concept can be supported by several resources; model this as a many-to-many association with an explicit relation role where useful.
 
 It also has two distinct projections: (1) the **pedagogical path**, which represents learning sequence and prerequisites needed to understand/build an LLM; and (2) the **knowledge map**, which exposes domains, concepts, advanced material, and cross-cutting relations without imposing a reading order. These projections must not be conflated with one another or with the page-level map.
 
-The interactive learning map now exposes two distinct modes. The page graph reads published page metadata and renders suggested route, page hierarchy, related-page links, and extracted `section_headings`. The concept graph is generated from `data/concepts.yml` and renders stable concept nodes, typed concept relations, and links to their resource pages. The two modes retain different node and edge semantics. PR #391's six-value `domain` field still classifies Deepen pages only. PR #399 added the canonical concept seed; PR #404 proposes a separate domain registry and concept memberships. Concept-resource associations still point directly to page IDs; first-class resource entities for demonstrations, experiments, implementations, and references are not yet represented.
+The interactive learning map now exposes two distinct modes. The page graph reads published page metadata and renders suggested route, page hierarchy, related-page links, and extracted `section_headings`. The concept graph is generated from `data/concepts.yml` and renders stable concept nodes, typed concept relations, and links to their resource pages. The two modes retain different node and edge semantics. PR #391's six-value `domain` field still classifies Deepen pages only. PR #399 added the canonical concept seed; PR #404 added the separate domain registry and concept memberships. Concept-resource associations still point directly to page IDs; first-class resource entities for demonstrations, experiments, implementations, and references are not yet represented.
 
 ## 3. Relationship semantics
 
@@ -93,7 +93,7 @@ Do not introduce RDF triple stores, graph databases, CASE exports or a full onto
 
 The canonical concept registry now exists at `data/concepts.yml` (PR #399, merged). It uses language-independent kebab-case IDs, bilingual labels and definitions, typed concept relations, and page-ID associations. Its 13 concepts and 12 relations are a reviewed seed, not complete ontology coverage.
 
-The six controlled domain definitions are maintained in `data/domains.yml` in PR #404. The PR also adds a `domains` list to each seeded concept. This is distinct from the page-level `domain` field: a page has one primary Deepen classification, while a concept may belong to several knowledge domains. Membership is classification, not a semantic relation or prerequisite. Until PR #404 is merged, treat the concept-domain layer as proposed.
+The six controlled domain definitions are maintained in `data/domains.yml` in PR #404. The PR also adds a `domains` list to each seeded concept. This is distinct from the page-level `domain` field: a page has one primary Deepen classification, while a concept may belong to several knowledge domains. Membership is classification, not a semantic relation or prerequisite. Concept-domain membership is now canonical data; it remains a classification association, not a semantic relation or prerequisite.
 
 ### Relation semantics
 
@@ -157,7 +157,7 @@ The following gaps should be addressed incrementally:
 |---|---|
 | Overall information architecture | This document |
 | Knowledge graph implementation audit | [Implementation audit](knowledge-graph-implementation-audit.md) |
-| Domain/concept/resource knowledge graph | `data/concepts.yml` (PR #399 merged); `data/domains.yml` and concept memberships (PR #404 pending); first-class resource records remain to be designed |
+| Domain/concept/resource knowledge graph | `data/concepts.yml` (PR #399 merged); `data/domains.yml` and concept memberships (PR #404 merged); first-class resource records remain to be designed |
 | Page metadata, tags and page graph | [Page metadata schema](page-metadata-schema.md) |
 | Learning-map implementation | `scripts/build_learning_map.py`, `tests/unit/test_learning_map.py` |
 | Metadata validation | `scripts/check_page_metadata.py`, `tests/unit/test_page_metadata.py` |
