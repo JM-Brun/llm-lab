@@ -2,15 +2,18 @@ schema_version: 1
 source_id: nishanthan-k-qkv-transformers-devto
 pedagogical_model:
   reconstruction:
-    status: partial
+    status: complete
     basis:
-      - "Article body reconstructed from indexed DEV content and an author-controlled Medium mirror."
-      - "Canonical DEV HTML/API and embedded media were not directly retrievable in the latest scan."
+      - "The complete author-authored text (introduction, all six numbered sections and conclusion) was reconciled against the indexed DEV article result and the author's Medium mirror on 2026-11-04."
+      - "The reconstruction preserves the article's analogies, examples, equations, explanatory claims, stated caveats, causal-mask mention, backpropagation reference and multi-head summary."
+      - "Completeness refers to the author-authored text and source-local pedagogical model, not to direct DOM capture, comments, linked resources or media inspection."
+      - "The indexed result exposes the substantive KV-cache reader comment; an earlier scan recorded a second visible comment and author reply, but their exact text is not recoverable from the current indexed snapshot."
     inferred_elements:
       - "Learning outcomes and prerequisites are inferred; the article does not state them formally."
   source_graph:
     nodes:
       - {id: src-input-representations, kind: computational-object, description: "Position representations entering self-attention.", locator: "Section 3"}
+      - {id: src-gradient-optimization, kind: learning-process, description: "Backpropagation and gradient-based optimization used to learn the Q/K/V projection matrices.", locator: "Section 3"}
       - {id: src-query, kind: representation, description: "Learned query projections used to score keys.", locator: "Sections 1 and 3"}
       - {id: src-key, kind: representation, description: "Learned key projections compared with queries.", locator: "Sections 1 and 3"}
       - {id: src-value, kind: representation, description: "Learned value projections aggregated by attention weights.", locator: "Sections 1, 3 and 5"}
@@ -31,6 +34,9 @@ pedagogical_model:
       - {from: src-input-representations, type: projected-into, to: src-query}
       - {from: src-input-representations, type: projected-into, to: src-key}
       - {from: src-input-representations, type: projected-into, to: src-value}
+      - {from: src-query, type: learned-through, to: src-gradient-optimization}
+      - {from: src-key, type: learned-through, to: src-gradient-optimization}
+      - {from: src-value, type: learned-through, to: src-gradient-optimization}
       - {from: src-query, type: contributes-to, to: src-scores}
       - {from: src-key, type: contributes-to, to: src-scores}
       - {from: src-scores, type: scaled-into, to: src-scaled-scores}
@@ -51,26 +57,30 @@ pedagogical_model:
     - {status: inferred, outcome: "Explain the distinct computational roles of Query, Key and Value.", basis: "Sections 1 and 3."}
     - {status: inferred, outcome: "Trace scaled dot-product attention from Q/K scores to weighted Value aggregation.", basis: "Sections 4 and 5."}
     - {status: inferred, outcome: "Describe the high-level composition of multi-head attention.", basis: "Section 6."}
+    - {status: inferred, outcome: "Explain that Q/K/V projections are trainable parameters learned through gradient-based optimization.", basis: "Section 3 explicitly mentions backpropagation and gradient-based optimization."}
   assumed_prerequisites:
     - {status: inferred, topic: "Basic familiarity with token or position representations.", basis: "Used without a first-principles introduction."}
     - {status: inferred, topic: "Basic matrix multiplication and softmax.", basis: "Equations and normalization are assumed."}
   teaching_route:
     - {order: 1, section: "What Are Query, Key, and Value (QKV)?", function: motivate-and-distinguish-roles, moves: ["Search/retrieval analogy", "Verbal role distinction"]}
     - {order: 2, section: "Why Do We Need Q, K, and V?", function: motivate-contextualization, moves: ["Bank lexical ambiguity", "It-to-the-animal pronoun reference"]}
-    - {order: 3, section: "How Are Q, K, and V Generated?", function: introduce-learned-projections, moves: ["Q = XW_Q, K = XW_K, V = XW_V"]}
+    - {order: 3, section: "How Are Q, K, and V Generated?", function: introduce-learned-projections, moves: ["Q = XW_Q, K = XW_K, V = XW_V", "Projection matrices are learned through backpropagation and gradient-based optimization"]}
     - {order: 4, section: "How Do Queries and Keys Calculate Attention?", function: derive-attention-weights, moves: ["QK transpose", "Scaling", "Softmax", "Causal masking"]}
     - {order: 5, section: "How Do Values Produce Contextual Information?", function: explain-weighted-aggregation, moves: ["Weighted Value sum", "Contrast with argmax"]}
     - {order: 6, section: "QKV in Multi-Head Attention", function: extend-to-multi-head, moves: ["Parallel per-head projections", "Concatenation", "Output projection"]}
   pedagogical_strengths:
     - "Compact progression from verbal intuition to equations and multi-head architecture."
     - "Two distinct linguistic motivations for contextualization."
-    - "Explicit caveats against semantic-similarity and winner-take-all interpretations."
+    - "Explicitly states that projection matrices are learned through backpropagation and gradient-based optimization."
+    - "Includes useful interpretive guardrails about semantic similarity and winner-take-all selection."
   pedagogical_limits:
-    - "No formal objectives, prerequisite map, exercises, comprehension checks or worked tensor-shape example."
+    - "No formal objectives, prerequisite map, exercises or comprehension checks."
     - "Scaling is stated rather than derived; variance assumptions are not developed."
-    - "Causal masking is mentioned but not developed as a separate mechanism."
     - "Multi-head attention lacks detailed dimensions, reshaping and output-mixing analysis."
-    - "No implementation, numerical experiments, training dynamics or KV-cache treatment in the article body."
+    - "No implementation, numerical experiments, tensor-shape walkthrough or worked numerical example."
+    - "Backpropagation is named but the optimization process and parameter updates are not explained."
+    - "Causal masking is mentioned but not developed as a separate operation."
+    - "No KV-cache treatment appears in the author-authored article body; it is a reader-comment follow-up."
   comparison:
     dossier: docs/source-reviews/qkv-learning-graph-comparison-2026-11.md
     canonical_graph: "data/concepts.yml and generated JSON-LD projection"
@@ -102,8 +112,8 @@ items:
     candidate_destinations:
       pages: [fr/queries-keys-values, en/queries-keys-values]
       concepts: [query, key, value]
-    disposition: defer
-    disposition_rationale: "The bilingual canonical lesson already states this distinction and warns that Q/K/V are learned numerical vectors rather than readable questions, labels, or cards."
+    disposition: reject
+    disposition_rationale: "The source's verbal distinction is preserved in the extraction record, but the bilingual Q/K/V lesson already teaches the same roles more precisely; no additional page edit is justified."
 
   - id: nishanthan-k-qkv-transformers-devto:shared-input-projections
     kind: mechanism
@@ -129,8 +139,8 @@ items:
     candidate_destinations:
       pages: [fr/queries-keys-values, en/queries-keys-values, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
       concepts: [query, key, value]
-    disposition: defer
-    disposition_rationale: "The canonical Q/K/V page already gives the equations, matrix dimensions, shared representation stream, learned parameters, and self-attention/cross-attention distinction."
+    disposition: reject
+    disposition_rationale: "The shared-input projection equations, dimensions and self-/cross-attention boundary are already taught in the bilingual Q/K/V lesson and implementation walkthrough; retain this as corroborating evidence, not duplicate content."
 
   - id: nishanthan-k-qkv-transformers-devto:scaled-dot-product-computation
     kind: mechanism
@@ -157,8 +167,8 @@ items:
     candidate_destinations:
       pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
       concepts: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax]
-    disposition: defer
-    disposition_rationale: "The adjacent attention lesson already gives the mask-aware equation, tensor shapes, numerical example, scaling derivation and interpretive caveats. Duplicating it on the Q/K/V page would blur scope."
+    disposition: reject
+    disposition_rationale: "The dedicated bilingual scaled-attention lesson already provides the complete mask-aware computation, derivation, tensor shapes, numerical example and interpretive caveats; no duplicate insertion is warranted."
 
   - id: nishanthan-k-qkv-transformers-devto:multi-head-attention
     kind: mechanism
@@ -184,8 +194,8 @@ items:
     candidate_destinations:
       pages: [fr/transformer, en/transformer, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
       concepts: [query, key, value, output-projection, multi-head-attention]
-    disposition: defer
-    disposition_rationale: "The overview already cautions against assuming interpretable head specialization; the implementation walkthrough explains head slicing and isolation until w_o."
+    disposition: reject
+    disposition_rationale: "The Transformer overview and block walkthrough already cover the conceptual and implementation levels, including concatenation and output projection; the source adds no distinct learner benefit."
 
   - id: nishanthan-k-qkv-transformers-devto:document-search-analogy
     kind: analogy
@@ -324,8 +334,8 @@ items:
     candidate_destinations:
       pages: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
       concepts: [query, key, self-attention]
-    disposition: defer
-    disposition_rationale: "Keep as convergent evidence in the extraction record; do not duplicate the existing misconception guardrail."
+    disposition: reject
+    disposition_rationale: "The canonical Q/K/V and scaled-attention lessons already explain why learned scores and normalized weights are not semantic-similarity measures; retain the article as convergent evidence without duplicating the misconception guardrail."
 
   - id: nishanthan-k-qkv-transformers-devto:weighted-aggregation-not-argmax
     kind: misconception
@@ -355,5 +365,65 @@ items:
     candidate_destinations:
       pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
       concepts: [value, self-attention]
-    disposition: defer
-    disposition_rationale: "Preserve the source's clear anti-argmax phrasing as convergent pedagogical evidence; the existing numerical example already teaches the same point."
+    disposition: reject
+    disposition_rationale: "The canonical scaled-attention equation and numerical example already demonstrate weighted Value aggregation; the article's anti-argmax phrasing does not justify another content block."
+
+  - id: nishanthan-k-qkv-transformers-devto:projection-learning
+    kind: mechanism
+    summary: "The three Q/K/V projection matrices are learned during training through backpropagation and gradient-based optimization; they are not manually specified representations."
+    locator: {type: section, value: "3", label: "How Are Q, K, and V Generated?"}
+    evidence:
+      kind: training-mechanism
+      confidence: well-supported
+      scope: "The article explicitly states that W_Q, W_K and W_V are learned through backpropagation and gradient-based optimization."
+      assumptions: ["The standard differentiable training of Transformer projection parameters is assumed."]
+      limitations: ["No loss function, gradient derivation, optimizer, update rule or training experiment is provided."]
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:qkv, method:gradient-optimization]
+      concept_ids: [query, key, value]
+    candidate_destinations:
+      pages: [fr/queries-keys-values, en/queries-keys-values, fr/gradients, en/gradients]
+      concepts: [query, key, value]
+    disposition: reject
+    disposition_rationale: "The bilingual Q/K/V lesson already identifies the projections as learned parameters, while the gradients lesson owns the optimization mechanism. The source adds no derivation or training evidence that warrants another page edit."
+
+  - id: nishanthan-k-qkv-transformers-devto:scaling-rationale
+    kind: claim
+    summary: "The article motivates division by sqrt(d_k) as a way to prevent large dot-product scores from producing overly peaked softmax distributions and less effective optimization."
+    locator: {type: section, value: "4", label: "How Do Queries and Keys Calculate Attention? — Step 2"}
+    evidence:
+      kind: mathematical-intuition
+      confidence: well-supported
+      scope: "The article gives the qualitative motivation for scaled dot-product attention."
+      assumptions: ["The usual dot-product attention and softmax formulation is assumed."]
+      limitations: ["The variance argument under simplifying assumptions is not derived; the explanation is qualitative."]
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:scaled-dot-product-attention, topic:softmax]
+      concept_ids: [attention-score, scaled-dot-product-attention, softmax]
+    candidate_destinations:
+      pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+      concepts: [attention-score, scaled-dot-product-attention, softmax]
+    disposition: reject
+    disposition_rationale: "The canonical bilingual attention lesson already derives the variance-based scaling rationale and explains softmax saturation more rigorously. Retain the source as corroborating evidence."
+
+  - id: nishanthan-k-qkv-transformers-devto:causal-mask-mention
+    kind: mechanism
+    summary: "The article notes that causal language models mask future positions so a token cannot attend to tokens that come later in the sequence."
+    locator: {type: section, value: "4", label: "How Do Queries and Keys Calculate Attention? — Step 3"}
+    evidence:
+      kind: architectural-constraint
+      confidence: well-supported
+      scope: "A brief statement about preventing attention to future positions in causal language models."
+      assumptions: ["The standard autoregressive causal-attention setting is assumed."]
+      limitations: ["The article does not specify mask construction, additive-mask semantics, tensor broadcasting or the exact point of application beyond placing it before softmax."]
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:causal-masking, topic:self-attention]
+      concept_ids: [causal-mask, self-attention, softmax]
+    candidate_destinations:
+      pages: [fr/causal-masking, en/causal-masking]
+      concepts: [causal-mask, self-attention, softmax]
+    disposition: reject
+    disposition_rationale: "The dedicated bilingual causal-masking lesson provides the complete mechanism and boundary conditions. The article's brief mention is retained as corroborating evidence, not copied."

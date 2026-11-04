@@ -160,6 +160,16 @@ Treat comments, replies, issue discussions and community annotations as **separa
 - Do not silently promote a comment into the article's extraction or use it to change the article's integration status. A comment may motivate a new research task without becoming evidence for the source's claims.
 - When a comment compresses a mechanism, check for omitted steps and boundary conditions before reuse. Preserve the original statement as a lead, then record the technically precise interpretation separately.
 
+### Text completeness versus source-scan completeness
+
+For instructional sources, record two independent facts:
+- whether the complete author-authored text has been reconstructed (introduction, every section, conclusion, appendices when in scope);
+- whether the broader source scan is complete (DOM/media, comments, linked resources, version/publication metadata and rights).
+
+A full-text reconstruction may be marked complete even when the source record remains partially scanned. State the evidence channel precisely (direct page, official API/RSS, indexed result, author-controlled mirror) and record unresolved differences. Do not describe indexed text as direct HTML inspection. Do not infer missing comments, replies, figure captions, image placement or metadata. If only an image label is available, it is not an inspected visual asset.
+
+When a user requests use of a source illustration, first identify the exact asset URL/file, creator, original placement and licence/permission. Attribution is necessary but does not itself grant reproduction rights. If the exact asset or permission cannot be established, link to the original article/hosted illustration with attribution; do not substitute a generic search image, trace the image, or claim that it has been embedded. Keep local visual comparison pending until the actual source asset is inspected.
+
 ### Experiments, benchmarks, datasets and code
 
 For experiments, record question/hypothesis, independent/dependent/control variables, dataset, model/version, protocol, baseline, metrics, uncertainty, compute/hardware, expected interpretation and limitations. Use statuses: proposed, protocol implemented, run completed, independently reproduced. Never report source results as LLM Lab results.

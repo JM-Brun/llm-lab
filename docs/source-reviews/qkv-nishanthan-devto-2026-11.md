@@ -10,9 +10,9 @@
 
 The initial review used indexed article content covering the introduction, sections 1–6 and conclusion. At that point direct retrieval returned a cache miss, and the source was correctly recorded as partially scanned.
 
-A follow-up inspection on 2026-11-04 successfully retrieved the DEV article directly. It confirmed the same complete article body and allowed inspection of the two visible reader comments and the author's reply. The publication year and update metadata remain unverified. Linked series articles, other external materials and embedded visual assets were not inspected separately. The source therefore remains **partially scanned**, not fully scanned.
+A prior scan event recorded a successful direct retrieval of the DEV article and inspection of two visible reader comments plus the author's reply. The latest access recheck did not reproduce that retrieval: the canonical page and API returned cache misses. The full author-authored body is currently corroborated by the indexed DEV result and the author-controlled Medium mirror; only the KV-cache comment is visible in the current indexed snapshot. The publication year and update metadata remain unverified. Linked series articles, other external materials and embedded visual assets were not inspected separately. The source therefore remains **partially scanned**, not fully scanned.
 
-No reuse licence was established. The project records a link and short paraphrased extraction only; no article prose, code or illustration is reproduced.
+No reuse licence was established. The project records links and short paraphrased extraction only; it does not reproduce article prose, code or image files. The original visual is now linked from both bilingual Q/K/V lessons, so readers can consult it at its source.
 
 ## 2. What the source contributes
 
@@ -32,19 +32,19 @@ The canonical bilingual Q/K/V page was inspected in both languages, together wit
 
 | Contribution | Novelty | Complementarity / learner value | Existing coverage and decision |
 |---|---|---|---|
-| Verbal distinction among Q, K and V | Low | Moderate: concise narrative may be a useful pre-formal entry point | Defer; compare the exact opening before making a small editorial change |
+| Verbal distinction among Q, K and V | Low | Moderate: concise narrative may be a useful pre-formal entry point | Reject as a new page edit; the existing Q/K/V page already provides the necessary role distinction |
 | Search analogy | Low | Low: same matching-versus-retrieval mapping as the index-card analogy | Reject as redundant by explanatory function, not merely by topic |
-| Shared input X and learned projections | Low | Low | Defer; canonical lesson already has equations, dimensions and self-/cross-attention caveats |
-| Score → scale → softmax → aggregation | Low | Low | Keep in the dedicated attention lesson, which provides stronger derivation and numerical treatment |
-| Multi-head summary | Low | Moderate as a simpler summary, but little additional learner value | Defer; current Transformer overview and block walkthrough already serve both levels |
+| Shared input X and learned projections | Low | Low | Reject as a new page edit; the canonical lesson already has equations, dimensions and self-/cross-attention caveats |
+| Score → scale → softmax → aggregation | Low | Low | Reject as a new page edit; retain the full computation in the dedicated attention lesson, which provides stronger derivation and numerical treatment |
+| Multi-head summary | Low | Moderate as a simpler summary, but little additional learner value | Reject as a new page edit; the Transformer overview and block walkthrough already serve both levels |
 | bank ambiguity → pronoun it | Low | High: lexical ambiguity and cross-position dependency are distinct learner intuitions | Integrate the pronoun example into both contextualized-representations pages, with an explicit caveat that it does not establish attention-head coreference resolution |
-| Scores are not semantic similarity | Low | Moderate as a misconception guardrail; reinforces a distinction learners may miss | Defer; Q/K/V page already warns against nearest-neighbour and semantic-relevance interpretations |
-| Weighted aggregation is not argmax selection | Low | Moderate: explicit winner-take-all contrast can help beginners | Defer; the attention lesson's equation and numerical example already show weighted Value aggregation |
+| Scores are not semantic similarity | Low | Moderate as a misconception guardrail; reinforces a distinction learners may miss | Reject as a new page edit; the Q/K/V page already warns against nearest-neighbour and semantic-relevance interpretations |
+| Weighted aggregation is not argmax selection | Low | Moderate: explicit winner-take-all contrast can help beginners | Reject as a new page edit; the attention lesson's equation and numerical example already show weighted Value aggregation |
 | KV-cache follow-up | Not an article contribution | Not assessed as an article item | It appeared only in a reader comment; exclude from article extraction and attribution |
 
 ## 4. Technical assessment
 
-The article's central equations and role distinctions are sound at the introductory level. Several points need careful interpretation if used elsewhere:
+The article's central equations and role distinctions are sound at the introductory level. The full text also states that Q/K/V projection matrices are learned by backpropagation and gradient-based optimization, gives a qualitative motivation for scaling, and briefly mentions causal masking. These are now separate atomic extraction items. Several points need careful interpretation if used elsewhere:
 
 1. **X is not necessarily the raw embedding matrix.** It denotes the representation stream entering the attention sublayer; in later blocks it is a contextualized hidden state.
 2. **The single-X equations describe self-attention.** In cross-attention, Q comes from the querying stream while K and V come from the source stream. The project already explains this separately.
@@ -54,9 +54,9 @@ The article's central equations and role distinctions are sound at the introduct
 
 ## 5. Integration decision
 
-**A targeted page edit is justified.** The existing contextualized-representations lesson already uses lexical ambiguity (bank), while the pronoun example (it → the animal) adds a distinct cross-position dependency. Both language versions now include it as a bounded motivation, not as evidence that one attention head resolves coreference. The concise verbal Q/K/V framing remains deferred pending a separate learner-benefit comparison.
+**A targeted page edit is justified.** The existing contextualized-representations lesson already uses lexical ambiguity (bank), while the pronoun example (it → the animal) adds a distinct cross-position dependency. Both language versions now include it as a bounded motivation, not as evidence that one attention head resolves coreference. The concise verbal Q/K/V framing is rejected as a new page edit because the current lesson already explains it more precisely; the source is now linked as an optional external visual reference.
 
-The search analogy is rejected only after comparing its actual mapping and learner function with the existing index-card analogy. The mathematical and multi-head material remains deferred because the project already provides more complete treatments at the appropriate locations.
+The search analogy is rejected only after comparing its actual mapping and learner function with the existing index-card analogy. The mathematical and multi-head material is rejected as new page content because the project already provides more complete treatments at the appropriate locations.
 
 At this initial page-integration stage, no new concept, graph edge, page, figure, experiment or bibliography entry was created. A later differential graph audit identified a separate modelling gap in LLM Lab's existing registry; the justified graph refinement is documented in section 9. The reader comment remains excluded from article-derived content.
 
@@ -74,7 +74,7 @@ The initial review records a direct article-body inspection and two visible read
 
 The KV-cache suggestion is now preserved as its own extraction item, with `provenance.voice: reader-comment`, a comment locator and a parent-source reference. It is not attributed to the article author. Its technical lead has been checked independently against the [Hugging Face Transformers caching explanation](https://huggingface.co/docs/transformers/main/en/cache_explanation), registered as a separate source and extracted separately.
 
-The technical interpretation is precise: during incremental causal decoding at position `t`, the current position produces `q_t`, `k_t` and `v_t`; `q_t` attends over the cached past keys/values together with the current `k_t`/`v_t); then the current key and value are appended to the per-layer cache. Thus, “only a fresh Query” describes which query is needed for the incremental attention calculation; it does **not** mean that the current token's K and V are skipped. The cache reduces recomputation but consumes memory proportional to the retained K/V states; exact usage depends on model dimensions and cache strategy. This verification is grounded in the independent Hugging Face documentation, not in the QKV article or the commenter.
+The technical interpretation is precise: during incremental causal decoding at position `t`, the current position produces `q_t`, `k_t` and `v_t`; `q_t` attends over the cached past keys/values together with the current `k_t`/`v_t`; then the current key and value are appended to the per-layer cache. Thus, “only a fresh Query” describes which query is needed for the incremental attention calculation; it does **not** mean that the current token's K and V are skipped. The cache reduces recomputation but consumes memory proportional to the retained K/V states; exact usage depends on model dimensions and cache strategy. This verification is grounded in the independent Hugging Face documentation, not in the QKV article or the commenter.
 
 The source catalogue preserves earlier scan events and adds this recheck with its actual access limitations. The QKV article remains `partially-scanned`; its integration remains `partially-integrated`. The separate Hugging Face documentation source is also partial because the mutable `main` revision was not pinned and implementation variants were not exhaustively audited.
 
@@ -84,7 +84,7 @@ The visual remains the most important unresolved part of this source scan. The i
 
 The canonical DEV article HTML and its API endpoints were not retrievable in this recheck. The Medium mirror's indexed article text and profile metadata are insufficient to inspect the actual illustration. Therefore the image is still **not visually inspected**. The user's observation that it is more attractive than the current project diagram remains a useful review lead, not a verified visual comparison. No generic image-search result is substituted.
 
-**Decision: inspection pending; no reuse.** The next successful retrieval must identify the exact image URL and its position in the article, download/open the original at readable resolution, compare the visual's information design with `site/images/queries-keys-values.svg` and `site/images/queries-keys-values-en.svg`, and separately establish creator and reuse rights. If the visual is pedagogically stronger but reuse rights remain unclear, link to it and design an independent visual from the underlying concept without tracing or cosmetically altering the source.
+**Decision: use as an externally hosted visual reference; do not copy the file.** Both bilingual Q/K/V lessons now provide an explicitly attributed link to the author's Medium mirror, where the article and its associated illustration can be consulted. The original image bytes and stable asset URL are still unavailable to this scan, so the visual has not been independently inspected and cannot yet be compared on visual-design merits with `site/images/queries-keys-values.svg` and `site/images/queries-keys-values-en.svg`. This is a source link, not a claim that the image has been embedded or that reuse permission exists. If a direct asset URL and reuse permission are later established, the project can reconsider local embedding.
 
 The extraction workflow now has explicit procedures for a retrieval ladder (canonical HTML/metadata, documented publisher API/RSS/JSON, then confirmed author-controlled mirror), exact media identity, and separate provenance for comments embedded in a parent source. A text scan, a mirror's image labels, and a visual inspection are three different evidence states.
 
@@ -97,3 +97,57 @@ The comparison found no reason to copy the article's section order into the proj
 It did reveal a representational gap in the canonical concept graph. Four stable concepts are now registered: `attention-score`, `attention-weight`, `scaled-dot-product-attention`, and `multi-head-attention`. Their bilingual definitions, canonical page mappings and typed relations make explicit distinctions that the existing lessons already teach. The QKV source record and relevant extraction items now reference these canonical IDs.
 
 No new page or route edge was added. The graph change is a refinement of the project's existing conceptual model, not a new content requirement generated by the article.
+
+
+## 10. Integration closure
+
+**The article's pedagogical integration is complete; its source scan is not.** These are separate lifecycle dimensions and must remain separate in the catalogue.
+
+The article's author-authored contributions have now all received a final disposition (11 atomic items: one integrated and ten rejected as unnecessary new edits):
+
+| Extracted contribution | Final disposition | Integration outcome |
+|---|---|---|
+| Q/K/V role distinction | Rejected as a new edit | Already explained more precisely in the bilingual Q/K/V lesson |
+| Shared-input learned projections | Rejected as a new edit | Equations, dimensions and self-/cross-attention boundary already covered |
+| Scaled dot-product computation | Rejected as a new edit | Dedicated attention lesson provides fuller derivation and numerical treatment |
+| Multi-head attention overview | Rejected as a new edit | Transformer overview and implementation walkthrough cover the conceptual and implementation levels |
+| Search/document analogy | Rejected | Explanatory mapping duplicates the existing index-card analogy |
+| Lexical ambiguity and pronoun reference | Integrated | The complementary pronoun-reference example is present in both contextualized-representations lessons |
+| Attention score is not semantic similarity | Rejected as a new edit | Existing bilingual misconception guardrails are more precise |
+| Weighted aggregation is not argmax | Rejected as a new edit | Existing equation and numerical example already demonstrate weighted aggregation |
+| Q/K/V projections learned by backpropagation | Rejected as a new edit | Existing Q/K/V page identifies learned parameters; the gradients lesson owns optimization |
+| Scaling prevents peaked softmax | Rejected as a new edit | Existing attention lesson derives the variance-based rationale more rigorously |
+| Causal masking blocks future positions | Rejected as a new edit | Dedicated bilingual causal-masking lesson provides the full mechanism |
+
+The reader-comment KV-cache lead remains **deferred** as a separately attributed community contribution, not as an unfinished article claim. Its technical content has been independently checked against the separately registered Hugging Face documentation source; it belongs in a future inference-efficiency learning destination, not in the introductory Q/K/V lesson.
+
+The canonical graph refinement is complete: the four stable concepts and their typed relations are registered, linked to existing bilingual resources, and covered by the source-graph comparison dossier. The article's six-section teaching sequence was compared with the canonical guided route, page routes and Build route; no route or navigation change was justified. No new page, local visual asset or experiment is added merely to mirror the source; the external source link is an optional visual detour.
+
+Accordingly, the parent article's `integration_status` is **integrated**: every author-authored contribution has been integrated or explicitly rejected as redundant. The separate KV-cache reader comment remains deferred. The article's `scan_status` remains **partially-scanned** because the embedded image has not been visually inspected, linked materials and publication metadata remain unverified, and reuse rights are unknown. This does not block the completed pedagogical integration, but it does block claiming a complete source audit or any figure reuse.
+
+No source content has been deleted from the extraction record; rejected items remain available as provenance-backed corroborating evidence.
+
+
+## 11. Final access recheck
+
+A final public-web recheck on 2026-11-04 again returned a cache miss for the canonical DEV article page. The indexed DEV result nevertheless exposes the complete introduction, six numbered sections, conclusion and reader comment, consistent with the extraction already recorded. The author-controlled Medium mirror also exposes the complete article body. These indexed/mirror copies support text-level reconciliation, but do not establish successful direct retrieval of the canonical page.
+
+The Medium profile search result now lists the QKV article and two image entries under its title. Opening the profile itself still returns a stale page snapshot that omits the QKV article; the image entries do not expose a stable original asset URL, image bytes, caption/placement or rights-holder information. Thus the visual inspection remains blocked. The direct DEV page and profile snapshot are evidence of access limitations, not grounds to infer the figure's content.
+
+**Final scan boundary:** the article's text and visible comment are reconciled; the source-local graph and route are compared; all author-authored extraction items have final integration dispositions. The source remains partially scanned for the unretrieved comment/reply thread, external linked material, publication metadata, the actual visual asset and rights. No figure reuse is permitted on the current evidence.
+
+
+## 12. Complete text extraction and remaining scan boundary
+
+The author-authored text reconstruction is now marked **complete** in the extraction's `pedagogical_model.reconstruction`. It covers the introduction, all six numbered sections and the conclusion, using the full indexed DEV result and the matching author-controlled Medium mirror. This is deliberately distinct from the source record's `scan_status`, which remains `partially-scanned` because the asset/comment/metadata boundary is not fully resolved.
+
+The extraction now explicitly records three details that were previously represented only indirectly:
+- the Q/K/V projection matrices are learned through backpropagation and gradient-based optimization (Section 3);
+- the scaling factor is motivated qualitatively by preventing large scores and overly peaked softmax distributions, without deriving the variance argument (Section 4);
+- causal masking is mentioned as a future-position restriction before softmax, but is not developed as a separate mechanism (Section 4).
+
+The source-local graph also now connects Q/K/V projections to a learning-process node for gradient-based optimization. These additions preserve the article's full instructional content without creating duplicate explanations in the public lessons.
+
+The currently indexed result exposes the substantive KV-cache reader comment, which remains a separate community item. An earlier scan recorded a second visible comment and an author reply, but their exact text is not recoverable from the current snapshot. They are not reconstructed from memory or guessed. The parent source remains partially scanned until this thread can be re-opened and reconciled.
+
+**Illustration handling:** the two Q/K/V lessons now link directly to the author-controlled Medium article and cite Nishanthan K and the DEV Community publication. This makes the source illustration accessible to readers at its origin without copying an uninspected image or implying a reuse licence. It is not yet an embedded project asset.

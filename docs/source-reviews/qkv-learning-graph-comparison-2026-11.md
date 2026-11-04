@@ -191,6 +191,32 @@ Existing `softmax` and `causal-mask` concepts are associated with the scaled-att
 
 These additions do **not** create new pages, duplicate explanations, or change the reader-facing route. They make the graph reflect distinctions already taught by LLM Lab. The graph remains a semantic model; the learning route remains a separate pedagogical sequence.
 
+## 6.5 Exact route crosswalk: source article, local page, project curriculum
+
+The comparison must distinguish three different route scales. The source's six-section order is not directly comparable to one page's navigation metadata or to the full project curriculum.
+
+| Learning function | DEV article's local sequence | LLM Lab page-level sequence | LLM Lab project-level route |
+|---|---|---|---|
+| Orient and motivate | §1: Q/K/V role analogy; §2: bank ambiguity and pronoun reference | Contextualized representations → Transformer overview → Q/K/V | `representations`: embedding space → positional encoding → contextualized representations |
+| Define the mechanism's inputs | §3: shared X projected to Q, K, V; matrices learned by backpropagation | Q/K/V page: roles, shared input, matrix shapes, learned parameters, self-/cross-attention boundary | `computation`: Transformer overview → Q/K/V |
+| Calculate the attention distribution | §4: QKᵀ → scaling → softmax; brief causal-mask mention | Next page: scaled dot-product attention with matrix shapes, variance-based scaling rationale, numerical example and mask semantics | `computation`: scaled dot-product attention → causal masking as its own lesson |
+| Form contextual output | §5: weighted aggregation A V; explicitly rejects argmax | Covered in the scaled-attention page; Q/K/V page links forward rather than duplicating it | Same computation stage, followed by prediction/logits |
+| Generalize across heads | §6: per-head projections, parallel attention, concatenation and Wᴼ | Not on the Q/K/V page; Transformer overview introduces the architecture and block walkthrough owns implementation detail | Optional/deeper architecture and Build path; implementation follows the conceptual route rather than being inserted into the Q/K/V lesson |
+| Practice and verify | No exercises, worked tensor shapes or executable experiment | Self-check on Q/K/V, numerical attention workbench and exercises on the dedicated attention page | Build path traces the mechanism into tensor operations and implementation tests |
+
+### What the route comparison says
+
+1. **The article is a self-contained micro-sequence.** It starts with analogy and motivation, then proceeds linearly through projections, scores, aggregation and multi-head attention. It is efficient for a reader who already knows what a Transformer input representation and matrix multiplication are.
+2. **The Q/K/V page is a component lesson, not a miniature copy of the article.** It assumes the learner has just seen the Transformer data flow, owns the Q/K/V projection boundary and dimensions, and explicitly hands the score/aggregation derivation to the next page.
+3. **The project route deliberately places context before mechanism.** The `representations` stage establishes embeddings, positional information and contextualized states before the `computation` stage. The article's two linguistic examples are already integrated in the contextualization lesson; repeating them on the Q/K/V page would weaken page ownership.
+4. **The project decomposes the article's §4 into two learning units.** Scaled attention explains scores, scaling, normalization and weighted aggregation; causal masking then treats the temporal constraint and its implementation separately. This is more precise than the article's brief parenthetical mention.
+5. **The project distributes multi-head attention by depth.** The overview provides the architecture-level account; the block walkthrough provides reshaping, head dimensions, concatenation and output projection. Promoting all of §6 into the introductory Q/K/V page would duplicate both destinations.
+6. **The project has stronger transfer supports.** Its exercises, numerical workbench and Build implementation make the computation testable rather than merely readable.
+
+### Route decision
+
+No change is justified to the canonical page sequence or project guided route. The article's best contribution is its compact visual/verbal entry point, not a better dependency order. Both Q/K/V pages now link to the author-controlled Medium article as an optional external visual reference, with attribution. This link is a visual detour, not a new mandatory route node; the image itself has not been copied or claimed to be visually validated.
+
 ## 7. Route decision
 
 **No change to the six-stage guided route or the page-level suggested route is warranted by this source.**

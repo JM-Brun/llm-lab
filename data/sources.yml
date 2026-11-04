@@ -15,7 +15,7 @@ sources:
     version: null
     revision: null
     licence: {identifier: null, url: null, status: unknown}
-    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
     classification:
       primary_theme: architectures-mechanisms
       secondary_themes: []
@@ -30,7 +30,7 @@ sources:
       contribution_types: [architecture, pedagogy]
       audiences: [beginner, learner]
     scan_status: partially-scanned
-    integration_status: partially-integrated
+    integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-04"
         status: partially-scanned
@@ -62,6 +62,18 @@ sources:
           - "The indexed Medium listing exposes image labels but not exact image bytes, a stable asset URL, figure placement or creator/rights metadata; the directly opened profile snapshot is stale and omits the QKV article."
           - "The two image entries cannot yet be classified reliably as cover versus in-body figure or confirmed as the same asset."
           - "No article-image reuse rights were established."
+      - accessed_at: "2026-11-04"
+        status: partially-scanned
+        inspected_scope:
+          - "Complete author-authored text reconstructed and reconciled: introduction, sections 1–6 and conclusion, using the indexed DEV result and author-controlled Medium mirror"
+          - "One substantive KV-cache reader comment visible in the indexed result, retained as separate community provenance"
+          - "The source's implied six-step pedagogical sequence and all mathematical/architectural statements mapped to the source-local graph and extraction items"
+          - "The exact QKV image could not be retrieved as bytes; the author-controlled Medium article is linked from both Q/K/V lessons as an external visual reference, without copying the asset"
+        limitations:
+          - "The direct DEV HTML and API endpoints remained unavailable to the page reader; text completeness is based on the full indexed article result and matching author-controlled Medium mirror."
+          - "An earlier scan recorded two visible reader comments and an author reply; the current indexed snapshot exposes only the KV-cache comment, so the exact second comment/reply could not be re-extracted or independently reconciled."
+          - "The Medium profile exposes two image labels under the QKV article title but no exact image URL or bytes; their role and identity remain unresolved."
+          - "The publication year, update metadata, linked series articles, image creator and image reuse permission remain unverified."
     related:
       pages:
         - fr/queries-keys-values

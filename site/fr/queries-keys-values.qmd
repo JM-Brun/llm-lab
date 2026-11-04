@@ -45,6 +45,13 @@ L'analogie aide à distinguer les fonctions, mais elle ne décrit pas une recher
 
 ![Schéma des projections Q, K et V : Q et K déterminent les poids d'attention, qui servent à combiner les valeurs V.](../images/queries-keys-values.svg){fig-alt="Une représentation d'entrée est projetée en requête, clé et valeur. Les requêtes sont comparées aux clés ; les poids obtenus pondèrent les valeurs." width=100%}
 
+::: {.callout-note title="Une autre illustration, dans la source"}
+Nishanthan K propose une représentation visuelle complémentaire des rôles Q/K/V dans son article. [Consulter l'article et son illustration originale sur Medium](https://nishanthan-k.medium.com/how-query-key-and-value-qkv-work-in-transformers-1274bfa14ea8) (miroir de l'article publié sur [DEV Community](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a)).
+
+Référence : Nishanthan K, *How Query, Key, and Value (QKV) Work in Transformers*, DEV Community, publié le 22 octobre (année non vérifiée). L'illustration reste hébergée par sa source ; LLM Lab établit un lien vers elle plutôt que d'en recopier le fichier, car les droits de réutilisation ne sont pas établis.
+:::
+
+
 Pour situer historiquement les mécanismes d'attention avant l'architecture Transformer, voir [l'historique des Transformers](transformer-history.qmd).
 
 ## D'où viennent Q, K et V ?
