@@ -50,6 +50,9 @@ stages:
     pages:
       fr: [fr/llm-overview, fr/generation]
       en: [en/llm-overview, en/generation]
+    optional_pages:
+      fr: [fr/transformer-architectures]
+      en: [en/transformer-architectures]
   - id: text-input
     title:
       fr: "Du texte aux tokens"
@@ -60,6 +63,9 @@ stages:
     pages:
       fr: [fr/text-data, fr/tokenization-strategies]
       en: [en/text-data, en/tokenization-strategies]
+    optional_pages:
+      fr: [fr/unicode-text, fr/tokenizer-design-evaluation]
+      en: [en/unicode-text, en/tokenizer-design-evaluation]
   - id: representations
     title:
       fr: "Des identifiants aux représentations"
@@ -70,6 +76,9 @@ stages:
     pages:
       fr: [fr/embedding-space, fr/positional-encoding, fr/contextualized-representations]
       en: [en/embedding-space, en/positional-encoding, en/contextualized-representations]
+    optional_pages:
+      fr: [fr/tensors, fr/rope]
+      en: [en/tensors, en/rope]
   - id: computation
     title:
       fr: "Comprendre le calcul du Transformer"
@@ -80,6 +89,9 @@ stages:
     pages:
       fr: [fr/transformer, fr/queries-keys-values, fr/scaled-dot-product-attention, fr/causal-masking]
       en: [en/transformer, en/queries-keys-values, en/scaled-dot-product-attention, en/causal-masking]
+    optional_pages:
+      fr: [fr/cross-attention]
+      en: [en/cross-attention]
   - id: prediction
     title:
       fr: "Des états aux prédictions"
@@ -90,6 +102,9 @@ stages:
     pages:
       fr: [fr/logits, fr/probabilites, fr/vraisemblance, fr/generation]
       en: [en/logits, en/probabilities, en/likelihood, en/generation]
+    optional_pages:
+      fr: [fr/decoding-strategies]
+      en: [en/decoding-strategies]
   - id: learning-evaluation
     title:
       fr: "Comprendre l'apprentissage et évaluer"
@@ -100,6 +115,9 @@ stages:
     pages:
       fr: [fr/cross-entropy, fr/loss, fr/gradients, fr/evaluation-experimentale]
       en: [en/cross-entropy, en/loss, en/gradients, en/experimental-evaluation]
+    optional_pages:
+      fr: [fr/scaling-laws]
+      en: [en/scaling-laws]
 -->
 
 ## Page ownership: one canonical explanation, deliberate reminders
