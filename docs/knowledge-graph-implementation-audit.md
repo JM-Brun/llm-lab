@@ -58,7 +58,7 @@ The registry also contains more specific relations such as part-of, contributes-
 
 ### Validation evidence
 
-At the latest inspected CI attempt for PR #399, the page-metadata validator, concept-registry validator, history validator, and embedding trace all passed. Ruff formatting then failed on formatting in scripts/check_concept_registry.py; formatting was corrected in a subsequent commit. The subsequent CI result must be checked before calling the PR green. Unit tests were skipped in the failed run because the workflow stopped at formatting.
+On PR #399 head 7bea7ec (2026-11-04), the Python quality workflow passed: page-metadata validation, concept-registry validation, history validation, embedding trace, Ruff format, Ruff lint, mypy, and pytest all completed successfully. The Quarto bilingual site render was still in progress at the latest status check; its final result remains to be confirmed.
 
 ## Remaining gaps, ordered by dependency
 
