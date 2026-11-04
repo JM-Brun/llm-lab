@@ -28,7 +28,7 @@ The existing validator remains the source of truth for structural invariants. Th
 - The structural validator reported no broken references, route/hierarchy reciprocity errors, cycles or FR/EN parity errors.
 - The hierarchy contains fan-out and multi-parent hubs; these are not prerequisites and are not merged into the route graph.
 
-The report is being added with PR #429. Its first CI execution successfully ran the audit and printed the topology, but the workflow subsequently stopped at Ruff formatting; that formatting is being corrected. These are structural findings, not evidence that the route is pedagogically optimal or that rendered interactions are accessible.
+The report and topology audit are included in PR #429. Python CI now passes on head `ce6237a86c2c8d81794ffb8aeb60a6e0443f5c4a`, including the audit step, formatting, lint, type checks and tests; the Quarto site workflow is still pending. These are structural findings, not evidence that the route is pedagogically optimal or that rendered interactions are accessible.
 
 ## 2. Curriculum contract to preserve
 
