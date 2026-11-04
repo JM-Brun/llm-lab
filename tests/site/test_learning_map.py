@@ -101,7 +101,10 @@ def _write_concept_registry(root: Path) -> None:
             "part-of": {
                 "direction": "directed",
                 "labels": {"fr": "fait partie de", "en": "is part of"},
-                "descriptions": {"fr": "La source est une partie de la cible.", "en": "The source is part of the target."},
+                "descriptions": {
+                    "fr": "La source est une partie de la cible.",
+                    "en": "The source is part of the target.",
+                },
             }
         },
         "relations": [{"from": "query", "type": "part-of", "to": "attention"}],
@@ -508,5 +511,8 @@ def test_concept_graph_script_exposes_direction_and_relation_legend() -> None:
     script_path = MODULE_PATH.parents[2] / "site" / "includes" / "learning-map.html"
     source = script_path.read_text(encoding="utf-8")
     assert "Relationship meaning (source → target)" in source
-    assert 'item.textContent = source.label + " — " + (relation ? relation.label : edge.type) + " → " + target.label;' in source
+    assert (
+        'item.textContent = source.label + " — " + (relation ? relation.label : edge.type) + " → " + target.label;'
+        in source
+    )
     assert 'conceptLegend.hidden = false' in source
