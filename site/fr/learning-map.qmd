@@ -27,7 +27,7 @@ La carte distingue le **fil de lecture conseillé**, la **hiérarchie pédagogiq
 - **Parent / enfant** — flèche bleue : décomposition ou inclusion pédagogique.
 - **Associé** — liaison grise en pointillés : proximité conceptuelle, sans ordre imposé.
 
-Les blocs représentent des pages. Les notions affichées dans chaque bloc sont extraites des titres de sections de la page : elles servent de repères, pas de taxonomie exhaustive. Les données sont générées depuis les métadonnées de chaque page publiée.
+Les blocs représentent des pages. Les notions affichées dans chaque bloc sont extraites des titres de sections de la page : elles servent de repères, pas de taxonomie exhaustive. Les données sont générées depuis les métadonnées de chaque page publiée. Le filtre par domaine permet d'isoler l'une des six familles d'approfondissement sans modifier le parcours principal.
 
 <div class="learning-map" data-learning-map data-language="fr" data-source="../learning-map-data-fr.json">
   <div class="learning-map-toolbar">
