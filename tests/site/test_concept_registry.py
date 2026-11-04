@@ -229,4 +229,4 @@ def test_registry_validates_relation_direction_metadata() -> None:
     data = _valid_registry()
     data["relation_types"]["implemented-by"]["direction"] = "symmetric"
     errors = validate_registry(data)
-    assert any("only contrasts-with is currently defined as symmetric" in error for error in errors)
+    assert any("is not defined as symmetric" in error for error in errors)
