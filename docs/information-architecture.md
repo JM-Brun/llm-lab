@@ -173,5 +173,5 @@ The following gaps should be addressed incrementally:
 | Page type to template mapping | [Site page design system](site-page-design-system.md) |
 | Visual design | [Design system](design-system.md) |
 | Historical dataset | [History data model](history-data-model.md) |
-| Contributor process | [Contributing guide](../CONTRIBUTING.md)) |
+| Contributor process | [Contributing guide](../CONTRIBUTING.md) |
 | Repeatable information-architecture audits | [Knowledge architecture audit skill](../.github/skills/knowledge-architecture-audit/SKILL.md) |
