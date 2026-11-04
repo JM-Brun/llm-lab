@@ -144,7 +144,7 @@ Store one file per source in `data/extractions/<source-id>.yml`. Each item is at
 For instructional sources (tutorials, blog articles, courses and book chapters), the extraction file also carries a top-level `pedagogical_model`. This is the source's own reconstructed model, not an extension of the canonical LLM Lab concept registry:
 
 - `reconstruction`: completeness status, evidence basis and explicitly inferred elements;
-- `source_graph.nodes`: source-local node IDs, kinds, descriptions and source locators;
+- `source_graph.nodes`: source-local node IDs, kinds, descriptions and source locators; IDs must use a `src-` prefix so they cannot be mistaken for canonical concept IDs;
 - `source_graph.edges`: typed source-local relations whose endpoints must resolve to nodes in that same graph;
 - `source_graph.interpretation`: an explicit statement that reconstructed relations are interpretations unless the source itself defines them formally;
 - `learning_outcomes` and `assumed_prerequisites`: each marked `declared` or `inferred`, with its basis;
