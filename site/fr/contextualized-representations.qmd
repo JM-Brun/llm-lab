@@ -12,7 +12,7 @@ scope: "Explique comment les couches du Transformer transforment les embeddings 
 purpose: "Le lecteur doit pouvoir expliquer pourquoi deux occurrences d’un même token partagent un embedding initial mais peuvent avoir des représentations contextualisées différentes, et relier cette différence au traitement par les couches du Transformer."
 suggested_route:
   previous: "fr/positional-encoding"
-  next: "fr/queries-keys-values"
+  next: "fr/transformer"
 hierarchy:
   parents: ["fr/embedding-space", "fr/positional-encoding", "fr/transformer"]
   children: ["fr/queries-keys-values"]
