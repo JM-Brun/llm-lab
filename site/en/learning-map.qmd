@@ -48,36 +48,16 @@ Six conceptual stages provide an entry point and a suggested progression. Primar
 
 ## Explore the resources
 
-The progressive map replaces the former dense graph: it first shows territories, then reveals each section on click, then the pages. The "Canonical concepts" view separately presents the registry concepts. These views support exploration; they do not replace the guided route above.
+The progressive map first shows territories, then reveals each section on click, then the pages. The "Canonical concepts" view separately presents the registry concepts. These views support exploration; they do not replace the guided route above. Both the map and the list below are generated automatically by the Python meta-code from the Quarto sidebar and page metadata: a single source to maintain.
 
-<div class="learning-map" data-learning-map data-language="en" data-source="../learning-map-data-en.json">
-  <div class="learning-map-toolbar">
-    <div class="learning-map-filter">
-      <label for="learning-map-mode">View</label>
-      <select id="learning-map-mode" data-map-mode>
-        <option value="pages">Territory map</option>
-        <option value="concepts">Canonical concepts</option>
-      </select>
-    </div>
-    <div class="learning-map-search">
-      <label for="learning-map-search">Search pages and concepts</label>
-      <input id="learning-map-search" data-map-search type="search" autocomplete="off">
-    </div>
-  </div>
-  <div class="learning-map-layout">
-    <div class="learning-map-canvas learning-map-viewport" data-map-viewport>
-      <p class="map-load-status">Loading map…</p>
-    </div>
-    <aside class="learning-map-details" aria-live="polite" aria-atomic="true">
-      <details data-map-details open>
-        <summary>Details</summary>
-        <div class="map-detail-panel" data-map-detail-panel></div>
-      </details>
-    </aside>
-  </div>
-  <p class="learning-map-status" data-map-status role="status" aria-live="polite">Loading map…</p>
-</div>
+{{< include ../includes/generated-map-territories-en.qmd >}}
 
 Use this map for orientation, not as a strict prerequisite graph. Advanced pages can be consulted directly when they address the question at hand.
+
+### All resources, as a list
+
+The same structure as a static list: useful without JavaScript, for printing, or for copying a link. It is produced by the same generation as the interactive map.
+
+{{< include ../includes/generated-map-list-en.qmd >}}
 
 [Browse the glossary](glossary.qmd) · [Explore the GPT build path](build-path.qmd) · [Version française](../fr/learning-map.html)

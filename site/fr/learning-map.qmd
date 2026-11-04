@@ -48,36 +48,16 @@ Six étapes conceptuelles donnent un point d'entrée et une progression conseill
 
 ## Explorer les ressources
 
-La carte progressive remplace l'ancien graphe dense : elle affiche d'abord les territoires, puis révèle chaque rubrique au clic, puis les pages. La vue « Notions canoniques » présente séparément les concepts du registre. Ces vues servent à explorer ; elles ne remplacent pas le parcours guidé ci-dessus.
+La carte progressive affiche d'abord les territoires, puis révèle chaque rubrique au clic, puis les pages. La vue « Notions canoniques » présente séparément les concepts du registre. Ces vues servent à explorer ; elles ne remplacent pas le parcours guidé ci-dessus. La carte comme la liste ci-dessous sont générées automatiquement par le méta-code Python à partir de la sidebar Quarto et des métadonnées des pages : une seule source à maintenir.
 
-<div class="learning-map" data-learning-map data-language="fr" data-source="../learning-map-data-fr.json">
-  <div class="learning-map-toolbar">
-    <div class="learning-map-filter">
-      <label for="learning-map-mode">Vue</label>
-      <select id="learning-map-mode" data-map-mode>
-        <option value="pages">Carte des territoires</option>
-        <option value="concepts">Notions canoniques</option>
-      </select>
-    </div>
-    <div class="learning-map-search">
-      <label for="learning-map-search">Rechercher une page ou une notion</label>
-      <input id="learning-map-search" data-map-search type="search" autocomplete="off">
-    </div>
-  </div>
-  <div class="learning-map-layout">
-    <div class="learning-map-canvas learning-map-viewport" data-map-viewport>
-      <p class="map-load-status">Chargement de la carte…</p>
-    </div>
-    <aside class="learning-map-details" aria-live="polite" aria-atomic="true">
-      <details data-map-details open>
-        <summary>Détails</summary>
-        <div class="map-detail-panel" data-map-detail-panel></div>
-      </details>
-    </aside>
-  </div>
-  <p class="learning-map-status" data-map-status role="status" aria-live="polite">Chargement de la carte…</p>
-</div>
+{{< include ../includes/generated-map-territories-fr.qmd >}}
 
 La carte est un outil d'orientation : elle n'indique pas qu'une page est un prérequis strict. Les pages de niveau avancé peuvent être consultées directement lorsque la question le justifie.
+
+### Toutes les ressources, en liste
+
+La même structure, en liste statique : utile sans JavaScript, pour l'impression, ou pour copier un lien. Elle est produite par la même génération que la carte interactive.
+
+{{< include ../includes/generated-map-list-fr.qmd >}}
 
 [Consulter le glossaire](glossary.qmd) · [Voir le parcours de construction du GPT](build-path.qmd) · [English version](../en/learning-map.html)

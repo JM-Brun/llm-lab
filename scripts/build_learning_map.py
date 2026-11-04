@@ -4,6 +4,10 @@
 The generated page rank is a deterministic display-order heuristic only. It
 combines suggested-route and hierarchy edges to arrange the exploratory graph;
 it is not a curriculum sequence or a prerequisite/topological ordering.
+
+Structure (pages, navigation areas, concepts) is derived from authored sources;
+presentation artifacts are rendered by ``learning_map_renderers`` and written
+next to the JSON payloads, so the two layers evolve independently.
 """
 
 from __future__ import annotations
@@ -16,6 +20,7 @@ from collections import deque
 from pathlib import Path
 from typing import Any, Literal
 
+from learning_map_renderers import REPRESENTATIONS, escape_markdown_text, render_map_script
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
@@ -328,12 +333,6 @@ def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[Resolv
     return resolved
 
 
-def _escape_markdown_text(value: str) -> str:
-    """Escape Markdown syntax in titles and objectives originating in page metadata."""
-    special = "\\*_{}[]<>#+.!|" + chr(96)
-    return "".join(f"\\{character}" if character in special else character for character in value)
-
-
 def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], language: str) -> str:
     """Render the route as native Quarto Markdown; no browser-side route renderer."""
     if language not in {"fr", "en"}:
@@ -346,21 +345,21 @@ def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], languag
             [
                 "::: {.guided-route-stage}",
                 "",
-                f"### {index:02d} · {_escape_markdown_text(stage.title)}",
+                f"### {index:02d} · {escape_markdown_text(stage.title)}",
                 "",
-                _escape_markdown_text(stage.objective),
+                escape_markdown_text(stage.objective),
                 "",
                 f"**{core_label}**",
                 "",
             ]
         )
         lines.extend(
-            f"- [{_escape_markdown_text(page.title)}]({page.href})" for page in stage.pages
+            f"- [{escape_markdown_text(page.title)}]({page.href})" for page in stage.pages
         )
         if stage.optional_pages:
             lines.extend(["", f"**{optional_label}**", ""])
             lines.extend(
-                f"- [{_escape_markdown_text(page.title)}]({page.href})"
+                f"- [{escape_markdown_text(page.title)}]({page.href})"
                 for page in stage.optional_pages
             )
         lines.extend(["", ":::", ""])
@@ -374,6 +373,22 @@ def write_guided_route_fragment(language: str, stages: list[ResolvedGuidedRouteS
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(render_guided_route_markdown(stages, language), encoding="utf-8")
     return output
+
+
+def write_map_fragments(
+    language: str, navigation: list[dict[str, Any]], pages: list[dict[str, Any]]
+) -> None:
+    """Write every generated presentation artifact for one language."""
+    page_by_id = {page["id"]: page for page in pages}
+    includes = SITE / "includes"
+    includes.mkdir(parents=True, exist_ok=True)
+    (includes / "learning-map.html").write_text(render_map_script(), encoding="utf-8")
+    for representation in REPRESENTATIONS.values():
+        fragment = includes / f"generated-{representation.artifact}-{language}.qmd"
+        fragment.write_text(
+            representation.render(language, navigation, page_by_id),
+            encoding="utf-8",
+        )
 
 
 def load_concept_graph(
@@ -433,7 +448,7 @@ def assign_route_rank(pages: list[dict[str, Any]], language: str) -> None:
 
 
 def build(language: str) -> Path:
-    """Write the published page graph for one language."""
+    """Write the published page graph and every generated presentation artifact."""
     all_pages = load_pages()
     pages = [
         page for page in all_pages if page["language"] == language or page["language"] == "shared"
@@ -451,6 +466,7 @@ def build(language: str) -> Path:
     guided_route = load_guided_route(language, pages)
     navigation = load_navigation(language, pages)
     write_guided_route_fragment(language, guided_route)
+    write_map_fragments(language, navigation, pages)
     output.write_text(
         json.dumps(
             {
