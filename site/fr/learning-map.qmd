@@ -9,8 +9,8 @@ toc: false
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/learning-map"
-scope: "Carte visuelle et interactive des pages publiées, de leur progression suggérée, de leur hiérarchie pédagogique, des titres de section et d’un graphe conceptuel canonique distinct."
-purpose: "Permettre au lecteur de comprendre l’architecture du parcours, d’identifier les pages et notions pertinentes, puis d’ouvrir directement une page depuis sa brique dans le graphe."
+scope: "Parcours guidé en six étapes conceptuelles, suivi de deux graphes exploratoires distincts : ressources publiées et concepts canoniques."
+purpose: "Orienter le lecteur dans une progression conceptuelle compacte, puis lui permettre d’explorer les ressources et les relations entre concepts."
 suggested_route:
   previous: null
   next: null
@@ -21,7 +21,7 @@ related: []
 tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:fr", "status:published"]
 -->
 
-La carte distingue le **fil de lecture conseillé**, la **hiérarchie pédagogique** et les **liens transversaux**. Ces relations répondent à des questions différentes : elles ne définissent pas une séquence obligatoire.
+La page distingue un **parcours guidé** compact de deux **graphes exploratoires**. Le parcours est dérivé du curriculum canonique ; les graphes permettent ensuite d’explorer les ressources et les relations sans imposer un ordre unique.
 
 - **Parcours** — flèche verte : page suggérée avant/après.
 - **Parent / enfant** — flèche bleue : décomposition ou inclusion pédagogique.
@@ -29,10 +29,28 @@ La carte distingue le **fil de lecture conseillé**, la **hiérarchie pédagogiq
 
 La carte propose deux graphes distincts. Le graphe des pages représente les ressources et leurs relations pédagogiques ; les intitulés de sections affichés dans les blocs sont des repères éditoriaux, pas des concepts canoniques. Le graphe conceptuel provient du registre bilingue versionné dans `data/concepts.yml` : ses nœuds ont des identifiants stables, des définitions et des relations typées. La sélection d’un concept affiche ses pages ressources. Les deux graphes ne doivent pas être interprétés comme un même ordre de lecture.
 
+::: {.guided-route-section}
+
+## Parcours guidé
+
+Six étapes conceptuelles donnent un point d'entrée et une progression conseillée. Les pages d'une même étape sont des ressources complémentaires, pas une liste de prérequis stricts.
+
+<ol class="guided-route-grid" data-guided-route aria-label="Six étapes du parcours guidé"></ol>
+
+<div class="guided-route-companion">
+  <strong>Fil pratique complémentaire :</strong> si vous souhaitez construire un petit GPT, suivez le <a href="build-path.html">parcours de construction</a>. La préparation du corpus et des exemples d'entraînement constitue une branche dédiée à l'apprentissage du modèle, et non un prérequis à l'inférence.
+</div>
+
+:::
+
+## Explorer les ressources
+
+Le graphe des pages conserve l'inventaire des ressources et leurs liens de progression, de hiérarchie et d'association. Le graphe conceptuel présente séparément les notions canoniques et leurs relations. Ces vues servent à explorer ; elles ne remplacent pas le parcours guidé ci-dessus.
+
 <div class="learning-map" data-learning-map data-language="fr" data-source="../learning-map-data-fr.json">
   <div class="learning-map-toolbar">
     <div class="learning-map-filter">
-      <label for="learning-map-mode">Type de graphe</label>
+      <label for="learning-map-mode">Vue exploratoire</label>
       <select id="learning-map-mode">
         <option value="pages">Graphe des pages</option>
         <option value="concepts">Graphe conceptuel</option>
