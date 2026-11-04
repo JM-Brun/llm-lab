@@ -270,7 +270,10 @@ def test_attention_subgraph_exports_intermediate_concepts_and_typed_relations() 
         f"{BASE}/en/transformer-block-walkthrough.html": {"multi-head-attention"},
     }
     for page_uri, expected_concepts in expected_pages.items():
-        about = {item["@id"].rsplit("/", maxsplit=1)[-1] for item in pages[page_uri]["schema:about"]}
+        about = {
+            item["@id"].rsplit("/", maxsplit=1)[-1]
+            for item in pages[page_uri]["schema:about"]
+        }
         assert expected_concepts.issubset(about)
 
     relations = {
