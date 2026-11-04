@@ -38,9 +38,11 @@ Vous pourrez :
 
 | Famille | Flux d'information | Masque et attention | Objectifs typiques | Usages fréquents | Exemples |
 |---|---|---|---|---|---|
-| **Encodeur seul** | L'encodeur transforme une séquence entière en représentations contextualisées. | Auto-attention généralement bidirectionnelle : chaque position peut exploiter les autres positions de l'entrée. | Prédiction de tokens masqués (*masked language modeling*), parmi d'autres objectifs possibles. | Classification, recherche sémantique, extraction et représentation de texte. | BERT, RoBERTa |
-| **Encodeur-décodeur** | L'encodeur représente l'entrée ; le décodeur produit une séquence cible en s'appuyant sur cette représentation. | Attention de l'encodeur sur l'entrée ; auto-attention causale du décodeur ; attention croisée vers les états de l'encodeur. | Reconstruction, débruitage ou apprentissage texte-vers-texte, selon le modèle. | Traduction, résumé, transformation d'une séquence en une autre. | Transformer original, T5 |
-| **Décodeur seul** | Le décodeur prolonge un préfixe en produisant des représentations utiles à la prédiction suivante. | Auto-attention causale : une position ne consulte pas les tokens futurs. | Prédiction autorégressive du prochain token, dans les GPT classiques. | Continuation et génération conditionnée par un prompt. | GPT, GPT-2 |
+| **Encodeur seul** | L'encodeur transforme une séquence entière en représentations contextualisées. | Auto-attention généralement bidirectionnelle : chaque position peut exploiter les autres positions de l'entrée. | Prédiction de tokens masqués (*masked language modeling*), parmi d'autres objectifs possibles. | Classification, recherche sémantique, extraction et représentation de texte. | [BERT](https://huggingface.co/google-bert/bert-base-uncased), [RoBERTa](https://huggingface.co/FacebookAI/roberta-base) |
+| **Encodeur-décodeur** | L'encodeur représente l'entrée ; le décodeur produit une séquence cible en s'appuyant sur cette représentation. | Attention de l'encodeur sur l'entrée ; auto-attention causale du décodeur ; attention croisée vers les états de l'encodeur. | Reconstruction, débruitage ou apprentissage texte-vers-texte, selon le modèle. | Traduction, résumé, transformation d'une séquence en une autre. | [Transformer original](https://arxiv.org/abs/1706.03762), [T5](https://huggingface.co/google-t5/t5-base) |
+| **Décodeur seul** | Le décodeur prolonge un préfixe en produisant des représentations utiles à la prédiction suivante. | Auto-attention causale : une position ne consulte pas les tokens futurs. | Prédiction autorégressive du prochain token, dans les GPT classiques. | Continuation et génération conditionnée par un prompt. | [GPT (2018)](https://openai.com/index/language-unsupervised/), [GPT-2](https://huggingface.co/openai-community/gpt2) |
+
+Les liens renvoient aux fiches de modèles ou aux publications d'origine. Pour les articles : [BERT](https://arxiv.org/abs/1810.04805), [RoBERTa](https://arxiv.org/abs/1907.11692), [T5](https://jmlr.org/papers/v21/20-074.html), [GPT](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf) et [GPT-2](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf). **RoBERTa reste un modèle encodeur seul** : il reprend la base architecturale de BERT et modifie surtout la recette de pré-entraînement ; ce n'est pas une quatrième configuration.
 
 ## Les trois architectures en un schéma
 
@@ -48,25 +50,23 @@ Vous pourrez :
 
 Dans l'architecture encodeur-décodeur, le décodeur consulte les représentations produites par l'encodeur au moyen de l'**attention croisée**. La [page dédiée](cross-attention.qmd) en détaille le calcul ; il n'est pas nécessaire pour comprendre la comparaison générale.
 
-
-
 ### Encodeur seul : contextualiser une entrée
 
 L'encodeur traite la séquence d'entrée dans son ensemble. Avec une attention bidirectionnelle, chaque position peut exploiter les tokens situés avant et après elle. Cette configuration convient notamment à la représentation ou à la classification d'un texte complet.
 
-Dans BERT, l'objectif de pré-entraînement emblématique consiste à prédire des tokens masqués à partir de leur contexte gauche et droit. C'est un objectif associé à cette architecture, pas sa définition.
+Dans [BERT](https://huggingface.co/google-bert/bert-base-uncased), l'objectif de pré-entraînement emblématique consiste à prédire des tokens masqués à partir de leur contexte gauche et droit. [RoBERTa](https://huggingface.co/FacebookAI/roberta-base) conserve cette configuration encodeur seul tout en optimisant notamment les conditions de pré-entraînement. L'objectif de prédiction masquée est associé à cette architecture, pas sa définition.
 
 ### Encodeur-décodeur : transformer une séquence en une autre
 
 L'encodeur construit des représentations de l'entrée. Le décodeur produit ensuite la séquence cible, généralement de façon autorégressive, en combinant son contexte déjà généré avec l'information de l'encodeur via l'attention croisée (*cross-attention*).
 
-Cette organisation convient lorsque l'entrée et la sortie ont des rôles distincts : traduction, résumé ou transformation de texte. Le Transformer original (2017) et T5 en sont deux exemples. La page sur l'[attention croisée](cross-attention.qmd) détaille le mécanisme et l'origine respective de Q, K et V.
+Cette organisation convient lorsque l'entrée et la sortie ont des rôles distincts : traduction, résumé ou transformation de texte. Le [Transformer original (2017)](https://arxiv.org/abs/1706.03762) et [T5](https://huggingface.co/google-t5/t5-base) en sont deux exemples. La page sur l'[attention croisée](cross-attention.qmd) détaille le mécanisme et l'origine respective de Q, K et V.
 
 ### Décodeur seul : prolonger un préfixe
 
 Le décodeur utilise un **masque causal** : une position ne peut pas consulter les tokens futurs. À l'entraînement, chaque position sert à prédire le token suivant. À l'inférence, le modèle répète ce calcul et ajoute chaque token sélectionné au contexte ; la page [Générer du texte](generation.qmd) détaille cette boucle.
 
-C'est la configuration des GPT classiques et celle retenue pour construire le petit GPT de LLM Lab. Elle rend la génération facile à observer étape par étape, mais tous les LLM ne sont pas des décodeurs seuls.
+C'est la configuration des [GPT (2018)](https://openai.com/index/language-unsupervised/) et [GPT-2](https://huggingface.co/openai-community/gpt2), ainsi que celle retenue pour construire le petit GPT de LLM Lab. Elle rend la génération facile à observer étape par étape, mais tous les LLM ne sont pas des décodeurs seuls.
 
 ## Architecture, objectif et tâche : trois notions différentes
 
