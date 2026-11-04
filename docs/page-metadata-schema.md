@@ -62,6 +62,12 @@ When a scientific term deserves emphasis, treat it as **content**, not as anothe
 
 This policy preserves the machine-readable graph while keeping the reading flow focused on explanations and meaningful connections.
 
+## Source metadata is a separate classification system
+
+The source catalogue uses its own classification contract in [source-catalogue-schema.md](source-catalogue-schema.md). Do not copy source-level themes, tags, source types, scan statuses, or technical levels into page metadata. Page tags describe the editorial role and discovery behavior of a published page; source tags describe facets for finding external material. Canonical scientific concepts remain in `data/concepts.yml`.
+
+In particular, source `primary_theme` and `secondary_themes` reuse `data/domains.yml`, while page-level `domain` remains governed by this page schema. They have different ownership and semantics. A source tag must not be exposed as a visible page badge or automatically mirrored into Quarto `keywords`.
+
 ## 3. Relation semantics
 
 These fields must not be conflated:
