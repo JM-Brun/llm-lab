@@ -247,16 +247,16 @@ def main() -> int:
         data = yaml.safe_load(REGISTRY.read_text(encoding="utf-8"))
         domain_data = yaml.safe_load(DOMAINS.read_text(encoding="utf-8"))
     except (OSError, yaml.YAMLError) as exc:
-        sys.stderr.write(f"Cannot read concept/domain registry: {exc}\\n")
+        sys.stderr.write(f"Cannot read concept/domain registry: {exc}\n")
         return 1
     domain_ids, domain_errors = validate_domains(domain_data)
     errors = [*domain_errors, *validate_registry(data, _published_page_ids(), domain_ids)]
     if errors:
-        sys.stderr.write("\\n".join(errors) + "\\n")
+        sys.stderr.write("\n".join(errors) + "\n")
         return 1
     sys.stdout.write(
         f"Validated {len(domain_ids)} domains, {len(data['concepts'])} concepts, "
-        f"and {len(data['relations'])} relations.\\n"
+        f"and {len(data['relations'])} relations.\n"
     )
     return 0
 
