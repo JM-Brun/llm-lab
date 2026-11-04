@@ -11,7 +11,7 @@ id: "fr/queries-keys-values"
 scope: "Définit les projections qui produisent requêtes, clés et valeurs à partir des représentations d’entrée, et leur rôle distinct dans le calcul d’attention ; laisse le produit scalaire, le masquage et la normalisation à la page sur l’attention à produit scalaire."
 purpose: "Le lecteur doit pouvoir distinguer Q, K et V, identifier les projections apprises qui les produisent et expliquer comment ils contribuent respectivement au calcul des poids d’attention et à la combinaison de l’information."
 suggested_route:
-  previous: "fr/contextualized-representations"
+  previous: "fr/transformer"
   next: "fr/scaled-dot-product-attention"
 hierarchy:
   parents: ["fr/contextualized-representations", "fr/transformer"]
