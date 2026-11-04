@@ -71,13 +71,12 @@ The article's six numbered sections imply the following local sequence:
 ```mermaid
 flowchart TD
     A["1. Identify Q, K and V roles"]
-    B["2. Motivate attention with contextual examples"]
-    C["3. Generate learned projections"]
-    D["4. Compute QKᵀ scores"]
-    E["5. Scale scores and apply softmax / mask"]
-    F["6. Aggregate Values into an output"]
-    G["7. Extend to multi-head attention"]
-    A --> B --> C --> D --> E --> F --> G
+    B["2. Motivate contextualization with linguistic examples"]
+    C["3. Generate learned Q/K/V projections"]
+    D["4. Compute scores, scaling, masking and softmax"]
+    E["5. Aggregate Value vectors with attention weights"]
+    F["6. Extend to multi-head attention"]
+    A --> B --> C --> D --> E --> F
 ```
 
 The article actually introduces the role analogy before its contextual examples; both together form its motivation stage. The route is therefore best read as:
