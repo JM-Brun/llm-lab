@@ -48,6 +48,14 @@ For each, record rationale, evidence/confidence, generality, existing coverage, 
 
 Do not add content solely because it is novel or interesting.
 
+### Compile complementary sources into a coherent learning resource
+
+Treat a source collection as material to synthesize, not as a queue of independent page additions. Most sources will share core concepts; this is expected. The editorial task is to identify the distinct contribution each makes and assemble a coherent explanation that is more useful than any source considered alone.
+
+For topics represented by multiple useful sources, create or update a source synthesis dossier under docs/source-syntheses/ when it materially helps editorial decisions or future maintenance. Follow docs/source-synthesis-method.md. Compare sources against the learner question and canonical page(s), by explanatory lens, mental model, example, derivation, evidence, implementation detail, abstraction level and caveats. Distinguish convergence, complementary viewpoints, disagreements and unsupported claims. Map contributions to core explanation, optional perspective, deep dive, case study, experiment, reference or cross-link. Record what is retained, synthesized in original language, linked, deferred or excluded, with source/item traceability.
+
+A compilation is not a concatenation. Do not reproduce source prose or stack near-identical analogies. Prefer one clear core explanation plus selected complementary perspectives where they resolve distinct learner difficulties. Preserve useful alternatives as optional material or linked resources. Do not erase disagreement. Repeated tutorials copying the same explanation are not independent corroboration; keep pedagogical usefulness separate from scientific evidential strength.
+
 ## 3. Enrich the knowledge graph deliberately
 
 The graph may be augmented, but only when the extraction changes the conceptual model or useful relationships.

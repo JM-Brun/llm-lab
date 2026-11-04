@@ -45,6 +45,12 @@ The embedding lookup is a table access. It does not inspect the surrounding word
 
 A qualification matters: a visible word is not guaranteed to correspond to one token. A tokenizer may split it into several tokens. This example isolates the contextualization principle by assuming one shared token ID.
 
+### Another dependency: pronoun reference
+
+Now consider: *“The animal was tired because it had been running.”* Here, the pronoun `it` refers to `the animal`. This is not a case of one word having two possible senses; it illustrates a dependency between different positions in a sequence. To build a context-dependent representation for `it`, the model can use information from other tokens in its context.
+
+This example is used as a pedagogical motivation in [Nishanthan K's tutorial on Q, K, and V](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers). It does not show that a particular attention head necessarily identifies the antecedent, or that attention alone performs complete coreference resolution. It complements the lexical-ambiguity example (*bank*) by illustrating a relation between tokens (*it* / *the animal*).
+
 ## What changes with position and context?
 
 The two occurrences are at different positions and have different neighbours. The exact handling of position depends on the architecture.
