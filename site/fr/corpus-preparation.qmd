@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/build-path"]
   children: ["fr/training-examples"]
-related: ["fr/text-data", "fr/tokenization-strategies", "fr/tokenizer-design-evaluation", "fr/training-examples", "fr/evaluation-experimentale"]
+related: ["fr/text-data", "fr/tokenization-strategies", "fr/tokenizer-design-evaluation", "fr/evaluation-experimentale"]
 tags: ["type:guided-build", "destination:build", "topic:corpus-preparation", "level:core", "language:fr", "status:published"]
 -->
 
