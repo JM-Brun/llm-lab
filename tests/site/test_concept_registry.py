@@ -33,6 +33,14 @@ def _valid_registry() -> dict[str, Any]:
                 "resources": ["fr/embedding-space", "en/embedding-space"],
             },
         ],
+        "relation_types": {
+            kind: {
+                "direction": "symmetric" if kind in {"contrasts-with", "analogy"} else "directed",
+                "labels": {"fr": kind, "en": kind},
+                "descriptions": {"fr": "Relation.", "en": "Relationship."},
+            }
+            for kind in MODULE["RELATION_TYPES"]
+        },
         "relations": [{"from": "token", "type": "implemented-by", "to": "embedding"}],
     }
 
@@ -202,3 +210,23 @@ def test_symmetric_contrast_relation_uses_one_canonical_orientation() -> None:
     errors = validate_registry(data)
 
     assert any("canonical lexical order" in error for error in errors)
+
+
+
+def test_registry_requires_bilingual_definitions_for_used_relation_types() -> None:
+    data = _valid_registry()
+    data["relation_types"]["implemented-by"]["descriptions"].pop("en")
+    errors = validate_registry(data)
+    assert any("relation_types.implemented-by.descriptions: expected exactly fr and en" in error for error in errors)
+
+    data = _valid_registry()
+    data["relation_types"].pop("implemented-by")
+    errors = validate_registry(data)
+    assert any("missing definitions for used types" in error for error in errors)
+
+
+def test_registry_validates_relation_direction_metadata() -> None:
+    data = _valid_registry()
+    data["relation_types"]["implemented-by"]["direction"] = "symmetric"
+    errors = validate_registry(data)
+    assert any("only contrasts-with is currently defined as symmetric" in error for error in errors)
