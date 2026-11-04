@@ -2,4 +2,55 @@ schema_version: 1
 # Canonical inventory of external sources and their scan history.
 # Empty until source mentions have been reconciled and verified.
 # Bibliography entries alone do not establish that a source was scanned.
-sources: []
+sources:
+  - id: nishanthan-k-qkv-transformers-devto
+    title: "How Query, Key, and Value (QKV) Work in Transformers"
+    creators: ["Nishanthan K"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a"
+    publisher: "DEV Community"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: []
+      tags:
+        - topic:qkv
+        - topic:self-attention
+        - topic:multi-head-attention
+        - method:scaled-dot-product-attention
+      concept_ids: [query, key, value, self-attention, softmax]
+    metadata:
+      technical_level: introductory
+      contribution_types: [architecture, pedagogy]
+      audiences: [beginner, learner]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-04T10:00:00Z"
+        status: partially-scanned
+        inspected_scope:
+          - "Indexed article body: introduction, sections 1–6, and conclusion"
+        limitations:
+          - "Direct page retrieval returned a cache miss; article text was available through indexed search content."
+          - "Publication year and update metadata were not independently verified."
+          - "Comments, linked materials, and embedded visual assets were not inspected."
+          - "No licence or reuse permission was established."
+    related:
+      pages:
+        - fr/queries-keys-values
+        - en/queries-keys-values
+        - fr/scaled-dot-product-attention
+        - en/scaled-dot-product-attention
+        - fr/transformer-block-walkthrough
+        - en/transformer-block-walkthrough
+      concepts: [query, key, value, self-attention, softmax]
+      audit_records:
+        - docs/source-reviews/qkv-nishanthan-devto-2026-11.md
+
