@@ -16,7 +16,7 @@ pedagogical_model:
       - {id: src-figure-3, caption: 'Fig 3: Scaled dot-product attention computation.', status: identified-not-visually-inspected}
     cover_or_hero: {status: unknown, note: 'The indexed article result does not establish whether a separate cover/hero asset exists.'}
     rights: unknown
-  inferred_elements:
+    inferred_elements:
       - "Learning outcomes and prerequisites are inferred; the article does not publish a formal outcomes or prerequisite list."
   source_graph:
     nodes:
@@ -120,7 +120,7 @@ items:
       applicability: {level: moderate, rationale: "Useful as an optional comparison in the source catalogue, not as a second core analogy on the lesson page."}
       redundancy: {level: high, rationale: "Same explanatory function and same Q/K matching versus V payload distinction as the current analogy."}
       evidence_quality: {level: moderate, rationale: "The analogy is clearly stated but is pedagogical framing rather than technical evidence."}
-    locator: {type: section, value: "The Core Intuition—A Database Search Analogy", label: "The Core Intuition—A Database Search Analogy"}
+    locator: {type: section, value: "The Core Intuition—A Database Search Analogy", label: "Database-search analogy"}
     evidence:
       kind: pedagogical-explanation
       confidence: well-supported
