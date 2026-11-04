@@ -152,6 +152,20 @@ Store one file per source in `data/extractions/<source-id>.yml`. Each item is at
 
 The extraction taxonomy is in `data/source-taxonomy.yml`. Use the sample and record rules in `data/extractions/README.md`.
 
+### Optional pedagogical assessment
+
+An extraction item may include:
+
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The mechanism is already explained in the project."}
+      complementarity: {level: high, rationale: "The source offers a distinct learner-facing mental model."}
+      pedagogical_value: {level: moderate, rationale: "It may help learners who struggle with the formal role distinction."}
+      applicability: {level: moderate, rationale: "Could fit as an optional note in the existing lesson."}
+      redundancy: {level: low, rationale: "The analogy illuminates a different aspect from the canonical example."}
+      evidence_quality: {level: moderate, rationale: "The explanation is inspectable but is a secondary tutorial."}
+
+Allowed levels are low, moderate, high and uncertain. Every dimension must have a rationale; use uncertain when the evidence or comparison is insufficient. These are independent editorial judgements, not numerical scores and not a ranking. The assessment is optional for older records, but expected for newly extracted pedagogical contributions (analogy, mental-model, teaching-sequence, question, misconception, page-improvement) and any item proposed as a learning improvement.
+
 An extraction item may carry a different primary theme from its source only when its specific contribution genuinely belongs elsewhere. This does not reclassify the source. Item-level tags should be sparse and more specific than source-level tags where possible.
 
 ## 5. Inheritance and query behavior
