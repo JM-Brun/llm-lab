@@ -15,7 +15,7 @@ suggested_route:
   next: "en/exercises"
 hierarchy:
   parents: ["en/index", "en/llm-overview"]
-  children: ["en/gpt-config-walkthrough", "en/gpt-ops-walkthrough", "en/transformer-block-walkthrough", "en/gpt-model-walkthrough", "en/gpt-generation-walkthrough", "en/corpus-preparation", "en/training-examples"]
+  children: ["en/gpt-config-walkthrough", "en/gpt-ops-walkthrough", "en/transformer-block-walkthrough", "en/gpt-model-walkthrough", "en/gpt-generation-walkthrough", "en/corpus-preparation"]
 related: []
 tags: ["type:guided-build", "destination:build", "topic:build-path", "level:applied", "language:en", "status:published"]
 -->
