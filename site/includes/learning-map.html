@@ -19,6 +19,8 @@
     open: "Ouvrir la page",
     empty: "Aucune page ne correspond à ces filtres.",
     count: (shown, total) => shown + " page(s) affichée(s) sur " + total + ".",
+    countConcepts: (shown, total) => shown + " concept(s) affiché(s) sur " + total + ".",
+    emptyConcepts: "Aucun concept ne correspond à cette recherche."
     loadError: "La carte n’a pas pu être chargée. Vérifiez que les données ont été générées pendant le rendu Quarto.",
     unknown: "Page",
     domainLabel: "Domaine d’approfondissement",
@@ -53,6 +55,8 @@
     open: "Open page",
     empty: "No pages match these filters.",
     count: (shown, total) => shown + " of " + total + " pages shown.",
+    countConcepts: (shown, total) => shown + " of " + total + " concepts shown.",
+    emptyConcepts: "No concepts match this search."
     loadError: "The map could not be loaded. Check that the data files were generated during the Quarto render.",
     unknown: "Page",
     domainLabel: "Deepen domain",
@@ -320,9 +324,10 @@
         const other = concepts.find(item => item.id === otherId);
         if (!other) return;
         const item = document.createElement("li");
-        item.textContent = edge.from === concept.id
-          ? edge.type + " → " + other.label
-          : other.label + " → " + edge.type;
+        const source = concepts.find(item => item.id === edge.from);
+        const target = concepts.find(item => item.id === edge.to);
+        if (!source || !target) return;
+        item.textContent = source.label + " — " + edge.type + " → " + target.label;
         list.appendChild(item);
       });
       details.appendChild(list);
@@ -368,6 +373,15 @@
     svg.setAttribute("viewBox", "0 0 " + width + " " + height);
     svg.setAttribute("width", String(width));
     svg.setAttribute("height", String(height));
+    const defs = svgElement("defs");
+    const marker = svgElement("marker", {
+      id: "map-arrow-concept", markerWidth: 8, markerHeight: 8,
+      refX: 6, refY: 3, orient: "auto", markerUnits: "strokeWidth"
+    });
+    marker.appendChild(svgElement("path", { d: "M0,0 L6,3 L0,6 Z", fill: "#7C6BB1" }));
+    defs.appendChild(marker);
+    svg.appendChild(defs);
+
     const positions = new Map();
     visible.forEach((concept, index) => {
       positions.set(concept.id, {
@@ -379,10 +393,16 @@
       const from = positions.get(edge.from);
       const to = positions.get(edge.to);
       if (!from || !to) return;
+      const fromCenter = { x: from.x + nodeWidth / 2, y: from.y + nodeHeight / 2 };
+      const toCenter = { x: to.x + nodeWidth / 2, y: to.y + nodeHeight / 2 };
+      const dx = toCenter.x - fromCenter.x;
+      const dy = toCenter.y - fromCenter.y;
+      const scale = 1 / Math.max(Math.abs(dx) / (nodeWidth / 2), Math.abs(dy) / (nodeHeight / 2));
       const path = svgElement("path", {
-        d: "M " + (from.x + nodeWidth / 2) + " " + (from.y + nodeHeight / 2)
-          + " L " + (to.x + nodeWidth / 2) + " " + (to.y + nodeHeight / 2),
+        d: "M " + (fromCenter.x + dx * scale) + " " + (fromCenter.y + dy * scale)
+          + " L " + (toCenter.x - dx * scale) + " " + (toCenter.y - dy * scale),
         class: "map-edge map-edge-concept",
+        "marker-end": "url(#map-arrow-concept)",
         "aria-hidden": "true"
       });
       svg.appendChild(path);
@@ -415,10 +435,10 @@
       });
       svg.appendChild(node);
     });
-    status.textContent = copy.count(visible.length, concepts.length).replace(/page\(s\)|pages/g, "concepts");
+    status.textContent = copy.countConcepts(visible.length, concepts.length);
     if (!visible.length) {
       const empty = svgElement("text", { x: 24, y: 115, class: "map-empty" });
-      empty.textContent = copy.empty;
+      empty.textContent = copy.emptyConcepts;
       svg.appendChild(empty);
     }
     if (!visible.some(item => item.id === selectedId) && visible.length) updateConceptDetails(visible[0]);
