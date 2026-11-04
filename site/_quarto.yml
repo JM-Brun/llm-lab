@@ -93,7 +93,9 @@ project:
     - fr/contextualized-representations.qmd
     - en/contextualized-representations.qmd
     - fr/positional-encoding.qmd
+    - fr/rope.qmd
     - en/positional-encoding.qmd
+    - en/rope.qmd
     - fr/exercises.qmd
     - en/exercises.qmd
     - fr/evaluation-experimentale.qmd
@@ -184,6 +186,7 @@ website:
             - section: "Mécanismes d'attention avancés"
               contents:
                 - fr/cross-attention.qmd
+            - fr/rope.qmd
             - section: "Calcul, complexité et parallélisme"
               contents:
                 - fr/llm-computational-complexity.qmd
@@ -276,6 +279,7 @@ website:
             - section: "Advanced attention mechanisms"
               contents:
                 - en/cross-attention.qmd
+            - en/rope.qmd
             - section: "Computation, complexity, and parallelism"
               contents:
                 - en/llm-computational-complexity.qmd
