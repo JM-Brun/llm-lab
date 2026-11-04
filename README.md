@@ -38,13 +38,14 @@ The project includes a bilingual Quarto website organized around LLM-specific ex
 - Core-route editorial boundary audit (2026-11-04): [`docs/editorial-boundary-audit-2026-11-04.md`](docs/editorial-boundary-audit-2026-11-04.md) — page-level overlap evidence, canonical ownership, and core-versus-optional recommendations.
 - Separate exercise-space entry points (navigation scaffolding only; exercises not yet written): [French](site/fr/exercises.qmd) · [English](site/en/exercises.qmd)
 
-The site uses carefully attributed illustrations embedded from their original source when suitable. It does not mirror or redistribute external image files. An accessible URL is not a licence: check reuse terms before copying or modifying a figure. The site can be rendered locally with the [Quarto CLI](https://quarto.org/docs/get-started/).
+The site uses carefully attributed illustrations embedded from their original source when suitable. It does not mirror or redistribute external image files. An accessible URL is not a licence: check reuse terms before copying or modifying a figure. The site can be rendered locally with the [Quarto CLI](https://quarto.org/docs/get-started/). Generate the page/concept graph data and the bilingual guided-route Markdown partials first; Quarto expands Markdown includes before its project pre-render hooks, so these files must exist before rendering.
 
 ```bash
+uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python scripts/build_learning_map.py
 quarto render site
 ```
 
-The rendered site is written to `site/_site/`. The Quarto CLI is a separate system dependency; it is not installed by `uv`.
+The generated JSON and Markdown fragments are build artifacts and are ignored by Git. The rendered site is written to `site/_site/`. The Quarto CLI is a separate system dependency; it is not installed by `uv`.
 
 ## Page composition
 
