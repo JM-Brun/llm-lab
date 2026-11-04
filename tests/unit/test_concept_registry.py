@@ -178,7 +178,7 @@ def test_symmetric_contrast_relation_uses_one_canonical_orientation() -> None:
     data = _valid_registry()
     data["relations"] = [{"from": "embedding", "type": "contrasts-with", "to": "token"}]
     assert validate_registry(data) == []
-    data["relations"].append({"from": "embedding", "type": "contrasts-with", "to": "token"})
+    data["relations"].append({"from": "token", "type": "contrasts-with", "to": "embedding"})
 
     errors = validate_registry(data)
 
