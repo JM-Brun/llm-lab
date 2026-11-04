@@ -44,11 +44,12 @@ The core implementation uses NumPy. The lockfile records the resolved Python dep
 Install [Quarto](https://quarto.org/docs/get-started/) separately; CI uses version 1.11.9. From the repository root:
 
 ```bash
+uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python scripts/build_learning_map.py
 uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python scripts/render_history_pilot.py
 quarto render site
 ```
 
-The first command generates the bilingual timeline includes; the site is written to `site/_site/`.
+The first command validates the canonical page/concept metadata and generates the bilingual learning-map data and guided-route Markdown partials. The route is maintained in [`data/guided-route.yml`](data/guided-route.yml); the generated partials are tracked because Quarto expands their includes before project pre-render hooks run. The second command generates the bilingual history timeline includes. The site is written to `site/_site/`.
 
 ## Contribute
 
