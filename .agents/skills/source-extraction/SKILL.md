@@ -124,6 +124,19 @@ For every article, tutorial, course page or paper with a visual component, perfo
 
 Do not silently treat a visual pass as complete because the article body was retrieved. The scan record and review note must state separately whether textual content, visual assets, linked resources and rights were inspected.
 
+
+
+### Community discussion and reader comments
+
+Treat comments, replies, issue discussions and community annotations as **separate voices**, not as part of the primary author's source text.
+
+- Record the speaker/role when available (author, reader, maintainer, reviewer), exact locator, date and thread context. Do not infer identity or expertise from a username.
+- Separate the primary work's claims from suggestions, corrections, questions and anecdotes introduced by commenters. An author's acknowledgement is not independent technical validation.
+- Preserve potentially useful leads even when they are outside the article's scope. Mark them as community-derived and unverified until checked against an authoritative source, implementation or reproducible evidence.
+- If a comment contains a substantive technical claim, assess it independently and, when it warrants extraction, give it a distinct item/provenance rather than attributing it to the article author. Register the underlying primary source separately if one is identified.
+- Do not silently promote a comment into the article's extraction or use it to change the article's integration status. A comment may motivate a new research task without becoming evidence for the source's claims.
+- When a comment compresses a mechanism, check for omitted steps and boundary conditions before reuse. Preserve the original statement as a lead, then record the technically precise interpretation separately.
+
 ### Experiments, benchmarks, datasets and code
 
 For experiments, record question/hypothesis, independent/dependent/control variables, dataset, model/version, protocol, baseline, metrics, uncertainty, compute/hardware, expected interpretation and limitations. Use statuses: proposed, protocol implemented, run completed, independently reproduced. Never report source results as LLM Lab results.
