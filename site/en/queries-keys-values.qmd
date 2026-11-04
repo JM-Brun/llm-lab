@@ -11,7 +11,7 @@ id: "en/queries-keys-values"
 scope: "Defines the projections that produce queries, keys, and values from input representations, and their distinct roles in attention; leaves dot-product scoring, masking, and normalization to the scaled dot-product attention page."
 purpose: "Readers should be able to distinguish Q, K, and V, identify the learned projections that produce them, and explain how they contribute respectively to attention-weight calculation and information aggregation."
 suggested_route:
-  previous: "en/contextualized-representations"
+  previous: "en/transformer"
   next: "en/scaled-dot-product-attention"
 hierarchy:
   parents: ["en/contextualized-representations", "en/transformer"]
