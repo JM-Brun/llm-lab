@@ -57,12 +57,20 @@ def _write_page(
     front_yaml = yaml.safe_dump(front, allow_unicode=True, sort_keys=False).strip()
     metadata_yaml = yaml.safe_dump(metadata, allow_unicode=True, sort_keys=False).strip()
     body = "\n".join(headings)
-    page_content = (
-        f"---\n{front_yaml}\n---\n\n"
-        "<!--\nLLM-LAB-PAGE-MAP v1\n"
-        f"{metadata_yaml}\n"
-        "-->\n\n"
-        f"{body}\n"
+    page_content = "\n".join(
+        [
+            "---",
+            front_yaml,
+            "---",
+            "",
+            "<!--",
+            "LLM-LAB-PAGE-MAP v1",
+            metadata_yaml,
+            "-->",
+            "",
+            body,
+            "",
+        ]
     )
     path.write_text(page_content, encoding="utf-8")
 
