@@ -8,7 +8,7 @@ from typing import Any
 
 import yaml
 
-MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts" / "check_concept_registry.py"
+MODULE_PATH = Path(__file__).resolve().parents[2] / "site" / "tools" / "check_concept_registry.py"
 MODULE: dict[str, Any] = runpy.run_path(str(MODULE_PATH), run_name="concept_registry_test")
 validate_registry = MODULE["validate_registry"]
 validate_domains = MODULE["validate_domains"]

@@ -119,7 +119,7 @@ Use these dimensions consistently:
 Run the validator locally from the repository root:
 
 ```bash
-uv run --with-requirements docs/requirements-history-validation.txt python scripts/check_page_metadata.py
+uv run --with-requirements docs/requirements-history-validation.txt python site/tools/check_page_metadata.py
 ```
 
 The validator reads the actual `project.render` list from `site/_quarto.yml` and scans source `.qmd` files for published pages omitted from that list; it does not infer coverage from sidebar indentation. It checks:
@@ -192,7 +192,7 @@ Do not use a generic `related-to` relation as a substitute for deciding what the
 
 ### Validation and scope
 
-Run `python scripts/check_concept_registry.py` to check stable IDs, bilingual labels/definitions, FR/EN published-resource coverage, domain memberships, resource-ID syntax, relation vocabulary, endpoint existence, self-links, duplicate edges, and prerequisite/generalization cycles (iteratively). The same check runs in CI. This first registry is intentionally a seed, not a complete ontology: it covers a small set of central concepts and should grow only alongside reviewed page content.
+Run `python site/tools/check_concept_registry.py` to check stable IDs, bilingual labels/definitions, FR/EN published-resource coverage, domain memberships, resource-ID syntax, relation vocabulary, endpoint existence, self-links, duplicate edges, and prerequisite/generalization cycles (iteratively). The same check runs in CI. This first registry is intentionally a seed, not a complete ontology: it covers a small set of central concepts and should grow only alongside reviewed page content.
 
 The interactive learning map offers **separate page-graph and concept-graph modes**. The concept mode resolves localized page-resource links and displays typed relations; it does not turn concept prerequisites into page navigation instructions. Domain memberships are stored canonically but are not yet exposed as a dedicated concept filter. Non-page resources are now first-class records in `data/resources.yml` and are included in the JSON-LD export; the interactive map UI does not yet render them.
 
@@ -219,4 +219,4 @@ Non-page learning and research artifacts are maintained separately in `data/reso
 
 Each resource has a stable language-independent ID, controlled kind, bilingual labels and descriptions, a BCP 47 tag for the human language used in the artifact, optional programming-language metadata, lifecycle status, a discriminated local-path or external-URL location, published page IDs that reference it, and concept IDs. Provenance fields are optional and must be omitted when unknown. The initial kind vocabulary contains only `implementation`; the first seed is limited to the five modules explicitly named by the bilingual guided-build route.
 
-The French and English walkthroughs reference one shared resource record rather than duplicate language-specific code resources. Published/deprecated resources require at least one published page reference; draft/retired records must have an empty `referenced_by` list. Run `python scripts/check_resource_registry.py` to validate IDs, controlled values, BCP 47 extension-singleton uniqueness, canonical local path segments and containment (including symlink resolution), external HTTP(S) URL syntax and port validity without network access, published-page references, concept references, and optional provenance. The JSON-LD projection uses `schema:SoftwareSourceCode` for implementation resources. The interactive concept-map UI is not yet extended to render non-page resources.
+The French and English walkthroughs reference one shared resource record rather than duplicate language-specific code resources. Published/deprecated resources require at least one published page reference; draft/retired records must have an empty `referenced_by` list. Run `python site/tools/check_resource_registry.py` to validate IDs, controlled values, BCP 47 extension-singleton uniqueness, canonical local path segments and containment (including symlink resolution), external HTTP(S) URL syntax and port validity without network access, published-page references, concept references, and optional provenance. The JSON-LD projection uses `schema:SoftwareSourceCode` for implementation resources. The interactive concept-map UI is not yet extended to render non-page resources.

@@ -6,7 +6,7 @@ import runpy
 from pathlib import Path
 from typing import Any
 
-MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts" / "check_resource_registry.py"
+MODULE_PATH = Path(__file__).resolve().parents[2] / "site" / "tools" / "check_resource_registry.py"
 MODULE: dict[str, Any] = runpy.run_path(str(MODULE_PATH), run_name="resource_registry_test")
 validate_resource_registry = MODULE["validate_resource_registry"]
 

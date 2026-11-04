@@ -5,7 +5,7 @@ import subprocess
 import sys
 
 
-SCRIPT = pathlib.Path(__file__).resolve().parents[2] / "scripts" / "check_site_links.py"
+SCRIPT = pathlib.Path(__file__).resolve().parents[2] / "site" / "tools" / "check_site_links.py"
 
 
 def run_checker(site: pathlib.Path) -> subprocess.CompletedProcess[str]:

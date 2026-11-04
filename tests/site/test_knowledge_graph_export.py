@@ -8,8 +8,8 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "site" / "tools"))
 
 from check_knowledge_graph_rendered import validate_graph  # noqa: E402
 from export_knowledge_graph import (  # noqa: E402

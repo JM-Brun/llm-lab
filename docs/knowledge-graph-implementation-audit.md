@@ -19,14 +19,14 @@ The pedagogical path and the knowledge map must remain distinct projections. The
 
 | Dimension / projection | Current source | Implemented semantics | Status and boundary |
 |---|---|---|---|
-| Domains | docs/page-metadata-schema.md; page-map metadata in site/**/*.qmd; scripts/check_page_metadata.py | Six controlled domain IDs classify Deepen content pages; FR/EN counterparts share the ID; page-map generator exports the field | **Implemented at both levels.** Page primary-domain classification remains distinct from many-to-many concept-domain membership. |
+| Domains | docs/page-metadata-schema.md; page-map metadata in site/**/*.qmd; site/tools/check_page_metadata.py | Six controlled domain IDs classify Deepen content pages; FR/EN counterparts share the ID; page-map generator exports the field | **Implemented at both levels.** Page primary-domain classification remains distinct from many-to-many concept-domain membership. |
 | Concepts | data/concepts.yml in PR #399 | Language-independent kebab-case IDs, FR/EN labels and definitions, typed concept-to-concept relations | **Merged seed.** 13 concepts and 12 relations; coverage is intentionally incomplete. |
-| Concept relations | data/concepts.yml; scripts/check_concept_registry.py in PR #399 | Directed relation vocabulary including prerequisite, generalizes, applies-to, contrasts-with, and more specific types | **Implemented for the seed.** Endpoints, relation types, self-links, duplicates, and prerequisite/generalization acyclicity are validated. PR #404 added a canonical single-storage orientation for symmetric `contrasts-with` edges. |
+| Concept relations | data/concepts.yml; site/tools/check_concept_registry.py in PR #399 | Directed relation vocabulary including prerequisite, generalizes, applies-to, contrasts-with, and more specific types | **Implemented for the seed.** Endpoints, relation types, self-links, duplicates, and prerequisite/generalization acyclicity are validated. PR #404 added a canonical single-storage orientation for symmetric `contrasts-with` edges. |
 | Resources | `data/resources.yml` plus `concepts[].resources` in `data/concepts.yml` | Stable non-page resource IDs; controlled kind/status; bilingual labels/descriptions; BCP 47 human-language tag; optional programming language and provenance; local/external location; `referenced_by` page IDs; many-to-many concept associations | **Implemented for a bounded seed.** Five implementation modules only. `concepts[].resources` remains page IDs; tests and other resource kinds are not inferred or migrated. |
 | Pedagogical path | docs/learning-path.md, docs/full-curriculum-plan.md, docs/roadmap.md | Ordered learning stages, prerequisites, progression and deliverables | **Documented curriculum projection.** Do not derive it from sidebar order or the page-map graph. |
 | Knowledge map | Domain metadata, concept registry, page metadata, and resource registry | Non-linear discovery, concept relations, page links, and first-class resource descriptions in JSON-LD | **Partially implemented across layers.** The JSON-LD projection now includes five `SoftwareSourceCode` resource nodes and their concept/page associations. The interactive map UI has not yet been extended to render non-page resource nodes or concept-domain membership. |
-| Page-navigation graph | docs/page-metadata-schema.md; scripts/check_page_metadata.py; scripts/build_learning_map.py | Page IDs, suggested route, reciprocal page hierarchy, related links, bilingual page parity | **Implemented.** These are page-level relations, not concept-level semantic relations. |
-| Section headings | `section_headings` extracted by scripts/build_learning_map.py | Display/search hints for sections within a page | **Implemented as presentation metadata.** They are not concept entities or stable concept IDs. |
+| Page-navigation graph | docs/page-metadata-schema.md; site/tools/check_page_metadata.py; site/tools/build_learning_map.py | Page IDs, suggested route, reciprocal page hierarchy, related links, bilingual page parity | **Implemented.** These are page-level relations, not concept-level semantic relations. |
+| Section headings | `section_headings` extracted by site/tools/build_learning_map.py | Display/search hints for sections within a page | **Implemented as presentation metadata.** They are not concept entities or stable concept IDs. |
 
 ## Relation vocabulary alignment
 
@@ -45,15 +45,15 @@ The registry also contains more specific relations such as part-of, contributes-
 
 ### Existing controls
 
-- scripts/check_page_metadata.py validates page metadata, page-level relation integrity, route and hierarchy cycles, and bilingual structural parity.
-- scripts/build_learning_map.py generates the page-map JSON projection; tests/unit/test_learning_map.py covers extraction, URL generation, and route ranking.
+- site/tools/check_page_metadata.py validates page metadata, page-level relation integrity, route and hierarchy cycles, and bilingual structural parity.
+- site/tools/build_learning_map.py generates the page-map JSON projection; tests/unit/test_learning_map.py covers extraction, URL generation, and route ranking.
 - .github/workflows/ci.yml runs the metadata validators, Ruff, mypy, and pytest.
 - .github/workflows/quarto.yml validates page metadata before rendering the bilingual site.
 
 ### Source-level registry controls
 
-- `scripts/check_concept_registry.py` validates concept IDs, bilingual labels/definitions, page-resource references, relation vocabulary/endpoints, self-relations, duplicate relations, and cycle constraints for prerequisite/generalization edges.
-- `scripts/check_resource_registry.py` validates non-page resource IDs, controlled kind/status, BCP 47 tags, bilingual metadata, discriminated locations, path containment after symlink resolution, external URL syntax, page references, concept references, and optional provenance.
+- `site/tools/check_concept_registry.py` validates concept IDs, bilingual labels/definitions, page-resource references, relation vocabulary/endpoints, self-relations, duplicate relations, and cycle constraints for prerequisite/generalization edges.
+- `site/tools/check_resource_registry.py` validates non-page resource IDs, controlled kind/status, BCP 47 tags, bilingual metadata, discriminated locations, path containment after symlink resolution, external URL syntax, page references, concept references, and optional provenance.
 - `tests/unit/test_concept_registry.py` covers the checked-in concept registry and its graph invariants.
 - `tests/unit/test_resource_registry.py` covers resource identity, many-to-many concept links, shared FR/EN page references, path traversal and symlink escapes, external URL syntax, lifecycle values, and language tags.
 - `tests/unit/test_knowledge_graph_export.py` checks `SoftwareSourceCode` projection, stable resource IDs, bilingual labels, page/concept links, unique page nodes, and registry provenance.

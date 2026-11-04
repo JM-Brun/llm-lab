@@ -104,7 +104,7 @@ Run the relevant checks for the changed surface and state clearly if a tool or o
 
 ## Engineering and research conventions
 
-- Put reusable code in `src/llm_lab`; notebooks and lesson snippets are explanatory, not the sole home of core logic.
+- Put reusable learning code in `src/llm_lab`; notebooks and lesson snippets are explanatory, not the sole home of core logic. Keep website generation and validation in `site/tools/`, with site tests in `tests/site/`.
 - Each computational concept page should connect the explanation to an implementation and a verifiable invariant (assertion, test, known value, or finite-difference check). Keep page snippets minimal and runnable; put reusable logic in `src/llm_lab` and test it there.
 - Keep functions focused, typed, and small enough to reason about; document tensor shapes and numerical conventions.
 - For numerical implementations, test known values and/or finite differences.

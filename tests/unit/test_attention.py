@@ -210,3 +210,10 @@ def test_scaled_dot_product_attention_validation_errors() -> None:
 
     with pytest.raises(ValueError, match="dimensions cannot be empty"):
         scaled_dot_product_attention(np.empty((0, 4)), np.empty((0, 4)), np.empty((0, 4)))
+
+
+def test_softmax_equal_large_logits_remain_uniform() -> None:
+    logits = np.array([[1e308, 1e308]])
+    with np.errstate(over="raise", invalid="raise"):
+        probabilities = softmax_with_temperature(logits, temperature=0.1)
+    np.testing.assert_allclose(probabilities, [[0.5, 0.5]])

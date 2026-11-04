@@ -16,7 +16,7 @@ from typing import Any
 
 import yaml
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
 CONCEPTS = ROOT / "data" / "concepts.yml"
 DOMAINS = ROOT / "data" / "domains.yml"

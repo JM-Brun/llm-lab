@@ -10,7 +10,7 @@ from typing import Any
 import pytest
 import yaml
 
-MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts" / "build_learning_map.py"
+MODULE_PATH = Path(__file__).resolve().parents[2] / "site" / "tools" / "build_learning_map.py"
 MODULE: dict[str, Any] = runpy.run_path(str(MODULE_PATH), run_name="learning_map_test")
 
 page_href = MODULE["page_href"]
@@ -309,7 +309,7 @@ def test_render_guided_route_markdown_uses_native_quarto_blocks() -> None:
 
 
 def test_repository_guided_route_resolves_against_published_pages(monkeypatch) -> None:
-    repository_root = MODULE_PATH.parents[1]
+    repository_root = MODULE_PATH.parents[2]
     monkeypatch.setitem(MODULE["load_pages"].__globals__, "SITE", repository_root / "site")
     monkeypatch.setitem(MODULE["load_guided_route"].__globals__, "ROOT", repository_root)
     published_pages = MODULE["load_pages"]()
@@ -427,7 +427,7 @@ def test_learning_map_browser_script_has_valid_javascript_and_fallback_target() 
     if node is None:
         pytest.skip("Node.js is required for the inline browser-script syntax check.")
 
-    script_path = MODULE_PATH.parents[1] / "site" / "includes" / "learning-map.html"
+    script_path = MODULE_PATH.parents[2] / "site" / "includes" / "learning-map.html"
     source = script_path.read_text(encoding="utf-8")
     assert source.count("<script>") == 1
     script = source.split("<script>", maxsplit=1)[1].split("</script>", maxsplit=1)[0]
