@@ -42,7 +42,11 @@ This glossary gives a concise first definition for terms used across the site. I
 
 ## Representations and geometry
 
-- **Embedding** — a vector associated with a token, text, or other object, depending on the model. See [embedding space](embedding-space.qmd).
+- **Embedding** — a vector representation of an object. The term refers to different objects depending on context; the entries below distinguish the main cases. See [embedding space](embedding-space.qmd).
+- **Initial token embedding** — the vector retrieved from the embedding matrix using a token ID; before contextualization, the same ID selects the same vector regardless of the surrounding sentence. See [embedding space](embedding-space.qmd).
+- **Contextualized representation** — the vector produced by the network for a given position after taking context into account; unlike the initial embedding, it depends on the other accessible tokens and the model's transformations. See [contextualized representations](contextualized-representations.qmd).
+- **Sentence or document embedding** — a vector representing an entire text, obtained from an encoder or an aggregation method; it should not be conflated with an initial token embedding or the hidden state of a single position. See [cosine similarity](cosine-similarity.qmd).
+- **Embedding space** — the vector space in which object representations are compared; its geometry depends on the model, layer, and representation method. See [embedding space](embedding-space.qmd).
 - **Cosine similarity** — the cosine of the angle between two non-zero vectors; see its [definition, assumptions, and limitations](cosine-similarity.qmd).
 - **Anisotropy** — a vector distribution that favours some directions in the space; it can affect scores and nearest-neighbour rankings.
 - **Hubness** — a phenomenon in which some points become the nearest neighbours of many other points.
@@ -79,8 +83,6 @@ These topics are grouped in the [Representation geometry and interpretability](e
 - **Autoregressive Transformer** — a Transformer trained to model a sequence from left to right, predicting each token conditioned on earlier tokens. “Autoregressive” describes the prediction objective; it does not require generating only one token at a time during training.
 - **Encoder** — a component that builds contextual representations of an input; in BERT, for example, attention can use context from both directions.
 - **Decoder** — a component designed to produce outputs from context; in an autoregressive decoder, a causal mask prevents access to future tokens.
-- **Embedding** — a learned vector representation of a token or other item. See [embedding space](embedding-space.qmd).
-- **Embedding space** — the vector space in which objects are represented by vectors; the observed geometry depends on the model and the task.
 - **Tensor** — an array of numbers organized along several axes. Its shape indicates the size of each axis; it does not by itself specify the meaning of the data. See [Tensors](tensors.qmd).
 - **Positional encoding / position information** — a mechanism that supplies the model with information about token order. Approaches include absolute encodings, relative biases, and RoPE. See [positional encoding and RoPE](positional-encoding.qmd).
 - **RoPE (*Rotary Position Embedding*)** — a positional encoding that applies position-dependent rotations to coordinate pairs of queries and keys.
