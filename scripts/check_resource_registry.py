@@ -181,8 +181,8 @@ def validate_resource_registry(
         errors.extend(_validate_location(resource.get("location"), root, f"{where}.location"))
 
         referenced_by = resource.get("referenced_by")
-        if not isinstance(referenced_by, list) or not referenced_by:
-            errors.append(f"{where}.referenced_by: expected a non-empty list of published page IDs")
+        if not isinstance(referenced_by, list):
+            errors.append(f"{where}.referenced_by: expected a list of published page IDs")
         elif not all(isinstance(page_id, str) for page_id in referenced_by):
             errors.append(f"{where}.referenced_by: values must be strings")
         else:
@@ -191,6 +191,14 @@ def validate_resource_registry(
             for page_id in referenced_by:
                 if page_id not in published_pages:
                     errors.append(f"{where}.referenced_by: page {page_id!r} is not published")
+            if status in {"published", "deprecated"} and not referenced_by:
+                errors.append(
+                    f"{where}.referenced_by: published/deprecated resources need a published page reference"
+                )
+            if status in {"draft", "retired"} and referenced_by:
+                errors.append(
+                    f"{where}.referenced_by: draft/retired resources cannot be linked from published pages"
+                )
 
         concepts = resource.get("concepts")
         if not isinstance(concepts, list):
