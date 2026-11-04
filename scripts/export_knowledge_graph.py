@@ -198,11 +198,7 @@ def build_graph() -> dict[str, Any]:
         page_id for concept in concepts_data["concepts"] for page_id in concept["resources"]
     }
     page_source_uris = sorted(
-        {
-            pages[page_id]["source_uri"]
-            for page_id in referenced_page_ids
-            if page_id in pages
-        }
+        {pages[page_id]["source_uri"] for page_id in referenced_page_ids if page_id in pages}
     )
     source_uris = [
         "https://github.com/JM-Brun/llm-lab/blob/main/data/concepts.yml",
