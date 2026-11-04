@@ -71,7 +71,11 @@ def test_export_provenance_names_canonical_sources() -> None:
     )
 
     assert export["@type"] == "prov:Entity"
-    assert len(export["prov:wasDerivedFrom"]) == 3
+    sources = [item["@id"] for item in export["prov:wasDerivedFrom"]]
+    assert "https://github.com/JM-Brun/llm-lab/blob/main/data/concepts.yml" in sources
+    assert "https://github.com/JM-Brun/llm-lab/blob/main/data/domains.yml" in sources
+    assert any("/blob/main/site/" in source and source.endswith(".qmd") for source in sources)
+    assert not any("/tree/main/site" in source for source in sources)
 
 
 def test_jsonld_context_is_explicit() -> None:
