@@ -298,70 +298,6 @@
   };
 
 
-  const routeContainer = root.querySelector("[data-guided-route]");
-
-  const renderGuidedRoute = stages => {
-    if (!routeContainer) return;
-    routeContainer.replaceChildren();
-    if (!Array.isArray(stages) || !stages.length) {
-      const empty = document.createElement("p");
-      empty.textContent = language === "fr"
-        ? "Le parcours guidé n'est pas disponible pour le moment."
-        : "The guided route is currently unavailable.";
-      routeContainer.appendChild(empty);
-      return;
-    }
-    stages.forEach((stage, index) => {
-      const item = document.createElement("li");
-      item.className = "guided-route-stage";
-
-      const number = document.createElement("span");
-      number.className = "guided-route-number";
-      number.textContent = String(index + 1).padStart(2, "0");
-      item.appendChild(number);
-
-      const heading = document.createElement("h3");
-      heading.textContent = stage.title;
-      item.appendChild(heading);
-
-      const objective = document.createElement("p");
-      objective.textContent = stage.objective;
-      item.appendChild(objective);
-
-      const links = document.createElement("ul");
-      links.className = "guided-route-links";
-      (stage.pages || []).forEach(page => {
-        const entry = document.createElement("li");
-        const link = document.createElement("a");
-        link.href = page.href;
-        link.textContent = page.title;
-        entry.appendChild(link);
-        links.appendChild(entry);
-      });
-      item.appendChild(links);
-
-      if (Array.isArray(stage.optional_pages) && stage.optional_pages.length) {
-        const optionalLabel = document.createElement("p");
-        optionalLabel.className = "guided-route-optional-label";
-        optionalLabel.textContent = language === "fr" ? "Approfondissements facultatifs" : "Optional deep dives";
-        item.appendChild(optionalLabel);
-
-        const optionalLinks = document.createElement("ul");
-        optionalLinks.className = "guided-route-links guided-route-optional-links";
-        stage.optional_pages.forEach(page => {
-          const entry = document.createElement("li");
-          const link = document.createElement("a");
-          link.href = page.href;
-          link.textContent = page.title;
-          entry.appendChild(link);
-          optionalLinks.appendChild(entry);
-        });
-        item.appendChild(optionalLinks);
-      }
-      routeContainer.appendChild(item);
-    });
-  };
-
   const updateConceptDetails = concept => {
     selectedId = concept.id;
     details.replaceChildren();
@@ -603,7 +539,6 @@
       pages = Array.isArray(payload.pages) ? payload.pages : [];
       concepts = Array.isArray(payload.concepts) ? payload.concepts : [];
       conceptRelations = Array.isArray(payload.concept_relations) ? payload.concept_relations : [];
-      renderGuidedRoute(payload.guided_route);
       if (!pages.length) throw new Error("No page metadata found");
       selectedId = pages.some(page => page.id === language + "/llm-overview")
         ? language + "/llm-overview"
