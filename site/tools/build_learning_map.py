@@ -25,8 +25,8 @@ from learning_map_renderers import (
     REPRESENTATIONS,
     escape_markdown_text,
     render_map_script,
-    render_resource_list,
-    render_territory_map,
+    render_resource_list as render_resource_list,
+    render_territory_map as render_territory_map,
 )
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 

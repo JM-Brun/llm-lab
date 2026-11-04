@@ -438,22 +438,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    import shutil
-    import subprocess
-
-    ruff = shutil.which("ruff")
-    base = [ruff] if ruff else [sys.executable, "-m", "ruff"]
-    findings = []
-    for args in (["check", ".", "--output-format", "concise"], ["format", "--check", "."]):
-        result = subprocess.run(
-            [*base, *args],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        findings.extend(result.stdout.splitlines()[:8])
-    if not findings:
-        findings.append("diag: ruff clean")
-    for finding in findings[:10]:
-        sys.stdout.write(f"::error title=diag::{finding}\n")
     raise SystemExit(main())
