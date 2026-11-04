@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/tokenizer-design-evaluation"
 scope: "Explores the mechanisms of BPE, WordPiece, and Unigram families, then tokenizer design choices and empirical evaluation: vocabulary size, budgets, reproducibility, metrics, downstream results, and multilingual disparities."
 purpose: "Explain training and encoding differences between BPE, WordPiece, and Unigram; build an interpretable comparison protocol; and distinguish representation cost, system cost, and downstream quality without generalizing beyond the studied data and protocols."
+domain: "text-tokenization"
 suggested_route:
   previous: null
   next: null
