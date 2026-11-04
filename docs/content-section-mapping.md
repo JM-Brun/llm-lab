@@ -143,7 +143,7 @@ Never label a concept as a mandatory prerequisite merely because it is mathemati
 - [Editorial boundary audit](editorial-boundary-audit.md) owns the separate public-LLM-course versus general-mathematics-wiki boundary.
 - [Page audit inventory](page-audit-inventory.md) records what has actually been reviewed and what remains to validate.
 
-Do not create a new issue for every row. Route changes to existing owners: #130 (high-level architecture), #87 (curriculum relationships), #61 (page-level progressive disclosure, closed), #78 (concept-to-code), #320 (deferred canonical-page browser review), and #108 (broad LLM panorama). #82 and #114 source audits are closed.
+Do not create a new issue for every row. Route changes to existing owners: #130 (high-level architecture), #87 (curriculum relationships, closed — crosswalk maintained in this document), #61 (page-level progressive disclosure, closed), #78 (concept-to-code), #320 (deferred canonical-page browser review), and #108 (broad LLM panorama, closed via PR #343 — rendered review in #337). #82 and #114 source audits are closed.
 
 
 ## 8. Chapter 5 pretraining source audit — 2026-11-03
