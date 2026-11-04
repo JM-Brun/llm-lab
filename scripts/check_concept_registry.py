@@ -29,7 +29,7 @@ def _published_page_ids() -> set[str]:
         for path in (ROOT / "site" / language).glob("*.qmd"):
             source = path.read_text(encoding="utf-8")
             match = re.search(
-                r"<!--\\s*\\nLLM-LAB-PAGE-MAP v1\\n(.*?)\\n-->",
+                r"<!--\s*\nLLM-LAB-PAGE-MAP v1\n(.*?)\n-->",
                 source,
                 re.DOTALL,
             )
@@ -117,9 +117,7 @@ def validate_registry(data: Any, published_pages: set[str] | None = None) -> lis
         if not isinstance(resources, list) or not resources:
             errors.append(f"{where}.resources: expected a non-empty list of page IDs")
             continue
-        if len(resources) != len(set(resources)) if all(
-            isinstance(item, str) for item in resources
-        ) else False:
+        if all(isinstance(item, str) for item in resources) and len(resources) != len(set(resources)):
             errors.append(f"{where}.resources: duplicate resource IDs")
         for page_id in resources:
             if not isinstance(page_id, str) or not PAGE_ID.fullmatch(page_id):
