@@ -46,7 +46,7 @@ def _page_records() -> dict[str, dict[str, Any]]:
     records: dict[str, dict[str, Any]] = {}
     for path in sorted(SITE.rglob("*.qmd")):
         source = path.read_text(encoding="utf-8")
-        front_match = re.match(r"\\A---\\s*\\n(.*?)\\n---\\s*(?:\\n|\\Z)", source, re.DOTALL)
+        front_match = re.match(r"\A---\s*\n(.*?)\n---\s*(?:\n|\Z)", source, re.DOTALL)
         match = re.search(
             r"<!--\s*\nLLM-LAB-PAGE-MAP v1\n(.*?)\n-->",
             source,
