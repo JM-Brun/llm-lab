@@ -32,14 +32,14 @@ The canonical bilingual Q/K/V page was inspected in both languages, together wit
 
 | Contribution | Novelty | Complementarity / learner value | Existing coverage and decision |
 |---|---|---|---|
-| Verbal distinction among Q, K and V | Low | Moderate: concise narrative may be a useful pre-formal entry point | Defer; compare the exact opening before making a small editorial change |
+| Verbal distinction among Q, K and V | Low | Moderate: concise narrative may be a useful pre-formal entry point | Reject as a new page edit; the existing Q/K/V page already provides the necessary role distinction |
 | Search analogy | Low | Low: same matching-versus-retrieval mapping as the index-card analogy | Reject as redundant by explanatory function, not merely by topic |
-| Shared input X and learned projections | Low | Low | Defer; canonical lesson already has equations, dimensions and self-/cross-attention caveats |
-| Score → scale → softmax → aggregation | Low | Low | Keep in the dedicated attention lesson, which provides stronger derivation and numerical treatment |
-| Multi-head summary | Low | Moderate as a simpler summary, but little additional learner value | Defer; current Transformer overview and block walkthrough already serve both levels |
+| Shared input X and learned projections | Low | Low | Reject as a new page edit; the canonical lesson already has equations, dimensions and self-/cross-attention caveats |
+| Score → scale → softmax → aggregation | Low | Low | Reject as a new page edit; retain the full computation in the dedicated attention lesson, which provides stronger derivation and numerical treatment |
+| Multi-head summary | Low | Moderate as a simpler summary, but little additional learner value | Reject as a new page edit; the Transformer overview and block walkthrough already serve both levels |
 | bank ambiguity → pronoun it | Low | High: lexical ambiguity and cross-position dependency are distinct learner intuitions | Integrate the pronoun example into both contextualized-representations pages, with an explicit caveat that it does not establish attention-head coreference resolution |
-| Scores are not semantic similarity | Low | Moderate as a misconception guardrail; reinforces a distinction learners may miss | Defer; Q/K/V page already warns against nearest-neighbour and semantic-relevance interpretations |
-| Weighted aggregation is not argmax selection | Low | Moderate: explicit winner-take-all contrast can help beginners | Defer; the attention lesson's equation and numerical example already show weighted Value aggregation |
+| Scores are not semantic similarity | Low | Moderate as a misconception guardrail; reinforces a distinction learners may miss | Reject as a new page edit; the Q/K/V page already warns against nearest-neighbour and semantic-relevance interpretations |
+| Weighted aggregation is not argmax selection | Low | Moderate: explicit winner-take-all contrast can help beginners | Reject as a new page edit; the attention lesson's equation and numerical example already show weighted Value aggregation |
 | KV-cache follow-up | Not an article contribution | Not assessed as an article item | It appeared only in a reader comment; exclude from article extraction and attribution |
 
 ## 4. Technical assessment
@@ -54,9 +54,9 @@ The article's central equations and role distinctions are sound at the introduct
 
 ## 5. Integration decision
 
-**A targeted page edit is justified.** The existing contextualized-representations lesson already uses lexical ambiguity (bank), while the pronoun example (it → the animal) adds a distinct cross-position dependency. Both language versions now include it as a bounded motivation, not as evidence that one attention head resolves coreference. The concise verbal Q/K/V framing remains deferred pending a separate learner-benefit comparison.
+**A targeted page edit is justified.** The existing contextualized-representations lesson already uses lexical ambiguity (bank), while the pronoun example (it → the animal) adds a distinct cross-position dependency. Both language versions now include it as a bounded motivation, not as evidence that one attention head resolves coreference. The concise verbal Q/K/V framing is rejected as a new page edit because the current lesson already explains it more precisely; the source is now linked as an optional external visual reference.
 
-The search analogy is rejected only after comparing its actual mapping and learner function with the existing index-card analogy. The mathematical and multi-head material remains deferred because the project already provides more complete treatments at the appropriate locations.
+The search analogy is rejected only after comparing its actual mapping and learner function with the existing index-card analogy. The mathematical and multi-head material is rejected as new page content because the project already provides more complete treatments at the appropriate locations.
 
 At this initial page-integration stage, no new concept, graph edge, page, figure, experiment or bibliography entry was created. A later differential graph audit identified a separate modelling gap in LLM Lab's existing registry; the justified graph refinement is documented in section 9. The reader comment remains excluded from article-derived content.
 
@@ -121,7 +121,7 @@ The article's author-authored contributions have now all received a final dispos
 
 The reader-comment KV-cache lead remains **deferred** as a separately attributed community contribution, not as an unfinished article claim. Its technical content has been independently checked against the separately registered Hugging Face documentation source; it belongs in a future inference-efficiency learning destination, not in the introductory Q/K/V lesson.
 
-The canonical graph refinement is complete: the four stable concepts and their typed relations are registered, linked to existing bilingual resources, and covered by the source-graph comparison dossier. The article's six-section teaching sequence was compared with the canonical guided route, page routes and Build route; no route or navigation change was justified. No page, visual or experiment is added merely to mirror the source.
+The canonical graph refinement is complete: the four stable concepts and their typed relations are registered, linked to existing bilingual resources, and covered by the source-graph comparison dossier. The article's six-section teaching sequence was compared with the canonical guided route, page routes and Build route; no route or navigation change was justified. No new page, local visual asset or experiment is added merely to mirror the source; the external source link is an optional visual detour.
 
 Accordingly, the parent article's `integration_status` is **integrated**: every author-authored contribution has been integrated or explicitly rejected as redundant. The separate KV-cache reader comment remains deferred. The article's `scan_status` remains **partially-scanned** because the embedded image has not been visually inspected, linked materials and publication metadata remain unverified, and reuse rights are unknown. This does not block the completed pedagogical integration, but it does block claiming a complete source audit or any figure reuse.
 
@@ -134,7 +134,7 @@ A final public-web recheck on 2026-11-04 again returned a cache miss for the can
 
 The Medium profile search result now lists the QKV article and two image entries under its title. Opening the profile itself still returns a stale page snapshot that omits the QKV article; the image entries do not expose a stable original asset URL, image bytes, caption/placement or rights-holder information. Thus the visual inspection remains blocked. The direct DEV page and profile snapshot are evidence of access limitations, not grounds to infer the figure's content.
 
-**Final scan boundary:** the article's text and visible comment are reconciled; the source-local graph and route are compared; all author-authored extraction items have final integration dispositions. The source remains partially scanned only for external linked material, publication metadata, the actual visual asset and rights. No figure reuse is permitted on the current evidence.
+**Final scan boundary:** the article's text and visible comment are reconciled; the source-local graph and route are compared; all author-authored extraction items have final integration dispositions. The source remains partially scanned for the unretrieved comment/reply thread, external linked material, publication metadata, the actual visual asset and rights. No figure reuse is permitted on the current evidence.
 
 
 ## 12. Complete text extraction and remaining scan boundary
