@@ -60,7 +60,7 @@ Before creating or changing data structures, inspect:
 - `site/tools/export_knowledge_graph.py` and relevant validators/tests;
 - source audits, `docs/references.md`, `docs/pedagogical-resource-library.md`, and `docs/visual-assets-register.md`.
 
-Reuse existing stable IDs and graph semantics. Do not create a second concept registry, competing graph database, or manually maintained JSON-LD. If external sources are not first-class entities, propose a compatible source catalogue (e.g. `data/sources.yml`) and structured extraction records (e.g. `data/extractions/`); do not overload implementation-oriented `data/resources.yml`. Keep YAML as authoring data and JSON-LD as a generated projection.
+Reuse existing stable IDs and graph semantics. The source catalogue is canonical in `data/sources.yml`, source classification in `data/source-taxonomy.yml`, and atomic extraction records in `data/extractions/`, governed by `docs/source-catalogue-schema.md`. Do not create a parallel catalogue, a second concept registry, a competing graph database, or manually maintained JSON-LD. Do not overload implementation-oriented `data/resources.yml`. Keep YAML as authoring data and JSON-LD as a generated projection.
 
 Distinguish sources actually scanned from sources merely discovered, selected, linked, cited, inaccessible, superseded or rejected. A bibliography entry is not evidence of a scan.
 
