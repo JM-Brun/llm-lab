@@ -39,11 +39,11 @@ flowchart LR
     SOFTMAX --> A["Attention weights A"]
     A --> AGG["Weighted aggregation A V"]
     V --> AGG
-    AGG --> O["Attention output O"]
-    O --> H["Context-aware representation"]
+    AGG --> O["Head output O_i"]
     O --> CONCAT["Concatenate head outputs"]
-    HEADS["Multiple learned heads"] --> CONCAT
+    HEADS["Other head outputs O_j"] --> CONCAT
     CONCAT --> WO["Output projection W_O"]
+    WO --> H["Multi-head output representation"]
 ```
 
 Interpretation:
