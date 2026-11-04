@@ -88,7 +88,7 @@ Dense attention performs \(O(T^2)\) interactions, but these interactions can be 
 
 ## Check your understanding
 
-[Extended exercises on this topic](../en/exercises.qmd#transformer).
+[Extended exercises on this topic](exercises.qmd#transformer).
 
 1. **Why can BERT use tokens that appear after the token being represented?** Its encoder generally uses bidirectional attention over the full input; it is not subject to GPT's causal mask.
 2. **Which operation particularly distinguishes an encoder–decoder from a decoder-only model?** The encoder–decoder's decoder has cross-attention to representations produced by the encoder.
