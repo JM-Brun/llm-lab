@@ -287,6 +287,16 @@ def test_attention_subgraph_exports_intermediate_concepts_and_typed_relations() 
         f"{BASE}/id/concept/attention-weight",
     ) in relations
     assert (
+        f"{BASE}/id/concept/query",
+        "llmlab:contributesTo",
+        f"{BASE}/id/concept/attention-score",
+    ) in relations
+    assert (
+        f"{BASE}/id/concept/key",
+        "llmlab:contributesTo",
+        f"{BASE}/id/concept/attention-score",
+    ) in relations
+    assert (
         f"{BASE}/id/concept/scaled-dot-product-attention",
         "llmlab:partOf",
         f"{BASE}/id/concept/multi-head-attention",
