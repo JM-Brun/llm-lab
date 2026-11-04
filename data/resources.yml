@@ -1,0 +1,112 @@
+schema_version: 1
+# Stable, language-independent identities for non-page learning resources.
+# Page IDs remain owned by LLM-LAB-PAGE-MAP and concepts.yml.resources.
+resources:
+  - id: gpt-config-module
+    kind: implementation
+    labels:
+      fr: "Configuration du GPT"
+      en: "GPT configuration"
+    descriptions:
+      fr: "Module Python qui définit les dimensions nommées, l'immuabilité et la validation de la configuration du GPT de référence."
+      en: "Python module defining the named dimensions, immutability, and construction-time validation of the reference GPT configuration."
+    language: en
+    programming_language: Python
+    status: published
+    location:
+      type: local
+      path: src/llm_lab/foundations/gpt_config.py
+    referenced_by:
+      - fr/gpt-config-walkthrough
+      - en/gpt-config-walkthrough
+    concepts: []
+
+  - id: gpt-ops-module
+    kind: implementation
+    labels:
+      fr: "Briques numériques du GPT"
+      en: "GPT numerical building blocks"
+    descriptions:
+      fr: "Module Python regroupant l'initialisation des poids, les projections linéaires, la normalisation et l'activation GELU."
+      en: "Python module collecting weight initialization, linear projections, layer normalization, and the GELU activation."
+    language: en
+    programming_language: Python
+    status: published
+    location:
+      type: local
+      path: src/llm_lab/foundations/gpt_ops.py
+    referenced_by:
+      - fr/gpt-ops-walkthrough
+      - en/gpt-ops-walkthrough
+    concepts: []
+
+  - id: transformer-block-module
+    kind: implementation
+    labels:
+      fr: "Bloc Transformer de référence"
+      en: "Reference Transformer block"
+    descriptions:
+      fr: "Implémentation pré-LN d'un bloc Transformer avec attention causale multi-têtes, projections Q/K/V/O, MLP et chemins résiduels."
+      en: "Pre-LN implementation of a Transformer block with multi-head causal attention, Q/K/V/O projections, an MLP, and residual paths."
+    language: en
+    programming_language: Python
+    status: published
+    location:
+      type: local
+      path: src/llm_lab/foundations/transformer_block.py
+    referenced_by:
+      - fr/transformer-block-walkthrough
+      - en/transformer-block-walkthrough
+    concepts:
+      - self-attention
+      - query
+      - key
+      - value
+      - causal-mask
+      - contextualized-representation
+
+  - id: gpt-model-module
+    kind: implementation
+    labels:
+      fr: "Modèle GPT assemblé"
+      en: "Assembled GPT model"
+    descriptions:
+      fr: "Module qui assemble les embeddings de tokens et de positions, les blocs Transformer, la normalisation finale et la projection vers les logits."
+      en: "Module assembling token and position embeddings, Transformer blocks, final normalization, and the projection to vocabulary logits."
+    language: en
+    programming_language: Python
+    status: published
+    location:
+      type: local
+      path: src/llm_lab/foundations/gpt.py
+    referenced_by:
+      - fr/gpt-model-walkthrough
+      - en/gpt-model-walkthrough
+    concepts:
+      - token-embedding
+      - positional-encoding
+      - contextualized-representation
+      - output-projection
+      - logits
+
+  - id: gpt-generation-module
+    kind: implementation
+    labels:
+      fr: "Boucle de génération GPT"
+      en: "GPT generation loop"
+    descriptions:
+      fr: "Boucle autorégressive qui transforme les logits de la dernière position en sélection de token, l'ajoute au contexte et recommence."
+      en: "Autoregressive loop that turns the final-position logits into a token selection, appends it to the context, and repeats."
+    language: en
+    programming_language: Python
+    status: published
+    location:
+      type: local
+      path: src/llm_lab/foundations/generate.py
+    referenced_by:
+      - fr/gpt-generation-walkthrough
+      - en/gpt-generation-walkthrough
+    concepts:
+      - logits
+      - softmax
+      - token

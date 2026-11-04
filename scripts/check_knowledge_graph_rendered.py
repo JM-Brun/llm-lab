@@ -14,6 +14,7 @@ REQUIRED_TYPES = {
     "skos:ConceptScheme",
     "skos:Concept",
     "schema:LearningResource",
+    "schema:SoftwareSourceCode",
     "prov:Entity",
 }
 
