@@ -438,4 +438,18 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    import subprocess
+
+    result = subprocess.run(
+        [sys.executable, "-m", "pytest", "--no-header", "-q"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    lines = result.stdout.splitlines()
+    findings = [line for line in lines if line.startswith("FAILED") or line.startswith("ERROR")]
+    summary = lines[-1] if lines else ""
+    picks = findings[:9] + [summary]
+    for finding in picks:
+        sys.stdout.write(f"::error title=pytest::{finding}\n")
     raise SystemExit(main())
