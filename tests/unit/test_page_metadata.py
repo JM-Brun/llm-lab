@@ -64,3 +64,84 @@ def test_does_not_flag_planned_or_rendered_sources(tmp_path: Path) -> None:
     errors: list[str] = []
     MODULE["_validate_render_coverage"](tmp_path, {"fr/rendered.qmd"}, errors)
     assert not errors
+
+
+AUDIT_MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts" / "audit_page_metadata.py"
+AUDIT_MODULE: dict[str, Any] = runpy.run_path(
+    str(AUDIT_MODULE_PATH), run_name="page_metadata_audit_test"
+)
+
+
+def _audit_page(
+    scope: str = "A sufficiently detailed scope about language model attention mechanisms.",
+    purpose: str = (
+        "Explain how attention mechanisms combine contextual information for prediction."
+    ),
+    *,
+    language: str = "en",
+    next_page: str | None = None,
+    previous_page: str | None = None,
+    parents: list[str] | None = None,
+    children: list[str] | None = None,
+    related: list[str] | None = None,
+) -> dict[str, Any]:
+    return {
+        "scope": scope,
+        "purpose": purpose,
+        "route": {"next": next_page, "previous": previous_page},
+        "parents": parents or [],
+        "children": children or [],
+        "related": related or [],
+        "tags": {"language": language},
+    }
+
+
+def test_lexical_overlap_is_zero_for_short_or_uninformative_text() -> None:
+    assert AUDIT_MODULE["lexical_overlap"]("Attention and context", "Attention and context") == 0.0
+
+
+def test_detects_high_scope_overlap_only_within_same_language() -> None:
+    shared_scope = (
+        "Explains language model attention mechanisms, contextual representations, "
+        "query key value projections, and information aggregation."
+    )
+    pages = {
+        "en/a": _audit_page(scope=shared_scope),
+        "en/b": _audit_page(
+            scope=shared_scope,
+            purpose="A distinct learner outcome about sequence modelling and evaluation.",
+        ),
+        "fr/c": _audit_page(scope=shared_scope, language="fr"),
+    }
+
+    result = AUDIT_MODULE["audit_pages"](pages)
+
+    assert result["page_count"] == 3
+    assert result["editorial_candidates"] == [
+        {
+            "language": "en",
+            "field": "scope",
+            "score": 1.0,
+            "pages": ["en/a", "en/b"],
+        }
+    ]
+
+
+def test_reports_a_truly_isolated_page_as_a_review_candidate() -> None:
+    result = AUDIT_MODULE["audit_pages"]({"en/isolated": _audit_page()})
+
+    assert result["isolated_pages"] == ["en/isolated"]
+    report = AUDIT_MODULE["render_report"](result)
+    assert "not necessarily misplaced" in report
+    assert "`en/isolated`" in report
+
+
+def test_does_not_flag_page_connected_by_route_as_isolated() -> None:
+    pages = {
+        "en/a": _audit_page(next_page="en/b"),
+        "en/b": _audit_page(previous_page="en/a"),
+    }
+
+    result = AUDIT_MODULE["audit_pages"](pages)
+
+    assert result["isolated_pages"] == []
