@@ -3,7 +3,8 @@ title: "Deepen: knowledge map"
 description: "A thematic map of advanced LLM topics, organized around questions and domains."
 keywords: ["type:entry-point", "destination:deepen", "topic:deepen-hub", "level:overview", "language:en", "status:published"]
 ---
-<!-- LLM-LAB-PAGE-MAP v1
+<!--
+LLM-LAB-PAGE-MAP v1
 id: "en/deepen"
 scope: "Entry point to advanced deep dives: organizes pages by question families and clarifies their relationship to the core Understand route."
 purpose: "Choose a deep dive by question, identify neighbouring topics, and understand its level without turning optional reading into a prerequisite."
