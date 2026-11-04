@@ -17,8 +17,13 @@ pedagogical_model:
       - {id: scores, kind: intermediate, description: "Query-key dot-product compatibility scores.", locator: "Section 4"}
       - {id: scaled-scores, kind: intermediate, description: "Scores divided by the square root of the key dimension.", locator: "Section 4"}
       - {id: attention-weights, kind: intermediate, description: "Softmax-normalized scores after applicable causal masking.", locator: "Section 4"}
+      - {id: causal-mask, kind: constraint, description: "Optional restriction of future positions in causal attention.", locator: "Section 4"}
+      - {id: softmax, kind: operation, description: "Row-wise normalization that converts eligible scores into attention weights.", locator: "Section 4"}
       - {id: weighted-aggregation, kind: operation, description: "Weighted aggregation of multiple Value vectors, not argmax selection.", locator: "Section 5"}
       - {id: attention-output, kind: representation, description: "Contextual output of the weighted aggregation.", locator: "Section 5"}
+      - {id: head-outputs, kind: representation-set, description: "Outputs produced independently by the parallel attention heads.", locator: "Section 6"}
+      - {id: concatenation, kind: operation, description: "Concatenation of the per-head outputs.", locator: "Section 6"}
+      - {id: output-projection, kind: operation, description: "Learned output projection applied after head concatenation.", locator: "Section 6"}
       - {id: multi-head, kind: architecture, description: "Parallel per-head projections, concatenation and output projection.", locator: "Section 6"}
       - {id: contextual-examples, kind: pedagogical-anchor, description: "Bank ambiguity and it-to-the-animal pronoun reference motivate contextualization.", locator: "Section 2"}
     edges:
@@ -29,10 +34,16 @@ pedagogical_model:
       - {from: key, type: contributes-to, to: scores}
       - {from: scores, type: scaled-into, to: scaled-scores}
       - {from: scaled-scores, type: normalized-into, to: attention-weights}
+      - {from: causal-mask, type: constrains, to: scaled-scores}
+      - {from: scaled-scores, type: normalized-by, to: softmax}
+      - {from: softmax, type: produces, to: attention-weights}
       - {from: attention-weights, type: weights, to: weighted-aggregation}
       - {from: value, type: aggregated-by, to: weighted-aggregation}
       - {from: weighted-aggregation, type: produces, to: attention-output}
-      - {from: attention-output, type: composed-with-other-head-outputs, to: multi-head}
+      - {from: attention-output, type: included-in, to: head-outputs}
+      - {from: head-outputs, type: concatenated-by, to: concatenation}
+      - {from: concatenation, type: transformed-by, to: output-projection}
+      - {from: output-projection, type: forms-output-of, to: multi-head}
       - {from: contextual-examples, type: motivates, to: input-representations}
     interpretation: "Source-local reconstruction from prose and equations; not an author-specified formal graph."
   learning_outcomes:
