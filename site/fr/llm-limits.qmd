@@ -1,5 +1,5 @@
 ---
-title: "Ce que la prédiction du prochain token ne prouve pas"
+title: "Objectif d'entraînement : garanties et limites"
 subtitle: "Lire les performances d’un LLM sans surinterpréter l’objectif d’entraînement"
 keywords: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:fr", "status:published"]
 lang: fr
@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/llm-overview"]
   children: []
-related: ["fr/evaluation-experimentale"]
+related: ["fr/evaluation-experimentale", "fr/emergence"]
 tags: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -24,11 +24,18 @@ tags: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "lev
 Prédire le prochain token est un **objectif d’entraînement**. Ce qu’un modèle en retire relève de l’évaluation, pas de la définition. Cette page sépare ce que l’objectif garantit — pas grand-chose au-delà de la prédiction elle-même — de ce qu’il rend seulement plausible.
 :::
 
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+À l’issue de cette page, vous pourrez :
+- distinguer ce qui découle de l’objectif d’entraînement de ce qui exige une évaluation ;
+- préciser le critère utilisé derrière le mot « comprendre » ;
+- expliquer pourquoi une capacité apparente dépend de la métrique et du protocole.
+:::
+
 ## 1. Ce que l’objectif garantit — et ne garantit pas
 
 Un objectif de prédiction apprend à attribuer des probabilités aux suites de tokens observées. Il peut conduire à des capacités linguistiques et à des comportements complexes, mais il ne garantit pas :
 
-- que chaque affirmation générée soit vraie ;
+- que chaque affirmation générée soit vraie — les affirmations plausibles mais fausses, souvent appelées *hallucinations*, en sont l’illustration la plus connue ;
 - que les probabilités soient bien calibrées ;
 - que le modèle possède une compréhension humaine du monde ;
 - qu’une capacité observée se généralise à toute tâche ou tout contexte ;
@@ -53,11 +60,36 @@ La taille du modèle ne suffit pas non plus à expliquer ses performances. La qu
 
 ## Sources principales et rôle
 
-- [Wei et al. (2022), *Emergent Abilities of Large Language Models*](https://arxiv.org/abs/2206.07682) — formulation des capacités émergentes et exemples de transitions apparentes.
-- [Schaeffer et al. (2023), *Are Emergent Abilities of Large Language Models a Mirage?*](https://arxiv.org/abs/2304.15004) — comment des choix de métrique peuvent créer ou dissoudre des effets d’émergence.
 - [Bommasani et al. (2021), *On the Opportunities and Risks of Foundation Models*](https://arxiv.org/abs/2108.07258) — cadrage des modèles de fondation et de leurs risques.
+- Les articles fondateurs sur les capacités émergentes — Wei et al. (2022) et Schaeffer et al. (2023) — et le débat qu’ils portent sont présentés dans la page [Émergence des capacités](emergence.qmd).
 
-Ces sources présentent des positions complémentaires, parfois en tension : la première documente le phénomène, la seconde en propose une explication métrique. Citez le protocole, pas seulement la conclusion.
+Citez le protocole, pas seulement la conclusion.
+
+::: {.self-check}
+
+[Exercices et mises en pratique](exercises.qmd).
+
+Essayez de répondre avant d’ouvrir les raisonnements. L’objectif est de manipuler le modèle mental, pas de mémoriser des étiquettes.
+
+1. Un modèle génère avec un ton assuré une affirmation fausse. Est-ce nécessairement un défaut de réalisation, ou une conséquence possible de l’objectif d’entraînement ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Ce n’est pas nécessairement un défaut de réalisation. L’objectif de prédiction attribue des probabilités aux continuations observées sans mécanisme de vérification de la vérité : une continuation statistiquement plausible peut être fausse. Traiter ce risque suppose une évaluation adaptée à l’usage visé.
+
+</details>
+
+2. Une capacité passe de 0 % à 60 % entre deux tailles de modèles sur une métrique à seuil. Que faut-il examiner avant de conclure à une capacité émergente ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+La métrique, son seuil et le protocole. Une métrique continue ou lissée peut montrer une amélioration graduelle là où une métrique à seuil suggère une rupture ; le [débat sur l’émergence des capacités](emergence.qmd) détaille ces analyses et les contrôles nécessaires.
+
+</details>
+
+:::
 
 ::: {.language-switch}
 **Langue :** [Français](llm-limits.qmd) · [English](../en/llm-limits.qmd)

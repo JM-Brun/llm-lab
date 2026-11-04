@@ -21,8 +21,8 @@
     - [Gradients: connecting loss to parameters](gradients.html)
   - [Panorama: what is an LLM?](llm-overview.html)
   - [Transformer architectures: encoder, encoder–decoder, and decoder](transformer-architectures.html)
+  - [The training objective: guarantees and limits](llm-limits.html)
   - [Generating text: inference step by step](generation.html)
-  - [What next-token prediction does not prove](llm-limits.html)
 - **Build a small GPT**
   - Prepare training data
     - [Preparing a corpus for pretraining](corpus-preparation.html)

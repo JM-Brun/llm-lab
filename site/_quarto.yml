@@ -141,8 +141,8 @@ website:
           contents:
             - fr/llm-overview.qmd
             - fr/transformer-architectures.qmd
-            - fr/generation.qmd
             - fr/llm-limits.qmd
+            - fr/generation.qmd
             - section: "Du texte aux représentations et au calcul"
               contents:
                 - fr/text-data.qmd
@@ -230,8 +230,8 @@ website:
           contents:
             - en/llm-overview.qmd
             - en/transformer-architectures.qmd
-            - en/generation.qmd
             - en/llm-limits.qmd
+            - en/generation.qmd
             - section: "From text to representations and computation"
               contents:
                 - en/text-data.qmd

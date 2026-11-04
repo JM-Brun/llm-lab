@@ -136,7 +136,7 @@ RAG can retrieve documents at inference time and provide them in the context; th
 
 ::: {.callout-note collapse="true" title="One distinction to keep in mind"}
 
-Next-token prediction guarantees neither the truth of a model's outputs nor human-like understanding of the world. These questions, along with claims about emergent capabilities, are examined in [What next-token prediction does not prove](llm-limits.qmd).
+Next-token prediction guarantees neither the truth of a model's outputs nor human-like understanding of the world. These questions, along with claims about emergent capabilities, are examined in [The training objective: guarantees and limits](llm-limits.qmd).
 
 :::
 

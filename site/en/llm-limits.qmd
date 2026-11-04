@@ -1,5 +1,5 @@
 ---
-title: "What next-token prediction does not prove"
+title: "The training objective: guarantees and limits"
 subtitle: "Reading an LLM's performance without over-interpreting the training objective"
 keywords: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:en", "status:published"]
 lang: en
@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/llm-overview"]
   children: []
-related: ["en/experimental-evaluation"]
+related: ["en/experimental-evaluation", "en/emergence"]
 tags: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:en", "status:published"]
 -->
 
@@ -24,11 +24,18 @@ tags: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "lev
 Predicting the next token is a **training objective**. What a model gains from it is a matter of evaluation, not definition. This page separates what the objective guarantees — little beyond prediction itself — from what it merely makes plausible.
 :::
 
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this page, you will be able to:
+- distinguish what follows from the training objective from what requires evaluation;
+- state the criterion used behind the word "understand";
+- explain why an apparent ability depends on the metric and the protocol.
+:::
+
 ## 1. What the objective guarantees — and does not
 
 A prediction objective learns to assign probabilities to observed token sequences. It can yield linguistic abilities and complex behaviors, but it does not guarantee:
 
-- that every generated statement is true;
+- that every generated statement is true — plausible but false statements, often called *hallucinations*, are the best-known illustration;
 - that the probabilities are well calibrated;
 - that the model has a human-like understanding of the world;
 - that an observed ability generalizes to every task or context;
@@ -53,11 +60,36 @@ Model size alone does not explain performance either. Data quality, diversity, a
 
 ## Primary sources and their role
 
-- [Wei et al. (2022), *Emergent Abilities of Large Language Models*](https://arxiv.org/abs/2206.07682) — formulation of emergent abilities and examples of apparent transitions.
-- [Schaeffer et al. (2023), *Are Emergent Abilities of Large Language Models a Mirage?*](https://arxiv.org/abs/2304.15004) — how metric choices can create or dissolve emergence effects.
 - [Bommasani et al. (2021), *On the Opportunities and Risks of Foundation Models*](https://arxiv.org/abs/2108.07258) — framing of foundation models and their risks.
+- The founding papers on emergent capabilities — Wei et al. (2022) and Schaeffer et al. (2023) — and the debate they frame are presented on the [Emergent capabilities](emergence.qmd) page.
 
-These sources present complementary, sometimes tension-filled positions: the first documents the phenomenon, the second offers a metric-based explanation. Cite the protocol, not just the conclusion.
+Cite the protocol, not just the conclusion.
+
+::: {.self-check}
+
+[Exercises and practice](exercises.qmd).
+
+Try to answer before opening the solutions. The goal is to manipulate the mental model, not to memorize labels.
+
+1. A model asserts a false statement in a confident tone. Is that necessarily an implementation defect, or a possible consequence of the training objective?
+
+<details>
+<summary>Show the reasoning</summary>
+
+It is not necessarily an implementation defect. The prediction objective assigns probabilities to observed continuations without any truth-verification mechanism: a statistically plausible continuation can be false. Managing that risk requires an evaluation adapted to the intended use.
+
+</details>
+
+2. A measured ability jumps from 0% to 60% between two model sizes under a thresholded metric. What should be examined before concluding to an emergent ability?
+
+<details>
+<summary>Show the reasoning</summary>
+
+The metric, its threshold, and the protocol. A continuous or smoothed metric can show gradual improvement where a thresholded metric suggests a discontinuity; the [emergence debate](emergence.qmd) details these analyses and the required controls.
+
+</details>
+
+:::
 
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-limits.qmd) · [English](llm-limits.qmd)

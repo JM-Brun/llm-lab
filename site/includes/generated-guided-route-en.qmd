@@ -14,6 +14,7 @@ Understand what an LLM is and observe a complete generation loop before studying
 **Optional deep dives**
 
 - [Transformer architectures: encoder, encoder–decoder, and decoder](transformer-architectures.html)
+- [The training objective: guarantees and limits](llm-limits.html)
 
 :::
 

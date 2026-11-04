@@ -70,7 +70,7 @@ The main route follows the logic **understand how the system works before studyi
 <g class="flow-node">
 <a href="llm-overview.html" aria-label="Open the LLM panorama"><rect x="20" y="55" width="250" height="55" rx="10"/><text x="34" y="77" class="flow-kicker">1 · ORIENT</text><text x="34" y="98" class="flow-title">LLM panorama</text></a>
 <a href="transformer-architectures.html"><text x="28" y="132" class="flow-subtitle">Architectures</text></a>
-<a href="llm-limits.html"><text x="145" y="132" class="flow-subtitle">Limits</text></a>
+<a href="llm-limits.html"><text x="28" y="150" class="flow-subtitle">Guarantees and limits</text></a>
 </g>
 <g class="flow-node">
 <a href="generation.html" aria-label="Open the generation lesson"><rect x="330" y="55" width="250" height="55" rx="10"/><text x="344" y="77" class="flow-kicker">2 · PREVIEW</text><text x="344" y="98" class="flow-title">Autoregressive generation</text></a>
