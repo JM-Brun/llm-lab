@@ -88,6 +88,7 @@ relations:
   - {from: causal-mask, type: constrains, to: self-attention}
   - {from: positional-encoding, type: contributes-to, to: self-attention}
   - {from: self-attention, type: contributes-to, to: contextualized-representation}
-  - {from: contextualized-representation, type: mapped-by, to: output-projection}\n  - {from: output-projection, type: produces, to: logits}
+  - {from: contextualized-representation, type: mapped-by, to: output-projection}
+  - {from: output-projection, type: produces, to: logits}
   - {from: logits, type: normalized-by, to: softmax}
   - {from: softmax, type: evaluated-by, to: cross-entropy}
