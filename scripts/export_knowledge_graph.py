@@ -262,7 +262,7 @@ def build_graph() -> dict[str, Any]:
     activity_uri = f"{BASE}/id/activity/knowledge-graph-export"
     referenced_page_ids = {
         page_id for concept in concepts_data["concepts"] for page_id in concept["resources"]
-    }
+    } | resource_page_ids
     page_source_uris = sorted(
         {pages[page_id]["source_uri"] for page_id in referenced_page_ids if page_id in pages}
     )
