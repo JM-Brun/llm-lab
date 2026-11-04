@@ -24,8 +24,6 @@ PROVENANCE_FIELDS = {"creator", "publisher", "source_url", "license"}
 
 def _published_page_ids(root: Path) -> set[str]:
     """Return stable IDs of published French and English Quarto pages."""
-    import re
-
     published: set[str] = set()
     for language in ("fr", "en"):
         for path in (root / "site" / language).glob("*.qmd"):
