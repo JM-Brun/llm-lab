@@ -144,6 +144,8 @@ Store one file per source in `data/extractions/<source-id>.yml`. Each item is at
 - stable item ID and controlled `kind`;
 - concise paraphrased summary, not copied source prose;
 - exact locator and locator type;
+- optional `provenance` when the item's voice differs from the parent source (for example, a reader comment quoted on an article page): `voice` (`primary-author`, `reader-comment`, `editorial-note`, `maintainer`, or `other`), `speaker` when explicitly available, `parent_source_id`, `locator`, and `captured_at`. This identifies who made the statement and where it appeared; it does not validate the content.
+- optional `verification` for community-derived claims: status (`unverified`, `corroborated`, `contradicted`, `not-assessed`), independent source IDs/URLs, and a concise technical assessment. Keep the original comment claim separate from the verifier's interpretation.
 - evidence kind, confidence, scope, assumptions and limitations;
 - optional item-level classification, which can refine but not silently overwrite source classification;
 - existing canonical concept IDs, if justified;
