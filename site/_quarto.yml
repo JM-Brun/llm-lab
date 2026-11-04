@@ -156,8 +156,10 @@ website:
         - section: "Construire un petit GPT"
           contents:
             - fr/build-path.qmd
-            - fr/corpus-preparation.qmd
-            - fr/training-examples.qmd
+            - section: "Préparer les données d'entraînement"
+              contents:
+                - fr/corpus-preparation.qmd
+                - fr/training-examples.qmd
             - section: "Visite guidée du code de référence"
               contents:
                 - fr/gpt-config-walkthrough.qmd
@@ -246,8 +248,10 @@ website:
         - section: "Build a small GPT"
           contents:
             - en/build-path.qmd
-            - en/corpus-preparation.qmd
-            - en/training-examples.qmd
+            - section: "Prepare training data"
+              contents:
+                - en/corpus-preparation.qmd
+                - en/training-examples.qmd
             - section: "Guided tour of the reference code"
               contents:
                 - en/gpt-config-walkthrough.qmd
