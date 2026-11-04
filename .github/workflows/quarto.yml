@@ -37,6 +37,9 @@ jobs:
       - name: Generate bilingual history timeline fragments
         run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python scripts/render_history_pilot.py
 
+      - name: Generate learning-map data and guided-route Markdown
+        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python scripts/build_learning_map.py
+
       - name: Render site
         run: quarto render site
 
