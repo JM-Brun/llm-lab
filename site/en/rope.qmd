@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/rope"
 scope: "Deepens Rotary Position Embedding: pairwise coordinate rotations, relative-offset dependence of the dot product, implementation conventions, and extrapolation limits; it does not repeat the general introduction to positional information."
 purpose: "Readers should be able to derive relative-offset dependence for one coordinate pair, locate rotations in Q/K computation, and identify implementation and evaluation choices that condition long-sequence behaviour."
+domain: "architectures-mechanisms"
 suggested_route:
   previous: null
   next: null
