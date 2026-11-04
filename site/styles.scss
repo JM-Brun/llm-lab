@@ -890,6 +890,19 @@ details.spot-the-fallacy .fallacy-content {
 }
 
 
+/* Contextual concept links are inline learning affordances, not page-classification badges. */
+a.concept-link {
+  font-weight: 650;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+}
+a.concept-link:hover,
+a.concept-link:focus-visible {
+  text-decoration-style: solid;
+  text-decoration-thickness: 2px;
+}
+
 /* Interactive bilingual learning map: nodes are links; relation layers are independently filterable. */
 .learning-map {
   margin: 1.5rem 0 2rem;

@@ -48,7 +48,7 @@ Links point to model cards or original publications. Research papers: [BERT](htt
 
 ![Comparison of information flow in encoder-only, decoder-only, and encoder–decoder architectures.](../images/transformer-attention-architectures.svg){fig-alt="Encoder-only: bidirectional self-attention. Decoder-only: causal self-attention. Encoder–decoder: encoder self-attention, causal decoder self-attention, and cross-attention to encoder memory." width=100%}
 
-In an encoder–decoder architecture, the decoder reads representations produced by the encoder through **cross-attention**. The [dedicated lesson](cross-attention.qmd) explains the computation; it is not required to understand the broad architecture comparison.
+In an encoder–decoder architecture, the decoder reads representations produced by the encoder through [**cross-attention**](cross-attention.qmd){.concept-link}. The [dedicated lesson](cross-attention.qmd) explains the computation; it is not required to understand the broad architecture comparison.
 
 ### Encoder-only: contextualize an input
 
