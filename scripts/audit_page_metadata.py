@@ -18,7 +18,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from check_page_metadata import _load_page  # noqa: E402
+from check_page_metadata import _load_page
 
 ROOT = Path(__file__).resolve().parents[1]
 TOKEN = re.compile(r"[^\W\d_]{3,}", re.UNICODE)
@@ -131,7 +131,8 @@ def render_report(result: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "A page with no graph relations is not necessarily misplaced: independent entry points,",
+            "A page with no graph relations is not necessarily misplaced: "
+            "independent entry points",
             "reference resources, and optional branches may be intentionally weakly connected.",
             "",
             "## Possible scope or purpose overlap",
@@ -156,9 +157,11 @@ def render_report(result: dict[str, Any]) -> str:
             "## Method and limits",
             "",
             "- Only published pages represented in the rendered page metadata graph are analyzed.",
-            "- French and English pages are compared separately; translated counterparts are not compared lexically.",
+            "- French and English pages are compared separately; "
+            "translated counterparts are not compared lexically.",
             "- Graph isolation checks all declared route, hierarchy, and related edges.",
-            "- The report does not infer prerequisites, semantic equivalence, or pedagogical redundancy.",
+            "- The report does not infer prerequisites, semantic equivalence, "
+            "or pedagogical redundancy.",
             "- Review candidates require inspection of page objectives and actual body content.",
             "",
         ]
