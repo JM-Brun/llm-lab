@@ -1,5 +1,5 @@
 ---
-title: "L'espace des embeddings"
+title: "L'espace des embeddings (ou plongements)"
 subtitle: "Comment les identifiants sélectionnent des vecteurs et comment le contexte les transforme"
 keywords: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 lang: fr
@@ -21,7 +21,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 -->
 
 ::: {.chapter-lead}
-Un **embedding** est un vecteur numérique associé à un objet, par exemple un token. L'ensemble de ces vecteurs forme un espace de représentation. On peut comparer leurs directions, leurs distances ou leurs voisins, mais leur interprétation dépend du modèle, de son entraînement et de la tâche : la géométrie n'est pas un dictionnaire universel du sens.
+Un **embedding**, ou **plongement**, est ici un vecteur numérique associé à un objet, par exemple un token. L'ensemble de ces vecteurs forme un espace de représentation. Le terme anglais reste très courant en apprentissage automatique ; *plongement* est son équivalent français et sera employé aussi dans cette page. On peut comparer leurs directions, leurs distances ou leurs voisins, mais leur interprétation dépend du modèle, de son entraînement et de la tâche : la géométrie n'est pas un dictionnaire universel du sens.
 :::
 
 <div class="pipeline-stepper" role="navigation" aria-label="Étapes du parcours LLM">
@@ -37,7 +37,7 @@ Un **embedding** est un vecteur numérique associé à un objet, par exemple un 
 </div>
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
-Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice d'embeddings contient un vecteur appris par ID ; le lookup sélectionne simplement la bonne ligne. Deux occurrences du même ID récupèrent donc le même vecteur initial. C'est ensuite le traitement par le Transformer qui construit une représentation dépendant du contexte.
+Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice d'embeddings — ou table de plongements — contient un vecteur appris par ID ; le lookup sélectionne simplement la bonne ligne. Deux occurrences du même ID récupèrent donc le même vecteur initial. C'est ensuite le traitement par le Transformer qui construit une représentation dépendant du contexte.
 
 **Première lecture :** comprenez le lookup sur la petite matrice et retenez qu’un ID sélectionne une ligne, sans encoder lui-même une coordonnée sémantique.
 
@@ -47,13 +47,13 @@ Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice 
 
 ## D'où viennent les vecteurs ?
 
-Un tokenizer découpe le texte en tokens et associe généralement chaque token à un identifiant entier. Une matrice d'embedding $E\in\mathbb{R}^{V\times d}$ contient un vecteur par identifiant : $V$ est la taille du vocabulaire et $d$ la dimension de l'embedding. Pour le token d'identifiant $i$, son embedding initial est la ligne $E_i$.
+Un tokenizer découpe le texte en tokens et associe généralement chaque token à un identifiant entier. Une **matrice de plongements** (ou matrice d'embeddings) $E\in\mathbb{R}^{V\times d}$ contient un vecteur par identifiant : $V$ est la taille du vocabulaire et $d$ la dimension du plongement. Pour le token d'identifiant $i$, son **vecteur de plongement initial** est la ligne $E_i$.
 
 Dans un Transformer, cette représentation est ensuite transformée par les couches du réseau. Il faut distinguer trois objets :
 
-- **Embedding de token :** vecteur initial récupéré dans la matrice du vocabulaire.
+- **Embedding (plongement) de token :** vecteur initial récupéré dans la matrice du vocabulaire.
 - **Représentation contextualisée :** vecteur produit après traitement du contexte, notamment par l'attention.
-- **Embedding de phrase ou de document :** vecteur calculé par un modèle et une méthode d'agrégation conçus pour représenter un texte plus long.
+- **Plongement de phrase ou de document :** vecteur calculé par un modèle et une méthode d'agrégation conçus pour représenter un texte plus long.
 
 Ces objets ne sont pas interchangeables. Une méthode adaptée aux embeddings de phrases pour la recherche documentaire ne se transfère pas automatiquement aux activations internes d'un LLM.
 
