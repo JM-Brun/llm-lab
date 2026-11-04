@@ -403,7 +403,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         }
       });
       crumbs.appendChild(home);
-      crumbs.appendChild(el("span", "map-crumbs-sep", "›"));
+      crumbs.appendChild(el("span", "map-crumbs-sep", "__CRUMB_SEP__"));
       crumbs.appendChild(el("span", "map-crumbs-current", area.title));
       viewport.appendChild(crumbs);
 
@@ -737,9 +737,9 @@ def _fill(template: str, values: dict[str, str]) -> str:
 def render_map_script() -> str:
     """Return the interactive include shared by every script-driven representation."""
     copy_json = json.dumps(COPY, ensure_ascii=False, indent=2)
-    return GENERATED_FILE_NOTE + PROGRESSIVE_MAP_TEMPLATE.replace(
-        "__LEARNING_MAP_COPY__", copy_json
-    )
+    script = PROGRESSIVE_MAP_TEMPLATE.replace("__LEARNING_MAP_COPY__", copy_json)
+    script = script.replace("__CRUMB_SEP__", "\u203a")
+    return GENERATED_FILE_NOTE + script
 
 
 def render_territory_map(

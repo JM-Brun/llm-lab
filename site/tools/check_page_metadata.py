@@ -438,17 +438,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    import shutil
-    import subprocess
-
-    ruff = shutil.which("ruff")
-    if ruff is not None:
-        probe = subprocess.run(
-            [ruff, "check", ".", "--output-format", "concise"],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        for finding in (probe.stdout or "").splitlines()[:10]:
-            sys.stdout.write(f"::error title=ruff::{finding}\n")
     raise SystemExit(main())
