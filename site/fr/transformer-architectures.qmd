@@ -2,6 +2,7 @@
 title: "Architectures Transformer : encodeur, encodeur-décodeur et décodeur"
 subtitle: "Trois façons d'organiser le traitement d'une séquence"
 description: "Compare les architectures Transformer encodeur seul, encodeur-décodeur et décodeur seul, leurs flux d'information et leurs objectifs typiques."
+keywords: ["type:concept-lesson","destination:understand","topic:transformer-architectures","level:core","language:fr","status:published"]
 lang: fr
 ---
 
