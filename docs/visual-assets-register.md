@@ -30,8 +30,9 @@ The same image is embedded in both language variants unless otherwise noted.
 
 ### Remote image links that are not currently embedded
 
-The following source illustration is linked from the bilingual Q/K/V lesson as an optional external visual reference. It is not copied into the repository or embedded as a local/remote image because the exact asset URL, visual contents and reuse permission could not be verified during the source scan:
+The following source illustrations are linked as optional external reading references. They are not copied into the repository or embedded as local/remote images because exact asset URLs, visual contents and reuse permissions could not be verified during the source scans:
 
+- Neha KK, [*Understanding Queries, Keys and Values in Transformers*](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b). The indexed article text exposes three captioned in-body figure placements (self-attention; linear projections; scaled dot-product attention) and one additional uncaptioned image placeholder. Direct page retrieval returned a cache miss; no exact image URL or bytes were available. Cover/hero media, creator, visual composition and reuse rights are unresolved. **Status: link-only; four in-body slots inventoried from indexed text, none visually inspected.**
 - Nishanthan K, [*How Query, Key, and Value (QKV) Work in Transformers*](https://nishanthan-k.medium.com/how-query-key-and-value-qkv-work-in-transformers-1274bfa14ea8), author-controlled Medium mirror of the [DEV Community article](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a). The Medium profile index lists two image entries under this article title, but neither the exact asset URL nor the original image bytes were available. **Status: linked-only; visual inspection and reuse rights pending.**
 
 
