@@ -45,6 +45,7 @@ Chaque entrée répond à une question plus précise : pourquoi un mécanisme fo
 
 **Question directrice :** quelles variantes changent la circulation de l'information ou la structure de calcul ?
 
+- [Pourquoi mettre les scores d'attention à l'échelle ?](attention-score-scaling.qmd) — variance des produits scalaires sous hypothèses gaussiennes, concentration du softmax et limites du facteur $\sqrt{d_k}$.
 - [Attention croisée](cross-attention.qmd) — transfert d'information entre deux séquences, notamment dans les architectures encodeur-décodeur et multimodales.
 - [RoPE : encodage positionnel rotatif](rope.qmd) — géométrie des rotations, dépendance aux positions relatives et limites d'extrapolation.
 - [Architectures hybrides : Nemotron 3 et 3.5](hybrid-llm-architectures.qmd) — combinaison de récurrence, attention, experts et prédiction multi-token dans un cas concret.

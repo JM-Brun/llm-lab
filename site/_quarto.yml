@@ -87,7 +87,9 @@ project:
     - fr/queries-keys-values.qmd
     - en/queries-keys-values.qmd
     - fr/scaled-dot-product-attention.qmd
+    - fr/attention-score-scaling.qmd
     - en/scaled-dot-product-attention.qmd
+    - en/attention-score-scaling.qmd
     - fr/causal-masking.qmd
     - en/causal-masking.qmd
     - fr/cosine-similarity.qmd
@@ -189,6 +191,7 @@ website:
             - fr/deepen.qmd
             - section: "Architectures et mécanismes"
               contents:
+                - fr/attention-score-scaling.qmd
                 - fr/cross-attention.qmd
                 - fr/rope.qmd
                 - fr/hybrid-llm-architectures.qmd
@@ -278,6 +281,7 @@ website:
             - en/deepen.qmd
             - section: "Architectures and mechanisms"
               contents:
+                - en/attention-score-scaling.qmd
                 - en/cross-attention.qmd
                 - en/rope.qmd
                 - en/hybrid-llm-architectures.qmd

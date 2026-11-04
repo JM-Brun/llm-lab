@@ -8,14 +8,14 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/scaled-dot-product-attention"
-scope: "Décompose le calcul d’attention à produit scalaire : scores QKᵀ, mise à l’échelle par la dimension des clés, normalisation softmax et combinaison pondérée des valeurs ; le masque causal est traité séparément et l’architecture multi-tête n’est abordée qu’en complément."
+scope: "Décompose le calcul d’attention à produit scalaire : scores QKᵀ, mise à l’échelle par la dimension des clés, normalisation softmax et combinaison pondérée des valeurs ; la justification du facteur d’échelle est développée dans l’approfondissement dédié, le masque causal est traité séparément et l’architecture multi-tête n’est abordée qu’en complément."
 purpose: "Le lecteur doit pouvoir suivre les étapes du calcul d’attention, expliquer le rôle de la mise à l’échelle et interpréter les poids comme une distribution de pondération conditionnée par les scores et le masque."
 suggested_route:
   previous: "fr/queries-keys-values"
   next: "fr/causal-masking"
 hierarchy:
   parents: ["fr/transformer"]
-  children: ["fr/causal-masking"]
+  children: ["fr/causal-masking", "fr/attention-score-scaling"]
 related: ["fr/queries-keys-values"]
 tags: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:fr", "status:published"]
 -->
@@ -47,7 +47,7 @@ L'attention n'est pas une opération unique : elle enchaîne **scores → mise �
 
 **Première lecture :** suivez les quatre étapes et refaites l'exemple avec une requête et deux clés. Vérifiez séparément la forme de chaque matrice : les scores sont de taille $T\times T$, la sortie de taille $T\times d_v$.
 
-**Pour approfondir :** examinez pourquoi on divise par $\sqrt{d_k}$, puis comment un masque modifie les positions accessibles avant le softmax.
+**Pour approfondir :** la dérivation du facteur d'échelle — pourquoi diviser par $\sqrt{d_k}$ et ce que cet argument ne garantit pas — est développée dans [Pourquoi mettre les scores à l'échelle ?](attention-score-scaling.qmd) ; la modification des positions accessibles avant le softmax est le rôle du [masque causal](causal-masking.qmd).
 :::
 
 ## Calcul en quatre étapes
@@ -65,7 +65,7 @@ $$
 O=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
 $$
 
-Ici, $M$ désigne un masque additif strict : $M_{ij}=0$ pour un couple requête-clé autorisé et $M_{ij}=-\infty$ pour un couple interdit. Si aucun masque n'est nécessaire, on omet $M$ (ce qui revient à utiliser une matrice nulle). Pour une attention causale, les positions futures sont interdites et reçoivent donc $-\infty$ avant le softmax. Chaque ligne de requête doit conserver au moins une clé autorisée ; si tous les scores d'une ligne sont masqués à $-\infty$, le softmax usuel n'est pas défini et ce cas doit être traité explicitement.
+Ici, $M$ désigne un masque additif strict : $M_{ij}=0$ pour un couple requête-clé autorisé et $M_{ij}=-\infty$ pour un couple interdit. Si aucun masque n'est nécessaire, on omet $M$ (ce qui revient à utiliser une matrice nulle). Le masque agit sur les scores **avant** le softmax : c'est le seul point où il peut modifier les positions accessibles à la normalisation. Quelles positions interdire — la contrainte causale — et comment traiter une ligne entièrement masquée sont définis dans le [masque causal](causal-masking.qmd), prochaine étape du parcours.
 
 ## Exemple numérique détaillé
 
@@ -88,46 +88,6 @@ Cet exemple distingue les rôles : la requête et les clés déterminent les poi
 
 Le schéma montre aussi pourquoi trois objets ne doivent pas être confondus : **scores** (compatibilités brutes), **poids** (normalisés relativement aux positions accessibles) et **sorties** (combinaisons pondérées des valeurs). Dans une attention non causale, le masque peut être absent ou exprimer une autre contrainte. La normalisation du softmax ne transforme pas les poids en mesure universelle de pertinence sémantique.
 
-::: {.callout-note collapse="true" title="Dérivation et simulation numérique (facultatif)"}
-Sous l'hypothèse simplificatrice que toutes les composantes de requête et de clé sont indépendantes, centrées et de variance unitaire, la variance du produit scalaire vaut $\sum_{i=1}^{d_k} \operatorname{Var}(q_i k_i) = d_k$. Son écart-type est donc $\sqrt{d_k}$ : pour $d_k=64$, il vaut 8. Des écarts importants entre scores d'une même ligne peuvent concentrer le softmax et réduire ses gradients. Diviser par $\sqrt{d_k}$ atténue ce risque dans ce modèle simplifié ; ni la saturation ni son absence ne sont garanties pour des projections apprises.
-
-::: {.micro-workbench}
-::: {.micro-workbench-header}
-<span>MICRO-ATELIER NUMÉRIQUE · ÉCHELLE DES SCORES</span>
-<span>Python 3.12+ / NumPy</span>
-:::
-::: {.micro-workbench-body}
-```python
-import numpy as np
-
-### Simulation de produits scalaires pour d_k = 64
-np.random.seed(42)
-d_k = 64
-N = 10000
-
-### Vecteurs gaussiens standards indépendants
-q = np.random.randn(N, d_k)
-k = np.random.randn(N, d_k)
-
-### Produit scalaire brut q . k
-raw_dots = np.sum(q * k, axis=1)
-
-### Écart-type empirique non normalisé vs normalisé
-std_raw = np.std(raw_dots)
-std_scaled = np.std(raw_dots / np.sqrt(d_k))
-
-print(f"Écart-type brut : {std_raw:.2f} (théorique: {np.sqrt(d_k):.1f})")
-print(f"Écart-type après division par sqrt(d_k) : {std_scaled:.2f} (théorique: 1.0)")
-
-assert np.isclose(std_scaled, 1.0, atol=0.05)
-```
-:::
-::: {.micro-workbench-footer}
-Dans cette simulation, la division par $\sqrt{d_k}$ ramène approximativement la variance des scores à l'unité. Elle ne mesure ni les poids softmax ni les gradients.
-:::
-:::
-:::
-
 ## Origine et rôle
 
 La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762), qui compare l'attention additive et l'attention par produit scalaire et introduit le facteur de mise à l'échelle. Elle permet des calculs matriciels efficaces et s'intègre naturellement aux mécanismes multi-têtes.
@@ -142,18 +102,11 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 <p><strong>Réfutation rigoureuse :</strong> Le poids $\alpha_{ij}$ est obtenu par softmax à partir du score $q_i^\top k_j/\sqrt{d_k}$ : il exprime une pondération relative parmi les positions accessibles, pas une causalité. Avant la projection de sortie, la contribution directe de la position $j$ à l'agrégation est $\alpha_{ij}v_j$ ; sa norme vaut $\alpha_{ij}\lVert v_j\rVert$. Un poids élevé ne garantit donc même pas un terme agrégé de grande norme. Et ce terme n'est pas l'effet sur la prédiction finale : la projection de sortie, les connexions résiduelles, la normalisation et le MLP transforment encore le signal. Établir une importance causale exige une analyse interventionnelle adaptée, pas la seule lecture des poids.</p>
 </div>
 </details>
-- **« Le facteur d'échelle est une constante empirique sans justification. »** Il découle d'un raisonnement sur l'échelle des produits scalaires ; les hypothèses sont simplificatrices, mais le facteur répond à un problème numérique précis.
-- **« Le softmax suffit à rendre l'attention causale. »** Non : sans masque causal, une position peut encore attribuer du poids aux tokens futurs.
-
-<details class="spot-the-fallacy">
-<summary>Piège fréquent : « Si l'on augmente la dimension des têtes $d_k$, l'attention devient automatiquement plus expressive sans précaution »</summary>
-<div class="fallacy-content">
-<p><strong>Limite :</strong> Sous les hypothèses ci-dessus et sans mise à l'échelle, passer de $d_k=64$ à 512 multiplierait l'écart-type des scores par $\sqrt{8} \approx 2{,}83$. Des différences plus grandes entre scores peuvent concentrer le softmax et réduire ses dérivées locales ; cela ne prouve ni une saturation systématique ni un blocage total de l'apprentissage.</p>
-</div>
-</details>
+- **« Le facteur d'échelle est une constante empirique sans justification. »** Non : il découle d'un raisonnement sur l'échelle des produits scalaires ; les hypothèses sont simplificatrices, mais le facteur répond à un problème numérique précis. La dérivation complète et la simulation numérique sont développées dans [Pourquoi mettre les scores à l'échelle ?](attention-score-scaling.qmd).
 
 ## Liens avec les autres concepts
 
+- La dérivation du facteur d'échelle et la simulation numérique de variance sont développées dans [Pourquoi mettre les scores à l'échelle ?](attention-score-scaling.qmd).
 - Les entrées $Q,K,V$ sont détaillées dans [requêtes, clés et valeurs](queries-keys-values.qmd).
 - L'exclusion des tokens futurs est définie dans le [masque causal](causal-masking.qmd).
 - La fonction softmax est liée aux [probabilités](probabilites.qmd), mais une distribution normalisée n'est pas nécessairement calibrée.
@@ -164,12 +117,12 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 
 [Exercices approfondis sur ce thème](exercises.qmd#attention).
 
-Une ligne de scores vaut $(2,0)$ et la dimension des clés est $d_k=4$. Calculez les poids softmax après mise à l’échelle. Que se passe-t-il si la deuxième position est interdite par un masque causal ?
+1. Une ligne de scores vaut $(2,0)$ et la dimension des clés est $d_k=4$. Calculez les poids softmax après mise à l’échelle.
 
 <details>
 <summary>Afficher le raisonnement</summary>
 
-On divise d’abord les scores par $\sqrt{4}=2$, ce qui donne $(1,0)$. Le softmax vaut environ $(0{,}731,0{,}269)$. Si la deuxième position est interdite, son score est masqué avant le softmax (conceptuellement $-\infty$) : les poids deviennent $(1,0)$. Le masque doit intervenir avant la normalisation ; mettre son poids à zéro après le softmax sans renormaliser ne produit pas la même distribution.
+On divise d’abord les scores par $\sqrt{4}=2$, ce qui donne $(1,0)$. Le softmax vaut environ $(0{,}731,0{,}269)$. La mise à l’échelle précède la normalisation ; les poids restent relatifs aux seuls scores de cette ligne. La variante où une position est interdite par un masque causal est traitée dans l’auto-vérification du [masque causal](causal-masking.qmd).
 
 </details>
 :::

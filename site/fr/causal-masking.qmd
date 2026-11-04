@@ -72,7 +72,7 @@ $$
 A=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right).
 $$
 
-Les positions futures reçoivent alors un poids nul en arithmétique idéale. En pratique, les bibliothèques peuvent représenter le masque sous forme booléenne ou employer une primitive d'attention qui intègre cette contrainte.
+Les positions futures reçoivent alors un poids nul en arithmétique idéale. En pratique, les bibliothèques peuvent représenter le masque sous forme booléenne ou employer une primitive d'attention qui intègre cette contrainte. Chaque ligne de requête doit conserver au moins une clé autorisée : si tous les scores d'une ligne sont masqués à $-\infty$, le softmax usuel n'est pas défini et ce cas doit être traité explicitement.
 
 ::: {.callout-note collapse="true" title="Convention des API de code (approfondissement)"}
 En code, **la polarité d'un masque booléen dépend de l'API**. Par exemple, dans [l'attention à produit scalaire mise à l'échelle de PyTorch](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html), `True` signifie qu'une position peut participer à l'attention ; dans [PyTorch MultiheadAttention](https://docs.pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html), `True` dans `attn_mask` signifie que la position est masquée. Ne transférez pas un masque booléen d'une API à l'autre sans vérifier la convention documentée. Cela ne change pas la règle causale elle-même : les couples requête-clé autorisés doivent toujours exclure les clés futures.
@@ -95,6 +95,7 @@ Les Transformers décodeurs comme GPT utilisent cette contrainte pour apprendre 
 ## Idées reçues et contre-exemples
 
 - **« Les données sont déjà dans le bon ordre, donc le masque est inutile. »** Faux : l'ordre des tokens n'empêche pas une opération d'attention non masquée de lire les représentations des positions futures.
+- **« Le softmax suffit à rendre l'attention causale. »** Non : sans masque, la normalisation s'applique encore aux positions futures, qui reçoivent des poids positifs.
 - **« Mettre les poids futurs à zéro après softmax suffit. »** Sans renormalisation, les poids restants peuvent ne plus sommer à un. Un masquage suivi d'une renormalisation est équivalent en arithmétique exacte si la somme restante est non nulle ; masquer les scores avant softmax est la formulation usuelle.
 - **« Tester uniquement la matrice du masque prouve l'absence de fuite. »** Faux : un autre chemin de calcul pourrait laisser passer l'information future.
 - **« Causal signifie que l'attention ne regarde que le token précédent. »** Faux : elle peut regarder toutes les positions antérieures, sauf si une autre restriction (par exemple une fenêtre glissante) est imposée.
@@ -165,6 +166,21 @@ Dans ce cas synthétique, modifier les clés et valeurs futures ne change pas le
 - [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) explique l'ordre score → masque → softmax → agrégation.
 - [Objectif et fondations mathématiques](mathematical-foundations.qmd) relie la contrainte au prochain-token et à la loss.
 - [Synthèse Transformer](transformer.qmd) replace le masque dans l'architecture globale.
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](exercises.qmd#attention).
+
+1. Une ligne de scores déjà mise à l'échelle vaut $(1,0)$. Que deviennent les poids si la deuxième position est interdite par un masque causal ? Pourquoi le masque doit-il être appliqué avant le softmax ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Le score interdit est masqué avant le softmax (conceptuellement $-\infty$) : les poids deviennent $(1,0)$. Le masque doit intervenir avant la normalisation ; mettre son poids à zéro après le softmax sans renormaliser ne produit pas la même distribution, car la somme restante serait inférieure à un.
+
+</details>
+:::
 
 ::: {.callout-note collapse="true" title="Code et tests de référence (approfondissement)"}
 Une implémentation de référence testée est disponible dans `src/llm_lab/foundations/attention.py` (`causal_mask` et `scaled_dot_product_attention`). La suite de tests `tests/unit/test_attention.py` comprend un cas similaire d'invariance sur une tête, ainsi que des vérifications du masque et des formes ; elle ne teste pas un GPT complet.
