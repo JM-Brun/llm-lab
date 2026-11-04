@@ -117,7 +117,19 @@ A source can be text-complete and still partially scanned. A contribution can be
 - Treat reader comments as separate provenance records and independently verify technical suggestions before integrating them.
 - Prefer primary papers, official documentation and reproducible code for technical validation; tutorials are pedagogical sources, not authority by repetition.
 
-## 7. Current follow-up queue
+## 7. Reusable integration artifacts
+
+The collection is maintained using the [external-source integration workflow](../workflows/source-to-learning-system-integration.md) and its [standard deliverable templates](../workflows/templates/):
+
+- [Source registration template](../workflows/templates/source-registration-template.yml)
+- [Structured extraction template](../workflows/templates/source-extraction-template.yml)
+- [Source review template](../workflows/templates/source-review-template.md)
+- [Multi-source comparison template](../workflows/templates/multi-source-comparison-template.md)
+- [Visual asset audit template](../workflows/templates/visual-asset-audit-template.md)
+
+These are complementary records, not duplicate versions of the same document: catalogue = provenance; extraction = atomic evidence; review = technical/pedagogical judgement; comparison = cross-source synthesis; visual audit = media and rights.
+
+## 8. Current follow-up queue
 
 - [ ] Reinspect both original articles' actual embedded figures and stable asset URLs; record creator/licence/reuse status before any embedding.
 - [ ] Recheck the DEV comment thread and reconcile the historical second comment/author reply if accessible.
