@@ -112,7 +112,7 @@ Turn ideas into bounded falsifiable protocols only when useful and feasible. Spe
 Use pinned versions, existing project architecture and canonical code locations. Add tests where appropriate. Distinguish conceptual pseudocode from executable code and intended behavior from observed/tested behavior.
 
 ## 7. Update references, metadata and bilingual pages
-## Source classification and discovery facets
+### Source classification and discovery facets
 
 When integrating source and extraction records, preserve the distinction defined in `docs/source-catalogue-schema.md`:
 - domains classify the broad subject and reuse `data/domains.yml`;
