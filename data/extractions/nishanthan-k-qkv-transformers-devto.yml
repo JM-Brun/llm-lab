@@ -388,7 +388,7 @@ items:
     disposition_rationale: "The bilingual Q/K/V lesson already identifies the projections as learned parameters, while the gradients lesson owns the optimization mechanism. The source adds no derivation or training evidence that warrants another page edit."
 
   - id: nishanthan-k-qkv-transformers-devto:scaling-rationale
-    kind: explanation
+    kind: claim
     summary: "The article motivates division by sqrt(d_k) as a way to prevent large dot-product scores from producing overly peaked softmax distributions and less effective optimization."
     locator: {type: section, value: "4", label: "How Do Queries and Keys Calculate Attention? — Step 2"}
     evidence:
