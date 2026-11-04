@@ -477,7 +477,6 @@ def test_learning_map_keyboard_activation_uses_node_selection() -> None:
     assert "renderConceptGraph(); });" not in script
 
 
-
 def test_load_concept_graph_serializes_localized_relation_semantics(tmp_path: Path) -> None:
     _write_concept_registry(tmp_path)
     MODULE["load_concept_graph"].__globals__["ROOT"] = tmp_path
@@ -513,4 +512,4 @@ def test_concept_graph_script_exposes_direction_and_relation_legend() -> None:
     assert "Relationship meaning (source → target)" in source
     assert 'const arrow = relation && relation.direction === "symmetric" ? " ↔ " : " → ";' in source
     assert 'marker-end": symmetric ? "none" : "url(#map-arrow-concept)"' in source
-    assert 'conceptLegend.hidden = false' in source
+    assert "conceptLegend.hidden = false" in source
