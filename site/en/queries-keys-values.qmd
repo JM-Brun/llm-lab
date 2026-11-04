@@ -45,6 +45,13 @@ The analogy separates the roles, but it is not a literal symbolic search: the mo
 
 ![Diagram of query, key, and value projections: Q and K determine attention weights, which are used to aggregate V.](../images/queries-keys-values-en.svg){fig-alt="An input representation is projected into a query, key, and value. Queries are compared with keys; the resulting weights are applied to values." width=100%}
 
+::: {.callout-note title="A complementary illustration in the source"}
+Nishanthan K provides a complementary visual explanation of the Q/K/V roles in the article. [Open the article and its original illustration on Medium](https://nishanthan-k.medium.com/how-query-key-and-value-qkv-work-in-transformers-1274bfa14ea8) (a mirror of the [DEV Community article](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a)).
+
+Reference: Nishanthan K, *How Query, Key, and Value (QKV) Work in Transformers*, DEV Community, posted October 22 (year not verified). The illustration remains hosted by its source; LLM Lab links to it rather than copying the asset because reuse rights have not been established.
+:::
+
+
 For the historical development of attention before the Transformer architecture, see [A history of Transformers](transformer-history.qmd).
 
 ## Where do Q, K, and V come from?
