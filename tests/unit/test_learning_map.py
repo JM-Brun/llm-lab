@@ -78,7 +78,6 @@ def _write_page(
     path.write_text(page_content, encoding="utf-8")
 
 
-
 def _write_concept_registry(root: Path) -> None:
     """Write a minimal bilingual concept registry for generator tests."""
     data = {
