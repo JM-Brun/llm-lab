@@ -117,7 +117,7 @@ def test_rendered_graph_validator_accepts_complete_references() -> None:
                 "@type": ["schema:WebPage", "schema:LearningResource"],
                 "schema:about": {"@id": "urn:concept"},
             },
-            {"@id": "urn:export", "@type": "prov:Entity"},
+            {"@id": f"{BASE}/knowledge-graph.jsonld", "@type": "prov:Entity"},
         ],
     }
 
@@ -145,7 +145,7 @@ def test_rendered_graph_validator_reports_dangling_references() -> None:
                 "@type": ["schema:WebPage", "schema:LearningResource"],
                 "schema:about": {"@id": "urn:concept"},
             },
-            {"@id": "urn:export", "@type": "prov:Entity"},
+            {"@id": f"{BASE}/knowledge-graph.jsonld", "@type": "prov:Entity"},
         ],
     }
 
