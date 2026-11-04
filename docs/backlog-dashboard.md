@@ -14,6 +14,31 @@
 
 40 issues are currently open. Thirty-four carry exactly one priority label (current split: P0=0, P1=11, P2=17, P3=6); six still need classification — #225, #266, #268, #280, #282, #368 — see [Issues needing attention](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+-label%3AP0+-label%3AP1+-label%3AP2+-label%3AP3). Re-run the filters above rather than relying on these dated counts.
 
+## Handoff — PR reconciliation and next sessions (2026-11-04)
+
+This is a **dated maintenance snapshot**, not an alternative issue tracker. Recheck [open PRs](https://github.com/JM-Brun/llm-lab/pulls?q=is%3Apr+is%3Aopen), current branch heads, `mergeable_state`, and the **latest-head** checks at the start of the next session: GitHub may be recomputing mergeability, and a green workflow on an older SHA is insufficient.
+
+| PR | Verified reconciliation | Next gate |
+|---|---|---|
+| [#406](https://github.com/JM-Brun/llm-lab/pull/406) — softmax/probability ownership | Historical conflict with `main` reconciled by merge commit `15d89c8`; subsequent branch work changed the head again. The branch includes the then-current `main`, with six intended files changed. | Recheck its **current head**, mergeability and CI/Quarto checks, then inspect the four FR/EN pages for preserved interaction, mathematical rendering, learning-outcome parity and local links before considering merge. |
+| [#410](https://github.com/JM-Brun/llm-lab/pull/410) — optional multi-head attention depth | Newly opened; source-level proposal only at this snapshot. | Check the latest CI/Quarto status, exact bilingual content preservation, callout collapse and placement in the core Transformer lesson. Do not confuse an `unknown` mergeability calculation with a proven Git conflict. |
+| [#409](https://github.com/JM-Brun/llm-lab/pull/409), [#408](https://github.com/JM-Brun/llm-lab/pull/408), [#405](https://github.com/JM-Brun/llm-lab/pull/405) | Merged. Older governance PRs [#396](https://github.com/JM-Brun/llm-lab/pull/396) and [#407](https://github.com/JM-Brun/llm-lab/pull/407) were closed without merge and superseded by #409. | Do not reopen or duplicate the superseded work. |
+
+### Small, independently reviewable next lots
+
+1. **P1 — Close open PR gates (one PR at a time).** For #406 and #410, inspect the latest head, GitHub's actual `mergeable_state` after computation, Python CI, Quarto bilingual render, timeline parity and local-link checks. Fix only reproduced failures. Record browser validation separately; a successful Quarto build does not verify the interactive slider, responsive layout or keyboard experience.
+2. **P1 — Reconcile editorial-audit findings after merge.** [The boundary audit](editorial-boundary-audit-2026-11-04.md) F1 is implemented in pending #406 but not closed until merged and reviewed. F2 was addressed by merged #405 (whitespace-splitting explanation belongs in tokenization-strategies, not text-data). F3/F4 are intentional distinctions, not invitations to remove useful reminders. Update the audit status rather than create a duplicate content ledger.
+3. **P1 — Establish typed resource entities, in a separate PR.** The [knowledge-graph implementation audit](knowledge-graph-implementation-audit.md) identifies the remaining third-dimension gap: concept resources are currently page IDs. First specify stable resource IDs, kinds (page/demo/experiment/implementation/reference), bilingual handling, provenance and location; then add referential-integrity fixtures. Do not redesign the page graph or introduce a second graph database.
+4. **P2 — Extend the concept-map projection only after the data contract.** Expose concept→domain membership through the existing canonical six-domain registry; expose non-page resource kinds only after their records and tests exist. Keep domain membership distinct from page primary domain, and never interpret conceptual prerequisites as a reading order.
+5. **P2 — Browser and accessibility review in scoped batches.** Follow [the existing dashboard items](#next--at-most-three-follow-up-work-items) and issue [#320](https://github.com/JM-Brun/llm-lab/issues/320); capture page/language/viewport/browser and reproducible defects. The previously deferred screenshot work is not an automatic blocker for unrelated source-level changes.
+
+### Verification and preservation contract
+
+- Before editing a conflicting PR: list its changed files; compare base→branch and base→latest `main`; use a true merge/rebase or an explicit three-way reconciliation. Preserve improvements from **both** sides, including domains, page metadata, interactive exercises, citations and FR/EN parity. Never replace a modified canonical file with the stale PR version.
+- After editing: ensure the branch contains latest `main`, compare the resulting PR diff, verify no malformed Quarto fences or duplicate/omitted interactive IDs, then check the **new** head's workflows. Avoid calling `mergeable: false` a conflict when GitHub reports `mergeable_state: unknown`.
+- Maintain **one source of truth** per concern: `data/domains.yml`, `data/concepts.yml`, page-map metadata, and `docs/content-section-mapping.md`. Source-level validation, rendered-site CI, browser inspection and pedagogical evidence are separate claims.
+- The older [remaining-work register](work-backlog-status.md) is a dated 2026-11-03 snapshot with historical issue counts; refresh it from live GitHub data before using those counts for prioritisation. The [roadmap](roadmap.md) is longer-term, not a live PR queue.
+
 ## Operating rule
 
 **One active learning slice at a time.** P0 is a temporary execution designation, not a measure of importance or a permanent severity rating. P1 contains the next work and cross-cutting risks; P2 is planned work; P3 is intentionally deferred or optional.
