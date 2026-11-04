@@ -131,8 +131,12 @@ def _validate_pedagogical_model(model: Any, where: str, errors: list[str]) -> No
                 errors.append(f"{node_where}: expected a mapping")
                 continue
             node_id = node.get("id")
-            if not isinstance(node_id, str) or not ID_PATTERN.fullmatch(node_id):
-                errors.append(f"{node_where}.id: expected a kebab-case local ID")
+            if (
+                not isinstance(node_id, str)
+                or not ID_PATTERN.fullmatch(node_id)
+                or not node_id.startswith("src-")
+            ):
+                errors.append(f"{node_where}.id: expected a source-namespaced kebab-case ID")
             elif node_id in node_ids:
                 errors.append(f"{node_where}.id: duplicate local node ID {node_id!r}")
             else:
