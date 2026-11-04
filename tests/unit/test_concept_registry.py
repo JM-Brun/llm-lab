@@ -79,6 +79,27 @@ def test_registry_rejects_duplicate_and_unpublished_resource_ids() -> None:
     assert any("not a published page" in error for error in errors)
 
 
+def test_registry_requires_resources_in_both_languages() -> None:
+    data = _valid_registry()
+    data["concepts"][0]["resources"] = ["fr/text-data"]
+
+    errors = validate_registry(data)
+
+    assert any("missing language(s) en" in error for error in errors)
+    data["concepts"][0]["resources"] = ["en/text-data"]
+    errors = validate_registry(data)
+    assert any("missing language(s) fr" in error for error in errors)
+
+
+def test_cycle_detection_handles_long_chains_without_recursion() -> None:
+    length = 1500
+    edges = {f"concept-{index}": [f"concept-{index + 1}"] for index in range(length - 1)}
+    assert not MODULE["_has_cycle"](edges)
+
+    edges[f"concept-{length - 1}"] = ["concept-0"]
+    assert MODULE["_has_cycle"](edges)
+
+
 def test_registry_handles_malformed_relation_value_types() -> None:
     data = _valid_registry()
     data["relations"] = [{"from": [], "type": {}, "to": None}]
