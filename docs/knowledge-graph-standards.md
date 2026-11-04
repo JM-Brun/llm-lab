@@ -95,7 +95,7 @@ uv run pytest
 
 The exporter is deterministic: it does not embed wall-clock timestamps or environment-specific paths. The generated `site/knowledge-graph.jsonld` must not be hand-edited.
 
-The existing `scripts/check_concept_registry.py` remains responsible for source-level graph semantics and referential integrity. The export tests check the standards projection, stable identifiers, bilingual labels, page links and provenance structure. A future SHACL layer is justified only if the RDF graph itself becomes a maintained validation boundary.
+The existing `scripts/check_concept_registry.py` remains responsible for source-level graph semantics and referential integrity. The export tests check the standards projection, stable identifiers, bilingual labels, page links and provenance structure. After Quarto rendering, `scripts/check_knowledge_graph_rendered.py` verifies that the JSON-LD resource was copied into the published output, required node types are present, and internal graph references resolve. A future SHACL layer is justified only if the RDF graph itself becomes a maintained validation boundary.
 
 ## 7. Model ownership boundaries
 
