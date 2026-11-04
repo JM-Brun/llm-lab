@@ -71,7 +71,8 @@ Each item records, as applicable:
 - limitations, caveats, counterevidence and what the source does not establish;
 - learner difficulty addressed and potential pedagogical value;
 - candidate concepts/pages/resources/experiments and proposed destination (proposal only);
-- links to related extracted items.
+- links to related extracted items;
+- optional `pedagogical_assessment` with independent levels and rationales for novelty, complementarity, pedagogical value, applicability, redundancy and evidence quality (required for pedagogical contributions and proposed learning improvements; see `docs/source-catalogue-schema.md`).
 
 Do not collapse a paper's observation into a universal fact. Do not copy substantial passages; synthesize and preserve technical terminology only where necessary.
 
