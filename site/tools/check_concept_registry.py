@@ -242,7 +242,7 @@ def validate_registry(
             if source in identifiers and target in identifiers:
                 if kind in SYMMETRIC_RELATION_TYPES and source >= target:
                     errors.append(
-                        f"{where}: contrasts-with must use canonical lexical order "
+                        f"{where}: {kind} must use canonical lexical order "
                         "(from < to) because it is symmetric"
                     )
                 if kind == "prerequisite":
@@ -260,7 +260,9 @@ def validate_registry(
         if unknown_definitions:
             errors.append(f"relation_types: unsupported definitions {sorted(unknown_definitions)}")
         if missing_definitions:
-            errors.append(f"relation_types: missing definitions for used types {sorted(missing_definitions)}")
+            errors.append(
+                f"relation_types: missing definitions for used types {sorted(missing_definitions)}"
+            )
         for kind, definition in relation_types.items():
             where = f"relation_types.{kind}"
             if not isinstance(definition, dict):
@@ -276,7 +278,9 @@ def validate_registry(
                     errors.append(f"{where}.{field}: values must be non-empty strings")
             if kind in SYMMETRIC_RELATION_TYPES and definition.get("direction") != "symmetric":
                 errors.append(f"{where}.direction: {kind} must be symmetric")
-            elif kind not in SYMMETRIC_RELATION_TYPES and definition.get("direction") == "symmetric":
+            elif (
+                kind not in SYMMETRIC_RELATION_TYPES and definition.get("direction") == "symmetric"
+            ):
                 errors.append(f"{where}.direction: {kind} is not defined as symmetric")
 
     if _has_cycle(prerequisite_edges):
