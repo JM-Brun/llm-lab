@@ -450,3 +450,17 @@ This pass applied the 2026-11-02 external review of the panorama and Transformer
 | Reference-code integration | New construction-order module list and executable quickstart (`uv sync --dev`; `GPTConfig` → `GPT` → greedy and sampled `generate`; `uv run pytest` with test files listed in reading order); pure-NumPy (float64), inference-only scope stated explicitly. | The snippet mirrors the tested `src/llm_lab/foundations/` API; it is not an executed CI example. Keep it in sync if the reference API changes. |
 | Milestone alignment | The milestone table uses the G0–G9 identifiers of `docs/learning-path.md`, with G2 flagged as a parallel branch; the causal-attention acceptance test keeps the evaluation-mode/dropout condition from the 2026-11-02 pass. | Status claims stay bounded: the inference reference is tested; the data pipeline, training loop and evaluation are not yet built. Recheck against the canonical learning path after merge. |
 | Cross-document traceability | `README.md` (site entry bullet, refreshed Status paragraph) and `docs/content-section-mapping.md` (inventory rows, renumbered milestone table, refreshed evidence) updated in the same PR. | Re-verify all three documents against the canonical learning path after merge. |
+
+
+### Deepen knowledge-map and taxonomy pass — 2026-11-04
+
+**Scope:** organize the advanced destination without turning it into a second mandatory route. The bilingual map pages (`site/fr/deepen.qmd`, `site/en/deepen.qmd`) introduce six question-led domains: architectures/mechanisms; text/tokenization; mathematical tools/geometry; probabilistic foundations/training; inference/efficiency; and scale/research questions.
+
+| Area | Change | Evidence boundary / remaining action |
+|---|---|---|
+| Reader discovery | Added bilingual landing maps with entry points by learner question, concise descriptions of each deep dive, and a classification rule for future topics. | Source-level content review; inspect rendered tables, anchors, language switch, and navigation after CI. |
+| Sidebar taxonomy | Replaced the previous uneven groups with six stable domains and placed the map at the top of the Deepen section in both languages. | Sidebar source updated; verify rendered Quarto navigation and mobile behavior. |
+| Editorial governance | Added an admission/placement contract to the content map and contributor principles: one primary category, canonical ownership, precise graph-edge semantics, and a threshold for creating categories. | Future additions must update map, navigation, render list, inventory, and bilingual metadata. |
+| RoPE integration | PR #387 is now merged; the RoPE deep dive is included under Architectures and mechanisms in both languages and in the bilingual map. | Rendered navigation, anchors, language switching, and mobile behavior remain to be inspected on the published site. |
+
+This is a source-level organizational change, not evidence that readers have tested or validated the new information architecture.
