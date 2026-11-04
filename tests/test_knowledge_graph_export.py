@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import json
 import sys
-from pathlib import Path
+from pathlib
+from tempfile import TemporaryDirectory import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,6 +17,7 @@ from export_knowledge_graph import (  # noqa: E402
     DOMAIN_SCHEME,
     build_graph,
     relation_predicate,
+    write_export,
 )
 
 
@@ -66,3 +69,13 @@ def test_jsonld_context_is_explicit() -> None:
     assert payload["@context"]["skos"] == "http://www.w3.org/2004/02/skos/core#"
     assert payload["@context"]["schema"] == "https://schema.org/"
     assert payload["@context"]["prov"] == "http://www.w3.org/ns/prov#"
+
+
+def test_export_writes_valid_jsonld_deterministically() -> None:
+    with TemporaryDirectory() as directory:
+        output = Path(directory) / "knowledge-graph.jsonld"
+        write_export(output)
+        first = output.read_text(encoding="utf-8")
+        assert json.loads(first)["@context"]["skos"] == "http://www.w3.org/2004/02/skos/core#"
+        write_export(output)
+        assert output.read_text(encoding="utf-8") == first
