@@ -164,6 +164,7 @@ The following gaps should be addressed incrementally:
 | Concern | Canonical reference |
 |---|---|
 | Overall information architecture | This document |
+| Knowledge graph implementation audit | [Implementation audit](knowledge-graph-implementation-audit.md) |
 | Domain/concept/resource knowledge graph | Candidate concept seed: `data/concepts.yml` (PR #399); domain-to-concept membership and first-class resource records remain to be verified |
 | Page metadata, tags and page graph | [Page metadata schema](page-metadata-schema.md) |
 | Learning-map implementation | `scripts/build_learning_map.py`, `tests/unit/test_learning_map.py` |
