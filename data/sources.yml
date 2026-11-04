@@ -89,6 +89,62 @@ sources:
         - docs/source-reviews/qkv-nishanthan-devto-2026-11.md
         - docs/source-reviews/qkv-learning-graph-comparison-2026-11.md
 
+  - id: neha-kk-understanding-qkv-medium
+    title: "Understanding Queries, Keys and Values in Transformers"
+    creators: ["Neha KK"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b"
+    publisher: "Medium"
+    publication_date: "2025-12-31"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: []
+      tags:
+        - topic:qkv
+        - topic:self-attention
+        - topic:contextualization
+        - application:coreference
+      concept_ids: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax, contextualized-representation]
+    metadata:
+      technical_level: introductory
+      contribution_types: [architecture, pedagogy, visualization]
+      audiences: [beginner, learner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-04"
+        status: partially-scanned
+        inspected_scope:
+          - "Directly retrieved canonical Medium article: introduction, all explanatory sections, equations, pronoun example and conclusion"
+          - "Article metadata: author, publication date and displayed figure captions/placements"
+          - "Reconstructed source-local pedagogical graph and ordered teaching route"
+          - "Compared against the bilingual Q/K/V and scaled-dot-product-attention lessons, canonical concept graph, guided route, page routes and Build route"
+        limitations:
+          - "The actual embedded image files were not retrieved as stable URLs or bytes and were not visually inspected."
+          - "Figure creators and reuse rights are unknown; figures are link-only."
+          - "No independent model, head, attention weights or experiment supports the article's pronoun-resolution example."
+          - "No linked technical resources or external evidence are provided in the author-authored article body."
+    related:
+      pages:
+        - fr/queries-keys-values
+        - en/queries-keys-values
+        - fr/scaled-dot-product-attention
+        - en/scaled-dot-product-attention
+        - fr/contextualized-representations
+        - en/contextualized-representations
+        - fr/causal-masking
+        - en/causal-masking
+      concepts: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax, contextualized-representation]
+      audit_records:
+        - docs/source-reviews/qkv-neha-kk-medium-2026-11.md
+
   - id: huggingface-transformers-kv-cache-explanation
     title: "Caching"
     creators: ["Hugging Face Transformers contributors"]
