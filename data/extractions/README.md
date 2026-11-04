@@ -46,6 +46,7 @@ Extraction records contain atomic, evidence-linked items; they are not a second 
 - kind must use data/source-taxonomy.yml.
 - A locator must identify the actual inspected location (page, section, PDF page, figure, code path, commit, timestamp, or dataset field).
 - Evidence and confidence describe the extracted item, not the reputation of the source.
+- If an item comes from a reader comment or another voice embedded in a source, add `provenance` with its voice, speaker (only if explicit), parent source ID, exact comment locator and capture date. Add `verification` separately when checking the claim against independent evidence; never merge the comment and verifier's interpretation into one attributed statement.
 - Item-level classification may refine the source classification; it must not silently rewrite it.
 - concept_ids refer only to existing canonical concepts in data/concepts.yml. Candidate concepts are proposals, not IDs to insert pre-emptively.
 - Candidate page IDs are proposals and must resolve before integration.
