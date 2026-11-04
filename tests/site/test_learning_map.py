@@ -448,6 +448,13 @@ def test_learning_map_browser_script_has_valid_javascript_and_fallback_target() 
     assert "conceptList.appendChild" not in script
     assert "sectionHeadingList.appendChild(item)" in script
 
+    assert "page.topic || copy.unknown" not in script
+    assert "page.topic || page.destination" not in script
+    assert '"CONCEPT · " + concept.id' not in script
+    assert "meta.textContent = concept.id" not in script
+    assert "copy.destinations[page.destination]" in script
+    assert "copy.noSectionHeadings" in script
+
 
 def test_learning_map_node_selection_is_separate_from_navigation() -> None:
     """Page and concept nodes select in place; navigation uses the details link."""
