@@ -92,3 +92,8 @@ When adding material:
 7. Create a new category only when multiple pages justify it or when a durable domain has a credible expansion path. Do not create one-page buckets around individual models or papers.
 
 The Deepen taxonomy is for discovery, not a prerequisite sequence. Sidebar order must never be interpreted as conceptual dependency.
+
+
+## 8. Maintain the machine-readable Deepen domain
+
+Every published content page in the Deepen destination must declare exactly one top-level `domain` in its page-map comment, using the controlled vocabulary in `docs/page-metadata-schema.md`. The bilingual counterpart must use the same identifier. Do not use `topic` for the broad domain: `topic` identifies the specific concept, while `domain` identifies the page's primary discovery category. The generated learning-map JSON exports this field for the interactive domain filter. Entry-point pages are exempt; non-Deepen pages must not declare a Deepen domain.
