@@ -115,4 +115,4 @@ The canonical `docs/learning-path.md` remains the authority for the milestone se
 
 ## Method and limits
 
-The report is generated from the explicit Quarto render list. Route chains use only `suggested_route.next`; hierarchy and related relations are analyzed separately. Structural validity and FR/EN parity are delegated to `scripts/check_page_metadata.py` (or its future `site/tools/` location), not reimplemented here. Lexical overlap is a conservative triage signal only. No metadata values were changed by this audit.
+The report is generated from the explicit Quarto render list. Route chains use only `suggested_route.next`; hierarchy is reported separately, while related links contribute only to isolated-page detection and are not treated as route or hierarchy edges. Structural validity and FR/EN parity are delegated to `scripts/check_page_metadata.py` (or its future `site/tools/` location), not reimplemented here. Lexical overlap is a conservative triage signal only. No page-map metadata values were changed by this audit.
