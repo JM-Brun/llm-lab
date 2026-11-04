@@ -404,7 +404,7 @@ def test_build_serializes_deepen_domain(tmp_path: Path) -> None:
         domain="architectures-mechanisms",
     )
     _write_page(site, page_id="en/index", language="en", title="Home", topic="overview")
-    _write_guided_route(tmp_path)
+    _write_guided_route(tmp_path, fr_core=["fr/rope"], en_core=["en/index"])
     MODULE["build"].__globals__["SITE"] = site
     MODULE["build"].__globals__["ROOT"] = tmp_path
     _write_concept_registry(tmp_path)
