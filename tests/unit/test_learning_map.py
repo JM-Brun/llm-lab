@@ -87,7 +87,7 @@ def test_load_pages_extracts_published_pages_and_heading_concepts(tmp_path: Path
         headings=(
             "## Intuition",
             "### **Query**, Key and Value",
-            "## Objectifs d’apprentissage",
+            "## Objectifs d'apprentissage",
             "## Calcul des scores",
             "## Normalisation",
             "## Agrégation",
