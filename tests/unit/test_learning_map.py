@@ -309,7 +309,7 @@ def test_render_guided_route_markdown_uses_native_quarto_blocks() -> None:
 
 
 def test_repository_guided_route_resolves_against_published_pages(monkeypatch) -> None:
-    repository_root = MODULE_PATH.parents[2]
+    repository_root = MODULE_PATH.parents[1]
     monkeypatch.setitem(MODULE["load_pages"].__globals__, "SITE", repository_root / "site")
     monkeypatch.setitem(MODULE["load_guided_route"].__globals__, "ROOT", repository_root)
     published_pages = MODULE["load_pages"]()
@@ -341,7 +341,7 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
 
     assert output.name == "learning-map-data-fr.json"
     assert payload["language"] == "fr"
-    assert payload["source"] == "LLM-LAB-PAGE-MAP v1 + data/concepts.yml"
+    assert payload["source"] == "LLM-LAB-PAGE-MAP v1 + data/guided-route.yml + data/concepts.yml"
     assert "guided_route" not in payload
     assert {page["id"] for page in payload["pages"]} == {"fr/index", "fr/attention"}
     assert all(page["href"] for page in payload["pages"])
@@ -404,6 +404,7 @@ def test_build_serializes_deepen_domain(tmp_path: Path) -> None:
         domain="architectures-mechanisms",
     )
     _write_page(site, page_id="en/index", language="en", title="Home", topic="overview")
+    _write_guided_route(tmp_path)
     MODULE["build"].__globals__["SITE"] = site
     MODULE["build"].__globals__["ROOT"] = tmp_path
     _write_concept_registry(tmp_path)
