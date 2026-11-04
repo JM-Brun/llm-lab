@@ -401,7 +401,7 @@ def build(language: str) -> Path:
         json.dumps(
             {
                 "language": language,
-                "source": "LLM-LAB-PAGE-MAP v1 + data/concepts.yml",
+                "source": "LLM-LAB-PAGE-MAP v1 + data/guided-route.yml + data/concepts.yml",
                 "pages": pages,
                 **concept_graph,
             },
