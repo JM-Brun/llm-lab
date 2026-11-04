@@ -11,8 +11,8 @@ id: "fr/transformer"
 scope: "Suit le calcul d’un GPT autorégressif à l’intérieur du réseau, depuis les représentations d’entrée jusqu’aux logits, en se concentrant sur les blocs Transformer, l’auto-attention, le MLP, les connexions résiduelles et la normalisation ; la préparation du texte et la boucle de génération sont seulement situées, pas réenseignées."
 purpose: "Le lecteur doit pouvoir décrire le calcul d’une passe avant, expliquer les opérations d’un bloc Transformer, distinguer profondeur et largeur, et identifier les logits comme sortie du réseau sans confondre cette passe avec le décodage ou la génération."
 suggested_route:
-  previous: "fr/llm-overview"
-  next: "fr/generation"
+  previous: "fr/contextualized-representations"
+  next: "fr/queries-keys-values"
 hierarchy:
   parents: ["fr/index", "fr/llm-overview"]
   children: ["fr/embedding-space", "fr/positional-encoding", "fr/contextualized-representations", "fr/queries-keys-values", "fr/logits", "fr/tensors", "fr/transformer-explainer"]
