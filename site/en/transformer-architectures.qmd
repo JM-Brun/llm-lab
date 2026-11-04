@@ -16,14 +16,12 @@ suggested_route:
 hierarchy:
   parents: ["en/llm-overview"]
   children: ["en/cross-attention"]
-related: ["en/transformer-history", "en/transformer"]
+related: ["en/transformer-history", "en/transformer", "en/hybrid-llm-architectures", "en/llm-computational-complexity"]
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
-::: {.chapter-lead}
 A Transformer can use an encoder, a decoder, or both. This choice determines which positions can exchange information and how the model processes a sequence. It does not, by itself, determine the training objective or the task being performed.
-:::
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
