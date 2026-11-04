@@ -81,7 +81,7 @@ sources:
     creators: ["Hugging Face Transformers contributors"]
     source_type: documentation
     identifiers: {}
-    canonical_url: "https://github.com/huggingface/transformers/blob/main/docs/source/en/cache_explanation.md"
+    canonical_url: "https://huggingface.co/docs/transformers/main/en/cache_explanation"
     publisher: "Hugging Face Transformers"
     publication_date: null
     updated_date: null
