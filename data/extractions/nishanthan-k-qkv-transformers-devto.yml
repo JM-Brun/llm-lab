@@ -173,3 +173,47 @@ items:
     disposition: integrate
     disposition_rationale: "The bilingual contextualized-representations lesson already uses lexical ambiguity (bank) but did not illustrate a cross-position pronoun dependency. Add the animal/it example as a short complementary subsection, explicitly framing it as motivation rather than evidence that one attention head resolves coreference. This preserves the source's useful second viewpoint without duplicating the QKV mechanism explanation."
 
+  - id: nishanthan-k-qkv-transformers-devto:reader-comment-kv-cache
+    kind: open-question
+    summary: "A reader comment proposes KV caching as a follow-up to Q/K/V, noting that incremental generation can use the current token's query with previously cached keys and values, and that cache memory grows with context length. The comment also suggests a small NumPy example to make tensor shapes concrete."
+    provenance:
+      voice: reader-comment
+      parent_source_id: nishanthan-k-qkv-transformers-devto
+      locator:
+        type: comment
+        value: "First visible reader comment following the article conclusion; KV-cache follow-up"
+      captured_at: "2026-11-04"
+    verification:
+      status: corroborated
+      sources:
+        - huggingface-transformers-kv-cache-explanation
+      assessment: "The Hugging Face Transformers caching documentation independently confirms that, during incremental causal decoding, the current query attends to cached past K/V plus the current K/V, and that current K/V are appended per layer. The comment's shorthand should not be read as saying that the current token computes only Q: its K and V are also computed and appended. Cache memory grows with retained sequence length; exact growth depends on the cache strategy and model configuration."
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "KV caching is a distinct inference-time consequence of separating Q from K/V, not covered by the article body."}
+      complementarity: {level: high, rationale: "It connects the introductory QKV mechanism to incremental autoregressive decoding and implementation-level reuse."}
+      pedagogical_value: {level: high, rationale: "It answers why Q is computed for the current step while past K/V can be reused, and introduces a concrete compute-memory trade-off."}
+      applicability: {level: moderate, rationale: "Useful as a follow-up in an inference-efficiency lesson, but outside the scope of the introductory QKV page."}
+      redundancy: {level: low, rationale: "The article's main text does not discuss caching or incremental decoding."}
+      evidence_quality: {level: moderate, rationale: "The comment is only a lead; its technical content is corroborated separately by official Transformers documentation."}
+    locator:
+      type: comment
+      value: "First visible reader comment following the article conclusion"
+      label: "Reader suggestion: KV cache and tensor-shape example"
+    evidence:
+      kind: community-comment
+      confidence: context-dependent
+      scope: "A reader-suggested follow-up topic and a concise description of incremental K/V reuse."
+      assumptions: ["The comment refers to standard causal autoregressive decoding with a KV cache."]
+      limitations:
+        - "The comment is not part of the article author's claims."
+        - "The shorthand omits that the current token's K and V are also computed and appended."
+        - "The cache-memory trade-off depends on cache strategy, layer count, KV-head count, head dimension, precision and retained context."
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:kv-cache, topic:autoregressive-generation]
+      concept_ids: [key, value]
+    candidate_destinations:
+      pages: []
+      concepts: [key, value]
+    disposition: defer
+    disposition_rationale: "Preserve the community lead and its independent verification, but do not add KV-cache detail to the introductory Q/K/V page. Revisit when the inference-efficiency curriculum has a canonical destination."
