@@ -174,4 +174,4 @@ The following gaps should be addressed incrementally:
 | Visual design | [Design system](design-system.md) |
 | Historical dataset | [History data model](history-data-model.md) |
 | Contributor process | [Contributing guide](../CONTRIBUTING.md) |
-| Repeatable information-architecture audits | [Knowledge architecture audit skill](../.github/skills/knowledge-architecture-audit/SKILL.md) |
+| Repeatable information-architecture audits | [Knowledge architecture audit skill](../.agents/skills/knowledge-architecture-audit/SKILL.md) |
