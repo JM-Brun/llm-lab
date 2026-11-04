@@ -268,3 +268,26 @@ def test_build_serializes_deepen_domain(tmp_path: Path) -> None:
     rope = next(page for page in payload["pages"] if page["id"] == "fr/rope")
 
     assert rope["domain"] == "architectures-mechanisms"
+
+
+def test_learning_map_browser_script_has_valid_javascript_and_fallback_target() -> None:
+    """Catch syntax errors that would prevent the browser map from initializing."""
+    import shutil
+    import subprocess
+
+    import pytest
+
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("Node.js is required for the inline browser-script syntax check.")
+
+    script_path = MODULE_PATH.parents[1] / "site" / "includes" / "learning-map.html"
+    source = script_path.read_text(encoding="utf-8")
+    assert source.count("<script>") == 1
+    script = source.split("<script>", maxsplit=1)[1].split("</script>", maxsplit=1)[0]
+    result = subprocess.run(
+        [node, "--check", "-"], input=script, text=True, capture_output=True, check=False
+    )
+    assert result.returncode == 0, result.stderr
+    assert "conceptList.appendChild" not in script
+    assert "sectionHeadingList.appendChild(item)" in script
