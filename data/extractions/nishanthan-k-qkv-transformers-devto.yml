@@ -102,8 +102,8 @@ items:
     candidate_destinations:
       pages: [fr/queries-keys-values, en/queries-keys-values]
       concepts: [query, key, value]
-    disposition: defer
-    disposition_rationale: "The bilingual canonical lesson already states this distinction and warns that Q/K/V are learned numerical vectors rather than readable questions, labels, or cards."
+    disposition: reject
+    disposition_rationale: "The source's verbal distinction is preserved in the extraction record, but the bilingual Q/K/V lesson already teaches the same roles more precisely; no additional page edit is justified."
 
   - id: nishanthan-k-qkv-transformers-devto:shared-input-projections
     kind: mechanism
@@ -129,8 +129,8 @@ items:
     candidate_destinations:
       pages: [fr/queries-keys-values, en/queries-keys-values, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
       concepts: [query, key, value]
-    disposition: defer
-    disposition_rationale: "The canonical Q/K/V page already gives the equations, matrix dimensions, shared representation stream, learned parameters, and self-attention/cross-attention distinction."
+    disposition: reject
+    disposition_rationale: "The shared-input projection equations, dimensions and self-/cross-attention boundary are already taught in the bilingual Q/K/V lesson and implementation walkthrough; retain this as corroborating evidence, not duplicate content."
 
   - id: nishanthan-k-qkv-transformers-devto:scaled-dot-product-computation
     kind: mechanism
@@ -157,8 +157,8 @@ items:
     candidate_destinations:
       pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
       concepts: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax]
-    disposition: defer
-    disposition_rationale: "The adjacent attention lesson already gives the mask-aware equation, tensor shapes, numerical example, scaling derivation and interpretive caveats. Duplicating it on the Q/K/V page would blur scope."
+    disposition: reject
+    disposition_rationale: "The dedicated bilingual scaled-attention lesson already provides the complete mask-aware computation, derivation, tensor shapes, numerical example and interpretive caveats; no duplicate insertion is warranted."
 
   - id: nishanthan-k-qkv-transformers-devto:multi-head-attention
     kind: mechanism
@@ -184,8 +184,8 @@ items:
     candidate_destinations:
       pages: [fr/transformer, en/transformer, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
       concepts: [query, key, value, output-projection, multi-head-attention]
-    disposition: defer
-    disposition_rationale: "The overview already cautions against assuming interpretable head specialization; the implementation walkthrough explains head slicing and isolation until w_o."
+    disposition: reject
+    disposition_rationale: "The Transformer overview and block walkthrough already cover the conceptual and implementation levels, including concatenation and output projection; the source adds no distinct learner benefit."
 
   - id: nishanthan-k-qkv-transformers-devto:document-search-analogy
     kind: analogy
@@ -324,8 +324,8 @@ items:
     candidate_destinations:
       pages: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
       concepts: [query, key, self-attention]
-    disposition: defer
-    disposition_rationale: "Keep as convergent evidence in the extraction record; do not duplicate the existing misconception guardrail."
+    disposition: reject
+    disposition_rationale: "The canonical Q/K/V and scaled-attention lessons already explain why learned scores and normalized weights are not semantic-similarity measures; retain the article as convergent evidence without duplicating the misconception guardrail."
 
   - id: nishanthan-k-qkv-transformers-devto:weighted-aggregation-not-argmax
     kind: misconception
@@ -355,5 +355,5 @@ items:
     candidate_destinations:
       pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
       concepts: [value, self-attention]
-    disposition: defer
-    disposition_rationale: "Preserve the source's clear anti-argmax phrasing as convergent pedagogical evidence; the existing numerical example already teaches the same point."
+    disposition: reject
+    disposition_rationale: "The canonical scaled-attention equation and numerical example already demonstrate weighted Value aggregation; the article's anti-argmax phrasing does not justify another content block."
