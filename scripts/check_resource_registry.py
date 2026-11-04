@@ -56,14 +56,17 @@ def _published_page_ids(root: Path) -> set[str]:
 def _valid_http_url(value: Any) -> bool:
     if not isinstance(value, str) or not value.strip() or any(char.isspace() for char in value):
         return False
-    parsed = urlsplit(value)
-    return (
-        parsed.scheme in {"http", "https"}
-        and bool(parsed.netloc)
-        and parsed.hostname is not None
-        and parsed.username is None
-        and parsed.password is None
-    )
+    try:
+        parsed = urlsplit(value)
+        return (
+            parsed.scheme in {"http", "https"}
+            and bool(parsed.netloc)
+            and parsed.hostname is not None
+            and parsed.username is None
+            and parsed.password is None
+        )
+    except ValueError:
+        return False
 
 
 def _validate_location(location: Any, root: Path, where: str) -> list[str]:
@@ -85,7 +88,10 @@ def _validate_location(location: Any, root: Path, where: str) -> list[str]:
             resolved_path = (root / Path(*pure_path.parts)).resolve(strict=True)
             resolved_path.relative_to(resolved_root)
         except (OSError, ValueError):
-            return [f"{where}.path: path must exist inside the repository (including symlink resolution)"]
+            return [
+                f"{where}.path: path must exist inside the repository "
+                "(including symlink resolution)"
+            ]
         if not resolved_path.is_file():
             errors.append(f"{where}.path: local resource must resolve to a file")
     elif location_type == "external":
@@ -157,7 +163,9 @@ def validate_resource_registry(
         if programming_language is not None and (
             not isinstance(programming_language, str) or not programming_language.strip()
         ):
-            errors.append(f"{where}.programming_language: expected a non-empty string when present")
+            errors.append(
+                f"{where}.programming_language: expected a non-empty string when present"
+            )
 
         status = resource.get("status")
         if not isinstance(status, str) or status not in STATUSES:
@@ -167,7 +175,9 @@ def validate_resource_registry(
 
         referenced_by = resource.get("referenced_by")
         if not isinstance(referenced_by, list) or not referenced_by:
-            errors.append(f"{where}.referenced_by: expected a non-empty list of published page IDs")
+            errors.append(
+                f"{where}.referenced_by: expected a non-empty list of published page IDs"
+            )
         elif not all(isinstance(page_id, str) for page_id in referenced_by):
             errors.append(f"{where}.referenced_by: values must be strings")
         else:
@@ -179,7 +189,9 @@ def validate_resource_registry(
 
         concepts = resource.get("concepts")
         if not isinstance(concepts, list):
-            errors.append(f"{where}.concepts: expected a list of concept IDs (possibly empty)")
+            errors.append(
+                f"{where}.concepts: expected a list of concept IDs (possibly empty)"
+            )
         elif not all(isinstance(item, str) for item in concepts):
             errors.append(f"{where}.concepts: values must be strings")
         else:
@@ -197,13 +209,16 @@ def validate_resource_registry(
                 unknown_provenance = set(provenance) - PROVENANCE_FIELDS
                 if unknown_provenance:
                     errors.append(
-                        f"{where}.provenance: unknown field(s) {', '.join(sorted(unknown_provenance))}"
+                        f"{where}.provenance: unknown field(s) "
+                        f"{', '.join(sorted(unknown_provenance))}"
                     )
                 for field, value in provenance.items():
                     if not isinstance(value, str) or not value.strip():
                         errors.append(f"{where}.provenance.{field}: expected a non-empty string")
                     elif field == "source_url" and not _valid_http_url(value):
-                        errors.append(f"{where}.provenance.source_url: expected an absolute HTTP(S) URL")
+                        errors.append(
+                            f"{where}.provenance.source_url: expected an absolute HTTP(S) URL"
+                        )
 
     return errors
 
