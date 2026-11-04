@@ -32,13 +32,15 @@ The repository is autonomous. Do not import or depend on the taxonomy or runtime
 
 ### 1. Establish the baseline before editing
 
-- Read `docs/information-architecture.md`, `docs/page-metadata-schema.md`, `docs/learning-path.md`, `docs/full-curriculum-plan.md`, `docs/page-template-system.md`, `docs/design-system.md`, and `CONTRIBUTING.md`.
+- Read `docs/information-architecture.md`, `docs/page-metadata-schema.md`, `docs/learning-path.md`, `docs/full-curriculum-plan.md`, `docs/page-template-system.md`, `docs/design-system.md`, and `CONTRIBUTING.md`. When present, inspect `data/concepts.yml` and `scripts/check_concept_registry.py` as the candidate canonical concept registry and validator.
 - Inspect the current default branch, all relevant open PRs, and the exact branch/commit being modified.
-- Locate the canonical source and schema for each of the three graph dimensions and both projections. Do not infer that a model exists in code merely because it is described in prose.
+- Locate the canonical source and schema for each of the three graph dimensions and both projections. The initial `data/concepts.yml` registry, if present, is a seed: verify its ownership and completeness rather than assuming it represents the full graph. Do not infer that a model exists in code merely because it is described in prose.
 - Record exact file paths, schema versions, ID namespaces, relation vocabularies, generators, consumers, tests, and CI jobs.
 - Distinguish confirmed implementation, documented intent, generated projection, and unresolved assumption.
 
 ### 2. Build a traceability matrix
+
+Treat the six Deepen `domain` values currently carried by page metadata as a page-classification facet until a canonical concept-to-domain membership model is demonstrated. Do not assume page `domain` is equivalent to concept domain membership. Likewise, if concept `resources` currently contains page IDs, record that as a page-resource association only; it does not yet model independent demonstrations, experiments, implementations, or external references as resource entities.
 
 For each entity/relation, record:
 
@@ -67,7 +69,7 @@ Check at minimum:
 - FR/EN labels exist for published concepts; translations share entity identity rather than duplicate entities.
 - Every published concept has at least one useful resource, unless explicitly marked abstract/non-resource-backed.
 - Resources can support multiple concepts; concepts can have multiple resources.
-- Resource links resolve to source files or valid external references; status and language are consistent.
+- Resource links resolve to source files or valid external references; status and language are consistent. Distinguish page references from first-class resource records and report which resource kinds are not yet represented.
 - Domain membership is classification, not a prerequisite or semantic edge.
 - Generated projections preserve source IDs and relation meaning; no projection invents semantic edges or turns headings into concepts.
 - Pedagogical order and knowledge-map connectivity remain separate.
@@ -87,7 +89,7 @@ Check at minimum:
 Prefer small deterministic tests at the layer where an invariant belongs:
 
 - **Schema/unit tests:** required fields, types, controlled vocabularies, ID format, uniqueness, and version compatibility.
-- **Graph-integrity tests:** dangling endpoints, duplicate edges, illegal relation types, inverse/reciprocity rules, self-loops, and justified cycle constraints.
+- **Graph-integrity tests:** dangling endpoints, duplicate edges, illegal relation types, inverse/reciprocity rules, self-loops, and justified cycle constraints. Validate page-resource references against published page IDs; keep this separate from future non-page resource-ID validation.
 - **Bilingual tests:** shared canonical IDs, required labels, equivalent relation topology, and valid resource language.
 - **Resource-link tests:** local path existence, external URL syntax, status consistency, and many-to-many association coverage.
 - **Projection tests:** stable IDs, deterministic output, expected node/edge counts, and no accidental collapse of distinct relation types.
