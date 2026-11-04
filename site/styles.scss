@@ -1011,6 +1011,13 @@ details.spot-the-fallacy .fallacy-content {
   filter: drop-shadow(0 2px 3px rgba(20,83,45,.12));
 }
 .map-node:focus { outline: none; }
+.map-selection-hint {
+  padding: .45rem .55rem;
+  border-left: 3px solid var(--llm-brand);
+  background: #EEF7F0;
+  color: #334155;
+  font-size: .8rem !important;
+}
 .map-node-topic {
   fill: #64748B;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -1134,6 +1141,7 @@ details.spot-the-fallacy .fallacy-content {
   stroke-width: 1.6;
   opacity: .5;
 }
+.map-edge-concept-symmetric { stroke-dasharray: 4 3; }
 .map-concept-node .map-node-card {
   fill: #F5F3FF;
   stroke: #C4B5FD;
@@ -1211,6 +1219,34 @@ details.spot-the-fallacy .fallacy-content {
 @media (max-width: 600px) {
   .guided-route-grid { grid-template-columns: 1fr; gap: .6rem; }
   .guided-route-stage { padding: .8rem .85rem; }
+}
+
+
+
+/* Concept relation legend: definitions are generated from the canonical registry. */
+.learning-map-concept-legend {
+  margin: .75rem 0 1rem;
+  padding: .75rem 1rem;
+  border: 1px solid #DDD6FE;
+  border-radius: .5rem;
+  background: #FAF9FF;
+  font-size: .86rem;
+}
+.learning-map-concept-legend h4 {
+  margin: 0 0 .45rem;
+  color: #51427D;
+  font-size: .92rem;
+}
+.learning-map-concept-legend ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .35rem 1.25rem;
+  margin: 0;
+  padding-left: 1.1rem;
+}
+.learning-map-concept-legend li { line-height: 1.45; }
+@media (max-width: 600px) {
+  .learning-map-concept-legend ul { grid-template-columns: 1fr; }
 }
 
 // ---------------------------------------------------------------------------
