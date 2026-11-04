@@ -105,6 +105,25 @@ Assume most useful sources will overlap with the project's subject matter. The p
 
 ## 4. Capture teaching contributions
 
+### Reconstruct the source's pedagogical graph and route
+
+For a tutorial, article, course, chapter or other instructional source, do not stop at extracting isolated claims. Reconstruct its **local learning model** as a review artifact:
+
+1. Identify the source's nodes: durable concepts, computational objects, operations, intermediate representations, examples, learner questions, activities and outcomes. Distinguish technical entities from pedagogical anchors.
+2. Identify typed relationships: transforms, produces, uses, aggregates, constrains, is part of, motivates, illustrates, contrasts with, and any genuine prerequisite. Do not turn section order or an illustrative analogy into a semantic dependency.
+3. Reconstruct the teaching route: section order, explicit and inferred learning outcomes, assumed prerequisites, transitions, worked examples, checks/practice, optional depth and omitted topics. Label inferred outcomes and edges as inferred, not author-declared.
+4. Draw a compact graph and route when they clarify the source. A Mermaid diagram in the source review is sufficient; do not create a second canonical concept registry or a parallel graph database.
+5. Keep the source model separate from the LLM Lab model. Phase A records the source's own structure and proposes candidate concepts/relations/destinations; Phase B compares it with the current canonical graph and route.
+6. Record source-specific strengths and limits: what the route makes easy to understand, what it assumes, what it compresses, and what it does not teach.
+
+The comparison must distinguish three structures:
+- **semantic knowledge graph**: what entities/concepts exist and how they relate;
+- **pedagogical route**: the sequence and scaffolding used to learn;
+- **site navigation/hierarchy**: how readers discover and move between resources.
+
+These structures can inform one another but are not interchangeable. A source may reveal missing graph nodes without warranting a route change, or offer a better local explanation without changing either canonical structure.
+
+
 ### Analogies and mental models
 
 For each useful analogy, record source domain, target concept, mapped entities/relations, mechanism illuminated, valid scope, where the mapping breaks, likely misconception, suitable teaching location and source locator. An analogy never replaces a formal or computational definition.
