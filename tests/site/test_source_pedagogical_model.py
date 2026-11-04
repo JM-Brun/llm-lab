@@ -73,9 +73,7 @@ def test_source_graph_rejects_edges_to_unknown_local_nodes() -> None:
 
 
 def test_source_learning_route_requires_contiguous_order() -> None:
-    extraction_path = (
-        ROOT / "data" / "extractions" / "nishanthan-k-qkv-transformers-devto.yml"
-    )
+    extraction_path = ROOT / "data" / "extractions" / "nishanthan-k-qkv-transformers-devto.yml"
     extraction = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
     model = extraction["pedagogical_model"]
     model["teaching_route"][1]["order"] = 4
