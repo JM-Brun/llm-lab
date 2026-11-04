@@ -42,7 +42,7 @@ The map offers two distinct graphs. The page graph represents resources and thei
       <label for="learning-map-search">Search pages and concepts</label>
       <input id="learning-map-search" type="search" placeholder="E.g. embeddings, attention, generation…" autocomplete="off">
     </div>
-    <div class="learning-map-filter">
+    <div class="learning-map-filter" data-map-page-controls>
       <label for="learning-map-domain">Filter by Deepen domain</label>
       <select id="learning-map-domain">
         <option value="all">All domains</option>
@@ -54,7 +54,7 @@ The map offers two distinct graphs. The page graph represents resources and thei
         <option value="scale-research">Scale and research questions</option>
       </select>
     </div>
-    <div class="learning-map-filter">
+    <div class="learning-map-filter" data-map-page-controls>
       <label for="learning-map-destination">Show a branch</label>
       <select id="learning-map-destination">
         <option value="all">All branches</option>
