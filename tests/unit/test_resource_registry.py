@@ -120,3 +120,41 @@ def test_concept_to_resource_links_are_many_to_many(tmp_path: Path) -> None:
         {"attention", "masking"},
     )
     assert errors == []
+
+
+def test_accepts_each_documented_lifecycle_status(tmp_path: Path) -> None:
+    resource = _valid_resource()
+    for status in ("published", "draft", "deprecated", "retired"):
+        resource["status"] = status
+        assert _validate(tmp_path, resource) == []
+
+
+def test_rejects_missing_local_files_and_malformed_location_variants(
+    tmp_path: Path,
+) -> None:
+    resource = _valid_resource()
+    resource["location"] = {"type": "local", "path": "src/missing.py"}
+    errors = _validate(tmp_path, resource)
+    assert any("must exist inside the repository" in error for error in errors)
+
+    resource["location"] = {
+        "type": "external",
+        "url": "https://example.org/resource",
+        "path": "unexpected.py",
+    }
+    errors = _validate(tmp_path, resource)
+    assert any("exactly type and url" in error for error in errors)
+
+
+def test_rejects_invalid_optional_provenance_without_inventing_defaults(
+    tmp_path: Path,
+) -> None:
+    resource = _valid_resource()
+    assert "provenance" not in resource
+    resource["provenance"] = {
+        "creator": " ",
+        "source_url": "javascript:alert(1)",
+    }
+    errors = _validate(tmp_path, resource)
+    assert any("non-empty string" in error for error in errors)
+    assert any("absolute HTTP(S) URL" in error for error in errors)
