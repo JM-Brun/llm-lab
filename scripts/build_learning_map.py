@@ -19,11 +19,25 @@ FRONT_MATTER = re.compile(r"\A---\s*\n(.*?)\n---\s*(?:\n|\Z)", re.DOTALL)
 HEADING = re.compile(r"^#{2,3}\s+(.+?)\s*#*\s*$", re.MULTILINE)
 INLINE_MARKUP = re.compile(r"[*_]|<[^>]+>")
 EXCLUDED_HEADINGS = {
-    "objectifs d’apprentissage", "objectifs d'apprentissage", "learning objectives",
-    "à retenir", "a retenir", "takeaways", "références", "references",
-    "pour aller plus loin", "further reading",
+    "objectifs d’apprentissage",
+    "objectifs d'apprentissage",
+    "learning objectives",
+    "à retenir",
+    "a retenir",
+    "takeaways",
+    "références",
+    "references",
+    "pour aller plus loin",
+    "further reading",
 }
-COLUMN_ORDER = {"orient": 0, "understand": 0, "build": 1, "deepen": 2, "practice": 3, "reference": 3}
+COLUMN_ORDER = {
+    "orient": 0,
+    "understand": 0,
+    "build": 1,
+    "deepen": 2,
+    "practice": 3,
+    "reference": 3,
+}
 
 
 def page_href(page_id: str, language: str) -> str:
@@ -128,8 +142,7 @@ def build(language: str) -> Path:
     """Write the published page graph for one language."""
     all_pages = load_pages()
     pages = [
-        page for page in all_pages
-        if page["language"] == language or page["language"] == "shared"
+        page for page in all_pages if page["language"] == language or page["language"] == "shared"
     ]
     assign_route_rank(pages, language)
     pages.sort(
