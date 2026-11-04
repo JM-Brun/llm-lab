@@ -8,6 +8,8 @@ The goal is not to train a production-scale LLM from scratch. It is to implement
 
 Contributions can improve concept explanations, French/English parity, reference implementations, numerical tests, reproducible experiments, critical reviews, figures/references, or developer tooling. Each mode has its own acceptance criteria; see [CONTRIBUTING.md](CONTRIBUTING.md) and use the PR template to state which mode your change follows.
 
+The information architecture, metadata ownership boundaries, and knowledge-graph maintenance rules are documented in [docs/information-architecture.md](docs/information-architecture.md).
+
 ## Learn through the Quarto site
 
 The project includes a bilingual Quarto website organized around LLM-specific explanations: overview pages connect mechanisms, applied concept pages explain how the mathematics is used in language models, and implementation/tests are linked when they exist. General mathematical foundations belong in the separate `wiki-knowledge` knowledge base; because that wiki is private, public lessons retain all definitions, assumptions, derivations, examples, and caveats needed to understand the LLM application, and cite accessible public references. Pages explicitly distinguish verified code from planned work.
