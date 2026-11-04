@@ -6,6 +6,7 @@ project:
   resources:
     - learning-map-data-fr.json
     - learning-map-data-en.json
+    - knowledge-graph.jsonld
   render:
     - index.qmd
     - fr/learning-map.qmd
