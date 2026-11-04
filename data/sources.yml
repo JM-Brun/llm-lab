@@ -64,3 +64,47 @@ sources:
       concepts: [query, key, value, self-attention, softmax, contextualized-representation]
       audit_records:
         - docs/source-reviews/qkv-nishanthan-devto-2026-11.md
+
+  - id: huggingface-transformers-kv-cache-explanation
+    title: "Caching"
+    creators: ["Hugging Face Transformers contributors"]
+    source_type: documentation
+    identifiers: {}
+    canonical_url: "https://github.com/huggingface/transformers/blob/main/docs/source/en/cache_explanation.md"
+    publisher: "Hugging Face Transformers"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "main documentation"
+    revision: main
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [architectures-mechanisms]
+      tags:
+        - topic:kv-cache
+        - topic:autoregressive-generation
+      concept_ids: [key, value, self-attention]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [architecture, implementation]
+      audiences: [learner, practitioner, maintainer]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-04"
+        status: partially-scanned
+        inspected_scope:
+          - "Caching explanation and attention-matrix section"
+          - "Incremental decoding equations and per-layer cache description"
+        limitations:
+          - "Documentation source was inspected through indexed GitHub content; repository revision was not pinned to a commit."
+          - "Cache class implementation details and model-specific variants were not exhaustively audited."
+          - "No code was executed."
+          - "Licence and figure/code reuse conditions were not independently checked."
+    related:
+      pages: []
+      concepts: [key, value, self-attention]
+      audit_records:
+        - docs/source-reviews/qkv-nishanthan-devto-2026-11.md
