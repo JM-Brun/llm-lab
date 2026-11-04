@@ -511,8 +511,6 @@ def test_concept_graph_script_exposes_direction_and_relation_legend() -> None:
     script_path = MODULE_PATH.parents[2] / "site" / "includes" / "learning-map.html"
     source = script_path.read_text(encoding="utf-8")
     assert "Relationship meaning (source → target)" in source
-    assert (
-        'item.textContent = source.label + " — " + (relation ? relation.label : edge.type) + " → " + target.label;'
-        in source
-    )
+    assert 'const arrow = relation && relation.direction === "symmetric" ? " ↔ " : " → ";' in source
+    assert 'marker-end": symmetric ? "none" : "url(#map-arrow-concept)"' in source
     assert 'conceptLegend.hidden = false' in source
