@@ -76,6 +76,8 @@ def test_export_provenance_names_canonical_sources() -> None:
     sources = [item["@id"] for item in export["prov:wasDerivedFrom"]]
     assert "https://github.com/JM-Brun/llm-lab/blob/main/data/concepts.yml" in sources
     assert "https://github.com/JM-Brun/llm-lab/blob/main/data/domains.yml" in sources
+    assert "https://github.com/JM-Brun/llm-lab/blob/main/data/resources.yml" in sources
+    assert any("/blob/main/src/llm_lab/foundations/" in source for source in sources)
     assert any("/blob/main/site/" in source and source.endswith(".qmd") for source in sources)
     assert not any("/tree/main/site" in source for source in sources)
 
