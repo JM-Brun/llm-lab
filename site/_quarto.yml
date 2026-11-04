@@ -319,6 +319,8 @@ format:
     theme:
       - cosmo
       - styles.scss
+    template-partials:
+      - includes/title-metadata.html
     include-after-body:
       - includes/language-switch.html
       - includes/learning-map.html
