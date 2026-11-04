@@ -18,6 +18,9 @@ The repository already has a navigable, bilingual page graph generated from `LLM
 | Learning content | `site/**/*.qmd` | Explanations, examples, equations, references and page body | A second copy in JSON/YAML indexes |
 | Page identity and editorial metadata | One `LLM-LAB-PAGE-MAP` block per page, governed by `docs/page-metadata-schema.md` | Stable page ID, scope, purpose, editorial type, destination, level, language, status, page relations | A concept record or a second archetype taxonomy |
 | Search keywords | Quarto `keywords` front matter | Search/indexing projection of controlled page tags | An independent tag vocabulary |
+| External source catalogue | `data/sources.yml`, governed by `docs/source-catalogue-schema.md` | Source identity, scan history, provenance, primary/secondary themes, retrieval tags and typed metadata | Bibliography, concept registry, page metadata or implementation-resource registry |
+| Source extraction records | `data/extractions/<source-id>.yml` | Atomic evidence-linked claims, explanations, visuals, experiments and integration proposals | Source identity, canonical concepts or published page content |
+| Source facets | `data/source-taxonomy.yml` plus `data/domains.yml` | Controlled source types, contribution types, audiences, statuses and tag policy | A second domain or concept taxonomy |
 | Page classification | Controlled `type`, `destination`, `level`, `language`, `status` tags | Facets for filtering and site organization | A taxonomy of scientific concepts |
 | Topic identifier | Controlled `topic:<id>` tag | Bilingual page grouping / subject key for a page | A canonical concept entity or a substitute for concept IDs |
 | Suggested learning route | `suggested_route.previous/next` in page metadata | Optional reader navigation | Hard prerequisites or conceptual parenthood |
@@ -32,9 +35,9 @@ The repository already has a navigable, bilingual page graph generated from `LLM
 | Historical knowledge | `data/history-pilot.yml` with `docs/history-data-model.md` | Events, sources, concepts and typed historical relations | A second general-purpose concept registry |
 | Validation | `site/tools/check_page_metadata.py`, tests and CI | Contract enforcement | A hidden content authoring system |
 
-### Important boundary: page tags are not a concept taxonomy
+### Important boundary: page tags, source tags and concepts are different things
 
-The `topic` tag is a stable subject key attached to a page. It is not interchangeable with a concept entity ID. Likewise, headings extracted into the page-map `section_headings` array are display hints, not identified concepts.
+The `topic` tag in page metadata is a stable subject key attached to a page. Source tags in `data/sources.yml` are namespaced retrieval facets governed by `data/source-taxonomy.yml`. Neither is interchangeable with a concept entity ID. Source domains reuse `data/domains.yml`; source `concept_ids` explicitly reference `data/concepts.yml`. Do not infer concept membership or semantic relations from tag overlap. Likewise, headings extracted into the page-map `section_headings` array are display hints, not identified concepts.
 
 The project's intended knowledge graph has three dimensions:
 
@@ -198,7 +201,8 @@ The standards profile documents the graph-export and rendered-output checks; use
 |---|---|
 | Overall information architecture | This document |
 | Knowledge graph implementation audit | [Implementation audit](knowledge-graph-implementation-audit.md) |
-| Domain/concept/resource knowledge graph | `data/concepts.yml` (PR #399 merged); `data/domains.yml` and concept memberships (PR #404 merged); `data/resources.yml` (five implementation resources in the current slice) |
+| Domain/concept/resource knowledge graph | `data/concepts.yml`; `data/domains.yml`; `data/resources.yml` |
+| External sources, classification and extraction records | [Source catalogue schema](source-catalogue-schema.md); `data/sources.yml`; `data/source-taxonomy.yml`; `data/extractions/` |
 | Page metadata, tags and page graph | [Page metadata schema](page-metadata-schema.md) |
 | Learning-map implementation | `site/tools/build_learning_map.py`, `tests/unit/test_learning_map.py` |
 | Metadata validation | `site/tools/check_page_metadata.py`, `tests/unit/test_page_metadata.py` |
