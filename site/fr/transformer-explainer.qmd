@@ -32,6 +32,8 @@ Observez une exécution de GPT-2, testez des hypothèses contrôlées et examine
 
 Le projet **[Transformer Explainer](https://poloclub.github.io/transformer-explainer/)** de Georgia Tech permet d'explorer une exécution réelle de GPT-2 small dans le navigateur. Il complète les schémas statiques de cette page : saisissez un texte, puis observez comment les représentations, les calculs d'attention et la distribution du prochain token évoluent.
 
+:::: {.callout-note title="Ouvrir la démonstration intégrée" collapse="true"}
+
 <iframe
   src="https://poloclub.github.io/transformer-explainer/"
   title="Transformer Explainer — visualisation interactive de GPT-2"
@@ -41,6 +43,8 @@ Le projet **[Transformer Explainer](https://poloclub.github.io/transformer-expla
   allow="fullscreen"
   style="border: 1px solid #d2d9c8; border-radius: 0.6rem; background: #fff;"
 ></iframe>
+
+::::
 
 [Ouvrir Transformer Explainer dans un nouvel onglet](https://poloclub.github.io/transformer-explainer/) si l'intégration ne s'affiche pas ou si vous préférez disposer de toute la fenêtre.
 
@@ -93,7 +97,7 @@ Fixons une température $T>0$ et notons $P_T$ la distribution softmax qui serait
 
 $$\sum_{i\in A}\frac{P_T(i)}{m}\geq p\quad\Longleftrightarrow\quad P_T(A)\geq p\,m.$$
 
-Autrement dit, le seuil $p$ s'applique à la distribution **renormalisée des 50 candidats**, pas au vocabulaire complet : avec $m=0{,}60$ et $p=0{,}90$, un préfixe portant 0,54 de la masse initiale suffit à atteindre le seuil, alors que le nucleus exact sur le vocabulaire complet devrait accumuler 0,90 — et donc inclure des tokens au-delà du rang 50. C'est une conséquence de la composition top-k → top-p, pas une anomalie : comparez les probabilités affichées au nucleus défini sur le vocabulaire complet en gardant cette différence à l'esprit.
+Autrement dit, le seuil $p$ s'applique à la distribution **renormalisée des 50 candidats**, pas au vocabulaire complet : avec $m=0{,}60$ et $p=0{,}90$, le seuil correspond à 0,54 de la masse initiale. La masse effectivement retenue peut dépasser 0,54 si le dernier token franchit le seuil ; elle reste au plus égale à 0,60. Le nucleus exact sur le vocabulaire complet devrait accumuler 0,90 — et donc inclure des tokens au-delà du rang 50. C'est une conséquence de la composition top-k → top-p, pas une anomalie : comparez les probabilités affichées au nucleus défini sur le vocabulaire complet en gardant cette différence à l'esprit.
 
 ### Ce que cette démonstration permet — et ne permet pas — de conclure
 

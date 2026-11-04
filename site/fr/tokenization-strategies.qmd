@@ -198,6 +198,24 @@ Ce tableau formule des questions à tester, pas des sorties exactes. Pour docume
 
 
 
+<!-- Legacy section anchors: see the linked companion page. -->
+<span id="comparaison-reproductible"></span>
+<span id="petit-protocole-reproductible-en-python"></span>
+<span id="mesurer-un-tokenizer-sans-réduire-la-qualité-au-nombre-de-tokens"></span>
+<span id="quatre-dimensions-à-séparer"></span>
+<span id="figure-de-recherche-externe-la-fertilité-varie-selon-la-langue"></span>
+<span id="ce-que-montrent-et-ne-montrent-pas-les-études"></span>
+<span id="figure-de-recherche-externe-longueur-de-représentation-et-temps-dexécution"></span>
+<span id="construire-un-protocole-de-comparaison"></span>
+<span id="ressources-et-travaux-connexes"></span>
+<span id="ressources-visuelles-recommandées"></span>
+<span id="repères-temporels-utiles-dans-la-vidéo-de-karpathy"></span>
+<span id="ordre-de-lecture-conseillé"></span>
+<span id="illustration-externe-du-pipeline"></span>
+<span id="références-de-recherche-complémentaires"></span>
+<span id="code-pédagogique-et-références-historiques"></span>
+<span id="tokenizer-evaluation"></span>
+
 ::: {.callout-note title="Pour approfondir"}
 La taille du vocabulaire, les budgets d'entraînement et l'évaluation comparative des tokenizers soulèvent des questions de coût, de qualité et d'équité multilingue. Ces choix dépassent la compréhension du mécanisme de segmentation ; ils sont traités dans [l'approfondissement sur la conception et l'évaluation des tokenizers](tokenizer-design-evaluation.qmd).
 :::
