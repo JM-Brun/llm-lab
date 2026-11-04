@@ -4,6 +4,15 @@
 
 This plan is a sequence of evidence-producing modules, not a promise of mastery after a fixed number of hours. Each module is complete only when its implementation, tests, experiment notes, and limitations are available. See [project status](project-status.md) for the current inventory and the [roadmap](roadmap.md) for priorities and acceptance criteria.
 
+## Reader-facing guided route — machine-readable map source
+
+The six-stage route displayed above the exploratory graphs on the bilingual learning-map pages is maintained in [`data/guided-route.yml`](../data/guided-route.yml), a versioned bilingual YAML registry. This file is the **single machine-readable source** for stage IDs, titles, objectives, core page links and optional deep dives. The present document remains the narrative curriculum and explains the conceptual order; do not duplicate the stage registry here or in JavaScript.
+
+The generator resolves every core and optional page ID against published page metadata and fails on missing or unpublished destinations. The route is conceptual, not a strict prerequisite DAG: pages within a stage are complementary resources, not mandatory sequential gates.
+
+The practical GPT construction route remains the separate [Build path](../site/fr/build-path.qmd) / [EN](../site/en/build-path.qmd). In particular, G2 corpus preparation and training-example construction form a branch for training, not a prerequisite for understanding inference.
+
+
 ## The conceptual order: see the system work before studying how it learns
 
 The learner-facing course and the implementation dependency graph answer different questions. **The conceptual course starts with what a model does; the build route follows the dependencies needed to construct one.** Do not force these into one identical chapter order.
