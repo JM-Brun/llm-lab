@@ -136,4 +136,4 @@ Current scope: a bilingual Quarto learning site, a tested NumPy reference implem
 
 ## License
 
-Project code is released under the MIT License; project-owned content is released under CC BY-SA 4.0. Third-party materials retain their own terms. See [LICENSE.md](LICENSE.md) and the [visual asset register](docs/visual-assets-register.md).
+Project code is released under the MIT License. CC BY-SA 4.0 applies only to original project-authored prose in Quarto pages and documentation; it does not cover illustrations, diagrams, SVGs, or other visual assets whose rights are not established. Third-party materials retain their own terms. See [LICENSE.md](LICENSE.md), the [licensing scope](docs/licensing-scope.md), and the [visual asset register](docs/visual-assets-register.md).
