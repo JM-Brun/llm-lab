@@ -207,6 +207,7 @@ Final report:
 
 - Each accepted integration links to a source and precise extraction item.
 - Graph changes use canonical IDs, relation semantics, schemas and generated projections.
+- For instructional sources, the source graph and route are compared with the canonical graph and route; graph and route changes are independent, justified decisions.
 - Every page change has a demonstrated learner benefit and fits page ownership/layer.
 - New-page decisions pass the explicit gate.
 - Existing useful content is preserved.
