@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/scaling-laws"
 scope: "Introduces empirical scaling laws for language models, relationships between parameter count, data, compute, and loss, and limits to extrapolation; does not establish a universal threshold defining an LLM."
 purpose: "Readers should be able to explain what scaling laws describe, why parameter count alone does not characterize scale, and why an empirical relationship does not define a universal boundary between LLMs and other models."
+domain: "scale-research"
 suggested_route:
   previous: null
   next: null

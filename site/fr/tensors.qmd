@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/tensors"
 scope: "Fournit une référence technique facultative sur les formes et axes des tenseurs dans les calculs d’un Transformer, notamment les dimensions batch, séquence, caractéristiques, vocabulaire et têtes, les projections et les formes courantes des activations et logits. Elle souligne qu’une compatibilité de formes ne garantit ni la justesse sémantique ni la correction du calcul et ne constitue pas un cours de prérequis au parcours pratique. Elle couvre également le coût en paramètres de la table d'embeddings."
 purpose: "Lire les formes courantes des tenseurs d’un LLM, suivre les axes préservés ou transformés par une opération, vérifier les dimensions des projections et de l’attention, et identifier pourquoi un calcul compatible en forme peut néanmoins être incorrect. Évaluer le nombre de paramètres de la table d'embeddings et de la projection de sortie."
+domain: "mathematical-tools-geometry"
 suggested_route:
   previous: "fr/mathematical-foundations"
   next: "fr/cosine-similarity"

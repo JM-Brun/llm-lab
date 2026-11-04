@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/mathematical-foundations"
 scope: "Fournit une carte mathématique synthétique reliant logits, probabilités par softmax, vraisemblance des tokens observés, cross-entropie, loss agrégée et gradients, avec une notation commune et les principales précautions d’interprétation. Elle oriente vers les pages canoniques sans constituer un cours de prérequis ni remplacer leurs démonstrations détaillées."
 purpose: "Suivre les grandeurs mathématiques des scores du modèle jusqu’aux gradients des paramètres, interpréter la notation et les équations communes, et expliquer pourquoi vraisemblance, entropie, cross-entropie, loss et gradients sont liés sans être interchangeables."
+domain: "probabilistic-foundations-training"
 suggested_route:
   previous: null
   next: "fr/tensors"

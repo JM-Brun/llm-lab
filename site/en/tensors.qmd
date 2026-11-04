@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/tensors"
 scope: "Provides an optional technical reference for tensor shapes and axes in Transformer computations, including batch, sequence, feature, vocabulary, and head dimensions, projections, and common activation/logit layouts. It emphasizes that shape compatibility does not establish semantic or computational correctness and is not a prerequisite course for the practical build path. It also covers the parameter cost of the embedding table."
 purpose: "Read common LLM tensor shapes, track which axes an operation preserves or transforms, check projection and attention dimensions, and identify why a shape-correct computation may still implement the wrong operation. Estimate the parameter count of the embedding table and the output projection."
+domain: "mathematical-tools-geometry"
 suggested_route:
   previous: "en/mathematical-foundations"
   next: "en/cosine-similarity"

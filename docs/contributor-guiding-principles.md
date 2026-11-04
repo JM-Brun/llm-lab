@@ -75,3 +75,25 @@ This is a recurring editorial responsibility, not a mandatory page-production qu
 > Will this change help a reader understand a specific LLM mechanism, inspect or verify its implementation, identify limitations, and navigate between explanation, code, tests, and evidence—without hiding assumptions or overstating the results?
 
 If the answer is unclear, narrow the scope or explain the trade-off in the pull request.
+
+
+## 7. Classify and place advanced knowledge consistently
+
+The Deepen destination uses a stable six-domain taxonomy: (1) architectures and mechanisms, (2) text and tokenization, (3) mathematical tools and geometry, (4) probabilistic foundations and training, (5) inference and efficiency, and (6) scale and research questions. The bilingual Deepen map explains the learner-facing questions and lists the canonical current entries.
+
+When adding material:
+
+1. Identify the reader question and primary learning outcome before choosing a page title or category.
+2. Check the canonical content owner. Extend an existing page when the material fits its scope; create a new page only for a distinct, durable question.
+3. Decide whether the minimum mechanism is required by the core mental model. If it is, retain a concise, accurate explanation in Understand and place only the derivation, variant, research discussion, or specialist implementation in Deepen.
+4. Assign exactly one primary sidebar category by learning objective. Use contextual links and metadata relations for legitimate cross-domain connections rather than duplicating the entry in several categories.
+5. Keep graph semantics precise: parent/child means conceptual containment or decomposition; related means a useful non-hierarchical connection; suggested_route means a recommended reading transition.
+6. Update the bilingual map, both sidebars, the Quarto render list, the page audit inventory, and metadata in the same change. Preserve FR/EN scope, level, status, and relations.
+7. Create a new category only when multiple pages justify it or when a durable domain has a credible expansion path. Do not create one-page buckets around individual models or papers.
+
+The Deepen taxonomy is for discovery, not a prerequisite sequence. Sidebar order must never be interpreted as conceptual dependency.
+
+
+## 8. Maintain the machine-readable Deepen domain
+
+Every published content page in the Deepen destination must declare exactly one top-level `domain` in its page-map comment, using the controlled vocabulary in `docs/page-metadata-schema.md`. The bilingual counterpart must use the same identifier. Do not use `topic` for the broad domain: `topic` identifies the specific concept, while `domain` identifies the page's primary discovery category. The generated learning-map JSON exports this field for the interactive domain filter. Entry-point pages are exempt; non-Deepen pages must not declare a Deepen domain.

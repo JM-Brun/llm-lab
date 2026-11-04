@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/rope"
 scope: "Approfondit Rotary Position Embedding : représentation des rotations par paires de coordonnées, dépendance du produit scalaire au décalage relatif, conventions d'implémentation et limites d'extrapolation ; ne reprend pas l'introduction générale à l'information positionnelle."
 purpose: "Le lecteur doit pouvoir dériver la dépendance au décalage relatif pour une paire de coordonnées, situer les rotations dans le calcul Q/K et identifier les choix d'implémentation et d'évaluation qui conditionnent le comportement à longue séquence."
+domain: "architectures-mechanisms"
 suggested_route:
   previous: null
   next: null

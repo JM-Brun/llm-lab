@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/llm-computational-complexity"
 scope: "Analyzes sequence-length complexity, memory, and parallelism in major LLM operations, distinguishing training, prefill, and decode."
 purpose: "Distinguish total work, sequential depth, and memory; explain attention, MLP, KV-cache, and recurrent architecture costs."
+domain: "inference-efficiency"
 suggested_route:
   previous: null
   next: null

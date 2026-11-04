@@ -30,6 +30,7 @@ def _write_page(
     children: list[str] | None = None,
     parents: list[str] | None = None,
     related: list[str] | None = None,
+    domain: str | None = None,
     headings: tuple[str, ...] = ("## Core idea", "### Query, Key, Value"),
 ) -> None:
     """Create a minimal Quarto page carrying the repository page-map contract."""
@@ -54,6 +55,8 @@ def _write_page(
         "related": related or [],
         "tags": tags,
     }
+    if domain is not None:
+        metadata["domain"] = domain
     front_yaml = yaml.safe_dump(front, allow_unicode=True, sort_keys=False).strip()
     metadata_yaml = yaml.safe_dump(metadata, allow_unicode=True, sort_keys=False).strip()
     body = "\n".join(headings)
@@ -174,3 +177,50 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     assert {page["id"] for page in payload["pages"]} == {"fr/index", "fr/attention"}
     assert all(page["href"] for page in payload["pages"])
     assert all(isinstance(page["concepts"], list) for page in payload["pages"])
+
+
+def test_load_pages_preserves_primary_deepen_domain(tmp_path: Path) -> None:
+    site = tmp_path / "site"
+    _write_page(
+        site,
+        page_id="fr/rope",
+        language="fr",
+        title="RoPE",
+        destination="deepen",
+        topic="rope",
+        domain="architectures-mechanisms",
+    )
+    MODULE["load_pages"].__globals__["SITE"] = site
+
+    pages = MODULE["load_pages"]()
+
+    assert len(pages) == 1
+    assert pages[0]["domain"] == "architectures-mechanisms"
+
+
+def test_build_serializes_deepen_domain(tmp_path: Path) -> None:
+    site = tmp_path / "site"
+    _write_page(
+        site,
+        page_id="fr/index",
+        language="fr",
+        title="Accueil",
+        topic="overview",
+    )
+    _write_page(
+        site,
+        page_id="fr/rope",
+        language="fr",
+        title="RoPE",
+        destination="deepen",
+        topic="rope",
+        domain="architectures-mechanisms",
+    )
+    _write_page(site, page_id="en/index", language="en", title="Home", topic="overview")
+    MODULE["build"].__globals__["SITE"] = site
+
+    output = MODULE["build"]("fr")
+    payload = json.loads(output.read_text(encoding="utf-8"))
+    rope = next(page for page in payload["pages"] if page["id"] == "fr/rope")
+
+    assert rope["domain"] == "architectures-mechanisms"

@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/cross-attention"
 scope: "Explains cross-attention in encoder–decoder Transformers, distinguishing the sources of queries, keys, and values, dimensions, information flow, and possible masks."
 purpose: "Advanced deep dive: formalize cross-attention, establish Q/K/V provenance and tensor dimensions, analyze masks, and place the mechanism in encoder–decoder and multimodal architectures."
+domain: "architectures-mechanisms"
 suggested_route:
   previous: null
   next: null

@@ -1,0 +1,115 @@
+---
+title: "Deepen: knowledge map"
+description: "A thematic map of advanced LLM topics, organized around questions and domains."
+keywords: ["type:entry-point", "destination:deepen", "topic:deepen-hub", "level:overview", "language:en", "status:published"]
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/deepen"
+scope: "Entry point to advanced deep dives: organizes pages by question families and clarifies their relationship to the core Understand route."
+purpose: "Choose a deep dive by question, identify neighbouring topics, and understand its level without turning optional reading into a prerequisite."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags:
+  - "type:entry-point"
+  - "destination:deepen"
+  - "topic:deepen-hub"
+  - "level:overview"
+  - "language:en"
+  - "status:published"
+-->
+
+# Deepen: a map, not a list
+
+The **Deepen** area collects treatments that go beyond the mental model needed for the core learning route. It is neither a second mandatory sequence nor an unstructured repository of specialist topics.
+
+Each entry answers a more specific question: why a mechanism works, under which conditions it remains valid, which trade-offs it introduces, or how to investigate it rigorously. Pages are grouped by **intellectual problem**, not alphabetically. A page may have cross-links, but retains one primary category to keep its entry point stable.
+
+## Choose by question
+
+| Your question | Domain |
+|---|---|
+| How does a specialized architecture change information flow? | [Architectures and mechanisms](#architectures-and-mechanisms) |
+| How can text representation be designed and evaluated? | [Text and tokenization](#text-and-tokenization) |
+| Which mathematical tools help analyze representations? | [Mathematical tools and geometry](#mathematical-tools-and-geometry) |
+| How are probabilities, the learning objective, and gradients connected? | [Probabilistic foundations and training](#probabilistic-foundations-and-training) |
+| How are outputs produced, and what resources do they require? | [Inference and efficiency](#inference-and-efficiency) |
+| What can evidence tell us about scale and model capabilities? | [Scale and research questions](#scale-and-research-questions) |
+
+## Architectures and mechanisms {#architectures-and-mechanisms}
+
+**Guiding question:** which variants change information flow or a model's computational structure?
+
+- [Cross-attention](cross-attention.qmd) — information transfer between two sequences, notably in encoder–decoder and multimodal architectures.
+- [RoPE: rotary positional embeddings](rope.qmd) — rotation geometry, relative-position dependence, and extrapolation limits.
+- [Hybrid architectures: Nemotron 3 and 3.5](hybrid-llm-architectures.qmd) — recurrence, attention, experts, and multi-token prediction in a concrete case.
+
+Specialized variants do not enter the core route merely because a recent model uses them. Their necessity for general understanding must be demonstrated.
+
+## Text and tokenization
+
+**Guiding question:** how do text-representation choices affect a system's properties?
+
+- [Unicode and text representation](unicode-text.qmd) — character-representation layers and their consequences.
+- [Tokenizer design and evaluation](tokenizer-design-evaluation.qmd) — BPE, WordPiece, and Unigram families, design, and empirical protocols.
+
+The core [Tokenization strategies](tokenization-strategies.qmd) lesson remains the conceptual entry point; design and comparative evaluation are advanced topics.
+
+## Mathematical tools and geometry {#mathematical-tools-and-geometry}
+
+**Guiding question:** which mathematical operations and properties help analyze representations and computations?
+
+- [Tensors](tensors.qmd) — dimensions, operations, and conventions.
+- [Cosine similarity](cosine-similarity.qmd) — angular measure and interpretation limits.
+- [Embedding linearity](embedding-linearity.qmd) — assumptions and empirical evidence behind linear relations in representation spaces.
+
+These pages provide analytical tools; they are not a prerequisite mathematics course to complete before building a small GPT.
+
+## Probabilistic foundations and training {#probabilistic-foundations-and-training}
+
+**Guiding question:** how are the predicted distribution, observed likelihood, objective function, and optimization connected?
+
+- [Mathematical formalization of language modeling](language-modeling-math.qmd) — autoregressive factorization, cross-entropy, and KL divergence.
+- [The mathematical chain of LLM training](mathematical-foundations.qmd) — from logits to gradients, distinguishing the mathematical objects involved.
+
+The core route's canonical pages remain responsible for local definitions of likelihood, entropy, cross-entropy, loss, and gradients. These deep dives connect or generalize those concepts without replacing them.
+
+## Inference and efficiency {#inference-and-efficiency}
+
+**Guiding question:** how does a model use context, select outputs, and consume resources?
+
+- [In-context learning](in-context-learning.qmd) — prompt examples without parameter updates.
+- [Advanced decoding strategies](decoding-strategies.qmd) — distribution transformations and sequence search.
+- [Computational complexity and parallelism in LLMs](llm-computational-complexity.qmd) — compute, memory, and parallelism in training, prefill, and decoding.
+
+The core route introduces autoregressive generation and its minimum operations. This category covers strategies and costs not needed for that first understanding.
+
+## Scale and research questions {#scale-and-research-questions}
+
+**Guiding question:** which empirical regularities and capability claims are supported by evidence?
+
+- [Scaling laws: parameters, data, and compute](scaling-laws.qmd) — empirical relationships between training resources and loss, and limits to extrapolation.
+- [Emergence](emergence.qmd) — gradual improvement, metric-induced thresholds, and genuine discontinuities.
+
+Always distinguish observations, explanatory hypotheses, and conclusions that depend on the protocol.
+
+## Classifying a new topic
+
+Classify an entry by its **primary learning objective**, not by a keyword in its title.
+
+1. **Conceptual necessity:** is the mechanism essential to the first mental model? If so, put only the minimum accurate explanation in Understand and reserve derivations or variants for Deepen. Otherwise, keep it here.
+2. **Question addressed:** architecture/flow, text/tokenization, mathematical tool, probabilistic foundation/training, inference/efficiency, or scale/research.
+3. **Content ownership:** extend a canonical page if the material belongs to its scope. Create a page only for a durable, distinct question.
+4. **Relation semantics:** parent/child for generalization or decomposition; related for a cross-topic connection; suggested_route for a recommended reading order. Not every dependency is hierarchical.
+5. **Evidence level:** state assumptions and conventions in derivations; document data, metrics, and protocols for empirical comparisons; separate general principles from case-specific choices.
+
+### Maintenance rule
+
+Every new advanced page must be added simultaneously to this map, FR/EN navigation, the Quarto render list, the editorial inventory, and the metadata graph. Its counterpart must preserve the same scope, level, and relations. Create a category when it groups multiple pages or represents a durable research axis; avoid single-entry categories unless justified.
+
+**This map is a discovery taxonomy, not a new mandatory learning route.** Category order does not create prerequisites.

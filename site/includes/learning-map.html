@@ -15,7 +15,24 @@
     empty: "Aucune page ne correspond à ces filtres.",
     count: (shown, total) => shown + " page(s) affichée(s) sur " + total + ".",
     loadError: "La carte n’a pas pu être chargée. Vérifiez que les données ont été générées pendant le rendu Quarto.",
-    unknown: "Page"
+    unknown: "Page",
+    domainLabel: "Domaine d’approfondissement",
+    domains: {
+      "architectures-mechanisms": "Architectures et mécanismes",
+      "text-tokenization": "Texte et tokenisation",
+      "mathematical-tools-geometry": "Outils mathématiques et géométrie",
+      "probabilistic-foundations-training": "Fondements probabilistes et entraînement",
+      "inference-efficiency": "Inférence et efficacité",
+      "scale-research": "Échelle et questions de recherche"
+    },
+    domainShort: {
+      "architectures-mechanisms": "Architectures",
+      "text-tokenization": "Texte / tokens",
+      "mathematical-tools-geometry": "Maths / géométrie",
+      "probabilistic-foundations-training": "Probabilités / entraînement",
+      "inference-efficiency": "Inférence / efficacité",
+      "scale-research": "Échelle / recherche"
+    }
   } : {
     columns: ["Understand", "Build", "Deepen", "Practice and reference"],
     route: "Suggested route",
@@ -27,7 +44,24 @@
     empty: "No pages match these filters.",
     count: (shown, total) => shown + " of " + total + " pages shown.",
     loadError: "The map could not be loaded. Check that the data files were generated during the Quarto render.",
-    unknown: "Page"
+    unknown: "Page",
+    domainLabel: "Deepen domain",
+    domains: {
+      "architectures-mechanisms": "Architectures and mechanisms",
+      "text-tokenization": "Text and tokenization",
+      "mathematical-tools-geometry": "Mathematical tools and geometry",
+      "probabilistic-foundations-training": "Probabilistic foundations and training",
+      "inference-efficiency": "Inference and efficiency",
+      "scale-research": "Scale and research questions"
+    },
+    domainShort: {
+      "architectures-mechanisms": "Architectures",
+      "text-tokenization": "Text / tokens",
+      "mathematical-tools-geometry": "Math / geometry",
+      "probabilistic-foundations-training": "Probability / training",
+      "inference-efficiency": "Inference / efficiency",
+      "scale-research": "Scale / research"
+    }
   };
 
   const svg = root.querySelector(".learning-map-svg");
@@ -36,6 +70,7 @@
   const status = root.querySelector(".learning-map-status");
   const search = root.querySelector("#learning-map-search");
   const destination = root.querySelector("#learning-map-destination");
+  const domain = root.querySelector("#learning-map-domain");
   const relationInputs = [...root.querySelectorAll("[data-map-relation]")];
   const NS = "http://www.w3.org/2000/svg";
   const WIDTH = 244;
@@ -95,16 +130,18 @@
   const visiblePages = () => {
     const query = search.value.trim().toLocaleLowerCase();
     const selectedDestination = destination.value;
+    const selectedDomain = domain ? domain.value : "all";
     return pages.filter(page => {
       const destinationMatches = selectedDestination === "all"
         || (selectedDestination === "understand"
           ? ["orient", "understand"].includes(page.destination)
           : page.destination === selectedDestination);
       const searchable = [
-        page.title, page.scope, page.purpose, page.topic,
+        page.title, page.scope, page.purpose, page.topic, page.domain,
         ...(page.concepts || [])
       ].join(" ").toLocaleLowerCase();
-      return destinationMatches && (!query || searchable.includes(query));
+      const domainMatches = selectedDomain === "all" || (page.destination === "deepen" && page.domain === selectedDomain);
+      return destinationMatches && domainMatches && (!query || searchable.includes(query));
     });
   };
 
@@ -176,7 +213,7 @@
 
     const eyebrow = document.createElement("p");
     eyebrow.className = "map-detail-eyebrow";
-    eyebrow.textContent = page.topic || copy.unknown;
+    eyebrow.textContent = (page.domain && copy.domains[page.domain]) || page.topic || copy.unknown;
     details.appendChild(eyebrow);
 
     const heading = document.createElement("h3");
@@ -287,7 +324,7 @@
       const topic = svgElement("text", {
         x: position.x + 13, y: position.y + 18, class: "map-node-topic"
       });
-      topic.textContent = page.topic || page.destination;
+      topic.textContent = (page.domain && copy.domainShort[page.domain]) || page.topic || page.destination;
       anchor.appendChild(topic);
       appendText(anchor, position.x + 13, position.y + 39, wrap(page.title, 30, 2), "map-node-title");
       const concepts = (page.concepts || []).slice(0, 2).join(" · ");
@@ -312,7 +349,14 @@
   };
 
   search.addEventListener("input", render);
-  destination.addEventListener("change", render);
+  destination.addEventListener("change", () => {
+    if (domain && destination.value !== "deepen") domain.value = "all";
+    render();
+  });
+  if (domain) domain.addEventListener("change", () => {
+    if (domain.value !== "all") destination.value = "deepen";
+    render();
+  });
   relationInputs.forEach(input => input.addEventListener("change", render));
 
   fetch(root.dataset.source)

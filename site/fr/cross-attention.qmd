@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/cross-attention"
 scope: "Explique l'attention croisée dans les Transformers encodeur-décodeur, la provenance de Q, K et V, les dimensions, le flux d'information et les masques éventuels."
 purpose: "Approfondissement avancé : formaliser l'attention croisée, établir la provenance de Q/K/V et les dimensions des tenseurs, analyser les masques et situer le mécanisme dans les architectures encodeur-décodeur et multimodales."
+domain: "architectures-mechanisms"
 suggested_route:
   previous: null
   next: null

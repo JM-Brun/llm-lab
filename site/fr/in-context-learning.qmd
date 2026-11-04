@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/in-context-learning"
 scope: "Présente l'apprentissage en contexte, ses différences avec l'entraînement et le fine-tuning, ses manifestations et les principales hypothèses explicatives."
 purpose: "Le lecteur doit pouvoir expliquer comment un modèle exploite des exemples dans le prompt sans mise à jour de ses paramètres, distinguer zero-shot, one-shot et few-shot, et reconnaître les limites des explications mécanistes actuelles."
+domain: "inference-efficiency"
 suggested_route:
   previous: null
   next: null

@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/hybrid-llm-architectures"
 scope: "Uses Nemotron 3 to study trade-offs among Mamba-2, attention, MoE, GQA, MTP, and numerical precision; distinguishes general principles from version-specific choices."
 purpose: "Explain inference costs targeted by hybrid architectures, distinguish total and active parameters, and identify trade-offs in capacity, retrieval, and bandwidth."
+domain: "architectures-mechanisms"
 suggested_route:
   previous: null
   next: null

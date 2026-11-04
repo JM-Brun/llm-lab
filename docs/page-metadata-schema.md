@@ -135,3 +135,21 @@ The validator runs in both the Python quality workflow and the Quarto workflow, 
 ## 8. Coverage boundary
 
 The baseline covers every page in the current `site/_quarto.yml` render list, including the French root landing page, the bilingual inference/generation lesson, and the shared references page. The inference lesson is now published and must carry `status:published`. New pages must receive complete metadata in the same change that adds them to the render list.
+
+
+## 9. Advanced knowledge domains
+
+Pages with `destination:deepen` and a content-page type (not an entry point) must declare one top-level `domain` in the page-map comment. This field assigns the page to exactly one primary discovery domain; it is not a prerequisite, a graph edge, or a claim that the page has no cross-domain relevance.
+
+Controlled values:
+
+| Identifier | Primary learning question |
+|---|---|
+| `architectures-mechanisms` | How do specialized mechanisms and architectures change information flow or computation? |
+| `text-tokenization` | How do text representation and tokenizer design affect model inputs? |
+| `mathematical-tools-geometry` | Which mathematical tools help analyze tensors and representation spaces? |
+| `probabilistic-foundations-training` | How do probabilistic quantities, objectives, and optimization connect? |
+| `inference-efficiency` | How does a model use context, select outputs, and consume compute or memory? |
+| `scale-research` | What empirical regularities and capability claims are supported by evidence? |
+
+The domain is exported into the generated learning-map JSON and can be used as a discovery filter. French and English counterparts must use the same identifier. Pages outside Deepen must not declare this field. Use `related` for cross-domain connections instead of assigning multiple primary domains.

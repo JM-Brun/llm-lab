@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/scaling-laws"
 scope: "Présente les lois d'échelle empiriques des modèles de langage, les relations entre nombre de paramètres, quantité de données, calcul et perte, ainsi que les limites de leur extrapolation ; ne fixe aucun seuil définissant universellement un LLM."
 purpose: "Le lecteur doit pouvoir expliquer ce que décrivent les lois d'échelle, pourquoi le nombre de paramètres ne suffit pas à caractériser l'échelle et pourquoi une relation empirique ne définit pas une frontière universelle entre LLM et autres modèles."
+domain: "scale-research"
 suggested_route:
   previous: null
   next: null

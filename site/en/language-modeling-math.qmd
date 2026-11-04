@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/language-modeling-math"
 scope: "Deepens the probabilistic formalization of language modeling: derives autoregressive factorization from the probability chain rule, distinguishes a probabilistic identity from a learned model, briefly connects sequence likelihood to maximum likelihood, then treats soft-target cross-entropy and KL divergence."
 purpose: "Derive sequence probability from the chain rule, explain what a parameterized model learns, and show why minimizing cross-entropy for a fixed target is equivalent to minimizing KL divergence, with the required assumptions and limitations."
+domain: "probabilistic-foundations-training"
 suggested_route:
   previous: null
   next: null
