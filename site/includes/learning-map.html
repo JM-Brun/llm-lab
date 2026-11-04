@@ -345,7 +345,8 @@
         const target = concepts.find(item => item.id === edge.to);
         if (!source || !target) return;
         const relation = conceptRelationTypes[edge.type];
-        item.textContent = source.label + " — " + (relation ? relation.label : edge.type) + " → " + target.label;
+        const arrow = relation && relation.direction === "symmetric" ? " ↔ " : " → ";
+        item.textContent = source.label + " — " + (relation ? relation.label : edge.type) + arrow + target.label;
         list.appendChild(item);
       });
       details.appendChild(list);
@@ -380,11 +381,14 @@
     const list = document.createElement("ul");
     Object.entries(conceptRelationTypes).forEach(([type, relation]) => {
       const item = document.createElement("li");
+      const direction = document.createElement("span");
+      direction.className = "map-relation-direction";
+      direction.textContent = relation.direction === "symmetric" ? "↔ " : "→ ";
       const label = document.createElement("strong");
       label.textContent = relation.label;
       const description = document.createElement("span");
       description.textContent = " — " + relation.description;
-      item.append(label, description);
+      item.append(direction, label, description);
       list.appendChild(item);
     });
     conceptLegend.appendChild(list);
@@ -436,11 +440,13 @@
       const dx = toCenter.x - fromCenter.x;
       const dy = toCenter.y - fromCenter.y;
       const scale = 1 / Math.max(Math.abs(dx) / (nodeWidth / 2), Math.abs(dy) / (nodeHeight / 2));
+      const relation = conceptRelationTypes[edge.type];
+      const symmetric = relation && relation.direction === "symmetric";
       const path = svgElement("path", {
         d: "M " + (fromCenter.x + dx * scale) + " " + (fromCenter.y + dy * scale)
           + " L " + (toCenter.x - dx * scale) + " " + (toCenter.y - dy * scale),
-        class: "map-edge map-edge-concept",
-        "marker-end": "url(#map-arrow-concept)",
+        class: "map-edge map-edge-concept" + (symmetric ? " map-edge-concept-symmetric" : ""),
+        "marker-end": symmetric ? "none" : "url(#map-arrow-concept)",
         "aria-hidden": "true"
       });
       svg.appendChild(path);
