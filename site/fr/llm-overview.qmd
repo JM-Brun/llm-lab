@@ -12,7 +12,7 @@ scope: "Situe les LLM modernes dans l’IA, l’apprentissage automatique et le 
 purpose: "À l’issue de cette page, le lecteur doit pouvoir situer les LLM, distinguer les principaux termes et les trois dimensions architecture/apprentissage/utilisation, et choisir la page spécialisée pertinente pour comprendre le calcul Transformer ou l’inférence autorégressive."
 suggested_route:
   previous: "fr/index"
-  next: "fr/transformer"
+  next: "fr/generation"
 hierarchy:
   parents: ["fr/index"]
   children: ["fr/transformer", "fr/transformer-architectures", "fr/generation", "fr/build-path", "fr/language-modeling-math", "fr/mathematical-foundations", "fr/llm-limits", "fr/llm-computational-complexity"]

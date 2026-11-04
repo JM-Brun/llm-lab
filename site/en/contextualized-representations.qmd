@@ -12,7 +12,7 @@ scope: "Explains how Transformer layers turn initial embeddings into context-dep
 purpose: "Readers should be able to explain why two occurrences of the same token share an initial embedding but can have different contextualized representations, and connect this difference to processing by Transformer layers."
 suggested_route:
   previous: "en/positional-encoding"
-  next: "en/queries-keys-values"
+  next: "en/transformer"
 hierarchy:
   parents: ["en/embedding-space", "en/positional-encoding", "en/transformer"]
   children: ["en/queries-keys-values"]

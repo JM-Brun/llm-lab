@@ -8,20 +8,20 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/queries-keys-values"
-scope: "Définit les projections qui produisent requêtes, clés et valeurs à partir des représentations d’entrée, et leur rôle distinct dans le calcul d’attention ; laisse le produit scalaire, le masquage et la normalisation à la page sur l’attention à produit scalaire."
+scope: "Présente les projections Q, K et V dans le cas de l’auto-attention, où elles proviennent du même flux de représentations ; laisse le calcul des scores, le masquage et la normalisation à la page sur l’attention à produit scalaire, et renvoie l’attention croisée à l’approfondissement avancé dédié."
 purpose: "Le lecteur doit pouvoir distinguer Q, K et V, identifier les projections apprises qui les produisent et expliquer comment ils contribuent respectivement au calcul des poids d’attention et à la combinaison de l’information."
 suggested_route:
-  previous: "fr/contextualized-representations"
+  previous: "fr/transformer"
   next: "fr/scaled-dot-product-attention"
 hierarchy:
   parents: ["fr/contextualized-representations", "fr/transformer"]
   children: ["fr/scaled-dot-product-attention"]
-related: []
+related: ["fr/cross-attention"]
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
-Les requêtes, clés et valeurs ne sont pas trois types de tokens. Ce sont trois **projections apprises** des représentations d'entrée, utilisées pour déterminer quelles positions contribuent à une représentation contextualisée.
+Les requêtes, clés et valeurs ne sont pas trois types de tokens. Dans le cas étudié ici — l'**auto-attention** — ce sont trois **projections apprises d'un même flux de représentations**, utilisées pour déterminer quelles positions contribuent à une représentation contextualisée. L'attention croisée, où Q et K/V proviennent de flux différents, est traitée dans un [approfondissement avancé](cross-attention.qmd).
 :::
 
 <div class="epistemic-badges">
@@ -30,15 +30,15 @@ Les requêtes, clés et valeurs ne sont pas trois types de tokens. Ce sont trois
   <span class="epistemic-badge badge-status">Architecture : Transformer</span>
 </div>
 
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes du parcours LLM">
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes du pipeline LLM">
   <a class="step-item" href="text-data.qmd">1. Texte</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-arrow">→</span>
   <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">3. Attention (Q, K, V)</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-arrow">→</span>
+  <span class="step-item active">3. Attention (Q, K, V)</span>
+  <span class="step-arrow">→</span>
   <a class="step-item" href="logits.qmd">4. Logits</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-arrow">→</span>
   <a class="step-item" href="cross-entropy.qmd">5. Perte & Entraînement</a>
 </div>
 
@@ -74,9 +74,9 @@ Cette liste recense les analogies effectivement présentes dans les pages de ré
 
 Q et K fournissent les informations utilisées pour déterminer les poids relatifs entre positions accessibles. Ces poids indiquent ensuite comment combiner les vecteurs V. Le calcul précis des scores, du masque et du softmax est détaillé dans la page sur l'attention à produit scalaire mise à l'échelle.
 
-## D'où viennent Q, K et V ?
+## D'où viennent Q, K et V dans l'auto-attention ?
 
-On part d'une matrice $X\in\mathbb{R}^{T\times d_{model}}$, qui rassemble les représentations des $T$ positions. Trois transformations apprises produisent :
+Dans l'auto-attention, on part d'une même matrice $X\in\mathbb{R}^{T\times d_{model}}$, qui rassemble les représentations des $T$ positions. Trois transformations apprises produisent :
 
 $$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
@@ -85,6 +85,8 @@ $$
 Les matrices $W_Q$, $W_K$ et $W_V$ sont apprises pendant l'entraînement. Elles transforment chaque représentation d'entrée pour lui donner un rôle différent dans le calcul de l'attention. Dans l'attention à produit scalaire standard, les valeurs $V$ ne déterminent pas directement les scores : ceux-ci sont calculés à partir de $Q$ et $K$.
 
 Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model}\times d_v}$, les formes obtenues sont $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$. Les biais éventuels sont omis ici.
+
+**Attention croisée :** la même formule avec un seul $X$ ne décrit pas ce cas. Les requêtes proviennent d'une séquence cible, tandis que clés et valeurs proviennent d'une séquence source. Cette séparation est étudiée dans l'[approfondissement sur l'attention croisée](cross-attention.qmd).
 
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
