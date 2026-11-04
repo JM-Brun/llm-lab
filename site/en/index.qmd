@@ -94,6 +94,10 @@ The main route follows the logic **understand how the system works before studyi
 <a href="cross-entropy.html"><text x="338" y="307" class="flow-subtitle">Cross-entropy and loss</text></a>
 <a href="gradients.html"><text x="338" y="325" class="flow-subtitle">Gradients and backpropagation</text></a>
 </g>
+<g class="flow-node">
+<a href="in-context-learning.html" aria-label="Open the in-context learning deep dive"><rect x="20" y="230" width="250" height="55" rx="10"/><text x="34" y="252" class="flow-kicker">8 · ADAPT</text><text x="34" y="273" class="flow-title">Adaptation and use</text></a>
+<a href="build-path.html"><text x="28" y="307" class="flow-subtitle">Fine-tuning and building</text></a>
+</g>
 <text x="20" y="405" class="flow-kicker">BUILD BRANCH · G2 · PREPARE DATA FOR TRAINING</text>
 <g class="flow-node flow-node-g2">
 <a href="corpus-preparation.html" aria-label="Open corpus preparation"><rect x="20" y="465" width="250" height="55" rx="10"/><text x="34" y="487" class="flow-kicker">G2 · CORPUS</text><text x="34" y="508" class="flow-title">Prepare the corpus</text></a>
