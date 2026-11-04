@@ -456,7 +456,8 @@ def test_learning_map_browser_script_has_valid_javascript_and_fallback_target() 
     assert "page.topic || page.destination" not in script
     assert '"CONCEPT · " + concept.id' not in script
     assert "meta.textContent = concept.id" not in script
-    assert "copy.destinations[page.destination]" in script
+    assert "eyebrow.textContent = copy.pageLabel;" in script
+    assert "copy.conceptLabel" in script
     assert "copy.noSectionHeadings" in script
     assert "topic.textContent" not in script
     assert "page.domain && copy.domains" not in script
