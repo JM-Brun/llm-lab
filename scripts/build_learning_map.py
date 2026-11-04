@@ -119,7 +119,9 @@ def load_pages() -> list[dict[str, Any]]:
 
 
 
-def load_concept_graph(language: str, pages: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+def load_concept_graph(
+    language: str, pages: list[dict[str, Any]]
+) -> dict[str, list[dict[str, Any]]]:
     """Load the reviewed concept registry and resolve language-specific page links."""
     registry_path = ROOT / "data" / "concepts.yml"
     registry = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
@@ -131,9 +133,7 @@ def load_concept_graph(language: str, pages: list[dict[str, Any]]) -> dict[str, 
         for page_id in item["resources"]:
             page = page_by_id.get(page_id)
             if page is not None:
-                resources.append(
-                    {"id": page_id, "title": page["title"], "href": page["href"]}
-                )
+                resources.append({"id": page_id, "title": page["title"], "href": page["href"]})
         concepts.append(
             {
                 "id": item["id"],
