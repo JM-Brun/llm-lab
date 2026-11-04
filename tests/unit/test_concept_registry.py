@@ -176,7 +176,7 @@ def test_concept_can_belong_to_multiple_domains() -> None:
 def test_symmetric_contrast_relation_uses_one_canonical_orientation() -> None:
     data = _valid_registry()
     data["relations"] = [
-        {"from": "token", "type": "contrasts-with", "to": "embedding"}
+        {"from": "embedding", "type": "contrasts-with", "to": "token"}
     ]
     assert validate_registry(data) == []
     data["relations"].append(
