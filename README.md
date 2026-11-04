@@ -45,7 +45,7 @@ uv run --no-project --with-requirements docs/requirements-history-validation.txt
 quarto render site
 ```
 
-The generated JSON and Markdown fragments are build artifacts and are ignored by Git. The rendered site is written to `site/_site/`. The Quarto CLI is a separate system dependency; it is not installed by `uv`.
+The generated page/concept JSON files are ignored build artifacts. The bilingual guided-route Markdown partials are intentionally tracked: Quarto expands their include directives before project pre-render hooks, so the partials must already exist at checkout time. The generator refreshes them from `data/guided-route.yml`; commit any resulting partial changes together with route-source edits. The rendered site is written to `site/_site/`. The Quarto CLI is a separate system dependency; it is not installed by `uv`.
 
 ## Page composition
 
