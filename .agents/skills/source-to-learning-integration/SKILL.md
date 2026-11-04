@@ -32,6 +32,7 @@ Output:
 - evidence kind, confidence, generality, assumptions, limitations and rights metadata;
 - candidate concepts, relations, pages, visuals, experiments and teaching improvements;
 - independent qualitative assessment of novelty, complementarity, learner value, applicability, redundancy and evidence quality;
+- a reconstruction of the source's local concept/process graph and pedagogical route, with inferred outcomes and relationships explicitly labelled;
 - an extraction report with access limits and unresolved questions.
 
 No page edits, published new pages, concept-registry mutations, or graph-projection changes in this phase. Candidate destinations and graph nodes/edges are proposals only.
@@ -45,6 +46,7 @@ Output:
 - canonical graph changes, or an explicit no-change decision;
 - updates to existing pages or justified new pages;
 - asset, experiment, implementation, reference, route and bilingual updates as needed;
+- a differential comparison of source graph/route versus the canonical LLM Lab graph, guided route, page routes and Build route;
 - validation evidence and a before/after impact report.
 
 A source can be fully scanned and catalogued without any page or graph change.
