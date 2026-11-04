@@ -41,7 +41,7 @@ Chaque entrée répond à une question plus précise : pourquoi un mécanisme fo
 | Comment produire des sorties et quels coûts cela implique-t-il ? | [Inférence et efficacité](#inference-et-efficacite) |
 | Que peut-on conclure sur l'échelle et les capacités des modèles ? | [Échelle et questions de recherche](#echelle-et-questions-de-recherche) |
 
-## Architectures et mécanismes
+## Architectures et mécanismes {#architectures-et-mecanismes}
 
 **Question directrice :** quelles variantes changent la circulation de l'information ou la structure de calcul ?
 
@@ -60,7 +60,7 @@ Les variantes spécialisées ne rejoignent pas le parcours principal simplement 
 
 La page [Stratégies de tokenisation](tokenization-strategies.qmd) du parcours principal reste le point d'entrée conceptuel ; la conception et l'évaluation comparative sont des approfondissements.
 
-## Outils mathématiques et géométrie
+## Outils mathématiques et géométrie {#outils-mathematiques-et-geometrie}
 
 **Question directrice :** quelles opérations et propriétés mathématiques permettent d'analyser les représentations et les calculs ?
 
@@ -70,7 +70,7 @@ La page [Stratégies de tokenisation](tokenization-strategies.qmd) du parcours p
 
 Ces pages fournissent des outils d'analyse ; elles ne constituent pas un cours de prérequis à terminer avant de construire un petit GPT.
 
-## Fondements probabilistes et entraînement
+## Fondements probabilistes et entraînement {#fondements-probabilistes-et-entrainement}
 
 **Question directrice :** comment relier distribution prédite, vraisemblance observée, fonction objectif et optimisation ?
 
@@ -79,7 +79,7 @@ Ces pages fournissent des outils d'analyse ; elles ne constituent pas un cours d
 
 Les pages canoniques du parcours principal restent propriétaires des définitions locales de vraisemblance, entropie, entropie croisée, loss et gradients. Ces approfondissements les relient ou les généralisent sans les remplacer.
 
-## Inférence et efficacité
+## Inférence et efficacité {#inference-et-efficacite}
 
 **Question directrice :** comment le modèle exploite-t-il le contexte, choisit-il ses sorties et mobilise-t-il ses ressources ?
 
@@ -89,7 +89,7 @@ Les pages canoniques du parcours principal restent propriétaires des définitio
 
 Le parcours principal présente la génération autorégressive et ses opérations minimales. Cette rubrique traite les stratégies et coûts non nécessaires à cette première compréhension.
 
-## Échelle et questions de recherche
+## Échelle et questions de recherche {#echelle-et-questions-de-recherche}
 
 **Question directrice :** quelles régularités empiriques et quelles affirmations sur les capacités sont soutenues par les données ?
 
