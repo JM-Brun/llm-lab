@@ -9,7 +9,7 @@
     route: "Parcours suggéré",
     hierarchy: "Hiérarchie pédagogique",
     related: "Pages associées",
-    concepts: "Notions repérées dans la page",
+    sectionLabels: "Repères de section",
     purpose: "Rôle dans le parcours",
     open: "Ouvrir la page",
     empty: "Aucune page ne correspond à ces filtres.",
@@ -21,7 +21,7 @@
     route: "Suggested route",
     hierarchy: "Pedagogical hierarchy",
     related: "Related pages",
-    concepts: "Concepts identified on this page",
+    sectionLabels: "Section headings",
     purpose: "Role in the learning path",
     open: "Open page",
     empty: "No pages match these filters.",
@@ -102,7 +102,7 @@
           : page.destination === selectedDestination);
       const searchable = [
         page.title, page.scope, page.purpose, page.topic,
-        ...(page.concepts || [])
+        ...(page.section_labels || [])
       ].join(" ").toLocaleLowerCase();
       return destinationMatches && (!query || searchable.includes(query));
     });
@@ -192,23 +192,23 @@
     summary.textContent = page.scope || page.purpose || "";
     details.appendChild(summary);
 
-    const conceptHeading = document.createElement("h4");
-    conceptHeading.textContent = copy.concepts;
-    details.appendChild(conceptHeading);
+    const sectionHeading = document.createElement("h4");
+    sectionHeading.textContent = copy.sectionLabels;
+    details.appendChild(sectionHeading);
 
-    const conceptList = document.createElement("ul");
-    conceptList.className = "map-concept-list";
-    (page.concepts || []).forEach(concept => {
+    const sectionList = document.createElement("ul");
+    sectionList.className = "map-concept-list";
+    (page.section_labels || []).forEach(concept => {
       const item = document.createElement("li");
       item.textContent = concept;
-      conceptList.appendChild(item);
+      sectionList.appendChild(item);
     });
-    if (!conceptList.childElementCount) {
+    if (!sectionList.childElementCount) {
       const item = document.createElement("li");
       item.textContent = page.topic || copy.unknown;
-      conceptList.appendChild(item);
+      sectionList.appendChild(item);
     }
-    details.appendChild(conceptList);
+    details.appendChild(sectionList);
 
     const open = document.createElement("a");
     open.className = "map-open-page";
@@ -275,7 +275,7 @@
       const anchor = svgElement("a", {
         href: page.href,
         class: "map-node map-node-" + page.destination + (selectedId === page.id ? " is-selected" : ""),
-        "aria-label": page.title + ". " + (page.concepts || []).slice(0, 3).join(", ")
+        "aria-label": page.title + ". " + (page.section_labels || []).slice(0, 3).join(", ")
       });
       const title = svgElement("title");
       title.textContent = page.title;
@@ -290,7 +290,7 @@
       topic.textContent = page.topic || page.destination;
       anchor.appendChild(topic);
       appendText(anchor, position.x + 13, position.y + 39, wrap(page.title, 30, 2), "map-node-title");
-      const concepts = (page.concepts || []).slice(0, 2).join(" · ");
+      const concepts = (page.section_labels || []).slice(0, 2).join(" · ");
       const conceptLine = svgElement("text", {
         x: position.x + 13, y: position.y + 84, class: "map-node-concepts"
       });
