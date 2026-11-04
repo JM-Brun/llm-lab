@@ -21,7 +21,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 -->
 
 ::: {.chapter-lead}
-L'attention compare des représentations de tokens, mais elle ne connaît pas spontanément leur ordre. Un mécanisme positionnel apporte cette information : il permet au modèle de distinguer, par exemple, « le chat poursuit le chien » de « le chien poursuit le chat ». Les Transformers utilisent plusieurs approches : un vecteur de position ajouté en entrée, ou une rotation des requêtes et des clés comme dans **RoPE** (*Rotary Position Embedding*), détaillée plus bas en complément facultatif.
+L'attention compare des représentations de tokens, mais elle ne connaît pas spontanément leur ordre. Un mécanisme positionnel apporte cette information : il permet au modèle de distinguer, par exemple, « le chat poursuit le chien » de « le chien poursuit le chat ». Les Transformers utilisent plusieurs approches : un vecteur de position ajouté au vecteur de plongement du token, ou une rotation des requêtes et des clés comme dans **RoPE** (*Rotary Position Embedding*), détaillée plus bas en complément facultatif.
 :::
 
 ## Pourquoi ajouter une information de position ?
@@ -32,7 +32,7 @@ Sans information positionnelle, l'auto-attention standard ne dispose pas à elle
 
 ## Trois familles à distinguer
 
-- **Encodage absolu ajouté au vecteur :** on ajoute à la représentation du token un vecteur associé à sa position. Le Transformer original utilisait des encodages sinusoïdaux ; d'autres modèles apprennent leurs embeddings positionnels.
+- **Encodage absolu ajouté au vecteur :** on ajoute à la représentation du token (son vecteur de plongement) un vecteur associé à sa position. Le Transformer original utilisait des encodages sinusoïdaux ; d'autres modèles apprennent leurs embeddings positionnels.
 - **Encodage ou biais relatif :** le calcul utilise explicitement la distance ou le décalage entre deux positions.
 - **RoPE :** des rotations dépendant de la position sont appliquées aux requêtes et aux clés. Le produit scalaire qui sert au score d'attention porte ainsi une information sur la relation entre les positions.
 

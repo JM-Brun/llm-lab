@@ -21,7 +21,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 -->
 
 ::: {.chapter-lead}
-Un même ID de token sélectionne toujours la même ligne dans une matrice d'embeddings fixe. Pourtant, ce token peut jouer des rôles différents selon la phrase. La distinction essentielle est la suivante : **le lookup fournit un vecteur initial ; le Transformer construit ensuite des représentations qui dépendent du contexte**.
+Un même ID de token sélectionne toujours la même ligne dans une matrice d'embeddings (ou table de plongements) fixe. Pourtant, ce token peut jouer des rôles différents selon la phrase. La distinction essentielle est la suivante : **le lookup fournit un vecteur de plongement initial ; le Transformer construit ensuite des représentations qui dépendent du contexte**.
 :::
 
 
@@ -37,7 +37,7 @@ Supposons que le token visible `bank` soit représenté par le même ID dans deu
 - “The river bank eroded.”
 - “The financial bank collapsed.”
 
-Sous cette hypothèse explicite, les deux occurrences récupèrent le même embedding initial :
+Sous cette hypothèse explicite, les deux occurrences récupèrent le même **vecteur de plongement initial** (embedding) :
 
 \[
 e_{\text{bank}} = E[\text{ID}_{\text{bank}}].
@@ -80,7 +80,7 @@ Cette illustration originale s'inspire de [Ethayarajh (2019), *How Contextual ar
 | Objet | De quoi dépend-il ? | Dépend-il du contexte ? |
 |---|---|---|
 | ID du token | Vocabulaire et règles du tokenizer | Non ; il identifie une entrée du vocabulaire |
-| Embedding initial du token | Ligne sélectionnée dans la matrice d'embeddings | Non, pour une matrice et un ID fixes |
+| Vecteur de plongement initial du token (embedding) | Ligne sélectionnée dans la matrice de plongements | Non, pour une matrice et un ID fixes |
 | État caché contextualisé | Représentation initiale, traitement positionnel, séquence environnante, architecture et couche | Oui, en général |
 
 Deux confusions fréquentes viennent du mélange de ces étapes :
@@ -95,12 +95,12 @@ Cela ne garantit pas non plus que le modèle représente les sens interprétés 
 Le parcours est le suivant :
 
 1. Le tokenizer transforme le texte en IDs de tokens.
-2. La table d'embeddings associe un vecteur initial à chaque ID.
+2. La table de plongements (table d'embeddings) associe un vecteur initial à chaque ID.
 3. L'architecture introduit l'information positionnelle selon ses choix.
 4. Les couches du Transformer produisent des états cachés dépendants du contexte.
 5. Les couches suivantes et la tête de sortie utilisent ces états pour prédire le token suivant.
 
-Le [lookup dans l’espace des embeddings](embedding-space.qmd) associe les IDs aux vecteurs initiaux ; [requêtes, clés et valeurs](queries-keys-values.qmd) puis l’[attention à produit scalaire mise à l’échelle](scaled-dot-product-attention.qmd) décrivent le traitement contextuel de la séquence.
+Le [lookup dans l’espace des plongements (embeddings)](embedding-space.qmd) associe les IDs aux vecteurs initiaux ; [requêtes, clés et valeurs](queries-keys-values.qmd) puis l’[attention à produit scalaire mise à l’échelle](scaled-dot-product-attention.qmd) décrivent le traitement contextuel de la séquence.
 
 ::: {.self-check}
 ## Vérifier sa compréhension
