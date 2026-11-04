@@ -138,24 +138,61 @@ For every future system or schema change:
 - **Bounded complexity:** no database or extra dependency until query volume, collaboration or interoperability requires it.
 - **Accessibility:** graph/map views have a usable list or textual equivalent and are not the only navigation route.
 
-## 9. Audit findings and next technical steps
+## 9. Implementation status and bounded follow-up
 
-The current implementation already has strong foundations: a documented page metadata contract, controlled tag dimensions, stable page IDs, reciprocal relation checks, cycle checks, bilingual parity checks, render-list coverage checks, generated map JSON, unit tests and CI integration.
+The source-of-truth index is now established by this document and surfaced from both the repository [README](../README.md) and [contributor guide](../CONTRIBUTING.md). Detailed contracts remain in their owning documents; this index must not repeat their full rules.
 
-The following gaps should be addressed incrementally:
+Implemented controls include stable page IDs, controlled page metadata, relation validation, bilingual parity checks, render-list coverage, concept/domain/resource registries, deterministic JSON-LD export, unit tests, and CI integration. The [knowledge-graph implementation audit](knowledge-graph-implementation-audit.md) records the evidence and the remaining graph-specific gaps.
 
-1. **Make the ownership map discoverable.** This document is the index for the information architecture; detailed documents remain canonical for their individual concerns.
-2. **Use semantically accurate map fields.** The learning-map payload and UI now call extracted headings `section_headings`; they are navigation landmarks, not concept records.
-3. **Make generated outputs explicitly generated.** Keep learning-map JSON out of hand-maintained source and ensure it is ignored or reproducibly refreshed in CI/builds.
-4. **Formalize machine-readable schemas when stable.** Extract page metadata shape and controlled vocabularies to JSON Schema Draft 2020-12; validate both shape and graph semantics.
-5. **Add an automated architecture consistency check.** Detect duplicate ownership, unknown tag dimensions, unused vocabularies, stale generated data and links to missing source records.
-6. **Keep graph projections separate.** The page-level navigation graph, pedagogical path, and domain/concept/resource knowledge graph have different node and edge semantics. Integrate them through stable IDs and generated projections; do not merge their relations into one generic `related` edge.
-7. **Extend the resource seed only with evidence.** The five guided-build implementation modules are now first-class records. Add other resource kinds only when actual artifacts and explicit page references justify them; preserve stable page IDs and many-to-many concept-resource links.
-8. **Extend the concept-map projection.** The JSON-LD export now describes first-class implementation resources, but the interactive map still renders concept nodes, typed relations, and linked pages. Add concept-domain membership and resource nodes only in a separately scoped UI follow-up, keeping the concept graph separate from page navigation and curriculum progression.
-9. **Test projection determinism and bilingual parity.** Verify stable output and ensure FR/EN labels do not create duplicate concept nodes.
-8. **Keep historical data separate.** The history model has its own event/source semantics and evidence requirements; connect it through canonical concept IDs only where the existing model supports it.
+Keep the remaining work explicit and separately owned:
 
-## 10. Canonical documentation index
+1. **Interactive concept graph:** render typed relation semantics and concept-domain membership; add resource nodes only with a reviewed interaction model. Tracked by [#416](https://github.com/JM-Brun/llm-lab/issues/416) and [#418](https://github.com/JM-Brun/llm-lab/issues/418). The JSON-LD export and interactive map are different projections and need separate validation.
+2. **Rendered reader experience:** verify the guided route, page graph, concept graph, FR/EN navigation, responsive behavior, keyboard/touch interaction, and textual alternatives in a real browser. Tracked by [#337](https://github.com/JM-Brun/llm-lab/issues/337) and its child issues. A successful Quarto build is not browser evidence.
+3. **Machine-readable schema evolution:** consider JSON Schema only when the current Pydantic/YAML contracts demonstrate a concrete interoperability or validation need. Any schema change must include migration notes, fixtures, validators, and compatibility review.
+4. **Cross-cutting consistency checks:** extend automated checks only for demonstrated failure modes (duplicate ownership, stale generated output, dangling references, unused controlled values). Do not add a generic framework before a concrete contract needs it.
+5. **Evidence and provenance:** dataset/build provenance is not claim-level scientific evidence. Preserve this distinction; claim-level source assertions require a separate, justified model extension.
+
+Historical events and source genealogy remain governed by [the history data model](history-data-model.md); connect them to concepts only through explicit, supported identifiers.
+
+## 10. Maintenance workflow
+
+Apply this workflow whenever a contribution changes a canonical registry, page metadata contract, curriculum structure, shared template, or generated projection.
+
+1. **Locate ownership.** Start with the [canonical documentation index](#11-canonical-documentation-index) and identify the one authoritative source. If no owner exists, update this architecture document before adding a new source or field.
+2. **Change source, not projection.** Edit the canonical YAML, page metadata, curriculum document, or shared template. Never hand-edit generated graph JSON, generated route fragments, or rendered output.
+3. **Update contract and examples together.** If a field, controlled value, relation meaning, or generation contract changes, update its owning schema/guide, representative records, fixtures, and migration notes in the same PR. Do not copy the full rule into README and CONTRIBUTING; link to its owner.
+4. **Validate proportionately.** Run the owning registry validator and focused tests; run the full Python checks for code/schema changes. Render the site when page sources, metadata, generated includes, or navigation change.
+5. **Inspect projections.** Check generated links, bilingual parity, and the affected FR/EN rendered pages. Interactive graph changes additionally require keyboard, touch, narrow viewport, empty/error state, and textual-alternative review.
+6. **Report evidence precisely.** Record commands and outcomes. Keep source review, unit/integration tests, CI, Quarto render, browser inspection, accessibility evaluation, and learner testing as separate evidence categories.
+7. **Close the loop.** Update the owning issue and the [implementation audit](knowledge-graph-implementation-audit.md) when its status changes. Update this index only when ownership, architecture, or maintenance procedures change; do not turn it into a duplicate status dashboard.
+
+### Routine commands
+
+From the repository root, use the focused checks relevant to the changed surface:
+
+```bash
+# Core Python quality and tests
+uv run ruff check .
+uv run ruff format --check .
+uv run mypy src
+uv run pytest
+
+# Page metadata and knowledge registries
+uv run python scripts/check_page_metadata.py
+uv run python scripts/check_concept_registry.py
+uv run python scripts/check_resource_registry.py
+
+# Deterministic knowledge-graph export
+uv run python scripts/export_knowledge_graph.py
+
+# Bilingual site build and rendered graph validation
+quarto render site
+uv run python scripts/check_knowledge_graph_rendered.py
+```
+
+The standards profile documents the graph-export and rendered-output checks; use [knowledge-graph standards](knowledge-graph-standards.md) rather than duplicating their implementation details here.
+
+## 11. Canonical documentation index
 
 | Concern | Canonical reference |
 |---|---|
