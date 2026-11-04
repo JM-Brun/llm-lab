@@ -14,9 +14,7 @@ from check_source_catalogue import _validate_pedagogical_model  # noqa: E402
 
 
 def test_qkv_source_pedagogical_model_is_structurally_valid() -> None:
-    extraction_path = (
-        ROOT / "data" / "extractions" / "nishanthan-k-qkv-transformers-devto.yml"
-    )
+    extraction_path = ROOT / "data" / "extractions" / "nishanthan-k-qkv-transformers-devto.yml"
     extraction = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
     errors: list[str] = []
 
