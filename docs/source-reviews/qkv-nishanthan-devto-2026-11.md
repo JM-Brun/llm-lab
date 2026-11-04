@@ -8,9 +8,11 @@
 
 ## 1. Inspection scope and confidence
 
-The indexed article body was available in search output, covering the introduction, sections 1–6 and conclusion. Direct retrieval of the DEV page returned a cache miss. The publication year, update metadata, comments, linked materials and embedded visual assets were not independently inspected. The source is therefore registered as **partially scanned**, not fully scanned.
+The initial review used indexed article content covering the introduction, sections 1–6 and conclusion. At that point direct retrieval returned a cache miss, and the source was correctly recorded as partially scanned.
 
-No reuse licence was established. The project records a link and short paraphrased extraction only; no article prose or illustration is reproduced.
+A follow-up inspection on 2026-11-04 successfully retrieved the DEV article directly. It confirmed the same complete article body and allowed inspection of the two visible reader comments and the author's reply. The publication year and update metadata remain unverified. Linked series articles, other external materials and embedded visual assets were not inspected separately. The source therefore remains **partially scanned**, not fully scanned.
+
+No reuse licence was established. The project records a link and short paraphrased extraction only; no article prose, code or illustration is reproduced.
 
 ## 2. What the source contributes
 
@@ -35,7 +37,7 @@ The canonical bilingual Q/K/V page was inspected in both languages, together wit
 | Score → scale → softmax → aggregation | Low | Low | Keep in the dedicated attention lesson, which provides stronger derivation and numerical treatment |
 | Multi-head summary | Low | Moderate as a simpler summary, but little additional learner value | Defer; current Transformer overview and block walkthrough already serve both levels |
 | bank ambiguity → pronoun it | Low | High: lexical ambiguity and cross-position dependency are distinct learner intuitions | Integrate the pronoun example into both contextualized-representations pages, with an explicit caveat that it does not establish attention-head coreference resolution |
-| KV-cache follow-up | Not an article contribution | Not assessed as an article item | It appeared only in a reader comment in the indexed result; exclude from article extraction and attribution |
+| KV-cache follow-up | Not an article contribution | Not assessed as an article item | It appeared only in a reader comment; exclude from article extraction and attribution |
 
 ## 4. Technical assessment
 
@@ -61,4 +63,10 @@ This is the intended workflow outcome: preserve plausible complementary value du
 
 The targeted comparison found a real complementarity: the canonical page used lexical ambiguity (bank) but not cross-position pronoun reference. Both language versions now include the it → the animal example. The wording treats it as an illustration of contextual dependency, not evidence that a particular attention head performs coreference resolution. The extraction disposition is updated to integrate.
 
-The article remains partially scanned. Its licence, embedded visual assets, comments and linked materials remain unverified; no article figure or code was reused. The article is cited as the pedagogical origin of the example, not as a primary scientific source.
+The article is cited as the pedagogical origin of the example, not as a primary scientific source. The source catalogue records the integration as partial because only the pronoun-reference contribution was integrated; other items were deferred or rejected. The source remains partially scanned because linked materials, embedded assets, publication metadata and reuse rights remain unverified.
+
+## 7. Follow-up scan reconciliation
+
+The direct retrieval performed after the initial review supersedes the earlier cache-miss limitation for the article body. The two visible reader comments and the author's reply were also inspected. One comment suggests KV-cache as a follow-up; this is reader commentary, not part of the article's claims, and remains excluded from the extraction. The article author's reply acknowledges the suggestion but does not provide a technical explanation, so no KV-cache knowledge is attributed to this source.
+
+The source catalogue retains both scan events to preserve provenance rather than rewriting the initial inspection history. The current scan status remains partially-scanned, while the integration status is partially-integrated.
