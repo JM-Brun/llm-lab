@@ -464,3 +464,17 @@ This pass applied the 2026-11-02 external review of the panorama and Transformer
 | RoPE integration | PR #387 is now merged; the RoPE deep dive is included under Architectures and mechanisms in both languages and in the bilingual map. | Rendered navigation, anchors, language switching, and mobile behavior remain to be inspected on the published site. |
 
 This is a source-level organizational change, not evidence that readers have tested or validated the new information architecture.
+
+
+### Knowledge graph: machine-readable Deepen domains — 2026-11-04
+
+**Scope:** add a stable taxonomy field to the existing generated page graph, rather than creating a second graph implementation.
+
+| Area | Change | Validation boundary |
+|---|---|---|
+| Metadata model | Added one controlled top-level `domain` field to each of the 15 bilingual Deepen content-page pairs. The specific `topic` and broad `destination` fields retain their separate meanings. | Validator requires one of six domain identifiers for Deepen content pages, exempts entry points, and rejects the field on other destinations. |
+| Data generation | The existing `build_learning_map.py` now exports `domain` to the bilingual JSON payload. | Existing graph data-generation tests extended to cover domain preservation and serialization. |
+| Interactive discovery | Added a domain filter to the existing FR/EN interactive map. Selecting a domain scopes the view to Deepen; changing destination away from Deepen clears the domain filter. Node labels use short forms; the details panel retains full category names. | Browser interaction, responsive layout, and keyboard use still require rendered review. |
+| Editorial contract | Documented the six controlled IDs and clarified that each page has one primary domain; cross-domain links remain `related` edges. | Future additions must update FR/EN counterparts, metadata, and the map's controlled vocabulary together. |
+
+The graph still distinguishes suggested reading route, conceptual hierarchy, and cross-links. Domain is a classification attribute, not a new edge type or prerequisite relation.
