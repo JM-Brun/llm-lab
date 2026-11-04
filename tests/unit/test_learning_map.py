@@ -58,7 +58,11 @@ def _write_page(
     metadata_yaml = yaml.safe_dump(metadata, allow_unicode=True, sort_keys=False).strip()
     body = "\\n".join(headings)
     path.write_text(
-        f"---\\n{front_yaml}\\n---\\n\\n<!--\\nLLM-LAB-PAGE-MAP v1\\n{metadata_yaml}\\n-->\\n\\n{body}\\n",
+        (
+            f"---\\n{front_yaml}\\n---\\n\\n"
+            f"<!--\\nLLM-LAB-PAGE-MAP v1\\n{metadata_yaml}\\n-->\\n\\n"
+            f"{body}\\n"
+        ),
         encoding="utf-8",
     )
 
