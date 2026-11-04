@@ -31,18 +31,16 @@ Un **logit** est un score réel associé à une classe ou à un token du vocabul
 - distinguer le classement des tokens, la concentration de la distribution et la confiance factuelle.
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes du pipeline LLM">
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes du parcours LLM">
   <a class="step-item" href="text-data.qmd">1. Texte</a>
-  <span class="step-arrow">→</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="queries-keys-values.qmd">3. Attention</a>
-  <span class="step-arrow">→</span>
-  <span class="step-item active">4. Logits</span>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="probabilites.qmd">5. Probabilités</a>
-  <span class="step-arrow">→</span>
-  <a class="step-item" href="generation.qmd">6. Génération</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="queries-keys-values.qmd">3. Attention (Q, K, V)</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">4. Logits</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="cross-entropy.qmd">5. Perte & Entraînement</a>
 </div>
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}

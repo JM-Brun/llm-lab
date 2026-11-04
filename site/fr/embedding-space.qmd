@@ -24,6 +24,18 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 Un **embedding** est un vecteur numérique associé à un objet, par exemple un token. L'ensemble de ces vecteurs forme un espace de représentation. On peut comparer leurs directions, leurs distances ou leurs voisins, mais leur interprétation dépend du modèle, de son entraînement et de la tâche : la géométrie n'est pas un dictionnaire universel du sens.
 :::
 
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes du parcours LLM">
+  <a class="step-item" href="text-data.qmd">1. Texte</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">2. Embeddings</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="queries-keys-values.qmd">3. Attention (Q, K, V)</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="logits.qmd">4. Logits</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="cross-entropy.qmd">5. Perte & Entraînement</a>
+</div>
+
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice d'embeddings contient un vecteur appris par ID ; le lookup sélectionne simplement la bonne ligne. Deux occurrences du même ID récupèrent donc le même vecteur initial. C'est ensuite le traitement par le Transformer qui construit une représentation dépendant du contexte.
 
