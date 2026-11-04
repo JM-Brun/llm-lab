@@ -1,6 +1,6 @@
 ---
 title: "Interactive learning map"
-subtitle: "Pages, concepts, and relationships across the LLM Lab learning path"
+subtitle: "A guided route followed by graphs for exploring pages and concepts"
 keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:en", "status:published"]
 lang: en
 toc: false
