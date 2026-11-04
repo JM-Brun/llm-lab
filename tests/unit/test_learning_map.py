@@ -279,7 +279,7 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
 
     assert output.name == "learning-map-data-fr.json"
     assert payload["language"] == "fr"
-    assert payload["source"] == "LLM-LAB-PAGE-MAP v1 + data/concepts.yml"
+    assert payload["source"] == "LLM-LAB-PAGE-MAP v1 + LLM-LAB-GUIDED-ROUTE v1 + data/concepts.yml"
     assert {page["id"] for page in payload["pages"]} == {"fr/index", "fr/attention"}
     assert all(page["href"] for page in payload["pages"])
     assert all(isinstance(page["section_headings"], list) for page in payload["pages"])
