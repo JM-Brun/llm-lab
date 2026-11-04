@@ -141,10 +141,10 @@ items:
     summary: "The article uses lexical ambiguity (bank) and pronoun reference (it) to motivate why token representations need contextual information from other positions."
     pedagogical_assessment:
       novelty: {level: low, rationale: "Lexical ambiguity and pronoun reference are established motivation examples."}
-      complementarity: {level: moderate, rationale: "The pair can provide a compact progression from within-word ambiguity to cross-position reference."}
-      pedagogical_value: {level: moderate, rationale: "The two examples may help learners connect contextualization to different kinds of linguistic dependency."}
-      applicability: {level: moderate, rationale: "Could be considered as an optional paired example if the current page does not already provide this progression."}
-      redundancy: {level: moderate, rationale: "The dedicated contextualized-representations page already owns these phenomena; exact example-level comparison is needed before reuse."}
+      complementarity: {level: high, rationale: "The pronoun example adds a distinct cross-position dependency to the page's existing lexical-ambiguity example."}
+      pedagogical_value: {level: high, rationale: "The paired examples distinguish lexical sense selection from using context across token positions."}
+      applicability: {level: high, rationale: "A concise bilingual subsection fits directly after the existing bank example on the contextualized-representations page."}
+      redundancy: {level: low, rationale: "The current page has a lexical ambiguity example but no pronoun-reference example; the new item adds a distinct relation without repeating the mechanism explanation."}
       evidence_quality: {level: moderate, rationale: "Illustrative examples motivate the need for context but do not prove that one attention layer resolves ambiguity or coreference."}
     locator: {type: section, value: "2", label: "Why Do We Need Q, K, and V?"}
     evidence:
@@ -160,6 +160,6 @@ items:
     candidate_destinations:
       pages: [fr/contextualized-representations, en/contextualized-representations]
       concepts: [contextualized-representation]
-    disposition: defer
-    disposition_rationale: "Do not reject solely because the topic is already covered. Preserve the potentially useful progression from lexical ambiguity (bank) to cross-position pronoun reference (it); compare the exact examples and teaching sequence on the contextualized-representations page before deciding whether a small optional addition would improve it."
+    disposition: integrate
+    disposition_rationale: "The bilingual contextualized-representations lesson already uses lexical ambiguity (bank) but did not illustrate a cross-position pronoun dependency. Add the animal/it example as a short complementary subsection, explicitly framing it as motivation rather than evidence that one attention head resolves coreference. This preserves the source's useful second viewpoint without duplicating the QKV mechanism explanation."
 
