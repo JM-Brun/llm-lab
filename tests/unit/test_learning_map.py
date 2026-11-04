@@ -7,8 +7,8 @@ import runpy
 from pathlib import Path
 from typing import Any
 
-import yaml
 import pytest
+import yaml
 
 MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts" / "build_learning_map.py"
 MODULE: dict[str, Any] = runpy.run_path(str(MODULE_PATH), run_name="learning_map_test")
