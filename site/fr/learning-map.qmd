@@ -27,15 +27,22 @@ La carte distingue le **fil de lecture conseillé**, la **hiérarchie pédagogiq
 - **Parent / enfant** — flèche bleue : décomposition ou inclusion pédagogique.
 - **Associé** — liaison grise en pointillés : proximité conceptuelle, sans ordre imposé.
 
-Les blocs représentent des pages. Les notions affichées dans chaque bloc sont extraites des titres de sections de la page : elles servent de repères, pas de taxonomie exhaustive. Les données sont générées depuis les métadonnées de chaque page publiée. Le filtre par domaine permet d'isoler l'une des six familles d'approfondissement sans modifier le parcours principal.
+La carte propose deux graphes distincts. Le graphe des pages représente les ressources et leurs relations pédagogiques ; les intitulés de sections affichés dans les blocs sont des repères éditoriaux, pas des concepts canoniques. Le graphe conceptuel provient du registre bilingue versionné dans `data/concepts.yml` : ses nœuds ont des identifiants stables, des définitions et des relations typées. La sélection d’un concept affiche ses pages ressources. Les deux graphes ne doivent pas être interprétés comme un même ordre de lecture.
 
 <div class="learning-map" data-learning-map data-language="fr" data-source="../learning-map-data-fr.json">
   <div class="learning-map-toolbar">
+    <div class="learning-map-filter">
+      <label for="learning-map-mode">Type de graphe</label>
+      <select id="learning-map-mode">
+        <option value="pages">Graphe des pages</option>
+        <option value="concepts">Graphe conceptuel</option>
+      </select>
+    </div>
     <div class="learning-map-search">
       <label for="learning-map-search">Rechercher une page ou une notion</label>
       <input id="learning-map-search" type="search" placeholder="Ex. : embeddings, attention, génération…" autocomplete="off">
     </div>
-    <div class="learning-map-filter">
+    <div class="learning-map-filter" data-map-page-controls>
       <label for="learning-map-domain">Filtrer par domaine avancé</label>
       <select id="learning-map-domain">
         <option value="all">Tous les domaines</option>
@@ -47,7 +54,7 @@ Les blocs représentent des pages. Les notions affichées dans chaque bloc sont 
         <option value="scale-research">Échelle et questions de recherche</option>
       </select>
     </div>
-    <div class="learning-map-filter">
+    <div class="learning-map-filter" data-map-page-controls>
       <label for="learning-map-destination">Afficher une branche</label>
       <select id="learning-map-destination">
         <option value="all">Toutes les branches</option>
@@ -59,12 +66,12 @@ Les blocs représentent des pages. Les notions affichées dans chaque bloc sont 
       </select>
     </div>
   </div>
-  <div class="learning-map-relations" aria-label="Relations affichées">
+  <div class="learning-map-relations" data-map-page-controls aria-label="Relations affichées">
     <label><input type="checkbox" data-map-relation="route" checked> Parcours</label>
     <label><input type="checkbox" data-map-relation="hierarchy" checked> Parent / enfant</label>
     <label><input type="checkbox" data-map-relation="related" checked> Liens associés</label>
   </div>
-  <div class="learning-map-legend" aria-hidden="true">
+  <div class="learning-map-legend" data-map-page-controls aria-hidden="true">
     <span><i class="map-key map-key-route"></i> Progression suggérée</span>
     <span><i class="map-key map-key-hierarchy"></i> Hiérarchie</span>
     <span><i class="map-key map-key-related"></i> Relation transversale</span>

@@ -1126,3 +1126,24 @@ details.spot-the-fallacy .fallacy-content {
   stroke: #B45309;
   stroke-dasharray: 5 3;
 }
+
+
+/* Concept graph: distinct visual grammar from the page-route graph. */
+.map-edge-concept {
+  stroke: #7C6BB1;
+  stroke-width: 1.6;
+  opacity: .5;
+}
+.map-concept-node .map-node-card {
+  fill: #F5F3FF;
+  stroke: #C4B5FD;
+}
+.map-concept-node:hover .map-node-card,
+.map-concept-node:focus-visible .map-node-card,
+.map-concept-node.is-selected .map-node-card {
+  fill: #EDE9FE;
+  stroke: #6D5AA7;
+}
+.learning-map [data-map-page-controls][hidden] {
+  display: none;
+}
