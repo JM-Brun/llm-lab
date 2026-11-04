@@ -39,6 +39,8 @@ Pour un tutoriel ou un cours, reconstruire en parallèle :
 
 Comparer ensuite ce modèle à la fois au sous-graphe canonique du projet et à ses parcours pédagogiques. Distinguer graphe sémantique, ordre pédagogique et navigation du site. Les relations de motivation ou d'illustration ne sont pas des prérequis ; l'ordre des sections d'une source ne constitue pas automatiquement un meilleur parcours. Consigner les écarts et décider séparément des changements au graphe, aux pages et au parcours. Une représentation Mermaid dans le dossier de revue suffit : ne pas créer une base de graphe parallèle.
 
+Pour les sources pédagogiques, conserver aussi cette reconstruction dans le champ `pedagogical_model` de l'extraction YAML : le dossier de revue et ses diagrammes sont la vue éditoriale lisible, tandis que le bloc structuré permet la validation, la comparaison et la réutilisation par les workflows. Les identifiants de ce graphe sont locaux à la source ; ils ne deviennent des concepts canoniques qu'après décision explicite en Phase B.
+
 ## 4. Construire une carte des contributions
 
 Pour un sujet couvert par plusieurs sources pertinentes, créer un dossier dans docs/source-syntheses/ en suivant son README. La carte doit rendre visibles la question d'apprentissage et la couverture canonique ; les sources et identifiants exacts des éléments extraits ; la contribution de chaque source ; les perspectives complémentaires, convergences et désaccords ; la décision d'intégration et sa destination ; les éléments optionnels, liés, différés ou exclus ; les lacunes restantes.
