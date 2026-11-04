@@ -8,14 +8,14 @@ pedagogical_model:
       - "The indexed article metadata identifies Neha KK as author, gives a five-minute reading estimate and lists 2025-12-31 as publication date."
       - "Text completeness applies only to the author-authored text represented in the search-index snapshot. It does not establish live-page DOM completeness or inspection of media, links, comments or rights."
     media_inventory:
-    retrieval_channel: search-index text; direct canonical page returned cache miss
-    in_body_slots:
-      - {id: src-figure-1, caption: 'Fig 1: Self-attention between tokens using queries, keys, and values.', status: identified-not-visually-inspected}
-      - {id: src-figure-2, caption: 'Fig 2: Linear projections into Q, K, and V.', status: identified-not-visually-inspected}
-      - {id: src-figure-2b, caption: null, status: placeholder-identified-not-visually-inspected, note: 'An additional full-size-image marker follows the text introducing three vectors; its content and relation to Fig. 2 cannot be established from the index snapshot.'}
-      - {id: src-figure-3, caption: 'Fig 3: Scaled dot-product attention computation.', status: identified-not-visually-inspected}
-    cover_or_hero: {status: unknown, note: 'The indexed article result does not establish whether a separate cover/hero asset exists.'}
-    rights: unknown
+      retrieval_channel: search-index text; direct canonical page returned cache miss
+      in_body_slots:
+        - {id: src-figure-1, caption: 'Fig 1: Self-attention between tokens using queries, keys, and values.', status: identified-not-visually-inspected}
+        - {id: src-figure-2, caption: 'Fig 2: Linear projections into Q, K, and V.', status: identified-not-visually-inspected}
+        - {id: src-figure-2b, caption: null, status: placeholder-identified-not-visually-inspected, note: 'An additional full-size-image marker follows the text introducing three vectors; its content and relation to Fig. 2 cannot be established from the index snapshot.'}
+        - {id: src-figure-3, caption: 'Fig 3: Scaled dot-product attention computation.', status: identified-not-visually-inspected}
+      cover_or_hero: {status: unknown, note: 'The indexed article result does not establish whether a separate cover/hero asset exists.'}
+      rights: unknown
     inferred_elements:
       - "Learning outcomes and prerequisites are inferred; the article does not publish a formal outcomes or prerequisite list."
   source_graph:
