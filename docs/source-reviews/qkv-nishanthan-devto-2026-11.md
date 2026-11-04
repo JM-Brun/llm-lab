@@ -10,7 +10,7 @@
 
 The initial review used indexed article content covering the introduction, sections 1–6 and conclusion. At that point direct retrieval returned a cache miss, and the source was correctly recorded as partially scanned.
 
-A follow-up inspection on 2026-11-04 successfully retrieved the DEV article directly. It confirmed the same complete article body and allowed inspection of the two visible reader comments and the author's reply. The publication year and update metadata remain unverified. Linked series articles, other external materials and embedded visual assets were not inspected separately. The source therefore remains **partially scanned**, not fully scanned.
+A prior scan event recorded a successful direct retrieval of the DEV article and inspection of two visible reader comments plus the author's reply. The latest access recheck did not reproduce that retrieval: the canonical page and API returned cache misses. The full author-authored body is currently corroborated by the indexed DEV result and the author-controlled Medium mirror; only the KV-cache comment is visible in the current indexed snapshot. The publication year and update metadata remain unverified. Linked series articles, other external materials and embedded visual assets were not inspected separately. The source therefore remains **partially scanned**, not fully scanned.
 
 No reuse licence was established. The project records links and short paraphrased extraction only; it does not reproduce article prose, code or image files. The original visual is now linked from both bilingual Q/K/V lessons, so readers can consult it at its source.
 
