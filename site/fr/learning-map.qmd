@@ -103,7 +103,7 @@ Le graphe des pages conserve l'inventaire des ressources et leurs liens de progr
     <aside class="learning-map-details" aria-live="polite" aria-atomic="true">
       <p class="map-detail-eyebrow">EXPLORER UNE BRIQUE</p>
       <h3>Sélectionner une page</h3>
-      <p>Passez sur un bloc ou placez-y le focus pour afficher son rôle, ses titres de section et ses relations. Cliquez sur le bloc pour ouvrir directement la page.</p>
+      <p>Sélectionnez un bloc (clic, toucher, Entrée ou Espace) pour afficher son rôle, ses titres de section et ses relations. Utilisez ensuite « Ouvrir la page » pour naviguer.</p>
     </aside>
   </div>
   <p class="learning-map-status" role="status" aria-live="polite">Chargement de la carte…</p>
