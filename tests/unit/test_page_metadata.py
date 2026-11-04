@@ -6,7 +6,7 @@ import runpy
 from pathlib import Path
 from typing import Any
 
-MODULE_PATH = Path(__file__).resolve().parents[1] / "scripts" / "check_page_metadata.py"
+MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts" / "check_page_metadata.py"
 MODULE: dict[str, Any] = runpy.run_path(str(MODULE_PATH), run_name="page_metadata_test")
 
 
