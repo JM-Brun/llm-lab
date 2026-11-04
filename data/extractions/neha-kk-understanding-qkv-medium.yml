@@ -247,7 +247,7 @@ items:
       complementarity: {level: moderate, rationale: "It identifies why the project's more precise wording matters for deeper layers."}
       pedagogical_value: {level: moderate, rationale: "It can prevent learners from assuming every attention layer reprojects the original static embedding."}
       applicability: {level: moderate, rationale: "A concise clarification in the Q/K/V lesson can connect the current hidden-state input to the positional mechanisms introduced on the preceding architecture path."}
-      redundancy: {level: high, rationale: "No missing clarification remains in the canonical page."}
+      redundancy: {level: moderate, rationale: "The current representation stream was already named, but the interaction with positional mechanisms was not explicit on the Q/K/V page."}
       evidence_quality: {level: high, rationale: "Direct comparison between article wording and the general Transformer computation."}
     locator: {type: section, value: "The Basis: Word Embeddings / Getting Q, K, and V", label: "The Basis: Word Embeddings / Getting Q, K, and V"}
     evidence: {kind: technical-limitation, confidence: well-supported, scope: "Input representation to the Q/K/V projections.", assumptions: ["A multi-layer Transformer in which attention receives current hidden states."], limitations: ["The article's introductory simplification is not necessarily false for the first attention layer.", "The article does not explain how positional information enters the representation or attention computation.", "The phrase 'reflects semantic meaning' should not be read as a coordinate-wise semantic interpretation."]}
