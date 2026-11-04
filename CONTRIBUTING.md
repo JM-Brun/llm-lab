@@ -82,7 +82,7 @@ For a substantial visual or explanatory revision, also state:
 Install Python 3.12 and uv, then run:
 
 ```bash
-uv sync --dev
+uv sync --locked --dev
 uv run pre-commit install
 uv run pre-commit run --all-files
 ```
@@ -96,6 +96,7 @@ uv run ruff check .
 uv run ruff format --check .
 uv run mypy src
 uv run pytest
+uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python scripts/render_history_pilot.py
 quarto render site
 ```
 
@@ -112,7 +113,7 @@ Run the relevant checks for the changed surface and state clearly if a tool or o
 - Pin dependencies through `pyproject.toml` constraints and the committed `uv.lock`.
 - Explain deviations from upstream implementations and cite the source.
 - Separate verified, planned, illustrative, and experimentally observed results. Passing CI verifies configured checks, not scientific claims or visual quality.
-- No license has been selected yet; do not imply that others have permission to reuse or redistribute code or content.
+- Follow [LICENSE.md](LICENSE.md) for project-owned code and prose; third-party materials and images with unestablished provenance have separate or unresolved terms.
 
 
 ### Page learning outcomes: one shared component

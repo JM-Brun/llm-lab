@@ -13,12 +13,12 @@ Attribution establishes provenance; it does not by itself grant permission. Conv
 
 ## Repository-level licensing finding
 
-The GitHub repository metadata reports no declared repository licence (`license: null`), and no root `LICENSE`, `COPYING`, or `NOTICE` file was found in the repository tree at the snapshot date.
+At the snapshot date, GitHub repository metadata reported no declared repository licence (`license: null`), and no root `LICENSE`, `COPYING`, or `NOTICE` file was found. The later [LICENSE.md](../LICENSE.md) specifies terms for project-owned code and prose, but excludes third-party material and images with unestablished provenance. This update does not resolve the asset-level questions below or assert what GitHub's license detector will report.
 
 Consequences:
 - Do not assume that the project's own SVGs are automatically available for third-party reuse merely because they are versioned here or described as original.
-- Establish the authorship/provenance of each local asset from its history and contribution context, then decide and document an explicit licence for project-owned material.
-- Do not retroactively claim that external figures are covered by a future repository licence.
+- Establish the authorship/provenance of each local asset from its history and contribution context before applying an asset-specific licence.
+- Do not claim that external figures are covered by the repository licence.
 - This is a project governance issue, not a reason to remove or disable any current asset.
 
 ## Externally hosted images currently embedded

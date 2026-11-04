@@ -115,6 +115,7 @@ website:
   description: "A bilingual learning lab to understand, build, and investigate language models."
   site-url: "https://jm-brun.github.io/llm-lab/"
   repo-url: "https://github.com/JM-Brun/llm-lab"
+  repo-subdir: "site"
   repo-actions: [source, issue]
   page-navigation: true
   search: true

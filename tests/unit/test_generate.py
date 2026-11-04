@@ -223,3 +223,18 @@ def test_generate_truncation_validation_errors() -> None:
         generate(model, prompt, 2, top_k=0)
     with pytest.raises(ValueError, match="top_p must be in the interval"):
         generate(model, prompt, 2, top_p=0.0)
+
+
+@pytest.mark.parametrize("temperature", [np.nan, np.inf, -np.inf])
+@pytest.mark.parametrize("greedy", [True, False])
+def test_generate_rejects_nonfinite_temperature(temperature: float, greedy: bool) -> None:
+    model = GPT(_small_config())
+    with pytest.raises(ValueError, match="temperature must be"):
+        generate(
+            model,
+            np.array([1]),
+            0,
+            temperature=temperature,
+            greedy=greedy,
+            rng=np.random.default_rng(0),
+        )

@@ -2,7 +2,16 @@
 
 > **Editorial boundary (2026-10-30):** the public site distinguishes four reader-facing destinations: **Understand** (the conceptual course), **Build** (the guided implementation route), **Deepen** (optional mathematical/technical depth), and **Practice & experiment** (exercises and evidence-producing investigations). These are destinations, not four duplicated curricula. Build reuses the canonical concept pages and introduces only the local tensor, probability, and gradient operations needed at each milestone. Advanced mathematics is not a blanket prerequisite. The exhaustive page-by-page classification and milestone-to-code/test evidence matrix are maintained in [content-section-mapping.md](content-section-mapping.md); the four-destination navigation complements, rather than replaces, the three learning depths described below.
 
-This plan is a sequence of evidence-producing modules, not a promise of mastery after a fixed number of hours. Each module is complete only when its implementation, tests, experiment notes, and limitations are available. The repository's current status, priorities, and acceptance criteria are tracked in the [roadmap](roadmap.md).
+This plan is a sequence of evidence-producing modules, not a promise of mastery after a fixed number of hours. Each module is complete only when its implementation, tests, experiment notes, and limitations are available. See [project status](project-status.md) for the current inventory and the [roadmap](roadmap.md) for priorities and acceptance criteria.
+
+## Reader-facing guided route — machine-readable map source
+
+The six-stage route displayed above the exploratory graphs on the bilingual learning-map pages is maintained in [`data/guided-route.yml`](../data/guided-route.yml), a versioned bilingual YAML registry. This file is the **single machine-readable source** for stage IDs, titles, objectives, core page links and optional deep dives. The present document remains the narrative curriculum and explains the conceptual order; do not duplicate the stage registry here or in JavaScript.
+
+The generator resolves every core and optional page ID against published page metadata and fails on missing or unpublished destinations. The route is conceptual, not a strict prerequisite DAG: pages within a stage are complementary resources, not mandatory sequential gates.
+
+The practical GPT construction route remains the separate [Build path](../site/fr/build-path.qmd) / [EN](../site/en/build-path.qmd). In particular, G2 corpus preparation and training-example construction form a branch for training, not a prerequisite for understanding inference.
+
 
 ## The conceptual order: see the system work before studying how it learns
 
@@ -30,14 +39,6 @@ The learning route branches from the shared foundations rather than continuing t
 `corpus preparation + tokenizer → training examples (windows and shifted targets) → forward pass → loss → gradients and parameter updates`.
 
 Evaluation is cross-cutting. Validation results may inform model, data, and decoding choices; the test set must remain held out until final assessment. The landing-page diagram links each available stage to its canonical lesson. A missing implementation milestone must remain visibly distinct from an available conceptual explanation.
-
-## Reader-facing guided route — machine-readable map source
-
-The six-stage route displayed above the exploratory graphs on the bilingual learning-map pages is maintained in [`data/guided-route.yml`](../data/guided-route.yml), a versioned bilingual YAML registry. This file is the **single machine-readable source** for stage IDs, titles, objectives, core page links and optional deep dives. The present document remains the narrative curriculum and explains the conceptual order; do not duplicate the stage registry here or in JavaScript.
-
-The generator resolves every core and optional page ID against published page metadata and fails on missing or unpublished destinations. The route is conceptual, not a strict prerequisite DAG: pages within a stage are complementary resources, not mandatory sequential gates.
-
-The practical GPT construction route remains the separate [Build path](../site/fr/build-path.qmd) / [EN](../site/en/build-path.qmd). In particular, G2 corpus preparation and training-example construction form a branch for training, not a prerequisite for understanding inference.
 
 ## Page ownership: one canonical explanation, deliberate reminders
 

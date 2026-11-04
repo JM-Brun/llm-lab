@@ -26,7 +26,7 @@ Scaled dot-product attention turns learned compatibility scores between queries 
 
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Verified Concept</span>
-  <span class="epistemic-badge badge-code">Executable Micro-code</span>
+  <span class="epistemic-badge badge-code">Python · run locally</span>
   <span class="epistemic-badge badge-status">Architecture: Standard Attention</span>
 </div>
 

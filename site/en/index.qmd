@@ -120,7 +120,7 @@ The main route follows the logic **understand how the system works before studyi
 Lessons use three markers to distinguish different kinds of material:
 
 - <span class="epistemic-badge badge-concept">Verified Concept</span> Formal definitions, equations, and explicit mathematical assumptions.
-- <span class="epistemic-badge badge-code">Executable Micro-code</span> Inspectable Python/NumPy workbenches with shape invariants and assertion checks.
+- <span class="epistemic-badge badge-code">Run locally</span> Python/NumPy examples with shape invariants and assertion checks. Copy them into a local Python environment; the code blocks do not execute in this page.
 - <span class="epistemic-badge badge-status">Architecture / Status</span> Explicit architectural scope and roadmap milestone state.
 
 These markers describe the evidence available; they do not make all evidence equivalent. A diagram makes a structure readable but does not prove a property; a derivation establishes a result under stated assumptions; a test checks the cases it covers; an experiment compares configurations under a documented protocol, metrics and limitations.

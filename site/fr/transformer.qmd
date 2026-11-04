@@ -106,7 +106,6 @@ Cette vérification porte sur le calcul interne, et non sur le décodage traité
 2. La connexion résiduelle additionne la sortie de la sous-couche à son entrée : $x_{sortie}=x_{entrée}+F(x_{entrée})$. Elle préserve un chemin direct à travers le bloc tout en laissant la sous-couche apporter une transformation apprise.
 
 </details>
-:::
 
 ## Explorer en pratique
 

@@ -106,7 +106,6 @@ This check focuses on the network computation, not on decoding, which is covered
 2. The residual connection adds the sublayer output to its input: $x_{out}=x_{in}+F(x_{in})$. It preserves a direct path through the block while allowing the sublayer to contribute a learned transformation.
 
 </details>
-:::
 
 ## Explore in practice
 

@@ -26,7 +26,7 @@ Queries, keys, and values are not three kinds of tokens. In the case covered her
 
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Verified Concept</span>
-  <span class="epistemic-badge badge-code">Executable Micro-code</span>
+  <span class="epistemic-badge badge-code">Python · run locally</span>
   <span class="epistemic-badge badge-status">Architecture: Transformer</span>
 </div>
 
@@ -185,7 +185,7 @@ A numerically tested reference implementation is available in `src/llm_lab/found
 
 - [Reference implementation](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
 - [Unit tests](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
-- [Planned causal-attention acceptance criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+- [Current implementation and validation status](https://github.com/JM-Brun/llm-lab/blob/main/docs/project-status.md)
 :::
 
 <div class="route-nav-cards">

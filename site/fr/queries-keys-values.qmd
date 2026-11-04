@@ -26,7 +26,7 @@ Les requêtes, clés et valeurs ne sont pas trois types de tokens. Dans le cas �
 
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Concept vérifié</span>
-  <span class="epistemic-badge badge-code">Micro-code exécutable</span>
+  <span class="epistemic-badge badge-code">Python · à exécuter localement</span>
   <span class="epistemic-badge badge-status">Architecture : Transformer</span>
 </div>
 
@@ -185,7 +185,7 @@ Une implémentation de référence testée numériquement est disponible dans `s
 
 - [Implémentation de référence](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
 - [Tests unitaires](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
-- [Critères prévus pour l'attention causale](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+- [État actuel de l'implémentation et de sa validation](https://github.com/JM-Brun/llm-lab/blob/main/docs/project-status.md)
 :::
 
 <div class="route-nav-cards">
