@@ -50,14 +50,14 @@ The registry also contains more specific relations such as part-of, contributes-
 - .github/workflows/ci.yml runs the metadata validators, Ruff, mypy, and pytest.
 - .github/workflows/quarto.yml validates page metadata before rendering the bilingual site.
 
-### Merged concept-registry controls (PR #399)
+### Source-level registry controls
 
 - `scripts/check_concept_registry.py` validates concept IDs, bilingual labels/definitions, page-resource references, relation vocabulary/endpoints, self-relations, duplicate relations, and cycle constraints for prerequisite/generalization edges.
 - `scripts/check_resource_registry.py` validates non-page resource IDs, controlled kind/status, BCP 47 tags, bilingual metadata, discriminated locations, path containment after symlink resolution, external URL syntax, page references, concept references, and optional provenance.
 - `tests/unit/test_concept_registry.py` covers the checked-in concept registry and its graph invariants.
 - `tests/unit/test_resource_registry.py` covers resource identity, many-to-many concept links, shared FR/EN page references, path traversal and symlink escapes, external URL syntax, lifecycle values, and language tags.
 - `tests/unit/test_knowledge_graph_export.py` checks `SoftwareSourceCode` projection, stable resource IDs, bilingual labels, page/concept links, unique page nodes, and registry provenance.
-- The validator is integrated into the existing Python CI workflow; no additional workflow is needed.
+- Both source registries are integrated into the existing Python CI workflow; the resource validator also runs before the Quarto render. No separate workflow is needed.
 
 ### Validation evidence
 
@@ -68,8 +68,8 @@ On merged PR #399 head 7bea7ec (2026-11-04), Python CI passed all 127 tests and 
 1. **Review the merged concept seed.** Expand `data/concepts.yml` only alongside reviewed content; audit relation direction and avoid implying ontology completeness.
 2. **Maintain concept-domain membership.** PR #404 merged `data/domains.yml`, many-to-many concept membership, and a canonical symmetry rule for `contrasts-with`. Review memberships as the concept seed expands; do not infer them from page-level classifications.
 3. **Extend the resource model only with evidence.** The initial first-class resource registry now covers the five guided-build implementation modules. Add demonstrations, experiments, datasets, papers, or media only when concrete repository artifacts and learner-facing references justify them.
-4. **Extend graph projections deliberately.** The JSON-LD export describes the resource entities; the interactive concept-map UI remains a separate follow-up and must not be changed as part of the source-model migration.
-5. **Extend and test the existing concept-map projection.** Expose concept-domain membership from `data/domains.yml`, with deterministic bilingual output and no duplicate concept nodes or reinterpretation of prerequisites as navigation. Expose non-page resource kinds only when their canonical records exist; preserve concept IDs and typed relation directions.
+4. **Extend the interactive map only in a separate UI slice.** The JSON-LD export describes the resource entities; the current concept-map UI does not render them. Any UI extension needs its own interaction, accessibility, responsive, and rendered-browser review.
+5. **Expose concept-domain membership.** Add deterministic bilingual output for the canonical `data/domains.yml` memberships without duplicate concept nodes or reinterpretation of prerequisites as navigation; preserve concept IDs and typed relation directions.
 6. **Review the rendered interaction separately.** Check accessibility, meaningful relationship direction, browser behavior, and responsive layout after the data model and tests; Quarto rendering and static link checks alone do not establish those properties.
 
 ## Non-goals
