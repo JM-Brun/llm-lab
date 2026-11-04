@@ -121,6 +121,22 @@ The relevant existing nodes are:
 
 Existing relations already express Q/K/V as parts of self-attention, the causal mask as a constraint, positional information as a contribution, and self-attention as a contributor to contextualized representations.
 
+The relevant pre-change subgraph can be summarized as follows:
+
+```mermaid
+flowchart LR
+    Q["Query"] --> SA["Self-attention"]
+    K["Key"] --> SA
+    V["Value"] --> SA
+    CM["Causal mask"] -. constrains .-> SA
+    PE["Positional encoding"] -. contributes .-> SA
+    TE["Token embedding"] --> CR["Contextualized representation"]
+    SA --> CR
+    CR --> OP["Output projection"] --> L["Logits"] --> SM["Softmax"] --> CE["Cross-entropy"]
+```
+
+This is a coarse lifecycle graph, not an explicit attention-computation graph: it skips the score, scaling, normalized-weight and weighted-aggregation intermediates.
+
 The graph does not yet give distinct canonical identities to the score matrix, normalized attention weights, the scaled-dot-product operation, or multi-head attention. These are nevertheless explicitly taught by the published pages.
 
 ### 4.2 Canonical learner route
