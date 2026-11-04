@@ -1,0 +1,5 @@
+schema_version: 1
+# Canonical inventory of external sources and their scan history.
+# Empty until source mentions have been reconciled and verified.
+# Bibliography entries alone do not establish that a source was scanned.
+sources: []

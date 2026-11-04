@@ -1,0 +1,197 @@
+# Source catalogue and extraction data contract
+
+**Status:** initial versioned contract (schema version 1).  
+**Canonical source:** this document defines external-source and extraction records.  
+**Scope:** research traceability and discovery; not page metadata, the concept graph, or the pedagogical route.
+
+## 1. Ownership and separation
+
+| Data | Canonical owner | Meaning |
+|---|---|---|
+| External source identity and scan history | `data/sources.yml` | What source exists, what was actually inspected, when, and with what access/reuse constraints |
+| Controlled source facets | `data/source-taxonomy.yml` | Allowed source types, levels, contributions, audiences, statuses, extraction kinds, and tag policy |
+| Atomic extracted knowledge | `data/extractions/<source-id>.yml` | What a source contributes at a precise locator, with evidence and limitations |
+| Knowledge domains | `data/domains.yml` | The six canonical subject domains |
+| Scientific concepts and typed relations | `data/concepts.yml` | Durable concepts and semantic relationships |
+| Published and implementation resources | `data/resources.yml` and page metadata | Existing resource model; do not overload it with source records |
+| Bibliographic presentation | `docs/references.md` | Human-readable annotated bibliography, not proof of scanning |
+
+A source, an extracted item, a concept, a page and a learning resource have different identities. Link them; never collapse them into one registry. YAML is canonical authoring data. JSON-LD remains a generated projection.
+
+## 2. Classification: theme, tags and metadata
+
+Every source has one primary theme once it is selected for substantive inspection. It may have zero or more secondary themes.
+
+- `classification.primary_theme`: exactly one ID from `data/domains.yml`; the best overall subject classification.
+- `classification.secondary_themes`: zero or more distinct IDs from the same registry; use only when a second domain is materially covered.
+- `classification.tags`: zero or more namespaced, lowercase-kebab-case retrieval facets, such as `topic:attention`, `method:contrastive-learning`, `modality:video`, `application:code-generation`, or `ecosystem:pytorch`.
+- `classification.concept_ids`: optional references to existing canonical concepts in `data/concepts.yml`. These are not tags and must not be guessed from keyword overlap.
+
+The primary theme is a classification, not a claim that the source belongs exclusively to that domain. A cross-disciplinary source may have several secondary themes. Do not duplicate the same ID in primary and secondary themes.
+
+### Tags are not concepts
+
+Tags support search and aggregation. They do not assert a scientific definition, semantic relation, prerequisite or ontology membership. Before creating a tag, check whether it duplicates:
+- a domain ID (use the domain field);
+- a canonical concept ID (use concept_ids);
+- a source metadata field (use the typed field);
+- an existing tag or its alias (reuse the canonical tag).
+
+Tags are normalized and namespaced to limit collisions. The initial namespaces are `topic`, `method`, `modality`, `application`, and `ecosystem`. Add a namespace only for a demonstrated query use case. Do not create a tag for every named entity or every extracted phrase.
+
+### Metadata are typed fields, not tags
+
+Use explicit fields for information that needs reliable filtering or validation:
+
+| Field | Controlled values / format | Purpose |
+|---|---|---|
+| `source_type` | `data/source-taxonomy.yml` | Paper, book, blog, documentation, repository, dataset, etc. |
+| `language` | BCP 47 language tag | Language of the source/version inspected |
+| `technical_level` | Controlled level | Introductory, intermediate, advanced, mixed, unspecified |
+| `contribution_types` | Controlled list | Theory, derivation, implementation, experiment, visualization, pedagogy, etc. |
+| `audiences` | Controlled list | Learner, practitioner, researcher, educator, maintainer |
+| `scan_status` | Controlled lifecycle | What has actually been inspected |
+| `integration_status` | Controlled lifecycle | Whether extraction items have been reviewed/integrated |
+| `publication_date`, `updated_date`, `accessed_at` | ISO 8601 date/date-time | Source chronology and inspection time |
+| `version`, `revision` | Source-native strings | Edition, release, commit, or version inspected |
+| `licence` and reuse fields | SPDX identifier when known; otherwise explicit unknown | Rights and reuse constraints |
+
+Do not invent a generic `meta_tags` field. Typed metadata is easier to validate, query and evolve than encoded key-value strings. If a future use case requires an additional facet, add a documented typed field or a controlled tag namespace rather than hiding it in free-form metadata.
+
+## 3. Source record
+
+A source record in `data/sources.yml` uses this shape:
+
+    schema_version: 1
+    sources:
+      - id: example-attention-paper
+        title: "Example paper title"
+        creators:
+          - "Author One"
+        source_type: paper
+        identifiers:
+          doi: "10.xxxx/example"
+        canonical_url: "https://example.org/paper"
+        publisher: "Example venue"
+        publication_date: "2024-01-15"
+        updated_date: null
+        language: en
+        version: "published version"
+        revision: null
+        licence:
+          identifier: null
+          url: null
+          status: unknown
+        reuse:
+          text: link-only
+          figures: unknown
+          code: unknown
+          data: unknown
+        classification:
+          primary_theme: architectures-mechanisms
+          secondary_themes:
+            - mathematical-tools-geometry
+          tags:
+            - topic:attention
+            - method:scaled-dot-product
+          concept_ids:
+            - self-attention
+        metadata:
+          technical_level: advanced
+          contribution_types:
+            - theory
+            - architecture
+          audiences:
+            - practitioner
+            - researcher
+        scan_status: partially-scanned
+        integration_status: not-reviewed
+        scan_history:
+          - accessed_at: "2026-11-04T10:00:00Z"
+            status: partially-scanned
+            inspected_scope:
+              - "Sections 1–3"
+              - "Figure 2"
+            limitations:
+              - "Supplementary material not inspected"
+        related:
+          pages: []
+          concepts:
+            - self-attention
+          audit_records: []
+
+### Identity and provenance
+
+- Use a stable language-independent kebab-case ID. Never derive identity from a translated title.
+- Deduplicate by DOI, normalized canonical URL, or repository plus pinned revision—not title alone.
+- Preserve distinct editions, versions, mirrors and aliases when they matter; connect them explicitly.
+- Prefer canonical publisher, author, DOI or repository URLs. Record redirects/mirrors as aliases when useful.
+- Record exact version, commit or release for mutable sources.
+- Use explicit unknown values for rights; an accessible URL or public repository does not imply a licence.
+
+### Scan status and history
+
+The current `scan_status` is a summary. Each inspection event belongs in `scan_history`, with date, status, exact scope and limitations. A source may be rescanned at a later version; do not overwrite the earlier inspection evidence.
+
+Allowed statuses are in `data/source-taxonomy.yml`. A source is `scanned` only when the declared intended scope has been inspected; otherwise use `partially-scanned`. A citation or link alone is `discovered` or `selected`, not scanned.
+
+A source can be classified before scanning. For unclassified discovered records, `primary_theme` may be null; it must be assigned before substantive extraction is marked complete.
+
+## 4. Extraction item records
+
+Store one file per source in `data/extractions/<source-id>.yml`. Each item is atomic and carries:
+
+- stable item ID and controlled `kind`;
+- concise paraphrased summary, not copied source prose;
+- exact locator and locator type;
+- evidence kind, confidence, scope, assumptions and limitations;
+- optional item-level classification, which can refine but not silently overwrite source classification;
+- existing canonical concept IDs, if justified;
+- candidate page/concept/resource destinations, explicitly marked as proposals;
+- disposition and rationale after Phase B review.
+
+The extraction taxonomy is in `data/source-taxonomy.yml`. Use the sample and record rules in `data/extractions/README.md`.
+
+An extraction item may carry a different primary theme from its source only when its specific contribution genuinely belongs elsewhere. This does not reclassify the source. Item-level tags should be sparse and more specific than source-level tags where possible.
+
+## 5. Inheritance and query behavior
+
+For discovery, an item may inherit the source's primary/secondary themes and source-level tags when it has no item-level override. Do not copy inherited values into every item by default; this creates duplication and drift.
+
+When displaying or filtering:
+1. use item-level classification when explicitly present;
+2. otherwise fall back to source classification;
+3. keep source metadata (language, source type, version, scan status) distinct from item evidence and integration disposition;
+4. never infer concept membership or semantic graph edges from tags.
+
+## 6. Historical backfill and bibliography reconciliation
+
+Backfill in evidence-aware passes:
+1. collect source mentions from references, source audits, page citations, asset registers, experiment records, notebooks, code and issue/PR discussions;
+2. normalize identity and deduplicate;
+3. classify evidence of use: scanned, partially scanned, linked/cited only, recommended/discovered, inaccessible, or unknown;
+4. record the exact known inspected scope and dates; do not infer them from a citation;
+5. add extraction items only where an auditable locator and useful content are available;
+6. report counts, duplicates, missing provenance/licences and unresolved statuses.
+
+Keep `docs/references.md` as a readable bibliography. It may link to source IDs, but must not become a second canonical machine-readable catalogue. A source catalogue entry does not require a published page change.
+
+## 7. Validation and evolution
+
+Before adding validators, inspect existing project validation conventions and consolidate responsibilities rather than creating one script per file. The eventual checks must cover:
+- YAML syntax and schema version;
+- unique source and extraction IDs;
+- controlled values and BCP 47 language tags;
+- valid domain, concept, page and resource references;
+- primary/secondary theme uniqueness and disjointness;
+- tag syntax, namespaces, aliases and duplicate detection;
+- scan-history chronology and consistency with current status;
+- extraction-to-source referential integrity and exact locators;
+- rights/status consistency and explicit unknowns;
+- no accidental promotion of tags to concepts or graph edges.
+
+Any schema change must update this contract, examples, taxonomy, validator fixtures, tests, skills and migration notes together. Keep JSON-LD and visualizations as derived projections; never hand-edit generated output.
+
+## 8. Standards alignment
+
+Use stable URI-like identifiers and ISO 8601 dates. Use BCP 47 for language tags and SPDX identifiers only when the licence is known and correctly identified. The source catalogue can later be projected to Schema.org `CreativeWork` and PROV-O where useful, but do not introduce a second RDF store or an ontology toolchain for the current static project. SKOS domains/concepts remain owned by their existing registries; source tags are not a substitute for SKOS concepts.

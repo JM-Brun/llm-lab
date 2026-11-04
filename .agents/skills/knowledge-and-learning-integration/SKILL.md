@@ -112,6 +112,16 @@ Turn ideas into bounded falsifiable protocols only when useful and feasible. Spe
 Use pinned versions, existing project architecture and canonical code locations. Add tests where appropriate. Distinguish conceptual pseudocode from executable code and intended behavior from observed/tested behavior.
 
 ## 7. Update references, metadata and bilingual pages
+### Source classification and discovery facets
+
+When integrating source and extraction records, preserve the distinction defined in `docs/source-catalogue-schema.md`:
+- domains classify the broad subject and reuse `data/domains.yml`;
+- tags are namespaced retrieval facets, not concept nodes or page metadata;
+- `concept_ids` reference canonical concepts only;
+- typed metadata (source type, language, level, contribution, audience, scan status and integration status) remains typed.
+
+Do not automatically promote source tags into concepts, page keywords, graph edges or visible UI labels. If an accepted extraction warrants a new canonical concept, define and relate it through the normal concept-review process. Keep item-level classification only where it adds meaningful specificity.
+
 
 For published changes:
 - cite the source next to the claim and update the appropriate canonical source/reference inventory;

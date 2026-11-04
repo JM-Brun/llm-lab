@@ -1,5 +1,8 @@
 # Annotated references
 
+> **Catalogue boundary:** this page is the reader-maintained annotated bibliography. It is not a scan inventory. The canonical machine-readable source records, classification, scan scope/status and provenance live in [the source catalogue](../data/sources.yml), governed by [the source catalogue schema](source-catalogue-schema.md). A reference listed here is not automatically a source that has been scanned.
+
+
 The repository is an independent learning and experimentation project. These sources are used for study and comparison; their code, text, datasets, figures, and model weights retain their own licenses and terms. An accessible URL does not automatically grant permission to copy or redistribute content.
 
 ## Visual explanations of GPT and Transformers

@@ -13,9 +13,22 @@ A scanned source may yield many independent items—or none worth integrating. E
 
 ## Inspect repository conventions
 
-Read the current graph standards and implementation audit, source/reference inventories, pedagogical resource library, visual-asset register, existing source audits, data schemas, validators and related skills. Reuse an established model if one exists. Otherwise propose a canonical source catalogue (e.g. `data/sources.yml`) and structured extraction records (e.g. `data/extractions/<source-id>.yml`). Do not overload implementation-oriented `data/resources.yml`, create another concept registry, or hand-maintain JSON-LD. Keep records compact; link large artifacts to canonical files.
+Read the current graph standards and implementation audit, `docs/source-catalogue-schema.md`, `data/source-taxonomy.yml`, `data/domains.yml`, `data/sources.yml`, source/reference inventories, the pedagogical resource library, visual-asset register, existing source audits, validators and related skills. Use `data/sources.yml` as the canonical source catalogue and `data/extractions/<source-id>.yml` for atomic extraction records. Do not create a parallel catalogue, overload implementation-oriented `data/resources.yml`, create another concept registry, or hand-maintain JSON-LD. Keep records compact; link large artifacts to canonical files.
 
 ## 1. Identify and register each source
+### Classification contract: themes, tags and metadata
+
+Use the canonical contract in `docs/source-catalogue-schema.md` and controlled values in `data/source-taxonomy.yml`.
+
+Every selected source must have one `classification.primary_theme` from `data/domains.yml`; add `secondary_themes` only for materially covered domains. A discovered but not yet classified source may leave the primary theme null. Do not create another domain taxonomy.
+
+Keep these dimensions distinct:
+- `tags`: sparse, namespaced retrieval facets (topic, method, modality, application, ecosystem), not concepts or scientific assertions;
+- `concept_ids`: references to existing canonical concepts in `data/concepts.yml`;
+- typed metadata: `source_type`, BCP 47 `language`, `technical_level`, `contribution_types`, `audiences`, scan/integration statuses, dates, versions and rights.
+
+Do not add a generic `meta_tags` field or encode typed metadata as tags. Do not duplicate domain IDs or concept IDs in tags. Item-level classification may refine source classification but must not silently rewrite it. Avoid copying inherited source tags into every extraction item.
+
 
 Record a stable language-independent ID and, where known:
 - title, author/creator/organization, source type;
