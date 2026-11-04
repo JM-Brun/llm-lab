@@ -154,7 +154,21 @@ The extraction taxonomy is in `data/source-taxonomy.yml`. Use the sample and rec
 
 ### Optional pedagogical assessment
 
-An extraction item may include:
+An extraction item may include a compact perspective profile when the contribution is pedagogical or intended for later synthesis:
+
+    pedagogical_profile:
+      learner_question: "What learner difficulty does this explanation address?"
+      explanatory_lens: linguistic
+      teaching_form: [worked-example, mental-model]
+      abstraction_level: introductory
+      prerequisites: [tokenization, contextualized-representation]
+      distinctive_value: "Shows a cross-position dependency not illustrated by the existing lexical-ambiguity example."
+      limitations:
+        - "Illustrative motivation; not evidence that one attention head resolves coreference."
+
+Use concise source-grounded values. The lens and teaching-form values are descriptive facets, not concept IDs or graph relations. Do not invent a unique perspective when sources share one. This field is optional for general factual or technical items, but expected for newly extracted pedagogical contributions that are candidates for cross-source synthesis.
+
+An extraction item may also include:
 
     pedagogical_assessment:
       novelty: {level: low, rationale: "The mechanism is already explained in the project."}
