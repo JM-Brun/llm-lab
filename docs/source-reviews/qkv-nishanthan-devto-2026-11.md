@@ -44,7 +44,7 @@ The canonical bilingual Q/K/V page was inspected in both languages, together wit
 
 ## 4. Technical assessment
 
-The article's central equations and role distinctions are sound at the introductory level. Several points need careful interpretation if used elsewhere:
+The article's central equations and role distinctions are sound at the introductory level. The full text also states that Q/K/V projection matrices are learned by backpropagation and gradient-based optimization, gives a qualitative motivation for scaling, and briefly mentions causal masking. These are now separate atomic extraction items. Several points need careful interpretation if used elsewhere:
 
 1. **X is not necessarily the raw embedding matrix.** It denotes the representation stream entering the attention sublayer; in later blocks it is a contextualized hidden state.
 2. **The single-X equations describe self-attention.** In cross-attention, Q comes from the querying stream while K and V come from the source stream. The project already explains this separately.
@@ -74,7 +74,7 @@ The initial review records a direct article-body inspection and two visible read
 
 The KV-cache suggestion is now preserved as its own extraction item, with `provenance.voice: reader-comment`, a comment locator and a parent-source reference. It is not attributed to the article author. Its technical lead has been checked independently against the [Hugging Face Transformers caching explanation](https://huggingface.co/docs/transformers/main/en/cache_explanation), registered as a separate source and extracted separately.
 
-The technical interpretation is precise: during incremental causal decoding at position `t`, the current position produces `q_t`, `k_t` and `v_t`; `q_t` attends over the cached past keys/values together with the current `k_t`/`v_t`); then the current key and value are appended to the per-layer cache. Thus, “only a fresh Query” describes which query is needed for the incremental attention calculation; it does **not** mean that the current token's K and V are skipped. The cache reduces recomputation but consumes memory proportional to the retained K/V states; exact usage depends on model dimensions and cache strategy. This verification is grounded in the independent Hugging Face documentation, not in the QKV article or the commenter.
+The technical interpretation is precise: during incremental causal decoding at position `t`, the current position produces `q_t`, `k_t` and `v_t`; `q_t` attends over the cached past keys/values together with the current `k_t`/`v_t`; then the current key and value are appended to the per-layer cache. Thus, “only a fresh Query” describes which query is needed for the incremental attention calculation; it does **not** mean that the current token's K and V are skipped. The cache reduces recomputation but consumes memory proportional to the retained K/V states; exact usage depends on model dimensions and cache strategy. This verification is grounded in the independent Hugging Face documentation, not in the QKV article or the commenter.
 
 The source catalogue preserves earlier scan events and adds this recheck with its actual access limitations. The QKV article remains `partially-scanned`; its integration remains `partially-integrated`. The separate Hugging Face documentation source is also partial because the mutable `main` revision was not pinned and implementation variants were not exhaustively audited.
 
@@ -103,7 +103,7 @@ No new page or route edge was added. The graph change is a refinement of the pro
 
 **The article's pedagogical integration is complete; its source scan is not.** These are separate lifecycle dimensions and must remain separate in the catalogue.
 
-The article's author-authored contributions have now all received a final disposition:
+The article's author-authored contributions have now all received a final disposition (11 atomic items: one integrated and ten rejected as unnecessary new edits):
 
 | Extracted contribution | Final disposition | Integration outcome |
 |---|---|---|
@@ -115,6 +115,9 @@ The article's author-authored contributions have now all received a final dispos
 | Lexical ambiguity and pronoun reference | Integrated | The complementary pronoun-reference example is present in both contextualized-representations lessons |
 | Attention score is not semantic similarity | Rejected as a new edit | Existing bilingual misconception guardrails are more precise |
 | Weighted aggregation is not argmax | Rejected as a new edit | Existing equation and numerical example already demonstrate weighted aggregation |
+| Q/K/V projections learned by backpropagation | Rejected as a new edit | Existing Q/K/V page identifies learned parameters; the gradients lesson owns optimization |
+| Scaling prevents peaked softmax | Rejected as a new edit | Existing attention lesson derives the variance-based rationale more rigorously |
+| Causal masking blocks future positions | Rejected as a new edit | Dedicated bilingual causal-masking lesson provides the full mechanism |
 
 The reader-comment KV-cache lead remains **deferred** as a separately attributed community contribution, not as an unfinished article claim. Its technical content has been independently checked against the separately registered Hugging Face documentation source; it belongs in a future inference-efficiency learning destination, not in the introductory Q/K/V lesson.
 
