@@ -458,6 +458,8 @@ def test_learning_map_browser_script_has_valid_javascript_and_fallback_target() 
     assert "meta.textContent = concept.id" not in script
     assert "copy.destinations[page.destination]" in script
     assert "copy.noSectionHeadings" in script
+    assert "topic.textContent" not in script
+    assert "page.domain && copy.domains" not in script
 
 
 def test_learning_map_node_selection_is_separate_from_navigation() -> None:
