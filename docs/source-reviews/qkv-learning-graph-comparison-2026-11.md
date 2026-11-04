@@ -287,3 +287,17 @@ The attention calculation remains on the next page. No new concept IDs, semantic
 ### 9.4 Provenance and scan status
 
 The Nishanthan DEV article remains partially scanned because the embedded illustration and parts of its comment history/metadata remain unresolved. The Neha KK Medium article also remains partially scanned because the actual figure files and reuse rights were not retrievable. Both sources can be cited and linked; neither article's illustrations are copied or represented as visually inspected.
+
+
+## 10. Neha KK follow-up scan — media and claim-level refinement
+
+A second pass on 2026-11-04 used the indexed Medium result after direct canonical page retrieval returned a cache miss. It reconstructed the full text represented in that index snapshot and identified **four in-body image placements**: three captioned figures (self-attention; Q/K/V projections; scaled dot-product attention) and one additional uncaptioned full-size-image placeholder. The cover/hero asset is not established. No actual image URL, image bytes, visual composition, comment thread or rights evidence was recovered. The source remains partially scanned; the text reconstruction is complete only for the index snapshot.
+
+The extraction now preserves each of the four visual slots as a distinct figure item with unverified visual evidence, and the pedagogical model includes a separate media inventory. These records deliberately do not infer what the images look like from captions. The visual-assets register records the source as link-only, and the annotated references list includes the article with its scan limitation.
+
+Two claim-level refinements were also extracted:
+
+- **Soft retrieval, not hard selection:** the article's phrase “closest matches determine which values to get” risks suggesting a nearest-neighbour/argmax operation. Its own subsequent softmax and weighted-sum formulation is a soft mixture over accessible values. This is already explained in the project's attention lesson; no extra page content is required.
+- **Directional/asymmetric scores:** the article states that attention is directional and non-symmetric. With distinct Q and K projections, QKᵀ is generally non-symmetric for a given input, but symmetry remains possible under special parameter/input configurations. The source provides no matrix example. This is retained as a deferred mathematical teaching opportunity rather than expanding the current page without a worked example.
+
+The original page integration remains bounded. No figure is embedded, no canonical concept or graph edge is added, and the learning route remains unchanged. The existing bilingual lesson content is preserved.
