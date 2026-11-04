@@ -107,9 +107,9 @@ The canonical `docs/learning-path.md` remains the authority for the milestone se
 
 ## Recommended follow-up
 
-1. Repair the two Build milestone tables in `docs/content-section-mapping.md` against `docs/learning-path.md`; add the missing G2 evidence row and preserve G1b as a separate corpus-preparation branch.
-2. Review the `glossary → transformer-history` chain against the editorial rule that history is optional reference context.
-3. Decide whether the three route-free Understand pages are intentionally standalone.
+1. Review the `glossary → transformer-history` chain against the editorial rule that history is optional reference context.
+2. Decide whether the three route-free Understand pages are intentionally standalone.
+3. Record why the five fully isolated landing/reference pages intentionally sit outside the graph.
 4. Preserve the distinction between suggested route, hierarchy, related links, and the six-stage reader-facing route.
 5. Complete manual rendered inspection (desktop/mobile, keyboard, focus, touch and link destinations) in #337/#417.
 
