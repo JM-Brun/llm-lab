@@ -101,7 +101,7 @@ def test_load_pages_extracts_published_pages_and_heading_concepts(tmp_path: Path
         headings=("## Intuition", "## Query, Key and Value"),
     )
 
-    MODULE["SITE"] = site
+    MODULE["load_pages"].__globals__["SITE"] = site
     pages = MODULE["load_pages"]()
 
     assert [page["id"] for page in pages] == ["en/attention", "fr/attention"]
