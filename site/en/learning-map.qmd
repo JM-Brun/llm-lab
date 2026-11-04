@@ -27,7 +27,7 @@ The map distinguishes the **suggested reading route**, the **pedagogical hierarc
 - **Parent / child** — blue arrow: pedagogical decomposition or inclusion.
 - **Related** — dotted grey line: conceptual connection without an imposed reading order.
 
-Blocks represent pages. The section headings displayed inside each block are extracted from the page section headings: they are useful landmarks, not a concept taxonomy. The data is generated from each published page's metadata.
+Blocks represent pages. The section headings displayed inside each block are extracted from each page's body. They are useful landmarks, not a concept taxonomy. The data is generated from each published page's metadata.
 
 <div class="learning-map" data-learning-map data-language="en" data-source="../learning-map-data-en.json">
   <div class="learning-map-toolbar">
