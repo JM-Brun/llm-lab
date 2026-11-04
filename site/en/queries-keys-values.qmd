@@ -11,7 +11,7 @@ id: "en/queries-keys-values"
 scope: "Introduces Q, K, and V projections for self-attention, where all three originate from the same representation stream; leaves score computation, masking, and normalization to the scaled dot-product attention page, and refers cross-attention to its dedicated advanced lesson."
 purpose: "Readers should be able to distinguish Q, K, and V, identify the learned projections that produce them, and explain how they contribute respectively to attention-weight calculation and information aggregation."
 suggested_route:
-  previous: "en/contextualized-representations"
+  previous: "en/transformer"
   next: "en/scaled-dot-product-attention"
 hierarchy:
   parents: ["en/contextualized-representations", "en/transformer"]
