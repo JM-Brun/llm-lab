@@ -78,7 +78,9 @@ The export deliberately does not map every relation to `skos:related`: doing so 
 PROV-O currently records that the generated JSON-LD entity was derived from:
 - `data/concepts.yml`;
 - `data/domains.yml`;
-- the published page metadata blocks.
+- the concrete Quarto source files containing the published page metadata referenced by the concept registry.
+
+The export links each page source to its repository file rather than treating the whole `site/` directory as a single source artifact. These links target the repository's current `main` branch; they are navigational source references, not immutable version-pinned evidence records.
 
 This establishes dataset-level build provenance. It does **not** establish which scientific paper supports each definition or relation. Claim-level evidence provenance requires explicit source assertions and is a separate future data-model change. Historical source records and relations remain governed by `docs/history-data-model.md`.
 
