@@ -208,17 +208,18 @@ Keep `docs/references.md` as a readable bibliography. It may link to source IDs,
 
 ## 7. Validation and evolution
 
-Before adding validators, inspect existing project validation conventions and consolidate responsibilities rather than creating one script per file. The eventual checks must cover:
-- YAML syntax and schema version;
-- unique source and extraction IDs;
-- controlled values and BCP 47 language tags;
-- valid domain, concept, page and resource references;
-- primary/secondary theme uniqueness and disjointness;
-- tag syntax, namespaces, aliases and duplicate detection;
-- scan-history chronology and consistency with current status;
-- extraction-to-source referential integrity and exact locators;
-- rights/status consistency and explicit unknowns;
-- no accidental promotion of tags to concepts or graph edges.
+The consolidated initial validator is `site/tools/check_source_catalogue.py`; it runs in CI after the YAML validation dependency is installed. Its current scope is deliberately explicit:
+
+- YAML syntax and schema version for source, taxonomy, domain, concept and extraction files;
+- unique source and extraction-item IDs, and extraction-to-source referential integrity;
+- controlled source types, scan/integration statuses and extraction kinds;
+- valid domain, concept and bilingual page references;
+- namespaced tag syntax and duplicate detection;
+- scan-history dates, statuses, inspected scopes and limitations;
+- exact item locators and supported evidence-confidence values;
+- community-item voice, parent-source provenance, capture date, verification status and independent source references.
+
+The initial validator does **not yet** validate BCP 47 language tags, publication/version chronology, licence identifiers or rights/status consistency, alias resolution, resource references, every optional pedagogical field, or semantic graph-edge rules. Keep these as explicit follow-up work; extend the consolidated validator and its tests rather than creating one script per data file. Do not treat a passing initial validator as proof that rights or scientific claims are valid.
 
 Any schema change must update this contract, examples, taxonomy, validator fixtures, tests, skills and migration notes together. Keep JSON-LD and visualizations as derived projections; never hand-edit generated output.
 
