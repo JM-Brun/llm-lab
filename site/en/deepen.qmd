@@ -46,6 +46,7 @@ Each entry answers a more specific question: why a mechanism works, under which 
 **Guiding question:** which variants change information flow or a model's computational structure?
 
 - [Cross-attention](cross-attention.qmd) — information transfer between two sequences, notably in encoder–decoder and multimodal architectures.
+- [RoPE: rotary positional embeddings](rope.qmd) — rotation geometry, relative-position dependence, and extrapolation limits.
 - [Hybrid architectures: Nemotron 3 and 3.5](hybrid-llm-architectures.qmd) — recurrence, attention, experts, and multi-token prediction in a concrete case.
 
 Specialized variants do not enter the core route merely because a recent model uses them. Their necessity for general understanding must be demonstrated.
