@@ -67,8 +67,8 @@ def route_topology(pages: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]
     """Describe route and hierarchy topology without inferring prerequisites.
 
     Suggested-route chains use only the route next field. Hierarchy relations
-    are reported separately because they have a different meaning and must not
-    be merged into the learning sequence.
+    are reported separately. Related links contribute only to isolated-page
+    detection; they are not interpreted as route or hierarchy edges.
     """
     topology: dict[str, dict[str, Any]] = {}
     for language in ("fr", "en"):
@@ -388,7 +388,8 @@ def render_report(result: dict[str, Any]) -> str:
             + tick
             + "suggested_route.next"
             + tick
-            + "; hierarchy and related links are not used to rank or order the route.",
+            + "; hierarchy is reported separately, while related links contribute only "
+            "to isolated-page detection.",
             "- Route-free pages are reported by destination and must not be called "
             "orphans without editorial review.",
             "- The report does not infer prerequisites, semantic equivalence, or "
