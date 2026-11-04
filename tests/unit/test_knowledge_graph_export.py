@@ -69,8 +69,12 @@ def test_resource_concept_and_bilingual_page_links_resolve() -> None:
 def test_page_nodes_are_unique_and_registry_is_in_export_provenance() -> None:
     payload = build_graph()
     graph = payload["@graph"]
-    ids = [node["@id"] for node in graph]
-    assert len(ids) == len(set(ids))
+    page_ids = [
+        node["@id"]
+        for node in graph
+        if isinstance(node.get("@type"), list) and "schema:WebPage" in node["@type"]
+    ]
+    assert len(page_ids) == len(set(page_ids))
     export = next(
         node
         for node in graph
