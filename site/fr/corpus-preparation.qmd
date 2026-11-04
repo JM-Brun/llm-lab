@@ -12,10 +12,10 @@ scope: "Décrit les décisions d'ingénierie des données en amont du préentra�
 purpose: "Construire un protocole de préparation de corpus traçable et adapté à l'objectif d'entraînement ou d'évaluation, en évitant les fuites entre partitions et en séparant les décisions de corpus des opérations internes au tokenizer et de la construction des exemples."
 suggested_route:
   previous: null
-  next: null
+  next: "fr/training-examples"
 hierarchy:
   parents: ["fr/build-path"]
-  children: []
+  children: ["fr/training-examples"]
 related: ["fr/text-data", "fr/tokenization-strategies", "fr/tokenizer-design-evaluation", "fr/training-examples", "fr/evaluation-experimentale"]
 tags: ["type:guided-build", "destination:build", "topic:corpus-preparation", "level:core", "language:fr", "status:published"]
 -->
