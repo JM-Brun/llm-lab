@@ -58,7 +58,7 @@ The article's central equations and role distinctions are sound at the introduct
 
 The search analogy is rejected only after comparing its actual mapping and learner function with the existing index-card analogy. The mathematical and multi-head material remains deferred because the project already provides more complete treatments at the appropriate locations.
 
-No new concept, graph edge, page, figure, experiment or bibliography entry is created. The reader comment remains excluded from article-derived content.
+At this initial page-integration stage, no new concept, graph edge, page, figure, experiment or bibliography entry was created. A later differential graph audit identified a separate modelling gap in LLM Lab's existing registry; the justified graph refinement is documented in section 9. The reader comment remains excluded from article-derived content.
 
 This is the intended workflow outcome: preserve plausible complementary value during extraction, then make a reasoned integration decision without forcing publication.
 
