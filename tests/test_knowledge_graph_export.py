@@ -23,11 +23,15 @@ from export_knowledge_graph import (  # noqa: E402
 
 def test_export_has_stable_skos_schemes_and_bilingual_labels() -> None:
     payload = build_graph()
-    nodes = {node.get("@id"): node for node in payload["@graph"] if "@id" in node}
+    nodes = [node for node in payload["@graph"] if "@id" in node]
 
-    assert nodes[CONCEPT_SCHEME]["@type"] == "skos:ConceptScheme"
-    assert nodes[DOMAIN_SCHEME]["@type"] == "skos:ConceptScheme"
-    concept = nodes[f"{BASE}/id/concept/token"]
+    assert any(node.get("@id") == CONCEPT_SCHEME and node.get("@type") == "skos:ConceptScheme" for node in nodes)
+    assert any(node.get("@id") == DOMAIN_SCHEME and node.get("@type") == "skos:ConceptScheme" for node in nodes)
+    concept = next(
+        node
+        for node in nodes
+        if node.get("@id") == f"{BASE}/id/concept/token" and node.get("@type") == "skos:Concept"
+    )
     assert concept["@type"] == "skos:Concept"
     assert {item["@language"] for item in concept["skos:prefLabel"]} == {"fr", "en"}
 
