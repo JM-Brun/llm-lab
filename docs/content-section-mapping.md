@@ -233,3 +233,10 @@ A new sidebar category should normally require at least two relevant pages or a 
 The six groups account for the current advanced entries: cross-attention, RoPE and hybrid architectures; Unicode and tokenizer design/evaluation; tensors, cosine similarity and embedding linearity; language-modeling mathematics and mathematical foundations; in-context learning, decoding and computational complexity; scaling laws and emergence.
 
 The bilingual map pages are `site/fr/deepen.qmd` and `site/en/deepen.qmd`. The Quarto sidebar is a concise navigation mirror; the map page explains the rationale and helps readers choose by question.
+
+
+### Machine-readable Deepen domains
+
+The six primary categories are now represented as a controlled top-level `domain` field in each advanced page's hidden page-map metadata. This is intentionally separate from `topic` (the specific concept) and `destination` (the reader-facing learning area). The bilingual graph generator exports this field, and the interactive map can filter advanced pages by domain.
+
+Controlled identifiers: `architectures-mechanisms`, `text-tokenization`, `mathematical-tools-geometry`, `probabilistic-foundations-training`, `inference-efficiency`, and `scale-research`. Every published Deepen content page must have exactly one primary domain; entry-point pages are exempt. Cross-domain relevance remains represented by reciprocal `related` links, not multiple primary categories.
