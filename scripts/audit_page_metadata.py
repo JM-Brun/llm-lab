@@ -28,6 +28,7 @@ for tools_dir in (SCRIPT_DIR, ROOT / "site" / "tools"):
         break
 
 from check_page_metadata import _load_page, validate as validate_page_metadata
+
 TOKEN = re.compile(r"[^\W\d_]{3,}", re.UNICODE)
 STOPWORDS = {
     "avec",
@@ -127,9 +128,7 @@ def route_topology(pages: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]
         unrooted = sorted(route_participants - covered)
         outside_by_destination: dict[str, list[str]] = defaultdict(list)
         for page_id in outside_route:
-            destination = language_pages[page_id].get("tags", {}).get(
-                "destination", "unclassified"
-            )
+            destination = language_pages[page_id].get("tags", {}).get("destination", "unclassified")
             outside_by_destination[str(destination)].append(page_id)
 
         hierarchy_fan_out = [
@@ -284,15 +283,11 @@ def render_report(result: dict[str, Any]) -> str:
             lines.append("No rooted multi-page route chain detected.")
         lines.extend(["", "**Pages outside the suggested route, by destination**", ""])
         if topology["outside_suggested_route_by_destination"]:
-            for destination, page_ids in topology[
-                "outside_suggested_route_by_destination"
-            ].items():
+            for destination, page_ids in topology["outside_suggested_route_by_destination"].items():
                 sample = ", ".join(f"{tick}{page_id}{tick}" for page_id in page_ids[:8])
                 remainder = len(page_ids) - min(len(page_ids), 8)
                 suffix = f" (+{remainder} more)" if remainder else ""
-                lines.append(
-                    f"- {tick}{destination}{tick}: **{len(page_ids)}** — {sample}{suffix}"
-                )
+                lines.append(f"- {tick}{destination}{tick}: **{len(page_ids)}** — {sample}{suffix}")
         else:
             lines.append("- None")
         for key, heading, relation_label in (
@@ -313,9 +308,7 @@ def render_report(result: dict[str, Any]) -> str:
                 lines.append("- None")
         lines.extend(["", "**Unrooted route participants**", ""])
         if topology["unrooted_route_pages"]:
-            lines.extend(
-                f"- {tick}{page_id}{tick}" for page_id in topology["unrooted_route_pages"]
-            )
+            lines.extend(f"- {tick}{page_id}{tick}" for page_id in topology["unrooted_route_pages"])
         else:
             lines.append("- None")
         lines.append("")
@@ -335,9 +328,7 @@ def render_report(result: dict[str, Any]) -> str:
     if not result["metadata_validation_checked"]:
         lines.append("The existing structural validator was not run for this report.")
     elif result["metadata_validation_errors"]:
-        lines.extend(
-            f"- {error}" for error in result["metadata_validation_errors"]
-        )
+        lines.extend(f"- {error}" for error in result["metadata_validation_errors"])
     else:
         lines.append(
             "The existing page-metadata validator reported no structural errors, "
@@ -373,7 +364,9 @@ def render_report(result: dict[str, Any]) -> str:
             left, right = item["pages"]
             field = item["field"]
             score = item["score"]
-            lines.append(f"- {tick}{left}{tick} ↔ {tick}{right}{tick} — {field} (overlap {score:.3f})")
+            lines.append(
+                f"- {tick}{left}{tick} ↔ {tick}{right}{tick} — {field} (overlap {score:.3f})"
+            )
     else:
         lines.append("No pairs crossed the conservative lexical-overlap threshold.")
     lines.extend(
@@ -383,7 +376,11 @@ def render_report(result: dict[str, Any]) -> str:
             "",
             "- Only published pages represented in the explicit Quarto render list are analyzed.",
             "- French and English route graphs are described separately; structural parity is delegated to the existing validator.",
-            "- Suggested-route chains use only " + tick + "suggested_route.next" + tick + "; hierarchy and related links are not used to rank or order the route.",
+            "- Suggested-route chains use only "
+            + tick
+            + "suggested_route.next"
+            + tick
+            + "; hierarchy and related links are not used to rank or order the route.",
             "- Route-free pages are reported by destination and must not be called orphans without editorial review.",
             "- The report does not infer prerequisites, semantic equivalence, or pedagogical redundancy.",
             "- Review candidates require inspection of page objectives and actual body content.",
@@ -415,9 +412,7 @@ def main() -> int:
     args = parser.parse_args()
     try:
         validation_errors = validate_page_metadata(args.site_dir)
-        report = render_report(
-            audit_pages(load_pages(args.site_dir), validation_errors)
-        )
+        report = render_report(audit_pages(load_pages(args.site_dir), validation_errors))
     except (OSError, KeyError, TypeError, ValueError, yaml.YAMLError) as exc:
         sys.stderr.write(f"Cannot audit page metadata: {exc}\n")
         return 1
