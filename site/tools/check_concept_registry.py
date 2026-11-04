@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 REGISTRY = ROOT / "data" / "concepts.yml"
 DOMAINS = ROOT / "data" / "domains.yml"
 IDENTIFIER = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+SYMMETRIC_RELATION_TYPES = {"contrasts-with", "analogy"}
 RELATION_TYPES = {
     "prerequisite",
     "part-of",
@@ -239,7 +240,7 @@ def validate_registry(
                 errors.append(f"{where}: duplicate relation {key!r}")
             seen.add(key)
             if source in identifiers and target in identifiers:
-                if kind == "contrasts-with" and source >= target:
+                if kind in SYMMETRIC_RELATION_TYPES and source >= target:
                     errors.append(
                         f"{where}: contrasts-with must use canonical lexical order "
                         "(from < to) because it is symmetric"
@@ -273,10 +274,10 @@ def validate_registry(
                     errors.append(f"{where}.{field}: expected exactly fr and en")
                 elif not all(isinstance(value, str) and value.strip() for value in values.values()):
                     errors.append(f"{where}.{field}: values must be non-empty strings")
-            if kind == "contrasts-with" and definition.get("direction") != "symmetric":
-                errors.append(f"{where}.direction: contrasts-with must be symmetric")
-            elif kind != "contrasts-with" and definition.get("direction") == "symmetric":
-                errors.append(f"{where}.direction: only contrasts-with is currently defined as symmetric")
+            if kind in SYMMETRIC_RELATION_TYPES and definition.get("direction") != "symmetric":
+                errors.append(f"{where}.direction: {kind} must be symmetric")
+            elif kind not in SYMMETRIC_RELATION_TYPES and definition.get("direction") == "symmetric":
+                errors.append(f"{where}.direction: {kind} is not defined as symmetric")
 
     if _has_cycle(prerequisite_edges):
         errors.append("relations: prerequisite graph must be acyclic")
