@@ -21,8 +21,8 @@
     - [Gradients : relier la perte aux paramètres](gradients.html)
   - [Panorama : qu’est-ce qu’un LLM ?](llm-overview.html)
   - [Architectures Transformer : encodeur, encodeur-décodeur et décodeur](transformer-architectures.html)
+  - [Objectif d'entraînement : garanties et limites](llm-limits.html)
   - [Générer du texte : l'inférence pas à pas](generation.html)
-  - [Ce que la prédiction du prochain token ne prouve pas](llm-limits.html)
 - **Construire un petit GPT**
   - Préparer les données d'entraînement
     - [Préparer un corpus pour le préentraînement](corpus-preparation.html)

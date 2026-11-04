@@ -71,7 +71,7 @@ Le parcours principal suit la logique **comprendre le fonctionnement avant d'ét
 <g class="flow-node">
 <a href="fr/llm-overview.html" aria-label="Ouvrir le panorama des LLM"><rect x="20" y="55" width="250" height="55" rx="10"/><text x="34" y="77" class="flow-kicker">1 · ORIENTER</text><text x="34" y="98" class="flow-title">Panorama des LLM</text></a>
 <a href="fr/transformer-architectures.html"><text x="28" y="132" class="flow-subtitle">Architectures</text></a>
-<a href="fr/llm-limits.html"><text x="145" y="132" class="flow-subtitle">Limites</text></a>
+<a href="fr/llm-limits.html"><text x="28" y="150" class="flow-subtitle">Garanties et limites</text></a>
 </g>
 <g class="flow-node">
 <a href="fr/generation.html" aria-label="Ouvrir la leçon sur la génération"><rect x="330" y="55" width="250" height="55" rx="10"/><text x="344" y="77" class="flow-kicker">2 · PRÉVISUALISER</text><text x="344" y="98" class="flow-title">Génération autorégressive</text></a>

@@ -11,8 +11,8 @@ stages:
       fr: [fr/llm-overview, fr/generation]
       en: [en/llm-overview, en/generation]
     optional_pages:
-      fr: [fr/transformer-architectures]
-      en: [en/transformer-architectures]
+      fr: [fr/transformer-architectures, fr/llm-limits]
+      en: [en/transformer-architectures, en/llm-limits]
   - id: text-input
     title:
       fr: "Du texte aux tokens"

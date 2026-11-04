@@ -150,6 +150,34 @@ concepts:
       en: "Quantity measuring the probabilistic cost of a predicted distribution relative to a target."
     domains: [probabilistic-foundations-training]
     resources: [fr/cross-entropy, en/cross-entropy]
+  - id: training-objective
+    labels: {fr: "Objectif d'entraînement", en: "Training objective"}
+    definitions:
+      fr: "Fonction optimisée pendant l'entraînement ; pour un GPT, la prédiction du prochain token. Ses garanties se limitent à la prédiction elle-même."
+      en: "Function optimized during training; for a GPT, next-token prediction. Its guarantees are limited to prediction itself."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/llm-limits, en/llm-limits, fr/llm-overview, en/llm-overview]
+  - id: calibration
+    labels: {fr: "Calibration", en: "Calibration"}
+    definitions:
+      fr: "Accord entre les probabilités prédites et les fréquences observées ; non garanti par l'objectif, à établir par une évaluation."
+      en: "Agreement between predicted probabilities and observed frequencies; not guaranteed by the objective, established by evaluation."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/llm-limits, en/llm-limits, fr/evaluation-experimentale, en/experimental-evaluation]
+  - id: emergent-ability
+    labels: {fr: "Capacité émergente", en: "Emergent ability"}
+    definitions:
+      fr: "Compétence qui semble apparaître au-delà d'une échelle de modèle ; sa réalité dépend de la tâche, de la métrique et du protocole."
+      en: "Ability that seems to appear beyond a model scale; its reality depends on the task, the metric, and the protocol."
+    domains: [scale-research]
+    resources: [fr/llm-limits, en/llm-limits, fr/emergence, en/emergence]
+  - id: operational-competence
+    labels: {fr: "Compétence opérationnelle", en: "Operational competence"}
+    definitions:
+      fr: "Capacité mesurée sur des tâches dans un périmètre donné, distincte d'une thèse de compréhension humaine."
+      en: "Ability measured on tasks within a given scope, distinct from a claim of human-like understanding."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/llm-limits, en/llm-limits]
 relation_types:
   represented-by:
     direction: directed
@@ -237,3 +265,4 @@ relations:
   - {from: output-projection, type: produces, to: logits}
   - {from: logits, type: normalized-by, to: softmax}
   - {from: softmax, type: evaluated-by, to: cross-entropy}
+  - {from: training-objective, type: evaluated-by, to: cross-entropy}

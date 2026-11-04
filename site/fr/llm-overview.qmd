@@ -137,7 +137,7 @@ Le RAG peut récupérer les documents à l’inférence et les fournir dans le c
 
 ::: {.callout-note collapse="true" title="Une distinction à garder en tête"}
 
-La prédiction du prochain token ne garantit ni la vérité des sorties ni une compréhension humaine du monde. Ces questions, ainsi que les limites des affirmations sur les capacités émergentes, sont examinées dans [Ce que la prédiction du prochain token ne prouve pas](llm-limits.qmd).
+La prédiction du prochain token ne garantit ni la vérité des sorties ni une compréhension humaine du monde. Ces questions, ainsi que les limites des affirmations sur les capacités émergentes, sont examinées dans [Objectif d'entraînement : garanties et limites](llm-limits.qmd).
 
 :::
 

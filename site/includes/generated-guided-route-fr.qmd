@@ -14,6 +14,7 @@ Comprendre ce qu'est un LLM et observer une génération complète avant d'en é
 **Approfondissements facultatifs**
 
 - [Architectures Transformer : encodeur, encodeur-décodeur et décodeur](transformer-architectures.html)
+- [Objectif d'entraînement : garanties et limites](llm-limits.html)
 
 :::
 
