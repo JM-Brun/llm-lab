@@ -32,6 +32,7 @@ Output:
 - evidence kind, confidence, generality, assumptions, limitations and rights metadata;
 - candidate concepts, relations, pages, visuals, experiments and teaching improvements;
 - independent qualitative assessment of novelty, complementarity, learner value, applicability, redundancy and evidence quality;
+- a top-level `pedagogical_model` in the extraction YAML, preserving the source-local concept/process graph, ordered teaching route, declared/inferred outcomes and prerequisites, strengths, limits and comparison pointer;
 - an extraction report with access limits and unresolved questions.
 
 No page edits, published new pages, concept-registry mutations, or graph-projection changes in this phase. Candidate destinations and graph nodes/edges are proposals only.
@@ -45,6 +46,7 @@ Output:
 - canonical graph changes, or an explicit no-change decision;
 - updates to existing pages or justified new pages;
 - asset, experiment, implementation, reference, route and bilingual updates as needed;
+- a differential comparison of source graph/route versus the canonical LLM Lab graph, guided route, page routes and Build route;
 - validation evidence and a before/after impact report.
 
 A source can be fully scanned and catalogued without any page or graph change.
@@ -90,6 +92,8 @@ Distinguish sources actually scanned from sources merely discovered, selected, l
 - Maintain substantive French/English parity for published changes.
 
 ## Completion report
+
+For instructional sources, include the reconstructed source graph and route, their differential against LLM Lab's canonical graph and learning route, and separate decisions for graph changes, route changes and intentional non-changes.
 
 Report the two phases separately:
 1. sources examined, scan scope/status, extraction counts by type, provenance/rights gaps;

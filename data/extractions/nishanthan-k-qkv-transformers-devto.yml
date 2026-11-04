@@ -1,5 +1,82 @@
 schema_version: 1
 source_id: nishanthan-k-qkv-transformers-devto
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Article body reconstructed from indexed DEV content and an author-controlled Medium mirror."
+      - "Canonical DEV HTML/API and embedded media were not directly retrievable in the latest scan."
+    inferred_elements:
+      - "Learning outcomes and prerequisites are inferred; the article does not state them formally."
+  source_graph:
+    nodes:
+      - {id: src-input-representations, kind: computational-object, description: "Position representations entering self-attention.", locator: "Section 3"}
+      - {id: src-query, kind: representation, description: "Learned query projections used to score keys.", locator: "Sections 1 and 3"}
+      - {id: src-key, kind: representation, description: "Learned key projections compared with queries.", locator: "Sections 1 and 3"}
+      - {id: src-value, kind: representation, description: "Learned value projections aggregated by attention weights.", locator: "Sections 1, 3 and 5"}
+      - {id: src-scores, kind: intermediate, description: "Query-key dot-product compatibility scores.", locator: "Section 4"}
+      - {id: src-scaled-scores, kind: intermediate, description: "Scores divided by the square root of the key dimension.", locator: "Section 4"}
+      - {id: src-attention-weights, kind: intermediate, description: "Softmax-normalized scores after applicable causal masking.", locator: "Section 4"}
+      - {id: src-causal-mask, kind: constraint, description: "Optional restriction of future positions in causal attention.", locator: "Section 4"}
+      - {id: src-softmax, kind: operation, description: "Row-wise normalization that converts eligible scores into attention weights.", locator: "Section 4"}
+      - {id: src-weighted-aggregation, kind: operation, description: "Weighted aggregation of multiple Value vectors, not argmax selection.", locator: "Section 5"}
+      - {id: src-attention-output, kind: representation, description: "Contextual output of the weighted aggregation.", locator: "Section 5"}
+      - {id: src-head-outputs, kind: representation-set, description: "Outputs produced independently by the parallel attention heads.", locator: "Section 6"}
+      - {id: src-concatenation, kind: operation, description: "Concatenation of the per-head outputs.", locator: "Section 6"}
+      - {id: src-output-projection, kind: operation, description: "Learned output projection applied after head concatenation.", locator: "Section 6"}
+      - {id: src-multi-head, kind: architecture, description: "Parallel per-head projections, concatenation and output projection.", locator: "Section 6"}
+      - {id: src-contextual-examples, kind: pedagogical-anchor, description: "Bank ambiguity and it-to-the-animal pronoun reference motivate contextualization.", locator: "Section 2"}
+      - {id: src-contextualization, kind: learning-target, description: "Context-sensitive token representations built using information from other positions.", locator: "Sections 2 and 5"}
+    edges:
+      - {from: src-input-representations, type: projected-into, to: src-query}
+      - {from: src-input-representations, type: projected-into, to: src-key}
+      - {from: src-input-representations, type: projected-into, to: src-value}
+      - {from: src-query, type: contributes-to, to: src-scores}
+      - {from: src-key, type: contributes-to, to: src-scores}
+      - {from: src-scores, type: scaled-into, to: src-scaled-scores}
+      - {from: src-causal-mask, type: constrains, to: src-scaled-scores}
+      - {from: src-scaled-scores, type: normalized-by, to: src-softmax}
+      - {from: src-softmax, type: produces, to: src-attention-weights}
+      - {from: src-attention-weights, type: weights, to: src-weighted-aggregation}
+      - {from: src-value, type: aggregated-by, to: src-weighted-aggregation}
+      - {from: src-weighted-aggregation, type: produces, to: src-attention-output}
+      - {from: src-attention-output, type: included-in, to: src-head-outputs}
+      - {from: src-head-outputs, type: concatenated-by, to: src-concatenation}
+      - {from: src-concatenation, type: transformed-by, to: src-output-projection}
+      - {from: src-output-projection, type: forms-output-of, to: src-multi-head}
+      - {from: src-contextual-examples, type: motivates, to: src-contextualization}
+      - {from: src-attention-output, type: contributes-to, to: src-contextualization}
+    interpretation: "Source-local reconstruction from prose and equations; not an author-specified formal graph."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain the distinct computational roles of Query, Key and Value.", basis: "Sections 1 and 3."}
+    - {status: inferred, outcome: "Trace scaled dot-product attention from Q/K scores to weighted Value aggregation.", basis: "Sections 4 and 5."}
+    - {status: inferred, outcome: "Describe the high-level composition of multi-head attention.", basis: "Section 6."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic familiarity with token or position representations.", basis: "Used without a first-principles introduction."}
+    - {status: inferred, topic: "Basic matrix multiplication and softmax.", basis: "Equations and normalization are assumed."}
+  teaching_route:
+    - {order: 1, section: "What Are Query, Key, and Value (QKV)?", function: motivate-and-distinguish-roles, moves: ["Search/retrieval analogy", "Verbal role distinction"]}
+    - {order: 2, section: "Why Do We Need Q, K, and V?", function: motivate-contextualization, moves: ["Bank lexical ambiguity", "It-to-the-animal pronoun reference"]}
+    - {order: 3, section: "How Are Q, K, and V Generated?", function: introduce-learned-projections, moves: ["Q = XW_Q, K = XW_K, V = XW_V"]}
+    - {order: 4, section: "How Do Queries and Keys Calculate Attention?", function: derive-attention-weights, moves: ["QK transpose", "Scaling", "Softmax", "Causal masking"]}
+    - {order: 5, section: "How Do Values Produce Contextual Information?", function: explain-weighted-aggregation, moves: ["Weighted Value sum", "Contrast with argmax"]}
+    - {order: 6, section: "QKV in Multi-Head Attention", function: extend-to-multi-head, moves: ["Parallel per-head projections", "Concatenation", "Output projection"]}
+  pedagogical_strengths:
+    - "Compact progression from verbal intuition to equations and multi-head architecture."
+    - "Two distinct linguistic motivations for contextualization."
+    - "Explicit caveats against semantic-similarity and winner-take-all interpretations."
+  pedagogical_limits:
+    - "No formal objectives, prerequisite map, exercises, comprehension checks or worked tensor-shape example."
+    - "Scaling is stated rather than derived; variance assumptions are not developed."
+    - "Causal masking is mentioned but not developed as a separate mechanism."
+    - "Multi-head attention lacks detailed dimensions, reshaping and output-mixing analysis."
+    - "No implementation, numerical experiments, training dynamics or KV-cache treatment in the article body."
+  comparison:
+    dossier: docs/source-reviews/qkv-learning-graph-comparison-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Page-level suggested_route metadata and Build route"]
+    decision: "The source graph exposed missing intermediate nodes in the canonical concept registry; those were added. Its section order does not justify changing the canonical guided route or page navigation."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
 items:
   - id: nishanthan-k-qkv-transformers-devto:role-separation
     kind: definition
@@ -79,7 +156,7 @@ items:
       concept_ids: [query, key, value, self-attention, softmax]
     candidate_destinations:
       pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
-      concepts: [self-attention, softmax]
+      concepts: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax]
     disposition: defer
     disposition_rationale: "The adjacent attention lesson already gives the mask-aware equation, tensor shapes, numerical example, scaling derivation and interpretive caveats. Duplicating it on the Q/K/V page would blur scope."
 
@@ -106,7 +183,7 @@ items:
       concept_ids: [query, key, value, output-projection]
     candidate_destinations:
       pages: [fr/transformer, en/transformer, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
-      concepts: [output-projection]
+      concepts: [query, key, value, output-projection, multi-head-attention]
     disposition: defer
     disposition_rationale: "The overview already cautions against assuming interpretable head specialization; the implementation walkthrough explains head slicing and isolation until w_o."
 
@@ -173,3 +250,110 @@ items:
     disposition: integrate
     disposition_rationale: "The bilingual contextualized-representations lesson already uses lexical ambiguity (bank) but did not illustrate a cross-position pronoun dependency. Add the animal/it example as a short complementary subsection, explicitly framing it as motivation rather than evidence that one attention head resolves coreference. This preserves the source's useful second viewpoint without duplicating the QKV mechanism explanation."
 
+  - id: nishanthan-k-qkv-transformers-devto:reader-comment-kv-cache
+    kind: open-question
+    summary: "A reader comment proposes KV caching as a follow-up to Q/K/V, noting that incremental generation can use the current token's query with previously cached keys and values, and that cache memory grows with context length. The comment also suggests a small NumPy example to make tensor shapes concrete."
+    provenance:
+      voice: reader-comment
+      parent_source_id: nishanthan-k-qkv-transformers-devto
+      locator:
+        type: comment
+        value: "First visible reader comment following the article conclusion; KV-cache follow-up"
+      captured_at: "2026-11-04"
+    verification:
+      status: corroborated
+      sources:
+        - huggingface-transformers-kv-cache-explanation
+      assessment: "The Hugging Face Transformers caching documentation independently confirms that, during incremental causal decoding, the current query attends to cached past K/V plus the current K/V, and that current K/V are appended per layer. The comment's shorthand should not be read as saying that the current token computes only Q: its K and V are also computed and appended. Cache memory grows with retained sequence length; exact growth depends on the cache strategy and model configuration."
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "KV caching is a distinct inference-time consequence of separating Q from K/V, not covered by the article body."}
+      complementarity: {level: high, rationale: "It connects the introductory QKV mechanism to incremental autoregressive decoding and implementation-level reuse."}
+      pedagogical_value: {level: high, rationale: "It answers why Q is computed for the current step while past K/V can be reused, and introduces a concrete compute-memory trade-off."}
+      applicability: {level: moderate, rationale: "Useful as a follow-up in an inference-efficiency lesson, but outside the scope of the introductory QKV page."}
+      redundancy: {level: low, rationale: "The article's main text does not discuss caching or incremental decoding."}
+      evidence_quality: {level: moderate, rationale: "The comment is only a lead; its technical content is corroborated separately by official Transformers documentation."}
+    locator:
+      type: comment
+      value: "First visible reader comment following the article conclusion"
+      label: "Reader suggestion: KV cache and tensor-shape example"
+    evidence:
+      kind: community-comment
+      confidence: context-dependent
+      scope: "A reader-suggested follow-up topic and a concise description of incremental K/V reuse."
+      assumptions: ["The comment refers to standard causal autoregressive decoding with a KV cache."]
+      limitations:
+        - "The comment is not part of the article author's claims."
+        - "The shorthand omits that the current token's K and V are also computed and appended."
+        - "The cache-memory trade-off depends on cache strategy, layer count, KV-head count, head dimension, precision and retained context."
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:kv-cache, topic:autoregressive-generation]
+      concept_ids: [key, value]
+    candidate_destinations:
+      pages: []
+      concepts: [key, value]
+    disposition: defer
+    disposition_rationale: "Preserve the community lead and its independent verification, but do not add KV-cache detail to the introductory Q/K/V page. Revisit when the inference-efficiency curriculum has a canonical destination."
+
+  - id: nishanthan-k-qkv-transformers-devto:attention-score-not-semantic-similarity
+    kind: limitation
+    summary: "The article cautions that a larger query-key dot product can lead to a larger attention weight, but the learned score is not a direct measure of semantic similarity between tokens."
+    locator:
+      type: section
+      value: "4, Step 1"
+      label: "Calculate Attention Scores"
+    evidence:
+      kind: interpretive-caveat
+      confidence: well-supported
+      scope: "The article explicitly limits the interpretation of query-key dot products."
+      assumptions: ["The scores are produced by learned Q and K projections."]
+      limitations:
+        - "The caveat does not by itself explain all factors that determine the final attention output."
+        - "Attention weights remain relative to the other accessible positions after masking and softmax."
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The bilingual Q/K/V page already warns that attention is not nearest-neighbour search and weights are not universal semantic relevance."}
+      complementarity: {level: moderate, rationale: "It independently reinforces the distinction between learned compatibility scores and semantic similarity."}
+      pedagogical_value: {level: moderate, rationale: "This is a useful misconception guardrail for learners who interpret dot products linguistically."}
+      applicability: {level: low, rationale: "The canonical page already expresses the caveat in a broader and more precise form."}
+      redundancy: {level: high, rationale: "The learner question and explanatory function are already covered."}
+      evidence_quality: {level: moderate, rationale: "The source states a correct interpretive caveat, but does not provide an empirical or theoretical analysis of attention interpretability."}
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:attention, topic:interpretability]
+      concept_ids: [query, key, self-attention]
+    candidate_destinations:
+      pages: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+      concepts: [query, key, self-attention]
+    disposition: defer
+    disposition_rationale: "Keep as convergent evidence in the extraction record; do not duplicate the existing misconception guardrail."
+
+  - id: nishanthan-k-qkv-transformers-devto:weighted-aggregation-not-argmax
+    kind: misconception
+    summary: "The article explicitly distinguishes attention's weighted aggregation of multiple Value vectors from a winner-take-all selection of the single token with the largest score."
+    locator:
+      type: section
+      value: "5"
+      label: "How Do Values Produce Contextual Information?"
+    evidence:
+      kind: conceptual-explanation
+      confidence: well-supported
+      scope: "The attention output is described as a weighted combination of Values according to the attention weights."
+      assumptions: ["The usual softmax-weighted attention formulation is used."]
+      limitations:
+        - "Some specialized attention mechanisms may alter the normalization or aggregation pattern; the statement describes the standard formulation in this article."
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The canonical attention lesson already derives O = AV and explains weighted aggregation."}
+      complementarity: {level: moderate, rationale: "The explicit contrast with winner-take-all selection can help diagnose a common beginner misconception."}
+      pedagogical_value: {level: moderate, rationale: "It makes clear that softmax weights distribute contributions rather than selecting one token by argmax."}
+      applicability: {level: low, rationale: "The current numerical example and shape explanation already show a weighted sum."}
+      redundancy: {level: high, rationale: "The mechanism and learner question are already treated directly in the attention lesson."}
+      evidence_quality: {level: moderate, rationale: "The statement is mathematically consistent with standard scaled dot-product attention, though presented in a secondary tutorial."}
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:attention, topic:weighted-aggregation]
+      concept_ids: [value, self-attention]
+    candidate_destinations:
+      pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+      concepts: [value, self-attention]
+    disposition: defer
+    disposition_rationale: "Preserve the source's clear anti-argmax phrasing as convergent pedagogical evidence; the existing numerical example already teaches the same point."

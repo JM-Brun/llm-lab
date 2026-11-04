@@ -58,6 +58,21 @@ A compilation is not a concatenation. Do not reproduce source prose or stack nea
 
 ## 3. Enrich the knowledge graph deliberately
 
+### Differential source-graph and learning-route analysis
+
+For instructional sources with a meaningful teaching sequence, compare the source's reconstructed local model with the current LLM Lab model before deciding on integration:
+
+1. Compare semantic nodes and typed relations against the relevant canonical concept subgraph. Identify missing durable concepts, missing/incorrect edges, ambiguous concepts, and source details that are merely examples or transient claims.
+2. Compare the source's teaching sequence against `data/guided-route.yml`, `docs/learning-path.md`, page-level `suggested_route`, page hierarchy and the separate Build route. State which of these structures is being compared; never conflate them.
+3. Compare learner outcomes, assumed prerequisites, conceptual transitions, examples, analogies, visual explanations, checks/practice, abstraction levels and omitted topics.
+4. Decide independently whether to change the canonical graph, the pedagogical route, a page explanation, navigation links, or none of them. A graph addition does not imply a route change; a source's section order is not automatically a better curriculum.
+5. Add a canonical concept only if it is stable, reusable, clearly defined, has meaningful typed relations, and maps to an appropriate existing or justified future learning resource. If a concept is already taught but absent from the graph, that can still be a valid graph improvement.
+6. Add a route edge only when it expresses a learner-relevant transition or dependency and passes route reciprocity, acyclicity, bilingual parity and page-ownership checks. Do not add route links just to mirror a source's order or eliminate null route pointers.
+7. Record the source graph, source route, current LLM Lab subgraph/route, differential findings, accepted changes and intentional non-changes in a concise comparison dossier. Use Mermaid or tables where they make the difference inspectable; keep the canonical YAML registries authoritative.
+
+The report must state whether the source changed the graph, the route, both, or neither, and explain why. Do not optimize for node/edge count or superficial visual symmetry.
+
+
 The graph may be augmented, but only when the extraction changes the conceptual model or useful relationships.
 
 ### Concepts
@@ -192,6 +207,7 @@ Final report:
 
 - Each accepted integration links to a source and precise extraction item.
 - Graph changes use canonical IDs, relation semantics, schemas and generated projections.
+- For instructional sources, the source graph and route are compared with the canonical graph and route; graph and route changes are independent, justified decisions.
 - Every page change has a demonstrated learner benefit and fits page ownership/layer.
 - New-page decisions pass the explicit gate.
 - Existing useful content is preserved.

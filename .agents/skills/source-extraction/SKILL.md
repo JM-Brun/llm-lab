@@ -47,6 +47,8 @@ A homepage visit does not mean the whole site was scanned. Register exact pages 
 
 Read beyond the abstract, introduction, README or conclusion. Inspect relevant equations, tables, figures, appendices, supplementary material, linked primary sources, code and tests.
 
+Record the retrieval channel for each inspected artifact: direct canonical page, publisher API/feed, author-controlled mirror, repository source, or search index. Search-index text is useful for discovery and partial extraction, but it is not direct page retrieval; label it explicitly, retain the index/mirror limitations, and do not promote a source to `scanned` when intended content or media remains uninspected. If a mirror or profile snapshot conflicts with current indexed metadata, record the discrepancy and prefer neither silently.
+
 Assess according to source type:
 - research: methods, assumptions, data, supplementary material, replication and later critique;
 - APIs/implementation: official documentation and pinned source;
@@ -103,13 +105,60 @@ Assume most useful sources will overlap with the project's subject matter. The p
 
 ## 4. Capture teaching contributions
 
+### Reconstruct the source's pedagogical graph and route
+
+For a tutorial, article, course, chapter or other instructional source, do not stop at extracting isolated claims. Reconstruct its **local learning model** as a review artifact:
+
+1. Identify the source's nodes: durable concepts, computational objects, operations, intermediate representations, examples, learner questions, activities and outcomes. Distinguish technical entities from pedagogical anchors.
+2. Identify typed relationships: transforms, produces, uses, aggregates, constrains, is part of, motivates, illustrates, contrasts with, and any genuine prerequisite. Do not turn section order or an illustrative analogy into a semantic dependency.
+3. Reconstruct the teaching route: section order, explicit and inferred learning outcomes, assumed prerequisites, transitions, worked examples, checks/practice, optional depth and omitted topics. Label inferred outcomes and edges as inferred, not author-declared.
+4. Persist the reconstruction in a top-level `pedagogical_model` block in the source's extraction YAML: source-local graph nodes/typed edges, ordered teaching route, declared versus inferred outcomes/prerequisites, strengths, limits and comparison-dossier pointer. Use Mermaid in the review dossier as a human-readable view of that structured record; do not create a second canonical concept registry or a parallel graph database.
+5. Keep the source model separate from the LLM Lab model. Phase A records the source's own structure and proposes candidate concepts/relations/destinations; Phase B compares it with the current canonical graph and route.
+6. Record source-specific strengths and limits: what the route makes easy to understand, what it assumes, what it compresses, and what it does not teach.
+
+The comparison must distinguish three structures:
+- **semantic knowledge graph**: what entities/concepts exist and how they relate;
+- **pedagogical route**: the sequence and scaffolding used to learn;
+- **site navigation/hierarchy**: how readers discover and move between resources.
+
+These structures can inform one another but are not interchangeable. A source may reveal missing graph nodes without warranting a route change, or offer a better local explanation without changing either canonical structure.
+
+
 ### Analogies and mental models
 
 For each useful analogy, record source domain, target concept, mapped entities/relations, mechanism illuminated, valid scope, where the mapping breaks, likely misconception, suitable teaching location and source locator. An analogy never replaces a formal or computational definition.
 
 ### Figures and visual assets
 
-Inspect the visual itself. Record creator, original URL, locator, caption/context, visual encoding, assumptions, omissions, accessibility, licence, permission and reuse status. Candidate actions: link original, embed with verified rights, create an independently authored explanation, or omit with rationale. Never trace or cosmetically alter protected figures. Phase B decides whether to update the site and asset register.
+Inspect the visual itself—not only its surrounding prose or an indexed text extract. Record creator, original URL, exact locator, caption/context, visual encoding, assumptions, omissions, accessibility, licence, permission and reuse status. Candidate actions: link original, embed with verified rights, create an independently authored explanation, or omit with rationale. Never trace or cosmetically alter protected figures. Phase B decides whether to update the site and asset register.
+
+#### Visual-first inspection checkpoint
+
+For every article, tutorial, course page or paper with a visual component, perform a separate media pass after the textual pass:
+
+1. Enumerate the cover/hero image and every in-body image, diagram, chart, animation, video and linked visual. Distinguish a decorative thumbnail from an explanatory figure; do not assume the cover image is the figure the author discusses.
+2. Resolve each asset to its original media URL and record its exact article locator (caption, section, figure number, or DOM order). Preserve redirects and mirrors as provenance, not as proof of authorship.
+   - Use a retrieval ladder when the page renderer is inaccessible: canonical article HTML/metadata, the publisher's documented API or RSS/JSON endpoint, then a confirmed author-controlled mirror. Record which route yielded each asset. A mirror's cover thumbnail, search-result thumbnail, or repeated alt text is not proof that it is the in-body figure; compare article identity and figure placement before treating assets as equivalent.
+3. Open the actual media at readable resolution. Inspect labels, arrows, grouping, reading order, visual hierarchy, mathematical notation, dimensions, colour dependence, cropping and mobile legibility. If the media cannot be retrieved or rendered, mark it **not visually inspected**; do not infer its content from alt text, a filename, a thumbnail, or the surrounding paragraph.
+4. Evaluate the figure as a teaching artifact independently of the article: which learner question does it answer, what representation or relationship does it make visible, what prerequisite does it assume, what does it omit, and what misconception could it create? Compare that explanatory function with the exact current LLM Lab figure/page, not just the topic.
+5. Record creator/rights-holder, source URL, licence evidence, permission and reuse conditions separately. A public image, an accessible CDN URL, attribution, or a permissive licence for article text does not automatically establish figure reuse rights. Unknown rights mean link-only or independently authored alternatives pending review—not automatic removal of existing material.
+6. Keep the decision explicit: retain as a linked reference, embed unchanged only when rights are verified, commission/create an independently authored visual without tracing, or omit with a reason. For a promising but inaccessible visual, preserve a follow-up question and keep the source scan partial.
+
+Do not silently treat a visual pass as complete because the article body was retrieved. The scan record and review note must state separately whether textual content, visual assets, linked resources and rights were inspected.
+
+
+
+### Community discussion and reader comments
+
+Treat comments, replies, issue discussions and community annotations as **separate voices**, not as part of the primary author's source text.
+
+- Record the speaker/role when available (author, reader, maintainer, reviewer), exact locator, date and thread context. Do not infer identity or expertise from a username.
+- When the comment is embedded in another source, keep the parent article as the container but mark the item's `provenance.voice` as `reader-comment`; include `parent_source_id`, the exact comment locator, capture date and speaker only when explicit. Use the optional `verification` block for independent checks; do not place verifier conclusions in the comment's summary.
+- Separate the primary work's claims from suggestions, corrections, questions and anecdotes introduced by commenters. An author's acknowledgement is not independent technical validation.
+- Preserve potentially useful leads even when they are outside the article's scope. Mark them as community-derived and unverified until checked against an authoritative source, implementation or reproducible evidence.
+- If a comment contains a substantive technical claim, assess it independently and, when it warrants extraction, give it a distinct item/provenance rather than attributing it to the article author. Register the underlying primary source separately if one is identified.
+- Do not silently promote a comment into the article's extraction or use it to change the article's integration status. A comment may motivate a new research task without becoming evidence for the source's claims.
+- When a comment compresses a mechanism, check for omitted steps and boundary conditions before reuse. Preserve the original statement as a lead, then record the technically precise interpretation separately.
 
 ### Experiments, benchmarks, datasets and code
 
@@ -130,16 +179,19 @@ Produce a reconciliation report: counts by status, duplicates/aliases, unlinked 
 Provide:
 1. source records with scope and scan status;
 2. atomic extraction items with locators, evidence, confidence, scope and caveats;
-3. candidate concepts, graph relations, pages, assets, experiments and cross-links;
-4. rights/reproducibility constraints and unknowns;
-5. a source-to-item index and summary.
+3. for instructional sources, a validated top-level `pedagogical_model` containing the source-local graph, ordered teaching route, declared/inferred outcomes and prerequisites, strengths, limits and a comparison-dossier pointer;
+4. candidate concepts, graph relations, pages, assets, experiments and cross-links;
+5. rights/reproducibility constraints and unknowns;
+6. a source-to-item index and summary.
 
 Candidate graph nodes/edges must be marked as proposals. Reuse known IDs and relation semantics; do not mutate the canonical graph in Phase A.
 
 ## Definition of done
 
 - Each scanned source has stable identity, provenance, scope, status and limitations.
+- Items originating in comments or embedded community discussion preserve a distinct voice, parent-source locator and independent verification status; they are never silently attributed to the primary author.
 - Each retained item is atomic, traceable and scoped.
+- For instructional sources, the local concept/process graph and pedagogical route are reconstructed, or explicitly marked not applicable; inferred outcomes and edges are labelled.
 - Analogies, visuals, experiments, datasets and code have relevant metadata and rights/reproducibility status.
 - Scanned, partial, linked-only, inaccessible and rejected sources are distinguished.
 - Historical sources are reconciled when initialization is in scope.

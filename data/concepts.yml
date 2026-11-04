@@ -50,13 +50,67 @@ concepts:
       en: "Mechanism that computes weights between positions in one sequence and aggregates their values."
     domains: [architectures-mechanisms]
     resources: [fr/transformer, en/transformer, fr/transformer-architectures, en/transformer-architectures, fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+  - id: attention-score
+    labels: {fr: "Score d'attention", en: "Attention score"}
+    definitions:
+      fr: >-
+        Score de compatibilité calculé entre une requête et une clé avant sa conversion en poids
+        d'attention normalisés.
+      en: >-
+        Compatibility score computed between a query and a key before conversion into normalized
+        attention weights.
+    domains: [architectures-mechanisms, mathematical-tools-geometry]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+  - id: attention-weight
+    labels: {fr: "Poids d'attention", en: "Attention weight"}
+    definitions:
+      fr: >-
+        Coefficient normalisé, après prise en compte du masque éventuel, qui pondère la contribution
+        d'une valeur à une sortie d'attention.
+      en: >-
+        Normalized coefficient, after any applicable mask, that weights a value's contribution
+        to an attention output.
+    domains: [architectures-mechanisms, mathematical-tools-geometry]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+  - id: scaled-dot-product-attention
+    labels: {fr: "Attention à produit scalaire mise à l'échelle", en: "Scaled dot-product attention"}
+    definitions:
+      fr: >-
+        Mécanisme qui calcule des scores par produit scalaire entre requêtes et clés, les met à
+        l'échelle, les normalise et agrège les vecteurs de valeur.
+      en: >-
+        Mechanism that computes query–key dot-product scores, scales and normalizes them, and
+        aggregates value vectors.
+    domains: [architectures-mechanisms, mathematical-tools-geometry]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+  - id: multi-head-attention
+    labels: {fr: "Attention multi-têtes", en: "Multi-head attention"}
+    definitions:
+      fr: >-
+        Mécanisme qui exécute plusieurs calculs d'attention avec des projections propres à chaque
+        tête, puis combine leurs sorties par concaténation et projection.
+      en: >-
+        Mechanism that runs multiple attention computations with per-head projections, then
+        combines their outputs through concatenation and projection.
+    domains: [architectures-mechanisms]
+    resources:
+      - fr/transformer
+      - en/transformer
+      - fr/transformer-block-walkthrough
+      - en/transformer-block-walkthrough
   - id: causal-mask
     labels: {fr: "Masque causal", en: "Causal mask"}
     definitions:
       fr: "Contrainte qui empêche une position de prendre en compte les positions futures."
       en: "Constraint preventing a position from attending to future positions."
     domains: [architectures-mechanisms]
-    resources: [fr/causal-masking, en/causal-masking, fr/transformer-architectures, en/transformer-architectures]
+    resources:
+      - fr/causal-masking
+      - en/causal-masking
+      - fr/scaled-dot-product-attention
+      - en/scaled-dot-product-attention
+      - fr/transformer-architectures
+      - en/transformer-architectures
   - id: positional-encoding
     labels: {fr: "Encodage positionnel", en: "Positional encoding"}
     definitions:
@@ -84,7 +138,11 @@ concepts:
       fr: "Transformation qui convertit un vecteur de scores en une distribution de probabilité."
       en: "Transformation converting a score vector into a probability distribution."
     domains: [mathematical-tools-geometry, probabilistic-foundations-training]
-    resources: [fr/probabilites, en/probabilities]
+    resources:
+      - fr/probabilites
+      - en/probabilities
+      - fr/scaled-dot-product-attention
+      - en/scaled-dot-product-attention
   - id: cross-entropy
     labels: {fr: "Entropie croisée", en: "Cross-entropy"}
     definitions:
@@ -123,6 +181,12 @@ relation_types:
     descriptions:
       fr: "La source contribue à la construction ou au fonctionnement de la cible."
       en: "The source contributes to the construction or operation of the target."
+  applies-to:
+    direction: directed
+    labels: {fr: "s'applique à", en: "applies to"}
+    descriptions:
+      fr: "Le mécanisme source peut être utilisé dans le contexte ou le mécanisme cible."
+      en: "The source mechanism can be used within the target context or mechanism."
   mapped-by:
     direction: directed
     labels: {fr: "est projeté par", en: "is mapped by"}
@@ -153,6 +217,19 @@ relations:
   - {from: query, type: part-of, to: self-attention}
   - {from: key, type: part-of, to: self-attention}
   - {from: value, type: part-of, to: self-attention}
+  - {from: query, type: part-of, to: scaled-dot-product-attention}
+  - {from: key, type: part-of, to: scaled-dot-product-attention}
+  - {from: value, type: part-of, to: scaled-dot-product-attention}
+  - {from: query, type: contributes-to, to: attention-score}
+  - {from: key, type: contributes-to, to: attention-score}
+  - {from: attention-score, type: part-of, to: scaled-dot-product-attention}
+  - {from: attention-weight, type: part-of, to: scaled-dot-product-attention}
+  - {from: attention-score, type: normalized-by, to: softmax}
+  - {from: softmax, type: produces, to: attention-weight}
+  - {from: causal-mask, type: constrains, to: scaled-dot-product-attention}
+  - {from: scaled-dot-product-attention, type: applies-to, to: self-attention}
+  - {from: scaled-dot-product-attention, type: part-of, to: multi-head-attention}
+  - {from: multi-head-attention, type: contributes-to, to: contextualized-representation}
   - {from: causal-mask, type: constrains, to: self-attention}
   - {from: positional-encoding, type: contributes-to, to: self-attention}
   - {from: self-attention, type: contributes-to, to: contextualized-representation}

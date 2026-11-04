@@ -24,13 +24,13 @@ sources:
         - topic:self-attention
         - topic:multi-head-attention
         - method:scaled-dot-product-attention
-      concept_ids: [query, key, value, self-attention, softmax]
+      concept_ids: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax, multi-head-attention]
     metadata:
       technical_level: introductory
       contribution_types: [architecture, pedagogy]
       audiences: [beginner, learner]
     scan_status: partially-scanned
-    integration_status: reviewed
+    integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-04"
         status: partially-scanned
@@ -41,6 +41,27 @@ sources:
           - "Publication year and update metadata were not independently verified."
           - "Comments, linked materials, and embedded visual assets were not inspected."
           - "No licence or reuse permission was established."
+      - accessed_at: "2026-11-04"
+        status: partially-scanned
+        inspected_scope:
+          - "Directly retrieved article body: introduction, sections 1–6, and conclusion"
+          - "Two visible reader comments and the author's reply"
+        limitations:
+          - "The publication year and update metadata remain unverified."
+          - "Linked series articles and other external materials were not inspected."
+          - "Embedded visual assets were not separately inspected; no reuse rights were established."
+          - "No licence or reuse permission was established."
+      - accessed_at: "2026-11-04"
+        status: partially-scanned
+        inspected_scope:
+          - "Rechecked the full article body through indexed DEV search content and the author-controlled Medium mirror"
+          - "Inspected indexed Medium profile metadata listing two image entries under the QKV article title; direct profile retrieval returned a stale snapshot omitting the QKV article"
+          - "Independently checked the KV-cache reader suggestion against the Hugging Face Transformers caching documentation recorded as a separate source"
+        limitations:
+          - "Direct article HTML and DEV API endpoints were not retrievable in this pass."
+          - "The indexed Medium listing exposes image labels but not exact image bytes, a stable asset URL, figure placement or creator/rights metadata; the directly opened profile snapshot is stale and omits the QKV article."
+          - "The two image entries cannot yet be classified reliably as cover versus in-body figure or confirmed as the same asset."
+          - "No article-image reuse rights were established."
     related:
       pages:
         - fr/queries-keys-values
@@ -49,7 +70,53 @@ sources:
         - en/scaled-dot-product-attention
         - fr/transformer-block-walkthrough
         - en/transformer-block-walkthrough
-      concepts: [query, key, value, self-attention, softmax]
+        - fr/contextualized-representations
+        - en/contextualized-representations
+      concepts: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax, multi-head-attention, contextualized-representation]
       audit_records:
         - docs/source-reviews/qkv-nishanthan-devto-2026-11.md
+        - docs/source-reviews/qkv-learning-graph-comparison-2026-11.md
 
+  - id: huggingface-transformers-kv-cache-explanation
+    title: "Caching"
+    creators: ["Hugging Face Transformers contributors"]
+    source_type: documentation
+    identifiers: {}
+    canonical_url: "https://huggingface.co/docs/transformers/main/en/cache_explanation"
+    publisher: "Hugging Face Transformers"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "main documentation"
+    revision: main
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [architectures-mechanisms]
+      tags:
+        - topic:kv-cache
+        - topic:autoregressive-generation
+      concept_ids: [key, value, self-attention]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [architecture, implementation]
+      audiences: [learner, practitioner, maintainer]
+    scan_status: partially-scanned
+    integration_status: deferred
+    scan_history:
+      - accessed_at: "2026-11-04"
+        status: partially-scanned
+        inspected_scope:
+          - "Caching explanation and attention-matrix section"
+          - "Incremental decoding equations and per-layer cache description"
+        limitations:
+          - "Documentation source was inspected through indexed GitHub content; repository revision was not pinned to a commit."
+          - "Cache class implementation details and model-specific variants were not exhaustively audited."
+          - "No code was executed."
+          - "Licence and figure/code reuse conditions were not independently checked."
+    related:
+      pages: []
+      concepts: [key, value, self-attention]
+      audit_records:
+        - docs/source-reviews/qkv-nishanthan-devto-2026-11.md

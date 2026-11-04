@@ -137,13 +137,31 @@ Allowed statuses are in `data/source-taxonomy.yml`. A source is `scanned` only w
 
 A source can be classified before scanning. For unclassified discovered records, `primary_theme` may be null; it must be assigned before substantive extraction is marked complete.
 
-## 4. Extraction item records
+## 4. Extraction records and source pedagogical models
+
+Store one file per source in `data/extractions/<source-id>.yml`. Each item is atomic and carries:
+
+For instructional sources (tutorials, blog articles, courses and book chapters), the extraction file also carries a top-level `pedagogical_model`. This is the source's own reconstructed model, not an extension of the canonical LLM Lab concept registry:
+
+- `reconstruction`: completeness status, evidence basis and explicitly inferred elements;
+- `source_graph.nodes`: source-local node IDs, kinds, descriptions and source locators; IDs must use a `src-` prefix so they cannot be mistaken for canonical concept IDs;
+- `source_graph.edges`: typed source-local relations whose endpoints must resolve to nodes in that same graph;
+- `source_graph.interpretation`: an explicit statement that reconstructed relations are interpretations unless the source itself defines them formally;
+- `learning_outcomes` and `assumed_prerequisites`: each marked `declared` or `inferred`, with its basis;
+- `teaching_route`: ordered source sections, their pedagogical function and teaching moves; order must be unique and contiguous;
+- `pedagogical_strengths` and `pedagogical_limits`;
+- `comparison`: links to the comparison dossier, canonical graph and route references, decision, and structures deliberately kept separate.
+
+Source-local graph IDs are not canonical concept IDs. Never copy them into `data/concepts.yml` automatically. Do not infer a prerequisite edge from section order, an analogy mapping, or a motivational example. A source graph can contain pedagogical anchors as well as technical entities, but those node kinds must remain distinguishable. If the source is only partially accessible, record a partial reconstruction and its evidence boundary rather than filling gaps by guesswork.
+
 
 Store one file per source in `data/extractions/<source-id>.yml`. Each item is atomic and carries:
 
 - stable item ID and controlled `kind`;
 - concise paraphrased summary, not copied source prose;
 - exact locator and locator type;
+- optional `provenance` when the item's voice differs from the parent source (for example, a reader comment quoted on an article page): `voice` (`primary-author`, `reader-comment`, `editorial-note`, `maintainer`, or `other`), `speaker` when explicitly available, `parent_source_id`, `locator`, and `captured_at`. This identifies who made the statement and where it appeared; it does not validate the content.
+- optional `verification` for community-derived claims: status (`unverified`, `corroborated`, `contradicted`, `not-assessed`), independent source IDs/URLs, and a concise technical assessment. Keep the original comment claim separate from the verifier's interpretation.
 - evidence kind, confidence, scope, assumptions and limitations;
 - optional item-level classification, which can refine but not silently overwrite source classification;
 - existing canonical concept IDs, if justified;
@@ -206,17 +224,19 @@ Keep `docs/references.md` as a readable bibliography. It may link to source IDs,
 
 ## 7. Validation and evolution
 
-Before adding validators, inspect existing project validation conventions and consolidate responsibilities rather than creating one script per file. The eventual checks must cover:
-- YAML syntax and schema version;
-- unique source and extraction IDs;
-- controlled values and BCP 47 language tags;
-- valid domain, concept, page and resource references;
-- primary/secondary theme uniqueness and disjointness;
-- tag syntax, namespaces, aliases and duplicate detection;
-- scan-history chronology and consistency with current status;
-- extraction-to-source referential integrity and exact locators;
-- rights/status consistency and explicit unknowns;
-- no accidental promotion of tags to concepts or graph edges.
+The consolidated initial validator is `site/tools/check_source_catalogue.py`; it runs in CI after the YAML validation dependency is installed. Its current scope is deliberately explicit:
+
+- YAML syntax and schema version for source, taxonomy, domain, concept and extraction files;
+- unique source and extraction-item IDs, and extraction-to-source referential integrity;
+- controlled source types, scan/integration statuses and extraction kinds;
+- valid domain, concept and bilingual page references;
+- namespaced tag syntax and duplicate detection;
+- scan-history dates, statuses, inspected scopes and limitations;
+- exact item locators and supported evidence-confidence values;
+- community-item voice, parent-source provenance, capture date, verification status and independent source references.
+- instructional-source pedagogical-model status, source-local node identity, edge endpoint integrity, explicit graph interpretation, declared/inferred outcomes and prerequisites, contiguous teaching-route order, strengths/limits and comparison pointers.
+
+The initial validator does **not yet** validate BCP 47 language tags, publication/version chronology, licence identifiers or rights/status consistency, alias resolution, resource references, all optional item-level pedagogical fields, or the scientific validity of reconstructed source-graph relations. Keep these as explicit follow-up work; extend the consolidated validator and its tests rather than creating one script per data file. Do not treat a passing initial validator as proof that rights or scientific claims are valid.
 
 Any schema change must update this contract, examples, taxonomy, validator fixtures, tests, skills and migration notes together. Keep JSON-LD and visualizations as derived projections; never hand-edit generated output.
 

@@ -232,3 +232,82 @@ def test_page_nodes_are_unique_and_resource_registry_is_in_provenance() -> None:
     )
     derived_from = {item["@id"] for item in export["prov:wasDerivedFrom"]}
     assert "https://github.com/JM-Brun/llm-lab/blob/main/data/resources.yml" in derived_from
+
+
+def test_attention_subgraph_exports_intermediate_concepts_and_typed_relations() -> None:
+    payload = build_graph()
+    graph = payload["@graph"]
+    identifiers = {node.get("@id") for node in graph}
+    concept_ids = {
+        "attention-score",
+        "attention-weight",
+        "scaled-dot-product-attention",
+        "multi-head-attention",
+    }
+
+    for concept_id in concept_ids:
+        assert f"{BASE}/id/concept/{concept_id}" in identifiers
+
+    pages = {
+        node["@id"]: node
+        for node in graph
+        if isinstance(node.get("@type"), list) and "schema:LearningResource" in node["@type"]
+    }
+    expected_pages = {
+        f"{BASE}/fr/scaled-dot-product-attention.html": {
+            "attention-score",
+            "attention-weight",
+            "scaled-dot-product-attention",
+        },
+        f"{BASE}/en/scaled-dot-product-attention.html": {
+            "attention-score",
+            "attention-weight",
+            "scaled-dot-product-attention",
+        },
+        f"{BASE}/fr/transformer.html": {"multi-head-attention"},
+        f"{BASE}/en/transformer.html": {"multi-head-attention"},
+        f"{BASE}/fr/transformer-block-walkthrough.html": {"multi-head-attention"},
+        f"{BASE}/en/transformer-block-walkthrough.html": {"multi-head-attention"},
+    }
+    for page_uri, expected_concepts in expected_pages.items():
+        about = {
+            item["@id"].rsplit("/", maxsplit=1)[-1] for item in pages[page_uri]["schema:about"]
+        }
+        assert expected_concepts.issubset(about)
+
+    relations = {
+        (node["@id"], predicate, value["@id"])
+        for node in graph
+        for predicate, value in node.items()
+        if predicate.startswith("llmlab:") and isinstance(value, dict) and "@id" in value
+    }
+    assert (
+        f"{BASE}/id/concept/softmax",
+        "llmlab:produces",
+        f"{BASE}/id/concept/attention-weight",
+    ) in relations
+    assert (
+        f"{BASE}/id/concept/query",
+        "llmlab:contributesTo",
+        f"{BASE}/id/concept/attention-score",
+    ) in relations
+    assert (
+        f"{BASE}/id/concept/key",
+        "llmlab:contributesTo",
+        f"{BASE}/id/concept/attention-score",
+    ) in relations
+    assert (
+        f"{BASE}/id/concept/scaled-dot-product-attention",
+        "llmlab:partOf",
+        f"{BASE}/id/concept/multi-head-attention",
+    ) in relations
+    assert (
+        f"{BASE}/id/concept/causal-mask",
+        "llmlab:constrains",
+        f"{BASE}/id/concept/scaled-dot-product-attention",
+    ) in relations
+    assert (
+        f"{BASE}/id/concept/scaled-dot-product-attention",
+        "llmlab:appliesTo",
+        f"{BASE}/id/concept/self-attention",
+    ) in relations
