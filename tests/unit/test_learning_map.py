@@ -57,14 +57,14 @@ def _write_page(
     front_yaml = yaml.safe_dump(front, allow_unicode=True, sort_keys=False).strip()
     metadata_yaml = yaml.safe_dump(metadata, allow_unicode=True, sort_keys=False).strip()
     body = "\n".join(headings)
-    path.write_text(
-        (
-            f"---\n{front_yaml}\n---\n\n"
-            f"<!--\nLLM-LAB-PAGE-MAP v1\n{metadata_yaml}\n-->\n\n"
-            f"{body}\n"
-        ),
-        encoding="utf-8",
+    page_content = (
+        f"---\n{front_yaml}\n---\n\n"
+        "<!--\nLLM-LAB-PAGE-MAP v1\n"
+        f"{metadata_yaml}\n"
+        "-->\n\n"
+        f"{body}\n"
     )
+    path.write_text(page_content, encoding="utf-8")
 
 
 def test_page_href_is_relative_to_language_map() -> None:
