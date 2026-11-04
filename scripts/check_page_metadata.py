@@ -231,7 +231,6 @@ def _validate_relations(pages: dict[str, dict[str, Any]], errors: list[str]) -> 
     for page_id in pages:
         visit_route(page_id, [])
 
-
     for page_id, page in pages.items():
         relations = {
             "previous": [page["route"]["previous"]] if page["route"]["previous"] else [],
