@@ -20,7 +20,7 @@
     empty: "Aucune page ne correspond à ces filtres.",
     count: (shown, total) => shown + " page(s) affichée(s) sur " + total + ".",
     countConcepts: (shown, total) => shown + " concept(s) affiché(s) sur " + total + ".",
-    emptyConcepts: "Aucun concept ne correspond à cette recherche."
+    emptyConcepts: "Aucun concept ne correspond à cette recherche.",
     loadError: "La carte n’a pas pu être chargée. Vérifiez que les données ont été générées pendant le rendu Quarto.",
     unknown: "Page",
     domainLabel: "Domaine d’approfondissement",
@@ -56,7 +56,7 @@
     empty: "No pages match these filters.",
     count: (shown, total) => shown + " of " + total + " pages shown.",
     countConcepts: (shown, total) => shown + " of " + total + " concepts shown.",
-    emptyConcepts: "No concepts match this search."
+    emptyConcepts: "No concepts match this search.",
     loadError: "The map could not be loaded. Check that the data files were generated during the Quarto render.",
     unknown: "Page",
     domainLabel: "Deepen domain",
@@ -261,7 +261,7 @@
     if (!sectionHeadingList.childElementCount) {
       const item = document.createElement("li");
       item.textContent = page.topic || copy.unknown;
-      conceptList.appendChild(item);
+      sectionHeadingList.appendChild(item);
     }
     details.appendChild(sectionHeadingList);
 
