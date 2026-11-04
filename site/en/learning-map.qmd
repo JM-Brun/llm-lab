@@ -1,6 +1,6 @@
 ---
 title: "Interactive learning map"
-subtitle: "Pages, concepts, and relationships across the LLM Lab learning path"
+subtitle: "Pages, section labels, and relationships across the LLM Lab learning path"
 keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:en", "status:published"]
 lang: en
 toc: false
@@ -9,8 +9,8 @@ toc: false
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/learning-map"
-scope: "Interactive visual map of published pages, suggested progression, pedagogical hierarchy, and concepts identified from page sections."
-purpose: "Help readers understand the learning path architecture, find relevant pages and concepts, and open a page directly from its node in the graph."
+scope: "Interactive visual map of published pages, suggested progression, pedagogical hierarchy, and section headings extracted from pages."
+purpose: "Help readers understand the learning path architecture, find relevant pages and section headings, and open a page directly from its node in the graph."
 suggested_route:
   previous: null
   next: null
@@ -27,12 +27,12 @@ The map distinguishes the **suggested reading route**, the **pedagogical hierarc
 - **Parent / child** — blue arrow: pedagogical decomposition or inclusion.
 - **Related** — dotted grey line: conceptual connection without an imposed reading order.
 
-Blocks represent pages. The concepts displayed inside each block are extracted from the page section headings: they are useful landmarks, not an exhaustive taxonomy. The data is generated from each published page's metadata. The domain filter isolates one of the six Deepen families without changing the core learning route.
+Blocks represent pages. The section headings displayed inside each block are extracted from each page body. They are useful landmarks, not a concept taxonomy. The data is generated from each published page's metadata. The domain filter isolates one of the six Deepen families without changing the core learning route.
 
 <div class="learning-map" data-learning-map data-language="en" data-source="../learning-map-data-en.json">
   <div class="learning-map-toolbar">
     <div class="learning-map-search">
-      <label for="learning-map-search">Search pages and concepts</label>
+      <label for="learning-map-search">Search pages and section headings</label>
       <input id="learning-map-search" type="search" placeholder="E.g. embeddings, attention, generation…" autocomplete="off">
     </div>
     <div class="learning-map-filter">
@@ -76,7 +76,7 @@ Blocks represent pages. The concepts displayed inside each block are extracted f
     <aside class="learning-map-details" aria-live="polite" aria-atomic="true">
       <p class="map-detail-eyebrow">EXPLORE A NODE</p>
       <h3>Select a page</h3>
-      <p>Hover over a block or focus it to inspect its purpose, concepts, and relationships. Click the block to open the page directly.</p>
+      <p>Hover over a block or focus it to inspect its purpose, section headings, and relationships. Click the block to open the page directly.</p>
     </aside>
   </div>
   <p class="learning-map-status" role="status" aria-live="polite">Loading map…</p>
