@@ -32,7 +32,7 @@ Output:
 - evidence kind, confidence, generality, assumptions, limitations and rights metadata;
 - candidate concepts, relations, pages, visuals, experiments and teaching improvements;
 - independent qualitative assessment of novelty, complementarity, learner value, applicability, redundancy and evidence quality;
-- a reconstruction of the source's local concept/process graph and pedagogical route, with inferred outcomes and relationships explicitly labelled;
+- a top-level `pedagogical_model` in the extraction YAML, preserving the source-local concept/process graph, ordered teaching route, declared/inferred outcomes and prerequisites, strengths, limits and comparison pointer;
 - an extraction report with access limits and unresolved questions.
 
 No page edits, published new pages, concept-registry mutations, or graph-projection changes in this phase. Candidate destinations and graph nodes/edges are proposals only.
