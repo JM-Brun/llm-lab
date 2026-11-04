@@ -28,7 +28,7 @@ The comparison distinguishes a repeated explanatory sequence from a short remind
 
 ### F1 — Softmax and temperature are taught substantively in both logits and probabilities
 
-<badge>High confidence</badge>
+**Confidence: high.**
 
 **Pages:** `site/fr/logits.qmd`, `site/en/logits.qmd`, `site/fr/probabilites.qmd`, `site/en/probabilities.qmd`; with a shorter contextual reminder in `generation.qmd` (FR/EN).
 
@@ -54,7 +54,7 @@ The comparison distinguishes a repeated explanatory sequence from a short remind
 
 ### F2 — A stated text-data learning outcome is not visibly taught on that page
 
-<badge color="warning">Medium confidence</badge>
+**Confidence: medium.**
 
 **Pages:** `site/fr/text-data.qmd`, `site/en/text-data.qmd`, and the canonical `tokenization-strategies.qmd` pair.
 
