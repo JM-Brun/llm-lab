@@ -83,6 +83,7 @@ These terms are not interchangeable with other internal dimensions: the **number
 *Width* is sometimes used more broadly for other internal dimensions, so check which dimension an article or model card means. For tensor shapes and projection dimensions, see [Tensors](tensors.qmd); for a concrete configuration, see the [GPT configuration walkthrough](gpt-config-walkthrough.qmd). Depth and width describe network structure, but neither alone predicts model performance.
 
 Self-attention allows permitted positions to exchange information. Its detailed computation — Q/K/V projections, scores, scaling, softmax, and causal masking — is covered in the canonical lessons on [Q/K/V](queries-keys-values.qmd), [scaled dot-product attention](scaled-dot-product-attention.qmd), and [causal masking](causal-masking.qmd). Positional information may be added to embeddings or incorporated into queries and keys (see [positional information](positional-encoding.qmd)).
+
 ## 3. From representations to logits
 
 After the final block, an output projection produces the **logits**: one unnormalized score per vocabulary token. The [logits lesson](logits.qmd) explains how to interpret them; the [output probabilities lesson](probabilities.qmd) covers their transformation into a distribution. This page stops at the network output: selecting the next token, appending it to the context, and repeating the process belong to [autoregressive generation](generation.qmd).
