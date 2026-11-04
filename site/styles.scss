@@ -1159,9 +1159,6 @@ details.spot-the-fallacy .fallacy-content {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: .8rem;
   margin: 1rem 0;
-  padding: 0;
-  list-style: none;
-  counter-reset: guided-route;
 }
 .guided-route-stage {
   min-width: 0;
@@ -1170,15 +1167,6 @@ details.spot-the-fallacy .fallacy-content {
   border-top: 3px solid var(--llm-brand);
   border-radius: .55rem;
   background: #FBFDFC;
-}
-.guided-route-number {
-  display: inline-block;
-  margin-bottom: .3rem;
-  color: var(--llm-brand-dark);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: .75rem;
-  font-weight: 800;
-  letter-spacing: .06em;
 }
 .guided-route-stage h3 {
   margin: 0 0 .45rem;
@@ -1192,13 +1180,22 @@ details.spot-the-fallacy .fallacy-content {
   font-size: .87rem;
   line-height: 1.45;
 }
-.guided-route-links {
+.guided-route-stage ul {
   margin: 0;
   padding-left: 1.1rem;
   font-size: .86rem;
   line-height: 1.55;
 }
-.guided-route-links li { margin: .12rem 0; }
+.guided-route-stage li { margin: .12rem 0; }
+.guided-route-stage strong {
+  display: block;
+  margin: .65rem 0 .2rem;
+  color: #64748B;
+  font-size: .73rem;
+  font-weight: 750;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
 .guided-route-companion {
   margin: .9rem 0 1.4rem;
   padding: .8rem 1rem;
@@ -1216,14 +1213,3 @@ details.spot-the-fallacy .fallacy-content {
   .guided-route-stage { padding: .8rem .85rem; }
 }
 
-.guided-route-optional-label {
-  margin: .65rem 0 .2rem !important;
-  color: #64748B !important;
-  font-size: .73rem !important;
-  font-weight: 750;
-  letter-spacing: .035em;
-  text-transform: uppercase;
-}
-.guided-route-optional-links {
-  font-size: .8rem;
-}
