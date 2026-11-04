@@ -252,7 +252,7 @@ The overall scan status should remain partial while any in-scope component is un
 
 
 
-## 8. Standard deliverable templates
+## 7. Standard deliverable templates
 
 Use the templates in [`docs/workflows/templates/`](templates/) as starting points. They are deliberately separate because each artifact has a different responsibility:
 
@@ -274,7 +274,7 @@ Use the templates in [`docs/workflows/templates/`](templates/) as starting point
 - Template files are examples, not schemas. Run the repository's actual validators against completed records and update templates when the canonical data model changes.
 - Preserve unknown values as null/unknown and distinguish `not-inspected`, `unavailable`, `not-applicable` and `not-verified` where relevant.
 
-## 9. Q/K/V worked application
+## 8. Q/K/V worked application
 
 The Q/K/V comparison is the initial worked application of this workflow:
 - DEV / Nishanthan provides a compact end-to-end sequence and a multi-head summary; the comparison exposed four canonical concepts already taught but absent from the registry.
