@@ -37,7 +37,11 @@ Six conceptual stages provide an entry point and a suggested progression. Primar
 
 {{< include ../includes/generated-guided-route-en.qmd >}}
 
+::: {.guided-route-companion}
 
+**Practical companion:** If you want to build a small GPT, follow the [guided build path](build-path.html). Corpus preparation and training-example construction form a dedicated model-learning branch, not a prerequisite for inference.
+
+:::
 
 :::
 
