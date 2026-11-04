@@ -266,6 +266,7 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
         return ["data/sources.yml: expected a sources list"]
 
     source_ids: set[str] = set()
+    source_types_by_id: dict[str, str] = {}
     for index, source in enumerate(source_entries):
         where = f"data/sources.yml:sources[{index}]"
         if not isinstance(source, dict):
@@ -278,6 +279,7 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
             errors.append(f"{where}.id: duplicate source ID {source_id!r}")
         else:
             source_ids.add(source_id)
+            source_types_by_id[source_id] = str(source.get("source_type"))
 
         if source.get("source_type") not in source_types:
             errors.append(f"{where}.source_type: unsupported value {source.get('source_type')!r}")
@@ -357,6 +359,22 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
             errors.append(f"{where}: expected schema_version: 1")
             continue
         source_id = data.get("source_id")
+        pedagogical_model = data.get("pedagogical_model")
+        if source_types_by_id.get(source_id) in {"blog", "tutorial", "course", "book-chapter"}:
+            if pedagogical_model is None:
+                errors.append(f"{where}.pedagogical_model: required for instructional sources")
+            else:
+                _validate_pedagogical_model(
+                    pedagogical_model,
+                    f"{where}.pedagogical_model",
+                    errors,
+                )
+        elif pedagogical_model is not None:
+            _validate_pedagogical_model(
+                pedagogical_model,
+                f"{where}.pedagogical_model",
+                errors,
+            )
         if source_id not in source_ids:
             errors.append(f"{where}.source_id: unknown source {source_id!r}")
         items = data.get("items")
