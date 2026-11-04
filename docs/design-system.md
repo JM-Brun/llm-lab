@@ -67,6 +67,22 @@ Keep navigation patterns distinct:
 
 Do not manually reproduce breadcrumb markup in individual pages. If the sidebar hierarchy changes, the breadcrumb should follow it automatically. Pages that are not represented in the sidebar (for example, a standalone reference page) may legitimately have no breadcrumb.
 
+## Reader-facing metadata and concept emphasis
+
+Page-classification metadata is not part of the reading interface. The controlled `type`, `destination`, `topic`, `level`, `language`, `status`, and `domain` values remain in the source and generated data for tools, filters, search, and graph construction. Do not display their raw identifiers as chips, badges, a metadata strip, or a tag cloud. This is a presentation rule, not a reason to delete or weaken the metadata contract.
+
+Show reader-facing orientation only when it has a concrete pedagogical purpose. Use natural language (for example, “Prerequisites”, “What you will learn”, or “Optional deep dive”) rather than exposing internal field names. Reuse existing callouts and page patterns; do not add a uniform metadata panel to every page.
+
+Scientific and technical terms may be highlighted in the prose when they help readers recognize an important concept. Prefer a contextual inline link to the canonical explanation, with emphasis at the first useful occurrence. Use the existing `concept-link` class for a subtle, consistent treatment where a distinction from ordinary navigation links is useful:
+
+```markdown
+[attention croisée](cross-attention.qmd){.concept-link}
+```
+
+The link should resolve to a useful explanation, not merely to a page that happens to mention the term. Keep the definition or essential qualification in the current page when needed for comprehension. Avoid repeated highlighting, keyword clouds, decorative pills, and links on every occurrence. The bilingual concept registry in `data/concepts.yml` is the vocabulary reference; it does not require every associated concept to be displayed on every page.
+
+The goal is to make concepts easier to recognize and explore without turning the prose into an index.
+
 ## Callout semantics
 
 Use the same Quarto callout types for the same reader need, but do not require every page to contain the same number of callouts.

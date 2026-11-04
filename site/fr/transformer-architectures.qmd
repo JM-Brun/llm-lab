@@ -1,28 +1,31 @@
 ---
 title: "Architectures Transformer : encodeur, encodeur-décodeur et décodeur"
-subtitle: "Trois organisations de l'information, des objectifs et des usages différents"
-keywords: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:fr", "status:published"]
+subtitle: "Trois façons d'organiser le traitement d'une séquence"
+description: "Compare les architectures Transformer encodeur seul, encodeur-décodeur et décodeur seul, leurs flux d'information et leurs objectifs typiques."
+keywords: ["type:concept-lesson","destination:understand","topic:transformer-architectures","level:core","language:fr","status:published"]
 lang: fr
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/transformer-architectures"
-scope: "Compare les architectures Transformer encodeur seul, encodeur-décodeur et décodeur seul par leur flux d'information, leurs masques, leurs objectifs d'entraînement typiques et leurs usages ; distingue explicitement architecture, objectif et tâche, sans prétendre que ces trois familles couvrent toutes les architectures de modèles de langage."
-purpose: "Le lecteur doit pouvoir expliquer comment chaque famille traite le contexte, identifier les différences entre attention bidirectionnelle, causale et attention croisée, et comprendre pourquoi le choix d'architecture ne détermine pas à lui seul l'objectif d'entraînement ni l'usage."
+scope: "Ressource de comparaison facultative : présente les trois configurations Transformer selon le contexte accessible, le flux d'information et les mécanismes d'attention ; distingue architecture, objectif d'entraînement et tâche, puis situe les limites de cette classification."
+purpose: "Le lecteur doit pouvoir comparer encodeur seul, encodeur-décodeur et décodeur seul, expliquer les rôles des attentions bidirectionnelle, causale et croisée, et ne pas confondre architecture, objectif et tâche."
 suggested_route:
   previous: null
   next: null
 hierarchy:
   parents: ["fr/llm-overview"]
   children: ["fr/cross-attention"]
-related: ["fr/transformer-history", "fr/transformer"]
+related: ["fr/transformer-history", "fr/transformer", "fr/generation", "fr/hybrid-llm-architectures", "fr/llm-computational-complexity"]
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
-Les Transformers ne forment pas une architecture unique. Selon que le réseau utilise un encodeur, un décodeur ou les deux, l'information circule différemment : une séquence peut être représentée dans les deux directions, transformée en une autre séquence, ou prolongée token par token. Ces choix influencent les usages possibles, mais ne déterminent pas à eux seuls l'objectif d'entraînement.
+Un Transformer peut utiliser un encodeur, un décodeur ou les deux. Ce choix détermine quelles positions peuvent échanger de l'information et comment le modèle traite une séquence. Il ne fixe pas, à lui seul, l'objectif d'entraînement ni la tâche réalisée.
 :::
+
+Cette comparaison est facultative : pour suivre le fil principal, passer directement du [panorama des LLM](llm-overview.qmd) à la [génération](generation.qmd).
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 Vous pourrez :
@@ -35,35 +38,35 @@ Vous pourrez :
 
 | Famille | Flux d'information | Masque et attention | Objectifs typiques | Usages fréquents | Exemples |
 |---|---|---|---|---|---|
-| **Encodeur seul** | L'encodeur transforme une séquence entière en représentations contextualisées. | Auto-attention généralement bidirectionnelle : chaque position peut exploiter les autres positions de l'entrée. | Prédiction de tokens masqués (*masked language modeling*), parmi d'autres objectifs possibles. | Classification, recherche sémantique, extraction et représentation de texte. | BERT, RoBERTa |
-| **Encodeur-décodeur** | L'encodeur représente l'entrée ; le décodeur produit une séquence cible en s'appuyant sur cette représentation. | Attention de l'encodeur sur l'entrée ; auto-attention causale du décodeur ; attention croisée vers les états de l'encodeur. | Reconstruction, débruitage ou apprentissage texte-vers-texte, selon le modèle. | Traduction, résumé, transformation d'une séquence en une autre. | Transformer original, T5 |
-| **Décodeur seul** | Le décodeur prolonge un préfixe en produisant des représentations utiles à la prédiction suivante. | Auto-attention causale : une position ne consulte pas les tokens futurs. | Prédiction autorégressive du prochain token, dans les GPT classiques. | Continuation et génération conditionnée par un prompt. | GPT, GPT-2 |
+| **Encodeur seul** | L'encodeur transforme une séquence entière en représentations contextualisées. | Auto-attention généralement bidirectionnelle : chaque position peut exploiter les autres positions de l'entrée. | Prédiction de tokens masqués (*masked language modeling*), parmi d'autres objectifs possibles. | Classification, recherche sémantique, extraction et représentation de texte. | [BERT](https://huggingface.co/google-bert/bert-base-uncased), [RoBERTa](https://huggingface.co/FacebookAI/roberta-base) |
+| **Encodeur-décodeur** | L'encodeur représente l'entrée ; le décodeur produit une séquence cible en s'appuyant sur cette représentation. | Attention de l'encodeur sur l'entrée ; auto-attention causale du décodeur ; attention croisée vers les états de l'encodeur. | Reconstruction, débruitage ou apprentissage texte-vers-texte, selon le modèle. | Traduction, résumé, transformation d'une séquence en une autre. | [Transformer original](https://arxiv.org/abs/1706.03762), [T5](https://huggingface.co/google-t5/t5-base) |
+| **Décodeur seul** | Le décodeur prolonge un préfixe en produisant des représentations utiles à la prédiction suivante. | Auto-attention causale : une position ne consulte pas les tokens futurs. | Prédiction autorégressive du prochain token, dans les GPT classiques. | Continuation et génération conditionnée par un prompt. | [GPT (2018)](https://openai.com/index/language-unsupervised/), [GPT-2](https://huggingface.co/openai-community/gpt2) |
+
+Les liens renvoient aux fiches de modèles ou aux publications d'origine. Pour les articles : [BERT](https://arxiv.org/abs/1810.04805), [RoBERTa](https://arxiv.org/abs/1907.11692), [T5](https://jmlr.org/papers/v21/20-074.html), [GPT](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf) et [GPT-2](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf). **RoBERTa reste un modèle encodeur seul** : il reprend la base architecturale de BERT et modifie surtout la recette de pré-entraînement ; ce n'est pas une quatrième configuration.
 
 ## Les trois architectures en un schéma
 
 ![Comparaison des flux d'information dans les architectures encodeur seul, décodeur seul et encodeur-décodeur.](../images/transformer-attention-architectures.svg){fig-alt="Encodeur seul : auto-attention bidirectionnelle. Décodeur seul : auto-attention causale. Encodeur-décodeur : auto-attention dans l'encodeur, auto-attention causale dans le décodeur et attention croisée vers la mémoire de l'encodeur." width=100%}
 
-Le point distinctif de l'architecture encodeur-décodeur est que le décodeur peut consulter les représentations produites par l'encodeur. Ce mécanisme est appelé **attention croisée**. Son fonctionnement détaillé relève d'un [approfondissement avancé](cross-attention.qmd) : il n'est pas nécessaire pour comprendre la comparaison générale des architectures.
-
-
+Dans l'architecture encodeur-décodeur, le décodeur consulte les représentations produites par l'encodeur au moyen de l'[**attention croisée**](cross-attention.qmd){.concept-link}. La [page dédiée](cross-attention.qmd) en détaille le calcul ; il n'est pas nécessaire pour comprendre la comparaison générale.
 
 ### Encodeur seul : contextualiser une entrée
 
-Un encodeur traite généralement la séquence fournie comme un tout. Avec une attention bidirectionnelle, la représentation d'un token peut intégrer des informations situées avant et après lui dans l'entrée. C'est adapté à des tâches où l'on veut représenter, classer ou comparer un texte complet.
+L'encodeur traite la séquence d'entrée dans son ensemble. Avec une attention bidirectionnelle, chaque position peut exploiter les tokens situés avant et après elle. Cette configuration convient notamment à la représentation ou à la classification d'un texte complet.
 
-Dans BERT, l'objectif de pré-entraînement emblématique consiste à prédire des tokens masqués à partir de leur contexte gauche et droit. Cet objectif exploite l'architecture ; il ne constitue pas la définition de tout encodeur.
+Dans [BERT](https://huggingface.co/google-bert/bert-base-uncased), l'objectif de pré-entraînement emblématique consiste à prédire des tokens masqués à partir de leur contexte gauche et droit. [RoBERTa](https://huggingface.co/FacebookAI/roberta-base) conserve cette configuration encodeur seul tout en optimisant notamment les conditions de pré-entraînement. L'objectif de prédiction masquée est associé à cette architecture, pas sa définition.
 
 ### Encodeur-décodeur : transformer une séquence en une autre
 
-L'encodeur construit une représentation de l'entrée. Le décodeur génère ensuite la sortie, généralement de façon autorégressive, en combinant son propre contexte déjà produit et l'information issue de l'encodeur via l'attention croisée (*cross-attention*).
+L'encodeur construit des représentations de l'entrée. Le décodeur produit ensuite la séquence cible, généralement de façon autorégressive, en combinant son contexte déjà généré avec l'information de l'encodeur via l'attention croisée (*cross-attention*).
 
-Cette séparation est naturelle lorsque l'entrée et la sortie jouent des rôles distincts : traduire une phrase, résumer un document ou convertir un texte dans un autre format. L'article Transformer de 2017 et T5 sont des exemples importants de cette famille. Le détail du mécanisme — notamment la provenance distincte de Q, K et V — est traité dans l'[approfondissement avancé consacré à l'attention croisée](cross-attention.qmd).
+Cette organisation convient lorsque l'entrée et la sortie ont des rôles distincts : traduction, résumé ou transformation de texte. Le [Transformer original (2017)](https://arxiv.org/abs/1706.03762) et [T5](https://huggingface.co/google-t5/t5-base) en sont deux exemples. La page sur l'[attention croisée](cross-attention.qmd) détaille le mécanisme et l'origine respective de Q, K et V.
 
 ### Décodeur seul : prolonger un préfixe
 
-Un décodeur seul utilise un masque causal : pour calculer la représentation à une position, il ne peut pas consulter les tokens futurs. En entraînement autorégressif, chaque position apprend à prédire le token qui suit le préfixe disponible. À l'inférence, le système répète cette prédiction et ajoute chaque token sélectionné au contexte.
+Le décodeur utilise un **masque causal** : une position ne peut pas consulter les tokens futurs. À l'entraînement, chaque position sert à prédire le token suivant. À l'inférence, le modèle répète ce calcul et ajoute chaque token sélectionné au contexte ; la page [Générer du texte](generation.qmd) détaille cette boucle.
 
-C'est l'architecture retenue dans le parcours de construction du petit GPT de LLM Lab. Ce choix rend la génération inspectable étape par étape ; il ne signifie pas que tous les LLM sont des décodeurs seuls.
+C'est la configuration des [GPT (2018)](https://openai.com/index/language-unsupervised/) et [GPT-2](https://huggingface.co/openai-community/gpt2), ainsi que celle retenue pour construire le petit GPT de LLM Lab. Elle rend la génération facile à observer étape par étape, mais tous les LLM ne sont pas des décodeurs seuls.
 
 ## Architecture, objectif et tâche : trois notions différentes
 
@@ -75,21 +78,69 @@ Ces termes sont souvent confondus, alors qu'ils répondent à des questions diff
 
 Une même famille peut être entraînée avec plusieurs objectifs ; un objectif proche peut être décliné dans plusieurs architectures. Le tableau présente des associations fréquentes, pas des correspondances obligatoires.
 
-## Le périmètre de cette comparaison
+## Au-delà des trois configurations
 
-Les trois familles décrites ici sont les grandes configurations du **Transformer**. Elles ne couvrent pas toutes les architectures de modèles de langage ou de séquence : des modèles à espace d'état, des architectures récurrentes et des systèmes hybrides existent également. Inversement, un Transformer n'est pas nécessairement un LLM : l'architecture ne renseigne pas à elle seule sur l'échelle, les données ou les capacités du modèle.
+Ces trois familles décrivent les principales configurations du **Transformer**, pas toutes les architectures de modèles de langage. Les modèles à espace d'état, les architectures récurrentes et les modèles hybrides proposent d'autres compromis. **MoE (*Mixture of Experts*) désigne une stratégie d'activation parcimonieuse d'experts** : elle peut être combinée à un Transformer et ne constitue donc pas, à elle seule, une famille exclusive des trois précédentes.
 
-Pour une lecture facultative des architectures qui dépassent ce socle Transformer, voir l’étude de cas sur les [architectures hybrides et Nemotron](hybrid-llm-architectures.qmd). L’[historique des Transformers](transformer-history.qmd) situe ces architectures dans l’évolution de la recherche ; le calcul interne du [GPT décodeur seul retenu dans ce projet](transformer.qmd) en montre une réalisation particulière.
+Le Transformer n'est pas non plus synonyme de LLM : l'architecture ne détermine ni l'échelle, ni les données, ni les capacités du modèle. Pour un exemple d'architecture hybride combinant plusieurs mécanismes, voir l'[étude de cas Nemotron](hybrid-llm-architectures.qmd). Pour replacer ces familles dans l'évolution du domaine, consulter l'[historique des Transformers](transformer-history.qmd).
 
-::: {.callout-note title="Repère — les LLM ne sont pas tous des Transformers purs"}
-Le Transformer est une architecture majeure, pas une obligation. D'autres modèles utilisent des **états récurrents** pour résumer le passé avec une mémoire compacte, ou combinent ces états avec quelques couches d'attention. D'autres encore utilisent une **activation parcimonieuse** : seuls certains réseaux experts traitent chaque token. Ces choix changent les compromis entre accès précis au contexte, mémoire, calcul et capacité. Il suffit ici de retenir que plusieurs architectures peuvent résoudre le problème de modélisation du langage ; les mécanismes de Mamba, MoE et les architectures hybrides sont détaillés dans l'[étude de cas Nemotron](hybrid-llm-architectures.qmd).
-:::
+L'attention dense effectue un nombre d'interactions en \(O(T^2)\), mais ces interactions sont parallélisables pendant l'entraînement et le préremplissage. À l'inverse, une récurrence peut réduire le travail à \(O(T)\), tout en dépendant de l'état calculé à l'étape précédente. La génération autorégressive reste séquentielle entre tokens. Le [guide sur la complexité et le parallélisme](llm-computational-complexity.qmd) détaille ces compromis de calcul, de mémoire et de dépendances. Le calcul interne du GPT décodeur seul du projet est présenté dans [GPT et Transformer](transformer.qmd).
 
-## Complexité et parallélisme : deux notions à ne pas confondre
+## Mini-expérience — observer trois comportements
 
-L'attention dense d'un Transformer effectue un nombre d'interactions qui croît comme \(T^2\) avec la longueur de séquence \(T\). Pourtant, ces interactions sont largement parallélisables pendant l'entraînement et le préremplissage (*prefill*). À l'inverse, une récurrence peut demander un travail linéaire en \(T\), tout en dépendant de l'état calculé à l'étape précédente. Enfin, la génération autorégressive standard reste séquentielle entre tokens, même si chaque étape utilise des opérations parallèles.
+Cette expérience fait fonctionner un modèle représentatif de chaque configuration. Elle sert à **observer des objectifs et des interfaces d'utilisation différents**, pas à mesurer quel modèle est « le meilleur ».
 
-Retenez trois questions distinctes : **combien de calcul ? quelle mémoire ? quelle chaîne de dépendances ?** Le [guide avancé sur la complexité et le parallélisme](llm-computational-complexity.qmd) les analyse en détail.
+### Préparer l'environnement
+
+Dans un environnement Python isolé :
+
+```bash
+python -m pip install torch transformers
+```
+
+Le premier lancement télécharge les poids des trois modèles. L'exécution sur CPU est possible, mais peut prendre quelques minutes et nécessite plusieurs centaines de mégaoctets à quelques gigaoctets de mémoire selon les modèles et les bibliothèques.
+
+### Exécuter les trois exemples
+
+```python
+from transformers import pipeline
+
+# 1. Encodeur seul : proposer des tokens pour un emplacement masqué.
+bert = pipeline("fill-mask", model="google-bert/bert-base-uncased")
+for candidate in bert("Paris is the capital of [MASK].", top_k=5):
+    print(candidate["token_str"], round(candidate["score"], 3))
+
+# 2. Décodeur seul : continuer un préfixe, sans voir les tokens futurs.
+gpt2 = pipeline("text-generation", model="openai-community/gpt2")
+continuation = gpt2(
+    "A language model learns to",
+    max_new_tokens=24,
+    do_sample=False,
+    pad_token_id=gpt2.tokenizer.eos_token_id,
+)
+print(continuation[0]["generated_text"])
+
+# 3. Encodeur-décodeur : produire une séquence cible à partir d'une entrée.
+t5 = pipeline("text2text-generation", model="google-t5/t5-small")
+translation = t5("translate English to German: The house is wonderful.")
+print(translation[0]["generated_text"])
+```
+
+### Interpréter les observations
+
+- **BERT** renvoie plusieurs propositions pour une position masquée. Il exploite le contexte situé à gauche et à droite de cette position dans l'entrée.
+- **GPT-2** prolonge le préfixe. Le masque causal empêche chaque position de consulter les tokens qui la suivent.
+- **T5** reçoit une entrée et génère une séquence cible. Son décodeur autorégressif utilise aussi l'information de l'entrée grâce à l'attention croisée.
+
+Les sorties exactes peuvent varier avec les versions des bibliothèques et les poids téléchargés. Le choix des phrases est volontairement illustratif : ces trois appels ne constituent **ni un benchmark ni une comparaison de qualité**. Les modèles diffèrent par leurs données, leur taille, leur tokenizer et leur entraînement.
+
+### Questions à examiner
+
+1. Pourquoi BERT peut-il proposer un mot en s'appuyant sur le contexte qui vient après le masque, alors que GPT-2 ne peut pas utiliser les tokens futurs ?
+2. Dans l'exemple T5, quelles informations proviennent de l'entrée et lesquelles sont produites par le décodeur ?
+3. Pourquoi ne peut-on pas conclure, à partir de ces trois sorties, qu'une architecture est globalement supérieure aux autres ?
+
+**À retenir :** la configuration architecturale contraint le flux d'information ; l'objectif d'entraînement et la tâche déterminent ce que le modèle apprend à faire et ce qu'on lui demande à l'inférence.
 
 ::: {.self-check}
 
@@ -99,7 +150,7 @@ Retenez trois questions distinctes : **combien de calcul ? quelle mémoire ? que
 
 1. **Pourquoi BERT peut-il exploiter des tokens situés après le token à représenter ?** Parce que son encodeur utilise généralement une attention bidirectionnelle sur toute l'entrée ; il n'est pas soumis au masque causal d'un GPT.
 2. **Quelle opération distingue particulièrement un décodeur d'un encodeur-décodeur ?** Dans le second, le décodeur dispose d'une attention croisée vers les représentations produites par l'encodeur.
-3. **Le prochain-token prediction définit-il tous les Transformers ?** Non. C'est un objectif typique des décodeurs autorégressifs, pas une propriété de tous les Transformers.
+3. **La prédiction du prochain token définit-elle tous les Transformers ?** Non. C'est un objectif typique des décodeurs autorégressifs, pas une propriété de tous les Transformers.
 4. **Un Transformer est-il nécessairement un LLM ?** Non. L'architecture ne détermine ni la taille du modèle ni son statut de LLM.
 :::
 
