@@ -18,13 +18,30 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from check_page_metadata import _load_page
+from check_page_metadata import _load_page  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 TOKEN = re.compile(r"[^\W\d_]{3,}", re.UNICODE)
 STOPWORDS = {
-    "avec", "dans", "des", "est", "les", "par", "pour", "que", "qui", "sur",
-    "the", "and", "for", "from", "into", "that", "this", "with", "what",
+    "avec",
+    "dans",
+    "des",
+    "est",
+    "les",
+    "par",
+    "pour",
+    "que",
+    "qui",
+    "sur",
+    "the",
+    "and",
+    "for",
+    "from",
+    "into",
+    "that",
+    "this",
+    "with",
+    "what",
 }
 
 
@@ -128,10 +145,9 @@ def render_report(result: dict[str, Any]) -> str:
     if result["editorial_candidates"]:
         for item in result["editorial_candidates"]:
             left, right = item["pages"]
-            lines.append(
-                f"- `{left}` ↔ `{right}` — {item['field']} "
-                f"(overlap {item['score']:.3f})"
-            )
+            field = item["field"]
+            score = item["score"]
+            lines.append(f"- `{left}` ↔ `{right}` — {field} (overlap {score:.3f})")
     else:
         lines.append("No pairs crossed the conservative lexical-overlap threshold.")
     lines.extend(
