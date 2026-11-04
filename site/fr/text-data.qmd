@@ -14,7 +14,7 @@ suggested_route:
   previous: "fr/generation"
   next: "fr/tokenization-strategies"
 hierarchy:
-  parents: []
+  parents: ["fr/generation"]
   children: ["fr/unicode-text", "fr/tokenization-strategies", "fr/embedding-space"]
 related: ["fr/transformer"]
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:fr", "status:published"]

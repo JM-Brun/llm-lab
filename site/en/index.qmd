@@ -55,44 +55,58 @@ Lessons use three markers to distinguish different kinds of material:
 
 These markers describe the evidence available; they do not make all evidence equivalent. A diagram makes a structure readable but does not prove a property; a derivation establishes a result under stated assumptions; a test checks the cases it covers; an experiment compares configurations under a documented protocol, metrics and limitations.
 
-## Three processes to distinguish
+## Two operational pathways and cross-cutting evaluation
 
-The same model is involved in several processes, but they have different objectives and dynamics:
+The same model participates in several processes, but their objectives and dynamics differ:
 
 <figure class="llm-flow-figure">
-<svg class="llm-flow" viewBox="0 0 1060 620" role="img" aria-labelledby="llm-flow-title-en llm-flow-desc-en" xmlns="http://www.w3.org/2000/svg">
-<title id="llm-flow-title-en">Two operational processes, with cross-cutting evaluation</title><desc id="llm-flow-desc-en">Inference uses fixed parameters, while learning updates them. Evaluation analyzes held-out data; its findings can inform data, learning, and decoding choices. The test set remains reserved for final assessment.</desc>
-<defs><marker id="flow-arrow-en" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7b91a6"/></marker><marker id="flow-feedback-en" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#39845b"/></marker></defs>
+<svg class="llm-flow" viewBox="0 0 1220 650" role="img" aria-labelledby="llm-flow-title-en llm-flow-desc-en" xmlns="http://www.w3.org/2000/svg">
+<title id="llm-flow-title-en">Interactive map of inference, learning, and evaluation</title>
+<desc id="llm-flow-desc-en">The top lane describes autoregressive inference with fixed parameters, from text context through next-token selection and appending it to the context. The second lane describes learning: corpus and tokenizer, examples, forward pass, loss, gradients, and parameter updates. The third lane shows evaluation on held-out data. Each clickable block opens a canonical lesson.</desc>
+<defs>
+<marker id="flow-arrow-en" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7b91a6"/></marker>
+<marker id="flow-feedback-en" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#39845b"/></marker>
+</defs>
+<text x="20" y="28" class="flow-kicker">1 · INFERENCE / GENERATION — FIXED PARAMETERS</text>
 <g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#flow-arrow-en)">
-<path d="M240 105 H280"/><path d="M500 105 H540"/><path d="M760 105 H800"/><path d="M910 145 V174 H130 V145"/>
-<path d="M240 285 H280"/><path d="M500 285 H540"/><path d="M760 285 H800"/><path d="M910 325 V355 H390 V325"/>
+<path d="M150 105 H170"/><path d="M300 105 H320"/><path d="M450 105 H470"/><path d="M600 105 H620"/><path d="M750 105 H770"/><path d="M900 105 H920"/><path d="M1050 105 H1070"/>
+<path d="M1135 150 V194 H85 V150"/>
 </g>
+<g class="flow-node"><a href="text-data.html" aria-label="Text and data: context and tokens"><rect x="20" y="60" width="130" height="90" rx="12"/><text x="32" y="82" class="flow-kicker">INPUT</text><text x="32" y="108" class="flow-title">Text / prompt</text><text x="32" y="130" class="flow-subtitle">tokenization → IDs</text></a></g>
+<g class="flow-node"><a href="embedding-space.html" aria-label="Embedding space"><rect x="170" y="60" width="130" height="90" rx="12"/><text x="182" y="82" class="flow-kicker">VECTORS</text><text x="182" y="108" class="flow-title">Embeddings</text><text x="182" y="130" class="flow-subtitle">lookup</text></a></g>
+<g class="flow-node"><a href="positional-encoding.html" aria-label="Positional information"><rect x="320" y="60" width="130" height="90" rx="12"/><text x="332" y="82" class="flow-kicker">POSITION</text><text x="332" y="108" class="flow-title">Position</text><text x="332" y="130" class="flow-subtitle">encoding / RoPE</text></a></g>
+<g class="flow-node"><a href="transformer.html" aria-label="Transformer computation"><rect x="470" y="60" width="130" height="90" rx="12"/><text x="482" y="82" class="flow-kicker">NETWORK</text><text x="482" y="108" class="flow-title">Transformer</text><text x="482" y="130" class="flow-subtitle">attention + MLP</text></a></g>
+<g class="flow-node"><a href="contextualized-representations.html" aria-label="Contextualized representations"><rect x="620" y="60" width="130" height="90" rx="12"/><text x="632" y="82" class="flow-kicker">HIDDEN OUTPUT</text><text x="632" y="108" class="flow-title">Contextualized</text><text x="632" y="130" class="flow-subtitle">hidden states</text></a></g>
+<g class="flow-node"><a href="logits.html" aria-label="Logits"><rect x="770" y="60" width="130" height="90" rx="12"/><text x="782" y="82" class="flow-kicker">SCORES</text><text x="782" y="108" class="flow-title">Logits</text><text x="782" y="130" class="flow-subtitle">unnormalized</text></a></g>
+<g class="flow-node"><a href="probabilities.html" aria-label="Probabilities"><rect x="920" y="60" width="130" height="90" rx="12"/><text x="932" y="82" class="flow-kicker">DISTRIBUTION</text><text x="932" y="108" class="flow-title">Probabilities</text><text x="932" y="130" class="flow-subtitle">softmax</text></a></g>
+<g class="flow-node"><a href="generation.html" aria-label="Generation and next-token selection"><rect x="1070" y="60" width="130" height="90" rx="12"/><text x="1082" y="82" class="flow-kicker">DECODING</text><text x="1082" y="108" class="flow-title">Selection</text><text x="1082" y="130" class="flow-subtitle">or sampling</text></a></g>
+<text x="430" y="174" class="flow-note">Append the selected token to the context, then repeat — without changing θ</text>
+<text x="20" y="216" class="flow-note">Depending on the architecture, position is added to embeddings or integrated into attention (e.g. RoPE).</text>
+
+<text x="20" y="238" class="flow-kicker">2 · LEARNING — PARAMETER UPDATES</text>
 <g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#flow-arrow-en)">
-<path d="M240 495 H420"/><path d="M640 495 H820"/>
+<path d="M240 315 H260"/><path d="M480 315 H500"/><path d="M720 315 H740"/><path d="M960 315 H980"/>
+<path d="M1090 360 V392 H610 V360"/>
 </g>
-<g class="flow-connectors flow-feedback" fill="none" stroke="#39845b" stroke-width="2.4" stroke-dasharray="7 6" marker-end="url(#flow-feedback-en)">
-<path d="M840 455 C790 400 300 380 130 325"/><path d="M900 455 C920 405 915 365 910 325"/><path d="M1000 455 C1060 360 1060 200 910 145"/>
+<g class="flow-node"><a href="corpus-preparation.html" aria-label="Corpus and tokenizer preparation"><rect x="20" y="270" width="220" height="90" rx="12"/><text x="34" y="292" class="flow-kicker">DATA</text><text x="34" y="318" class="flow-title">Corpus + tokenizer</text><text x="34" y="340" class="flow-subtitle">provenance, filtering, splits</text></a></g>
+<g class="flow-node"><a href="training-examples.html" aria-label="Training examples"><rect x="260" y="270" width="220" height="90" rx="12"/><text x="274" y="292" class="flow-kicker">SEQUENCES</text><text x="274" y="318" class="flow-title">Inputs + targets</text><text x="274" y="340" class="flow-subtitle">windows and shifting</text></a></g>
+<g class="flow-node"><a href="transformer.html" aria-label="Model forward pass"><rect x="500" y="270" width="220" height="90" rx="12"/><text x="514" y="292" class="flow-kicker">PREDICTIONS</text><text x="514" y="318" class="flow-title">Forward pass</text><text x="514" y="340" class="flow-subtitle">using parameters θ</text></a></g>
+<g class="flow-node"><a href="loss.html" aria-label="Loss function"><rect x="740" y="270" width="220" height="90" rx="12"/><text x="754" y="292" class="flow-kicker">OBJECTIVE</text><text x="754" y="318" class="flow-title">Loss</text><text x="754" y="340" class="flow-subtitle">prediction error against targets</text></a></g>
+<g class="flow-node"><a href="gradients.html" aria-label="Gradients and parameter update"><rect x="980" y="270" width="220" height="90" rx="12"/><text x="994" y="292" class="flow-kicker">OPTIMIZATION</text><text x="994" y="318" class="flow-title">Gradients + update</text><text x="994" y="340" class="flow-subtitle">modify parameters θ</text></a></g>
+<text x="650" y="414" class="flow-note">Updated parameters are used in the next computation</text>
+
+<text x="20" y="448" class="flow-kicker">3 · EVALUATION — CROSS-CUTTING FUNCTION</text>
+<g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#flow-arrow-en)">
+<path d="M240 525 H420"/><path d="M640 525 H820"/>
 </g>
-<text x="20" y="42" class="flow-kicker">INFERENCE / GENERATION · FIXED PARAMETERS</text>
-<g class="flow-node"><a href="text-data.html" aria-label="Previously generated tokens"><rect x="20" y="65" width="220" height="80" rx="12"/><text x="34" y="86" class="flow-kicker">CONTEXT</text><text x="34" y="111" class="flow-title">Previously generated tokens</text><text x="34" y="130" class="flow-subtitle">and current input</text></a></g>
-<g class="flow-node"><a href="transformer.html" aria-label="Transformer with θ"><rect x="280" y="65" width="220" height="80" rx="12"/><text x="294" y="86" class="flow-kicker">PARAMETERIZED MODEL</text><text x="294" y="111" class="flow-title">Transformer with θ</text><text x="294" y="130" class="flow-subtitle">weights unchanged</text></a></g>
-<g class="flow-node"><a href="logits.html" aria-label="Next-token"><rect x="540" y="65" width="220" height="80" rx="12"/><text x="554" y="86" class="flow-kicker">DISTRIBUTION</text><text x="554" y="111" class="flow-title">Next-token</text><text x="554" y="130" class="flow-subtitle">probabilities</text></a></g>
-<g class="flow-node flow-node-planned"><rect x="800" y="65" width="220" height="80" rx="12"/><text x="814" y="86" class="flow-kicker">DECODING · PLANNED</text><text x="814" y="111" class="flow-title">Select / sample</text><text x="814" y="130" class="flow-subtitle">the next token</text></g>
-<text x="350" y="169" class="flow-note">Append the token to the context, then repeat</text>
-<text x="20" y="225" class="flow-kicker">LEARNING · PARAMETER UPDATES</text>
-<g class="flow-node"><a href="training-examples.html" aria-label="Input sequences"><rect x="20" y="245" width="220" height="80" rx="12"/><text x="34" y="266" class="flow-kicker">EXAMPLES + TARGETS</text><text x="34" y="291" class="flow-title">Input sequences</text><text x="34" y="310" class="flow-subtitle">and expected tokens</text></a></g>
-<g class="flow-node"><a href="transformer.html" aria-label="Predictions using"><rect x="280" y="245" width="220" height="80" rx="12"/><text x="294" y="266" class="flow-kicker">FORWARD PASS</text><text x="294" y="291" class="flow-title">Predictions using</text><text x="294" y="310" class="flow-subtitle">parameters θ</text></a></g>
-<g class="flow-node"><a href="cross-entropy.html" aria-label="Difference between predictions and targets"><rect x="540" y="245" width="220" height="80" rx="12"/><text x="554" y="266" class="flow-kicker">LOSS FUNCTION</text><text x="554" y="291" class="flow-title">Difference between</text><text x="554" y="310" class="flow-subtitle">predictions and targets</text></a></g>
-<g class="flow-node"><a href="gradients.html" aria-label="Compute ∇θ L, then"><rect x="800" y="245" width="220" height="80" rx="12"/><text x="814" y="266" class="flow-kicker">GRADIENTS / UPDATE</text><text x="814" y="291" class="flow-title">Compute ∇θ L, then</text><text x="814" y="310" class="flow-subtitle">modify θ</text></a></g>
-<text x="470" y="380" class="flow-note">Updated parameters are used for the next step</text>
-<text x="20" y="435" class="flow-kicker">EVALUATION · CROSS-CUTTING FUNCTION</text>
-<g class="flow-node"><a href="text-data.html" aria-label="Held-out data"><rect x="20" y="455" width="220" height="80" rx="12"/><text x="34" y="476" class="flow-kicker">EVALUATION DATA</text><text x="34" y="501" class="flow-title">Held-out data</text><text x="34" y="520" class="flow-subtitle">separate validation and test</text></a></g>
-<g class="flow-node"><a href="experimental-evaluation.html" aria-label="Metrics and uncertainty"><rect x="420" y="455" width="220" height="80" rx="12"/><text x="434" y="476" class="flow-kicker">METRICS + ERRORS</text><text x="434" y="501" class="flow-title">Metrics and uncertainty</text><text x="434" y="520" class="flow-subtitle">qualitative analysis</text></a></g>
-<g class="flow-node"><rect x="820" y="455" width="220" height="80" rx="12"/><text x="834" y="476" class="flow-kicker">DECISIONS + LIMITES</text><text x="834" y="501" class="flow-title">Interpret the findings</text><text x="834" y="520" class="flow-subtitle">revise choices, not the test set</text></g>
-<text x="300" y="558" class="flow-note">Feedback to data, learning, and decoding choices</text>
-<text x="20" y="584" class="flow-hint">Validation may guide adjustments; the test set remains held out until final assessment.</text>
-<text x="20" y="610" class="flow-hint">Blocks open the currently available canonical pages.</text>
-</svg><figcaption>Inference: fixed parameters · Learning: updated parameters · Dashed arrows: evaluation feedback</figcaption></figure>
+<g class="flow-node"><a href="corpus-preparation.html" aria-label="Validation and test splits"><rect x="20" y="480" width="220" height="90" rx="12"/><text x="34" y="502" class="flow-kicker">HELD-OUT DATA</text><text x="34" y="528" class="flow-title">Validation / test</text><text x="34" y="550" class="flow-subtitle">separate, leakage-free splits</text></a></g>
+<g class="flow-node"><a href="experimental-evaluation.html" aria-label="Metrics and error analysis"><rect x="420" y="480" width="220" height="90" rx="12"/><text x="434" y="502" class="flow-kicker">MEASUREMENT</text><text x="434" y="528" class="flow-title">Metrics + errors</text><text x="434" y="550" class="flow-subtitle">uncertainty and analysis</text></a></g>
+<g class="flow-node"><a href="experimental-evaluation.html" aria-label="Interpret evaluation results"><rect x="820" y="480" width="220" height="90" rx="12"/><text x="834" y="502" class="flow-kicker">INTERPRETATION</text><text x="834" y="528" class="flow-title">Informed decisions</text><text x="834" y="550" class="flow-subtitle">adjust without contaminating test</text></a></g>
+<text x="20" y="606" class="flow-hint">Validation results may guide data, training, and decoding choices; the test set remains reserved for final assessment.</text>
+<text x="20" y="630" class="flow-hint">Every bordered block is clickable and opens a canonical lesson. Solid arrows show computation flow; loops show repetition or parameter updates.</text>
+</svg>
+<figcaption>Inference: fixed parameters · Learning: updated parameters · Evaluation: cross-cutting analysis on held-out data</figcaption>
+</figure>
 
 ## Explore further
 

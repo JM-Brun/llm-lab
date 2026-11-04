@@ -15,7 +15,7 @@ suggested_route:
   next: "fr/text-data"
 hierarchy:
   parents: ["fr/llm-overview"]
-  children: ["fr/logits", "fr/probabilites"]
+  children: ["fr/text-data", "fr/logits", "fr/probabilites"]
 related: ["fr/build-path", "fr/training-examples"]
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:fr", "status:published"]
 -->

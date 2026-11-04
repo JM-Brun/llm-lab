@@ -8,7 +8,7 @@ This plan is a sequence of evidence-producing modules, not a promise of mastery 
 
 The learner-facing course and the implementation dependency graph answer different questions. **The conceptual course starts with what a model does; the build route follows the dependencies needed to construct one.** Do not force these into one identical chapter order.
 
-1. **Orient:** what the broad term LLM covers, where GPT fits, and how architecture differs from objective and task. Use the overview's linked pipeline to trace text → tokens/IDs → embeddings → Transformer → logits → distribution → selection; open the dedicated architecture comparison only when that distinction needs detail. Keep optional weight adaptation distinct from prompting/RAG at inference.
+1. **Orient:** what the broad term LLM covers, where GPT fits, and how architecture differs from objective and task. Use the landing page's interactive process map to distinguish inference, learning and evaluation; trace text → tokens/IDs → embeddings → positional information → Transformer → contextualized states → logits → probabilities → selection. Open the dedicated architecture comparison only when that distinction needs detail. Keep optional weight adaptation distinct from prompting/RAG at inference.
 2. **Preview inference:** follow one complete request through input, model computation, next-token prediction, selection and repeated generation. At this stage, treat the model as a system with fixed parameters; do not require training theory.
 3. **Unpack the input:** raw text, tokenization, vocabulary, token IDs and the prompt/context supplied at inference. Unicode/UTF-8 representation and normalization are optional technical depth, not a prerequisite in the linear route.
 4. **Unpack representations and computation:** embeddings, positional information, contextual states, Transformer blocks, attention and causal masking.
@@ -16,6 +16,20 @@ The learner-facing course and the implementation dependency graph answer differe
 6. **Explain learning:** the next-token prediction objective, sequence likelihood, cross-entropy/loss, gradients, backpropagation, optimization, pretraining and validation. Introduce the parameter-update loop only after the inference path is understood; do not turn corpus engineering or batch construction into prerequisites for this conceptual explanation.
 7. **Prepare training data (G2 branch):** when following Build, prepare a traceable corpus and tokenizer ([corpus preparation](../site/fr/corpus-preparation.qmd) / [EN](../site/en/corpus-preparation.qmd)), then construct context windows and shifted targets ([training examples](../site/fr/training-examples.qmd) / [EN](../site/en/training-examples.qmd)). This branch depends on text/tokenization but is not a prerequisite for understanding or demonstrating inference.
 8. **Explain adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation; keep these distinct.
+
+### Reader-facing sequence and operational branches
+
+The public page-navigation arrows follow the **conceptual inference route**, not the order in which every component is implemented:
+
+`LLM panorama → generation preview → text and tokens → tokenization → embeddings → positional information → contextualized representations → Transformer → Q/K/V → scaled attention → causal masking → logits → probabilities`.
+
+The generation lesson appears early as a system-level preview: it establishes the autoregressive loop with fixed parameters before the learner studies each internal component. Its appearance before the detailed input and probability lessons is deliberate, not a claim that those details are unnecessary.
+
+The learning route branches from the shared foundations rather than continuing the inference chain:
+
+`corpus preparation + tokenizer → training examples (windows and shifted targets) → forward pass → loss → gradients and parameter updates`.
+
+Evaluation is cross-cutting. Validation results may inform model, data, and decoding choices; the test set must remain held out until final assessment. The landing-page diagram links each available stage to its canonical lesson. A missing implementation milestone must remain visibly distinct from an available conceptual explanation.
 
 ## Page ownership: one canonical explanation, deliberate reminders
 
