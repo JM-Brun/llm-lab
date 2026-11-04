@@ -286,7 +286,8 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
                 ):
                     if concept_id not in concept_ids:
                         errors.append(
-                            f"{item_where}.classification.concept_ids: unknown concept {concept_id!r}"
+                            f"{item_where}.classification.concept_ids: unknown "
+                            f"concept {concept_id!r}"
                         )
 
             provenance = item.get("provenance")
