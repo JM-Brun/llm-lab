@@ -12,7 +12,7 @@ scope: "Places modern LLMs within AI/ML and NLP; defines language model, generat
 purpose: "By the end of this page, readers should be able to place LLMs, distinguish the key terms and the three dimensions of architecture/weight learning/use, and choose the specialized page for understanding Transformer computation or autoregressive inference."
 suggested_route:
   previous: "en/index"
-  next: "en/transformer"
+  next: "en/generation"
 hierarchy:
   parents: ["en/index"]
   children: ["en/transformer", "en/transformer-architectures", "en/generation", "en/build-path", "en/language-modeling-math", "en/mathematical-foundations", "en/llm-limits", "en/llm-computational-complexity"]
