@@ -31,6 +31,7 @@ Output:
 - scan status and exact scope actually inspected;
 - evidence kind, confidence, generality, assumptions, limitations and rights metadata;
 - candidate concepts, relations, pages, visuals, experiments and teaching improvements;
+- independent qualitative assessment of novelty, complementarity, learner value, applicability, redundancy and evidence quality;
 - an extraction report with access limits and unresolved questions.
 
 No page edits, published new pages, concept-registry mutations, or graph-projection changes in this phase. Candidate destinations and graph nodes/edges are proposals only.
