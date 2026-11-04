@@ -11,3 +11,5 @@ uv run --locked python experiments/decoding-distribution/run.py
 ```
 
 The script emits JSON containing the input, settings, probabilities, entropy, retained mass and runtime environment. The [report](../../reports/decoding-distribution.md) records one run and its limits. Floating-point output and environment metadata can differ slightly across platforms.
+
+The runner models each configuration as a `DecodingScenario` and each result as a `DecodingMeasurement`. `run_experiment` evaluates the scenarios and returns an `ExperimentReport`; the command-line entry point serializes that report as JSON.

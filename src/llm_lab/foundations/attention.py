@@ -48,10 +48,20 @@ def softmax_with_temperature(
     if not np.all(np.isfinite(logits)):
         raise ValueError("logits must contain only finite values")
 
-    # Subtract before division: scaling a large positive logit can overflow.
-    # A negative difference may overflow to -inf, correctly giving zero mass.
+    # Subtract first to preserve small differences between large, close logits.
+    # If opposite extremes overflow that subtraction, scaling them separately
+    # can recover a representable difference when the temperature is high.
     with np.errstate(over="ignore"):
-        shifted = (logits - np.max(logits, axis=axis, keepdims=True)) / temperature
+        maximum = np.max(logits, axis=axis, keepdims=True)
+        differences = logits - maximum
+        shifted = differences / temperature
+        if temperature >= 1.0:
+            np.subtract(
+                logits / temperature,
+                maximum / temperature,
+                out=shifted,
+                where=np.isneginf(differences),
+            )
     exp_vals = np.exp(shifted)
     sum_exp = np.sum(exp_vals, axis=axis, keepdims=True)
     return np.asarray(exp_vals / sum_exp, dtype=np.float64)
@@ -81,7 +91,7 @@ def scaled_dot_product_attention(
             and zero output (a deliberate convention, not a probability distribution).
 
     Raises:
-        ValueError: If array dimensions or shapes do not match the attention contract.
+        ValueError: If inputs violate the attention contract or scores overflow.
     """
     if queries.ndim != 2 or keys.ndim != 2 or values.ndim != 2:
         raise ValueError("queries, keys, and values must be 2D arrays")
@@ -102,21 +112,28 @@ def scaled_dot_product_attention(
     if d_k == 0 or t_q == 0 or t_k == 0:
         raise ValueError("dimensions cannot be empty")
 
-    scores = (queries @ keys.T) / np.sqrt(d_k)
+    with np.errstate(over="ignore", invalid="ignore"):
+        scores = (queries @ keys.T) / np.sqrt(d_k)
+    if not np.all(np.isfinite(scores)):
+        raise ValueError("attention scores must be finite before masking")
 
     if mask is not None:
         if mask.shape != (t_q, t_k):
             raise ValueError(f"mask shape {mask.shape} does not match expected ({t_q}, {t_k})")
         if np.any(np.isnan(mask)) or np.any(np.isposinf(mask)):
             raise ValueError("mask must contain only finite values or -inf")
-        scores = scores + mask
+        with np.errstate(over="ignore", invalid="ignore"):
+            scores = scores + mask
+        if np.any(~np.isfinite(scores) & ~np.isneginf(mask)):
+            raise ValueError("attention scores must remain finite for unmasked positions")
 
     # Handle numerical stability for softmax
     max_scores = np.max(scores, axis=-1, keepdims=True)
     # If a row is fully masked (-inf), max_scores is -inf; avoid nan
     valid_rows = np.isfinite(max_scores)
     shifted = np.zeros_like(scores)
-    np.subtract(scores, max_scores, out=shifted, where=valid_rows)
+    with np.errstate(over="ignore"):
+        np.subtract(scores, max_scores, out=shifted, where=valid_rows)
     exp_scores = np.exp(shifted)
     exp_scores[~np.isfinite(scores)] = 0.0
 
