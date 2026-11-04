@@ -111,6 +111,66 @@ These criteria are **learning outcomes**, not a change in repository status: an 
 
 Detailed prerequisites, expected evidence, dependencies and validation criteria are maintained in the [versioned build plan](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
 
+The repository reserves `src/llm_lab/minimal/` for the future end-to-end build and `src/llm_lab/advanced/` for optional extensions; neither is implemented yet. Existing NumPy reference components are in `src/llm_lab/foundations/`. Website maintenance tools are separate in `site/tools/`.
+
+## Q/K/V workshop: from projections to aggregation {#qkv-workshop}
+
+This NumPy example illustrates milestone 3 with one head and no mask: the matrices are chosen for demonstration, not obtained by training. It is not a complete GPT module. See [Q/K/V](queries-keys-values.qmd) for the roles of the projections, [attention](scaled-dot-product-attention.qmd) for the full calculation, and [causal masking](causal-masking.qmd) for the mask.
+
+:::: {.callout-note title="Open the numerical workshop" collapse="true"}
+::: {.micro-workbench}
+::: {.micro-workbench-header}
+<span>NUMERICAL WORKBENCH · MATRIX COMPUTATION AND TENSOR SHAPES</span>
+<span>Python 3.12+ / NumPy</span>
+:::
+::: {.micro-workbench-body}
+```python
+import numpy as np
+
+# 1. Input representations of T=3 positions with dimension d_model=4
+X = np.array([
+    [1.0, 0.5, 0.2, 0.1],  # position 0
+    [0.1, 0.9, 0.8, 0.3],  # position 1
+    [0.4, 0.2, 0.7, 0.9],  # position 2
+])
+T, d_model = X.shape
+
+# 2. Projection matrices chosen for this example: d_k=2, d_v=3
+W_Q = np.array([[0.5, 0.1], [0.2, 0.8], [0.1, 0.3], [0.9, 0.4]])
+W_K = np.array([[0.2, 0.7], [0.4, 0.1], [0.6, 0.5], [0.3, 0.2]])
+W_V = np.array([[1.0, 0.0, 0.2], [0.0, 1.0, 0.5], [0.5, 0.2, 0.0], [0.1, 0.8, 0.4]])
+
+# 3. Linear projections
+Q = X @ W_Q  # Shape (T, d_k)
+K = X @ W_K  # Shape (T, d_k)
+V = X @ W_V  # Shape (T, d_v)
+assert Q.shape == (3, 2) and K.shape == (3, 2) and V.shape == (3, 3)
+
+# 4. Attention scores S = Q K^T / sqrt(d_k)
+d_k = 2
+scores = (Q @ K.T) / np.sqrt(d_k)
+assert scores.shape == (3, 3)
+
+# 5. Softmax weights (summing to 1 along key dimension)
+exp_scores = np.exp(scores - np.max(scores, axis=-1, keepdims=True))
+weights = exp_scores / np.sum(exp_scores, axis=-1, keepdims=True)
+assert np.allclose(weights.sum(axis=-1), 1.0)
+
+# 6. Final aggregated output O = A V
+output = weights @ V
+assert output.shape == (3, 3)
+```
+:::
+::: {.micro-workbench-footer}
+Verified invariant: dimensions strictly follow $(T, d_{model}) \to [(T, d_k), (T, d_v)] \to (T, d_v)$.
+:::
+:::
+
+The scores $QK^\top$ compare every query with every key. After scaling and applying any mask, the weights determine the combination of rows of $V$. In standard dot-product attention, values therefore do not directly determine the scores.
+::::
+
+The [`scaled_dot_product_attention`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/attention.py) reference function computes attention from Q, K and V; it does not implement the projections above. Its [unit tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py) cover shapes, normalization, and numerical stability. The [planned causal-attention criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation) are separate from this example. See [Tensors](tensors.qmd) for dimensions.
+
 ## Knowledge to acquire along the way
 
 | Topic | Minimum useful for building | Optional deeper study |

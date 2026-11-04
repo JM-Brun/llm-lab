@@ -26,7 +26,6 @@ Queries, keys, and values are not three kinds of tokens. They are three **learne
 
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Verified Concept</span>
-  <span class="epistemic-badge badge-code">Executable Micro-code</span>
   <span class="epistemic-badge badge-status">Architecture: Transformer</span>
 </div>
 
@@ -71,67 +70,22 @@ Suppose a query produces two attention scores, \(s=(0,\ln 3)\). Applying *softma
 o=0.25\times 2+0.75\times 10=8.
 \]
 
-This separates the two roles: scores from Q and K determine **the weights**; values V supply **the content being aggregated**. This does not mean values are generally scalars, nor that weights alone explain a prediction. In a real model, scores and values are vectors produced by learned projections.
+This separates the two roles: scores from Q and K determine **the weights**; values V supply **the content being aggregated**. This does not mean values are generally scalars, nor that weights alone explain a prediction. In a model, each score is a scalar computed from Q and K; values are generally vectors produced by learned projections.
 
 ## Definition and dimensions
 
-For $X\in\mathbb{R}^{T\times d_{model}}$, the projections for one head are:
+For one self-attention head, let $X\in\mathbb{R}^{T\times d_{model}}$ contain the input representations. The projections are:
 
 $$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
 $$
 
+::: {.callout-note title="Projection dimensions" collapse="true"}
 With $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ and $W_V\in\mathbb{R}^{d_{model}\times d_v}$, we obtain $Q,K\in\mathbb{R}^{T\times d_k}$ and $V\in\mathbb{R}^{T\times d_v}$. Optional biases are omitted for clarity.
 
-::: {.micro-workbench}
-::: {.micro-workbench-header}
-<span>NUMERICAL WORKBENCH · MATRIX COMPUTATION AND TENSOR SHAPES</span>
-<span>Python 3.12+ / NumPy</span>
-:::
-::: {.micro-workbench-body}
-```python
-import numpy as np
-
-# 1. Input representations of T=3 positions with dimension d_model=4
-X = np.array([
-    [1.0, 0.5, 0.2, 0.1],  # position 0
-    [0.1, 0.9, 0.8, 0.3],  # position 1
-    [0.4, 0.2, 0.7, 0.9],  # position 2
-])
-T, d_model = X.shape
-
-# 2. Learned projection matrices: d_k=2, d_v=3
-W_Q = np.array([[0.5, 0.1], [0.2, 0.8], [0.1, 0.3], [0.9, 0.4]])
-W_K = np.array([[0.2, 0.7], [0.4, 0.1], [0.6, 0.5], [0.3, 0.2]])
-W_V = np.array([[1.0, 0.0, 0.2], [0.0, 1.0, 0.5], [0.5, 0.2, 0.0], [0.1, 0.8, 0.4]])
-
-# 3. Linear projections
-Q = X @ W_Q  # Shape (T, d_k)
-K = X @ W_K  # Shape (T, d_k)
-V = X @ W_V  # Shape (T, d_v)
-assert Q.shape == (3, 2) and K.shape == (3, 2) and V.shape == (3, 3)
-
-# 4. Attention scores S = Q K^T / sqrt(d_k)
-d_k = 2
-scores = (Q @ K.T) / np.sqrt(d_k)
-assert scores.shape == (3, 3)
-
-# 5. Softmax weights (summing to 1 along key dimension)
-exp_scores = np.exp(scores - np.max(scores, axis=-1, keepdims=True))
-weights = exp_scores / np.sum(exp_scores, axis=-1, keepdims=True)
-assert np.allclose(weights.sum(axis=-1), 1.0)
-
-# 6. Final aggregated output O = A V
-output = weights @ V
-assert output.shape == (3, 3)
-```
-:::
-::: {.micro-workbench-footer}
-Verified invariant: dimensions strictly follow $(T, d_{model}) \to [(T, d_k), (T, d_v)] \to (T, d_v)$.
-:::
+For shapes and axes, see [Tensors](tensors.qmd).
 :::
 
-The scores $QK^\top$ compare every query with every key. After scaling and applying any mask, the weights determine the combination of rows of $V$. In standard dot-product attention, values therefore do not directly determine the scores.
 
 ## Why separate these roles?
 
@@ -151,16 +105,9 @@ The full formula for one attention head is given in [scaled dot-product attentio
 <details class="spot-the-fallacy">
 <summary>Common Fallacy: “An attention weight of 0.95 proves this token is the primary cause of the model's output”</summary>
 <div class="fallacy-content">
-<p><strong>Rigorous Refutation:</strong> The attention weight $\alpha_{ij}$ merely measures relative alignment between query $q_i$ and key $k_j$. If the corresponding value vector $v_j$ has small norm or aligns with a suppressed projection subspace, its impact on the output may be negligible. Furthermore, downstream MLP transformations, residual additions, and layer normalizations drastically reshape token representations before final prediction.</p>
+<p><strong>Why?</strong> The weight $\alpha_{ij}$ depends on scores and accessible positions. The direct contribution to this sum is $\alpha_{ij}v_j$: if $v_j$ is zero, that contribution is zero even with a high weight. Other values, projections, and later transformations, including residual connections, normalization, and MLPs depending on the architecture, also affect the prediction. The weight alone does not measure the causal effect of that position.</p>
 </div>
 </details>
-
-## Historical context
-
-Attention mechanisms were studied in neural encoder–decoder translation models, notably by Bahdanau, Cho, and Bengio (2014). *Attention Is All You Need* (Vaswani et al., 2017) made self-attention central to the Transformer architecture and formalized scaled dot-product attention. This distinction matters: attention predates the Transformer, while the Transformer combined self-attention with a specific architecture and efficient multi-head computation.
-
-- [Bahdanau et al. (2014), *Neural Machine Translation by Jointly Learning to Align and Translate*](https://arxiv.org/abs/1409.0473)
-- [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762)
 
 ## Connections to other concepts
 
@@ -168,6 +115,8 @@ Attention mechanisms were studied in neural encoder–decoder translation models
 - Understand the ordering constraint in [causal masking](causal-masking.qmd).
 - See how the operations fit into the [Transformer overview](transformer.qmd).
 - Connect softmax to [probabilities](probabilities.qmd).
+- Place attention’s precursors and the Transformer in the [history](transformer-history.qmd), with original sources.
+- Try the [Q/K/V workshop](build-path.qmd#qkv-workshop) in the build path.
 
 ## Check your understanding
 
@@ -179,16 +128,6 @@ A position receives attention weights $(0.75,\,0.25)$ and the value vectors are 
 The output is the weighted sum: $0.75(2,0)+0.25(0,4)=(1.5,1)$. After swapping the values it becomes $0.75(0,4)+0.25(2,0)=(0.5,3)$. Weights determine the relative contribution of positions; values determine the aggregated content. Weights alone therefore do not determine the output.
 
 </details>
-
-## Code and tests
-
-To follow the vector and matrix shapes used in these calculations, see [Tensors](tensors.qmd).
-
-A numerically tested reference implementation is available in `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`). Associated unit tests in `tests/unit/test_attention.py` verify shape preservation, unit row sums, and numerical stability.
-
-- [Reference implementation](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
-- [Unit tests](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
-- [Planned causal-attention acceptance criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
 
 <div class="route-nav-cards">
   <a class="route-nav-card" href="contextualized-representations.qmd">

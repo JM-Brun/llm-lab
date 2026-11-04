@@ -2,6 +2,7 @@
 
 import numpy as np
 import pytest
+
 from llm_lab.foundations.attention import (
     causal_mask,
     scaled_dot_product_attention,
@@ -62,6 +63,7 @@ def test_softmax_with_temperature_invalid() -> None:
 
 def test_scaled_dot_product_attention_shapes_and_invariants() -> None:
     t_q, t_k, d_k, d_v = 3, 4, 8, 12
+    np.random.seed(123)
     q = np.random.randn(t_q, d_k)
     k = np.random.randn(t_k, d_k)
     v = np.random.randn(t_k, d_v)

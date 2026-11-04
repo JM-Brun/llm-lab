@@ -38,28 +38,28 @@ Large language models (LLMs) are a family of neural models trained on large amou
 </div>
 ::::
 
-## Three Learning Routes
+## Choose your path
 
 ::: {.learning-grid}
 ::: {.learning-card}
-<p class="eyebrow">ROUTE 1 · GUIDED BUILD</p>
-### Build a Small GPT
-A step-by-step roadmap to implement and understand a decoder-only model from scratch.
-[Follow the build](build-path.qmd){.card-link}
-:::
-
-::: {.learning-card}
-<p class="eyebrow">ROUTE 2 · CONCEPTS & WORKBENCHES</p>
-### Concepts & Micro-workbenches
-Self-contained lessons with executable numerical code snippets for each mechanism.
+<p class="eyebrow">UNDERSTAND · CONCEPTS & MECHANISMS</p>
+### Understand LLMs
+From the panorama to Transformer operations, generation, and learning.
 [Explore concepts](llm-overview.qmd){.card-link}
 :::
 
 ::: {.learning-card}
-<p class="eyebrow">ROUTE 3 · RIGOR & CRITIQUE</p>
-### Foundations & Limits
-Representation geometry, embedding linearity, cosine similarity, and evaluation caveats.
-[Examine foundations](mathematical-foundations.qmd){.card-link}
+<p class="eyebrow">BUILD · GUIDED</p>
+### Build a small GPT
+A milestone-based build path with status and expected checks.
+[Follow the build](build-path.qmd){.card-link}
+:::
+
+::: {.learning-card}
+<p class="eyebrow">DEEPEN · OPTIONAL</p>
+### Deepen your understanding
+Tensors, representation geometry, and the limits of interpretation.
+[Explore deeper topics](tensors.qmd){.card-link}
 :::
 :::
 
@@ -122,12 +122,20 @@ The same model is involved in several processes, but they have different objecti
 
 ## Conceptual route
 
-Start with the [LLM panorama](llm-overview.qmd) to place model families and their lifecycle. Then move to the [GPT / Transformer overview](transformer.qmd), which focuses on the decoder-only model built in this project, and use the guided path to connect mechanisms to implementation milestones. The concept pages explain individual operations; evaluation remains cross-cutting, not simply a final stage of generation.
+The **Understand** path offers a suggested order, not a mandatory reading list. The sidebar contains the full sequence; each lesson can also be read on its own.
+
+1. [LLM panorama](llm-overview.qmd), [GPT and Transformer](transformer.qmd), then [generation](generation.qmd): orient yourself in the system and its use.
+2. [Text to tokens](text-data.qmd), then embeddings, position, and contextualized representations: understand the model's inputs.
+3. [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd), and [causal masking](causal-masking.qmd): follow how context is processed.
+4. [Logits](logits.qmd) and [probabilities](probabilities.qmd): understand prediction. Generation uses these concepts without requiring prior study of training.
+5. [Training examples](training-examples.qmd), then likelihood, entropy, cross-entropy, loss, and gradients: understand how parameters are learned.
+
+The [build path](build-path.qmd) connects these mechanisms to practical milestones. [Evaluation](experimental-evaluation.qmd) applies across the work, and [history](transformer-history.qmd) is optional reference material.
 
 The detailed map of the three learning depths and implementation milestones lives in the [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md). Tensor references and advanced mathematical derivations are optional, not prerequisites.
 
 ::: {.callout-note}
-**Current scope.** This route organizes the content currently available; it does not claim that a complete GPT has already been implemented. Detailed generation, reproducible pretraining, and adaptation of a pretrained model remain distinct workstreams beyond the conceptual route.
+**Current scope.** Conceptual explanations of generation are available. A complete GPT, an integrated generation loop, reproducible pretraining, and adaptation of a pretrained model remain to be built.
 :::
 
 ## Verify, do not only visualize

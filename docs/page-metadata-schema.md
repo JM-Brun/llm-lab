@@ -101,7 +101,7 @@ Use these dimensions consistently:
 Run the validator locally from the repository root:
 
 ```bash
-uv run --with-requirements docs/requirements-history-validation.txt python scripts/check_page_metadata.py
+uv run --with-requirements docs/requirements-history-validation.txt python site/tools/check_page_metadata.py
 ```
 
 The validator reads the actual `project.render` list from `site/_quarto.yml`; it does not infer coverage from sidebar indentation. It checks:

@@ -68,6 +68,8 @@ Cette page est le point d’entrée des exercices approfondis. Des auto-vérific
 
 **Notions préalables :** [synthèse Transformer](transformer.qmd), [espace des embeddings](embedding-space.qmd), [position et RoPE](positional-encoding.qmd).
 
+**Activité disponible :** [observer et questionner un Transformer](transformer-explainer.qmd), avec des observations guidées et un audit critique d'une démonstration externe. Cette activité ne constitue pas une collection complète d'exercices corrigés.
+
 **À préparer :** suivre les représentations à travers un bloc, comparer les rôles de l’attention et du MLP, distinguer architectures et variantes.
 
 ### Préentraînement {#preentrainement}

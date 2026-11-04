@@ -68,6 +68,8 @@ This page is the entry point for extended exercises. Short self-checks with coll
 
 **Prerequisites:** [Transformer overview](transformer.qmd), [embedding space](embedding-space.qmd), [position and RoPE](positional-encoding.qmd).
 
+**Available activity:** [observe and question a Transformer](transformer-explainer.qmd), with guided observations and a critical audit of an external demonstration. This activity is not a complete collection of exercises with solutions.
+
 **Planned focus:** trace representations through a block, compare attention and MLP roles, and distinguish architecture families.
 
 ### Pretraining {#pretraining}

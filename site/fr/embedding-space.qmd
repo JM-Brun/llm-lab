@@ -24,6 +24,24 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 Un **embedding** est un vecteur numérique associé à un objet, par exemple un token. L'ensemble de ces vecteurs forme un espace de représentation. On peut comparer leurs directions, leurs distances ou leurs voisins, mais leur interprétation dépend du modèle, de son entraînement et de la tâche : la géométrie n'est pas un dictionnaire universel du sens.
 :::
 
+<div class="epistemic-badges">
+  <span class="epistemic-badge badge-concept">Concept vérifié</span>
+  <span class="epistemic-badge badge-code">Micro-code exécutable</span>
+  <span class="epistemic-badge badge-status">Étape : Représentations initiales</span>
+</div>
+
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes du pipeline LLM">
+  <a class="step-item" href="text-data.qmd">1. Texte</a>
+  <span class="step-arrow">→</span>
+  <span class="step-item active">2. Espace des Embeddings</span>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="queries-keys-values.qmd">3. Attention</a>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="logits.qmd">4. Logits</a>
+  <span class="step-arrow">→</span>
+  <a class="step-item" href="cross-entropy.qmd">5. Perte & Entraînement</a>
+</div>
+
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice d'embeddings contient un vecteur appris par ID ; le lookup sélectionne simplement la bonne ligne. Deux occurrences du même ID récupèrent donc le même vecteur initial. C'est ensuite le traitement par le Transformer qui construit une représentation dépendant du contexte.
 
@@ -209,6 +227,13 @@ Pour évaluer un espace d'embeddings, revenir à la tâche réelle : recherche d
 - **« Une belle visualisation démontre la qualité des embeddings. »** Elle illustre une projection ; une évaluation adaptée mesure l'utilité pour la tâche.
 - **« Tous les embeddings doivent être comparés au cosinus. »** Le choix dépend du modèle et de son objectif. Produit scalaire et cosinus donnent le même classement lorsque les vecteurs sont normalisés.
 
+<details class="spot-the-fallacy">
+<summary>Piège fréquent : « L'espace d'embeddings apprend les vraies définitions sémantiques des mots »</summary>
+<div class="fallacy-content">
+<p><strong>Réfutation rigoureuse :</strong> Un embedding de token est uniquement une coordonnée apprise pour minimiser la fonction de perte (la prédiction du prochain token). Selon l'hypothèse distributionnelle de Harris (1954), deux tokens proches partagent des contextes d'apparition similaires. Ainsi, des antonymes parfaits comme <em>froid</em> et <em>chaud</em> se retrouvent souvent très proches dans l'espace des embeddings car ils apparaissent dans des phrases syntaxiquement identiques. Proximité géométrique ne signifie donc pas synonymie sémantique.</p>
+</div>
+</details>
+
 ## Vérifier votre compréhension
 
 1. Deux occurrences du même ID apparaissent dans des contextes différents. Avant le Transformer, sélectionnent-elles le même vecteur d’embedding ? Après plusieurs couches, leurs représentations doivent-elles rester identiques ?
@@ -243,6 +268,17 @@ Non. Une projection 2D ne préserve qu’une partie de la géométrie et peut cr
 - [Li et al. (2020), On the Sentence Embeddings from Pre-trained Language Models](https://aclanthology.org/2020.emnlp-main.733/).
 - [Steck, Ekanadham & Kallus (2024), Is Cosine-Similarity of Embeddings Really About Similarity?](https://arxiv.org/abs/2403.05440).
 - [Sentence Transformers — Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html).
+
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="tokenization-strategies.qmd">
+    <span class="nav-direction">← Étape précédente</span>
+    <span class="nav-title">Stratégies de tokenisation</span>
+  </a>
+  <a class="route-nav-card" href="positional-encoding.qmd">
+    <span class="nav-direction">Étape suivante →</span>
+    <span class="nav-title">Encodage positionnel et RoPE</span>
+  </a>
+</div>
 
 ::: {.language-switch}
 **Langue :** [Français](embedding-space.qmd) · [English](../en/embedding-space.qmd)

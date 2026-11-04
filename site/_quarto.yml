@@ -9,8 +9,10 @@ project:
     - fr/unicode-text.qmd
     - en/unicode-text.qmd
     - fr/tokenization-strategies.qmd
+    - fr/tokenizer-evaluation.qmd
     - fr/training-examples.qmd
     - en/tokenization-strategies.qmd
+    - en/tokenizer-evaluation.qmd
     - en/training-examples.qmd
     - fr/mathematical-foundations.qmd
     - en/mathematical-foundations.qmd
@@ -33,7 +35,9 @@ project:
     - fr/llm-overview.qmd
     - en/llm-overview.qmd
     - fr/transformer.qmd
+    - fr/transformer-explainer.qmd
     - en/transformer.qmd
+    - en/transformer-explainer.qmd
     - fr/generation.qmd
     - en/generation.qmd
     - fr/glossary.qmd
@@ -129,9 +133,11 @@ website:
           contents:
             - fr/exercises.qmd
             - fr/evaluation-experimentale.qmd
+            - fr/transformer-explainer.qmd
         - section: "Approfondir"
           contents:
             - fr/tensors.qmd
+            - fr/tokenizer-evaluation.qmd
             - fr/cosine-similarity.qmd
             - fr/linearite-embeddings.qmd
         - section: "Références"
@@ -185,9 +191,11 @@ website:
           contents:
             - en/exercises.qmd
             - en/experimental-evaluation.qmd
+            - en/transformer-explainer.qmd
         - section: "Deepen your understanding"
           contents:
             - en/tensors.qmd
+            - en/tokenizer-evaluation.qmd
             - en/cosine-similarity.qmd
             - en/embedding-linearity.qmd
         - section: "Reference"

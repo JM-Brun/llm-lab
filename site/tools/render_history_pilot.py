@@ -12,7 +12,7 @@ from typing import Any
 
 import yaml
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DATA_PATH = ROOT / "data" / "history-pilot.yml"
 OUTPUTS = {
     "fr": ROOT / "site" / "includes" / "_history-timeline-fr.qmd",

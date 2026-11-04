@@ -1,9 +1,14 @@
 """Small reference implementations of attention mechanisms and score transformations."""
 
 import numpy as np
-from numpy.typing import NDArray
 
-FloatArray = NDArray[np.float64]
+from llm_lab.foundations.types import FloatArray
+
+__all__ = [
+    "causal_mask",
+    "scaled_dot_product_attention",
+    "softmax_with_temperature",
+]
 
 
 def causal_mask(seq_len: int) -> FloatArray:
@@ -87,7 +92,11 @@ def scaled_dot_product_attention(
         raise ValueError("queries and keys must have identical key dimension d_k")
     if keys.shape[0] != values.shape[0]:
         raise ValueError("keys and values must have identical sequence length T_k")
-    if not np.all(np.isfinite(queries)) or not np.all(np.isfinite(keys)) or not np.all(np.isfinite(values)):
+    if (
+        not np.all(np.isfinite(queries))
+        or not np.all(np.isfinite(keys))
+        or not np.all(np.isfinite(values))
+    ):
         raise ValueError("queries, keys, and values must contain finite numbers")
 
     t_q, d_k = queries.shape

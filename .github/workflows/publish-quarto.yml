@@ -31,7 +31,7 @@ jobs:
           python-version: "3.12"
 
       - name: Generate bilingual history timeline fragments
-        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python scripts/render_history_pilot.py
+        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/render_history_pilot.py
 
       - name: Render site
         run: quarto render site

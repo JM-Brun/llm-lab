@@ -26,7 +26,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Concept vérifié</span>
-  <span class="epistemic-badge badge-code">Micro-code exécutable</span>
   <span class="epistemic-badge badge-status">Architecture : Transformer</span>
 </div>
 
@@ -61,8 +60,6 @@ Le calcul se déroule en deux étapes :
 1. **Comparer.** La requête d'une position est comparée aux clés des positions auxquelles elle a le droit d'accéder. Ces comparaisons donnent des scores, mis à l'échelle puis éventuellement masqués avant d'être transformés en poids par le *softmax*. Le masque dépend du type d'attention ; il n'est pas nécessairement causal.
 2. **Combiner.** Le modèle calcule une somme pondérée des valeurs. Les positions qui reçoivent un poids plus élevé contribuent davantage à cette nouvelle représentation.
 
-Le vocabulaire vient d'une analogie avec la recherche d'information : une requête indique ce qu'on cherche, une clé permet de comparer les éléments disponibles, et une valeur contient l'information à récupérer. Dans un réseau neuronal, ces rôles sont portés par des vecteurs appris ; ils ne sont pas des étiquettes lisibles par un humain.
-
 ## Un exemple numérique : les poids ne sont pas les valeurs
 
 Considérons une requête qui produit deux scores d'attention, \(s=(0,\ln 3)\). Après *softmax*, les poids valent \((0{,}25, 0{,}75)\). Si les deux vecteurs de valeur sont ici de simples scalaires \(v_1=2\) et \(v_2=10\), la sortie agrégée est :
@@ -71,11 +68,11 @@ Considérons une requête qui produit deux scores d'attention, \(s=(0,\ln 3)\). 
 o=0{,}25\times 2+0{,}75\times 10=8.
 \]
 
-Cet exemple sépare les deux rôles : les scores issus de Q et K déterminent **les poids** ; les valeurs V fournissent **les contenus agrégés**. Il ne signifie pas que les valeurs sont toujours scalaires, ni que les poids révèlent à eux seuls une explication de la prédiction. Dans un vrai modèle, les scores et les valeurs sont des vecteurs calculés par des projections apprises.
+Cet exemple sépare les deux rôles : les scores issus de Q et K déterminent **les poids** ; les valeurs V fournissent **les contenus agrégés**. Il ne signifie pas que les valeurs sont toujours scalaires, ni que les poids révèlent à eux seuls une explication de la prédiction. Dans un modèle, chaque score est un scalaire calculé à partir de Q et K ; les valeurs sont généralement des vecteurs issus de projections apprises.
 
 ## D'où viennent Q, K et V ?
 
-On part d'une matrice $X\in\mathbb{R}^{T\times d_{model}}$, qui rassemble les représentations des $T$ positions. Trois transformations apprises produisent :
+Pour une tête d'auto-attention, on part d'une matrice $X\in\mathbb{R}^{T\times d_{model}}$, qui rassemble les représentations des $T$ positions. Trois transformations apprises produisent :
 
 $$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
@@ -83,54 +80,10 @@ $$
 
 Les matrices $W_Q$, $W_K$ et $W_V$ sont apprises pendant l'entraînement. Elles transforment chaque représentation d'entrée pour lui donner un rôle différent dans le calcul de l'attention. Dans l'attention à produit scalaire standard, les valeurs $V$ ne déterminent pas directement les scores : ceux-ci sont calculés à partir de $Q$ et $K$.
 
+::: {.callout-note title="Dimensions des projections" collapse="true"}
 Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model}\times d_v}$, les formes obtenues sont $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$. Les biais éventuels sont omis ici.
 
-::: {.micro-workbench}
-::: {.micro-workbench-header}
-<span>MICRO-ATELIER NUMÉRIQUE · CALCUL MATRICIEL ET FORMES TENSORIELLES</span>
-<span>Python 3.12+ / NumPy</span>
-:::
-::: {.micro-workbench-body}
-```python
-import numpy as np
-
-# 1. Représentations de T=3 positions en dimension d_model=4
-X = np.array([
-    [1.0, 0.5, 0.2, 0.1],  # position 0
-    [0.1, 0.9, 0.8, 0.3],  # position 1
-    [0.4, 0.2, 0.7, 0.9],  # position 2
-])
-T, d_model = X.shape
-
-# 2. Matrices de projection apprises : d_k=2, d_v=3
-W_Q = np.array([[0.5, 0.1], [0.2, 0.8], [0.1, 0.3], [0.9, 0.4]])
-W_K = np.array([[0.2, 0.7], [0.4, 0.1], [0.6, 0.5], [0.3, 0.2]])
-W_V = np.array([[1.0, 0.0, 0.2], [0.0, 1.0, 0.5], [0.5, 0.2, 0.0], [0.1, 0.8, 0.4]])
-
-# 3. Projections linéaires
-Q = X @ W_Q  # Forme (T, d_k)
-K = X @ W_K  # Forme (T, d_k)
-V = X @ W_V  # Forme (T, d_v)
-assert Q.shape == (3, 2) and K.shape == (3, 2) and V.shape == (3, 3)
-
-# 4. Scores d'attention S = Q K^T / sqrt(d_k)
-d_k = 2
-scores = (Q @ K.T) / np.sqrt(d_k)
-assert scores.shape == (3, 3)
-
-# 5. Poids softmax (somme = 1 sur chaque ligne)
-exp_scores = np.exp(scores - np.max(scores, axis=-1, keepdims=True))
-weights = exp_scores / np.sum(exp_scores, axis=-1, keepdims=True)
-assert np.allclose(weights.sum(axis=-1), 1.0)
-
-# 6. Agrégation finale O = A V
-output = weights @ V
-assert output.shape == (3, 3)
-```
-:::
-::: {.micro-workbench-footer}
-Invariant vérifié : les dimensions respectent rigoureusement $(T, d_{model}) \to [(T, d_k), (T, d_v)] \to (T, d_v)$.
-:::
+Pour lire ces formes et leurs axes, voir [Tenseurs](tensors.qmd).
 :::
 
 ## Pourquoi séparer ces trois rôles ?
@@ -151,16 +104,9 @@ La formule complète d'une tête d'attention est présentée dans la page sur l'
 <details class="spot-the-fallacy">
 <summary>Piège fréquent : « Un poids d'attention de 0,95 prouve que ce token est la cause principale de la réponse »</summary>
 <div class="fallacy-content">
-<p><strong>Réfutation rigoureuse :</strong> Le poids d'attention $\alpha_{ij}$ mesure uniquement l'alignement relatif entre la requête $q_i$ et la clé $k_j$. Si le vecteur de valeur $v_j$ correspondant a une norme faible ou est orthogonal à la direction utile pour la prédiction, cette position aura une contribution marginale. De plus, la sortie d'attention traverse ensuite une connexion résiduelle, une normalisation et un réseau MLP, qui modifient profondément l'information transmise.</p>
+<p><strong>Pourquoi ?</strong> Le poids $\alpha_{ij}$ dépend des scores et des positions accessibles. La contribution directe à cette somme est $\alpha_{ij}v_j$ : si $v_j$ est nul, elle est nulle même pour un poids élevé. Les autres valeurs, les projections et les transformations ultérieures, notamment résidus, normalisation et MLP selon l’architecture, interviennent aussi dans la prédiction. Le poids seul ne mesure donc pas l’effet causal de cette position.</p>
 </div>
 </details>
-
-## Repères historiques
-
-Les mécanismes d'attention ont notamment été étudiés dans les modèles de traduction neuronale de Bahdanau, Cho et Bengio (2014). *Attention Is All You Need* (Vaswani et al., 2017) a placé l'auto-attention au cœur de l'architecture Transformer et formalisé l'attention à produit scalaire mise à l'échelle.
-
-- [Bahdanau et al. (2014), *Neural Machine Translation by Jointly Learning to Align and Translate*](https://arxiv.org/abs/1409.0473)
-- [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762)
 
 ## Liens avec les autres concepts
 
@@ -168,6 +114,8 @@ Les mécanismes d'attention ont notamment été étudiés dans les modèles de t
 - Voir comment le [masque causal](causal-masking.qmd) bloque l'accès aux positions futures.
 - Replacer ces opérations dans la [synthèse du Transformer](transformer.qmd).
 - Relier le *softmax* aux [probabilités](probabilites.qmd).
+- Situer les précurseurs de l’attention et le Transformer dans l’[historique](transformer-history.qmd), avec les sources originales.
+- Passer à la pratique avec l’[atelier Q/K/V](build-path.qmd#atelier-qkv) du parcours de construction.
 
 ## Vérifier votre compréhension
 
@@ -179,16 +127,6 @@ Une position reçoit les poids d’attention $(0{,}75,\,0{,}25)$ et les vecteurs
 La sortie est la somme pondérée : $0{,}75(2,0)+0{,}25(0,4)=(1{,}5;1)$. Après échange des valeurs, elle devient $0{,}75(0,4)+0{,}25(2,0)=(0{,}5;3)$. Les poids déterminent la contribution relative des positions ; les valeurs déterminent le contenu agrégé. Les poids seuls ne suffisent donc pas à déterminer la sortie.
 
 </details>
-
-## Code et tests
-
-Pour comprendre les formes des matrices et des vecteurs utilisés ici, voir [Tenseurs](tensors.qmd).
-
-Une implémentation de référence testée numériquement est disponible dans `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`). Les tests unitaires associés dans `tests/unit/test_attention.py` vérifient la préservation des formes, la somme unitaire des poids et la stabilité numérique.
-
-- [Implémentation de référence](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
-- [Tests unitaires](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
-- [Critères prévus pour l'attention causale](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
 
 <div class="route-nav-cards">
   <a class="route-nav-card" href="contextualized-representations.qmd">

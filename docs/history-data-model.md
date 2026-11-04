@@ -237,7 +237,7 @@ These references informed the product/design requirements; they are not accepted
 
 ## 13. Canonical pilot rendering
 
-The first public timeline is rendered from `data/history-pilot.yml`; the French and English pages must not maintain separate milestone lists. The build script `scripts/render_history_pilot.py` generates the two Quarto fragments included by the existing page pair.
+The first public timeline is rendered from `data/history-pilot.yml`; the French and English pages must not maintain separate milestone lists. The build script `site/tools/render_history_pilot.py` generates the two Quarto fragments included by the existing page pair.
 
 - Edit event content, dates, sources, caveats and verified internal destinations in the dataset, not in the generated fragments.
 - Keep titles, summaries and editorial caveats bilingual under the same stable event ID.
@@ -246,7 +246,7 @@ The first public timeline is rendered from `data/history-pilot.yml`; the French 
 - CI generates the fragments before Quarto rendering. For a local render, run:
 
 ```bash
-uv run --with-requirements docs/requirements-history-validation.txt python scripts/render_history_pilot.py
+uv run --with-requirements docs/requirements-history-validation.txt python site/tools/render_history_pilot.py
 quarto render site
 ```
 

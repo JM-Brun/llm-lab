@@ -15,7 +15,7 @@ suggested_route:
   next: "fr/generation"
 hierarchy:
   parents: ["fr/llm-overview"]
-  children: ["fr/text-data", "fr/embedding-space", "fr/positional-encoding", "fr/contextualized-representations", "fr/queries-keys-values", "fr/logits", "fr/tensors"]
+  children: ["fr/text-data", "fr/embedding-space", "fr/positional-encoding", "fr/contextualized-representations", "fr/queries-keys-values", "fr/logits", "fr/tensors", "fr/transformer-explainer"]
 related: []
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:fr", "status:published"]
 -->
@@ -67,6 +67,8 @@ La distinction importante n'est pas que l'attention « comprend » les tokens et
 
 ![Étapes du calcul d'attention : scores, mise à l'échelle, masque, softmax et agrégation des valeurs.](../images/attention-calculation-flow.svg){fig-alt="Q et K produisent des scores qui sont mis à l'échelle et masqués avant le softmax. Les poids obtenus combinent les valeurs V pour produire les vecteurs de sortie." width=100%}
 
+Ces liens indiquent un ordre de lecture, pas l'ordre de toutes les opérations du modèle : par exemple, RoPE agit sur Q et K avant le calcul de leurs scores.
+
 1. [**Requêtes, clés et valeurs (Q, K, V)**](queries-keys-values.qmd) — trois projections apprises donnent des rôles distincts aux représentations.
 2. [**Attention à produit scalaire mise à l'échelle**](scaled-dot-product-attention.qmd) — les scores issus de $QK^\top$ sont normalisés par $\sqrt{d_k}$ puis convertis en poids par le *softmax*.
 3. [**Masque causal**](causal-masking.qmd) — exclut les positions futures avant le *softmax*.
@@ -80,80 +82,16 @@ Après les blocs, une projection de sortie produit des **logits** — des scores
 
 Pendant la génération, une règle de sélection choisit le token suivant : maximum, échantillonnage ou méthode plus élaborée. Ce token est ajouté au contexte, puis le modèle recommence. La génération est donc **autorégressive** ; elle ne consiste pas en une seule prédiction de toute la réponse.
 
+<!-- Stable anchors for material moved to the guided exploration. -->
+<span id="une-expérience-guidée-en-quatre-observations"></span>
+<span id="expériences-contrôlées-passer-de-lobservation-au-test"></span>
+<span id="lire-le-code-de-transformer-explainer"></span>
+<span id="audit-critique-une-visualisation-nest-pas-une-spécification"></span>
+<span id="ce-que-cette-démonstration-permet-et-ne-permet-pas-de-conclure"></span>
+
 ## Observer un Transformer en fonctionnement
 
-Le projet **[Transformer Explainer](https://poloclub.github.io/transformer-explainer/)** de Georgia Tech permet d'explorer une exécution réelle de GPT-2 small dans le navigateur. Il complète les schémas statiques de cette page : saisissez un texte, puis observez comment les représentations, les calculs d'attention et la distribution du prochain token évoluent.
-
-<iframe
-  src="https://poloclub.github.io/transformer-explainer/"
-  title="Transformer Explainer — visualisation interactive de GPT-2"
-  width="100%"
-  height="820"
-  loading="lazy"
-  allow="fullscreen"
-  style="border: 1px solid #d2d9c8; border-radius: 0.6rem; background: #fff;"
-></iframe>
-
-[Ouvrir Transformer Explainer dans un nouvel onglet](https://poloclub.github.io/transformer-explainer/) si l'intégration ne s'affiche pas ou si vous préférez disposer de toute la fenêtre.
-
-### Une expérience guidée en quatre observations
-
-1. **Tokens et représentations.** Modifiez légèrement le texte d'entrée et observez sa segmentation. Reliez les tokens aux identifiants et aux embeddings décrits dans [la page sur les représentations](embedding-space.qmd).
-2. **Attention.** Sélectionnez des tokens et examinez les motifs d'attention. Reliez les scores, le masque causal et l'agrégation des valeurs aux pages [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd) et [masquage causal](causal-masking.qmd).
-3. **Prédiction.** Repérez les scores de sortie (*logits*) et la distribution sur le vocabulaire. Consultez [logits](logits.qmd) et [probabilités](probabilites.qmd) pour distinguer score et probabilité.
-4. **Décodage.** Faites varier la température et, lorsque l'interface le propose, les paramètres top-k/top-p. Une même distribution peut conduire à des sélections différentes ; le décodage ne modifie pas les poids du modèle.
-
-### Expériences contrôlées : passer de l'observation au test
-
-Pour éviter de tirer des conclusions d'une seule visualisation, gardez un prompt de référence, modifiez **un seul facteur à la fois** et notez ce qui change.
-
-1. **Sensibilité du tokenizer.** Comparez un mot isolé, le même mot précédé d'une espace et une variante avec ponctuation. Relevez les tokens et IDs. Un découpage en sous-mots dépend du tokenizer et du contexte de caractères ; il ne révèle pas directement la « compréhension » du modèle.
-2. **Masque causal.** Examinez la ligne d'attention du dernier token, puis ajoutez un suffixe au prompt. Une position ne doit pas recevoir d'information des positions futures. Dans un modèle causal en mode évaluation, les représentations des positions du préfixe doivent rester invariantes à l'ajout d'un suffixe (à tolérance numérique près) ; ce test porte sur les états internes, pas seulement sur le texte généré.
-3. **Température et échantillonnage.** Conservez le prompt et les logits, puis changez uniquement la température. La distribution change selon $p_i(T)=\operatorname{softmax}(z/T)_i$, mais les logits bruts restent identiques. Comparez ensuite top-k et top-p : ces filtres modifient l'ensemble des candidats autorisés. Une génération échantillonnée peut varier même lorsque le prompt et les paramètres sont identiques.
-
-Pour chaque expérience, consignez : hypothèse, variable modifiée, observation, interprétation et limite. Une observation visuelle est un indice à confronter à l'équation et, si possible, à un test automatisé.
-
-### Lire le code de Transformer Explainer
-
-**Périmètre de l'audit :** dépôt amont [poloclub/transformer-explainer](https://github.com/poloclub/transformer-explainer), snapshot [`bfe50af`](https://github.com/poloclub/transformer-explainer/commit/bfe50afba10b9b560b84143ee1107d977defa74f) consulté le 30 octobre 2026. Les fichiers d'interface ci-dessous affichent les résultats ; ils ne doivent pas être confondus avec les fonctions qui calculent ces résultats.
-
-| Élément observé | Composant d'interface | Calcul ou données à inspecter |
-|---|---|---|
-| Tokens, IDs et vecteurs d'embedding | [Embedding.svelte](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/components/Embedding.svelte) — visualisation | [data.ts](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/data.ts) pour la tokenisation et l'appel d'inférence ONNX ; [model.py](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/model/model.py), `GPT.forward`, pour les tables d'embeddings de tokens et de positions |
-| Projections Q, K et V | [QKV.svelte](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/components/QKV.svelte) — visualisation des vecteurs | [model.py](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/model/model.py), `CausalSelfAttention.forward` : projection jointe, séparation et mise en forme des têtes |
-| Scores et poids d'attention | [AttentionMatrix.svelte](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/components/AttentionMatrix.svelte) — matrice affichée | [model.py](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/model/model.py) pour scores, mise à l'échelle, masque causal, softmax et dropout ; [data.ts](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/data.ts) sélectionne les tenseurs exposés par la session ONNX |
-| MLP et blocs résiduels | [Mlp.svelte](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/components/Mlp.svelte) — visualisation | [model.py](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/model/model.py), classes `MLP` et `Block` : transformations feed-forward, normalisations et connexions résiduelles |
-| Logits, température et échantillonnage | [LinearSoftmax.svelte](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/components/LinearSoftmax.svelte) — visualisation | [data.ts](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/data.ts) : extraction des logits ONNX, température, softmax, top-k et top-p |
-| Explications et surlignages guidés | [textbookPages.ts](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/textbookPages.ts) | Texte pédagogique et association entre étapes du manuel et composants visuels ; ce fichier ne définit pas le calcul du modèle |
-
-Le chemin d'exécution dans le navigateur utilise Svelte/TypeScript, ONNX Runtime Web et un tokenizer GPT-2 ; `data.ts` appelle la session ONNX. Le dépôt contient aussi un modèle PyTorch de référence dans `model.py`, utile pour inspecter l'architecture et ses opérations, mais distinct du chemin d'inférence ONNX utilisé par l'interface. Cette séparation entre calcul, extraction des tenseurs, visualisation et explications est un modèle d'organisation à étudier, pas une architecture à recopier telle quelle dans LLM Lab.
-
-### Audit critique : une visualisation n'est pas une spécification
-
-Le code source révèle aussi des choix qu'il faut garder à l'esprit :
-
-- **Top-p :** dans `topPSampling` de `src/utils/data.ts`, le code trie les logits, conserve les 50 meilleurs, applique la température, puis calcule le softmax et la somme cumulée **sur ces 50 candidats seulement**. Il tronque ensuite selon le seuil $p$ et renormalise les candidats retenus. La distribution restreinte somme donc déjà à un : le seuil est atteint dans ce sous-ensemble. La limite réelle est que les tokens au-delà du rang 50 sont exclus avant le calcul du nucleus ; si le nucleus exact sur le vocabulaire complet devait contenir plus de 50 tokens, cette implémentation ne peut pas les récupérer. Par exemple, si les 50 premiers tokens ne portent que 60 % de la masse de probabilité complète et que $p=0{,}9$, l'outil renormalise ces 60 % à 100 % : le seuil affiché correspond alors à seulement 0,54 (= 0,9 × 0,60) de la masse initiale. Le nucleus exact sur le vocabulaire complet doit au contraire inclure des tokens au-delà du rang 50 pour atteindre 0,9. C'est une approximation propre à cet outil, pas une propriété du top-p.
-
-**Formulation conditionnelle.** Fixons une température $T>0$ et notons $P_T$ la distribution softmax qui serait obtenue sur le vocabulaire complet après application de cette température. Soit $S_{50}$ l'ensemble des 50 candidats retenus et $m=P_T(S_{50})<1$ leur masse dans cette distribution. Après troncature, l'outil travaille avec la distribution conditionnelle $P_T(i\mid i\in S_{50})=P_T(i)/m$. Pour un préfixe retenu $A\subseteq S_{50}$, sa condition de coupure devient
-
-$\sum_{i\in A}\frac{P_T(i)}{m}\geq p\quad\Longleftrightarrow\quad P_T(A)\geq p\,m.$
-
-Avec $m=0{,}60$ et $p=0{,}90$, il suffit donc que $A$ porte 0,54 de la masse initiale. Le nucleus exact sur le vocabulaire complet accumule au contraire la masse $P_T$ jusqu'à 0,90 ; comme $S_{50}$ ne porte que 0,60, il doit nécessairement inclure des tokens hors de $S_{50}$.
-- **Embeddings :** une représentation vectorielle apprise n'est pas une définition géométrique universelle du sens. La proximité dépend de la métrique, de l'espace, de la couche et de la tâche.
-- **Attention :** les poids affichés décrivent une étape du calcul. Ils ne suffisent pas à mesurer l'influence causale d'un token sur le logit final.
-- **Génération aléatoire :** comparer deux sorties textuelles ne permet pas d'isoler l'effet d'un paramètre si le tirage aléatoire change également. Pour étudier la distribution, comparez les probabilités ou contrôlez la graine lorsque l'implémentation le permet.
-
-Ces remarques ne disqualifient pas l'outil : elles définissent précisément ce qu'il permet d'apprendre et ce qu'il ne faut pas lui faire dire.
-
-### Ce que cette démonstration permet — et ne permet pas — de conclure
-
-- L'outil exécute **GPT-2 small (124 millions de paramètres)** : c'est un modèle pédagogique suffisamment représentatif des opérations fondamentales, pas un substitut à l'inspection de tous les LLM récents.
-- Le modèle s'exécute côté navigateur. Le premier chargement peut nécessiter le téléchargement des ressources du modèle et solliciter la mémoire et le processeur de votre machine.
-- Une visualisation d'un poids d'attention montre une opération interne, pas à elle seule une explication causale ou fidèle de la prédiction.
-- Les paramètres de génération comme la température changent la sélection du prochain token ; ils ne réentraînent pas le modèle et ne rendent pas ses sorties factuellement fiables.
-- Cette démonstration est un outil externe. Elle n'exécute pas le code Python de LLM Lab et ne constitue pas un test de nos futures implémentations.
-
-**À retenir :** utilisez l'explorateur pour formuler des hypothèses et repérer les opérations ; revenez aux équations de ce site pour les vérifier, puis aux tests et expériences du dépôt lorsqu'une implémentation correspondante sera disponible.
+La démonstration externe **Transformer Explainer** permet d’observer une exécution de GPT-2 small. Elle illustre un modèle précis et ne constitue ni une preuve causale ni un test du code de LLM Lab. La [visite guidée et l’audit de ses limites](transformer-explainer.qmd) sont facultatifs.
 
 ## Entraînement et génération : deux modes à ne pas confondre
 
@@ -203,6 +141,7 @@ Il n'est pas nécessaire de consulter toutes les ressources. Choisissez celle qu
 - [DeepLearning.AI — *How Transformer LLMs Work*](https://www.deeplearning.ai/courses/how-transformer-llms-work) : un cours vidéo compact de Jay Alammar et Maarten Grootendorst sur la tokenisation, les embeddings, l'attention, les blocs modernes et quelques variantes d'efficacité. L'accès et les conditions du cours peuvent évoluer.
 
 Ces ressources ont des rôles différents : les visualisations construisent l'intuition, l'article primaire documente la formulation originale, le code annoté rend visibles les choix d'implémentation et la documentation d'API précise le contrat d'une opération de bibliothèque. Elles sont complémentaires, mais non interchangeables. Lorsqu'une explication simplifie un mécanisme ou qu'une implémentation adopte une convention particulière, vérifiez les hypothèses et le périmètre avant de généraliser.
+
 ::: {.language-switch}
 **Langue :** [Français](transformer.qmd) · [English](../en/transformer.qmd)
 :::

@@ -9,8 +9,10 @@ from llm_lab.foundations.losses import (
     cross_entropy_from_logits,
     cross_entropy_gradient,
 )
+from llm_lab.foundations.types import FloatArray
 
 __all__ = [
+    "FloatArray",
     "causal_mask",
     "cross_entropy_from_logits",
     "cross_entropy_gradient",

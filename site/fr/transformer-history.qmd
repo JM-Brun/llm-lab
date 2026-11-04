@@ -22,6 +22,8 @@ tags: ["type:historical-reference", "destination:reference", "topic:transformer-
 
 Le Transformer n'est pas apparu sans précurseurs. Son histoire combine les mécanismes d'attention développés pour la traduction neuronale, l'auto-attention, l'entraînement à grande échelle et des objectifs différents selon les familles de modèles. Cette chronologie est sélective : elle présente des jalons, pas une histoire exhaustive ni une causalité unique.
 
+Parmi ces jalons, [Bahdanau, Cho et Bengio (2014)](https://arxiv.org/abs/1409.0473) étudient une attention pour la traduction neuronale. [Vaswani et al. (2017)](https://arxiv.org/abs/1706.03762) placent l'auto-attention au cœur du Transformer et décrivent l'attention à produit scalaire mise à l'échelle. Les deux mécanismes et architectures ne sont pas identiques.
+
 ## Chronologie
 
 Les dates distinguent soumission, annonce et mise à disposition. Les jalons sont regroupés par domaine ; leur ordre chronologique ne signifie pas qu'ils forment une chaîne causale.

@@ -34,17 +34,17 @@ Un LLM n'écrit pas un texte d'un bloc : il produit **un token à la fois**. À 
 
 ## La boucle de génération, étape par étape
 
-1. **Préparer le contexte.** Le texte de départ est découpé en [tokens](text-data.qmd) et converti en identifiants. Si le contexte dépasse la fenêtre maximale du modèle, il est tronqué selon une règle propre à chaque modèle.
+1. **Préparer le contexte.** Le texte de départ est découpé en [tokens](text-data.qmd) et converti en identifiants. Si le contexte dépasse la fenêtre maximale, l'application doit gérer cette limite, par exemple en tronquant ou en arrêtant la génération.
 2. **Estimer la distribution du prochain token.** Le modèle produit, pour chaque token du vocabulaire, un score puis une probabilité. Cette distribution dépend du contexte courant : c'est une probabilité conditionnelle.
 3. **Sélectionner le prochain token.** Une règle de décodage (voir ci-dessous) transforme la distribution en un unique choix : soit déterministe, soit tiré au hasard selon les probabilités.
-4. **Ajouter le token et recommencer.** Le token sélectionné est ajouté au contexte, et la boucle repart à l'étape 2 avec un contexte rallongé d'un token.
+4. **Ajouter le token et recommencer.** Le token sélectionné est ajouté au contexte, puis la boucle repart à l'étape 2, sous réserve de la limite de contexte.
 5. **Arrêter.** La génération s'arrête sur un critère explicite — token de fin, longueur maximale, ou règle imposée par l'application — jamais parce que le modèle « aurait fini de réfléchir ».
 
-À chaque pas, le contexte s'allonge d'un token : les prédictions suivantes sont donc aussi conditionnées par les tokens que le modèle vient de produire lui-même.
+Les prédictions suivantes sont donc aussi conditionnées par les tokens produits qui restent dans le contexte utilisé.
 
 ## L'inférence n'apprend rien
 
-Contrairement à l'apprentissage, la boucle de génération **ne modifie aucun paramètre**. Avec une règle déterministe, le même contexte produit toujours la même suite ; seule une règle aléatoire (échantillonnage) introduit de la variabilité. Générer beaucoup de texte n'entraîne pas le modèle : rien de ce qui est produit n'est mémorisé au-delà du contexte courant.
+Dans la génération ordinaire, les paramètres du modèle restent fixes. Avec le même contexte, les mêmes paramètres et un calcul déterministe, une règle de décodage déterministe produit la même suite ; l'échantillonnage ou des calculs non déterministes peuvent introduire de la variabilité. Générer du texte ne met pas à jour les poids, même si une application peut conserver l'historique ou d'autres données en dehors du modèle.
 
 C'est la distinction reprise par le [parcours de construction](build-path.qmd) : **générer avec des paramètres fixes**, ou **évaluer une loss puis modifier les paramètres**.
 
@@ -52,11 +52,11 @@ C'est la distinction reprise par le [parcours de construction](build-path.qmd) :
 
 ### Sélection gloutonne (argmax)
 
-Le token le plus probable est sélectionné systématiquement. Le résultat est reproductible, mais les textes générés sont souvent répétitifs : une fois engagé dans une boucle, le modèle peut la parcourir indéfiniment.
+Le token le plus probable est sélectionné systématiquement. À calcul déterministe et conditions identiques, le résultat est reproductible. Une répétition peut persister jusqu'à ce qu'un critère d'arrêt ou une limite intervienne.
 
 ### Échantillonnage selon la distribution
 
-Le token est tiré au hasard selon les probabilités. Les textes varient d'une exécution à l'autre ; un token peu probable peut apparaître, parfois au prix de la cohérence.
+Le token est tiré au hasard selon les probabilités. Les textes peuvent varier d'une exécution à l'autre ; un token peu probable peut apparaître, parfois au prix de la cohérence. Une graine et un calcul déterministes permettent de reproduire un tirage dans les mêmes conditions.
 
 ### Échantillonnage ajusté : température et troncature
 

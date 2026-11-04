@@ -22,6 +22,8 @@ tags: ["type:historical-reference", "destination:reference", "topic:transformer-
 
 The Transformer did not emerge without predecessors. Its history combines attention mechanisms developed for neural machine translation, self-attention, large-scale training, and different objectives across model families. This selective timeline highlights milestones; it is neither exhaustive nor a claim of a single causal path.
 
+Among these milestones, [Bahdanau, Cho, and Bengio (2014)](https://arxiv.org/abs/1409.0473) studied attention for neural translation. [Vaswani et al. (2017)](https://arxiv.org/abs/1706.03762) placed self-attention at the center of the Transformer and described scaled dot-product attention. The two mechanisms and architectures are not identical.
+
 ## Timeline
 
 Dates distinguish submissions, announcements, and releases. Milestones are grouped by research area; chronological order does not imply a single causal chain.

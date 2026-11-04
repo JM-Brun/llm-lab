@@ -34,17 +34,17 @@ An LLM does not write text in one block: it produces **one token at a time**. At
 
 ## The generation loop, step by step
 
-1. **Prepare the context.** The starting text is split into [tokens](text-data.qmd) and converted to token IDs. If the context exceeds the model's maximum window, it is truncated according to a model-specific rule.
+1. **Prepare the context.** The starting text is split into [tokens](text-data.qmd) and converted to token IDs. If the context exceeds the maximum window, the application must handle the limit, for example by truncating or stopping generation.
 2. **Estimate the next-token distribution.** For every token in the vocabulary, the model produces a score and then a probability. This distribution depends on the current context: it is a conditional probability.
 3. **Select the next token.** A decoding rule (see below) turns the distribution into a single choice: either deterministic, or drawn at random according to the probabilities.
-4. **Append the token and repeat.** The selected token is added to the context, and the loop returns to step 2 with a context one token longer.
+4. **Append the token and repeat.** The selected token is added to the context, and the loop returns to step 2, subject to the context limit.
 5. **Stop.** Generation stops on an explicit criterion — an end-of-sequence token, a maximum length, or a rule imposed by the application — never because the model "finished thinking".
 
-At each step, the context grows by one token: later predictions are therefore also conditioned on the tokens the model itself has just produced.
+Later predictions are therefore also conditioned on the generated tokens that remain in the context used.
 
 ## Inference learns nothing
 
-Unlike learning, the generation loop **does not modify any parameter**. With a deterministic rule, the same context always produces the same continuation; only a random rule (sampling) introduces variability. Generating a lot of text does not train the model: nothing that is produced is memorized beyond the current context.
+In ordinary generation, the model's parameters remain fixed. With the same context, parameters, and deterministic computation, a deterministic decoding rule produces the same continuation; sampling or nondeterministic computation can introduce variability. Generating text does not update the weights, although an application may retain history or other data outside the model.
 
 This is the distinction used by the [build path](build-path.qmd): **generate with fixed parameters**, or **evaluate a loss and then update the parameters**.
 
@@ -52,11 +52,11 @@ This is the distinction used by the [build path](build-path.qmd): **generate wit
 
 ### Greedy selection (argmax)
 
-The most likely token is selected every time. The result is reproducible, but generated texts are often repetitive: once locked into a loop, the model may cycle through it indefinitely.
+The most likely token is selected every time. With deterministic computation and identical conditions, the result is reproducible. Repetition can persist until a stopping criterion or limit intervenes.
 
 ### Sampling from the distribution
 
-The token is drawn at random according to the probabilities. Texts vary from one run to another; an unlikely token may appear, sometimes at the cost of coherence.
+The token is drawn at random according to the probabilities. Texts can vary between runs; an unlikely token may appear, sometimes at the cost of coherence. A fixed seed and deterministic computation allow the draw to be reproduced under the same conditions.
 
 ### Adjusted sampling: temperature and truncation
 

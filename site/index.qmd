@@ -39,28 +39,28 @@ Les grands modèles de langage (LLM) sont une famille de modèles neuronaux entr
 </div>
 ::::
 
-## Trois parcours d'apprentissage
+## Choisir son parcours
 
 ::: {.learning-grid}
 ::: {.learning-card}
-<p class="eyebrow">PARCOURS 1 · GUIDÉ</p>
-### Construire un petit GPT
-Un fil conducteur pas à pas pour implémenter et comprendre un décodeur de A à Z.
-[Suivre le parcours](fr/build-path.qmd){.card-link}
-:::
-
-::: {.learning-card}
-<p class="eyebrow">PARCOURS 2 · NOTIONS & MÉCANISMES</p>
-### Notions & Micro-ateliers
-Des fiches autonomes avec micro-ateliers numériques exécutables pour chaque mécanisme.
+<p class="eyebrow">COMPRENDRE · NOTIONS & MÉCANISMES</p>
+### Comprendre les LLM
+Du panorama aux opérations du Transformer, puis à la génération et à l'apprentissage.
 [Explorer les notions](fr/llm-overview.qmd){.card-link}
 :::
 
 ::: {.learning-card}
-<p class="eyebrow">PARCOURS 3 · RIGUEUR & CRITIQUE</p>
-### Fondations & limites
-Géométrie des représentations, hypothèse de linéarité et protocoles expérimentaux.
-[Examiner les fondations](fr/mathematical-foundations.qmd){.card-link}
+<p class="eyebrow">CONSTRUIRE · GUIDÉ</p>
+### Construire un petit GPT
+Un parcours de construction par jalons, avec le statut et les vérifications attendues.
+[Suivre le parcours](fr/build-path.qmd){.card-link}
+:::
+
+::: {.learning-card}
+<p class="eyebrow">APPROFONDIR · FACULTATIF</p>
+### Approfondir les notions
+Tenseurs, géométrie des représentations et limites de leur interprétation.
+[Explorer les approfondissements](fr/tensors.qmd){.card-link}
 :::
 :::
 
@@ -123,12 +123,20 @@ Le même modèle intervient dans plusieurs processus, mais ceux-ci n'ont ni le m
 
 ## Parcours conceptuel
 
-Commencez par le [panorama des LLM](fr/llm-overview.qmd) pour situer les familles de modèles et leur cycle de vie. Passez ensuite à la [vue d’ensemble GPT / Transformer](fr/transformer.qmd), qui zoome sur le modèle décodeur seul construit dans ce projet, puis utilisez le parcours guidé pour relier les mécanismes aux jalons de construction. Les pages conceptuelles détaillent les opérations ; l’évaluation reste transversale et ne constitue pas une simple dernière étape de génération.
+Le parcours **Comprendre** suit un ordre suggéré, sans imposer une lecture intégrale. La barre latérale donne la liste complète ; les pages se lisent aussi indépendamment.
+
+1. [Panorama des LLM](fr/llm-overview.qmd), [GPT et Transformer](fr/transformer.qmd), puis [génération](fr/generation.qmd) : situer le système et son utilisation.
+2. [Du texte aux tokens](fr/text-data.qmd), puis embeddings, position et représentations contextualisées : comprendre les entrées du modèle.
+3. [Q/K/V](fr/queries-keys-values.qmd), [attention](fr/scaled-dot-product-attention.qmd) et [masque causal](fr/causal-masking.qmd) : suivre le traitement du contexte.
+4. [Logits](fr/logits.qmd) et [probabilités](fr/probabilites.qmd) : comprendre la prédiction. La génération utilise ces éléments sans nécessiter l'étude préalable de l'entraînement.
+5. [Exemples d'entraînement](fr/training-examples.qmd), puis vraisemblance, entropie, cross-entropie, loss et gradients : comprendre comment les paramètres sont appris.
+
+Le [parcours de construction](fr/build-path.qmd) relie ces mécanismes aux jalons pratiques. L'[évaluation](fr/evaluation-experimentale.qmd) reste transversale, et l'[historique](fr/transformer-history.qmd) est une référence facultative.
 
 La carte détaillée des trois profondeurs pédagogiques et des jalons de construction est maintenue dans le [parcours d’apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md). Les pages de tenseurs et les développements mathématiques avancés sont des références facultatives, non des prérequis.
 
 ::: {.callout-note}
-**Périmètre actuel.** Ce parcours organise les contenus disponibles ; il ne prétend pas qu'un GPT complet est déjà implémenté. La génération détaillée, le préentraînement reproductible et l'adaptation d'un modèle pré-entraîné restent des chantiers distincts du parcours conceptuel.
+**Périmètre actuel.** Les explications conceptuelles de la génération sont disponibles. Un GPT complet, une boucle de génération intégrée, le préentraînement reproductible et l'adaptation d'un modèle pré-entraîné restent à construire.
 :::
 
 ## Vérifier plutôt que seulement visualiser

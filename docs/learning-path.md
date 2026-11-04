@@ -4,6 +4,15 @@
 
 This plan is a sequence of evidence-producing modules, not a promise of mastery after a fixed number of hours. Each module is complete only when its implementation, tests, experiment notes, and limitations are available. The repository's current status, priorities, and acceptance criteria are tracked in the [roadmap](roadmap.md).
 
+## Where the code belongs
+
+- `src/llm_lab/foundations/` contains the existing NumPy reference components and their numerical tests are in `tests/unit/`. These components illustrate concepts; they are not a complete GPT.
+- `src/llm_lab/minimal/` is reserved for the future end-to-end teaching build, including the code needed to train it and generate text. It must not require site tooling or advanced extensions.
+- `src/llm_lab/advanced/` is reserved for optional learning extensions, such as adaptation or efficiency work. They may build on the minimal model; neither directory contains an implementation yet.
+- `site/tools/` and `tests/site/` maintain and verify the website. They are separate from the installable learning package. Experiment configurations and results belong in `experiments/` and `reports/` respectively.
+
+These locations do not change the milestone order or authorize implementation before its evidence gates are met.
+
 ## The conceptual order: see the system work before studying how it learns
 
 The learner-facing course and the implementation dependency graph answer different questions. **The conceptual course starts with what a model does; the build route follows the dependencies needed to construct one.** Do not force these into one identical chapter order.

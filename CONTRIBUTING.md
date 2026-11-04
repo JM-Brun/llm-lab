@@ -59,7 +59,8 @@ Run the relevant checks for the changed surface and state clearly if a tool or o
 
 ## Engineering and research conventions
 
-- Put reusable code in `src/llm_lab`; notebooks and lesson snippets are explanatory, not the sole home of core logic.
+- Put reusable learning code in `src/llm_lab`; notebooks and lesson snippets are explanatory, not the sole home of core logic. Keep site generation and validation code in `site/tools/`, with site tests in `tests/site/`.
+- Keep the planned minimal end-to-end model in `src/llm_lab/minimal/` independent of site tooling and advanced extensions. Place optional learning extensions in `src/llm_lab/advanced/`; they may depend on the minimal model. Existing numerical reference components live in `src/llm_lab/foundations/` and are not themselves a complete model.
 - Each computational concept page should connect the explanation to an implementation and a verifiable invariant (assertion, test, known value, or finite-difference check). Keep page snippets minimal and runnable; put reusable logic in `src/llm_lab` and test it there.
 - Keep functions focused, typed, and small enough to reason about; document tensor shapes and numerical conventions.
 - For numerical implementations, test known values and/or finite differences.
