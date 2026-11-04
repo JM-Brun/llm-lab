@@ -42,7 +42,7 @@ def test_checked_in_registry_is_valid() -> None:
     data = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
     published_pages = MODULE["_published_page_ids"]()
     domain_data = yaml.safe_load(
-        (registry_path.parents[1] / "domains.yml").read_text(encoding="utf-8")
+        (registry_path.parent / "domains.yml").read_text(encoding="utf-8")
     )
     domain_ids, domain_errors = validate_domains(domain_data)
     assert domain_errors == []
