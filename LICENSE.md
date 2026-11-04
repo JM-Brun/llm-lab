@@ -24,14 +24,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-## Content — Creative Commons Attribution-ShareAlike 4.0
+## Project-authored prose — Creative Commons Attribution-ShareAlike 4.0
 
-Project-owned non-code content (Quarto pages, documentation, illustrations,
-and text) is licensed under the
+Original text written for this project in Quarto pages and documentation is
+licensed under the
 [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
 
-You are free to share and adapt the material, provided you give appropriate
-credit, indicate changes, and distribute contributions under the same license.
+You are free to share and adapt that prose, provided you give appropriate
+credit, indicate changes, and distribute adaptations under the same licence.
 
-Third-party material retains its own licence or other applicable terms. This
-licence does not grant rights that the project or its contributors do not hold.
+## Explicit exclusions and third-party material
+
+The CC BY-SA grant above does not cover images, diagrams, illustrations, SVG
+files, screenshots, photographs, fonts, datasets, model weights, or other
+non-text assets. In particular, the local SVG files under `site/images/` are
+excluded until their authorship, adaptation history, and rights have been
+confirmed and the asset register explicitly records the applicable licence.
+
+Externally hosted figures and other third-party materials are not relicensed
+by this repository. They remain subject to the rights and terms of their
+respective rights holders. Attribution or a source link is not, by itself,
+permission to reuse an asset.
+
+Where a file or passage contains third-party material, that material is
+excluded from the project licence; the licence applies only to project-authored
+portions for which the project has the necessary rights. Consult the
+[visual asset register](docs/visual-assets-register.md) for current evidence
+and unresolved provenance checks.
+
+No licence statement in this repository grants rights that the project or its
+contributors do not hold.
