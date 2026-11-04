@@ -30,7 +30,7 @@ sources:
       contribution_types: [architecture, pedagogy]
       audiences: [beginner, learner]
     scan_status: partially-scanned
-    integration_status: partially-integrated
+    integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-04"
         status: partially-scanned
