@@ -14,6 +14,7 @@ These principles are the short version of the project's editorial and engineerin
 6. **Keep overviews at the right level.** Explain organising relationships and link to dedicated pages for derivations, detailed algorithms, or code. Do not move essential definitions out of context merely to reduce page length.
 7. **State learning outcomes only when they help.** Outcomes must be observable and page-specific, not generic promises.
 8. **Maintain a useful glossary.** Define unfamiliar terms when first needed and preserve French/English terminology parity.
+9. **Use French equivalents without erasing established technical usage.** In French pages, introduce the accepted French term alongside a widely used English term at first mention (for example, *embedding* / *plongement*). Keep the English term where it is standard in code, APIs, model names, or established expressions, and reuse the French equivalent naturally in explanatory prose. Do not alternate mechanically or imply that related concepts (such as an initial embedding and a contextualized representation) are interchangeable.
 
 ## 2. Prefer scientific precision over apparent certainty
 
