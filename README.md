@@ -8,7 +8,7 @@ The goal is not to train a production-scale LLM from scratch. It is to implement
 
 Contributions can improve concept explanations, French/English parity, reference implementations, numerical tests, reproducible experiments, critical reviews, figures/references, or developer tooling. Each mode has its own acceptance criteria; see [CONTRIBUTING.md](CONTRIBUTING.md) and use the PR template to state which mode your change follows.
 
-The information architecture, metadata ownership boundaries, and knowledge-graph maintenance rules are documented in [docs/information-architecture.md](docs/information-architecture.md).
+**Architecture and maintenance entry point:** [Information architecture and metadata governance](docs/information-architecture.md). It is the index for the canonical sources, their ownership boundaries, the generated projections, and the maintenance workflow. Use the [contributor guide](CONTRIBUTING.md) for the practical change workflow; detailed rules remain in their owning documents.
 
 ## Learn through the Quarto site
 
@@ -50,6 +50,7 @@ The rendered site is written to `site/_site/`. The Quarto CLI is a separate syst
 
 - Contributor entry point and template map: [page-template guide](docs/page-template-guide.md) and [page archetype map](docs/site-page-design-system.md).
 - Canonical soft composition model and reusable patterns: [page-template system](docs/page-template-system.md), [scientific page patterns](docs/page-patterns.md), and [implementation-page patterns](docs/implementation-page-patterns.md).
+- Ownership, cross-document references, and update rules: [information architecture](docs/information-architecture.md). The map above is an index; the linked documents remain authoritative for their own subject.
 
 ## Editorial and content principles
 
@@ -80,7 +81,7 @@ The [canonical learning path](docs/learning-path.md) is the single source of tru
 
 The from-scratch route demonstrates inference before training, then prepares training examples and proceeds to learning and verification. G2 is a training-data branch, not a prerequisite for understanding inference. A1–A4 form a separate pretrained-model adaptation route; E1 covers evaluation across routes. These are not fixed calendar stages, and planned modules must not be read as completed implementations.
 
-See [the learning path](docs/learning-path.md) for the authoritative module-level objectives and evidence gates, the [roadmap](docs/roadmap.md) for priorities and acceptance criteria, and the [experiment protocol](docs/experiment-protocol.md) for reporting requirements.
+See [the learning path](docs/learning-path.md) for the authoritative module-level objectives and evidence gates, the [content-section map](docs/content-section-mapping.md) for destination boundaries and page ownership, the [roadmap](docs/roadmap.md) for priorities and acceptance criteria, and the [experiment protocol](docs/experiment-protocol.md) for reporting requirements. The interactive learning route and exploratory graphs are reader-facing projections; their source ownership and maintenance are indexed in [information architecture](docs/information-architecture.md).
 
 ## Repository layout
 
