@@ -11,8 +11,8 @@ id: "en/transformer"
 scope: "Follows an autoregressive GPT computation inside the network, from input representations to logits, focusing on Transformer blocks, self-attention, the MLP, residual connections, and normalization; text preparation and the generation loop are located but not retaught."
 purpose: "Readers should be able to describe one forward pass, explain the operations in a Transformer block, distinguish depth from width, and identify logits as the network output without conflating that pass with decoding or generation."
 suggested_route:
-  previous: "en/llm-overview"
-  next: "en/generation"
+  previous: "en/contextualized-representations"
+  next: "en/queries-keys-values"
 hierarchy:
   parents: ["en/index", "en/llm-overview"]
   children: ["en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/queries-keys-values", "en/logits", "en/tensors", "en/transformer-explainer"]
