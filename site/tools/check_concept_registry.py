@@ -249,6 +249,35 @@ def validate_registry(
                 elif kind == "generalizes":
                     generalization_edges.setdefault(source, []).append(target)
 
+    relation_types = data.get("relation_types")
+    used_types = {kind for _, kind, _ in seen}
+    if not isinstance(relation_types, dict):
+        errors.append("relation_types: expected a mapping")
+    else:
+        unknown_definitions = set(relation_types) - RELATION_TYPES
+        missing_definitions = used_types - set(relation_types)
+        if unknown_definitions:
+            errors.append(f"relation_types: unsupported definitions {sorted(unknown_definitions)}")
+        if missing_definitions:
+            errors.append(f"relation_types: missing definitions for used types {sorted(missing_definitions)}")
+        for kind, definition in relation_types.items():
+            where = f"relation_types.{kind}"
+            if not isinstance(definition, dict):
+                errors.append(f"{where}: expected mapping")
+                continue
+            if definition.get("direction") not in {"directed", "symmetric"}:
+                errors.append(f"{where}.direction: expected directed or symmetric")
+            for field in ("labels", "descriptions"):
+                values = definition.get(field)
+                if not isinstance(values, dict) or set(values) != {"fr", "en"}:
+                    errors.append(f"{where}.{field}: expected exactly fr and en")
+                elif not all(isinstance(value, str) and value.strip() for value in values.values()):
+                    errors.append(f"{where}.{field}: values must be non-empty strings")
+            if kind == "contrasts-with" and definition.get("direction") != "symmetric":
+                errors.append(f"{where}.direction: contrasts-with must be symmetric")
+            elif kind != "contrasts-with" and definition.get("direction") == "symmetric":
+                errors.append(f"{where}.direction: only contrasts-with is currently defined as symmetric")
+
     if _has_cycle(prerequisite_edges):
         errors.append("relations: prerequisite graph must be acyclic")
     if _has_cycle(generalization_edges):
