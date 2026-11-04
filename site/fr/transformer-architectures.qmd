@@ -8,7 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/transformer-architectures"
-scope: "Compare les trois configurations Transformer par le contexte accessible, le flux d'information et les mécanismes d'attention ; distingue architecture, objectif d'entraînement et tâche, puis situe les limites de cette classification."
+scope: "Ressource de comparaison facultative : présente les trois configurations Transformer selon le contexte accessible, le flux d'information et les mécanismes d'attention ; distingue architecture, objectif d'entraînement et tâche, puis situe les limites de cette classification."
 purpose: "Le lecteur doit pouvoir comparer encodeur seul, encodeur-décodeur et décodeur seul, expliquer les rôles des attentions bidirectionnelle, causale et croisée, et ne pas confondre architecture, objectif et tâche."
 suggested_route:
   previous: "fr/llm-overview"
