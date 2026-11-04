@@ -155,7 +155,8 @@ def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[dict[s
             page = page_by_id.get(page_id)
             if page is None:
                 raise ValueError(
-                    f"guided-route stage {stage_id!r} references unpublished or missing page {page_id!r}"
+                    f"guided-route stage {stage_id!r} references unpublished or "
+                    f"missing page {page_id!r}"
                 )
             resources.append({"id": page_id, "title": page["title"], "href": page["href"]})
         resolved.append(
