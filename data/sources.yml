@@ -24,7 +24,7 @@ sources:
         - topic:self-attention
         - topic:multi-head-attention
         - method:scaled-dot-product-attention
-      concept_ids: [query, key, value, self-attention, softmax]
+      concept_ids: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax, multi-head-attention]
     metadata:
       technical_level: introductory
       contribution_types: [architecture, pedagogy]
