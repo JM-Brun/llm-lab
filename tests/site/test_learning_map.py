@@ -193,6 +193,10 @@ def test_load_pages_extracts_published_pages_and_section_headings(tmp_path: Path
     assert french["href"] == "attention.html"
     assert french["scope"] == "A concise scope."
     assert french["purpose"] == "A concise pedagogical purpose."
+    assert french["destination"] == "understand"
+    assert french["level"] == "core"
+    assert french["type"] == "concept-lesson"
+    assert french["topic"] == "attention"
     assert french["section_headings"] == [
         "Intuition",
         "Query, Key and Value",
