@@ -40,6 +40,9 @@ jobs:
       - name: Render site
         run: quarto render site
 
+      - name: Check rendered knowledge graph export
+        run: python3 scripts/check_knowledge_graph_rendered.py site/_site
+
       - name: Check rendered history timeline parity
         run: python3 scripts/check_history_rendered.py
 
