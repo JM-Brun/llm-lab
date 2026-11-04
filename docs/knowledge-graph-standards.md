@@ -18,7 +18,7 @@ LLM Lab already has a bilingual concept registry, controlled domains, typed conc
 | Standard | Use in LLM Lab | Status / boundary |
 |---|---|---|
 | W3C SKOS | `skos:ConceptScheme`, `skos:Concept`, language-tagged `prefLabel` and `definition`, domain membership via `dcterms:subject`, genuine generalization via `skos:narrower` | Implemented in JSON-LD export |
-| Schema.org | Published pages as `WebPage` + `LearningResource`; `name`, `inLanguage`, `description`, `abstract`, `learningResourceType`, `educationalLevel`, `about` | Implemented from existing page metadata |
+| Schema.org | Published pages as `WebPage` + `LearningResource`; `name`, `inLanguage`, `description`, `abstract`, `learningResourceType`, `about`; editorial depth stays project-specific | Implemented from existing page metadata |
 | Dublin Core Terms | `dcterms:subject`, `dcterms:format` | Implemented where semantics fit |
 | W3C PROV-O | Export entity, generation activity and source-artifact derivation | Implemented for dataset-level provenance only |
 | JSON-LD 1.1 | Interchange serialization with explicit contexts and stable absolute identifiers | Implemented |
@@ -46,7 +46,7 @@ The six controlled knowledge domains resolve to `https://jm-brun.github.io/llm-l
 
 ### Learning resources
 
-Each published FR/EN page referenced by the concept registry is described as a Schema.org `LearningResource` and `WebPage`. Its stable public URL is the resource identifier. The export uses `schema:about` because the current `resources` field asserts topical association, not necessarily that every linked page explicitly teaches or assesses the concept. Do not replace this with `schema:teaches` without an explicit learning-outcome mapping.
+Each published FR/EN page referenced by the concept registry is described as a Schema.org `LearningResource` and `WebPage`. Its stable public URL is the resource identifier. The export uses `schema:about` because the current `resources` field asserts topical association, not necessarily that every linked page explicitly teaches or assesses the concept. Do not replace this with `schema:teaches` without an explicit learning-outcome mapping. The editorial `level` values (`overview`, `core`, `applied`, `advanced`, `reference`) are exported as `llmlab:editorialLevel`, not `schema:educationalLevel`, because they classify page role/depth rather than learner educational attainment.
 
 Code modules, tests, experiments, external papers and media are not yet first-class resource records in the canonical registry. They remain a future extension; do not infer their identity from arbitrary links in page prose.
 
