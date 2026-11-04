@@ -11,7 +11,7 @@ The repository now has the beginnings of a three-dimensional knowledge model, bu
 - The **page graph** is implemented and rendered by the existing bilingual learning map.
 - A **typed concept registry** is implemented in `data/concepts.yml` by merged PR [#399](https://github.com/JM-Brun/llm-lab/pull/399). It is a reviewed seed, not yet the full knowledge graph.
 - The six **Deepen domains** are currently page-classification metadata, introduced by merged PR [#391](https://github.com/JM-Brun/llm-lab/pull/391).
-- Concept-to-domain membership and a canonical bilingual domain registry are proposed in PR [#404](https://github.com/JM-Brun/llm-lab/pull/404). The resource dimension remains represented by concept-to-page references; independent resource entities for demonstrations, experiments, implementations, and external references are not yet modelled.
+- Concept-to-domain membership and the canonical bilingual domain registry were merged in PR [#404](https://github.com/JM-Brun/llm-lab/pull/404). The resource dimension remains represented by concept-to-page references; independent resource entities for demonstrations, experiments, implementations, and external references are not yet modelled.
 
 The pedagogical path and the knowledge map must remain distinct projections. The former encodes learner progression; the latter supports non-linear discovery and cross-domain navigation.
 
@@ -19,7 +19,7 @@ The pedagogical path and the knowledge map must remain distinct projections. The
 
 | Dimension / projection | Current source | Implemented semantics | Status and boundary |
 |---|---|---|---|
-| Domains | docs/page-metadata-schema.md; page-map metadata in site/**/*.qmd; scripts/check_page_metadata.py | Six controlled domain IDs classify Deepen content pages; FR/EN counterparts share the ID; page-map generator exports the field | **Implemented at page level; concept membership proposed in PR #404.** Page primary-domain classification remains distinct from potentially many-to-many concept-domain membership. |
+| Domains | docs/page-metadata-schema.md; page-map metadata in site/**/*.qmd; scripts/check_page_metadata.py | Six controlled domain IDs classify Deepen content pages; FR/EN counterparts share the ID; page-map generator exports the field | **Implemented at both levels.** Page primary-domain classification remains distinct from many-to-many concept-domain membership. Page primary-domain classification remains distinct from potentially many-to-many concept-domain membership. |
 | Concepts | data/concepts.yml in PR #399 | Language-independent kebab-case IDs, FR/EN labels and definitions, typed concept-to-concept relations | **Merged seed.** 13 concepts and 12 relations; coverage is intentionally incomplete. |
 | Concept relations | data/concepts.yml; scripts/check_concept_registry.py in PR #399 | Directed relation vocabulary including prerequisite, generalizes, applies-to, contrasts-with, and more specific types | **Implemented for the seed.** Endpoints, relation types, self-links, duplicates, and prerequisite/generalization acyclicity are validated. PR #404 adds a canonical single-storage orientation for symmetric `contrasts-with` edges. |
 | Resources | resources arrays on concept records in PR #399 | References to published FR/EN page IDs; the validator checks page-ID syntax and published-page resolution | **Partial.** A page is currently the resource record. No first-class resource entity with its own stable ID, kind, language, status, provenance, and path/URL was found for demonstrations, experiments, implementations, and external references. |
@@ -58,12 +58,12 @@ The registry also contains more specific relations such as part-of, contributes-
 
 ### Validation evidence
 
-On merged PR #399 head 7bea7ec (2026-11-04), Python CI passed all 127 tests and the Quarto workflow passed bilingual rendering, history timeline parity, and rendered local-link checks. On PR #404 head f1bc8da (2026-11-04), the concept/domain validator, page metadata checks, Ruff format/lint, mypy, and all 131 pytest tests passed. The corresponding Quarto workflow was still pending at the latest audit update; do not report it as green until its final result is observed.
+On merged PR #399 head 7bea7ec (2026-11-04), Python CI passed all 127 tests and the Quarto workflow passed bilingual rendering, history timeline parity, and rendered local-link checks. On merged PR #404 head f1bc8da (2026-11-04), Python CI passed the concept/domain validator, page metadata checks, Ruff format/lint, mypy, and all 131 pytest tests. The Quarto workflow also passed bilingual rendering, history timeline parity, and rendered local-link checks.
 
 ## Remaining gaps, ordered by dependency
 
 1. **Review the merged concept seed.** Expand `data/concepts.yml` only alongside reviewed content; audit relation direction and avoid implying ontology completeness.
-2. **Merge and maintain concept-domain membership.** PR #404 proposes `data/domains.yml`, many-to-many concept membership, and a canonical symmetry rule for `contrasts-with`; verify its CI and rendered-site checks before merging.
+2. **Maintain concept-domain membership.** PR #404 merged `data/domains.yml`, many-to-many concept membership, and a canonical symmetry rule for `contrasts-with`. Review memberships as the concept seed expands; do not infer them from page-level classifications.
 3. **Introduce first-class resource records.** Define stable resource IDs distinct from page and concept IDs; include kind, language, status, provenance, and local path/external URL. Then make concept-resource associations many-to-many. Preserve page IDs as page identifiers.
 4. **Add referential-integrity tests across dimensions.** Check concept-domain membership, resource IDs, resource locations/status, and concept-resource endpoints. Include fixtures for one resource linked to multiple concepts and one concept linked to multiple resource kinds.
 5. **Extend the concept-map projection.** Add concept-domain membership and first-class resource kinds when their canonical records are available. Preserve IDs and edge types; keep this view distinct from page navigation and curriculum progression.
