@@ -48,6 +48,8 @@ In particular, do not display technical labels such as `type:concept-lesson`, `d
 
 Reader-facing orientation is a separate editorial decision. Use natural-language elements only when they help answer a reader question—for example, a concise prerequisite, a meaningful learning outcome, or a clearly labelled optional deep dive. Never expose internal field names or force every page to display the same metadata panel.
 
+Interactive visualizations follow the same rule. Stable IDs such as `topic`, `destination`, concept IDs, and graph node IDs may remain in generated JSON, SVG attributes, search indexes, and event-handling code. They must not be copied into visible text. Render localized human-readable labels for page destinations and concept categories; when no meaningful label exists, omit the label or use a neutral localized fallback rather than exposing an identifier.
+
 ### Concept terms are not editorial tags
 
 When a scientific term deserves emphasis, treat it as **content**, not as another page tag:
