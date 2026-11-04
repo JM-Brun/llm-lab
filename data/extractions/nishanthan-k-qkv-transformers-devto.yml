@@ -79,7 +79,7 @@ items:
       concept_ids: [query, key, value, self-attention, softmax]
     candidate_destinations:
       pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
-      concepts: [self-attention, softmax]
+      concepts: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax]
     disposition: defer
     disposition_rationale: "The adjacent attention lesson already gives the mask-aware equation, tensor shapes, numerical example, scaling derivation and interpretive caveats. Duplicating it on the Q/K/V page would blur scope."
 
@@ -106,7 +106,7 @@ items:
       concept_ids: [query, key, value, output-projection]
     candidate_destinations:
       pages: [fr/transformer, en/transformer, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
-      concepts: [output-projection]
+      concepts: [query, key, value, output-projection, multi-head-attention]
     disposition: defer
     disposition_rationale: "The overview already cautions against assuming interpretable head specialization; the implementation walkthrough explains head slicing and isolation until w_o."
 
