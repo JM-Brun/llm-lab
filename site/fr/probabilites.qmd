@@ -67,7 +67,7 @@ p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i.
 
 Une température plus faible tend à rendre la distribution plus concentrée ; une température plus élevée tend à l'aplatir. Pour \(\tau>0\), l'ordre des logits et l'argmax restent inchangés, mais les probabilités changent. La température modifie la distribution utilisée pour le décodage, pas les paramètres du modèle ; elle ne peut pas établir la vérité d'une sortie.
 
-La softmax possède également deux propriétés utiles : elle conserve l'ordre des logits et elle est invariante à l'ajout d'une même constante à tous les scores. Les rapports de probabilités vérifient $p_i/p_j=e^{z_i-z_j}$.
+La softmax possède également deux propriétés utiles : elle conserve l'ordre des logits et elle est invariante à l'ajout d'une même constante à tous les scores. Pour $\tau=1$, les rapports de probabilités vérifient $p_i/p_j=e^{z_i-z_j}$ ; plus généralement, $p_i^{(\tau)}/p_j^{(\tau)}=e^{(z_i-z_j)/\tau}$.
 
 ### Explorer l'effet de la température
 

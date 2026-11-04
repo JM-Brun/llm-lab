@@ -9,7 +9,7 @@ toc: false
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/learning-map"
-scope: "Interactive visual map of published pages, suggested progression, pedagogical hierarchy, and concepts identified from page sections."
+scope: "Interactive visual map of published pages, suggested progression, pedagogical hierarchy, page section headings, and a separate canonical concept graph."
 purpose: "Help readers understand the learning path architecture, find relevant pages and concepts, and open a page directly from its node in the graph."
 suggested_route:
   previous: null
@@ -27,15 +27,22 @@ The map distinguishes the **suggested reading route**, the **pedagogical hierarc
 - **Parent / child** — blue arrow: pedagogical decomposition or inclusion.
 - **Related** — dotted grey line: conceptual connection without an imposed reading order.
 
-Blocks represent pages. The concepts displayed inside each block are extracted from the page section headings: they are useful landmarks, not an exhaustive taxonomy. The data is generated from each published page's metadata. The domain filter isolates one of the six Deepen families without changing the core learning route.
+The map offers two distinct graphs. The page graph represents resources and their pedagogical relationships; section headings shown inside page nodes are editorial landmarks, not canonical concepts. The concept graph is generated from the bilingual registry versioned in `data/concepts.yml`: its nodes have stable identifiers, definitions, and typed relationships. Selecting a concept reveals its resource pages. The two graphs must not be interpreted as one reading order.
 
 <div class="learning-map" data-learning-map data-language="en" data-source="../learning-map-data-en.json">
   <div class="learning-map-toolbar">
+    <div class="learning-map-filter">
+      <label for="learning-map-mode">Graph type</label>
+      <select id="learning-map-mode">
+        <option value="pages">Page graph</option>
+        <option value="concepts">Concept graph</option>
+      </select>
+    </div>
     <div class="learning-map-search">
       <label for="learning-map-search">Search pages and concepts</label>
       <input id="learning-map-search" type="search" placeholder="E.g. embeddings, attention, generation…" autocomplete="off">
     </div>
-    <div class="learning-map-filter">
+    <div class="learning-map-filter" data-map-page-controls>
       <label for="learning-map-domain">Filter by Deepen domain</label>
       <select id="learning-map-domain">
         <option value="all">All domains</option>
@@ -47,7 +54,7 @@ Blocks represent pages. The concepts displayed inside each block are extracted f
         <option value="scale-research">Scale and research questions</option>
       </select>
     </div>
-    <div class="learning-map-filter">
+    <div class="learning-map-filter" data-map-page-controls>
       <label for="learning-map-destination">Show a branch</label>
       <select id="learning-map-destination">
         <option value="all">All branches</option>
@@ -59,12 +66,12 @@ Blocks represent pages. The concepts displayed inside each block are extracted f
       </select>
     </div>
   </div>
-  <div class="learning-map-relations" aria-label="Visible relationships">
+  <div class="learning-map-relations" data-map-page-controls aria-label="Visible relationships">
     <label><input type="checkbox" data-map-relation="route" checked> Route</label>
     <label><input type="checkbox" data-map-relation="hierarchy" checked> Parent / child</label>
     <label><input type="checkbox" data-map-relation="related" checked> Related links</label>
   </div>
-  <div class="learning-map-legend" aria-hidden="true">
+  <div class="learning-map-legend" data-map-page-controls aria-hidden="true">
     <span><i class="map-key map-key-route"></i> Suggested progression</span>
     <span><i class="map-key map-key-hierarchy"></i> Hierarchy</span>
     <span><i class="map-key map-key-related"></i> Cross-link</span>
@@ -76,7 +83,7 @@ Blocks represent pages. The concepts displayed inside each block are extracted f
     <aside class="learning-map-details" aria-live="polite" aria-atomic="true">
       <p class="map-detail-eyebrow">EXPLORE A NODE</p>
       <h3>Select a page</h3>
-      <p>Hover over a block or focus it to inspect its purpose, concepts, and relationships. Click the block to open the page directly.</p>
+      <p>Hover over a block or focus it to inspect its purpose, section headings, and relationships. Click the block to open the page directly.</p>
     </aside>
   </div>
   <p class="learning-map-status" role="status" aria-live="polite">Loading map…</p>

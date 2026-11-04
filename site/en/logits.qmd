@@ -47,7 +47,9 @@ By the end of this page, you will be able to:
 **Logits are scores, not probabilities.** At one position, the model produces one score per vocabulary token. The largest score identifies the top-ranked candidate; by itself, it is neither a probability nor a measure of truth.
 
 **First pass:** follow “Transformer representation → output projection → vector of $V$ logits”. The next page explains how these scores become a conditional distribution.
-:::## Definition and dimensions
+:::
+
+## Definition and dimensions
 
 At a given position, write the score vector as:
 \[

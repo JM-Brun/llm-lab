@@ -87,11 +87,13 @@ A useful scope can mention an adjacent topic, but only to establish a boundary. 
 
 ## 4. Tag vocabulary
 
+The `topic` tag is a stable page-grouping identifier shared by translated counterparts. It is not a concept record and does not provide definitions, synonyms, broader/narrower relations, or concept identity across multiple pages. Section headings extracted for the learning map are display labels only; they are not taxonomy entries. See [the information architecture contract](information-architecture.md) for the ownership boundary and criteria for a future SKOS-aligned concept scheme.
+
 Use these dimensions consistently:
 
 - **`type`**: `entry-point`, `system-overview`, `concept-lesson`, `concept-bridge`, `guided-build`, `deep-dive`, `exercise-hub`, `experiment-guide`, `glossary`, `historical-reference`, `bibliography`.
 - **`destination`**: `orient`, `understand`, `build`, `deepen`, `practice`, `reference`.
-- **`topic`**: a stable kebab-case concept identifier; use the same identifier for French and English counterparts even when their filenames differ.
+- **`topic`**: a stable kebab-case subject/grouping identifier for the page; use the same identifier for French and English counterparts even when their filenames differ. It is not a canonical concept ID.
 - **`level`**: `overview`, `core`, `applied`, `advanced`, `reference`.
 - **`language`**: `fr`, `en`, or `shared` for language-neutral resources.
 - **`status`**: `published`, `planned`, or `retired`. Do not label a planned page as published.
@@ -193,3 +195,19 @@ Do not use a generic `related-to` relation as a substitute for deciding what the
 Run `python scripts/check_concept_registry.py` to check stable IDs, bilingual labels/definitions, resource-ID syntax, relation vocabulary, endpoint existence, self-links, and duplicate edges. The same check runs in CI. This first registry is intentionally a seed, not a complete ontology: it covers a small set of central concepts and should grow only alongside reviewed page content.
 
 The concept registry is not yet rendered as a second interactive graph. The existing learning map remains a page graph; a later integration should expose concept-to-page links and concept relations without conflating them with page navigation or the Understand/Build/Deepen destinations.
+
+
+## 11. Concept-to-domain membership
+
+The controlled domain vocabulary is maintained in `data/domains.yml`. Concept membership is recorded separately in each concept's `domains` list in `data/concepts.yml`. A concept may belong to more than one domain when it genuinely contributes to multiple lines of inquiry.
+
+This is deliberately distinct from the page-level `domain` field:
+- A Deepen page has one primary editorial/discovery domain, used to classify that page.
+- A concept may have multiple knowledge-domain memberships, used to organize the knowledge graph and cross-domain exploration.
+- Membership does not imply prerequisite, containment, or exclusivity. Use typed concept relations for semantic connections.
+
+The domain registry defines stable IDs, bilingual labels, descriptions, and guiding questions. All six controlled IDs must be present. A concept must declare at least one valid domain; the validator rejects unknown or duplicate memberships.
+
+## 12. Symmetric concept relations
+
+Concept relations are stored as directed triples. Most relation types are semantically directional and must not be reversed casually. `contrasts-with` is the exception: it is symmetric. Store it once, with the lexicographically smaller concept ID in `from` and the larger ID in `to`. Do not store a reciprocal duplicate. The validator enforces this canonical orientation.

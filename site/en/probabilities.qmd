@@ -67,7 +67,7 @@ p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i.
 
 Lower temperature tends to make the distribution more concentrated; higher temperature tends to flatten it. For \(\tau>0\), logit ordering and argmax remain unchanged, but probabilities change. Temperature changes the distribution used for decoding, not the model parameters; it cannot establish the truth of an output.
 
-Softmax also has two useful properties: it preserves logit ordering and is invariant to adding the same constant to every score. Probability ratios satisfy $p_i/p_j=e^{z_i-z_j}$.
+Softmax also has two useful properties: it preserves logit ordering and is invariant to adding the same constant to every score. At $\tau=1$, probability ratios satisfy $p_i/p_j=e^{z_i-z_j}$; more generally, $p_i^{(\tau)}/p_j^{(\tau)}=e^{(z_i-z_j)/\tau}$.
 
 ### Explore the effect of temperature
 

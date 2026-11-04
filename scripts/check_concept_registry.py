@@ -12,6 +12,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "data" / "concepts.yml"
+DOMAINS = ROOT / "data" / "domains.yml"
 IDENTIFIER = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 RELATION_TYPES = {
     "prerequisite",
@@ -65,26 +66,81 @@ def _published_page_ids() -> set[str]:
 
 
 def _has_cycle(edges: dict[str, list[str]]) -> bool:
-    """Return whether a directed adjacency list contains a cycle."""
-    visiting: set[str] = set()
+    """Detect cycles iteratively, including in long dependency chains."""
+    active: set[str] = set()
     visited: set[str] = set()
+    for root in edges:
+        if root in visited:
+            continue
+        active.add(root)
+        stack = [(root, iter(edges.get(root, [])))]
+        while stack:
+            node, targets = stack[-1]
+            target = next(targets, None)
+            if target is None:
+                stack.pop()
+                active.remove(node)
+                visited.add(node)
+            elif target in active:
+                return True
+            elif target not in visited:
+                active.add(target)
+                stack.append((target, iter(edges.get(target, []))))
+    return False
 
-    def visit(node: str) -> bool:
-        if node in visiting:
-            return True
-        if node in visited:
-            return False
-        visiting.add(node)
-        if any(visit(target) for target in edges.get(node, [])):
-            return True
-        visiting.remove(node)
-        visited.add(node)
-        return False
 
-    return any(visit(node) for node in edges)
+def validate_domains(data: Any) -> tuple[set[str], list[str]]:
+    """Validate the controlled bilingual domain registry."""
+    errors: list[str] = []
+    if (
+        not isinstance(data, dict)
+        or type(data.get("schema_version")) is not int
+        or data.get("schema_version") != 1
+    ):
+        return set(), ["domains: expected mapping with schema_version: 1"]
+    entries = data.get("domains")
+    if not isinstance(entries, list) or not entries:
+        return set(), ["domains: expected a non-empty list"]
+    identifiers: set[str] = set()
+    for index, domain in enumerate(entries):
+        where = f"domains[{index}]"
+        if not isinstance(domain, dict):
+            errors.append(f"{where}: expected mapping")
+            continue
+        identifier = domain.get("id")
+        if not isinstance(identifier, str) or not IDENTIFIER.fullmatch(identifier):
+            errors.append(f"{where}.id: expected stable kebab-case identifier")
+        elif identifier in identifiers:
+            errors.append(f"{where}.id: duplicate identifier {identifier!r}")
+        else:
+            identifiers.add(identifier)
+        for field in ("labels", "descriptions", "guiding_questions"):
+            values = domain.get(field)
+            if not isinstance(values, dict) or set(values) != {"fr", "en"}:
+                errors.append(f"{where}.{field}: expected exactly fr and en")
+            elif not all(isinstance(value, str) and value.strip() for value in values.values()):
+                errors.append(f"{where}.{field}: values must be non-empty strings")
+    expected = {
+        "architectures-mechanisms",
+        "text-tokenization",
+        "mathematical-tools-geometry",
+        "probabilistic-foundations-training",
+        "inference-efficiency",
+        "scale-research",
+    }
+    if identifiers != expected:
+        errors.append(
+            f"domains: expected the six controlled domain IDs; "
+            f"missing={sorted(expected - identifiers)}, extra={sorted(identifiers - expected)}"
+        )
+    return identifiers, errors
 
 
-def validate_registry(data: Any, published_pages: set[str] | None = None) -> list[str]:
+def validate_registry(
+    data: Any,
+    published_pages: set[str] | None = None,
+    domain_ids: set[str] | None = None,
+) -> list[str]:
     """Return schema, bilingual, and referential-integrity errors."""
     errors: list[str] = []
     if (
@@ -120,6 +176,19 @@ def validate_registry(data: Any, published_pages: set[str] | None = None) -> lis
             elif not all(isinstance(value, str) and value.strip() for value in values.values()):
                 errors.append(f"{where}.{field}: values must be non-empty strings")
 
+        memberships = concept.get("domains")
+        if not isinstance(memberships, list) or not memberships:
+            errors.append(f"{where}.domains: expected a non-empty list of domain IDs")
+        elif not all(isinstance(item, str) for item in memberships):
+            errors.append(f"{where}.domains: values must be strings")
+        else:
+            if len(memberships) != len(set(memberships)):
+                errors.append(f"{where}.domains: duplicate domain IDs")
+            if domain_ids is not None:
+                for domain_id in memberships:
+                    if domain_id not in domain_ids:
+                        errors.append(f"{where}.domains: unknown domain {domain_id!r}")
+
         resources = concept.get("resources")
         if not isinstance(resources, list) or not resources:
             errors.append(f"{where}.resources: expected a non-empty list of page IDs")
@@ -128,11 +197,19 @@ def validate_registry(data: Any, published_pages: set[str] | None = None) -> lis
             set(resources)
         ):
             errors.append(f"{where}.resources: duplicate resource IDs")
+        resource_languages: set[str] = set()
         for page_id in resources:
             if not isinstance(page_id, str) or not PAGE_ID.fullmatch(page_id):
                 errors.append(f"{where}.resources: invalid page ID {page_id!r}")
-            elif published_pages is not None and page_id not in published_pages:
-                errors.append(f"{where}.resources: page {page_id!r} is not a published page")
+            else:
+                resource_languages.add(page_id.split("/", maxsplit=1)[0])
+                if published_pages is not None and page_id not in published_pages:
+                    errors.append(f"{where}.resources: page {page_id!r} is not a published page")
+        missing_languages = {"fr", "en"} - resource_languages
+        if missing_languages:
+            errors.append(
+                f"{where}.resources: missing language(s) {', '.join(sorted(missing_languages))}"
+            )
 
     relations = data.get("relations")
     if not isinstance(relations, list):
@@ -162,6 +239,11 @@ def validate_registry(data: Any, published_pages: set[str] | None = None) -> lis
                 errors.append(f"{where}: duplicate relation {key!r}")
             seen.add(key)
             if source in identifiers and target in identifiers:
+                if kind == "contrasts-with" and source >= target:
+                    errors.append(
+                        f"{where}: contrasts-with must use canonical lexical order "
+                        "(from < to) because it is symmetric"
+                    )
                 if kind == "prerequisite":
                     prerequisite_edges.setdefault(source, []).append(target)
                 elif kind == "generalizes":
@@ -175,18 +257,21 @@ def validate_registry(data: Any, published_pages: set[str] | None = None) -> lis
 
 
 def main() -> int:
-    """Validate the checked-in registry."""
+    """Validate the checked-in concept and domain registries."""
     try:
         data = yaml.safe_load(REGISTRY.read_text(encoding="utf-8"))
+        domain_data = yaml.safe_load(DOMAINS.read_text(encoding="utf-8"))
     except (OSError, yaml.YAMLError) as exc:
-        sys.stderr.write(f"Cannot read concept registry: {exc}\n")
+        sys.stderr.write(f"Cannot read concept/domain registry: {exc}\n")
         return 1
-    errors = validate_registry(data, _published_page_ids())
+    domain_ids, domain_errors = validate_domains(domain_data)
+    errors = [*domain_errors, *validate_registry(data, _published_page_ids(), domain_ids)]
     if errors:
         sys.stderr.write("\n".join(errors) + "\n")
         return 1
     sys.stdout.write(
-        f"Validated {len(data['concepts'])} concepts and {len(data['relations'])} relations.\n"
+        f"Validated {len(domain_ids)} domains, {len(data['concepts'])} concepts, "
+        f"and {len(data['relations'])} relations.\n"
     )
     return 0
 

@@ -27,7 +27,7 @@ Un **logit** est un score réel associé à une classe ou à un token du vocabul
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À l’issue de cette page, vous pourrez :
 - interpréter un vecteur de logits et expliquer pourquoi ses valeurs ne sont pas des probabilités ;
-- décrire le rôle du softmax et l’effet de la température sur la distribution ;
+- distinguer le classement des candidats par score de la distribution conditionnelle utilisée pour la génération ;
 - identifier la dimension du vecteur en fonction de la taille du vocabulaire.
 :::
 
@@ -47,7 +47,9 @@ Un **logit** est un score réel associé à une classe ou à un token du vocabul
 Les **logits sont des scores, pas des probabilités**. À une position, le modèle produit un score par token du vocabulaire. Le score le plus élevé désigne le candidat classé premier ; il ne fournit pas, à lui seul, une probabilité ni une mesure de vérité.
 
 **Première lecture :** suivez le passage « représentation du Transformer → projection de sortie → vecteur de $V$ logits ». La page suivante explique comment ces scores deviennent une distribution conditionnelle.
-:::## Définition et dimensions
+:::
+
+## Définition et dimensions
 
 Pour une position donnée, on note le vecteur des scores :
 \[
