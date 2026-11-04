@@ -61,7 +61,7 @@ Cette organisation convient lorsque l'entrée et la sortie ont des rôles distin
 
 ### Décodeur seul : prolonger un préfixe
 
-Le décodeur utilise un **masque causal** : une position ne peut pas consulter les tokens futurs. À l'entraînement, chaque position sert à prédire le token suivant. À l'inférence, le modèle répète ce calcul et ajoute chaque token sélectionné au contexte.
+Le décodeur utilise un **masque causal** : une position ne peut pas consulter les tokens futurs. À l'entraînement, chaque position sert à prédire le token suivant. À l'inférence, le modèle répète ce calcul et ajoute chaque token sélectionné au contexte ; la page [Générer du texte](generation.qmd) détaille cette boucle.
 
 C'est la configuration des GPT classiques et celle retenue pour construire le petit GPT de LLM Lab. Elle rend la génération facile à observer étape par étape, mais tous les LLM ne sont pas des décodeurs seuls.
 
