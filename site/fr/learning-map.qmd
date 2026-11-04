@@ -1,6 +1,6 @@
 ---
 title: "Carte interactive du parcours"
-subtitle: "Pages, notions et relations pour explorer LLM Lab dans son ensemble"
+subtitle: "Pages, sections et relations pour explorer LLM Lab dans son ensemble"
 keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:fr", "status:published"]
 lang: fr
 toc: false
@@ -9,8 +9,8 @@ toc: false
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/learning-map"
-scope: "Carte visuelle et interactive des pages publiées, de leur progression suggérée, de leur hiérarchie pédagogique et des notions repérées dans leurs sections."
-purpose: "Permettre au lecteur de comprendre l’architecture du parcours, d’identifier les pages et notions pertinentes, puis d’ouvrir directement une page depuis sa brique dans le graphe."
+scope: "Carte visuelle et interactive des pages publiées, de leur progression suggérée, de leur hiérarchie pédagogique et des repères extraits de leurs sections."
+purpose: "Permettre au lecteur de comprendre l’architecture du parcours, d’identifier les pages et repères pertinents, puis d’ouvrir directement une page depuis sa brique dans le graphe."
 suggested_route:
   previous: null
   next: null
@@ -27,12 +27,12 @@ La carte distingue le **fil de lecture conseillé**, la **hiérarchie pédagogiq
 - **Parent / enfant** — flèche bleue : décomposition ou inclusion pédagogique.
 - **Associé** — liaison grise en pointillés : proximité conceptuelle, sans ordre imposé.
 
-Les blocs représentent des pages. Les notions affichées dans chaque bloc sont extraites des titres de sections de la page : elles servent de repères, pas de taxonomie exhaustive. Les données sont générées depuis les métadonnées de chaque page publiée.
+Les blocs représentent des pages. Les titres de section affichés dans chaque bloc sont extraites des titres de sections de la page : elles servent de repères, pas de taxonomie exhaustive. Les données sont générées depuis les métadonnées de chaque page publiée.
 
 <div class="learning-map" data-learning-map data-language="fr" data-source="../learning-map-data-fr.json">
   <div class="learning-map-toolbar">
     <div class="learning-map-search">
-      <label for="learning-map-search">Rechercher une page ou une notion</label>
+      <label for="learning-map-search">Rechercher une page ou une titre de section</label>
       <input id="learning-map-search" type="search" placeholder="Ex. : embeddings, attention, génération…" autocomplete="off">
     </div>
     <div class="learning-map-filter">
@@ -64,7 +64,7 @@ Les blocs représentent des pages. Les notions affichées dans chaque bloc sont 
     <aside class="learning-map-details" aria-live="polite" aria-atomic="true">
       <p class="map-detail-eyebrow">EXPLORER UNE BRIQUE</p>
       <h3>Sélectionner une page</h3>
-      <p>Passez sur un bloc ou placez-y le focus pour afficher son rôle, ses notions et ses relations. Cliquez sur le bloc pour ouvrir directement la page.</p>
+      <p>Passez sur un bloc ou placez-y le focus pour afficher son rôle, ses titre de sections et ses relations. Cliquez sur le bloc pour ouvrir directement la page.</p>
     </aside>
   </div>
   <p class="learning-map-status" role="status" aria-live="polite">Chargement de la carte…</p>
