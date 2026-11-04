@@ -55,6 +55,7 @@ pedagogical_model:
     - {status: inferred, outcome: "Explain the distinct computational roles of Query, Key and Value.", basis: "Sections 1 and 3."}
     - {status: inferred, outcome: "Trace scaled dot-product attention from Q/K scores to weighted Value aggregation.", basis: "Sections 4 and 5."}
     - {status: inferred, outcome: "Describe the high-level composition of multi-head attention.", basis: "Section 6."}
+    - {status: inferred, outcome: "Explain that Q/K/V projections are trainable parameters learned through gradient-based optimization.", basis: "Section 3 explicitly mentions backpropagation and gradient-based optimization."}
   assumed_prerequisites:
     - {status: inferred, topic: "Basic familiarity with token or position representations.", basis: "Used without a first-principles introduction."}
     - {status: inferred, topic: "Basic matrix multiplication and softmax.", basis: "Equations and normalization are assumed."}
