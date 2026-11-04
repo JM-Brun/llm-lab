@@ -189,8 +189,10 @@ def test_load_guided_route_resolves_language_specific_page_links(tmp_path: Path)
     site = tmp_path / "site"
     _write_page(site, page_id="fr/overview", language="fr", title="Panorama")
     _write_page(site, page_id="fr/generation", language="fr", title="Génération")
+    _write_page(site, page_id="fr/tensors", language="fr", title="Tenseurs")
     _write_page(site, page_id="en/overview", language="en", title="Overview")
     _write_page(site, page_id="en/generation", language="en", title="Generation")
+    _write_page(site, page_id="en/tensors", language="en", title="Tensors")
     route = tmp_path / "docs" / "learning-path.md"
     route.parent.mkdir(parents=True)
     route.write_text(
@@ -203,6 +205,9 @@ stages:
     pages:
       fr: [fr/overview, fr/generation]
       en: [en/overview, en/generation]
+    optional_pages:
+      fr: [fr/tensors]
+      en: [en/tensors]
 -->
 """,
         encoding="utf-8",
@@ -214,6 +219,7 @@ stages:
         [
             {"id": "fr/overview", "title": "Panorama", "href": "overview.html"},
             {"id": "fr/generation", "title": "Génération", "href": "generation.html"},
+            {"id": "fr/tensors", "title": "Tenseurs", "href": "tensors.html"},
         ],
     )
     english = MODULE["load_guided_route"](
@@ -221,6 +227,7 @@ stages:
         [
             {"id": "en/overview", "title": "Overview", "href": "overview.html"},
             {"id": "en/generation", "title": "Generation", "href": "generation.html"},
+            {"id": "en/tensors", "title": "Tensors", "href": "tensors.html"},
         ],
     )
 
@@ -233,10 +240,14 @@ stages:
                 {"id": "fr/overview", "title": "Panorama", "href": "overview.html"},
                 {"id": "fr/generation", "title": "Génération", "href": "generation.html"},
             ],
+            "optional_pages": [{"id": "fr/tensors", "title": "Tenseurs", "href": "tensors.html"}],
         }
     ]
     assert english[0]["title"] == "Orient yourself"
     assert english[0]["pages"][0]["href"] == "overview.html"
+    assert english[0]["optional_pages"] == [
+        {"id": "en/tensors", "title": "Tensors", "href": "tensors.html"}
+    ]
 
 
 def test_load_guided_route_rejects_missing_published_page(tmp_path: Path) -> None:
@@ -260,7 +271,7 @@ stages:
 
     import pytest
 
-    with pytest.raises(ValueError, match="unpublished or missing page"):
+    with pytest.raises(ValueError, match="unpublished or missing core page"):
         MODULE["load_guided_route"]("fr", [])
 
 
