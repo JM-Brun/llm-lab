@@ -38,9 +38,11 @@ You will be able to:
 
 | Family | Information flow | Masking and attention | Typical objectives | Common uses | Examples |
 |---|---|---|---|---|---|
-| **Encoder-only** | The encoder transforms an entire input sequence into contextual representations. | Generally bidirectional self-attention: each position can use information from other positions in the input. | Masked language modeling, among other possible objectives. | Classification, semantic search, extraction, and text representation. | BERT, RoBERTa |
-| **Encoder–decoder** | The encoder represents the input; the decoder produces a target sequence using that representation. | Encoder attention over the input; causal self-attention in the decoder; cross-attention to encoder states. | Reconstruction, denoising, or text-to-text learning, depending on the model. | Translation, summarization, and sequence-to-sequence transformation. | Original Transformer, T5 |
-| **Decoder-only** | The decoder extends a prefix by producing representations used to predict the next token. | Causal self-attention: a position cannot attend to future tokens. | Autoregressive next-token prediction in classic GPT models. | Prompt-conditioned continuation and generation. | GPT, GPT-2 |
+| **Encoder-only** | The encoder transforms an entire input sequence into contextual representations. | Generally bidirectional self-attention: each position can use information from other positions in the input. | Masked language modeling, among other possible objectives. | Classification, semantic search, extraction, and text representation. | [BERT](https://huggingface.co/google-bert/bert-base-uncased), [RoBERTa](https://huggingface.co/FacebookAI/roberta-base) |
+| **Encoder–decoder** | The encoder represents the input; the decoder produces a target sequence using that representation. | Encoder attention over the input; causal self-attention in the decoder; cross-attention to encoder states. | Reconstruction, denoising, or text-to-text learning, depending on the model. | Translation, summarization, and sequence-to-sequence transformation. | [Original Transformer](https://arxiv.org/abs/1706.03762), [T5](https://huggingface.co/google-t5/t5-base) |
+| **Decoder-only** | The decoder extends a prefix by producing representations used to predict the next token. | Causal self-attention: a position cannot attend to future tokens. | Autoregressive next-token prediction in classic GPT models. | Prompt-conditioned continuation and generation. | [GPT (2018)](https://openai.com/index/language-unsupervised/), [GPT-2](https://huggingface.co/openai-community/gpt2) |
+
+Links point to model cards or original publications. Research papers: [BERT](https://arxiv.org/abs/1810.04805), [RoBERTa](https://arxiv.org/abs/1907.11692), [T5](https://jmlr.org/papers/v21/20-074.html), [GPT](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf), and [GPT-2](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf). **RoBERTa remains an encoder-only model**: it retains BERT's architectural basis while mainly changing the pretraining recipe; it is not a fourth configuration.
 
 ## The three architectures in one diagram
 
@@ -48,25 +50,23 @@ You will be able to:
 
 In an encoder–decoder architecture, the decoder reads representations produced by the encoder through **cross-attention**. The [dedicated lesson](cross-attention.qmd) explains the computation; it is not required to understand the broad architecture comparison.
 
-
-
 ### Encoder-only: contextualize an input
 
 The encoder processes the input sequence as a whole. With bidirectional attention, each position can use tokens both before and after it. This is useful for representing or classifying a complete text.
 
-BERT's best-known pretraining objective predicts masked tokens from their left and right context. This objective is associated with the architecture; it does not define every encoder.
+[BERT](https://huggingface.co/google-bert/bert-base-uncased)'s best-known pretraining objective predicts masked tokens from their left and right context. [RoBERTa](https://huggingface.co/FacebookAI/roberta-base) keeps this encoder-only configuration while optimizing, among other things, the pretraining setup. Masked prediction is associated with this architecture; it does not define every encoder.
 
 ### Encoder–decoder: transform one sequence into another
 
 The encoder builds representations of the input. The decoder then produces the target sequence, usually autoregressively, combining its generated context with information from the encoder through *cross-attention*.
 
-This organization suits tasks where input and output play distinct roles, such as translation, summarization, or text transformation. The original 2017 Transformer and T5 are examples. The [cross-attention lesson](cross-attention.qmd) explains the mechanism and the respective origins of Q, K, and V.
+This organization suits tasks where input and output play distinct roles, such as translation, summarization, or text transformation. The [original 2017 Transformer](https://arxiv.org/abs/1706.03762) and [T5](https://huggingface.co/google-t5/t5-base) are examples. The [cross-attention lesson](cross-attention.qmd) explains the mechanism and the respective origins of Q, K, and V.
 
 ### Decoder-only: extend a prefix
 
 The decoder uses a **causal mask**: a position cannot attend to future tokens. During training, each position is used to predict the next token. At inference, the model repeats this computation and appends each selected token to the context; [Generating text](generation.qmd) explains this loop.
 
-This is the configuration used by classic GPT models and by LLM Lab's small-GPT build. It makes generation easy to inspect step by step, but not every LLM is decoder-only.
+This is the configuration used by [GPT (2018)](https://openai.com/index/language-unsupervised/), [GPT-2](https://huggingface.co/openai-community/gpt2), and LLM Lab's small-GPT build. It makes generation easy to inspect step by step, but not every LLM is decoder-only.
 
 ## Architecture, objective, and task are different concepts
 
@@ -85,6 +85,62 @@ These three families describe the main **Transformer** configurations, not every
 Nor is Transformer synonymous with LLM: architecture alone does not determine scale, data, or model capabilities. For an example of a hybrid architecture combining several mechanisms, see the [Nemotron case study](hybrid-llm-architectures.qmd). For the historical development of these families, see the [history of Transformers](transformer-history.qmd).
 
 Dense attention performs \(O(T^2)\) interactions, but these interactions can be parallelized during training and prompt prefill. By contrast, a recurrence may reduce work to \(O(T)\) while depending on the state computed at the previous step. Autoregressive generation remains sequential across tokens. The [guide to computational complexity and parallelism](llm-computational-complexity.qmd) examines these compute, memory, and dependency trade-offs. The internal computation of the project's decoder-only GPT is explained in [GPT and Transformer](transformer.qmd).
+
+## Mini-experiment — observe three behaviours
+
+This experiment runs one representative model from each configuration. Its purpose is to **observe different objectives and usage interfaces**, not to measure which model is “best”.
+
+### Set up the environment
+
+In an isolated Python environment:
+
+```bash
+python -m pip install torch transformers
+```
+
+The first run downloads the three models' weights. CPU execution is possible, but may take a few minutes and requires from several hundred megabytes to a few gigabytes of memory, depending on the models and libraries.
+
+### Run the three examples
+
+```python
+from transformers import pipeline
+
+# 1. Encoder-only: suggest tokens for a masked position.
+bert = pipeline("fill-mask", model="google-bert/bert-base-uncased")
+for candidate in bert("Paris is the capital of [MASK].", top_k=5):
+    print(candidate["token_str"], round(candidate["score"], 3))
+
+# 2. Decoder-only: continue a prefix without seeing future tokens.
+gpt2 = pipeline("text-generation", model="openai-community/gpt2")
+continuation = gpt2(
+    "A language model learns to",
+    max_new_tokens=24,
+    do_sample=False,
+    pad_token_id=gpt2.tokenizer.eos_token_id,
+)
+print(continuation[0]["generated_text"])
+
+# 3. Encoder–decoder: produce a target sequence from an input.
+t5 = pipeline("text2text-generation", model="google-t5/t5-small")
+translation = t5("translate English to German: The house is wonderful.")
+print(translation[0]["generated_text"])
+```
+
+### Interpret the observations
+
+- **BERT** returns several candidates for a masked position. It uses context on both the left and right of that position in the input.
+- **GPT-2** continues the prefix. Its causal mask prevents each position from attending to later tokens.
+- **T5** receives an input and generates a target sequence. Its autoregressive decoder also uses information from the input through cross-attention.
+
+Exact outputs may vary with library versions and downloaded weights. The prompts are deliberately illustrative: these three calls are **neither a benchmark nor a quality comparison**. The models differ in data, size, tokenizer, and training.
+
+### Questions to investigate
+
+1. Why can BERT suggest a word using context after the mask, while GPT-2 cannot use future tokens?
+2. In the T5 example, which information comes from the input, and which information is produced by the decoder?
+3. Why can these three outputs not establish that one architecture is globally better than the others?
+
+**Takeaway:** the architecture constrains information flow; the training objective and the task determine what the model learns to do and what it is asked to do at inference time.
 
 ::: {.self-check}
 
