@@ -220,6 +220,8 @@ relations:
   - {from: query, type: part-of, to: scaled-dot-product-attention}
   - {from: key, type: part-of, to: scaled-dot-product-attention}
   - {from: value, type: part-of, to: scaled-dot-product-attention}
+  - {from: query, type: contributes-to, to: attention-score}
+  - {from: key, type: contributes-to, to: attention-score}
   - {from: attention-score, type: part-of, to: scaled-dot-product-attention}
   - {from: attention-weight, type: part-of, to: scaled-dot-product-attention}
   - {from: attention-score, type: normalized-by, to: softmax}
