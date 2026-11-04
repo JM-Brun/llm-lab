@@ -45,6 +45,71 @@ Large language models (LLMs) are a family of neural models trained on large amou
 
 Practice supports all three learning depths; it is not a fourth depth. The conceptual route and the implementation route have different orders. Their relationship is documented in the [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
 
+## Interactive learning map
+
+The main route follows the logic **understand how the system works before studying how it learns**. Each block opens its canonical lesson; the smaller links open focused companion pages. The G2 branch is separate: it prepares the data required for training, but is not a prerequisite for understanding inference.
+
+<figure class="llm-flow-figure">
+<svg class="llm-flow" viewBox="0 0 1260 610" role="img" aria-labelledby="route-title-en route-desc-en" xmlns="http://www.w3.org/2000/svg">
+<title id="route-title-en">Interactive LLM Lab learning path</title>
+<desc id="route-desc-en">Main route: overview, generation, text and tokens, representations, Transformer computation, prediction, learning. Separate G2 branch: corpus preparation, training examples, guided build. Each block and secondary link opens a canonical lesson.</desc>
+<defs><marker id="route-arrow-en" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7b91a6"/></marker></defs>
+<g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#route-arrow-en)">
+<path d="M270 85 H330"/><path d="M580 85 H640"/><path d="M890 85 H950"/>
+<path d="M1075 155 V230"/>
+<path d="M950 255 H890"/><path d="M640 255 H580"/><path d="M330 255 H270"/>
+<path d="M270 495 H330"/><path d="M580 495 H640"/>
+</g>
+<text x="20" y="30" class="flow-kicker">CONCEPTUAL ROUTE · UNDERSTAND</text>
+<g class="flow-node">
+<a href="llm-overview.html" aria-label="Open the LLM panorama"><rect x="20" y="55" width="250" height="55" rx="10"/><text x="34" y="77" class="flow-kicker">1 · ORIENT</text><text x="34" y="98" class="flow-title">LLM panorama</text></a>
+<a href="transformer-architectures.html"><text x="28" y="132" class="flow-subtitle">Architectures</text></a>
+<a href="llm-limits.html"><text x="145" y="132" class="flow-subtitle">Limits</text></a>
+</g>
+<g class="flow-node">
+<a href="generation.html" aria-label="Open the generation lesson"><rect x="330" y="55" width="250" height="55" rx="10"/><text x="344" y="77" class="flow-kicker">2 · PREVIEW</text><text x="344" y="98" class="flow-title">Autoregressive generation</text></a>
+<a href="decoding-strategies.html"><text x="338" y="132" class="flow-subtitle">Advanced decoding</text></a>
+</g>
+<g class="flow-node">
+<a href="text-data.html" aria-label="Open the text and tokens lesson"><rect x="640" y="55" width="250" height="55" rx="10"/><text x="654" y="77" class="flow-kicker">3 · ENCODE INPUT</text><text x="654" y="98" class="flow-title">Text, tokens and IDs</text></a>
+<a href="tokenization-strategies.html"><text x="648" y="132" class="flow-subtitle">Tokenization strategies</text></a>
+</g>
+<g class="flow-node">
+<a href="embedding-space.html" aria-label="Open the embedding lesson"><rect x="950" y="55" width="250" height="55" rx="10"/><text x="964" y="77" class="flow-kicker">4 · REPRESENT</text><text x="964" y="98" class="flow-title">Embeddings and position</text></a>
+<a href="positional-encoding.html"><text x="958" y="132" class="flow-subtitle">Positional information</text></a>
+<a href="contextualized-representations.html"><text x="958" y="150" class="flow-subtitle">Contextualized states</text></a>
+</g>
+<g class="flow-node">
+<a href="transformer.html" aria-label="Open the Transformer overview"><rect x="950" y="230" width="250" height="55" rx="10"/><text x="964" y="252" class="flow-kicker">5 · COMPUTE</text><text x="964" y="273" class="flow-title">Transformer computation</text></a>
+<a href="queries-keys-values.html"><text x="958" y="307" class="flow-subtitle">Queries, keys and values</text></a>
+<a href="scaled-dot-product-attention.html"><text x="958" y="325" class="flow-subtitle">Attention and scores</text></a>
+<a href="causal-masking.html"><text x="958" y="343" class="flow-subtitle">Causal masking</text></a>
+</g>
+<g class="flow-node">
+<a href="logits.html" aria-label="Open the logits lesson"><rect x="640" y="230" width="250" height="55" rx="10"/><text x="654" y="252" class="flow-kicker">6 · PREDICT</text><text x="654" y="273" class="flow-title">Logits and probabilities</text></a>
+<a href="probabilities.html"><text x="648" y="307" class="flow-subtitle">Next-token distribution</text></a>
+</g>
+<g class="flow-node">
+<a href="likelihood.html" aria-label="Open the likelihood lesson"><rect x="330" y="230" width="250" height="55" rx="10"/><text x="344" y="252" class="flow-kicker">7 · LEARN</text><text x="344" y="273" class="flow-title">Objective and optimization</text></a>
+<a href="cross-entropy.html"><text x="338" y="307" class="flow-subtitle">Cross-entropy and loss</text></a>
+<a href="gradients.html"><text x="338" y="325" class="flow-subtitle">Gradients and backpropagation</text></a>
+</g>
+<text x="20" y="405" class="flow-kicker">BUILD BRANCH · G2 · PREPARE DATA FOR TRAINING</text>
+<g class="flow-node flow-node-g2">
+<a href="corpus-preparation.html" aria-label="Open corpus preparation"><rect x="20" y="465" width="250" height="55" rx="10"/><text x="34" y="487" class="flow-kicker">G2 · CORPUS</text><text x="34" y="508" class="flow-title">Prepare the corpus</text></a>
+</g>
+<g class="flow-node flow-node-g2">
+<a href="training-examples.html" aria-label="Open training examples"><rect x="330" y="465" width="250" height="55" rx="10"/><text x="344" y="487" class="flow-kicker">G2 · EXAMPLES</text><text x="344" y="508" class="flow-title">Windows and targets</text></a>
+</g>
+<g class="flow-node flow-node-g2">
+<a href="build-path.html" aria-label="Open the guided build"><rect x="640" y="465" width="250" height="55" rx="10"/><text x="654" y="487" class="flow-kicker">BUILD</text><text x="654" y="508" class="flow-title">Guided build path</text></a>
+</g>
+<text x="20" y="555" class="flow-note">The G2 branch is required to train a model, not to follow the inference route.</text>
+<text x="20" y="580" class="flow-hint">Solid arrows: recommended reading order · Blocks and secondary links: clickable canonical pages.</text>
+</svg>
+<figcaption>Main conceptual route and separate training-data branch.</figcaption>
+</figure>
+
 ## How to read a lesson
 
 Lessons use three markers to distinguish different kinds of material:
@@ -77,7 +142,7 @@ The same model is involved in several processes, but they have different objecti
 <g class="flow-node"><a href="text-data.html" aria-label="Previously generated tokens"><rect x="20" y="65" width="220" height="80" rx="12"/><text x="34" y="86" class="flow-kicker">CONTEXT</text><text x="34" y="111" class="flow-title">Previously generated tokens</text><text x="34" y="130" class="flow-subtitle">and current input</text></a></g>
 <g class="flow-node"><a href="transformer.html" aria-label="Transformer with θ"><rect x="280" y="65" width="220" height="80" rx="12"/><text x="294" y="86" class="flow-kicker">PARAMETERIZED MODEL</text><text x="294" y="111" class="flow-title">Transformer with θ</text><text x="294" y="130" class="flow-subtitle">weights unchanged</text></a></g>
 <g class="flow-node"><a href="logits.html" aria-label="Next-token"><rect x="540" y="65" width="220" height="80" rx="12"/><text x="554" y="86" class="flow-kicker">DISTRIBUTION</text><text x="554" y="111" class="flow-title">Next-token</text><text x="554" y="130" class="flow-subtitle">probabilities</text></a></g>
-<g class="flow-node flow-node-planned"><rect x="800" y="65" width="220" height="80" rx="12"/><text x="814" y="86" class="flow-kicker">DECODING · PLANNED</text><text x="814" y="111" class="flow-title">Select / sample</text><text x="814" y="130" class="flow-subtitle">the next token</text></g>
+<g class="flow-node"><a href="generation.html" aria-label="Open the generation and decoding lesson"><rect x="800" y="65" width="220" height="80" rx="12"/><text x="814" y="86" class="flow-kicker">DECODING</text><text x="814" y="111" class="flow-title">Select / sample</text><text x="814" y="130" class="flow-subtitle">next-token selection rule</text></a></g>
 <text x="350" y="169" class="flow-note">Append the token to the context, then repeat</text>
 <text x="20" y="225" class="flow-kicker">LEARNING · PARAMETER UPDATES</text>
 <g class="flow-node"><a href="training-examples.html" aria-label="Input sequences"><rect x="20" y="245" width="220" height="80" rx="12"/><text x="34" y="266" class="flow-kicker">EXAMPLES + TARGETS</text><text x="34" y="291" class="flow-title">Input sequences</text><text x="34" y="310" class="flow-subtitle">and expected tokens</text></a></g>
@@ -86,7 +151,7 @@ The same model is involved in several processes, but they have different objecti
 <g class="flow-node"><a href="gradients.html" aria-label="Compute ∇θ L, then"><rect x="800" y="245" width="220" height="80" rx="12"/><text x="814" y="266" class="flow-kicker">GRADIENTS / UPDATE</text><text x="814" y="291" class="flow-title">Compute ∇θ L, then</text><text x="814" y="310" class="flow-subtitle">modify θ</text></a></g>
 <text x="470" y="380" class="flow-note">Updated parameters are used for the next step</text>
 <text x="20" y="435" class="flow-kicker">EVALUATION · CROSS-CUTTING FUNCTION</text>
-<g class="flow-node"><a href="text-data.html" aria-label="Held-out data"><rect x="20" y="455" width="220" height="80" rx="12"/><text x="34" y="476" class="flow-kicker">EVALUATION DATA</text><text x="34" y="501" class="flow-title">Held-out data</text><text x="34" y="520" class="flow-subtitle">separate validation and test</text></a></g>
+<g class="flow-node"><a href="corpus-preparation.html" aria-label="Validation and test splits"><rect x="20" y="455" width="220" height="80" rx="12"/><text x="34" y="476" class="flow-kicker">EVALUATION DATA</text><text x="34" y="501" class="flow-title">Held-out data</text><text x="34" y="520" class="flow-subtitle">separate validation and test</text></a></g>
 <g class="flow-node"><a href="experimental-evaluation.html" aria-label="Metrics and uncertainty"><rect x="420" y="455" width="220" height="80" rx="12"/><text x="434" y="476" class="flow-kicker">METRICS + ERRORS</text><text x="434" y="501" class="flow-title">Metrics and uncertainty</text><text x="434" y="520" class="flow-subtitle">qualitative analysis</text></a></g>
 <g class="flow-node"><rect x="820" y="455" width="220" height="80" rx="12"/><text x="834" y="476" class="flow-kicker">DECISIONS + LIMITES</text><text x="834" y="501" class="flow-title">Interpret the findings</text><text x="834" y="520" class="flow-subtitle">revise choices, not the test set</text></g>
 <text x="300" y="558" class="flow-note">Feedback to data, learning, and decoding choices</text>
