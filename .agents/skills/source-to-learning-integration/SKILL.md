@@ -49,7 +49,7 @@ Output:
 A source can be fully scanned and catalogued without any page or graph change.
 
 ## Canonical architecture
-## Classification contract
+### Classification contract
 
 Use `docs/source-catalogue-schema.md` and `data/source-taxonomy.yml` for source/extraction classification. Reuse the six domains in `data/domains.yml`; assign one primary theme and optional secondary themes. Keep namespaced retrieval tags separate from canonical `concept_ids` and typed metadata. Do not introduce a generic `meta_tags` bag or treat tags as graph concepts. Apply the same distinction at extraction-item level, allowing a justified item-level refinement without rewriting its source classification.
 
