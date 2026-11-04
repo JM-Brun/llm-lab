@@ -339,6 +339,25 @@
         links.appendChild(entry);
       });
       item.appendChild(links);
+
+      if (Array.isArray(stage.optional_pages) && stage.optional_pages.length) {
+        const optionalLabel = document.createElement("p");
+        optionalLabel.className = "guided-route-optional-label";
+        optionalLabel.textContent = language === "fr" ? "Approfondissements facultatifs" : "Optional deep dives";
+        item.appendChild(optionalLabel);
+
+        const optionalLinks = document.createElement("ul");
+        optionalLinks.className = "guided-route-links guided-route-optional-links";
+        stage.optional_pages.forEach(page => {
+          const entry = document.createElement("li");
+          const link = document.createElement("a");
+          link.href = page.href;
+          link.textContent = page.title;
+          entry.appendChild(link);
+          optionalLinks.appendChild(entry);
+        });
+        item.appendChild(optionalLinks);
+      }
       routeContainer.appendChild(item);
     });
   };
