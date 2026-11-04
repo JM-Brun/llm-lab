@@ -98,11 +98,25 @@ def test_export_writes_valid_jsonld_deterministically() -> None:
 
 def test_rendered_graph_validator_accepts_complete_references() -> None:
     payload = {
-        "@context": {"skos": "urn:skos:", "schema": "urn:schema:", "prov": "urn:prov:", "dcterms": "urn:dcterms:", "llmlab": "urn:llmlab:"},
+        "@context": {
+            "skos": "urn:skos:",
+            "schema": "urn:schema:",
+            "prov": "urn:prov:",
+            "dcterms": "urn:dcterms:",
+            "llmlab": "urn:llmlab:",
+        },
         "@graph": [
             {"@id": "urn:scheme", "@type": "skos:ConceptScheme"},
-            {"@id": "urn:concept", "@type": "skos:Concept", "skos:inScheme": {"@id": "urn:scheme"}},
-            {"@id": "urn:page", "@type": ["schema:WebPage", "schema:LearningResource"], "schema:about": {"@id": "urn:concept"}},
+            {
+                "@id": "urn:concept",
+                "@type": "skos:Concept",
+                "skos:inScheme": {"@id": "urn:scheme"},
+            },
+            {
+                "@id": "urn:page",
+                "@type": ["schema:WebPage", "schema:LearningResource"],
+                "schema:about": {"@id": "urn:concept"},
+            },
             {"@id": "urn:export", "@type": "prov:Entity"},
         ],
     }
@@ -112,11 +126,25 @@ def test_rendered_graph_validator_accepts_complete_references() -> None:
 
 def test_rendered_graph_validator_reports_dangling_references() -> None:
     payload = {
-        "@context": {"skos": "urn:skos:", "schema": "urn:schema:", "prov": "urn:prov:", "dcterms": "urn:dcterms:", "llmlab": "urn:llmlab:"},
+        "@context": {
+            "skos": "urn:skos:",
+            "schema": "urn:schema:",
+            "prov": "urn:prov:",
+            "dcterms": "urn:dcterms:",
+            "llmlab": "urn:llmlab:",
+        },
         "@graph": [
             {"@id": "urn:scheme", "@type": "skos:ConceptScheme"},
-            {"@id": "urn:concept", "@type": "skos:Concept", "skos:inScheme": {"@id": "urn:missing"}},
-            {"@id": "urn:page", "@type": ["schema:WebPage", "schema:LearningResource"], "schema:about": {"@id": "urn:concept"}},
+            {
+                "@id": "urn:concept",
+                "@type": "skos:Concept",
+                "skos:inScheme": {"@id": "urn:missing"},
+            },
+            {
+                "@id": "urn:page",
+                "@type": ["schema:WebPage", "schema:LearningResource"],
+                "schema:about": {"@id": "urn:concept"},
+            },
             {"@id": "urn:export", "@type": "prov:Entity"},
         ],
     }
