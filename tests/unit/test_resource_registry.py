@@ -126,7 +126,20 @@ def test_accepts_each_documented_lifecycle_status(tmp_path: Path) -> None:
     resource = _valid_resource()
     for status in ("published", "draft", "deprecated", "retired"):
         resource["status"] = status
+        resource["referenced_by"] = (
+            [] if status in {"draft", "retired"} else ["fr/build-path", "en/build-path"]
+        )
         assert _validate(tmp_path, resource) == []
+
+    resource["status"] = "published"
+    resource["referenced_by"] = []
+    errors = _validate(tmp_path, resource)
+    assert any("need a published page reference" in error for error in errors)
+
+    resource["status"] = "draft"
+    resource["referenced_by"] = ["fr/build-path"]
+    errors = _validate(tmp_path, resource)
+    assert any("cannot be linked from published pages" in error for error in errors)
 
 
 def test_rejects_missing_local_files_and_malformed_location_variants(
