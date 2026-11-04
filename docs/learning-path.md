@@ -77,6 +77,7 @@ The sidebar is intentionally a map of **available canonical pages**, not a compl
 ### How to use this map
 
 - Start from the [French landing page](../site/index.qmd) or [English landing page](../site/en/index.qmd), then choose the panorama, guided build or a deep dive.
+- The sidebars and both landing pages also expose an interactive learning map of the published pages ([FR](../site/fr/learning-map.qmd) / [EN](../site/en/learning-map.qmd)). It is a navigation aid over existing pages; it adds no new evidence state.
 - Follow the guided milestones in dependency order, but stop at unmet exit criteria. Implementation follows the dependency and evidence criteria in #78–#81; per-issue source-review and browser-review states are tracked once in the milestone table, the [roadmap](roadmap.md) and the [remaining-work register](work-backlog-status.md).
 - Follow contextual links from an overview to a concept page, and from that concept to code/tests or evidence where available. A deep dive should always provide a route back to its parent question.
 - Treat “page exists,” “source checked,” “code executes,” “CI passes,” “rendered desktop/mobile reviewed,” and “learner can transfer the idea” as separate evidence states.
