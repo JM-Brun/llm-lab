@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/language-modeling-math"
 scope: "Approfondit la formalisation probabiliste de la modélisation du langage : dérivation de la factorisation autorégressive par la règle de chaîne, distinction entre identité probabiliste et modèle appris, lien compact avec le maximum de vraisemblance, puis entropie croisée à cibles souples et divergence KL."
 purpose: "Dériver la probabilité d'une séquence à partir de la règle de chaîne, expliquer ce que le modèle paramétré apprend, et démontrer pourquoi, pour une cible fixe, minimiser l'entropie croisée revient à minimiser la divergence KL, avec les hypothèses et limites nécessaires."
+domain: "probabilistic-foundations-training"
 suggested_route:
   previous: null
   next: null
