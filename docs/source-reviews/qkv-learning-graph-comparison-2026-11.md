@@ -287,3 +287,12 @@ The attention calculation remains on the next page. No new concept IDs, semantic
 ### 9.4 Provenance and scan status
 
 The Nishanthan DEV article remains partially scanned because the embedded illustration and parts of its comment history/metadata remain unresolved. The Neha KK Medium article also remains partially scanned because the actual figure files and reuse rights were not retrievable. Both sources can be cited and linked; neither article's illustrations are copied or represented as visually inspected.
+
+
+## 10. Living collection and future-source protocol
+
+This document is the detailed comparison record for the current Q/K/V tutorials. The maintained index for additional sources is [Q/K/V source collection and comparative synthesis](qkv-source-collection.md). The reusable method is specified in [External-source to learning-system integration workflow](../workflows/source-to-learning-system-integration.md).
+
+Future Q/K/V sources must be added to the collection index and compared against the same dimensions rather than creating isolated, incomparable reviews. Keep each source's extraction and evidence boundary separate. Extend the comparison matrix only after reconstructing the new source's own graph and teaching route. Revisit canonical content only where a contribution closes a demonstrated gap; do not duplicate the score/scale/softmax/aggregation treatment or alter the curriculum merely because another article uses a different order.
+
+The current synthesis is intentionally provisional in one respect: both tutorials remain partially scanned for media and rights. The Medium figure placeholders and DEV visual/comment history must not be treated as inspected assets or complete source context. A future scan that resolves these items should update the source-specific review and this dossier with the exact evidence, not silently change the status.
