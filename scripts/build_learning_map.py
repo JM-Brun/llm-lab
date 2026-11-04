@@ -143,6 +143,7 @@ def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[dict[s
         title = stage.get("title", {}).get(language)
         objective = stage.get("objective", {}).get(language)
         page_ids = stage.get("pages", {}).get(language)
+        optional_page_ids = stage.get("optional_pages", {}).get(language, [])
         if not isinstance(stage_id, str) or stage_id in seen_ids:
             raise ValueError(f"guided-route stage ID is missing or duplicated: {stage_id!r}")
         if not isinstance(title, str) or not isinstance(objective, str):
@@ -150,17 +151,31 @@ def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[dict[s
         if not isinstance(page_ids, list) or not page_ids:
             raise ValueError(f"guided-route stage {stage_id!r} lacks {language} page IDs")
 
-        resources = []
-        for page_id in page_ids:
-            page = page_by_id.get(page_id)
-            if page is None:
-                raise ValueError(
-                    f"guided-route stage {stage_id!r} references unpublished or "
-                    f"missing page {page_id!r}"
-                )
-            resources.append({"id": page_id, "title": page["title"], "href": page["href"]})
+        if not isinstance(optional_page_ids, list):
+            raise ValueError(f"guided-route stage {stage_id!r} optional pages must be a list")
+
+        def resolve_pages(ids: list[str], role: str) -> list[dict[str, str]]:
+            resources = []
+            for page_id in ids:
+                page = page_by_id.get(page_id)
+                if page is None:
+                    raise ValueError(
+                        f"guided-route stage {stage_id!r} references unpublished or "
+                        f"missing {role} page {page_id!r}"
+                    )
+                resources.append({"id": page_id, "title": page["title"], "href": page["href"]})
+            return resources
+
+        resources = resolve_pages(page_ids, "core")
+        optional_resources = resolve_pages(optional_page_ids, "optional")
         resolved.append(
-            {"id": stage_id, "title": title, "objective": objective, "pages": resources}
+            {
+                "id": stage_id,
+                "title": title,
+                "objective": objective,
+                "pages": resources,
+                "optional_pages": optional_resources,
+            }
         )
         seen_ids.add(stage_id)
     return resolved
