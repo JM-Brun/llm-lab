@@ -153,3 +153,43 @@ Controlled values:
 | `scale-research` | What empirical regularities and capability claims are supported by evidence? |
 
 The domain is exported into the generated learning-map JSON and can be used as a discovery filter. French and English counterparts must use the same identifier. Pages outside Deepen must not declare this field. Use `related` for cross-domain connections instead of assigning multiple primary domains.
+
+## 10. Language-independent concept registry
+
+The page graph and the concept graph answer different questions:
+
+- A **page** is a maintained learning resource with a scope, audience, language, and pedagogical role.
+- A **concept** is a language-independent knowledge entity that may be explained by several pages and recur across the curriculum.
+- A **resource link** connects a concept to a page; it does not assert that the page is the concept's only owner.
+- A **concept relation** connects two concepts with an explicitly typed semantic relation. It is not a reading-order edge.
+
+The initial registry lives in `data/concepts.yml`. Each concept has a stable kebab-case `id`, French and English labels and definitions, and zero or more page IDs in `resources`. Translations share one concept ID; do not create separate French and English concept nodes.
+
+### Relation vocabulary
+
+Relations are directed from `from` to `to`; their direction is part of their definition.
+
+| Type | Meaning |
+|---|---|
+| `prerequisite` | Understanding the source is needed to understand the target. Use sparingly; this is a conceptual dependency, not a suggested reading order. |
+| `part-of` | The source is a constituent or structural component of the target. |
+| `generalizes` | The source is a more general concept that subsumes the target. |
+| `contrasts-with` | The source is meaningfully distinguished from the target; do not infer opposition from mere difference. |
+| `analogy` | The source is used as an analogy for the target, not as a mathematical equivalence. |
+| `implemented-by` | The source is realized or operationalized by the target in the stated context. |
+| `represented-by` | The target is a representation of the source, without implying identity. |
+| `applies-to` | The source mechanism or method is applied to the target object/process. |
+| `contributes-to` | The source is one contributing mechanism or factor in the target; it is not necessarily sufficient on its own. |
+| `mapped-by` | The source is transformed into or mapped to a target representation by the named operation. |
+| `constrains` | The source imposes a constraint on the target. |
+| `produces` | The source operation or process produces the target quantity/state. |
+| `normalized-by` | The source quantity is transformed/normalized by the target operation. |
+| `evaluated-by` | The source prediction/distribution is evaluated using the target criterion. |
+
+Do not use a generic `related-to` relation as a substitute for deciding what the connection means. Add a relation type only when multiple real examples justify it and its direction can be stated unambiguously.
+
+### Validation and scope
+
+Run `python scripts/check_concept_registry.py` to check stable IDs, bilingual labels/definitions, resource-ID syntax, relation vocabulary, endpoint existence, self-links, and duplicate edges. The same check runs in CI. This first registry is intentionally a seed, not a complete ontology: it covers a small set of central concepts and should grow only alongside reviewed page content.
+
+The concept registry is not yet rendered as a second interactive graph. The existing learning map remains a page graph; a later integration should expose concept-to-page links and concept relations without conflating them with page navigation or the Understand/Build/Deepen destinations.
