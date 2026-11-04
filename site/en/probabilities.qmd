@@ -181,7 +181,7 @@ Temperature modulates distribution entropy without altering token ranking ($z_i 
 <details class="spot-the-fallacy">
 <summary>Common Fallacy: “Two models outputting the exact same top logit score share the same prediction confidence”</summary>
 <div class="fallacy-content">
-<p><strong>Counterexample:</strong> Model A outputs logits $(10, 2, 1)$ while Model B outputs $(10, 9.9, 9.8)$. Both have identical maximum logit ($z_1 = 10$). However, after softmax, Model A assigns over 99% probability to the top token (high certainty), whereas Model B divides probability almost equally among all three tokens ($\approx 34\%$, high uncertainty). Epistemic certainty depends on score margins, not absolute logit height.</p>
+<p><strong>Counterexample:</strong> Model A outputs logits $(10, 2, 1)$ while Model B outputs $(10, 9.9, 9.8)$. Both have the same maximum logit ($z_1 = 10$). After softmax, model A assigns over 99% probability to the first token, compared with about 36.7% for model B. The distribution depends on all score differences, not the absolute maximum. A high probability does not establish calibration or the truth of a prediction.</p>
 </div>
 </details>
 

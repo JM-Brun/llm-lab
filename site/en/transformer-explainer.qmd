@@ -32,6 +32,8 @@ Use the activity to **observe a real GPT-2 run, test controlled hypotheses, and 
 
 Georgia Tech's **[Transformer Explainer](https://poloclub.github.io/transformer-explainer/)** lets you explore a real GPT-2 small run in the browser. It complements the static diagrams of the overview: type a text, then watch how the representations, attention computations, and next-token distribution evolve.
 
+:::: {.callout-note title="Open the embedded demonstration" collapse="true"}
+
 <iframe
   src="https://poloclub.github.io/transformer-explainer/"
   title="Transformer Explainer — interactive GPT-2 visualization"
@@ -41,6 +43,8 @@ Georgia Tech's **[Transformer Explainer](https://poloclub.github.io/transformer-
   allow="fullscreen"
   style="border: 1px solid #d2d9c8; border-radius: 0.6rem; background: #fff;"
 ></iframe>
+
+::::
 
 [Open Transformer Explainer in a new tab](https://poloclub.github.io/transformer-explainer/) if the embed does not display, or if you prefer the full window.
 
@@ -93,7 +97,7 @@ Fix a temperature $T>0$ and let $P_T$ be the softmax distribution that would be 
 
 $$\sum_{i\in A}\frac{P_T(i)}{m}\geq p\quad\Longleftrightarrow\quad P_T(A)\geq p\,m.$$
 
-In other words, the threshold $p$ applies to the **renormalized distribution of the 50 candidates**, not to the full vocabulary: with $m=0{,}60$ and $p=0{,}90$, a prefix carrying 0.54 of the initial mass is enough to reach the threshold, whereas the exact nucleus on the full vocabulary would have to accumulate 0.90 — and therefore include tokens beyond rank 50. This is a consequence of the top-k → top-p composition, not an anomaly: compare the displayed probabilities with the nucleus defined on the full vocabulary with this difference in mind.
+In other words, the threshold $p$ applies to the **renormalized distribution of the 50 candidates**, not to the full vocabulary: with $m=0{,}60$ and $p=0{,}90$, the threshold corresponds to 0.54 of the initial mass. The mass actually retained can exceed 0.54 if the last token crosses the threshold; it remains at most 0.60. The exact nucleus on the full vocabulary would have to accumulate 0.90 — and therefore include tokens beyond rank 50. This is a consequence of the top-k → top-p composition, not an anomaly: compare the displayed probabilities with the nucleus defined on the full vocabulary with this difference in mind.
 
 ### What this demonstration allows — and does not allow — concluding
 

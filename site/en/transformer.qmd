@@ -107,6 +107,14 @@ This check focuses on the network computation, not on decoding, which is covered
 
 </details>
 
+<!-- Legacy section anchors: see the linked companion page. -->
+<span id="a-guided-four-part-exploration"></span>
+<span id="controlled-experiments-move-from-observation-to-testing"></span>
+<span id="read-transformer-explainers-source-code"></span>
+<span id="critical-audit-a-visualization-is-not-a-specification"></span>
+<span id="what-this-demonstration-does-and-does-not-establish"></span>
+<span id="observe-a-transformer-in-action"></span>
+
 ## Explore in practice
 
 The [GPT-2 exploration workshop](transformer-explainer.qmd) lets you observe these mechanisms on a real model: run controlled experiments and examine the limits of the visualization. It is an independent analysis exercise — useful, but not required to follow the flow described here.

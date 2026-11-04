@@ -89,11 +89,11 @@ Cet exemple distingue les rôles : la requête et les clés déterminent les poi
 Le schéma montre aussi pourquoi trois objets ne doivent pas être confondus : **scores** (compatibilités brutes), **poids** (normalisés relativement aux positions accessibles) et **sorties** (combinaisons pondérées des valeurs). Dans une attention non causale, le masque peut être absent ou exprimer une autre contrainte. La normalisation du softmax ne transforme pas les poids en mesure universelle de pertinence sémantique.
 
 ::: {.callout-note collapse="true" title="Dérivation et simulation numérique (facultatif)"}
-Sous l'hypothèse simplificatrice que les composantes des vecteurs de requête et de clé sont indépendantes, centrées et de variance unitaire, la variance d'un produit scalaire de $d_k$ termes vaut $\sum_{i=1}^{d_k} \operatorname{Var}(q_i k_i) = d_k$. Son écart-type est donc $\sqrt{d_k}$. Pour $d_k=64$, les scores typiques oscillent autour de $\pm 8$. Sans mise à l'échelle, de tels écarts saturent immédiatement le softmax (qui tend vers un one-hot), entraînant des gradients quasi nuls pour la rétropropagation.
+Sous l'hypothèse simplificatrice que toutes les composantes de requête et de clé sont indépendantes, centrées et de variance unitaire, la variance du produit scalaire vaut $\sum_{i=1}^{d_k} \operatorname{Var}(q_i k_i) = d_k$. Son écart-type est donc $\sqrt{d_k}$ : pour $d_k=64$, il vaut 8. Des écarts importants entre scores d'une même ligne peuvent concentrer le softmax et réduire ses gradients. Diviser par $\sqrt{d_k}$ atténue ce risque dans ce modèle simplifié ; ni la saturation ni son absence ne sont garanties pour des projections apprises.
 
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
-<span>MICRO-ATELIER NUMÉRIQUE · ÉCHELLE DES SCORES ET GRADIENTS DU SOFTMAX</span>
+<span>MICRO-ATELIER NUMÉRIQUE · ÉCHELLE DES SCORES</span>
 <span>Python 3.12+ / NumPy</span>
 :::
 ::: {.micro-workbench-body}
@@ -123,7 +123,7 @@ assert np.isclose(std_scaled, 1.0, atol=0.05)
 ```
 :::
 ::: {.micro-workbench-footer}
-La division par $\sqrt{d_k}$ ramène la variance des scores à l'unité, préservant la fluidité des gradients lors de l'apprentissage.
+Dans cette simulation, la division par $\sqrt{d_k}$ ramène approximativement la variance des scores à l'unité. Elle ne mesure ni les poids softmax ni les gradients.
 :::
 :::
 :::
@@ -148,7 +148,7 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 <details class="spot-the-fallacy">
 <summary>Piège fréquent : « Si l'on augmente la dimension des têtes $d_k$, l'attention devient automatiquement plus expressive sans précaution »</summary>
 <div class="fallacy-content">
-<p><strong>Contre-exemple :</strong> Si l'on omettait la division par $\sqrt{d_k}$, augmenter $d_k$ de 64 à 512 multiplierait l'écart-type des scores par près de 3 ($\sqrt{512} \approx 22{,}6$). Les scores extrêmes feraient basculer le softmax dans ses régions à dérivée quasi nulle, bloquant totalement l'apprentissage des couches inférieures par évanouissement de gradient (vanishing gradient).</p>
+<p><strong>Limite :</strong> Sous les hypothèses ci-dessus et sans mise à l'échelle, passer de $d_k=64$ à 512 multiplierait l'écart-type des scores par $\sqrt{8} \approx 2{,}83$. Des différences plus grandes entre scores peuvent concentrer le softmax et réduire ses dérivées locales ; cela ne prouve ni une saturation systématique ni un blocage total de l'apprentissage.</p>
 </div>
 </details>
 

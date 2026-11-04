@@ -18,6 +18,9 @@
 
 This is a **dated maintenance snapshot**, not an alternative issue tracker. Recheck [open PRs](https://github.com/JM-Brun/llm-lab/pulls?q=is%3Apr+is%3Aopen), current branch heads, `mergeable_state`, and the **latest-head** checks at the start of the next session: GitHub may be recomputing mergeability, and a green workflow on an older SHA is insufficient.
 
+For the later #422 merge and outstanding validation gates, see the
+[PR #422 follow-up](pr-422-followup-2026-11-04.md).
+
 | PR | Verified reconciliation | Next gate |
 |---|---|---|
 | [#406](https://github.com/JM-Brun/llm-lab/pull/406) — softmax/probability ownership | Historical conflict with `main` reconciled by merge commit `15d89c8`; subsequent branch work changed the head again. The branch includes the then-current `main`, with six intended files changed. | Recheck its **current head**, mergeability and CI/Quarto checks, then inspect the four FR/EN pages for preserved interaction, mathematical rendering, learning-outcome parity and local links before considering merge. |

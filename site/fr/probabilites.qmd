@@ -181,7 +181,7 @@ La température module la sélectivité du décodage sans jamais modifier l'ordr
 <details class="spot-the-fallacy">
 <summary>Piège fréquent : « Deux modèles ayant le même logit maximal pour un mot ont la même certitude »</summary>
 <div class="fallacy-content">
-<p><strong>Contre-exemple :</strong> Considérons le modèle A avec des logits $(10, 2, 1)$ et le modèle B avec $(10, 9{,}9, 9{,}8)$. Les deux ont le même logit maximal ($z_1 = 10$). Cependant, après softmax, le modèle A attribue plus de 99 % de probabilité au premier token (certitude quasi absolue), tandis que le modèle B répartit la probabilité presque équitablement entre les trois tokens ($\approx 34\,\%$, incertitude maximale). La certitude dépend de l'écart relatif (la marge), non de la valeur absolue du logit.</p>
+<p><strong>Contre-exemple :</strong> Considérons le modèle A avec des logits $(10, 2, 1)$ et le modèle B avec $(10, 9{,}9, 9{,}8)$. Les deux ont le même logit maximal ($z_1 = 10$). Après softmax, le modèle A attribue plus de 99 % de probabilité au premier token, contre environ 36,7 % pour le modèle B. La distribution dépend de tous les écarts entre logits, pas de la valeur absolue du maximum. Une probabilité élevée n'établit ni la calibration ni la vérité de la prédiction.</p>
 </div>
 </details>
 

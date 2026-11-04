@@ -86,7 +86,7 @@ Une clé n'est pas une étiquette sémantique lisible, et l'attention n'est pas 
 <details>
 <summary>Afficher le raisonnement</summary>
 
-Q et K déterminent les poids d'attention ; V fournit les vecteurs dont le contenu est agrégé. Modifier Q ou K peut modifier les poids. Si V change seul, les poids restent identiques puisque les scores dépendent de Q et K ; le contenu agrégé change, car la combinaison porte sur les nouveaux vecteurs V.
+Q et K déterminent les poids d'attention ; V fournit les vecteurs dont le contenu est agrégé. Modifier Q ou K peut modifier les poids. Si V change seul, les poids restent identiques puisque les scores dépendent de Q et K ; le contenu agrégé peut changer, mais ce n'est pas systématique : des variations pondérées peuvent se compenser.
 
 </details>
 :::

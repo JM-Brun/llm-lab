@@ -107,6 +107,14 @@ Cette vérification porte sur le calcul interne, et non sur le décodage traité
 
 </details>
 
+<!-- Legacy section anchors: see the linked companion page. -->
+<span id="une-expérience-guidée-en-quatre-observations"></span>
+<span id="expériences-contrôlées-passer-de-lobservation-au-test"></span>
+<span id="lire-le-code-de-transformer-explainer"></span>
+<span id="audit-critique-une-visualisation-nest-pas-une-spécification"></span>
+<span id="ce-que-cette-démonstration-permet-et-ne-permet-pas-de-conclure"></span>
+<span id="observer-un-transformer-en-fonctionnement"></span>
+
 ## Explorer en pratique
 
 L'[atelier d'exploration de GPT-2](transformer-explainer.qmd) permet d'observer ces mécanismes sur un modèle réel : conduire des expériences contrôlées et examiner les limites de la visualisation. C'est un exercice d'analyse indépendant — utile, mais pas nécessaire pour suivre le flux décrit ici.

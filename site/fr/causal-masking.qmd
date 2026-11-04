@@ -95,19 +95,21 @@ Les Transformers décodeurs comme GPT utilisent cette contrainte pour apprendre 
 ## Idées reçues et contre-exemples
 
 - **« Les données sont déjà dans le bon ordre, donc le masque est inutile. »** Faux : l'ordre des tokens n'empêche pas une opération d'attention non masquée de lire les représentations des positions futures.
-- **« Mettre les poids futurs à zéro après softmax est équivalent. »** Faux : les poids restants peuvent ne plus sommer à un. Le masque doit agir sur les scores avant softmax, ou être appliqué par une primitive équivalente.
+- **« Mettre les poids futurs à zéro après softmax suffit. »** Sans renormalisation, les poids restants peuvent ne plus sommer à un. Un masquage suivi d'une renormalisation est équivalent en arithmétique exacte si la somme restante est non nulle ; masquer les scores avant softmax est la formulation usuelle.
 - **« Tester uniquement la matrice du masque prouve l'absence de fuite. »** Faux : un autre chemin de calcul pourrait laisser passer l'information future.
 - **« Causal signifie que l'attention ne regarde que le token précédent. »** Faux : elle peut regarder toutes les positions antérieures, sauf si une autre restriction (par exemple une fenêtre glissante) est imposée.
 
 <details class="spot-the-fallacy">
 <summary>Piège fréquent : « Pourquoi s'embêter avec $-\infty$ avant le softmax ? Il suffit de multiplier par zéro après le softmax ! »</summary>
 <div class="fallacy-content">
-<p><strong>Démonstration mathématique de l'erreur :</strong> Le softmax est calculé ligne par ligne : $\sum_{j=1}^T \alpha_{ij} = 1$. Si vous appliquez le softmax sur toute la ligne puis annulez les positions futures ($\alpha_{ij} = 0$ pour $j > i$), la somme des poids restants sera strictement inférieure à 1 ($\sum_{j \le i} \alpha_{ij} < 1$). Les poids ne formeront plus une distribution de probabilité et la norme de l'état agrégé sera artificiellement compressée pour les premières positions ! En posant $M_{ij} = -\infty$ <em>avant</em> exponentiation, $e^{-\infty} = 0$ et le dénominateur normalise exactement sur les seules positions autorisées.</p>
+<p><strong>Pourquoi ?</strong> Si des positions futures ont un poids positif, les annuler après le softmax sans renormaliser laisse une somme inférieure à 1. Le résultat diffère alors de l'attention causale normalisée ; la norme de la sortie ne diminue pas nécessairement, car les vecteurs peuvent se compenser. Masquer avant le softmax normalise sur les positions autorisées. Annuler puis renormaliser donne le même résultat en arithmétique exacte si la somme restante est non nulle.</p>
 </div>
 </details>
 
 ::: {.callout-note collapse="true" title="Test d'invariance causale (facultatif)"}
-Pour vérifier rigoureusement l'absence de fuite d'information : gardez les tokens jusqu'à $t$ identiques, modifiez un token situé après $t$, puis vérifiez que les sorties des positions jusqu'à $t$ restent strictement identiques.
+Pour rechercher une fuite d'information, gardez les tokens jusqu'à $t$ identiques, modifiez un token situé après $t$, puis comparez les sorties jusqu'à $t$ à une tolérance numérique près, en mode évaluation. Un tel test vérifie les cas essayés ; il ne prouve pas à lui seul l'absence de fuite dans tout le modèle.
+
+L’exemple ci-dessous isole une tête d’attention : il modifie les clés et les valeurs futures, pas les tokens d’un modèle complet.
 
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
@@ -146,13 +148,13 @@ V_alt[3] += 100.0
 
 out_alt, w_alt = run_causal_attention(Q, K_alt, V_alt, mask)
 
-### 4. Invariance mathématique absolue : les positions 0, 1 et 2 sont IDENTIQUES
+### 4. Comparaison numérique des sorties aux positions 0, 1 et 2
 assert np.allclose(out_ref[:3], out_alt[:3]), "Fuite temporelle détectée !"
 assert not np.allclose(out_ref[3], out_alt[3]), "La position 3 devait changer."
 ```
 :::
 ::: {.micro-workbench-footer}
-Test formel d'invariance réussi : modifier le futur n'altère absolument aucun état passé ou présent.
+Dans ce cas synthétique, modifier les clés et valeurs futures ne change pas les sorties précédentes à la tolérance de `np.allclose`.
 :::
 :::
 :::
@@ -165,7 +167,7 @@ Test formel d'invariance réussi : modifier le futur n'altère absolument aucun 
 - [Synthèse Transformer](transformer.qmd) replace le masque dans l'architecture globale.
 
 ::: {.callout-note collapse="true" title="Code et tests de référence (approfondissement)"}
-Une implémentation de référence testée est disponible dans `src/llm_lab/foundations/attention.py` (`causal_mask` et `scaled_dot_product_attention`). La suite de tests `tests/unit/test_attention.py` intègre ce test d'invariance temporelle ainsi que la validation des formes et des bornes.
+Une implémentation de référence testée est disponible dans `src/llm_lab/foundations/attention.py` (`causal_mask` et `scaled_dot_product_attention`). La suite de tests `tests/unit/test_attention.py` comprend un cas similaire d'invariance sur une tête, ainsi que des vérifications du masque et des formes ; elle ne teste pas un GPT complet.
 
 - [Implémentation du masque causal](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
 - [Tests d'invariance temporelle](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)

@@ -86,7 +86,7 @@ A key is not a human-readable semantic label, and attention is not nearest-neigh
 <details>
 <summary>Show the reasoning</summary>
 
-Q and K determine the attention weights; V supplies the vectors whose content is aggregated. Changing Q or K can change the weights. If only V changes, the weights remain unchanged because the scores depend on Q and K; the aggregated content changes because the weighted combination now uses different V vectors.
+Q and K determine the attention weights; V supplies the vectors whose content is aggregated. Changing Q or K can change the weights. If only V changes, the weights remain unchanged because the scores depend on Q and K; the aggregated content can change, but need not do so: weighted changes can cancel out.
 
 </details>
 :::

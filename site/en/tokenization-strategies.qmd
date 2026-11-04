@@ -199,6 +199,24 @@ This table poses questions to test, not exact outputs. To report a result, recor
 
 
 
+<!-- Legacy section anchors: see the linked companion page. -->
+<span id="reproducible-comparison"></span>
+<span id="a-reproducible-python-probe"></span>
+<span id="measuring-a-tokenizer-without-reducing-quality-to-token-count"></span>
+<span id="four-dimensions-to-keep-separate"></span>
+<span id="external-research-figure-tokenizer-fertility-varies-by-language"></span>
+<span id="what-the-studies-show-and-what-they-do-not"></span>
+<span id="external-research-figure-representation-length-and-execution-time"></span>
+<span id="building-an-interpretable-comparison-protocol"></span>
+<span id="related-work-and-resources"></span>
+<span id="recommended-visual-resources"></span>
+<span id="useful-timestamps-in-karpathys-video"></span>
+<span id="suggested-reading-order"></span>
+<span id="an-external-illustration-of-the-tokenizer-pipeline"></span>
+<span id="additional-research-references"></span>
+<span id="educational-code-and-historical-reference"></span>
+<span id="tokenizer-evaluation"></span>
+
 ::: {.callout-note title="Go deeper"}
 Vocabulary size, training budgets, and comparative tokenizer evaluation raise questions about cost, quality, and multilingual equity. These design choices go beyond understanding the segmentation mechanism; see the [advanced guide to tokenizer design and evaluation](tokenizer-design-evaluation.qmd).
 :::

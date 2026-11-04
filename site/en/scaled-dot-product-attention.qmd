@@ -89,11 +89,11 @@ This small example separates the roles: the query and keys determine the weights
 The diagram also shows why three objects must not be conflated: **scores** (raw compatibility values), **weights** (normalized relative to accessible positions), and **outputs** (weighted combinations of values). In non-causal attention, the mask may be absent or encode another constraint. Softmax normalization does not turn the weights into a universal measure of semantic relevance.
 
 ::: {.callout-note collapse="true" title="Derivation and numerical simulation (optional)"}
-Under the simplifying assumption that query and key components are independent, zero-mean, and unit-variance, the variance of their dot product $\sum_{i=1}^{d_k} q_i k_i$ equals $d_k$, yielding a standard deviation of $\sqrt{d_k}$. For $d_k=64$, raw dot-product scores typically swing by $\pm 8$. Without scaling, these large magnitudes saturate the softmax function into near one-hot outputs, resulting in near-zero gradients that stall backpropagation.
+Under the simplifying assumption that all query and key components are independent, zero-mean, and unit-variance, their dot product has variance $d_k$ and standard deviation $\sqrt{d_k}$: for $d_k=64$, it is 8. Large differences between scores in a row can concentrate softmax and reduce its gradients. Dividing by $\sqrt{d_k}$ reduces this risk in the simplified model; neither saturation nor its absence is guaranteed for learned projections.
 
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
-<span>NUMERICAL WORKBENCH · SCORE VARIANCE AND SOFTMAX GRADIENT PRESERVATION</span>
+<span>NUMERICAL WORKBENCH · SCORE SCALE</span>
 <span>Python 3.12+ / NumPy</span>
 :::
 ::: {.micro-workbench-body}
@@ -123,7 +123,7 @@ assert np.isclose(std_scaled, 1.0, atol=0.05)
 ```
 :::
 ::: {.micro-workbench-footer}
-Dividing by $\sqrt{d_k}$ stabilizes score variance to unit scale, preventing softmax saturation and vanishing gradients.
+In this simulation, dividing by $\sqrt{d_k}$ brings score variance approximately to one. It measures neither softmax weights nor gradients.
 :::
 :::
 :::
@@ -148,7 +148,7 @@ The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Ne
 <details class="spot-the-fallacy">
 <summary>Common Fallacy: “Increasing head dimension $d_k$ automatically improves attention expressiveness with no drawbacks”</summary>
 <div class="fallacy-content">
-<p><strong>Counterexample:</strong> If scaling were omitted, widening $d_k$ from 64 to 512 would multiply score standard deviation nearly threefold ($\sqrt{512} \approx 22.6$). Extreme scores push softmax inputs deep into exponential saturation regions where local derivatives vanish, effectively preventing early Transformer layers from receiving training gradients.</p>
+<p><strong>Limitation:</strong> Under the assumptions above and without scaling, increasing $d_k$ from 64 to 512 multiplies score standard deviation by $\sqrt{8} \approx 2.83$. Larger score differences can concentrate softmax and reduce its local derivatives; this does not prove inevitable saturation or a total halt to learning.</p>
 </div>
 </details>
 

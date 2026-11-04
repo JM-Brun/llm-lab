@@ -35,7 +35,7 @@ Les pages de cours utilisent un composant homogène **« Vérifier sa compréhen
 |---|---|---|
 | [Fondations mathématiques](#fondations) | Tenseurs, probabilités, logits, entropie, cross-entropie, vraisemblance, gradients, stabilité numérique | 7 exercices progressifs rédigés ; vérification de gradients et autres thèmes à compléter |
 | [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Auto-vérifications sur IDs et tokenizers dans les pages texte/embeddings ; exercices approfondis à construire |
-| [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Auto-vérifications sur agrégation Q/K/V et mise à l’échelle/masquage ; un exercice NumPy sur les projections et les dimensions Q/K/V est disponible, les autres exercices restent à construire |
+| [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Exercices sur la somme pondérée et les projections Q/K/V ; autres exercices à construire |
 | [Transformer](#transformer) | Embeddings, position, résidus, normalisation, MLP et variantes d’architecture | Structure à compléter |
 | [Préentraînement](#preentrainement) | Objectif, entraînement/validation, perplexité, checkpoints et reproductibilité | Structure à compléter |
 | [Génération](#generation) | Décodage, température, top-k/top-p, arrêt, contexte et cache KV | Structure à compléter |
@@ -222,7 +222,18 @@ Une comparaison exige notamment de contrôler le tokenizer et sa segmentation, l
 
 **Notions préalables :** [Q/K/V](queries-keys-values.qmd), [attention à produit scalaire mise à l’échelle](scaled-dot-product-attention.qmd), [masque causal](causal-masking.qmd), [tenseurs](tensors.qmd).
 
-**À compléter :** calculs de scores et de poids, interprétation prudente des poids et raisonnement sur l’invariance causale. Un premier exercice vérifie déjà les projections et leurs dimensions.
+**Disponible :** un calcul de somme pondérée et un exercice NumPy sur les projections et leurs dimensions. **À compléter :** calculs de scores et de poids, interprétation prudente des poids et raisonnement sur l’invariance causale.
+
+#### Calculer une agrégation à la main
+
+Une position reçoit les poids d’attention $(0{,}75,\,0{,}25)$ et les vecteurs de valeur sont $v_1=(2,0)$ et $v_2=(0,4)$. Calculez la sortie. Si l’on échange $v_1$ et $v_2$ sans changer les poids, la sortie reste-t-elle identique ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+La sortie est la somme pondérée : $0{,}75(2,0)+0{,}25(0,4)=(1{,}5;1)$. Après échange des valeurs, elle devient $0{,}75(0,4)+0{,}25(2,0)=(0{,}5;3)$. Les poids déterminent la contribution relative des positions ; les valeurs déterminent le contenu agrégé. Les poids seuls ne suffisent donc pas à déterminer la sortie.
+
+</details>
 
 #### Exercice — projeter une séquence en Q, K et V
 
