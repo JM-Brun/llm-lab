@@ -14,10 +14,20 @@ ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "data" / "concepts.yml"
 IDENTIFIER = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 RELATION_TYPES = {
-    "prerequisite", "part-of", "generalizes", "contrasts-with",
-    "analogy", "implemented-by", "applies-to", "constrains",
-    "produces", "normalized-by", "evaluated-by", "represented-by",
-    "contributes-to", "mapped-by",
+    "prerequisite",
+    "part-of",
+    "generalizes",
+    "contrasts-with",
+    "analogy",
+    "implemented-by",
+    "applies-to",
+    "constrains",
+    "produces",
+    "normalized-by",
+    "evaluated-by",
+    "represented-by",
+    "contributes-to",
+    "mapped-by",
 }
 PAGE_ID = re.compile(r"(?:fr|en)/[a-z0-9]+(?:-[a-z0-9]+)*")
 
@@ -107,23 +117,24 @@ def validate_registry(data: Any, published_pages: set[str] | None = None) -> lis
             values = concept.get(field)
             if not isinstance(values, dict) or set(values) != {"fr", "en"}:
                 errors.append(f"{where}.{field}: expected exactly fr and en")
-            elif not all(
-                isinstance(value, str) and value.strip()
-                for value in values.values()
-            ):
+            elif not all(isinstance(value, str) and value.strip() for value in values.values()):
                 errors.append(f"{where}.{field}: values must be non-empty strings")
 
         resources = concept.get("resources")
         if not isinstance(resources, list) or not resources:
             errors.append(f"{where}.resources: expected a non-empty list of page IDs")
             continue
-        if all(isinstance(item, str) for item in resources) and len(resources) != len(set(resources)):
+        if all(isinstance(item, str) for item in resources) and len(resources) != len(
+            set(resources)
+        ):
             errors.append(f"{where}.resources: duplicate resource IDs")
         for page_id in resources:
             if not isinstance(page_id, str) or not PAGE_ID.fullmatch(page_id):
                 errors.append(f"{where}.resources: invalid page ID {page_id!r}")
             elif published_pages is not None and page_id not in published_pages:
-                errors.append(f"{where}.resources: page {page_id!r} is not a published page")
+                errors.append(
+                    f"{where}.resources: page {page_id!r} is not a published page"
+                )
 
     relations = data.get("relations")
     if not isinstance(relations, list):
