@@ -56,12 +56,15 @@ def validate_graph(payload: dict[str, Any]) -> list[str]:
                 continue
             values = value if isinstance(value, list) else [value]
             for item in values:
-                if isinstance(item, dict) and isinstance(item.get("@id"), str):
-                    if item["@id"] not in identifiers:
-                        errors.append(
-                            f"Unresolved graph reference {item['@id']!r} "
-                            f"from {node.get('@id', '<anonymous>')!r} via {predicate!r}"
-                        )
+                if (
+                    isinstance(item, dict)
+                    and isinstance(item.get("@id"), str)
+                    and item["@id"] not in identifiers
+                ):
+                    errors.append(
+                        f"Unresolved graph reference {item['@id']!r} "
+                        f"from {node.get('@id', '<anonymous>')!r} via {predicate!r}"
+                    )
 
     return errors
 
