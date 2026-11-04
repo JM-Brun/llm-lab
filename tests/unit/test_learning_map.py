@@ -281,7 +281,7 @@ def test_learning_map_browser_script_has_valid_javascript_and_fallback_target() 
     if node is None:
         pytest.skip("Node.js is required for the inline browser-script syntax check.")
 
-    script_path = MODULE_PATH.parents[1] / "site" / "includes" / "learning-map.html"
+    script_path = MODULE_PATH.parents[2] / "site" / "includes" / "learning-map.html"
     source = script_path.read_text(encoding="utf-8")
     assert source.count("<script>") == 1
     script = source.split("<script>", maxsplit=1)[1].split("</script>", maxsplit=1)[0]
