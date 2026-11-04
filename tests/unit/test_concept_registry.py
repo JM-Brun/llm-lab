@@ -41,7 +41,9 @@ def test_checked_in_registry_is_valid() -> None:
     registry_path = Path(__file__).resolve().parents[2] / "data" / "concepts.yml"
     data = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
     published_pages = MODULE["_published_page_ids"]()
-    domain_data = yaml.safe_load((registry_path.parents[1] / "domains.yml").read_text(encoding="utf-8"))
+    domain_data = yaml.safe_load(
+        (registry_path.parents[1] / "domains.yml").read_text(encoding="utf-8")
+    )
     domain_ids, domain_errors = validate_domains(domain_data)
     assert domain_errors == []
     assert validate_registry(data, published_pages, domain_ids) == []
@@ -175,13 +177,9 @@ def test_concept_can_belong_to_multiple_domains() -> None:
 
 def test_symmetric_contrast_relation_uses_one_canonical_orientation() -> None:
     data = _valid_registry()
-    data["relations"] = [
-        {"from": "embedding", "type": "contrasts-with", "to": "token"}
-    ]
+    data["relations"] = [{"from": "embedding", "type": "contrasts-with", "to": "token"}]
     assert validate_registry(data) == []
-    data["relations"].append(
-        {"from": "embedding", "type": "contrasts-with", "to": "token"}
-    )
+    data["relations"].append({"from": "embedding", "type": "contrasts-with", "to": "token"})
 
     errors = validate_registry(data)
 
