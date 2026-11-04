@@ -246,15 +246,15 @@ items:
       novelty: {level: low, rationale: "The canonical lesson already correctly calls X a representation stream rather than raw word embeddings."}
       complementarity: {level: moderate, rationale: "It identifies why the project's more precise wording matters for deeper layers."}
       pedagogical_value: {level: moderate, rationale: "It can prevent learners from assuming every attention layer reprojects the original static embedding."}
-      applicability: {level: low, rationale: "The existing page already states the distinction adequately."}
+      applicability: {level: moderate, rationale: "A concise clarification in the Q/K/V lesson can connect the current hidden-state input to the positional mechanisms introduced on the preceding architecture path."}
       redundancy: {level: high, rationale: "No missing clarification remains in the canonical page."}
       evidence_quality: {level: high, rationale: "Direct comparison between article wording and the general Transformer computation."}
     locator: {type: section, value: "The Basis: Word Embeddings / Getting Q, K, and V", label: "The Basis: Word Embeddings / Getting Q, K, and V"}
     evidence: {kind: technical-limitation, confidence: well-supported, scope: "Input representation to the Q/K/V projections.", assumptions: ["A multi-layer Transformer in which attention receives current hidden states."], limitations: ["The article's introductory simplification is not necessarily false for the first attention layer.", "The article does not explain how positional information enters the representation or attention computation.", "The phrase 'reflects semantic meaning' should not be read as a coordinate-wise semantic interpretation."]}
     classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, method:learned-linear-projection], concept_ids: [query, key, value]}
     candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values], concepts: [query, key, value]}
-    disposition: reject
-    disposition_rationale: "The project already uses X for the current representation stream and explicitly distinguishes it from raw token embeddings; no edit is needed."
+    disposition: clarify
+    disposition_rationale: "Clarify locally that X is the current input to the attention sublayer, not always a raw token embedding, and distinguish input-level positional embeddings from attention-internal mechanisms such as RoPE."
 
   - id: neha-kk-understanding-qkv-medium:cross-domain-applications
     kind: claim
