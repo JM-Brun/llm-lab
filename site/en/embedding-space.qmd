@@ -156,23 +156,11 @@ The exact IDs are specific to the named encoding and library behaviour; another 
 The embedding table contains $V \times d$ parameters; a separate output projection may add $d \times V$ unless input and output weights are tied. The detailed counting, the associated shapes, and a hand-checkable scale estimate are provided in the [Tensors](tensors.qmd) page.
 :::
 
-## From token embeddings to contextualized states
+## From initial embeddings to contextualized representations
 
-The next step depends on the architecture. In a GPT-2-style model with learned absolute position embeddings, a position-specific vector is added to each token embedding:
+Lookup ends when a row is selected from the embedding matrix; it does not contextualize the vector. Positional information and processing by Transformer layers come afterwards, with mechanisms that depend on the architecture. To keep these stages distinct, see the dedicated lessons on [positional encoding](positional-encoding.qmd) and [contextualized representations](contextualized-representations.qmd).
 
-\[
-X_{b,t}=E_{\text{token}_{b,t}}+P_t.
-\]
-
-Both terms have dimension \(d\), so the combined input has shape \([B,L,d]\). Transformer blocks then contextualize each position using the sequence; for a standard width-preserving block, the hidden-state shape remains \([B,L,d]\), although the values change as information from the context is incorporated.
-
-This addition is **not universal**. For example, [RoPE](positional-encoding.qmd) applies position-dependent rotations to query and key vectors inside attention rather than adding a position vector directly to the initial token embeddings. Always identify the architecture before drawing a precise pipeline.
-
-During training, gradients can update the embedding-table rows used by the examples. The lookup operation itself does not make a vector context-aware; contextualization happens in the subsequent network layers. See [tensors](tensors.qmd) for axis conventions and [from text to tokens](text-data.qmd) for the preceding tokenizer stage.
-
-### From an initial embedding to a contextualized state
-
-The same token ID retrieves the same initial embedding, but its representation can change as positional information and surrounding tokens are processed by the Transformer. This distinction is explored in a [focused companion lesson](contextualized-representations.qmd).
+During training, gradients can update the embedding-table rows used by the examples. For tensor shapes and operations, see [tensors](tensors.qmd); for the preceding tokenizer stage, see [from text to tokens](text-data.qmd).
 
 ## Interpreting geometry with care
 
@@ -189,12 +177,12 @@ For a deeper treatment without conflating geometry with the lookup mechanism, se
 
 [Extended exercises on this topic](../en/exercises.qmd#transformer).
 
-1. Two occurrences of the same token ID appear in different contexts. Before the Transformer, do they select the same embedding vector? After several layers, must their representations remain identical?
+1. An embedding matrix has \(V\) rows and vectors of dimension \(d\). How many parameters does it contain, and what does ID \(i\) select?
 
 <details>
 <summary>Show the reasoning</summary>
 
-The initial lookup selects the same matrix row, so the initial embedding vector is identical, for fixed parameters and apart from positional additions. After contextualization, hidden states may differ because each occurrence exchanges information with a different context. Distinguish the initial token embedding from the contextualized hidden state.
+The matrix contains \(V\times d\) parameters. ID \(i\) selects row \(E_i\); its integer value is an index, not a semantic coordinate. Positional processing and contextualization happen afterwards, depending on the architecture (see the two dedicated lessons).
 
 </details>
 
