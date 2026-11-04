@@ -9,7 +9,7 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/embedding-space"
 scope: "Explique le lookup qui associe chaque ID de token à un vecteur initial appris, puis distingue ce vecteur des représentations contextualisées produites par les couches du Transformer ; introduit prudemment la géométrie sans en faire un prérequis."
-purpose: "Le lecteur doit pouvoir expliquer comment un ID sélectionne une ligne de la matrice d’embeddings, distinguer embedding initial et représentation contextualisée, et comprendre pourquoi les propriétés géométriques demandent une interprétation dépendante du modèle et de la tâche."
+purpose: "Le lecteur doit pouvoir expliquer comment un ID sélectionne une ligne de la matrice de plongements (embedding), distinguer le vecteur de plongement initial de la représentation contextualisée, et comprendre pourquoi les propriétés géométriques demandent une interprétation dépendante du modèle et de la tâche."
 suggested_route:
   previous: "fr/tokenization-strategies"
   next: "fr/positional-encoding"
@@ -55,13 +55,13 @@ Dans un Transformer, cette représentation est ensuite transformée par les couc
 - **Représentation contextualisée :** vecteur produit après traitement du contexte, notamment par l'attention.
 - **Plongement de phrase ou de document :** vecteur calculé par un modèle et une méthode d'agrégation conçus pour représenter un texte plus long.
 
-Ces objets ne sont pas interchangeables. Une méthode adaptée aux embeddings de phrases pour la recherche documentaire ne se transfère pas automatiquement aux activations internes d'un LLM.
+Ces objets ne sont pas interchangeables. Une méthode adaptée aux plongements de phrases (embeddings de phrases) pour la recherche documentaire ne se transfère pas automatiquement aux activations internes d'un LLM.
 
 ### Une distinction historique : les vecteurs de mots statiques
 
 Avant les modèles de langage contextualisés, des méthodes comme Word2Vec apprenaient **un vecteur par type de mot** à partir des régularités observées dans son contexte. CBOW prédit un mot cible à partir de son contexte ; Skip-gram prédit les mots environnants à partir d'un mot cible. Dans un modèle Word2Vec entraîné, le vecteur associé à une entrée du vocabulaire telle que `bank` reste le même quelle que soit la phrase où le mot apparaît.
 
-Un Transformer procède autrement : sa table d'embeddings associe chaque **ID de token** (souvent une unité sous-lexicale, et non un mot entier) à un vecteur initial. Un même ID sélectionne toujours la même ligne, mais les couches suivantes combinent cette représentation avec l'information positionnelle et contextuelle ; l'état caché obtenu peut donc varier d'une occurrence à l'autre. Un vecteur de mot statique Word2Vec, un embedding initial de token dans un Transformer et un état caché contextualisé sont des notions apparentées, mais non interchangeables.
+Un Transformer procède autrement : sa table de plongements (table d'embeddings) associe chaque **ID de token** (souvent une unité sous-lexicale, et non un mot entier) à un vecteur initial. Un même ID sélectionne toujours la même ligne, mais les couches suivantes combinent cette représentation avec l'information positionnelle et contextuelle ; l'état caché obtenu peut donc varier d'une occurrence à l'autre. Un vecteur de mot statique Word2Vec, un embedding initial de token dans un Transformer et un état caché contextualisé sont des notions apparentées, mais non interchangeables.
 
 Cette comparaison est conceptuelle : elle ne signifie pas que les embeddings des Transformers modernes sont initialisés ou entraînés comme ceux de Word2Vec. Voir [Mikolov et al. (2013)](https://arxiv.org/abs/1301.3781) pour les architectures originales de représentation des mots.
 
