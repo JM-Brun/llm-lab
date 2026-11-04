@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/emergence"
 scope: "Examine les capacités dites émergentes des modèles de langage, les observations liées à l'échelle et le débat sur leur caractère discontinu."
 purpose: "Le lecteur doit distinguer une amélioration graduelle, un seuil de réussite induit par une métrique et une transition réellement discontinue, puis savoir quelles preuves seraient nécessaires pour soutenir une affirmation d'émergence."
+domain: "scale-research"
 suggested_route:
   previous: null
   next: null
