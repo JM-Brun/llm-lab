@@ -2,10 +2,12 @@ schema_version: 1
 source_id: nishanthan-k-qkv-transformers-devto
 pedagogical_model:
   reconstruction:
-    status: partial
+    status: complete
     basis:
-      - "Article body reconstructed from indexed DEV content and an author-controlled Medium mirror."
-      - "Canonical DEV HTML/API and embedded media were not directly retrievable in the latest scan."
+      - "The complete author-authored text (introduction, all six numbered sections and conclusion) was reconciled against the indexed DEV article result and the author's Medium mirror on 2026-11-04."
+      - "The reconstruction preserves the article's analogies, examples, equations, explanatory claims, stated caveats, causal-mask mention, backpropagation reference and multi-head summary."
+      - "Completeness refers to the author-authored text and source-local pedagogical model, not to direct DOM capture, comments, linked resources or media inspection."
+      - "The indexed result exposes the substantive KV-cache reader comment; an earlier scan recorded a second visible comment and author reply, but their exact text is not recoverable from the current indexed snapshot."
     inferred_elements:
       - "Learning outcomes and prerequisites are inferred; the article does not state them formally."
   source_graph:
@@ -71,11 +73,9 @@ pedagogical_model:
     - "Two distinct linguistic motivations for contextualization."
     - "Explicitly states that projection matrices are learned through backpropagation and gradient-based optimization."
     - "Includes useful interpretive guardrails about semantic similarity and winner-take-all selection."
-    - "Explicit caveats against semantic-similarity and winner-take-all interpretations."
   pedagogical_limits:
     - "No formal objectives, prerequisite map, exercises, comprehension checks or worked tensor-shape example."
     - "Scaling is stated rather than derived; variance assumptions are not developed."
-    - "Causal masking is mentioned but not developed as a separate mechanism."
     - "Multi-head attention lacks detailed dimensions, reshaping and output-mixing analysis."
     - "No implementation, numerical experiments, tensor-shape walkthrough, worked numerical example or derivation of the scaling factor."
     - "Backpropagation is named but the optimization process and parameter updates are not explained."
