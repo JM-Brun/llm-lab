@@ -58,9 +58,7 @@ def test_does_not_flag_planned_or_rendered_sources(tmp_path: Path) -> None:
     planned.parent.mkdir()
     for path, status in ((planned, "planned"), (rendered, "published")):
         path.write_text(
-            "<!--\nLLM-LAB-PAGE-MAP v1\n"
-            f"tags:\n  - status:{status}\n"
-            "-->\n",
+            f"<!--\nLLM-LAB-PAGE-MAP v1\ntags:\n  - status:{status}\n-->\n",
             encoding="utf-8",
         )
     errors: list[str] = []
