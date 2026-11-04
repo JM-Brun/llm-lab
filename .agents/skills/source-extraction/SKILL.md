@@ -109,7 +109,20 @@ For each useful analogy, record source domain, target concept, mapped entities/r
 
 ### Figures and visual assets
 
-Inspect the visual itself. Record creator, original URL, locator, caption/context, visual encoding, assumptions, omissions, accessibility, licence, permission and reuse status. Candidate actions: link original, embed with verified rights, create an independently authored explanation, or omit with rationale. Never trace or cosmetically alter protected figures. Phase B decides whether to update the site and asset register.
+Inspect the visual itself—not only its surrounding prose or an indexed text extract. Record creator, original URL, exact locator, caption/context, visual encoding, assumptions, omissions, accessibility, licence, permission and reuse status. Candidate actions: link original, embed with verified rights, create an independently authored explanation, or omit with rationale. Never trace or cosmetically alter protected figures. Phase B decides whether to update the site and asset register.
+
+#### Visual-first inspection checkpoint
+
+For every article, tutorial, course page or paper with a visual component, perform a separate media pass after the textual pass:
+
+1. Enumerate the cover/hero image and every in-body image, diagram, chart, animation, video and linked visual. Distinguish a decorative thumbnail from an explanatory figure; do not assume the cover image is the figure the author discusses.
+2. Resolve each asset to its original media URL and record its exact article locator (caption, section, figure number, or DOM order). Preserve redirects and mirrors as provenance, not as proof of authorship.
+3. Open the actual media at readable resolution. Inspect labels, arrows, grouping, reading order, visual hierarchy, mathematical notation, dimensions, colour dependence, cropping and mobile legibility. If the media cannot be retrieved or rendered, mark it **not visually inspected**; do not infer its content from alt text, a filename, a thumbnail, or the surrounding paragraph.
+4. Evaluate the figure as a teaching artifact independently of the article: which learner question does it answer, what representation or relationship does it make visible, what prerequisite does it assume, what does it omit, and what misconception could it create? Compare that explanatory function with the exact current LLM Lab figure/page, not just the topic.
+5. Record creator/rights-holder, source URL, licence evidence, permission and reuse conditions separately. A public image, an accessible CDN URL, attribution, or a permissive licence for article text does not automatically establish figure reuse rights. Unknown rights mean link-only or independently authored alternatives pending review—not automatic removal of existing material.
+6. Keep the decision explicit: retain as a linked reference, embed unchanged only when rights are verified, commission/create an independently authored visual without tracing, or omit with a reason. For a promising but inaccessible visual, preserve a follow-up question and keep the source scan partial.
+
+Do not silently treat a visual pass as complete because the article body was retrieved. The scan record and review note must state separately whether textual content, visual assets, linked resources and rights were inspected.
 
 ### Experiments, benchmarks, datasets and code
 
