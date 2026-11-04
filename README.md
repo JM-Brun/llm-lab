@@ -44,8 +44,8 @@ The core implementation uses NumPy. The lockfile records the resolved Python dep
 Install [Quarto](https://quarto.org/docs/get-started/) separately; CI uses version 1.11.9. From the repository root:
 
 ```bash
-uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python scripts/build_learning_map.py
-uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python scripts/render_history_pilot.py
+uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py
+uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/render_history_pilot.py
 quarto render site
 ```
 
@@ -63,4 +63,4 @@ The [roadmap](docs/roadmap.md) records priorities; the [information architecture
 
 ## License
 
-Project-owned code is offered under MIT and project-owned prose under CC BY-SA 4.0. Third-party materials and images with unresolved provenance are excluded; see [LICENSE.md](LICENSE.md) and the [visual-assets register](docs/visual-assets-register.md).
+Project code is released under the MIT License. CC BY-SA 4.0 applies only to original project-authored prose in Quarto pages and documentation; it excludes all visual assets whose rights are not established. Third-party materials retain their own terms. See [LICENSE.md](LICENSE.md), [licensing scope](docs/licensing-scope.md), and the [visual asset register](docs/visual-assets-register.md).

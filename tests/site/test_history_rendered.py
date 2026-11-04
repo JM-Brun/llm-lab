@@ -1,12 +1,12 @@
 """Regression tests for parsing generated timeline HTML after Quarto rendering."""
 
 SCRIPT = __file__.replace(
-    "/tests/unit/test_history_rendered.py",
-    "/scripts/check_history_rendered.py",
+    "/tests/site/test_history_rendered.py",
+    "/site/tools/check_history_rendered.py",
 )
 GENERATOR = __file__.replace(
-    "/tests/unit/test_history_rendered.py",
-    "/scripts/render_history_pilot.py",
+    "/tests/site/test_history_rendered.py",
+    "/site/tools/render_history_pilot.py",
 )
 RUNPY = __import__("runpy")
 render_timeline = RUNPY.run_path(GENERATOR, run_name="render_history_pilot")["render"]
