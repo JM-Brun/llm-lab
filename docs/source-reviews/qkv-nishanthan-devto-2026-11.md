@@ -123,3 +123,12 @@ The canonical graph refinement is complete: the four stable concepts and their t
 Accordingly, the parent article's `integration_status` is **integrated**: every author-authored contribution has been integrated or explicitly rejected as redundant. The separate KV-cache reader comment remains deferred. The article's `scan_status` remains **partially-scanned** because the embedded image has not been visually inspected, linked materials and publication metadata remain unverified, and reuse rights are unknown. This does not block the completed pedagogical integration, but it does block claiming a complete source audit or any figure reuse.
 
 No source content has been deleted from the extraction record; rejected items remain available as provenance-backed corroborating evidence.
+
+
+## 11. Final access recheck
+
+A final public-web recheck on 2026-11-04 again returned a cache miss for the canonical DEV article page. The indexed DEV result nevertheless exposes the complete introduction, six numbered sections, conclusion and reader comment, consistent with the extraction already recorded. The author-controlled Medium mirror also exposes the complete article body. These indexed/mirror copies support text-level reconciliation, but do not establish successful direct retrieval of the canonical page.
+
+The Medium profile search result now lists the QKV article and two image entries under its title. Opening the profile itself still returns a stale page snapshot that omits the QKV article; the image entries do not expose a stable original asset URL, image bytes, caption/placement or rights-holder information. Thus the visual inspection remains blocked. The direct DEV page and profile snapshot are evidence of access limitations, not grounds to infer the figure's content.
+
+**Final scan boundary:** the article's text and visible comment are reconciled; the source-local graph and route are compared; all author-authored extraction items have final integration dispositions. The source remains partially scanned only for external linked material, publication metadata, the actual visual asset and rights. No figure reuse is permitted on the current evidence.
