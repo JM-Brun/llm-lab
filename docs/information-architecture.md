@@ -33,7 +33,7 @@ The repository already has a useful page-level contract (`LLM-LAB-PAGE-MAP v1`) 
 
 ### Important boundary: page tags are not a concept taxonomy
 
-The `topic` tag is a stable subject key attached to a page. It does not define a concept, its preferred label, synonyms, definition, broader/narrower concepts, provenance or links to multiple pages. Likewise, headings extracted into the learning-map `concepts` array are display hints, not identified concepts.
+The `topic` tag is a stable subject key attached to a page. It does not define a concept, its preferred label, synonyms, definition, broader/narrower concepts, provenance or links to multiple pages. Likewise, headings extracted into the learning-map `section_labels` array are display hints, not identified concepts.
 
 Do not describe either mechanism as a complete knowledge graph or ontology. If a reusable concept registry becomes necessary, introduce it as a separate, explicitly modelled dataset (see section 6), and link pages to concept IDs. Do not overload existing page tags.
 
@@ -150,7 +150,7 @@ The current implementation already has strong foundations: a documented page met
 The following gaps should be addressed incrementally:
 
 1. **Make the ownership map discoverable.** This document is the index for the information architecture; detailed documents remain canonical for their individual concerns.
-2. **Stop calling extracted headings concepts.** Rename the generated `concepts` property to `section_labels` (or equivalent) in learning-map data and UI. It currently contains up to six headings, not concept records.
+2. **Use semantically accurate map fields.** The learning-map payload and UI now call extracted headings `section_labels`; they are navigation landmarks, not concept records.
 3. **Make generated outputs explicitly generated.** Keep learning-map JSON out of hand-maintained source and ensure it is ignored or reproducibly refreshed in CI/builds.
 4. **Formalize machine-readable schemas when stable.** Extract page metadata shape and controlled vocabularies to JSON Schema Draft 2020-12; validate both shape and graph semantics.
 5. **Add an automated architecture consistency check.** Detect duplicate ownership, unknown tag dimensions, unused vocabularies, stale generated data and links to missing source records.
