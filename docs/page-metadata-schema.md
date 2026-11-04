@@ -120,12 +120,13 @@ Run the validator locally from the repository root:
 uv run --with-requirements docs/requirements-history-validation.txt python scripts/check_page_metadata.py
 ```
 
-The validator reads the actual `project.render` list from `site/_quarto.yml`; it does not infer coverage from sidebar indentation. It checks:
+The validator reads the actual `project.render` list from `site/_quarto.yml` and scans source `.qmd` files for published pages omitted from that list; it does not infer coverage from sidebar indentation. It checks:
 
 - exactly one correctly placed page-map comment and valid YAML front matter per rendered page;
 - required fields, stable IDs derived from source paths, unique IDs, and matching Quarto `keywords` / comment tags;
 - one value for each controlled tag dimension and valid vocabulary values;
-- resolvable relations, reciprocal parent/child and suggested-route edges, and an acyclic conceptual hierarchy;
+- resolvable relations, reciprocal parent/child and suggested-route edges, and acyclic conceptual hierarchy and suggested reading routes;
+- render-list coverage: every source page marked `status:published` must appear in `project.render` (planned drafts may remain outside the render list);
 - French/English counterpart coverage, matching editorial dimensions, and equivalent relations after mapping translated IDs to canonical topic tags;
 - published status for every page in the render list.
 
