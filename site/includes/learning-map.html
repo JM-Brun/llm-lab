@@ -24,6 +24,14 @@
       "probabilistic-foundations-training": "Fondements probabilistes et entraînement",
       "inference-efficiency": "Inférence et efficacité",
       "scale-research": "Échelle et questions de recherche"
+    },
+    domainShort: {
+      "architectures-mechanisms": "Architectures",
+      "text-tokenization": "Texte / tokens",
+      "mathematical-tools-geometry": "Maths / géométrie",
+      "probabilistic-foundations-training": "Probabilités / entraînement",
+      "inference-efficiency": "Inférence / efficacité",
+      "scale-research": "Échelle / recherche"
     }
   } : {
     columns: ["Understand", "Build", "Deepen", "Practice and reference"],
@@ -45,6 +53,14 @@
       "probabilistic-foundations-training": "Probabilistic foundations and training",
       "inference-efficiency": "Inference and efficiency",
       "scale-research": "Scale and research questions"
+    },
+    domainShort: {
+      "architectures-mechanisms": "Architectures",
+      "text-tokenization": "Text / tokens",
+      "mathematical-tools-geometry": "Math / geometry",
+      "probabilistic-foundations-training": "Probability / training",
+      "inference-efficiency": "Inference / efficiency",
+      "scale-research": "Scale / research"
     }
   };
 
@@ -308,7 +324,7 @@
       const topic = svgElement("text", {
         x: position.x + 13, y: position.y + 18, class: "map-node-topic"
       });
-      topic.textContent = (page.domain && copy.domains[page.domain]) || page.topic || page.destination;
+      topic.textContent = (page.domain && copy.domainShort[page.domain]) || page.topic || page.destination;
       anchor.appendChild(topic);
       appendText(anchor, position.x + 13, position.y + 39, wrap(page.title, 30, 2), "map-node-title");
       const concepts = (page.concepts || []).slice(0, 2).join(" · ");
