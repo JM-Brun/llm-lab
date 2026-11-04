@@ -439,7 +439,6 @@ def test_learning_map_browser_script_has_valid_javascript_and_fallback_target() 
     assert "sectionHeadingList.appendChild(item)" in script
 
 
-
 def test_learning_map_node_selection_is_separate_from_navigation() -> None:
     """Page and concept nodes select in place; navigation uses the details link."""
     script_path = MODULE_PATH.parents[2] / "site" / "includes" / "learning-map.html"
@@ -451,7 +450,7 @@ def test_learning_map_node_selection_is_separate_from_navigation() -> None:
     assert 'role: "button"' in script
     assert 'node.addEventListener("click", () => updateConceptDetails(concept));' in script
     assert 'anchor.addEventListener("click", () => updateDetails(page));' in script
-    assert 'href: page.href' not in script
+    assert "href: page.href" not in script
     assert "const syncSelection = () =>" in script
 
 
