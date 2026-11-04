@@ -2,6 +2,7 @@
 title: "Panorama : qu’est-ce qu’un LLM ?"
 subtitle: "Du texte au prochain token : la carte conceptuelle avant les mécanismes"
 description: "Panorama des modèles de langage : définitions, architecture, apprentissage des paramètres et inférence."
+keywords: ["type:system-overview","destination:understand","topic:llm-overview","level:overview","language:fr","status:published"]
 lang: fr
 ---
 
