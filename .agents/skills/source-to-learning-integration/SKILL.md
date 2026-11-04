@@ -93,6 +93,8 @@ Distinguish sources actually scanned from sources merely discovered, selected, l
 
 ## Completion report
 
+For instructional sources, include the reconstructed source graph and route, their differential against LLM Lab's canonical graph and learning route, and separate decisions for graph changes, route changes and intentional non-changes.
+
 Report the two phases separately:
 1. sources examined, scan scope/status, extraction counts by type, provenance/rights gaps;
 2. item dispositions, graph nodes/edges added or changed, pages/assets/experiments/references updated, and no-change decisions;
