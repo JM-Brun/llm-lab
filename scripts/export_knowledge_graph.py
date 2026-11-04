@@ -46,13 +46,15 @@ def _page_records() -> dict[str, dict[str, Any]]:
     records: dict[str, dict[str, Any]] = {}
     for path in sorted(SITE.rglob("*.qmd")):
         source = path.read_text(encoding="utf-8")
+        front_match = re.match(r"\\A---\\s*\\n(.*?)\\n---\\s*(?:\\n|\\Z)", source, re.DOTALL)
         match = re.search(
-            r"<!--\\s*\\nLLM-LAB-PAGE-MAP v1\\n(.*?)\\n-->",
+            r"<!--\s*\nLLM-LAB-PAGE-MAP v1\n(.*?)\n-->",
             source,
             re.DOTALL,
         )
-        if match is None:
+        if match is None or front_match is None:
             continue
+        front = yaml.safe_load(front_match.group(1))
         metadata = yaml.safe_load(match.group(1))
         if not isinstance(metadata, dict):
             continue
@@ -76,7 +78,7 @@ def _page_records() -> dict[str, dict[str, Any]]:
             "id": page_id,
             "url": href,
             "language": language,
-            "title": str(metadata.get("scope", slug)),
+            "title": str(front.get("title", slug)),
             "scope": str(metadata.get("scope", "")),
             "purpose": str(metadata.get("purpose", "")),
             "type": tags.get("type", "concept-lesson"),
@@ -161,7 +163,7 @@ def build_graph() -> dict[str, Any]:
                     "schema:description": page["scope"],
                     "schema:abstract": page["purpose"],
                     "schema:learningResourceType": page["type"],
-                    "schema:educationalLevel": page["level"],
+                    "llmlab:editorialLevel": page["level"],
                     "schema:about": {"@id": concept_uri},
                 }
             )
