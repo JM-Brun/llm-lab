@@ -41,6 +41,9 @@ jobs:
       - name: Validate page metadata learning graph
         run: uv run python site/tools/check_page_metadata.py
 
+      - name: Audit page metadata topology
+        run: uv run python site/tools/audit_page_metadata.py
+
       - name: Validate bilingual concept registry
         run: uv run python site/tools/check_concept_registry.py
 
