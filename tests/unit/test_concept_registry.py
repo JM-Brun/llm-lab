@@ -11,6 +11,7 @@ import yaml
 MODULE_PATH = Path(__file__).resolve().parents[2] / "scripts" / "check_concept_registry.py"
 MODULE: dict[str, Any] = runpy.run_path(str(MODULE_PATH), run_name="concept_registry_test")
 validate_registry = MODULE["validate_registry"]
+validate_domains = MODULE["validate_domains"]
 
 
 def _valid_registry() -> dict[str, Any]:
@@ -21,12 +22,14 @@ def _valid_registry() -> dict[str, Any]:
                 "id": "token",
                 "labels": {"fr": "Token", "en": "Token"},
                 "definitions": {"fr": "Unité discrète.", "en": "Discrete unit."},
+                "domains": ["architectures-mechanisms"],
                 "resources": ["fr/text-data", "en/text-data"],
             },
             {
                 "id": "embedding",
                 "labels": {"fr": "Plongement", "en": "Embedding"},
                 "definitions": {"fr": "Vecteur.", "en": "Vector."},
+                "domains": ["mathematical-tools-geometry"],
                 "resources": ["fr/embedding-space", "en/embedding-space"],
             },
         ],
@@ -38,7 +41,10 @@ def test_checked_in_registry_is_valid() -> None:
     registry_path = Path(__file__).resolve().parents[2] / "data" / "concepts.yml"
     data = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
     published_pages = MODULE["_published_page_ids"]()
-    assert validate_registry(data, published_pages) == []
+    domain_data = yaml.safe_load((registry_path.parents[1] / "domains.yml").read_text(encoding="utf-8"))
+    domain_ids, domain_errors = validate_domains(domain_data)
+    assert domain_errors == []
+    assert validate_registry(data, published_pages, domain_ids) == []
 
 
 def test_registry_rejects_duplicate_ids_and_unknown_relation_endpoints() -> None:
@@ -111,3 +117,72 @@ def test_generalization_cycles_are_rejected_but_application_cycles_are_allowed()
 
     assert any("generalization graph must be acyclic" in error for error in errors)
     assert not any("applies-to" in error for error in errors)
+
+
+
+def test_domain_registry_rejects_missing_bilingual_fields_and_duplicate_ids() -> None:
+    data = {
+        "schema_version": 1,
+        "domains": [
+            {
+                "id": "architectures-mechanisms",
+                "labels": {"fr": "Architectures", "en": "Architectures"},
+                "descriptions": {"fr": "Structures."},
+                "guiding_questions": {"fr": "Pourquoi ?", "en": "Why?"},
+            },
+            {
+                "id": "architectures-mechanisms",
+                "labels": {"fr": "Autre", "en": "Other"},
+                "descriptions": {"fr": "Autre.", "en": "Other."},
+                "guiding_questions": {"fr": "Pourquoi ?", "en": "Why?"},
+            },
+        ],
+    }
+
+    identifiers, errors = validate_domains(data)
+
+    assert "architectures-mechanisms" in identifiers
+    assert any("expected exactly fr and en" in error for error in errors)
+    assert any("duplicate identifier" in error for error in errors)
+    assert any("six controlled domain IDs" in error for error in errors)
+
+
+def test_concept_domain_membership_is_required_and_resolved() -> None:
+    data = _valid_registry()
+    data["concepts"][0]["domains"] = ["unknown-domain"]
+    data["concepts"][1]["domains"] = []
+
+    errors = validate_registry(data, domain_ids={"architectures-mechanisms"})
+
+    assert any("unknown domain" in error for error in errors)
+    assert any(".domains: expected a non-empty list" in error for error in errors)
+
+
+def test_concept_can_belong_to_multiple_domains() -> None:
+    data = _valid_registry()
+    data["concepts"][0]["domains"] = [
+        "architectures-mechanisms",
+        "mathematical-tools-geometry",
+    ]
+
+    errors = validate_registry(
+        data,
+        domain_ids={"architectures-mechanisms", "mathematical-tools-geometry"},
+    )
+
+    assert errors == []
+
+
+def test_symmetric_contrast_relation_uses_one_canonical_orientation() -> None:
+    data = _valid_registry()
+    data["relations"] = [
+        {"from": "token", "type": "contrasts-with", "to": "embedding"}
+    ]
+    assert validate_registry(data) == []
+    data["relations"].append(
+        {"from": "embedding", "type": "contrasts-with", "to": "token"}
+    )
+
+    errors = validate_registry(data)
+
+    assert any("canonical lexical order" in error for error in errors)
