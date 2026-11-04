@@ -132,6 +132,8 @@ Modifiez $\tau$ pour observer comment la distribution change, alors que le token
   </script>
 </div>
 
+```
+
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
 <span>MICRO-ATELIER NUMÉRIQUE · EXPÉRIMENTATION AVEC LE SOFTMAX TEMPÉRÉ</span>
