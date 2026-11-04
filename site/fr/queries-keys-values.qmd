@@ -56,7 +56,7 @@ Pour situer historiquement les mécanismes d'attention avant l'architecture Tran
 
 ## D'où viennent Q, K et V ?
 
-Dans l'auto-attention, les trois projections partent du même flux de représentations. Pour une séquence de $T$ positions, on note cette matrice $X\in\mathbb{R}^{T\times d_{model}}$ :
+Dans l'auto-attention, les trois projections partent du même flux de représentations. Ici, $X$ désigne l'entrée courante du sous-module d'attention : dans le premier bloc, elle reflète la représentation du token et le mécanisme positionnel de l'architecture ; dans les blocs suivants, elle correspond à un état caché déjà contextualisé. Certaines architectures injectent la position dans la représentation d'entrée, tandis que d'autres (comme celles fondées sur RoPE) modifient les requêtes et les clés à l'intérieur de l'attention. Pour une séquence de $T$ positions, on note cette matrice $X\in\mathbb{R}^{T\times d_{model}}$ :
 
 $$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
