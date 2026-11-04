@@ -80,12 +80,12 @@ Use established standards where they solve a real interoperability or validation
 | Generated interchange data | JSON (RFC 8259) | Continue generating JSON learning-map payloads |
 | Stable identifiers | URI design principles (RFC 3986) | Keep durable repository-relative IDs now; use canonical URIs if records are exchanged externally |
 | Schema validation | JSON Schema Draft 2020-12 | Adopt when the page/concept data contract is extracted into a machine-readable schema; keep semantic graph checks in Python |
-| Concept schemes / controlled vocabularies | W3C SKOS | Use for a future explicit concept taxonomy: `skos:ConceptScheme`, `prefLabel`, `altLabel`, `definition`, `broader`, `narrower`, `related` |
+| Concept schemes / controlled vocabularies | W3C SKOS | Align the existing bilingual concept and domain registries using `skos:ConceptScheme`, `skos:Concept`, `prefLabel`, `definition`, and `narrower` only for genuine generalization |
 | Public educational page description | Schema.org `LearningResource` / `WebPage` | Generated from published page metadata in `site/knowledge-graph.jsonld`; use `about` for current concept-page associations and do not infer `teaches` |
 | Graph serialization / linked data | JSON-LD 1.1 | Implemented as a deterministic generated projection; YAML remains canonical |
 | Learning-resource interoperability | 1EdTech CASE | Consider only if formal competencies, educational frameworks or curriculum structures must be exchanged with other platforms |
 
-SKOS is appropriate if a true concept taxonomy is added. It is not a replacement for the page graph: page routes, page hierarchy, curriculum prerequisites and historical evidential relations have different semantics and should remain separately typed.
+SKOS is now used for the existing concept and domain schemes. It is not a replacement for the page graph: page routes, page hierarchy, curriculum prerequisites and historical evidential relations have different semantics and should remain separately typed.
 
 Do not introduce RDF triple stores, graph databases, CASE exports or a full ontology toolchain for the current static bilingual site. A versioned YAML source plus JSON projection and deterministic validators is proportionate.
 
