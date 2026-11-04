@@ -9,7 +9,7 @@ toc: false
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/learning-map"
-scope: "Carte visuelle et interactive des pages publiées, de leur progression suggérée, de leur hiérarchie pédagogique et des notions repérées dans leurs sections."
+scope: "Carte visuelle et interactive des pages publiées, de leur progression suggérée, de leur hiérarchie pédagogique, des titres de section et d’un graphe conceptuel canonique distinct."
 purpose: "Permettre au lecteur de comprendre l’architecture du parcours, d’identifier les pages et notions pertinentes, puis d’ouvrir directement une page depuis sa brique dans le graphe."
 suggested_route:
   previous: null
@@ -83,7 +83,7 @@ La carte propose deux graphes distincts. Le graphe des pages représente les res
     <aside class="learning-map-details" aria-live="polite" aria-atomic="true">
       <p class="map-detail-eyebrow">EXPLORER UNE BRIQUE</p>
       <h3>Sélectionner une page</h3>
-      <p>Passez sur un bloc ou placez-y le focus pour afficher son rôle, ses notions et ses relations. Cliquez sur le bloc pour ouvrir directement la page.</p>
+      <p>Passez sur un bloc ou placez-y le focus pour afficher son rôle, ses titres de section et ses relations. Cliquez sur le bloc pour ouvrir directement la page.</p>
     </aside>
   </div>
   <p class="learning-map-status" role="status" aria-live="polite">Chargement de la carte…</p>

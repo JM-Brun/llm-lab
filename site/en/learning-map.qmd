@@ -9,7 +9,7 @@ toc: false
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/learning-map"
-scope: "Interactive visual map of published pages, suggested progression, pedagogical hierarchy, and concepts identified from page sections."
+scope: "Interactive visual map of published pages, suggested progression, pedagogical hierarchy, page section headings, and a separate canonical concept graph."
 purpose: "Help readers understand the learning path architecture, find relevant pages and concepts, and open a page directly from its node in the graph."
 suggested_route:
   previous: null
@@ -83,7 +83,7 @@ The map offers two distinct graphs. The page graph represents resources and thei
     <aside class="learning-map-details" aria-live="polite" aria-atomic="true">
       <p class="map-detail-eyebrow">EXPLORE A NODE</p>
       <h3>Select a page</h3>
-      <p>Hover over a block or focus it to inspect its purpose, concepts, and relationships. Click the block to open the page directly.</p>
+      <p>Hover over a block or focus it to inspect its purpose, section headings, and relationships. Click the block to open the page directly.</p>
     </aside>
   </div>
   <p class="learning-map-status" role="status" aria-live="polite">Loading map…</p>

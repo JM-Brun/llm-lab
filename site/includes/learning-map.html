@@ -9,7 +9,7 @@
     route: "Parcours suggéré",
     hierarchy: "Hiérarchie pédagogique",
     related: "Pages associées",
-    concepts: "Notions repérées dans la page",
+    sectionHeadings: "Titres de section",
     modePages: "Graphe des pages",
     modeConcepts: "Graphe conceptuel",
     conceptRelations: "Relations conceptuelles",
@@ -45,7 +45,7 @@
     route: "Suggested route",
     hierarchy: "Pedagogical hierarchy",
     related: "Related pages",
-    concepts: "Section headings on this page",
+    sectionHeadings: "Section headings on this page",
     modePages: "Page graph",
     modeConcepts: "Concept graph",
     conceptRelations: "Concept relationships",
@@ -247,23 +247,23 @@
     summary.textContent = page.scope || page.purpose || "";
     details.appendChild(summary);
 
-    const conceptHeading = document.createElement("h4");
-    conceptHeading.textContent = copy.concepts;
-    details.appendChild(conceptHeading);
+    const sectionHeadingTitle = document.createElement("h4");
+    sectionHeadingTitle.textContent = copy.sectionHeadings;
+    details.appendChild(sectionHeadingTitle);
 
-    const conceptList = document.createElement("ul");
-    conceptList.className = "map-concept-list";
+    const sectionHeadingList = document.createElement("ul");
+    sectionHeadingList.className = "map-section-heading-list";
     (page.section_headings || []).forEach(concept => {
       const item = document.createElement("li");
       item.textContent = concept;
-      conceptList.appendChild(item);
+      sectionHeadingList.appendChild(item);
     });
-    if (!conceptList.childElementCount) {
+    if (!sectionHeadingList.childElementCount) {
       const item = document.createElement("li");
       item.textContent = page.topic || copy.unknown;
       conceptList.appendChild(item);
     }
-    details.appendChild(conceptList);
+    details.appendChild(sectionHeadingList);
 
     const open = document.createElement("a");
     open.className = "map-open-page";
@@ -499,7 +499,7 @@
       appendText(anchor, position.x + 13, position.y + 39, wrap(page.title, 30, 2), "map-node-title");
       const headings = (page.section_headings || []).slice(0, 2).join(" · ");
       const conceptLine = svgElement("text", {
-        x: position.x + 13, y: position.y + 84, class: "map-node-concepts"
+        x: position.x + 13, y: position.y + 84, class: "map-node-section-headings"
       });
       conceptLine.textContent = headings.length > 44 ? headings.slice(0, 43) + "…" : headings;
       anchor.appendChild(conceptLine);
