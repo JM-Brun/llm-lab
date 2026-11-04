@@ -51,7 +51,7 @@ The article's central equations and role distinctions are sound at the introduct
 
 **No change to the published Q/K/V page is warranted from this source.** The existing bilingual lesson is already more precise and better integrated into the learning route than the article. It covers the useful information without importing the article's simplifications or duplicating its examples.
 
-No new concept, graph edge, page, figure, experiment or bibliography entry is created. The source and its atomic extraction records are retained for traceability and future discovery. All seven extraction items have explicit Phase B dispositions.
+No new concept, graph edge, page, figure, experiment or bibliography entry is created. The source and its atomic extraction records are retained for traceability and future discovery. All six article-derived extraction items have explicit Phase B dispositions. The reader comment is explicitly excluded from the article's extracted content.
 
 This is a valid outcome of the source-to-learning workflow: a source can be catalogued and reviewed without requiring a content change.
 
