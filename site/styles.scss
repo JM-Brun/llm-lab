@@ -1119,3 +1119,10 @@ details.spot-the-fallacy .fallacy-content {
 @media (prefers-reduced-motion: reduce) {
   .map-node-card { transition: none; }
 }
+
+
+.llm-flow .flow-node-g2 rect {
+  fill: #FFFBEB;
+  stroke: #B45309;
+  stroke-dasharray: 5 3;
+}
