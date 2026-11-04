@@ -1,14 +1,14 @@
 ---
 title: "Panorama : qu’est-ce qu’un LLM ?"
 subtitle: "Du texte au prochain token : la carte conceptuelle avant les mécanismes"
-keywords: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
+description: "Panorama des modèles de langage : définitions, architecture, apprentissage des paramètres et inférence."
 lang: fr
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
-scope: "Situe les LLM modernes dans l’IA, l’apprentissage automatique et le TAL ; définit modèle de langage, modèle génératif, LLM, GPT et Transformer ; distingue architecture, apprentissage des poids et utilisation ; oriente vers les pages dédiées sans détailler la boucle de génération ni les mécanismes internes."
+scope: "Situe les LLM dans l'intelligence artificielle et l'apprentissage automatique ; définit modèle de langage, modèle génératif, LLM, GPT et Transformer ; distingue architecture, apprentissage des poids et utilisation ; oriente vers les pages dédiées sans détailler la boucle de génération ni les mécanismes internes."
 purpose: "À l’issue de cette page, le lecteur doit pouvoir situer les LLM, distinguer les principaux termes et les trois dimensions architecture/apprentissage/utilisation, et choisir la page spécialisée pertinente pour comprendre le calcul Transformer ou l’inférence autorégressive."
 suggested_route:
   previous: "fr/index"
@@ -54,7 +54,7 @@ Le modèle apprend des régularités statistiques des données ; cet objectif ne
 
 **GPT** (*Generative Pre-trained Transformer*) désigne une famille de modèles génératifs pré-entraînés fondés sur l'architecture Transformer. Dans l'usage courant, les GPT classiques sont des Transformers **décodeur seul**, entraînés à prédire le prochain token. GPT et Transformer ne sont donc pas synonymes : Transformer désigne une famille d'architectures ; GPT désigne une famille de modèles qui en utilise une configuration particulière.
 
-Les LLM modernes sont généralement des modèles d'apprentissage profond au sein de l'intelligence artificielle et de l'apprentissage automatique. Le TAL est un domaine, pas une architecture. Les systèmes antérieurs reposaient souvent sur des règles, des caractéristiques conçues à la main ou des modèles statistiques/neuronaux spécialisés par tâche. Les LLM apprennent des régularités réutilisables à partir de corpus étendus et peuvent être adaptés à plusieurs tâches, mais nécessitent toujours une évaluation propre à chaque tâche.
+Les LLM modernes sont généralement des modèles d'apprentissage profond au sein de l'intelligence artificielle et de l'apprentissage automatique. Ils apprennent des régularités réutilisables à partir de corpus étendus et peuvent être adaptés à plusieurs tâches, mais nécessitent toujours une évaluation propre à chaque tâche. Pour situer le TAL et les approches qui ont précédé les LLM, voir l'[historique des Transformers](transformer-history.qmd).
 
 LLM Lab utilise de petits modèles inspectables pour expliquer les mécanismes, pas pour reproduire les capacités des modèles de production. Un modèle de référence non entraîné est censé produire un texte incohérent.
 
