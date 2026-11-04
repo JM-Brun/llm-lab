@@ -12,7 +12,7 @@ scope: "Defines the conditional categorical distribution over the vocabulary at 
 purpose: "Identify what a next-token probability represents, explain how logits become a normalized distribution and inform token selection, and distinguish normalization, calibration, temperature, and factual truth."
 suggested_route:
   previous: "en/logits"
-  next: "en/training-examples"
+  next: "en/likelihood"
 hierarchy:
   parents: ["en/logits", "en/generation"]
   children: ["en/likelihood"]
