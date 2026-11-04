@@ -1215,3 +1215,15 @@ details.spot-the-fallacy .fallacy-content {
   .guided-route-grid { grid-template-columns: 1fr; gap: .6rem; }
   .guided-route-stage { padding: .8rem .85rem; }
 }
+
+.guided-route-optional-label {
+  margin: .65rem 0 .2rem !important;
+  color: #64748B !important;
+  font-size: .73rem !important;
+  font-weight: 750;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+.guided-route-optional-links {
+  font-size: .8rem;
+}
