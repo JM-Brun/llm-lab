@@ -137,7 +137,23 @@ Allowed statuses are in `data/source-taxonomy.yml`. A source is `scanned` only w
 
 A source can be classified before scanning. For unclassified discovered records, `primary_theme` may be null; it must be assigned before substantive extraction is marked complete.
 
-## 4. Extraction item records
+## 4. Extraction records and source pedagogical models
+
+Store one file per source in `data/extractions/<source-id>.yml`. Each item is atomic and carries:
+
+For instructional sources (tutorials, blog articles, courses and book chapters), the extraction file also carries a top-level `pedagogical_model`. This is the source's own reconstructed model, not an extension of the canonical LLM Lab concept registry:
+
+- `reconstruction`: completeness status, evidence basis and explicitly inferred elements;
+- `source_graph.nodes`: source-local node IDs, kinds, descriptions and source locators;
+- `source_graph.edges`: typed source-local relations whose endpoints must resolve to nodes in that same graph;
+- `source_graph.interpretation`: an explicit statement that reconstructed relations are interpretations unless the source itself defines them formally;
+- `learning_outcomes` and `assumed_prerequisites`: each marked `declared` or `inferred`, with its basis;
+- `teaching_route`: ordered source sections, their pedagogical function and teaching moves; order must be unique and contiguous;
+- `pedagogical_strengths` and `pedagogical_limits`;
+- `comparison`: links to the comparison dossier, canonical graph and route references, decision, and structures deliberately kept separate.
+
+Source-local graph IDs are not canonical concept IDs. Never copy them into `data/concepts.yml` automatically. Do not infer a prerequisite edge from section order, an analogy mapping, or a motivational example. A source graph can contain pedagogical anchors as well as technical entities, but those node kinds must remain distinguishable. If the source is only partially accessible, record a partial reconstruction and its evidence boundary rather than filling gaps by guesswork.
+
 
 Store one file per source in `data/extractions/<source-id>.yml`. Each item is atomic and carries:
 
