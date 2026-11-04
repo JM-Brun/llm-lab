@@ -35,7 +35,7 @@ jobs:
       - name: Install documentation example dependency
         run: uv pip install --python .venv/bin/python -r docs/requirements-tokenizer-example.txt
 
-      - name: Install history data validation dependency
+      - name: Install YAML data validation dependencies
         run: uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
 
       - name: Validate source catalogue and extraction records
