@@ -63,7 +63,7 @@ The page-map schema correctly distinguishes route, hierarchy and related links. 
 - [x] Separate suggested-route chains from hierarchy fan-out, multi-parent nodes and related links.
 - [x] Record route starts/ends, chains, convergence, unrooted components, route-free pages by destination and isolated pages.
 - [x] Compare the six-stage conceptual route with the G0–G9 Build milestones; record the deliberate G2 training-data branch and G1b corpus-preparation branch.
-- [ ] Repair the malformed G0–G9 tables in `docs/content-section-mapping.md`: remove the stray seven-column rows from the four-column table, correct the mislabeled training-examples milestone, and add the missing G2 evidence row to the detailed matrix.
+- [x] Repair the malformed G0–G9 tables in `docs/content-section-mapping.md`: normalize the summary table, correct the G3/G2 labels, add the missing G2 evidence row, and align G1/G1b and G6 claims with the source implementation (PR #429).
 - [ ] Review the `glossary → transformer-history` suggested-route chain against the editorial rule that history is optional reference context.
 - [ ] Decide whether the three route-free Understand pages (entropy, LLM limits and Transformer architectures) are intentionally standalone; do not add route links merely to eliminate nulls.
 - [ ] Review the five fully isolated landing/reference pages and record why they intentionally sit outside the graph.
