@@ -200,9 +200,7 @@ def test_route_topology_separates_route_chains_from_hierarchy() -> None:
             following="fr/middle",
             children=["fr/branch-a", "fr/branch-b"],
         ),
-        "fr/middle": _graph_page(
-            "fr/middle", previous="fr/start", following="fr/end"
-        ),
+        "fr/middle": _graph_page("fr/middle", previous="fr/start", following="fr/end"),
         "fr/end": _graph_page("fr/end", previous="fr/middle"),
         "fr/branch-a": _graph_page("fr/branch-a", destination="deepen"),
         "fr/branch-b": _graph_page("fr/branch-b", destination="deepen"),
@@ -237,9 +235,7 @@ def test_route_topology_reports_unrooted_components_and_convergence() -> None:
 
     result = AUDIT_MODULE["route_topology"](pages)["fr"]
 
-    assert result["route_merges"] == [
-        {"page": "fr/c", "incoming_from": ["fr/a", "fr/b"]}
-    ]
+    assert result["route_merges"] == [{"page": "fr/c", "incoming_from": ["fr/a", "fr/b"]}]
     assert result["unrooted_route_pages"] == ["fr/x", "fr/y"]
 
 
