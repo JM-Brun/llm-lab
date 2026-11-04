@@ -41,7 +41,7 @@ Each entry answers a more specific question: why a mechanism works, under which 
 | How are outputs produced, and what resources do they require? | [Inference and efficiency](#inference-and-efficiency) |
 | What can evidence tell us about scale and model capabilities? | [Scale and research questions](#scale-and-research-questions) |
 
-## Architectures and mechanisms
+## Architectures and mechanisms {#architectures-and-mechanisms}
 
 **Guiding question:** which variants change information flow or a model's computational structure?
 
@@ -60,7 +60,7 @@ Specialized variants do not enter the core route merely because a recent model u
 
 The core [Tokenization strategies](tokenization-strategies.qmd) lesson remains the conceptual entry point; design and comparative evaluation are advanced topics.
 
-## Mathematical tools and geometry
+## Mathematical tools and geometry {#mathematical-tools-and-geometry}
 
 **Guiding question:** which mathematical operations and properties help analyze representations and computations?
 
@@ -70,7 +70,7 @@ The core [Tokenization strategies](tokenization-strategies.qmd) lesson remains t
 
 These pages provide analytical tools; they are not a prerequisite mathematics course to complete before building a small GPT.
 
-## Probabilistic foundations and training
+## Probabilistic foundations and training {#probabilistic-foundations-and-training}
 
 **Guiding question:** how are the predicted distribution, observed likelihood, objective function, and optimization connected?
 
@@ -79,7 +79,7 @@ These pages provide analytical tools; they are not a prerequisite mathematics co
 
 The core route's canonical pages remain responsible for local definitions of likelihood, entropy, cross-entropy, loss, and gradients. These deep dives connect or generalize those concepts without replacing them.
 
-## Inference and efficiency
+## Inference and efficiency {#inference-and-efficiency}
 
 **Guiding question:** how does a model use context, select outputs, and consume resources?
 
@@ -89,7 +89,7 @@ The core route's canonical pages remain responsible for local definitions of lik
 
 The core route introduces autoregressive generation and its minimum operations. This category covers strategies and costs not needed for that first understanding.
 
-## Scale and research questions
+## Scale and research questions {#scale-and-research-questions}
 
 **Guiding question:** which empirical regularities and capability claims are supported by evidence?
 
