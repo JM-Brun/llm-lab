@@ -187,7 +187,9 @@ def main() -> int:
     if errors:
         sys.stderr.write("\n".join(errors) + "\n")
         return 1
-    sys.stdout.write(f"Validated {len(data['concepts'])} concepts and {len(data['relations'])} relations.\n")
+    sys.stdout.write(
+        f"Validated {len(data['concepts'])} concepts and {len(data['relations'])} relations.\n"
+    )
     return 0
 
 
