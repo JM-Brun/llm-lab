@@ -2,7 +2,7 @@
 
 **Snapshot:** 2026-11-04  
 **Metadata base:** `main` at `82606ee4a9c77f9be2dc5a1e8c8931bc79e370b1`  
-**Audit implementation:** `scripts/audit_page_metadata.py` (PR #429)  
+**Audit implementation:** `site/tools/audit_page_metadata.py` (introduced in PR #429; relocated by PR #422)  
 **Scope:** published page metadata from the explicit Quarto render inventory. This is a structural and editorial triage report, not a learner study or a claim that the current route is pedagogically optimal.
 
 ## Executive findings
@@ -115,4 +115,4 @@ The canonical `docs/learning-path.md` remains the authority for the milestone se
 
 ## Method and limits
 
-The report is generated from the explicit Quarto render list. Route chains use only `suggested_route.next`; hierarchy is reported separately, while related links contribute only to isolated-page detection and are not treated as route or hierarchy edges. Structural validity and FR/EN parity are delegated to `scripts/check_page_metadata.py` (or its future `site/tools/` location), not reimplemented here. Lexical overlap is a conservative triage signal only. No page-map metadata values were changed by this audit.
+The report is generated from the explicit Quarto render list. Route chains use only `suggested_route.next`; hierarchy is reported separately, while related links contribute only to isolated-page detection and are not treated as route or hierarchy edges. Structural validity and FR/EN parity are delegated to `site/tools/check_page_metadata.py`, not reimplemented here. Lexical overlap is a conservative triage signal only. No page-map metadata values were changed by this audit.
