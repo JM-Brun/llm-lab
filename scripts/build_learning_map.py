@@ -15,6 +15,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 COMMENT = re.compile(r"<!--\s*\nLLM-LAB-PAGE-MAP v1\n(.*?)\n-->", re.DOTALL)
+GUIDED_ROUTE_COMMENT = re.compile(r"<!--\s*\nLLM-LAB-GUIDED-ROUTE v1\n(.*?)\n-->", re.DOTALL)
 FRONT_MATTER = re.compile(r"\A---\s*\n(.*?)\n---\s*(?:\n|\Z)", re.DOTALL)
 HEADING = re.compile(r"^#{2,3}\s+(.+?)\s*#*\s*$", re.MULTILINE)
 INLINE_MARKUP = re.compile(r"[*_]|<[^>]+>")
