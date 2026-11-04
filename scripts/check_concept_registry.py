@@ -117,9 +117,12 @@ def validate_domains(data: Any) -> tuple[set[str], list[str]]:
             elif not all(isinstance(value, str) and value.strip() for value in values.values()):
                 errors.append(f"{where}.{field}: values must be non-empty strings")
     expected = {
-        "architectures-mechanisms", "text-tokenization",
-        "mathematical-tools-geometry", "probabilistic-foundations-training",
-        "inference-efficiency", "scale-research",
+        "architectures-mechanisms",
+        "text-tokenization",
+        "mathematical-tools-geometry",
+        "probabilistic-foundations-training",
+        "inference-efficiency",
+        "scale-research",
     }
     if identifiers != expected:
         errors.append(
