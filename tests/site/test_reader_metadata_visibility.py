@@ -19,7 +19,7 @@ def test_editorial_keywords_remain_machine_readable_but_are_not_in_title_block()
 
     partial = (SITE / "includes" / "title-metadata.html").read_text(encoding="utf-8")
     assert "$if(keywords)$" not in partial
-    assert "class=\"keywords\"" not in partial
+    assert 'class="keywords"' not in partial
 
 
 def test_page_classification_tags_are_preserved_in_source_metadata() -> None:
