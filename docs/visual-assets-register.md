@@ -35,7 +35,7 @@ The following source illustration is linked from the bilingual Q/K/V lesson as a
 - Nishanthan K, [*How Query, Key, and Value (QKV) Work in Transformers*](https://nishanthan-k.medium.com/how-query-key-and-value-qkv-work-in-transformers-1274bfa14ea8), author-controlled Medium mirror of the [DEV Community article](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a). The Medium profile index lists two image entries under this article title, but neither the exact asset URL nor the original image bytes were available. **Status: linked-only; visual inspection and reuse rights pending.**
 
 
-These appear as source links in `site/references.qmd`; they are not current image embeds in the course pages and must not be counted as embedded assets:
+These are source links rather than current image embeds in the course pages and must not be counted as embedded assets. Some appear in `site/references.qmd`; others are linked from the relevant concept lesson:
 
 - Jay Alammar, [GPT-2 transformer block image](https://jalammar.github.io/images/gpt2/gpt2-transformer-block-vectors-2.png).
 - Jay Alammar, [GPT-2 masked-attention dataset image](https://jalammar.github.io/images/gpt2/transformer-decoder-attention-mask-dataset.png).
