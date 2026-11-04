@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer-architectures"
-scope: "Compares the three Transformer configurations by context visibility, information flow, and attention mechanisms; distinguishes architecture, training objective, and task, then states the limits of this classification."
+scope: "Optional comparison resource: presents the three Transformer configurations by context visibility, information flow, and attention mechanisms; distinguishes architecture, training objective, and task, then states the limits of this classification."
 purpose: "Readers should be able to compare encoder-only, encoder–decoder, and decoder-only models, explain bidirectional, causal, and cross-attention, and keep architecture, objective, and task distinct."
 suggested_route:
   previous: "en/llm-overview"
