@@ -1,0 +1,108 @@
+---
+name: source-extraction
+description: Inspect external articles, papers, documentation, repositories, datasets, experiments and visual sources; extract traceable structured claims, ideas, analogies and artifacts into the LLM Lab source catalogue without editing site pages or the canonical knowledge graph.
+---
+
+# Source extraction
+
+## Mission and phase boundary
+
+Produce a durable, machine-readable record of what a source actually contains and what may be useful to LLM Lab. This is **Phase A: extraction only**. Do not edit published pages, create pages, mutate `data/concepts.yml`, change graph relations, or regenerate graph projections. Candidate concepts and destinations are proposals for Phase B.
+
+A scanned source may yield many independent items—or none worth integrating. Extraction is not endorsement or publication.
+
+## Inspect repository conventions
+
+Read the current graph standards and implementation audit, source/reference inventories, pedagogical resource library, visual-asset register, existing source audits, data schemas, validators and related skills. Reuse an established model if one exists. Otherwise propose a canonical source catalogue (e.g. `data/sources.yml`) and structured extraction records (e.g. `data/extractions/<source-id>.yml`). Do not overload implementation-oriented `data/resources.yml`, create another concept registry, or hand-maintain JSON-LD. Keep records compact; link large artifacts to canonical files.
+
+## 1. Identify and register each source
+
+Record a stable language-independent ID and, where known:
+- title, author/creator/organization, source type;
+- canonical URL, DOI, repository identifier, publisher/venue;
+- publication date, update date, access date, language;
+- version, release, commit or archived edition;
+- licence and separate text/figure/code/data reuse status (unknown is valid);
+- scan status: `discovered`, `selected`, `scanned`, `partially-scanned`, `inaccessible`, `superseded`, `rejected` (or established equivalent);
+- exact scope inspected: pages, sections, PDF pages, figures, appendices, code paths, commits, notebooks, supplementary files;
+- access limitations, quality/evidence assessment, primary/secondary status and last verification;
+- links to audit notes, PRs, issues and related existing concept/page/resource IDs.
+
+A homepage visit does not mean the whole site was scanned. Register exact pages examined. Deduplicate by DOI, normalized canonical URL, or repository plus pinned revision—not title alone. Preserve mirrors, aliases, distinct editions and rescans; do not overwrite scan history.
+
+## 2. Inspect and verify
+
+Read beyond the abstract, introduction, README or conclusion. Inspect relevant equations, tables, figures, appendices, supplementary material, linked primary sources, code and tests.
+
+Assess according to source type:
+- research: methods, assumptions, data, supplementary material, replication and later critique;
+- APIs/implementation: official documentation and pinned source;
+- empirical claims: protocol, dataset, baselines, metrics, uncertainty and reproducibility;
+- educational material: correctness, scope, clarity and supporting references.
+
+Distinguish proof, measurement, empirical association, illustrative example, design choice, opinion, hypothesis and undocumented assertion. Preserve disagreement and limitations. Do not infer behavior from names or README claims when source/tests are available.
+
+## 3. Extract atomic structured items
+
+Give every item a stable ID within its source and make it independently routable. Controlled kinds include:
+- knowledge: `claim`, `definition`, `mechanism`, `derivation`, `assumption`, `result`, `limitation`, `counterexample`;
+- pedagogy: `analogy`, `mental-model`, `teaching-sequence`, `question`, `misconception`;
+- media: `figure`, `diagram`, `animation`, `visualization`;
+- practice/engineering: `experiment`, `benchmark`, `dataset`, `code-example`, `implementation-pattern`;
+- editorial proposals: `page-improvement`, `new-page-proposal`, `cross-link`, `open-question`.
+
+Each item records, as applicable:
+- concise original synthesis (not copied prose);
+- precise locator: section, page, timestamp, equation, figure/table, code path plus commit, notebook cell or dataset ID;
+- evidence kind, confidence (`established`, `well-supported`, `context-dependent`, `disputed`, `speculative`, `unverified`), scope and assumptions;
+- limitations, caveats, counterevidence and what the source does not establish;
+- learner difficulty addressed and potential pedagogical value;
+- candidate concepts/pages/resources/experiments and proposed destination (proposal only);
+- links to related extracted items.
+
+Do not collapse a paper's observation into a universal fact. Do not copy substantial passages; synthesize and preserve technical terminology only where necessary.
+
+## 4. Capture teaching contributions
+
+### Analogies and mental models
+
+For each useful analogy, record source domain, target concept, mapped entities/relations, mechanism illuminated, valid scope, where the mapping breaks, likely misconception, suitable teaching location and source locator. An analogy never replaces a formal or computational definition.
+
+### Figures and visual assets
+
+Inspect the visual itself. Record creator, original URL, locator, caption/context, visual encoding, assumptions, omissions, accessibility, licence, permission and reuse status. Candidate actions: link original, embed with verified rights, create an independently authored explanation, or omit with rationale. Never trace or cosmetically alter protected figures. Phase B decides whether to update the site and asset register.
+
+### Experiments, benchmarks, datasets and code
+
+For experiments, record question/hypothesis, independent/dependent/control variables, dataset, model/version, protocol, baseline, metrics, uncertainty, compute/hardware, expected interpretation and limitations. Use statuses: proposed, protocol implemented, run completed, independently reproduced. Never report source results as LLM Lab results.
+
+For code, record repository, pinned commit/version, path, licence, dependencies, tests and whether executed. Distinguish intended, observed and test-guaranteed behavior.
+
+## 5. Backfill historical scanned sources
+
+When initializing the catalogue, search the repository for source audits, bibliographies, source inventories, page citations, figure registers, experiment reports, notebooks, datasets, code references and PR/issue discussions.
+
+Classify each mention as demonstrably scanned, partially scanned, linked/cited only, discovered/recommended only, or unknown. Register every verifiably scanned source. Link audit notes instead of copying prose. Extract historical items only where evidence exists. A bare URL/title is not a completed scan.
+
+Produce a reconciliation report: counts by status, duplicates/aliases, unlinked extractions, inaccessible sources and unresolved provenance/licence questions. Do not claim historical completeness until the repository-wide backfill has been counted.
+
+## 6. Phase B hand-off
+
+Provide:
+1. source records with scope and scan status;
+2. atomic extraction items with locators, evidence, confidence, scope and caveats;
+3. candidate concepts, graph relations, pages, assets, experiments and cross-links;
+4. rights/reproducibility constraints and unknowns;
+5. a source-to-item index and summary.
+
+Candidate graph nodes/edges must be marked as proposals. Reuse known IDs and relation semantics; do not mutate the canonical graph in Phase A.
+
+## Definition of done
+
+- Each scanned source has stable identity, provenance, scope, status and limitations.
+- Each retained item is atomic, traceable and scoped.
+- Analogies, visuals, experiments, datasets and code have relevant metadata and rights/reproducibility status.
+- Scanned, partial, linked-only, inaccessible and rejected sources are distinguished.
+- Historical sources are reconciled when initialization is in scope.
+- No pages or canonical graph structures were changed.
+- The Phase B hand-off and unresolved questions are explicit.
