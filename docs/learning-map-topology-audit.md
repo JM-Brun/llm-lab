@@ -91,15 +91,19 @@ The six-stage reader-facing route introduced in PR #424 is intentionally not iso
 
 **G2 is deliberately absent from the conceptual inference route.** It covers training-example construction (context windows, shifted targets, batches and masks) and belongs to the separate training-data branch after corpus preparation. Build has its own implementation dependencies; it should reuse the conceptual pages rather than merge its order with the inference route.
 
-### Documentation inconsistency requiring correction
+### Documentation inconsistency found and corrected in PR #429
 
-The current `docs/content-section-mapping.md` needs a focused repair before it can serve as the definitive G0–G9 crosswalk:
+At the audited base snapshot, `docs/content-section-mapping.md` contained a malformed Build summary: a four-column table was followed by seven-column rows without a header, the G2 training-examples row was duplicated, and a later training-examples row was mislabeled G3. The detailed evidence matrix also omitted G2.
 
-1. In section 3, a four-column Build table is followed by rows with a different seven-column shape and no intervening header. The G2 training-examples row is duplicated, and a later row is labelled `G3 — Create training examples`, which conflicts with the authoritative G3 representation milestone.
-2. In section 4, the evidence matrix contains G0, G1, G1b, G3–G9 and A1–A4, but has no G2 evidence row.
-3. The canonical `docs/learning-path.md` identifies G2 as the parallel training-data branch. Keep G1b (corpus preparation) and G2 (training examples) explicit and distinct; do not renumber G3–G9 to hide the omission.
+PR #429 repairs this crosswalk:
 
-This report records the inconsistency; it does not silently rewrite the curriculum or invent missing implementation evidence.
+1. Section 3 now has a consistent four-column summary for G0–G9, with G1b explicitly retained as the corpus-preparation branch.
+2. Section 4 now includes the missing G2 evidence row and keeps G1b distinct from training-example construction.
+3. G3 is reserved for token representations; the training-examples milestone remains G2.
+4. G1 and G1b now distinguish prompt text/tokenization from corpus governance.
+5. G6 evidence now matches `generate.py`: top-k/top-p are optional sampling-path parameters and are ignored in greedy mode.
+
+The canonical `docs/learning-path.md` remains the authority for the milestone sequence. The repair preserves the implementation evidence and does not infer that a planned component exists.
 
 ## Recommended follow-up
 
