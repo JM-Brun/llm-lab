@@ -268,11 +268,6 @@ def build_graph() -> dict[str, Any]:
         for item in active_resources
         if item["location"]["type"] == "local"
     ]
-    declared_source_uris = [
-        item["provenance"]["source_url"]
-        for item in active_resources
-        if item.get("provenance", {}).get("source_url")
-    ]
     source_uris = sorted(
         {
             "https://github.com/JM-Brun/llm-lab/blob/main/data/concepts.yml",
@@ -280,7 +275,6 @@ def build_graph() -> dict[str, Any]:
             "https://github.com/JM-Brun/llm-lab/blob/main/data/resources.yml",
             *page_source_uris,
             *resource_source_uris,
-            *declared_source_uris,
         }
     )
     graph.append(
