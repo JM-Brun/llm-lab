@@ -15,7 +15,6 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 COMMENT = re.compile(r"<!--\s*\nLLM-LAB-PAGE-MAP v1\n(.*?)\n-->", re.DOTALL)
-GUIDED_ROUTE_COMMENT = re.compile(r"<!--\s*\nLLM-LAB-GUIDED-ROUTE v1\n(.*?)\n-->", re.DOTALL)
 FRONT_MATTER = re.compile(r"\A---\s*\n(.*?)\n---\s*(?:\n|\Z)", re.DOTALL)
 HEADING = re.compile(r"^#{2,3}\s+(.+?)\s*#*\s*$", re.MULTILINE)
 INLINE_MARKUP = re.compile(r"[*_]|<[^>]+>")
@@ -121,14 +120,12 @@ def load_pages() -> list[dict[str, Any]]:
 
 def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Resolve the canonical curriculum stages to published bilingual page links."""
-    source_path = ROOT / "docs" / "learning-path.md"
+    source_path = ROOT / "data" / "guided-route.yml"
     if not source_path.exists():
         return []
-    matches = GUIDED_ROUTE_COMMENT.findall(source_path.read_text(encoding="utf-8"))
-    if len(matches) != 1:
-        raise ValueError("docs/learning-path.md must contain exactly one guided-route block")
-
-    payload = yaml.safe_load(matches[0])
+    payload = yaml.safe_load(source_path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict) or payload.get("schema_version") != 1:
+        raise ValueError("data/guided-route.yml must use schema_version: 1")
     stages = payload.get("stages") if isinstance(payload, dict) else None
     if not isinstance(stages, list) or not stages:
         raise ValueError("guided-route block must define a non-empty stages list")
