@@ -1,0 +1,71 @@
+schema_version: 1
+# Controlled values for source and extraction records.
+# Themes reuse data/domains.yml; this file does not define domains or concepts.
+source_types:
+  - paper
+  - book
+  - book-chapter
+  - blog
+  - tutorial
+  - documentation
+  - repository
+  - dataset
+  - benchmark
+  - video
+  - course
+  - thesis
+  - standard
+  - other
+technical_levels: [introductory, intermediate, advanced, mixed, unspecified]
+contribution_types:
+  - theory
+  - mathematical-derivation
+  - architecture
+  - implementation
+  - experiment
+  - benchmark
+  - dataset
+  - visualization
+  - pedagogy
+  - historical-context
+  - security
+  - other
+audiences: [beginner, learner, practitioner, researcher, educator, maintainer]
+scan_statuses: [discovered, selected, scanned, partially-scanned, inaccessible, superseded, rejected]
+integration_statuses: [not-reviewed, reviewed, partially-integrated, integrated, deferred, rejected]
+extraction_kinds:
+  - claim
+  - definition
+  - mechanism
+  - derivation
+  - assumption
+  - result
+  - limitation
+  - counterexample
+  - analogy
+  - mental-model
+  - teaching-sequence
+  - question
+  - misconception
+  - figure
+  - diagram
+  - animation
+  - visualization
+  - experiment
+  - benchmark
+  - dataset
+  - code-example
+  - implementation-pattern
+  - page-improvement
+  - new-page-proposal
+  - cross-link
+  - open-question
+tagging_policy:
+  syntax: lowercase-kebab-case
+  namespaces: [topic, method, modality, application, ecosystem]
+  rules:
+    - "Tags are retrieval facets, not concepts, claims, or page metadata."
+    - "Reuse data/concepts.yml IDs through concept_ids when a canonical concept exists."
+    - "Do not create a tag that duplicates a domain ID or a concept ID."
+    - "Do not encode source type, language, level, status, or contribution type as tags."
+    - "Add a namespace only when a demonstrated filtering or analysis use case requires it."
