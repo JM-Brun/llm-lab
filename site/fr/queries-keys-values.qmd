@@ -62,7 +62,7 @@ $$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
 $$
 
-Les matrices $W_Q$, $W_K$ et $W_V$ sont des paramètres appris conjointement pendant l'entraînement. Elles transforment chaque représentation d'entrée, mais remplissent des rôles distincts dans le mécanisme.
+Les matrices $W_Q$, $W_K$ et $W_V$ sont des paramètres appris conjointement pendant l'entraînement. Elles transforment chaque représentation d'entrée, mais remplissent des rôles distincts dans le mécanisme. Le fait de séparer ces projections permet au modèle d'apprendre indépendamment la manière de comparer les positions (Q et K) et le contenu à transmettre (V) ; une représentation unique pour ces deux fonctions les couplerait.
 
 Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model}\times d_v}$, les formes sont :
 
@@ -72,6 +72,12 @@ Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model
 Les dimensions $d_k$ et $d_v$ ne sont donc pas nécessairement égales. Les biais éventuels sont omis dans cette écriture. Pour suivre ces projections dans le code réel du bloc, voir la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd) ; les conventions générales de dimensions et d'axes sont détaillées dans [Tenseurs](tensors.qmd).
 
 **Attention croisée :** cette formule à entrée unique décrit l'auto-attention, pas tous les mécanismes d'attention. En attention croisée, Q provient du flux qui consulte, tandis que K et V proviennent du flux consulté. Voir l'[approfondissement sur l'attention croisée](cross-attention.qmd).
+
+::: {.callout-note collapse="true" title="Exemple linguistique : un token qui a besoin de contexte"}
+Considérons : « L'animal n'a pas traversé la route parce qu'il était fatigué. » Le pronom **il** s'interprète dans son contexte. Pour se représenter le mécanisme, une requête construite à cette position peut être comparée aux clés de plusieurs tokens précédents ; les poids obtenus servent ensuite à combiner leurs vecteurs de valeurs.
+
+Il s'agit d'une illustration du flux d'information contextuel, pas d'un résultat d'observation. L'article de [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) propose cet exemple, mais ne fournit ni modèle, ni tête d'attention, ni poids mesurés, ni expérience. Il ne démontre donc pas qu'une tête donnée résout la coréférence, ni qu'une carte d'attention explique la décision du modèle.
+:::
 
 ## Ce qu'il faut distinguer
 

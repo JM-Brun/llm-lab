@@ -1,0 +1,254 @@
+schema_version: 1
+source_id: neha-kk-understanding-qkv-medium
+pedagogical_model:
+  reconstruction:
+    status: complete
+    basis:
+      - "The complete author-authored article body was directly retrieved from the canonical Medium URL on 2026-11-04, including its introduction, all explanatory sections, equations, worked linguistic example, conclusion and displayed figure captions."
+      - "The article metadata identifies Neha KK as author and 2025-12-31 as publication date."
+      - "Completeness applies to the retrievable author-authored text, not to visual inspection of embedded image files, linked resources, comments or rights verification."
+    inferred_elements:
+      - "Learning outcomes and prerequisites are inferred; the article does not publish a formal outcomes or prerequisite list."
+  source_graph:
+    nodes:
+      - {id: src-token-representations, kind: computational-object, description: "Word/token embeddings described as the shared starting representation for Q, K and V.", locator: "Sections 1–2"}
+      - {id: src-query, kind: representation, description: "Learned query representation describing what contextual information a position seeks.", locator: "Sections 1–3"}
+      - {id: src-key, kind: representation, description: "Learned key representation against which queries are compared.", locator: "Sections 1–3"}
+      - {id: src-value, kind: representation, description: "Learned value representation carrying information aggregated after matching.", locator: "Sections 1–3"}
+      - {id: src-projection-matrices, kind: parameter-set, description: "Three learned linear projection matrices that map the input representation to Q, K and V.", locator: "Section: What Q, K, and V Really Are"}
+      - {id: src-database-analogy, kind: pedagogical-anchor, description: "Database search analogy: query as search request, key as item label, value as retrieved information.", locator: "The Core Intuition—A Database Search Analogy"}
+      - {id: src-compatibility-scores, kind: intermediate, description: "Dot-product scores between each query and the available keys.", locator: "How Attention Is Actually Computed, Step 1"}
+      - {id: src-scaled-scores, kind: intermediate, description: "Compatibility scores divided by the square root of the key dimension.", locator: "How Attention Is Actually Computed, Step 2"}
+      - {id: src-attention-weights, kind: intermediate, description: "Row-wise softmax weights over the available key positions.", locator: "How Attention Is Actually Computed, Step 3"}
+      - {id: src-weighted-value-sum, kind: operation, description: "Weighted sum of value vectors that forms a context-enriched output.", locator: "How Attention Is Actually Computed, Step 4"}
+      - {id: src-pronoun-example, kind: pedagogical-anchor, description: "Pronoun ambiguity example in which a query at 'it' is compared with candidate antecedent keys such as 'animal' and 'road'.", locator: "Consider the sentence"}
+      - {id: src-attention-map, kind: visualization, description: "Attention maps are proposed as a way to inspect token-to-token weights.", locator: "Why Q, K, and V Are So Powerful"}
+      - {id: src-contextual-output, kind: representation, description: "Representation enriched by information aggregated from other positions.", locator: "Step 4 and conclusion"}
+      - {id: src-transformer-applications, kind: application-domain, description: "Attention is described as a mechanism used in language, vision, speech and multimodal systems.", locator: "Why Q, K, and V Are So Powerful"}
+    edges:
+      - {from: src-token-representations, type: projected-into, to: src-query}
+      - {from: src-token-representations, type: projected-into, to: src-key}
+      - {from: src-token-representations, type: projected-into, to: src-value}
+      - {from: src-projection-matrices, type: parameterizes, to: src-query}
+      - {from: src-projection-matrices, type: parameterizes, to: src-key}
+      - {from: src-projection-matrices, type: parameterizes, to: src-value}
+      - {from: src-query, type: compared-with, to: src-key}
+      - {from: src-query, type: contributes-to, to: src-compatibility-scores}
+      - {from: src-key, type: contributes-to, to: src-compatibility-scores}
+      - {from: src-compatibility-scores, type: scaled-into, to: src-scaled-scores}
+      - {from: src-scaled-scores, type: normalized-by, to: src-attention-weights}
+      - {from: src-attention-weights, type: weights, to: src-weighted-value-sum}
+      - {from: src-value, type: aggregated-by, to: src-weighted-value-sum}
+      - {from: src-weighted-value-sum, type: produces, to: src-contextual-output}
+      - {from: src-pronoun-example, type: illustrates, to: src-query}
+      - {from: src-pronoun-example, type: illustrates, to: src-key}
+      - {from: src-attention-map, type: visualizes, to: src-attention-weights}
+      - {from: src-contextual-output, type: used-in, to: src-transformer-applications}
+    interpretation: "Source-local reconstruction from article prose and equations; relationships are editorial interpretations, not an author-defined formal ontology. The article's database analogy does not establish literal retrieval or a nearest-neighbour algorithm."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain the functional distinction between query, key and value.", basis: "The article's analogy and role descriptions."}
+    - {status: inferred, outcome: "Trace the high-level sequence from query-key scores through scaling and softmax to weighted value aggregation.", basis: "The four computation steps."}
+    - {status: inferred, outcome: "Use a pronoun example to reason about contextual information exchange while recognizing that attention weights do not prove coreference resolution.", basis: "The 'it' example, with an explicit limitation added during technical review."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic familiarity with tokens and vector embeddings.", basis: "Embeddings are used as the starting point without a definition."}
+    - {status: inferred, topic: "Basic matrix multiplication and softmax.", basis: "The article presents equations but does not derive these operations."}
+  teaching_route:
+    - {order: 1, section: "Why Attention Exists in the First Place", function: motivate-contextual-dependencies, moves: ["Contrast sequential recurrent processing with attention-based information exchange", "Introduce the need to weight context dynamically"]}
+    - {order: 2, section: "The Core Intuition—A Database Search Analogy", function: introduce-functional-roles, moves: ["Map query to search request", "Map key to item descriptor", "Map value to retrieved content"]}
+    - {order: 3, section: "What Q, K, and V Really Are", function: connect-analogy-to-learned-representations, moves: ["Introduce embeddings as input", "Describe three learned linear projections", "Explain role-specific learned representations"]}
+    - {order: 4, section: "Why Three Representations Instead of One?", function: motivate-role-decoupling, moves: ["Explain separation of matching and payload", "Argue that distinct projections allow directional contextual interactions"]}
+    - {order: 5, section: "How Attention Is Actually Computed", function: trace-computation, moves: ["Dot-product scores", "Scale by square root of key dimension", "Apply softmax", "Aggregate values"]}
+    - {order: 6, section: "Linguistic pronoun example", function: illustrate-contextual-dependency, moves: ["Use 'it' with candidate antecedents 'animal' and 'road'", "Describe a plausible preference for the semantically compatible candidate"]}
+    - {order: 7, section: "Why Q, K, and V Are So Powerful", function: generalize-applications-and-interpretation, moves: ["Mention attention maps", "Extend the mechanism to language, vision, speech and multimodal settings"]}
+    - {order: 8, section: "Conclusion", function: consolidate-role-distinction, moves: ["Recap Q/K matching and V aggregation", "Connect to multi-head and cross-attention as follow-on topics"]}
+  pedagogical_strengths:
+    - "Accessible database-search framing makes the matching-versus-payload distinction concrete."
+    - "The article places the question 'why three representations?' before the equations, explicitly motivating role decoupling."
+    - "The pronoun example connects the mechanism to a familiar contextual-language problem."
+    - "The four-step computation sequence is easy to scan and gives a first-pass overview."
+    - "The article signals that the same general mechanism appears beyond text, including vision, speech and multimodal systems."
+  pedagogical_limits:
+    - "The database analogy can suggest exact lookup or nearest-neighbour retrieval; actual attention computes learned compatibility scores and a weighted sum over accessible values."
+    - "The article says Transformers inspect all words simultaneously without qualifying causal masks or the distinction between parallel training computation and incremental autoregressive generation."
+    - "The pronoun example asserts that scores favour 'animal' without providing model, head, weights, experiment or evidence; it is an intuition, not a demonstrated coreference result."
+    - "The claim that attention maps provide interpretability is too broad: weights alone do not establish causal importance or explain a prediction."
+    - "The scaling rationale is stated qualitatively; variance assumptions and the relationship to softmax concentration/gradients are not derived."
+    - "The formula omits masking and does not distinguish self-attention from cross-attention."
+    - "The input is called a word embedding; in deeper Transformer layers Q/K/V are projected from the current hidden representations, not necessarily the original token embedding."
+    - "No numerical worked example, tensor shapes, multi-head decomposition, implementation, exercise or explicit assessment is provided."
+  comparison:
+    dossier: docs/source-reviews/qkv-neha-kk-medium-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Page-level suggested_route metadata and Build route"]
+    decision: "No new concept or route edge is warranted. Integrate only the bounded pronoun/contextual-dependency example as an optional bilingual illustration with an explicit non-evidential caveat; retain the database analogy as a source alternative, not as another core analogy."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: neha-kk-understanding-qkv-medium:database-search-analogy
+    kind: analogy
+    summary: "The article compares attention to searching a database: a query expresses what is sought, keys describe candidate items, and values carry the information returned. The analogy separates matching from payload, but does not describe exact lookup, literal labels or a nearest-neighbour algorithm."
+    pedagogical_profile:
+      learner_question: "Why are query, key and value separate representations?"
+      explanatory_lens: information-retrieval
+      teaching_form: [analogy, mental-model]
+      abstraction_level: introductory
+      prerequisites: [token, embedding]
+      distinctive_value: "Frames Q/K as the matching interface and V as the retrieved payload."
+      limitations: ["The mapping is functional, not literal; attention combines values rather than selecting one database record."]
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The current bilingual lesson already uses index cards and explicitly distinguishes comparison from aggregation."}
+      complementarity: {level: moderate, rationale: "A database-search setting is a familiar alternative framing, but its mapping substantially overlaps the existing index-card analogy."}
+      pedagogical_value: {level: low, rationale: "It does not resolve a learner difficulty not already addressed by the current bounded analogy."}
+      applicability: {level: moderate, rationale: "Useful as an optional comparison in the source catalogue, not as a second core analogy on the lesson page."}
+      redundancy: {level: high, rationale: "Same explanatory function and same Q/K matching versus V payload distinction as the current analogy."}
+      evidence_quality: {level: moderate, rationale: "The analogy is clearly stated but is pedagogical framing rather than technical evidence."}
+    locator: {type: section, value: "63–75", label: "The Core Intuition—A Database Search Analogy"}
+    evidence:
+      kind: pedagogical-explanation
+      confidence: well-supported
+      scope: "The author's stated analogy for the functional roles of Q, K and V."
+      assumptions: ["The target is standard attention with learned Q/K/V representations."]
+      limitations: ["The analogy must not be interpreted as exact lookup or selection of one record."]
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, method:information-retrieval-analogy], concept_ids: [query, key, value, self-attention]}
+    candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values], concepts: [query, key, value]}
+    disposition: reject
+    disposition_rationale: "Retain as an alternative perspective in the extraction record; do not stack it beside the existing index-card analogy because the learner function is substantially the same."
+
+  - id: neha-kk-understanding-qkv-medium:role-decoupling
+    kind: mechanism
+    summary: "Separate learned projections let matching information (Q and K) differ from the payload representation (V), so the same input position can participate in contextual matching and contribute a distinct vector to the output."
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The canonical Q/K/V lesson already distinguishes weight computation from value aggregation."}
+      complementarity: {level: moderate, rationale: "The article foregrounds the design rationale for three projections rather than introducing them only by definition."}
+      pedagogical_value: {level: moderate, rationale: "The 'why three?' question can motivate the existing role distinction for learners who see Q/K/V as redundant copies."}
+      applicability: {level: moderate, rationale: "The rationale can be folded into the existing explanation without adding a separate section."}
+      redundancy: {level: moderate, rationale: "The idea is implicit in the current page but the explicit design-motivation framing is useful."}
+      evidence_quality: {level: moderate, rationale: "Conceptually sound secondary explanation; it does not provide an empirical demonstration."}
+    pedagogical_profile:
+      learner_question: "Why not use one representation for both matching and information transfer?"
+      explanatory_lens: functional-decomposition
+      teaching_form: [conceptual-explanation, contrast]
+      abstraction_level: introductory
+      prerequisites: [query, key, value]
+      distinctive_value: "Explains the benefit of separating the matching interface from the content payload."
+      limitations: ["The article does not quantify the benefit or prove that three separate projections are uniquely optimal."]
+    locator: {type: section, value: "118–119", label: "Why Q, K, and V Are So Powerful"}
+    evidence: {kind: conceptual-claim, confidence: well-supported, scope: "Rationale for separate learned projections.", assumptions: ["Standard attention mechanism."], limitations: ["Does not establish that all attention architectures use exactly these three separately parameterized projections."]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv], concept_ids: [query, key, value, self-attention]}
+    candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values], concepts: [query, key, value]}
+    disposition: clarify
+    disposition_rationale: "Use as a brief motivation for role decoupling within the existing lesson, not as a new concept or new page."
+
+  - id: neha-kk-understanding-qkv-medium:four-step-computation
+    kind: teaching-sequence
+    summary: "The article presents attention as four steps: compute QK^T, divide scores by sqrt(d_k), apply row-wise softmax, and use the resulting weights to aggregate V."
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The adjacent scaled dot-product attention lesson already formalizes all four operations and optional masking."}
+      complementarity: {level: low, rationale: "The sequence is the same as the project's canonical computation flow."}
+      pedagogical_value: {level: low, rationale: "No additional mathematical or computational scaffold is supplied."}
+      applicability: {level: low, rationale: "The dedicated attention lesson is already the correct destination."}
+      redundancy: {level: high, rationale: "Same operation order, equations and learner question as the existing page."}
+      evidence_quality: {level: moderate, rationale: "Standard formula, but the article omits mask handling and detailed assumptions."}
+    locator: {type: section, value: "120–154", label: "How Attention Is Actually Computed"}
+    evidence: {kind: mathematical-formulation, confidence: well-supported, scope: "Scaled dot-product attention at a high level.", assumptions: ["Softmax is applied row-wise over accessible positions."], limitations: ["Masking is omitted from the displayed formula; scaling is not derived."]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:scaled-dot-product-attention, method:softmax], concept_ids: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, softmax]}
+    candidate_destinations: {pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention], concepts: [attention-score, attention-weight, scaled-dot-product-attention, softmax]}
+    disposition: reject
+    disposition_rationale: "The existing lesson is more complete and already has a numerical example, mask semantics, shape analysis and scaling derivation."
+
+  - id: neha-kk-understanding-qkv-medium:pronoun-context-example
+    kind: mental-model
+    summary: "The article uses an ambiguous pronoun ('it') with candidate antecedents such as 'animal' and 'road' to motivate why a position may need information from other tokens. It suggests that a query at the pronoun can assign greater compatibility to a plausible antecedent, whose value then contributes to the output."
+    pedagogical_profile:
+      learner_question: "Why can a token's representation depend on information from other positions?"
+      explanatory_lens: linguistic-context
+      teaching_form: [worked-example, mental-model, misconception-check]
+      abstraction_level: introductory
+      prerequisites: [token, contextualized-representation, query, key, value]
+      distinctive_value: "Connects Q/K matching and V aggregation to a concrete cross-token dependency such as pronoun reference."
+      limitations: ["The article reports no actual attention weights or model experiment; the example does not establish that a head resolves coreference or that attention weights are explanations."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The current Q/K/V lesson has no explicit pronoun-reference example; the example adds a distinct linguistic use case."}
+      complementarity: {level: high, rationale: "It shifts from the existing static index-card analogy to a token-in-context problem and makes cross-position information flow concrete."}
+      pedagogical_value: {level: moderate, rationale: "It can help explain why contextual representations depend on other positions, provided the example is explicitly framed as intuition rather than measured model behaviour."}
+      applicability: {level: high, rationale: "A compact optional callout fits the existing Q/K/V concept lesson in both languages."}
+      redundancy: {level: low, rationale: "The learner function differs from the current role analogy and numerical attention example."}
+      evidence_quality: {level: low, rationale: "The linguistic example is illustrative only; the source provides no model, head, weights or experiment supporting the claimed preference."}
+    locator: {type: section, value: "156–160", label: "Consider the sentence"}
+    evidence:
+      kind: illustrative-example
+      confidence: context-dependent
+      scope: "Motivation for contextual information exchange in a pronoun-reference setting."
+      assumptions: ["The surrounding sentence provides cues that make one antecedent more plausible."]
+      limitations: ["No empirical attention distribution is shown.", "A high attention weight would not by itself prove coreference resolution or causal importance.", "The example is not a general claim about every model, head or layer."]
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:contextualization, application:coreference], concept_ids: [query, key, value, contextualized-representation, self-attention]}
+    candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values], concepts: [contextualized-representation, query, key, value]}
+    disposition: integrate
+    disposition_rationale: "Add a short bilingual optional example explaining the plausible Q/K comparison and weighted V contribution, with an explicit caveat that this is not evidence of coreference resolution or interpretability."
+
+  - id: neha-kk-understanding-qkv-medium:attention-map-interpretability
+    kind: misconception
+    summary: "The article suggests attention maps provide interpretability by showing which tokens influence a model's decisions. This formulation overstates what attention weights establish: they visualize a conditional weighting pattern, not causal influence or a complete explanation of a prediction."
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The project's attention lesson already explicitly rejects causal and semantic overinterpretation of attention weights."}
+      complementarity: {level: moderate, rationale: "The source provides a useful example of a common introductory overclaim that can be checked against the project's existing fallacy treatment."}
+      pedagogical_value: {level: moderate, rationale: "It reinforces the distinction between visualization and explanation."}
+      applicability: {level: moderate, rationale: "Retain in the extraction and link to the existing attention-weight fallacy; no additional page content is necessary."}
+      redundancy: {level: high, rationale: "The correction is already directly covered in the scaled dot-product attention lesson."}
+      evidence_quality: {level: high, rationale: "The source's own claim can be directly inspected and contrasted with the existing technically qualified treatment."}
+    locator: {type: section, value: "162–168", label: "Why Q, K, and V Are So Powerful"}
+    evidence: {kind: claim-and-correction, confidence: well-supported, scope: "Claim about interpretability from attention maps.", assumptions: ["Attention maps expose weights from a particular layer/head and input."], limitations: ["The source does not define interpretability or provide an evaluation protocol."]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:attention-weight, method:interpretability], concept_ids: [attention-weight, scaled-dot-product-attention]}
+    candidate_destinations: {pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention], concepts: [attention-weight]}
+    disposition: clarify
+    disposition_rationale: "No change required: the existing bilingual fallacy already explains why attention weights do not establish causal importance. Record this article claim as an example of the overstatement the lesson guards against."
+
+  - id: neha-kk-understanding-qkv-medium:parallelism-claim
+    kind: limitation
+    summary: "The article contrasts sequential RNN/LSTM processing with Transformers processing all words simultaneously and attributes efficiency to parallel computation. This is an oversimplification: parallelism applies to sequence positions during training/full-sequence forward passes, while causal autoregressive generation proceeds token by token and uses a causal mask."
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The source introduces no detailed parallel-computation analysis."}
+      complementarity: {level: moderate, rationale: "It exposes a frequent introductory simplification that can be useful as a review checkpoint."}
+      pedagogical_value: {level: moderate, rationale: "Learners may otherwise infer that a causal decoder can use future tokens or generate every output position simultaneously."}
+      applicability: {level: moderate, rationale: "The distinction belongs in the architecture/generation lessons; this article does not provide enough detail to warrant editing them."}
+      redundancy: {level: moderate, rationale: "The project treats causal masking and autoregressive generation elsewhere."}
+      evidence_quality: {level: high, rationale: "The oversimplification is directly present in the article and can be checked against the canonical architecture."}
+    locator: {type: section, value: "52–61", label: "Why Attention Exists in the First Place"}
+    evidence: {kind: limitation, confidence: well-supported, scope: "High-level comparison between recurrent and Transformer processing.", assumptions: ["Standard Transformer training and decoder-only autoregressive inference."], limitations: ["The article does not distinguish training parallelism from generation-time dependencies."]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:transformer, method:parallel-computation], concept_ids: [self-attention]}
+    candidate_destinations: {pages: [fr/transformer, en/transformer, fr/causal-masking, en/causal-masking], concepts: [self-attention]}
+    disposition: link
+    disposition_rationale: "Preserve the correction in this audit; rely on existing architecture and causal-mask lessons rather than expanding the Q/K/V lesson beyond its scope."
+
+  - id: neha-kk-understanding-qkv-medium:projection-input-qualification
+    kind: limitation
+    summary: "The article calls the shared input to Q/K/V a word embedding. This is suitable as an initial intuition but is too narrow for a general Transformer layer: projections operate on the current layer's input hidden states, which may already be contextualized."
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The canonical lesson already correctly calls X a representation stream rather than raw word embeddings."}
+      complementarity: {level: moderate, rationale: "It identifies why the project's more precise wording matters for deeper layers."}
+      pedagogical_value: {level: moderate, rationale: "It can prevent learners from assuming every attention layer reprojects the original static embedding."}
+      applicability: {level: low, rationale: "The existing page already states the distinction adequately."}
+      redundancy: {level: high, rationale: "No missing clarification remains in the canonical page."}
+      evidence_quality: {level: high, rationale: "Direct comparison between article wording and the general Transformer computation."}
+    locator: {type: section, value: "89–101", label: "The Basis: Word Embeddings / Getting Q, K, and V"}
+    evidence: {kind: technical-limitation, confidence: well-supported, scope: "Input representation to the Q/K/V projections.", assumptions: ["A multi-layer Transformer in which attention receives current hidden states."], limitations: ["The article's introductory simplification is not necessarily false for the first attention layer."]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, method:learned-linear-projection], concept_ids: [query, key, value]}
+    candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values], concepts: [query, key, value]}
+    disposition: reject
+    disposition_rationale: "The project already uses X for the current representation stream and explicitly distinguishes it from raw token embeddings; no edit is needed."
+
+  - id: neha-kk-understanding-qkv-medium:cross-domain-applications
+    kind: claim
+    summary: "The article notes that attention is used in language, vision, speech and multimodal systems. This is a useful scope reminder, but it is broad and is not supported by concrete architecture examples in the article."
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The project already introduces multiple Transformer and multimodal contexts elsewhere."}
+      complementarity: {level: moderate, rationale: "It offers a compact reminder that attention is not restricted to language."}
+      pedagogical_value: {level: low, rationale: "The article does not explain a specific cross-domain mechanism or architecture."}
+      applicability: {level: low, rationale: "A broad statement would add little to the current Q/K/V lesson."}
+      redundancy: {level: moderate, rationale: "The current architecture overview and cross-attention page already expose broader uses."}
+      evidence_quality: {level: moderate, rationale: "The statement is broadly correct but lacks concrete supporting examples in this article."}
+    locator: {type: section, value: "162–171", label: "Why Q, K, and V Are So Powerful"}
+    evidence: {kind: scope-claim, confidence: well-supported, scope: "High-level application domains.", assumptions: ["Attention-based systems across modalities."], limitations: ["No examples, models or modality-specific design details are provided."]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:attention, modality:multimodal], concept_ids: [self-attention]}
+    candidate_destinations: {pages: [fr/transformer-architectures, en/transformer-architectures], concepts: [self-attention]}
+    disposition: link
+    disposition_rationale: "Retain as a source-level scope observation; the project already treats architecture families and cross-attention without requiring another broad list."
