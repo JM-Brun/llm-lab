@@ -57,6 +57,10 @@ A source can be low-novelty but high-complementarity. Topic overlap alone is not
 
 Phase A should preserve useful options; Phase B should decide whether each option improves the learner experience enough to justify additional complexity and maintenance. A no-change decision must be item-specific and explain why the contribution is redundant or not worth integrating—not merely state that the concept is already covered.
 
+## Multi-source compilation principle
+
+Expect substantial overlap among sources. The project should progressively become a curated, traceable synthesis of useful contributions: distinct explanations, mathematical and computational views, analogies, examples, visualizations, history, implementation choices, empirical evidence, critiques and experiments. The goal is not maximal source count or page length, but a coherent sequence of complementary perspectives with provenance and uncertainty preserved. For topics with several relevant sources, use docs/source-synthesis-method.md and maintain a dossier in docs/source-syntheses/ when it adds durable value. Compare sources against the learner question and current lesson; distinguish independent evidence from copied tutorial consensus; place useful contributions at the right depth. Never merge distinct claims into an unattributed statement.
+
 ## Canonical architecture
 ### Classification contract
 
