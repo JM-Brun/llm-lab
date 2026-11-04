@@ -71,9 +71,31 @@ Each item records, as applicable:
 - limitations, caveats, counterevidence and what the source does not establish;
 - learner difficulty addressed and potential pedagogical value;
 - candidate concepts/pages/resources/experiments and proposed destination (proposal only);
-- links to related extracted items.
+- links to related extracted items;
+- optional `pedagogical_assessment` with independent levels and rationales for novelty, complementarity, pedagogical value, applicability, redundancy and evidence quality (required for pedagogical contributions and proposed learning improvements; see `docs/source-catalogue-schema.md`).
 
 Do not collapse a paper's observation into a universal fact. Do not copy substantial passages; synthesize and preserve technical terminology only where necessary.
+
+## 3a. Compare value, not just topic novelty
+
+A source can cover a concept already present and still improve the project through a different explanatory route. Do not use topical overlap as a proxy for redundancy, and do not decide that an item is uninteresting merely because its destination page already exists.
+
+For each potentially useful item, assess these dimensions independently (qualitatively, with a short rationale; never collapse them into one score):
+
+| Dimension | Question |
+|---|---|
+| novelty | Does it add a fact, distinction, derivation, caveat, result or implementation detail absent from the project? |
+| complementarity | Does it offer a genuinely different mental model, analogy, sequence, example, perspective, framing or connection? |
+| pedagogical_value | Does that difference address a learner difficulty, misconception, abstraction barrier or missing intuition? |
+| applicability | Can it be used meaningfully in a page, route, glossary, visual, activity, experiment or implementation? |
+| redundancy | How much does it repeat existing content or an existing explanation, rather than merely sharing its topic? |
+| evidence_quality | How reliable, precise and inspectable is the source for this particular contribution? |
+
+Use low, moderate, high or uncertain for each level and add a concise rationale. Uncertain is preferable to guessing. For factual claims, evidence quality concerns correctness/support; for analogies and examples, assess whether they are clearly presented and appropriately bounded.
+
+When comparing with LLM Lab, identify the exact existing page/section and compare the explanatory function: learner question, mental model, example, sequence, level, caveats and likely misconceptions. A new analogy on an already-covered topic is not automatically redundant; nor is it automatically valuable. Record what it illuminates that the existing explanation does not, and where it may mislead.
+
+Keep useful alternative perspectives in the extraction record even when Phase B decides not to publish them. Phase A should preserve options, not prematurely filter for novelty.
 
 ## 4. Capture teaching contributions
 

@@ -31,6 +31,7 @@ Output:
 - scan status and exact scope actually inspected;
 - evidence kind, confidence, generality, assumptions, limitations and rights metadata;
 - candidate concepts, relations, pages, visuals, experiments and teaching improvements;
+- independent qualitative assessment of novelty, complementarity, learner value, applicability, redundancy and evidence quality;
 - an extraction report with access limits and unresolved questions.
 
 No page edits, published new pages, concept-registry mutations, or graph-projection changes in this phase. Candidate destinations and graph nodes/edges are proposals only.
@@ -47,6 +48,14 @@ Output:
 - validation evidence and a before/after impact report.
 
 A source can be fully scanned and catalogued without any page or graph change.
+
+## Cross-phase decision rule: novelty is not the same as complementarity
+
+Before deciding what to publish, evaluate each extracted item on two separate axes: **information novelty** and **pedagogical complementarity**. Also assess learner value, applicability, explanatory redundancy and evidence quality. Use qualitative levels with rationales; never reduce them to a composite score.
+
+A source can be low-novelty but high-complementarity. Topic overlap alone is not a reason to reject it. Compare the learner question, explanatory model, analogy mapping, example, teaching sequence, abstraction level and caveats against the exact existing page section. Preserve promising alternatives in the extraction record even when they are not published.
+
+Phase A should preserve useful options; Phase B should decide whether each option improves the learner experience enough to justify additional complexity and maintenance. A no-change decision must be item-specific and explain why the contribution is redundant or not worth integrating—not merely state that the concept is already covered.
 
 ## Canonical architecture
 ### Classification contract
