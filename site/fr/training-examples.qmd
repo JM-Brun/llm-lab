@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/corpus-preparation"]
   children: []
-related: ["fr/corpus-preparation", "fr/tokenization-strategies", "fr/vraisemblance"]
+related: ["fr/tokenization-strategies", "fr/vraisemblance"]
 tags: ["type:concept-bridge", "destination:build", "topic:training-examples", "level:core", "language:fr", "status:published"]
 -->
 
