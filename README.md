@@ -31,11 +31,13 @@ You need Python 3.12 or later and [uv](https://docs.astral.sh/uv/). Core exercis
 
 ```bash
 uv sync --locked --dev
+uv pip install --python .venv/bin/python -r docs/requirements-tokenizer-example.txt
+uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
 uv run --locked pytest
 uv run --locked python experiments/decoding-distribution/run.py
 ```
 
-The last command compares decoding distributions for fixed synthetic logits. Its [report](reports/decoding-distribution.md) explains the baseline, results, and limits; it does not measure language quality.
+The two documentation requirements files supply dependencies used by site checks and tests; reinstall them after a fresh `uv sync --locked --dev`. The last command compares decoding distributions for fixed synthetic logits. Its [report](reports/decoding-distribution.md) explains the baseline, results, and limits; it does not measure language quality.
 
 The core implementation uses NumPy. The lockfile records the resolved Python dependencies; optional PyTorch support can be installed with `uv sync --locked --dev --extra ml`. Reusable code lives in `src/llm_lab/`, tests in `tests/`, and experiment definitions and evidence in `experiments/` and `reports/`. Notebooks are explanatory rather than the sole home of reusable logic.
 

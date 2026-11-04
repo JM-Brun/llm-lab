@@ -83,9 +83,13 @@ Install Python 3.12 and uv, then run:
 
 ```bash
 uv sync --locked --dev
+uv pip install --python .venv/bin/python -r docs/requirements-tokenizer-example.txt
+uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
 uv run pre-commit install
 uv run pre-commit run --all-files
 ```
+
+The two documentation requirements files provide dependencies used by site checks and tests, as in CI. Reinstall them after running `uv sync --locked --dev`, which can remove packages outside the project environment.
 
 Commit `uv.lock` whenever dependency metadata changes. Use `uv lock --check` to check that the lockfile matches `pyproject.toml`, and use `uv sync --locked --dev` to reproduce the locked environment.
 
@@ -96,7 +100,8 @@ uv run ruff check .
 uv run ruff format --check .
 uv run mypy src
 uv run pytest
-uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python scripts/render_history_pilot.py
+uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py
+uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/render_history_pilot.py
 quarto render site
 ```
 
