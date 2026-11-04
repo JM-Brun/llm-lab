@@ -55,13 +55,7 @@ La distribution du token suivant dépend du préfixe :
 p_\theta(x_t\mid x_{<t}).
 \]
 
-La probabilité d'une séquence se factorise en produit de ces probabilités conditionnelles :
-
-\[
-p_\theta(x_{1:T})=\prod_{t=1}^{T}p_\theta(x_t\mid x_{<t}).
-\]
-
-Il ne s'agit pas d'une hypothèse d'indépendance : chaque facteur dépend des tokens précédents. Un même token peut donc recevoir des probabilités différentes selon le contexte. Le tokenizer compte également : la probabilité est attribuée aux unités tokenisées, pas directement aux mots ou aux propositions sémantiques.
+Un même token peut donc recevoir des probabilités différentes selon le préfixe. La probabilité d'une séquence entière combine ces probabilités conditionnelles position par position ; le produit et son logarithme sont traités dans la page sur la [vraisemblance](vraisemblance.qmd). Le tokenizer compte également : les probabilités portent sur les unités tokenisées, pas directement sur les mots ou les propositions sémantiques.
 
 ## Température et stratégie de génération
 
