@@ -431,14 +431,23 @@ def load_concept_graph(
             }
         )
         concept_ids.add(item["id"])
-    relations = [
-        {"from": edge["from"], "type": edge["type"], "to": edge["to"]}
-        for edge in registry["relations"]
-        if edge["from"] in concept_ids and edge["to"] in concept_ids
-    ]
+    relations = []
+    for edge in registry["relations"]:
+        if edge["from"] not in concept_ids or edge["to"] not in concept_ids:
+            continue
+        relation = {"from": edge["from"], "type": edge["type"], "to": edge["to"]}
+        rationale = edge.get("rationale")
+        if isinstance(rationale, dict) and isinstance(rationale.get(language), str):
+            relation["rationale"] = rationale[language]
+        relations.append(relation)
     relation_types = {
         kind: {
             "direction": definition["direction"],
+            "family": definition["family"],
+            "transitive": definition["transitive"],
+            "acyclic": definition["acyclic"],
+            "learning_dependency": definition["learning_dependency"],
+            "inverse": definition["inverse"],
             "label": definition["labels"][language],
             "description": definition["descriptions"][language],
         }

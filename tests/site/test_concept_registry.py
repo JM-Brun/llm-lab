@@ -240,11 +240,17 @@ def test_registry_requires_bilingual_definitions_for_used_relation_types() -> No
     assert any("missing definitions for used types" in error for error in errors)
 
 
-def test_registry_validates_relation_direction_metadata() -> None:
+def test_symmetric_direction_is_driven_by_registry_metadata() -> None:
     data = _valid_registry()
     data["relation_types"]["implemented-by"]["direction"] = "symmetric"
+    data["relations"] = [
+        {"from": "embedding", "type": "implemented-by", "to": "token"},
+    ]
+    assert validate_registry(data) == []
+
+    data["relations"].append({"from": "token", "type": "implemented-by", "to": "embedding"})
     errors = validate_registry(data)
-    assert any("is not defined as symmetric" in error for error in errors)
+    assert any("canonical lexical order" in error for error in errors)
 
 
 def test_relation_contract_requires_semantic_metadata() -> None:
@@ -253,6 +259,7 @@ def test_relation_contract_requires_semantic_metadata() -> None:
     data["relation_types"]["implemented-by"].pop("transitive")
     data["relation_types"]["implemented-by"].pop("acyclic")
     data["relation_types"]["implemented-by"].pop("learning_dependency")
+    data["relation_types"]["implemented-by"].pop("inverse")
 
     errors = validate_registry(data)
 
@@ -260,6 +267,7 @@ def test_relation_contract_requires_semantic_metadata() -> None:
     assert any(".transitive:" in error for error in errors)
     assert any(".acyclic:" in error for error in errors)
     assert any(".learning_dependency:" in error for error in errors)
+    assert any(".inverse: required field is missing" in error for error in errors)
 
 
 def test_only_acyclic_relation_types_reject_cycles() -> None:
@@ -298,3 +306,25 @@ def test_inverse_relation_declarations_must_be_reciprocal() -> None:
     errors = validate_registry(data)
 
     assert any("must point back" in error for error in errors)
+
+
+def test_learning_dependency_requires_explicit_rationale() -> None:
+    data = _valid_registry()
+    data["relations"] = [
+        {"from": "token", "type": "prerequisite", "to": "embedding"},
+    ]
+
+    errors = validate_registry(data)
+
+    assert any("rationale: expected non-empty fr and en" in error for error in errors)
+    data["relations"][0]["rationale"] = {
+        "fr": (
+            "La représentation initiale du token doit être comprise "
+            "avant les transformations contextuelles."
+        ),
+        "en": (
+            "The initial token representation should be understood "
+            "before its contextual transformations."
+        ),
+    }
+    assert validate_registry(data) == []

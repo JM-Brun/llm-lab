@@ -107,6 +107,11 @@ def _write_concept_registry(root: Path) -> None:
         "relation_types": {
             "part-of": {
                 "direction": "directed",
+                "family": "structural",
+                "transitive": True,
+                "acyclic": True,
+                "learning_dependency": False,
+                "inverse": None,
                 "labels": {"fr": "fait partie de", "en": "is part of"},
                 "descriptions": {
                     "fr": "La source est une partie de la cible.",
@@ -114,7 +119,17 @@ def _write_concept_registry(root: Path) -> None:
                 },
             }
         },
-        "relations": [{"from": "query", "type": "part-of", "to": "attention"}],
+        "relations": [
+            {
+                "from": "query",
+                "type": "part-of",
+                "to": "attention",
+                "rationale": {
+                    "fr": "La projection de requête est un composant du mécanisme d'attention.",
+                    "en": "The query projection is a component of the attention mechanism.",
+                },
+            }
+        ],
     }
     registry = root / "data" / "concepts.yml"
     registry.parent.mkdir(parents=True, exist_ok=True)
@@ -567,7 +582,14 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     assert payload["concept_domains"] == [
         {"id": "architectures-mechanisms", "label": "Architectures et mécanismes"}
     ]
-    assert payload["concept_relations"] == [{"from": "query", "type": "part-of", "to": "attention"}]
+    assert payload["concept_relations"] == [
+        {
+            "from": "query",
+            "type": "part-of",
+            "to": "attention",
+            "rationale": "La projection de requête est un composant du mécanisme d'attention.",
+        }
+    ]
 
 
 def test_load_pages_preserves_primary_deepen_domain(tmp_path: Path) -> None:
@@ -687,14 +709,40 @@ def test_load_concept_graph_serializes_localized_relation_semantics(tmp_path: Pa
 
     assert french["concept_relation_types"]["part-of"] == {
         "direction": "directed",
+        "family": "structural",
+        "transitive": True,
+        "acyclic": True,
+        "learning_dependency": False,
+        "inverse": None,
         "label": "fait partie de",
         "description": "La source est une partie de la cible.",
     }
     assert english["concept_relation_types"]["part-of"] == {
         "direction": "directed",
+        "family": "structural",
+        "transitive": True,
+        "acyclic": True,
+        "learning_dependency": False,
+        "inverse": None,
         "label": "is part of",
         "description": "The source is part of the target.",
     }
+    assert french["concept_relations"] == [
+        {
+            "from": "query",
+            "type": "part-of",
+            "to": "attention",
+            "rationale": "La projection de requête est un composant du mécanisme d'attention.",
+        }
+    ]
+    assert english["concept_relations"] == [
+        {
+            "from": "query",
+            "type": "part-of",
+            "to": "attention",
+            "rationale": "The query projection is a component of the attention mechanism.",
+        }
+    ]
 
 
 def test_concept_graph_script_exposes_direction_and_relation_legend() -> None:

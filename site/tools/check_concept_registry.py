@@ -14,7 +14,6 @@ ROOT = Path(__file__).resolve().parents[2]
 REGISTRY = ROOT / "data" / "concepts.yml"
 DOMAINS = ROOT / "data" / "domains.yml"
 IDENTIFIER = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
-SYMMETRIC_RELATION_TYPES = {"contrasts-with", "analogy"}
 RELATION_TYPES = {
     "prerequisite",
     "part-of",
@@ -248,11 +247,6 @@ def validate_registry(
                 errors.append(f"{where}: duplicate relation {key!r}")
             seen.add(key)
             if source in identifiers and target in identifiers:
-                if kind in SYMMETRIC_RELATION_TYPES and source >= target:
-                    errors.append(
-                        f"{where}: {kind} must use canonical lexical order "
-                        "(from < to) because it is symmetric"
-                    )
                 edges_by_type.setdefault(kind, {}).setdefault(source, []).append(target)
 
     relation_types = data.get("relation_types")
@@ -280,6 +274,8 @@ def validate_registry(
             for field in ("transitive", "acyclic", "learning_dependency"):
                 if type(definition.get(field)) is not bool:
                     errors.append(f"{where}.{field}: expected a boolean")
+            if "inverse" not in definition:
+                errors.append(f"{where}.inverse: required field is missing")
             inverse = definition.get("inverse")
             if inverse is not None and (
                 not isinstance(inverse, str) or inverse not in relation_types
@@ -298,12 +294,6 @@ def validate_registry(
                     errors.append(f"{where}.{field}: expected exactly fr and en")
                 elif not all(isinstance(value, str) and value.strip() for value in values.values()):
                     errors.append(f"{where}.{field}: values must be non-empty strings")
-            if kind in SYMMETRIC_RELATION_TYPES and definition.get("direction") != "symmetric":
-                errors.append(f"{where}.direction: {kind} must be symmetric")
-            elif (
-                kind not in SYMMETRIC_RELATION_TYPES and definition.get("direction") == "symmetric"
-            ):
-                errors.append(f"{where}.direction: {kind} is not defined as symmetric")
             if isinstance(inverse, str) and inverse in relation_types:
                 inverse_definition = relation_types[inverse]
                 if (
@@ -313,6 +303,25 @@ def validate_registry(
                     errors.append(
                         f"{where}.inverse: inverse relation {inverse!r} must point back to {kind!r}"
                     )
+
+        for index, relation in enumerate(relations):
+            if not isinstance(relation, dict):
+                continue
+            kind = relation.get("type")
+            source = relation.get("from")
+            target = relation.get("to")
+            definition = relation_types.get(kind) if isinstance(kind, str) else None
+            if (
+                isinstance(definition, dict)
+                and definition.get("direction") == "symmetric"
+                and isinstance(source, str)
+                and isinstance(target, str)
+                and source >= target
+            ):
+                errors.append(
+                    f"relations[{index}]: {kind} must use canonical lexical order "
+                    "(from < to) because it is symmetric"
+                )
 
         for kind, definition in relation_types.items():
             if (
@@ -325,10 +334,16 @@ def validate_registry(
                 for index, relation in enumerate(relations):
                     if isinstance(relation, dict) and relation.get("type") == kind:
                         rationale = relation.get("rationale")
-                        if not isinstance(rationale, str) or not rationale.strip():
+                        if (
+                            not isinstance(rationale, dict)
+                            or set(rationale) != {"fr", "en"}
+                            or not all(
+                                isinstance(value, str) and value.strip()
+                                for value in rationale.values()
+                            )
+                        ):
                             errors.append(
-                                f"relations[{index}].rationale: required for learning "
-                                f"dependency {kind!r}"
+                                f"relations[{index}].rationale: expected non-empty fr and en"
                             )
     return errors
 
