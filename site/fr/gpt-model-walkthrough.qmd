@@ -54,7 +54,7 @@ Cette page est la quatrième étape (4 sur 5) de la visite guidée du code de r�
 - La tête `w_head` projette `d → V`. Elle est **non liée** (*untied*) : une matrice séparée, distincte de la table d'embeddings (contrairement au *weight tying*).
 
 ::: {.callout-warning}
-**Écart par rapport à GPT-2.** Le GPT-2 original réutilise la matrice d'embeddings des tokens, transposée, pour calculer les logits : les poids d'entrée et de sortie sont *liés* (*weight tying*). Ici, `w_head` est une matrice indépendante et possède un biais (`b_head`). Le modèle de référence du projet est donc un GPT pédagogique de type GPT-2, mais pas une reproduction exacte de cette partie de GPT-2. Le comptage des paramètres inclut bien cette matrice et ce biais supplémentaires.
+**Écarts par rapport à GPT-2.** Le GPT-2 original réutilise la matrice d'embeddings des tokens, transposée, pour calculer les logits : les poids d'entrée et de sortie sont *liés* (*weight tying*). Ici, `w_head` est une matrice indépendante et possède un biais (`b_head`). Autre différence d'initialisation : GPT-2 initialise la table des positions avec un écart-type de `0.01`, contre `0.02` ici ; la table des tokens utilise `0.02` dans les deux cas. Le modèle de référence du projet est donc un GPT pédagogique de type GPT-2, pas une reproduction exacte de GPT-2. Le comptage des paramètres inclut la matrice et le biais de sortie supplémentaires.
 :::
 
 ## La passe avant : de `(B, T)` à `(B, T, V)`
