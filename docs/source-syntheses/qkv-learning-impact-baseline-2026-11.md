@@ -1,14 +1,14 @@
 # Q/K/V — learning-impact baseline and assessment plan
 
 **Review date:** 2026-11-05  
-**Status:** editorial audit and proposed evaluation; no learner outcome data collected  
+**Status:** editorial audit and formative protocol prepared; no learner outcome data collected  
 **Source collection:** [Q/K/V source collection](../source-reviews/qkv-source-collection.md)  
 **Related synthesis:** [Complementary perspectives](qkv-complementary-perspectives-2026-11.md)  
 **Coverage matrix:** [Pedagogical coverage matrix](qkv-pedagogical-coverage-matrix-2026-11.md)
 
 ## 1. Purpose and evidence boundary
 
-The three-source Q/K/V collection has already changed the bilingual lesson through a geometric perspective, a contextual-language contrast and more explicit misconception boundaries. The next question is not whether more source material can be added, but whether the resulting learning experience supports better discrimination, calculation and transfer.
+The three-source Q/K/V collection has already changed the bilingual lesson through a geometric perspective, a contextual-language contrast and more explicit misconception boundaries. The next question is not whether more source material can be added, but whether the resulting learning experience supports better discrimination, calculation and transfer. The current exercise recommendations below are historical candidates; see section 9 for the post-implementation decisions and the single pilot protocol that supersedes them.
 
 This dossier establishes a **content-based baseline** and proposes a small assessment. It does not claim measured improvement: no learner study, pre/post comparison, item analysis or usability test has been conducted.
 
@@ -127,3 +127,26 @@ Without learner data, limit claims to content coverage, assessment design and te
 - The current EN/FR pages remain the canonical learning resources.
 
 **Next implementation gate:** inspect exercise conventions and bilingual parity, then add only the three minimal diagnostic items if they remain non-duplicative. Keep the linguistic transfer prompt optional. Validate the arithmetic independently and preserve existing exercises.
+
+
+## 9. Post-implementation reconciliation — 2026-11-05
+
+This section supersedes the earlier proposed diagnostic bundle in section 4. It records what was implemented and what remains only a candidate.
+
+| Topic | Current project evidence | Decision |
+|---|---|---|
+| Dot product versus cosine | The geometric note gives the norm/angle identity. [PR #489](https://github.com/JM-Brun/llm-lab/pull/489) adds a deterministic regression fixture showing that dot-product and cosine rankings can differ. The existing learner-pilot protocol in [#447](https://github.com/JM-Brun/llm-lab/issues/447), extended by [PR #490](https://github.com/JM-Brun/llm-lab/pull/490), includes an optional geometry probe. | Regression coverage is implemented; a formative probe is prepared but unrun. Do not add a separate exercise page unless learner evidence shows a remaining gap. |
+| Softmax mixture versus hard retrieval | The canonical attention lesson already works through non-degenerate weights (approximately 0.67/0.33) and the resulting weighted output. The source audit and #473 decision record found no need for another generic exercise. | No duplicate exercise. [#480](https://github.com/JM-Brun/llm-lab/issues/480) was closed as not planned; revisit only if pilot observations show that learners still infer argmax retrieval. |
+| Q/K/V role discrimination | The canonical self-check asks which projections determine weights and which vectors are aggregated. The exercise hub includes the W_V-only counterfactual. The #447 protocol now records a pre-reading role baseline and a post-reading V-only counterfactual. | Existing instructional coverage is retained; the protocol adds a way to observe understanding without adding a duplicate quiz. |
+| Contextual transfer | The Q/K/V page contrasts pronoun coreference with lexical polysemy and explicitly limits claims about head specialization. | Explanation is present; no extra exercise is justified before learner evidence. |
+
+### Evidence status
+
+- **Implementation regression evidence:** PR #489 is merged; Python CI and Quarto passed. Its tests validate selected numerical and shape invariants, not learner understanding.
+- **Pilot protocol:** PR #490 is merged with bilingual prompts and a 0–2 rubric. It is a protocol only; no participant has been observed.
+- **Rendered/accessibility review:** still open in [#483](https://github.com/JM-Brun/llm-lab/issues/483). Run the independent pilot only after the published EN/FR pages receive the required browser review.
+- **Learning outcomes:** no pre/post learner data or efficacy evidence exists. Keep all claims at the level of content audit, implementation tests and protocol design.
+
+### Current implementation decision
+
+Do not implement the earlier four-item learner-facing diagnostic bundle as a new exercise page. Reuse the existing lesson and exercise coverage, the regression tests in #489, and the single pilot protocol in #447. Add a new learner-facing item only if the pilot identifies a specific residual misconception and the item can be placed in the existing exercise hub without duplicating current tasks.

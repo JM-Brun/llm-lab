@@ -190,7 +190,7 @@ These are complementary records, not duplicate versions of the same document: ca
 | Q/K/V role definitions | Reinforces the canonical functional split but adds no new definition | Already covered; retain provenance |
 | Geometric Q/K framing | A spatial/vector lens alongside the existing index-card analogy; bridges the conceptual role to dot-product geometry | Integrated as an optional collapsible note on both Q/K/V pages, with dot-product norms/angle and warnings against cosine/nearest-neighbour interpretations |
 | Bank / river example | Lexical polysemy (competing senses of one word), distinct from the pronoun-coreference example already on the Q/K/V page | Integrated as a compact optional contrast on both pages; full bank discussion remains on contextualized-representations |
-| Multiple-choice check | Distractors explicitly test confusion among Q, K and V | Retained as a future exercise-design reference; no duplicate quiz |
+| Three-question knowledge check | Compact checks of Q/K/V purpose, dynamic attention versus pooling, and contextual aggregation | Retained as a future exercise-design reference; no duplicate quiz |
 | Course-level sequence | Places Q/K/V between motivation and relevance scoring, then lists later attention topics | Confirms compatibility with current route; no route change from titles alone |
 
 ### What the combined explanation now offers

@@ -5,7 +5,7 @@ pedagogical_model:
   reconstruction:
     status: partial
     basis:
-      - "Direct page retrieval on 2026-11-05 exposed the lesson title, introduction, definition, bank/river example, explanatory recap and one multiple-choice question."
+      - "Direct page retrieval on 2026-11-05 exposed the lesson title, introduction, definition, bank/river example, explanatory recap and three four-option multiple-choice questions."
       - "The page explicitly identifies itself as Section 1, Chapter 2 of Neural Network Attention Mechanisms."
       - "The page requires JavaScript; the reconstruction covers the text exposed by the page reader, not the full interactive lesson runtime."
     course_context:
@@ -42,7 +42,7 @@ pedagogical_model:
       retrieval_channel: direct rendered page text; linked image retrieval failed
       in_body_slots:
         - {id: src-definition-icon, role: "decorative or explanatory image unclear", status: identified-not-visually-inspected, locator: "Immediately after the introductory paragraph"}
-        - {id: src-question-icon, role: "quiz decoration unclear", status: identified-not-visually-inspected, locator: "Immediately before the multiple-choice check"}
+        - {id: src-question-icon, role: "quiz decoration unclear", status: identified-not-visually-inspected, locator: "Immediately before the three multiple-choice checks"}
       cover_or_hero: {status: unknown, note: "The retrieved page does not establish whether a separate course cover asset is used within the lesson."}
       rights: unknown
   comparison:
@@ -57,22 +57,34 @@ pedagogical_model:
       - {id: src-key, kind: representation, description: "Vector associated with each candidate position and framed as what it offers for matching.", locator: "Definition, lines 19–24"}
       - {id: src-value, kind: representation, description: "Vector framed as the information passed into the output when its key receives attention weight.", locator: "Definition, lines 19–24"}
       - {id: src-query-key-alignment, kind: intermediate, description: "Geometric alignment between query and key vectors, described qualitatively as determining how much information flows.", locator: "Introduction, lines 13–14"}
+      - {id: src-contextual-aggregation, kind: intermediate, description: "Context-dependent weighted combination of information from sequence positions, rather than equal or fixed pooling.", locator: "Introduction, lines 13–15; knowledge check, question 3, lines 72–85"}
       - {id: src-bank-example, kind: pedagogical-anchor, description: "Lexical ambiguity of bank in a riverside sentence; river-related context is used to motivate which information may inform the representation at bank.", locator: "Definition example, line 25"}
-      - {id: src-quiz, kind: assessment, description: "Single multiple-choice check asking which role correctly describes keys.", locator: "Knowledge check, lines 27–49"}
+      - {id: src-quiz-purpose, kind: assessment, description: "Four-option question about the primary purpose of Q/K/V: assigning dynamic weights based on relevance.", locator: "Knowledge check, question 1, lines 36–55"}
+      - {id: src-quiz-pooling, kind: assessment, description: "Four-option question contrasting attention dynamic weighting with equal or fixed pooling.", locator: "Knowledge check, question 2, lines 58–70"}
+      - {id: src-quiz-context, kind: assessment, description: "Four-option question about why contextual aggregation matters for sequence modelling.", locator: "Knowledge check, question 3, lines 72–85"}
     edges:
       - {from: src-query, type: compared-with, to: src-key}
       - {from: src-query-key-alignment, type: derived-from, to: src-query}
       - {from: src-query-key-alignment, type: derived-from, to: src-key}
       - {from: src-query-key-alignment, type: controls-contribution-of, to: src-value}
+      - {from: src-query-key-alignment, type: determines-weights-for, to: src-contextual-aggregation}
+      - {from: src-contextual-aggregation, type: aggregates, to: src-value}
       - {from: src-bank-example, type: illustrates, to: src-query}
       - {from: src-bank-example, type: illustrates, to: src-key}
       - {from: src-bank-example, type: illustrates, to: src-value}
-      - {from: src-quiz, type: assesses, to: src-key}
+      - {from: src-quiz-purpose, type: assesses, to: src-query}
+      - {from: src-quiz-purpose, type: assesses, to: src-key}
+      - {from: src-quiz-purpose, type: assesses, to: src-value}
+      - {from: src-quiz-pooling, type: assesses, to: src-query-key-alignment}
+      - {from: src-quiz-pooling, type: assesses, to: src-contextual-aggregation}
+      - {from: src-quiz-context, type: assesses, to: src-contextual-aggregation}
     interpretation: "This source-local graph is an editorial reconstruction of the lesson text, not a formal graph defined by Codefinity. The geometric-alignment wording is intentionally not translated into a claim that attention is cosine similarity or nearest-neighbour retrieval."
   learning_outcomes:
     - {status: inferred, outcome: "Distinguish the functional roles of queries, keys and values in attention.", basis: "The definition and recap explicitly contrast searching, matching and transmitted information."}
     - {status: inferred, outcome: "Explain at a high level how a query-key compatibility relation influences the aggregation of values.", basis: "The introductory vector-alignment description and bank example."}
-    - {status: inferred, outcome: "Recognize keys as matching representations rather than search vectors or payload vectors.", basis: "The single multiple-choice question."}
+    - {status: inferred, outcome: "Recognize that Q/K/V supports dynamic weighting of input elements in attention.", basis: "The first multiple-choice question asks for the primary role of Q/K/V."}
+    - {status: inferred, outcome: "Distinguish attention context-dependent weighting from equal or fixed pooling.", basis: "The second multiple-choice question contrasts attention with traditional pooling."}
+    - {status: inferred, outcome: "Explain why contextual aggregation can combine information from different sequence positions.", basis: "The third multiple-choice question asks why contextual aggregation matters for sequence modelling."}
   assumed_prerequisites:
     - {status: inferred, topic: "Basic familiarity with vectors and token/position representations.", basis: "The lesson states that Q, K and V are vectors but does not define vector operations."}
     - {status: inferred, topic: "Basic intuition about contextual ambiguity in language.", basis: "The bank/river example assumes the reader understands lexical ambiguity."}
@@ -80,19 +92,19 @@ pedagogical_model:
     - {order: 1, section: "Introduction", function: motivate-attention-and-vector-roles, moves: ["Frame Q/K/V as vectors associated with input positions", "Introduce a geometric search-and-match analogy"]}
     - {order: 2, section: "Definition", function: distinguish-functional-roles, moves: ["Define Q as the search vector", "Define K as the matching descriptor", "Define V as the content to be passed"]}
     - {order: 3, section: "Bank/river example", function: illustrate-contextual-lexical-ambiguity, moves: ["Use the sentence 'He sat by the bank.'", "Relate river context to a query-key match and value contribution"]}
-    - {order: 4, section: "Knowledge check", function: formative-retrieval-practice, moves: ["Ask the learner to identify the role of keys among four alternatives"]}
+    - {order: 4, section: "Knowledge check", function: formative-retrieval-practice, moves: ["Ask why Q/K/V assigns dynamic weights", "Contrast attention with fixed pooling", "Ask why contextual aggregation matters for sequence modelling"]}
     - {order: 5, section: "Recap", function: consolidate-complementary-roles, moves: ["Explain why Q, K and V are each needed"]}
   pedagogical_strengths:
     - "The explanation is short and question-led: it moves from the learner's need to focus information to the three functional roles."
     - "The bank/river example is a familiar lexical-ambiguity scenario that can help motivate context-dependent representations."
-    - "The multiple-choice check directly targets a common role-confusion error: mistaking keys for queries or values."
+    - "Three multiple-choice checks cover the primary Q/K/V purpose, dynamic weighting versus pooling, and the value of contextual aggregation."
     - "The three-role explanation makes the distinction between matching information and transmitted content explicit."
   pedagogical_limits:
     - "The geometric alignment description is qualitative and does not define the actual compatibility function, scaling, softmax or weighted sum."
     - "The bank example does not provide a model, layer, head, measured scores or weights; it is an intuition, not evidence that a particular head performs word-sense disambiguation."
     - "The wording that river's key aligns with bank's query may suggest a direct lexical nearest-neighbour or cosine-similarity mechanism unless qualified."
     - "The source does not explain learned projection matrices, dimensions, self- versus cross-attention, causal masking, multi-head attention, implementation or numerical examples."
-    - "The linked visual asset, full course context and interactive behaviour were not inspected."
+    - "The linked visual assets, full course context and interactive answer/feedback behaviour were not inspected."
 items:
   - id: codefinity-qkv-building-blocks:role-definitions
     kind: definition
@@ -179,37 +191,98 @@ items:
     disposition: integrate-by-reference
     disposition_rationale: "Do not duplicate the full bank example from contextualized-representations. Instead, use a concise contrast with the Q/K/V page’s pronoun-coreference example to distinguish lexical polysemy from coreference and show two different context-dependent language phenomena. Attribute Codefinity and link to the canonical contextualized-representations lesson."
 
-  - id: codefinity-qkv-building-blocks:quiz-check
+  - id: codefinity-qkv-building-blocks:quiz-purpose
     kind: question
-    summary: "A four-option multiple-choice check asks which statement correctly describes keys, distinguishing matching descriptors from value payloads and query search vectors."
-    locator: {type: section, value: "Knowledge check, lines 27–49", label: "Which statement best describes the function of keys?"}
+    summary: "A four-option question asks for the primary purpose of Q/K/V; the keyed answer is dynamic weighting of input elements based on their relevance to a query."
+    locator: {type: section, value: "Knowledge check, question 1, lines 36–55", label: "Primary purpose of Q/K/V"}
     evidence:
       kind: direct-statement
       confidence: well-supported
       assumptions: []
-      limitations: ["Only one role-focused question is visible; broader quiz coverage and feedback logic were not accessible."]
+      limitations: ["The prompt and options are visible; answer submission and feedback behaviour were not exercised."]
     pedagogical_profile:
-      learner_question: "Can the learner distinguish keys from queries and values?"
-      explanatory_lens: role-discrimination
+      learner_question: "Can the learner identify what Q/K/V enables attention to compute?"
+      explanatory_lens: purpose-identification
       teaching_form: [multiple-choice-question, formative-check]
       abstraction_level: introductory
       prerequisites: [query, key, value]
-      distinctive_value: "Distractors explicitly represent the two most plausible role confusions."
-      limitations: ["Only one visible question is available; feedback and scoring are unknown."]
+      distinctive_value: "Tests the mechanism purpose rather than an isolated vector definition."
+      limitations: ["Interactive answer and feedback behaviour was not exercised."]
     pedagogical_assessment:
-      novelty: {level: low, rationale: "The project already contains a self-check on the distinct Q/K/V roles and an extended exercise set."}
-      complementarity: {level: moderate, rationale: "Its distractors make the exact confusion between query, key and value explicit."}
-      pedagogical_value: {level: moderate, rationale: "Could inform future distractor design for formative assessment without requiring a new activity now."}
-      applicability: {level: moderate, rationale: "Retain as an assessment-design reference in the extraction and source collection."}
-      redundancy: {level: moderate, rationale: "The current self-check covers the same concept but does not necessarily use the same distractor taxonomy."}
-      evidence_quality: {level: moderate, rationale: "The question is directly visible; the learner feedback and scoring behaviour are not."}
-    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv], concept_ids: [query, key, value]}
+      novelty: {level: low, rationale: "The canonical project already explains Q/K/V as the basis for score-derived weights and value aggregation."}
+      complementarity: {level: moderate, rationale: "Provides a concise retrieval check for the purpose of the mechanism."}
+      pedagogical_value: {level: moderate, rationale: "Useful as an assessment-design reference, but not sufficient to test the individual roles."}
+      applicability: {level: moderate, rationale: "Retain as a source-specific quiz pattern; do not add a duplicate introductory quiz."}
+      redundancy: {level: moderate, rationale: "Overlaps with existing Q/K/V and attention self-checks."}
+      evidence_quality: {level: moderate, rationale: "The visible prompt and four alternatives are direct evidence; response feedback is unknown."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:self-attention], concept_ids: [query, key, value, attention-weight]}
     candidate_destinations:
       pages: [fr/queries-keys-values, en/queries-keys-values]
-      concepts: [query, key, value]
+      concepts: [query, key, value, attention-weight]
     disposition: integrate-by-reference
-    disposition_rationale: "No new quiz is needed. Preserve the distractor pattern as a future formative-assessment reference; compare it with the existing QKV self-check when exercises are next revised."
+    disposition_rationale: "Preserve as an assessment-design reference. The project already has a fuller worked derivation and does not need a duplicate introductory quiz."
 
+  - id: codefinity-qkv-building-blocks:quiz-pooling
+    kind: question
+    summary: "A four-option question contrasts attention dynamic weighting based on query-key compatibility with equal averaging or fixed pooling."
+    locator: {type: section, value: "Knowledge check, question 2, lines 58–70", label: "Attention versus pooling"}
+    evidence:
+      kind: direct-statement
+      confidence: well-supported
+      assumptions: []
+      limitations: ["The prompt and options are visible; answer submission and feedback behaviour were not exercised."]
+    pedagogical_profile:
+      learner_question: "Can the learner distinguish context-dependent attention from fixed pooling?"
+      explanatory_lens: comparison
+      teaching_form: [multiple-choice-question, formative-check]
+      abstraction_level: introductory
+      prerequisites: [query, key, value, weighted-aggregation]
+      distinctive_value: "Contrasts attention with mean/max pooling rather than only testing Q/K/V labels."
+      limitations: ["Interactive answer and feedback behaviour was not exercised."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The comparison with fixed pooling is not the main focus of the canonical Q/K/V page."}
+      complementarity: {level: moderate, rationale: "Provides an assessment contrast between adaptive weighting and fixed aggregation."}
+      pedagogical_value: {level: moderate, rationale: "Can reveal whether a learner understands that attention weights vary with the query and context."}
+      applicability: {level: moderate, rationale: "Retain as a future exercise-design reference; avoid adding it without evidence of a learner gap."}
+      redundancy: {level: moderate, rationale: "The attention lesson explains dynamic weighted aggregation, though not via this exact distractor set."}
+      evidence_quality: {level: moderate, rationale: "The visible prompt and four alternatives are direct evidence; response feedback is unknown."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:attention], concept_ids: [query, key, attention-weight]}
+    candidate_destinations:
+      pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+      concepts: [attention-weight, weighted-aggregation]
+    disposition: integrate-by-reference
+    disposition_rationale: "Keep as a source-specific comparison and possible future distractor set; do not create a duplicate activity."
+
+  - id: codefinity-qkv-building-blocks:quiz-context
+    kind: question
+    summary: "A four-option question asks why contextual aggregation matters, with the keyed answer emphasizing flexible combination of information from different sequence positions."
+    locator: {type: section, value: "Knowledge check, question 3, lines 72–85", label: "Why contextual aggregation matters"}
+    evidence:
+      kind: direct-statement
+      confidence: well-supported
+      assumptions: []
+      limitations: ["The prompt and options are visible; answer submission and feedback behaviour were not exercised."]
+    pedagogical_profile:
+      learner_question: "Can the learner explain why context-dependent aggregation matters for sequence modelling?"
+      explanatory_lens: contextual-aggregation
+      teaching_form: [multiple-choice-question, formative-check]
+      abstraction_level: introductory
+      prerequisites: [contextualized-representation, weighted-aggregation]
+      distinctive_value: "Connects the mechanism to sequence-level information flow."
+      limitations: ["Interactive answer and feedback behaviour was not exercised."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "It asks about the learning purpose of contextual aggregation rather than a vector role alone."}
+      complementarity: {level: moderate, rationale: "Offers a high-level transfer prompt from the Q/K/V mechanism to sequence modelling."}
+      pedagogical_value: {level: moderate, rationale: "Useful as a broad conceptual check, but does not test tensor operations or causal constraints."}
+      applicability: {level: moderate, rationale: "Retain as a future formative-assessment reference; no new page or exercise is justified yet."}
+      redundancy: {level: moderate, rationale: "The canonical attention page explains the value of contextual weighted aggregation."}
+      evidence_quality: {level: moderate, rationale: "The visible prompt and four alternatives are direct evidence; response feedback is unknown."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:contextualization], concept_ids: [contextualized-representation]}
+    candidate_destinations:
+      pages: [fr/contextualized-representations, en/contextualized-representations, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+      concepts: [contextualized-representation, weighted-aggregation]
+    disposition: integrate-by-reference
+    disposition_rationale: "Keep as a source-specific conceptual check; the current project already has a more complete explanation and does not need a duplicate quiz."
   - id: codefinity-qkv-building-blocks:scope-limitations
     kind: limitation
     summary: "The retrieved lesson provides a role-level explanation and one lexical example, but no projection equations, attention-score calculation, scaling, softmax, weighted-sum derivation, tensor dimensions, masking or implementation."
@@ -237,4 +310,4 @@ canonical_mapping:
   proposed_concepts: []
   proposed_relations: []
   route_implications: []
-  decision_summary: "No canonical concepts or relations are missing. The source contributes a distinct geometric lens for Q/K and a lexical-polysemy example that complements the existing pronoun-coreference example. Both are integrated as optional, bounded perspectives in the bilingual Q/K/V lesson; the full bank treatment remains on contextualized-representations. The role definitions remain already covered, the quiz remains an assessment-design reference, and no graph or route change is justified."
+  decision_summary: "No canonical concepts or relations are missing. The source contributes a distinct geometric lens for Q/K and a lexical-polysemy example that complements the existing pronoun-coreference example. Both are integrated as optional, bounded perspectives in the bilingual Q/K/V lesson; the full bank treatment remains on contextualized-representations. The role definitions remain already covered; all three quiz questions are retained as assessment-design references rather than duplicated; no graph or route change is justified."

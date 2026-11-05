@@ -11,7 +11,7 @@
 
 | Learner question / difficulty | Nishanthan (DEV) | Neha KK (Medium) | Codefinity | Existing LLM Lab coverage | Decision |
 |---|---|---|---|---|---|
-| What do Q, K and V each do? | Functional walkthrough and search framing | Database/search framing | Role wording and role-check quiz | Q/K/V page: index-card analogy and projection flow | **Already covered.** Keep one canonical analogy; use alternative phrasings as source references. |
+| What do Q, K and V each do? | Functional walkthrough and search framing | Database/search framing | Role wording plus three checks on mechanism purpose, pooling and contextual aggregation | Q/K/V page: index-card analogy and projection flow | **Already covered.** Keep one canonical analogy; use alternative phrasings as source references. |
 | Why are there three projections rather than one? | Mentions learned projections and roles | Explicit matching-versus-payload rationale | Distinguishes roles, but no equally explicit design rationale observed | Q/K/V page now explains Q/K as matching views and V as payload/content view | **Integrated.** Preserve as a design rationale, not a new mechanism. |
 | What is the input to Q/K/V? | Embedding/representation shorthand | Word-embedding shorthand | Not a major focus in inspected lesson | Q/K/V page clarifies incoming hidden representation, first-block embeddings and positional-information variants | **Clarified in project.** Avoid copying source shorthand as a universal statement. |
 | What are Q and K mathematically? | Vector/projection description | Projection equations | Geometric vector-alignment lens | Q/K/V page has optional geometric note; attention page owns full score derivation | **Integrated in layers.** Geometry is optional; formal calculation remains in attention lesson. |
@@ -24,7 +24,7 @@
 | How do multiple heads fit in? | Brief architecture summary | Follow-on mention | Listed in parent outline; lesson body not inspected | Overview and dedicated multi-head/Build material | **No change from outline alone.** Scan full lesson before extracting more. |
 | What changes with causal masking, cross-attention or encoder/decoder placement? | Not sufficiently developed in inspected article | Not sufficiently developed in inspected article | Parent outline lists related lessons; their bodies were not scanned | Covered elsewhere in the project route | **Out of scope for these scans.** Do not infer lesson content from course headings. |
 | Can a learner calculate QKᵀ and the weighted sum by hand? | Compact conceptual sequence | Compact equations | Not observed | Dedicated attention lesson / numerical workbench | **Project-owned.** Source overlap is not a reason to add another derivation. |
-| Can learners identify Q/K/V role confusions? | Misconception warnings | Role rationale | Explicit multiple-choice distractor pattern | Existing self-check and extended exercises | **Reference for next exercise revision.** Reuse the diagnostic principle, not a duplicate quiz. |
+| Can learners explain the purpose and effect of attention? | Misconception warnings | Role rationale | Three questions on Q/K/V purpose, dynamic attention versus pooling, and contextual aggregation | Existing self-check and extended exercises | **Assessment-design reference.** Reuse the question patterns only if a learner gap is observed; do not duplicate a quiz. |
 
 ## 2. Perspective matrix
 
@@ -34,7 +34,7 @@ This matrix captures the *teaching move* that makes a source useful, even when t
 |---|---|---|---|---|---|
 | Nishanthan K | Functional / visual / retrieval | Walks from role definitions into the attention flow; names common misreadings | First-pass orientation and misconception checking | Search language may imply hard retrieval; visual asset not inspected | Integrate by reference; retain misconception checks |
 | Neha KK | Architectural design rationale / linguistic coreference | Asks why matching and payload should use separate learned projections; gives a pronoun-context scenario | Understanding why Q/K and V have distinct roles; contextual information flow | Compact computation is less complete than project derivation; example is illustrative | Integrated in canonical explanation |
-| Codefinity | Geometric / lexical polysemy / formative assessment | Relates Q/K to vector alignment; uses bank/river; tests role discrimination | Optional bridge from conceptual roles to vector geometry; transfer to a second language phenomenon | Qualitative geometry can be mistaken for cosine-only similarity; quiz is a single-item sample; media not inspected | Geometric note and contrast integrated; distractor pattern retained |
+| Codefinity | Geometric / lexical polysemy / three-question formative check | Relates Q/K to vector alignment; uses bank/river; checks mechanism purpose, attention versus pooling, and contextual aggregation | Optional bridge from conceptual roles to vector geometry; transfer to a second language phenomenon | Qualitative geometry can be mistaken for cosine-only similarity; quiz feedback untested; media not inspected | Geometric note and contrast integrated; three question patterns retained as design references |
 
 ## 3. Coverage status and genuine gaps
 
@@ -48,13 +48,13 @@ This matrix captures the *teaching move* that makes a source useful, even when t
 - Soft weighting versus hard nearest-neighbour retrieval.
 - The warning that attention weights are not standalone causal explanations.
 
-### Covered, but worth improving through assessment or visualization
+### Candidate improvements: current decisions
 
-- Dot product versus cosine similarity: a small worked numerical comparison could expose the role of vector norms more concretely.
-- Q/K/V role discrimination: the existing exercise set could include distractors based on the three roles and the matching/payload distinction.
-- Soft versus hard retrieval: a tiny example with two nonzero weights could counter the winner-take-all misconception.
+- **Dot product versus cosine similarity:** the geometric note states the norm/angle identity; [#489](https://github.com/JM-Brun/llm-lab/pull/489) adds a deterministic regression counterexample, and the optional geometry probe is in the #447 pilot protocol. No new learner-facing exercise page is justified before pilot evidence.
+- **Q/K/V role discrimination:** the existing self-check and W_V-only exercise already cover the roles; the #447 protocol now records a pre-reading baseline and post-reading V-only counterfactual. Do not add another role quiz.
+- **Soft versus hard retrieval:** the canonical worked attention example already shows non-degenerate softmax weights and a weighted output. [#480](https://github.com/JM-Brun/llm-lab/issues/480) was closed as not planned to avoid duplicating this treatment.
 
-These are **candidate improvements**, not confirmed content gaps. Before implementing them, inspect the current exercise and numerical-workbench coverage to avoid duplication.
+These are no longer active page-change requests. The remaining gate is learner evidence, not more generic exercises; see the [learning-impact baseline](qkv-learning-impact-baseline-2026-11.md#9-post-implementation-reconciliation--2026-11-05).
 
 ### Not established by the three source scans
 
@@ -67,7 +67,7 @@ These items must not be marked as absent from the project merely because the tut
 
 ## 4. Current project learning-impact baseline
 
-The project already has a Q/K/V self-check, a hand-worked weighted aggregation and a NumPy projection/shape exercise. The remaining opportunities are primarily assessment gaps: numerical dot-product versus cosine comparison, softmax mixture versus hard retrieval, and transfer of role discrimination to changed projection parameters. See the [learning-impact baseline and assessment plan](qkv-learning-impact-baseline-2026-11.md) for the page-by-page audit and proposed minimal diagnostic bundle. Do not add another generic projection or weighted-sum exercise.
+The project already has a Q/K/V self-check, a hand-worked weighted aggregation and a NumPy projection/shape exercise. PR #489 adds implementation regression tests for dot-product/cosine ranking and attention invariants; PR #490 extends the single formative pilot protocol with a Q/K/V baseline, V-only counterfactual and optional geometry probe. These are not learner-outcome data. The remaining work is to complete the browser/accessibility review in #483 and then, if appropriate, run the existing pilot in #447. Do not add another generic projection, weighted-sum or role quiz.
 
 ## 5. Integration decision rules
 
@@ -113,7 +113,7 @@ The following decisions were made after inspecting the merged bilingual Q/K/V pa
 |---|---|---|---|
 | Dot product versus cosine similarity | Both Q/K/V pages state $q^\top k=\lVert q\rVert\lVert k\rVert\cos\theta$ and explicitly explain that vector norms matter. However, the current attention workbench's hand example uses unit-norm Q/K vectors, so it does not demonstrate a ranking difference between dot product and cosine similarity. | **Accept a bounded numerical contrast**, but do not add another Q/K/V page section. Use a two-dimensional, hand-checkable pair with different key norms in the existing attention workbench. | **#80** — scaled dot-product attention. |
 | Soft weighting versus hard retrieval | The scaled-attention lesson computes softmax weights approximately $(0.67,0.33)$ and an output $(6.7,6.6)$ from two distinct value vectors. It explicitly says the weights are relative to accessible keys, not semantic relevance. The Q/K/V lesson also rejects nearest-neighbour interpretation. | **Already demonstrated; reject a second numerical example.** The existing example is sufficient to show that aggregation is not argmax retrieval. | No new work. Retain links between Q/K/V and the attention derivation. |
-| Q/K/V role discrimination | The Q/K/V lesson has a self-check asking which projections determine weights, which supplies aggregated vectors, and what changes when V changes alone. The attention exercise inventory also asks learners to explain why changing $W_V$ does not change Q/K scores. Codefinity's four-option item is a useful distractor pattern, but the current project already assesses the same conceptual distinction through explanation and prediction. | **Defer the multiple-choice format; do not add a duplicate quiz now.** Revisit only if learner-pilot evidence or an exercise redesign identifies a specific residual misconception that open response does not expose. | Keep the pattern in the source extraction; any future attention assessment belongs with the attention exercise owner, coordinated with #80 and #447. |
+| Attention assessment patterns | The existing Q/K/V self-check tests which projections determine weights and which vectors are aggregated; the exercise tests the W_V-only counterfactual. Codefinity adds three four-option checks on the mechanism's purpose, dynamic attention versus fixed pooling, and contextual aggregation. The interactive answer/feedback behavior was not exercised. | **Retain as design references; do not add a duplicate quiz now.** Revisit if the learner pilot identifies a specific gap in explaining dynamic weighting or contextual aggregation. | Keep all three source items in the extraction; any future learner-facing assessment belongs with the attention exercise owner, coordinated with #80 and #447. |
 
 ### Numerical contrast hand-off to #80
 
