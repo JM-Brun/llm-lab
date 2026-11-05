@@ -20,6 +20,8 @@ related: ["fr/transformer"]
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-text-data.qmd >}}
+
 ::: {.chapter-lead}
 Un modèle de langage reçoit une séquence d'identifiants numériques, pas du texte brut. La tokenisation définit comment le texte est converti en identifiants et comment ceux-ci sont décodés. Elle est distincte du réseau neuronal, mais conditionne son vocabulaire, la longueur des séquences, le coût de calcul et certains comportements observables.
 :::
