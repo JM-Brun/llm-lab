@@ -71,7 +71,7 @@ The five pages are not a five-step sequence. They comprise two core pages, two o
 | ID | Priority | Scope | Evidence and impact | Recommendation |
 |---|---|---|---|---|
 | A-01 | P1 | Group/navigation | The curriculum separates the conceptual route and Build branch, but a flat five-page inventory can imply one sequence. | Mark every member core, optional, branch or context. State separately whether membership implies sequence. |
-| A-02 | P2 | Transition | text-data distinguishes prompt encoding from corpus preparation; corpus-preparation is a Build page related to text/tokenization. The boundary is sound, but the hand-off should remain explicit. | Verify that the text-data boundary section links to corpus-preparation as a Build application and states that it is not required for conceptual inference learning. |
+| A-02 | Verified / no defect | Transition | Both FR and EN text-data pages link to corpus-preparation and distinguish prompt encoding from corpus preparation. | No change required; retain the existing explicit hand-off. |
 | A-03 | Observation | Bilingual | FR and EN counterparts exist. File existence does not prove equivalent scope, examples or navigation. | Compare metadata, route membership, headings, examples and key transitions in future bilingual audits. |
 
 ### What is working
@@ -132,7 +132,7 @@ The page-map contracts are aligned: each page names what it covers and delegates
 | ID | Priority | Scope | Evidence and impact | Recommendation |
 |---|---|---|---|---|
 | B-01 | P2 | Guided route/depth | site/fr/attention-score-scaling.qmd declares scaled-dot-product-attention as its parent and develops the 1/sqrt(d_k) factor. data/guided-route.yml currently lists cross-attention as the computation stage's optional page but omits attention-score-scaling. The deep dive is discoverable through page hierarchy, but not the stage's optional resources. | Decide explicitly whether the computation stage should expose this mathematical deep dive. If yes, add it to FR and EN optional_pages; otherwise document why it is intentionally outside the stage. |
-| B-02 | P3 | Transition | The causal-mask page hands off to logits, while the computation stage ends at masking and prediction is a distinct next stage. The boundary is valid but may benefit from a concise bridge. | Check the rendered transition and add one sentence only if the relation is not already clear. Do not duplicate the logits explanation. |
+| B-02 | Verified / no defect | Transition | The FR and EN causal-masking pages contain explicit next-step navigation to logits; page metadata also identifies logits as the next route step. | No additional bridge is justified by the inspected source. |
 | B-03 | Observation | Optional depth | Cross-attention belongs to a different architectural setting and should not be inserted into the core decoder-only GPT sequence. | Preserve its optional status and explain its encoder-decoder/multimodal context where linked. |
 
 ### What is working
@@ -235,7 +235,7 @@ This is a useful regression case for sequential audits. Each page establishes th
 
 | ID | Priority | Scope | Evidence and impact | Recommendation |
 |---|---|---|---|---|
-| D-01 | P2 | Transition | The sequence crosses from internal attention computation to output representation. The Transformer overview covers the full forward pass, but the local window's final hand-off may be abrupt without that overview. | Check whether the causal-mask conclusion points clearly to output/logits. If not, add a one-sentence bridge, not a repeated logits section. |
+| D-01 | Verified / no defect | Transition | The causal-masking page has an explicit next-step card to logits in FR and EN. | No change required; preserve the existing transition. |
 | D-02 | Observation | Group boundary | The window does not include probabilities, likelihood or generation. These belong to the next prediction/decoding portion of the route. | Retain the boundary and identify the next stage as context rather than expanding every local window indefinitely. |
 
 ### What is working
@@ -260,8 +260,8 @@ This is a useful regression case for sequential audits. Each page establishes th
 |---|---|---|---|
 | P1 | Preserve role-aware group membership in audits and navigation summaries. | Audit skill and future reports | Every member is marked core, optional, branch or context; sequence is stated separately. |
 | P2 | Decide whether attention-score-scaling belongs in the computation stage's optional resources. | data/guided-route.yml and generated FR/EN contexts | Decision is documented; if included, both languages resolve the same page ID and generated contexts validate. |
-| P2 | Verify text-data → corpus-preparation hand-off. | FR/EN text-data and Build pages | Link identifies corpus preparation as Build, not a prerequisite for conceptual inference learning. |
-| P2 | Verify causal-mask → logits bridge in rendered pages. | FR/EN causal-masking and logits | Reader can identify the transition to vocabulary scores without duplicated exposition. |
+| Verified | Retain the explicit text-data → corpus-preparation hand-off. | FR/EN text-data pages | Both pages identify corpus preparation as a separate Build concern, not a conceptual inference prerequisite. |
+| Verified | Retain the causal-mask → logits next-step navigation. | FR/EN causal-masking and logits | Both language versions expose the next-step link; no extra explanatory paragraph is needed. |
 | P2 | Add semantic bilingual parity to the audit procedure. | Audit skill | EN/FR comparison covers metadata, role, examples, scope, links and stage membership, not only file existence. |
 | P3 | Reuse these four groups as regression examples for future skill changes. | This report and audit skill | A proposed skill change is checked against all four cases and preserves intentional differences. |
 
