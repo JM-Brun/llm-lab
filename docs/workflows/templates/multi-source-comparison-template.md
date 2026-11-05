@@ -57,7 +57,7 @@ Use only the controlled item dispositions in `data/source-taxonomy.yml`. Evidenc
 
 | Contribution | Source provenance | Evidence confidence | Novelty | Complementarity | Disposition (taxonomy) | Destination / rationale |
 |---|---|---|---|---|---|---|
-| | | | | | [exact value from data/source-taxonomy.yml] | |
+| | | | | | [exact value from `item_dispositions` in `data/source-taxonomy.yml`] | |
 
 ## 7. Canonical project impact
 
