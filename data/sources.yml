@@ -668,6 +668,15 @@ sources:
           - "Primary paper and distinction between static word-type vectors and contextual Transformer representations"
         limitations:
           - "The audit is scoped to the historical/static-embedding distinction; the paper's full experimental appendix was not re-audited."
+      - accessed_at: "2026-11-05"
+        status: partially-scanned
+        inspected_scope:
+          - "Full arXiv:1301.3781v3 PDF: log-linear model complexity, CBOW/Skip-gram architectures, Huffman hierarchical softmax, analogy benchmark, experimental comparisons and conclusion"
+          - "Main architecture figure and evaluation tables inspected; structured extraction created with five atomic items"
+        limitations:
+          - "Historical word2vec code and pretrained vectors were not retrieved or executed."
+          - "The paper's negative-sampling follow-up and other later implementation variants were not audited."
+          - "The benchmark is English-centric and tests exact-match single-token analogies, not general semantic understanding."
     related:
       pages: [en/embedding-space, fr/embedding-space, en/contextualized-representations, fr/contextualized-representations]
       concepts: [token-embedding, contextualized-representation]
