@@ -389,26 +389,44 @@ def write_map_fragments(
         )
 
 
+def load_domain_labels(language: str) -> dict[str, str] | None:
+    """Return localized domain labels, or None when the domain registry is absent."""
+    path = ROOT / "data" / "domains.yml"
+    if not path.is_file():
+        return None
+    payload = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    return {
+        str(domain["id"]): str(domain["labels"][language]) for domain in payload.get("domains", [])
+    }
+
+
 def load_concept_graph(
     language: str, pages: list[dict[str, Any]]
 ) -> dict[str, list[dict[str, Any]]]:
     """Load the reviewed concept registry and resolve language-specific page links."""
     registry_path = ROOT / "data" / "concepts.yml"
     registry = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
+    domain_labels = load_domain_labels(language)
     page_by_id = {page["id"]: page for page in pages}
     concepts = []
     concept_ids = set()
+    referenced_domains: list[str] = []
     for item in registry["concepts"]:
         resources = []
         for page_id in item["resources"]:
             page = page_by_id.get(page_id)
             if page is not None:
                 resources.append({"id": page_id, "title": page["title"], "href": page["href"]})
+        domains = [value for value in item.get("domains", []) if isinstance(value, str)]
+        for domain_id in domains:
+            if domain_id not in referenced_domains:
+                referenced_domains.append(domain_id)
         concepts.append(
             {
                 "id": item["id"],
                 "label": item["labels"][language],
                 "definition": item["definitions"][language],
+                "domains": domains,
                 "resources": resources,
             }
         )
@@ -427,8 +445,20 @@ def load_concept_graph(
         for kind, definition in registry["relation_types"].items()
         if any(edge["type"] == kind for edge in relations)
     }
+    if domain_labels is None:
+        concept_domains = [
+            {"id": domain_id, "label": domain_id} for domain_id in referenced_domains
+        ]
+    else:
+        ordered = [domain_id for domain_id in domain_labels if domain_id in referenced_domains]
+        ordered += [domain_id for domain_id in referenced_domains if domain_id not in domain_labels]
+        concept_domains = [
+            {"id": domain_id, "label": domain_labels.get(domain_id, domain_id)}
+            for domain_id in ordered
+        ]
     return {
         "concepts": concepts,
+        "concept_domains": concept_domains,
         "concept_relations": relations,
         "concept_relation_types": relation_types,
     }
