@@ -3,13 +3,14 @@
 **Status:** living source collection · **Review date:** 2026-11-05  
 **Catalogue:** [data/sources.yml](../../data/sources.yml)  
 **Migration map:** [Tokenization and embeddings source migration map](tokenization-embeddings-source-migration-map-2026-11.md)  
+**Method transfer assessment:** [Source-to-knowledge method transfer validation](../source-syntheses/tokenization-embeddings-method-transfer-validation-2026-11.md)  
 **Owning issue:** [#458](https://github.com/JM-Brun/llm-lab/issues/458)
 
 ## 1. Purpose and evidence boundary
 
 This dossier compares the source families already audited in #114, #147, #82 and #96. It is a synthesis of prior work, not a new exhaustive review of tokenization or embedding research.
 
-The source catalogue currently contains **46 records**: the three pre-existing Q/K/V and KV-cache records plus **43 migrated tokenization/embeddings-related records**. The registry distinguishes papers, documentation, repositories, videos, courses and articles. A record's existence does not mean every component was scanned.
+The source catalogue currently contains **47 records**: four Q/K/V and KV-cache records (including Codefinity) plus **43 migrated tokenization/embeddings-related records**. The registry distinguishes papers, documentation, repositories, videos, courses and articles. A record's existence does not mean every component was scanned.
 
 The source set is selected because it was already cited, inspected or used in the project. It is not a representative sample of all tokenizer research, embedding research or educational resources.
 
@@ -246,6 +247,10 @@ This contribution should be used with strict boundaries:
 **Integration decision.** No new page or route step is warranted. The existing historical paragraph in the embedding-space lesson remains the right level for the core path. The extraction provides an evidence-backed source for optional detail and prevents the common conflation of the original CBOW/Skip-gram paper with later word2vec implementation variants.
 
 **Evidence boundary.** The full arXiv v3 PDF and main architecture/evaluation figures and tables were inspected. The historical code and pretrained vectors were not retrieved or executed; the negative-sampling follow-up was not scanned. The source remains partially scanned.
+
+### Method-transfer validation
+
+The source-to-knowledge workflow has now been retrospectively assessed against this broader collection. The [transfer-validation report](../source-syntheses/tokenization-embeddings-method-transfer-validation-2026-11.md) records the current catalogue/extraction baseline, what transfers from the Q/K/V calibration case, the limitations exposed, and the next validation gates. This is documentation/synthesis evidence, not browser, rights or learner-outcome validation.
 
 ### Remaining migration tasks
 
