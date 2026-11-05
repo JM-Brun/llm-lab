@@ -101,6 +101,8 @@ Les pages individuelles dérivent chaque étape, donnent un exemple calculable e
 - Bishop, [*Pattern Recognition and Machine Learning*](https://www.microsoft.com/en-us/research/people/cmbishop/prml-book/), pour les probabilités, la vraisemblance et l'estimation.
 - Documentation [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html), qui précise la convention des logits, des cibles et de la réduction.
 
+**Notion canonique :** [Panorama des modèles de langage](llm-overview.qmd). Cette synthèse mathématique relie plusieurs notions du parcours ; elle sert de référence transversale et non de prérequis.
+
 ::: {.language-switch}
 **Langue :** [Français](mathematical-foundations.qmd) · [English](../en/mathematical-foundations.qmd)
 :::
