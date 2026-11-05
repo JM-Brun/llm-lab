@@ -155,6 +155,18 @@ C'est pourquoi Q/K et V ne sont pas interchangeables : modifier V seul laisse le
 Perspective issue de [Brenndoerfer, *Query, Key, Value: The Foundation of Transformer Attention*](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism).
 :::
 
+## Opérations à maîtriser
+
+La compréhension de Q/K/V se vérifie par des opérations observables, pas seulement par la mémorisation des définitions. À l'issue de cette leçon, vous devez pouvoir :
+
+1. **Reconnaître les trois rôles** : distinguer les projections qui déterminent les poids (Q et K) de celle qui fournit le contenu agrégé (V).
+2. **Reconstruire les projections** : écrire $Q=XW_Q$, $K=XW_K$, $V=XW_V$, suivre les dimensions et calculer les représentations obtenues.
+3. **Comprendre leur apprentissage** : expliquer comment la perte du modèle rétropropage des gradients vers les trois matrices, par des chemins différents pour Q/K et V.
+4. **Prédire les conséquences d'une modification de paramètres** : identifier ce qui change — et ce qui reste invariant — lorsqu'on modifie $W_Q$, $W_K$ ou $W_V$.
+5. **Transférer le raisonnement** : réutiliser ces distinctions en attention croisée et dans des variantes d'attention, en explicitant les changements de provenance ou de partage des projections.
+
+Les exercices associés sont regroupés dans la section [Attention](exercises.qmd#attention). Ils distinguent les acquis propres à Q/K/V des calculs de scores, de softmax et d'agrégation, traités dans la page sur l'[attention à produit scalaire](scaled-dot-product-attention.qmd).
+
 ## Ce qu'il faut distinguer
 
 | Objet | Rôle dans le calcul |
