@@ -118,7 +118,7 @@ This preserves all domain memberships but can create repeated cards. It is not a
 
 ### First browser run baseline — 2026-11-05
 
-The first browser run on the earlier review branch completed the Q/K/V and overview/generation route-context cases in FR/EN, desktop/mobile and light/dark modes. Those cases had no horizontal overflow; guided-stage anchors resolved; single and multi-membership semantics matched the contract; keyboard traversal found visible focus targets.
+The first browser run on the earlier review branch completed the Q/K/V and overview/generation route-context cases in FR/EN, desktop/mobile and browser prefers-color-scheme light/dark contexts. Those cases had no horizontal overflow; guided-stage anchors resolved; single and multi-membership semantics matched the contract; keyboard traversal found visible focus targets.
 
 The eight concept-map cases stopped at an over-strict test assertion: a concept with two domain memberships rendered two buttons with the same canonical ID, while the details panel updated correctly. The test now validates the selected canonical-ID set instead of requiring exactly one DOM button.
 
@@ -130,3 +130,10 @@ These findings require review on the current main-based rerun. They are not evid
 
 
 The current-main rerun is implemented in [PR #531](https://github.com/JM-Brun/llm-lab/pull/531). It covers the concept browser plus all four guided-route context pilots (overview, generation, embeddings and Q/K/V), and explicitly verifies that the obsolete pipeline stepper is absent from the latter two lessons. The rerun also captures Axe target HTML snippets to distinguish Quarto-generated markup from project-owned components.
+
+
+## Accessibility remediation follow-up — 2026-11-05
+
+The 40-case browser audit in merged [PR #531](https://github.com/JM-Brun/llm-lab/pull/531) established the rendered baseline. It tested browser prefers-color-scheme contexts; the Quarto site currently defines a single light theme, so this is not evidence of a dedicated dark theme.
+
+The two cross-cutting Axe findings are tracked in [#532](https://github.com/JM-Brun/llm-lab/issues/532) and are being addressed in [PR #535](https://github.com/JM-Brun/llm-lab/pull/535): semantic keyboard support for Quarto collapsible-callout headers, improved contrast for page-navigation/breadcrumb text and Mermaid edge labels, plus blocking Axe assertions in the existing browser audit. The PR is pending CI, Quarto and browser validation.
