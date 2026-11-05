@@ -215,7 +215,7 @@ items:
     disposition_rationale: "The current bilingual Q/K/V and attention lessons already state the same shape contracts and explain why d_k and d_v differ; no page edit is justified."
 
   - id: brenndoerfer-query-key-value-attention-2025:worked-example-random-projections
-    kind: example
+    kind: code-example
     summary: "A three-token 'The cat sat' example traces hand-crafted four-dimensional inputs through random Q/K/V projection matrices and the scaled attention computation, exposing intermediate vectors, weights and weighted outputs."
     locator: {type: section, value: "§7, lines 1270–1448", label: "A Worked Example with Real Words"}
     evidence:
