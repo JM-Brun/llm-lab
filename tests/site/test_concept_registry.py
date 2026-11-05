@@ -248,9 +248,7 @@ def test_symmetric_direction_is_driven_by_registry_metadata() -> None:
     ]
     assert validate_registry(data) == []
 
-    data["relations"].append(
-        {"from": "token", "type": "implemented-by", "to": "embedding"}
-    )
+    data["relations"].append({"from": "token", "type": "implemented-by", "to": "embedding"})
     errors = validate_registry(data)
     assert any("canonical lexical order" in error for error in errors)
 
