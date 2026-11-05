@@ -19,7 +19,7 @@ const cases = [
     ...testCase, page: "learning-map.html", kind: "learning-map",
   })),
   ...visualCases.flatMap(testCase =>
-    ["llm-overview.html", "generation.html", "embedding-space.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "logits.html", "cross-entropy.html"].map(page => ({
+    ["llm-overview.html", "generation.html", "embedding-space.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "logits.html", "cross-entropy.html", "text-data.html"].map(page => ({
       ...testCase, page, kind: "route-context",
     }))
   ),
@@ -235,6 +235,17 @@ for (const testCase of cases) {
     }
 
     if (kind === "route-context") {
+      const siteBreadcrumb = page.locator(".quarto-title-breadcrumbs");
+      const duplicateBreadcrumb = page.locator(".llm-breadcrumb");
+      item.siteBreadcrumb = {
+        nativeCount: await siteBreadcrumb.count(),
+        nativeText: await siteBreadcrumb.first().innerText().catch(() => ""),
+        customDuplicateCount: await duplicateBreadcrumb.count(),
+      };
+      if (item.siteBreadcrumb.nativeCount !== 1 || item.siteBreadcrumb.customDuplicateCount !== 0) {
+        throw new Error("site location must use exactly one native Quarto breadcrumb");
+      }
+
       const context = page.locator(".guided-page-context");
       if (await context.count() !== 1) throw new Error("guided-route context is missing");
       item.routeContext = {
@@ -283,6 +294,7 @@ for (const testCase of cases) {
           "causal-masking.html": "guided-stage-computation",
           "logits.html": "guided-stage-prediction",
           "cross-entropy.html": "guided-stage-learning-evaluation",
+          "text-data.html": "guided-stage-text-input",
         }[pagePath];
         if (!expectedStage || item.routeContext.isMultiple || !item.routeContext.navLandmark ||
             item.routeContext.currentPageMarkers !== 0 || stageFragments.length !== 1 ||
@@ -296,6 +308,24 @@ for (const testCase of cases) {
         if (item.routeContext.legacyStepperCount !== 0) {
           throw new Error("misleading legacy five-step pipeline stepper is still rendered");
         }
+      }
+      if (pagePath === "text-data.html") {
+        item.routeContext.localProcessStepperCount = await page.locator(".pipeline-stepper").count();
+        item.routeContext.localProcessStepperLabel = await page.locator(".pipeline-stepper").getAttribute("aria-label");
+        if (item.routeContext.localProcessStepperCount !== 1 ||
+            !item.routeContext.localProcessStepperLabel ||
+            /learning path|parcours pédagogique/i.test(item.routeContext.localProcessStepperLabel)) {
+          throw new Error("text-data local process stepper is missing or mislabelled as a curriculum breadcrumb");
+        }
+        const openingOrder = await page.locator(".chapter-lead, .callout-tip, .pipeline-stepper").evaluateAll(nodes =>
+          nodes.map(node => node.classList.contains("chapter-lead") ? "lead" :
+            node.classList.contains("pipeline-stepper") ? "stepper" : "takeaway")
+        );
+        if (openingOrder.indexOf("lead") < 0 || openingOrder.indexOf("takeaway") < 0 ||
+            openingOrder.indexOf("stepper") <= openingOrder.indexOf("takeaway")) {
+          throw new Error("text-data process stepper must follow the introductory mental model");
+        }
+        item.routeContext.openingOrder = openingOrder;
       }
     }
 

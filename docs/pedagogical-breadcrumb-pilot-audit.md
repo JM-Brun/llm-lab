@@ -232,3 +232,58 @@ Add the end-of-page `route-nav-cards` to FR/EN text-data (previous: generation; 
 - **D. A + end-of-page route cards now**, then decide C after the §11 rendered review and learner check.
 
 Recommendation: **D**.
+
+## 10. Rendered header audit — 2026-11-05
+
+A Chromium artifact from the merged browser-review run for PR #534 was inspected at desktop (1440 px) and mobile (390 px), French, light theme, for Q/K/V. The screenshot and `report.json` are retained in the GitHub Actions artifact `site-browser-review-0009a61155216d0fb16779079c1b71b2da0cd175` (run `42100872126`).
+
+### Observed opening
+
+The rendered Q/K/V header contains:
+
+1. a custom `.llm-breadcrumb` generated from the active Quarto sidebar;
+2. Quarto's native `.quarto-title-breadcrumbs`, repeating the same sidebar ancestry and current page;
+3. the H1 and subtitle;
+4. the generated guided-route stage context;
+5. the chapter lead;
+6. epistemic/status badges;
+7. an “L'idée à retenir” callout;
+8. the first section heading and its explanation.
+
+The two site-location breadcrumbs are redundant. The browser audit's Axe output independently identifies the native `.quarto-title-breadcrumbs` link and reports a minor contrast shortfall (4.48:1 against a 4.5:1 threshold). The custom breadcrumb is therefore not needed to provide the hierarchy and should be removed rather than visually combined with the native one.
+
+The mobile capture also shows the Quarto sidebar's compact navigation controls. These are global navigation controls, not a third page breadcrumb, and should remain intact.
+
+### Header composition decision
+
+Use a nested but semantically separate composition:
+
+- Quarto native breadcrumb: site location;
+- H1/subtitle: page identity;
+- generated guided-route context: pedagogical role of the page;
+- chapter lead and takeaway: page orientation and core mental model;
+- optional local stepper: a process/representation sequence within the content.
+
+The stage context is not appended to the site breadcrumb. A local stepper is not labelled as a learning path. The text-data and scaled-attention pages receive the same generated stage context as Q/K/V, while retaining their distinct local process steppers after the introductory mental model.
+
+### Follow-up verification
+
+- Confirm exactly one native Quarto breadcrumb and no `.llm-breadcrumb` on Q/K/V, text-data, and scaled-dot-product attention, in French and English.
+- Confirm the three pages expose their correct guided-route stage (text-input for text-data; computation for Q/K/V and scaled attention).
+- Confirm local steppers remain distinct, correctly labelled, and below the introductory explanation.
+- Review desktop/mobile screenshots and Axe results before merging.
+- Extend the pilot to other page archetypes only after this three-page composition is validated; do not mass-insert a context cue into every page without checking its value.
+
+## 11. Text-data nested context decision — 2026-11-05
+
+The initial §14 continuity decision retained the local text-data stepper and omitted a generated stage context to avoid two adjacent navigation bars. The subsequent page-header review distinguishes their semantics: the generated stage context identifies the page's place in the six-stage curriculum (site-learning context), while the local four-stop stepper explains the internal text-to-representation sequence (within-page process). They are therefore not duplicate navigation cues when visually nested and separated in the page opening.
+
+The explicit reader requirement is to expose both the site breadcrumb and the pedagogical stage context on text-data, while retaining the useful local representation stepper. This addendum supersedes only the §14 statement that text-data must stay without a generated stage context. It does not change the retirement of the misleading five-stop steppers on scaled attention, causal masking, logits, and cross-entropy.
+
+Validation remains pending: rendered FR/EN desktop/mobile screenshots must confirm the three dimensions remain visually distinct and the page opening is not overloaded.
+
+## 12. Stepper placement correction — 2026-11-05
+
+Review of the PR #538 rendered screenshots exposed one remaining mismatch between the written page-opening contract and the actual text-data composition: the local representation stepper appeared immediately after the chapter lead, before the one-minute mental-model callout. Although the three navigation dimensions were distinct and Axe reported no violations, this ordering made the process sequence compete with the initial explanation.
+
+The FR/EN pages now place the local stepper after the mental-model callout. The browser audit asserts this DOM order for both languages and viewports. This preserves the semantic distinction established in §11 while making the hierarchy explicit: site location → page identity → curriculum context → chapter lead → mental model → local process sequence.
