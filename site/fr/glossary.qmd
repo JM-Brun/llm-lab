@@ -12,7 +12,7 @@ scope: "Fait office d’index de référence concis pour le vocabulaire utilisé
 purpose: "Retrouver un terme, comprendre sa définition opérationnelle courte et rejoindre la page canonique pour les hypothèses, équations, exemples et limites qu’une entrée de glossaire ne peut pas développer."
 suggested_route:
   previous: null
-  next: "fr/transformer-history"
+  next: null
 hierarchy:
   parents: ["fr/index"]
   children: []

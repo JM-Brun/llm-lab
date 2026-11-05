@@ -12,7 +12,7 @@ scope: "Acts as a concise reference index for terminology used across the site, 
 purpose: "Locate a term, understand its short working definition, and follow the canonical page for assumptions, equations, examples, and limitations that a glossary entry cannot provide."
 suggested_route:
   previous: null
-  next: "en/transformer-history"
+  next: null
 hierarchy:
   parents: ["en/index"]
   children: []
