@@ -358,7 +358,7 @@ sources:
     title: "Do All Languages Cost the Same?"
     creators: ["Ahia et al."]
     source_type: paper
-    identifiers: {doi: null}
+    identifiers: {}
     canonical_url: "https://aclanthology.org/2023.emnlp-main.614/"
     publisher: "EMNLP 2023 / ACL Anthology"
     publication_date: "2023"
@@ -763,7 +763,7 @@ sources:
       concept_ids: [contextualized-representation]
     metadata:
       technical_level: intermediate
-      contribution_types: [implementation, documentation]
+      contribution_types: [implementation]
       audiences: [practitioner, maintainer]
     scan_status: partially-scanned
     integration_status: integrated
@@ -881,7 +881,7 @@ sources:
       concept_ids: [token]
     metadata:
       technical_level: intermediate
-      contribution_types: [implementation, documentation]
+      contribution_types: [implementation]
       audiences: [practitioner, maintainer]
     scan_status: partially-scanned
     integration_status: integrated
@@ -920,7 +920,7 @@ sources:
       concept_ids: [token]
     metadata:
       technical_level: intermediate
-      contribution_types: [implementation, documentation]
+      contribution_types: [implementation]
       audiences: [practitioner, maintainer]
     scan_status: partially-scanned
     integration_status: integrated
@@ -959,7 +959,7 @@ sources:
       concept_ids: [token]
     metadata:
       technical_level: intermediate
-      contribution_types: [theory, documentation, pedagogy]
+      contribution_types: [theory, pedagogy]
       audiences: [learner, practitioner]
     scan_status: partially-scanned
     integration_status: integrated
@@ -1034,7 +1034,7 @@ sources:
       concept_ids: [token-embedding]
     metadata:
       technical_level: intermediate
-      contribution_types: [implementation, documentation]
+      contribution_types: [implementation]
       audiences: [practitioner, maintainer]
     scan_status: partially-scanned
     integration_status: integrated
