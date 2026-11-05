@@ -4,6 +4,12 @@ This directory contains source-specific reviews and living multi-source collecti
 
 A collection dossier is not a replacement for the canonical concept graph, bilingual learning pages or project learning route. It compares external perspectives and records their integration decisions.
 
+## Curriculum and learning-path comparisons
+
+| Comparison | Scope | Entry point | Current state |
+|---|---|---|---|
+| Raschka and Hugging Face learning paths | From-scratch GPT implementation versus ecosystem/task-oriented LLM curriculum; transferable design principles and implications for LLM Lab | [Comparative audit](learning-path-comparison-2026-11-05.md) | Dated structural comparison (2026-11-05); not a learner-outcome evaluation |
+
 ## Living collections
 
 | Collection | Scope | Entry point | Current state |
