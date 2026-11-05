@@ -15,6 +15,7 @@ const visualCases = ["light", "dark"].flatMap(theme => [
 ]);
 
 const routeContextCases = visualCases.filter(testCase => testCase.theme === "light" && testCase.label === "desktop");
+const deepDiveReviewCases = visualCases.filter(testCase => testCase.theme === "light");
 
 const cases = [
   ...visualCases.map(testCase => ({
@@ -28,6 +29,13 @@ const cases = [
   ...visualCases.flatMap(testCase =>
     ["gpt-config-walkthrough.html", "gpt-ops-walkthrough.html", "transformer-block-walkthrough.html", "gpt-model-walkthrough.html", "gpt-generation-walkthrough.html"].map(page => ({
       ...testCase, page, kind: "build-tour",
+    }))
+  ),
+  ...deepDiveReviewCases.flatMap(testCase =>
+    ["attention-score-scaling.html", "cross-attention.html", "rope.html", "unicode-text.html", "tensors.html", "cosine-similarity.html",
+      testCase.lang === "fr" ? "linearite-embeddings.html" : "embedding-linearity.html",
+      "language-modeling-math.html", "mathematical-foundations.html", "llm-computational-complexity.html"].map(page => ({
+      ...testCase, page, kind: "deep-dive-parent",
     }))
   ),
 ];
@@ -352,6 +360,40 @@ for (const testCase of cases) {
         !expectedLinks.some(expected => link.targetId === expected.target && link.text.includes(expected.label))
       )) {
         throw new Error("build-tour has an unexpected previous/next link at this sequence boundary");
+      }
+    }
+
+    if (kind === "deep-dive-parent") {
+      const currentPageId = `${lang}/${pagePath.replace(/\.html$/, "")}`;
+      const parents = await page.evaluate(async ({ language, currentId }) => {
+        const response = await fetch(`../learning-map-data-${language}.json`);
+        if (!response.ok) throw new Error(`learning-map metadata request failed: ${response.status}`);
+        const payload = await response.json();
+        const current = payload.pages.find(candidate => candidate.id === currentId);
+        if (!current) throw new Error(`missing page metadata: ${currentId}`);
+        return current.parents || [];
+      }, { language: lang, currentId: currentPageId });
+      if (!parents.length) throw new Error("deep-dive page has no declared canonical parent");
+
+      const links = await page.locator("main a[href]").evaluateAll(anchors =>
+        anchors.map(anchor => ({
+          href: anchor.getAttribute("href"),
+          text: (anchor.innerText || anchor.textContent || "").trim(),
+        }))
+      );
+      const resolvedLinks = links.map(link => {
+        const url = new URL(link.href, page.url());
+        const match = url.pathname.match(/\/(fr|en)\/([^/]+)\.html$/);
+        return { ...link, targetId: match ? `${match[1]}/${match[2]}` : null };
+      });
+      item.deepDiveParent = {
+        parents,
+        links: resolvedLinks.filter(link => parents.includes(link.targetId)),
+      };
+      for (const parent of parents) {
+        if (!item.deepDiveParent.links.some(link => link.targetId === parent)) {
+          throw new Error(`deep-dive page does not expose a link back to canonical parent ${parent}`);
+        }
       }
     }
 
