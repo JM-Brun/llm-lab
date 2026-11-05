@@ -2,13 +2,13 @@
 
 **Source ID:** `codefinity-qkv-building-blocks`  
 **Creator/publisher:** Codefinity  
-**Source type / language / audience:** Course lesson / English / introductory learner  
+**Source type / language / audience:** Course lesson / English / introductory lesson within a course labelled Advanced  
 **Review date:** 2026-11-05  
 **Canonical URL:** https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b
 
 ## 1. Scope, provenance and scan status
 
-The lesson page was directly opened. The page reader exposed the lesson title, introductory paragraph, definition, bank/river example, explanatory recap, one four-option multiple-choice check, and its position as Section 1 / Chapter 2 of *Neural Network Attention Mechanisms*.
+The lesson page was directly opened. The page reader exposed the lesson title, introductory paragraph, definition, bank/river example, explanatory recap, one four-option multiple-choice check, and its position as Section 1 / Chapter 2 of *Neural Network Attention Mechanisms*. The parent course overview was also directly inspected: it labels the course Advanced, reports three modules, ten chapters and ten assignments, and exposes the complete chapter-title outline. The other lesson bodies and assignments were not inspected.
 
 | Component | Status | Coverage and evidence | Limitations |
 |---|---|---|---|
@@ -17,7 +17,7 @@ The lesson page was directly opened. The page reader exposed the lesson title, i
 | Code/data | not exposed | No code or data visible in retrieved lesson | Wider course may contain interactive tasks |
 | Comments/community | not exposed | No comments visible | Absence cannot be inferred |
 | Linked resources | not inspected | No technical outbound references exposed | Full DOM not available |
-| Metadata/version | partial | Course, section and lesson identifiers; course title | Publication/update date and revision unknown |
+| Metadata/version | partial | Course, section and lesson identifiers; course title; parent course level and outline | Publication/update date and revision unknown; other lesson bodies not inspected |
 | Licence/reuse rights | unknown | No licence statement established | Text and figures remain link-only |
 
 **Overall status: partially-scanned.** The lesson text exposed by the page reader was reviewed, but the interactive environment, media, broader course sequence, links and rights were not.
@@ -66,7 +66,19 @@ The bank/river sentence motivates contextual lexical ambiguity, while the quiz t
 
 The route is concise and question-led. It does not expose a derivation or implementation sequence. The quiz's distractors are useful because they target role confusion directly, but the available evidence does not show whether the platform gives explanatory feedback or tracks mastery.
 
-## 6. Differential comparison with LLM Lab
+## 6. Course-level route comparison
+
+The parent course overview places the target lesson in this sequence:
+
+1. **Foundations of Attention:** motivation → Q/K/V → relevance scoring.
+2. **Self-Attention and Multi-Head Attention:** contextual representations → scaling/softmax → multi-head attention → causal/padding masks.
+3. **Attention Inside Transformers:** block placement → self-/cross-attention → long-range reasoning and interpretability.
+
+The course declares an Advanced level, while this particular lesson uses an introductory explanatory style. This is why the source catalogue classifies its technical level as mixed rather than assuming the lesson is advanced from the course label.
+
+The local sequence is compatible with LLM Lab's separation of the Q/K/V projections from the subsequent scaled-dot-product-attention computation. The later module ordering differs from LLM Lab's broader prerequisite-oriented route, but the overview alone does not provide enough instructional detail to justify adopting it. Course-level titles are not evidence of prerequisite relations.
+
+## 7. Differential comparison with LLM Lab
 
 | Learner question | Codefinity treatment | Existing project treatment | Gap or complementarity | Decision |
 |---|---|---|---|---|
@@ -82,7 +94,7 @@ The route is concise and question-led. It does not expose a derivation or implem
 - **Pedagogical route:** Codefinity uses a compact local sequence; it does not justify changing the canonical route.
 - **Site navigation:** no new page, sidebar item, prerequisite edge or route card is justified.
 
-## 7. Integration decision
+## 8. Integration decision
 
 **No published-page or canonical-graph edit is justified.** The bank example is already present in the project's contextualized-representations treatment and the current Q/K/V page has a separate pronoun-context example. Adding Codefinity's role definitions or another search analogy would stack explanations without a distinct learner benefit.
 
@@ -98,10 +110,11 @@ The quiz is retained as an assessment-design reference. It may inform a future r
 - **Visual assets:** none; no source image copied.
 - **New pages:** none.
 
-## 8. Validation, provenance and open work
+## 9. Validation, provenance and open work
 
 - The source is registered in `data/sources.yml` and its atomic items are in the extraction YAML.
 - The Q/K/V source collection index links this review and extraction.
+- The parent course overview was inspected for module/chapter titles only; no content from the other lessons or assignments is attributed to the target lesson.
 - The linked images remain uninspected; no reuse rights are established.
 - The wider course sequence and interactive quiz feedback remain uninspected.
 - No CI, Quarto render, link check or visual browser validation is claimed by this source review.
