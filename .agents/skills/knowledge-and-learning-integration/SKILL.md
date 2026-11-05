@@ -11,6 +11,8 @@ This is **Phase B: integration**. Consume persistent, reviewable records produce
 
 Do not rescan by default. If an extraction is incomplete, stale or tied to a different version, request targeted re-extraction. An extracted item is not automatically accepted. A fully catalogued source can produce no graph or page change.
 
+Use the [source-to-knowledge validation protocol](../../../docs/workflows/source-to-knowledge-validation.md) for the integration gates and final report. Assess complementarity independently of novelty, test a plausible bounded integration before a pedagogical no-op, and keep technical review, rendered/accessibility review and learner evidence distinct.
+
 ## 1. Inspect the current architecture
 
 Before changing anything, inspect:

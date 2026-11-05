@@ -21,6 +21,8 @@ The phases may run in separate sessions and PRs. Extraction is a durable researc
 
 Use this skill to orchestrate both. Run extraction first unless a complete, trustworthy record already exists. Run integration only against persistent, reviewable records. Do not repeat scans unnecessarily.
 
+Apply the [source-to-knowledge validation protocol](../../../docs/workflows/source-to-knowledge-validation.md) across the hand-off: validate extraction fidelity before synthesis, compare contributions before deciding integration, and report resource validation and learner validation as separate evidence states. Q/K/V is a calibration case, not proof of transferability.
+
 ## Phase A — extraction
 
 Input: URLs, documents, repositories, named sources, or a source set.

@@ -11,6 +11,8 @@ Produce a durable, machine-readable record of what a source actually contains an
 
 A scanned source may yield many independent items—or none worth integrating. Extraction is not endorsement or publication.
 
+Use the [source-to-knowledge validation protocol](../../../docs/workflows/source-to-knowledge-validation.md) as the quality gate for Phase A. In particular, keep source inspection and extraction completeness independent; record partial access explicitly; and do not let a useful extracted item upgrade the source-level scan status.
+
 ## Inspect repository conventions
 
 Read the current graph standards and implementation audit, `docs/source-catalogue-schema.md`, `data/source-taxonomy.yml`, `data/domains.yml`, `data/sources.yml`, source/reference inventories, the pedagogical resource library, visual-asset register, existing source audits, validators and related skills. Use `data/sources.yml` as the canonical source catalogue and `data/extractions/<source-id>.yml` for atomic extraction records. Do not create a parallel catalogue, overload implementation-oriented `data/resources.yml`, create another concept registry, or hand-maintain JSON-LD. Keep records compact; link large artifacts to canonical files.
