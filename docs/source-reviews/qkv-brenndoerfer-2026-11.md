@@ -13,14 +13,14 @@
 | Component | Status | Inspected | Not established |
 |---|---|---|---|
 | Author text | Complete for visible chapter | Motivation, analogy, equations, derivation, dimensions, code, worked example, limitations, parameters, summary and quiz introduction | Immutable archived version |
-| Figures / visualizations | Partial | Captions and textual descriptions of variance plots, softmax distributions, attention heatmap and worked example | Original image bytes, visual design, alt text and accessibility |
+| Figures / visualizations | Partial, inventoried | Nine visual teaching assets/moves catalogued: variance curve, softmax concentration bars, scaled/unscaled comparison, Q/K/V projection-space scatter plots, random-init heatmap, tensor-shape table, worked-example intermediates, row-normalization output and weighted-value mixtures | Original image bytes, source design, original alt text, accessibility and reuse licence remain unverified; see visual inventory |
 | Code / data | Partial | Rendered snippets and outputs for projections, attention, scaling, shapes and worked example | Execution, dependencies, environment, reproducibility |
 | Quiz | Partial | Eight-question quiz advertised; question 1 visible | Questions 2–8, feedback, scoring and interaction |
 | Comments | Partial | One visible comment dated 2026-08-04 | Completeness of thread |
 | Linked resources | Partial | Internal links to adjacent handbook chapters | Re-scan of linked chapters |
 | Rights | Unknown | No reuse terms established | Text, figure, code and data licence |
 
-No code, image or extended prose is copied into LLM Lab. The source remains link-only. No claim of browser accessibility or learner effectiveness is made.
+No source code, original image, or extended prose is copied into LLM Lab. The source remains linked and its visual teaching moves are documented separately. No claim of original-asset accessibility or learner effectiveness is made.
 
 ## 2. Source-local pedagogical reconstruction
 
@@ -87,6 +87,9 @@ Compared directly with:
 | End-to-end Python trace | Canonical deterministic worked example and Build walkthrough | Integrate by reference; no second implementation or copied code |
 | Random-init heatmap caveat | Existing warnings against interpreting attention weights causally | Clarify as a distinct epistemic point in source synthesis/regression tests; no page edit until learner gap is evidenced |
 | “Operate independently” wording | Canonical page explicitly says separately parameterized but jointly optimized | Already covered; retain as adversarial regression fixture |
+| Key/value routing versus payload | Canonical page states Q/K determine weights and V supplies content, but does not explain explicitly that a position can attract attention for one feature while transmitting another | Added a short collapsible, hypothetical explanation in both Q/K/V language pages |
+| Message passing / broadcast interpretation | Not stated explicitly in the scaled-attention lesson | Added as an optional analogy in both scaled-attention language pages |
+| Convex-hull property of the weighted sum | Weighted-sum formula exists, but this geometric consequence was absent | Added with conditions and a boundary: before output projection/residual addition, for rows with at least one accessible key |
 | Eleven-section teaching route | Existing route intentionally separates Q/K/V roles, score computation, scaling and Build | Integrate by reference as a comparison case; do not reorder canonical curriculum |
 | Eight-question quiz | Only first question visible; existing #447 protocol and exercise hub exist | Defer assessment comparison until all items and feedback are inspectable |
 
@@ -96,9 +99,7 @@ No new canonical page, concept, relation, route edge, exercise or implementation
 
 The strongest incremental contribution is the **assumption-explicit variance-to-softmax teaching chain**. It belongs conceptually with the existing attention-score-scaling deep dive, but that lesson already owns the topic. The correct integration is a traceable external reference, not duplicated text.
 
-The source also contributes two useful workflow regression cases:
-- distinguish separate parameterization from independent optimization;
-- distinguish a random-initialization visualization from evidence about trained attention behavior.
+The source also contributes workflow regression cases: distinguish separate parameterization from independent optimization; distinguish a random-initialization visualization from evidence about trained attention behavior; and distinguish the routing role of keys from the payload role of values. The last distinction is now integrated as a short, explicitly hypothetical note in both canonical Q/K/V pages.
 
 At least one plausible learner-facing candidate was tested: adding the variance derivation to the core Q/K/V page would duplicate the dedicated scaling lesson and overload the conceptual entry point. The existing advanced scaling page is the appropriate owner; the external chapter can be linked there if a precise gap is found. This supports a justified no-op for canonical content.
 
@@ -113,7 +114,7 @@ This is an incremental source addition to an already populated Q/K/V collection,
 | Extraction | One catalogue record, one structured extraction, 16 source-local nodes, 15 relations, six inferred outcomes, three prerequisites, eleven route steps, seven atomic items | Active minutes not instrumented |
 | Comparison | Six canonical EN/FR pages plus existing source collection, coverage matrix and synthesis | Active minutes not instrumented |
 | Decision | Item-level dispositions and one tested no-op candidate | Active minutes not instrumented |
-| Validation | Schema validator and CI/Quarto on the final PR head | Pending at report creation |
+| Validation | Initial schema gate caught unsupported `example` kind; corrected to `code-example`. CI and Quarto subsequently completed successfully on commit `cfe4ba90ef03cd02ec46cc43708e7127e388638a` before the visual/pedagogical additions. The new additions require a fresh final-head run. | Active minutes not instrumented |
 
 **No elapsed-time or active-human-time estimate is fabricated.** Repository operations and artifact counts are reproducible, but they are not a proxy for human effort. The next iteration should record stage start/end timestamps, active review minutes, manual interventions, retries, blocked events and automated check outcomes. Waiting time should be reported separately from active work.
 
@@ -129,7 +130,7 @@ The first catalogue-validator run rejected the worked-example item because `exam
 
 ## 8. Operational footprint and effort
 
-Observable artifact footprint: one source record, one extraction with six atomic items, sixteen source-local nodes, fifteen source-local edges, eleven teaching-route steps, one source review, and three existing synthesis/collection artifacts updated. These are reproducible workload descriptors, not human-time estimates. Active review minutes, waiting time, number of manual interventions and cognitive effort were not instrumented. The first validation attempt exposed one controlled-vocabulary error; it was repaired in one extraction-file update. CI/Quarto must be checked on the final head.
+Observable artifact footprint: one source record, one structured extraction, sixteen source-local nodes, fifteen source-local edges, eleven teaching-route steps, one source review, one visual inventory, two bilingual Q/K/V lesson updates, two bilingual scaled-attention lesson updates, and three existing synthesis/collection artifacts updated. These are reproducible workload descriptors, not human-time estimates. Active review minutes, waiting time, number of manual interventions and cognitive effort were not instrumented. The first validation attempt exposed one controlled-vocabulary error; it was repaired in one extraction-file update. CI/Quarto must be checked on the final head.
 
 ## 9. Reproducibility
 
@@ -138,4 +139,5 @@ Observable artifact footprint: one source record, one extraction with six atomic
 - Structured extraction: `data/extractions/brenndoerfer-query-key-value-attention-2025.yml`
 - Q/K/V collection: `docs/source-reviews/qkv-source-collection.md`
 - Coverage matrix: `docs/source-syntheses/qkv-pedagogical-coverage-matrix-2026-11.md`
+- Visual inventory: `docs/source-reviews/qkv-brenndoerfer-visual-inventory-2026-11.md`
 - Existing method: `docs/workflows/source-to-knowledge-validation.md`
