@@ -42,7 +42,7 @@ pedagogical_model:
       - {from: src-quiz, type: assesses, to: src-query}
       - {from: src-quiz, type: assesses, to: src-key}
       - {from: src-quiz, type: assesses, to: src-value}
-  interpretation: "Editorial reconstruction of the article's instructional model, not a formal ontology authored by the source. Section order is a teaching route, not proof of semantic prerequisites."
+    interpretation: "Editorial reconstruction of the article's instructional model, not a formal ontology authored by the source. Section order is a teaching route, not proof of semantic prerequisites."
   learning_outcomes:
     - {status: inferred, outcome: "Explain why attention uses distinct learned query, key and value representations.", basis: "Introductory motivation and projection derivation."}
     - {status: inferred, outcome: "Derive the scaled dot-product attention computation and track its matrix dimensions.", basis: "Stepwise formula development and shape analysis."}
