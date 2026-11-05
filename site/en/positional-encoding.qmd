@@ -20,6 +20,8 @@ related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-positional-encoding.qmd >}}
 ::: {.chapter-lead}
 Attention compares token representations, but it does not inherently know their order. A positional mechanism supplies this information, allowing a model to distinguish, for example, “the cat chases the dog” from “the dog chases the cat”. This page introduces the main mechanism families conceptually; RoPE geometry and derivation belong in an [advanced deep dive](rope.qmd).
 :::
