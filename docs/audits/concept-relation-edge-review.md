@@ -1,9 +1,9 @@
 # Concept relation edge review
 
 **Date:** 2026-11-05  
-**Status:** first semantic review; rendered graph and learner validation remain open  
+**Status:** semantic registry review complete; source-level UI review recorded; browser/accessibility and learner validation remain open  
 **Canonical data:** [`data/concepts.yml`](../data/concepts.yml)  
-**Tracking:** [LLM Lab #416](https://github.com/JM-Brun/llm-lab/issues/416), [validator PR #518](https://github.com/JM-Brun/llm-lab/pull/518)
+**Tracking:** [LLM Lab #416](https://github.com/JM-Brun/llm-lab/issues/416), [merged validator PR #520](https://github.com/JM-Brun/llm-lab/pull/520)
 
 ## Scope and method
 
@@ -91,3 +91,31 @@ The generated bilingual learning-map payload now preserves the relation type con
 The interactive learning-map JSON now preserves the relation metadata. The separate JSON-LD export in `site/tools/export_knowledge_graph.py` currently emits typed predicates for relation edges but does not export relation-type nodes with their family, direction, transitivity, acyclicity, learning-dependency and inverse metadata. This is a selective export, not a full serialization of the relation contract.
 
 A follow-up should decide whether external consumers need a published relation vocabulary (for example, relation-type nodes with bilingual SKOS labels/definitions and project-specific semantic properties). The exporter and validator also maintain hard-coded relation-type allowlists; assess whether those should be derived from the canonical `relation_types` mapping to reduce drift. Do not expand JSON-LD or add another vocabulary unless an interoperability consumer requires it.
+
+## Source-level interaction and accessibility review — 2026-11-05
+
+This is a review of the current source implementation, not a claim that the rendered pages have been visually or assistively tested in a browser.
+
+### Confirmed in source
+
+- The concept view is grouped by canonical discovery domain and uses a responsive CSS grid (auto-fill with a 240px minimum), rather than the earlier fixed three-column ordering.
+- The relation legend is shown persistently while the concept view is active. It exposes the source → target convention, localized relation labels, and localized descriptions.
+- Concepts are native buttons. Selection is represented with aria-pressed; selecting a concept highlights its neighbours and updates the details panel.
+- The details panel lists each relation with source, relation label, target, and a button to inspect the connected concept.
+- Mode, relation filter, and search controls have associated labels. The details panel uses a polite live region; the page also exposes a status region.
+- Escape clears a query, selected concept, or active relation filter in sequence; the reset control clears all map state.
+- CSS includes visible focus styles for concept buttons, relation links, map controls, and reduced-motion handling in the broader site styles.
+
+### Important semantic clarification
+
+The current canonical-concept view is a **domain-grouped concept browser**, not a node-link diagram: it does not draw connectors between concept nodes. Relationships are communicated through the persistent legend, neighbour highlighting, and the selected concept's textual relation list. Documentation and issue descriptions should not imply that visible edge geometry or graph layout has been validated.
+
+### Remaining checks
+
+- Browser QA must inspect desktop/mobile at 1440px and 390px in light/dark color schemes, with screenshots and Axe results.
+- Verify keyboard focus order, Escape behavior, filter interaction, selection, and detail navigation against the rendered DOM.
+- Inspect contrast and focus visibility manually; source selectors alone do not establish WCAG conformance.
+- Relation family, transitivity, acyclicity, inverse, and learning-dependency metadata are preserved in the data projection but are not all exposed in the reader-facing legend. Decide whether exposing any of them improves interpretation without overwhelming the legend.
+- No learner-comprehension claim is supported until readers unfamiliar with the project complete a small task-based evaluation.
+
+The browser audit is being extended in [PR #524](https://github.com/JM-Brun/llm-lab/pull/524). Its result, not this source review, will provide rendered-browser evidence.
