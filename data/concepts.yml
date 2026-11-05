@@ -294,7 +294,9 @@ relations:
   - from: token-embedding
     type: prerequisite
     to: contextualized-representation
-    rationale: "The contextualized representation is computed from an initial token representation by the model layers."
+    rationale:
+      fr: "La représentation initiale du token doit être comprise avant les transformations contextuelles."
+      en: "The initial token representation should be understood before its contextual transformations."
   - {from: query, type: part-of, to: self-attention}
   - {from: key, type: part-of, to: self-attention}
   - {from: value, type: part-of, to: self-attention}
