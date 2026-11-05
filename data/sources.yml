@@ -2014,3 +2014,52 @@ sources:
       audit_records:
         - docs/source-reviews/qkv-codefinity-course-2026-11.md
         - docs/source-reviews/qkv-source-collection.md
+
+  - id: mbrenndoerfer-qkv-attention-mechanism
+    title: "Query, Key, Value: The Foundation of Transformer Attention"
+    creators: ["Michael Brenndoerfer"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism"
+    publisher: "Michael Brenndoerfer / Language AI Handbook"
+    publication_date: "2025-06-01"
+    updated_date: "2025-06-04"
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:qkv, topic:self-attention, topic:attention, method:scaled-dot-product]
+      concept_ids: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [pedagogy, mathematical-derivation, implementation, visualization]
+      audiences: [learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-05"
+        status: partially-scanned
+        inspected_scope:
+          - "Canonical chapter page and 11-section structure; visible prose and chapter navigation"
+          - "QKV projection equations, dimensions, scaling variance derivation, softmax and weighted aggregation"
+          - "Python code snippets, displayed numerical outputs, shape walkthrough and The cat sat worked example"
+          - "Limitations, key parameters, summary and quiz section presence"
+          - "Compared selected contributions with the existing Q/K/V source collection and canonical bilingual lessons"
+        limitations:
+          - "Code and notebook cells were inspected as published text; execution and numerical reproduction were not performed."
+          - "The retrieved page described plots and visualizations, but original media bytes were not retrieved or visually inspected."
+          - "Interactive controls, quiz feedback, comments, raw DOM, linked references and surrounding handbook chapters were not inspected."
+          - "Text and figure licences/reuse permissions were not established; retain link-only."
+          - "The chapter is secondary pedagogical material; technical claims were assessed mathematically but not all independently traced to primary sources."
+    related:
+      pages: [en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
+      concepts: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention]
+      audit_records:
+        - data/extractions/mbrenndoerfer-qkv-attention-mechanism.yml
+        - docs/source-reviews/qkv-mbrenndoerfer-2026-11.md
+        - docs/source-reviews/qkv-source-collection.md
+        - docs/source-syntheses/qkv-incremental-source-pilot-2026-11-05.md
