@@ -133,7 +133,7 @@ Use the existing project checks; do not create a workflow per concept or a secon
 ```bash
 uv run --with-requirements docs/requirements-history-validation.txt python site/tools/check_page_metadata.py
 uv run --locked pytest
-python scripts/build_learning_map.py
+python site/tools/build_learning_map.py
 quarto render site
 ```
 
