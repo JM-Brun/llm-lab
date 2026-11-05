@@ -1,0 +1,200 @@
+schema_version: 1
+source_id: ahia-do-all-languages-cost-the-same-2023
+scan:
+  accessed_at: "2026-11-05"
+  retrieval_method: direct-pdf
+  author_text:
+    status: partial
+    coverage: "Published EMNLP 2023 PDF: research questions, tokenizer/model setup, parallel-corpus token-count analysis, API cost estimates, in-context utility experiments, socio-economic correlations and limitations."
+    notes: ["Full main paper inspected; selected appendix results were not exhaustively audited and no experiment was reproduced."]
+  figures_media:
+    status: partial
+    coverage: "Main figures 1–10 and the socio-economic correlation table inspected in the rendered PDF."
+    notes: ["No external figure or table asset was copied."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["The linked llm_tokenizer_cost repository, API snapshots, raw benchmark outputs and evaluation scripts were not independently audited or executed."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "ACL Anthology proceedings PDF and publication metadata; paper's linked code repository identified."
+    notes: ["Repository history, dependencies, model snapshots and all cited datasets were not exhaustively inspected."]
+  metadata:
+    status: partial
+    coverage: "EMNLP 2023, pp. 9904–9923."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["No figure reuse permission was established; this extraction contains paraphrases only."]
+  unresolved_questions:
+    - "The reported API cost ratios should not be presented as current prices or current model behaviour."
+    - "A reproducibility pass requires identifying the exact tokenizer/API snapshots and inspecting the linked code and evaluation data."
+items:
+  - id: ahia-do-all-languages-cost-the-same-2023:token-count-as-cost-unit
+    kind: definition
+    summary: "The paper treats the number of processed and generated tokens as the operational billing unit for commercial LM APIs and measures fragmentation as average tokens per sentence on parallel text, rather than fertility, to compare equivalent content without requiring language-specific word segmenters."
+    locator: {type: section, value: "§2.1–2.2 and §3.2, pp. 9905–9906", label: "API billing and token-count measurement"}
+    evidence:
+      kind: method-definition
+      confidence: established
+      scope: "The paper's 2023 analysis of selected commercial and open multilingual LM APIs."
+      assumptions: ["Parallel FLORES-200 sentences are treated as content-matched across languages."]
+      limitations:
+        - "Parallel translated text may contain translationese and may not represent naturally authored text."
+        - "Average tokens per sentence is specific to the API billing question and is not interchangeable with fertility, CTC or character-normalized parity."
+    technical_assessment:
+      status: correct
+      rationale: "The paper explicitly motivates sequence token counts as the relevant quantity for per-token billing and explains why fertility is unsuitable for its language set."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, application:api-cost]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/text-data, fr/text-data]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Adds the economic/billing interpretation of sequence length to the existing tokenizer evaluation comparison; keep its measurement distinct from the other corpus metrics."
+  - id: ahia-do-all-languages-cost-the-same-2023:script-and-data-effects
+    kind: experiment
+    summary: "The authors compare commercial tokenizer fragmentation across 22 languages and train byte-level BPE tokenizers on parallel data with matched content and data size, varying vocabulary sizes from 5,000 to 50,000; disparities persist across scripts even under this controlled training setup."
+    locator: {type: section, value: "§3.2 and §4.1, pp. 9906–9907; Figure 3", label: "Parallel-data byte-level BPE experiment"}
+    evidence:
+      kind: controlled-tokenizer-experiment
+      confidence: well-supported
+      scope: "Selected language/script samples and byte-level BPE vocabulary sizes in the paper's controlled experiment."
+      assumptions: ["Matched parallel data and corpus size reduce content and data-volume differences between language conditions."]
+      limitations:
+        - "The controlled experiment samples one language per script in its main comparison and does not isolate every linguistic feature."
+        - "The commercial ChatGPT training corpus and tokenizer-training details were not available to the authors."
+    technical_assessment:
+      status: qualified
+      rationale: "The matched-data experiment supports a role for script/language properties beyond data volume, but does not identify a single causal linguistic feature."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:multilingual-tokenization, method:controlled-comparison, topic:byte-level-bpe]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The advanced lesson already includes the finding that tokenizer disparity is not reducible to language data volume; this extraction preserves the controlled experiment's scope."
+  - id: ahia-do-all-languages-cost-the-same-2023:api-cost-disparity
+    kind: result
+    summary: "Under the per-token API pricing and tokenizer conditions examined in 2023, more fragmented languages incur higher estimated usage costs; the paper reports close to fivefold relative cost for several mid-resource Indic languages and up to fourfold prompt-plus-generation experiment cost for Telugu and Amharic on XLSUM."
+    locator: {type: section, value: "§4.2, pp. 9907–9908; Figures 4–5 and Appendix Figure 11", label: "Estimated API usage cost"}
+    evidence:
+      kind: reported-cost-estimate
+      confidence: well-supported
+      scope: "The paper's historical GPT-3.5/ChatGPT tokenizer and API pricing assumptions, language samples and evaluated tasks."
+      assumptions: ["The same information is compared and API charges are assumed proportional to input/output token counts at a fixed per-token rate."]
+      limitations:
+        - "The ratios are historical estimates, not current API prices or a statement about present-day model tokenizers."
+        - "The cost analysis depends on the specific tokenizer and API pricing schedule used by the authors."
+        - "The reported fivefold and fourfold values refer to different comparisons and must not be conflated."
+    technical_assessment:
+      status: qualified
+      rationale: "The paper's relative-cost calculation follows from token counts and the then-current per-token pricing, but its numerical ratios are time- and model-specific."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [application:api-cost, topic:multilingual-tokenization, topic:compute-cost]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "A concrete example of how tokenizer sequence length propagates into user-facing economic cost; numbers should remain explicitly historical."
+  - id: ahia-do-all-languages-cost-the-same-2023:context-window-and-icl-utility
+    kind: result
+    summary: "Higher fragmentation reduces the number of in-context demonstrations and the amount of source text that fit within a fixed token context window; the paper observes that some languages cannot fit even one complete demonstration in selected ChatGPT tasks, limiting few-shot utility."
+    locator: {type: section, value: "§3.3 and §4.3, pp. 9906, 9908–9909; Figures 6–9", label: "Context budget and in-context learning"}
+    evidence:
+      kind: reported-evaluation
+      confidence: well-supported
+      scope: "The paper's 4,096-token ChatGPT context limit and 1,000-token BLOOMZ inference API limit, with selected multilingual tasks."
+      assumptions: ["The task prompts and demonstrations are comparable enough for within-language changes in k-shot context to be informative."]
+      limitations:
+        - "BLOOMZ few-shot behaviour is separately affected by weak demonstration use and API truncation; its results should not be attributed solely to tokenization."
+        - "Some language/task settings are evaluated zero-shot because additional demonstrations do not fit."
+        - "The tested model versions and context limits are historical."
+    technical_assessment:
+      status: qualified
+      rationale: "The paper shows a concrete context-budget mechanism, but model behaviour and prompt/task effects remain entangled with tokenization."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:context-window, topic:in-context-learning, application:api-cost]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "This is a useful connection from tokenizer output to context-window utilization and few-shot capacity; retain as an advanced application example, not a general causal law."
+  - id: ahia-do-all-languages-cost-the-same-2023:double-unfairness
+    kind: result
+    summary: "The authors report correlations between language-level fragmentation, API cost, model utility and the Human Development Index of the country with the largest absolute number of speakers; they describe the combined pattern of higher cost and lower utility in less economically developed settings as 'double unfairness'."
+    locator: {type: section, value: "§4.4, pp. 9910–9911; Figure 10 and Table 1", label: "Socio-economic correlations"}
+    evidence:
+      kind: reported-correlational-analysis
+      confidence: context-dependent
+      scope: "Language-level metrics and country-level HDI proxies for the selected languages and tasks."
+      assumptions: ["The country with the largest number of speakers is used as a proxy for the socio-economic context of a language community."]
+      limitations:
+        - "This is an ecological correlation and does not establish individual-level affordability or causal discrimination."
+        - "The language-to-country mapping is a coarse proxy for multilingual and diasporic speaker populations."
+        - "The correlations are based on a limited set of languages, models and historical API conditions."
+    technical_assessment:
+      status: qualified
+      rationale: "The authors report statistically tested associations, but the ecological design and proxy choices do not justify individual-level causal claims."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: [scale-research]
+      tags: [application:api-cost, topic:multilingual-tokenization, topic:accessibility]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Adds a distinct social-accessibility perspective that is not captured by tokenizer compression metrics alone; preserve its ecological and historical scope."
+  - id: ahia-do-all-languages-cost-the-same-2023:reproducibility-and-generalization-limits
+    kind: limitation
+    summary: "The study's downstream evaluation uses closed ChatGPT models whose weights and training data are unavailable and may change, estimates training-language proportions from CC100, and uses translated FLORES-200 text for the cross-language token-count comparison."
+    locator: {type: section, value: "Limitations, p. 9912; §4.1 and §8", label: "Reproducibility and generalization limits"}
+    evidence:
+      kind: author-stated-limitations
+      confidence: established
+      scope: "The paper's commercial API analysis and cross-language evaluation design."
+      assumptions: []
+      limitations:
+        - "The open-tokenizer cost analysis is more reproducible than the closed-model downstream evaluation."
+        - "The paper's conclusions concern the model/API versions available at the time of the 2023 study."
+        - "CC100 is a proxy for unknown ChatGPT training-language proportions, not verified training data."
+    technical_assessment:
+      status: correct
+      rationale: "These limitations are explicitly acknowledged by the authors and materially constrain reproducibility and generalization."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:reproducibility, topic:multilingual-tokenization, application:api-cost]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The advanced lesson already treats the results as historically scoped; the extraction adds the exact reproducibility caveats."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "Ahia et al. adds a distinct user-facing and socio-economic dimension to multilingual tokenization: token counts affect API bills and the number of in-context examples that fit, not just compression metrics. The paper also connects those effects to language-level affordability proxies. Preserve the 2023 model/pricing context and the ecological nature of the socio-economic correlations; no new canonical concept or route step is warranted."

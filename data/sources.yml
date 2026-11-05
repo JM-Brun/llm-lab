@@ -388,6 +388,15 @@ sources:
         limitations:
           - "The audit is abstract-level; full-paper methodology was not reviewed in that pass."
           - "Findings are specific to evaluated commercial APIs and benchmarks."
+      - accessed_at: "2026-11-05"
+        status: partially-scanned
+        inspected_scope:
+          - "Full published EMNLP 2023 PDF: tokenizer/model setup, FLORES-200 token counts, controlled byte-level BPE comparison, API cost estimates, in-context utility experiments, socio-economic correlations and limitations"
+          - "Main figures and table inspected; structured extraction created with six atomic items"
+        limitations:
+          - "The commercial model and pricing evidence is historical; ChatGPT training data and model snapshots were unavailable."
+          - "FLORES-200 translationese, CC100 proxy assumptions and country-level HDI mapping limit generalization."
+          - "The linked code repository and raw evaluation data were not independently audited or executed."
     related:
       pages: [en/text-data, fr/text-data, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
@@ -659,6 +668,15 @@ sources:
           - "Primary paper and distinction between static word-type vectors and contextual Transformer representations"
         limitations:
           - "The audit is scoped to the historical/static-embedding distinction; the paper's full experimental appendix was not re-audited."
+      - accessed_at: "2026-11-05"
+        status: partially-scanned
+        inspected_scope:
+          - "Full arXiv:1301.3781v3 PDF: log-linear model complexity, CBOW/Skip-gram architectures, Huffman hierarchical softmax, analogy benchmark, experimental comparisons and conclusion"
+          - "Main architecture figure and evaluation tables inspected; structured extraction created with five atomic items"
+        limitations:
+          - "Historical word2vec code and pretrained vectors were not retrieved or executed."
+          - "The paper's negative-sampling follow-up and other later implementation variants were not audited."
+          - "The benchmark is English-centric and tests exact-match single-token analogies, not general semantic understanding."
     related:
       pages: [en/embedding-space, fr/embedding-space, en/contextualized-representations, fr/contextualized-representations]
       concepts: [token-embedding, contextualized-representation]
@@ -1933,6 +1951,7 @@ sources:
       pages: [en/text-data, fr/text-data, en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
       audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+
 
   - id: codefinity-qkv-building-blocks
     title: "Queries, Keys, and Values: The Building Blocks"
