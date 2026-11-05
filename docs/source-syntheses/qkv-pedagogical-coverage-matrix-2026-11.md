@@ -128,3 +128,19 @@ The dot product ranks $k_2$ higher, while cosine similarity ranks $k_1$ higher. 
 ### Evidence boundary
 
 This is a source-content and canonical-source inspection, not a rendered browser review. The bilingual Q/K/V and scaled-attention source files were compared; the Q/K/V pages have matching optional geometric, linguistic and role distinctions, and the scaled-attention pages have matching worked-example structure. Desktop/mobile layout, disclosure interaction, equation rendering, keyboard behavior and screenshot evidence remain unverified. See the [component-level media and visual audit](../source-reviews/qkv-visual-asset-audit-2026-11-05.md).
+
+
+## 8. Fourth tutorial — Brenndoerfer (2026-11-05)
+
+[Source review](../source-reviews/qkv-mbrenndoerfer-2026-11.md) · [structured extraction](../../data/extractions/mbrenndoerfer-qkv-attention-mechanism.yml) · [incremental pilot report](qkv-incremental-source-pilot-2026-11-05.md)
+
+| Learner question / difficulty | Brenndoerfer contribution | Existing LLM Lab coverage | Decision |
+|---|---|---|---|
+| Why divide scores by √d_k? | Assumption-explicit variance derivation and Gaussian simulation | Canonical scaled-attention formula and implementation | Integrate by reference; no duplicated derivation unless learner evidence identifies a gap |
+| How do shapes propagate? | Compact unbatched single-head shape walkthrough; explicitly allows d_v ≠ d_k | Existing attention/Build tensor-contract treatment | Already covered; retain as alternative reference |
+| Can I trace the full mechanism numerically? | Complete three-token example with intermediate Q/K/V, scores, weights and outputs | Existing numerical workbench | Integrate by reference only; no second workbench |
+| What geometric property follows from weighted aggregation? | Convex-hull interpretation of each normalized weighted sum | Weighted-sum formula is canonical; convex geometry is not foregrounded | Defer pending a concrete learner task |
+| What can be inferred from attention patterns? | Suggests trained heads may learn linguistic relations and describes positional symmetry | Project already warns against interpreting weights as causal explanations | Keep caveats as a source-quality regression case; do not strengthen canonical claims |
+| Which mental model explains the roles? | Database/library lookup analogy | Canonical index-card analogy | Already covered; avoid analogy accumulation |
+
+**Synthesis update:** the fourth source adds depth and a more explicit teaching route, not a new canonical mechanism. Its scaling derivation is the strongest incremental contribution, but reference-only integration is preferred because the canonical lesson already owns the mathematical pipeline. The convex-hull result remains an optional research/geometry lead rather than a learner-facing addition. Source text inspection does not establish figure quality, code execution, interactive assessment quality or learner benefit.
