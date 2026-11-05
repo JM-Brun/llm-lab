@@ -52,7 +52,7 @@ Cette section donne seulement les repères nécessaires pour lire le calcul du r
 
 Le cœur du réseau est un empilement de blocs identiques. Chaque bloc combine deux opérations :
 
-- **Auto-attention :** chaque position puise dans les positions précédentes l'information qui affine sa représentation. Par exemple, pour interpréter *it* dans « Adam puts the ice cream in the freezer because it was melting », l'attention peut faire entrer l'information sur *the ice cream* dans la représentation de *it*. Dans GPT, un masque causal interdit de lire les tokens futurs.
+- **Auto-attention :** chaque position puise dans les positions autorisées par le masque — y compris sa propre position dans un GPT causal — pour affiner sa représentation. Par exemple, pour interpréter *it* dans « Adam puts the ice cream in the freezer because it was melting », l'attention peut faire entrer l'information sur *the ice cream* dans la représentation de *it*. Dans GPT, un masque causal interdit de lire les tokens futurs.
 - **Réseau feed-forward (MLP) :** un petit réseau de neurones appliqué à chaque position séparément, avec les mêmes poids partout. Il combine typiquement des projections linéaires et une activation non linéaire pour produire une représentation transformée ; sa conception précise varie selon l'architecture.
 
 Les blocs utilisent aussi des **connexions résiduelles** et des **normalisations**. Une connexion résiduelle ajoute à la représentation qui circule dans le réseau une correction calculée par une sous-couche, au lieu de remplacer entièrement cette représentation. Elle fournit ainsi un chemin direct à l'information et au gradient :
