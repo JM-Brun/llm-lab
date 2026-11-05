@@ -208,3 +208,45 @@ Decision (extension of the §8 rationale): retire the eight five-stop blocks wit
 The full scan — cue-coverage map, the nested-route mapping, and the remaining rollout gaps (nine core route pages still carry no visual cue; the prediction → learning tail has no route cards after `logits`) — is recorded in [visual-route-continuity-audit-2026-11-05.md](visual-route-continuity-audit-2026-11-05.md).
 
 This closes the §5 and §11 stepper-inventory items at the source level only. Rendered/browser verification, the accessibility review and the learner check remain open, as does the #535 follow-up.
+
+
+## 10. Rendered header audit — 2026-11-05
+
+A Chromium artifact from the merged browser-review run for PR #534 was inspected at desktop (1440 px) and mobile (390 px), French, light theme, for Q/K/V. The screenshot and `report.json` are retained in the GitHub Actions artifact `site-browser-review-0009a61155216d0fb16779079c1b71b2da0cd175` (run `42100872126`).
+
+### Observed opening
+
+The rendered Q/K/V header contains:
+
+1. a custom `.llm-breadcrumb` generated from the active Quarto sidebar;
+2. Quarto's native `.quarto-title-breadcrumbs`, repeating the same sidebar ancestry and current page;
+3. the H1 and subtitle;
+4. the generated guided-route stage context;
+5. the chapter lead;
+6. epistemic/status badges;
+7. an “L'idée à retenir” callout;
+8. the first section heading and its explanation.
+
+The two site-location breadcrumbs are redundant. The browser audit's Axe output independently identifies the native `.quarto-title-breadcrumbs` link and reports a minor contrast shortfall (4.48:1 against a 4.5:1 threshold). The custom breadcrumb is therefore not needed to provide the hierarchy and should be removed rather than visually combined with the native one.
+
+The mobile capture also shows the Quarto sidebar's compact navigation controls. These are global navigation controls, not a third page breadcrumb, and should remain intact.
+
+### Header composition decision
+
+Use a nested but semantically separate composition:
+
+- Quarto native breadcrumb: site location;
+- H1/subtitle: page identity;
+- generated guided-route context: pedagogical role of the page;
+- chapter lead and takeaway: page orientation and core mental model;
+- optional local stepper: a process/representation sequence within the content.
+
+The stage context is not appended to the site breadcrumb. A local stepper is not labelled as a learning path. The text-data and scaled-attention pages receive the same generated stage context as Q/K/V, while retaining their distinct local process steppers after the introductory mental model.
+
+### Follow-up verification
+
+- Confirm exactly one native Quarto breadcrumb and no `.llm-breadcrumb` on Q/K/V, text-data, and scaled-dot-product attention, in French and English.
+- Confirm the three pages expose their correct guided-route stage (text-input for text-data; computation for Q/K/V and scaled attention).
+- Confirm local steppers remain distinct, correctly labelled, and below the introductory explanation.
+- Review desktop/mobile screenshots and Axe results before merging.
+- Extend the pilot to other page archetypes only after this three-page composition is validated; do not mass-insert a context cue into every page without checking its value.
