@@ -15,7 +15,7 @@ suggested_route:
   next: "en/queries-keys-values"
 hierarchy:
   parents: ["en/index", "en/llm-overview"]
-  children: ["en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/queries-keys-values", "en/scaled-dot-product-attention", "en/logits", "en/tensors", "en/transformer-explainer"]
+  children: ["en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/queries-keys-values", "en/scaled-dot-product-attention", "en/logits", "en/tensors"]
 related: ["en/text-data", "en/transformer-block-walkthrough"]
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:en", "status:published"]
 -->
