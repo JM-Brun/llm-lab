@@ -1,0 +1,171 @@
+schema_version: 1
+source_id: arnett-explaining-mitigating-crosslingual-tokenizer-inequities-2025
+scan:
+  accessed_at: "2026-11-05"
+  retrieval_method: direct-pdf
+  author_text:
+    status: partial
+    coverage: "Published NeurIPS 2025 PDF: definitions and compression metric, controlled tokenizer-training setup, language-feature analysis, vocabulary and pre-tokenization interventions, discussion and limitations."
+    notes: ["Main paper and selected appendix evidence inspected; experiments were not reproduced."]
+  figures_media:
+    status: partial
+    coverage: "Figures 1, 3 and 4 inspected in the rendered PDF for CTC distributions and vocabulary/pre-tokenization interventions."
+    notes: ["No figure or table asset was copied."]
+  code_data:
+    status: partial
+    coverage: "The paper's linked MonTok dataset/code destination and tokenizer-training description were identified."
+    notes: ["Repository contents, trained tokenizer artifacts and raw corpora were not independently audited or executed."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Published NeurIPS proceedings PDF, OpenReview PDF and arXiv metadata."
+    notes: ["Cited papers and all linked datasets were not exhaustively audited."]
+  metadata:
+    status: partial
+    coverage: "NeurIPS 2025, Advances in Neural Information Processing Systems 38."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["No figure reuse permission was established; this extraction contains paraphrases only."]
+  unresolved_questions:
+    - "The released tokenizers and training/evaluation code need independent inspection before reproducibility claims."
+    - "No language models were trained with the experimental tokenizers, so downstream model-quality effects remain untested."
+items:
+  - id: arnett-explaining-mitigating-crosslingual-tokenizer-inequities-2025:token-premium-and-ctc
+    kind: definition
+    summary: "The paper defines token premiums as relative token-count differences for content-matched texts across languages and operationalizes compression with corpus token count (CTC) over parallel FLORES text; it avoids fertility because whitespace-delimited wordhood is not comparable across many languages."
+    locator: {type: section, value: "§2.1–2.2, pp. 2–3", label: "Token premiums and compression metrics"}
+    evidence:
+      kind: explicit-method-definition
+      confidence: established
+      scope: "The paper's crosslingual monolingual-tokenizer comparisons and FLORES-based CTC protocol."
+      assumptions: ["Parallel texts are treated as content-matched for compression comparison."]
+      limitations:
+        - "CTC is a corpus-level operational measure and does not measure linguistic quality or downstream task performance."
+        - "FLORES is translated from English; translation artifacts are acknowledged by the authors."
+    technical_assessment:
+      status: correct
+      rationale: "The paper explicitly defines token premiums and explains why fertility and bytes-per-token are not its preferred cross-language compression measure."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, method:intrinsic-evaluation]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The advanced bilingual lesson already distinguishes fertility, parity and corpus-level compression; this record preserves the paper-specific rationale and denominator."
+  - id: arnett-explaining-mitigating-crosslingual-tokenizer-inequities-2025:monolingual-controlled-design
+    kind: experiment
+    summary: "The authors train approximately 7,000 comparable monolingual tokenizers for 97 languages, varying BPE versus Unigram, vocabulary size and byte-premium-scaled training data while holding the main training setup comparable; this isolates language-linked token-premium variation from multilingual vocabulary allocation."
+    locator: {type: section, value: "§1 and §3, pp. 1, 4–5; Appendix A–B", label: "Tokenizer training design"}
+    evidence:
+      kind: experimental-protocol
+      confidence: established
+      scope: "97 languages with at least 300 MB of available text; two tokenizer families and seven vocabulary sizes."
+      assumptions: ["Comparability follows the matched tokenizer implementation, data volume and vocabulary conditions described by the authors."]
+      limitations:
+        - "The tokenizer training corpus is 300 MB per language, smaller than many production tokenizer corpora."
+        - "This is a monolingual tokenizer experiment, not a direct evaluation of multilingual LLM tokenizers."
+    technical_assessment:
+      status: correct
+      rationale: "The design and controlled variables are described explicitly in the training section."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:multilingual-tokenization, method:controlled-comparison, topic:tokenizer-training]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Adds a useful controlled monolingual research design to the advanced comparison, without implying that its results directly rank multilingual production tokenizers."
+  - id: arnett-explaining-mitigating-crosslingual-tokenizer-inequities-2025:language-features-and-whitespace
+    kind: result
+    summary: "The analysis associates cross-language CTC variation with language features including mean token length, whitespace proportion, length ratio and bytes per character; whitespace pre-tokenization constrains merges at boundaries and disproportionately affects languages whose orthographic conventions use spaces differently."
+    locator: {type: section, value: "§4, pp. 5–6; Table 1; §5.3 and §6, pp. 7–8", label: "Predictors and pre-tokenization"}
+    evidence:
+      kind: reported-analysis
+      confidence: well-supported
+      scope: "Linear regressions and tokenizer experiments using the paper's 97-language training design and FLORES evaluation."
+      assumptions: []
+      limitations:
+        - "The reported predictors explain part, not all, of the variance in CTC."
+        - "Associations in the predictor analysis should not be read as causal effects without the corresponding intervention."
+    technical_assessment:
+      status: qualified
+      rationale: "The paper combines regression evidence with a separate intervention on whitespace pre-tokenization; these evidence types must remain distinct."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:pre-tokenization, topic:multilingual-tokenization, method:regression]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/tokenization-pipeline, fr/tokenization-pipeline]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "A useful mechanism-level explanation connecting pre-tokenization boundaries to cross-language compression, already compatible with the project's pipeline lesson."
+  - id: arnett-explaining-mitigating-crosslingual-tokenizer-inequities-2025:language-specific-vocabulary
+    kind: result
+    summary: "Simply increasing vocabulary size lowers CTC overall but does not significantly reduce the variance of token premiums; fitting a power-law relationship between vocabulary size and CTC per language and selecting a language-specific vocabulary size reduces cross-language CTC variance in the tested BPE setting."
+    locator: {type: section, value: "§5.2, pp. 6–7; Figure 3; Appendix J", label: "Optimal vocabulary-size intervention"}
+    evidence:
+      kind: reported-intervention
+      confidence: well-supported
+      scope: "BPE tokenizers trained under the paper's monolingual setup and evaluated against a target FLORES CTC."
+      assumptions: ["The per-language power-law fit is used to estimate the vocabulary size for a target CTC."]
+      limitations:
+        - "The intervention is a research design for monolingual tokenizers; it is not a ready-made vocabulary allocation recipe for multilingual LLMs."
+        - "Language-specific vocabularies imply a design trade-off that the paper does not resolve for a shared multilingual model."
+    technical_assessment:
+      status: correct
+      rationale: "The paper reports that same-size vocabulary scaling alone does not reduce variance, while estimated language-specific vocabulary sizes do in the evaluated BPE setup."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-training, topic:multilingual-tokenization, method:regression]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Adds a concrete counterexample to the simplistic rule 'larger vocabulary fixes inequity'; keep as an advanced research intervention."
+  - id: arnett-explaining-mitigating-crosslingual-tokenizer-inequities-2025:superbpe-intervention-and-limits
+    kind: limitation
+    summary: "SuperBPE permits merges across whitespace boundaries and reduces average CTC and its variance in the tested settings; however, the paper's optimal-vocabulary SuperBPE results are estimates rather than tokenizers trained at every predicted optimum, and the authors did not train language models with any experimental tokenizer."
+    locator: {type: section, value: "§5.3–5.4, pp. 7–8; §6 and §8, pp. 8–10; Appendix K–M", label: "SuperBPE results and study limitations"}
+    evidence:
+      kind: reported-intervention-and-limitation
+      confidence: established
+      scope: "SuperBPE tokenizer experiments at vocabulary sizes above 64K and the authors' stated limitations."
+      assumptions: []
+      limitations:
+        - "The optimal-vocabulary SuperBPE comparison estimates CTC and variance; the corresponding tokenizers were not all trained."
+        - "FLORES is the sole evaluation corpus and is translation-derived."
+        - "The paper makes no direct claim about downstream language-model quality."
+        - "The authors raise, but do not establish, a possible downside of excessive compression."
+    technical_assessment:
+      status: qualified
+      rationale: "The distinction between measured SuperBPE results, estimated optima and untested LM outcomes is explicit in the paper."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:pre-tokenization, topic:multilingual-tokenization, topic:superbpe]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The current deep dive already records the lack of downstream LM evaluation; the extraction adds the important measured-versus-estimated distinction."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "Arnett et al. provides a controlled study of crosslingual compression in monolingual tokenizers. Its strongest complementary contribution is the interaction between whitespace pre-tokenization and language-specific vocabulary sizing. Preserve the distinction between tokenizer compression, token premiums and downstream model quality; no new canonical concept or learner route is warranted."
