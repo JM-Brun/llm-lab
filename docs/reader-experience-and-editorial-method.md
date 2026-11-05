@@ -2,6 +2,8 @@
 
 **Purpose:** make LLM Lab a navigable explanation system, not a textbook that must be read from page one to the end. This document is the shared editorial contract for public pages, concepts, learning stages, and contributions. It complements the scientific and implementation criteria in the [full curriculum plan](full-curriculum-plan.md), [roadmap](roadmap.md), and [contributing guide](../CONTRIBUTING.md); it does not replace them. The source-level page map and controlled tag vocabulary are specified in the [page metadata contract](page-metadata-schema.md); keep suggested reading order distinct from conceptual parent/child relations.
 
+ The page-level navigation contract is specified in the [pedagogical breadcrumb and page-navigation contract](pedagogical-breadcrumb-and-page-navigation-contract.md); it keeps guided-route context distinct from site navigation, suggested reading order, concept hierarchy, and implementation dependencies.
+
 ## Editorial economy: page-specific information only
 
 Reader-facing prose must teach, orient through a real decision, or establish a meaningful conceptual connection. Do not add generic meta-discourse that merely describes the document or the learning platform. Avoid statements such as “this page provides an overview”, “the following sections explore…”, “each step links to a dedicated explanation”, “to continue the learning journey…”, and their French equivalents. These formulations can be pasted into almost any page without changing their meaning; that is a strong signal that they carry no useful information.
