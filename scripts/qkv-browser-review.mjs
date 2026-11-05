@@ -4,16 +4,28 @@ import { chromium } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 
 const BASE = (process.env.QKV_BROWSER_BASE_URL || "https://jm-brun.github.io/llm-lab").replace(/\/$/, "");
-const OUT = "artifacts/qkv-browser-review";
+const OUT = "artifacts/site-browser-review";
 fs.mkdirSync(OUT, { recursive: true });
 
+const visualCases = ["light", "dark"].flatMap(theme => [
+  { lang: "en", viewport: { width: 1440, height: 1000 }, label: "desktop", theme },
+  { lang: "fr", viewport: { width: 1440, height: 1000 }, label: "desktop", theme },
+  { lang: "en", viewport: { width: 390, height: 844 }, label: "mobile", theme },
+  { lang: "fr", viewport: { width: 390, height: 844 }, label: "mobile", theme },
+]);
+
 const cases = [
-  ...["light", "dark"].flatMap(theme => [
-    { lang: "en", viewport: { width: 1440, height: 1000 }, label: "desktop", theme },
-    { lang: "fr", viewport: { width: 1440, height: 1000 }, label: "desktop", theme },
-    { lang: "en", viewport: { width: 390, height: 844 }, label: "mobile", theme },
-    { lang: "fr", viewport: { width: 390, height: 844 }, label: "mobile", theme },
-  ]),
+  ...visualCases.map(testCase => ({
+    ...testCase, page: "queries-keys-values.html", kind: "qkv",
+  })),
+  ...visualCases.map(testCase => ({
+    ...testCase, page: "learning-map.html", kind: "learning-map",
+  })),
+  ...visualCases.flatMap(testCase =>
+    ["llm-overview.html", "generation.html"].map(page => ({
+      ...testCase, page, kind: "route-context",
+    }))
+  ),
 ];
 
 const browser = await chromium.launch({ headless: true });
@@ -26,7 +38,7 @@ const report = {
 };
 
 for (const testCase of cases) {
-  const { lang, viewport, label, theme } = testCase;
+  const { lang, viewport, label, theme, page: pagePath, kind } = testCase;
   const context = await browser.newContext({ viewport, deviceScaleFactor: 1, colorScheme: theme });
   const page = await context.newPage();
   const consoleErrors = [];
@@ -34,8 +46,8 @@ for (const testCase of cases) {
   page.on("console", msg => { if (msg.type() === "error") consoleErrors.push(msg.text()); });
   page.on("pageerror", error => pageErrors.push(String(error)));
 
-  const url = `${BASE}/${lang}/queries-keys-values.html`;
-  const item = { lang, viewport, label, theme, url, consoleErrors, pageErrors };
+  const url = `${BASE}/${lang}/${pagePath}`;
+  const item = { lang, viewport, label, theme, page: pagePath, kind, url, consoleErrors, pageErrors };
   try {
     const response = await page.goto(url, { waitUntil: "networkidle", timeout: 60000 });
     item.httpStatus = response?.status() ?? null;
@@ -96,7 +108,7 @@ for (const testCase of cases) {
       languageSwitchLinks: [...document.querySelectorAll("a[href]")].filter(a => { const href = a.getAttribute("href") || ""; return href.includes("/en/") || href.includes("/fr/"); }).length,
     }));
 
-    const screenshot = path.join(OUT, `qkv-${lang}-${label}-${theme}.png`);
+    const screenshot = path.join(OUT, `${pagePath.replace(".html", "")}-${lang}-${label}-${theme}.png`);
     await page.screenshot({ path: screenshot, fullPage: true, animations: "disabled" });
     item.screenshot = screenshot;
 
@@ -147,6 +159,67 @@ for (const testCase of cases) {
       await page.keyboard.press("Enter");
       item.keyboardDisclosure.afterOpen = await details.evaluate(el => el.hasAttribute("open"));
       item.keyboardDisclosure.toggledByEnter = item.keyboardDisclosure.beforeOpen !== item.keyboardDisclosure.afterOpen;
+    }
+
+    if (kind === "learning-map") {
+      const mode = page.locator("[data-map-mode]");
+      if (await mode.count() !== 1) throw new Error("learning-map mode selector is missing");
+      if (await page.locator('label[for="learning-map-mode"]').count() !== 1) {
+        throw new Error("learning-map mode selector has no associated label");
+      }
+      await mode.selectOption("concepts");
+      await page.waitForSelector(".map-concept-item", { timeout: 15000 });
+      const legend = page.locator(".learning-map-concept-legend");
+      item.learningMap = {
+        legendVisible: await legend.isVisible(),
+        legendItems: await legend.locator(".map-concept-legend-item").count(),
+        conceptButtons: await page.locator(".map-concept-item").count(),
+        relationFilterLabelled: await page.locator('label[for="learning-map-relation-type"]').count() === 1,
+        searchLabelled: await page.locator('label[for="learning-map-search"]').count() === 1,
+      };
+      if (!item.learningMap.legendVisible || item.learningMap.legendItems === 0) {
+        throw new Error("concept relation legend is missing or empty");
+      }
+      if (!item.learningMap.conceptButtons) throw new Error("concept list is empty");
+      if (!item.learningMap.relationFilterLabelled || !item.learningMap.searchLabelled) {
+        throw new Error("learning-map controls are missing accessible labels");
+      }
+      await page.locator(".map-concept-item").first().click();
+      item.learningMap.selectedConcept = await page.locator(".map-concept-item[aria-pressed='true']").count() === 1;
+      item.learningMap.detailsTitle = await page.locator(".map-detail-panel .map-detail-title").first().innerText().catch(() => null);
+      if (!item.learningMap.selectedConcept || !item.learningMap.detailsTitle) {
+        throw new Error("selecting a concept did not update its accessible details panel");
+      }
+      await page.keyboard.press("Escape");
+      item.learningMap.escapeClearsSelection = await page.locator(".map-concept-item[aria-pressed='true']").count() === 0;
+      if (!item.learningMap.escapeClearsSelection) {
+        throw new Error("Escape did not clear the selected concept");
+      }
+    }
+
+    if (kind === "route-context") {
+      const context = page.locator(".guided-page-context");
+      if (await context.count() !== 1) throw new Error("guided-route context is missing");
+      item.routeContext = {
+        isMultiple: await context.evaluate(el => el.classList.contains("guided-page-context--multiple")),
+        stageLinks: await context.locator('a[href*="learning-map.html#guided-stage-"]').count(),
+        currentPageMarkers: await context.locator('[aria-current="page"]').count(),
+        listItems: await context.locator("li").count(),
+        navLandmark: await context.evaluate(el => el.tagName.toLowerCase() === "nav"),
+        accessibleLabel: await context.getAttribute("aria-label"),
+      };
+      if (!item.routeContext.stageLinks) throw new Error("guided-route context has no stage links");
+      if (pagePath === "llm-overview.html") {
+        if (item.routeContext.isMultiple || !item.routeContext.navLandmark ||
+            item.routeContext.currentPageMarkers !== 1) {
+          throw new Error("single-stage context is not exposed as a labelled breadcrumb");
+        }
+      } else if (pagePath === "generation.html") {
+        if (!item.routeContext.isMultiple || item.routeContext.navLandmark ||
+            item.routeContext.listItems !== 2 || item.routeContext.currentPageMarkers !== 0) {
+          throw new Error("multi-stage context is misleading or incomplete");
+        }
+      }
     }
 
     const axe = await new AxeBuilder({ page })
