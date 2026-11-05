@@ -394,13 +394,13 @@ def render_guided_page_context_markdown(
         role_label = "Ressource facultative" if language == "fr" else "Optional resource"
         lines = [
             f'<nav class="guided-page-context" aria-label="{aria_label}">',
-            "  <ol>",
+            '  <span class="guided-page-context__label">'
+            + ("Parcours pédagogique" if language == "fr" else "Learning path")
+            + "</span>",
             (
-                '    <li><a href="learning-map.html#guided-stage-'
-                f'{membership.stage_id}">{escape(membership.stage_title)}</a></li>'
+                '  <a class="guided-page-context__stage" href="learning-map.html#guided-stage-'
+                f'{membership.stage_id}">{escape(membership.stage_title)}</a>'
             ),
-            f'    <li aria-current="page">{escape(page.title)}</li>',
-            "  </ol>",
         ]
         if membership.role == "optional":
             lines.append(f'  <span class="guided-page-context__role">{role_label}</span>')
