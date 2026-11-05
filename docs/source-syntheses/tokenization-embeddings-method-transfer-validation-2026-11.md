@@ -137,6 +137,7 @@ This triage exposes an important workflow distinction: **route reconstruction is
 | T8 | Items are extracted but code/media remain uninspected | Keep source/component scan status partial |
 | T9 | Collection spans multiple subdomains | Organize by learner questions; do not invent one unified concept |
 | T10 | Catalogue changes after dossier count | Flag and reconcile the count before validation |
+| T11 | YAML item count includes nested pedagogical-model node IDs | Count only schema-level extraction items; report graph nodes separately |
 
 These cases should be added to the canonical adversarial suite only after deciding whether to keep it compact or group cases by domain.
 
