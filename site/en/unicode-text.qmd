@@ -21,6 +21,8 @@ related: []
 tags: ["type:deep-dive", "destination:deepen", "topic:unicode-text", "level:advanced", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-unicode-text.qmd >}}
 This page is a **technical companion** to the [overview of the text-to-token path](text-data.qmd). It is not required to understand the general pipeline; it becomes useful when text looks identical on screen but produces different encodings or tokenization.
 
 ## Three distinct layers
