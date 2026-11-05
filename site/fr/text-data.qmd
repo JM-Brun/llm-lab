@@ -65,6 +65,7 @@ flowchart TB
     F --> G["Embeddings des tokens"]
     G --> H["Transformer et mécanisme positionnel"]
     H --> I["Représentations contextualisées"]
+    classDef default color:#14532D;
 ```
 
 Le dernier bloc regroupe volontairement le traitement positionnel et le Transformer. Les architectures n'introduisent pas toutes la position de la même manière : des vecteurs positionnels absolus appris peuvent être ajoutés aux embeddings des tokens, tandis que RoPE fait tourner les vecteurs requête et clé dans l'attention. La position n'est donc pas un vecteur supplémentaire universellement ajouté au moment du lookup ; voir [encodage positionnel et RoPE](positional-encoding.qmd).

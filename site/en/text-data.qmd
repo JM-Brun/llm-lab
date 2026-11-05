@@ -65,6 +65,7 @@ flowchart TB
     F --> G["Token embeddings"]
     G --> H["Transformer with positional mechanism"]
     H --> I["Contextual representations"]
+    classDef default color:#14532D;
 ```
 
 The final box deliberately groups positional handling with Transformer processing. Architectures do not all inject position in the same way: learned absolute position vectors may be added to token embeddings, whereas RoPE rotates query and key vectors inside attention. Position is therefore not a universal extra vector added at the lookup step; see [positional encoding and RoPE](positional-encoding.qmd).
