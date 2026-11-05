@@ -155,3 +155,26 @@ This section supersedes the earlier proposed diagnostic bundle in section 4. It 
 ### Current implementation decision
 
 Do not implement the earlier four-item learner-facing diagnostic bundle as a new exercise page. Reuse the existing lesson and exercise coverage, the regression tests in #489, and the single pilot protocol in #447. Add a new learner-facing item only if the pilot identifies a specific residual misconception and the item can be placed in the existing exercise hub without duplicating current tasks.
+
+
+## 10. Operational Q/K/V competencies and exercise implementation — 2026-11-05
+
+**Decision update:** this section supersedes the conflicting earlier recommendation in §9 not to add learner-facing exercises. The five operations are now an explicit requirement, so the bilingual exercise hub has been expanded in a bounded way rather than adding a separate exercise page or duplicating the attention workbench.
+
+The five operations below are now the explicit learner-outcome contract for the Q/K/V lesson. Each must be elicited by an observable task and assessed from the learner's reasoning.
+
+| Operation | Observable evidence | Exercise location |
+|---|---|---|
+| Recognize the three roles | Distinguish score/weight formation (Q/K) from transmitted content (V) in a changed situation | Existing role self-check and projection exercise |
+| Reconstruct the projections | Write the three matrix products, infer shapes, and execute a small NumPy projection | Existing sequence-projection exercise, retained and linked from the lesson |
+| Understand their learning | Explain indirect optimization from the final loss, distinguish gradient paths, and state local linear-layer gradient identities | New conceptual/derivation exercise in the Attention section |
+| Predict parameter-change consequences | Predict invariants and potentially changing quantities under separate W_Q/W_K/W_V interventions | New parameter-counterfactual exercise |
+| Transfer the reasoning | Reconstruct the provenance of Q/K/V in cross-attention, then distinguish the K/V head-sharing changes in MQA/GQA from the stable Q/K-versus-V functional roles | New cross-attention transfer exercise |
+
+The EN/FR Q/K/V pages now state these five operations explicitly and link them to the exercise hub. The bilingual exercise hub contains corresponding tasks. Existing weighted-sum work remains owned by scaled-dot-product attention; no duplicate score/softmax derivation is introduced here.
+
+### Assessment rule
+
+Score the reasoning, not only the final answer. Require learners to state what is held fixed, distinguish a quantity that *can* change from one that *must* change, justify parameter interventions from functional dependencies, and distinguish shared-input self-attention from two-stream cross-attention.
+
+These additions establish authored content and exercise coverage, not learning effectiveness. The formative pilot in #447 remains necessary to test independent performance and transfer.
