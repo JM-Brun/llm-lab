@@ -374,3 +374,16 @@ Do not silently turn a recommendation into a canonical curriculum or navigation 
 ### I. Record lessons without bloating every audit
 
 The full audit report is the evidence record. The skill should contain reusable method rules, not copy every project's findings into its permanent instructions. Add a new rule only when a pilot reveals a repeatable methodological failure or ambiguity. Keep project-specific findings in dated audit reports and link them as calibration examples.
+
+
+### J. Track finding lifecycle and close verified checks
+
+Distinguish:
+- **Open finding:** evidence confirms a defect or material risk.
+- **Verified / no defect:** the audit question was checked and the expected behavior already exists.
+- **Open question:** evidence is insufficient or contradictory.
+- **Deferred decision:** a policy or architecture choice requires an explicit owner decision.
+- **Implemented:** a change was made and its acceptance criterion was checked.
+- **Rejected:** a recommendation was considered and intentionally not adopted, with rationale.
+
+Do not leave "check whether X exists" in the action plan after confirming that X already exists. Close it as verified and cite the exact evidence. Re-read high-impact transitions in the page body and navigation cards; metadata alone does not establish that a reader-visible hand-off is present. If a second pass resolves a question, append a dated revalidation note to the audit report rather than silently rewriting the original reasoning.
