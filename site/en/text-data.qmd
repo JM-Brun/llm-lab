@@ -131,6 +131,17 @@ No. IDs are defined only within a tokenizer's vocabulary; ID 17 in one vocabular
 
 Corpus preparation (provenance, filtering, deduplication, splits, and tokenizer fitting) now has a canonical home: [Preparing a corpus for pretraining](corpus-preparation.qmd). This page retains only the distinction needed to situate prompt encoding.
 
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="generation.qmd">
+    <span class="nav-direction">← Previous Step</span>
+    <span class="nav-title">Generating text: inference step by step</span>
+  </a>
+  <a class="route-nav-card" href="tokenization-strategies.qmd">
+    <span class="nav-direction">Next Step →</span>
+    <span class="nav-title">Tokenization strategies: granularity, algorithms, and trade-offs</span>
+  </a>
+</div>
+
 :::: {.language-switch}
 **Language:** [Français](../fr/text-data.qmd) · [English](text-data.qmd)
 ::::

@@ -131,6 +131,17 @@ Non. Les IDs ne sont définis qu’à l’intérieur du vocabulaire de leur toke
 
 La préparation du corpus (provenance, filtrage, déduplication, partitions et ajustement du tokenizer) a désormais sa page de référence : [Préparer un corpus pour le préentraînement](corpus-preparation.qmd). Cette page conserve uniquement la distinction nécessaire pour situer l'encodage d'un prompt.
 
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="generation.qmd">
+    <span class="nav-direction">← Étape précédente</span>
+    <span class="nav-title">Générer du texte : l'inférence pas à pas</span>
+  </a>
+  <a class="route-nav-card" href="tokenization-strategies.qmd">
+    <span class="nav-direction">Étape suivante →</span>
+    <span class="nav-title">Stratégies de tokenisation : granularité, algorithmes et compromis</span>
+  </a>
+</div>
+
 ::: {.language-switch}
 **Langue :** [Français](text-data.qmd) · [English](../en/text-data.qmd)
 :::
