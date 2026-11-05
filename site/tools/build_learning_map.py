@@ -395,11 +395,7 @@ def render_guided_page_context_markdown(
             if language == "fr"
             else "Learning path context"
         )
-        role_label = (
-            "Ressource facultative"
-            if language == "fr"
-            else "Optional resource"
-        )
+        role_label = "Ressource facultative" if language == "fr" else "Optional resource"
         lines = [
             f'<nav class="guided-page-context" aria-label="{aria_label}">',
             "  <ol>",
@@ -424,14 +420,14 @@ def render_guided_page_context_markdown(
         '<section class="guided-page-context guided-page-context--multiple"',
         '         aria-labelledby="guided-page-context-heading">',
         f'  <p id="guided-page-context-heading">{heading} : '
-        f'<strong>{escape(page.title)}</strong>.</p>',
+        f"<strong>{escape(page.title)}</strong>.</p>",
         "  <ul>",
     ]
     for membership in memberships:
         role_label = (
-            "Facultatif" if language == "fr" else "Optional"
-        ) if membership.role == "optional" else (
-            "Étape centrale" if language == "fr" else "Core stage"
+            ("Facultatif" if language == "fr" else "Optional")
+            if membership.role == "optional"
+            else ("Étape centrale" if language == "fr" else "Core stage")
         )
         lines.extend(
             [
@@ -441,7 +437,7 @@ def render_guided_page_context_markdown(
                     f'{membership.stage_id}">{escape(membership.stage_title)}</a>'
                 ),
                 f'      <span class="guided-page-context__role">{role_label}</span>',
-                f'      <p>{escape(membership.stage_objective)}</p>',
+                f"      <p>{escape(membership.stage_objective)}</p>",
                 "    </li>",
             ]
         )
