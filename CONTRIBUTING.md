@@ -99,11 +99,13 @@ Commit `uv.lock` whenever dependency metadata changes. Use `uv lock --check` to 
 uv run ruff check .
 uv run ruff format --check .
 uv run mypy src
-uv run pytest
 uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py
+uv run pytest
 uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/render_history_pilot.py
 quarto render site
 ```
+
+The test suite compares both tracked guided-route fragments with the current route data and published page titles. Regenerate them before testing when these inputs change; commit the resulting fragments alongside their sources. The check does not write files.
 
 Run the relevant checks for the changed surface and state clearly if a tool or optional dependency is unavailable. Review the rendered page, including the other language version for bilingual changes.
 
