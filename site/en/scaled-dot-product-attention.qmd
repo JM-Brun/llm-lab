@@ -30,15 +30,15 @@ Scaled dot-product attention turns learned compatibility scores between queries 
   <span class="epistemic-badge badge-status">Architecture: Standard Attention</span>
 </div>
 
-<div class="pipeline-stepper" role="navigation" aria-label="LLM pipeline stages">
+<div class="pipeline-stepper" role="navigation" aria-label="LLM learning path stages">
   <a class="step-item" href="text-data.qmd">1. Text</a>
-  <span class="step-arrow">→</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
-  <span class="step-arrow">→</span>
-  <span class="step-item active">3. Scaled Dot-Product Attention</span>
-  <span class="step-arrow">→</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">3. Scaled Dot-Product Attention</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="logits.qmd">4. Logits</a>
-  <span class="step-arrow">→</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="cross-entropy.qmd">5. Loss & Training</a>
 </div>
 
