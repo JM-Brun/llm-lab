@@ -281,3 +281,9 @@ The initial §14 continuity decision retained the local text-data stepper and om
 The explicit reader requirement is to expose both the site breadcrumb and the pedagogical stage context on text-data, while retaining the useful local representation stepper. This addendum supersedes only the §14 statement that text-data must stay without a generated stage context. It does not change the retirement of the misleading five-stop steppers on scaled attention, causal masking, logits, and cross-entropy.
 
 Validation remains pending: rendered FR/EN desktop/mobile screenshots must confirm the three dimensions remain visually distinct and the page opening is not overloaded.
+
+## 12. Stepper placement correction — 2026-11-05
+
+Review of the PR #538 rendered screenshots exposed one remaining mismatch between the written page-opening contract and the actual text-data composition: the local representation stepper appeared immediately after the chapter lead, before the one-minute mental-model callout. Although the three navigation dimensions were distinct and Axe reported no violations, this ordering made the process sequence compete with the initial explanation.
+
+The FR/EN pages now place the local stepper after the mental-model callout. The browser audit asserts this DOM order for both languages and viewports. This preserves the semantic distinction established in §11 while making the hierarchy explicit: site location → page identity → curriculum context → chapter lead → mental model → local process sequence.
