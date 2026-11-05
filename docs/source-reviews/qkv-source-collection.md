@@ -1,6 +1,6 @@
 # Q/K/V source collection and comparative synthesis
 
-**Status:** living dossier · **Last reviewed:** 2026-11-04  
+**Status:** living dossier · **Last reviewed:** 2026-11-05  
 **Scope:** external explanations of Query, Key, Value, self-attention and closely related mechanisms.  
 **Purpose:** accumulate complementary perspectives without turning the public curriculum into a stack of duplicated tutorials.
 
@@ -12,15 +12,19 @@ This page is the entry point for the Q/K/V source collection. It is intentionall
 |---|---|---|---|---|---|
 | `nishanthan-k-qkv-transformers-devto` | [Nishanthan K — How Query, Key, and Value (QKV) Work in Transformers](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a) | Publication date not independently verified | [YAML extraction](../../data/extractions/nishanthan-k-qkv-transformers-devto.yml) | [Review](qkv-nishanthan-devto-2026-11.md) | Partially scanned: author text reconstructed; media, linked resources, some comment history, metadata and rights unresolved |
 | `neha-kk-understanding-qkv-medium` | [Neha KK — Understanding Queries, Keys and Values in Transformers](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) | 2025-12-31 | [YAML extraction](../../data/extractions/neha-kk-understanding-qkv-medium.yml) | [Review](qkv-neha-kk-medium-2026-11.md) | Partially scanned: author text reconstructed; actual figure files, linked resources and rights unresolved |
-| `huggingface-transformers-kv-cache-explanation` | [Hugging Face Transformers — Caching](https://huggingface.co/docs/transformers/main/en/cache_explanation) | Living documentation | [Source catalogue](../../data/sources.yml) | [DEV review, community follow-up](qkv-nishanthan-devto-2026-11.md#7-follow-up-scan-reconciliation) | Partially scanned; technical follow-up source, not a third Q/K/V tutorial |
+| `codefinity-qkv-course` | [Codefinity — Queries, Keys, and Values](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) | Course date not independently verified | [YAML extraction](../../data/extractions/codefinity-qkv-building-blocks.yml) | [Review](qkv-codefinity-course-2026-11.md) | Partially scanned: lesson text and parent outline inspected; image bytes, full interactive course, other lessons, assignments, linked resources and rights unresolved |\n| `huggingface-transformers-kv-cache-explanation` | [Hugging Face Transformers — Caching](https://huggingface.co/docs/transformers/main/en/cache_explanation) | Living documentation | [Source catalogue](../../data/sources.yml) | [DEV review, community follow-up](qkv-nishanthan-devto-2026-11.md#7-follow-up-scan-reconciliation) | Partially scanned; technical follow-up source, not a third Q/K/V tutorial |
 
 **Medium scan refinement:** the indexed text exposes four in-body image placements (three captioned figures and one uncaptioned placeholder), but none was retrieved as image bytes or visually inspected. The live page DOM, cover/hero asset, comments and reuse rights remain unresolved. The current scan record also distinguishes the index snapshot from direct page retrieval.
 
 **Important provenance rule:** the KV-cache suggestion is a reader-comment contribution associated with the DEV discussion. It is not part of Nishanthan's author-authored article and must not be attributed to him. Hugging Face documentation is a separate corroborating source.
 
+## 1.1 Pedagogical coverage matrix
+
+The [Q/K/V pedagogical coverage matrix](../source-syntheses/qkv-pedagogical-coverage-matrix-2026-11.md) maps learner questions against each scanned source and the current project. It distinguishes source coverage from project coverage, identifies genuine candidate improvements, and records explicit scan boundaries. Update it whenever a new source is fully reviewed or the canonical learning content changes.
+
 ## 2. Cross-source synthesis
 
-The two tutorials converge on the standard introductory account:
+The three tutorials converge on the standard introductory account:
 
 - Q and K provide learned representations used to compute compatibility scores.
 - V provides learned representations aggregated using the normalized attention weights.
@@ -45,11 +49,39 @@ That agreement is useful pedagogical convergence, not independent experimental v
 | Directionality / asymmetry | Claims attention is directional/non-symmetric without a matrix example | Not developed | Defer a worked matrix example; qualify that distinct Q/K projections typically yield non-symmetric scores, not universally |
 | KV cache | Reader comment, not article body | Not covered | Track as a separately sourced inference-efficiency topic |
 
+## 2.1 Three-source comparison: differentiated pedagogical value
+
+The collection now compares three introductory tutorials, not just their repeated definitions.
+
+| Source | Strongest distinctive contribution | Example / teaching device | What it should change in the project |
+|---|---|---|---|
+| Nishanthan K (DEV) | Compact visual/functional walkthrough linking roles to the attention pipeline; explicit warnings against semantic-similarity and winner-take-all readings | Search/retrieval framing; bank ambiguity and pronoun reference | Keep the source as an optional alternative explanation; retain its misconception checks where they reinforce the canonical treatment. Its visual remains uninspected and is link-only. |
+| Neha KK (Medium) | Explicit design question: why learn three projections, separating matching from payload; concise score-to-output sequence | Pronoun “it” with competing antecedents | The rationale is made explicit in the existing Q/K/V lesson; the pronoun example illustrates cross-position information flow, not measured coreference resolution. |
+| Codefinity | Geometric perspective on query-key compatibility, plus a role-discrimination check | Q/K vector alignment; “bank” in a river context | Add the bounded geometric lens and contrast lexical polysemy with coreference; preserve its quiz distractor pattern for later exercise revision. |
+
+### Cross-source distinctions worth preserving
+
+1. **Role analogy versus vector geometry.** The search/database/index-card framing explains functional roles; geometric alignment explains the numerical objects compared. They are complementary levels, not competing definitions.
+2. **Design rationale versus operation sequence.** Neha’s “why three?” framing explains why matching and payload have distinct learned projections. The four-step score/softmax/aggregation sequence explains what attention computes. Keep these as separate teaching questions.
+3. **Coreference versus lexical polysemy.** A pronoun choosing an antecedent and a word choosing among senses are different language phenomena. Their juxtaposition broadens the learner’s understanding of contextual dependence.
+4. **Soft weighting versus hard retrieval.** Nishanthan and Neha use retrieval-style language that can suggest selecting one nearest item; Codefinity’s alignment language can suggest cosine-only matching. The canonical treatment must retain the exact distinction: scaled dot products feed a softmax distribution over accessible positions, and the resulting weights aggregate values.
+5. **Illustration versus evidence.** None of the linguistic examples demonstrates measured attention weights or proves that an individual head performs coreference resolution or word-sense disambiguation. They are explanatory scenarios only.
+
+### Source-to-project disposition
+
+- **Already integrated:** Neha’s matching-versus-payload rationale and pronoun example; Nishanthan’s contextual examples and misconception cautions; Codefinity’s optional geometric lens and bank/polysemy contrast.
+- **Retain as references:** Codefinity’s Q/K/V role-confusion distractors for the next exercise revision; alternative database/search analogies in source-specific extractions.
+- **Do not duplicate:** the complete score/scale/softmax/weighted-sum derivation, already owned by the scaled-dot-product-attention lesson.
+- **Do not promote to canonical graph nodes:** no new stable mechanism is introduced by these tutorial perspectives; they enrich explanations and examples, not the semantic ontology.
+
+See the [three-source complementary-perspectives synthesis](../source-syntheses/qkv-complementary-perspectives-2026-11.md) for the full comparison and integration rationale.
+
 ## 3. What changed in LLM Lab
 
 ### Learning content
-- The Q/K/V explanation now makes the separation between matching (Q/K) and payload (V) explicit.
-- A bounded pronoun-context example is used as an illustration of cross-position information flow.
+- The Q/K/V explanation makes the separation between matching (Q/K) and payload (V) explicit, including Neha KK’s design rationale for learning these roles through separate projections.
+- The optional geometric lens from Codefinity connects Q/K compatibility to the dot product, vector norms and angle, while distinguishing dot product from cosine similarity.
+- A bounded pronoun-context example is used as an illustration of cross-position information flow; Codefinity’s bank example is contrasted with it as lexical polysemy rather than coreference.
 - The example is explicitly not presented as evidence of measured attention, coreference resolution or interpretability.
 - The attention equations and detailed computation remain in the dedicated scaled-dot-product-attention lesson.
 - The current input to Q/K/V is described as the representation entering the attention sublayer, not always as raw token embeddings; positional information may be injected at different points, including mechanisms such as RoPE.
@@ -64,7 +96,7 @@ The DEV comparison exposed that the concept registry did not give stable identit
 These nodes formalize existing teaching; they do not imply that either tutorial introduced a new scientific mechanism. The semantic graph and pedagogical route remain distinct structures.
 
 ### Curriculum and navigation
-No new Q/K/V page, curriculum stage, prerequisite edge, navigation edge, Build step or duplicated numerical explanation is justified by these two tutorials. The project route remains broader and more explicit than either article's local sequence.
+No new Q/K/V page, curriculum stage, prerequisite edge, navigation edge, Build step or duplicated numerical explanation is justified by these three tutorials. The project route remains broader and more explicit than either article's local sequence.
 
 ## 4. Comparison dossier
 
@@ -141,3 +173,31 @@ These are complementary records, not duplicate versions of the same document: ca
 - [ ] Verify DEV publication/update metadata if a reliable page or API snapshot becomes available.
 - [ ] Pin and inspect the Hugging Face documentation revision and relevant cache implementation when the KV-cache topic is developed.
 - [ ] Add future Q/K/V sources here and extend the comparison dossier without duplicating source-specific extraction.
+
+## 9. Codefinity — “Queries, Keys, and Values: The Building Blocks” (2026-11-05)
+
+[Codefinity lesson](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) · [structured extraction](../../data/extractions/codefinity-qkv-building-blocks.yml) · [source review](qkv-codefinity-course-2026-11.md) · [cross-source synthesis dossier](../source-syntheses/qkv-complementary-perspectives-2026-11.md)
+
+**Scan status: partially scanned.** The visible lesson text was retrieved directly and the parent course outline was inspected. Linked image bytes, the interactive environment, other lesson bodies, assignments, linked resources and reuse rights remain uninspected.
+
+### Differential contribution and integration
+
+| Contribution | What it adds beyond current LLM Lab content | Integration |
+|---|---|---|
+| Q/K/V role definitions | Reinforces the canonical functional split but adds no new definition | Already covered; retain provenance |
+| Geometric Q/K framing | A spatial/vector lens alongside the existing index-card analogy; bridges the conceptual role to dot-product geometry | Integrated as an optional collapsible note on both Q/K/V pages, with dot-product norms/angle and warnings against cosine/nearest-neighbour interpretations |
+| Bank / river example | Lexical polysemy (competing senses of one word), distinct from the pronoun-coreference example already on the Q/K/V page | Integrated as a compact optional contrast on both pages; full bank discussion remains on contextualized-representations |
+| Multiple-choice check | Distractors explicitly test confusion among Q, K and V | Retained as a future exercise-design reference; no duplicate quiz |
+| Course-level sequence | Places Q/K/V between motivation and relevance scoring, then lists later attention topics | Confirms compatibility with current route; no route change from titles alone |
+
+### What the combined explanation now offers
+
+1. **Functional analogy:** index cards distinguish what Q, K and V do.
+2. **Geometric perspective:** query/key vectors connect that role distinction to the dot product, with its magnitude-and-angle dependence.
+3. **Linguistic transfer:** pronoun coreference and lexical polysemy illustrate two different reasons context matters.
+4. **Formal computation:** the next page remains responsible for scaling, softmax, masking and weighted aggregation.
+
+The new perspectives are optional and attributed. No canonical concept, graph edge, new page or route dependency is added. No source image is copied. The original examples remain illustrations, not evidence that one particular attention head performs a linguistic task.
+
+The extraction and review preserve source-specific evidence and scan limitations. The cross-source dossier records the comparative reasoning and the contribution-to-page mapping.
+

@@ -43,6 +43,22 @@ Imagine a collection of index cards:
 
 The analogy separates the roles, but it is not a literal symbolic search: the model does not manipulate readable questions, labels, or cards. Q, K, and V are learned numerical vectors.
 
+::: {.callout-note collapse="true" title="Another perspective: viewing Q and K in vector space"}
+Codefinity offers a geometric intuition: picture Q and K as vectors whose orientation and alignment contribute to a compatibility score. This complements the index-card analogy by helping bridge conceptual roles and numerical objects.
+
+For two vectors, the dot product can be written as:
+
+$
+q^\top k = \lVert q\rVert\,\lVert k\rVert\cos(\theta).
+$
+
+The angle is only part of the score: **the dot product also depends on the norms** of Q and K. It is not, in general, cosine similarity. In attention, these scores are subsequently scaled, normalized with softmax over accessible keys, and used to weight V. There is no requirement to select one nearest neighbour, and no automatic semantic-relevance interpretation.
+
+This geometric intuition is a bridge to the [scaled dot-product attention calculation](scaled-dot-product-attention.qmd), not a substitute for its mathematical definition.
+
+Source of this perspective: [Codefinity, *Queries, Keys, and Values: The Building Blocks*](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b).
+:::
+
 ![Diagram of query, key, and value projections: Q and K determine attention weights, which are used to aggregate V.](../images/queries-keys-values-en.svg){fig-alt="An input representation is projected into a query, key, and value. Queries are compared with keys; the resulting weights are applied to values." width=100%}
 
 ::: {.callout-note title="A complementary illustration in the source"}
@@ -77,6 +93,19 @@ The dimensions $d_k$ and $d_v$ therefore need not be equal. Optional biases are 
 Consider: “The animal didn't cross the road because it was tired.” The pronoun **it** is understood in context. As an intuition, a query formed at that position can be compared with keys from several earlier tokens; the resulting weights then combine their value vectors.
 
 This is an illustration of contextual information flow, not a report of measured attention. The article by [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) gives this example but reports no model, head, attention weights or experiment. It therefore does not establish that a particular attention head resolves coreference, nor that an attention map explains the model's decision.
+:::
+
+::: {.callout-note collapse="true" title="Two contextual phenomena: coreference and lexical ambiguity"}
+The Q/K/V sources examined here illustrate two different language challenges:
+
+| Phenomenon | Example | What context helps interpret |
+|---|---|---|
+| Coreference | “The animal didn't cross the road because it was tired.” | Which referent does the pronoun “it” refer to? |
+| Lexical ambiguity | “He sat by the bank,” in a river context | Which sense of *bank* is intended: riverbank or financial institution? |
+
+The first example, used by [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b), emphasizes relations between tokens. The second, used by [Codefinity](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b), emphasizes competing senses of the same word. They are not interchangeable: they provide two examples of tasks to which contextualized representations may contribute.
+
+In both cases, the Q/K/V explanation remains an illustration of information flow. These examples do not prove that one identified attention head alone performs coreference resolution or lexical disambiguation. For the broader role of context in representations, see [Contextualized representations](contextualized-representations.qmd).
 :::
 
 ## Keep these objects distinct

@@ -43,6 +43,22 @@ Imagine une collection de fiches :
 
 L'analogie aide à distinguer les fonctions, mais elle ne décrit pas une recherche symbolique : le modèle ne manipule pas des questions, des étiquettes ou des fiches lisibles. Q, K et V sont des vecteurs numériques appris.
 
+::: {.callout-note collapse="true" title="Autre point de vue : visualiser Q et K dans l'espace vectoriel"}
+Codefinity propose une intuition géométrique : représenter Q et K comme des vecteurs dont l'orientation et l'alignement participent au score de compatibilité. Cette vue complète l'analogie des fiches : elle aide à passer des rôles conceptuels à des objets numériques.
+
+Pour deux vecteurs, le produit scalaire s'écrit :
+
+$
+q^\top k = \lVert q\rVert\,\lVert k\rVert\cos(\theta).
+$
+
+L'angle n'est donc qu'une partie du score : **le produit scalaire dépend aussi des normes** de Q et K. Il ne s'agit pas, en général, d'une similarité cosinus. Dans l'attention, ces scores sont ensuite mis à l'échelle, normalisés par softmax sur les clés accessibles, puis utilisés pour pondérer V. Il n'y a ni sélection obligatoire d'un unique voisin, ni interprétation automatique en pertinence sémantique.
+
+Cette intuition géométrique est une passerelle vers le [calcul de l'attention à produit scalaire](scaled-dot-product-attention.qmd), pas un substitut à sa définition mathématique.
+
+Source de cette perspective : [Codefinity, *Queries, Keys, and Values: The Building Blocks*](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b).
+:::
+
 ![Schéma des projections Q, K et V : Q et K déterminent les poids d'attention, qui servent à combiner les valeurs V.](../images/queries-keys-values.svg){fig-alt="Une représentation d'entrée est projetée en requête, clé et valeur. Les requêtes sont comparées aux clés ; les poids obtenus pondèrent les valeurs." width=100%}
 
 ::: {.callout-note title="Une autre illustration, dans la source"}
@@ -77,6 +93,19 @@ Les dimensions $d_k$ et $d_v$ ne sont donc pas nécessairement égales. Les biai
 Considérons : « L'animal n'a pas traversé la route parce qu'il était fatigué. » Le pronom **il** s'interprète dans son contexte. Pour se représenter le mécanisme, une requête construite à cette position peut être comparée aux clés de plusieurs tokens précédents ; les poids obtenus servent ensuite à combiner leurs vecteurs de valeurs.
 
 Il s'agit d'une illustration du flux d'information contextuel, pas d'un résultat d'observation. L'article de [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) propose cet exemple, mais ne fournit ni modèle, ni tête d'attention, ni poids mesurés, ni expérience. Il ne démontre donc pas qu'une tête donnée résout la coréférence, ni qu'une carte d'attention explique la décision du modèle.
+:::
+
+::: {.callout-note collapse="true" title="Deux phénomènes contextuels : coréférence et ambiguïté lexicale"}
+Les sources Q/K/V étudiées illustrent deux difficultés linguistiques différentes :
+
+| Phénomène | Exemple | Ce que le contexte doit aider à interpréter |
+|---|---|---|
+| Coréférence | « L'animal n'a pas traversé la route parce qu'il était fatigué. » | À quel référent renvoie le pronom « il » ? |
+| Ambiguïté lexicale | « He sat by the bank », dans un contexte de rivière | Quel sens du mot anglais *bank* est pertinent : rive ou établissement financier ? |
+
+Le premier exemple, repris par [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b), met l'accent sur les relations entre tokens. Le second, utilisé par [Codefinity](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b), met l'accent sur les sens possibles d'un même mot. Ils ne sont pas interchangeables : ils donnent deux exemples de tâches auxquelles des représentations contextualisées peuvent contribuer.
+
+Dans les deux cas, l'explication Q/K/V reste une illustration du flux d'information. Ces exemples ne prouvent pas qu'une tête d'attention identifiée effectue à elle seule la coréférence ou la désambiguïsation lexicale. Pour le rôle plus général du contexte dans les représentations, voir [Représentations contextualisées](contextualized-representations.qmd).
 :::
 
 ## Ce qu'il faut distinguer

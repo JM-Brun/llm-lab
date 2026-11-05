@@ -144,7 +144,9 @@ For each candidate, answer:
 - Would integration create duplication, overload or a false implication?
 - Is the source sufficiently reliable for the intended use?
 
-**Gate:** each item has an explicit disposition, including a reason for no change.
+**Required complementary-perspective pass:** do not close the comparison after finding that a concept or example already exists. Compare the learner question, explanatory lens, mental model, example phenomenon, abstraction level, teaching move and omitted assumptions. Test whether the source can enrich the existing page through a bounded optional perspective, contrast, example, misconception, exercise or cross-link. For example, two sources using different language examples may illustrate distinct phenomena (coreference and lexical polysemy), even though both concern contextual information flow.
+
+**Gate:** each item has an explicit disposition, including a reason for no change; each pedagogical source has a recorded complementarity assessment; and at least one concrete integration candidate has been tested before recommending no learner-facing change. If no candidate survives, document the tested alternatives and why each would not improve learning.
 
 ### Stage 5 — Make bounded integration decisions
 

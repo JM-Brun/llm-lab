@@ -84,6 +84,11 @@ items:
       status: not-reviewed
       rationale: ""
       corroborating_sources: []
+    # Mandatory complementarity check before classifying an item as already-covered,
+    # reinforcement or reject: compare learner question, explanatory lens, mental model,
+    # example phenomenon, teaching move, abstraction level and hidden assumptions.
+    # Test a bounded integration (optional note, contrast, example, misconception,
+    # exercise or cross-link); record why it helps or why it would add cognitive load.
     pedagogical_assessment:
       learner_question: ""
       explanatory_lens: ""
