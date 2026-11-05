@@ -43,9 +43,13 @@ The tours follow a useful reading order, not a complete dependency list. For exa
 
 ## The model, assembled
 
-The assembled model can be exercised in a few lines[^exec]. This example uses a synthetic vocabulary and returns token IDs, not decoded text (see "Generate first, train later"):
+After the setup below[^exec], run this complete example with `uv run --locked python example.py`. It uses a synthetic vocabulary and returns token IDs, not decoded text (see "Generate first, train later"):
 
 ```python
+import numpy as np
+
+from llm_lab.foundations import GPT, GPTConfig, generate
+
 config = GPTConfig(
     vocab_size=50,       # V: embedding-table rows, logits per position
     context_length=32,   # T: positions processed in one pass
@@ -56,14 +60,21 @@ config = GPTConfig(
     seed=0,              # same seed, same parameters
 )
 model = GPT(config)
-model.num_parameters()  # 21426 parameters for this configuration
+parameter_count = model.num_parameters()
+assert parameter_count == 21426
+print("Parameters:", parameter_count)
 
-ids = generate(model, np.array([1, 2, 3]), max_new_tokens=8)  # greedy decoding
-ids = generate(model, np.array([1, 2, 3]), max_new_tokens=8, greedy=False,
-               temperature=0.8, rng=np.random.default_rng(42))  # sampling
+prompt = np.array([1, 2, 3])
+greedy_ids = generate(model, prompt, max_new_tokens=8)
+sampled_ids = generate(
+    model, prompt, max_new_tokens=8, greedy=False,
+    temperature=0.8, rng=np.random.default_rng(42),
+)
+print("Greedy IDs:", greedy_ids)
+print("Sampled IDs:", sampled_ids)
 ```
 
-For this configuration, the expected count is **21,426 parameters**. The reference code is pure NumPy (float64): readability first, speed later.
+For this configuration, the expected count is **21,426 parameters**. Each output contains the three prompt IDs followed by eight generated IDs; the two calls start from the same prompt. The reference code is pure NumPy (float64): readability first, speed later.
 
 ## Understand, build, deepen
 
@@ -93,13 +104,15 @@ Before moving to the next step, produce or verify the indicated result; concept 
 | 0 · G0. Define the model | The scope: a decoder-only GPT predicting the next token | Place this model among LLM families and Transformer architectures | [LLM panorama](llm-overview.qmd), [GPT and Transformer](transformer.qmd), [history](transformer-history.qmd) as context | Conceptual |
 | 1 · G1. Prepare text input | Encoding and decoding a prompt with the tokenizer | Encode then decode a short text; identify the effect of special tokens and tokenizer version | [Text and data](text-data.qmd), [Unicode](unicode-text.qmd), [tokenization](tokenization-strategies.qmd) | Conceptual — no validated tokenizer pipeline |
 | 2 · G3. Represent tokens | Embedding lookup and positional information | Trace shapes from `[B, L]` to `[B, L, D]` and name each axis | [Embedding space](embedding-space.qmd), [position](positional-encoding.qmd) | Reference — inside `gpt.py`; [tour: model](gpt-model-walkthrough.qmd) |
-| 3 · G4. Compute attention | Q/K/V projections, scores, softmax and causal mask | In evaluation mode, change a future token without altering earlier-position outputs | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd) | Reference — `attention.py` (`scaled_dot_product_attention`, `causal_mask`, `softmax_with_temperature`); [tour: block](transformer-block-walkthrough.qmd) |
+| 3 · G4. Compute attention | Q/K/V projections, scores, softmax and causal mask | With fixed parameters, append future tokens and compare the earlier-position logits | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd) | Reference — `attention.py` (`scaled_dot_product_attention`, `causal_mask`, `softmax_with_temperature`); [tour: block](transformer-block-walkthrough.qmd) |
 | 4 · G5. Assemble the GPT | Stacking the blocks: residuals, normalization, MLP and output projection | Trace dimensions through the model and check the parameter count (`model.num_parameters()`) | [Transformer](transformer.qmd), [tensors](tensors.qmd) as reference | Reference — [tours: block](transformer-block-walkthrough.qmd) and [model](gpt-model-walkthrough.qmd) |
 | 5 · G6. Predict and select | Turning logits into a distribution, then the decoding rule | Distinguish logits from probabilities; explain greedy or sampled selection | [Logits](logits.qmd), [probabilities](probabilities.qmd), [generation step by step](generation.qmd) | Reference — inside `generate.py`; [tour: generation](gpt-generation-walkthrough.qmd) |
 | 6 · G7. Generate before training | The full autoregressive loop, with random parameters | Run the loop on token IDs; check stopping and context window, without expecting learned language | [Generation step by step](generation.qmd) | Reference — [tour: generation](gpt-generation-walkthrough.qmd) |
 | 7 · G2. Prepare training data | A documented, partitioned corpus; input windows, shifted targets, batches and masks — a parallel branch of the learning path | Build a window and its shifted target; test boundaries, padding and split hygiene | [Text and data](text-data.qmd), [training examples](training-examples.qmd) | Partial — tested sliding windows and shifted targets in `training_examples.py`; corpus loading, packing, padding, batching and split checks remain to be built |
 | 8 · G8. Train and validate | Loss, backpropagation, optimizer, validation and checkpoints | Align logits and targets, compute the loss, reproduce a small update, track training and validation losses separately | [Cross-entropy](cross-entropy.qmd), [loss](loss.qmd), [gradients](gradients.qmd) | Partial — `losses.py` (`cross_entropy_from_logits`, `cross_entropy_gradient`); full loop to be built |
 | 9 · G9 / E1. Evaluate | Baselines, metrics, error analysis and limits | Compare against a baseline under an explicit protocol; state what the metrics do not establish | [Experimental evaluation](experimental-evaluation.qmd) | Method available — no complete evaluation of a trained GPT |
+
+For the G4 causality check, inspect `test_prefix_invariance_future_tokens_do_not_change_earlier_logits` in the [model tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt.py): it compares a prefix with a longer sequence under the same model. The NumPy reference has no train/eval mode switch. This test covers that prefix-extension case; it does not prove causality for every possible input.
 
 For a first G2 check, take token IDs `[5, 6, 7, 8]` and a context length of 3: predict the input window and its one-token-shifted target. The [worked training-example lesson](training-examples.qmd) explains the convention; compare your answer with `test_corpus_of_context_length_plus_one_yields_one_window` in the [reference tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_training_examples.py). Run the file with `uv run --locked pytest --no-cov -q tests/unit/test_training_examples.py`. It does not test a complete corpus or data-splitting pipeline.
 
@@ -110,7 +123,7 @@ These criteria are learning objectives: an available page, a hand-checkable exam
 - [Exercises and practice](exercises.qmd): apply the milestones to exercises, separately from conceptual questions.
 - [Versioned build plan](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md): prerequisites, expected evidence, dependencies and validation criteria for each milestone.
 
-[^exec]: Install Python 3.12+ and [uv](https://docs.astral.sh/uv/), clone the repository (`git clone https://github.com/JM-Brun/llm-lab.git` then `cd llm-lab`), sync with `uv sync --locked --dev`, and run tests with `uv run --locked pytest`. The snippet on the page assumes `import numpy as np` then `from llm_lab.foundations import GPT, GPTConfig, generate`. The five tour test files are `test_gpt_config.py`, `test_gpt_ops.py`, `test_transformer_block.py`, `test_gpt.py` and `test_generate.py`; `test_attention.py`, `test_training_examples.py` and `test_losses.py` cover additional primitives.
+[^exec]: Install Python 3.12+ and [uv](https://docs.astral.sh/uv/), clone the repository (`git clone https://github.com/JM-Brun/llm-lab.git` then `cd llm-lab`), and sync with `uv sync --locked --dev`. For the full test suite, also install the site-test dependencies with `uv pip install --python .venv/bin/python -r docs/requirements-tokenizer-example.txt` and `uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt`, then run `uv run --locked pytest`. Reinstall those requirements after a fresh sync, as explained in the [contributor guide](https://github.com/JM-Brun/llm-lab/blob/main/CONTRIBUTING.md). Save the example in a file named `example.py` at the repository root. The five tour test files are `test_gpt_config.py`, `test_gpt_ops.py`, `test_transformer_block.py`, `test_gpt.py` and `test_generate.py`; `test_attention.py`, `test_training_examples.py` and `test_losses.py` cover additional primitives.
 
 ::: {.callout-warning}
 **An educational project, not industrial-scale training.** The small randomly initialized GPT makes transformations and errors inspectable; it does not reproduce the data volumes, compute resources or performance of a production LLM.
