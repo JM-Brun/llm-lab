@@ -78,12 +78,22 @@ $$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
 $$
 
-The matrices $W_Q$, $W_K$, and $W_V$ are learned jointly during training. They transform each input representation, but play distinct roles in the mechanism. Keeping these projections separate lets the model learn how positions should be matched (Q and K) independently from the content carried forward (V); using one shared representation for both roles would couple matching and information transfer.
+The matrices $W_Q$, $W_K$, and $W_V$ are learned jointly during training. They transform each input representation, but play distinct roles in the mechanism. Keeping these projections separately parameterized lets the model represent compatibility (Q and K) and payload (V) in distinct learned spaces. Their parameters are nevertheless optimized jointly during training; separate parameterization does not mean independent learning.
 
 With $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ and $W_V\in\mathbb{R}^{d_{model}\times d_v}$, the resulting shapes are:
 
 - $Q,K\in\mathbb{R}^{T\times d_k}$;
 - $V\in\mathbb{R}^{T\times d_v}$.
+
+::: {.callout-note collapse="true" title="Scope: the standard formulation and its variants"}
+This page presents the standard formulation with separately parameterized Q, K and V projections. It is a useful baseline, not a claim that every Transformer uses three wholly independent projection matrices or the same number of query and key/value heads.
+
+For example, **multi-query attention (MQA)** and **grouped-query attention (GQA)** use fewer key/value heads than query heads, sharing each key/value head across multiple query heads to reduce inference-time KV-cache costs. Other recent work studies tying projection parameters, including sharing the key and value projections. These are architecture variants with empirical trade-offs; they do not invalidate the role distinction taught here.
+
+- Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — standard Transformer attention formulation.
+- Ainslie et al. (2023), [*GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints*](https://arxiv.org/abs/2305.13245) — grouped key/value heads.
+- Kayyam et al. (2026), [*Do Transformers Need Three Projections? Systematic Study of QKV Variants*](https://proceedings.mlr.press/v306/kayyam26a.html) — empirical study of projection sharing.
+:::
 
 The dimensions $d_k$ and $d_v$ therefore need not be equal. Optional biases are omitted here. To trace these projections in the actual block implementation, see the [guided Transformer-block walkthrough](transformer-block-walkthrough.qmd); general dimension and axis conventions are covered in the [tensor reference](tensors.qmd).
 
