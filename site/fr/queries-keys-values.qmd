@@ -106,7 +106,7 @@ $
 \qquad
 \frac{\partial\mathcal L}{\partial W_V}
 =X^\top\frac{\partial\mathcal L}{\partial V}.
-$
+$$
 
 Ces gradients sont calculés dans le contexte du réseau complet, puis l'optimiseur met à jour les paramètres. Les trois projections sont donc **paramétrées séparément, mais apprises conjointement** : modifier l'une peut changer la sortie et, au fil de l'entraînement, les autres paramètres s'adaptent aussi. Cette vue explique le principe ; elle ne remplace pas la dérivation complète de l'attention ni celle de la rétropropagation.
 :::
