@@ -70,7 +70,7 @@ return x + self._mlp(layer_norm(x, self.ln2_gamma, self.ln2_beta))
 <g data-wf-part="br2"><path d="M991 144 C 990 110, 982 78, 966 66" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
 <g data-wf-part="br1 br2"><circle cx="960" cy="50" r="14" fill="#fff" stroke="#16A34A" stroke-width="2.5"/><text x="960" y="56" text-anchor="middle" font-size="17" font-weight="700" fill="#14532D">+</text></g>
 <g data-wf-part="init"><rect x="270" y="240" width="330" height="40" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.8" stroke-dasharray="6 4"/><text x="435" y="265" text-anchor="middle" font-size="12.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#78350F">residual_std = 0.02 / √(2 × num_layers)</text></g>
-<g data-wf-part="init" stroke="#8B5CF6" stroke-width="1.6" stroke-dasharray="5 4" fill="none"><path d="M390 236 C 350 200, 320 170, 306 142" marker-end="url(#wfb-violet)"/><path d="M470 236 C 540 200, 608 164, 642 142" marker-end="url(#wfb-violet)"/><path d="M560 240 C 720 224, 900 176, 986 148" marker-end="url(#wfb-violet)"/></g>
+<g data-wf-part="init" stroke="#8B5CF6" stroke-width="1.6" stroke-dasharray="5 4" fill="none"><path d="M470 236 C 540 200, 608 164, 642 142" marker-end="url(#wfb-violet)"/><path d="M560 240 C 720 224, 900 176, 986 148" marker-end="url(#wfb-violet)"/></g>
 </g>
 </svg>
 </div>
@@ -80,7 +80,7 @@ return x + self._mlp(layer_norm(x, self.ln2_gamma, self.ln2_beta))
 <button type="button" class="wf-chip" data-wf-links="br1" data-wf-note="Attention branch: ln1 prepares a normalized copy of x, and w_o’s output adds back to the trunk. Identity stays the default path: the block cannot destroy its input.">x + _attention(ln1(x))</button>
 <button type="button" class="wf-chip" data-wf-links="br2" data-wf-note="MLP branch: ln2 prepares a copy, fc1 widens (d → hidden), GELU activates, fc2 projects back (hidden → d), and the output adds to the trunk, position by position.">x + _mlp(ln2(x))</button>
 <button type="button" class="wf-chip" data-wf-links="heads" data-wf-note="Head h reads columns h·(d/H) to (h+1)·(d/H) of Q, K and V: contiguous slices of the same stream, never mixed before the w_o projection.">columns = slice(h·head_dim, …)</button>
-<button type="button" class="wf-chip" data-wf-links="init" data-wf-note="Depth L shrinks the standard deviation of both branches’ weights (0.02/√(2L)): this choice helps control the scale of contributions accumulated along residual paths, without guaranteeing constant variance.">residual_std = 0.02/√(2L)</button>
+<button type="button" class="wf-chip" data-wf-links="init" data-wf-note="Only the output projections added to the residual trunk — attention w_o and MLP fc2 — use 0.02/√(2L). Q, K, V and fc1 retain the base standard deviation 0.02.">residual_std = 0.02/√(2L)</button>
 </div>
 <p class="wf-note" aria-live="polite">The green stroke crosses the block unchanged: that is the residual trunk. Each branch (attention, MLP) only adds a correction computed on a normalized copy — GPT-2’s pre-LN order.</p>
 </div>
@@ -116,13 +116,13 @@ Normalization sits **inside the branch**, not on the trunk. The trunk (`x + ...`
 - `head_dim = d // H`: each head owns `d/H` contiguous columns — the slice bounds are recomputed in `_attention`.
 
 ::: {.callout-note collapse="true" title="GPT-2-specific initialization detail"}
-The reference implementation scales the standard deviation of residual projections according to depth:
+The GPT-2 scheme keeps the base standard deviation $0.02$ for internal projections (Q, K, V and the MLP's first layer), and reduces it for the **two output projections added to the residual stream**: attention $W_O$ and the MLP's second layer (`fc2`).
 
 ```python
 residual_std = 0.02 / math.sqrt(2.0 * config.num_layers)
 ```
 
-This factor aims to control the scale of contributions accumulated along residual paths. It is an initialization choice inherited from GPT-2, not a mathematical requirement of Transformer blocks or a guarantee that variance remains exactly constant.
+The factor $1/\sqrt{2L}$ accounts for the two residual contributions per block across $L$ blocks. It reduces the initial scale of these two output projections; it does not guarantee constant residual-stream variance. The other projections retain the base standard deviation $0.02$.
 :::
 
 Parameter creation follows: normalizations start at identity (`gamma` ones, `beta` zeros), then four `(d, d)` matrices for the Q, K, V and O projections, and two matrices for the MLP (`d -> mlp_hidden_dim -> d`).

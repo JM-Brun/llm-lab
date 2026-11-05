@@ -67,11 +67,13 @@ class TransformerBlock:
             rng: Seeded NumPy generator owned by the caller.
         """
         d = config.embedding_dim
-        # Weights that feed a residual path are initialized smaller than
-        # the rest: dividing by sqrt(2 * num_layers) keeps the variance of
-        # the residual stream roughly constant as blocks stack (the
-        # "scaled residual-layer initialization" of the GPT-2 paper).
-        residual_std = 0.02 / math.sqrt(2.0 * config.num_layers)
+        # GPT-2 uses the base std for internal projections and a smaller
+        # std only for the two output projections added to the residual
+        # stream: attention W_o and the MLP's second linear layer.
+        # This depth-scaled scheme controls their initial contribution; it
+        # does not guarantee constant residual-stream variance.
+        base_std = 0.02
+        residual_std = base_std / math.sqrt(2.0 * config.num_layers)
         # Each head owns a contiguous slice of head_dim columns; the slice
         # boundaries are recomputed in _attention from these two numbers.
         self.num_heads = config.num_heads
@@ -85,9 +87,9 @@ class TransformerBlock:
         # Three projections Q, K, V from the same input x, then an output
         # projection W_o that merges the per-head results back into d
         # columns. All four matrices are (d, d).
-        self.w_q, self.b_q = _init_linear(rng, d, d, residual_std)
-        self.w_k, self.b_k = _init_linear(rng, d, d, residual_std)
-        self.w_v, self.b_v = _init_linear(rng, d, d, residual_std)
+        self.w_q, self.b_q = _init_linear(rng, d, d, base_std)
+        self.w_k, self.b_k = _init_linear(rng, d, d, base_std)
+        self.w_v, self.b_v = _init_linear(rng, d, d, base_std)
         self.w_o, self.b_o = _init_linear(rng, d, d, residual_std)
 
         # --- MLP branch ------------------------------------------------
@@ -95,7 +97,7 @@ class TransformerBlock:
         self.ln2_beta: FloatArray = np.zeros(d, dtype=np.float64)
         # Position-wise MLP: d -> mlp_hidden_dim -> d. Each position goes
         # through the same two matrices, independently of its neighbours.
-        self.w_fc1, self.b_fc1 = _init_linear(rng, config.mlp_hidden_dim, d, residual_std)
+        self.w_fc1, self.b_fc1 = _init_linear(rng, config.mlp_hidden_dim, d, base_std)
         self.w_fc2, self.b_fc2 = _init_linear(rng, d, config.mlp_hidden_dim, residual_std)
 
     def _attention(self, x: FloatArray) -> FloatArray:
