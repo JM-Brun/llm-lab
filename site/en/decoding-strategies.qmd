@@ -21,6 +21,8 @@ related: ["en/generation", "en/logits", "en/probabilities", "en/experimental-eva
 tags: ["type:deep-dive", "destination:deepen", "topic:decoding", "level:advanced", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-decoding-strategies.qmd >}}
 ::: {.chapter-lead}
 The [text generation](generation.qmd) lesson introduces the essential mechanism: produce a conditional distribution, select a token, append it to the context, and repeat. This optional page studies finer choices that transform that distribution or search over sequences. They do not update the model's parameters, but they change the effective output distribution and the trade-offs among diversity, coherence, and instruction fidelity.
 :::
