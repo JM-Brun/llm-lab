@@ -204,7 +204,7 @@ The standards profile documents the graph-export and rendered-output checks; use
 | Domain/concept/resource knowledge graph | `data/concepts.yml`; `data/domains.yml`; `data/resources.yml` |
 | External sources, classification and extraction records | [Source catalogue schema](source-catalogue-schema.md); `data/sources.yml`; `data/source-taxonomy.yml`; `data/extractions/` |
 | Page metadata, tags and page graph | [Page metadata schema](page-metadata-schema.md) |
-| Global and local breadcrumb rendering | [Nested breadcrumb navigation contract](nested-breadcrumb-navigation-contract.md) |
+| Site-location and pedagogical route navigation | [Pedagogical breadcrumb and page-navigation contract](pedagogical-breadcrumb-and-page-navigation-contract.md); [pilot audit](pedagogical-breadcrumb-pilot-audit.md) |
 | Learning-map implementation | `site/tools/build_learning_map.py`, `tests/unit/test_learning_map.py` |
 | Metadata validation | `site/tools/check_page_metadata.py`, `tests/unit/test_page_metadata.py` |
 | Curriculum and prerequisites | [Learning path](learning-path.md) |
