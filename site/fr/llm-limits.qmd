@@ -20,6 +20,8 @@ related: ["fr/evaluation-experimentale", "fr/emergence"]
 tags: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:fr", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-fr-llm-limits.qmd >}}
 ::: {.chapter-lead}
 Prédire le prochain token est un **objectif d’entraînement**. Ce qu’un modèle en retire relève de l’évaluation, pas de la définition. Cette page sépare ce que l’objectif garantit — pas grand-chose au-delà de la prédiction elle-même — de ce qu’il rend seulement plausible.
 :::
