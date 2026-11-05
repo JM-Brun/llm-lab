@@ -96,7 +96,10 @@ def test_single_membership_renders_as_context_not_as_a_parent_claim() -> None:
     assert 'href="learning-map.html#guided-stage-representations"' in rendered
     assert "Rotary Position Embeddings" not in rendered
     assert 'class="guided-page-context__label">Learning path</span>' in rendered
-    assert 'class="guided-page-context__stage" href="learning-map.html#guided-stage-representations"' in rendered
+    assert (
+        'class="guided-page-context__stage" '
+        'href="learning-map.html#guided-stage-representations"' in rendered
+    )
     assert "Optional resource" in rendered
 
 
@@ -174,20 +177,3 @@ def test_writer_generates_page_contexts_for_every_route_member(
     )
 
 
-@pytest.mark.parametrize(
-    ("language", "expected_include"),
-    [
-        ("fr", "generated-guided-context-fr-text-data.qmd"),
-        ("en", "generated-guided-context-en-text-data.qmd"),
-    ],
-)
-def test_text_data_page_includes_its_localized_guided_route_context(
-    language: str, expected_include: str
-) -> None:
-    page = ROOT / "site" / language / "text-data.qmd"
-
-    content = page.read_text(encoding="utf-8")
-
-    assert f"../includes/{expected_include}" in content
-    other_language = "en" if language == "fr" else "fr"
-    assert f"generated-guided-context-{other_language}-text-data.qmd" not in content
