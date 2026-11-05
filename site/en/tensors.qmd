@@ -21,6 +21,8 @@ related: []
 tags: ["type:deep-dive", "destination:deepen", "topic:tensors", "level:advanced", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-tensors.qmd >}}
 ::: {.chapter-lead}
 In a Transformer, tensors carry token representations, logits, masks, and gradients. Reading their axes correctly is essential: an operation can run without an error while acting on the wrong axis.
 :::
