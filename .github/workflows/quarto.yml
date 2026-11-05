@@ -15,9 +15,9 @@ concurrency:
 
 jobs:
   render:
-    name: Render bilingual learning site
+    name: Render bilingual learning site and QKV browser audit
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -59,3 +59,47 @@ jobs:
 
       - name: Check local links in rendered site
         run: python3 site/tools/check_site_links.py site/_site
+
+      # Run the browser audit against this exact PR render, not the deployed
+      # Pages site. This makes the check reproducible and tests proposed CSS.
+      - name: Set up Node
+        if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'review/qkv-browser-qa-')
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install browser test dependencies
+        if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'review/qkv-browser-qa-')
+        run: npm install --no-save --package-lock=false playwright@1.56.1 @axe-core/playwright@4.10.2
+
+      - name: Install Chromium
+        if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'review/qkv-browser-qa-')
+        run: npx playwright install --with-deps chromium
+
+      - name: Serve this PR's rendered site
+        if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'review/qkv-browser-qa-')
+        run: |
+          python3 -m http.server 4173 --directory site/_site >/tmp/qkv-site-server.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4173/en/queries-keys-values.html >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/qkv-site-server.log
+          exit 1
+
+      - name: Review rendered bilingual QKV pages
+        if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'review/qkv-browser-qa-')
+        env:
+          QKV_BROWSER_BASE_URL: http://127.0.0.1:4173
+        run: node scripts/qkv-browser-review.mjs
+
+      - name: Upload screenshots and audit report
+        if: always() && github.event_name == 'pull_request' && startsWith(github.head_ref, 'review/qkv-browser-qa-')
+        uses: actions/upload-artifact@v4
+        with:
+          name: qkv-browser-review-${{ github.sha }}
+          path: artifacts/qkv-browser-review/
+          if-no-files-found: warn
+          retention-days: 30
