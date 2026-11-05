@@ -50,7 +50,7 @@ The same branch now includes a renderer, `render_guided_page_context_markdown()`
 
 Stage anchors are added to the generated bilingual route fragments, and responsive styles are defined for the two context presentations.
 
-The renderer is covered by tests for a single optional membership, multiple core memberships, stable anchors, and an absent membership. The current prototype is not yet inserted into lesson pages; Quarto include-path and rendered-output validation are still required before rollout.
+The renderer is covered by tests for a single optional membership, multiple core memberships, stable anchors, and an absent membership. A generator now emits one ignored Quarto partial per route-member page. The English and French overview and generation lessons include these partials as a first page-level pilot: the overview exercises the single-membership path, while generation exercises the multi-membership path. The Quarto build runs the generator before rendering; local builds must run `python site/tools/build_learning_map.py` before `quarto render site`.
 
 The next design/implementation step must choose an accessible presentation that does not misrepresent multi-membership:
 
@@ -63,4 +63,4 @@ The stage links should target stable anchors on the guided-route overview, not a
 
 ## Validation boundary
 
-The projection, renderer and regression tests are committed in the implementation PR. CI is being rerun after a formatting-only correction. Quarto rendering, visual review, keyboard navigation and screen-reader review remain pending. Do not describe this as a validated learner-facing breadcrumb until those checks have been completed.
+The projection, renderer, fragment writer and regression tests are committed in the implementation PR. Python CI passes on the latest validated head. The page-level pilot is being checked by the Quarto workflow; visual review, keyboard navigation and screen-reader review remain pending. Do not describe this as a validated learner-facing breadcrumb until those checks have been completed.
