@@ -16,7 +16,7 @@ The function returns a mapping:
 
 - key: published page ID, including its language prefix;
 - value: ordered list of explicit memberships;
-- each membership contains the stage ID, localized stage title, and role (`core` or `optional`).
+- each membership contains the stage ID, localized stage title, localized objective, and role (`core` or `optional`).
 
 The list order follows the stage order in `data/guided-route.yml`. The role is preserved per membership, not collapsed into a page-level boolean.
 
