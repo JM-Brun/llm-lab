@@ -1678,3 +1678,57 @@ a.concept-link:focus-visible {
     display: block;
   }
 }
+
+
+/* Guided-route context on lessons: context, not a claim of conceptual ancestry. */
+.guided-route-stage[id] { scroll-margin-top: 5rem; }
+.guided-page-context,
+.guided-page-context--multiple {
+  margin: .85rem 0 1.1rem;
+  padding: .65rem .85rem;
+  border-left: 3px solid var(--llm-brand);
+  border-radius: .3rem;
+  background: #F3F8F4;
+  color: var(--llm-ink);
+  font-size: .86rem;
+  line-height: 1.45;
+}
+.guided-page-context ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .3rem .55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.guided-page-context li + li::before {
+  content: "›";
+  margin-right: .55rem;
+  color: #64748B;
+}
+.guided-page-context [aria-current="page"] { font-weight: 700; }
+.guided-page-context__role {
+  display: inline-block;
+  margin-left: .35rem;
+  color: #52665A;
+  font-size: .78rem;
+  font-weight: 650;
+}
+.guided-page-context--multiple > p { margin: 0 0 .4rem; }
+.guided-page-context--multiple ul {
+  display: grid;
+  gap: .5rem;
+  margin: 0;
+  padding-left: 1.15rem;
+}
+.guided-page-context--multiple li > p {
+  margin: .12rem 0 0;
+  color: #52665A;
+  font-size: .82rem;
+}
+@media (max-width: 600px) {
+  .guided-page-context,
+  .guided-page-context--multiple { padding: .6rem .7rem; }
+  .guided-page-context--multiple ul { gap: .65rem; }
+}
