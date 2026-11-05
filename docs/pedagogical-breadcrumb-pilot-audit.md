@@ -208,3 +208,27 @@ Decision (extension of the §8 rationale): retire the eight five-stop blocks wit
 The full scan — cue-coverage map, the nested-route mapping, and the remaining rollout gaps (nine core route pages still carry no visual cue; the prediction → learning tail has no route cards after `logits`) — is recorded in [visual-route-continuity-audit-2026-11-05.md](visual-route-continuity-audit-2026-11-05.md).
 
 This closes the §5 and §11 stepper-inventory items at the source level only. Rendered/browser verification, the accessibility review and the learner check remain open, as does the #535 follow-up.
+
+## 15. Text-data cue-dimension evaluation and restored route transitions (2026-11-05)
+
+After #537, the deployed `fr/text-data` page was re-examined to evaluate how its local stepper and the pedagogical context are organized.
+
+### Findings
+
+1. The retained four-stop stepper (§12.1) is honest as a **local transformation pipeline**: its stops 2-4 are exactly the three core pages of the `representations` stage, in registry order, and each arrow is a real transformation consistent with the page's own diagram and key chain. It answers «what transformation chain am I following?», not «where am I in the guided route?» (contract §2).
+2. It is a **cross-stage sub-pipeline**: stop 1 belongs to stage 02 (`text-input`), stops 2-4 to stage 03 (`representations`). The page does not say so; a learner clicking stop 2 lands on `embedding-space`, which now carries the generated stage-03 context, moving from local numbering (2 of 4) to route numbering with no bridge.
+3. **Competing next-step signals**: the stepper's stop 2 points to `embedding-space`, while `suggested_route.next` points to `tokenization-strategies` (the other core page of stage 02). Both are defensible for different reading intents (first pass vs stage completion; the one-minute callout explicitly defers BPE/WordPiece details), but the page never makes that choice explicit, and the visually dominant stepper silently contradicts the registry signal.
+4. The anti-stacking decision (§12.1/§13) removed the route dimension from the page entirely: `text-data` is the only core member of its stage with no rendered cue for membership **or** transitions. Its `suggested_route` (generation → tokenization-strategies) exists only as metadata, and unlike QKV/SDPA/causal-masking/logits the page carries no end-of-page route cards.
+
+### Correction applied
+
+Add the end-of-page `route-nav-cards` to FR/EN text-data (previous: generation; next: tokenization-strategies). This is the endorsed reading-transition pattern (§8: «useful local previous/next links … distinct from the global curriculum breadcrumb»). The opening organization is unchanged: the local stepper remains the sole opening cue, per §12.1/§13.
+
+### Options recorded for the opening cue (owner decision; none implemented here)
+
+- **A. Status quo** — stepper only; route membership stays invisible.
+- **B. Generated chip above the stepper** — reverts §13; two stacked bars.
+- **C. One block, two labelled dimensions** — a caption line inside the stepper block linking to the learning map («Parcours guidé · Du texte aux tokens»), visually subordinate to the stepper. Honors the intent of §13 (no stacked competing bars) while restoring membership; needs generator and CSS work.
+- **D. A + end-of-page route cards now**, then decide C after the §11 rendered review and learner check.
+
+Recommendation: **D**.
