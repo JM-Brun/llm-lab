@@ -34,26 +34,25 @@ These projections may link to one another, but their semantics remain distinct. 
 
 ## 3. Breadcrumb behavior
 
-### 3.1 Two complementary trails, not two competing curricula
+### 3.1 One coherent visual cue, not stacked breadcrumbs
 
-When both add distinct orientation value, render two separate trails with explicit, localized labels:
+The learner-facing treatment should remain a **single, visually recognizable pedagogical context cue**. Do not stack a site-location breadcrumb and a pedagogical breadcrumb above the same page by default: that creates competing navigation bars and repeats the reader's location.
 
-1. **Site-location breadcrumb** — derived from the Quarto navigation hierarchy. It answers “Where am I in the published site?” It is a location aid, not a learning sequence.
-2. **Pedagogical route context** — derived from the existing guided-route registry and its page crosswalk. It answers “Which learning route or stage gives this page its instructional context?” It is not a conceptual-parent chain and does not imply that every earlier stage is a strict prerequisite.
+The Quarto sidebar already provides global site navigation. It is not necessary to reproduce its ancestry as a second page-level breadcrumb. A separate site-location breadcrumb may be considered only if a demonstrated navigation problem remains after the pedagogical cue is corrected, and only if it adds information that is not already visible in the sidebar.
 
-The two trails are separate projections of existing sources. Do not merge their items into one synthetic ancestry chain. Do not create a third breadcrumb from `hierarchy.parents`: that field describes conceptual containment/decomposition and can be multi-parent. Use it for contextual relationships, not automatically for reader-facing breadcrumb ancestry.
+For a page with one explicit guided-route membership, show the route stage as a visual, linked context chip near the page opening. The page heading itself identifies the current page; do **not** repeat the page title as the final breadcrumb item immediately above the heading. The route cue should resemble the site's established visual stepper treatment (clear surface, border, active green element, responsive wrapping), without implying a fabricated multi-step sequence.
 
-The pedagogical context component already piloted by PR #522 is a generated projection of `data/guided-route.yml`. Reuse and extend that component rather than adding page-specific breadcrumb markup or a parallel renderer. The Quarto sidebar remains the source for site location; its ancestry should not be copied into page metadata.
+For a page with multiple memberships, retain the distinct stage contexts and their objectives in a separate, clearly labelled contextual section. Do not present multiple memberships as one breadcrumb and do not select an arbitrary primary stage.
 
-Render only the trails that provide distinct value. If both are shown, give them different accessible names (for example “Site location” / “Emplacement dans le site” and “Learning path” / “Parcours pédagogique”) and distinguish their visual hierarchy. Avoid duplicate adjacent links and avoid presenting the two trails as one continuous sequence.
+The guided-route cue is generated from `data/guided-route.yml`. Do not create a parallel renderer or derive the cue from `hierarchy.parents`, which describes conceptual containment and may be multi-parent.
 
 ### 3.2 Guided-route context
 
-For pages assigned to a curriculum stage, show a compact breadcrumb using the existing stage names and page crosswalk. The breadcrumb should communicate the primary guided context, not claim that every item is a strict prerequisite.
+For pages assigned to exactly one curriculum stage, show the localized stage context using the existing stage name and page crosswalk. This cue communicates pedagogical context; it does not claim that every earlier stage is a strict prerequisite.
 
 Example (illustrative labels only):
 
-`Understand → Data representations → Embeddings`
+`Learning path · From IDs to representations`
 
 Use localized labels in French and English. Stable identifiers may be used internally but must never leak into visible labels.
 
@@ -69,8 +68,8 @@ A page may be reached from multiple stages, concepts, or companion lessons.
 
 ### 3.4 Breadcrumb semantics and accessibility
 
-- Use semantic navigation markup with distinct accessible labels for the site-location and pedagogical trails when both are rendered; the pedagogical trail may use “Learning path” / “Parcours pédagogique”.
-- Mark the current page as the current item; do not make it a self-link.
+- Use semantic navigation markup with a localized accessible label such as “Learning path” / “Parcours pédagogique”.
+- Let the page heading identify the current page; do not repeat it in the context cue immediately above the heading.
 - Keep labels short, localized, and human-readable.
 - Ensure keyboard focus, visible focus state, sufficient contrast, and a usable narrow-screen layout.
 - Avoid truncating away the current page identity. On small screens, collapse ancestors progressively or provide an accessible compact representation.
