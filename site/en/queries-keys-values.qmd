@@ -118,6 +118,18 @@ The first example, used by [Neha KK](https://medium.com/@nkk18072004/understandi
 In both cases, the Q/K/V explanation remains an illustration of information flow. These examples do not prove that one identified attention head alone performs coreference resolution or lexical disambiguation. For the broader role of context in representations, see [Contextualized representations](contextualized-representations.qmd).
 :::
 
+
+
+::: {.callout-note collapse="true" title="A useful distinction: what attracts attention is not necessarily what gets transmitted"}
+Brenndoerfer makes the separation between **routing** and **content** especially explicit. A key participates in deciding whether a position receives attention; the corresponding value determines what that position contributes if selected. These roles need not encode the same feature.
+
+For example, a hypothetical token could be attended to because its key signals a useful grammatical role, while its value carries semantic content. This is a functional illustration, not a claim that a trained head has been shown to implement that linguistic behavior.
+
+This is why Q/K and V are not interchangeable: changing V alone leaves the attention weights unchanged, although it can change the resulting weighted sum. The score and aggregation equations are derived in [scaled dot-product attention](scaled-dot-product-attention.qmd).
+
+Source perspective: [Brenndoerfer, *Query, Key, Value: The Foundation of Transformer Attention*](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism).
+:::
+
 ## Keep these objects distinct
 
 | Object | Role in the computation |

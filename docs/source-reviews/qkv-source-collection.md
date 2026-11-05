@@ -15,6 +15,7 @@ This page is the entry point for the Q/K/V source collection. It is intentionall
 | `nishanthan-k-qkv-transformers-devto` | [Nishanthan K — How Query, Key, and Value (QKV) Work in Transformers](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a) | Header shows Oct 22; year not independently verified | [YAML extraction](../../data/extractions/nishanthan-k-qkv-transformers-devto.yml) | [Review](qkv-nishanthan-devto-2026-11.md) | Partially scanned: DEV author text and two-comment thread directly inspected; Medium mirror exposes one unresolved image placeholder; linked resources, image bytes and rights unresolved |
 | `neha-kk-understanding-qkv-medium` | [Neha KK — Understanding Queries, Keys and Values in Transformers](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) | 2025-12-31 | [YAML extraction](../../data/extractions/neha-kk-understanding-qkv-medium.yml) | [Review](qkv-neha-kk-medium-2026-11.md) | Partially scanned: visible author text now directly reconciled against the live page-text view; actual figure files, linked resources and rights unresolved |
 | `codefinity-qkv-course` | [Codefinity — Queries, Keys, and Values](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) | Course date not independently verified | [YAML extraction](../../data/extractions/codefinity-qkv-building-blocks.yml) | [Review](qkv-codefinity-course-2026-11.md) | Partially scanned: lesson and parent outline inspected; two interface SVG URLs identified but bytes/rights unresolved; full interactive course, other lessons, assignments and linked resources uninspected |
+| `mbrenndoerfer-qkv-attention-mechanism` | [Michael Brenndoerfer — Query, Key, Value: The Foundation of Transformer Attention](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism) | 2025-06-01; updated 2025-06-04 | [YAML extraction](../../data/extractions/mbrenndoerfer-qkv-attention-mechanism.yml) | [Review](qkv-mbrenndoerfer-2026-11.md) · [Visual inventory](qkv-brenndoerfer-visual-inventory-2026-11.md) | Partially scanned: chapter text inspected; nine visual teaching moves inventoried but original assets/rights unresolved; code not executed; quiz interactions and linked resources uninspected |
 | `huggingface-transformers-kv-cache-explanation` | [Hugging Face Transformers — Caching](https://huggingface.co/docs/transformers/main/en/cache_explanation) | Living documentation | [Source catalogue](../../data/sources.yml) | [DEV review, community follow-up](qkv-nishanthan-devto-2026-11.md#7-follow-up-scan-reconciliation) | Partially scanned; technical follow-up source, not a third Q/K/V tutorial |
 
 **Medium scan refinement (2026-11-05):** the canonical page is now directly readable through the page reader; the visible text reconciles with the earlier indexed snapshot. Four in-body image placements remain visible (three captioned figures and one uncaptioned placeholder), but none was retrieved as image bytes or visually inspected. A “No responses yet” state was visible at this recheck; this is point-in-time evidence only. The raw DOM, cover/hero asset and reuse rights remain unresolved.
@@ -208,3 +209,27 @@ The extraction and review preserve source-specific evidence and scan limitations
 ## 10. Learning-impact baseline
 
 The current bilingual lesson and exercise hub have been audited to distinguish existing coverage from genuine assessment gaps. The [Q/K/V learning-impact baseline and assessment plan](../source-syntheses/qkv-learning-impact-baseline-2026-11.md) proposes a small diagnostic bundle without claiming measured learning gains or duplicating existing projection/aggregation exercises.
+
+
+## 11. Michael Brenndoerfer — “Query, Key, Value: The Foundation of Transformer Attention” (2026-11-05)
+
+[Canonical chapter](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism) · [structured extraction](../../data/extractions/mbrenndoerfer-qkv-attention-mechanism.yml) · [source review](qkv-mbrenndoerfer-2026-11.md) · [incremental workflow pilot report](../source-syntheses/qkv-incremental-source-pilot-2026-11-05.md)
+
+**Scan status: partially scanned.** The 11-section chapter's visible text, equations, selected code/output blocks, worked example, limitations and quiz section were inspected. Code was not executed; the visualizations were not inspected as image files; interactive controls, quiz feedback, comments, linked references and rights remain unresolved.
+
+### Differential contribution
+
+| Contribution | Comparison with current LLM Lab | Decision |
+|---|---|---|
+| Database/library lookup analogy | Same functional role mapping as the canonical index-card analogy; carries the same hard-retrieval risk | Already covered; do not stack another analogy |
+| Variance derivation for the scale factor | Explicitly derives Var(qᵀk)=d_k under independence and unit-variance assumptions | Integrate by reference as optional intermediate depth; do not duplicate the attention lesson |
+| Tensor shape walkthrough | Alternative compact reference; canonical Build/attention material already owns shape reasoning | Already covered |
+| Full “The cat sat” numerical trace | Useful transparent trace, but duplicates the existing workbench; random weights are not learned linguistic behavior | Integrate by reference; preserve the random-vs-trained caveat |
+| Convex-hull property | Valid for each normalized weighted sum over that row's value vectors, before later projections/residual/MLP | Defer until a learner task justifies geometric depth |
+| Broad symmetry and learned-head claims | Several statements need qualification around masks, positional mechanisms, softmax nonlinearity and evidence for linguistic specialization | Keep as source-review regression examples; no learner-facing rebuttal page |
+
+### Workflow result
+
+The fourth Q/K/V tutorial was processed without a new registry, concept, page or route edge. The source-local model reconstructs the 11-section route. Six selected items have explicit dispositions. The candidate scaling derivation was tested against the canonical lesson and retained as a reference rather than copied into the page.
+
+The pilot identifies two operational improvements only: record text reconstruction completeness separately from whole-source inspection, and record effort by workflow phase. No new skill, taxonomy or composite score is justified. See the pilot report for coverage, effort and remaining validation gates.
