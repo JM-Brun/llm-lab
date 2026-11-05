@@ -2014,3 +2014,55 @@ sources:
       audit_records:
         - docs/source-reviews/qkv-codefinity-course-2026-11.md
         - docs/source-reviews/qkv-source-collection.md
+
+  - id: brenndoerfer-query-key-value-attention-2025
+    title: "Query, Key, Value: The Foundation of Transformer Attention"
+    creators: ["Michael Brenndoerfer"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism"
+    publisher: "Michael Brenndoerfer / Language AI Handbook"
+    publication_date: "2025-06-01"
+    updated_date: "2025-06-04"
+    language: en
+    version: "Web chapter 91 of Language AI Handbook; page reports 11 sections and 40 minutes; accessed 2026-11-05"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:qkv, topic:self-attention, method:scaled-dot-product-attention, ecosystem:python]
+      concept_ids: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax]
+    metadata:
+      technical_level: mixed
+      contribution_types: [architecture, mathematical-derivation, implementation, visualization, pedagogy]
+      audiences: [beginner, learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-05"
+        status: partially-scanned
+        inspected_scope:
+          - "Direct page text and chapter metadata: title, author, publication/update dates, handbook position, eleven section titles and estimated reading time"
+          - "Author text for all eleven visible chapter sections, including Q/K/V motivation, database analogy, projection equations, dot-product scoring, scaling derivation, softmax, complete attention formula, tensor dimensions, learned transformations, implementation code, worked example, limitations, parameters, summary and quiz"
+          - "Visible Python code and output blocks, including the scaling variance simulation, attention implementation, shape checks, random-initialization heatmap and worked three-word example"
+          - "Visible quiz interface and first question; chapter advertises eight questions"
+          - "Visible discussion area and one comment"
+          - "Compared source-local teaching sequence and candidate contributions against the canonical bilingual Q/K/V and scaled-dot-product-attention pages, existing Q/K/V source collection and pedagogical coverage matrix"
+        limitations:
+          - "The visible page-reader text is not a pinned archival snapshot; no immutable revision or repository commit is supplied."
+          - "Notebook/code cells were inspected as rendered text but not independently executed; dependencies, environment and numerical reproducibility were not checked."
+          - "Only the first of eight quiz questions was exposed in the retrieved page text; remaining questions, feedback and scoring behavior were not inspected."
+          - "Figures and visualizations were identified through captions/descriptions but original image bytes, alt-text quality, responsive behavior and accessibility were not independently inspected."
+          - "The single visible comment was inspected; discussion completeness and moderation state were not independently verified."
+          - "No licence or reuse permission for text, figures, code or data was established; all remain link-only."
+          - "Some claims about trained linguistic attention patterns and interpretability exceed the evidence shown by the tutorial's random-initialization demonstrations."
+    related:
+      pages: [en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention, en/attention-score-scaling, fr/attention-score-scaling]
+      concepts: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax]
+      audit_records:
+        - docs/source-reviews/qkv-brenndoerfer-2026-11.md
+        - docs/source-reviews/qkv-source-collection.md
+        - docs/source-syntheses/qkv-pedagogical-coverage-matrix-2026-11.md
+        - docs/source-syntheses/qkv-complementary-perspectives-2026-11.md
