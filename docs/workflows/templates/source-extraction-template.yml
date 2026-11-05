@@ -76,7 +76,7 @@ items:
     #   captured_at: "YYYY-MM-DD"
     evidence:
       kind: direct-statement # describe the evidence basis; keep author statements separate from inference
-      confidence: well-supported # established | well-supported | context-dependent | disputed | speculative | unverified
+      confidence: well-supported # exact value from evidence_confidence_levels in data/source-taxonomy.yml
       scope: "State the scope of the claim and inspected evidence."
       assumptions: []
       limitations: []
@@ -107,7 +107,7 @@ items:
       pages: []
       concepts: []
       route_ids: []
-    disposition: defer # integrate | integrate-by-reference | already-covered | defer | reject
+    disposition: defer # exact value from item_dispositions in data/source-taxonomy.yml
     disposition_rationale: ""
 
 # Never equate source-local graph IDs with canonical concept IDs.
