@@ -388,6 +388,15 @@ sources:
         limitations:
           - "The audit is abstract-level; full-paper methodology was not reviewed in that pass."
           - "Findings are specific to evaluated commercial APIs and benchmarks."
+      - accessed_at: "2026-11-05"
+        status: partially-scanned
+        inspected_scope:
+          - "Full published EMNLP 2023 PDF: tokenizer/model setup, FLORES-200 token counts, controlled byte-level BPE comparison, API cost estimates, in-context utility experiments, socio-economic correlations and limitations"
+          - "Main figures and table inspected; structured extraction created with six atomic items"
+        limitations:
+          - "The commercial model and pricing evidence is historical; ChatGPT training data and model snapshots were unavailable."
+          - "FLORES-200 translationese, CC100 proxy assumptions and country-level HDI mapping limit generalization."
+          - "The linked code repository and raw evaluation data were not independently audited or executed."
     related:
       pages: [en/text-data, fr/text-data, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
