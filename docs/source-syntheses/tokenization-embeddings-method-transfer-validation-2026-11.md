@@ -83,7 +83,7 @@ Both cases show how a source can improve the evidence layer without requiring a 
 
 1. **Inventory drift:** the source count became stale after Codefinity was registered. A deterministic catalogue/dossier consistency check is needed.
 2. **Instructional route status is implicit for some sources:** among the ten topic-specific extraction files, only Karpathy has a pedagogical model. That is appropriate for research papers, but registered instructional sources such as Raschka, the Hugging Face course, Vizuara and ByteByteGo need explicit needed/not-applicable/deferred triage.
-3. **Metadata gaps remain:** exact historical URLs for some ByteByteGo/Vizuara resources and some upstream revisions must be recovered from existing evidence, never guessed.
+3. **Metadata gaps remain:** the registered ByteByteGo/Vizuara resources have canonical URLs, but a potentially separate Vizuara embeddings resource and some upstream revisions still need reconciliation from existing evidence, never guesswork.
 4. **Rights and inspection are independent:** reading an article or paper does not clear figures, videos, repositories, code or supplements.
 5. **Dossier size needs governance:** future additions should update the relevant learner-question section and compact decision table; large details belong in extraction/review records.
 6. **Validation must target the final head:** prior CI success cannot be reused after catalogue, extraction or protocol changes.
