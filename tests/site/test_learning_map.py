@@ -93,12 +93,14 @@ def _write_concept_registry(root: Path) -> None:
                 "id": "attention",
                 "labels": {"fr": "Attention", "en": "Attention"},
                 "definitions": {"fr": "Mécanisme.", "en": "Mechanism."},
+                "domains": ["architectures-mechanisms"],
                 "resources": ["fr/attention", "en/attention"],
             },
             {
                 "id": "query",
                 "labels": {"fr": "Requête", "en": "Query"},
                 "definitions": {"fr": "Projection.", "en": "Projection."},
+                "domains": [],
                 "resources": ["fr/attention", "en/attention"],
             },
         ],
@@ -117,6 +119,26 @@ def _write_concept_registry(root: Path) -> None:
     registry = root / "data" / "concepts.yml"
     registry.parent.mkdir(parents=True, exist_ok=True)
     registry.write_text(yaml.safe_dump(data, allow_unicode=True), encoding="utf-8")
+
+
+def _write_domain_registry(root: Path) -> None:
+    """Write a minimal bilingual domain registry for generator tests."""
+    data = {
+        "schema_version": 1,
+        "domains": [
+            {
+                "id": "architectures-mechanisms",
+                "labels": {
+                    "fr": "Architectures et mécanismes",
+                    "en": "Architectures and mechanisms",
+                },
+            }
+        ],
+    }
+    registry = root / "data" / "domains.yml"
+    registry.parent.mkdir(parents=True, exist_ok=True)
+    registry.write_text(yaml.safe_dump(data, allow_unicode=True), encoding="utf-8")
+
 
 
 def _write_guided_route(
@@ -491,6 +513,7 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     MODULE["build"].__globals__["SITE"] = site
     MODULE["build"].__globals__["ROOT"] = tmp_path
     _write_concept_registry(tmp_path)
+    _write_domain_registry(tmp_path)
     output = MODULE["build"]("fr")
     payload = json.loads(output.read_text(encoding="utf-8"))
 
@@ -531,14 +554,19 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
             "id": "attention",
             "label": "Attention",
             "definition": "Mécanisme.",
+            "domains": ["architectures-mechanisms"],
             "resources": [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}],
         },
         {
             "id": "query",
             "label": "Requête",
             "definition": "Projection.",
+            "domains": [],
             "resources": [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}],
         },
+    ]
+    assert payload["concept_domains"] == [
+        {"id": "architectures-mechanisms", "label": "Architectures et mécanismes"}
     ]
     assert payload["concept_relations"] == [{"from": "query", "type": "part-of", "to": "attention"}]
 
@@ -679,3 +707,87 @@ def test_concept_graph_script_exposes_direction_and_relation_legend() -> None:
     assert "renderConceptLegend();" in source
     assert "var label = type ? type.label : relation.type;" in source
     assert 'relation.direction === "symmetric" ? "↔ " : "→ "' in source
+def test_load_concept_graph_exports_localized_domains(tmp_path: Path) -> None:
+    _write_concept_registry(tmp_path)
+    _write_domain_registry(tmp_path)
+    MODULE["load_concept_graph"].__globals__["ROOT"] = tmp_path
+    pages = [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}]
+
+    french = MODULE["load_concept_graph"]("fr", pages)
+    english = MODULE["load_concept_graph"]("en", pages)
+
+    assert french["concept_domains"] == [
+        {"id": "architectures-mechanisms", "label": "Architectures et mécanismes"}
+    ]
+    assert english["concept_domains"] == [
+        {"id": "architectures-mechanisms", "label": "Architectures and mechanisms"}
+    ]
+    assert french["concepts"][0]["domains"] == ["architectures-mechanisms"]
+    assert french["concepts"][1]["domains"] == []
+
+
+def test_load_concept_graph_falls_back_when_domain_registry_is_missing(tmp_path: Path) -> None:
+    _write_concept_registry(tmp_path)
+    MODULE["load_concept_graph"].__globals__["ROOT"] = tmp_path
+    pages = [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}]
+
+    graph = MODULE["load_concept_graph"]("fr", pages)
+
+    assert graph["concept_domains"] == [
+        {"id": "architectures-mechanisms", "label": "architectures-mechanisms"}
+    ]
+
+
+def test_learning_map_script_groups_concepts_and_filters_relations() -> None:
+    """The concepts view groups by domain, filters relations, and chains details."""
+    script_path = MODULE_PATH.parents[2] / "site" / "includes" / "learning-map.html"
+    source = script_path.read_text(encoding="utf-8")
+    script = source.split("<script>", maxsplit=1)[1].split("</script>", maxsplit=1)[0]
+
+    assert 'querySelector("[data-map-relation-type]")' in script
+    assert 'querySelector("[data-map-reset]")' in script
+    assert 'el("h3", "map-concept-domain-title"' in script
+    assert "conceptMatchesFilters" in script
+    assert "conceptNeighbors" in script
+    assert 'setAttribute("aria-pressed", "true")' in script
+    assert "map-concept-dimmed" in script
+    assert 'copy.hiddenRelations.replace("{count}", String(hiddenCount))' in script
+    assert 'showConceptDetails(other.id, "details")' in script
+    assert "loadedSummary()" in script
+    assert '"Tous les types"' in script
+    assert '"All types"' in script
+
+
+def test_render_territory_map_exposes_relation_filter_and_reset() -> None:
+    render = RENDERERS["render_territory_map"]
+
+    french = render("fr", [], {})
+    english = render("en", [], {})
+
+    assert "data-map-relation-type" in french
+    assert "data-map-reset" in french
+    assert "Type de relation" in french
+    assert "Réinitialiser la vue" in french
+    assert "Échap remonte d'un niveau à la fois" in french
+    assert "data-map-relation-type" in english
+    assert "data-map-reset" in english
+    assert "Relation type" in english
+    assert "Reset view" in english
+    assert "Escape steps back one level at a time" in english
+
+
+def test_learning_map_reset_and_escape_clear_filters_progressively() -> None:
+    """Reset clears everything; Escape steps back one level at a time."""
+    script_path = MODULE_PATH.parents[2] / "site" / "includes" / "learning-map.html"
+    source = script_path.read_text(encoding="utf-8")
+    script = source.split("<script>", maxsplit=1)[1].split("</script>", maxsplit=1)[0]
+
+    escape_step = script.index('if (event.key !== "Escape" || !data) {')
+    query_step = script.index("if (state.query) {", escape_step)
+    selection_step = script.index('state.mode === "concepts" && state.conceptId', escape_step)
+    filter_step = script.index('state.mode === "concepts" && state.relationType', escape_step)
+    area_step = script.index('state.mode === "pages" && state.areaId', escape_step)
+    assert query_step < selection_step < filter_step < area_step
+    assert "renderPlaceholder();" in script
+    assert 'state.relationType = "";' in script
+    assert "state.conceptId = null;" in script
