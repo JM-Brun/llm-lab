@@ -133,3 +133,40 @@ def test_page_without_route_membership_has_no_context_fragment() -> None:
     )
 
     assert GENERATOR["render_guided_page_context_markdown"](page, [], "en") == ""
+
+
+@pytest.mark.parametrize("language", ["fr", "en"])
+def test_writer_generates_page_contexts_for_every_route_member(
+    language: str, tmp_path: Path
+) -> None:
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
+    stages = GENERATOR["load_guided_route"](language, pages)
+    memberships = GENERATOR["build_guided_route_memberships"](stages)
+    page_by_id = {
+        page.id: page
+        for stage in stages
+        for page in [*stage.pages, *stage.optional_pages]
+    }
+
+    original_site = GENERATOR["SITE"]
+    GENERATOR["SITE"] = tmp_path
+    try:
+        outputs = GENERATOR["write_guided_page_context_fragments"](language, stages)
+    finally:
+        GENERATOR["SITE"] = original_site
+
+    assert len(outputs) == len(memberships)
+    overview_id = f"{language}/llm-overview"
+    generation_id = f"{language}/generation"
+    output_by_name = {path.name: path for path in outputs}
+
+    overview_file = output_by_name[f"generated-guided-context-{overview_id.replace('/', '-')}.qmd"]
+    generation_file = output_by_name[
+        f"generated-guided-context-{generation_id.replace('/', '-')}.qmd"
+    ]
+    assert overview_file.read_text(encoding="utf-8") == GENERATOR[
+        "render_guided_page_context_markdown"
+    ](page_by_id[overview_id], memberships[overview_id], language)
+    assert generation_file.read_text(encoding="utf-8") == GENERATOR[
+        "render_guided_page_context_markdown"
+    ](page_by_id[generation_id], memberships[generation_id], language)
