@@ -21,14 +21,6 @@ ID_PATTERN = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 TAG_PATTERN = re.compile(
     r"(?:topic|method|modality|application|ecosystem):[a-z0-9]+(?:-[a-z0-9]+)*"
 )
-CONFIDENCE_LEVELS = {
-    "established",
-    "well-supported",
-    "context-dependent",
-    "disputed",
-    "speculative",
-    "unverified",
-}
 COMMUNITY_VOICES = {
     "primary-author",
     "reader-comment",
@@ -255,6 +247,8 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
     scan_statuses = set(taxonomy.get("scan_statuses", []))
     integration_statuses = set(taxonomy.get("integration_statuses", []))
     extraction_kinds = set(taxonomy.get("extraction_kinds", []))
+    evidence_confidence_levels = set(taxonomy.get("evidence_confidence_levels", []))
+    item_dispositions = set(taxonomy.get("item_dispositions", []))
     domain_ids = {
         item.get("id")
         for item in domains.get("domains", [])
@@ -412,8 +406,17 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
             evidence = item.get("evidence")
             if not isinstance(evidence, dict):
                 errors.append(f"{item_where}.evidence: expected a mapping")
-            elif evidence.get("confidence") not in CONFIDENCE_LEVELS:
-                errors.append(f"{item_where}.evidence.confidence: unsupported value")
+            elif evidence.get("confidence") not in evidence_confidence_levels:
+                errors.append(
+                    f"{item_where}.evidence.confidence: unsupported value "
+                    f"{evidence.get('confidence')!r}"
+                )
+
+            disposition = item.get("disposition")
+            if disposition is not None and disposition not in item_dispositions:
+                errors.append(
+                    f"{item_where}.disposition: unsupported value {disposition!r}"
+                )
 
             classification = item.get("classification", {})
             if classification is not None and not isinstance(classification, dict):
