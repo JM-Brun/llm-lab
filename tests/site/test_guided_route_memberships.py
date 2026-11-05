@@ -71,11 +71,7 @@ def test_membership_projection_keeps_empty_membership_absent() -> None:
 
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_guided_route_stage_anchors_are_stable(language: str) -> None:
-    pages = [
-        page
-        for page in GENERATOR["load_pages"]()
-        if page["language"] in {language, "shared"}
-    ]
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
     stages = GENERATOR["load_guided_route"](language, pages)
     rendered = GENERATOR["render_guided_route_markdown"](stages, language)
 
