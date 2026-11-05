@@ -122,3 +122,30 @@ Therefore, a universal page-level breadcrumb is not always semantically well-def
 6. Review rendered desktop/mobile and keyboard/screen-reader behavior before enabling the component broadly.
 
 **Branching note:** this audit was performed against current `main` content. PR #516's head is two commits behind `main`; synchronize/rebase before applying the four-page removal or implementing the projection. No content pages or runtime behavior were changed by this audit update.
+
+## 11. Implementation status after the first merged pilot (2026-11-05)
+
+The first implementation slice is now merged:
+
+- [PR #522](https://github.com/JM-Brun/llm-lab/pull/522) was merged as `84e951d`.
+- It adds a typed projection from the validated route model, preserving all page memberships and `core` / `optional` roles.
+- It adds a single-membership ordered context and a distinct multi-membership section; generation shows both `orientation` and `prediction` with their separate objectives.
+- The existing build script generates per-page context partials before Quarto rendering. The FR/EN overview and generation pages include the new component.
+- Stable stage anchors are generated on the guided-route overview.
+- Main-branch Python CI, Quarto render, and Quarto publish workflows completed successfully for the merge commit. The PR-level Quarto checks also passed site rendering, generated map checks, knowledge-graph export, timeline parity, and local-link checks.
+
+The Q/K/V and embedding lessons were intentionally not changed in PR #522 because their legacy five-stop stepper needed a separate, bounded content correction.
+
+[PR #519](https://github.com/JM-Brun/llm-lab/pull/519) now removes that stepper from the four FR/EN embeddings and Q/K/V pages and replaces it with the generated single-membership route context (`representations` and `computation`). The branch has been synchronized with current `main`; its updated CI and Quarto/browser checks are still in progress.
+
+### Remaining validation and rollout
+
+- [ ] Confirm PR #519 Python CI and Quarto/local-link checks on its latest head.
+- [ ] Inspect the rendered FR/EN overview, generation, embeddings, and Q/K/V pages at desktop and mobile widths.
+- [ ] Inspect the generated single-membership context and the multi-membership generation context for hierarchy ambiguity, visual weight, and placement relative to the chapter lead.
+- [ ] Verify keyboard focus, screen-reader announcement order, `aria-current`, contrast, and responsive wrapping.
+- [ ] Record the rendered review and any corrections in #337 / #368 before marking the breadcrumb/context pilot complete.
+- [ ] Run a small learner transfer/comprehension check; CI and visual review do not establish pedagogical effectiveness.
+- [ ] Search for any remaining `pipeline-stepper` occurrence and ensure no misleading linear chain remains.
+
+**Evidence boundary:** successful Python CI and Quarto render/publish establish technical generation and link integrity, not accessibility conformance or improved learner comprehension. The new component is a first implementation pilot, not yet a validated site-wide design.
