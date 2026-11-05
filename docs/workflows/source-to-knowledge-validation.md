@@ -180,9 +180,9 @@ This is a pilot evaluation frame, not a claim that every dimension is closed. Ex
 
 | Source family | Primary role in synthesis | Do not use it as |
 |---|---|---|
-| Nishanthan K (DEV/Medium mirror) | Concise intuition and visual framing candidate | Primary technical authority or two independent sources when mirror duplicates article |
+| Nishanthan K (DEV/Medium mirror) | Concise verbal intuition; the author-controlled mirror exposes an unresolved image placeholder | Primary technical authority or independent corroboration when the mirror duplicates the DEV article |
 | Neha KK (Medium) | Motivation for three projections; matching/payload distinction; linguistic examples | Evidence that parallelism alone explains architecture design |
-| Codefinity | Geometric intuition and distractor-style questions | Fully inspected course assessment; runtime/deeper course material remains unverified |
+| Codefinity | Geometric intuition and a three-question assessment pattern; answer feedback remains untested | Fully inspected course assessment; runtime, answer feedback and deeper course material remain unverified |
 | Vaswani et al. (2017) | Primary formulation of learned projections and scaled dot-product attention | Complete beginner teaching sequence |
 | GQA/MQA paper (Ainslie et al.) | Evidence for grouped/shared KV-head architectural variants | Proof that projection parameter tying is the same design decision |
 | Hugging Face KV-cache documentation | Implementation-oriented explanation of cached keys/values in autoregressive generation | General proof of every model's cache layout |
