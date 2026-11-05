@@ -914,7 +914,7 @@ a.concept-link:focus-visible {
 }
 .learning-map-toolbar {
   display: grid;
-  grid-template-columns: minmax(240px, 2fr) minmax(190px, 1fr);
+  grid-template-columns: minmax(220px, 2fr) minmax(170px, 1fr) minmax(190px, 1fr) auto;
   gap: .9rem;
   align-items: end;
 }
@@ -1129,6 +1129,7 @@ a.concept-link:focus-visible {
   .learning-map-layout { grid-template-columns: 1fr; }
   .learning-map-details { position: static; }
   .learning-map-canvas { max-height: 65vh; }
+  .learning-map-toolbar { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 600px) {
   .learning-map { padding: .7rem; }
@@ -1531,6 +1532,77 @@ a.concept-link:focus-visible {
 .map-concept-def {
   font-size: 0.78rem;
   color: var(--map-muted);
+}
+
+.map-concept-group {
+  margin: 0 0 1.1rem;
+}
+
+.map-concept-domain-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin: 0 0 0.45rem;
+  color: var(--map-ink);
+  font-size: 0.95rem;
+}
+
+.map-concept-domain-count {
+  padding: 0.05rem 0.4rem;
+  border: 1px solid var(--map-line);
+  border-radius: 999px;
+  color: var(--map-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.map-concept-item[aria-pressed="true"] {
+  border-color: var(--map-accent);
+  box-shadow: 0 0 0 1px var(--map-accent);
+}
+
+.map-concept-dimmed {
+  opacity: 0.45;
+}
+
+.map-hidden-relations {
+  margin: 0.6rem 0 0;
+  color: var(--map-muted);
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.map-detail-relations .map-concept-link {
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.5rem;
+  border: 1px solid var(--map-line);
+  border-radius: 999px;
+  background: var(--map-surface);
+  color: var(--map-accent);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.map-detail-relations .map-concept-link:hover,
+.map-detail-relations .map-concept-link:focus-visible {
+  border-color: var(--map-accent);
+}
+
+.learning-map-actions .map-reset {
+  min-height: 2.65rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid #B8C5BE;
+  border-radius: 0.4rem;
+  background: #fff;
+  color: var(--llm-ink);
+  cursor: pointer;
+}
+
+.learning-map-actions .map-reset:hover,
+.learning-map-actions .map-reset:focus-visible {
+  border-color: var(--llm-brand-action);
+  outline: 2px solid var(--llm-brand-action);
+  outline-offset: 2px;
 }
 
 .learning-map-details .map-empty {

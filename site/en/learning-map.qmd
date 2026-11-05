@@ -26,7 +26,7 @@ This page separates a compact **guided route** from a **progressive map**. The r
 - **Territories** — the main parts of the site: Understand, Build, Practice, Deepen, Reference.
 - **Sections** — clicking a territory reveals its subsections; the breadcrumb or the Escape key takes you back up one level.
 - **Pages** — clicking a page shows its details (purpose, sections, links); "Open the page" navigates there directly.
-- **Concepts** — the "Canonical concepts" view lists the concepts from the bilingual registry versioned in `data/concepts.yml`, with their definitions, typed relationships, and resource pages.
+- **Concepts** — the "Canonical concepts" view groups the concepts from the bilingual registry versioned in `data/concepts.yml` by discovery domain, with their definitions, typed relationships, and resource pages. The search and the relation-type filter narrow the list, a selected concept highlights its neighbours, and related concepts remain clickable from the details panel.
 
 Section headings shown in a page's details are editorial landmarks, not canonical concepts. The map must not be interpreted as a single reading order: the guided route below plays that role.
 
@@ -48,7 +48,7 @@ Six conceptual stages provide an entry point and a suggested progression. Core p
 
 ## Explore the resources
 
-The progressive map first shows territories, then reveals each section on click, then the pages. The "Canonical concepts" view separately presents the registry concepts. These views support exploration; they do not replace the guided route above. Both the map and the list below are generated automatically by the Python meta-code from the Quarto sidebar and page metadata: a single source to maintain.
+The progressive map first shows territories, then reveals each section on click, then the pages. The "Canonical concepts" view separately presents the registry concepts, grouped by domain. These views support exploration; they do not replace the guided route above. The "Reset view" button clears the search, the filter, and the selection; the Escape key steps back one level at a time. Both the map and the list below are generated automatically by the Python meta-code from the Quarto sidebar and page metadata: a single source to maintain.
 
 {{< include ../includes/generated-map-territories-en.qmd >}}
 
