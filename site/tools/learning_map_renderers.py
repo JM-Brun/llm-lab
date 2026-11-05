@@ -50,6 +50,13 @@ COPY: dict[str, dict[str, Any]] = {
         "sectionHeadingsTitle": "Dans cette page",
         "conceptResources": "Pages associées",
         "relationLegendTitle": "Sens des relations (source → cible)",
+        "relationFilterLabel": "Type de relation",
+        "relationFilterAll": "Tous les types",
+        "resetView": "Réinitialiser la vue",
+        "resetHint": "Efface la recherche, le filtre et la sélection ; Échap remonte d'un niveau à la fois.",
+        "ungroupedConcepts": "Autres notions",
+        "hiddenRelations": "{count} relation(s) masquée(s) par la recherche ou le filtre.",
+        "viewConcept": "Voir la notion",
         "statusLoaded": "Carte chargée.",
         "destinations": {
             "orient": "S'orienter",
@@ -90,6 +97,13 @@ COPY: dict[str, dict[str, Any]] = {
         "sectionHeadingsTitle": "On this page",
         "conceptResources": "Pages covering this concept",
         "relationLegendTitle": "Relationship meaning (source → target)",
+        "relationFilterLabel": "Relation type",
+        "relationFilterAll": "All types",
+        "resetView": "Reset view",
+        "resetHint": "Clears search, filter, and selection; Escape steps back one level at a time.",
+        "ungroupedConcepts": "Other concepts",
+        "hiddenRelations": "{count} relation(s) hidden by the search or filter.",
+        "viewConcept": "Show concept",
         "statusLoaded": "Map loaded.",
         "destinations": {
             "orient": "Get oriented",
@@ -155,6 +169,8 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
     var detailPanel = root.querySelector("[data-map-detail-panel]");
     var statusLine = root.querySelector("[data-map-status]");
     var conceptLegend = root.querySelector(".learning-map-concept-legend");
+    var relationFilter = root.querySelector("[data-map-relation-type]");
+    var resetButton = root.querySelector("[data-map-reset]");
     if (!viewport || !modeSelect || !searchInput || !detailPanel) {
       return;
     }
@@ -165,12 +181,14 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
     }
     var copy = COPY[lang];
     var dataSource = root.getAttribute("data-source") || "../learning-map-data-" + lang + ".json";
-    var state = { mode: "pages", areaId: null, query: "" };
+    var state = { mode: "pages", areaId: null, query: "", relationType: "", conceptId: null };
     var data = null;
     var pageById = {};
     var conceptById = {};
     var areas = [];
     var relationTypes = {};
+    var conceptDomainList = [];
+    var retryReload = false;
 
     searchInput.setAttribute("placeholder", copy.searchPlaceholder);
     searchInput.setAttribute("aria-label", copy.searchLabel);
@@ -216,27 +234,56 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
           }
           areas = normalizeAreas(data.navigation || []);
           relationTypes = data.concept_relation_types || {};
+          conceptDomainList = data.concept_domains || [];
           render();
-          setStatus(
-            copy.statusLoaded +
-              " " +
-              data.pages.length +
-              " " +
-              copy.pagesUnitPlural +
-              " · " +
-              areas.length +
-              " " +
-              copy.territoriesUnit
-          );
+          fillRelationFilter();
+          setStatus(loadedSummary());
+          if (retryReload) {
+            retryReload = false;
+            modeSelect.focus();
+          }
         })
         .catch(function () {
           clearNode(viewport);
           viewport.appendChild(el("p", "map-load-error", copy.loadError));
           var retry = el("button", "map-back", copy.retry);
           retry.type = "button";
-          retry.addEventListener("click", load);
+          retry.addEventListener("click", function () {
+            retryReload = true;
+            load();
+          });
           viewport.appendChild(retry);
         });
+    }
+
+    function loadedSummary() {
+      return (
+        copy.statusLoaded +
+        " " +
+        data.pages.length +
+        " " +
+        copy.pagesUnitPlural +
+        " · " +
+        areas.length +
+        " " +
+        copy.territoriesUnit
+      );
+    }
+
+    function fillRelationFilter() {
+      if (!relationFilter) {
+        return;
+      }
+      clearNode(relationFilter);
+      var allOption = el("option", null, copy.relationFilterAll);
+      allOption.value = "";
+      relationFilter.appendChild(allOption);
+      Object.keys(relationTypes).forEach(function (kind) {
+        var option = el("option", null, relationTypes[kind].label);
+        option.value = kind;
+        relationFilter.appendChild(option);
+      });
+      relationFilter.value = state.relationType;
     }
 
     function normalizeAreas(navigation) {
@@ -328,6 +375,9 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       clearNode(viewport);
       if (conceptLegend) {
         conceptLegend.hidden = state.mode !== "concepts";
+      }
+      if (relationFilter && relationFilter.parentElement) {
+        relationFilter.parentElement.hidden = state.mode !== "concepts";
       }
       if (state.mode === "concepts") {
         renderConcepts();
@@ -504,34 +554,152 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       }
     }
 
+    function conceptMatchesFilters(concept, query) {
+      if (query) {
+        var haystack = (concept.label + " " + (concept.definition || "")).toLowerCase();
+        if (haystack.indexOf(query) < 0) {
+          return false;
+        }
+      }
+      if (!state.relationType) {
+        return true;
+      }
+      var participates = (data.concept_relations || []).some(function (relation) {
+        return (
+          relation.type === state.relationType &&
+          (relation.from === concept.id || relation.to === concept.id)
+        );
+      });
+      return participates;
+    }
+
+    function conceptNeighbors(conceptId) {
+      var neighbors = {};
+      (data.concept_relations || []).forEach(function (relation) {
+        if (state.relationType && relation.type !== state.relationType) {
+          return;
+        }
+        if (relation.from === conceptId) {
+          neighbors[relation.to] = true;
+        } else if (relation.to === conceptId) {
+          neighbors[relation.from] = true;
+        }
+      });
+      return neighbors;
+    }
+
+    function countHiddenRelations(visibleConcepts) {
+      if (!state.query && !state.relationType) {
+        return 0;
+      }
+      var visibleIds = {};
+      visibleConcepts.forEach(function (concept) {
+        visibleIds[concept.id] = true;
+      });
+      var hidden = 0;
+      (data.concept_relations || []).forEach(function (relation) {
+        var filteredType = Boolean(state.relationType) && relation.type !== state.relationType;
+        if (filteredType || !visibleIds[relation.from] || !visibleIds[relation.to]) {
+          hidden += 1;
+        }
+      });
+      return hidden;
+    }
+
+    function conceptItemFor(concept, neighbors) {
+      var item = el("button", "map-concept-item");
+      item.type = "button";
+      item.setAttribute("data-concept-id", concept.id);
+      item.appendChild(el("span", "map-concept-label", concept.label));
+      if (concept.definition) {
+        item.appendChild(el("span", "map-concept-def", concept.definition));
+      }
+      if (state.conceptId) {
+        if (state.conceptId === concept.id) {
+          item.setAttribute("aria-pressed", "true");
+        } else if (!neighbors[concept.id]) {
+          item.classList.add("map-concept-dimmed");
+        }
+      }
+      item.addEventListener("click", function () {
+        state.conceptId = concept.id;
+        render();
+        showConceptDetails(concept.id);
+        var selected = viewport.querySelector('[data-concept-id="' + concept.id + '"]');
+        if (selected) {
+          selected.focus();
+        }
+      });
+      return item;
+    }
+
     function renderConcepts() {
       renderConceptLegend();
       var query = state.query.toLowerCase();
       var concepts = (data.concepts || []).filter(function (concept) {
-        if (!query) {
-          return true;
-        }
-        var haystack = (concept.label + " " + (concept.definition || "")).toLowerCase();
-        return haystack.indexOf(query) >= 0;
+        return conceptMatchesFilters(concept, query);
       });
       if (!concepts.length) {
         viewport.appendChild(el("p", "map-empty", copy.noResults));
+        setStatus(copy.noResults);
         return;
       }
-      var grid = el("div", "map-concept-grid");
-      concepts.forEach(function (concept) {
-        var item = el("button", "map-concept-item");
-        item.type = "button";
-        item.appendChild(el("span", "map-concept-label", concept.label));
-        if (concept.definition) {
-          item.appendChild(el("span", "map-concept-def", concept.definition));
-        }
-        item.addEventListener("click", function () {
-          showConceptDetails(concept.id);
-        });
-        grid.appendChild(item);
+      var grouped = {};
+      (conceptDomainList || []).forEach(function (domain) {
+        grouped[domain.id] = [];
       });
-      viewport.appendChild(grid);
+      var ungrouped = [];
+      concepts.forEach(function (concept) {
+        var matched = false;
+        (concept.domains || []).forEach(function (domainId) {
+          if (grouped[domainId]) {
+            grouped[domainId].push(concept);
+            matched = true;
+          }
+        });
+        if (!matched) {
+          ungrouped.push(concept);
+        }
+      });
+      var neighbors = state.conceptId ? conceptNeighbors(state.conceptId) : null;
+      (conceptDomainList || []).forEach(function (domain) {
+        if (!grouped[domain.id].length) {
+          return;
+        }
+        var group = el("section", "map-concept-group");
+        var title = el("h3", "map-concept-domain-title", domain.label);
+        var count = String(grouped[domain.id].length);
+        title.appendChild(el("span", "map-concept-domain-count", count));
+        group.appendChild(title);
+        var grid = el("div", "map-concept-grid");
+        grouped[domain.id].forEach(function (concept) {
+          grid.appendChild(conceptItemFor(concept, neighbors));
+        });
+        group.appendChild(grid);
+        viewport.appendChild(group);
+      });
+      if (ungrouped.length) {
+        var group = el("section", "map-concept-group");
+        var title = el("h3", "map-concept-domain-title", copy.ungroupedConcepts);
+        title.appendChild(el("span", "map-concept-domain-count", String(ungrouped.length)));
+        group.appendChild(title);
+        var grid = el("div", "map-concept-grid");
+        ungrouped.forEach(function (concept) {
+          grid.appendChild(conceptItemFor(concept, neighbors));
+        });
+        group.appendChild(grid);
+        viewport.appendChild(group);
+      }
+      var hiddenCount = countHiddenRelations(concepts);
+      if (hiddenCount > 0) {
+        viewport.appendChild(
+          el(
+            "p",
+            "map-hidden-relations",
+            copy.hiddenRelations.replace("{count}", String(hiddenCount))
+          )
+        );
+      }
       setStatus(concepts.length + " " + copy.notionsUnit);
     }
 
@@ -602,7 +770,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       setStatus(page.title);
     }
 
-    function showConceptDetails(conceptId) {
+    function showConceptDetails(conceptId, focusTarget) {
       var concept = conceptById[conceptId];
       if (!concept) {
         return;
@@ -613,20 +781,37 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         detailPanel.appendChild(el("p", "map-detail-purpose", concept.definition));
       }
       var relations = (data.concept_relations || []).filter(function (relation) {
+        if (state.relationType && relation.type !== state.relationType) {
+          return false;
+        }
         return relation.from === conceptId || relation.to === conceptId;
       });
       if (relations.length) {
         detailPanel.appendChild(el("h4", "map-detail-heading", copy.relatedConcepts));
         var relationList = el("ul", "map-detail-relations");
         relations.forEach(function (relation) {
-          var otherId = relation.from === conceptId ? relation.to : relation.from;
+          var outgoing = relation.from === conceptId;
+          var otherId = outgoing ? relation.to : relation.from;
           var other = conceptById[otherId];
           var type = relationTypes[relation.type];
           if (other) {
             var label = type ? type.label : relation.type;
-            relationList.appendChild(
-              el("li", "map-detail-relation", label + " · " + other.label)
+            var arrow = type && type.direction === "symmetric" ? " ↔ " : " ";
+            var source = outgoing ? concept : other;
+            var target = outgoing ? other : concept;
+            var entry = el("li", "map-detail-relation");
+            entry.appendChild(
+              document.createTextNode(source.label + " " + label + arrow + target.label)
             );
+            var link = el("button", "map-concept-link", copy.viewConcept);
+            link.type = "button";
+            link.addEventListener("click", function () {
+              state.conceptId = other.id;
+              render();
+              showConceptDetails(other.id, "details");
+            });
+            entry.appendChild(link);
+            relationList.appendChild(entry);
           }
         });
         if (relationList.firstChild) {
@@ -647,10 +832,18 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       }
       openDetailsBox();
       setStatus(concept.label);
+      if (focusTarget === "details") {
+        var title = detailPanel.querySelector(".map-detail-title");
+        if (title) {
+          title.tabIndex = -1;
+          title.focus();
+        }
+      }
     }
 
     modeSelect.addEventListener("change", function () {
       state.mode = modeSelect.value;
+      state.conceptId = null;
       render();
     });
 
@@ -659,6 +852,29 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       render();
     });
 
+    if (relationFilter) {
+      relationFilter.addEventListener("change", function () {
+        state.relationType = relationFilter.value;
+        render();
+      });
+    }
+
+    if (resetButton) {
+      resetButton.addEventListener("click", function () {
+        state.query = "";
+        state.relationType = "";
+        state.areaId = null;
+        state.conceptId = null;
+        searchInput.value = "";
+        if (relationFilter) {
+          relationFilter.value = "";
+        }
+        render();
+        renderPlaceholder();
+        modeSelect.focus();
+      });
+    }
+
     document.addEventListener("keydown", function (event) {
       if (event.key !== "Escape" || !data) {
         return;
@@ -666,6 +882,16 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       if (state.query) {
         state.query = "";
         searchInput.value = "";
+        render();
+      } else if (state.mode === "concepts" && state.conceptId) {
+        state.conceptId = null;
+        render();
+        renderPlaceholder();
+      } else if (state.mode === "concepts" && state.relationType) {
+        state.relationType = "";
+        if (relationFilter) {
+          relationFilter.value = "";
+        }
         render();
       } else if (state.mode === "pages" && state.areaId) {
         state.areaId = null;
@@ -691,9 +917,18 @@ TERRITORY_MAP_TEMPLATE = """<div class="learning-map" data-learning-map
         <option value="concepts">__MODE_CONCEPTS__</option>
       </select>
     </div>
+    <div class="learning-map-relation-filter" hidden>
+      <label for="learning-map-relation-type">__RELATION_FILTER_LABEL__</label>
+      <select id="learning-map-relation-type" data-map-relation-type></select>
+    </div>
     <div class="learning-map-search">
       <label for="learning-map-search">__SEARCH_LABEL__</label>
       <input id="learning-map-search" data-map-search type="search" autocomplete="off">
+    </div>
+    <div class="learning-map-actions">
+      <button type="button" class="map-reset" data-map-reset title="__RESET_HINT__">
+        __RESET_VIEW__
+      </button>
     </div>
   </div>
   <div class="learning-map-concept-legend" hidden></div>
@@ -759,6 +994,9 @@ def render_territory_map(
                 "__MODE_PAGES__": html.escape(copy["modePages"]),
                 "__MODE_CONCEPTS__": html.escape(copy["modeConcepts"]),
                 "__SEARCH_LABEL__": html.escape(copy["searchLabel"]),
+                "__RELATION_FILTER_LABEL__": html.escape(copy["relationFilterLabel"]),
+                "__RESET_VIEW__": html.escape(copy["resetView"]),
+                "__RESET_HINT__": html.escape(copy["resetHint"]),
                 "__LOADING__": html.escape(copy["loading"]),
                 "__DETAILS_SUMMARY__": html.escape(copy["detailsSummary"]),
                 "__ASIDE_HINT__": html.escape(copy["asideHint"]),
