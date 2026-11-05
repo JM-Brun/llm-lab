@@ -48,6 +48,19 @@ For each, record rationale, evidence/confidence, generality, existing coverage, 
 
 Do not add content solely because it is novel or interesting.
 
+### Required complementary-perspective pass (do not stop at already-covered)
+
+Before assigning an already-covered, reinforcement or reject disposition to a pedagogical contribution, perform and record a complementary-perspective pass:
+
+1. Identify the precise learner question served by the existing canonical explanation.
+2. Identify the source's learner question, explanatory lens, mental model, example phenomenon, teaching move and abstraction level.
+3. Compare these functions, not just the topic, vocabulary or example label. In particular, distinguish examples that share a word/topic but teach different phenomena (e.g. lexical ambiguity versus pronoun coreference).
+4. Ask whether the source makes a hidden relationship, assumption, contrast or transfer opportunity explicit.
+5. Test a bounded integration in the existing page: an optional/collapsible alternative perspective, a contrast table, a cross-link, a worked example, a misconception note or a practice prompt. Do not force it into the core route if it is optional.
+6. Keep the addition only if it gives the learner a distinct benefit and can be bounded technically; otherwise record why the attempted integration would add cognitive load without benefit.
+
+A source collection should accumulate distinct explanatory lenses, not merely accumulate citations. When multiple sources illuminate the same mechanism from different angles, integrate the best combination in original project language and preserve item-level attribution. “The topic is already covered” is never sufficient rationale by itself for a no-op decision.
+
 ### Compile complementary sources into a coherent learning resource
 
 Treat a source collection as material to synthesize, not as a queue of independent page additions. Most sources will share core concepts; this is expected. The editorial task is to identify the distinct contribution each makes and assemble a coherent explanation that is more useful than any source considered alone.

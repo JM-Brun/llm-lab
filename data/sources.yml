@@ -1869,3 +1869,64 @@ sources:
       concepts: [token]
       audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
+  - id: codefinity-qkv-building-blocks
+    title: "Queries, Keys, and Values: The Building Blocks"
+    creators: ["Codefinity"]
+    source_type: course
+    identifiers:
+      course_id: "e7ee0772-6b82-4a1c-96ba-69b85ddee608"
+      section_id: "7ce26687-f7a7-4728-be33-7014c6c7b707"
+      lesson_id: "a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b"
+    canonical_url: "https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b"
+    publisher: "Codefinity"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: []
+      tags: [topic:qkv, topic:self-attention, method:scaled-dot-product-attention]
+      concept_ids: [query, key, value, attention-score, attention-weight, self-attention]
+    metadata:
+      technical_level: mixed
+      contribution_types: [architecture, pedagogy, visualization]
+      audiences: [beginner, learner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-05"
+        status: partially-scanned
+        inspected_scope:
+          - "Course overview page: declared advanced level, three modules, ten chapters and ten assignments"
+          - "Published module outline: Foundations of Attention; Self-Attention and Multi-Head Attention; Attention Inside Transformers"
+          - "Ordered chapter titles around the target lesson, including The Need for Attention before Q/K/V and Scoring Relevance after it"
+        limitations:
+          - "The course overview exposes titles and short module descriptions, not the contents of the other lessons or assignments."
+          - "No claim is made that all ten chapters or assignments were scanned."
+      - accessed_at: "2026-11-05"
+        status: partially-scanned
+        inspected_scope:
+          - "Directly retrieved lesson text: title, introductory explanation, definition, bank/river example, explanatory recap and one multiple-choice knowledge check"
+          - "Course/section/lesson identifiers and visible course context"
+          - "Reconstructed the source-local teaching route and compared its concepts, analogy, example and quiz against the canonical bilingual Q/K/V lesson, contextualized-representations lesson and existing QKV source collection"
+        limitations:
+          - "The page requires JavaScript; the available retrieval exposed rendered text but not the complete interactive course environment."
+          - "The linked explanatory image asset could not be retrieved as image bytes and was not visually inspected."
+          - "The complete course outline, preceding/following lessons, embedded interactions, feedback behaviour and any downloadable materials were not inspected."
+          - "Publication/update metadata and source-specific licence or reuse permissions were not established."
+    related:
+      pages:
+        - fr/queries-keys-values
+        - en/queries-keys-values
+        - fr/contextualized-representations
+        - en/contextualized-representations
+        - fr/scaled-dot-product-attention
+        - en/scaled-dot-product-attention
+      concepts: [query, key, value, attention-score, attention-weight, self-attention, contextualized-representation]
+      audit_records:
+        - docs/source-reviews/qkv-codefinity-course-2026-11.md
+        - docs/source-reviews/qkv-source-collection.md

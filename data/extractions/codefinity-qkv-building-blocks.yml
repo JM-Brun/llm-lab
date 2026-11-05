@@ -1,0 +1,240 @@
+schema_version: 1
+source_id: codefinity-qkv-building-blocks
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Direct page retrieval on 2026-11-05 exposed the lesson title, introduction, definition, bank/river example, explanatory recap and one multiple-choice question."
+      - "The page explicitly identifies itself as Section 1, Chapter 2 of Neural Network Attention Mechanisms."
+      - "The page requires JavaScript; the reconstruction covers the text exposed by the page reader, not the full interactive lesson runtime."
+    course_context:
+      source: "https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608"
+      retrieval: direct-course-overview
+      declared_level: advanced
+      structure:
+        module_count: 3
+        chapter_count: 10
+        assignment_count: 10
+        modules:
+          - title: "Foundations of Attention"
+            chapters:
+              - "The Need for Attention: Selective Focus in Neural Networks"
+              - "Queries, Keys, and Values: The Building Blocks"
+              - "Scoring Relevance: Similarity Functions in Attention"
+          - title: "Self-Attention and Multi-Head Attention"
+            chapters:
+              - "Self-Attention: Contextual Representations from Within"
+              - "Scaling and Softmax: Making Attention Work"
+              - "Multi-Head Attention: Multiple Perspectives"
+              - "Masking in Attention: Causal and Padding Masks"
+          - title: "Attention Inside Transformers"
+            chapters:
+              - "Attention in Transformer Blocks: Encoder and Decoder"
+              - "Self-Attention vs Cross-Attention: Conceptual Differences"
+              - "Long-Range Reasoning and Interpretability in Attention"
+      scope_limit: "Only the published course outline was inspected; the other lesson bodies and assignments were not scanned."
+      comparison_note: "The course places Q/K/V between attention motivation and similarity scoring. This is compatible with the LLM Lab split between the Q/K/V role/projection lesson and the following scaled-dot-product-attention lesson; the broader course order does not warrant a route change."
+    inferred_elements:
+      - "Learning outcomes and prerequisites are inferred; no formal outcome or prerequisite list is exposed."
+      - "The example's implied computation path is reconstructed from the accompanying prose, not from observed model activations."
+    media_inventory:
+      retrieval_channel: direct rendered page text; linked image retrieval failed
+      in_body_slots:
+        - {id: src-definition-icon, role: "decorative or explanatory image unclear", status: identified-not-visually-inspected, locator: "Immediately after the introductory paragraph"}
+        - {id: src-question-icon, role: "quiz decoration unclear", status: identified-not-visually-inspected, locator: "Immediately before the multiple-choice check"}
+      cover_or_hero: {status: unknown, note: "The retrieved page does not establish whether a separate course cover asset is used within the lesson."}
+      rights: unknown
+  comparison:
+    dossier: docs/source-reviews/qkv-codefinity-course-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: ["data/guided-route.yml", "docs/learning-path.md", "page-level suggested_route metadata and Build route"]
+    decision: "No canonical concept, relation, page, route or Build change. Existing content covers the role definitions and bank example; retain the geometric framing and quiz design as source-specific alternatives for future synthesis."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
+  source_graph:
+    nodes:
+      - {id: src-query, kind: representation, description: "Vector associated with the current position and framed as what that position is searching for.", locator: "Definition, lines 19–24"}
+      - {id: src-key, kind: representation, description: "Vector associated with each candidate position and framed as what it offers for matching.", locator: "Definition, lines 19–24"}
+      - {id: src-value, kind: representation, description: "Vector framed as the information passed into the output when its key receives attention weight.", locator: "Definition, lines 19–24"}
+      - {id: src-query-key-alignment, kind: intermediate, description: "Geometric alignment between query and key vectors, described qualitatively as determining how much information flows.", locator: "Introduction, lines 13–14"}
+      - {id: src-bank-example, kind: pedagogical-anchor, description: "Lexical ambiguity of bank in a riverside sentence; river-related context is used to motivate which information may inform the representation at bank.", locator: "Definition example, line 25"}
+      - {id: src-quiz, kind: assessment, description: "Single multiple-choice check asking which role correctly describes keys.", locator: "Knowledge check, lines 27–49"}
+    edges:
+      - {from: src-query, type: compared-with, to: src-key}
+      - {from: src-query-key-alignment, type: derived-from, to: src-query}
+      - {from: src-query-key-alignment, type: derived-from, to: src-key}
+      - {from: src-query-key-alignment, type: controls-contribution-of, to: src-value}
+      - {from: src-bank-example, type: illustrates, to: src-query}
+      - {from: src-bank-example, type: illustrates, to: src-key}
+      - {from: src-bank-example, type: illustrates, to: src-value}
+      - {from: src-quiz, type: assesses, to: src-key}
+    interpretation: "This source-local graph is an editorial reconstruction of the lesson text, not a formal graph defined by Codefinity. The geometric-alignment wording is intentionally not translated into a claim that attention is cosine similarity or nearest-neighbour retrieval."
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish the functional roles of queries, keys and values in attention.", basis: "The definition and recap explicitly contrast searching, matching and transmitted information."}
+    - {status: inferred, outcome: "Explain at a high level how a query-key compatibility relation influences the aggregation of values.", basis: "The introductory vector-alignment description and bank example."}
+    - {status: inferred, outcome: "Recognize keys as matching representations rather than search vectors or payload vectors.", basis: "The single multiple-choice question."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic familiarity with vectors and token/position representations.", basis: "The lesson states that Q, K and V are vectors but does not define vector operations."}
+    - {status: inferred, topic: "Basic intuition about contextual ambiguity in language.", basis: "The bank/river example assumes the reader understands lexical ambiguity."}
+  teaching_route:
+    - {order: 1, section: "Introduction", function: motivate-attention-and-vector-roles, moves: ["Frame Q/K/V as vectors associated with input positions", "Introduce a geometric search-and-match analogy"]}
+    - {order: 2, section: "Definition", function: distinguish-functional-roles, moves: ["Define Q as the search vector", "Define K as the matching descriptor", "Define V as the content to be passed"]}
+    - {order: 3, section: "Bank/river example", function: illustrate-contextual-lexical-ambiguity, moves: ["Use the sentence 'He sat by the bank.'", "Relate river context to a query-key match and value contribution"]}
+    - {order: 4, section: "Knowledge check", function: formative-retrieval-practice, moves: ["Ask the learner to identify the role of keys among four alternatives"]}
+    - {order: 5, section: "Recap", function: consolidate-complementary-roles, moves: ["Explain why Q, K and V are each needed"]}
+  pedagogical_strengths:
+    - "The explanation is short and question-led: it moves from the learner's need to focus information to the three functional roles."
+    - "The bank/river example is a familiar lexical-ambiguity scenario that can help motivate context-dependent representations."
+    - "The multiple-choice check directly targets a common role-confusion error: mistaking keys for queries or values."
+    - "The three-role explanation makes the distinction between matching information and transmitted content explicit."
+  pedagogical_limits:
+    - "The geometric alignment description is qualitative and does not define the actual compatibility function, scaling, softmax or weighted sum."
+    - "The bank example does not provide a model, layer, head, measured scores or weights; it is an intuition, not evidence that a particular head performs word-sense disambiguation."
+    - "The wording that river's key aligns with bank's query may suggest a direct lexical nearest-neighbour or cosine-similarity mechanism unless qualified."
+    - "The source does not explain learned projection matrices, dimensions, self- versus cross-attention, causal masking, multi-head attention, implementation or numerical examples."
+    - "The linked visual asset, full course context and interactive behaviour were not inspected."
+items:
+  - id: codefinity-qkv-building-blocks:role-definitions
+    kind: definition
+    summary: "The lesson assigns complementary functions to Q, K and V: Q represents what a position seeks, K represents what each candidate position offers for matching, and V carries the content that may be aggregated."
+    locator: {type: section, value: "Definition, lines 19–24", label: "Definition"}
+    evidence:
+      kind: direct-statement
+      confidence: well-supported
+      assumptions: ["Standard attention mechanism with query-key compatibility and value aggregation."]
+      limitations: ["This is an introductory functional description, not a mathematical or implementation specification."]
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The canonical bilingual Q/K/V page already states these roles more precisely and connects them to learned projections."}
+      complementarity: {level: low, rationale: "The search/offer/payload framing is close to the project's existing index-card/search analogy and previous QKV tutorials."}
+      pedagogical_value: {level: low, rationale: "It reinforces the distinction but does not address a new learner difficulty."}
+      applicability: {level: moderate, rationale: "Useful as corroborating material in the source collection, not as another paragraph on the canonical page."}
+      redundancy: {level: high, rationale: "Same learner question and explanatory function as existing QKV content."}
+      evidence_quality: {level: moderate, rationale: "Clear secondary instructional text, without mathematical derivation or primary-source support."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:self-attention], concept_ids: [query, key, value]}
+    candidate_destinations:
+      pages: [fr/queries-keys-values, en/queries-keys-values]
+      concepts: [query, key, value]
+    disposition: already-covered
+    disposition_rationale: "Retain as a source-specific formulation in the extraction; do not duplicate the existing canonical role explanation."
+
+  - id: codefinity-qkv-building-blocks:geometric-alignment-framing
+    kind: mental-model
+    summary: "The introduction pictures Q and K as arrows in a high-dimensional space whose alignment determines the amount of information passed from V."
+    locator: {type: section, value: "Introduction, lines 13–14", label: "Introduction"}
+    evidence:
+      kind: pedagogical-explanation
+      confidence: context-dependent
+      assumptions: ["A compatibility score between learned query and key representations is used to produce attention weights."]
+      limitations: ["The source does not define alignment as cosine similarity or explain the dot product, scaling, softmax or weighted aggregation."]
+    pedagogical_profile:
+      learner_question: "How can a learner picture the relationship between queries and keys as numerical vectors?"
+      explanatory_lens: geometric
+      teaching_form: [mental-model, analogy]
+      abstraction_level: introductory
+      prerequisites: [query, key, vector]
+      distinctive_value: "Uses a spatial alignment image rather than a database or index-card analogy."
+      limitations: ["The score function is unspecified; do not infer cosine similarity or hard nearest-neighbour selection."]
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The dot-product mechanism itself is already canonical; the source contributes a distinct spatial explanatory lens rather than a new computation."}
+      complementarity: {level: moderate, rationale: "It adds a spatial/vector framing alongside the project's index-card analogy, but its explanatory contribution is limited without a formula."}
+      pedagogical_value: {level: moderate, rationale: "Could help learners picture Q and K as numerical vectors rather than literal text questions and labels."}
+      applicability: {level: high, rationale: "A collapsible bilingual note can connect vector geometry to the dot-product formula while preserving the core index-card explanation and avoiding extra page clutter."}
+      redundancy: {level: moderate, rationale: "Overlaps with the matching role but uses a different visual metaphor."}
+      evidence_quality: {level: moderate, rationale: "Appropriate as a qualitative analogy, not as a technical account of the score function."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, method:vector-similarity], concept_ids: [query, key, attention-score, attention-weight]}
+    candidate_destinations:
+      pages: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+      concepts: [query, key, attention-score, attention-weight]
+    disposition: integrate
+    disposition_rationale: "Integrated as an optional collapsible geometric perspective on both Q/K/V pages. The project-authored explanation explicitly bridges qᵀk to vector norms and angle, then to scaling, softmax and weighted V; it warns that dot product is not generally cosine similarity and does not imply hard nearest-neighbour selection. The original Codefinity visual was not copied because it was not inspected and reuse rights are unknown."
+
+  - id: codefinity-qkv-building-blocks:bank-polysemy-example
+    kind: mental-model
+    summary: "The lesson uses 'He sat by the bank' to illustrate how surrounding context may disambiguate a word between a financial institution and a riverbank; it narrates a river-related key as matching the query at bank and its value contributing to the resulting representation."
+    locator: {type: section, value: "Definition example, line 25", label: "Bank/river example"}
+    evidence:
+      kind: illustrative-example
+      confidence: context-dependent
+      assumptions: ["The sentence context is sufficient to motivate a river-related interpretation of bank."]
+      limitations: ["No model, attention head, measured weights or experiment is supplied; the described match is a pedagogical story, not an observed internal computation."]
+    pedagogical_profile:
+      learner_question: "How can context change the interpretation of an ambiguous word?"
+      explanatory_lens: lexical-context
+      teaching_form: [worked-example, mental-model]
+      abstraction_level: introductory
+      prerequisites: [contextualized-representation]
+      distinctive_value: "Shows lexical ambiguity using a short riverside sentence."
+      limitations: ["No model-specific attention scores or observed word-sense disambiguation are provided."]
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "Lexical polysemy is already covered in contextualized-representations; the contribution is not a new scientific concept."}
+      complementarity: {level: high, rationale: "It addresses a different phenomenon from the pronoun-coreference example on the Q/K/V page: lexical polysemy (one word, competing senses) rather than reference resolution (one expression, competing antecedents). This contrast broadens transfer across two context-dependent language tasks."}
+      pedagogical_value: {level: high, rationale: "A short contrast table helps learners see that the same general contextual-information mechanism can be discussed for distinct linguistic phenomena, without implying one attention head solves either task."}
+      applicability: {level: high, rationale: "Integrated by reference in a collapsible bilingual comparison with the existing coreference example, and linked to contextualized-representations for the fuller treatment."}
+      redundancy: {level: moderate, rationale: "The phenomenon exists elsewhere in the project, but the juxtaposition with coreference on the Q/K/V page adds a new cross-example teaching function."}
+      evidence_quality: {level: moderate, rationale: "A clear intuitive example, but no model-specific or empirical evidence."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:contextualization], concept_ids: [query, key, value, contextualized-representation]}
+    candidate_destinations:
+      pages: [fr/contextualized-representations, en/contextualized-representations]
+      concepts: [query, key, value, contextualized-representation]
+    disposition: integrate-by-reference
+    disposition_rationale: "Do not duplicate the full bank example from contextualized-representations. Instead, use a concise contrast with the Q/K/V page’s pronoun-coreference example to distinguish lexical polysemy from coreference and show two different context-dependent language phenomena. Attribute Codefinity and link to the canonical contextualized-representations lesson."
+
+  - id: codefinity-qkv-building-blocks:quiz-check
+    kind: question
+    summary: "A four-option multiple-choice check asks which statement correctly describes keys, distinguishing matching descriptors from value payloads and query search vectors."
+    locator: {type: section, value: "Knowledge check, lines 27–49", label: "Which statement best describes the function of keys?"}
+    evidence:
+      kind: direct-statement
+      confidence: well-supported
+      assumptions: []
+      limitations: ["Only one role-focused question is visible; broader quiz coverage and feedback logic were not accessible."]
+    pedagogical_profile:
+      learner_question: "Can the learner distinguish keys from queries and values?"
+      explanatory_lens: role-discrimination
+      teaching_form: [multiple-choice-question, formative-check]
+      abstraction_level: introductory
+      prerequisites: [query, key, value]
+      distinctive_value: "Distractors explicitly represent the two most plausible role confusions."
+      limitations: ["Only one visible question is available; feedback and scoring are unknown."]
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The project already contains a self-check on the distinct Q/K/V roles and an extended exercise set."}
+      complementarity: {level: moderate, rationale: "Its distractors make the exact confusion between query, key and value explicit."}
+      pedagogical_value: {level: moderate, rationale: "Could inform future distractor design for formative assessment without requiring a new activity now."}
+      applicability: {level: moderate, rationale: "Retain as an assessment-design reference in the extraction and source collection."}
+      redundancy: {level: moderate, rationale: "The current self-check covers the same concept but does not necessarily use the same distractor taxonomy."}
+      evidence_quality: {level: moderate, rationale: "The question is directly visible; the learner feedback and scoring behaviour are not."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv], concept_ids: [query, key, value]}
+    candidate_destinations:
+      pages: [fr/queries-keys-values, en/queries-keys-values]
+      concepts: [query, key, value]
+    disposition: integrate-by-reference
+    disposition_rationale: "No new quiz is needed. Preserve the distractor pattern as a future formative-assessment reference; compare it with the existing QKV self-check when exercises are next revised."
+
+  - id: codefinity-qkv-building-blocks:scope-limitations
+    kind: limitation
+    summary: "The retrieved lesson provides a role-level explanation and one lexical example, but no projection equations, attention-score calculation, scaling, softmax, weighted-sum derivation, tensor dimensions, masking or implementation."
+    locator: {type: section, value: "Entire retrieved lesson text, lines 10–49", label: "Retrieved lesson scope"}
+    evidence:
+      kind: inspected-scope
+      confidence: well-supported
+      assumptions: ["The claim is limited to the text and page components exposed by the retrieval."]
+      limitations: ["The JavaScript-dependent course environment and unexposed materials may contain further instruction."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "It explicitly establishes the narrow scope of this lesson relative to the wider attention mechanism."}
+      complementarity: {level: moderate, rationale: "Its compact scope contrasts with the project's layered concept-to-computation route."}
+      pedagogical_value: {level: moderate, rationale: "Helps prevent the source from being mistaken for a complete QKV or attention treatment."}
+      applicability: {level: high, rationale: "Useful in the review and source collection to bound what this page contributes."}
+      redundancy: {level: low, rationale: "This is a source audit finding, not duplicate learner content."}
+      evidence_quality: {level: high, rationale: "Bounded to the directly retrieved text."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv], concept_ids: [query, key, value, scaled-dot-product-attention]}
+    candidate_destinations:
+      pages: []
+      concepts: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Keep the scope boundary in the source review and collection; no page content is missing from LLM Lab as a result."
+
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "No canonical concepts or relations are missing. The source contributes a distinct geometric lens for Q/K and a lexical-polysemy example that complements the existing pronoun-coreference example. Both are integrated as optional, bounded perspectives in the bilingual Q/K/V lesson; the full bank treatment remains on contextualized-representations. The role definitions remain already covered, the quiz remains an assessment-design reference, and no graph or route change is justified."
