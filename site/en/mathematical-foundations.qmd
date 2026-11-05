@@ -95,6 +95,8 @@ Each concept page derives one step, gives a calculable example, and states its a
 - Bishop, [*Pattern Recognition and Machine Learning*](https://www.microsoft.com/en-us/research/people/cmbishop/prml-book/), for probabilities, likelihood, and estimation.
 - [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html), which specifies logits, targets, and reduction conventions.
 
+**Canonical lesson:** [LLM overview](llm-overview.qmd). This mathematical synthesis connects several concepts in the learning route; it is a cross-reference, not a prerequisite.
+
 :::: {.language-switch}
 **Language:** [Français](../fr/mathematical-foundations.qmd) · [English](mathematical-foundations.qmd)
 ::::
