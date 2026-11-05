@@ -215,15 +215,12 @@ pedagogical_model:
 
 items:
   - id: andrej-karpathy-gpt-tokenizer-video:unicode-bytes
-    kind: distinction
+    kind: definition
     summary: "Unicode code points, UTF-8 bytes and visible characters are different representational units; a code point may encode to multiple bytes."
     locator:
       type: timestamp
       value: "14:56–23:49"
       label: "Unicode strings and UTF encodings"
-    provenance:
-      contributor: author
-      component: author-text
     evidence:
       kind: transcript-explanation
       confidence: well-supported
@@ -261,9 +258,6 @@ items:
       type: timestamp
       value: "23:50–57:36"
       label: "BPE training, merge order, encoding and decoding"
-    provenance:
-      contributor: author
-      component: author-text
     evidence:
       kind: transcript-explanation
       confidence: well-supported
@@ -301,9 +295,6 @@ items:
       type: timestamp
       value: "57:36–1:11:38"
       label: "Regex pre-tokenization and GPT tokenizer patterns"
-    provenance:
-      contributor: author
-      component: author-text
     evidence:
       kind: transcript-explanation
       confidence: context-dependent
@@ -342,9 +333,6 @@ items:
       type: timestamp
       value: "1:18:15–1:28:42"
       label: "Special-token handling"
-    provenance:
-      contributor: author
-      component: author-text
     evidence:
       kind: transcript-explanation
       confidence: context-dependent
@@ -383,9 +371,6 @@ items:
       type: timestamp
       value: "1:28:42–1:49:58 onward"
       label: "SentencePiece and multimodal tokenization"
-    provenance:
-      contributor: author
-      component: author-text
     evidence:
       kind: transcript-outline
       confidence: context-dependent
