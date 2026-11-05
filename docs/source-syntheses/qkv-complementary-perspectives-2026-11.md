@@ -27,8 +27,8 @@ The contextualized-representations page already used lexical ambiguity (the word
 
 | Source | Extracted item(s) | Explanatory lens | Learner question | Distinct value | Limits |
 |---|---|---|---|---|---|
-| Neha KK, [Understanding QKV](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) | Existing extraction: pronoun example | Linguistic / coreference | Which earlier token or entity does a pronoun refer to? | Makes cross-position reference and contextual information flow concrete | Illustrative only; no measured model/head/weights |
-| Nishanthan K, [How QKV Work](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a) | Existing extraction: visual and card/search framing | Diagrammatic / functional | How do Q, K and V play different roles? | Gives a compact role-oriented visual narrative | Media provenance and reuse rights remain unresolved |
+| Neha KK, [Understanding QKV](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) | Explicit rationale for three projections; pronoun “it” with candidate antecedents; four-step computation | Design rationale / linguistic coreference / computational sequence | Why separate matching from payload? How can a token depend on another position? | Makes the decoupling of matching and payload representations explicit; supplies a concrete cross-position example | The article’s compact computation is already treated more rigorously in the attention lesson; pronoun example is illustrative, not measured model evidence |
+| Nishanthan K, [How QKV Work](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a) | Visual/functional walkthrough; bank ambiguity and pronoun reference; soft-vs-hard retrieval caveats | Diagrammatic / functional / linguistic context / misconception correction | How do roles map to the attention flow? How can context matter? Is attention a hard lookup? | Connects role definitions to a compact end-to-end narrative and flags winner-take-all / semantic-similarity misreadings | Its visual asset remains uninspected; examples are not evidence of a specific head performing linguistic resolution |
 | Codefinity, [Queries, Keys, and Values](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) | [Geometric alignment](../../data/extractions/codefinity-qkv-building-blocks.yml) · [Bank polysemy](../../data/extractions/codefinity-qkv-building-blocks.yml) · quiz distractors | Geometric / lexical polysemy / formative assessment | How can vector matching be pictured? How can context disambiguate one word with multiple senses? | Bridges conceptual Q/K roles to vector geometry; contrasts lexical polysemy with coreference | Geometry is qualitative in the source; bank example is illustrative, not model evidence |
 
 ## 4. Synthesis: what each perspective contributes
@@ -60,13 +60,48 @@ Treating both as merely “the bank example already exists” would miss their d
 
 **Integration:** a compact optional comparison appears on both Q/K/V pages. The full bank discussion remains owned by contextualized-representations and is linked rather than duplicated. Both examples are explicitly labelled illustrative; neither is evidence that a particular attention head alone performs the linguistic task.
 
-### 4.3 Assessment design
+### 4.3 Why three representations? A design rationale
+
+Neha KK explicitly foregrounds the question of why the mechanism uses three learned projections rather than one shared representation. This is not a new operation, but it makes the architectural motivation more legible: the model can learn a representation useful for **matching** (Q/K) separately from a representation useful for **transmitting and aggregating content** (V). The point is not that Q/K and V are statistically independent, nor that they encode wholly unrelated information; they are learned linear views of the same incoming representation, optimized for different roles.
+
+**Integration status:** this rationale is already reflected in the current bilingual Q/K/V lesson. It should be treated as an explicit design explanation contributed and reinforced by Neha, not as a new concept or a separate page.
+
+### 4.4 Assessment design
 
 Codefinity's single multiple-choice question targets confusion between query, key and value. LLM Lab already has a self-check and extended exercises, so a new quiz would duplicate the activity. The useful part to retain is the distractor principle: test whether learners confuse the search representation, matching representation and transmitted content.
 
 **Integration:** keep as a source-linked design reference for the next exercise revision; no new quiz now.
 
-## 5. Convergence, differences and evidence
+## 5. Three-source comparison: convergence, complementarity and boundaries
+
+### 5.1 What genuinely converges
+
+All three sources teach the same functional decomposition: Q and K participate in computing compatibility, while V supplies the representations combined by attention weights. Neha and Nishanthan also describe the familiar score → scale → softmax → weighted aggregation sequence. This convergence is useful as a consistency check on the introductory explanation, but it is not independent empirical validation: the sources are secondary tutorials explaining the same established mechanism.
+
+### 5.2 Distinct explanatory contributions
+
+| Dimension | Nishanthan K (DEV) | Neha KK (Medium) | Codefinity | Combined teaching value |
+|---|---|---|---|---|
+| Role intuition | Concise visual/functional narrative and search framing | Database-search framing | Search/offer/payload role wording | Keep one canonical role analogy; do not stack near-synonymous retrieval analogies |
+| Why three projections? | Learned projections are described | Explicitly asks why matching and payload should be separated | Roles are contrasted | State the design rationale once: learn matching views separately from payload views |
+| Mathematical objects | Q/K/V vectors and projection flow | Projection equations and four-step attention sequence | Spatial alignment of Q and K | Move from functional analogy to vector objects, then to the dot-product derivation on the next lesson |
+| Context example | Bank ambiguity and pronoun reference | Pronoun “it” and candidate antecedents | Bank / riverbank ambiguity | Contrast lexical polysemy with coreference; do not treat them as interchangeable examples |
+| Computation | Scores, scaling, softmax, weighted aggregation | Same sequence with equations | Does not derive the score pipeline | Keep full mathematics and numerical work in scaled-dot-product-attention |
+| Misconceptions | Scores are not semantic similarity; aggregation is not winner-take-all | “Closest matches” wording needs qualification; attention-map interpretability claim needs caution | Vector alignment could be mistaken for cosine similarity or hard retrieval | Preserve explicit guardrails: dot product ≠ cosine in general; softmax weighting ≠ argmax retrieval; weights ≠ causal explanation |
+| Assessment | No substantial assessment inspected | No substantial assessment inspected | One role-discrimination multiple-choice question | Retain its distractor pattern for future exercise revision, not a duplicate quiz |
+
+### 5.3 The linguistic examples teach different phenomena
+
+- **Coreference (Neha; also present in Nishanthan’s tutorial):** a pronoun such as “it” may refer to one of several candidate antecedents. The learner tracks a relation between two expressions.
+- **Lexical polysemy (Nishanthan and Codefinity):** one word such as “bank” has multiple senses, and surrounding context helps constrain the intended sense. The learner distinguishes competing meanings of one expression.
+
+The shared teaching idea is contextual dependence, not a shared linguistic task. Presenting the two side by side creates a useful transfer contrast: context can support both reference resolution and word-sense disambiguation. It does not demonstrate that a particular attention head performs either task.
+
+### 5.4 Complementarity is not a vote
+
+The three tutorials' agreement on Q/K matching and V aggregation should not be counted as three independent proofs. The project should ground technical correctness in the Transformer formulation and its own equations/tests. The tutorials are valuable because they make different aspects salient: design motivation, visual role mapping, vector geometry, contextual examples and likely misconceptions.
+
+## 6. Convergence, differences and evidence
 
 - The sources converge on the high-level functional split between Q/K matching and V aggregation. This is pedagogical convergence, not independent empirical confirmation.
 - The sources differ in explanatory lens: index-card analogy, vector geometry, pronoun coreference and lexical polysemy.
@@ -74,7 +109,7 @@ Codefinity's single multiple-choice question targets confusion between query, ke
 - The geometric intuition is useful only when connected to the actual dot-product calculation and bounded against cosine-similarity / nearest-neighbour misconceptions.
 - The parent Codefinity course outline places Q/K/V between attention motivation and relevance scoring, then covers self-attention, scaling/softmax, multi-head attention, masking, encoder/decoder placement, cross-attention and interpretability. Only the outline was inspected; the other lesson bodies and assignments were not scanned.
 
-## 6. Integration decisions
+## 7. Integration decisions
 
 | Contribution | Destination | Decision |
 |---|---|---|
@@ -86,7 +121,7 @@ Codefinity's single multiple-choice question targets confusion between query, ke
 | Codefinity media | Asset register / future audit | Not reused; inspect actual image and rights before any reuse |
 | Canonical graph and learning route | — | No change justified |
 
-## 7. Current result and remaining opportunities
+## 8. Current result and remaining opportunities
 
 The bilingual Q/K/V pages now offer a layered explanation:
 
@@ -104,7 +139,7 @@ Potential next work, only if later sources justify it:
 - compare quiz distractors across sources and revise the existing exercise set;
 - inspect further course chapters only if their full content can be accessed, not infer their substance from titles.
 
-## 8. Traceability
+## 9. Traceability
 
 - Codefinity source review: [qkv-codefinity-course-2026-11](../source-reviews/qkv-codefinity-course-2026-11.md)
 - Codefinity extraction: [codefinity-qkv-building-blocks.yml](../../data/extractions/codefinity-qkv-building-blocks.yml)
