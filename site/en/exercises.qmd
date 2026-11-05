@@ -228,9 +228,9 @@ A comparison requires checking, among other things, the tokenizer and its segmen
 
 ### Attention {#attention}
 
-**Preparation:** the first task uses supplied weights and vectors; see [attention aggregation](scaled-dot-product-attention.qmd) for context. The second uses [Q/K/V projections](queries-keys-values.qmd), matrix shapes and NumPy; [tensors](tensors.qmd) is an optional shape reference. Neither task requires studying causal masking first.
+**Preparation:** the Q/K/V exercises use [Q/K/V projections](queries-keys-values.qmd), matrix shapes, and NumPy; [tensors](tensors.qmd) is an optional shape reference. Score, softmax, and aggregation exercises rely on [scaled dot-product attention](scaled-dot-product-attention.qmd). None of the exercises below requires studying causal masking first.
 
-**Available:** a weighted-sum calculation and a NumPy exercise on projections and shapes. **Planned focus:** score and weight calculations, cautious interpretation of attention weights and causal-invariance reasoning.
+**Q/K/V competencies assessed:** recognizing the roles, reconstructing projections, explaining how they are learned, predicting parameter-change effects, and transferring the reasoning to cross-attention. The existing weighted-sum task remains the aggregation calculation.
 
 #### Calculate an aggregation by hand
 
@@ -284,6 +284,76 @@ print("Q:", Q.shape, "K:", K.shape, "V:", V.shape)
 Expected output: Q=(3, 2), K=(3, 2), V=(3, 3). The projections act independently on each position; the three matrices share the same number of rows here, but need not share the same number of columns.
 
 Changing W_V can change V and the resulting aggregated output, but it does not change the scores or weights, which depend on Q and K.
+
+</details>
+
+
+#### Exercise — predict the effect of changing a projection
+
+Consider the same input $X$ and standard attention, without biases. For each intervention, state whether $Q$, $K$, $V$, the scores, the weights, and the aggregated output can change. Keep all other parameters fixed.
+
+| Intervention | Quantities that may change | Invariants |
+|---|---|---|
+| Change $W_Q$ only |  |  |
+| Change $W_K$ only |  |  |
+| Change $W_V$ only |  |  |
+
+Justify each row from the functional dependencies.
+
+<details>
+<summary>Show the reasoned solution</summary>
+
+- **$W_Q$ only:** Q may change; scores computed from Q and K may therefore change, followed by the weights and output. K and V remain invariant.
+- **$W_K$ only:** K may change; scores, weights, and output may therefore change. Q and V remain invariant.
+- **$W_V$ only:** V and generally the aggregated output may change. Q, K, scores, and weights remain invariant.
+
+“May change” does not mean “must change”: a particular perturbation can be cancelled by the data or aggregation weights. The output depends on both weights and values.
+
+</details>
+
+#### Exercise — connect the projections to learning
+
+In the standard mechanism, $W_Q$, $W_K$, and $W_V$ are trained from the model's final loss. Answer without assuming that separate Q, K, or V targets are provided.
+
+1. Why is projection learning indirect?
+2. Through which operations does the gradient associated with Q and K propagate?
+3. Through which operation does the gradient associated with V propagate?
+4. For $Q=XW_Q$ with fixed $X$ and no bias, what is the form of $\partial\mathcal L/\partial W_Q$? Give the corresponding expressions for K and V.
+
+<details>
+<summary>Show the reasoned solution</summary>
+
+The projections have no independent targets: they are adjusted to reduce the model's prediction loss. The gradient to Q and K passes through compatibility-score computation and normalization; the gradient to V passes through weighted aggregation. For a linear projection $Q=XW_Q$, the chain rule gives:
+
+$
+\frac{\partial\mathcal L}{\partial W_Q}
+=X^\top\frac{\partial\mathcal L}{\partial Q}.
+$
+
+Likewise, $\partial\mathcal L/\partial W_K=X^\top(\partial\mathcal L/\partial K)$ and $\partial\mathcal L/\partial W_V=X^\top(\partial\mathcal L/\partial V)$. These are local linear-layer gradients; the gradients of Q, K, and V come from the complete attention and network computation.
+
+</details>
+
+#### Exercise — transfer Q/K/V to cross-attention
+
+A decoder consults representations produced by an encoder. Let $X_D$ denote decoder states and $X_E$ encoder states.
+
+1. Write Q, K, and V for cross-attention.
+2. If only $X_D$ changes, which projections are directly affected?
+3. If only $X_E$ changes, which projections are directly affected?
+4. Explain why the single-input formula $Q=XW_Q$, $K=XW_K$, $V=XW_V$ describes self-attention but not this cross-stream provenance.
+5. In MQA and GQA, what changes about the number or sharing of K/V heads? Which functional distinction between Q/K and V remains?
+
+<details>
+<summary>Show the reasoned solution</summary>
+
+In cross-attention, Q comes from the querying stream, while K and V come from the stream being queried:
+
+$
+Q=X_DW_Q,\qquad K=X_EW_K,\qquad V=X_EW_V.
+$
+
+With parameters fixed, changing $X_D$ directly affects Q; changing $X_E$ directly affects K and V. Scores and output may then change as a consequence. The functional distinction remains, but the projections no longer share a common input. In MQA, multiple query heads share one K/V head; in GQA, groups of query heads share K/V heads. The number or sharing of K/V heads changes, but the functional distinction remains: Q/K determine weights and V supplies aggregated content. Describe the exact parameterization rather than mechanically copying the standard case.
 
 </details>
 
