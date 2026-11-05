@@ -201,3 +201,7 @@ The new perspectives are optional and attributed. No canonical concept, graph ed
 
 The extraction and review preserve source-specific evidence and scan limitations. The cross-source dossier records the comparative reasoning and the contribution-to-page mapping.
 
+
+## 10. Learning-impact baseline
+
+The current bilingual lesson and exercise hub have been audited to distinguish existing coverage from genuine assessment gaps. The [Q/K/V learning-impact baseline and assessment plan](../source-syntheses/qkv-learning-impact-baseline-2026-11.md) proposes a small diagnostic bundle without claiming measured learning gains or duplicating existing projection/aggregation exercises.
