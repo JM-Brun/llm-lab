@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/llm-overview"]
   children: ["en/cross-attention"]
-related: ["en/transformer-history", "en/transformer", "en/generation", "en/hybrid-llm-architectures", "en/llm-computational-complexity"]
+related: ["en/transformer-history", "en/transformer", "en/generation", "en/transformer-explainer", "en/hybrid-llm-architectures", "en/llm-computational-complexity"]
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:en", "status:published"]
 -->
 
@@ -88,61 +88,9 @@ Nor is Transformer synonymous with LLM: architecture alone does not determine sc
 
 Dense attention performs \(O(T^2)\) interactions, but these interactions can be parallelized during training and prompt prefill. By contrast, a recurrence may reduce work to \(O(T)\) while depending on the state computed at the previous step. Autoregressive generation remains sequential across tokens. The [guide to computational complexity and parallelism](llm-computational-complexity.qmd) examines these compute, memory, and dependency trade-offs. The internal computation of the project's decoder-only GPT is explained in [GPT and Transformer](transformer.qmd).
 
-## Mini-experiment — observe three behaviours
+## Observe the three families in practice
 
-This experiment runs one representative model from each configuration. Its purpose is to **observe different objectives and usage interfaces**, not to measure which model is “best”.
-
-### Set up the environment
-
-In an isolated Python environment:
-
-```bash
-python -m pip install torch transformers
-```
-
-The first run downloads the three models' weights. CPU execution is possible, but may take a few minutes and requires from several hundred megabytes to a few gigabytes of memory, depending on the models and libraries.
-
-### Run the three examples
-
-```python
-from transformers import pipeline
-
-# 1. Encoder-only: suggest tokens for a masked position.
-bert = pipeline("fill-mask", model="google-bert/bert-base-uncased")
-for candidate in bert("Paris is the capital of [MASK].", top_k=5):
-    print(candidate["token_str"], round(candidate["score"], 3))
-
-# 2. Decoder-only: continue a prefix without seeing future tokens.
-gpt2 = pipeline("text-generation", model="openai-community/gpt2")
-continuation = gpt2(
-    "A language model learns to",
-    max_new_tokens=24,
-    do_sample=False,
-    pad_token_id=gpt2.tokenizer.eos_token_id,
-)
-print(continuation[0]["generated_text"])
-
-# 3. Encoder–decoder: produce a target sequence from an input.
-t5 = pipeline("text2text-generation", model="google-t5/t5-small")
-translation = t5("translate English to German: The house is wonderful.")
-print(translation[0]["generated_text"])
-```
-
-### Interpret the observations
-
-- **BERT** returns several candidates for a masked position. It uses context on both the left and right of that position in the input.
-- **GPT-2** continues the prefix. Its causal mask prevents each position from attending to later tokens.
-- **T5** receives an input and generates a target sequence. Its autoregressive decoder also uses information from the input through cross-attention.
-
-Exact outputs may vary with library versions and downloaded weights. The prompts are deliberately illustrative: these three calls are **neither a benchmark nor a quality comparison**. The models differ in data, size, tokenizer, and training.
-
-### Questions to investigate
-
-1. Why can BERT suggest a word using context after the mask, while GPT-2 cannot use future tokens?
-2. In the T5 example, which information comes from the input, and which information is produced by the decoder?
-3. Why can these three outputs not establish that one architecture is globally better than the others?
-
-**Takeaway:** the architecture constrains information flow; the training objective and the task determine what the model learns to do and what it is asked to do at inference time.
+The conceptual comparison is sufficient to locate the architectures. To run one representative example of each, install dependencies, and interpret the outputs, continue to the [hands-on activity: compare BERT, GPT-2, and T5](transformer-explainer.qmd#compare-three-transformer-families). This optional activity belongs to practice, not to the conceptual route or the small-GPT build.
 
 ::: {.self-check}
 
