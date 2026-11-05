@@ -174,12 +174,18 @@ These are evidence pointers, not substitutes for inspecting the final repository
 
 ### Structured extraction progress — 2026-11-05
 
-Two primary research papers now have source-scoped atomic extraction records, based on direct inspection of their published PDFs:
+Five primary research papers now have source-scoped atomic extraction records, based on direct inspection of their published PDFs:
 
 - [Ali et al. (2024)](../../data/extractions/ali-tokenizer-choice-llm-training-2024.yml): five items covering intrinsic versus extrinsic evaluation, controlled decoder-only comparison, downstream effects, the limits of fertility/parity as proxies, and the scope of the training-compute estimate.
 - [Wegmann et al. (2025)](../../data/extractions/wegmann-tokenization-language-variation-2025.yml): five items covering task-dependent robustness versus sensitivity to linguistic variation, pre-tokenizer boundaries, task-sensitive results, a task-aware proxy, and the paper's within-English scope.
 
 **Why these two are complementary rather than duplicates.** Ali et al. evaluates tokenizer configurations across languages and measures their effects on decoder-only LMs. Wegmann et al. asks a different question: whether tokenization should preserve or suppress *within-language* variation depending on the downstream task's label semantics. The former informs multilingual efficiency and model-training trade-offs; the latter connects tokenizer design to task objectives and linguistic form. These are separate evaluation axes and should not be collapsed into a single “tokenizer fairness” claim.
+
+- [Ethayarajh (2019)](../../data/extractions/ethayarajh-contextualized-representations-2019.yml): four items covering contextuality measures, anisotropy-adjusted baselines, layer-wise findings and the MEV bound.
+- [Li et al. (2020)](../../data/extractions/li-bert-flow-sentence-embeddings-2020.yml): four items distinguishing sentence-level BERT embeddings, anisotropic geometry, BERT-flow and the target-distribution adaptation caveat.
+- [Steck et al. (2024)](../../data/extractions/steck-cosine-similarity-embeddings-2024.yml): four items covering regularization-dependent geometry, non-uniqueness, uniqueness without semantic validity, and the simulated-data boundary.
+
+**Why these three are complementary rather than duplicates.** Ethayarajh studies contextualized *word/token occurrences* across layers and defines measures that separate context-specificity from anisotropy. Li studies pooled *sentence embeddings* from BERT and proposes a particular normalizing-flow calibration. Steck gives an analytical counterexample in *regularized linear matrix-factorization models*, showing that learned cosine geometry can depend on the training objective. Together they distinguish three different levels of analysis—contextual token representations, sentence-vector distributions and objective-induced embedding geometry. None establishes a universal property of all current LLM embeddings.
 
 **Integration decision.** Both records map to existing bilingual advanced content. No new concept, page, figure, exercise or route step is justified. The value of this backfill is inspectable evidence, explicit scope boundaries and a reusable basis for future comparisons—not more learner-facing prose.
 
