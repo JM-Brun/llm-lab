@@ -582,7 +582,14 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     assert payload["concept_domains"] == [
         {"id": "architectures-mechanisms", "label": "Architectures et mécanismes"}
     ]
-    assert payload["concept_relations"] == [{"from": "query", "type": "part-of", "to": "attention"}]
+    assert payload["concept_relations"] == [
+        {
+            "from": "query",
+            "type": "part-of",
+            "to": "attention",
+            "rationale": "La projection de requête est un composant du mécanisme d'attention.",
+        }
+    ]
 
 
 def test_load_pages_preserves_primary_deepen_domain(tmp_path: Path) -> None:
