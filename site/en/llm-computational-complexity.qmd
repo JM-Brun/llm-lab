@@ -186,6 +186,8 @@ Apply these distinctions to concrete architecture choices: [hybrid architectures
 5. **Does an MoE with few active experts store only those experts?** No: all expert weights must be hosted or accessible.
 :::
 
+**Canonical lesson:** [LLM overview](llm-overview.qmd). This page deepens the computational and memory costs of LLMs; it complements the overview without being a required step.
+
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-computational-complexity.qmd) · [English](llm-computational-complexity.qmd)
 :::
