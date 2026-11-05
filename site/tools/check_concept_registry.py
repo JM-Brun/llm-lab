@@ -39,6 +39,7 @@ RELATION_FAMILIES = {
     "constraint",
     "functional",
     "evaluative",
+    "associative",
 }
 
 
