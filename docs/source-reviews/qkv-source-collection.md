@@ -1,6 +1,6 @@
 # Q/K/V source collection and comparative synthesis
 
-**Status:** living dossier · **Last reviewed:** 2026-11-04  
+**Status:** living dossier · **Last reviewed:** 2026-11-05  
 **Scope:** external explanations of Query, Key, Value, self-attention and closely related mechanisms.  
 **Purpose:** accumulate complementary perspectives without turning the public curriculum into a stack of duplicated tutorials.
 
@@ -44,6 +44,33 @@ That agreement is useful pedagogical convergence, not independent experimental v
 | Soft versus hard retrieval | “Closest matches” wording risks implying discrete selection | Four-step formula shows softmax-weighted aggregation | Preserve the distinction; existing attention lesson already teaches the weighted mixture |
 | Directionality / asymmetry | Claims attention is directional/non-symmetric without a matrix example | Not developed | Defer a worked matrix example; qualify that distinct Q/K projections typically yield non-symmetric scores, not universally |
 | KV cache | Reader comment, not article body | Not covered | Track as a separately sourced inference-efficiency topic |
+
+## 2.1 Three-source comparison: differentiated pedagogical value
+
+The collection now compares three introductory tutorials, not just their repeated definitions.
+
+| Source | Strongest distinctive contribution | Example / teaching device | What it should change in the project |
+|---|---|---|---|
+| Nishanthan K (DEV) | Compact visual/functional walkthrough linking roles to the attention pipeline; explicit warnings against semantic-similarity and winner-take-all readings | Search/retrieval framing; bank ambiguity and pronoun reference | Keep the source as an optional alternative explanation; retain its misconception checks where they reinforce the canonical treatment. Its visual remains uninspected and is link-only. |
+| Neha KK (Medium) | Explicit design question: why learn three projections, separating matching from payload; concise score-to-output sequence | Pronoun “it” with competing antecedents | The rationale is made explicit in the existing Q/K/V lesson; the pronoun example illustrates cross-position information flow, not measured coreference resolution. |
+| Codefinity | Geometric perspective on query-key compatibility, plus a role-discrimination check | Q/K vector alignment; “bank” in a river context | Add the bounded geometric lens and contrast lexical polysemy with coreference; preserve its quiz distractor pattern for later exercise revision. |
+
+### Cross-source distinctions worth preserving
+
+1. **Role analogy versus vector geometry.** The search/database/index-card framing explains functional roles; geometric alignment explains the numerical objects compared. They are complementary levels, not competing definitions.
+2. **Design rationale versus operation sequence.** Neha’s “why three?” framing explains why matching and payload have distinct learned projections. The four-step score/softmax/aggregation sequence explains what attention computes. Keep these as separate teaching questions.
+3. **Coreference versus lexical polysemy.** A pronoun choosing an antecedent and a word choosing among senses are different language phenomena. Their juxtaposition broadens the learner’s understanding of contextual dependence.
+4. **Soft weighting versus hard retrieval.** Nishanthan and Neha use retrieval-style language that can suggest selecting one nearest item; Codefinity’s alignment language can suggest cosine-only matching. The canonical treatment must retain the exact distinction: scaled dot products feed a softmax distribution over accessible positions, and the resulting weights aggregate values.
+5. **Illustration versus evidence.** None of the linguistic examples demonstrates measured attention weights or proves that an individual head performs coreference resolution or word-sense disambiguation. They are explanatory scenarios only.
+
+### Source-to-project disposition
+
+- **Already integrated:** Neha’s matching-versus-payload rationale and pronoun example; Nishanthan’s contextual examples and misconception cautions; Codefinity’s optional geometric lens and bank/polysemy contrast.
+- **Retain as references:** Codefinity’s Q/K/V role-confusion distractors for the next exercise revision; alternative database/search analogies in source-specific extractions.
+- **Do not duplicate:** the complete score/scale/softmax/weighted-sum derivation, already owned by the scaled-dot-product-attention lesson.
+- **Do not promote to canonical graph nodes:** no new stable mechanism is introduced by these tutorial perspectives; they enrich explanations and examples, not the semantic ontology.
+
+See the [three-source complementary-perspectives synthesis](../source-syntheses/qkv-complementary-perspectives-2026-11.md) for the full comparison and integration rationale.
 
 ## 3. What changed in LLM Lab
 
