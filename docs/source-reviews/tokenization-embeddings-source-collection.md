@@ -1,0 +1,185 @@
+# Tokenization and embeddings — cross-source synthesis
+
+**Status:** living source collection · **Review date:** 2026-11-05  
+**Catalogue:** [data/sources.yml](../../data/sources.yml)  
+**Migration map:** [Tokenization and embeddings source migration map](tokenization-embeddings-source-migration-map-2026-11.md)  
+**Owning issue:** [#458](https://github.com/JM-Brun/llm-lab/issues/458)
+
+## 1. Purpose and evidence boundary
+
+This dossier compares the source families already audited in #114, #147, #82 and #96. It is a synthesis of prior work, not a new exhaustive review of tokenization or embedding research.
+
+The source catalogue currently contains **34 records**: the three pre-existing Q/K/V and KV-cache records plus **31 migrated tokenization/embeddings-related records**. The registry distinguishes papers, documentation, repositories, videos, courses and articles. A record's existence does not mean every component was scanned.
+
+The source set is selected because it was already cited, inspected or used in the project. It is not a representative sample of all tokenizer research, embedding research or educational resources.
+
+### Scan boundaries that must remain visible
+
+- Karpathy's tokenizer video was reviewed through public chapter markers and a third-party rendered transcript; the full audiovisual work was not watched.
+- The Hugging Face course audit covers relevant BPE, WordPiece, Unigram and construction sections, not the entire course.
+- Ahia, Wegmann and some other research sources were reviewed at abstract/metadata level; do not imply full-paper methodology review where the source audit says otherwise.
+- Ali, Arnett, Ethayarajh, Li and Steck have more detailed primary-source reviews recorded in #114; preserve each paper's own model, task, corpus and experimental boundaries.
+- Sentence Transformers, Hugging Face and PyTorch documentation are living resources. Their inspected pages were not pinned to immutable documentation revisions unless explicitly recorded.
+- The Rushang Chauhan image, Arnett/Petrov/Hugging Face figures and other embedded assets remain under the site-wide rights workflow in #156. Attribution and repository-level licences are not substitutes for asset-level permission.
+- ByteByteGo and Vizuara were pedagogically reviewed, but their exact source URLs have not yet been recovered into this catalogue. Do not create guessed records; the prior review remains linked through #147.
+
+## 2. Source families and their distinct roles
+
+| Family | Representative records | What the sources contribute | What they do not establish |
+|---|---|---|---|
+| Tokenizer construction and encoding | Karpathy video; Raschka Ch. 2; Hugging Face course; Gage; Sennrich; tiktoken; minbpe; HF Tokenizers; SentencePiece | Unicode/bytes distinctions, vocabulary and IDs, BPE training vs encoding, pre-tokenization, algorithm families, special-token handling and practical implementation boundaries | One universal tokenizer pipeline, equivalence between all BPE variants, or complete production compatibility from a toy example |
+| Corpus preparation | Raschka Ch. 2; ByteByteGo resources (historical review); canonical LLM Lab corpus pages | Document-level collection/filtering/deduplication, evaluation-aware partitions, tokenizer fitting, encoding and training-example hand-off | A single fixed order suitable for every corpus or a guarantee that deduplication alone prevents leakage |
+| Multilingual tokenizer evaluation | Ahia; Ali; Wegmann; Arnett 2025; TokLens; Catherine Arnett 2024 | Language-dependent token costs, token premium/fertility/parity measures, tokenizer design trade-offs, experimental effects and evaluation caveats | A universal tokenizer ranking, a causal account of every language disparity, or a guarantee that lower token count improves downstream quality |
+| Token and contextualized embeddings | Mikolov; Ethayarajh; Rushang Chauhan; Raschka Ch. 2 | Static word-type vectors vs token lookup vectors, and why contextual states can vary by context even when the token ID is fixed | Equivalence between Word2Vec and Transformer embeddings, or proof that a particular attention head performs a linguistic task |
+| Sentence embeddings and geometry | Li et al.; Steck et al.; Sentence Transformers documentation | Anisotropy, sentence-level pooling/geometry, limits of raw cosine similarity, metric choice and model/API-specific behavior | Universal conclusions about every embedding model or a claim that cosine similarity directly measures semantic similarity |
+| Interactive and visual learning | Hugging Face BPE visualizer; Polo Club Transformer Explainer; Vizuara pedagogical review | Manipulable views, question-led exploration, source-code cross-checks and interactive forward-pass observation | Faithful production-tokenizer execution from every visualizer, generalization from GPT-2 small to all LLMs, or learning outcomes for LLM Lab without a separate study |
+
+## 3. Cross-source synthesis by learner question
+
+### 3.1 What is a token, and what is the tokenizer actually doing?
+
+**Convergence.** Karpathy, Raschka, Hugging Face and the implementation repositories all support the separation between raw text representation, tokenizer preprocessing, token vocabulary/IDs and model input. The project's distinction between Unicode code points, UTF-8 bytes, token strings and token IDs is necessary: they are different representations, not interchangeable names for the same object.
+
+**Complementarity.**
+- Karpathy's transcript-based walkthrough contributes a byte-level, implementation-oriented narrative.
+- Raschka provides a compact build-from-scratch route and a concrete notebook structure.
+- Hugging Face's course provides a broader comparison of BPE, WordPiece and Unigram.
+- The tiktoken educational module and minbpe make algorithm steps inspectable.
+- SentencePiece highlights raw-Unicode input, whitespace handling and the fact that a tokenizer library may support more than one algorithm family.
+
+**Qualification.** Gage's 1994 algorithm is byte-pair compression. NLP subword BPE adapts the pair-merging idea to vocabulary construction and token encoding; GPT-style byte-level BPE adds tokenizer-specific conventions. The three should not be described as the same algorithm unchanged.
+
+**Project decision.** Keep the existing division: high-level text-data overview, dedicated tokenizer-strategies deep dive, Unicode page and separate implementation examples. Do not duplicate the BPE implementation or turn the overview into a library catalogue.
+
+### 3.2 What belongs to corpus preparation, and what belongs to tokenization?
+
+The historical ByteByteGo/Vizuara review and the canonical corpus lesson support a useful boundary:
+
+- Corpus-level operations act on documents or dataset partitions: collection, provenance, parsing, filtering, deduplication and split design.
+- Tokenizer-level operations transform text according to a tokenizer configuration: normalization, pre-tokenization, model-specific segmentation, post-processing and decoding.
+- Tokenizer fitting is a learned step and must respect evaluation boundaries; held-out text must not leak into a learned vocabulary when the goal is an unbiased held-out evaluation.
+- Training examples are a later stage: sequence windows, shifted targets, packing and masks belong to their own lesson.
+
+Deduplication and splitting interact. The project correctly avoids prescribing a universal order and explains why chunks or near-duplicates from one source should not be distributed naively across partitions.
+
+**Project decision.** The bilingual text-data pipeline added in PR #148 is the canonical treatment. The migration adds source traceability, not another pipeline page.
+
+### 3.3 How should tokenizer quality be measured across languages?
+
+The studies do not measure one interchangeable quantity.
+
+| Study | Scope and contribution | Boundary to preserve |
+|---|---|---|
+| Ahia et al. (2023) | Tokenization cost/utility across 22 languages in commercial API settings | Results belong to the evaluated APIs and benchmarks; they are not timeless properties of all models |
+| Ali et al. (2024) | 24 tokenizer configurations and decoder-only models at 2.6B scale; tokenizer choice affected results in the studied training/evaluation setup | Five European languages, one seed, uneven task counts and protocol-specific compute estimates |
+| Wegmann et al. (2025) | Task sensitivity to language variation and tokenizer/pre-tokenizer design | Reported pre-tokenizer effect is scoped to BERT-base experiments |
+| Arnett et al. (2025) | ~7,000 monolingual tokenizers across 97 languages; token premiums, vocabulary and pre-tokenization effects | No language model was trained; compression results do not establish downstream LM quality |
+| TokLens (2026) | Six intrinsic metrics and comparisons across tokenizer configurations/languages | Correlations are not causal evidence; intrinsic metrics and MMLU-ProX use different sample subsets |
+| Catherine Arnett (2024) | A pedagogical/community article about tokenizer recycling and fertility | Article experiments are not a universal tokenizer ranking; figure rights are a separate question |
+
+**Synthesis.** Tokenizer design can affect sequence length, cost and downstream performance in particular conditions. Yet fertility, parity, token count and compression do not collapse into a universal measure of quality. Intrinsic metrics may fail to predict downstream results, and a shorter sequence is not by itself evidence of a better model.
+
+**Project decision.** Keep numerical study details and caveats in the advanced tokenizer-design deep dive. Keep the essential path focused on what tokenization does and why it matters.
+
+### 3.4 What does “embedding” mean at different stages?
+
+Mikolov et al. provide historical context for static word-type vectors learned from local context. A Transformer begins with an embedding lookup indexed by token ID, then transforms these vectors through layers into contextualized hidden states.
+
+Ethayarajh's study helps explain context dependence and anisotropy in the specific ELMo/BERT/GPT-2 models evaluated. It does not imply that every model/layer behaves identically. The Rushang Chauhan article offers a high-level visual bridge across the pipeline, but the image's reuse rights remain unresolved in #156.
+
+**Project decision.** The static-vs-contextualized distinction is already integrated in PR #152 and the bilingual embedding/contextualization pages. No second embeddings overview is justified.
+
+### 3.5 What can cosine similarity tell us about embedding geometry?
+
+The source set provides three complementary cautions:
+
+1. **Ethayarajh (2019):** anisotropy affects interpretation of cosine similarity between contextualized occurrences; the study uses layer- and measure-specific baselines.
+2. **Li et al. (2020):** BERT sentence embeddings can be anisotropic in the studied setup; BERT-flow is a particular post-hoc transformation, with a transductive target-split caveat.
+3. **Steck et al. (2024):** cosine similarity can be non-unique under specified regularized linear factorization/autoencoder objectives; the analytic result is not a theorem about all deep LLM embeddings.
+
+Sentence Transformers documentation further shows that cosine is not the only available metric; dot product, Euclidean and Manhattan options exist, and normalized embeddings can make dot product operationally equivalent to cosine.
+
+**Project decision.** The current cosine-similarity page is appropriately bounded. Do not convert it into an exhaustive API catalogue or imply that a cosine score is a semantic truth value.
+
+### 3.6 What do interactive visualizers really show?
+
+The Hugging Face community BPE visualizer is useful as a schematic of merge operations, but its inspected implementation does not reproduce the full tokenizer pipeline (normalizer, pre-tokenizer, byte-level mapping and post-processing). It should not be treated as a faithful GPT-2 token-boundary trace.
+
+Polo Club's Transformer Explainer offers a different and stronger complement: an interactive GPT-2-small forward pass with source files mapped to visible stages. The code audit also exposed a top-p implementation that truncates logits to the top 50 before computing cumulative probability. This is a useful implementation lesson, not an exact implementation of full-vocabulary nucleus sampling.
+
+**Project decision.** Keep the visualizers optional and critically annotated. LLM Lab's own equations, Python examples and tests remain the source of truth for its canonical explanations.
+
+## 4. Source routes versus LLM Lab's learner route
+
+The source set offers several local teaching sequences, but these should not be concatenated into one mega-course.
+
+| Learning function | Source perspectives | Canonical LLM Lab treatment | Curriculum decision |
+|---|---|---|---|
+| Understand text representation | Karpathy, Raschka, Hugging Face | text-data → Unicode text → tokenization strategies | Keep the overview short; send byte/Unicode detail to the dedicated page |
+| Understand tokenizer construction | BPE, WordPiece, Unigram, tiktoken, minbpe, SentencePiece | tokenizer strategies + reproducible examples | Keep algorithm comparison in deep dive; no second implementation |
+| Understand corpus preparation | ByteByteGo review, Raschka, corpus lesson | text-data → training examples | Keep document-level preparation separate from tokenizer internals |
+| Understand token embeddings | Mikolov historical contrast, Raschka implementation | embedding-space | Explain lookup and dimensions without adding Word2Vec implementation |
+| Understand contextualization | Ethayarajh, Rushang visual, Polo Club interaction | contextualized-representations → attention mechanisms | Keep the same token ID / different context explanation and causal caveats |
+| Evaluate embedding similarity | Li, Steck, Sentence Transformers | cosine-similarity | Preserve model/task scope; do not teach cosine as universal semantic similarity |
+| Evaluate tokenizer quality | Ahia, Ali, Wegmann, Arnett, TokLens | tokenizer-design-evaluation | Keep advanced research synthesis optional; no essential-path expansion |
+
+The canonical route remains: text and corpus → tokenizer → token IDs → embedding lookup → positional information → contextualized hidden states. The project concept graph records semantic identities and relations; the source-local graphs/routes remain editorial reconstructions. Neither is a replacement for the other.
+
+## 5. Integration decisions
+
+| Contribution | Decision | Rationale |
+|---|---|---|
+| More ByteByteGo examples for whitespace, case, numbers, Unicode, multilingual text and code | already-covered | Existing EN/FR contrastive mini-lab has reproducible, version-qualified prompts |
+| Vizuara question-led micro-lesson | already-covered / integrate-by-reference | Existing question-led mini-lab, BPE merge trace and optional interactive visualizer provide the useful teaching form |
+| Second BPE implementation | reject for current scope | Would duplicate the trace and add maintenance without a demonstrated learning gap |
+| Gage vs NLP BPE distinction | integrated | A concise bilingual historical note is present via PR #155 |
+| Static Word2Vec vs Transformer embeddings | integrated | Existing bilingual embedding-space lesson via PR #152 |
+| Special-token API allow-list and untrusted-input caveat | integrated | Existing bilingual tokenizer lesson via PR #151 |
+| Multilingual tokenizer evaluation protocols and limitations | integrated | Advanced bilingual deep dive updated via PR #326/#332 |
+| Embedding geometry and metric caveats | integrated | Existing cosine-similarity and contextualization pages reconciled via PR #333 |
+| Hugging Face visualizer limitations | integrated by reference | Optional external resource is qualified via PR #168 |
+| Polo Club interactive forward-pass and top-p caveat | integrated by reference | Interactive companion is source-audited via PR #186/#188 |
+| Byte-level production tokenizer implementation | defer | Not required by current conceptual path; only add if a concrete Build milestone requires it |
+| Negative sampling, detailed pooling, API catalogues | defer | Optional depth, not a prerequisite for the current GPT build path |
+| Multimodal tokenization | defer | Outside the current text-only learning slice |
+
+## 6. Canonical project impact
+
+- **Concept graph:** no new concept IDs proposed by this migration. Existing token, token-embedding, contextualized-representation and positional-encoding nodes cover the stable concepts represented here.
+- **Source graph:** source-local graphs and pedagogical routes are not yet backfilled for all sources; create them only for instructional sources where prior evidence contains enough structure.
+- **Pages:** no new learner-facing page edits are proposed by this dossier.
+- **Learning routes:** no route or prerequisite change is justified.
+- **Exercises/experiments:** existing contrastive tokenization mini-lab, BPE trace and implementation examples remain the canonical practical activities.
+- **Build/implementation:** no new tokenizer implementation is proposed.
+- **Visual assets:** no asset was added, removed, replaced or modified. Rights remain with #156.
+- **New pages:** none.
+
+## 7. Provenance, validation and open work
+
+### Existing integration evidence
+
+- #146 — text → token pipeline and contextualized-representation companion pages.
+- #148 — corpus preparation pipeline.
+- #149 — tokenizer pre-processing comparisons.
+- #151 — special-token handling.
+- #152 — static Word2Vec vs Transformer embeddings.
+- #155 — compression BPE vs NLP subword BPE vs byte-level BPE.
+- #168 — community BPE visualizer implementation caveats.
+- #172/#173 — Raschka Chapter 2 and Hugging Face course coverage audits.
+- #186/#188 — Polo Club Transformer Explainer integration and top-p implementation caveat.
+- #326/#332/#333 — TokLens and tokenizer/embedding research-source reconciliation.
+- #147 — completed pedagogical comparison of Vizuara and ByteByteGo.
+
+These are evidence pointers, not substitutes for inspecting the final repository state. PR merge state and CI evidence should be rechecked before this dossier is declared complete.
+
+### Remaining migration tasks
+
+1. Create structured extraction records for sources with sufficiently precise locators and source-level evidence. Prioritize research papers with detailed primary-source notes and instructional sources with reconstructable teaching routes.
+2. Recover exact canonical URLs for the ByteByteGo and Vizuara resources from their original historical references; do not guess them.
+3. Add source-specific review records only where a durable review cannot be represented adequately by this dossier and migration map.
+4. Keep asset rights verification in #156 and deferred browser review in #320/#329.
+5. Re-run catalogue/extraction validation and the bilingual Quarto workflow after extraction files and any generated projections are added.
+
+### Final assessment
+
+The source collection reinforces and qualifies the existing curriculum more than it expands it. Its strongest added value is a structured comparison of tokenizer design and multilingual evaluation, a precise distinction between static and contextual representations, and methodological caveats around embedding geometry and interactive visualizers. The right outcome is a traceable compilation of perspectives, not a larger sequence of overlapping lessons.
