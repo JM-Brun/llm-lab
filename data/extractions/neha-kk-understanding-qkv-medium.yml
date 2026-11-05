@@ -4,11 +4,11 @@ pedagogical_model:
   reconstruction:
     status: complete
     basis:
-      - "The full author-authored text exposed by the indexed Medium search result was reconstructed on 2026-11-04, including its introduction, all visible sections, equations, worked linguistic example, conclusion and figure captions. The canonical page itself returned a cache miss and its HTML/DOM was not directly inspected."
-      - "The indexed article metadata identifies Neha KK as author, gives a five-minute reading estimate and lists 2025-12-31 as publication date."
-      - "Text completeness applies only to the author-authored text represented in the search-index snapshot. It does not establish live-page DOM completeness or inspection of media, links, comments or rights."
+      - "The author-authored text was first reconstructed from the indexed Medium result on 2026-11-04, then reconciled against a directly readable canonical page-text view on 2026-11-05."
+      - "The live page view confirms Neha KK as author, a five-minute reading estimate and the 2025-12-31 publication date."
+      - "The page reader displayed 'No responses yet' on 2026-11-05; this is a point-in-time observation. Raw DOM, image bytes, linked resources and reuse rights remain uninspected."
     media_inventory:
-      retrieval_channel: search-index text; direct canonical page returned cache miss
+      retrieval_channel: indexed snapshot plus direct canonical Medium page-text view (2026-11-05); no raw image retrieval
       in_body_slots:
         - {id: src-figure-1, caption: 'Fig 1: Self-attention between tokens using queries, keys, and values.', status: identified-not-visually-inspected}
         - {id: src-figure-2, caption: 'Fig 2: Linear projections into Q, K, and V.', status: identified-not-visually-inspected}
@@ -82,7 +82,7 @@ pedagogical_model:
     - "The article signals that the same general mechanism appears beyond text, including vision, speech and multimodal systems."
   pedagogical_limits:
     - "The database analogy can suggest exact lookup or nearest-neighbour retrieval; actual attention computes learned compatibility scores and a weighted sum over accessible values."
-    - "The article says Transformers inspect all words simultaneously without qualifying causal masks or the distinction between parallel training computation and incremental autoregressive generation."
+    - "The article says Transformers inspect all words simultaneously and claims efficient scaling to long sequences through parallel computation. This conflates parallelism with sequence-length complexity: dense full self-attention still computes pairwise token interactions with O(n²) score complexity (and a naive materialized score matrix has O(n²) memory), while causal autoregressive generation proceeds token by token."
     - "The pronoun example asserts that scores favour 'animal' without providing model, head, weights, experiment or evidence; it is an intuition, not a demonstrated coreference result."
     - "The claim that attention maps provide interpretability is too broad: weights alone do not establish causal importance or explain a prediction."
     - "The scaling rationale is stated qualitatively; variance assumptions and the relationship to softmax concentration/gradients are not derived."
@@ -221,7 +221,7 @@ items:
 
   - id: neha-kk-understanding-qkv-medium:parallelism-claim
     kind: limitation
-    summary: "The article contrasts sequential RNN/LSTM processing with Transformers processing all words simultaneously and attributes efficiency to parallel computation. This is an oversimplification: parallelism applies to sequence positions during training/full-sequence forward passes, while causal autoregressive generation proceeds token by token and uses a causal mask."
+    summary: "The article contrasts sequential RNN/LSTM processing with Transformers processing all words simultaneously and attributes long-sequence efficiency to parallel computation. This is an oversimplification: parallelism applies across positions in training/full-sequence forward passes, but standard dense self-attention still computes O(n²) pairwise score interactions (and a naive materialized score matrix uses O(n²) memory); causal autoregressive generation also proceeds token by token under a causal mask."
     pedagogical_assessment:
       novelty: {level: low, rationale: "The source introduces no detailed parallel-computation analysis."}
       complementarity: {level: moderate, rationale: "It exposes a frequent introductory simplification that can be useful as a review checkpoint."}
@@ -230,7 +230,7 @@ items:
       redundancy: {level: moderate, rationale: "The project treats causal masking and autoregressive generation elsewhere."}
       evidence_quality: {level: high, rationale: "The oversimplification is directly present in the article and can be checked against the canonical architecture."}
     locator: {type: section, value: "Why Attention Exists in the First Place", label: "Why Attention Exists in the First Place"}
-    evidence: {kind: limitation, confidence: well-supported, scope: "High-level comparison between recurrent and Transformer processing.", assumptions: ["Standard Transformer training and decoder-only autoregressive inference."], limitations: ["The article does not distinguish training parallelism from generation-time dependencies."]}
+    evidence: {kind: limitation, confidence: well-supported, scope: "High-level comparison between recurrent and Transformer processing.", assumptions: ["Standard Transformer training and decoder-only autoregressive inference."], limitations: ["The article does not distinguish training parallelism from generation-time dependencies.", "The claim that parallelism makes attention more efficient for long sequences is not supported by a complexity comparison; standard dense self-attention has quadratic pairwise interaction cost."]}
     classification: {primary_theme: architectures-mechanisms, tags: [topic:transformer, method:parallel-computation], concept_ids: [self-attention]}
     candidate_destinations: {pages: [fr/transformer, en/transformer, fr/causal-masking, en/causal-masking], concepts: [self-attention]}
     disposition: link
