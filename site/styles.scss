@@ -839,56 +839,31 @@ details.spot-the-fallacy .fallacy-content {
 }
 
 
-/* Global breadcrumb: reflects the Quarto sidebar hierarchy, not a mandatory reading sequence. */
-.llm-breadcrumb {
-  margin: 0 0 1.15rem;
-  color: #64748B;
+/* Quarto's native breadcrumb is the single site-location trail. */
+.quarto-title-breadcrumbs {
+  margin: 0 0 1rem;
+  color: #475569;
   font-size: .82rem;
   line-height: 1.45;
 }
-.llm-breadcrumb ol {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: .35rem .55rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.llm-breadcrumb li {
-  display: inline-flex;
-  align-items: center;
-  gap: .55rem;
-  max-width: 100%;
-}
-.llm-breadcrumb li + li::before {
-  content: "›";
-  color: #94A3B8;
-  font-weight: 700;
-}
-.llm-breadcrumb a {
+.quarto-title-breadcrumbs .breadcrumb-item a {
   color: #475569;
   text-decoration: none;
 }
-.llm-breadcrumb a:hover {
+.quarto-title-breadcrumbs .breadcrumb-item a:hover {
   color: #14532D;
   text-decoration: underline;
 }
-.llm-breadcrumb [aria-current="page"] {
+.quarto-title-breadcrumbs .breadcrumb-item.active {
   color: #14532D;
   font-weight: 700;
 }
 @media (max-width: 700px) {
-  .llm-breadcrumb {
+  .quarto-title-breadcrumbs {
     margin-bottom: .9rem;
     font-size: .78rem;
   }
-  .llm-breadcrumb ol,
-  .llm-breadcrumb li {
-    gap: .3rem .4rem;
-  }
 }
-
 
 /* Contextual concept links are inline learning affordances, not page-classification badges. */
 a.concept-link {
