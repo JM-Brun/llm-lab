@@ -181,67 +181,120 @@ concepts:
 relation_types:
   represented-by:
     direction: directed
+    family: representational
+    transitive: false
+    acyclic: false
+    learning_dependency: false
+    inverse: null
     labels: {fr: "est représenté par", en: "is represented by"}
     descriptions:
       fr: "La source est représentée par la cible."
       en: "The source concept is represented by the target."
   prerequisite:
     direction: directed
+    family: pedagogical
+    transitive: false
+    acyclic: true
+    learning_dependency: true
+    inverse: null
     labels: {fr: "est prérequis pour", en: "is a prerequisite for"}
     descriptions:
       fr: "La source est nécessaire pour comprendre ou utiliser la cible ; cela ne définit pas à lui seul un ordre global du parcours."
       en: "The source is needed to understand or use the target; this alone does not define a global learning sequence."
   part-of:
     direction: directed
+    family: structural
+    transitive: true
+    acyclic: true
+    learning_dependency: false
+    inverse: null
     labels: {fr: "fait partie de", en: "is part of"}
     descriptions:
       fr: "La source est un composant ou une partie de la cible."
       en: "The source is a component or part of the target."
   constrains:
     direction: directed
+    family: constraint
+    transitive: false
+    acyclic: false
+    learning_dependency: false
+    inverse: null
     labels: {fr: "contraint", en: "constrains"}
     descriptions:
       fr: "La source impose une contrainte à la cible."
       en: "The source imposes a constraint on the target."
   contributes-to:
     direction: directed
+    family: functional
+    transitive: false
+    acyclic: false
+    learning_dependency: false
+    inverse: null
     labels: {fr: "contribue à", en: "contributes to"}
     descriptions:
       fr: "La source contribue à la construction ou au fonctionnement de la cible."
       en: "The source contributes to the construction or operation of the target."
   applies-to:
     direction: directed
+    family: functional
+    transitive: false
+    acyclic: false
+    learning_dependency: false
+    inverse: null
     labels: {fr: "s'applique à", en: "applies to"}
     descriptions:
       fr: "Le mécanisme source peut être utilisé dans le contexte ou le mécanisme cible."
       en: "The source mechanism can be used within the target context or mechanism."
   mapped-by:
     direction: directed
+    family: representational
+    transitive: false
+    acyclic: false
+    learning_dependency: false
+    inverse: null
     labels: {fr: "est projeté par", en: "is mapped by"}
     descriptions:
       fr: "La source est transformée ou projetée par la cible."
       en: "The source is transformed or projected by the target."
   produces:
     direction: directed
+    family: functional
+    transitive: false
+    acyclic: false
+    learning_dependency: false
+    inverse: null
     labels: {fr: "produit", en: "produces"}
     descriptions:
       fr: "La source produit la cible."
       en: "The source produces the target."
   normalized-by:
     direction: directed
+    family: functional
+    transitive: false
+    acyclic: false
+    learning_dependency: false
+    inverse: null
     labels: {fr: "est normalisé par", en: "is normalized by"}
     descriptions:
       fr: "La source est normalisée par la transformation cible."
       en: "The source is normalized by the target transformation."
   evaluated-by:
     direction: directed
+    family: evaluative
+    transitive: false
+    acyclic: false
+    learning_dependency: false
+    inverse: null
     labels: {fr: "est évalué par", en: "is evaluated by"}
     descriptions:
       fr: "La source est évaluée au moyen de la cible."
       en: "The source is evaluated using the target."
 relations:
   - {from: token, type: represented-by, to: token-embedding}
-  - {from: token-embedding, type: prerequisite, to: contextualized-representation}
+  - from: token-embedding
+    type: prerequisite
+    to: contextualized-representation
+    rationale: "The contextualized representation is computed from an initial token representation by the model layers."
   - {from: query, type: part-of, to: self-attention}
   - {from: key, type: part-of, to: self-attention}
   - {from: value, type: part-of, to: self-attention}
