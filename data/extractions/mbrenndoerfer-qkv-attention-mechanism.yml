@@ -22,7 +22,9 @@ pedagogical_model:
       - {id: src-projection, kind: operation, description: "Three learned linear projections produce Q, K and V; the text presents them as separately parameterized transformations.", locator: "The QKV Mechanism, lines 694-727"}
       - {id: src-score-matrix, kind: intermediate, description: "Pairwise query-key dot products produce an n-by-n score matrix before scaling and normalization.", locator: "Scaled dot-product implementation and shape analysis, lines 973-1043"}
       - {id: src-scaling, kind: operation, description: "Division by sqrt(d_k) is motivated by a variance calculation under independent zero-mean unit-variance component assumptions.", locator: "The Scaling Problem and Its Solution, lines 809-870"}
-      - {id: src-weighted-output, kind: intermediate, description: "Softmax weights form a weighted sum of value vectors at each query position.", locator: "Step 4: Aggregating Values, lines 1044-1060"}
+      - {id: src-scaled-scores, kind: intermediate, description: "The query-key score matrix after division by sqrt(d_k), before softmax normalization.", locator: "Scaled dot-product implementation, lines 973-1043"}
+      - {id: src-attention-weights, kind: intermediate, description: "Row-wise softmax probabilities over accessible key positions, used to weight value vectors.", locator: "Step 3: Computing Attention Weights, lines 1020-1043"}
+      - {id: src-weighted-output, kind: intermediate, description: "The row-wise weighted sum of value vectors using normalized attention weights.", locator: "Step 4: Aggregating Values, lines 1044-1060"}
       - {id: src-convex-hull, kind: geometric-property, description: "A normalized nonnegative weighted sum lies in the convex hull of the contributing value vectors.", locator: "Step 4: Aggregating Values, lines 1059-1060"}
       - {id: src-worked-example, kind: pedagogical-anchor, description: "A three-token sentence with hand-designed four-dimensional inputs and seeded random projections traces QKV through output.", locator: "A Worked Example with Real Words, lines 1270-1449"}
       - {id: src-quiz, kind: assessment, description: "A short quiz checks role distinctions and the attention computation.", locator: "11 Quiz, final section"}
@@ -34,7 +36,11 @@ pedagogical_model:
       - {from: src-query, type: compared-with, to: src-key}
       - {from: src-query, type: contributes-to, to: src-score-matrix}
       - {from: src-key, type: contributes-to, to: src-score-matrix}
-      - {from: src-score-matrix, type: normalized-after-scaling, to: src-weighted-output}
+      - {from: src-score-matrix, type: scaled-by, to: src-scaling}
+      - {from: src-scaling, type: produces, to: src-scaled-scores}
+      - {from: src-scaled-scores, type: normalized-by-softmax-into, to: src-attention-weights}
+      - {from: src-attention-weights, type: weights, to: src-value}
+      - {from: src-attention-weights, type: determines-aggregation-into, to: src-weighted-output}
       - {from: src-value, type: aggregated-into, to: src-weighted-output}
       - {from: src-weighted-output, type: satisfies, to: src-convex-hull}
       - {from: src-worked-example, type: illustrates, to: src-projection}
