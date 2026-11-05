@@ -284,3 +284,14 @@ The initial skill is strong on audit dimensions but underspecifies practical mec
 - **Medium confidence:** transition usability inferred from source text and explicit links without a rendered browser walkthrough.
 - **Not assessed:** learner comprehension, responsive rendering, keyboard/screen-reader experience, and full semantic parity of all EN/FR page bodies.
 - Quarto rendering, metadata validation, link checks and CI were not run for this audit. No candidate action is claimed as implemented.
+
+
+## 10. Revalidation pass — 2026-11-06
+
+A second, targeted read of the actual transition sections resolved three checks that the first pass had correctly left open:
+
+- **A-02 — verified:** both FR and EN text-data pages explicitly link to their corpus-preparation counterpart and state that corpus preparation has its own canonical page. The French text says that text-data retains only the distinction needed to situate prompt encoding; the English page communicates the same boundary. No additional bridge is required on these pages.
+- **B-02 / D-01 — verified:** the French causal-masking page contains an explicit route-navigation card to logits, labelled as the next step. The English counterpart uses the corresponding next-step card. The suggested-route metadata also points to logits. The transition is therefore present in source; a further explanatory sentence is not justified by this audit.
+- **Bilingual parity — partially verified:** the text-data boundary and causal-masking → logits navigation were checked in both languages and are semantically aligned in these specific places. This does not establish full semantic parity across all pages in the groups.
+
+**Finding lifecycle correction:** A recommendation phrased as "verify whether X exists" must be closed as verified when the evidence is found. It must not remain in the open action plan as though the project still needs the work. The outstanding action plan is therefore limited to A-01, A-03, B-01, C-01 through C-04 where applicable, and the method-level refinements.
