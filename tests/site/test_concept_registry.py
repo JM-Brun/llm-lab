@@ -253,6 +253,7 @@ def test_relation_contract_requires_semantic_metadata() -> None:
     data["relation_types"]["implemented-by"].pop("transitive")
     data["relation_types"]["implemented-by"].pop("acyclic")
     data["relation_types"]["implemented-by"].pop("learning_dependency")
+    data["relation_types"]["implemented-by"].pop("inverse")
 
     errors = validate_registry(data)
 
@@ -260,6 +261,7 @@ def test_relation_contract_requires_semantic_metadata() -> None:
     assert any(".transitive:" in error for error in errors)
     assert any(".acyclic:" in error for error in errors)
     assert any(".learning_dependency:" in error for error in errors)
+    assert any(".inverse: required field is missing" in error for error in errors)
 
 
 def test_only_acyclic_relation_types_reject_cycles() -> None:
