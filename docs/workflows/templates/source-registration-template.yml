@@ -4,7 +4,7 @@
 - id: "stable-lowercase-kebab-case-id"
   title: "Source title"
   creators: ["Author or organization"]
-  source_type: paper # paper | book | book-chapter | blog | tutorial | documentation | repository | dataset | benchmark | video | course | thesis | standard | other
+  source_type: paper # exact value from source_types in data/source-taxonomy.yml
   identifiers: {}
   canonical_url: "https://example.org/canonical-source"
   publisher: "Publisher or platform"
@@ -24,8 +24,8 @@
     technical_level: unspecified # introductory | intermediate | advanced | mixed | unspecified
     contribution_types: [other] # controlled by data/source-taxonomy.yml
     audiences: [learner] # controlled by data/source-taxonomy.yml
-  scan_status: discovered # discovered | selected | scanned | partially-scanned | inaccessible | superseded | rejected
-  integration_status: not-reviewed # not-reviewed | reviewed | partially-integrated | integrated | deferred | rejected
+  scan_status: discovered # exact value from scan_statuses in data/source-taxonomy.yml
+  integration_status: not-reviewed # exact value from integration_statuses in data/source-taxonomy.yml
   scan_history:
     - accessed_at: "YYYY-MM-DD"
       status: partially-scanned
