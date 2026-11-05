@@ -170,12 +170,17 @@ for (const testCase of cases) {
       await mode.selectOption("concepts");
       await page.waitForSelector(".map-concept-item", { timeout: 15000 });
       const legend = page.locator(".learning-map-concept-legend");
+      const relationFilter = page.locator("[data-map-relation-type]");
+      const relationOptions = await relationFilter.locator("option").evaluateAll(options =>
+        options.map(option => ({ value: option.value, label: option.textContent.trim() }))
+      );
       item.learningMap = {
         legendVisible: await legend.isVisible(),
         legendItems: await legend.locator(".map-concept-legend-item").count(),
         conceptButtons: await page.locator(".map-concept-item").count(),
         relationFilterLabelled: await page.locator('label[for="learning-map-relation-type"]').count() === 1,
         searchLabelled: await page.locator('label[for="learning-map-search"]').count() === 1,
+        relationOptions,
       };
       if (!item.learningMap.legendVisible || item.learningMap.legendItems === 0) {
         throw new Error("concept relation legend is missing or empty");
@@ -184,6 +189,11 @@ for (const testCase of cases) {
       if (!item.learningMap.relationFilterLabelled || !item.learningMap.searchLabelled) {
         throw new Error("learning-map controls are missing accessible labels");
       }
+      if (relationOptions.length < 2) throw new Error("relation filter has no usable relation types");
+      await relationFilter.selectOption(relationOptions[1].value);
+      item.learningMap.filteredConceptButtons = await page.locator(".map-concept-item").count();
+      if (!item.learningMap.filteredConceptButtons) throw new Error("relation filter removed every concept");
+      await relationFilter.selectOption("");
       await page.locator(".map-concept-item").first().click();
       item.learningMap.selectedConcept = await page.locator(".map-concept-item[aria-pressed='true']").count() === 1;
       item.learningMap.detailsTitle = await page.locator(".map-detail-panel .map-detail-title").first().innerText().catch(() => null);
@@ -209,6 +219,19 @@ for (const testCase of cases) {
         accessibleLabel: await context.getAttribute("aria-label"),
       };
       if (!item.routeContext.stageLinks) throw new Error("guided-route context has no stage links");
+      const stageFragments = await context.locator('a[href*="learning-map.html#guided-stage-"]').evaluateAll(links =>
+        links.map(link => (link.getAttribute("href").split("#")[1] || ""))
+      );
+      const routeMapPage = await context.context().newPage();
+      try {
+        await routeMapPage.goto(`${BASE}/${lang}/learning-map.html`, { waitUntil: "networkidle", timeout: 60000 });
+        item.routeContext.stageAnchorsResolve = await routeMapPage.evaluate(ids =>
+          ids.every(id => id && document.getElementById(id) !== null), stageFragments
+        );
+      } finally {
+        await routeMapPage.close();
+      }
+      if (!item.routeContext.stageAnchorsResolve) throw new Error("guided-route stage link points to a missing anchor");
       if (pagePath === "llm-overview.html") {
         if (item.routeContext.isMultiple || !item.routeContext.navLandmark ||
             item.routeContext.currentPageMarkers !== 1) {
@@ -237,8 +260,8 @@ for (const testCase of cases) {
       incomplete: axe.incomplete.length,
     };
 
-    if (item.layout.horizontalOverflow) report.failures.push(`${lang}/${label}/${theme}: horizontal overflow`);
-    if (!item.keyboard.length) report.failures.push(`${lang}/${label}/${theme}: no keyboard focus targets`);
+    if (item.layout.horizontalOverflow) report.failures.push(`${pagePath}/${lang}/${label}/${theme}: horizontal overflow`);
+    if (!item.keyboard.length) report.failures.push(`${pagePath}/${lang}/${label}/${theme}: no keyboard focus targets`);
   } catch (error) {
     item.error = String(error);
     report.failures.push(`${lang}/${label}: ${String(error)}`);
@@ -253,7 +276,7 @@ fs.writeFileSync(path.join(OUT, "report.json"), JSON.stringify(report, null, 2))
 console.log(JSON.stringify({
   generatedAt: report.generatedAt,
   cases: report.cases.map(c => ({
-    lang: c.lang, viewport: c.viewport, theme: c.theme, status: c.httpStatus, title: c.title,
+    page: c.page, lang: c.lang, viewport: c.viewport, theme: c.theme, status: c.httpStatus, title: c.title,
     overflow: c.layout?.horizontalOverflow,
     overflowCandidates: c.layout?.overflowCandidates,
     focusTargets: c.keyboardSummary?.focusTargets,
