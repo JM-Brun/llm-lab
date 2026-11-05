@@ -282,6 +282,8 @@ def validate_registry(
             for field in ("transitive", "acyclic", "learning_dependency"):
                 if type(definition.get(field)) is not bool:
                     errors.append(f"{where}.{field}: expected a boolean")
+            if "inverse" not in definition:
+                errors.append(f"{where}.inverse: required field is missing")
             inverse = definition.get("inverse")
             if inverse is not None and (
                 not isinstance(inverse, str) or inverse not in relation_types
