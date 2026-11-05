@@ -151,3 +151,10 @@ This is a first contract increment, not proof that every current relation edge i
 ## Edge-level review
 
 The initial manual review of all 26 edges is documented separately in [`docs/audits/concept-relation-edge-review.md`](audits/concept-relation-edge-review.md). It records the intended reading and scope limitations for every edge. The review found no immediate direction reversal, but several high-level relations are explicitly not exhaustive computational data-flow claims. Rendered FR/EN graph UX and learner comprehension remain unverified.
+
+
+### Projection preservation
+
+The bilingual learning-map data builder now carries the relation contract into its generated projection: family, direction, transitivity, acyclicity, learning-dependency eligibility, inverse declaration, localized label/description, and any localized edge rationale. The interactive renderer currently uses direction, label and description; retaining the additional metadata prevents the projection boundary from silently discarding semantics and leaves future presentation/consumer choices explicit. Tests cover both metadata and localized rationale preservation.
+
+The guided curriculum generator remains independent of concept relations. In particular, `learning_dependency` is descriptive metadata for concept edges; it is not currently consumed to generate or reorder the guided route.
