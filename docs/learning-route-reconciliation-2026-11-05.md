@@ -130,11 +130,11 @@ The concept graph is separate from the page graph. A concept's prerequisite rela
 
 Use the existing project checks; do not create a workflow per concept or a second page-graph validator.
 
-```bash
-uv run --with-requirements docs/requirements-history-validation.txt python site/tools/check_page_metadata.py
-uv run --locked pytest
-uv run python site/tools/build_learning_map.py
-quarto render site
-```
+The authoritative command sequence is defined in the existing workflows:
 
-The repository's CI/Quarto workflows may wrap these commands and add rendered local-link checks. A passing structural validator proves reference integrity and declared parity, not pedagogical quality or learner mastery.
+- `.github/workflows/ci.yml`: install the locked development environment and the two documentation requirement files, then run `site/tools/check_page_metadata.py`, `site/tools/audit_page_metadata.py`, concept/resource validators, Ruff, mypy and pytest.
+- `.github/workflows/quarto.yml`: run the page/resource validators and generators with `docs/requirements-history-validation.txt`, generate the guided-route Markdown and map data with `site/tools/build_learning_map.py`, run `quarto render site`, then check the rendered learning-map controls, knowledge-graph export, history parity and local links.
+
+For a local reproduction, use the exact run commands in those workflow files rather than maintaining a second command list here. The relevant entry points are `site/tools/check_page_metadata.py`, `site/tools/audit_page_metadata.py`, `site/tools/build_learning_map.py`, and the rendered-site checks under `site/tools/`.
+
+A passing structural validator proves reference integrity and declared parity, not pedagogical quality or learner mastery.
