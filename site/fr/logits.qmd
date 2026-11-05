@@ -20,6 +20,8 @@ related: ["fr/causal-masking"]
 tags: ["type:concept-lesson", "destination:understand", "topic:logits", "level:core", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-logits.qmd >}}
+
 ::: {.chapter-lead}
 Un **logit** est un score réel associé à une classe ou à un token du vocabulaire, avant sa conversion en probabilité. Dans un LLM, la dernière projection produit généralement un vecteur $z\in\mathbb{R}^{V}$ à chaque position où le modèle doit prédire un token.
 :::
@@ -30,18 +32,6 @@ Un **logit** est un score réel associé à une classe ou à un token du vocabul
 - distinguer le classement des candidats par score de la distribution conditionnelle utilisée pour la génération ;
 - identifier la dimension du vecteur en fonction de la taille du vocabulaire.
 :::
-
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes du parcours LLM">
-  <a class="step-item" href="text-data.qmd">1. Texte</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="queries-keys-values.qmd">3. Attention (Q, K, V)</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">4. Logits</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="cross-entropy.qmd">5. Perte & Entraînement</a>
-</div>
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 Les **logits sont des scores, pas des probabilités**. À une position, le modèle produit un score par token du vocabulaire. Le score le plus élevé désigne le candidat classé premier ; il ne fournit pas, à lui seul, une probabilité ni une mesure de vérité.
