@@ -149,3 +149,27 @@ The Q/K/V and embedding lessons were intentionally not changed in PR #522 becaus
 - [ ] Search for any remaining `pipeline-stepper` occurrence and ensure no misleading linear chain remains.
 
 **Evidence boundary:** successful Python CI and Quarto render/publish establish technical generation and link integrity, not accessibility conformance or improved learner comprehension. The new component is a first implementation pilot, not yet a validated site-wide design. The four-page stepper removal is a corrective deletion, not evidence that breadcrumb rollout is complete.
+
+
+## 12. Reconciliation of the nested-breadcrumb proposal (2026-11-05)
+
+A follow-up source trace clarifies that the desired two levels should be the **site-location breadcrumb** and the **pedagogical route context**, not a breadcrumb derived from conceptual hierarchy.
+
+Evidence from the current source:
+
+- `site/_quarto.yml` defines distinct bilingual navigation trees. The FR Q/K/V page is nested under “Attention et sortie du Transformer”; the FR text-data page is nested under “Du texte aux représentations et au calcul”. Their site-location ancestry therefore differs.
+- `site/styles.scss` contains a `.llm-breadcrumb` style block labelled “Global breadcrumb”, but a stylesheet selector is not evidence that a matching element is emitted.
+- `site/includes/title-metadata.html` does not contain breadcrumb markup.
+- The Q/K/V page includes `generated-guided-context-fr-queries-keys-values.qmd`; this is the pedagogical-context projection introduced by PR #522.
+- The text-data page still contains a legacy `.pipeline-stepper` block in the inspected main snapshot. This is a process/representation sequence, not a site breadcrumb or the generated curriculum context. It must not be silently repurposed as either.
+- Q/K/V also has explicit previous/next route cards in its page body. These remain reading transitions and must not be conflated with either breadcrumb.
+
+Consequences:
+
+1. Keep the generated pedagogical context as the only pedagogical breadcrumb/context renderer.
+2. If a site-location breadcrumb is implemented, derive it from Quarto navigation and label it as site location; do not use `hierarchy.parents`.
+3. Do not add a local conceptual breadcrumb. Multi-parent conceptual relations remain contextual links.
+4. Before changing runtime code, trace the build generator that emits `generated-guided-context-*` and the remaining global-breadcrumb CSS; verify whether the reported click issue comes from a link in the generated pedagogical context, the sidebar, or a page-level route card.
+5. Record actual hrefs and destinations from rendered FR/EN output. Source-level inspection alone does not reproduce the browser behavior.
+
+This addendum supersedes the earlier exploratory proposal to derive a second local breadcrumb from page hierarchy. The canonical contract is this document; no separate nested-breadcrumb contract should be maintained.
