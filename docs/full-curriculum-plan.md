@@ -2,7 +2,7 @@
 
 **Status:** planning only. This document defines scope, dependencies, page ownership, and acceptance criteria. It does not authorize drafting all lessons, adding model implementations, or running new experiments immediately.
 
-**Primary baseline:** Sebastian Raschka, [*Build a Large Language Model (From Scratch)* source repository](https://github.com/rasbt/LLMs-from-scratch). The repository evolves; re-check its README and chapter folders before marking coverage complete.
+**Primary baseline:** Sebastian Raschka, [*Build a Large Language Model (From Scratch)* source repository](https://github.com/rasbt/LLMs-from-scratch). The repository evolves; re-check its README and chapter folders before marking coverage complete. The dated comparison with the [Raschka book path and Hugging Face Course](source-reviews/learning-path-comparison-2026-11-05.md) records transferable principles and explains why LLM Lab does not mirror either curriculum.
 
 **Complementary explanations:** [Jay Alammar, The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/), [The Illustrated Transformer From Scratch](https://idtjo.hosting.acm.org/wordpress/the-illustrated-transformer/), [Jay Alammar, The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/), and [3Blue1Brown's GPT lessons](https://www.3blue1brown.com/lessons/gpt/).
 
