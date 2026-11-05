@@ -8,7 +8,7 @@
 
 ## 1. Purpose and evidence boundary
 
-The three-source Q/K/V collection has already changed the bilingual lesson through a geometric perspective, a contextual-language contrast and more explicit misconception boundaries. The next question is not whether more source material can be added, but whether the resulting learning experience supports better discrimination, calculation and transfer. The current exercise recommendations below are historical candidates; see section 9 for the post-implementation decisions and the single pilot protocol that supersedes them.
+The four-source Q/K/V collection has already changed the bilingual lesson through a geometric perspective, a contextual-language contrast and more explicit misconception boundaries. The next question is not whether more source material can be added, but whether the resulting learning experience supports better discrimination, calculation and transfer. The current exercise recommendations below are historical candidates; see section 9 for the post-implementation decisions and the single pilot protocol that supersedes them.
 
 This dossier establishes a **content-based baseline** and proposes a small assessment. It does not claim measured improvement: no learner study, pre/post comparison, item analysis or usability test has been conducted.
 
@@ -20,6 +20,7 @@ The audit is based on the current canonical EN/FR Q/K/V lesson, scaled-dot-produ
 |---|---|---|---|
 | Distinguish Q/K from V roles | Q/K/V lesson, essential-idea callout and self-check | Q/K determine weights; V supplies aggregated content; asks what changes if V changes alone | Explicitly covered |
 | Explain why projections are separate | Q/K/V lesson, projection section | Matching views versus content/payload; learned projections from a shared representation | Explicitly covered |
+| Explain how the projections are learned | Q/K/V lesson, optional training note | Loss gradients reach Q/K through the score/normalization path and V through weighted aggregation; local linear-layer gradient identities are shown | Conceptual mechanism clarified; full backpropagation remains in the gradients lesson |
 | Infer Q/K/V tensor shapes | Q/K/V lesson and exercise hub | Different output dimensions; NumPy projection exercise with Q/K=(3,2), V=(3,3) | Explicitly practiced |
 | Distinguish self-attention from cross-attention | Q/K/V lesson and cross-attention link | Query stream versus key/value stream | Covered conceptually; not a focus of current exercises |
 | Distinguish coreference from lexical polysemy | Q/K/V optional contextual contrast | Pronoun antecedent versus competing senses of one word | Explicitly illustrated; transfer not assessed |
@@ -146,6 +147,10 @@ This section supersedes the earlier proposed diagnostic bundle in section 4. It 
 - **Pilot protocol:** PR #490 is merged with bilingual prompts and a 0–2 rubric. It is a protocol only; no participant has been observed.
 - **Rendered/accessibility review:** still open in [#483](https://github.com/JM-Brun/llm-lab/issues/483). Run the independent pilot only after the published EN/FR pages receive the required browser review.
 - **Learning outcomes:** no pre/post learner data or efficacy evidence exists. Keep all claims at the level of content audit, implementation tests and protocol design.
+
+### Update after the bilingual Q/K/V learning note
+
+[PR #506](https://github.com/JM-Brun/llm-lab/pull/506) adds a collapsed EN/FR explanation of position-wise projections and gradient-based learning. It makes the existing statement “learned jointly” operational: Q/K gradients flow through score computation and normalization, while V gradients flow through weighted aggregation. The displayed matrix-gradient identities are local linear-layer derivatives for fixed X and no bias; they are not a full Transformer backpropagation derivation. The change adds no new learner exercise and does not claim measured learning improvement. CI, Quarto rendering and rendered disclosure/equation inspection remain required on the final PR head.
 
 ### Current implementation decision
 
