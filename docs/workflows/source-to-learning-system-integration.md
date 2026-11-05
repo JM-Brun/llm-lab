@@ -1,7 +1,10 @@
 # External-source to learning-system integration workflow
 
 **Status:** normative project workflow · **Version:** 1.2 · **Last reviewed:** 2026-11-05  
-**Related collection:** [Q/K/V source collection](../source-reviews/qkv-source-collection.md)
+**Related collection:** [Q/K/V source collection](../source-reviews/qkv-source-collection.md)  
+**Validation protocol:** [Source-to-knowledge validation](source-to-knowledge-validation.md)
+
+> Apply the validation protocol to distinguish source inspection, extraction, cross-source synthesis, project integration, resource validation and learner validation. Q/K/V is the first calibration case; it does not by itself establish that the method scales to other concepts.
 
 ## 1. Objective
 
