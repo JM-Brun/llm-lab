@@ -1,0 +1,170 @@
+schema_version: 1
+source_id: mikolov-word2vec-2013
+scan:
+  accessed_at: "2026-11-05"
+  retrieval_method: direct-pdf
+  author_text:
+    status: partial
+    coverage: "arXiv:1301.3781v3 PDF: model-complexity framing, CBOW and Skip-gram architectures, hierarchical softmax, analogy evaluation, experimental results and conclusion."
+    notes: ["All main sections inspected; the linked historical implementation and subsequent papers were not audited."]
+  figures_media:
+    status: partial
+    coverage: "Architecture Figure 1 and main evaluation tables inspected in the rendered PDF."
+    notes: ["No figure or table asset was copied."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["The linked historical word2vec code and pretrained Google News vectors were not independently retrieved or executed."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Primary arXiv v3 PDF and the historical code URL cited in the paper."
+    notes: ["The cited NIPS 2013 follow-up on negative sampling and phrase composition was not scanned as part of this extraction."]
+  metadata:
+    status: partial
+    coverage: "arXiv:1301.3781v3, submitted 2013."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["No figure reuse permission was established; this extraction contains paraphrases only."]
+  unresolved_questions:
+    - "The exact implementation details and later word2vec training options require a separate review of the linked code and follow-up paper."
+    - "The benchmark and training corpus are historical and English-dominant; they should not be treated as current multilingual embedding evidence."
+items:
+  - id: mikolov-word2vec-2013:efficient-log-linear-architecture
+    kind: mechanism
+    summary: "The paper proposes removing the nonlinear hidden layer from earlier neural language-model architectures and sharing a projection matrix across context positions, trading some representational complexity for much lower training cost and the ability to learn word vectors from very large corpora."
+    locator: {type: section, value: "§2 and §3, pp. 2–3", label: "Model complexity and new log-linear models"}
+    evidence:
+      kind: architecture-description
+      confidence: established
+      scope: "The two log-linear architectures proposed in the 2013 paper and the complexity comparison used by its authors."
+      assumptions: ["Training complexity is approximated by the number of parameters accessed per training example."]
+      limitations:
+        - "The efficiency comparison is specific to the architectures and hardware/training setup discussed in the paper."
+        - "The models learn static word-type representations, not context-dependent token states."
+    technical_assessment:
+      status: correct
+      rationale: "The paper explicitly motivates removing the hidden layer to reduce the dominant computation in the earlier neural language-model architectures."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:word-embeddings, method:log-linear-model]
+      concept_ids: [token-embedding]
+    candidate_destinations:
+      pages: [en/embedding-space, fr/embedding-space]
+      concepts: [token-embedding]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Provides historical and architectural detail behind the static-word-vector comparison already present in the bilingual embedding-space lesson; not a new core LLM mechanism."
+  - id: mikolov-word2vec-2013:cbow-context-prediction
+    kind: mechanism
+    summary: "CBOW averages shared projections of surrounding word vectors and predicts the middle word from its context; the paper's best-performing configuration uses both preceding and following context words."
+    locator: {type: section, value: "§3.1, pp. 3–4; Figure 1", label: "Continuous Bag-of-Words"}
+    evidence:
+      kind: architecture-description
+      confidence: established
+      scope: "The CBOW formulation and experimental context window used in the paper."
+      assumptions: []
+      limitations:
+        - "The bag-of-words context projection discards the order of context words."
+        - "The paper's bidirectional surrounding context is not a causal next-token prediction setup."
+    technical_assessment:
+      status: correct
+      rationale: "The paper describes a shared projection, averaged context representation and prediction of the central word."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:word-embeddings, method:cbow]
+      concept_ids: [token-embedding]
+    candidate_destinations:
+      pages: [en/embedding-space, fr/embedding-space]
+      concepts: [token-embedding]
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The embedding-space lesson already gives the essential CBOW mental model; this record retains the source's more precise averaging and bidirectional-context details."
+  - id: mikolov-word2vec-2013:skipgram-context-prediction
+    kind: mechanism
+    summary: "Skip-gram uses the current word as input and predicts surrounding words within a context window; the paper samples a variable window radius and gives less weight to more distant context positions through the sampling procedure."
+    locator: {type: section, value: "§3.2, pp. 3–4; Figure 1", label: "Continuous Skip-gram"}
+    evidence:
+      kind: architecture-description
+      confidence: established
+      scope: "The Skip-gram objective and window-sampling procedure described in the paper."
+      assumptions: []
+      limitations:
+        - "The context window is a local co-occurrence training signal, not an explicit semantic definition."
+        - "The model produces static word-type vectors."
+    technical_assessment:
+      status: correct
+      rationale: "The paper states the target-context prediction direction and explains the random context radius."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:word-embeddings, method:skip-gram]
+      concept_ids: [token-embedding]
+    candidate_destinations:
+      pages: [en/embedding-space, fr/embedding-space]
+      concepts: [token-embedding]
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The bilingual lesson already contrasts Skip-gram with CBOW; this extraction adds the variable-window detail without expanding the essential path."
+  - id: mikolov-word2vec-2013:huffman-hierarchical-softmax
+    kind: mechanism
+    summary: "The paper uses hierarchical softmax with a frequency-based Huffman binary tree to reduce the number of output decisions needed for a word prediction; the inspected 2013 paper describes this objective rather than negative sampling."
+    locator: {type: section, value: "§2.1 and §3.1–3.2, pp. 2–4", label: "Hierarchical softmax and output complexity"}
+    evidence:
+      kind: explicit-training-method
+      confidence: established
+      scope: "The training objective and complexity discussion in arXiv:1301.3781v3."
+      assumptions: ["The Huffman tree assigns shorter paths to more frequent words."]
+      limitations:
+        - "Negative sampling is associated with subsequent word2vec work and should not be attributed to this paper's described training setup."
+        - "The precise objective used by a particular later word2vec implementation must be checked against that implementation and version."
+    technical_assessment:
+      status: correct
+      rationale: "The paper explicitly states that its models use hierarchical softmax with a Huffman tree; its cited follow-up work is a separate publication."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:word-embeddings, method:hierarchical-softmax, method:huffman-tree]
+      concept_ids: [token-embedding]
+    candidate_destinations:
+      pages: [en/embedding-space, fr/embedding-space]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "This is a valuable historical precision point because modern explanations often conflate the original paper with later negative-sampling implementations; keep it as an optional note, not a required lesson."
+  - id: mikolov-word2vec-2013:analogy-benchmark-boundary
+    kind: limitation
+    summary: "The paper evaluates word vectors with syntactic and semantic analogy questions solved by vector offsets and nearest-neighbour search, but its benchmark requires exact single-token answers, counts synonyms as errors and excludes multi-word entities."
+    locator: {type: section, value: "§1.1 and §4.1, pp. 1, 5; Table 1", label: "Word analogy evaluation"}
+    evidence:
+      kind: evaluation-protocol-and-limitation
+      confidence: established
+      scope: "The paper's Semantic-Syntactic Word Relationship test set and its exact-match scoring procedure."
+      assumptions: []
+      limitations:
+        - "Analogy accuracy is not a general measure of semantic understanding."
+        - "Exact-match scoring penalizes valid synonyms and excludes multi-token answers."
+        - "The benchmark's English vocabulary and relation categories do not establish multilingual generality."
+    technical_assessment:
+      status: qualified
+      rationale: "The evaluation is clearly specified, but its operational metric covers a narrow set of word-relation tasks."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:word-embeddings, method:analogy-evaluation, topic:cosine-similarity]
+      concept_ids: [token-embedding]
+    candidate_destinations:
+      pages: [en/embedding-space, fr/embedding-space, en/cosine-similarity, fr/cosine-similarity]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "The paper is a useful historical source for vector arithmetic, but its benchmark should be presented as a specific evaluation protocol rather than evidence that embedding geometry universally encodes meaning."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "Mikolov et al. provides the historical source for CBOW and Skip-gram static word vectors and a useful precision distinction: this paper describes hierarchical softmax, while negative sampling belongs to later word2vec work. The project already explains the static-versus-contextual distinction; retain source-specific architecture and benchmark evidence without creating a new page or route step."
