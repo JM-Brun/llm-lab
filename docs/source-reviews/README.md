@@ -8,7 +8,7 @@ A collection dossier is not a replacement for the canonical concept graph, bilin
 
 | Collection | Scope | Entry point | Current state |
 |---|---|---|---|
-| Tokenization and embeddings | Text representation, tokenizer construction, corpus preparation, multilingual evaluation, embeddings and similarity geometry | [Cross-source synthesis](tokenization-embeddings-source-collection.md) · [Migration map](tokenization-embeddings-source-migration-map-2026-11.md) | 46 source records; 10 structured extractions (Karpathy, Ali, Wegmann, Ethayarajh, Li, Steck, Arnett, TokLens, Ahia, Mikolov); research-source backfill ongoing in PR #469 |
+| Tokenization and embeddings | Text representation, tokenizer construction, corpus preparation, multilingual evaluation, embeddings and similarity geometry | [Cross-source synthesis](tokenization-embeddings-source-collection.md) · [Migration map](tokenization-embeddings-source-migration-map-2026-11.md) | 49 source records in the project catalogue; 11 structured extractions in this collection (16 across the repository); migration PRs #468 and #469 merged; remaining URL and asset-rights gaps are tracked in the migration map and #156 |
 | Q/K/V and attention | Query, Key, Value, self-attention, scaled dot-product attention and related teaching perspectives | [Q/K/V source collection](qkv-source-collection.md) · [Learning-graph comparison](qkv-learning-graph-comparison-2026-11.md) | Initial source records and structured extractions integrated |
 
 ## How to navigate the evidence
