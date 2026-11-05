@@ -10,7 +10,7 @@
       header.setAttribute("tabindex", "0");
 
       const title = header.querySelector(".callout-title-container");
-      const accessibleName = title?.textContent?.trim().replace(/\\s+/g, " ");
+      const accessibleName = title?.textContent?.trim().replace(/\s+/g, " ");
       if (accessibleName) {
         header.setAttribute("aria-label", accessibleName);
       }
