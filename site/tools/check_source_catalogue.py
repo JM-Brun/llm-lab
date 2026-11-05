@@ -63,6 +63,28 @@ def _strings(value: Any, where: str, errors: list[str]) -> list[str]:
     return value
 
 
+def _validate_item_controlled_values(
+    item: dict[str, Any],
+    where: str,
+    evidence_confidence_levels: set[str],
+    item_dispositions: set[str],
+    errors: list[str],
+) -> None:
+    """Validate controlled evidence-confidence and item-disposition values."""
+    evidence = item.get("evidence")
+    if not isinstance(evidence, dict):
+        errors.append(f"{where}.evidence: expected a mapping")
+    elif evidence.get("confidence") not in evidence_confidence_levels:
+        errors.append(
+            f"{where}.evidence.confidence: unsupported value "
+            f"{evidence.get('confidence')!r}"
+        )
+
+    disposition = item.get("disposition")
+    if disposition is not None and disposition not in item_dispositions:
+        errors.append(f"{where}.disposition: unsupported value {disposition!r}")
+
+
 def _validate_tags(value: Any, where: str, errors: list[str]) -> None:
     tags = _strings(value, where, errors)
     if len(tags) != len(set(tags)):
@@ -403,20 +425,13 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
             locator = item.get("locator")
             if not isinstance(locator, dict) or not locator.get("type") or not locator.get("value"):
                 errors.append(f"{item_where}.locator: expected type and value")
-            evidence = item.get("evidence")
-            if not isinstance(evidence, dict):
-                errors.append(f"{item_where}.evidence: expected a mapping")
-            elif evidence.get("confidence") not in evidence_confidence_levels:
-                errors.append(
-                    f"{item_where}.evidence.confidence: unsupported value "
-                    f"{evidence.get('confidence')!r}"
-                )
-
-            disposition = item.get("disposition")
-            if disposition is not None and disposition not in item_dispositions:
-                errors.append(
-                    f"{item_where}.disposition: unsupported value {disposition!r}"
-                )
+            _validate_item_controlled_values(
+                item,
+                item_where,
+                evidence_confidence_levels,
+                item_dispositions,
+                errors,
+            )
 
             classification = item.get("classification", {})
             if classification is not None and not isinstance(classification, dict):
