@@ -317,7 +317,7 @@ for (const testCase of cases) {
       item.buildTour.navigationLinks = item.buildTour.navigationLinks.map(link => ({
         ...link,
         targetId: link.href
-          ? new URL(link.href, page.url()).pathname.replace(/^\\//, "").replace(/\\.html$/, "")
+          ? new URL(link.href, page.url()).pathname.slice(1).replace(".html", "")
           : null,
       }));
       for (const expected of expectedLinks) {
