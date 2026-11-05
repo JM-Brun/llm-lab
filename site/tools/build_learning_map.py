@@ -339,6 +339,7 @@ class GuidedRouteMembership(StrictModel):
 
     stage_id: str
     stage_title: str
+    stage_objective: str
     role: Literal["core", "optional"]
 
 
@@ -358,6 +359,7 @@ def build_guided_route_memberships(
                 GuidedRouteMembership(
                     stage_id=stage.id,
                     stage_title=stage.title,
+                    stage_objective=stage.objective,
                     role="core",
                 )
             )
@@ -366,10 +368,84 @@ def build_guided_route_memberships(
                 GuidedRouteMembership(
                     stage_id=stage.id,
                     stage_title=stage.title,
+                    stage_objective=stage.objective,
                     role="optional",
                 )
             )
     return memberships
+
+
+
+def render_guided_page_context_markdown(
+    page: ResolvedPage,
+    memberships: list[GuidedRouteMembership],
+    language: str,
+) -> str:
+    """Render honest route context without inventing a unique parent stage."""
+    if language not in {"fr", "en"}:
+        raise ValueError(f"unsupported guided-route language: {language!r}")
+    if not memberships:
+        return ""
+
+    if len(memberships) == 1:
+        membership = memberships[0]
+        aria_label = (
+            "Contexte du parcours pédagogique"
+            if language == "fr"
+            else "Learning path context"
+        )
+        role_label = (
+            "Ressource facultative"
+            if language == "fr"
+            else "Optional resource"
+        )
+        lines = [
+            f'<nav class="guided-page-context" aria-label="{aria_label}">',
+            "  <ol>",
+            (
+                '    <li><a href="learning-map.html#guided-stage-'
+                f'{membership.stage_id}">{escape_markdown_text(membership.stage_title)}</a></li>'
+            ),
+            f'    <li aria-current="page">{escape_markdown_text(page.title)}</li>',
+            "  </ol>",
+        ]
+        if membership.role == "optional":
+            lines.append(f'  <span class="guided-page-context__role">{role_label}</span>')
+        lines.extend(["</nav>", ""])
+        return "\n".join(lines)
+
+    heading = (
+        "Cette page intervient à plusieurs moments du parcours"
+        if language == "fr"
+        else "This page appears at more than one point in the learning path"
+    )
+    lines = [
+        '<section class="guided-page-context guided-page-context--multiple"',
+        '         aria-labelledby="guided-page-context-heading">',
+        f'  <p id="guided-page-context-heading">{heading} : '
+        f'<strong>{escape_markdown_text(page.title)}</strong>.</p>',
+        "  <ul>",
+    ]
+    for membership in memberships:
+        role_label = (
+            "Facultatif" if language == "fr" else "Optional"
+        ) if membership.role == "optional" else (
+            "Étape centrale" if language == "fr" else "Core stage"
+        )
+        lines.extend(
+            [
+                "    <li>",
+                (
+                    '      <a href="learning-map.html#guided-stage-'
+                    f'{membership.stage_id}">{escape_markdown_text(membership.stage_title)}</a>'
+                ),
+                f'      <span class="guided-page-context__role">{role_label}</span>',
+                f'      <p>{escape_markdown_text(membership.stage_objective)}</p>',
+                "    </li>",
+            ]
+        )
+    lines.extend(["  </ul>", "</section>", ""])
+    return "\n".join(lines)
 
 
 def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], language: str) -> str:
@@ -382,7 +458,7 @@ def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], languag
     for index, stage in enumerate(stages, start=1):
         lines.extend(
             [
-                "::: {.guided-route-stage}",
+                f"::: {{.guided-route-stage #guided-stage-{stage.id}}}",
                 "",
                 f"### {index:02d} · {escape_markdown_text(stage.title)}",
                 "",
