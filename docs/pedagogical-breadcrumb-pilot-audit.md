@@ -250,3 +250,12 @@ The stage context is not appended to the site breadcrumb. A local stepper is not
 - Confirm local steppers remain distinct, correctly labelled, and below the introductory explanation.
 - Review desktop/mobile screenshots and Axe results before merging.
 - Extend the pilot to other page archetypes only after this three-page composition is validated; do not mass-insert a context cue into every page without checking its value.
+
+
+## 11. Text-data nested context decision — 2026-11-05
+
+The initial §14 continuity decision retained the local text-data stepper and omitted a generated stage context to avoid two adjacent navigation bars. The subsequent page-header review distinguishes their semantics: the generated stage context identifies the page's place in the six-stage curriculum (site-learning context), while the local four-stop stepper explains the internal text-to-representation sequence (within-page process). They are therefore not duplicate navigation cues when visually nested and separated in the page opening.
+
+The explicit reader requirement is to expose both the site breadcrumb and the pedagogical stage context on text-data, while retaining the useful local representation stepper. This addendum supersedes only the §14 statement that text-data must stay without a generated stage context. It does not change the retirement of the misleading five-stop steppers on scaled attention, causal masking, logits, and cross-entropy.
+
+Validation remains pending: rendered FR/EN desktop/mobile screenshots must confirm the three dimensions remain visually distinct and the page opening is not overloaded.
