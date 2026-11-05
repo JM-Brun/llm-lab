@@ -19,7 +19,7 @@ A collection dossier is not a replacement for the canonical concept graph, bilin
 4. **Collection dossier** — cross-source convergence, complementarity, disagreements, route comparison and project impact.
 5. **Visual asset register** — asset-level provenance and rights; separate from article-level source scanning.
 
-See the [source integration workflow](../workflows/source-to-learning-system-integration.md) and its [templates](../workflows/templates/). The workflow distinguishes source-local graphs/routes from the canonical concept graph and learner routes.
+See the [source integration workflow](../workflows/source-to-learning-system-integration.md), its [templates](../workflows/templates/), and the [source-to-knowledge validation protocol](../workflows/source-to-knowledge-validation.md). The workflow distinguishes source-local graphs/routes from the canonical concept graph and learner routes; the validation protocol checks both the knowledge product and the repeatability of the method.
 
 ## Scope and status rules
 
