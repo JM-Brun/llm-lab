@@ -142,6 +142,8 @@ The [Cross-entropy](cross-entropy.qmd) lesson remains the canonical home for per
 - [The mathematical chain of LLM training](mathematical-foundations.qmd): a compact map from logits to gradients.
 - Bishop, *Pattern Recognition and Machine Learning*, Chapters 1–2, for probabilistic foundations.
 
+**Canonical lesson:** [LLM overview](llm-overview.qmd). This page deepens its probabilistic formalization; it complements the learning route without being a prerequisite.
+
 ::: {.language-switch}
 **Language:** [Français](../fr/language-modeling-math.qmd) · [English](language-modeling-math.qmd)
 :::

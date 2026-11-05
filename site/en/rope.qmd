@@ -82,6 +82,8 @@ Check tensor dimensions, the pairing convention for coordinates, the positions u
 - [Su et al. (2021), *RoFormer: Enhanced Transformer with Rotary Position Embedding*](https://arxiv.org/abs/2104.09864) — the original RoPE formulation.
 - [Hugging Face Transformers documentation](https://huggingface.co/docs/transformers/) — implementation conventions vary by architecture.
 
+**Canonical lesson:** [Positional encoding](positional-encoding.qmd). This page deepens one particular mechanism; it does not replace the general introduction to positional information.
+
 ::: {.language-switch}
 **Language:** [Français](../fr/rope.qmd) · [English](rope.qmd)
 :::

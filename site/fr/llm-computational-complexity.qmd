@@ -186,6 +186,8 @@ Pour appliquer ces distinctions à des choix d'architecture : [architectures hyb
 5. **Un MoE avec peu d'experts actifs ne stocke-t-il que ces experts ?** Non : tous les poids experts doivent être hébergés ou accessibles.
 :::
 
+**Notion canonique :** [Panorama des modèles de langage](llm-overview.qmd). Cette page approfondit les coûts de calcul et de mémoire des LLM ; elle complète la vue générale sans être une étape obligatoire.
+
 ::: {.language-switch}
 **Langue :** [Français](llm-computational-complexity.qmd) · [English](../en/llm-computational-complexity.qmd)
 :::
