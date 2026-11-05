@@ -118,3 +118,31 @@ This is a schema/documentation gap, not proof that current edges are factually w
 - [ ] Confirm that the learner-facing graph, guided route, and curriculum sequence remain distinct projections.
 
 The initial audit is deliberately bounded to the registry. It does not claim the renderer, all relation consumers, or the complete pedagogical effect have been tested.
+
+
+## Relation contract implemented on the interoperability branch (2026-11-05)
+
+The first implementation increment extends the existing generic `site/tools/check_concept_registry.py` validator and its shared test module. It does not add a second workflow or per-concept CI.
+
+Each relation type now declares:
+
+- `family`: one of structural, pedagogical, representational, constraint, functional, evaluative, or associative;
+- `direction`: directed or symmetric (existing field);
+- `transitive`: explicit boolean semantic declaration; this does not automatically materialize transitive edges;
+- `acyclic`: explicit boolean; cycle validation applies only to relation types that declare it;
+- `learning_dependency`: explicit boolean; when true, the relation must be directed, pedagogical and acyclic;
+- `inverse`: null or another relation type whose inverse declaration must point back.
+
+Every edge of a relation type marked `learning_dependency: true` must include a non-empty `rationale`. This prevents a graph edge from silently becoming a curriculum dependency without an explicit pedagogical justification.
+
+The current registry's ten relation types have been annotated. `part-of` is declared transitive and acyclic; `prerequisite` is pedagogical, acyclic and learning-relevant but not automatically transitively expanded. All other current relation types are non-transitive and do not drive learning order. No inverse relation is currently declared.
+
+### Domain/range boundary
+
+At present, every edge has canonical concepts as both endpoints. The validator checks that both endpoints resolve to concept IDs. It does not yet constrain endpoints to particular concept domains: domain membership is multi-valued and current relations legitimately cross domains. More granular source/target kinds should be introduced only when the graph includes non-concept entities or a demonstrated invalid edge class; do not invent restrictive domain rules that reject valid cross-domain relations.
+
+### Validation coverage
+
+The existing CI entry point remains `uv run python site/tools/check_concept_registry.py`; the existing `tests/site/test_concept_registry.py` now covers required relation metadata, learning-dependency invariants, relation-specific cycle policy, reciprocal inverse declarations, and mandatory rationale. The PR must pass the existing generic CI and Quarto render workflows before merge.
+
+This is a first contract increment, not proof that every current relation edge is semantically correct or that the rendered graph is pedagogically effective. The remaining manual review of the current edge inventory stays in #416.
