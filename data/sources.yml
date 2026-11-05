@@ -195,3 +195,897 @@ sources:
       concepts: [key, value, self-attention]
       audit_records:
         - docs/source-reviews/qkv-nishanthan-devto-2026-11.md
+  - id: andrej-karpathy-gpt-tokenizer-video
+    title: "Let's build the GPT Tokenizer"
+    creators: ["Andrej Karpathy"]
+    source_type: video
+    identifiers: {}
+    canonical_url: "https://www.youtube.com/watch?v=zduSFxRajkE"
+    publisher: "YouTube"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, method:bpe, modality:video]
+      concept_ids: [token]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [theory, implementation, pedagogy, historical-context]
+      audiences: [learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Public chapter markers and video description"
+          - "Third-party rendered transcript/captions with timestamped segments"
+        limitations:
+          - "The full video was not watched; transcript-based review is not equivalent to audiovisual inspection."
+          - "The transcript is a third-party rendering of public captions."
+          - "Visuals, comments, linked resources and reuse rights were not independently audited."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies, en/unicode-text, fr/unicode-text, en/text-data, fr/text-data]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: sebastian-raschka-llms-from-scratch-ch02
+    title: "Build a Large Language Model (From Scratch), Chapter 2"
+    creators: ["Sebastian Raschka"]
+    source_type: book-chapter
+    identifiers: {}
+    canonical_url: "https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02"
+    publisher: "Manning / GitHub"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Chapter 2 source and companion notebooks"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:tokenization, topic:training-examples, method:bpe, ecosystem:pytorch]
+      concept_ids: [token, token-embedding]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [theory, implementation, pedagogy]
+      audiences: [learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Chapter 2 source and BPE full/simple notebooks"
+          - "Relevant tests and pretrained GPT-2 loading path"
+        limitations:
+          - "The custom from-scratch training path uses character/string symbols and simplified splitting, not a full UTF-8 byte-level GPT-2 pipeline."
+          - "Pretrained GPT-2 loading tests cover selected cases and do not establish exhaustive compatibility."
+          - "The full book and unrelated chapters were not audited."
+    related:
+      pages: [en/text-data, fr/text-data, en/tokenization-strategies, fr/tokenization-strategies, en/training-examples, fr/training-examples, en/embedding-space, fr/embedding-space]
+      concepts: [token, token-embedding]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: huggingface-course-tokenizers-chapter6
+    title: "Hugging Face LLM Course — Tokenizers"
+    creators: ["Hugging Face contributors"]
+    source_type: course
+    identifiers: {}
+    canonical_url: "https://huggingface.co/docs/course/chapter6/8"
+    publisher: "Hugging Face"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Living course documentation"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, method:bpe, method:wordpiece, method:unigram, ecosystem:huggingface]
+      concept_ids: [token]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [theory, implementation, pedagogy, visualization]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "BPE, WordPiece and Unigram course sections"
+          - "Tokenizer construction pipeline concepts and current bilingual LLM Lab coverage crosswalk"
+        limitations:
+          - "This is a bounded chapter/section audit, not a scan of the full Hugging Face course."
+          - "The documentation is living; the inspected revision was not pinned to a commit."
+          - "The embedded pipeline figure's asset-level rights and provenance remain with issue #156."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies, en/text-data, fr/text-data]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: philip-gage-byte-pair-compression-1994
+    title: "A New Algorithm for Data Compression"
+    creators: ["Philip Gage"]
+    source_type: paper
+    identifiers: {}
+    canonical_url: "https://www.derczynski.com/papers/archive/BPE_Gage.pdf"
+    publisher: "C Users Journal"
+    publication_date: "1994"
+    updated_date: null
+    language: en
+    version: "Published paper"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, method:bpe, topic:compression]
+      concept_ids: [token]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [theory, historical-context]
+      audiences: [learner, practitioner, researcher]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-04"
+        status: partially-scanned
+        inspected_scope:
+          - "PDF text and historical algorithm description relevant to byte-pair compression"
+          - "Comparison with NLP subword BPE and GPT-style byte-level BPE"
+        limitations:
+          - "The audit is scoped to the historical algorithm and its distinction from later tokenizer designs."
+          - "No figure, code or data reuse rights were established."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: ahia-do-all-languages-cost-the-same-2023
+    title: "Do All Languages Cost the Same?"
+    creators: ["Ahia et al."]
+    source_type: paper
+    identifiers: {doi: null}
+    canonical_url: "https://aclanthology.org/2023.emnlp-main.614/"
+    publisher: "EMNLP 2023 / ACL Anthology"
+    publication_date: "2023"
+    updated_date: null
+    language: en
+    version: "Published proceedings version"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: [scale-research]
+      tags: [topic:multilingual-tokenization, topic:tokenizer-evaluation, application:api-cost]
+      concept_ids: [token]
+    metadata:
+      technical_level: advanced
+      contribution_types: [experiment, benchmark, theory]
+      audiences: [researcher, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "ACL Anthology abstract and publication metadata"
+          - "Claim-level comparison with current LLM Lab multilingual tokenization discussion"
+        limitations:
+          - "The audit is abstract-level; full-paper methodology was not reviewed in that pass."
+          - "Findings are specific to evaluated commercial APIs and benchmarks."
+    related:
+      pages: [en/text-data, fr/text-data, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: ali-tokenizer-choice-llm-training-2024
+    title: "Tokenizer Choice For LLM Training"
+    creators: ["Ali et al."]
+    source_type: paper
+    identifiers: {}
+    canonical_url: "https://aclanthology.org/2024.findings-naacl.247/"
+    publisher: "Findings of NAACL 2024 / ACL Anthology"
+    publication_date: "2024"
+    updated_date: null
+    language: en
+    version: "Published proceedings version"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: [scale-research]
+      tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, method:bpe, method:unigram]
+      concept_ids: [token]
+    metadata:
+      technical_level: advanced
+      contribution_types: [experiment, benchmark, theory]
+      audiences: [researcher, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-02"
+        status: partially-scanned
+        inspected_scope:
+          - "Full ACL Anthology PDF and experimental protocol"
+          - "Tokenizer configurations, training setup, zero-shot evaluation and reported limitations"
+        limitations:
+          - "Results are scoped to the five evaluated European languages, 2.6B decoder-only models and the paper's training/evaluation protocol."
+          - "The reported 68% training-compute increase is specific to a German document comparison, not a universal cost multiplier."
+          - "One seed and uneven per-language task counts limit generalization."
+    related:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: wegmann-tokenization-language-variation-2025
+    title: "Tokenization is Sensitive to Language Variation"
+    creators: ["Wegmann et al."]
+    source_type: paper
+    identifiers: {}
+    canonical_url: "https://aclanthology.org/2025.findings-acl.572/"
+    publisher: "Findings of ACL 2025 / ACL Anthology"
+    publication_date: "2025"
+    updated_date: null
+    language: en
+    version: "Published proceedings version"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: [scale-research]
+      tags: [topic:tokenizer-evaluation, topic:language-variation]
+      concept_ids: [token]
+    metadata:
+      technical_level: advanced
+      contribution_types: [experiment, benchmark]
+      audiences: [researcher, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "ACL Anthology abstract and publication metadata"
+          - "Claim-level comparison with the advanced tokenizer-design discussion"
+        limitations:
+          - "The prior audit was abstract-level; full-paper methodology was not reviewed in that pass."
+          - "The reported pre-tokenizer effect is scoped to BERT-base experiments."
+    related:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: arnett-explaining-mitigating-crosslingual-tokenizer-inequities-2025
+    title: "Explaining and Mitigating Crosslingual Tokenizer Inequities"
+    creators: ["Arnett et al."]
+    source_type: paper
+    identifiers: {}
+    canonical_url: "https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html"
+    publisher: "NeurIPS 2025"
+    publication_date: "2025"
+    updated_date: null
+    language: en
+    version: "Published proceedings version"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: [scale-research]
+      tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, method:bpe, method:unigram]
+      concept_ids: [token]
+    metadata:
+      technical_level: advanced
+      contribution_types: [experiment, benchmark, theory]
+      audiences: [researcher, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-02"
+        status: partially-scanned
+        inspected_scope:
+          - "NeurIPS proceedings abstract and OpenReview/arXiv full-text sources"
+          - "Study design, token-premium definitions, tokenizer comparison and stated limitations"
+        limitations:
+          - "No language model was trained in the reported tokenizer comparison; downstream LM quality is not established."
+          - "Results are scoped to the study's tokenizer families, training corpus, FLORES evaluation and statistical protocol."
+    related:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: chiu-toklens-acl-srw-2026
+    title: "TokLens"
+    creators: ["Chiu"]
+    source_type: paper
+    identifiers: {}
+    canonical_url: "https://aclanthology.org/2026.acl-srw.18/"
+    publisher: "ACL Anthology — ACL 2026 Student Research Workshop"
+    publication_date: "2026"
+    updated_date: null
+    language: en
+    version: "Published proceedings version"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: [scale-research]
+      tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization]
+      concept_ids: [token]
+    metadata:
+      technical_level: advanced
+      contribution_types: [experiment, benchmark]
+      audiences: [researcher, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-02"
+        status: partially-scanned
+        inspected_scope:
+          - "ACL Anthology paper and metric definitions"
+          - "Sample sizes, language/model subsets and statistical limitations"
+        limitations:
+          - "Associations are correlational and partly confounded by pretraining-data composition."
+          - "MMLU-ProX uses a smaller subset than the intrinsic metric analysis; denominators must not be conflated."
+    related:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: catherine-arnett-tokenizer-fertility
+    title: "Dangers of tokenizer recycling"
+    creators: ["Catherine Arnett"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://huggingface.co/blog/catherinearnett/dangers-of-tokenizer-recycling"
+    publisher: "Hugging Face"
+    publication_date: "2024-09-27"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, ecosystem:huggingface]
+      concept_ids: [token]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [experiment, pedagogy, visualization]
+      audiences: [learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Article claims and experimental comparison as recorded in the tokenization source audit"
+          - "Embedded fertility chart provenance noted in public references"
+        limitations:
+          - "The exact figure's asset-level reuse rights remain unresolved in issue #156."
+          - "Article review is not a universal tokenizer ranking."
+    related:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/text-data, fr/text-data]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: mikolov-word2vec-2013
+    title: "Efficient Estimation of Word Representations in Vector Space"
+    creators: ["Tomas Mikolov et al."]
+    source_type: paper
+    identifiers: {}
+    canonical_url: "https://arxiv.org/abs/1301.3781"
+    publisher: "arXiv"
+    publication_date: "2013"
+    updated_date: null
+    language: en
+    version: "Preprint"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [text-tokenization]
+      tags: [topic:word-embeddings, method:cbow, method:skip-gram]
+      concept_ids: [token-embedding]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [theory, experiment, historical-context]
+      audiences: [learner, researcher]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary paper and distinction between static word-type vectors and contextual Transformer representations"
+        limitations:
+          - "The audit is scoped to the historical/static-embedding distinction; the paper's full experimental appendix was not re-audited."
+    related:
+      pages: [en/embedding-space, fr/embedding-space, en/contextualized-representations, fr/contextualized-representations]
+      concepts: [token-embedding, contextualized-representation]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: ethayarajh-contextualized-representations-2019
+    title: "How Contextual are Contextualized Word Representations?"
+    creators: ["Kawin Ethayarajh"]
+    source_type: paper
+    identifiers: {}
+    canonical_url: "https://aclanthology.org/D19-1006/"
+    publisher: "EMNLP 2019 / ACL Anthology"
+    publication_date: "2019"
+    updated_date: null
+    language: en
+    version: "Published proceedings version"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:contextualized-representations, topic:embedding-geometry, method:cosine-similarity]
+      concept_ids: [contextualized-representation, token-embedding]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, experiment, benchmark]
+      audiences: [researcher, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-02"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary paper PDF, definitions of self-similarity/intra-sentence similarity/MEV and reported ELMo/BERT/GPT-2 results"
+        limitations:
+          - "Results are scoped to the models, layers, datasets and anisotropy-corrected measures in the 2019 study."
+          - "The findings do not establish a universal degree of contextualization for contemporary models."
+    related:
+      pages: [en/contextualized-representations, fr/contextualized-representations, en/cosine-similarity, fr/cosine-similarity]
+      concepts: [contextualized-representation, token-embedding]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: li-bert-flow-sentence-embeddings-2020
+    title: "On the Sentence Embeddings from Pre-trained Language Models"
+    creators: ["Li et al."]
+    source_type: paper
+    identifiers: {}
+    canonical_url: "https://aclanthology.org/2020.emnlp-main.733/"
+    publisher: "EMNLP 2020 / ACL Anthology"
+    publication_date: "2020"
+    updated_date: null
+    language: en
+    version: "Published proceedings version"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:sentence-embeddings, topic:embedding-geometry, method:normalizing-flow]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, experiment, benchmark]
+      audiences: [researcher, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-02"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary paper PDF, sentence embedding extraction and BERT-flow methodology"
+          - "Seven STS benchmarks and reported results"
+        limitations:
+          - "The study concerns sentence embeddings from BERT, not all token embeddings or modern retrieval encoders."
+          - "The target-split flow setup is transductive; it must not be described as strictly inductive evaluation."
+    related:
+      pages: [en/cosine-similarity, fr/cosine-similarity, en/embedding-space, fr/embedding-space]
+      concepts: [contextualized-representation]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: steck-cosine-similarity-embeddings-2024
+    title: "Is Cosine-Similarity of Embeddings Really About Similarity?"
+    creators: ["Steck", "Ekanadham", "Kallus"]
+    source_type: paper
+    identifiers: {doi: "10.1145/3589335.3651526"}
+    canonical_url: "https://arxiv.org/abs/2403.05440"
+    publisher: "WWW 2024 Companion / arXiv"
+    publication_date: "2024"
+    updated_date: null
+    language: en
+    version: "Preprint and proceedings reference"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: []
+      tags: [topic:embedding-geometry, method:cosine-similarity]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, experiment, limitation]
+      audiences: [researcher, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-02"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary paper PDF, linear matrix-factorization/autoencoder assumptions and cosine non-uniqueness result"
+          - "Simulated-data experiment and scope of implications for deep models"
+        limitations:
+          - "The analytic result is for specified regularized linear model families, not a direct theorem for all LLM embeddings."
+          - "The experiments use simulated data and do not constitute a user study or LLM benchmark."
+    related:
+      pages: [en/cosine-similarity, fr/cosine-similarity]
+      concepts: [contextualized-representation]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: sentence-transformers-similarity-documentation
+    title: "Sentence Transformers — Similarity and SentenceTransformer APIs"
+    creators: ["Sentence Transformers contributors"]
+    source_type: documentation
+    identifiers: {}
+    canonical_url: "https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html"
+    publisher: "Sentence Transformers"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Living documentation"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: []
+      tags: [topic:sentence-embeddings, method:cosine-similarity, ecosystem:sentence-transformers]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation, documentation]
+      audiences: [practitioner, maintainer]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-02"
+        status: partially-scanned
+        inspected_scope:
+          - "Semantic textual similarity documentation"
+          - "Similarity function reference and SentenceTransformer API documentation"
+        limitations:
+          - "Documentation is living and was not pinned to a release or commit."
+          - "No exhaustive API survey was intended."
+    related:
+      pages: [en/cosine-similarity, fr/cosine-similarity]
+      concepts: [contextualized-representation]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: openai-tiktoken-educational-bpe
+    title: "tiktoken educational BPE module"
+    creators: ["OpenAI"]
+    source_type: repository
+    identifiers: {}
+    canonical_url: "https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py"
+    publisher: "OpenAI / GitHub"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, method:bpe, ecosystem:tiktoken]
+      concept_ids: [token]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation, pedagogy]
+      audiences: [learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Educational module source for regex pre-splitting, UTF-8 byte conversion, merge ranks and decoding"
+        limitations:
+          - "This was source inspection; the code was not copied or executed as part of the audit."
+          - "The educational module is not the optimized production path."
+          - "The mutable main branch was not pinned in the historical note."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies, en/embedding-space, fr/embedding-space]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: karpathy-minbpe
+    title: "minbpe"
+    creators: ["Andrej Karpathy"]
+    source_type: repository
+    identifiers: {}
+    canonical_url: "https://github.com/karpathy/minbpe"
+    publisher: "GitHub"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: "MIT", url: "https://github.com/karpathy/minbpe/blob/master/LICENSE", status: verified}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, method:bpe, ecosystem:python]
+      concept_ids: [token]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation, pedagogy]
+      audiences: [learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "README and exercise documentation"
+          - "BasicTokenizer and RegexTokenizer distinctions noted in source audit"
+        limitations:
+          - "The implementation was not copied or executed in that audit."
+          - "The licence check was repository-level; individual asset reuse is not inferred."
+          - "The mutable master branch was not pinned in the historical note."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: huggingface-tokenizers-pipeline-docs
+    title: "Hugging Face Tokenizers — Pipeline and Components"
+    creators: ["Hugging Face contributors"]
+    source_type: documentation
+    identifiers: {}
+    canonical_url: "https://huggingface.co/docs/tokenizers/python/latest/pipeline.html"
+    publisher: "Hugging Face"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "latest documentation"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, ecosystem:huggingface]
+      concept_ids: [token]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation, documentation]
+      audiences: [practitioner, maintainer]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Pipeline order and tokenizer component documentation"
+          - "Normalization, pre-tokenization, model, post-processing and decoder responsibilities"
+        limitations:
+          - "Living documentation; no immutable revision was recorded."
+          - "Alignment/offset APIs and all implementation details were outside the audit scope."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: google-sentencepiece-documentation
+    title: "SentencePiece — Overview and Normalization"
+    creators: ["Google SentencePiece contributors"]
+    source_type: documentation
+    identifiers: {}
+    canonical_url: "https://google.github.io/sentencepiece/"
+    publisher: "Google"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Living documentation"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, method:unigram, method:bpe, ecosystem:sentencepiece]
+      concept_ids: [token]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation, documentation]
+      audiences: [practitioner, maintainer]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Official overview and normalization documentation"
+          - "Raw Unicode input, whitespace meta-symbol and configurable normalization behaviors"
+        limitations:
+          - "Documentation was not pinned to a release."
+          - "Not every normalization option or implementation detail was audited."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: huggingface-tokenizer-algorithms-summary
+    title: "Hugging Face Transformers — Tokenizer Summary"
+    creators: ["Hugging Face Transformers contributors"]
+    source_type: documentation
+    identifiers: {}
+    canonical_url: "https://huggingface.co/docs/transformers/main/en/tokenizer_summary"
+    publisher: "Hugging Face"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "main documentation"
+    revision: main
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, method:bpe, method:wordpiece, method:unigram, ecosystem:huggingface]
+      concept_ids: [token]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [theory, documentation, pedagogy]
+      audiences: [learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Algorithm summary comparing BPE, WordPiece and Unigram"
+        limitations:
+          - "The moving main documentation URL was not pinned to a commit."
+          - "The review covered the relevant algorithm overview, not the complete Transformers documentation."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: sennrich-subword-nmt-2016
+    title: "Neural Machine Translation of Rare Words with Subword Units"
+    creators: ["Rico Sennrich", "Barry Haddow", "Alexandra Birch"]
+    source_type: paper
+    identifiers: {}
+    canonical_url: "https://aclanthology.org/P16-1162/"
+    publisher: "ACL Anthology"
+    publication_date: "2016"
+    updated_date: null
+    language: en
+    version: "Published proceedings version"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, method:bpe, topic:historical-context]
+      concept_ids: [token]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, historical-context]
+      audiences: [researcher, learner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "ACL Anthology abstract and historical use of BPE-derived subword units in neural machine translation"
+        limitations:
+          - "Abstract-level review only; this paper is not treated as a specification of GPT-2 byte-level BPE."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: pytorch-embedding-api
+    title: "torch.nn.Embedding"
+    creators: ["PyTorch contributors"]
+    source_type: documentation
+    identifiers: {}
+    canonical_url: "https://docs.pytorch.org/docs/stable/generated/torch.nn.Embedding.html"
+    publisher: "PyTorch"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "stable documentation"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [text-tokenization]
+      tags: [topic:token-embedding, ecosystem:pytorch]
+      concept_ids: [token-embedding]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation, documentation]
+      audiences: [practitioner, maintainer]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Integer-index lookup semantics and tensor shape behavior of the Embedding API"
+        limitations:
+          - "The review was limited to API semantics relevant to the embedding-space lesson."
+          - "No exhaustive PyTorch API review was intended."
+    related:
+      pages: [en/embedding-space, fr/embedding-space]
+      concepts: [token-embedding]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: su-roformer-rope-2021
+    title: "RoFormer: Enhanced Transformer with Rotary Position Embedding"
+    creators: ["Jianlin Su et al."]
+    source_type: paper
+    identifiers: {}
+    canonical_url: "https://arxiv.org/abs/2104.09864"
+    publisher: "arXiv"
+    publication_date: "2021"
+    updated_date: null
+    language: en
+    version: "Preprint"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-information, method:rotary-position-embedding]
+      concept_ids: [positional-encoding]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation]
+      audiences: [researcher, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Paper formulation relevant to rotary positional information and comparison with learned absolute position vectors"
+        limitations:
+          - "The audit was scoped to positional mechanism claims relevant to the current lesson."
+          - "No exhaustive reproduction of the paper's experiments was performed."
+    related:
+      pages: [en/positional-encoding, fr/positional-encoding]
+      concepts: [positional-encoding]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
