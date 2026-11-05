@@ -53,6 +53,10 @@ Cette page est la quatrième étape (4 sur 5) de la visite guidée du code de r�
 - `blocks` : `num_layers` blocs identiques dans leur structure, distincts dans leurs paramètres.
 - La tête `w_head` projette `d → V`. Elle est **non liée** (*untied*) : une matrice séparée, distincte de la table d'embeddings (contrairement au *weight tying*).
 
+::: {.callout-warning}
+**Écart par rapport à GPT-2.** Le GPT-2 original réutilise la matrice d'embeddings des tokens, transposée, pour calculer les logits : les poids d'entrée et de sortie sont *liés* (*weight tying*). Ici, `w_head` est une matrice indépendante et possède un biais (`b_head`). Le modèle de référence du projet est donc un GPT pédagogique de type GPT-2, mais pas une reproduction exacte de cette partie de GPT-2. Le comptage des paramètres inclut bien cette matrice et ce biais supplémentaires.
+:::
+
 ## La passe avant : de `(B, T)` à `(B, T, V)`
 
 ```python
