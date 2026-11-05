@@ -130,7 +130,11 @@ On divise d’abord les scores par $\sqrt{4}=2$, ce qui donne $(1,0)$. Le softma
 ::: {.callout-note collapse="true" title="Implémentation et vérification (approfondissement)"}
 Les dimensions des entrées et des sorties sont aussi importantes que la formule : voir [Tenseurs](tensors.qmd).
 
-Une implémentation de référence testée est accessible dans `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`). La suite `tests/unit/test_attention.py` vérifie la préservation des formes, la somme unitaire des poids sur chaque ligne et la stabilité numérique.
+L'implémentation de référence actuelle en NumPy, dans `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`), traite **une seule tête sans dimension de batch** : Q est de forme `(T_q, d_k)`, K de forme `(T_k, d_k)` et V de forme `(T_k, d_v)`. Les longueurs de requêtes et de clés peuvent différer, tout comme les dimensions des clés et des valeurs.
+
+Cette leçon utilise un **masque additif strict** (0 pour les positions autorisées et `-inf` pour les positions interdites). La fonction de référence accepte aussi des biais additifs finis ; cette capacité de l'API n'est pas nécessaire pour l'introduction au masque causal. Si une ligne est entièrement masquée, l'implémentation renvoie volontairement des poids et une sortie nuls. Une telle ligne ne constitue pas une distribution de probabilité ; les lignes comportant au moins une clé accessible sont normalisées à une somme égale à un sur ces clés.
+
+La suite `tests/unit/test_attention.py` vérifie la préservation des formes, l'agrégation pondérée, le comportement du masque, les invariants de normalisation et plusieurs cas numériques limites. Les dimensions des entrées et des sorties comptent autant que la formule : voir [Tenseurs](tensors.qmd).
 
 - [Implémentation de référence](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
 - [Tests unitaires](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
