@@ -157,7 +157,7 @@ def test_generalization_cycles_are_rejected_but_application_cycles_are_allowed()
 
     errors = validate_registry(data)
 
-    assert any("generalization graph must be acyclic" in error for error in errors)
+    assert any("generalizes graph must be acyclic" in error for error in errors)
     assert not any("applies-to" in error for error in errors)
 
 
