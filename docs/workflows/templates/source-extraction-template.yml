@@ -15,9 +15,11 @@ scan:
   rights: {status: unknown, coverage: null, notes: []}
   unresolved_questions: []
 
+# Required for instructional source types (blog, tutorial, course, book-chapter).
+# See docs/source-catalogue-schema.md for the exact contract.
 pedagogical_model:
   reconstruction:
-    status: not-assessed # not-assessed | partial | complete
+    status: partial # partial | complete | not-applicable
     basis: []
     inferred_elements: []
   source_graph:
@@ -32,13 +34,13 @@ pedagogical_model:
         type: "typed-relation"
         to: "src-node-b"
         inferred: false
-    interpretation: "Explain that this is an editorial reconstruction unless the author defines a formal graph."
+    interpretation: "State that this is an editorial reconstruction unless the source defines a formal graph."
   learning_outcomes:
-    - status: inferred # explicit | inferred
+    - status: inferred # declared | inferred
       outcome: "Observable learner capability."
       basis: "Source evidence or reason for inference."
   assumed_prerequisites:
-    - status: inferred
+    - status: inferred # declared | inferred
       topic: "Required prior knowledge."
       basis: "Source evidence or reason for inference."
   teaching_route:
@@ -48,36 +50,52 @@ pedagogical_model:
       moves: ["What this segment asks the learner to do."]
   pedagogical_strengths: []
   pedagogical_limits: []
+  comparison:
+    dossier: "docs/source-reviews/topic-source-collection.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: []
+    decision: "State the source-to-project comparison outcome."
+    structures_kept_separate:
+      - "Source-local graph and route"
+      - "Canonical concept graph"
+      - "Project learner route"
 
 # One item per atomic contribution. Include useful, redundant, rejected and deferred items.
 items:
-  - id: "source-id:atomic-contribution-id"
-    kind: "definition | distinction | claim | equation | derivation | example | analogy | misconception | method | experiment | implementation | visualization | community-suggestion"
+  - id: "stable-source-id:atomic-contribution-id"
+    kind: claim # choose an exact value from data/source-taxonomy.yml extraction_kinds
     summary: "Faithful concise paraphrase; do not copy extended source wording."
-    locator: {type: section, value: "section or line locator", label: "Heading"}
-    provenance:
-      contributor: "author | commenter | linked-resource-author | editor-inference"
-      component: "author-text | comment | figure | code | linked-resource | metadata"
+    locator: {type: section, value: "exact section, page, timestamp, code symbol or comment locator", label: "Heading"}
+    # Optional: include provenance only when the item's voice differs from the parent source.
+    # For example, a reader comment embedded in an article:
+    # provenance:
+    #   voice: reader-comment # primary-author | reader-comment | editorial-note | maintainer | other
+    #   speaker: null
+    #   parent_source_id: "stable-source-id"
+    #   locator: {type: comment, value: "Exact comment locator"}
+    #   captured_at: "YYYY-MM-DD"
     evidence:
-      kind: "direct-statement | equation | example | code | comment | inferred"
-      confidence: medium # high | medium | low
+      kind: direct-statement # describe the evidence basis; keep author statements separate from inference
+      confidence: well-supported # established | well-supported | context-dependent | disputed | speculative | unverified
+      scope: "State the scope of the claim and inspected evidence."
       assumptions: []
       limitations: []
     technical_assessment:
-      status: not-reviewed # correct | qualified | disputed | incorrect | not-reviewed
+      status: not-reviewed
       rationale: ""
       corroborating_sources: []
     pedagogical_assessment:
       learner_question: ""
       explanatory_lens: ""
       teaching_form: []
-      novelty: {level: unknown, rationale: ""}
-      complementarity: {level: unknown, rationale: ""}
-      learner_value: {level: unknown, rationale: ""}
-      redundancy: {level: unknown, rationale: ""}
-      integration_cost: {level: unknown, rationale: ""}
+      novelty: {level: uncertain, rationale: ""}
+      complementarity: {level: uncertain, rationale: ""}
+      pedagogical_value: {level: uncertain, rationale: ""}
+      applicability: {level: uncertain, rationale: ""}
+      redundancy: {level: uncertain, rationale: ""}
+      evidence_quality: {level: uncertain, rationale: ""}
     classification:
-      primary_theme: "canonical-theme-id"
+      primary_theme: text-tokenization
       tags: []
       concept_ids: []
     candidate_destinations:
