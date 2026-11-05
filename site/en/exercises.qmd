@@ -243,6 +243,23 @@ The output is the weighted sum: $0.75(2,0)+0.25(0,4)=(1.5,1)$. After swapping th
 
 </details>
 
+#### Exercise — distinguish a weighted mixture from selection
+
+After the softmax of one attention row, the weights are $(0.95,\,0.05)$ over two positions, with $v_1=(10,0)$ and $v_2=(0,20)$.
+
+1. A colleague claims that attention "selects position 1 and ignores the rest." Compute the output and state whether it equals $v_1$.
+2. Which weight distribution would return exactly $v_1$? Can the softmax of a finite score row ever produce exactly that distribution?
+3. In which limiting case does attention approach selection, and why is that not the general behavior?
+
+<details>
+<summary>Show the reasoning</summary>
+
+1. The output is $0.95(10,0)+0.05(0,20)=(9.5,1)$: it does not equal $v_1$. Even with a weight of $0.95$, position 2 transmits $5\,\%$ of its value vector; the output is a weighted mixture, not a selection. Compare with the previous exercise, where more balanced weights also produced a mixture.
+2. Only the distribution $(1,0)$ would return exactly $v_1$. Softmax over a finite score row produces strictly positive weights, so it can never reach exactly $(1,0)$, only approach it.
+3. When one score vastly dominates the others after scaling, the weights approach a one-hot vector and the mixture approaches selection. That is a limiting case: in general weights are not close to one-hot, and reading attention as "the winning position" ignores the nonzero contributions of the other positions. Weights remain mixing coefficients, not selection decisions.
+
+</details>
+
 #### Exercise — project a sequence into Q, K, and V
 
 Consider three positions, each represented by a 4-dimensional vector. The matrices W_Q and W_K project to dimension 2, while W_V projects to dimension 3.
