@@ -8,12 +8,12 @@
 
 ## 1. Scope, provenance and scan status
 
-The lesson page was directly opened. The page reader exposed the lesson title, introductory paragraph, definition, bank/river example, explanatory recap, one four-option multiple-choice check, and its position as Section 1 / Chapter 2 of *Neural Network Attention Mechanisms*. The parent course overview was also directly inspected: it labels the course Advanced, reports three modules, ten chapters and ten assignments, and exposes the complete chapter-title outline. The other lesson bodies and assignments were not inspected.
+The lesson page was directly opened and rechecked on 2026-11-05. The page reader exposed the lesson title, introductory paragraph, definition, bank/river example, explanatory recap, one four-option multiple-choice check, and its position as Section 1 / Chapter 2 of *Neural Network Attention Mechanisms*. It also resolved the two inline image references to versioned CDN URLs: a Note/definition icon and a question-mark icon. These are interface/section icons, not explanatory Q/K/V figures. The parent course overview was also directly inspected: it labels the course Advanced, reports three modules, ten chapters and ten assignments, and exposes the complete chapter-title outline. The other lesson bodies and assignments were not inspected.
 
 | Component | Status | Coverage and evidence | Limitations |
 |---|---|---|---|
 | Author-authored lesson text | partially inspected | Visible text from introduction through the knowledge check | JavaScript-dependent course; complete runtime and any hidden text not inspected |
-| Figures/media | identified, not inspected | Two image slots exposed in page text | Image retrieval failed; no bytes, visual composition, creator or licence inspected |
+| Figures/media | Two interface SVGs identified by exact CDN URL; bytes not inspected | “Note” icon: `https://cdn.codefinity.com/master/f42d6a4a7b49c3a3f94ea4c125d3d5938acf2e8f/_next/static/media/definition.c461b802.svg?q=75&w=64`; question-mark icon: `https://cdn.codefinity.com/master/f42d6a4a7b49c3a3f94ea4c125d3d5938acf2e8f/_next/static/media/question-blue-sign-rounded.5e7468bd.svg?q=75&w=64` | The page reader rejected both SVG responses because of the `image/svg+xml` content type; visual content, creator and licence remain uninspected |
 | Code/data | not exposed | No code or data visible in retrieved lesson | Wider course may contain interactive tasks |
 | Comments/community | not exposed | No comments visible | Absence cannot be inferred |
 | Linked resources | not inspected | No technical outbound references exposed | Full DOM not available |
