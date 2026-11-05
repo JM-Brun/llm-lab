@@ -41,9 +41,16 @@ The bilingual tests exercise:
 - `build-path`: absent from the Understand route;
 - a synthetic unassigned page: absent from the mapping.
 
-## Not yet implemented
+## Rendering prototype
 
-This projection is not a breadcrumb renderer. No generated page fragments are emitted and no page currently includes a new navigation component as part of this change.
+The same branch now includes a renderer, `render_guided_page_context_markdown()`, and stable anchors on each generated route stage (`#guided-stage-<stage-id>`). The renderer has two distinct presentations:
+
+- one membership: an ordered breadcrumb-like context with the current page marked by `aria-current=page`; optional membership receives an explicit optional-resource label;
+- multiple memberships: a separate section listing every stage and its distinct objective. It is deliberately not marked up as a breadcrumb because there is no unique parent context.
+
+Stage anchors are added to the generated bilingual route fragments, and responsive styles are defined for the two context presentations.
+
+The renderer is covered by tests for a single optional membership, multiple core memberships, stable anchors, and an absent membership. The current prototype is not yet inserted into lesson pages; Quarto include-path and rendered-output validation are still required before rollout.
 
 The next design/implementation step must choose an accessible presentation that does not misrepresent multi-membership:
 
@@ -56,4 +63,4 @@ The stage links should target stable anchors on the guided-route overview, not a
 
 ## Validation boundary
 
-The projection and regression tests are committed in the implementation PR. CI execution, Quarto rendering, visual review, keyboard navigation and screen-reader review remain pending. Do not describe this as a validated learner-facing breadcrumb until those checks have been completed.
+The projection, renderer and regression tests are committed in the implementation PR. CI is being rerun after a formatting-only correction. Quarto rendering, visual review, keyboard navigation and screen-reader review remain pending. Do not describe this as a validated learner-facing breadcrumb until those checks have been completed.
