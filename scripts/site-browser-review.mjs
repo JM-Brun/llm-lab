@@ -194,17 +194,25 @@ for (const testCase of cases) {
       item.learningMap.filteredConceptButtons = await page.locator(".map-concept-item").count();
       if (!item.learningMap.filteredConceptButtons) throw new Error("relation filter removed every concept");
       await relationFilter.selectOption("");
-      await page.locator(".map-concept-item").first().click();
-      item.learningMap.selectedConcept = await page.locator(".map-concept-item[aria-pressed='true']").count() === 1;
+      const firstConcept = page.locator(".map-concept-item").first();
+      await firstConcept.click();
+      item.learningMap.pointerSelection = await page.locator(".map-concept-item[aria-pressed='true']").count() === 1;
       item.learningMap.detailsTitle = await page.locator(".map-detail-panel .map-detail-title").first().innerText().catch(() => null);
-      if (!item.learningMap.selectedConcept || !item.learningMap.detailsTitle) {
-        throw new Error("selecting a concept did not update its accessible details panel");
+      if (!item.learningMap.pointerSelection || !item.learningMap.detailsTitle) {
+        throw new Error("pointer selection did not update the concept details panel");
       }
       await page.keyboard.press("Escape");
       item.learningMap.escapeClearsSelection = await page.locator(".map-concept-item[aria-pressed='true']").count() === 0;
       if (!item.learningMap.escapeClearsSelection) {
         throw new Error("Escape did not clear the selected concept");
       }
+      await firstConcept.focus();
+      await page.keyboard.press("Enter");
+      item.learningMap.keyboardActivation = await page.locator(".map-concept-item[aria-pressed='true']").count() === 1;
+      if (!item.learningMap.keyboardActivation) {
+        throw new Error("Enter did not activate the focused concept button");
+      }
+      await page.keyboard.press("Escape");
     }
 
     if (kind === "route-context") {
@@ -264,7 +272,7 @@ for (const testCase of cases) {
     if (!item.keyboard.length) report.failures.push(`${pagePath}/${lang}/${label}/${theme}: no keyboard focus targets`);
   } catch (error) {
     item.error = String(error);
-    report.failures.push(`${lang}/${label}: ${String(error)}`);
+    report.failures.push(`${pagePath}/${lang}/${label}/${theme}: ${String(error)}`);
   } finally {
     report.cases.push(item);
     await context.close();
