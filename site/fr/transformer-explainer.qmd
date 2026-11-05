@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/transformer"]
   children: []
-related: ["fr/exercises"]
+related: ["fr/exercises", "fr/transformer-architectures"]
 tags: ["type:experiment-guide", "destination:practice", "topic:transformer-explainer", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -27,6 +27,66 @@ Observez une exécution de GPT-2, testez des hypothèses contrôlées et examine
 ::: {.callout-note}
 **À connaître avant de commencer :** le [fonctionnement d'un GPT](transformer.qmd), les [tokens et représentations](embedding-space.qmd), l'[attention](scaled-dot-product-attention.qmd) et les [probabilités](probabilites.qmd). Les liens servent de rappels ciblés ; il n'est pas nécessaire de maîtriser les dérivations avancées.
 :::
+
+## Comparer trois familles Transformer
+
+Cette activité pratique reprend la comparaison conceptuelle de la page [Architectures Transformer](transformer-architectures.qmd). Elle montre comment trois interfaces d'utilisation différentes correspondent à trois configurations et objectifs typiques. Elle ne constitue **ni un benchmark ni un classement de qualité**.
+
+### Exécuter un exemple de chaque famille
+
+Cette expérience fait fonctionner un modèle représentatif de chaque configuration. Elle sert à **observer des objectifs et des interfaces d'utilisation différents**, pas à mesurer quel modèle est « le meilleur ».
+
+#### Préparer l'environnement
+
+Dans un environnement Python isolé :
+
+```bash
+python -m pip install torch transformers
+```
+
+Le premier lancement télécharge les poids des trois modèles. L'exécution sur CPU est possible, mais peut prendre quelques minutes et nécessite plusieurs centaines de mégaoctets à quelques gigaoctets de mémoire selon les modèles et les bibliothèques.
+
+#### Exécuter les trois exemples
+
+```python
+from transformers import pipeline
+
+# 1. Encodeur seul : proposer des tokens pour un emplacement masqué.
+bert = pipeline("fill-mask", model="google-bert/bert-base-uncased")
+for candidate in bert("Paris is the capital of [MASK].", top_k=5):
+    print(candidate["token_str"], round(candidate["score"], 3))
+
+# 2. Décodeur seul : continuer un préfixe, sans voir les tokens futurs.
+gpt2 = pipeline("text-generation", model="openai-community/gpt2")
+continuation = gpt2(
+    "A language model learns to",
+    max_new_tokens=24,
+    do_sample=False,
+    pad_token_id=gpt2.tokenizer.eos_token_id,
+)
+print(continuation[0]["generated_text"])
+
+# 3. Encodeur-décodeur : produire une séquence cible à partir d'une entrée.
+t5 = pipeline("text2text-generation", model="google-t5/t5-small")
+translation = t5("translate English to German: The house is wonderful.")
+print(translation[0]["generated_text"])
+```
+
+#### Interpréter les observations
+
+- **BERT** renvoie plusieurs propositions pour une position masquée. Il exploite le contexte situé à gauche et à droite de cette position dans l'entrée.
+- **GPT-2** prolonge le préfixe. Le masque causal empêche chaque position de consulter les tokens qui la suivent.
+- **T5** reçoit une entrée et génère une séquence cible. Son décodeur autorégressif utilise aussi l'information de l'entrée grâce à l'attention croisée.
+
+Les sorties exactes peuvent varier avec les versions des bibliothèques et les poids téléchargés. Le choix des phrases est volontairement illustratif : ces trois appels ne constituent **ni un benchmark ni une comparaison de qualité**. Les modèles diffèrent par leurs données, leur taille, leur tokenizer et leur entraînement.
+
+#### Questions pour interpréter les résultats
+
+1. Pourquoi BERT peut-il proposer un mot en s'appuyant sur le contexte qui vient après le masque, alors que GPT-2 ne peut pas utiliser les tokens futurs ?
+2. Dans l'exemple T5, quelles informations proviennent de l'entrée et lesquelles sont produites par le décodeur ?
+3. Pourquoi ne peut-on pas conclure, à partir de ces trois sorties, qu'une architecture est globalement supérieure aux autres ?
+
+**À retenir :** la configuration architecturale contraint le flux d'information ; l'objectif d'entraînement et la tâche déterminent ce que le modèle apprend à faire et ce qu'on lui demande à l'inférence.
 
 ## Observer un Transformer en fonctionnement
 
