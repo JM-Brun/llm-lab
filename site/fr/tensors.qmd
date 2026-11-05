@@ -1,6 +1,4 @@
 ---
-**Notion canonique :** [GPT et Transformer](transformer.qmd). Cette page fournit une référence technique sur les formes et les axes des tenseurs ; elle ne constitue pas un prérequis à la lecture du parcours de construction.
-
 title: "Tenseurs dans un Transformer : formes et axes"
 subtitle: "Lire les dimensions sans confondre cohérence de forme et correction du calcul"
 keywords: ["type:deep-dive", "destination:deepen", "topic:tensors", "level:advanced", "language:fr", "status:published"]
@@ -204,6 +202,8 @@ Dans les bibliothèques de deep learning, le mot « tenseur » désigne couramme
 - [NumPy — N-dimensional array](https://numpy.org/doc/stable/reference/arrays.ndarray.html).
 - [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch) — référence complémentaire orientée implémentation.
 - [Visualisation des tenseurs, partie 1](https://www.youtube.com/watch?v=YxXyN2ifK8A) — point de vue mathématique et physique, à distinguer de l'usage plus simple de « tenseur » dans les bibliothèques de deep learning.
+
+**Notion canonique :** [GPT et Transformer](transformer.qmd). Cette page fournit une référence technique sur les formes et les axes des tenseurs ; elle ne constitue pas un prérequis à la lecture du parcours de construction.
 
 ::: {.language-switch}
 [Français](tensors.qmd) · [English](../en/tensors.qmd)
