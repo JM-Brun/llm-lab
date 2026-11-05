@@ -54,7 +54,7 @@ By the end of this tour, you will be able to:
 - The head `w_head` projects `d -> V`. It is **untied**: a separate matrix, distinct from the embedding table (unlike weight tying).
 
 ::: {.callout-warning}
-**Difference from GPT-2.** The original GPT-2 reuses the token-embedding matrix, transposed, to compute logits: input and output weights are *tied*. Here, `w_head` is an independent matrix and has a bias (`b_head`). The project's reference model is therefore a GPT-style educational model, but not an exact reproduction of this part of GPT-2. Its parameter count correctly includes this additional matrix and bias.
+**Differences from GPT-2.** The original GPT-2 reuses the token-embedding matrix, transposed, to compute logits: input and output weights are *tied*. Here, `w_head` is an independent matrix and has a bias (`b_head`). There is another initialization difference: GPT-2 initializes its position-embedding table with standard deviation `0.01`, whereas this project uses `0.02`; token embeddings use `0.02` in both. The project's reference model is therefore a GPT-style educational model, not an exact GPT-2 reproduction. Its parameter count includes the additional output matrix and bias.
 :::
 
 ## The forward pass: from `(B, T)` to `(B, T, V)`
