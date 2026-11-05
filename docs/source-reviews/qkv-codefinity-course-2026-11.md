@@ -8,7 +8,7 @@
 
 ## 1. Scope, provenance and scan status
 
-The lesson page was directly opened and rechecked on 2026-11-05. The page reader exposed the lesson title, introductory paragraph, definition, bank/river example, explanatory recap, one four-option multiple-choice check, and its position as Section 1 / Chapter 2 of *Neural Network Attention Mechanisms*. It also resolved the two inline image references to versioned CDN URLs: a Note/definition icon and a question-mark icon. These are interface/section icons, not explanatory Q/K/V figures. The parent course overview was also directly inspected: it labels the course Advanced, reports three modules, ten chapters and ten assignments, and exposes the complete chapter-title outline. The other lesson bodies and assignments were not inspected.
+The lesson page was directly opened and rechecked on 2026-11-05. The page reader exposed the lesson title, introductory paragraph, definition, bank/river example, explanatory recap, three four-option multiple-choice checks, and its position as Section 1 / Chapter 2 of *Neural Network Attention Mechanisms*. It also resolved the two inline image references to versioned CDN URLs: a Note/definition icon and a question-mark icon. These are interface/section icons, not explanatory Q/K/V figures. The parent course overview was also directly inspected: it labels the course Advanced, reports three modules, ten chapters and ten assignments, and exposes the complete chapter-title outline. The other lesson bodies and assignments were not inspected.
 
 | Component | Status | Coverage and evidence | Limitations |
 |---|---|---|---|
@@ -31,7 +31,7 @@ The complete structured extraction is [`data/extractions/codefinity-qkv-building
 | Role definitions | Q seeks, K offers matching representation, V carries aggregated content | Correct at introductory level | Low complementarity; existing lesson is more precise | Already covered |
 | Geometric alignment | Q/K as vectors whose alignment contributes to compatibility | Qualitative in source; project-authored bridge now supplies the dot-product geometry and its limits | High complementarity with the index-card analogy when bounded mathematically | Integrated as optional bilingual note |
 | Bank/river example | Lexical polysemy: riverbank vs financial institution | Illustrative, not empirical; differs from the Q/K/V page’s pronoun-coreference example | High complementarity as a contrast between two context-dependent language phenomena; full bank treatment remains elsewhere | Integrated by reference in bilingual contrast |
-| Multiple-choice check | Distractors distinguish the roles of Q, K and V | Visible question; feedback behaviour unknown | Moderate as an assessment-design reference | Integrate by reference |
+| Three-question knowledge check | Q/K/V purpose; attention versus pooling; contextual aggregation | Three visible four-option prompts; answer submission and feedback were not exercised | Moderate as an assessment-design reference | Integrate by reference |
 | Scope boundary | No equations or detailed attention computation in retrieved lesson | Accurate for inspected text only | High value for source curation | Integrate by reference |
 
 ## 3. Technical assessment
@@ -62,7 +62,7 @@ The bank/river sentence motivates contextual lexical ambiguity, while the quiz t
 
 ## 5. Teaching route
 
-**Observed route:** short motivation → vector-role definition → bank/river example → one multiple-choice check → explanatory recap.
+**Observed route:** short motivation → vector-role definition → bank/river example → three multiple-choice checks (Q/K/V purpose, attention versus pooling, contextual aggregation) → explanatory recap.
 
 The route is concise and question-led. It does not expose a derivation or implementation sequence. The quiz's distractors are useful because they target role confusion directly, but the available evidence does not show whether the platform gives explanatory feedback or tracks mastery.
 
@@ -85,7 +85,7 @@ The local sequence is compatible with LLM Lab's separation of the Q/K/V projecti
 | What does each vector do? | Search / offer-to-match / information passed | Index-card analogy plus learned projections and explicit Q/K vs V distinction | Rephrasing, not a new model | Already covered |
 | How can Q/K matching be pictured numerically? | Geometric alignment of Q and K vectors | Index-card analogy on the Q/K/V page; dot-product/scaling/softmax on the next page | Adds a spatial lens and bridges role intuition to vector algebra | Integrated as a collapsible geometric view, explicitly bounded against cosine similarity and nearest-neighbour interpretations |
 | What kinds of language phenomena need context? | “bank” in a riverside sentence (lexical polysemy) | Q/K/V page uses pronoun coreference; contextualized-representations has the fuller bank example | Distinct phenomena: competing senses of one word versus competing antecedents for a pronoun | Integrated as a compact contrast; link to the canonical bank discussion rather than duplicating it |
-| How do I check the key role? | One multiple-choice question with role-confusion distractors | Existing bilingual QKV self-check and extended exercises | Potential assessment-design reference, not missing content | Integrate by reference |
+| How do I check the mechanism's purpose and effects? | Three four-option questions on Q/K/V purpose, dynamic attention versus pooling, and contextual aggregation | Existing bilingual Q/K/V self-check and attention exercises cover the core mechanism; Codefinity adds a compact three-part quiz pattern | Assessment-design reference, not missing technical content | Integrate by reference |
 | How is attention calculated? | Not in the retrieved text | Dedicated scaled-dot-product-attention lesson | Project has deeper, more rigorous treatment | No change |
 
 ### Comparison across the three structures
