@@ -1,4 +1,6 @@
 ---
+**Notion canonique :** [GPT et Transformer](transformer.qmd). Cette page fournit une référence technique sur les formes et les axes des tenseurs ; elle ne constitue pas un prérequis à la lecture du parcours de construction.
+
 title: "Tenseurs dans un Transformer : formes et axes"
 subtitle: "Lire les dimensions sans confondre cohérence de forme et correction du calcul"
 keywords: ["type:deep-dive", "destination:deepen", "topic:tensors", "level:advanced", "language:fr", "status:published"]
