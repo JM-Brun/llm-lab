@@ -318,6 +318,14 @@ def validate_registry(
                 and _has_cycle(edges_by_type.get(kind, {}))
             ):
                 errors.append(f"relations: {kind} graph must be acyclic")
+            if isinstance(definition, dict) and definition.get("learning_dependency") is True:
+                for index, relation in enumerate(relations):
+                    if isinstance(relation, dict) and relation.get("type") == kind:
+                        rationale = relation.get("rationale")
+                        if not isinstance(rationale, str) or not rationale.strip():
+                            errors.append(
+                                f"relations[{index}].rationale: required for learning dependency {kind!r}"
+                            )
     return errors
 
 
