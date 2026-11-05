@@ -11,7 +11,7 @@ Understand what an LLM is and observe a complete generation loop before studying
 - [Panorama: what is an LLM?](llm-overview.html)
 - [Generating text: inference step by step](generation.html)
 
-**Optional deep dives**
+**Optional resources**
 
 - [Transformer architectures: encoder, encoder–decoder, and decoder](transformer-architectures.html)
 - [The training objective: guarantees and limits](llm-limits.html)
@@ -29,7 +29,7 @@ Distinguish text, tokenization, vocabulary, and token IDs in the construction of
 - [From text to tokens: representing language](text-data.html)
 - [Tokenization strategies: granularity, algorithms, and trade-offs](tokenization-strategies.html)
 
-**Optional deep dives**
+**Optional resources**
 
 - [Unicode, UTF-8, and text normalization](unicode-text.html)
 - [Designing and evaluating a tokenizer](tokenizer-design-evaluation.html)
@@ -48,7 +48,7 @@ Trace embedding lookup, positional information, and the contextualization of hid
 - [Positional encoding: giving tokens an order](positional-encoding.html)
 - [Why can the same token have different contextualized representations?](contextualized-representations.html)
 
-**Optional deep dives**
+**Optional resources**
 
 - [Tensors in a Transformer: shapes and axes](tensors.html)
 - [RoPE: geometry, derivation, and limitations](rope.html)
@@ -68,7 +68,7 @@ Connect Q/K/V, attention weights, aggregation, and causal masking without confus
 - [Scaled dot-product attention](scaled-dot-product-attention.html)
 - [Causal masking](causal-masking.html)
 
-**Optional deep dives**
+**Optional resources**
 
 - [Cross-attention: connecting two sequences](cross-attention.html)
 
@@ -87,7 +87,7 @@ Connect logits, probability distributions, likelihood, and next-token selection\
 - [Likelihood and log-likelihood](likelihood.html)
 - [Generating text: inference step by step](generation.html)
 
-**Optional deep dives**
+**Optional resources**
 
 - [Advanced decoding strategies](decoding-strategies.html)
 
@@ -106,7 +106,7 @@ Explore loss objectives and gradients, then examine the evidence, metrics, and l
 - [Gradients: connecting loss to parameters](gradients.html)
 - [Evaluating a model: from score to experimental protocol](experimental-evaluation.html)
 
-**Optional deep dives**
+**Optional resources**
 
 - [Scaling laws: parameters, data, and compute](scaling-laws.html)
 

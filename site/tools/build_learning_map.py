@@ -338,7 +338,7 @@ def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], languag
     if language not in {"fr", "en"}:
         raise ValueError(f"unsupported guided-route language: {language!r}")
     core_label = "Pages centrales" if language == "fr" else "Core pages"
-    optional_label = "Approfondissements facultatifs" if language == "fr" else "Optional deep dives"
+    optional_label = "Ressources facultatives" if language == "fr" else "Optional resources"
     lines = [":::: {.guided-route-grid}", ""]
     for index, stage in enumerate(stages, start=1):
         lines.extend(

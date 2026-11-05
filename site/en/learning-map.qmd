@@ -34,7 +34,7 @@ Section headings shown in a page's details are editorial landmarks, not canonica
 
 ## Guided route
 
-Six conceptual stages provide an entry point and a suggested progression. Primary links open the core pages; deep dives are optional. Pages within a stage are complementary resources, not a list of strict prerequisites.
+Six conceptual stages provide an entry point and a suggested progression. Core pages cover each stage's main ideas; optional resources offer further context or depth and can belong to any destination. Pages within a stage are complementary resources, not a list of strict prerequisites.
 
 {{< include ../includes/generated-guided-route-en.qmd >}}
 
