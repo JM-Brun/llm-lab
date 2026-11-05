@@ -10,7 +10,7 @@
 
 ## 1. Scan scope and evidence
 
-The canonical Medium URL was queried directly, but page retrieval returned a cache miss. The complete article text available to this pass came from the search-index result, not from direct HTML/DOM inspection. That indexed snapshot contains the title, author, publication date, all visible section text, equations, the pronoun example, conclusion, three figure captions and one additional full-size-image placeholder. The following structure is reconstructed from that indexed snapshot:
+**Recheck 2026-11-05:** the canonical Medium URL is now directly readable through the page reader. The live text view confirms the indexed snapshot's title, author, publication date, section text, equations, pronoun example, conclusion, three figure captions and one additional full-size-image placeholder. The current page view also exposes a “No responses yet” state. This is a point-in-time observation, not proof that comments never existed. The earlier indexed-only reconstruction is retained as historical scan evidence; the current review is upgraded to direct page-text inspection, not full DOM or image inspection. The following structure is confirmed from the directly readable page text:
 
 1. Why attention exists.
 2. Database-search analogy.
@@ -27,18 +27,18 @@ The indexed metadata identifies Neha KK and lists 31 December 2025 as the public
 
 | Component | Status | Evidence / limitation |
 |---|---|---|
-| Author-authored text | Complete within retrieved snapshot | Full text reconstructed from indexed search result; live article HTML/DOM was not retrieved |
-| Page DOM / live-page completeness | Not verified | Canonical Medium retrieval returned a cache miss |
+| Author-authored text | Direct page-text inspection completed | Canonical Medium page directly readable on 2026-11-05; visible article text and section order reconciled with the indexed snapshot |
+| Page DOM / live-page completeness | Partially verified | Page-reader text is directly accessible; raw DOM, hidden/lazy-loaded elements and full browser behavior remain uninspected |
 | Article metadata | Partially inspected | Indexed author, title, five-minute reading estimate and 2025-12-31 publication date |
 | Section/teaching sequence | Complete | Reconstructed from the article's visible headings and transitions |
 | In-body visual placements | Partially inventoried | Three captioned figures plus one additional uncaptioned full-size-image placeholder are visible in indexed text |
 | Cover / hero image | Unknown | Search-index text does not establish whether a separate cover asset exists |
 | Actual image bytes and visual composition | Not inspected | The page reader did not expose stable image URLs or downloadable image bytes |
 | Linked resources | Not inspected | The indexed text does not expose a substantive bibliography or outbound technical references; live-page links and targets were not inspected |
-| Comments | Not inspected | The indexed result does not expose the comment area; absence of indexed comments is not evidence that no comments exist |
+| Comments | Point-in-time state inspected | Page reader displayed “No responses yet” on 2026-11-05; no comment thread was exposed at that time |
 | Rights/reuse | Unknown | No licence or figure-reuse permission was established |
 
-The source therefore remains **partially scanned**. The text reconstruction is complete only for the retrieved search-index snapshot; it has not been reconciled against the live page DOM. The article and its illustrations may be linked, but its images must not be copied, traced or recreated from an unseen thumbnail.
+The source therefore remains **partially scanned**. The visible author text has now been reconciled against a directly readable page-text view, but the raw DOM, actual image files, linked resources and reuse rights remain unresolved. The article and its illustrations may be linked, but its images must not be copied, traced or recreated from an unseen thumbnail.
 
 ## 2. Extracted contributions
 
