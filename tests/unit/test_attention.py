@@ -144,7 +144,6 @@ def test_fully_masked_attention_row_returns_zeros_without_warning() -> None:
     np.testing.assert_array_equal(output, [[0.0]])
 
 
-
 def test_scaled_dot_product_attention_matches_hand_computable_weighted_sum() -> None:
     # One query, two keys, and values with a different width from Q/K.
     q = np.array([[1.0, 0.0]])
@@ -163,7 +162,6 @@ def test_scaled_dot_product_attention_matches_hand_computable_weighted_sum() -> 
     np.testing.assert_allclose(output[0], expected_output, rtol=1e-12)
 
 
-
 def test_attention_weights_normalize_only_over_allowed_keys() -> None:
     q = np.array([[1.0, 0.0]])
     k = np.array([[1.0, 0.0], [0.0, 1.0], [1.0, 1.0]])
@@ -176,6 +174,7 @@ def test_attention_weights_normalize_only_over_allowed_keys() -> None:
     np.testing.assert_allclose(weights[0, [0, 2]].sum(), 1.0, rtol=1e-12)
     np.testing.assert_allclose(output[0], weights[0] @ v, rtol=1e-12)
 
+
 def test_single_position_attention_returns_its_only_value() -> None:
     q = np.array([[2.0, -1.0]])
     k = np.array([[0.5, 3.0]])
@@ -185,6 +184,7 @@ def test_single_position_attention_returns_its_only_value() -> None:
 
     np.testing.assert_array_equal(weights, [[1.0]])
     np.testing.assert_array_equal(output, v)
+
 
 
 def test_attention_dot_product_ranking_is_not_cosine_ranking() -> None:
@@ -202,6 +202,7 @@ def test_attention_dot_product_ranking_is_not_cosine_ranking() -> None:
     assert cosine_similarities[0] > cosine_similarities[1]
     assert weights[0, 1] > weights[0, 0]
     np.testing.assert_allclose(output, weights, rtol=1e-12)
+
 
 def test_scaled_dot_product_attention_shapes_and_invariants() -> None:
     t_q, t_k, d_k, d_v = 3, 4, 8, 12
