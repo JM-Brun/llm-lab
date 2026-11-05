@@ -172,9 +172,28 @@ The canonical route remains: text and corpus → tokenizer → token IDs → emb
 
 These are evidence pointers, not substitutes for inspecting the final repository state. PR merge state and CI evidence should be rechecked before this dossier is declared complete.
 
+### Structured extraction progress — 2026-11-05
+
+Five primary research papers now have source-scoped atomic extraction records, based on direct inspection of their published PDFs:
+
+- [Ali et al. (2024)](../../data/extractions/ali-tokenizer-choice-llm-training-2024.yml): five items covering intrinsic versus extrinsic evaluation, controlled decoder-only comparison, downstream effects, the limits of fertility/parity as proxies, and the scope of the training-compute estimate.
+- [Wegmann et al. (2025)](../../data/extractions/wegmann-tokenization-language-variation-2025.yml): five items covering task-dependent robustness versus sensitivity to linguistic variation, pre-tokenizer boundaries, task-sensitive results, a task-aware proxy, and the paper's within-English scope.
+
+**Why these two are complementary rather than duplicates.** Ali et al. evaluates tokenizer configurations across languages and measures their effects on decoder-only LMs. Wegmann et al. asks a different question: whether tokenization should preserve or suppress *within-language* variation depending on the downstream task's label semantics. The former informs multilingual efficiency and model-training trade-offs; the latter connects tokenizer design to task objectives and linguistic form. These are separate evaluation axes and should not be collapsed into a single “tokenizer fairness” claim.
+
+- [Ethayarajh (2019)](../../data/extractions/ethayarajh-contextualized-representations-2019.yml): four items covering contextuality measures, anisotropy-adjusted baselines, layer-wise findings and the MEV bound.
+- [Li et al. (2020)](../../data/extractions/li-bert-flow-sentence-embeddings-2020.yml): four items distinguishing sentence-level BERT embeddings, anisotropic geometry, BERT-flow and the target-distribution adaptation caveat.
+- [Steck et al. (2024)](../../data/extractions/steck-cosine-similarity-embeddings-2024.yml): four items covering regularization-dependent geometry, non-uniqueness, uniqueness without semantic validity, and the simulated-data boundary.
+
+**Why these three are complementary rather than duplicates.** Ethayarajh studies contextualized *word/token occurrences* across layers and defines measures that separate context-specificity from anisotropy. Li studies pooled *sentence embeddings* from BERT and proposes a particular normalizing-flow calibration. Steck gives an analytical counterexample in *regularized linear matrix-factorization models*, showing that learned cosine geometry can depend on the training objective. Together they distinguish three different levels of analysis—contextual token representations, sentence-vector distributions and objective-induced embedding geometry. None establishes a universal property of all current LLM embeddings.
+
+**Integration decision.** Both records map to existing bilingual advanced content. No new concept, page, figure, exercise or route step is justified. The value of this backfill is inspectable evidence, explicit scope boundaries and a reusable basis for future comparisons—not more learner-facing prose.
+
+**Evidence boundary.** The papers' main text and relevant tables/figures were inspected. Code, raw data, supplementary material and independent reproduction were not. Both source records therefore remain partially scanned; the extraction files do not imply complete source audits.
+
 ### Remaining migration tasks
 
-1. Create structured extraction records for sources with sufficiently precise locators and source-level evidence. Prioritize research papers with detailed primary-source notes and instructional sources with reconstructable teaching routes.
+1. Continue structured extraction backfill for research sources with precise primary-PDF locators (next candidates: Ethayarajh, Li and Steck), then reconstruct pedagogical models only for instructional sources where the inspected source supports them.
 2. Recover exact canonical URLs for the ByteByteGo and Vizuara resources from their original historical references; do not guess them.
 3. Add source-specific review records only where a durable review cannot be represented adequately by this dossier and migration map.
 4. Keep asset rights verification in #156 and deferred browser review in #320/#329.
