@@ -119,13 +119,19 @@ This is an incremental source addition to an already populated Q/K/V collection,
 
 ## 7. Method defects and follow-up
 
+The first catalogue-validator run rejected the worked-example item because `example` is not an allowed extraction kind. The record was corrected to the controlled `code-example` kind. This is a useful operational result: the schema gate caught a vocabulary mismatch before integration; the repair was local and did not require a taxonomy change.
+
 1. The page is mutable and lacks an immutable revision; retain access date and visible publication/update metadata.
 2. Rendered code outputs invite a false reproducibility assumption; add a separate execution gate before treating them as reproducible.
 3. The interactive quiz exposes only one of eight questions to the current retrieval path; keep quiz inspection partial.
 4. The source's teaching route is long and integrated; the project should preserve its own depth split rather than copy the whole sequence.
 5. Pedagogical quality remains unmeasured. The source's clear sequence is observable, but no learner task or outcome data establishes effectiveness.
 
-## 8. Reproducibility
+## 8. Operational footprint and effort
+
+Observable artifact footprint: one source record, one extraction with six atomic items, sixteen source-local nodes, fifteen source-local edges, eleven teaching-route steps, one source review, and three existing synthesis/collection artifacts updated. These are reproducible workload descriptors, not human-time estimates. Active review minutes, waiting time, number of manual interventions and cognitive effort were not instrumented. The first validation attempt exposed one controlled-vocabulary error; it was repaired in one extraction-file update. CI/Quarto must be checked on the final head.
+
+## 9. Reproducibility
 
 - Source: https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism
 - Source catalogue: `data/sources.yml`
