@@ -1,6 +1,6 @@
 ---
 title: "GPT et Transformer : architecture et flux des données"
-subtitle: "Des tokens aux probabilités du prochain token"
+subtitle: "Des tokens aux logits"
 keywords: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:fr", "status:published"]
 lang: fr
 ---
