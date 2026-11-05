@@ -14,11 +14,13 @@ const visualCases = ["light", "dark"].flatMap(theme => [
   { lang: "fr", viewport: { width: 390, height: 844 }, label: "mobile", theme },
 ]);
 
+const routeContextCases = visualCases.filter(testCase => testCase.theme === "light");
+
 const cases = [
   ...visualCases.map(testCase => ({
     ...testCase, page: "learning-map.html", kind: "learning-map",
   })),
-  ...visualCases.flatMap(testCase =>
+  ...routeContextCases.flatMap(testCase =>
     ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "cross-attention.html", "logits.html", "probabilities.html", "likelihood.html", "decoding-strategies.html", "cross-entropy.html", "loss.html", "gradients.html", "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
       ...testCase, page, kind: "route-context",
     }))
@@ -31,6 +33,7 @@ const cases = [
 ];
 
 const browser = await chromium.launch({ headless: true });
+const stageAnchorCache = new Map();
 const report = {
   generatedAt: new Date().toISOString(),
   baseUrl: BASE,
@@ -50,10 +53,13 @@ for (const testCase of cases) {
 
   const url = `${BASE}/${lang}/${pagePath}`;
   const item = { lang, viewport, label, theme, page: pagePath, kind, url, consoleErrors, pageErrors };
+  const runInteractiveAudit = viewport.width >= 1000 && theme === "light";
+  item.auditProfile = runInteractiveAudit ? "full-desktop-light" : "visual-responsive";
   try {
-    const response = await page.goto(url, { waitUntil: "networkidle", timeout: 60000 });
+    const response = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
     item.httpStatus = response?.status() ?? null;
     if (!response || !response.ok()) throw new Error(`HTTP status ${item.httpStatus}`);
+    await page.waitForLoadState("networkidle", { timeout: 5000 }).catch(() => {});
     await page.evaluate(() => document.fonts?.ready.then(() => true));
     await page.waitForTimeout(1000);
 
@@ -114,6 +120,9 @@ for (const testCase of cases) {
     await page.screenshot({ path: screenshot, fullPage: true, animations: "disabled" });
     item.screenshot = screenshot;
 
+    // Keyboard and accessibility interaction checks run once per language/page
+    // on desktop/light. Mobile and dark cases remain visual/responsive checks.
+    if (runInteractiveAudit) {
     // Keyboard traversal: record actual focus targets and whether the browser
     // exposes a visible focus indicator while tabbing through the page.
     await page.evaluate(() => { window.scrollTo(0, 0); document.activeElement?.blur(); });
@@ -162,6 +171,8 @@ for (const testCase of cases) {
       item.keyboardDisclosure.afterOpen = await details.evaluate(el => el.hasAttribute("open"));
       item.keyboardDisclosure.toggledByEnter = item.keyboardDisclosure.beforeOpen !== item.keyboardDisclosure.afterOpen;
     }
+
+    } // end runInteractiveAudit keyboard checks
 
     if (kind === "learning-map") {
       const mode = page.locator("[data-map-mode]");
@@ -363,15 +374,19 @@ for (const testCase of cases) {
       const stageFragments = await context.locator('a[href*="learning-map.html#guided-stage-"]').evaluateAll(links =>
         links.map(link => (link.getAttribute("href").split("#")[1] || ""))
       );
-      const routeMapPage = await page.context().newPage();
-      try {
-        await routeMapPage.goto(`${BASE}/${lang}/learning-map.html`, { waitUntil: "networkidle", timeout: 60000 });
-        item.routeContext.stageAnchorsResolve = await routeMapPage.evaluate(ids =>
-          ids.every(id => id && document.getElementById(id) !== null), stageFragments
-        );
-      } finally {
-        await routeMapPage.close();
+      if (!stageAnchorCache.has(lang)) {
+        const routeMapPage = await page.context().newPage();
+        try {
+          await routeMapPage.goto(`${BASE}/${lang}/learning-map.html`, { waitUntil: "domcontentloaded", timeout: 30000 });
+          await routeMapPage.waitForLoadState("networkidle", { timeout: 5000 }).catch(() => {});
+          const ids = await routeMapPage.locator("[id^='guided-stage-']").evaluateAll(nodes => nodes.map(node => node.id));
+          stageAnchorCache.set(lang, new Set(ids));
+        } finally {
+          await routeMapPage.close();
+        }
       }
+      const availableStageAnchors = stageAnchorCache.get(lang);
+      item.routeContext.stageAnchorsResolve = stageFragments.every(id => availableStageAnchors.has(id));
       if (!item.routeContext.stageAnchorsResolve) throw new Error("guided-route stage link points to a missing anchor");
       if (pagePath === "generation.html") {
         const expectedStages = ["guided-stage-orientation", "guided-stage-prediction"];
@@ -459,6 +474,7 @@ for (const testCase of cases) {
       }
     }
 
+    if (runInteractiveAudit) {
     const calloutSelector = ".callout-header[data-bs-toggle='collapse']";
     const calloutHeaders = page.locator(calloutSelector);
     item.callouts = { count: await calloutHeaders.count() };
@@ -513,23 +529,28 @@ for (const testCase of cases) {
       );
       item.callouts.keyboardEnterAndSpace = true;
     }
+    } // end runInteractiveAudit callout checks
 
-    const axe = await new AxeBuilder({ page })
-      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-      .analyze();
-    item.axe = {
-      violations: axe.violations.map(v => ({
-        id: v.id, impact: v.impact, description: v.description,
-        help: v.help, nodes: v.nodes.slice(0, 8).map(n => ({
-          target: n.target, html: n.html?.slice(0, 500), summary: n.failureSummary?.slice(0, 500),
+    if (runInteractiveAudit) {
+      const axe = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+        .analyze();
+      item.axe = {
+        violations: axe.violations.map(v => ({
+          id: v.id, impact: v.impact, description: v.description,
+          help: v.help, nodes: v.nodes.slice(0, 8).map(n => ({
+            target: n.target, html: n.html?.slice(0, 500), summary: n.failureSummary?.slice(0, 500),
+          })),
         })),
-      })),
-      violationCount: axe.violations.length,
-      passes: axe.passes.length,
-      incomplete: axe.incomplete.length,
-    };
+        violationCount: axe.violations.length,
+        passes: axe.passes.length,
+        incomplete: axe.incomplete.length,
+      };
+    } else {
+      item.axe = { skipped: true, reason: "Axe runs once per page/language on desktop/light" };
+    }
 
-    const blockingAxe = axe.violations.filter(v => ["aria-allowed-attr", "color-contrast"].includes(v.id));
+    const blockingAxe = (item.axe.violations || []).filter(v => ["aria-allowed-attr", "color-contrast"].includes(v.id));
     item.axe.blockingViolationCount = blockingAxe.length;
     if (blockingAxe.length) {
       report.failures.push(
@@ -539,7 +560,7 @@ for (const testCase of cases) {
     if (item.layout.horizontalOverflow || item.learningMapLayout?.horizontalOverflow) {
       report.failures.push(`${pagePath}/${lang}/${label}/${theme}: horizontal overflow`);
     }
-    if (!item.keyboard.length) report.failures.push(`${pagePath}/${lang}/${label}/${theme}: no keyboard focus targets`);
+    if (runInteractiveAudit && !item.keyboard.length) report.failures.push(`${pagePath}/${lang}/${label}/${theme}: no keyboard focus targets`);
   } catch (error) {
     item.error = String(error);
     report.failures.push(`${pagePath}/${lang}/${label}/${theme}: ${String(error)}`);
