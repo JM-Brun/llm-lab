@@ -80,7 +80,7 @@ return x + self._mlp(layer_norm(x, self.ln2_gamma, self.ln2_beta))
 <button type="button" class="wf-chip" data-wf-links="br1" data-wf-note="Attention branch: ln1 prepares a normalized copy of x, and w_o’s output adds back to the trunk. Identity stays the default path: the block cannot destroy its input.">x + _attention(ln1(x))</button>
 <button type="button" class="wf-chip" data-wf-links="br2" data-wf-note="MLP branch: ln2 prepares a copy, fc1 widens (d → hidden), GELU activates, fc2 projects back (hidden → d), and the output adds to the trunk, position by position.">x + _mlp(ln2(x))</button>
 <button type="button" class="wf-chip" data-wf-links="heads" data-wf-note="Head h reads columns h·(d/H) to (h+1)·(d/H) of Q, K and V: contiguous slices of the same stream, never mixed before the w_o projection.">columns = slice(h·head_dim, …)</button>
-<button type="button" class="wf-chip" data-wf-links="init" data-wf-note="Depth L shrinks the standard deviation of both branches’ weights (0.02/√(2L)): the trunk’s variance stays ≈ constant across the whole stack of blocks.">residual_std = 0.02/√(2L)</button>
+<button type="button" class="wf-chip" data-wf-links="init" data-wf-note="Depth L shrinks the standard deviation of both branches’ weights (0.02/√(2L)): this choice helps control the scale of contributions accumulated along residual paths, without guaranteeing constant variance.">residual_std = 0.02/√(2L)</button>
 </div>
 <p class="wf-note" aria-live="polite">The green stroke crosses the block unchanged: that is the residual trunk. Each branch (attention, MLP) only adds a correction computed on a normalized copy — GPT-2’s pre-LN order.</p>
 </div>
