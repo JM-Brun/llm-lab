@@ -201,6 +201,15 @@ def test_attention_dot_product_ranking_is_not_cosine_ranking() -> None:
     np.testing.assert_allclose(output, weights, rtol=1e-12)
 
 
+
+def test_wrong_softmax_axis_fails_per_query_normalization_invariant() -> None:
+    scores = np.array([[2.0, 0.0], [1.0, 0.0]])
+
+    wrong_axis_weights = softmax_with_temperature(scores, axis=0)
+
+    np.testing.assert_allclose(wrong_axis_weights.sum(axis=0), [1.0, 1.0])
+    assert not np.allclose(wrong_axis_weights.sum(axis=-1), [1.0, 1.0])
+
 def test_scaled_dot_product_attention_shapes_and_invariants() -> None:
     t_q, t_k, d_k, d_v = 3, 4, 8, 12
     q = np.random.randn(t_q, d_k)
