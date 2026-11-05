@@ -233,7 +233,7 @@ Add the end-of-page `route-nav-cards` to FR/EN text-data (previous: generation; 
 
 Recommendation: **D**.
 
-## 10. Rendered header audit — 2026-11-05
+## 16. Rendered header audit — 2026-11-05
 
 A Chromium artifact from the merged browser-review run for PR #534 was inspected at desktop (1440 px) and mobile (390 px), French, light theme, for Q/K/V. The screenshot and `report.json` are retained in the GitHub Actions artifact `site-browser-review-0009a61155216d0fb16779079c1b71b2da0cd175` (run `42100872126`).
 
@@ -274,7 +274,7 @@ The stage context is not appended to the site breadcrumb. A local stepper is not
 - Review desktop/mobile screenshots and Axe results before merging.
 - Extend the pilot to other page archetypes only after this three-page composition is validated; do not mass-insert a context cue into every page without checking its value.
 
-## 11. Text-data nested context decision — 2026-11-05
+## 17. Text-data nested context decision — 2026-11-05
 
 The initial §14 continuity decision retained the local text-data stepper and omitted a generated stage context to avoid two adjacent navigation bars. The subsequent page-header review distinguishes their semantics: the generated stage context identifies the page's place in the six-stage curriculum (site-learning context), while the local four-stop stepper explains the internal text-to-representation sequence (within-page process). They are therefore not duplicate navigation cues when visually nested and separated in the page opening.
 
@@ -282,8 +282,25 @@ The explicit reader requirement is to expose both the site breadcrumb and the pe
 
 Validation remains pending: rendered FR/EN desktop/mobile screenshots must confirm the three dimensions remain visually distinct and the page opening is not overloaded.
 
-## 12. Stepper placement correction — 2026-11-05
+## 18. Stepper placement correction — 2026-11-05
 
 Review of the PR #538 rendered screenshots exposed one remaining mismatch between the written page-opening contract and the actual text-data composition: the local representation stepper appeared immediately after the chapter lead, before the one-minute mental-model callout. Although the three navigation dimensions were distinct and Axe reported no violations, this ordering made the process sequence compete with the initial explanation.
 
-The FR/EN pages now place the local stepper after the mental-model callout. The browser audit asserts this DOM order for both languages and viewports. This preserves the semantic distinction established in §11 while making the hierarchy explicit: site location → page identity → curriculum context → chapter lead → mental model → local process sequence.
+The FR/EN pages now place the local stepper after the mental-model callout. The browser audit asserts this DOM order for both languages and viewports. This preserves the semantic distinction established in §17 while making the hierarchy explicit: site location → page identity → curriculum context → chapter lead → mental model → local process sequence.
+
+## 19. Level-distinct visual grammars for the two breadcrumb-like cues (2026-11-05)
+
+Reader feedback on the deployed `fr/text-data` page reported two breadcrumb-like trails that read as duplicates instead of two distinct levels. Diagnosis against the deployed site and current `main` (post-#541):
+
+1. The custom `.llm-breadcrumb` duplicate had already been retired by #540, so the reported pair is not two site-location breadcrumbs.
+2. The reported pair is the native Quarto site breadcrumb and the generated `.guided-page-context` cue: two different levels rendered in one identical visual grammar (grey, same size, chevron separators, no stage number). On `text-data` the collision is maximal: the stage title «Du texte aux tokens» nearly coincides with the page title «Du texte aux tokens : représenter le langage», so both trails end almost identically.
+
+Decision: keep both levels, one grammar per level.
+
+- The stage cue now carries the learning-map stage number («02 · Du texte aux tokens») for single and multiple memberships, generated from the same registry order that numbers the learning-map stages.
+- The cue loses its breadcrumb-mimicking chevron pseudo-element; its label moves to the action green while the site breadcrumb stays a plain grey trail.
+- The contract records the rule (§3.3, §3.6): the pedagogical cue must never mimic the breadcrumb trail; the stage number is what disambiguates the levels where titles nearly coincide.
+
+`scripts/site-browser-review.mjs` asserts the numbered stage labels and the absence of chevron separators inside the guided context. Validation gap recorded for the owner: the Chromium review runs only on `review/site-browser-qa-*` branches, never on `main` deployments, which is why this near-duplicate reached production; extending the workflow trigger is a separate decision.
+
+Honest limits: Python CI, Quarto render and the Chromium review were not executed in this session; the changes are source-level and need the standard checks on the branch before merge.

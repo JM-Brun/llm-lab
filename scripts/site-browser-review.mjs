@@ -258,9 +258,31 @@ for (const testCase of cases) {
         accessibleLabel: await context.getAttribute("aria-label"),
       };
       if (!item.routeContext.stageLinks) throw new Error("guided-route context has no stage links");
-      const stageFragments = await context.locator('a[href*="learning-map.html#guided-stage-"]').evaluateAll(links =>
+      const stageLinks = context.locator('a[href*="learning-map.html#guided-stage-"]');
+      const stageFragments = await stageLinks.evaluateAll(links =>
         links.map(link => (link.getAttribute("href").split("#")[1] || ""))
       );
+      const stageTexts = await stageLinks.evaluateAll(links =>
+        links.map(link => (link.textContent || "").trim())
+      );
+      item.routeContext.stageTexts = stageTexts;
+      const stageOrder = [
+        "guided-stage-orientation",
+        "guided-stage-text-input",
+        "guided-stage-representations",
+        "guided-stage-computation",
+        "guided-stage-prediction",
+        "guided-stage-learning-evaluation",
+      ];
+      stageFragments.forEach((fragment, index) => {
+        const expectedNumber = String(stageOrder.indexOf(fragment) + 1).padStart(2, "0");
+        if (!stageTexts[index] || !stageTexts[index].startsWith(expectedNumber + " ·")) {
+          throw new Error("guided-route context stage link is missing its numbered stage label");
+        }
+      });
+      if (item.routeContext.visibleCurrentPageText.includes("›")) {
+        throw new Error("guided-route context must not mimic the site breadcrumb chevron trail");
+      }
       const routeMapPage = await page.context().newPage();
       try {
         await routeMapPage.goto(`${BASE}/${lang}/learning-map.html`, { waitUntil: "networkidle", timeout: 60000 });
