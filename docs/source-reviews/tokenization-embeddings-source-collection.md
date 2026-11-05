@@ -217,9 +217,25 @@ Two further primary papers have now been converted into source-scoped extraction
 
 **Evidence boundary.** The published PDFs and selected figures/tables/appendices were inspected. The TokLens repository README and Arnett's linked project destination were identified, but code, raw data and tokenizer artifacts were not executed or independently audited. Both sources remain partially scanned.
 
+### Structured extraction progress — API cost and accessibility perspective
+
+- [Ahia et al. (2023)](../../data/extractions/ahia-do-all-languages-cost-the-same-2023.yml): six atomic items covering token-count billing, controlled byte-level BPE comparisons, estimated API cost disparities, context-window/few-shot utility, socio-economic correlations and reproducibility limits.
+
+**Why this source adds a distinct perspective.** The previous studies primarily measure tokenizer compression, linguistic-form sensitivity or statistical associations with benchmark performance. Ahia et al. traces tokenization to the *user-facing consequences* of a fixed per-token API: higher token counts can increase historical API usage costs and reduce the number of in-context examples or the amount of source text that fits in a fixed context window. It also relates language-level cost and utility patterns to country-level HDI proxies.
+
+This contribution should be used with strict boundaries:
+- The reported cost ratios are based on 2023 model/API conditions and are not current price estimates.
+- The context-window experiment is tied to historical ChatGPT and BLOOMZ API limits; BLOOMZ's weak few-shot behaviour and truncation are separate confounds.
+- The socio-economic analysis is ecological: a country-level HDI proxy is associated with language-level observations, not evidence about every individual speaker or a causal effect.
+- FLORES-200 is translated text; the paper uses CC100 as a proxy for unavailable ChatGPT training-language statistics.
+
+**Integration decision.** This adds a meaningful social-accessibility lens to the source compilation, but no new canonical concept or learner route is required. The existing advanced tokenizer-evaluation page is the appropriate reference point. A future optional lab could combine parallel text, a tokenizer, a fixed context budget and a per-token price assumption to let learners quantify how sequence length propagates into cost and few-shot capacity; that is a candidate experiment, not an approved page change.
+
+**Evidence boundary.** The full main paper and main figures/tables were inspected. The linked repository, raw evaluation data and API/model snapshots were not independently audited or executed. The source remains partially scanned.
+
 ### Remaining migration tasks
 
-1. Continue structured extraction backfill for the remaining research sources with sufficiently precise primary-source locators. Next candidates are Ahia et al. and Mikolov et al.; assess their existing evidence depth and source-specific contribution before deciding whether an extraction adds value. Reconstruct pedagogical models only for instructional sources where the inspected source supports them.
+1. Continue structured extraction backfill for the remaining research sources with sufficiently precise primary-source locators. Next candidate: Mikolov et al. (2013), but only if a focused extraction reveals value beyond the static-versus-contextual distinction already integrated. Reconstruct pedagogical models only for instructional sources where the inspected source supports them.
 2. Recover exact canonical URLs for the ByteByteGo and Vizuara resources from their original historical references; do not guess them.
 3. Add source-specific review records only where a durable review cannot be represented adequately by this dossier and migration map.
 4. Keep asset rights verification in #156 and deferred browser review in #320/#329.
