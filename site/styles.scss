@@ -1761,3 +1761,19 @@ a.concept-link:focus-visible {
   outline-offset: 3px;
   border-radius: .25rem;
 }
+
+/* Keep long code fragments inside the reading column on narrow screens.
+   Code blocks scroll locally; inline code wraps like prose. Desktop behavior
+   is unchanged: pre keeps its wrap policy (code-overflow: wrap). */
+main.content pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+main.content pre > code {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+main.content :not(pre) > code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
