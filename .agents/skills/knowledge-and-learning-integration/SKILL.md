@@ -24,6 +24,8 @@ Before changing anything, inspect:
 
 The current branch is authoritative. Audits and extraction recommendations are discovery aids, not proof of current state.
 
+Lifecycle rule: source scan status, source integration status and extraction-item disposition are independent. Never infer `scanned` from `integrated`, and never infer that every item was accepted from a source-level status. Preserve mixed item decisions.
+
 ## 2. Review and disposition every item
 
 ### Evaluate incremental learning value before disposition
@@ -41,8 +43,9 @@ Use these distinctions:
 
 Do not reject an item solely because the concept or topic is already covered. Conversely, do not integrate it merely because it is different. Ask what learner difficulty it solves and whether it does so better or differently enough to justify the added cognitive load.
 
-Compare each extraction with actual existing coverage. Record one disposition:
-- `integrate`, `correct`, `clarify`, `link`, `cite`, `case-study`, `experiment`, `defer`, or `reject`.
+Compare each extraction with actual existing coverage. Record exactly one item-level `disposition` from `item_dispositions` in `data/source-taxonomy.yml`: `integrate`, `correct`, `clarify`, `link`, `cite`, `case-study`, `experiment`, `integrate-by-reference`, `already-covered`, `defer`, or `reject`. The taxonomy file is authoritative; do not introduce local synonyms or substitute source-level `integration_status` for an item decision.
+
+Keep evidence confidence distinct from pedagogical assessment: item evidence uses the confidence values in `data/source-taxonomy.yml`; pedagogical assessment dimensions use `low`, `moderate`, `high`, or `uncertain`, each with a rationale.
 
 For each, record rationale, evidence/confidence, generality, existing coverage, destination and learner value. State what is genuinely complementary: derivation, mental model, counterexample, evidence, limitation, implementation perspective, failure mode, history or experiment.
 
