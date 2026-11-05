@@ -79,3 +79,8 @@ All ten types are used by the current graph. Every current type is directed; the
 ## Session handoff
 
 The semantic inventory and initial edge review are recorded. The implementation of the generic relation contract is proposed in #518; wait for CI and Quarto checks before merging. The next useful task is rendered FR/EN graph inspection, not another schema expansion.
+
+
+## Projection preservation
+
+The generated bilingual learning-map payload now preserves the relation type contract (family, direction, transitivity, acyclicity, learning-dependency eligibility, inverse) and localized edge rationale. The current interactive renderer still uses only direction, label and description for its legend and details. The additional fields are retained in the projection rather than discarded, but no route generation consumes `learning_dependency`.
