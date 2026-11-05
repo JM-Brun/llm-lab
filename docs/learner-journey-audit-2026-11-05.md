@@ -233,3 +233,24 @@ The journey is **not** considered fully validated merely because the source file
 - [ ] Record browser evidence separately from source/CI evidence.
 - [ ] Record pilot observations and limitations; keep individual learner data private.
 - [ ] Do not merge a pull request without explicit user approval.
+
+
+## 10. Homepage source review — 2026-11-05
+
+A focused source review of `site/index.qmd` and `site/en/index.qmd` found three reader-facing ambiguities worth correcting without changing the underlying curriculum or graph models.
+
+### H1 — Reading-mode count contradicted the editorial contract
+
+The homepages stated that Practice supports “three learning depths”. The canonical [reader-experience and editorial method](reader-experience-and-editorial-method.md) defines **four complementary reading modes**: Orient, Connect, Understand, and Investigate. Practice is a transversal destination that can support all four; it is not itself a depth. The wording is corrected in both languages.
+
+### H2 — Two route visualizations used an ambiguous shared label
+
+The homepage's first SVG is an eight-stage conceptual summary. The canonical learning-map page separately presents a six-stage guided route and a progressive exploration of territories, sections, pages, and canonical concepts. The different granularities are legitimate, but calling the homepage SVG an “interactive learning map” risks conflating it with the dedicated resource/concept map. The homepage heading and link labels are clarified; the canonical route and data are unchanged.
+
+### H3 — Route summary and process diagram answer different questions
+
+The first homepage diagram summarizes a learner-facing conceptual progression. The second diagram represents operational flows: autoregressive inference with fixed parameters, parameter learning through loss/gradients/updates, and cross-cutting evaluation on held-out data. They are not duplicate diagrams and should not be collapsed into one. The first is a pedagogical orientation; the second is a system/process explanation. Their distinction should remain explicit in future visual review.
+
+### Evidence boundary and follow-up
+
+This was a **source-level** review of the French and English homepage files and the canonical editorial/map documents. It does not establish rendered legibility, responsive behavior, keyboard/touch equivalence, contrast, or WCAG conformance. Those checks remain with [#341 — homepage browser review](https://github.com/JM-Brun/llm-lab/issues/341); the broader rendered navigation/map crosswalk remains with [#337](https://github.com/JM-Brun/llm-lab/issues/337). Coordination remains under [#130](https://github.com/JM-Brun/llm-lab/issues/130). No new issue is needed for these wording and labeling corrections.

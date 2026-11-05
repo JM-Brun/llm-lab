@@ -44,11 +44,13 @@ Les grands modèles de langage (LLM) sont une famille de modèles neuronaux entr
 - **Approfondir** — Consultez les dérivations et références techniques facultatives, par exemple les [tenseurs](fr/tensors.qmd). Elles ne sont pas des prérequis au parcours principal.
 - **S’exercer et expérimenter** — Utilisez les [exercices](fr/exercises.qmd) et l’[évaluation expérimentale](fr/evaluation-experimentale.qmd) pour confronter les explications à des calculs et à des protocoles documentés.
 
-La pratique soutient les trois profondeurs pédagogiques ; elle ne constitue pas une quatrième profondeur. Le parcours conceptuel et le parcours d’implémentation suivent des ordres différents. Leur articulation est documentée dans le [parcours d’apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
+La pratique soutient les quatre modes de lecture ; elle reste transversale et ne constitue pas une profondeur supplémentaire. Le parcours conceptuel et le parcours d’implémentation suivent des ordres différents. Leur articulation est documentée dans le [parcours d’apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
 
-Pour visualiser les pages, leurs notions et leurs relations, consultez la [carte interactive du parcours](fr/learning-map.qmd).
+Pour explorer les rubriques, les pages et les notions canoniques, consultez la [carte des ressources et des notions](fr/learning-map.qmd).
 
-## Carte interactive du parcours
+## Vue synthétique du parcours conceptuel
+
+Cette vue regroupe la progression en huit jalons visuels. La carte des ressources et des notions présente séparément le parcours guidé canonique en six étapes, puis l’exploration des territoires, rubriques, pages et concepts : les deux vues ont des granularités et des fonctions distinctes.
 
 Le parcours principal suit la logique **comprendre le fonctionnement avant d'étudier l'apprentissage**. Chaque bloc ouvre sa page de référence ; les petits liens donnent accès aux pages spécialisées. La branche G2 est distincte : elle prépare les données nécessaires à l'entraînement, mais n'est pas un prérequis pour comprendre l'inférence.
 

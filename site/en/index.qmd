@@ -43,11 +43,13 @@ Large language models (LLMs) are a family of neural models trained on large amou
 - **Deepen** — Explore optional derivations and technical references, such as [tensors](tensors.qmd). These are not prerequisites for the main route.
 - **Practice and experiment** — Use [exercises](exercises.qmd) and [experimental evaluation](experimental-evaluation.qmd) to test explanations against calculations and documented protocols.
 
-Practice supports all three learning depths; it is not a fourth depth. The conceptual route and the implementation route have different orders. Their relationship is documented in the [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
+Practice supports all four reading modes; it remains transversal and is not an additional learning depth. The conceptual route and the implementation route have different orders. Their relationship is documented in the [learning path](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
 
-To explore the pages, concepts, and their relationships visually, open the [interactive learning map](learning-map.qmd).
+To explore the site's sections, pages, and canonical concepts, open the [resource and concept map](learning-map.qmd).
 
-## Interactive learning map
+## Conceptual route at a glance
+
+This view groups the progression into eight visual stages. The resource and concept map separately presents the canonical six-stage guided route, followed by exploration of the site's territories, sections, pages, and concepts: the two views use different levels of aggregation and serve different purposes.
 
 The main route follows the logic **understand how the system works before studying how it learns**. Each block opens its canonical lesson; the smaller links open focused companion pages. The G2 branch is separate: it prepares the data required for training, but is not a prerequisite for understanding inference.
 
