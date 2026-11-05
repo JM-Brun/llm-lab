@@ -1,0 +1,38 @@
+# Copy one entry into data/sources.yml and replace every placeholder.
+# Keep unknown values null/unknown; never infer dates, licences or rights.
+- id: "stable-lowercase-kebab-case-id"
+  title: "Source title"
+  creators: ["Author or organization"]
+  source_type: blog # paper | book | documentation | video | course | repository | dataset | other
+  identifiers: {}
+  canonical_url: "https://example.org/canonical-source"
+  publisher: "Publisher or platform"
+  publication_date: null
+  updated_date: null
+  language: en
+  version: null
+  revision: null
+  licence: {identifier: null, url: null, status: unknown}
+  reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+  classification:
+    primary_theme: "canonical-theme-id"
+    secondary_themes: []
+    tags: ["topic:replace-me"]
+    concept_ids: []
+  metadata:
+    technical_level: introductory # introductory | intermediate | advanced | mixed | unknown
+    contribution_types: [pedagogy]
+    audiences: [learner]
+  scan_status: not-scanned # not-scanned | partially-scanned | scanned
+  integration_status: not-assessed # not-assessed | integrated | deferred | rejected | reference-only
+  scan_history:
+    - accessed_at: "YYYY-MM-DD"
+      status: partially-scanned
+      inspected_scope:
+        - "Specify exactly which source component was inspected and by what route."
+      limitations:
+        - "List inaccessible or unresolved components; do not treat them as absent."
+  related:
+    pages: []
+    concepts: []
+    audit_records: []
