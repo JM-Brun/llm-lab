@@ -1,4 +1,6 @@
 ---
+**Notion canonique :** [Panorama des modèles de langage](llm-overview.qmd). Cette page en approfondit la formalisation probabiliste ; elle complète les explications du parcours sans constituer un prérequis.
+
 title: "Formaliser mathématiquement la modélisation du langage"
 subtitle: "Règle de chaîne, factorisation autorégressive et cibles souples"
 keywords: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:fr", "status:published"]
