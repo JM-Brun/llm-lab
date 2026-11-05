@@ -19,7 +19,7 @@ const cases = [
     ...testCase, page: "learning-map.html", kind: "learning-map",
   })),
   ...visualCases.flatMap(testCase =>
-    ["llm-overview.html", "generation.html", "embedding-space.html", "queries-keys-values.html"].map(page => ({
+    ["llm-overview.html", "generation.html", "embedding-space.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "text-data.html"].map(page => ({
       ...testCase, page, kind: "route-context",
     }))
   ),
@@ -235,6 +235,17 @@ for (const testCase of cases) {
     }
 
     if (kind === "route-context") {
+      const siteBreadcrumb = page.locator(".quarto-title-breadcrumbs");
+      const duplicateBreadcrumb = page.locator(".llm-breadcrumb");
+      item.siteBreadcrumb = {
+        nativeCount: await siteBreadcrumb.count(),
+        nativeText: await siteBreadcrumb.first().innerText().catch(() => ""),
+        customDuplicateCount: await duplicateBreadcrumb.count(),
+      };
+      if (item.siteBreadcrumb.nativeCount !== 1 || item.siteBreadcrumb.customDuplicateCount !== 0) {
+        throw new Error("site location must use exactly one native Quarto breadcrumb");
+      }
+
       const context = page.locator(".guided-page-context");
       if (await context.count() !== 1) throw new Error("guided-route context is missing");
       item.routeContext = {
@@ -279,6 +290,8 @@ for (const testCase of cases) {
           "llm-overview.html": "guided-stage-orientation",
           "embedding-space.html": "guided-stage-representations",
           "queries-keys-values.html": "guided-stage-computation",
+          "scaled-dot-product-attention.html": "guided-stage-computation",
+          "text-data.html": "guided-stage-text-input",
         }[pagePath];
         if (!expectedStage || item.routeContext.isMultiple || !item.routeContext.navLandmark ||
             item.routeContext.currentPageMarkers !== 0 || stageFragments.length !== 1 ||
@@ -291,6 +304,14 @@ for (const testCase of cases) {
         item.routeContext.legacyStepperCount = await page.locator(".pipeline-stepper").count();
         if (item.routeContext.legacyStepperCount !== 0) {
           throw new Error("misleading legacy five-step pipeline stepper is still rendered");
+        }
+      }
+      if (pagePath === "scaled-dot-product-attention.html" || pagePath === "text-data.html") {
+        item.routeContext.localProcessStepperCount = await page.locator(".pipeline-stepper").count();
+        item.routeContext.localProcessStepperLabel = await page.locator(".pipeline-stepper").getAttribute("aria-label");
+        if (item.routeContext.localProcessStepperCount !== 1 || !item.routeContext.localProcessStepperLabel ||
+            /learning path|parcours pédagogique/i.test(item.routeContext.localProcessStepperLabel)) {
+          throw new Error("local process stepper is missing or mislabelled as a curriculum breadcrumb");
         }
       }
     }
