@@ -119,7 +119,17 @@ def _write_concept_registry(root: Path) -> None:
                 },
             }
         },
-        "relations": [{"from": "query", "type": "part-of", "to": "attention"}],
+        "relations": [
+            {
+                "from": "query",
+                "type": "part-of",
+                "to": "attention",
+                "rationale": {
+                    "fr": "La projection de requête est un composant du mécanisme d'attention.",
+                    "en": "The query projection is a component of the attention mechanism.",
+                },
+            }
+        ],
     }
     registry = root / "data" / "concepts.yml"
     registry.parent.mkdir(parents=True, exist_ok=True)
@@ -710,6 +720,22 @@ def test_load_concept_graph_serializes_localized_relation_semantics(tmp_path: Pa
         "label": "is part of",
         "description": "The source is part of the target.",
     }
+    assert french["concept_relations"] == [
+        {
+            "from": "query",
+            "type": "part-of",
+            "to": "attention",
+            "rationale": "La projection de requête est un composant du mécanisme d'attention.",
+        }
+    ]
+    assert english["concept_relations"] == [
+        {
+            "from": "query",
+            "type": "part-of",
+            "to": "attention",
+            "rationale": "The query projection is a component of the attention mechanism.",
+        }
+    ]
 
 
 def test_concept_graph_script_exposes_direction_and_relation_legend() -> None:
