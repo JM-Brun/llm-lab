@@ -169,6 +169,17 @@ for (const testCase of cases) {
       }
       await mode.selectOption("concepts");
       await page.waitForSelector(".map-concept-item", { timeout: 15000 });
+      item.learningMapLayout = await page.evaluate(() => ({
+        viewportWidth: window.innerWidth,
+        documentWidth: document.documentElement.scrollWidth,
+        horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 1,
+      }));
+      if (item.learningMapLayout.horizontalOverflow) {
+        throw new Error("concept view has horizontal overflow");
+      }
+      const conceptScreenshot = path.join(OUT, `learning-map-concepts-${lang}-${label}-${theme}.png`);
+      await page.screenshot({ path: conceptScreenshot, fullPage: true, animations: "disabled" });
+      item.learningMapScreenshot = conceptScreenshot;
       const legend = page.locator(".learning-map-concept-legend");
       const relationFilter = page.locator("[data-map-relation-type]");
       const relationOptions = await relationFilter.locator("option").evaluateAll(options =>
@@ -268,7 +279,9 @@ for (const testCase of cases) {
       incomplete: axe.incomplete.length,
     };
 
-    if (item.layout.horizontalOverflow) report.failures.push(`${pagePath}/${lang}/${label}/${theme}: horizontal overflow`);
+    if (item.layout.horizontalOverflow || item.learningMapLayout?.horizontalOverflow) {
+      report.failures.push(`${pagePath}/${lang}/${label}/${theme}: horizontal overflow`);
+    }
     if (!item.keyboard.length) report.failures.push(`${pagePath}/${lang}/${label}/${theme}: no keyboard focus targets`);
   } catch (error) {
     item.error = String(error);
