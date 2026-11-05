@@ -151,3 +151,20 @@ A separate content-based audit of the current bilingual lesson and exercise hub 
 - Codefinity extraction: [codefinity-qkv-building-blocks.yml](../../data/extractions/codefinity-qkv-building-blocks.yml)
 - Living source collection: [qkv-source-collection](../source-reviews/qkv-source-collection.md)
 - Workflow: [external-source integration](../workflows/source-to-learning-system-integration.md)
+
+
+## 11. Fourth tutorial: Brenndoerfer — progressive formalization and statistical scaling
+
+[Source review](../source-reviews/qkv-brenndoerfer-2026-11.md) · [Structured extraction](../../data/extractions/brenndoerfer-query-key-value-attention-2025.yml)
+
+Brenndoerfer's chapter adds a longer instructional sequence: contextual-relevance motivation → database analogy → learned projections → statistical derivation of score scaling → tensor contracts → code → integrated worked trace → limitations → quiz. Its strongest distinct contribution is the explicit variance argument for dividing QK scores by \(\sqrt{d_k}\), not a new explanation of Q/K/V roles.
+
+The derivation assumes independent, zero-mean, unit-variance components. Under those assumptions, the variance of the dot product grows with \(d_k\). Scaling therefore has a statistical motivation, but it does **not** guarantee that real learned score distributions have unit variance or that softmax gradients never vanish. The existing attention-score-scaling lesson is the canonical owner of this explanation; the new source is linked by reference rather than duplicated.
+
+Two useful adversarial synthesis cases emerge:
+1. The source says Q/K/V projections “operate independently”. Interpret this as distinct representational transformations, not independent optimization; standard training jointly optimizes their parameters.
+2. A random-initialization heatmap is explicitly meaningless as evidence of linguistic specialization. Later statements about trained linguistic patterns in the chapter are not supported by a model-specific experiment.
+
+The three-token worked example uses hand-crafted feature-labelled inputs and random projection matrices. It is a computational trace, not evidence of learned semantic dimensions or head-level linguistic behavior. The eight-question quiz is only partially visible (question one); no quiz-quality or learner-effectiveness claim is warranted.
+
+**Integration decision:** no new page, concept, route, exercise or implementation. Keep the statistical derivation as an advanced external reference, and retain the two epistemic/wording issues as regression fixtures. The existing source collection remains complementary rather than cumulative by paragraph count.
