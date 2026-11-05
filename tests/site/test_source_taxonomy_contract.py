@@ -114,4 +114,7 @@ def test_pedagogical_assessment_rejects_evidence_confidence_as_rating() -> None:
         set(taxonomy["assessment_levels"]),
         errors,
     )
-    assert any("assessment.novelty.level: unsupported value 'well-supported'" in error for error in errors)
+    assert any(
+        "assessment.novelty.level: unsupported value 'well-supported'" in error
+        for error in errors
+    )
