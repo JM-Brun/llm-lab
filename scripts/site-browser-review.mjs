@@ -300,31 +300,49 @@ for (const testCase of cases) {
       const callout = calloutHeaders.first();
       const controlsId = await callout.getAttribute("aria-controls");
       const initialExpanded = await callout.getAttribute("aria-expanded");
+      const tagName = await callout.evaluate(el => el.tagName.toLowerCase());
+      item.callouts.tagName = tagName;
       item.callouts.role = await callout.getAttribute("role");
       item.callouts.tabIndex = await callout.getAttribute("tabindex");
       item.callouts.accessibleName = await callout.getAttribute("aria-label");
       item.callouts.controlsTargetExists = Boolean(
         controlsId && await page.locator(`#${controlsId}`).count() === 1
       );
-      if (item.callouts.role !== "button" || item.callouts.tabIndex !== "0" ||
+      if (tagName !== "button" || item.callouts.tabIndex === "-1" ||
           !item.callouts.accessibleName || !item.callouts.controlsTargetExists ||
           !["true", "false"].includes(initialExpanded)) {
-        throw new Error("collapsible callout is missing button semantics, name, or a valid controlled target");
+        throw new Error("collapsible callout is missing native button semantics, name, or a valid controlled target");
       }
-      const expandedAfterEnter = initialExpanded === "true" ? "false" : "true";
+
+      const initialTargetExpanded = await page.locator(`#${controlsId}`).evaluate(
+        el => el.classList.contains("show")
+      );
+      if ((initialExpanded === "true") !== initialTargetExpanded) {
+        throw new Error("callout aria-expanded does not match the controlled panel state before interaction");
+      }
+
       await callout.focus();
       await page.keyboard.press("Enter");
       await page.waitForFunction(
-        ({ selector, expected }) =>
-          document.querySelector(selector)?.getAttribute("aria-expanded") === expected,
-        { selector: calloutSelector, expected: expandedAfterEnter },
+        ({ targetId, expected, selector }) => {
+          const trigger = document.querySelector(selector);
+          const target = document.getElementById(targetId);
+          return target?.classList.contains("show") === expected &&
+            trigger?.getAttribute("aria-expanded") === String(expected);
+        },
+        { targetId: controlsId, expected: !initialTargetExpanded, selector: calloutSelector },
         { timeout: 5000 }
       );
+
       await page.keyboard.press("Space");
       await page.waitForFunction(
-        ({ selector, expected }) =>
-          document.querySelector(selector)?.getAttribute("aria-expanded") === expected,
-        { selector: calloutSelector, expected: initialExpanded },
+        ({ targetId, expected, selector }) => {
+          const trigger = document.querySelector(selector);
+          const target = document.getElementById(targetId);
+          return target?.classList.contains("show") === expected &&
+            trigger?.getAttribute("aria-expanded") === String(expected);
+        },
+        { targetId: controlsId, expected: initialTargetExpanded, selector: calloutSelector },
         { timeout: 5000 }
       );
       item.callouts.keyboardEnterAndSpace = true;
