@@ -94,7 +94,9 @@ def test_single_membership_renders_as_context_not_as_a_parent_claim() -> None:
 
     assert '<nav class="guided-page-context"' in rendered
     assert 'href="learning-map.html#guided-stage-representations"' in rendered
-    assert 'aria-current="page">Rotary Position Embeddings</li>' in rendered
+    assert "Rotary Position Embeddings" not in rendered
+    assert 'class="guided-page-context__label">Learning path</span>' in rendered
+    assert 'class="guided-page-context__stage" href="learning-map.html#guided-stage-representations"' in rendered
     assert "Optional resource" in rendered
 
 
