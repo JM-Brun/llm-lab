@@ -14,7 +14,7 @@ pedagogical_model:
         - {id: src-figure-2, caption: 'Fig 2: Linear projections into Q, K, and V.', status: identified-not-visually-inspected}
         - {id: src-figure-2b, caption: null, status: placeholder-identified-not-visually-inspected, note: 'An additional full-size-image marker follows the text introducing three vectors; its content and relation to Fig. 2 cannot be established from the index snapshot.'}
         - {id: src-figure-3, caption: 'Fig 3: Scaled dot-product attention computation.', status: identified-not-visually-inspected}
-      cover_or_hero: {status: unknown, note: 'The indexed article result does not establish whether a separate cover/hero asset exists.'}
+      cover_or_hero: {status: unknown, note: 'The directly readable page-text view does not establish whether a separate cover/hero asset exists.'}
       rights: unknown
     inferred_elements:
       - "Learning outcomes and prerequisites are inferred; the article does not publish a formal outcomes or prerequisite list."
@@ -90,7 +90,7 @@ pedagogical_model:
     - "The input is called a word embedding; in deeper Transformer layers Q/K/V are projected from the current hidden representations, not necessarily the original token embedding."
     - "The article describes an embedding as a compact vector reflecting semantic meaning, which is a useful simplification but can suggest that embedding coordinates are explicit semantic features. Token embeddings are learned parameters; positional information and contextual processing are also needed to form the representations used by attention."
     - "No numerical worked example, tensor shapes, multi-head decomposition, implementation, exercise or explicit assessment is provided."
-    - "The indexed snapshot exposes four in-body image placements, but none of the actual images can be visually inspected or evaluated."
+    - "The directly readable page-text view confirms four in-body image placements, but none of the actual images has been retrieved as bytes or visually inspected."
     - "The phrase that closest query-key matches determine which values to get risks implying hard top-1 retrieval; the subsequent weighted-sum formula instead describes a soft mixture over accessible value vectors."
     - "The article calls attention directional and non-symmetric without showing a matrix example or qualifying that asymmetry is typical rather than universal for every possible parameter/input configuration."
   comparison:
@@ -372,7 +372,7 @@ items:
 
   - id: neha-kk-understanding-qkv-medium:figure-2b-unlabelled
     kind: figure
-    summary: "A second full-size-image placeholder appears after the text 'Three different vectors from the same embedding where:' and before the explanation of Q, K and V roles. No caption or subject is exposed in the indexed snapshot."
+    summary: "A second full-size-image placeholder appears after the text 'Three different vectors from the same embedding where:' and before the explanation of Q, K and V roles. No caption or subject is exposed in the directly readable page-text view."
     pedagogical_profile:
       learner_question: "Unknown; the image content is unavailable."
       explanatory_lens: unknown
