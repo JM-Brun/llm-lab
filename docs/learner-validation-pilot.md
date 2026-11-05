@@ -9,9 +9,9 @@ Invite a volunteer who knows basic Python but has not studied these lessons. Let
 ## Tasks
 
 1. Ask them to start at the home page and find the path from text to attention. Note where they go and whether they can recover from a wrong turn.
-2. Before they read the relevant explanation, ask: “If the same token ID occurs twice, must its initial embedding lookup be identical? Must its final contextual representation also be identical?” (FR: « Si un même ID de token apparaît deux fois, la recherche initiale dans la table d'embeddings doit-elle renvoyer le même vecteur ? La représentation contextualisée finale doit-elle aussi être identique ? ») Record the answer and confidence without correcting it.
+2. Before they read the relevant explanation, ask two baseline questions: (a) “If the same token ID occurs twice, must its initial embedding lookup be identical? Must its final contextual representation also be identical?” (FR: « Si un même ID de token apparaît deux fois, la recherche initiale dans la table d'embeddings doit-elle renvoyer le même vecteur ? La représentation contextualisée finale doit-elle aussi être identique ? ») (b) “In attention, what determines how much each position contributes to another position's output, and what carries the content being combined?” (FR: « Dans l'attention, qu'est-ce qui détermine la contribution de chaque position à la sortie d'une autre position, et quel objet porte le contenu combiné ? ») Record both answers and confidence without correcting them.
 3. Ask them to use the text-data, embedding-space, Q/K/V and scaled-attention pages, including any code example they choose. Observe whether “run locally” and the prerequisites are clear.
-4. **Q/K/V role and counterfactual probe:** ask, “If V changes while Q, K and the mask stay fixed, which quantities must remain unchanged? What may happen to the output?” (FR: « Si V change alors que Q, K et le masque restent fixes, quelles quantités doivent rester inchangées ? Que peut-il arriver à la sortie ? ») Ask for an explanation, not only a label. Do not show the answer before the participant has committed to a response.
+4. **Q/K/V post-reading counterfactual probe:** ask, “If V changes while Q, K and the mask stay fixed, which quantities must remain unchanged? What may happen to the output?” (FR: « Si V change alors que Q, K et le masque restent fixes, quelles quantités doivent rester inchangées ? Que peut-il arriver à la sortie ? ») Ask for an explanation, not only a label. Do not show the answer before the participant has committed to a response.
 5. **Transfer probe:** ask, “Two sequences share the same first three token IDs but differ at position four. In a causal decoder with identical parameters, can the logits at position two change because of position four? What assumption matters?” (FR: « Deux séquences ont les trois premiers ID de tokens identiques, mais diffèrent à la quatrième position. Dans un décodeur causal aux paramètres identiques, le token futur à la position quatre peut-il modifier les logits à la position deux ? Quelle hypothèse est déterminante ? ») Ask for reasoning, not only yes/no.
 6. Ask what they would change on the route, and whether any diagram, mathematical notation, disclosure or navigation control was unclear.
 
@@ -26,7 +26,7 @@ If time permits, use the optional geometry probe: “Let q=(1,0), k₁=(0.1,0), 
 
 ## Lightweight scoring rubric
 
-Score each required conceptual probe independently; do not combine scores into a claim of learning effectiveness.
+Score each required conceptual probe independently. Compare the pre-reading Q/K/V baseline with the post-reading counterfactual response, but do not combine scores into a claim of learning effectiveness.
 
 | Dimension | 0 — Incorrect / absent | 1 — Partial | 2 — Correct with reasoning |
 |---|---|---|---|
