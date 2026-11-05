@@ -10,9 +10,18 @@
         <option value="concepts">Canonical concepts</option>
       </select>
     </div>
+    <div class="learning-map-relation-filter" hidden>
+      <label for="learning-map-relation-type">Relation type</label>
+      <select id="learning-map-relation-type" data-map-relation-type></select>
+    </div>
     <div class="learning-map-search">
       <label for="learning-map-search">Search the map</label>
       <input id="learning-map-search" data-map-search type="search" autocomplete="off">
+    </div>
+    <div class="learning-map-actions">
+      <button type="button" class="map-reset" data-map-reset title="Clears search, filter, and selection; Escape steps back one level at a time.">
+        Reset view
+      </button>
     </div>
   </div>
   <div class="learning-map-concept-legend" hidden></div>
