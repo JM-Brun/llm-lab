@@ -602,7 +602,7 @@ for (const testCase of cases) {
       );
     }
     if (item.layout.horizontalOverflow || item.learningMapLayout?.horizontalOverflow) {
-      report.failures.push(`${pagePath}/${lang}/${label}/${theme}: horizontal overflow`);
+      report.failures.push(`${pagePath}/${lang}/${label}/${theme}: horizontal overflow: ${JSON.stringify((item.layout.overflowCandidates || []).slice(0, 5))}`);
     }
     if (runInteractiveAudit && !item.keyboard.length) report.failures.push(`${pagePath}/${lang}/${label}/${theme}: no keyboard focus targets`);
   } catch (error) {
