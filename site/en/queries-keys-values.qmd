@@ -155,6 +155,18 @@ This is why Q/K and V are not interchangeable: changing V alone leaves the atten
 Source perspective: [Brenndoerfer, *Query, Key, Value: The Foundation of Transformer Attention*](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism).
 :::
 
+## Operations to master
+
+Understanding Q/K/V should be demonstrated through observable operations, not just recall of definitions. By the end of this lesson, you should be able to:
+
+1. **Recognize the three roles:** distinguish the projections that determine attention weights (Q and K) from the projection that supplies aggregated content (V).
+2. **Reconstruct the projections:** write $Q=XW_Q$, $K=XW_K$, $V=XW_V$, track dimensions, and calculate the resulting representations.
+3. **Understand how they are learned:** explain how the model loss backpropagates gradients to all three matrices, through different paths for Q/K and V.
+4. **Predict the consequences of parameter changes:** identify what changes — and what remains invariant — when $W_Q$, $W_K$, or $W_V$ is modified.
+5. **Transfer the reasoning:** reuse these distinctions in cross-attention and attention variants, making changes in input provenance or projection sharing explicit.
+
+The associated exercises are grouped in the [Attention](exercises.qmd#attention) section. They distinguish Q/K/V-specific competencies from score, softmax, and aggregation calculations, which belong to the [scaled dot-product attention](scaled-dot-product-attention.qmd) lesson.
+
 ## Keep these objects distinct
 
 | Object | Role in the computation |
