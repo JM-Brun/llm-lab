@@ -4,6 +4,10 @@
 
 This roadmap prioritizes **validating and improving the knowledge already present**. Public-page structure and review should follow the shared [reader-experience and editorial method](reader-experience-and-editorial-method.md), which defines progressive disclosure and non-linear navigation. Do not add implementations, modules, pages, or experiments merely to advance a roadmap. A topic is not complete because it is documented, because tests pass, or because an experiment runs: it requires accurate explanations, explicit assumptions and counterexamples, and demonstrated understanding recorded in the private `career-knowledge` inventory. For implementation, validate only the **specific minimum knowledge needed for the next step**; introduce tensor operations, probability and gradients in context. Advanced mathematics and general tensor theory are optional deep dives, not blanket prerequisites for building a small GPT. The page-by-page boundary is documented in [content-section-mapping.md](content-section-mapping.md).
 
+## Main learner journey audit — 2026-11-05
+
+The focused synthesis of the learner-facing route, Build scope, transfer evidence and existing owner issues is recorded in [docs/learner-journey-audit-2026-11-05.md](learner-journey-audit-2026-11-05.md). It is an audit baseline, not a replacement roadmap or a new issue hierarchy. Existing work remains with #130, #225, #355, #415, #78, #220, #447 and the bounded browser-review issues. The audit explicitly separates design coherence, operational/browser validation and evidence of learner mastery.
+
 ## Current state
 
 The [project status](project-status.md) is the current inventory of implemented, tested, demonstrated, and planned work. The dated material below preserves the 2026-10-28 review as history; its implementation and gate statements are not a current status source.
