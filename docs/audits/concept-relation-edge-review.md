@@ -84,3 +84,10 @@ The semantic inventory and initial edge review are recorded. The implementation 
 ## Projection preservation
 
 The generated bilingual learning-map payload now preserves the relation type contract (family, direction, transitivity, acyclicity, learning-dependency eligibility, inverse) and localized edge rationale. The current interactive renderer still uses only direction, label and description for its legend and details. The additional fields are retained in the projection rather than discarded, but no route generation consumes `learning_dependency`.
+
+
+## Interoperability export boundary
+
+The interactive learning-map JSON now preserves the relation metadata. The separate JSON-LD export in `site/tools/export_knowledge_graph.py` currently emits typed predicates for relation edges but does not export relation-type nodes with their family, direction, transitivity, acyclicity, learning-dependency and inverse metadata. This is a selective export, not a full serialization of the relation contract.
+
+A follow-up should decide whether external consumers need a published relation vocabulary (for example, relation-type nodes with bilingual SKOS labels/definitions and project-specific semantic properties). The exporter and validator also maintain hard-coded relation-type allowlists; assess whether those should be derived from the canonical `relation_types` mapping to reduce drift. Do not expand JSON-LD or add another vocabulary unless an interoperability consumer requires it.
