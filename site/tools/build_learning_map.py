@@ -480,9 +480,7 @@ def write_guided_page_context_fragments(
     """Write generated context partials for every page in the guided route."""
     memberships = build_guided_route_memberships(stages)
     page_by_id = {
-        page.id: page
-        for stage in stages
-        for page in [*stage.pages, *stage.optional_pages]
+        page.id: page for stage in stages for page in [*stage.pages, *stage.optional_pages]
     }
     includes = SITE / "includes"
     includes.mkdir(parents=True, exist_ok=True)
