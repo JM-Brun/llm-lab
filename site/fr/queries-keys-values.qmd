@@ -97,7 +97,7 @@ Dans le chemin d'attention considéré ici :
 
 Pour une entrée $X$ fixée, sans biais et avec les projections linéaires écrites plus haut, la règle de dérivation prend la forme :
 
-$
+$$
 \frac{\partial\mathcal L}{\partial W_Q}
 =X^\top\frac{\partial\mathcal L}{\partial Q},
 \qquad
