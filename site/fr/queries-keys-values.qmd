@@ -48,9 +48,9 @@ Codefinity propose une intuition géométrique : représenter Q et K comme des v
 
 Pour deux vecteurs, le produit scalaire s'écrit :
 
-$
+$$
 q^\top k = \lVert q\rVert\,\lVert k\rVert\cos(\theta).
-$
+$$
 
 L'angle n'est donc qu'une partie du score : **le produit scalaire dépend aussi des normes** de Q et K. Il ne s'agit pas, en général, d'une similarité cosinus. Dans l'attention, ces scores sont ensuite mis à l'échelle, normalisés par softmax sur les clés accessibles, puis utilisés pour pondérer V. Il n'y a ni sélection obligatoire d'un unique voisin, ni interprétation automatique en pertinence sémantique.
 
@@ -64,7 +64,7 @@ Source de cette perspective : [Codefinity, *Queries, Keys, and Values: The Build
 ::: {.callout-note title="Une autre illustration, dans la source"}
 Nishanthan K propose une représentation visuelle complémentaire des rôles Q/K/V dans son article. [Consulter l'article et son illustration originale sur Medium](https://nishanthan-k.medium.com/how-query-key-and-value-qkv-work-in-transformers-1274bfa14ea8) (miroir de l'article publié sur [DEV Community](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a)).
 
-Référence : Nishanthan K, *How Query, Key, and Value (QKV) Work in Transformers*, DEV Community, publié le 22 octobre (année non vérifiée). L'illustration reste hébergée par sa source ; LLM Lab établit un lien vers elle plutôt que d'en recopier le fichier, car les droits de réutilisation ne sont pas établis.
+Référence : Nishanthan K, *How Query, Key, and Value (QKV) Work in Transformers*, DEV Community, publié le 22 octobre 2026. L'illustration reste hébergée par sa source ; LLM Lab établit un lien vers elle plutôt que d'en recopier le fichier, car les droits de réutilisation ne sont pas établis.
 :::
 
 
