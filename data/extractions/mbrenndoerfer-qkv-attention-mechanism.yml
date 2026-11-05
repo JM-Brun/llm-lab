@@ -27,21 +27,21 @@ pedagogical_model:
       - {id: src-worked-example, kind: pedagogical-anchor, description: "A three-token sentence with hand-designed four-dimensional inputs and seeded random projections traces QKV through output.", locator: "A Worked Example with Real Words, lines 1270-1449"}
       - {id: src-quiz, kind: assessment, description: "A short quiz checks role distinctions and the attention computation.", locator: "11 Quiz, final section"}
     edges:
-    - {from: src-input-representation, type: transformed-by, to: src-projection}
-    - {from: src-projection, type: produces, to: src-query}
-    - {from: src-projection, type: produces, to: src-key}
-    - {from: src-projection, type: produces, to: src-value}
-    - {from: src-query, type: compared-with, to: src-key}
-    - {from: src-query, type: contributes-to, to: src-score-matrix}
-    - {from: src-key, type: contributes-to, to: src-score-matrix}
-    - {from: src-score-matrix, type: normalized-after-scaling, to: src-weighted-output}
-    - {from: src-value, type: aggregated-into, to: src-weighted-output}
-    - {from: src-weighted-output, type: satisfies, to: src-convex-hull}
-    - {from: src-worked-example, type: illustrates, to: src-projection}
-    - {from: src-worked-example, type: illustrates, to: src-weighted-output}
-    - {from: src-quiz, type: assesses, to: src-query}
-    - {from: src-quiz, type: assesses, to: src-key}
-    - {from: src-quiz, type: assesses, to: src-value}
+      - {from: src-input-representation, type: transformed-by, to: src-projection}
+      - {from: src-projection, type: produces, to: src-query}
+      - {from: src-projection, type: produces, to: src-key}
+      - {from: src-projection, type: produces, to: src-value}
+      - {from: src-query, type: compared-with, to: src-key}
+      - {from: src-query, type: contributes-to, to: src-score-matrix}
+      - {from: src-key, type: contributes-to, to: src-score-matrix}
+      - {from: src-score-matrix, type: normalized-after-scaling, to: src-weighted-output}
+      - {from: src-value, type: aggregated-into, to: src-weighted-output}
+      - {from: src-weighted-output, type: satisfies, to: src-convex-hull}
+      - {from: src-worked-example, type: illustrates, to: src-projection}
+      - {from: src-worked-example, type: illustrates, to: src-weighted-output}
+      - {from: src-quiz, type: assesses, to: src-query}
+      - {from: src-quiz, type: assesses, to: src-key}
+      - {from: src-quiz, type: assesses, to: src-value}
   interpretation: "Editorial reconstruction of the article's instructional model, not a formal ontology authored by the source. Section order is a teaching route, not proof of semantic prerequisites."
   learning_outcomes:
     - {status: inferred, outcome: "Explain why attention uses distinct learned query, key and value representations.", basis: "Introductory motivation and projection derivation."}
