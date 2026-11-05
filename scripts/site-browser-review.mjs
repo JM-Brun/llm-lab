@@ -189,6 +189,9 @@ for (const testCase of cases) {
         legendVisible: await legend.isVisible(),
         legendItems: await legend.locator(".map-concept-legend-item").count(),
         conceptButtons: await page.locator(".map-concept-item").count(),
+        uniqueConceptIds: await page.locator(".map-concept-item").evaluateAll(items =>
+          new Set(items.map(item => item.getAttribute("data-concept-id"))).size
+        ),
         relationFilterLabelled: await page.locator('label[for="learning-map-relation-type"]').count() === 1,
         searchLabelled: await page.locator('label[for="learning-map-search"]').count() === 1,
         relationOptions,
@@ -206,11 +209,16 @@ for (const testCase of cases) {
       if (!item.learningMap.filteredConceptButtons) throw new Error("relation filter removed every concept");
       await relationFilter.selectOption("");
       const firstConcept = page.locator(".map-concept-item").first();
+      const firstConceptId = await firstConcept.getAttribute("data-concept-id");
       await firstConcept.click();
-      item.learningMap.pointerSelection = await page.locator(".map-concept-item[aria-pressed='true']").count() === 1;
+      const pointerPressedIds = await page.locator(".map-concept-item[aria-pressed='true']").evaluateAll(items =>
+        [...new Set(items.map(item => item.getAttribute("data-concept-id")))]
+      );
+      item.learningMap.selectedButtonCount = await page.locator(".map-concept-item[aria-pressed='true']").count();
+      item.learningMap.pointerSelection = pointerPressedIds.length === 1 && pointerPressedIds[0] === firstConceptId;
       item.learningMap.detailsTitle = await page.locator(".map-detail-panel .map-detail-title").first().innerText().catch(() => null);
       if (!item.learningMap.pointerSelection || !item.learningMap.detailsTitle) {
-        throw new Error("pointer selection did not update the concept details panel");
+        throw new Error("pointer selection did not update one canonical concept and its details panel");
       }
       await page.keyboard.press("Escape");
       item.learningMap.escapeClearsSelection = await page.locator(".map-concept-item[aria-pressed='true']").count() === 0;
@@ -219,7 +227,10 @@ for (const testCase of cases) {
       }
       await firstConcept.focus();
       await page.keyboard.press("Enter");
-      item.learningMap.keyboardActivation = await page.locator(".map-concept-item[aria-pressed='true']").count() === 1;
+      const keyboardPressedIds = await page.locator(".map-concept-item[aria-pressed='true']").evaluateAll(items =>
+        [...new Set(items.map(item => item.getAttribute("data-concept-id")))]
+      );
+      item.learningMap.keyboardActivation = keyboardPressedIds.length === 1 && keyboardPressedIds[0] === firstConceptId;
       if (!item.learningMap.keyboardActivation) {
         throw new Error("Enter did not activate the focused concept button");
       }
