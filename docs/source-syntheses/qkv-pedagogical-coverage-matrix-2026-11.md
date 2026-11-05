@@ -2,10 +2,10 @@
 
 **Status:** living decision artifact  
 **Review date:** 2026-11-05  
-**Scope:** Nishanthan K (DEV), Neha KK (Medium), Codefinity, and the current LLM Lab learning system.  
+**Scope:** four tutorial sources — Nishanthan K (DEV), Neha KK (Medium), Codefinity and Michael Brenndoerfer — plus the current LLM Lab learning system.  
 **Purpose:** decide which source contributions improve learner understanding, where they belong, and what remains genuinely uncovered. This is a coverage and integration tool, not a vote on technical truth.
 
-> **Reading rule:** source coverage records what was visible in the scanned material, not what the full article/course might contain. All three sources remain partially scanned; consult their individual reviews for retrieval and media limitations.
+> **Reading rule:** source coverage records what was visible in the scanned material, not what the full article/course might contain. All four sources remain partially scanned; consult their individual reviews for retrieval and media limitations.
 
 ## 1. Learner-question coverage
 
@@ -56,7 +56,7 @@ This matrix captures the *teaching move* that makes a source useful, even when t
 
 These are no longer active page-change requests. The remaining gate is learner evidence, not more generic exercises; see the [learning-impact baseline](qkv-learning-impact-baseline-2026-11.md#9-post-implementation-reconciliation--2026-11-05).
 
-### Not established by the three source scans
+### Not established by the four source scans
 
 - Full causal-mask treatment, cross-attention, encoder/decoder placement and interpretability: Codefinity's parent outline lists related lessons, but those lesson bodies and assignments were not scanned.
 - A worked non-symmetric attention-score matrix and the exact conditions under which asymmetry holds.
@@ -97,6 +97,7 @@ A topical match is not sufficient evidence for **already covered**. First test w
 
 - [Living Q/K/V source collection](../source-reviews/qkv-source-collection.md)
 - [Complementary explanatory perspectives](qkv-complementary-perspectives-2026-11.md)
+- [Four-source comparison and canonical-page audit](qkv-four-source-comparison-2026-11.md)
 - [Learning-impact baseline and assessment plan](qkv-learning-impact-baseline-2026-11.md)
 - [Q/K/V learning-graph and route comparison](../source-reviews/qkv-learning-graph-comparison-2026-11.md)
 - [Nishanthan K source review](../source-reviews/qkv-nishanthan-devto-2026-11.md)
@@ -130,7 +131,7 @@ The dot product ranks $k_2$ higher, while cosine similarity ranks $k_1$ higher. 
 This is a source-content and canonical-source inspection, not a rendered browser review. The bilingual Q/K/V and scaled-attention source files were compared; the Q/K/V pages have matching optional geometric, linguistic and role distinctions, and the scaled-attention pages have matching worked-example structure. Desktop/mobile layout, disclosure interaction, equation rendering, keyboard behavior and screenshot evidence remain unverified. See the [component-level media and visual audit](../source-reviews/qkv-visual-asset-audit-2026-11-05.md).
 
 
-## 8. Fourth tutorial — Brenndoerfer (2026-11-05)
+## 8. Fourth tutorial — Brenndoerfer (2026-11-05) — post-integration reconciliation
 
 [Source review](../source-reviews/qkv-mbrenndoerfer-2026-11.md) · [structured extraction](../../data/extractions/mbrenndoerfer-qkv-attention-mechanism.yml) · [incremental pilot report](qkv-incremental-source-pilot-2026-11-05.md)
 
@@ -143,4 +144,6 @@ This is a source-content and canonical-source inspection, not a rendered browser
 | What can be inferred from attention patterns? | Suggests trained heads may learn linguistic relations and describes positional symmetry | Project already warns against interpreting weights as causal explanations | Keep caveats as a source-quality regression case; do not strengthen canonical claims |
 | Which mental model explains the roles? | Database/library lookup analogy | Canonical index-card analogy | Already covered; avoid analogy accumulation |
 
-**Synthesis update:** the fourth source adds depth and a more explicit teaching route, not a new canonical mechanism. Its scaling derivation is the strongest incremental contribution, but reference-only integration is preferred because the canonical lesson already owns the mathematical pipeline. The convex-hull result remains an optional research/geometry lead rather than a learner-facing addition. Source text inspection does not establish figure quality, code execution, interactive assessment quality or learner benefit.
+**Synthesis update:** the fourth source adds depth and a more explicit teaching route, not a new canonical mechanism. Its scaling derivation remains reference-only because the dedicated deep dive owns the mathematical derivation. Routing/payload is integrated on the Q/K/V pages; message passing and the convex-hull property are integrated on the scaled-attention pages with explicit scope limits. This supersedes the earlier provisional deferral of convex hull. Source text inspection does not establish figure quality, code execution, interactive assessment quality or learner benefit.
+
+For the consolidated comparison across all four sources and both EN/FR page pairs, see the [four-source comparison and canonical-page audit](qkv-four-source-comparison-2026-11.md).
