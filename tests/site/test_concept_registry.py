@@ -253,6 +253,7 @@ def test_relation_contract_requires_semantic_metadata() -> None:
     data["relation_types"]["implemented-by"].pop("transitive")
     data["relation_types"]["implemented-by"].pop("acyclic")
     data["relation_types"]["implemented-by"].pop("learning_dependency")
+    data["relation_types"]["implemented-by"].pop("inverse")
 
     errors = validate_registry(data)
 
@@ -260,6 +261,7 @@ def test_relation_contract_requires_semantic_metadata() -> None:
     assert any(".transitive:" in error for error in errors)
     assert any(".acyclic:" in error for error in errors)
     assert any(".learning_dependency:" in error for error in errors)
+    assert any(".inverse: required field is missing" in error for error in errors)
 
 
 def test_only_acyclic_relation_types_reject_cycles() -> None:
@@ -298,3 +300,16 @@ def test_inverse_relation_declarations_must_be_reciprocal() -> None:
     errors = validate_registry(data)
 
     assert any("must point back" in error for error in errors)
+
+
+def test_learning_dependency_requires_explicit_rationale() -> None:
+    data = _valid_registry()
+    data["relations"] = [
+        {"from": "token", "type": "prerequisite", "to": "embedding"},
+    ]
+
+    errors = validate_registry(data)
+
+    assert any("rationale: required for learning dependency" in error for error in errors)
+    data["relations"][0]["rationale"] = "The token representation is used by the next stage."
+    assert validate_registry(data) == []
