@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/transformer-architectures"]
   children: []
-related: ["en/exercises", "en/transformer-architectures"]
+related: ["en/exercises"]
 tags: ["type:experiment-guide", "destination:practice", "topic:transformer-explainer", "level:applied", "language:en", "status:published"]
 -->
 
