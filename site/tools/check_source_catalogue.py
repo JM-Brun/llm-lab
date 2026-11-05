@@ -63,6 +63,31 @@ def _strings(value: Any, where: str, errors: list[str]) -> list[str]:
     return value
 
 
+def _validate_pedagogical_assessment(
+    assessment: Any,
+    where: str,
+    assessment_levels: set[str],
+    errors: list[str],
+) -> None:
+    """Validate qualitative pedagogical ratings independently from evidence confidence."""
+    if assessment is None:
+        return
+    if not isinstance(assessment, dict):
+        errors.append(f"{where}: expected a mapping")
+        return
+    for dimension, rating in assessment.items():
+        rating_where = f"{where}.{dimension}"
+        if not isinstance(rating, dict):
+            errors.append(f"{rating_where}: expected a mapping with level and rationale")
+            continue
+        if rating.get("level") not in assessment_levels:
+            errors.append(
+                f"{rating_where}.level: unsupported value {rating.get('level')!r}"
+            )
+        if not isinstance(rating.get("rationale"), str) or not rating["rationale"].strip():
+            errors.append(f"{rating_where}.rationale: expected non-empty text")
+
+
 def _validate_item_controlled_values(
     item: dict[str, Any],
     where: str,
@@ -269,6 +294,7 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
     integration_statuses = set(taxonomy.get("integration_statuses", []))
     extraction_kinds = set(taxonomy.get("extraction_kinds", []))
     evidence_confidence_levels = set(taxonomy.get("evidence_confidence_levels", []))
+    assessment_levels = set(taxonomy.get("assessment_levels", []))
     item_dispositions = set(taxonomy.get("item_dispositions", []))
     domain_ids = {
         item.get("id")
@@ -429,6 +455,12 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
                 item_where,
                 evidence_confidence_levels,
                 item_dispositions,
+                errors,
+            )
+            _validate_pedagogical_assessment(
+                item.get("pedagogical_assessment"),
+                f"{item_where}.pedagogical_assessment",
+                assessment_levels,
                 errors,
             )
 
