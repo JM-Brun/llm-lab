@@ -268,7 +268,7 @@ Exemple de visualisations manipulables autour des vecteurs, du produit scalaire,
 
 ## Références pédagogiques — requêtes, clés et valeurs
 
-Ces ressources secondaires apportent des angles pédagogiques complémentaires aux pages [Q, K et V](fr/queries-keys-values.qmd) et [scaled dot-product attention](fr/scaled-dot-product-attention.qmd). Elles ne remplacent ni les références primaires ni les dérivations du dépôt. Les figures externes restent hébergées par leurs sources : aucune illustration n'est copiée ici.
+Ressources consultées le 5 novembre 2026. Ces ressources secondaires apportent des angles pédagogiques complémentaires aux pages [Q, K et V](fr/queries-keys-values.qmd) et [scaled dot-product attention](fr/scaled-dot-product-attention.qmd). Elles ne remplacent ni les références primaires ni les dérivations du dépôt. Les figures externes restent hébergées par leurs sources : aucune illustration n'est copiée ici.
 
 - **Michael Brenndoerfer**, [*Query, Key, Value: The Foundation of Transformer Attention*](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism) — explication intermédiaire avec hypothèses explicites pour la variance des scores, déroulé numérique, formes de tenseurs et interprétations géométriques. Les hypothèses de la dérivation et les limites de la trace jouet sont détaillées dans la revue de source.
 - **Codefinity**, [*Queries, Keys, and Values: The Building Blocks*](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) — intuition géométrique sur Q/K, dépendance du produit scalaire aux normes et exemple d'ambiguïté lexicale (*bank*). Ressource pédagogique, pas source primaire.
