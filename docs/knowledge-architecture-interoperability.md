@@ -133,7 +133,7 @@ Each relation type now declares:
 - `learning_dependency`: explicit boolean; when true, the relation must be directed, pedagogical and acyclic;
 - `inverse`: null or another relation type whose inverse declaration must point back.
 
-Every edge of a relation type marked `learning_dependency: true` must include a non-empty `rationale`. This prevents a graph edge from silently becoming a curriculum dependency without an explicit pedagogical justification.
+Every edge of a relation type marked `learning_dependency: true` must include a bilingual `rationale` mapping with non-empty `fr` and `en` values. This prevents a graph edge from silently becoming a curriculum dependency without an explicit pedagogical justification and keeps the public data contract bilingual.
 
 The current registry's ten relation types have been annotated. `part-of` is declared transitive and acyclic; `prerequisite` is pedagogical, acyclic and learning-relevant but not automatically transitively expanded. All other current relation types are non-transitive and do not drive learning order. No inverse relation is currently declared.
 
