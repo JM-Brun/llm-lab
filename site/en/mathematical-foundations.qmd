@@ -1,4 +1,6 @@
 ---
+**Canonical lesson:** [LLM overview](llm-overview.qmd). This mathematical synthesis connects several concepts in the learning route; it is a cross-reference, not a prerequisite.
+
 title: "The mathematical chain of LLM training"
 subtitle: "From logits to next-token probabilities, loss, and gradients"
 keywords: ["type:deep-dive", "destination:deepen", "topic:mathematical-foundations", "level:advanced", "language:en", "status:published"]
