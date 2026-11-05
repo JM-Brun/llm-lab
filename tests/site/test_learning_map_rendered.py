@@ -21,6 +21,8 @@ def test_valid_map_has_real_localized_controls(tmp_path: Path, language: str) ->
         <select data-map-mode><option value="pages">Pages</option>
         <option value="concepts">Concepts</option></select>
         <input type="search" data-map-search>
+        <select data-map-relation-type></select>
+        <button type="button" data-map-reset>Reset</button>
         <div data-map-viewport></div><div data-map-detail-panel></div>
         <p data-map-status></p></div></main>''',
         encoding="utf-8",
