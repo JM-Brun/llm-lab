@@ -21,6 +21,8 @@ related: ["fr/queries-keys-values", "fr/scaled-dot-product-attention"]
 tags: ["type:deep-dive", "destination:deepen", "topic:rope", "level:advanced", "language:fr", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-fr-rope.qmd >}}
 ::: {.chapter-lead}
 Cette page est un **approfondissement avancé**. Elle suppose compris le rôle de l'information positionnelle et le calcul général de l'attention. Elle étudie la géométrie de **RoPE** (*Rotary Position Embedding*), qui applique des rotations dépendant de la position aux requêtes et aux clés avant le calcul des scores d'attention.
 :::
