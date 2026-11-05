@@ -53,7 +53,7 @@ COPY: dict[str, dict[str, Any]] = {
         "relationFilterLabel": "Type de relation",
         "relationFilterAll": "Tous les types",
         "resetView": "Réinitialiser la vue",
-        "resetHint": "Efface la recherche, le filtre et la sélection ; Échap remonte d'un niveau à la fois.",
+        "resetHint": "Efface recherche, filtre et sélection ; Échap remonte d'un niveau à la fois.",
         "ungroupedConcepts": "Autres notions",
         "hiddenRelations": "{count} relation(s) masquée(s) par la recherche ou le filtre.",
         "viewConcept": "Voir la notion",
