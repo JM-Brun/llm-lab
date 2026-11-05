@@ -20,6 +20,8 @@ related: ["en/contextualized-representations", "en/scaled-dot-product-attention"
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:en", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-en-queries-keys-values.qmd >}}
+
 ::: {.chapter-lead}
 The previous page, [GPT and Transformers: architecture and data flow](transformer.qmd), places self-attention within the network's forward pass. Here we isolate the three projections that feed it: **Q**, **K**, and **V**. These are not three token categories, but three learned transformations of a representation. Q and K determine the weights; V supplies the aggregated content. The next page derives the weights and aggregation themselves.
 :::
