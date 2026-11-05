@@ -16,3 +16,7 @@ Suivre la [méthode de synthèse des sources](../source-synthesis-method.md). Co
 6. **Lacunes et suites** — affirmations non résolues, perspectives manquantes, vérifications de provenance/droits et déclencheurs de révision.
 
 Préférer les liens vers les extractions et sections de pages aux duplications de texte. Mettre à jour le dossier lorsque les évaluations de sources ou les intégrations publiées changent.
+
+## Transfer validation
+
+The tokenization/embeddings collection includes a retrospective assessment of whether the Q/K/V-calibrated source-to-knowledge method transfers to a heterogeneous source family: [method transfer validation](tokenization-embeddings-method-transfer-validation-2026-11.md). This is a method assessment, not another source catalogue or a replacement for the collection dossier.
