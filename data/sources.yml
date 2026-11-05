@@ -1088,4 +1088,315 @@ sources:
       pages: [en/positional-encoding, fr/positional-encoding]
       concepts: [positional-encoding]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+  - id: openai-tiktoken-repository
+    title: "tiktoken"
+    creators: ["OpenAI"]
+    source_type: repository
+    identifiers: {}
+    canonical_url: "https://github.com/openai/tiktoken"
+    publisher: "OpenAI / GitHub"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: "MIT", url: "https://github.com/openai/tiktoken/blob/main/LICENSE", status: verified}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, ecosystem:tiktoken]
+      concept_ids: [token]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation, pedagogy]
+      audiences: [practitioner, maintainer]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Repository README, API scope and educational implementation entry point"
+        limitations:
+          - "Historical README benchmark numbers were not reused as current performance evidence."
+          - "The complete repository implementation and release history were not audited."
+          - "The mutable main branch was not pinned in the historical note."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies, en/embedding-space, fr/embedding-space]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: huggingface-tokenizers-repository
+    title: "Tokenizers"
+    creators: ["Hugging Face"]
+    source_type: repository
+    identifiers: {}
+    canonical_url: "https://github.com/huggingface/tokenizers"
+    publisher: "Hugging Face / GitHub"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: "Apache-2.0", url: "https://github.com/huggingface/tokenizers/blob/main/LICENSE", status: verified}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, ecosystem:huggingface]
+      concept_ids: [token]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation]
+      audiences: [practitioner, maintainer]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Repository README and declared Apache-2.0 licence"
+        limitations:
+          - "Detailed API and implementation internals were outside the initial audit."
+          - "The mutable main branch was not pinned in the historical note."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: google-sentencepiece-repository
+    title: "SentencePiece"
+    creators: ["Google"]
+    source_type: repository
+    identifiers: {}
+    canonical_url: "https://github.com/google/sentencepiece"
+    publisher: "Google / GitHub"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: "Apache-2.0", url: "https://github.com/google/sentencepiece/blob/master/LICENSE", status: verified}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, method:bpe, method:unigram, ecosystem:sentencepiece]
+      concept_ids: [token]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation]
+      audiences: [practitioner, maintainer]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Repository README and declared Apache-2.0 licence"
+        limitations:
+          - "Detailed API and implementation internals were outside the initial audit."
+          - "The mutable master branch was not pinned in the historical note."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: sauravp97-hf-bpe-visualizer-article
+    title: "Visualizing BPE Tokenizer Encoding"
+    creators: ["Saurav P"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://huggingface.co/blog/SauravP97/bpe-tokenizer-visualize"
+    publisher: "Hugging Face"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, method:bpe, topic:visualization, ecosystem:huggingface]
+      concept_ids: [token]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation, visualization, pedagogy]
+      audiences: [learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Article claims, advertised GPT-2 example and relation to the companion visualizer package"
+        limitations:
+          - "The article was not treated as proof that the visualizer reproduces the full GPT-2 tokenizer pipeline."
+          - "The article's embedded visual assets and reuse rights were not separately audited."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: sauravp97-hf-bpe-visualizer-repository
+    title: "hf-tokenizer-visualizer"
+    creators: ["Saurav P"]
+    source_type: repository
+    identifiers: {}
+    canonical_url: "https://github.com/SauravP97/hf-tokenizer-visualizer"
+    publisher: "GitHub"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: "1a802315afc0e17dddf3a64972cf25dddda8bbfe"
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, method:bpe, topic:visualization, ecosystem:huggingface]
+      concept_ids: [token]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation, visualization]
+      audiences: [practitioner, maintainer]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Python implementation, packaging metadata and README at pinned commit"
+          - "BPE merge replay and graph construction behavior"
+        limitations:
+          - "The code was inspected but not executed in a clean environment."
+          - "The visualizer does not reproduce the normalizer, pre-tokenizer, byte-level alphabet mapping or post-processing of a production tokenizer."
+          - "Repository dependency declarations and README instructions are inconsistent."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: rushang-chauhan-embeddings-bridge-tokens-context
+    title: "Embeddings: The Bridge Between Tokens and Context"
+    creators: ["Rushang Chauhan"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/"
+    publisher: "LinkedIn"
+    publication_date: "2026-04-30"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: [mathematical-tools-geometry, architectures-mechanisms]
+      tags: [topic:token-embedding, topic:contextualized-representations, topic:visualization]
+      concept_ids: [token, token-embedding, contextualized-representation, positional-encoding]
+    metadata:
+      technical_level: introductory
+      contribution_types: [pedagogy, visualization]
+      audiences: [beginner, learner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Article illustration provenance and its pedagogical role in the text-to-context sequence"
+          - "Cross-check against the existing bilingual contextualized-representations pages"
+        limitations:
+          - "Attribution does not establish reuse permission; exact asset-level rights remain under issue #156."
+          - "The LinkedIn CDN asset is externally hosted and was not copied into the repository."
+          - "The source article was not exhaustively audited for every claim or linked resource."
+    related:
+      pages: [en/contextualized-representations, fr/contextualized-representations, en/embedding-space, fr/embedding-space]
+      concepts: [token, token-embedding, contextualized-representation, positional-encoding]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: poloclub-transformer-explainer-paper-2026
+    title: "Transformer Explainer: Learning LLM Transformers with Interactive Visual Explanation and Experimentation"
+    creators: ["Cho et al."]
+    source_type: paper
+    identifiers: {doi: "10.1145/3772318.3791725"}
+    canonical_url: "https://doi.org/10.1145/3772318.3791725"
+    publisher: "ACM CHI 2026"
+    publication_date: "2026"
+    updated_date: null
+    language: en
+    version: "CHI 2026 published version"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [text-tokenization, mathematical-tools-geometry]
+      tags: [topic:transformer-visualization, topic:tokenization, topic:embeddings]
+      concept_ids: [token, token-embedding, contextualized-representation, self-attention]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [experiment, visualization, pedagogy]
+      audiences: [learner, educator, researcher]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-02"
+        status: partially-scanned
+        inspected_scope:
+          - "CHI 2026 paper and distinction from the earlier 2024 arXiv preprint"
+          - "Learning design and claims relevant to the interactive Transformer explainer"
+        limitations:
+          - "The 2024 arXiv preprint and 2026 CHI paper are different versions and must not be conflated."
+          - "The paper's reported user study does not establish learning outcomes for LLM Lab."
+    related:
+      pages: [en/transformer, fr/transformer, en/text-data, fr/text-data, en/embedding-space, fr/embedding-space]
+      concepts: [token, token-embedding, contextualized-representation, self-attention]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: poloclub-transformer-explainer-repository
+    title: "Transformer Explainer"
+    creators: ["Georgia Tech Polo Club"]
+    source_type: repository
+    identifiers: {}
+    canonical_url: "https://github.com/poloclub/transformer-explainer"
+    publisher: "Georgia Tech Polo Club / GitHub"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: "MIT", url: "https://github.com/poloclub/transformer-explainer/blob/main/LICENSE", status verified}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [text-tokenization, mathematical-tools-geometry]
+      tags: [topic:transformer-visualization, topic:tokenization, topic:embeddings, ecosystem:pytorch]
+      concept_ids: [token, token-embedding, contextualized-representation, self-attention]
+    metadata:
+      technical_level: advanced
+      contribution_types: [implementation, experiment, visualization]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-02"
+        status: partially-scanned
+        inspected_scope:
+          - "README, MIT licence, Svelte components, PyTorch reference model, ONNX inference/data extraction and sampling implementation"
+          - "Source mapping between visible UI stages and implementation files"
+        limitations:
+          - "Inspection is bounded to files relevant to the educational explorer, not the full repository history."
+          - "The top-p implementation truncates logits to the top 50 before cumulative probability; it is not necessarily exact full-vocabulary nucleus sampling."
+          - "The live third-party iframe and deployed browser/mobile behavior are not covered by repository source inspection."
+    related:
+      pages: [en/transformer, fr/transformer]
+      concepts: [token, token-embedding, contextualized-representation, self-attention]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
 
