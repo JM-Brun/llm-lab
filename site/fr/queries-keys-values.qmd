@@ -22,14 +22,14 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 
 {{< include ../includes/generated-guided-context-fr-queries-keys-values.qmd >}}
 
-::: {.chapter-lead}
-La page précédente, [GPT et Transformer : architecture et flux des données](transformer.qmd), situe l'auto-attention dans la passe avant du réseau. Ici, on isole les trois projections qui l'alimentent : **Q**, **K** et **V**. Ce ne sont pas trois catégories de tokens, mais trois transformations apprises d'une représentation. Q et K déterminent les poids ; V fournit le contenu agrégé. La page suivante détaille le calcul de ces poids et de cette agrégation.
-:::
-
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Concept vérifié</span>
   <span class="epistemic-badge badge-status">Architecture : Transformer</span>
 </div>
+
+::: {.chapter-lead}
+La page précédente, [GPT et Transformer : architecture et flux des données](transformer.qmd), situe l'auto-attention dans la passe avant du réseau. Ici, on isole les trois projections qui l'alimentent : **Q**, **K** et **V**. Ce ne sont pas trois catégories de tokens, mais trois transformations apprises d'une représentation. Q et K déterminent les poids ; V fournit le contenu agrégé. La page suivante détaille le calcul de ces poids et de cette agrégation.
+:::
 
 
 ::: {.callout-tip title="L'idée à retenir"}
