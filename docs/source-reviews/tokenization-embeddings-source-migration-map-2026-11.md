@@ -172,8 +172,8 @@ The eventual collection dossier should compare the sources on a consistent set o
 The following are explicit migration blockers for catalogue completeness, not reasons to repeat the technical audit:
 
 - Recover exact title, URL, authors and publication metadata for Ahia, Ali, Wegmann and TokLens from merged PR #326/#332/#333.
-- Recover exact ByteByteGo URL(s) and determine whether tokenization and corpus preparation were one article or separate resources.
-- Recover exact Vizuara URL(s) and separate BPE from embeddings if they are distinct sources.
+- The two ByteByteGo articles are now separately registered with canonical URLs: one corpus-preparation overview and one introductory tokenization/embeddings overview. Do not create a speculative third record unless historical evidence demonstrates a distinct resource.
+- The Vizuara BPE course and 30,000 Feet micro-course are now registered with canonical URLs. A potentially separate Vizuara embeddings resource remains unresolved; recover it only from historical evidence and do not infer that it exists.
 - Recover the exact version/commit used for Raschka Chapter 2, Hugging Face course pages and Polo Club repository.
 - Confirm whether Karpathy's transcript source and timestamp guide have a stable record URL and preserve the limitation that the full video was not watched.
 - Keep all visual asset-level rights checks in #156; do not infer them from source repository licences or attribution.
