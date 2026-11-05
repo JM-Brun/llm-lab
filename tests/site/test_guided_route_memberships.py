@@ -19,11 +19,7 @@ GENERATOR: dict[str, Any] = runpy.run_path(
 def test_membership_projection_preserves_core_optional_and_multiple_contexts(
     language: str,
 ) -> None:
-    pages = [
-        page
-        for page in GENERATOR["load_pages"]()
-        if page["language"] in {language, "shared"}
-    ]
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
     stages = GENERATOR["load_guided_route"](language, pages)
     memberships = GENERATOR["build_guided_route_memberships"](stages)
 
@@ -58,15 +54,9 @@ def test_membership_projection_keeps_empty_membership_absent() -> None:
             id="one",
             title="Stage one",
             objective="An objective",
-            pages=[
-                GENERATOR["ResolvedPage"](
-                    id="en/core", title="Core", href="core.html"
-                )
-            ],
+            pages=[GENERATOR["ResolvedPage"](id="en/core", title="Core", href="core.html")],
             optional_pages=[
-                GENERATOR["ResolvedPage"](
-                    id="en/optional", title="Optional", href="optional.html"
-                )
+                GENERATOR["ResolvedPage"](id="en/optional", title="Optional", href="optional.html")
             ],
         )
     ]
@@ -104,9 +94,7 @@ def test_single_membership_renders_as_context_not_as_a_parent_claim() -> None:
         id="en/rope", title="Rotary Position Embeddings", href="rope.html"
     )
 
-    rendered = GENERATOR["render_guided_page_context_markdown"](
-        page, [membership], "en"
-    )
+    rendered = GENERATOR["render_guided_page_context_markdown"](page, [membership], "en")
 
     assert '<nav class="guided-page-context"' in rendered
     assert 'href="learning-map.html#guided-stage-representations"' in rendered
@@ -133,9 +121,7 @@ def test_multiple_memberships_are_all_rendered_with_their_purposes() -> None:
         id="en/generation", title="Text generation", href="generation.html"
     )
 
-    rendered = GENERATOR["render_guided_page_context_markdown"](
-        page, memberships, "en"
-    )
+    rendered = GENERATOR["render_guided_page_context_markdown"](page, memberships, "en")
 
     assert "guided-page-context--multiple" in rendered
     assert "guided-stage-orientation" in rendered
