@@ -48,6 +48,9 @@ jobs:
       - name: Render site
         run: quarto render site
 
+      - name: Check rendered learning-map controls
+        run: python3 site/tools/check_learning_map_rendered.py site/_site
+
       - name: Check rendered knowledge graph export
         run: python3 site/tools/check_knowledge_graph_rendered.py site/_site
 
