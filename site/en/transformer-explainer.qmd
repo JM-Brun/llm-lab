@@ -1,6 +1,6 @@
 ---
-title: "Explore a Transformer: observe, test, critique"
-subtitle: "A guided activity around a real GPT-2 run and the limits of its visualization"
+title: "Explore and compare Transformers"
+subtitle: "Compare three model families, then observe and critique a real GPT-2 run"
 keywords: ["type:experiment-guide", "destination:practice", "topic:transformer-explainer", "level:applied", "language:en", "status:published"]
 lang: en
 ---
@@ -8,25 +8,85 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer-explainer"
-scope: "Guides an experimental exploration of GPT-2 small with Transformer Explainer: observe tokenization, representations, attention and decoding; design controlled comparisons; then audit visualization limits and selected design choices of the implementation. It does not re-explain GPT architecture."
-purpose: "Readers should be able to formulate and test a hypothesis about a GPT-2 run, distinguish visual observation from evidence about computation, identify the computation path behind the interface, and explain one concrete design choice in the top-p implementation (display truncation followed by nucleus)."
+scope: "Practice activity: run and compare BERT, GPT-2, and T5, then explore GPT-2 small with Transformer Explainer, design controlled experiments, and audit visualization limits and selected implementation choices. It does not replace the conceptual architecture lessons."
+purpose: "Readers should be able to run minimal examples of BERT, GPT-2, and T5, relate their usage interfaces to architecture families without inferring a quality ranking, then formulate and test hypotheses about GPT-2 and distinguish visual observation from evidence about computation."
 suggested_route:
   previous: null
   next: null
 hierarchy:
   parents: ["en/transformer"]
   children: []
-related: ["en/exercises"]
+related: ["en/exercises", "en/transformer-architectures"]
 tags: ["type:experiment-guide", "destination:practice", "topic:transformer-explainer", "level:applied", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
-Use the activity to **observe a real GPT-2 run, test controlled hypotheses, and examine what the tool actually shows**. Move from the interface to the computations, then assess the limits of the experiment.
+Compare representative models from the three main Transformer configurations, then **observe a real GPT-2 run, test controlled hypotheses, and examine what the tool actually shows**. Move from outputs to computations, then assess the limits of the experiments.
 :::
 
 ::: {.callout-note}
 **Before you start:** how a [GPT works](transformer.qmd), [tokens and representations](embedding-space.qmd), [attention](scaled-dot-product-attention.qmd), and [probabilities](probabilities.qmd). The links serve as targeted reminders; you do not need to master the advanced derivations.
 :::
+
+## Compare three Transformer families
+
+This hands-on activity complements the conceptual [Transformer architectures](transformer-architectures.qmd) lesson. It shows how three different usage interfaces correspond to three typical configurations and objectives. It is **neither a benchmark nor a quality ranking**.
+
+### Run one example from each family
+
+This experiment runs one representative model from each configuration. Its purpose is to **observe different objectives and usage interfaces**, not to measure which model is “best”.
+
+#### Set up the environment
+
+In an isolated Python environment:
+
+```bash
+python -m pip install torch transformers
+```
+
+The first run downloads the three models' weights. CPU execution is possible, but may take a few minutes and requires from several hundred megabytes to a few gigabytes of memory, depending on the models and libraries.
+
+#### Run the three examples
+
+```python
+from transformers import pipeline
+
+# 1. Encoder-only: suggest tokens for a masked position.
+bert = pipeline("fill-mask", model="google-bert/bert-base-uncased")
+for candidate in bert("Paris is the capital of [MASK].", top_k=5):
+    print(candidate["token_str"], round(candidate["score"], 3))
+
+# 2. Decoder-only: continue a prefix without seeing future tokens.
+gpt2 = pipeline("text-generation", model="openai-community/gpt2")
+continuation = gpt2(
+    "A language model learns to",
+    max_new_tokens=24,
+    do_sample=False,
+    pad_token_id=gpt2.tokenizer.eos_token_id,
+)
+print(continuation[0]["generated_text"])
+
+# 3. Encoder–decoder: produce a target sequence from an input.
+t5 = pipeline("text2text-generation", model="google-t5/t5-small")
+translation = t5("translate English to German: The house is wonderful.")
+print(translation[0]["generated_text"])
+```
+
+#### Interpret the observations
+
+- **BERT** returns several candidates for a masked position. It uses context on both the left and right of that position in the input.
+- **GPT-2** continues the prefix. Its causal mask prevents each position from attending to later tokens.
+- **T5** receives an input and generates a target sequence. Its autoregressive decoder also uses information from the input through cross-attention.
+
+Exact outputs may vary with library versions and downloaded weights. The prompts are deliberately illustrative: these three calls are **neither a benchmark nor a quality comparison**. The models differ in data, size, tokenizer, and training.
+
+#### Questions to interpret the results
+
+1. Why can BERT suggest a word using context after the mask, while GPT-2 cannot use future tokens?
+2. In the T5 example, which information comes from the input, and which information is produced by the decoder?
+3. Why can these three outputs not establish that one architecture is globally better than the others?
+
+**Takeaway:** the architecture constrains information flow; the training objective and the task determine what the model learns to do and what it is asked to do at inference time.
 
 ## Observe a Transformer at work
 
