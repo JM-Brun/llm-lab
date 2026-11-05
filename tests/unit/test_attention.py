@@ -186,7 +186,6 @@ def test_single_position_attention_returns_its_only_value() -> None:
     np.testing.assert_array_equal(output, v)
 
 
-
 def test_attention_dot_product_ranking_is_not_cosine_ranking() -> None:
     q = np.array([[1.0, 0.0]])
     k = np.array([[0.1, 0.0], [10.0, 10.0]])
