@@ -26,7 +26,7 @@ pedagogical_model:
       - {id: src-convex-hull, kind: geometric-property, description: "A normalized nonnegative weighted sum lies in the convex hull of the contributing value vectors.", locator: "Step 4: Aggregating Values, lines 1059-1060"}
       - {id: src-worked-example, kind: pedagogical-anchor, description: "A three-token sentence with hand-designed four-dimensional inputs and seeded random projections traces QKV through output.", locator: "A Worked Example with Real Words, lines 1270-1449"}
       - {id: src-quiz, kind: assessment, description: "A short quiz checks role distinctions and the attention computation.", locator: "11 Quiz, final section"}
-  source_graph_edges:
+    edges:
     - {from: src-input-representation, type: transformed-by, to: src-projection}
     - {from: src-projection, type: produces, to: src-query}
     - {from: src-projection, type: produces, to: src-key}
