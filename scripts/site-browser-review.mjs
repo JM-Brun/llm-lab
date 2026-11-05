@@ -276,8 +276,11 @@ for (const testCase of cases) {
         { target: step.previous, label: lang === "fr" ? "Étape précédente" : "Previous stop" },
         { target: step.next, label: lang === "fr" ? "Étape suivante" : "Next stop" },
       ].filter(link => link.target);
-      item.buildTour.navigationLinks = await connectionsList.locator("a[href]").evaluateAll(links =>
-        links.map(link => ({ href: link.getAttribute("href"), text: link.innerText.trim() }))
+      item.buildTour.navigationLinks = await connectionsList.locator("li").evaluateAll(items =>
+        items.map(item => ({
+          href: item.querySelector("a[href]")?.getAttribute("href") || null,
+          text: item.innerText.trim(),
+        }))
       );
       for (const expected of expectedLinks) {
         const actual = item.buildTour.navigationLinks.filter(link =>
