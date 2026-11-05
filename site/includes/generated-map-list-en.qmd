@@ -40,6 +40,7 @@
   - [Evaluating a model: from score to experimental protocol](experimental-evaluation.html)
 - **Deepen your understanding**
   - Architectures and mechanisms
+    - [Why scale attention scores?](attention-score-scaling.html)
     - [Cross-attention: connecting two sequences](cross-attention.html)
     - [RoPE: geometry, derivation, and limitations](rope.html)
     - [Hybrid LLM architectures: Nemotron 3 and 3\.5](hybrid-llm-architectures.html)

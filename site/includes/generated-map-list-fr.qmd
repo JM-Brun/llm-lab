@@ -40,6 +40,7 @@
   - [Évaluer un modèle : du score au protocole expérimental](evaluation-experimentale.html)
 - **Approfondir**
   - Architectures et mécanismes
+    - [Pourquoi mettre les scores d'attention à l'échelle ?](attention-score-scaling.html)
     - [Attention croisée : faire communiquer deux séquences](cross-attention.html)
     - [RoPE : géométrie, dérivation et limites](rope.html)
     - [Architectures hybrides : Nemotron 3 et 3\.5](hybrid-llm-architectures.html)

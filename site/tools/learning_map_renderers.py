@@ -747,19 +747,24 @@ def render_territory_map(
 ) -> str:
     """Return the localized interactive shell markup for the drill-down map."""
     copy = _copy_for(language)
-    return GENERATED_FILE_NOTE + _fill(
-        TERRITORY_MAP_TEMPLATE,
-        {
-            "__LANGUAGE__": language,
-            "__DATA_SOURCE__": f"../learning-map-data-{language}.json",
-            "__VIEW_LABEL__": html.escape(copy["viewLabel"]),
-            "__MODE_PAGES__": html.escape(copy["modePages"]),
-            "__MODE_CONCEPTS__": html.escape(copy["modeConcepts"]),
-            "__SEARCH_LABEL__": html.escape(copy["searchLabel"]),
-            "__LOADING__": html.escape(copy["loading"]),
-            "__DETAILS_SUMMARY__": html.escape(copy["detailsSummary"]),
-            "__ASIDE_HINT__": html.escape(copy["asideHint"]),
-        },
+    return (
+        GENERATED_FILE_NOTE
+        + "```{=html}\n"
+        + _fill(
+            TERRITORY_MAP_TEMPLATE,
+            {
+                "__LANGUAGE__": language,
+                "__DATA_SOURCE__": f"../learning-map-data-{language}.json",
+                "__VIEW_LABEL__": html.escape(copy["viewLabel"]),
+                "__MODE_PAGES__": html.escape(copy["modePages"]),
+                "__MODE_CONCEPTS__": html.escape(copy["modeConcepts"]),
+                "__SEARCH_LABEL__": html.escape(copy["searchLabel"]),
+                "__LOADING__": html.escape(copy["loading"]),
+                "__DETAILS_SUMMARY__": html.escape(copy["detailsSummary"]),
+                "__ASIDE_HINT__": html.escape(copy["asideHint"]),
+            },
+        )
+        + "```\n"
     )
 
 
