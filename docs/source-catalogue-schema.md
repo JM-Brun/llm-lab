@@ -162,11 +162,11 @@ Store one file per source in `data/extractions/<source-id>.yml`. Each item is at
 - exact locator and locator type;
 - optional `provenance` when the item's voice differs from the parent source (for example, a reader comment quoted on an article page): `voice` (`primary-author`, `reader-comment`, `editorial-note`, `maintainer`, or `other`), `speaker` when explicitly available, `parent_source_id`, `locator`, and `captured_at`. This identifies who made the statement and where it appeared; it does not validate the content.
 - optional `verification` for community-derived claims: status (`unverified`, `corroborated`, `contradicted`, `not-assessed`), independent source IDs/URLs, and a concise technical assessment. Keep the original comment claim separate from the verifier's interpretation.
-- evidence kind, confidence, scope, assumptions and limitations. Evidence confidence uses exactly one of `established`, `well-supported`, `context-dependent`, `disputed`, `speculative`, or `unverified` (see `site/tools/check_source_catalogue.py`). This is distinct from pedagogical assessment levels (`low`, `moderate`, `high`, `uncertain`);
+- evidence kind, confidence, scope, assumptions and limitations. Evidence confidence uses `evidence_confidence_levels` in `data/source-taxonomy.yml` (`established`, `well-supported`, `context-dependent`, `disputed`, `speculative`, `unverified`). This is distinct from pedagogical assessment levels (`low`, `moderate`, `high`, `uncertain`), defined by `assessment_levels`;
 - optional item-level classification, which can refine but not silently overwrite source classification;
 - existing canonical concept IDs, if justified;
 - candidate page/concept/resource destinations, explicitly marked as proposals;
-- optional item-level `disposition` and rationale after Phase B review, using `item_dispositions` in `data/source-taxonomy.yml`. Source-level `integration_status` is a summary and must not replace item-level decisions.
+- optional item-level `disposition` and rationale after Phase B review, using `item_dispositions` in `data/source-taxonomy.yml`. The validator rejects unknown disposition and evidence-confidence values. Source-level `integration_status` is a summary and must not replace item-level decisions.
 
 The extraction taxonomy is in `data/source-taxonomy.yml`. Use the sample and record rules in `data/extractions/README.md`.
 
