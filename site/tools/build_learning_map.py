@@ -473,7 +473,6 @@ def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], languag
     return "\n".join(lines)
 
 
-
 def write_guided_page_context_fragments(
     language: str, stages: list[ResolvedGuidedRouteStage]
 ) -> list[Path]:
