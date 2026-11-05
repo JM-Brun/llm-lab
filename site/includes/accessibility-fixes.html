@@ -1,0 +1,36 @@
+<script>
+(() => {
+  const selector = ".callout-header[data-bs-toggle='collapse']";
+
+  const enhanceCalloutButtons = () => {
+    document.querySelectorAll(selector).forEach((header) => {
+      if (header.dataset.accessibilityEnhanced === "true") return;
+
+      // Quarto currently renders a div as the collapse trigger. Replace it
+      // with a native button so keyboard activation and button semantics are
+      // provided by the browser rather than reimplemented with key handlers.
+      const button = document.createElement("button");
+      for (const attribute of [...header.attributes]) {
+        button.setAttribute(attribute.name, attribute.value);
+      }
+      button.type = "button";
+      button.dataset.accessibilityEnhanced = "true";
+      button.append(...header.childNodes);
+
+      const title = button.querySelector(".callout-title-container");
+      const accessibleName = title?.textContent?.trim().replace(/\s+/g, " ");
+      if (accessibleName) {
+        button.setAttribute("aria-label", accessibleName);
+      }
+
+      header.replaceWith(button);
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", enhanceCalloutButtons, { once: true });
+  } else {
+    enhanceCalloutButtons();
+  }
+})();
+</script>

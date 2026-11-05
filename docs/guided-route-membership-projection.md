@@ -74,4 +74,11 @@ The stage links should target stable anchors on the guided-route overview, not a
 
 ## Validation boundary
 
-The projection, renderer, fragment writer and regression tests are integrated in `main` through PR #522. The four-page embeddings/Q/K/V integration was merged in [PR #528](https://github.com/JM-Brun/llm-lab/pull/528). Python CI and Quarto static rendering passed for the implementation and four-page integration. A dedicated current-main browser audit in [PR #531](https://github.com/JM-Brun/llm-lab/pull/531) covers the learning map and all four route-context pages in FR/EN, desktop/mobile and light/dark modes. Do not describe the learner-facing context as fully validated until the browser run, Axe report, screenshots, keyboard navigation, contrast and screen-reader review have been completed.
+The projection, renderer, fragment writer and regression tests are integrated in `main` through PR #522. The four-page embeddings/Q/K/V integration was merged in [PR #528](https://github.com/JM-Brun/llm-lab/pull/528). Python CI and Quarto static rendering passed for the implementation and four-page integration. A dedicated current-main browser audit in [PR #531](https://github.com/JM-Brun/llm-lab/pull/531) covers the learning map and all four route-context pages in FR/EN, desktop/mobile and browser prefers-color-scheme light/dark contexts. Do not describe the learner-facing context as fully validated until the browser run, Axe report, screenshots, keyboard navigation, contrast and screen-reader review have been completed.
+
+
+## Accessibility remediation
+
+The merged [PR #531](https://github.com/JM-Brun/llm-lab/pull/531) validated the four page-context pilots and the learning map. It varied browser color-scheme preference, but the site currently ships only one light Quarto theme; no dark-theme support is claimed.
+
+The follow-up Axe findings are tracked in [#532](https://github.com/JM-Brun/llm-lab/issues/532) and are being addressed in [PR #535](https://github.com/JM-Brun/llm-lab/pull/535). That PR adds keyboard semantics to Quarto collapsible callouts and fixes the identified navigation/Mermaid contrast issues.
