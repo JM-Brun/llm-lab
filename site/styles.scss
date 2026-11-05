@@ -1661,3 +1661,20 @@ a.concept-link:focus-visible {
   padding-left: 1.2rem;
   font-size: 0.85rem;
 }
+
+
+/* Keep long MathJax expressions inside the reading column on narrow screens.
+   The expression remains fully available through local horizontal scrolling. */
+@media (max-width: 600px) {
+  mjx-container[jax="CHTML"] {
+    display: inline-block;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    vertical-align: middle;
+  }
+
+  mjx-container[jax="CHTML"][display="true"] {
+    display: block;
+  }
+}
