@@ -19,7 +19,7 @@
 <text x="448" y="355" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#334c7d">ce qui est à comparer</text>
 <rect x="336" y="439" width="224" height="86" rx="15" fill="#fff0e8" stroke="#df8b67" stroke-width="2"/>
 <text x="448" y="473" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="22" font-weight="800" fill="#9b4e3c">Valeur · V</text>
-<text x="448" y="501" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#7c5143">l'information à récupérer</text>
+<text x="448" y="501" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#7c5143">contenu à agréger</text>
 <path d="M560 193 H620 V263 H650 M560 336 H620 V263" fill="none" stroke="#60758b" stroke-width="2.5" marker-end="url(#arrow)"/>
 <rect x="656" y="207" width="212" height="112" rx="16" fill="#fff" stroke="#a9b9c8" stroke-width="2"/>
 <text x="762" y="239" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="19" font-weight="750" fill="#10233f">1. Comparer</text>
