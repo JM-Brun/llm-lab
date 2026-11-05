@@ -127,3 +127,6 @@ Axe also reported two baseline issue types on the completed page cases:
 - serious color-contrast: muted text #6c757d on #f8fafc measured 4.48:1; Mermaid green edge labels #16a34a on #ebecec measured 2.78:1.
 
 These findings require review on the current main-based rerun. They are not evidence that the new concept browser itself causes the issues. Inspect Axe output and screenshots separately; do not claim WCAG conformance from source review or Quarto success.
+
+
+The current-main rerun is implemented in [PR #531](https://github.com/JM-Brun/llm-lab/pull/531). It covers the concept browser plus all four guided-route context pilots (overview, generation, embeddings and Q/K/V), and explicitly verifies that the obsolete pipeline stepper is absent from the latter two lessons. The rerun also captures Axe target HTML snippets to distinguish Quarto-generated markup from project-owned components.
