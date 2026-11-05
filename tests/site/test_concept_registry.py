@@ -298,3 +298,16 @@ def test_inverse_relation_declarations_must_be_reciprocal() -> None:
     errors = validate_registry(data)
 
     assert any("must point back" in error for error in errors)
+
+
+def test_learning_dependency_requires_explicit_rationale() -> None:
+    data = _valid_registry()
+    data["relations"] = [
+        {"from": "token", "type": "prerequisite", "to": "embedding"},
+    ]
+
+    errors = validate_registry(data)
+
+    assert any("rationale: required for learning dependency" in error for error in errors)
+    data["relations"][0]["rationale"] = "The token representation is used by the next stage."
+    assert validate_registry(data) == []
