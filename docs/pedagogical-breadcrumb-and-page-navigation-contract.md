@@ -1,6 +1,6 @@
 # Pedagogical breadcrumb and page-navigation contract
 
-**Status:** proposed implementation contract  
+**Status:** canonical contract; guided-route context pilot implemented; site-location breadcrumb still under investigation  
 **Scope:** reader-facing navigation across the bilingual LLM Lab site.  
 **Coordination:** [#368 — consistent bilingual lesson-page template](https://github.com/JM-Brun/llm-lab/issues/368), [#225 — conceptual curriculum](https://github.com/JM-Brun/llm-lab/issues/225), [#415 — guided path vs resource graph](https://github.com/JM-Brun/llm-lab/issues/415), [#337 — rendered curriculum/navigation review](https://github.com/JM-Brun/llm-lab/issues/337).
 
