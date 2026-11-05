@@ -128,3 +128,27 @@ The dot product ranks $k_2$ higher, while cosine similarity ranks $k_1$ higher. 
 ### Evidence boundary
 
 This is a source-content and canonical-source inspection, not a rendered browser review. The bilingual Q/K/V and scaled-attention source files were compared; the Q/K/V pages have matching optional geometric, linguistic and role distinctions, and the scaled-attention pages have matching worked-example structure. Desktop/mobile layout, disclosure interaction, equation rendering, keyboard behavior and screenshot evidence remain unverified. See the [component-level media and visual audit](../source-reviews/qkv-visual-asset-audit-2026-11-05.md).
+
+
+## 8. Incremental source test — Brenndoerfer (2026-11-05)
+
+The new tutorial was compared against the canonical bilingual Q/K/V, scaled-attention and attention-score-scaling lessons. It is the fourth Q/K/V instructional source in the current collection; it does not warrant another page or route.
+
+| Learner question / difficulty | Brenndoerfer contribution | Existing LLM Lab treatment | Decision |
+|---|---|---|---|
+| Why separate Q/K/V projections? | Motivation from raw similarity versus contextual relevance; database/catalog analogy | Index-card analogy and explicit matching-versus-payload rationale | Already covered; alternative analogy retained as reference |
+| Why divide by sqrt(d_k)? | Explicit variance derivation from independent zero-mean, unit-variance components, followed by softmax concentration | Dedicated attention-score-scaling lesson | Integrate by reference; test assumptions and non-guarantee wording, no duplicate derivation |
+| Why can d_v differ from d_k? | Compact tensor-shape table | Q/K/V lesson and tensor reference | Already covered |
+| What does a full computation look like? | Code plus three-token worked trace | Deterministic worked example and Build walkthrough | Integrate by reference only; random projections are less suitable as evidence of learned linguistic behavior |
+| What can a random attention heatmap establish? | Explicitly says random-init patterns are meaningless | Existing attention-weight and interpretability caveats | Clarify as an adversarial epistemic regression case; no page edit yet |
+| Does “independent projections” mean independent training? | Ambiguous phrase in §5 | Canonical lesson says separately parameterized but jointly optimized | Already covered; add to adversarial source-synthesis checks |
+| Does the chapter order imply a better project route? | Eleven-section sequence from intuition through code and quiz | Existing split across Q/K/V, attention, scaling and Build | Integrate by reference; no route change |
+| Can its quiz validate learning? | Eight questions advertised, only question one visible | #447 protocol and existing exercise hub | Defer; no efficacy or assessment-quality claim |
+
+### Candidate integration actually tested
+
+A plausible candidate was to import the source's variance derivation into the core Q/K/V page. Rejected after checking ownership: the separate bilingual attention-score-scaling lesson already explains the scaling rationale. Repeating it on Q/K/V would blur the boundary between projection roles and score normalization. The smallest justified integration is source-level cross-reference and two adversarial regression cases (random-init interpretation; parameterization versus optimization).
+
+### Pedagogical evidence boundary
+
+The chapter's progressive formalization is directly observable; its learning effectiveness is not. The quiz is only partially visible and no learners were observed. Treat this as an editorial comparison, not a learner validation result.
