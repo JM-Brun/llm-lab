@@ -74,10 +74,10 @@ Ces notions sont regroupées dans le parcours [Géométrie et interprétabilité
 - **Transformer** — famille d'architectures neuronales fondées sur l'attention et des transformations de représentations, introduite par Vaswani et ses collègues en 2017. Ce terme ne désigne pas une famille de modèles unique. Voir [synthèse du Transformer](transformer.qmd) et [historique](transformer-history.qmd).
 - **GPT (*Generative Pre-trained Transformer*)** — famille de modèles génératifs pré-entraînés fondés sur le Transformer ; les GPT classiques utilisent une architecture décodeur seul et un objectif autorégressif. GPT n'est pas synonyme de Transformer. Voir [GPT et Transformer](transformer.qmd) et [architectures Transformer](transformer-architectures.qmd).
 - **Attention** — mécanisme qui calcule des poids à partir de requêtes et de clés, puis agrège les valeurs correspondantes. Voir [Q, K et V](queries-keys-values.qmd).
-- **Requête (Q)** — projection utilisée pour calculer les compatibilités avec les clés.
-- **Clé (K)** — projection comparée à une requête pour obtenir un score.
-- **Valeur (V)** — projection dont les représentations sont agrégées avec les poids d'attention.
-- **Attention auto-référentielle (*self-attention*)** — attention dans laquelle les requêtes, clés et valeurs proviennent des représentations de la même séquence.
+- **Requête (Q)** — projection utilisée pour calculer les compatibilités avec les clés. Voir [Q, K et V](queries-keys-values.qmd).
+- **Clé (K)** — projection comparée à une requête pour obtenir un score. Voir [Q, K et V](queries-keys-values.qmd).
+- **Valeur (V)** — projection dont les représentations sont agrégées avec les poids d'attention. Voir [Q, K et V](queries-keys-values.qmd).
+- **Attention auto-référentielle (*self-attention*)** — attention dans laquelle les requêtes, clés et valeurs proviennent des représentations de la même séquence. Voir [Q, K et V](queries-keys-values.qmd).
 - **Attention multi-têtes** — plusieurs mécanismes d'attention calculés en parallèle, puis combinés.
 - **Masque causal** — contrainte qui empêche une position de consulter les positions futures. Voir [Masque causal](causal-masking.qmd).
 - **Transformer autorégressif** — Transformer entraîné à modéliser la séquence de gauche à droite : il estime chaque token conditionnellement aux tokens précédents. « Autorégressif » décrit l'objectif de prédiction, pas une obligation de générer un seul token à la fois pendant l'entraînement.
