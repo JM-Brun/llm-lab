@@ -44,9 +44,12 @@ def test_membership_projection_preserves_core_optional_and_multiple_contexts(
     ]
 
     assert f"{language}/build-path" not in memberships
-    assert f"{language}/experimental-evaluation" in memberships if language == "fr" else (
-        f"{language}/experimental-evaluation" in memberships
+    practice_page = (
+        f"{language}/evaluation-experimentale"
+        if language == "fr"
+        else f"{language}/experimental-evaluation"
     )
+    assert practice_page in memberships
 
 
 def test_membership_projection_keeps_empty_membership_absent() -> None:
