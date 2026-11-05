@@ -1,6 +1,4 @@
 ---
-**Notion canonique :** [Panorama des modèles de langage](llm-overview.qmd). Cette page en approfondit la formalisation probabiliste ; elle complète les explications du parcours sans constituer un prérequis.
-
 title: "Formaliser mathématiquement la modélisation du langage"
 subtitle: "Règle de chaîne, factorisation autorégressive et cibles souples"
 keywords: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:fr", "status:published"]
@@ -143,6 +141,8 @@ La page [Entropie croisée](cross-entropy.qmd) reste la référence pour la pert
 - [Entropie croisée](cross-entropy.qmd) : perte par token et conventions d'entraînement.
 - [Chaîne mathématique de l'entraînement](mathematical-foundations.qmd) : carte synthétique des logits aux gradients.
 - Bishop, *Pattern Recognition and Machine Learning*, chapitres 1–2, pour les fondements probabilistes.
+
+**Notion canonique :** [Panorama des modèles de langage](llm-overview.qmd). Cette page en approfondit la formalisation probabiliste ; elle complète les explications du parcours sans constituer un prérequis.
 
 ::: {.language-switch}
 **Langue :** [Français](language-modeling-math.qmd) · [English](../en/language-modeling-math.qmd)
