@@ -88,6 +88,20 @@ Cet exemple distingue les rôles : la requête et les clés déterminent les poi
 
 Le schéma montre aussi pourquoi trois objets ne doivent pas être confondus : **scores** (compatibilités brutes), **poids** (normalisés relativement aux positions accessibles) et **sorties** (combinaisons pondérées des valeurs). Dans une attention non causale, le masque peut être absent ou exprimer une autre contrainte. La normalisation du softmax ne transforme pas les poids en mesure universelle de pertinence sémantique.
 
+
+
+::: {.callout-note collapse="true" title="Deux points de vue complémentaires : passage de messages et combinaison convexe"}
+**Passage de messages.** On peut voir chaque position comme un nœud qui envoie un message : son vecteur de valeur $v_j$. Une requête à la position $i$ attribue des poids aux positions accessibles ; la sortie est le mélange pondéré qu'elle reçoit. L'auto-attention peut ainsi être comprise comme un mécanisme de passage de messages dépendant du contenu : les valeurs sont les messages, tandis que les scores requête-clé déterminent leurs poids de routage. C'est une analogie du calcul, pas l'affirmation que le modèle utilise un graphe fixe.
+
+**Géométrie convexe.** Si au moins une clé est accessible, les poids du softmax ligne par ligne vérifient $\alpha_{ij}\geq 0$ et $\sum_j\alpha_{ij}=1$. Par conséquent,
+$$
+o_i=\sum_j\alpha_{ij}v_j
+$$
+est une combinaison convexe des vecteurs de valeurs accessibles : avant toute projection de sortie ou addition résiduelle ultérieure, $o_i$ appartient à leur enveloppe convexe. Cette propriété donne une interprétation géométrique précise de la somme pondérée. Elle ne signifie pas que la représentation finale du bloc Transformer doit rester dans cette enveloppe convexe.
+
+Cette perspective est adaptée du [tutoriel Q/K/V de Brenndoerfer](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism) ; la propriété découle directement de la positivité et de la normalisation des poids softmax.
+:::
+
 ## Origine et rôle
 
 La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762), qui compare l'attention additive et l'attention par produit scalaire et introduit le facteur de mise à l'échelle. Elle permet des calculs matriciels efficaces et s'intègre naturellement aux mécanismes multi-têtes.
