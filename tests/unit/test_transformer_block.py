@@ -4,6 +4,7 @@ import numpy as np
 import pytest
 
 from llm_lab.foundations.gpt_config import GPTConfig
+import llm_lab.foundations.transformer_block as transformer_block_module
 from llm_lab.foundations.transformer_block import TransformerBlock
 
 
@@ -47,9 +48,7 @@ def test_block_attention_rejects_inconsistent_head_count() -> None:
 def test_gpt2_scaled_initialization_applies_only_to_residual_output_projections(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    import llm_lab.foundations.transformer_block as transformer_block_module
-
-    observed_stds: list[float] = []
+        observed_stds: list[float] = []
     original_init_linear = transformer_block_module._init_linear
 
     def recording_init_linear(
