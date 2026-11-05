@@ -84,7 +84,7 @@ Before implementation, inspect #416, #415, #130, #225, #355, #458 and the active
 
 ## Initial audit of the current canonical relation registry (2026-11-05)
 
-Inspected `data/concepts.yml` on the default branch. The registry currently declares nine relation types: `represented-by`, `prerequisite`, `part-of`, `constrains`, `contributes-to`, `applies-to`, `mapped-by`, `produces`, `normalized-by`, and `evaluated-by` (ten types; all currently declare `direction: directed`). The records provide bilingual labels and descriptions, which is a useful base.
+Inspected `data/concepts.yml` on the default branch. The registry currently declares ten relation types: `represented-by`, `prerequisite`, `part-of`, `constrains`, `contributes-to`, `applies-to`, `mapped-by`, `produces`, `normalized-by`, and `evaluated-by` (all currently declare `direction: directed`). The records provide bilingual labels and descriptions, which is a useful base.
 
 The current contract does **not** yet encode:
 - permitted source/target object kinds or concept/domain constraints;
