@@ -6,6 +6,8 @@
 **Accessed:** 2026-11-05  
 **Canonical URL:** https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism
 
+> **Post-integration reconciliation (2026-11-05):** the item-level comparison below records the initial assessment. The later [four-source comparison and canonical-page audit](../source-syntheses/qkv-four-source-comparison-2026-11.md) supersedes the provisional deferral of the convex-hull property: it is now integrated, with precise scope limits, in the bilingual scaled-attention pages. Routing/payload and message-passing interpretations are also integrated as bounded explanatory notes.
+
 ## 1. Inspection and effort
 
 The canonical page was directly retrieved. The visible page identifies an 11-section chapter, a 40-minute reading estimate and its position in a larger 513-chapter Language AI Handbook. The chapter contains prose, equations, Python snippets, outputs, described visualizations, a worked example, parameter discussion and a quiz.
@@ -62,7 +64,7 @@ The source was compared against the existing Nishanthan, Neha KK and Codefinity 
 | Explicit variance derivation for scaling | Moderate–high: connects `sqrt(d_k)` to a probabilistic model and exposes assumptions | Requires independent, zero-mean, unit-variance components; not a universal activation law | Integrate by reference as optional intermediate depth; do not duplicate canonical derivation |
 | Tensor shape walkthrough | Moderate reference value, especially explicit `d_v != d_k` | Single-head, unbatched; no masks, head axes, cross-attention or GQA/MQA | Already covered in canonical implementation/shape work; retain as alternative reference |
 | End-to-end “The cat sat” trace | Moderate as a debugging/reference example | Inputs are hand-designed; projections are seeded random matrices, not trained weights | Integrate by reference; no second numerical workbench |
-| Convex-hull property of weighted values | Mathematically valid and potentially useful for geometry-oriented learners | Applies only to the normalized weighted sum before output projection/residual/MLP | Defer pending a concrete learner task |
+| Convex-hull property of weighted values | Mathematically valid and useful for geometry-oriented learners | Applies only to the normalized weighted sum over accessible values before output projection/residual/MLP; not to fully masked rows | Integrated in the bilingual scaled-attention pages, with scope bounded |
 | Claims about learned linguistic head patterns and symmetry | Useful review stress-test | Broad claims exceed evidence shown; masks and positional mechanisms complicate symmetry | Clarify/retain as a source-quality regression case |
 
 ### Candidate contribution tested against canonical content
@@ -89,7 +91,7 @@ This is a real item-level decision, not a topic-count decision.
 - No new canonical concept, relation, page, navigation item or learning-route edge.
 - Keep the variance derivation as an optional reference linked to the existing scaled-attention topic.
 - Keep the shape walkthrough and numerical trace as alternative references; do not duplicate the canonical workbench.
-- Defer the convex-hull observation until a learner task demonstrates a need.
+- The convex-hull observation is now integrated as an optional note in the bilingual scaled-attention pages; the later decision is recorded in the four-source audit.
 - Retain the database analogy as already covered.
 - Preserve the technical caveats as source-review regression examples.
 - Do not reuse the article's charts or images; visual inspection and reuse rights remain open.
@@ -104,7 +106,7 @@ The source's main value is a coherent intermediate-level teaching route and an a
 | Inspection | Partial pass | Long chapter structure is easy to enumerate; figures, interactive controls and outbound links require separate work |
 | Extraction | Pass for selected text items | Source-local model captures a route with 11 sections; care needed not to over-extract every repeated explanation |
 | Comparison | Pass | Existing Q/K/V dossier and coverage matrix made overlap visible; exact item-level decisions still required |
-| Integration decision | Pass | One bounded optional reference, no canonical content change |
+| Integration decision | Pass | Bounded routing/payload, message-passing and convex-hull notes integrated in existing bilingual pages; scaling derivation remains reference-only |
 | Validation | Partial | Structural and technical reasoning documented; YAML/build/schema checks still required; no browser or learner validation |
 | Effort measurement | Provisional | Manual estimates only; no phase telemetry or automation timing yet |
 
@@ -121,9 +123,14 @@ These are documentation-level refinements. Do not create a second workflow or a 
 
 - Existing Q/K/V source records and unique contributions remain intact.
 - No source count is used as a quality metric.
-- No canonical page, graph, route or quiz was expanded merely because a new source was added.
+- Existing canonical pages were enriched only where a distinct explanatory benefit was identified; no new page, route or duplicate quiz/workbench was added.
 - No third-party figure was copied.
 - The source remains partially scanned.
 - No learner-effectiveness claim is made.
 
 Remaining: validate the new YAML against the canonical schema and validators; inspect the final diff; run targeted checks/build; optionally retrieve original figure bytes and exercise the interactive quiz if those components become relevant. Learner testing remains governed by #447 and the rendered/accessibility gate #483.
+
+
+## 8. Post-integration reconciliation
+
+The initial comparison in sections 3 and 5 was written before the final page edits. The current disposition is maintained in the [four-source comparison and canonical-page audit](../source-syntheses/qkv-four-source-comparison-2026-11.md): routing versus payload is integrated on the Q/K/V pages; message passing and the convex-hull property are integrated on the scaled-attention pages; the variance derivation and worked example remain references rather than duplicated content. The source remains partially scanned, and the original visual assets and rights remain unresolved.

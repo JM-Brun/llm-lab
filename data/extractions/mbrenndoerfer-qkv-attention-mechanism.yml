@@ -219,8 +219,8 @@ items:
     candidate_destinations:
       pages: [en/queries-keys-values, fr/queries-keys-values]
       concepts: [query, key, value]
-    disposition: already-covered
-    disposition_rationale: "Do not add a second database/search analogy; the existing canonical index-card framing already serves this purpose."
+    disposition: integrate-by-reference
+    disposition_rationale: "Keep the alternative database/search analogy in the source record, but do not stack a second retrieval analogy into the canonical lesson; the existing index-card framing already serves this learner need."
 
   - id: mbrenndoerfer-qkv-attention-mechanism:convex-hull
     kind: claim
@@ -237,13 +237,13 @@ items:
       teaching_form: [geometric-property, equation]
       abstraction_level: intermediate
       prerequisites: [softmax, convex-combination]
-      distinctive_value: "Connects row-wise normalization to a geometric property of the output."
+      distinctive_value: "Connects row-wise normalization to a geometric property of the weighted output and is now available as optional learner-facing depth."
       limitations: ["The property applies to the value vectors used in that particular attention row."]
     pedagogical_assessment:
       novelty: {level: moderate, rationale: "The geometric property is not a core concept currently foregrounded in the Q/K/V lesson."}
       complementarity: {level: moderate, rationale: "It gives a precise geometric consequence of the weighted-sum formula."}
-      pedagogical_value: {level: uncertain, rationale: "Potentially useful for learners studying convex geometry, but no evidence shows it resolves a current learner difficulty."}
-      applicability: {level: moderate, rationale: "Retain as optional depth/reference; no canonical page change until a learner question justifies it."}
+      pedagogical_value: {level: moderate, rationale: "The bounded property is now integrated as optional depth in the bilingual scaled-attention lessons; learner benefit still requires pilot evidence."}
+      applicability: {level: high, rationale: "Integrated as an optional bilingual note beside weighted aggregation, with the pre-projection and accessible-row scope stated explicitly."}
       redundancy: {level: low, rationale: "The specific convex-hull consequence is not the same as the existing weighted-sum explanation."}
       evidence_quality: {level: high, rationale: "Follows directly from nonnegative normalized weights."}
     classification: {primary_theme: architectures-mechanisms, secondary_themes: [mathematical-tools-geometry], tags: [topic:attention, topic:weighted-aggregation], concept_ids: [attention-weight, value]}

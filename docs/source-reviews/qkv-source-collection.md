@@ -16,7 +16,7 @@ This page is the entry point for the Q/K/V source collection. It is intentionall
 | `neha-kk-understanding-qkv-medium` | [Neha KK — Understanding Queries, Keys and Values in Transformers](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) | 2025-12-31 | [YAML extraction](../../data/extractions/neha-kk-understanding-qkv-medium.yml) | [Review](qkv-neha-kk-medium-2026-11.md) | Partially scanned: visible author text now directly reconciled against the live page-text view; actual figure files, linked resources and rights unresolved |
 | `codefinity-qkv-course` | [Codefinity — Queries, Keys, and Values](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) | Course date not independently verified | [YAML extraction](../../data/extractions/codefinity-qkv-building-blocks.yml) | [Review](qkv-codefinity-course-2026-11.md) | Partially scanned: lesson and parent outline inspected; two interface SVG URLs identified but bytes/rights unresolved; full interactive course, other lessons, assignments and linked resources uninspected |
 | `mbrenndoerfer-qkv-attention-mechanism` | [Michael Brenndoerfer — Query, Key, Value: The Foundation of Transformer Attention](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism) | 2025-06-01; updated 2025-06-04 | [YAML extraction](../../data/extractions/mbrenndoerfer-qkv-attention-mechanism.yml) | [Review](qkv-mbrenndoerfer-2026-11.md) · [Visual inventory](qkv-brenndoerfer-visual-inventory-2026-11.md) | Partially scanned: chapter text inspected; nine visual teaching moves inventoried but original assets/rights unresolved; code not executed; quiz interactions and linked resources uninspected |
-| `huggingface-transformers-kv-cache-explanation` | [Hugging Face Transformers — Caching](https://huggingface.co/docs/transformers/main/en/cache_explanation) | Living documentation | [Source catalogue](../../data/sources.yml) | [DEV review, community follow-up](qkv-nishanthan-devto-2026-11.md#7-follow-up-scan-reconciliation) | Partially scanned; technical follow-up source, not a third Q/K/V tutorial |
+| `huggingface-transformers-kv-cache-explanation` | [Hugging Face Transformers — Caching](https://huggingface.co/docs/transformers/main/en/cache_explanation) | Living documentation | [Source catalogue](../../data/sources.yml) | [DEV review, community follow-up](qkv-nishanthan-devto-2026-11.md#7-follow-up-scan-reconciliation) | Partially scanned; technical follow-up source, not an additional Q/K/V tutorial |
 
 **Medium scan refinement (2026-11-05):** the canonical page is now directly readable through the page reader; the visible text reconciles with the earlier indexed snapshot. Four in-body image placements remain visible (three captioned figures and one uncaptioned placeholder), but none was retrieved as image bytes or visually inspected. A “No responses yet” state was visible at this recheck; this is point-in-time evidence only. The raw DOM, cover/hero asset and reuse rights remain unresolved.
 
@@ -28,7 +28,7 @@ The [Q/K/V pedagogical coverage matrix](../source-syntheses/qkv-pedagogical-cove
 
 ## 2. Cross-source synthesis
 
-The three tutorials converge on the standard introductory account:
+The three initial tutorials converge on the standard introductory account; Brenndoerfer is compared separately in section 10 and in the four-source audit:
 
 - Q and K provide learned representations used to compute compatibility scores.
 - V provides learned representations aggregated using the normalized attention weights.
@@ -53,7 +53,7 @@ That agreement is useful pedagogical convergence, not independent experimental v
 | Directionality / asymmetry | Claims attention is directional/non-symmetric without a matrix example | Not developed | Defer a worked matrix example; qualify that distinct Q/K projections typically yield non-symmetric scores, not universally |
 | KV cache | Reader comment, not article body | Not covered | Track as a separately sourced inference-efficiency topic |
 
-## 2.1 Three-source comparison: differentiated pedagogical value
+## 2.1 Three-source baseline: differentiated pedagogical value
 
 The collection now compares three introductory tutorials, not just their repeated definitions.
 
@@ -78,7 +78,7 @@ The collection now compares three introductory tutorials, not just their repeate
 - **Do not duplicate:** the complete score/scale/softmax/weighted-sum derivation, already owned by the scaled-dot-product-attention lesson.
 - **Do not promote to canonical graph nodes:** no new stable mechanism is introduced by these tutorial perspectives; they enrich explanations and examples, not the semantic ontology.
 
-See the [three-source complementary-perspectives synthesis](../source-syntheses/qkv-complementary-perspectives-2026-11.md) for the full comparison and integration rationale.
+See the [initial three-source complementary-perspectives synthesis](../source-syntheses/qkv-complementary-perspectives-2026-11.md) for that baseline, and the [four-source comparison and canonical-page audit](../source-syntheses/qkv-four-source-comparison-2026-11.md) for the reconciled four-source view.
 
 ## 3. What changed in LLM Lab
 
@@ -100,11 +100,11 @@ The DEV comparison exposed that the concept registry did not give stable identit
 These nodes formalize existing teaching; they do not imply that either tutorial introduced a new scientific mechanism. The semantic graph and pedagogical route remain distinct structures.
 
 ### Curriculum and navigation
-No new Q/K/V page, curriculum stage, prerequisite edge, navigation edge, Build step or duplicated numerical explanation is justified by these three tutorials. The project route remains broader and more explicit than either article's local sequence.
+No new Q/K/V page, curriculum stage, prerequisite edge, navigation edge, Build step or duplicated numerical explanation is justified by these four tutorials. The project route remains broader and more explicit than either article's local sequence.
 
 ## 4. Comparison dossier
 
-The detailed source-graph and route crosswalk is maintained in [QKV tutorial: source learning graph and route comparison](qkv-learning-graph-comparison-2026-11.md). That dossier is the place to append detailed comparisons as further sources are scanned. This collection page should remain a concise index and synthesis, not another copy of every extraction.
+The detailed source-graph and route crosswalk is maintained in [QKV tutorial: source learning graph and route comparison](qkv-learning-graph-comparison-2026-11.md). The current four-source pedagogical and canonical-page comparison is in the [four-source audit](../source-syntheses/qkv-four-source-comparison-2026-11.md). That dossier is the place to append detailed comparisons as further sources are scanned. This collection page should remain a concise index and synthesis, not another copy of every extraction.
 
 ## 5. Adding future Q/K/V sources
 

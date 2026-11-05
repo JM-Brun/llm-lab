@@ -2,14 +2,14 @@
 
 **Audit date:** 2026-11-05  
 **Audited revision:** `main` at `79b91333a41bb74aa10a29f9e9a201eeb87a35a7`  
-**Scope:** canonical English/French Q/K/V lessons, adjacent scaled-dot-product-attention lessons, attention exercise inventory, project diagrams, and the three extracted introductory sources.  
+**Scope:** canonical English/French Q/K/V lessons, adjacent scaled-dot-product-attention lessons, attention exercise inventory, project diagrams, and the four extracted introductory sources.  
 **Purpose:** assess whether LLM Lab can be treated as a useful public pedagogical source on Q/K/V, rather than only as a consumer of external explanations.
 
 ## 1. Executive assessment
 
 **Conclusion: yes, LLM Lab is already a credible and comparatively strong pedagogical resource for the standard Q/K/V formulation.** Its main advantage is not novelty of the mechanism. It is the way it combines a clear conceptual distinction, explicit mathematical notation and tensor shapes, careful boundaries on interpretation, bilingual coverage, a sequenced learning route, worked calculations, exercises, implementation links, and inspectable source provenance.
 
-Against the three scanned introductory sources, LLM Lab has greater explanatory depth and stronger epistemic safeguards. The external sources remain useful for their compact analogies, visual explanations, geometric intuition and quiz design. The project does not need to imitate their page structures or reproduce their media.
+Against the four scanned introductory sources, LLM Lab has greater explanatory depth and stronger epistemic safeguards. The external sources remain useful for their compact analogies, visual explanations, geometric intuition and quiz design. The project does not need to imitate their page structures or reproduce their media.
 
 This is a **content and source-quality audit**, not a claim of measured learning effectiveness or completed browser QA. CI, Quarto and the publish workflow succeeded for the audited main revision. The published pages could not be opened through the available page-reading interface during this audit; desktop/mobile layout, live equation rendering, disclosure behavior, keyboard navigation and screen-reader output remain unverified.
 
@@ -63,6 +63,7 @@ The comparison below uses the source-specific reviews and structured extractions
 | Nishanthan K, [DEV Community](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a) / [author's Medium mirror](https://nishanthan-k.medium.com/how-query-key-and-value-qkv-work-in-transformers-1274bfa14ea8) | Compact functional narrative; visual explanation; bank ambiguity and pronoun examples; warnings against semantic-similarity and winner-take-all readings | Original illustration bytes and reuse rights unresolved; year in visible DEV header unverified; no substantial worked tensor exercise observed in the scanned article | LLM Lab is more formal, explicit about scope and misconceptions, and provides a linked mathematical continuation and practice. DEV remains a useful alternative short explanation and potential visual reference. |
 | Neha KK, [Medium](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) | Clear “why three projections?” motivation; separates matching from payload; useful pronoun/coreference scenario | Four image placements are visible but image bytes and rights remain unresolved; some broad efficiency/parallelism wording needs qualification; no measured model evidence for the linguistic example | LLM Lab preserves the design rationale but states it more carefully, distinguishes jointly optimized parameters from independently parameterized projections, and avoids claiming measured coreference behavior. |
 | Codefinity, [Q/K/V lesson](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) | Geometric Q/K perspective; bank/river polysemy example; one multiple-choice item with role-confusion distractors | Two resolved SVG URLs are interface icons, not pedagogical figures; their bytes were not inspected; full interactive course and assignments were not scanned | LLM Lab turns the geometric lens into an explicit dot-product identity with norm dependence, connects it to the full calculation, and retains the quiz pattern without duplicating a quiz. |
+| Michael Brenndoerfer, [Q/K/V chapter](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism) | Assumption-explicit variance derivation; shape walkthrough; complete toy trace; routing/payload distinction; message-passing and convex-hull interpretations | Random projections are not learned behavior; variance result depends on independence/variance assumptions; figures and quiz interactions not inspected; convex-hull claim needs pre-projection/accessibility limits | The derivation and toy trace remain references; routing/payload, message passing and convex-hull interpretations are integrated as bounded optional notes in existing bilingual pages. |
 | **LLM Lab (this project)** | Integrated learning route, explicit projection and tensor notation, boundaries between concepts, bilingual pages, worked numerical calculation, exercises, implementation route and source traceability | More material than a short tutorial; no learner-pilot evidence; rendered accessibility and media review incomplete; no stable scholarly release/citation record yet | Strongest overall as a structured learning resource, provided its scope is stated as an introductory treatment of the standard formulation rather than an exhaustive account of all attention variants. |
 
 ### What should not be copied from the sources
@@ -155,7 +156,7 @@ The project's distinctive contribution is the **auditable synthesis and learning
 |---|---|
 | EN/FR source-content parity | Reviewed in source |
 | Projection equations, dimensions and numerical arithmetic | Reviewed |
-| Comparison with three scanned tutorials and their extracted claims | Reviewed |
+| Comparison with four scanned tutorials and their extracted claims | Reviewed |
 | Primary/advanced technical reference comparison | Reviewed at the cited paper/documentation level |
 | Quarto site build | Passed on audited main revision |
 | CI | Passed on audited main revision |
@@ -178,6 +179,8 @@ The project's distinctive contribution is the **auditable synthesis and learning
 - [Neha KK source review](qkv-neha-kk-medium-2026-11.md)
 - [Nishanthan K source review](qkv-nishanthan-devto-2026-11.md)
 - [Codefinity source review](qkv-codefinity-course-2026-11.md)
+- [Brenndoerfer source review](qkv-mbrenndoerfer-2026-11.md)
+- [Four-source comparison and canonical-page audit](../source-syntheses/qkv-four-source-comparison-2026-11.md)
 
 **Audit boundary:** this document records a source-content and repository-level audit. It does not substitute for rendered-site, accessibility, user-study or legal/licensing review.
 
@@ -204,3 +207,10 @@ The audit above describes the pre-audit baseline at commit `79b91333a41bb74aa10a
 LLM Lab is a useful public educational source for the standard Q/K/V formulation because it combines a bilingual conceptual lesson, mathematical continuation, implementation reference, tests, source comparison and explicit epistemic limits. The new tests improve implementation confidence for the cases they exercise; they do **not** establish correctness for all shapes, numerical regimes, architectures or optimized kernels, and they do not establish learner mastery.
 
 The pilot protocol improves the ability to collect formative evidence but remains unrun. The source-media audit remains partial. A stable scholarly citation should identify an immutable release after the browser/accessibility review, not a moving branch or an unverified DOI.
+
+
+## 11. Fourth-source integration reconciliation — 2026-11-05
+
+The original audit's comparative baseline covered three tutorials. Brenndoerfer was subsequently added as a fourth source. The canonical bilingual pages were enriched in bounded ways: routing versus payload on the Q/K/V pages, and message passing plus the convex-hull property on the scaled-attention pages. The convex-hull statement is restricted to normalized nonnegative weights over accessible values, before output projection or residual/MLP transformations. The variance derivation and end-to-end toy trace remain reference-only because the project already owns the scaling deep dive and numerical workbench.
+
+This later source comparison does not establish learner effectiveness. The current evidence remains content inspection, implementation tests and an unrun pilot protocol. See the [four-source comparison and canonical-page audit](../source-syntheses/qkv-four-source-comparison-2026-11.md) for the item-level mapping and remaining validation boundaries.
