@@ -193,7 +193,7 @@ Five primary research papers now have source-scoped atomic extraction records, b
 
 ### Remaining migration tasks
 
-1. Continue structured extraction backfill for research sources with precise primary-PDF locators (next candidates: Ethayarajh, Li and Steck), then reconstruct pedagogical models only for instructional sources where the inspected source supports them.
+1. Continue structured extraction backfill for the remaining research sources with sufficiently precise primary-source locators. Next candidates are Arnett et al. and TokLens; assess Ahia et al. and Mikolov et al. separately against their existing evidence depth before deciding whether an extraction adds value. Reconstruct pedagogical models only for instructional sources where the inspected source supports them.
 2. Recover exact canonical URLs for the ByteByteGo and Vizuara resources from their original historical references; do not guess them.
 3. Add source-specific review records only where a durable review cannot be represented adequately by this dossier and migration map.
 4. Keep asset rights verification in #156 and deferred browser review in #320/#329.
