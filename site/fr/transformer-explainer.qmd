@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/transformer-explainer"
-scope: "Activité de pratique : exécuter et comparer BERT, GPT-2 et T5, puis explorer GPT-2 small avec Transformer Explainer, concevoir des expériences contrôlées et auditer les limites de la visualisation et certains choix de son implémentation. Ne remplace pas les leçons conceptuelles sur les architectures."
-purpose: "Le lecteur doit pouvoir exécuter un exemple minimal de BERT, GPT-2 et T5, relier les interfaces observées à leurs familles architecturales sans en déduire un classement de qualité, puis formuler et tester des hypothèses sur GPT-2 et distinguer observation visuelle et preuve sur le calcul."
+scope: "Activité pratique : exécuter et comparer un encodeur seul (BERT), un décodeur seul (GPT-2) et un encodeur-décodeur (T5), puis explorer GPT-2 small avec Transformer Explainer : observer tokenisation, représentations, attention et décodage ; concevoir des expériences contrôlées ; identifier la chaîne computationnelle derrière l’interface ; distinguer observation visuelle et preuve sur le calcul ; auditer les limites de la visualisation et les choix d’implémentation, notamment la composition top-k puis top-p (troncation d’affichage suivie du nucleus). Ne remplace pas les leçons conceptuelles sur les architectures."
+purpose: "Le lecteur doit pouvoir exécuter un exemple minimal de BERT, GPT-2 et T5 et relier les interfaces observées à leurs familles architecturales sans en déduire un classement de qualité ; formuler et tester une hypothèse sur une exécution de GPT-2 ; identifier la chaîne de calcul derrière l’interface ; distinguer observation visuelle et preuve computationnelle ; expliquer précisément le choix top-k puis top-p et ses conséquences sur le seuil du nucleus."
 suggested_route:
   previous: null
   next: null
@@ -21,7 +21,7 @@ tags: ["type:experiment-guide", "destination:practice", "topic:transformer-expla
 -->
 
 ::: {.chapter-lead}
-Observez une exécution de GPT-2, testez des hypothèses contrôlées et examinez ce que l'outil montre réellement. Passez de l'interface aux calculs, puis évaluez les limites de l'expérience.
+Comparez d'abord des exemples représentatifs des trois configurations Transformer, puis **observez une exécution réelle de GPT-2, testez des hypothèses contrôlées et examinez ce que l'outil montre réellement**. Passez des sorties aux calculs, puis évaluez les limites des expériences.
 :::
 
 ::: {.callout-note}
