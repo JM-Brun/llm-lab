@@ -10,7 +10,10 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "site" / "tools"))
 
-from check_source_catalogue import _validate_item_controlled_values  # noqa: E402
+from check_source_catalogue import (  # noqa: E402
+    _validate_item_controlled_values,
+    validate_source_catalogue,
+)
 
 
 def _taxonomy() -> dict:
@@ -78,3 +81,7 @@ def test_item_controlled_values_reject_unknown_values() -> None:
 
     assert any("evidence.confidence: unsupported value 'high'" in error for error in errors)
     assert any("disposition: unsupported value 'already-integrated'" in error for error in errors)
+
+
+def test_existing_source_catalogue_and_extractions_match_taxonomy() -> None:
+    assert validate_source_catalogue(ROOT) == []
