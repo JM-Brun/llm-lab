@@ -20,6 +20,8 @@ related: ["fr/training-examples"]
 tags: ["type:concept-lesson", "destination:understand", "topic:tokenization-strategies", "level:core", "language:fr", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-fr-tokenization-strategies.qmd >}}
 ::: {.chapter-lead}
 Un tokenizer est un choix de représentation et d'ingénierie. Il doit couvrir les entrées attendues et maîtriser la taille du vocabulaire et le coût en séquence. Aucun découpage — mot, caractère, octet ou sous-mot — n'est optimal sur tous les corpus et toutes les tâches.
 :::
