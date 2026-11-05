@@ -1,5 +1,7 @@
 # Tokenization and embeddings — cross-source synthesis
 
+**Current inventory snapshot (2026-11-05).** The canonical catalogue contains 49 source records across LLM Lab. This collection has 11 structured tokenization/embeddings extraction records; the repository-wide extraction directory contains 16 records in total (11 tokenization/embeddings and 5 Q/K/V or KV-cache). These are inventory counts, not measures of scan completeness or pedagogical quality. Migration PRs #468 and #469 are merged. Exact ByteByteGo/Vizuara URLs and asset-level reuse checks remain unresolved as described below and in #156.
+
 **Status:** living source collection · **Review date:** 2026-11-05  
 **Catalogue:** [data/sources.yml](../../data/sources.yml)  
 **Migration map:** [Tokenization and embeddings source migration map](tokenization-embeddings-source-migration-map-2026-11.md)  
