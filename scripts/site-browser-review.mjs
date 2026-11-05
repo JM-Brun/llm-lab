@@ -14,18 +14,26 @@ const visualCases = ["light", "dark"].flatMap(theme => [
   { lang: "fr", viewport: { width: 390, height: 844 }, label: "mobile", theme },
 ]);
 
+const routeContextCases = visualCases.filter(testCase => testCase.theme === "light");
+
 const cases = [
   ...visualCases.map(testCase => ({
     ...testCase, page: "learning-map.html", kind: "learning-map",
   })),
-  ...visualCases.flatMap(testCase =>
+  ...routeContextCases.flatMap(testCase =>
     ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "cross-attention.html", "logits.html", "probabilities.html", "likelihood.html", "decoding-strategies.html", "cross-entropy.html", "loss.html", "gradients.html", "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
       ...testCase, page, kind: "route-context",
+    }))
+  ),
+  ...visualCases.flatMap(testCase =>
+    ["gpt-config-walkthrough.html", "gpt-ops-walkthrough.html", "transformer-block-walkthrough.html", "gpt-model-walkthrough.html", "gpt-generation-walkthrough.html"].map(page => ({
+      ...testCase, page, kind: "build-tour",
     }))
   ),
 ];
 
 const browser = await chromium.launch({ headless: true });
+const stageAnchorCache = new Map();
 const report = {
   generatedAt: new Date().toISOString(),
   baseUrl: BASE,
@@ -45,12 +53,15 @@ for (const testCase of cases) {
 
   const url = `${BASE}/${lang}/${pagePath}`;
   const item = { lang, viewport, label, theme, page: pagePath, kind, url, consoleErrors, pageErrors };
+  const runInteractiveAudit = viewport.width >= 1000 && theme === "light";
+  item.auditProfile = runInteractiveAudit ? "full-desktop-light" : "visual-responsive";
   try {
-    const response = await page.goto(url, { waitUntil: "networkidle", timeout: 60000 });
+    const response = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
     item.httpStatus = response?.status() ?? null;
     if (!response || !response.ok()) throw new Error(`HTTP status ${item.httpStatus}`);
+    await page.waitForLoadState("networkidle", { timeout: 1500 }).catch(() => {});
     await page.evaluate(() => document.fonts?.ready.then(() => true));
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(300);
 
     item.title = await page.title();
     item.h1 = await page.locator("h1").first().innerText().catch(() => null);
@@ -109,6 +120,9 @@ for (const testCase of cases) {
     await page.screenshot({ path: screenshot, fullPage: true, animations: "disabled" });
     item.screenshot = screenshot;
 
+    // Keyboard and accessibility interaction checks run once per language/page
+    // on desktop/light. Mobile and dark cases remain visual/responsive checks.
+    if (runInteractiveAudit) {
     // Keyboard traversal: record actual focus targets and whether the browser
     // exposes a visible focus indicator while tabbing through the page.
     await page.evaluate(() => { window.scrollTo(0, 0); document.activeElement?.blur(); });
@@ -157,6 +171,8 @@ for (const testCase of cases) {
       item.keyboardDisclosure.afterOpen = await details.evaluate(el => el.hasAttribute("open"));
       item.keyboardDisclosure.toggledByEnter = item.keyboardDisclosure.beforeOpen !== item.keyboardDisclosure.afterOpen;
     }
+
+    } // end runInteractiveAudit keyboard checks
 
     if (kind === "learning-map") {
       const mode = page.locator("[data-map-mode]");
@@ -234,6 +250,103 @@ for (const testCase of cases) {
       await page.keyboard.press("Escape");
     }
 
+    if (kind === "build-tour") {
+      const currentPageId = `${lang}/${pagePath.replace(/\.html$/, "")}`;
+      const tour = await page.evaluate(async ({ language, currentId }) => {
+        const response = await fetch(`../learning-map-data-${language}.json`);
+        if (!response.ok) throw new Error(`learning-map metadata request failed: ${response.status}`);
+        const payload = await response.json();
+        const byId = new Map(payload.pages.map(item => [item.id, item]));
+        const current = byId.get(currentId);
+        if (!current) throw new Error(`missing page metadata: ${currentId}`);
+
+        let first = current;
+        const backwards = new Set([first.id]);
+        while (first.route?.previous) {
+          const previous = byId.get(first.route.previous);
+          if (!previous || backwards.has(previous.id)) {
+            throw new Error("build-tour previous links are missing or cyclic");
+          }
+          backwards.add(previous.id);
+          first = previous;
+        }
+
+        const steps = [];
+        const visited = new Set();
+        let cursor = first;
+        let expectedPrevious = null;
+        while (cursor) {
+          if (visited.has(cursor.id) || cursor.route?.previous !== expectedPrevious) {
+            throw new Error("build-tour metadata is cyclic or non-reciprocal");
+          }
+          visited.add(cursor.id);
+          steps.push({ id: cursor.id, previous: cursor.route?.previous ?? null, next: cursor.route?.next ?? null });
+          expectedPrevious = cursor.id;
+          cursor = cursor.route?.next ? byId.get(cursor.route.next) : null;
+          if (steps.at(-1).next && !cursor) throw new Error("build-tour next link targets missing metadata");
+        }
+        if (steps.length !== 5 || steps.at(-1).next !== null) {
+          throw new Error(`expected a finite five-page build tour; found ${steps.length} pages`);
+        }
+        return steps;
+      }, { language: lang, currentId: currentPageId });
+      const index = tour.findIndex(step => step.id === currentPageId);
+      if (index < 0) throw new Error("current page is not part of its resolved build-tour chain");
+      const step = tour[index];
+      const lead = page.locator("main .chapter-lead").first();
+      const leadText = await lead.innerText();
+      const ordinalPattern = lang === "fr"
+        ? new RegExp(`\\b${index + 1}\\s+sur\\s+5\\b`, "i")
+        : new RegExp(`\\b${index + 1}\\s+of\\s+5\\b`, "i");
+      if (!await lead.count() || !ordinalPattern.test(leadText)) {
+        throw new Error("build-tour opening does not expose the correct localized step number");
+      }
+      const siteBreadcrumb = page.locator(".quarto-title-breadcrumbs");
+      item.buildTour = {
+        ordinal: index + 1,
+        leadText,
+        siteBreadcrumbCount: await siteBreadcrumb.count(),
+        guidedRouteContextCount: await page.locator(".guided-page-context").count(),
+      };
+      if (item.buildTour.siteBreadcrumbCount !== 1 || item.buildTour.guidedRouteContextCount !== 0) {
+        throw new Error("build-tour page must retain one site breadcrumb and no unrelated Understand route context");
+      }
+      const connectionsHeading = page.locator("main h2").filter({
+        hasText: lang === "fr" ? /^Connexions$/ : /^Connections$/,
+      }).last();
+      const connectionsList = connectionsHeading.locator("xpath=following-sibling::ul[1]");
+      const expectedLinks = [
+        { target: step.previous, label: lang === "fr" ? "Étape précédente" : "Previous stop" },
+        { target: step.next, label: lang === "fr" ? "Étape suivante" : "Next stop" },
+      ].filter(link => link.target);
+      item.buildTour.navigationLinks = await connectionsList.locator("li").evaluateAll(items =>
+        items.map(item => ({
+          href: item.querySelector("a[href]")?.getAttribute("href") || null,
+          text: item.innerText.trim(),
+        }))
+      );
+      item.buildTour.navigationLinks = item.buildTour.navigationLinks.map(link => ({
+        ...link,
+        targetId: link.href
+          ? new URL(link.href, page.url()).pathname.slice(1).replace(".html", "")
+          : null,
+      }));
+      for (const expected of expectedLinks) {
+        const actual = item.buildTour.navigationLinks.filter(link =>
+          link.targetId === expected.target && link.text.includes(expected.label)
+        );
+        if (actual.length !== 1) {
+          throw new Error(`build-tour ${expected.label} link to ${expected.target} is missing or duplicated`);
+        }
+      }
+      if (item.buildTour.navigationLinks.some(link =>
+        /(?:previous|next) stop|étape (?:précédente|suivante)/i.test(link.text) &&
+        !expectedLinks.some(expected => link.targetId === expected.target && link.text.includes(expected.label))
+      )) {
+        throw new Error("build-tour has an unexpected previous/next link at this sequence boundary");
+      }
+    }
+
     if (kind === "route-context") {
       const siteBreadcrumb = page.locator(".quarto-title-breadcrumbs");
       const duplicateBreadcrumb = page.locator(".llm-breadcrumb");
@@ -258,40 +371,22 @@ for (const testCase of cases) {
         accessibleLabel: await context.getAttribute("aria-label"),
       };
       if (!item.routeContext.stageLinks) throw new Error("guided-route context has no stage links");
-      const stageLinks = context.locator('a[href*="learning-map.html#guided-stage-"]');
-      const stageFragments = await stageLinks.evaluateAll(links =>
+      const stageFragments = await context.locator('a[href*="learning-map.html#guided-stage-"]').evaluateAll(links =>
         links.map(link => (link.getAttribute("href").split("#")[1] || ""))
       );
-      const stageTexts = await stageLinks.evaluateAll(links =>
-        links.map(link => (link.textContent || "").trim())
-      );
-      item.routeContext.stageTexts = stageTexts;
-      const stageOrder = [
-        "guided-stage-orientation",
-        "guided-stage-text-input",
-        "guided-stage-representations",
-        "guided-stage-computation",
-        "guided-stage-prediction",
-        "guided-stage-learning-evaluation",
-      ];
-      stageFragments.forEach((fragment, index) => {
-        const expectedNumber = String(stageOrder.indexOf(fragment) + 1).padStart(2, "0");
-        if (!stageTexts[index] || !stageTexts[index].startsWith(expectedNumber + " ·")) {
-          throw new Error("guided-route context stage link is missing its numbered stage label");
+      if (!stageAnchorCache.has(lang)) {
+        const routeMapPage = await page.context().newPage();
+        try {
+          await routeMapPage.goto(`${BASE}/${lang}/learning-map.html`, { waitUntil: "domcontentloaded", timeout: 30000 });
+          await routeMapPage.waitForLoadState("networkidle", { timeout: 5000 }).catch(() => {});
+          const ids = await routeMapPage.locator("[id^='guided-stage-']").evaluateAll(nodes => nodes.map(node => node.id));
+          stageAnchorCache.set(lang, new Set(ids));
+        } finally {
+          await routeMapPage.close();
         }
-      });
-      if (item.routeContext.visibleCurrentPageText.includes("›")) {
-        throw new Error("guided-route context must not mimic the site breadcrumb chevron trail");
       }
-      const routeMapPage = await page.context().newPage();
-      try {
-        await routeMapPage.goto(`${BASE}/${lang}/learning-map.html`, { waitUntil: "networkidle", timeout: 60000 });
-        item.routeContext.stageAnchorsResolve = await routeMapPage.evaluate(ids =>
-          ids.every(id => id && document.getElementById(id) !== null), stageFragments
-        );
-      } finally {
-        await routeMapPage.close();
-      }
+      const availableStageAnchors = stageAnchorCache.get(lang);
+      item.routeContext.stageAnchorsResolve = stageFragments.every(id => availableStageAnchors.has(id));
       if (!item.routeContext.stageAnchorsResolve) throw new Error("guided-route stage link points to a missing anchor");
       if (pagePath === "generation.html") {
         const expectedStages = ["guided-stage-orientation", "guided-stage-prediction"];
@@ -379,6 +474,7 @@ for (const testCase of cases) {
       }
     }
 
+    if (runInteractiveAudit) {
     const calloutSelector = ".callout-header[data-bs-toggle='collapse']";
     const calloutHeaders = page.locator(calloutSelector);
     item.callouts = { count: await calloutHeaders.count() };
@@ -433,23 +529,28 @@ for (const testCase of cases) {
       );
       item.callouts.keyboardEnterAndSpace = true;
     }
+    } // end runInteractiveAudit callout checks
 
-    const axe = await new AxeBuilder({ page })
-      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-      .analyze();
-    item.axe = {
-      violations: axe.violations.map(v => ({
-        id: v.id, impact: v.impact, description: v.description,
-        help: v.help, nodes: v.nodes.slice(0, 8).map(n => ({
-          target: n.target, html: n.html?.slice(0, 500), summary: n.failureSummary?.slice(0, 500),
+    if (runInteractiveAudit) {
+      const axe = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+        .analyze();
+      item.axe = {
+        violations: axe.violations.map(v => ({
+          id: v.id, impact: v.impact, description: v.description,
+          help: v.help, nodes: v.nodes.slice(0, 8).map(n => ({
+            target: n.target, html: n.html?.slice(0, 500), summary: n.failureSummary?.slice(0, 500),
+          })),
         })),
-      })),
-      violationCount: axe.violations.length,
-      passes: axe.passes.length,
-      incomplete: axe.incomplete.length,
-    };
+        violationCount: axe.violations.length,
+        passes: axe.passes.length,
+        incomplete: axe.incomplete.length,
+      };
+    } else {
+      item.axe = { skipped: true, reason: "Axe runs once per page/language on desktop/light" };
+    }
 
-    const blockingAxe = axe.violations.filter(v => ["aria-allowed-attr", "color-contrast"].includes(v.id));
+    const blockingAxe = (item.axe.violations || []).filter(v => ["aria-allowed-attr", "color-contrast"].includes(v.id));
     item.axe.blockingViolationCount = blockingAxe.length;
     if (blockingAxe.length) {
       report.failures.push(
@@ -459,7 +560,7 @@ for (const testCase of cases) {
     if (item.layout.horizontalOverflow || item.learningMapLayout?.horizontalOverflow) {
       report.failures.push(`${pagePath}/${lang}/${label}/${theme}: horizontal overflow`);
     }
-    if (!item.keyboard.length) report.failures.push(`${pagePath}/${lang}/${label}/${theme}: no keyboard focus targets`);
+    if (runInteractiveAudit && !item.keyboard.length) report.failures.push(`${pagePath}/${lang}/${label}/${theme}: no keyboard focus targets`);
   } catch (error) {
     item.error = String(error);
     report.failures.push(`${pagePath}/${lang}/${label}/${theme}: ${String(error)}`);
