@@ -133,7 +133,7 @@ items:
       tags: [topic:context-window, topic:in-context-learning, application:api-cost]
       concept_ids: [token]
     candidate_destinations:
-      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/context-window, fr/context-window]
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: []
       route_ids: []
     disposition: integrate-by-reference
