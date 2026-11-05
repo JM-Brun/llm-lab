@@ -2015,6 +2015,52 @@ sources:
         - docs/source-reviews/qkv-codefinity-course-2026-11.md
         - docs/source-reviews/qkv-source-collection.md
 
+  - id: varis-stephen-libovicky-tokcollate-2026
+    title: "TokCollate: A Comprehensive Tool for Tokenizer Evaluation and Visualization across Languages"
+    creators: ["Dušan Variš", "Abishek Stephen", "Jindřich Libovický"]
+    source_type: paper
+    identifiers:
+      doi: "10.18653/v1/2026.acl-demo.41"
+      anthology_id: "2026.acl-demo.41"
+    canonical_url: "https://aclanthology.org/2026.acl-demo.41/"
+    publisher: "Association for Computational Linguistics"
+    publication_date: "2026-07"
+    updated_date: null
+    language: en
+    version: "ACL 2026 System Demonstrations proceedings version, pp. 418–427"
+    revision: null
+    licence: {identifier: "CC-BY-4.0", url: "https://creativecommons.org/licenses/by/4.0/", status: verified}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, topic:visualization, ecosystem:python]
+      concept_ids: [token]
+    metadata:
+      technical_level: advanced
+      contribution_types: [implementation, benchmark, visualization, experiment]
+      audiences: [researcher, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-05"
+        status: partially-scanned
+        inspected_scope:
+          - "Direct ACL Anthology proceedings PDF, all ten pages: system architecture, input/output contract, metric definitions, language metadata, visualizer, use cases, case study, related tools, limitations and configuration appendix"
+          - "ACL Anthology publication metadata, DOI, authors, venue and post-2016 CC BY 4.0 publication licence"
+        limitations:
+          - "The GitHub repository and implementation were not inspected or executed; the paper's statement that the software is MIT-licensed was not independently verified against the repository."
+          - "The live visualizer was not opened or tested; screenshots were read in the paper but browser interaction, accessibility and current behavior remain unverified."
+          - "The paper reports tool capabilities; no independent benchmark reproduction or metric implementation audit was performed."
+          - "The paper's data-source dependencies and language metadata were recorded from its description, not independently audited."
+          - "Third-party figures/assets were not extracted or reused."
+    related:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records:
+        - docs/source-syntheses/tokenization-embeddings-protocol-transferability-2026-11.md
+        - data/extractions/varis-stephen-libovicky-tokcollate-2026.yml
+
   - id: mbrenndoerfer-qkv-attention-mechanism
     title: "Query, Key, Value: The Foundation of Transformer Attention"
     creators: ["Michael Brenndoerfer"]
