@@ -98,3 +98,28 @@ A topical match is not sufficient evidence for **already covered**. First test w
 - [Neha KK source review](../source-reviews/qkv-neha-kk-medium-2026-11.md)
 - [Codefinity source review](../source-reviews/qkv-codefinity-course-2026-11.md)
 - [External-source integration workflow](../workflows/source-to-learning-system-integration.md)
+
+
+## 7. Closure review — 2026-11-05
+
+The following decisions were made after inspecting the merged bilingual Q/K/V pages, the bilingual scaled-attention pages, and the current English attention exercise inventory. They supersede the earlier status of the three candidates as merely unverified possibilities.
+
+| Candidate | Evidence in the canonical project | Decision | Owner / destination |
+|---|---|---|---|
+| Dot product versus cosine similarity | Both Q/K/V pages state $q^\top k=\lVert q\rVert\lVert k\rVert\cos\theta$ and explicitly explain that vector norms matter. However, the current attention workbench's hand example uses unit-norm Q/K vectors, so it does not demonstrate a ranking difference between dot product and cosine similarity. | **Accept a bounded numerical contrast**, but do not add another Q/K/V page section. Use a two-dimensional, hand-checkable pair with different key norms in the existing attention workbench. | **#80** — scaled dot-product attention. |
+| Soft weighting versus hard retrieval | The scaled-attention lesson computes softmax weights approximately $(0.67,0.33)$ and an output $(6.7,6.6)$ from two distinct value vectors. It explicitly says the weights are relative to accessible keys, not semantic relevance. The Q/K/V lesson also rejects nearest-neighbour interpretation. | **Already demonstrated; reject a second numerical example.** The existing example is sufficient to show that aggregation is not argmax retrieval. | No new work. Retain links between Q/K/V and the attention derivation. |
+| Q/K/V role discrimination | The Q/K/V lesson has a self-check asking which projections determine weights, which supplies aggregated vectors, and what changes when V changes alone. The attention exercise inventory also asks learners to explain why changing $W_V$ does not change Q/K scores. Codefinity's four-option item is a useful distractor pattern, but the current project already assesses the same conceptual distinction through explanation and prediction. | **Defer the multiple-choice format; do not add a duplicate quiz now.** Revisit only if learner-pilot evidence or an exercise redesign identifies a specific residual misconception that open response does not expose. | Keep the pattern in the source extraction; any future attention assessment belongs with the attention exercise owner, coordinated with #80 and #447. |
+
+### Numerical contrast hand-off to #80
+
+The existing attention example uses unit vectors, for which dot product and cosine similarity coincide. A minimal contrast can use:
+
+- $q=(1,0)$;
+- $k_1=(0.1,0)$, giving $q^\top k_1=0.1$ and $\cos(q,k_1)=1$;
+- $k_2=(10,10)$, giving $q^\top k_2=10$ and $\cos(q,k_2)=1/\sqrt{2}$.
+
+The dot product ranks $k_2$ higher, while cosine similarity ranks $k_1$ higher. This isolates the effect of vector norms without requiring a new concept page. If used in scaled attention, state the key dimension and apply the same scale factor to both scores; the ranking remains unchanged by this common positive scale. The example is a mathematical counterexample, not a claim about semantic relevance.
+
+### Evidence boundary
+
+This is a source-content and canonical-source inspection, not a rendered browser review. The bilingual Q/K/V and scaled-attention source files were compared; the Q/K/V pages have matching optional geometric, linguistic and role distinctions, and the scaled-attention pages have matching worked-example structure. Desktop/mobile layout, disclosure interaction, equation rendering, keyboard behavior and screenshot evidence remain unverified. See the [component-level media and visual audit](../source-reviews/qkv-visual-asset-audit-2026-11-05.md).
