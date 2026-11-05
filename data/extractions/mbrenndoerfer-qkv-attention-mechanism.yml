@@ -250,8 +250,8 @@ items:
     candidate_destinations:
       pages: [en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
       concepts: [attention-weight, weighted-aggregation]
-    disposition: defer
-    disposition_rationale: "Preserve as a candidate mathematical insight, but defer learner-facing integration until a specific transfer task or learner difficulty warrants it."
+    disposition: integrate
+    disposition_rationale: "Integrated as a bounded optional note in both bilingual scaled-attention lessons; the statement is restricted to the pre-output-projection weighted sum and rows with at least one accessible key."
 
   - id: mbrenndoerfer-qkv-attention-mechanism:routing-versus-payload
     kind: claim
@@ -281,7 +281,7 @@ items:
     candidate_destinations:
       pages: [en/queries-keys-values, fr/queries-keys-values]
       concepts: [key, value]
-    disposition: integrated
+    disposition: integrate
     disposition_rationale: "Added as a short, source-attributed, collapsible note in both language versions, explicitly marking the linguistic illustration as hypothetical."
 
   - id: mbrenndoerfer-qkv-attention-mechanism:message-passing
@@ -312,7 +312,7 @@ items:
     candidate_destinations:
       pages: [en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
       concepts: [self-attention, attention-weight]
-    disposition: integrated
+    disposition: integrate
     disposition_rationale: "Added as an optional, explicitly analogical note in both scaled-attention pages."
 
   - id: mbrenndoerfer-qkv-attention-mechanism:scope-claims
