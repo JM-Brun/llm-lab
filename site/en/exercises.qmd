@@ -283,7 +283,7 @@ print("Q:", Q.shape, "K:", K.shape, "V:", V.shape)
 
 Expected output: Q=(3, 2), K=(3, 2), V=(3, 3). The projections act independently on each position; the three matrices share the same number of rows here, but need not share the same number of columns.
 
-Changing W_V changes the aggregated vectors, but not the scores or weights, which depend on Q and K.
+Changing W_V can change V and the resulting aggregated output, but it does not change the scores or weights, which depend on Q and K.
 
 </details>
 
