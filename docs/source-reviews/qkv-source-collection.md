@@ -20,7 +20,7 @@ This page is the entry point for the Q/K/V source collection. It is intentionall
 
 ## 2. Cross-source synthesis
 
-The two tutorials converge on the standard introductory account:
+The three tutorials converge on the standard introductory account:
 
 - Q and K provide learned representations used to compute compatibility scores.
 - V provides learned representations aggregated using the normalized attention weights.
@@ -75,8 +75,9 @@ See the [three-source complementary-perspectives synthesis](../source-syntheses/
 ## 3. What changed in LLM Lab
 
 ### Learning content
-- The Q/K/V explanation now makes the separation between matching (Q/K) and payload (V) explicit.
-- A bounded pronoun-context example is used as an illustration of cross-position information flow.
+- The Q/K/V explanation makes the separation between matching (Q/K) and payload (V) explicit, including Neha KK’s design rationale for learning these roles through separate projections.
+- The optional geometric lens from Codefinity connects Q/K compatibility to the dot product, vector norms and angle, while distinguishing dot product from cosine similarity.
+- A bounded pronoun-context example is used as an illustration of cross-position information flow; Codefinity’s bank example is contrasted with it as lexical polysemy rather than coreference.
 - The example is explicitly not presented as evidence of measured attention, coreference resolution or interpretability.
 - The attention equations and detailed computation remain in the dedicated scaled-dot-product-attention lesson.
 - The current input to Q/K/V is described as the representation entering the attention sublayer, not always as raw token embeddings; positional information may be injected at different points, including mechanisms such as RoPE.
@@ -91,7 +92,7 @@ The DEV comparison exposed that the concept registry did not give stable identit
 These nodes formalize existing teaching; they do not imply that either tutorial introduced a new scientific mechanism. The semantic graph and pedagogical route remain distinct structures.
 
 ### Curriculum and navigation
-No new Q/K/V page, curriculum stage, prerequisite edge, navigation edge, Build step or duplicated numerical explanation is justified by these two tutorials. The project route remains broader and more explicit than either article's local sequence.
+No new Q/K/V page, curriculum stage, prerequisite edge, navigation edge, Build step or duplicated numerical explanation is justified by these three tutorials. The project route remains broader and more explicit than either article's local sequence.
 
 ## 4. Comparison dossier
 
