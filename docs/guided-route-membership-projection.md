@@ -1,6 +1,6 @@
 # Guided-route page membership projection
 
-**Status:** implemented as a tested data projection; not yet rendered as page navigation.  
+**Status:** implemented, rendered as a bilingual pilot on overview and generation pages; browser/accessibility and learner validation remain open.  
 **Source of truth:** `data/guided-route.yml`.  
 **Implementation:** `build_guided_route_memberships()` in `site/tools/build_learning_map.py`.  
 **Tests:** `tests/site/test_guided_route_memberships.py`.  
@@ -52,7 +52,7 @@ Stage anchors are added to the generated bilingual route fragments, and responsi
 
 The renderer is covered by tests for a single optional membership, multiple core memberships, stable anchors, and an absent membership. A generator now emits one ignored Quarto partial per route-member page. The English and French overview and generation lessons include these partials as a first page-level pilot: the overview exercises the single-membership path, while generation exercises the multi-membership path. The Quarto build runs the generator before rendering; local builds must run `python site/tools/build_learning_map.py` before `quarto render site`.
 
-The next design/implementation step must choose an accessible presentation that does not misrepresent multi-membership:
+The current pilot has selected and implemented a semantic distinction (one membership as a labelled navigation breadcrumb; multiple memberships as a labelled section with all contexts). The rendered presentation still requires browser and assistive-technology review:
 
 - one membership: identify the stage context and current page;
 - multiple memberships: show all relevant stage contexts with their distinct purpose, or omit the breadcrumb if the presentation becomes ambiguous or noisy;
@@ -63,4 +63,4 @@ The stage links should target stable anchors on the guided-route overview, not a
 
 ## Validation boundary
 
-The projection, renderer, fragment writer and regression tests are committed in the implementation PR. Python CI passes on the latest validated head. The page-level pilot is being checked by the Quarto workflow; visual review, keyboard navigation and screen-reader review remain pending. Do not describe this as a validated learner-facing breadcrumb until those checks have been completed.
+The projection, renderer, fragment writer, page-level includes and regression tests are merged through [PR #522](https://github.com/JM-Brun/llm-lab/pull/522). The pilot is present on the English and French overview pages (single membership) and generation pages (multiple memberships). Python CI and Quarto static rendering passed on the merged PR. A dedicated browser audit is being extended in [PR #524](https://github.com/JM-Brun/llm-lab/pull/524); visual, keyboard, contrast, screen-reader and learner validation remain pending. Do not describe the pilot as fully validated until those checks have been completed.
