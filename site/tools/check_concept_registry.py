@@ -270,9 +270,7 @@ def validate_registry(
             if definition.get("direction") not in {"directed", "symmetric"}:
                 errors.append(f"{where}.direction: expected directed or symmetric")
             if definition.get("family") not in RELATION_FAMILIES:
-                errors.append(
-                    f"{where}.family: expected one of {sorted(RELATION_FAMILIES)}"
-                )
+                errors.append(f"{where}.family: expected one of {sorted(RELATION_FAMILIES)}")
             for field in ("transitive", "acyclic", "learning_dependency"):
                 if type(definition.get(field)) is not bool:
                     errors.append(f"{where}.{field}: expected a boolean")
@@ -298,8 +296,13 @@ def validate_registry(
                     errors.append(f"{where}.{field}: values must be non-empty strings")
             if isinstance(inverse, str) and inverse in relation_types:
                 inverse_definition = relation_types[inverse]
-                if isinstance(inverse_definition, dict) and inverse_definition.get("inverse") != kind:
-                    errors.append(f"{where}.inverse: inverse relation {inverse!r} must point back to {kind!r}")
+                if (
+                    isinstance(inverse_definition, dict)
+                    and inverse_definition.get("inverse") != kind
+                ):
+                    errors.append(
+                        f"{where}.inverse: inverse relation {inverse!r} must point back to {kind!r}"
+                    )
 
         for index, relation in enumerate(relations):
             if not isinstance(relation, dict):
