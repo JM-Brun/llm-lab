@@ -139,7 +139,11 @@ Potential next work, only if later sources justify it:
 - compare quiz distractors across sources and revise the existing exercise set;
 - inspect further course chapters only if their full content can be accessed, not infer their substance from titles.
 
-## 9. Traceability
+## 9. Learning-impact follow-up
+
+A separate content-based audit of the current bilingual lesson and exercise hub distinguishes material already taught from assessment gaps and proposes a minimal diagnostic bundle. It deliberately makes no claim of measured learning gains: [Q/K/V learning-impact baseline and assessment plan](qkv-learning-impact-baseline-2026-11.md).
+
+## 10. Traceability
 
 - Pedagogical coverage matrix: [qkv-pedagogical-coverage-matrix-2026-11](qkv-pedagogical-coverage-matrix-2026-11.md)
 
