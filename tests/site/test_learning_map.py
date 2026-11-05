@@ -769,7 +769,7 @@ def test_render_territory_map_exposes_relation_filter_and_reset() -> None:
     assert "data-map-reset" in french
     assert "Type de relation" in french
     assert "Réinitialiser la vue" in french
-    assert "Échap remonte d'un niveau à la fois" in french
+    assert "Échap remonte d&#x27;un niveau à la fois" in french
     assert "data-map-relation-type" in english
     assert "data-map-reset" in english
     assert "Relation type" in english
