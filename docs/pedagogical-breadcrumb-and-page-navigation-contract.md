@@ -192,7 +192,11 @@ Test with readers who have not authored the site. Ask them to locate their posit
 - [ ] Automated validation, rendered browser review, accessibility review, and learner evaluation are reported as separate evidence.
 - [ ] No unique scientific content is lost and no per-concept workflow/action is introduced.
 
-## 11. Related existing contracts
+## 11. Pilot audit
+
+The source-level baseline and unresolved implementation questions are recorded in the [pedagogical breadcrumb pilot audit](pedagogical-breadcrumb-pilot-audit.md). It distinguishes inspected source evidence from rendered, accessibility, bilingual-parity, and learner-validation evidence.
+
+## 12. Related existing contracts
 
 - [Reader experience and editorial method](reader-experience-and-editorial-method.md)
 - [Page-template guide](page-template-guide.md)
