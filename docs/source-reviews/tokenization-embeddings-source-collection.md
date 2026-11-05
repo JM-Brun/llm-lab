@@ -10,7 +10,7 @@
 
 This dossier compares the source families already audited in #114, #147, #82 and #96. It is a synthesis of prior work, not a new exhaustive review of tokenization or embedding research.
 
-The source catalogue currently contains **47 records**: four Q/K/V and KV-cache records (including Codefinity) plus **43 migrated tokenization/embeddings-related records**. The registry distinguishes papers, documentation, repositories, videos, courses and articles. A record's existence does not mean every component was scanned.
+The source catalogue contains **48 records in the 2026-11-05 transfer-pilot branch**: four Q/K/V and KV-cache records (including Codefinity) plus **44 tokenization/embeddings-related records**, including the newly registered TokCollate paper. The pre-pilot `main` baseline contains 47 records (four Q/K/V/KV-cache plus 43 tokenization/embeddings records). The registry distinguishes papers, documentation, repositories, videos, courses and articles. A record's existence does not mean every component was scanned.
 
 The source set is selected because it was already cited, inspected or used in the project. It is not a representative sample of all tokenizer research, embedding research or educational resources.
 

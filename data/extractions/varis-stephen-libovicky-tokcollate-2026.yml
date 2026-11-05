@@ -1,0 +1,185 @@
+schema_version: 1
+source_id: varis-stephen-libovicky-tokcollate-2026
+scan:
+  accessed_at: "2026-11-05"
+  retrieval_method: direct-pdf
+  author_text:
+    status: complete
+    coverage: "All ten pages of the ACL Anthology proceedings PDF: abstract, system overview, metrics, language metadata, interface, use cases, case study, related work, conclusion, limitations and configuration appendix."
+    notes: ["Text was inspected through the publisher-hosted PDF; no experiment was reproduced."]
+  figures_media:
+    status: partial
+    coverage: "Figure captions and their role in the system description were inspected; the paper screenshots were not separately evaluated as reusable project assets."
+    notes: ["No image asset was copied or adapted; browser rendering of the live visualizer was not tested."]
+  code_data:
+    status: partial
+    coverage: "The paper's stated CLI, data contract, output files, software stack and repository URL were inspected."
+    notes: ["The repository, code, dependencies, data and metric implementations were not inspected or executed."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "ACL Anthology record, DOI and repository URL as printed in the paper."
+    notes: ["The GitHub repository and live demo were not opened."]
+  metadata:
+    status: complete
+    coverage: "Authors, title, ACL 2026 System Demonstrations, pages 418–427, July 2026, DOI 10.18653/v1/2026.acl-demo.41."
+    notes: ["ACL Anthology page states that materials published in or after 2016 are CC BY 4.0."]
+  rights:
+    status: partial
+    coverage: "The proceedings paper is identified as CC BY 4.0 by the ACL Anthology."
+    notes: ["The software's stated MIT licence was not independently verified in the repository; no figure reuse or adaptation was performed."]
+  unresolved_questions:
+    - "Does the current repository implementation match the paper's described CLI, metrics and visualizer?"
+    - "What are the exact dependency versions, supported tokenizer formats and current maintenance status?"
+    - "Does the live visualizer remain available and accessible with keyboard and mobile interaction?"
+    - "Can the metric definitions and aggregation choices be independently reproduced from the code and sample data?"
+items:
+  - id: varis-stephen-libovicky-tokcollate-2026:two-stage-evaluation-architecture
+    kind: mechanism
+    summary: "TokCollate separates evaluation from exploration: a Python evaluation script consumes already-tokenized text files and emits metadata plus result matrices; a web visualizer then loads those outputs for interactive inspection. The paper explicitly says the current tool does not execute tokenization itself."
+    locator: {type: section, value: "§2, pp. 419–420", label: "System overview and evaluation input/output"}
+    evidence:
+      kind: implementation-description
+      confidence: established
+      scope: "Architecture described in the ACL 2026 system demonstration paper."
+      assumptions: []
+      limitations: ["Repository behavior was not independently checked or executed.", "The distinction applies to the paper's described version."]
+    technical_assessment:
+      status: correct
+      rationale: "The paper explicitly distinguishes precomputed tokenizer outputs from the subsequent scoring and visualization stages."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-evaluation, topic:evaluation-pipeline]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "A concrete external example of separating tokenizer execution, metric computation and result exploration. It adds operational specificity, but does not warrant a new canonical pipeline or implementation."
+  - id: varis-stephen-libovicky-tokcollate-2026:metric-families
+    kind: definition
+    summary: "The framework groups intrinsic metrics into monolingual measures computed per language (including corpus token count, fertility, characters per token, Rényi efficiency and Shannon entropy) and cross-lingual measures computed over language pairs (including vocabulary overlap, Jensen–Shannon divergence, Eflomal alignment and length ratios)."
+    locator: {type: section, value: "§2.1, pp. 420–421; §6, p. 424", label: "Evaluation metrics"}
+    evidence:
+      kind: explicit-metric-definitions
+      confidence: established
+      scope: "Metric families implemented and described by the paper."
+      assumptions: []
+      limitations: ["Definitions and implementation details may depend on metric parameters and the selected corpus.", "This is an inventory of the paper's tool, not a universal taxonomy of tokenizer quality."]
+    technical_assessment:
+      status: correct
+      rationale: "The paper explicitly distinguishes per-language from language-pair metrics and identifies the required data for each."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-evaluation, method:intrinsic-evaluation, topic:multilingual-tokenization]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The canonical advanced lesson already explains that token count, fertility, compression and downstream quality are distinct; the paper is useful as a concrete tool reference rather than another metric catalogue."
+  - id: varis-stephen-libovicky-tokcollate-2026:cross-lingual-metric-distinction
+    kind: mechanism
+    summary: "The paper distinguishes vocabulary overlap, which measures shared subword types, from Jensen–Shannon divergence, which compares token-frequency distributions, and from alignment-based Eflomal scores, which estimate correspondence between tokens in parallel sentences. These metrics capture different aspects and require different evidence."
+    locator: {type: section, value: "§2.1, pp. 420–421", label: "Cross-lingual metrics"}
+    evidence:
+      kind: method-description
+      confidence: well-supported
+      scope: "Cross-lingual metrics as implemented and described in TokCollate."
+      assumptions: []
+      limitations: ["Eflomal requires parallel sentence pairs.", "The paper's interpretation of alignment consistency as beneficial for transfer is not itself a causal result."]
+    technical_assessment:
+      status: qualified
+      rationale: "The metric descriptions are explicit; downstream interpretation is appropriately bounded by the paper's data requirements and cited prior work."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:multilingual-tokenization, topic:tokenizer-evaluation]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Useful complementary operational detail for researchers; adding another list to the learner-facing core would duplicate the existing advanced metric discussion."
+  - id: varis-stephen-libovicky-tokcollate-2026:language-metadata-provenance
+    kind: limitation
+    summary: "The tool's language grouping depends on a composite metadata layer: FLORES+ for language coverage, ISO 639-3/15924 identifiers, Glottolog for genealogical families, Wikidata for speaker population and geographic annotations, Joshi et al. for resource tiers, manually assembled morphological typology, and FineWeb2 volume as a data-availability proxy."
+    locator: {type: section, value: "§2.2, pp. 421–422", label: "Language information"}
+    evidence:
+      kind: implementation-description
+      confidence: established
+      scope: "Metadata sources and construction described in the paper."
+      assumptions: []
+      limitations: ["Some annotations are manually reconciled.", "Resource tiers date to Joshi et al. (2020).", "FineWeb2 volume is a proxy, not a direct measure of all model pretraining data."]
+    technical_assessment:
+      status: qualified
+      rationale: "The paper discloses the main metadata sources and manual steps, which makes provenance and proxy limitations inspectable."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:multilingual-tokenization, topic:dataset-provenance]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: defer
+    disposition_rationale: "The metadata lineage is important for an advanced research review but is too implementation-specific for the current canonical explanation; revisit only if the tool is selected for a hands-on lab."
+  - id: varis-stephen-libovicky-tokcollate-2026:intrinsic-extrinsic-boundary
+    kind: limitation
+    summary: "TokCollate implements intrinsic metrics only and explicitly warns that intrinsic measures such as Rényi efficiency do not reliably predict extrinsic downstream quality across settings."
+    locator: {type: section, value: "§6, p. 424", label: "Limitations"}
+    evidence:
+      kind: explicit-author-limitation
+      confidence: established
+      scope: "The limitations stated by the authors for the described tool and its metric set."
+      assumptions: []
+      limitations: ["This is a statement about the tool's implemented scope, not a proof that all intrinsic metrics are uninformative."]
+    technical_assessment:
+      status: correct
+      rationale: "The paper explicitly limits its tool to intrinsic evaluation and notes inconsistent relationships with downstream performance."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-evaluation, method:intrinsic-evaluation]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "This is a key existing canonical caveat; the new source reinforces rather than changes the lesson."
+  - id: varis-stephen-libovicky-tokcollate-2026:educator-use-case
+    kind: visualization
+    summary: "The authors identify educators as a target audience and describe browser-based exploration of tokenizer disparities through tables, metric-pair correlations and side-by-side tokenized text, with filtering by language characteristics."
+    locator: {type: section, value: "§2.3–§3, pp. 421–422", label: "Visualization interface and target audience"}
+    evidence:
+      kind: explicit-use-case-description
+      confidence: established
+      scope: "The paper's stated interface capabilities and intended educator use."
+      assumptions: []
+      limitations: ["This is an author-described use case, not a learner study.", "Live usability, accessibility and pedagogical effectiveness were not independently tested."]
+    technical_assessment:
+      status: qualified
+      rationale: "The interface functions and educator use case are explicitly described, but no learner outcomes are measured."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:visualization, topic:pedagogy]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: link
+    disposition_rationale: "Potential optional teaching resource; keep as a link-only candidate until the live interface is inspected and a learner task is designed. Do not claim that the visualizer improves learning."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "The paper adds a concrete, multi-stage tokenizer-evaluation tool and an explicit separation between pre-tokenized inputs, intrinsic scoring and result visualization. The strongest contribution is operational/reference value, not a new tokenizer-quality theory. Existing canonical pages already cover the key metric and intrinsic/extrinsic caveats. Record and link the tool as an optional advanced reference, but defer page, route, graph and exercise changes until the repository/live interface is independently inspected."
