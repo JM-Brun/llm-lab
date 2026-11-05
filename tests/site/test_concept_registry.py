@@ -310,6 +310,9 @@ def test_learning_dependency_requires_explicit_rationale() -> None:
 
     errors = validate_registry(data)
 
-    assert any("rationale: required for learning dependency" in error for error in errors)
-    data["relations"][0]["rationale"] = "The token representation is used by the next stage."
+    assert any("rationale: expected non-empty fr and en" in error for error in errors)
+    data["relations"][0]["rationale"] = {
+        "fr": "La représentation initiale du token doit être comprise avant les transformations contextuelles.",
+        "en": "The initial token representation should be understood before its contextual transformations.",
+    }
     assert validate_registry(data) == []
