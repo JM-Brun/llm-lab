@@ -85,6 +85,31 @@ Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model
 - $Q,K\in\mathbb{R}^{T\times d_k}$ ;
 - $V\in\mathbb{R}^{T\times d_v}$.
 
+Chaque ligne correspond à une position de la séquence : pour la position $t$, on obtient $q_t=x_tW_Q$, $k_t=x_tW_K$ et $v_t=x_tW_V$. Les mêmes matrices de projection sont appliquées à toutes les positions ; ce sont les représentations d'entrée qui varient d'une position à l'autre.
+
+::: {.callout-note collapse="true" title="Comment l'entraînement apprend-il ces projections ?"}
+Les matrices $W_Q$, $W_K$ et $W_V$ ne reçoivent pas chacune une cible explicite « correcte ». Elles sont ajustées indirectement à partir de la fonction de perte du modèle, par rétropropagation du gradient.
+
+Dans le chemin d'attention considéré ici :
+
+- le gradient qui atteint **Q et K** passe par les scores de compatibilité, puis par leur normalisation ;
+- le gradient qui atteint **V** passe par l'agrégation pondérée : il indique comment le contenu transmis contribue à l'erreur finale.
+
+Pour une entrée $X$ fixée, sans biais et avec les projections linéaires écrites plus haut, la règle de dérivation prend la forme :
+
+$
+\frac{\partial\mathcal L}{\partial W_Q}
+=X^\top\frac{\partial\mathcal L}{\partial Q},
+\qquad
+\frac{\partial\mathcal L}{\partial W_K}
+=X^\top\frac{\partial\mathcal L}{\partial K},
+\qquad
+\frac{\partial\mathcal L}{\partial W_V}
+=X^\top\frac{\partial\mathcal L}{\partial V}.
+$
+
+Ces gradients sont calculés dans le contexte du réseau complet, puis l'optimiseur met à jour les paramètres. Les trois projections sont donc **paramétrées séparément, mais apprises conjointement** : modifier l'une peut changer la sortie et, au fil de l'entraînement, les autres paramètres s'adaptent aussi. Cette vue explique le principe ; elle ne remplace pas la dérivation complète de l'attention ni celle de la rétropropagation.
+:::
 ::: {.callout-note collapse="true" title="Périmètre : formulation standard et variantes"}
 Cette page présente la formulation standard avec des projections Q, K et V paramétrées séparément. C'est un modèle de référence utile, pas l'affirmation que tous les Transformers utilisent trois matrices de projection entièrement indépendantes ou le même nombre de têtes de requête et de clés/valeurs.
 
