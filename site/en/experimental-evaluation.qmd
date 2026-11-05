@@ -20,6 +20,8 @@ related: []
 tags: ["type:experiment-guide", "destination:practice", "topic:evaluation-experimentale", "level:applied", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-experimental-evaluation.qmd >}}
 ## Goal
 
 Practice designing a defensible evaluation for a scientific-passage ranker. The exercise focuses on the estimand, dependence between observations, leakage, selection bias, metric interpretation, and uncertainty. It adds no model implementation and is not a benchmark result.
