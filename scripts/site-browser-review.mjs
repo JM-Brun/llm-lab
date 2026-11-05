@@ -21,7 +21,7 @@ const cases = [
     ...testCase, page: "learning-map.html", kind: "learning-map",
   })),
   ...routeContextCases.flatMap(testCase =>
-    ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "cross-attention.html", "logits.html", "probabilities.html", "likelihood.html", "decoding-strategies.html", "cross-entropy.html", "loss.html", "gradients.html", "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
+    ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "cross-attention.html", "logits.html", testCase.lang === "fr" ? "probabilites.html" : "probabilities.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "decoding-strategies.html", "cross-entropy.html", "loss.html", "gradients.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
       ...testCase, page, kind: "route-context",
     }))
   ),
@@ -462,12 +462,15 @@ for (const testCase of cases) {
           "cross-attention.html": "guided-stage-computation",
           "logits.html": "guided-stage-prediction",
           "probabilities.html": "guided-stage-prediction",
+          "probabilites.html": "guided-stage-prediction",
           "likelihood.html": "guided-stage-prediction",
+          "vraisemblance.html": "guided-stage-prediction",
           "decoding-strategies.html": "guided-stage-prediction",
           "cross-entropy.html": "guided-stage-learning-evaluation",
           "loss.html": "guided-stage-learning-evaluation",
           "gradients.html": "guided-stage-learning-evaluation",
           "experimental-evaluation.html": "guided-stage-learning-evaluation",
+          "evaluation-experimentale.html": "guided-stage-learning-evaluation",
           "scaling-laws.html": "guided-stage-learning-evaluation",
           "transformer-architectures.html": "guided-stage-orientation",
           "llm-limits.html": "guided-stage-orientation",
@@ -480,7 +483,7 @@ for (const testCase of cases) {
         const optionalRole = context.locator(".guided-page-context__role");
         const optionalRoleText = await optionalRole.innerText().catch(() => "");
         const roleMatches = optionalPages.has(pagePath)
-          ? /optional|facultatif/i.test(optionalRoleText)
+          ? /optional|facultatif|facultative/i.test(optionalRoleText)
           : await optionalRole.count() === 0;
         if (!expectedStage || item.routeContext.isMultiple || !item.routeContext.navLandmark ||
             item.routeContext.currentPageMarkers !== 0 || stageFragments.length !== 1 ||
