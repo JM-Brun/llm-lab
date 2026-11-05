@@ -21,6 +21,8 @@ related: ["fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/causa
 tags: ["type:deep-dive", "destination:deepen", "topic:cross-attention", "level:advanced", "language:fr", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-fr-cross-attention.qmd >}}
 ::: {.chapter-lead}
 Cette page est un **approfondissement avancé**. Elle suppose déjà compris le principe général de l'attention, les projections Q/K/V et les grandes familles d'architectures Transformer. Pour une première découverte, la page [Architectures Transformer](transformer-architectures.qmd) suffit : retenez simplement que le décodeur d'un modèle encodeur-décodeur peut consulter les représentations produites par l'encodeur.
 
