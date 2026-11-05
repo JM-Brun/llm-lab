@@ -20,6 +20,8 @@ related: ["en/queries-keys-values"]
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-contextualized-representations.qmd >}}
 ::: {.chapter-lead}
 The same token ID always selects the same row from a fixed embedding matrix. Yet the token can play different roles in different sentences. The distinction is that **lookup provides an initial vector; the Transformer subsequently builds representations that depend on context**.
 :::
