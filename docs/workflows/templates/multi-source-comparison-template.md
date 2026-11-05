@@ -53,9 +53,11 @@ Compare local article sequences with page-level and project-level routes separat
 
 ## 6. Atomic integration decisions
 
-| Contribution | Source provenance | Novelty | Complementarity | Technical confidence | Disposition | Destination / rationale |
+Use only the controlled item dispositions in `data/source-taxonomy.yml`. Evidence confidence uses the separate evidence-confidence vocabulary; novelty and complementarity use the pedagogical assessment levels. Do not collapse these dimensions into one rating.
+
+| Contribution | Source provenance | Evidence confidence | Novelty | Complementarity | Disposition (taxonomy) | Destination / rationale |
 |---|---|---|---|---|---|---|
-| | | | | | integrate / integrate-by-reference / already-covered / defer / reject | |
+| | | | | | [exact value from data/source-taxonomy.yml] | |
 
 ## 7. Canonical project impact
 
