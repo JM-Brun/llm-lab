@@ -1,4 +1,6 @@
 ---
+**Canonical lesson:** [LLM overview](llm-overview.qmd). This page deepens its probabilistic formalization; it complements the learning route without being a prerequisite.
+
 title: "The mathematics of language modeling"
 subtitle: "The chain rule, autoregressive factorization, and soft targets"
 keywords: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:en", "status:published"]
