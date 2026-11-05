@@ -54,6 +54,8 @@ class MapParser(HTMLParser):
             for name, expected_tag in (
                 ("data-map-mode", "select"),
                 ("data-map-search", "input"),
+                ("data-map-relation-type", "select"),
+                ("data-map-reset", "button"),
                 ("data-map-viewport", "div"),
                 ("data-map-detail-panel", "div"),
                 ("data-map-status", "p"),
@@ -87,6 +89,8 @@ def inspect_page(path: Path, language: str) -> list[str]:
         "option:pages",
         "option:concepts",
         "data-map-search",
+        "data-map-relation-type",
+        "data-map-reset",
         "data-map-viewport",
         "data-map-detail-panel",
         "data-map-status",
