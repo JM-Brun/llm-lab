@@ -1,6 +1,6 @@
 # Source-to-knowledge workflow: validation protocol
 
-**Status:** reusable validation protocol · **Version:** 0.1 · **Pilot:** Q/K/V
+**Status:** reusable validation protocol · **Version:** 0.2 · **Calibration:** Q/K/V; transfer assessment: tokenization/embeddings
 
 ## 1. Purpose and claim boundary
 
@@ -272,4 +272,6 @@ Treat this protocol as versioned project method. Change it only when a pilot rev
 - avoid new controlled vocabulary when a descriptive label or existing field is sufficient;
 - validate the protocol on a second concept collection before claiming general transfer.
 
-Q/K/V is the first calibration case, not proof of scalability. Tokenization/embeddings or another concept collection should be the next transfer test after the Q/K/V benchmark and the existing #475 vocabulary/validator reconciliation are complete.
+Q/K/V is the first calibration case. A retrospective transfer assessment has now been completed for the broader [tokenization/embeddings collection](../source-syntheses/tokenization-embeddings-method-transfer-validation-2026-11.md). It demonstrates transfer at the documentation and synthesis level, but does not establish full automation, learner efficacy or universal scalability. The report records remaining gates: final-head validators, instructional-source route triage, metadata recovery, rendered/accessibility review, rights checks and independent learner observations.
+
+The next scalability test should be a small, deliberately selected new source added to an already-covered subdomain, processed end-to-end with the current skills and templates. Measure traceability, review effort, regressions and learner-facing value before attempting another large migration.
