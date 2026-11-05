@@ -233,7 +233,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/unicode-text, fr/unicode-text, en/text-data, fr/text-data]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: sebastian-raschka-llms-from-scratch-ch02
     title: "Build a Large Language Model (From Scratch), Chapter 2"
@@ -273,7 +273,7 @@ sources:
     related:
       pages: [en/text-data, fr/text-data, en/tokenization-strategies, fr/tokenization-strategies, en/training-examples, fr/training-examples, en/embedding-space, fr/embedding-space]
       concepts: [token, token-embedding]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: huggingface-course-tokenizers-chapter6
     title: "Hugging Face LLM Course — Tokenizers"
@@ -313,7 +313,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/text-data, fr/text-data]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: philip-gage-byte-pair-compression-1994
     title: "A New Algorithm for Data Compression"
@@ -352,7 +352,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: ahia-do-all-languages-cost-the-same-2023
     title: "Do All Languages Cost the Same?"
@@ -391,7 +391,7 @@ sources:
     related:
       pages: [en/text-data, fr/text-data, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: ali-tokenizer-choice-llm-training-2024
     title: "Tokenizer Choice For LLM Training"
@@ -431,7 +431,7 @@ sources:
     related:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: wegmann-tokenization-language-variation-2025
     title: "Tokenization is Sensitive to Language Variation"
@@ -470,7 +470,7 @@ sources:
     related:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: arnett-explaining-mitigating-crosslingual-tokenizer-inequities-2025
     title: "Explaining and Mitigating Crosslingual Tokenizer Inequities"
@@ -509,7 +509,7 @@ sources:
     related:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: chiu-toklens-acl-srw-2026
     title: "TokLens"
@@ -548,7 +548,7 @@ sources:
     related:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: catherine-arnett-tokenizer-fertility
     title: "Dangers of tokenizer recycling"
@@ -587,7 +587,7 @@ sources:
     related:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/text-data, fr/text-data]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: mikolov-word2vec-2013
     title: "Efficient Estimation of Word Representations in Vector Space"
@@ -624,7 +624,7 @@ sources:
     related:
       pages: [en/embedding-space, fr/embedding-space, en/contextualized-representations, fr/contextualized-representations]
       concepts: [token-embedding, contextualized-representation]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: ethayarajh-contextualized-representations-2019
     title: "How Contextual are Contextualized Word Representations?"
@@ -662,7 +662,7 @@ sources:
     related:
       pages: [en/contextualized-representations, fr/contextualized-representations, en/cosine-similarity, fr/cosine-similarity]
       concepts: [contextualized-representation, token-embedding]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: li-bert-flow-sentence-embeddings-2020
     title: "On the Sentence Embeddings from Pre-trained Language Models"
@@ -701,7 +701,7 @@ sources:
     related:
       pages: [en/cosine-similarity, fr/cosine-similarity, en/embedding-space, fr/embedding-space]
       concepts: [contextualized-representation]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: steck-cosine-similarity-embeddings-2024
     title: "Is Cosine-Similarity of Embeddings Really About Similarity?"
@@ -740,7 +740,7 @@ sources:
     related:
       pages: [en/cosine-similarity, fr/cosine-similarity]
       concepts: [contextualized-representation]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: sentence-transformers-similarity-documentation
     title: "Sentence Transformers — Similarity and SentenceTransformer APIs"
@@ -779,7 +779,7 @@ sources:
     related:
       pages: [en/cosine-similarity, fr/cosine-similarity]
       concepts: [contextualized-representation]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: openai-tiktoken-educational-bpe
     title: "tiktoken educational BPE module"
@@ -818,7 +818,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/embedding-space, fr/embedding-space]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: karpathy-minbpe
     title: "minbpe"
@@ -858,7 +858,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: huggingface-tokenizers-pipeline-docs
     title: "Hugging Face Tokenizers — Pipeline and Components"
@@ -897,7 +897,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: google-sentencepiece-documentation
     title: "SentencePiece — Overview and Normalization"
@@ -936,7 +936,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: huggingface-tokenizer-algorithms-summary
     title: "Hugging Face Transformers — Tokenizer Summary"
@@ -974,7 +974,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: sennrich-subword-nmt-2016
     title: "Neural Machine Translation of Rare Words with Subword Units"
@@ -1011,7 +1011,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: pytorch-embedding-api
     title: "torch.nn.Embedding"
@@ -1049,7 +1049,7 @@ sources:
     related:
       pages: [en/embedding-space, fr/embedding-space]
       concepts: [token-embedding]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: su-roformer-rope-2021
     title: "RoFormer: Enhanced Transformer with Rotary Position Embedding"
@@ -1087,7 +1087,7 @@ sources:
     related:
       pages: [en/positional-encoding, fr/positional-encoding]
       concepts: [positional-encoding]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
   - id: openai-tiktoken-repository
     title: "tiktoken"
     creators: ["OpenAI"]
@@ -1125,7 +1125,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/embedding-space, fr/embedding-space]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: huggingface-tokenizers-repository
     title: "Tokenizers"
@@ -1163,7 +1163,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: google-sentencepiece-repository
     title: "SentencePiece"
@@ -1201,7 +1201,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: sauravp97-hf-bpe-visualizer-article
     title: "Visualizing BPE Tokenizer Encoding"
@@ -1239,7 +1239,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: sauravp97-hf-bpe-visualizer-repository
     title: "hf-tokenizer-visualizer"
@@ -1279,7 +1279,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: rushang-chauhan-embeddings-bridge-tokens-context
     title: "Embeddings: The Bridge Between Tokens and Context"
@@ -1319,7 +1319,7 @@ sources:
     related:
       pages: [en/contextualized-representations, fr/contextualized-representations, en/embedding-space, fr/embedding-space]
       concepts: [token, token-embedding, contextualized-representation, positional-encoding]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: poloclub-transformer-explainer-paper-2026
     title: "Transformer Explainer: Learning LLM Transformers with Interactive Visual Explanation and Experimentation"
@@ -1358,7 +1358,7 @@ sources:
     related:
       pages: [en/transformer, fr/transformer, en/text-data, fr/text-data, en/embedding-space, fr/embedding-space]
       concepts: [token, token-embedding, contextualized-representation, self-attention]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: poloclub-transformer-explainer-repository
     title: "Transformer Explainer"
@@ -1398,5 +1398,5 @@ sources:
     related:
       pages: [en/transformer, fr/transformer]
       concepts: [token, token-embedding, contextualized-representation, self-attention]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
