@@ -21,6 +21,8 @@ related: ["en/queries-keys-values", "en/scaled-dot-product-attention", "en/causa
 tags: ["type:deep-dive", "destination:deepen", "topic:cross-attention", "level:advanced", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-cross-attention.qmd >}}
 ::: {.chapter-lead}
 This page is an **advanced deep dive**. It assumes familiarity with the general attention mechanism, Q/K/V projections, and the main Transformer architecture families. For a first introduction, the [Transformer architectures](transformer-architectures.qmd) page is sufficient: simply remember that an encoder–decoder model's decoder can read representations produced by its encoder.
 
