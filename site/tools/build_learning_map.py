@@ -14,10 +14,10 @@ from __future__ import annotations
 
 import json
 import re
-from html import escape
 import sys
 import unicodedata
 from collections import deque
+from html import escape
 from pathlib import Path
 from typing import Any, Literal
 
