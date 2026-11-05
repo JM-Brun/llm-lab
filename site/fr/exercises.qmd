@@ -228,9 +228,9 @@ Une comparaison exige notamment de contrôler le tokenizer et sa segmentation, l
 
 ### Attention {#attention}
 
-**Préparation :** le premier exercice utilise des poids et des vecteurs fournis ; voir l'[agrégation par attention](scaled-dot-product-attention.qmd) pour le contexte. Le second utilise les [projections Q/K/V](queries-keys-values.qmd), les formes matricielles et NumPy ; les [tenseurs](tensors.qmd) sont une référence facultative sur les formes. Aucun des deux n'exige d'étudier d'abord le masque causal.
+**Préparation :** les exercices Q/K/V mobilisent la page [projections Q/K/V](queries-keys-values.qmd), les formes matricielles et NumPy ; les [tenseurs](tensors.qmd) sont une référence facultative. Les exercices de score, softmax et agrégation s'appuient sur l'[attention à produit scalaire](scaled-dot-product-attention.qmd). Aucun exercice ci-dessous n'exige d'étudier d'abord le masque causal.
 
-**Disponible :** un calcul de somme pondérée et un exercice NumPy sur les projections et leurs dimensions. **À compléter :** calculs de scores et de poids, interprétation prudente des poids et raisonnement sur l’invariance causale.
+**Compétences Q/K/V évaluées :** reconnaître les rôles, reconstruire les projections, expliquer leur apprentissage, prédire les effets d'une modification de paramètres et transférer le raisonnement à l'attention croisée. La somme pondérée existante reste l'exercice de calcul de l'agrégation.
 
 #### Calculer une agrégation à la main
 
@@ -284,6 +284,76 @@ print("Q:", Q.shape, "K:", K.shape, "V:", V.shape)
 Résultat attendu : Q=(3, 2), K=(3, 2), V=(3, 3). Les projections s'appliquent indépendamment à chaque position ; les trois matrices partagent ici le même nombre de lignes, mais pas nécessairement le même nombre de colonnes.
 
 Modifier W_V peut changer V et la sortie agrégée, mais ne change pas les scores ni les poids, qui dépendent de Q et K.
+
+</details>
+
+
+#### Exercice — prévoir l'effet d'une modification de projection
+
+On considère une même entrée $X$ et une attention standard, sans biais. Pour chaque intervention, indiquez si $Q$, $K$, $V$, les scores, les poids et la sortie agrégée peuvent changer. Les autres paramètres restent fixes.
+
+| Intervention | Quantités qui peuvent changer | Quantités invariantes |
+|---|---|---|
+| Modifier $W_Q$ seul |  |  |
+| Modifier $W_K$ seul |  |  |
+| Modifier $W_V$ seul |  |  |
+
+Justifiez chaque ligne à partir des dépendances fonctionnelles.
+
+<details>
+<summary>Afficher le corrigé raisonné</summary>
+
+- **$W_Q$ seul :** Q peut changer ; les scores calculés à partir de Q et K peuvent donc changer, puis les poids et la sortie. K et V restent invariants.
+- **$W_K$ seul :** K peut changer ; les scores, les poids et la sortie peuvent donc changer. Q et V restent invariants.
+- **$W_V$ seul :** V et généralement la sortie agrégée peuvent changer. Q, K, les scores et les poids restent invariants.
+
+« Peut changer » ne signifie pas « change nécessairement » : une perturbation particulière peut être annulée par les données ou les poids d'agrégation. La sortie dépend à la fois des poids et des valeurs.
+
+</details>
+
+#### Exercice — relier les projections à l'apprentissage
+
+Dans le mécanisme standard, les matrices $W_Q$, $W_K$ et $W_V$ sont entraînées à partir de la perte finale du modèle. Répondez sans supposer qu'une cible Q, K ou V est fournie directement.
+
+1. Pourquoi parle-t-on d'apprentissage indirect des projections ?
+2. Par quelles opérations le gradient associé à Q et K remonte-t-il ?
+3. Par quelle opération le gradient associé à V remonte-t-il ?
+4. Pour $Q=XW_Q$ avec $X$ fixé et sans biais, quelle est la forme de $\partial\mathcal L/\partial W_Q$ ? Même question pour K et V.
+
+<details>
+<summary>Afficher le corrigé raisonné</summary>
+
+Les projections n'ont pas de cibles indépendantes : elles sont ajustées pour réduire la perte de prédiction du modèle. Le gradient vers Q et K traverse le calcul des scores de compatibilité et leur normalisation ; celui vers V traverse l'agrégation pondérée. Pour une projection linéaire $Q=XW_Q$, la règle de chaîne donne :
+
+$
+\frac{\partial\mathcal L}{\partial W_Q}
+=X^\top\frac{\partial\mathcal L}{\partial Q}.
+$
+
+De même, $\partial\mathcal L/\partial W_K=X^\top(\partial\mathcal L/\partial K)$ et $\partial\mathcal L/\partial W_V=X^\top(\partial\mathcal L/\partial V)$. Ce sont des gradients locaux de la couche linéaire ; les gradients de Q, K et V proviennent du calcul complet de l'attention et du réseau.
+
+</details>
+
+#### Exercice — transférer Q/K/V à l'attention croisée
+
+Un décodeur consulte les représentations produites par un encodeur. On note $X_D$ les états du décodeur et $X_E$ ceux de l'encodeur.
+
+1. Écrire les expressions de Q, K et V en attention croisée.
+2. Si l'on modifie uniquement $X_D$, quelles projections sont directement affectées ?
+3. Si l'on modifie uniquement $X_E$, quelles projections sont directement affectées ?
+4. Expliquer pourquoi la formule à entrée unique $Q=XW_Q$, $K=XW_K$, $V=XW_V$ décrit l'auto-attention, mais pas cette provenance croisée.
+5. En MQA et GQA, qu'est-ce qui change concernant le nombre ou le partage des têtes K/V ? Quelle distinction fonctionnelle entre Q/K et V demeure ?
+
+<details>
+<summary>Afficher le corrigé raisonné</summary>
+
+En attention croisée, Q provient du flux qui consulte et K/V du flux consulté :
+
+$
+Q=X_DW_Q,\qquad K=X_EW_K,\qquad V=X_EW_V.
+$
+
+À paramètres fixés, modifier $X_D$ affecte directement Q ; modifier $X_E$ affecte directement K et V. Les scores et la sortie peuvent ensuite changer en conséquence. La distinction fonctionnelle demeure, mais les projections ne partagent plus une entrée commune. En MQA, plusieurs têtes de requête partagent une seule tête K/V ; en GQA, des groupes de têtes de requête partagent des têtes K/V. Le nombre ou le partage des têtes K/V change, mais la distinction fonctionnelle demeure : Q/K déterminent les poids et V fournit le contenu agrégé. Il faut décrire la paramétrisation exacte plutôt que recopier mécaniquement le cas standard.
 
 </details>
 
