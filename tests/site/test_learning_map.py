@@ -140,7 +140,6 @@ def _write_domain_registry(root: Path) -> None:
     registry.write_text(yaml.safe_dump(data, allow_unicode=True), encoding="utf-8")
 
 
-
 def _write_guided_route(
     root: Path,
     *,
@@ -707,6 +706,8 @@ def test_concept_graph_script_exposes_direction_and_relation_legend() -> None:
     assert "renderConceptLegend();" in source
     assert "var label = type ? type.label : relation.type;" in source
     assert 'relation.direction === "symmetric" ? "↔ " : "→ "' in source
+
+
 def test_load_concept_graph_exports_localized_domains(tmp_path: Path) -> None:
     _write_concept_registry(tmp_path)
     _write_domain_registry(tmp_path)
