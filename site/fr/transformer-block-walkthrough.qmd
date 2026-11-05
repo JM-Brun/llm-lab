@@ -70,7 +70,7 @@ return x + self._mlp(layer_norm(x, self.ln2_gamma, self.ln2_beta))
 <g data-wf-part="br2"><path d="M991 144 C 990 110, 982 78, 966 66" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#wfb-ink)"/></g>
 <g data-wf-part="br1 br2"><circle cx="960" cy="50" r="14" fill="#fff" stroke="#16A34A" stroke-width="2.5"/><text x="960" y="56" text-anchor="middle" font-size="17" font-weight="700" fill="#14532D">+</text></g>
 <g data-wf-part="init"><rect x="270" y="240" width="330" height="40" rx="8" fill="#FFFBEB" stroke="#B45309" stroke-width="1.8" stroke-dasharray="6 4"/><text x="435" y="265" text-anchor="middle" font-size="12.5" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#78350F">residual_std = 0.02 / √(2 × num_layers)</text></g>
-<g data-wf-part="init" stroke="#8B5CF6" stroke-width="1.6" stroke-dasharray="5 4" fill="none"><path d="M390 236 C 350 200, 320 170, 306 142" marker-end="url(#wfb-violet)"/><path d="M470 236 C 540 200, 608 164, 642 142" marker-end="url(#wfb-violet)"/><path d="M560 240 C 720 224, 900 176, 986 148" marker-end="url(#wfb-violet)"/></g>
+<g data-wf-part="init" stroke="#8B5CF6" stroke-width="1.6" stroke-dasharray="5 4" fill="none"><path d="M470 236 C 540 200, 608 164, 642 142" marker-end="url(#wfb-violet)"/><path d="M560 240 C 720 224, 900 176, 986 148" marker-end="url(#wfb-violet)"/></g>
 </g>
 </svg>
 </div>
@@ -80,7 +80,7 @@ return x + self._mlp(layer_norm(x, self.ln2_gamma, self.ln2_beta))
 <button type="button" class="wf-chip" data-wf-links="br1" data-wf-note="Branche d’attention : ln1 prépare une copie normalisée de x, la sortie de w_o vient s’ajouter au tronc. L’identité reste le chemin par défaut : le bloc ne peut pas détruire son entrée.">x + _attention(ln1(x))</button>
 <button type="button" class="wf-chip" data-wf-links="br2" data-wf-note="Branche MLP : ln2 prépare une copie, fc1 élargit (d → hidden), GELU active, fc2 re-projette (hidden → d), puis la sortie s’ajoute au tronc, position par position.">x + _mlp(ln2(x))</button>
 <button type="button" class="wf-chip" data-wf-links="heads" data-wf-note="La tête h lit les colonnes h·(d/H) à (h+1)·(d/H) de Q, K et V : des tranches contiguës du même flux, jamais mélangées avant la projection w_o.">columns = slice(h·head_dim, …)</button>
-<button type="button" class="wf-chip" data-wf-links="init" data-wf-note="La profondeur L réduit l’écart-type des poids des deux branches (0.02/√(2L)) : ce choix aide à maîtriser l’échelle des contributions accumulées le long des chemins résiduels, sans garantir une variance constante.">residual_std = 0.02/√(2L)</button>
+<button type="button" class="wf-chip" data-wf-links="init" data-wf-note="Seules les projections de sortie ajoutées au tronc résiduel — w_o pour l’attention et fc2 pour le MLP — utilisent 0.02/√(2L). Q, K, V et fc1 gardent l’écart-type de base 0.02.">residual_std = 0.02/√(2L)</button>
 </div>
 <p class="wf-note" aria-live="polite">Le trait vert traverse le bloc sans transformation : c’est le tronc résiduel. Chaque branche (attention, MLP) ne fait qu’ajouter une correction calculée sur une copie normalisée — l’ordre pré-LN de GPT-2.</p>
 </div>
@@ -116,13 +116,13 @@ La normalisation est **dans la branche**, pas sur le tronc. Le tronc (`x + ...`)
 - `head_dim = d // H` : chaque tête possède `d/H` colonnes contiguës — les bornes de tranches sont recalculées dans `_attention`.
 
 ::: {.callout-note collapse="true" title="Détail d'initialisation propre à GPT-2"}
-La variante de référence met à l'échelle l'écart-type des projections résiduelles en fonction de la profondeur :
+La variante GPT-2 conserve l'écart-type de base $0{,}02$ pour les projections internes (Q, K, V et première couche du MLP), et réduit celui des **deux projections de sortie ajoutées au flux résiduel** : $W_O$ pour l'attention et la seconde couche du MLP (`fc2`).
 
 ```python
 residual_std = 0.02 / math.sqrt(2.0 * config.num_layers)
 ```
 
-Ce facteur vise à contrôler l'échelle des contributions accumulées le long des chemins résiduels. Il s'agit d'un choix d'initialisation hérité de GPT-2, pas d'une propriété mathématique nécessaire des blocs Transformer ni d'une garantie que la variance reste exactement constante.
+Le facteur $1/\sqrt{2L}$ tient compte des deux contributions résiduelles par bloc sur $L$ blocs. Il réduit l'échelle initiale de ces deux projections de sortie ; il ne garantit pas que la variance du flux résiduel reste constante. Les autres projections conservent l'écart-type de base $0{,}02$.
 :::
 
 Vient ensuite la création des paramètres : les normalisations démarrent à l'identité (`gamma` à uns, `beta` à zéros), puis quatre matrices `(d, d)` pour les projections Q, K, V et O, et deux matrices pour le MLP (`d → mlp_hidden_dim → d`).
