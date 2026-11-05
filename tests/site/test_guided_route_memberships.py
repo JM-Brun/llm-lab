@@ -143,9 +143,7 @@ def test_writer_generates_page_contexts_for_every_route_member(
     stages = GENERATOR["load_guided_route"](language, pages)
     memberships = GENERATOR["build_guided_route_memberships"](stages)
     page_by_id = {
-        page.id: page
-        for stage in stages
-        for page in [*stage.pages, *stage.optional_pages]
+        page.id: page for stage in stages for page in [*stage.pages, *stage.optional_pages]
     }
 
     original_site = GENERATOR["SITE"]
