@@ -14,7 +14,7 @@ This page is the entry point for the Q/K/V source collection. It is intentionall
 |---|---|---|---|---|---|
 | `nishanthan-k-qkv-transformers-devto` | [Nishanthan K — How Query, Key, and Value (QKV) Work in Transformers](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a) | Header shows Oct 22; year not independently verified | [YAML extraction](../../data/extractions/nishanthan-k-qkv-transformers-devto.yml) | [Review](qkv-nishanthan-devto-2026-11.md) | Partially scanned: DEV author text and two-comment thread directly inspected; Medium mirror exposes one unresolved image placeholder; linked resources, image bytes and rights unresolved |
 | `neha-kk-understanding-qkv-medium` | [Neha KK — Understanding Queries, Keys and Values in Transformers](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) | 2025-12-31 | [YAML extraction](../../data/extractions/neha-kk-understanding-qkv-medium.yml) | [Review](qkv-neha-kk-medium-2026-11.md) | Partially scanned: visible author text now directly reconciled against the live page-text view; actual figure files, linked resources and rights unresolved |
-| `codefinity-qkv-course` | [Codefinity — Queries, Keys, and Values](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) | Course date not independently verified | [YAML extraction](../../data/extractions/codefinity-qkv-building-blocks.yml) | [Review](qkv-codefinity-course-2026-11.md) | Partially scanned: lesson and parent outline inspected; two interface SVG URLs identified but bytes/rights unresolved; full interactive course, other lessons, assignments and linked resources uninspected |
+| `brenndoerfer-query-key-value-attention-2025` | [Michael Brenndoerfer — Query, Key, Value: The Foundation of Transformer Attention](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism) | 2025-06-01 (updated 2025-06-04) | [YAML extraction](../../data/extractions/brenndoerfer-query-key-value-attention-2025.yml) | [Review](qkv-brenndoerfer-2026-11.md) | Partially scanned: all eleven visible sections inspected; code not executed, only first of eight quiz questions visible, figures/rights unresolved |\n| `codefinity-qkv-course` | [Codefinity — Queries, Keys, and Values](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) | Course date not independently verified | [YAML extraction](../../data/extractions/codefinity-qkv-building-blocks.yml) | [Review](qkv-codefinity-course-2026-11.md) | Partially scanned: lesson and parent outline inspected; two interface SVG URLs identified but bytes/rights unresolved; full interactive course, other lessons, assignments and linked resources uninspected |
 | `huggingface-transformers-kv-cache-explanation` | [Hugging Face Transformers — Caching](https://huggingface.co/docs/transformers/main/en/cache_explanation) | Living documentation | [Source catalogue](../../data/sources.yml) | [DEV review, community follow-up](qkv-nishanthan-devto-2026-11.md#7-follow-up-scan-reconciliation) | Partially scanned; technical follow-up source, not a third Q/K/V tutorial |
 
 **Medium scan refinement (2026-11-05):** the canonical page is now directly readable through the page reader; the visible text reconciles with the earlier indexed snapshot. Four in-body image placements remain visible (three captioned figures and one uncaptioned placeholder), but none was retrieved as image bytes or visually inspected. A “No responses yet” state was visible at this recheck; this is point-in-time evidence only. The raw DOM, cover/hero asset and reuse rights remain unresolved.
@@ -208,3 +208,25 @@ The extraction and review preserve source-specific evidence and scan limitations
 ## 10. Learning-impact baseline
 
 The current bilingual lesson and exercise hub have been audited to distinguish existing coverage from genuine assessment gaps. The [Q/K/V learning-impact baseline and assessment plan](../source-syntheses/qkv-learning-impact-baseline-2026-11.md) proposes a small diagnostic bundle without claiming measured learning gains or duplicating existing projection/aggregation exercises.
+
+
+## 11. Michael Brenndoerfer — “Query, Key, Value: The Foundation of Transformer Attention” (2026-11-05)
+
+[Original chapter](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism) · [structured extraction](../../data/extractions/brenndoerfer-query-key-value-attention-2025.yml) · [source review](qkv-brenndoerfer-2026-11.md) · [pedagogical coverage matrix](../source-syntheses/qkv-pedagogical-coverage-matrix-2026-11.md)
+
+**Scan status: partially scanned.** All eleven visible sections were inspected, including the statistical scaling derivation, tensor-shape table, rendered code/output blocks, worked example, limitations, parameters and quiz introduction. The page advertises eight quiz questions, but only the first was visible. Code was not executed; figure bytes and rights remain uninspected.
+
+### Differential contribution and integration
+
+| Contribution | Existing LLM Lab treatment | Decision |
+|---|---|---|
+| Database/catalog analogy | Existing index-card analogy already distinguishes roles | Already covered; retain as an alternative source lens |
+| Variance of QK dot products under simplifying assumptions, then scaling and softmax concentration | Dedicated bilingual attention-score-scaling deep dive | Integrate by reference; do not duplicate the derivation |
+| Tensor contracts for Q/K/V, scores, weights and output | Existing Q/K/V lesson and tensor reference | Already covered |
+| End-to-end code and “The cat sat” trace | Existing numerical attention example and Build walkthrough | Integrate by reference; no second implementation |
+| Random-initialization heatmap caveat | Existing interpretability caveats | Clarify in the synthesis/regression suite; no page edit without a demonstrated learner gap |
+| “Projections operate independently” phrase | Canonical lesson already distinguishes separate parameterization from joint optimization | Already covered; preserve as an adversarial wording fixture |
+| Eleven-section progressive formalization | Existing route intentionally separates Q/K/V roles, attention calculation and Build | Integrate by reference; no route change |
+| Eight-question quiz | Only question one visible; existing assessment plan exists | Defer comparison until all items and feedback are inspectable |
+
+The strongest new value is a longer statistical derivation, not new Q/K/V theory. The no-op on canonical pages is deliberate: the existing scaling deep dive owns the derivation, while the Q/K/V page should remain a conceptual entry point. No code, figures or prose are copied.
