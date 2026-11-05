@@ -3,7 +3,7 @@ import path from "node:path";
 import { chromium } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 
-const BASE = (process.env.QKV_BROWSER_BASE_URL || "https://jm-brun.github.io/llm-lab").replace(/\\/$/, "");
+const BASE = (process.env.QKV_BROWSER_BASE_URL || "https://jm-brun.github.io/llm-lab").replace(/\/$/, "");
 const OUT = "artifacts/qkv-browser-review";
 fs.mkdirSync(OUT, { recursive: true });
 
