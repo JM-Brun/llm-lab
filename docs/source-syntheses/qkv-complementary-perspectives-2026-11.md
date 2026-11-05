@@ -39,9 +39,9 @@ The index-card analogy answers **what the roles are**: Q asks, K is compared, V 
 
 The geometric perspective answers **what kind of objects are being compared**: Q and K are numerical vectors, and their dot product is influenced by both angle and magnitude:
 
-[
-q^	op k = lVert qVert,lVert kVertcos(	heta).
-]
+\[
+q^\top k = \lVert q\rVert\,\lVert k\rVert\cos(\theta).
+\]
 
 This distinction matters. Describing vectors as “aligned” can tempt the learner to think only about angle or cosine similarity. The dot product is not generally cosine similarity because the vector norms also matter. In scaled dot-product attention, scores are divided by \(\sqrt{d_k}\), normalized with softmax over accessible keys, and used to weight values. No hard nearest-neighbour selection is implied.
 
