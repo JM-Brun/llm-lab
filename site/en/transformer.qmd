@@ -36,7 +36,7 @@ You will be able to:
 
 ## The whole path, in one diagram
 
-![Simplified flow of an autoregressive GPT, from tokens to next-token selection.](../images/gpt-data-flow.svg){fig-alt="Conceptual pipeline: text, tokenization, embeddings and position, repeated Transformer blocks, logits, softmax, next-token choice, then addition to the context." width=100%}
+![Simplified flow of an autoregressive GPT, from tokens to next-token selection.](../images/gpt-data-flow-en.svg){fig-alt="Conceptual pipeline: text, tokenization, embeddings and position, repeated Transformer blocks, logits, softmax, next-token choice, then addition to the context." width=100%}
 
 This diagram locates the Transformer within the complete system. **This page zooms in on the computation performed by the network**, from its input representations to the logits; it does not reteach text preparation or the next-token selection loop.
 
@@ -65,7 +65,7 @@ Normalization (*LayerNorm* in classic GPT models) centers and normalizes the hid
 
 To see these operations in a concrete implementation without mistaking them for invariants of every Transformer, consult the [guided tour of the reference block](transformer-block-walkthrough.qmd).
 
-![Comparison of the roles of self-attention and the feed-forward network in a Transformer block.](../images/attention-vs-mlp.svg){fig-alt="Self-attention allows exchanges between allowed positions; the same feed-forward network is applied separately to each position." width=100%}
+![Comparison of the roles of self-attention and the feed-forward network in a Transformer block.](../images/attention-vs-mlp-en.svg){fig-alt="Self-attention allows exchanges between allowed positions; the same feed-forward network is applied separately to each position." width=100%}
 
 The useful distinction is not that attention "understands" the tokens while the MLP does not: both transformations are learned. Attention mixes information across positions; the MLP transforms each representation locally, with weights shared across positions.
 
