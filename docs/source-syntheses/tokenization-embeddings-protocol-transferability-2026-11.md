@@ -39,7 +39,7 @@ Baseline evidence reused, not rescanned:
 - #458 and #460/#463 — source registration and structured extraction migration;
 - the existing source collection and migration map.
 
-The dossier's stated source count (46) and the later #458 progress update (47) are different snapshots. This pilot does not treat either count as a completeness target. Reconcile the current count from the validated working tree during CI rather than copying a historical count into the report.
+The pre-pilot `main` catalogue was counted directly at **47 source records** (four Q/K/V/KV-cache plus 43 tokenization/embeddings records). The pilot branch contains **48** after registering TokCollate. The collection dossier was reconciled to this current branch snapshot; neither count is treated as a completeness target.
 
 ## 2. Discovery and source inspection
 
@@ -115,8 +115,9 @@ The integration choice is deliberately small: preserve the source as a traceable
 | Extraction fidelity | pass at paper-text scope | Six located items with evidence kinds, confidence, scope and caveats |
 | Cross-source synthesis | pass | Compared against four bilingual canonical pages and the existing collection |
 | Integration decision | pass | Item-level decisions; no-op justified against exact existing treatment |
-| Schema and catalogue validation | pending CI | New catalogue and extraction records require repository validator |
-| Python CI / Quarto | pending PR checks | No claim made before final-head workflows complete |
+| Schema and catalogue validation | pass | CI validator accepted the new catalogue and extraction records; branch catalogue count is 48 |
+| Python CI | pass | Run 2094 succeeded, including pytest, Ruff, mypy and catalogue/extraction checks |
+| Quarto site | pending at report cut-off | Run 2088 was still rendering; final status must be confirmed before merge |
 | Rendered browser/accessibility review | not run | Not required for a no-page-change pilot; remains owned by #156 / #320/#329 for existing assets/pages |
 | Independent learner validation | not run | No learning-effectiveness claim; use existing #447 only if a future learner-facing change warrants it |
 
@@ -156,8 +157,8 @@ A future formative check should score the learner's reasoning and transfer, not 
 
 ## 9. Next actions
 
-1. Run `site/tools/check_source_catalogue.py` and all CI checks on the PR head; repair schema issues if found.
-2. Reconcile the catalogue total from the validated working tree and update only the canonical snapshot that needs correction.
+1. Confirm the running Quarto site workflow and post-render checks on the PR head; repair any failure before merge.
+2. Reconcile the catalogue count only when further sources are registered; the current baseline (47) and pilot branch (48) are now recorded.
 3. Inspect the TokCollate repository at a pinned commit and verify code licence, dependencies, metric implementation, sample data and tests before considering a practical link.
 4. Open the live visualizer and inspect keyboard, mobile and accessibility behavior before recommending it as a learner tool.
 5. If the tool is adopted for an activity, design a small task and test comprehension/transfer separately; no efficacy claim from the paper's educator use case.
