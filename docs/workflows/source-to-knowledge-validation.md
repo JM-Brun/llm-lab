@@ -1,6 +1,6 @@
 # Source-to-knowledge workflow: validation protocol
 
-**Status:** reusable validation protocol · **Version:** 0.2 · **Calibration:** Q/K/V; transfer assessment: tokenization/embeddings
+**Status:** reusable validation protocol · **Version:** 0.3 · **Calibration:** Q/K/V; transfer assessment: tokenization/embeddings
 
 ## 1. Purpose and claim boundary
 
@@ -226,6 +226,7 @@ Reuse these checks when a source is added or the synthesis changes.
 | A10 | Partial source yields one valuable item | Integrate item while keeping source scan partial | Item integration upgrades scan completeness |
 | A11 | New contribution would add a duplicate paragraph | Prefer link/reference or no-op with rationale | Page length/source count optimized over learning |
 | A12 | Page changes in English only | Block publication or record explicit translation follow-up | Bilingual parity assumed from one page's build |
+| A13 | YAML item counts include nested source-local graph-node IDs | Count only schema-level extraction items; report pedagogical graph nodes separately | Recursive ID count is reported as atomic extraction-item count |
 
 For each check, record pass/fail/not-applicable, evidence pointer and reviewer/date. A checklist pass is not a substitute for technical judgement.
 
