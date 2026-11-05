@@ -107,6 +107,11 @@ def _write_concept_registry(root: Path) -> None:
         "relation_types": {
             "part-of": {
                 "direction": "directed",
+                "family": "structural",
+                "transitive": True,
+                "acyclic": True,
+                "learning_dependency": False,
+                "inverse": None,
                 "labels": {"fr": "fait partie de", "en": "is part of"},
                 "descriptions": {
                     "fr": "La source est une partie de la cible.",
@@ -687,11 +692,21 @@ def test_load_concept_graph_serializes_localized_relation_semantics(tmp_path: Pa
 
     assert french["concept_relation_types"]["part-of"] == {
         "direction": "directed",
+        "family": "structural",
+        "transitive": True,
+        "acyclic": True,
+        "learning_dependency": False,
+        "inverse": None,
         "label": "fait partie de",
         "description": "La source est une partie de la cible.",
     }
     assert english["concept_relation_types"]["part-of"] == {
         "direction": "directed",
+        "family": "structural",
+        "transitive": True,
+        "acyclic": True,
+        "learning_dependency": False,
+        "inverse": None,
         "label": "is part of",
         "description": "The source is part of the target.",
     }
