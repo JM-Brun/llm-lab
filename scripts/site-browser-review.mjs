@@ -240,15 +240,47 @@ for (const testCase of cases) {
     }
 
     if (kind === "build-tour") {
-      const tour = [
-        { page: "gpt-config-walkthrough.html", previous: null, next: "gpt-ops-walkthrough.html" },
-        { page: "gpt-ops-walkthrough.html", previous: "gpt-config-walkthrough.html", next: "transformer-block-walkthrough.html" },
-        { page: "transformer-block-walkthrough.html", previous: "gpt-ops-walkthrough.html", next: "gpt-model-walkthrough.html" },
-        { page: "gpt-model-walkthrough.html", previous: "transformer-block-walkthrough.html", next: "gpt-generation-walkthrough.html" },
-        { page: "gpt-generation-walkthrough.html", previous: "gpt-model-walkthrough.html", next: null },
-      ];
-      const index = tour.findIndex(step => step.page === pagePath);
-      if (index < 0) throw new Error("unknown build-tour page");
+      const currentPageId = `${lang}/${pagePath.replace(/\\.html$/, "")}`;
+      const tour = await page.evaluate(async ({ language, currentId }) => {
+        const response = await fetch(`learning-map-data-${language}.json`);
+        if (!response.ok) throw new Error(`learning-map metadata request failed: ${response.status}`);
+        const payload = await response.json();
+        const byId = new Map(payload.pages.map(item => [item.id, item]));
+        const current = byId.get(currentId);
+        if (!current) throw new Error(`missing page metadata: ${currentId}`);
+
+        let first = current;
+        const backwards = new Set([first.id]);
+        while (first.route?.previous) {
+          const previous = byId.get(first.route.previous);
+          if (!previous || backwards.has(previous.id)) {
+            throw new Error("build-tour previous links are missing or cyclic");
+          }
+          backwards.add(previous.id);
+          first = previous;
+        }
+
+        const steps = [];
+        const visited = new Set();
+        let cursor = first;
+        let expectedPrevious = null;
+        while (cursor) {
+          if (visited.has(cursor.id) || cursor.route?.previous !== expectedPrevious) {
+            throw new Error("build-tour metadata is cyclic or non-reciprocal");
+          }
+          visited.add(cursor.id);
+          steps.push({ id: cursor.id, previous: cursor.route?.previous ?? null, next: cursor.route?.next ?? null });
+          expectedPrevious = cursor.id;
+          cursor = cursor.route?.next ? byId.get(cursor.route.next) : null;
+          if (steps.at(-1).next && !cursor) throw new Error("build-tour next link targets missing metadata");
+        }
+        if (steps.length !== 5 || steps.at(-1).next !== null) {
+          throw new Error(`expected a finite five-page build tour; found ${steps.length} pages`);
+        }
+        return steps;
+      }, { language: lang, currentId: currentPageId });
+      const index = tour.findIndex(step => step.id === currentPageId);
+      if (index < 0) throw new Error("current page is not part of its resolved build-tour chain");
       const step = tour[index];
       const lead = page.locator("main .chapter-lead").first();
       const leadText = await lead.innerText();
