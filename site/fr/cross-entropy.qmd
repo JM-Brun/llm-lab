@@ -132,7 +132,7 @@ La dérivée de la cross-entropie one-hot par rapport aux logits est $p_i-\mathb
 
 ## Exercices complémentaires
 
-L'[espace d'exercices — fondations mathématiques](exercises.qmd#fondations) est une structure de navigation prévue ; les exercices détaillés ne sont pas encore rédigés.
+La [collection de fondations mathématiques](exercises.qmd#fondations) contient des exercices corrigés sur les logits, la perte et le masquage ; d'autres thèmes restent prévus.
 
 ## Références
 

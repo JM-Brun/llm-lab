@@ -66,7 +66,7 @@ If the probabilities assigned to three observed tokens are $(0.5, 0.25, 0.8)$, t
 ::: {.self-check}
 ## Check your understanding
 
-[Open the related exercise space](exercises.qmd#foundations) — detailed exercises will be authored separately.
+[Practice with the mathematical foundations collection](exercises.qmd#foundations), including worked exercises on negative log-likelihood and perplexity.
 
 1. Why use log-likelihood rather than the direct product?
 2. Which rule factorizes a sequence probability into conditional probabilities? Does it require token independence?

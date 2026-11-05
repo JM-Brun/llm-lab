@@ -175,7 +175,7 @@ For a deeper treatment without conflating geometry with the lookup mechanism, se
 ::: {.self-check}
 ## Check your understanding
 
-[Extended exercises on this topic](../en/exercises.qmd#transformer).
+The [extended Transformer collection](../en/exercises.qmd#transformer) is planned; use the checks below for now.
 
 1. An embedding matrix has \(V\) rows and vectors of dimension \(d\). How many parameters does it contain, and what does ID \(i\) select?
 

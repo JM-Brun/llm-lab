@@ -176,7 +176,7 @@ Pour approfondir ces questions sans les confondre avec le mécanisme de lookup, 
 ::: {.self-check}
 ## Vérifier sa compréhension
 
-[Exercices approfondis sur ce thème](exercises.qmd#transformer).
+La [collection approfondie sur le Transformer](exercises.qmd#transformer) est prévue ; utilisez les vérifications ci-dessous en attendant.
 
 1. Une matrice contient \(V\) lignes et des vecteurs de dimension \(d\). Combien de paramètres contient-elle, et que sélectionne l'ID \(i\) ?
 

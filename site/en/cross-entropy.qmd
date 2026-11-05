@@ -132,7 +132,7 @@ The derivative of one-hot cross-entropy with respect to the logits is $p_i-\math
 
 ## Further practice
 
-The [mathematical foundations exercise collection](exercises.qmd#foundations) is planned navigation scaffolding; detailed exercises are not yet written.
+The [mathematical foundations collection](exercises.qmd#foundations) includes worked exercises on logits, loss and masking; further topics remain planned.
 
 ## References
 

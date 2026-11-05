@@ -66,7 +66,7 @@ Si les probabilités attribuées à trois tokens observés sont $(0.5, 0.25, 0.8
 ::: {.self-check}
 ## Vérifier sa compréhension
 
-[Accéder à l'espace d'exercices associé](exercises.qmd#fondations) — les exercices détaillés seront ajoutés séparément.
+[S'exercer avec la collection de fondations mathématiques](exercises.qmd#fondations), notamment les exercices corrigés sur la log-vraisemblance négative et la perplexité.
 
 Pour voir comment la vraisemblance devient une fonction de perte, lire [Entropie croisée](cross-entropy.qmd) et [Loss](loss.qmd).
 

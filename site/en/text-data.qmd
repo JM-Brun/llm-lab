@@ -98,7 +98,7 @@ The same text can produce different sequences depending on the vocabulary, pre-t
 ::: {.self-check}
 ## Check your understanding
 
-[Extended exercises on this topic](../en/exercises.qmd#text-data).
+The [extended text-data collection](../en/exercises.qmd#text-data) is planned; use the checks below for now.
 
 1. A tokenizer assigns ID `17` to the token `cat`. This ID appears twice in a sequence. Do both occurrences select the same initial vector? Can you conclude that the number 17 encodes an amount of meaning?
 

@@ -24,12 +24,12 @@ Lesson pages use a consistent **“Check your understanding”** component: shor
 
 ## How to use this space
 
-- Start with the linked course page and prerequisites.
+- Choose an available task and consult the preparation named for that task; other linked pages are references when needed.
 - Attempt each exercise before opening its solution; explain assumptions and conditions under which the answer would fail.
 - Use transfer questions to check whether a concept generalizes beyond the example shown in the lesson.
 - Answer keys are collapsed by default. A correct result without reasoning is not sufficient evidence of mastery.
 
-## Planned collections
+## Collections and availability {#planned-collections}
 
 | Collection | Scope | Status |
 |---|---|---|
@@ -48,7 +48,15 @@ Lesson pages use a consistent **“Check your understanding”** component: shor
 
 ### Mathematical foundations {#foundations}
 
-**Prerequisites:** [mathematical foundations](mathematical-foundations.qmd), [tensors](tensors.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd), [entropy](entropy.qmd), [cross-entropy](cross-entropy.qmd), [likelihood](likelihood.qmd), [gradients](gradients.qmd).
+**Preparation by exercise:** choose the topic you need rather than reading every reference first.
+
+1. Logits, [softmax](probabilities.qmd), [cross-entropy](cross-entropy.qmd) and logit gradients.
+2. Per-token [loss and masking](loss.qmd), means and logarithms.
+3. [Gradients](gradients.qmd), the chain rule and matrix multiplication.
+4. Soft targets, entropy and KL divergence in [language-modeling mathematics](language-modeling-math.qmd).
+5. Batch, sequence and vocabulary axes; [tensors](tensors.qmd) is an optional shape reference.
+6. [Softmax and numerical stability](probabilities.qmd), exponentials and logarithms.
+7. [Negative log-likelihood](likelihood.qmd), token averaging and [perplexity](cross-entropy.qmd#connection-to-perplexity).
 
 **Current scope:** seven worked exercises cover softmax/NLL, masking and reduction, gradients, soft targets and KL, tensor shapes, log-sum-exp/log-softmax stability, and perplexity. Finite-difference gradient checking remains to be developed.
 
@@ -220,7 +228,7 @@ A comparison requires checking, among other things, the tokenizer and its segmen
 
 ### Attention {#attention}
 
-**Prerequisites:** [Q/K/V](queries-keys-values.qmd), [scaled dot-product attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd), [tensors](tensors.qmd).
+**Preparation:** the first task uses supplied weights and vectors; see [attention aggregation](scaled-dot-product-attention.qmd) for context. The second uses [Q/K/V projections](queries-keys-values.qmd), matrix shapes and NumPy; [tensors](tensors.qmd) is an optional shape reference. Neither task requires studying causal masking first.
 
 **Available:** a weighted-sum calculation and a NumPy exercise on projections and shapes. **Planned focus:** score and weight calculations, cautious interpretation of attention weights and causal-invariance reasoning.
 
