@@ -240,11 +240,19 @@ def test_registry_requires_bilingual_definitions_for_used_relation_types() -> No
     assert any("missing definitions for used types" in error for error in errors)
 
 
-def test_registry_validates_relation_direction_metadata() -> None:
+def test_symmetric_direction_is_driven_by_registry_metadata() -> None:
     data = _valid_registry()
     data["relation_types"]["implemented-by"]["direction"] = "symmetric"
+    data["relations"] = [
+        {"from": "embedding", "type": "implemented-by", "to": "token"},
+    ]
+    assert validate_registry(data) == []
+
+    data["relations"].append(
+        {"from": "token", "type": "implemented-by", "to": "embedding"}
+    )
     errors = validate_registry(data)
-    assert any("is not defined as symmetric" in error for error in errors)
+    assert any("canonical lexical order" in error for error in errors)
 
 
 def test_relation_contract_requires_semantic_metadata() -> None:
