@@ -48,13 +48,13 @@ This matrix captures the *teaching move* that makes a source useful, even when t
 - Soft weighting versus hard nearest-neighbour retrieval.
 - The warning that attention weights are not standalone causal explanations.
 
-### Covered, but worth improving through assessment or visualization
+### Candidate improvements: current decisions
 
-- Dot product versus cosine similarity: a small worked numerical comparison could expose the role of vector norms more concretely.
-- Q/K/V role discrimination: the existing exercise set could include distractors based on the three roles and the matching/payload distinction.
-- Soft versus hard retrieval: a tiny example with two nonzero weights could counter the winner-take-all misconception.
+- **Dot product versus cosine similarity:** the geometric note states the norm/angle identity; [#489](https://github.com/JM-Brun/llm-lab/pull/489) adds a deterministic regression counterexample, and the optional geometry probe is in the #447 pilot protocol. No new learner-facing exercise page is justified before pilot evidence.
+- **Q/K/V role discrimination:** the existing self-check and W_V-only exercise already cover the roles; the #447 protocol now records a pre-reading baseline and post-reading V-only counterfactual. Do not add another role quiz.
+- **Soft versus hard retrieval:** the canonical worked attention example already shows non-degenerate softmax weights and a weighted output. [#480](https://github.com/JM-Brun/llm-lab/issues/480) was closed as not planned to avoid duplicating this treatment.
 
-These are **candidate improvements**, not confirmed content gaps. Before implementing them, inspect the current exercise and numerical-workbench coverage to avoid duplication.
+These are no longer active page-change requests. The remaining gate is learner evidence, not more generic exercises; see the [learning-impact baseline](qkv-learning-impact-baseline-2026-11.md#9-post-implementation-reconciliation--2026-11-05).
 
 ### Not established by the three source scans
 
@@ -67,7 +67,7 @@ These items must not be marked as absent from the project merely because the tut
 
 ## 4. Current project learning-impact baseline
 
-The project already has a Q/K/V self-check, a hand-worked weighted aggregation and a NumPy projection/shape exercise. The remaining opportunities are primarily assessment gaps: numerical dot-product versus cosine comparison, softmax mixture versus hard retrieval, and transfer of role discrimination to changed projection parameters. See the [learning-impact baseline and assessment plan](qkv-learning-impact-baseline-2026-11.md) for the page-by-page audit and proposed minimal diagnostic bundle. Do not add another generic projection or weighted-sum exercise.
+The project already has a Q/K/V self-check, a hand-worked weighted aggregation and a NumPy projection/shape exercise. PR #489 adds implementation regression tests for dot-product/cosine ranking and attention invariants; PR #490 extends the single formative pilot protocol with a Q/K/V baseline, V-only counterfactual and optional geometry probe. These are not learner-outcome data. The remaining work is to complete the browser/accessibility review in #483 and then, if appropriate, run the existing pilot in #447. Do not add another generic projection, weighted-sum or role quiz.
 
 ## 5. Integration decision rules
 
