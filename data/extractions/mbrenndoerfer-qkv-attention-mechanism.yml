@@ -235,7 +235,7 @@ items:
       applicability: {level: moderate, rationale: "Retain as optional depth/reference; no canonical page change until a learner question justifies it."}
       redundancy: {level: low, rationale: "The specific convex-hull consequence is not the same as the existing weighted-sum explanation."}
       evidence_quality: {level: high, rationale: "Follows directly from nonnegative normalized weights."}
-    classification: {primary_theme: architectures-mechanisms, secondary_themes: [mathematical-tools-geometry], tags: [topic:attention, topic:weighted-aggregation], concept_ids: [attention-weight, value, weighted-aggregation]}
+    classification: {primary_theme: architectures-mechanisms, secondary_themes: [mathematical-tools-geometry], tags: [topic:attention, topic:weighted-aggregation], concept_ids: [attention-weight, value]}
     candidate_destinations:
       pages: [en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
       concepts: [attention-weight, weighted-aggregation]
