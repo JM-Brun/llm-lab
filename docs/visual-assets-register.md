@@ -63,6 +63,7 @@ The source-level scan found 32 SVG files. The table records source references fo
 | `queries-keys-values-en.svg`, `queries-keys-values.svg` | EN/FR `queries-keys-values.qmd` | Project-managed SVG pair; described as original in `site/references.qmd`; verify authorship/history and licence |
 | `rope-en.svg`, `rope-fr.svg` | EN/FR `positional-encoding.qmd` | Project-managed SVG pair; verify authorship/history and licence |
 | `softmax-axis-comparison-en.svg`, `softmax-axis-comparison-fr.svg` | EN/FR `tensors.qmd` | Project-managed SVG pair; verify authorship/history and licence |
+| `transformer-attention-architectures-fr.svg`, `transformer-attention-architectures.svg` | FR/EN `transformer-architectures.qmd` | Project-managed SVG pair (FR variant added in the #317 pilot review); verify authorship/history and licence |
 | `tensors-en.svg`, `tensors-fr.svg` | EN/FR `tensors.qmd` | Project-managed SVG pair; verify authorship/history and licence |
 | `token-embedding-matrix-en.svg`, `token-embedding-matrix-fr.svg` | No reference found in the scanned Quarto source files | Present but currently unreferenced; retain files and investigate intended use/provenance |
 | `tokenization-language-cost.svg`, `tokenization-language-cost-fr.svg` | EN/FR `text-data.qmd` | Project-managed SVG pair; verify authorship/history and licence |
