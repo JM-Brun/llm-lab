@@ -20,9 +20,7 @@ related: ["en/queries-keys-values"]
 tags: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:en", "status:published"]
 -->
 
-::: {.chapter-lead}
-Scaled dot-product attention turns learned compatibility scores between queries and keys into weights, then uses those weights to aggregate values. Softmax normalizes scores over accessible positions; it does not prove semantic relevance or causality.
-:::
+{{< include ../includes/generated-guided-context-en-scaled-dot-product-attention.qmd >}}
 
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Verified Concept</span>
@@ -30,7 +28,19 @@ Scaled dot-product attention turns learned compatibility scores between queries 
   <span class="epistemic-badge badge-status">Architecture: Standard Attention</span>
 </div>
 
-<div class="pipeline-stepper" role="navigation" aria-label="LLM learning path stages">
+::: {.chapter-lead}
+Scaled dot-product attention turns learned compatibility scores between queries and keys into weights, then uses those weights to aggregate values. Softmax normalizes scores over accessible positions; it does not prove semantic relevance or causality.
+:::
+
+::: {.callout-tip title="The one-minute mental model"}
+Attention is not one indivisible operation: it is the sequence **scores → scaling → optional mask → softmax → aggregation**. Scores compare Q and K; weights are normalized row by row; the output is a weighted combination of V.
+
+**First pass:** follow the four steps and work through the one-query, two-key example. Check the shape of each matrix separately: scores have shape $T\times T$, while the output has shape $T\times d_v$.
+
+**Go deeper:** the derivation of the scaling factor — why divide by $\sqrt{d_k}$ and what the argument does not guarantee — is developed in [Why scale attention scores?](attention-score-scaling.qmd); changing which positions are accessible before softmax is the role of [causal masking](causal-masking.qmd).
+:::
+
+<div class="pipeline-stepper" role="navigation" aria-label="Attention computation overview">
   <a class="step-item" href="text-data.qmd">1. Text</a>
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
@@ -41,14 +51,6 @@ Scaled dot-product attention turns learned compatibility scores between queries 
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="cross-entropy.qmd">5. Loss & Training</a>
 </div>
-
-::: {.callout-tip title="The one-minute mental model"}
-Attention is not one indivisible operation: it is the sequence **scores → scaling → optional mask → softmax → aggregation**. Scores compare Q and K; weights are normalized row by row; the output is a weighted combination of V.
-
-**First pass:** follow the four steps and work through the one-query, two-key example. Check the shape of each matrix separately: scores have shape $T\times T$, while the output has shape $T\times d_v$.
-
-**Go deeper:** the derivation of the scaling factor — why divide by $\sqrt{d_k}$ and what the argument does not guarantee — is developed in [Why scale attention scores?](attention-score-scaling.qmd); changing which positions are accessible before softmax is the role of [causal masking](causal-masking.qmd).
-:::
 
 ## Four computation steps
 
