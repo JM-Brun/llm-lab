@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer-explainer"
-scope: "Practice activity: run and compare BERT, GPT-2, and T5, then explore GPT-2 small with Transformer Explainer, design controlled experiments, and audit visualization limits and selected implementation choices. It does not replace the conceptual architecture lessons."
-purpose: "Readers should be able to run minimal examples of BERT, GPT-2, and T5, relate their usage interfaces to architecture families without inferring a quality ranking, then formulate and test hypotheses about GPT-2 and distinguish visual observation from evidence about computation."
+scope: "Hands-on activity: run and compare an encoder-only model (BERT), a decoder-only model (GPT-2), and an encoder–decoder model (T5), then explore GPT-2 small with Transformer Explainer: observe tokenization, representations, attention and decoding; design controlled experiments; identify the computation path behind the interface; distinguish visual observation from computational evidence; and audit visualization limits and implementation choices, notably top-k followed by top-p (display truncation before nucleus sampling). It does not replace the conceptual architecture lessons."
+purpose: "Readers should be able to run minimal examples of BERT, GPT-2, and T5 and relate their interfaces to architecture families without inferring a quality ranking; formulate and test a hypothesis about a GPT-2 run; identify the computation path behind the interface; distinguish visual observation from computational evidence; and explain the top-k-then-top-p choice and its consequences for the nucleus threshold."
 suggested_route:
   previous: null
   next: null
