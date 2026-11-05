@@ -22,13 +22,13 @@ At the reviewed repository state, while the structured migration/backfill in #45
 |---|---:|
 | Canonical source catalogue | 47 records: 4 Q/K/V or KV-cache records + 43 tokenization/embeddings records |
 | Structured extraction records | 14 YAML files: 10 tokenization/embeddings + 4 Q/K/V/KV-cache |
-| Atomic items in the 10 topic-specific extraction files | 59 |
+| Top-level extraction items in the 10 topic-specific extraction files | 49 |
 | Topic-level synthesis | One living dossier organized around learner questions and six source families |
 | Migration map | One, preserving historical scan boundaries and unresolved metadata |
 
-**Count correction:** the collection dossier still says 46 records, comprising three Q/K/V/KV-cache records plus 43 migrated records. The current catalogue has 47 because Codefinity's Q/K/V lesson is now registered. The correct decomposition is four Q/K/V/KV-cache records plus 43 tokenization/embeddings records. This is a metadata reconciliation, not a new source discovery.
+**Count reconciliation:** before this PR, the collection dossier stated 46 records (three Q/K/V/KV-cache records plus 43 migrated records). The current catalogue has 47 because Codefinity's Q/K/V lesson is now registered. This PR updates the dossier to the correct decomposition: four Q/K/V/KV-cache records plus 43 tokenization/embeddings records. This is a metadata reconciliation, not a new source discovery.
 
-The 10 topic-specific extraction records cover Karpathy, Ahia, Ali, Wegmann, Arnett, Chiu/TokLens, Ethayarajh, Li, Mikolov and Steck. Their 59 extracted items are an inventory count, not 59 independent claims or proof of complete source coverage.
+The 10 topic-specific extraction records cover Karpathy, Ahia, Ali, Wegmann, Arnett, Chiu/TokLens, Ethayarajh, Li, Mikolov and Steck. They contain 49 top-level extraction items. A recursive YAML count had incorrectly included 10 nested pedagogical-graph node IDs; those nodes are not extraction items. The 49 items are an inventory count, not 49 independent claims or proof of complete source coverage.
 
 ## 3. Transfer assessment
 
@@ -36,7 +36,7 @@ The 10 topic-specific extraction records cover Karpathy, Ahia, Ali, Wegmann, Arn
 |---|---|---|
 | Identity/provenance | Partial | Stable IDs and URLs exist for registered sources; exact historical URLs for some ByteByteGo/Vizuara resources and some immutable revisions remain unresolved. |
 | Inspection coverage | Pass with explicit partial states | The dossier distinguishes PDF inspection, transcript/chapter-marker review, documentation and historical audit migration; uninspected code, data, supplements, media and rights remain visible. |
-| Extraction fidelity | Promising; final validator check required | Ten topic-specific YAML records contain 59 located items with evidence scope and dispositions. This report does not replace a fresh final-head validation run. |
+| Extraction fidelity | Promising; final validator check required | Ten topic-specific YAML records contain 49 top-level extraction items with evidence scope and dispositions; nested pedagogical graph nodes are counted separately. This report does not replace a fresh final-head validation run. |
 | Technical validity | Pass within stated scopes | Primary research is distinguished from tutorial explanation; models, tasks, corpora, denominators and limits are preserved. No independent reproduction is claimed. |
 | Evidence independence | Pass in synthesis design | Compression, fertility, parity, downstream quality and cosine geometry are not treated as interchangeable measures. |
 | Pedagogical reconstruction | Partial | Karpathy's instructional source has a source-local pedagogical model. Most other extracted sources are research papers, where a teaching route is not applicable. Several registered instructional sources still need explicit route triage. |
@@ -44,7 +44,7 @@ The 10 topic-specific extraction records cover Karpathy, Ahia, Ali, Wegmann, Arn
 | Synthesis coherence | Pass | The collection is organized by learner questions and subdomains rather than concatenating source summaries. It preserves distinctions between BPE variants, multilingual metric denominators and embedding-geometry scopes. |
 | Integration value | Pass | Existing pages and routes are reused; integrate-by-reference, already-covered and defer decisions avoid unnecessary new pages and implementations. |
 | Resource quality | Not assessed here | This report does not establish rendered-page quality, keyboard accessibility or mobile usability. |
-| Maintainability | Partial | Canonical IDs, one catalogue, one extraction directory and one topic dossier support incremental work. The stale source count exposes a need for inventory consistency checks. |
+| Maintainability | Partial | Canonical IDs, one catalogue, one extraction directory and one topic dossier support incremental work. The source-count drift is reconciled in this PR; a deterministic inventory consistency check remains a useful regression safeguard. |
 | Learner evidence | Not assessed | No learning outcome is inferred from source audits or the existence of exercises. |
 
 ## 4. What transfers successfully
