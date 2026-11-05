@@ -3,7 +3,7 @@
 **Date:** 2026-11-05  
 **Source:** [Michael Brenndoerfer, Query, Key, Value: The Foundation of Transformer Attention](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism)  
 **Source ID:** `mbrenndoerfer-qkv-attention-mechanism`  
-**Protocol:** [Source-to-knowledge validation v0.3](../workflows/source-to-knowledge-validation.md)
+**Protocol:** [Source-to-knowledge validation v0.4](../workflows/source-to-knowledge-validation.md)
 
 ## Executive result
 
@@ -34,7 +34,18 @@ The existing Q/K/V workflow handled a fourth tutorial source without creating a 
 
 ## Effort
 
-Retrospective manual estimate: **58–85 minutes** across discovery (3–5), inspection (12–18), comparison (8–12), extraction/review (25–35), and catalogue/dossier maintenance (10–15). This is a single-case estimate, not a baseline or scalability claim. Future runs should capture phase timestamps and distinguish active work from tool latency.
+Retrospective manual estimate: **58–85 minutes** across discovery (3–5), inspection (12–18), comparison (8–12), extraction/review (25–35), and catalogue/dossier maintenance (10–15). The estimate is not instrumented: active human time was reconstructed after the work, and tool/CI latency was not measured. Integration decision was included within comparison/review; automated validation time was not separately measured.
+
+| Phase | Active human effort | Measurement quality | Notes |
+|---|---:|---|---|
+| Discovery / identity | 3–5 min | Retrospective estimate | URL and existing Q/K/V dossier checked |
+| Inspection | 12–18 min | Retrospective estimate | Text/equations/code-output text; no media or interaction inspection |
+| Extraction / source-local model | Included in 25–35 min | Retrospective estimate | YAML authoring and item-level evidence/caveats |
+| Comparison / integration decision | 8–12 min | Retrospective estimate | Existing concepts, pages, routes and three prior tutorials compared |
+| Catalogue / dossier / report maintenance | 10–15 min | Retrospective estimate | Six repository files updated |
+| Automated validation | Not measured | CI evidence only | First CI run failed on two validator findings; Quarto site run succeeded; corrected head has not yet produced a new Actions run |
+
+Observed correction burden: **2 validator findings → 2 targeted YAML corrections**. This is a useful process signal, not a quality score. Future pilots must timestamp phases prospectively and separate active human time, tool execution, CI queue time, retries and review interventions.
 
 ## Workflow transfer result
 
@@ -44,8 +55,9 @@ No new skill, registry, taxonomy or composite quality score is justified. Propos
 
 ## Remaining validation
 
-1. Run source catalogue and extraction schema validators.
-2. Run targeted source consistency checks and Quarto build.
-3. Inspect the rendered diff if any site page changes later; this pilot currently changes no canonical page.
-4. Keep media/rights and interactive quiz checks open only if a later integration decision depends on them.
-5. Reconcile with #447/#483 before any learner-facing efficacy claim.
+1. Re-run the source catalogue/extraction validator on the corrected PR head; the first run identified two issues and both were corrected.
+2. Confirm a fresh Quarto build and full CI run on the corrected head; the first Quarto run succeeded, but the corrected head has not yet produced a new Actions run.
+3. Reconcile the PR branch with the latest `main` commit before merge; the branch is currently one commit behind.
+4. Inspect the rendered diff if any site page changes later; this pilot currently changes no canonical page.
+5. Keep media/rights and interactive quiz checks open only if a later integration decision depends on them.
+6. Reconcile with #447/#483 before any learner-facing efficacy claim.
