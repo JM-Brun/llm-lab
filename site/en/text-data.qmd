@@ -56,7 +56,7 @@ Think of a **catalogue with reference numbers**. The tokenizer splits text into 
 At this stage, the useful perspective is the **pipeline**: what transformations does text go through before the neural network processes it?
 
 ```{mermaid}
-flowchart LR
+flowchart TB
     A["Source text"] --> B["Optional preprocessing"]
     B --> C["Tokenizer"]
     C --> D["Tokens"]
@@ -89,6 +89,7 @@ The same tokenizer is used to encode an inference prompt and to convert corpus d
 - **Pretraining:** corpus preparation and splitting, tokenizer fitting and freezing ([corpus preparation](corpus-preparation.qmd)), then construction of windows, targets, and masks from the ID stream ([training examples](training-examples.qmd)).
 
 The second branch is not a prerequisite for understanding how a model encodes a prompt.
+
 ## 2. What tokenization changes — and what it does not tell us
 
 Segmentation determines the sequence of IDs supplied to the model. It affects input coverage, sequence length, and compatibility between tokenizer and model weights. It is not guaranteed linguistic analysis, a measure of meaning, or a model-quality score.
