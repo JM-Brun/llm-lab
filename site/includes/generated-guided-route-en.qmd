@@ -1,6 +1,6 @@
 :::: {.guided-route-grid}
 
-::: {.guided-route-stage}
+::: {.guided-route-stage #guided-stage-orientation}
 
 ### 01 · Orient yourself
 
@@ -18,7 +18,7 @@ Understand what an LLM is and observe a complete generation loop before studying
 
 :::
 
-::: {.guided-route-stage}
+::: {.guided-route-stage #guided-stage-text-input}
 
 ### 02 · From text to tokens
 
@@ -36,7 +36,7 @@ Distinguish text, tokenization, vocabulary, and token IDs in the construction of
 
 :::
 
-::: {.guided-route-stage}
+::: {.guided-route-stage #guided-stage-representations}
 
 ### 03 · From IDs to representations
 
@@ -55,7 +55,7 @@ Trace embedding lookup, positional information, and the contextualization of hid
 
 :::
 
-::: {.guided-route-stage}
+::: {.guided-route-stage #guided-stage-computation}
 
 ### 04 · Understand Transformer computation
 
@@ -74,7 +74,7 @@ Connect Q/K/V, attention weights, aggregation, and causal masking without confus
 
 :::
 
-::: {.guided-route-stage}
+::: {.guided-route-stage #guided-stage-prediction}
 
 ### 05 · From hidden states to predictions
 
@@ -93,7 +93,7 @@ Connect logits, probability distributions, likelihood, and next-token selection\
 
 :::
 
-::: {.guided-route-stage}
+::: {.guided-route-stage #guided-stage-learning-evaluation}
 
 ### 06 · Understand learning and evaluate
 
