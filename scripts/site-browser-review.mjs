@@ -222,7 +222,7 @@ for (const testCase of cases) {
       const stageFragments = await context.locator('a[href*="learning-map.html#guided-stage-"]').evaluateAll(links =>
         links.map(link => (link.getAttribute("href").split("#")[1] || ""))
       );
-      const routeMapPage = await context.context().newPage();
+      const routeMapPage = await page.context().newPage();
       try {
         await routeMapPage.goto(`${BASE}/${lang}/learning-map.html`, { waitUntil: "networkidle", timeout: 60000 });
         item.routeContext.stageAnchorsResolve = await routeMapPage.evaluate(ids =>
