@@ -79,7 +79,22 @@ The dossier often chooses not to add a page, route step, implementation or visua
 
 Both cases show how a source can improve the evidence layer without requiring a new canonical concept or route step.
 
-## 6. Defects and scalability limits exposed
+## 6. Heterogeneous evidence sample
+
+The transfer test must not imply that all registered sources were inspected to the same depth. The following examples show how the method preserves distinct evidence types and limits:
+
+| Evidence type | Existing source and record | What was inspected | What remains unclaimed |
+|---|---|---|---|
+| Primary research paper | Ali et al., tokenizer choice for LLM training; structured extraction | Published paper and its experimental setup/results | Independent reproduction, broader language/task coverage, or a universal tokenizer ranking |
+| Living documentation | Sentence Transformers similarity and model API documentation; registered documentation records | Specific similarity functions and API behavior used by the lesson | Immutable revision or exhaustive review of the entire documentation site |
+| Repository/code | Hugging Face BPE visualizer repository; prior #114/#168 code audit | Repository implementation at the recorded commit and its tokenization pipeline boundaries | Full production-tokenizer fidelity or clean-room execution unless separately evidenced |
+| Video/transcript | Karpathy GPT tokenizer video; structured extraction with source-local teaching model | Public chapter markers and a third-party rendered transcript | Full audiovisual viewing, audio/visual quality or rights clearance |
+| Interactive pedagogical resource | Polo Club Transformer Explainer; #186/#188 review | Interactive GPT-2-small forward-pass design and a specific top-p implementation caveat | Generalization to every Transformer or evidence of learning gains |
+| Course material | Hugging Face course chapter and Vizuara courses; historical #114/#147 audits | Specific tokenization sections or course landing-page descriptions | Full course completion, runtime behavior or uninspected assignments |
+
+This sample is sufficient to test whether the workflow can preserve evidence class and inspection scope. It is not a claim that the entire 47-record catalogue has been re-audited.
+
+## 7. Defects and scalability limits exposed
 
 1. **Inventory drift:** the source count became stale after Codefinity was registered. A deterministic catalogue/dossier consistency check is needed.
 2. **Instructional route status is implicit for some sources:** among the ten topic-specific extraction files, only Karpathy has a pedagogical model. That is appropriate for research papers, but registered instructional sources such as Raschka, the Hugging Face course, Vizuara and ByteByteGo need explicit needed/not-applicable/deferred triage.
