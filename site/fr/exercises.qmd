@@ -24,12 +24,12 @@ Les pages de cours utilisent un composant homogène **« Vérifier sa compréhen
 
 ## Comment utiliser cet espace
 
-- Commencer par la page de cours indiquée dans les prérequis.
+- Choisir un exercice disponible et consulter la préparation indiquée pour cet exercice ; les autres pages liées servent de références au besoin.
 - Répondre sans consulter le corrigé, puis expliquer les hypothèses et les cas où la réponse ne tient plus.
 - Utiliser les exercices de transfert pour vérifier qu’une notion est comprise au-delà de l’exemple vu en cours.
 - Les corrigés sont masqués par défaut. Un résultat juste sans raisonnement ne suffit pas à établir la maîtrise.
 
-## Collections prévues
+## Collections et disponibilité {#collections-prévues}
 
 | Collection | Périmètre | Statut |
 |---|---|---|
@@ -48,7 +48,15 @@ Les pages de cours utilisent un composant homogène **« Vérifier sa compréhen
 
 ### Fondations mathématiques {#fondations}
 
-**Notions préalables :** [fondations mathématiques](mathematical-foundations.qmd), [tenseurs](tensors.qmd), [logits](logits.qmd), [probabilités](probabilites.qmd), [entropie](entropy.qmd), [cross-entropie](cross-entropy.qmd), [vraisemblance](vraisemblance.qmd), [gradients](gradients.qmd).
+**Préparation par exercice :** choisissez la notion utile plutôt que de lire toutes les références au préalable.
+
+1. Logits, [softmax](probabilites.qmd), [cross-entropie](cross-entropy.qmd) et gradients des logits.
+2. [Perte par token et masquage](loss.qmd), moyennes et logarithmes.
+3. [Gradients](gradients.qmd), règle de chaîne et multiplication matricielle.
+4. Cibles souples, entropie et divergence KL dans les [mathématiques des modèles de langage](language-modeling-math.qmd).
+5. Axes du batch, de la séquence et du vocabulaire ; les [tenseurs](tensors.qmd) sont une référence facultative sur les formes.
+6. [Softmax et stabilité numérique](probabilites.qmd), exponentielles et logarithmes.
+7. [Log-vraisemblance négative](vraisemblance.qmd), moyenne par token et [perplexité](cross-entropy.qmd#lien-avec-la-perplexité).
 
 **Périmètre actuel :** sept exercices corrigés couvrent softmax/NLL, masquage et réduction, gradients, cibles souples et KL, formes de tenseurs, stabilité de log-sum-exp/log-softmax et perplexité. La vérification de gradients par différences finies reste à construire.
 
@@ -220,7 +228,7 @@ Une comparaison exige notamment de contrôler le tokenizer et sa segmentation, l
 
 ### Attention {#attention}
 
-**Notions préalables :** [Q/K/V](queries-keys-values.qmd), [attention à produit scalaire mise à l’échelle](scaled-dot-product-attention.qmd), [masque causal](causal-masking.qmd), [tenseurs](tensors.qmd).
+**Préparation :** le premier exercice utilise des poids et des vecteurs fournis ; voir l'[agrégation par attention](scaled-dot-product-attention.qmd) pour le contexte. Le second utilise les [projections Q/K/V](queries-keys-values.qmd), les formes matricielles et NumPy ; les [tenseurs](tensors.qmd) sont une référence facultative sur les formes. Aucun des deux n'exige d'étudier d'abord le masque causal.
 
 **Disponible :** un calcul de somme pondérée et un exercice NumPy sur les projections et leurs dimensions. **À compléter :** calculs de scores et de poids, interprétation prudente des poids et raisonnement sur l’invariance causale.
 

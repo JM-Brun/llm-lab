@@ -100,7 +100,7 @@ Un même texte peut produire des séquences différentes selon le vocabulaire, l
 ::: {.self-check}
 ## Vérifier sa compréhension
 
-[Exercices approfondis sur ce thème](exercises.qmd#donnees-textuelles).
+La [collection approfondie sur les données textuelles](exercises.qmd#donnees-textuelles) est prévue ; utilisez les vérifications ci-dessous en attendant.
 
 1. Un tokenizer attribue l’ID `17` au token `chat`. Dans une séquence, cet ID apparaît deux fois. Les deux occurrences sélectionnent-elles le même vecteur initial ? Peut-on conclure que le nombre 17 encode une quantité de sens ?
 

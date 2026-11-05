@@ -95,7 +95,7 @@ Top-k and nucleus sampling (top-p) are more advanced filters that restrict the c
 ::: {.self-check}
 ## Check your understanding
 
-[Extended exercises on this topic](../en/exercises.qmd#generation).
+The [extended generation collection](../en/exercises.qmd#generation) is planned; use the checks below for now.
 
 1. Why can the same model with the same context produce different texts?
 
