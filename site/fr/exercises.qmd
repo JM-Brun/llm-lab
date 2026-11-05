@@ -243,6 +243,23 @@ La sortie est la somme pondérée : $0{,}75(2,0)+0{,}25(0,4)=(1{,}5;1)$. Après 
 
 </details>
 
+#### Exercice — distinguer mélange pondéré et sélection
+
+Après le softmax d'une ligne d'attention, les poids valent $(0{,}95,\,0{,}05)$ sur deux positions, avec $v_1=(10,0)$ et $v_2=(0,20)$.
+
+1. Un collègue affirme que l'attention « sélectionne la position 1 et ignore le reste ». Calculez la sortie et indiquez si elle coïncide avec $v_1$.
+2. Quelle distribution de poids donnerait exactement $v_1$ en sortie ? Le softmax d'une ligne de scores finis peut-il produire exactement cette distribution ?
+3. Dans quel cas limite l'attention se rapproche-t-elle d'une sélection, et pourquoi ce cas n'est-il pas le comportement général ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+1. La sortie vaut $0{,}95(10,0)+0{,}05(0,20)=(9{,}5,1)$ : elle ne coïncide pas avec $v_1$. Même avec un poids de $0{,}95$, la position 2 transmet $5\,\%$ de son vecteur de valeur : la sortie est un mélange pondéré, pas une sélection. Comparez avec l'exercice précédent, où des poids plus équilibrés produisaient aussi un mélange.
+2. Seule la distribution $(1,0)$ redonnerait exactement $v_1$. Le softmax d'une ligne de scores finis produit des poids strictement positifs : il ne peut pas atteindre exactement $(1,0)$, seulement s'en approcher.
+3. Lorsqu'un score domine très largement les autres après mise à l'échelle, les poids tendent vers un vecteur one-hot et le mélange se rapproche d'une sélection. C'est un cas limite : en général les poids ne sont pas proches de one-hot, et lire l'attention comme « la position gagnante » néglige les contributions non nulles des autres positions. Les poids restent des coefficients de pondération, pas des décisions de sélection.
+
+</details>
+
 #### Exercice — projeter une séquence en Q, K et V
 
 On considère trois positions décrites chacune par un vecteur de dimension 4. Les matrices W_Q et W_K projettent vers une dimension 2, tandis que W_V projette vers une dimension 3.
