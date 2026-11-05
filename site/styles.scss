@@ -1747,7 +1747,7 @@ a.concept-link:focus-visible {
 
 /* Quarto's collapsible callout header is a div enhanced as a button in
    accessibility-fixes.html; provide a visible keyboard focus indicator. */
-.callout-header[role="button"]:focus-visible {
+.callout-header:focus-visible {
   outline: 3px solid var(--llm-amber);
   outline-offset: 3px;
   border-radius: .25rem;
