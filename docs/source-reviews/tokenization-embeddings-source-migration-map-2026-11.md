@@ -125,6 +125,23 @@ These records are easy to miss if the migration is based only on the learner-fac
 | `poloclub-transformer-explainer-paper-2026` | [Transformer Explainer — CHI 2026 paper](https://doi.org/10.1145/3772318.3791725) | PR #186/#188 and references page | Registered separately from the code repository and the live demo |
 | `poloclub-transformer-explainer-repository` | [Transformer Explainer repository](https://github.com/poloclub/transformer-explainer) | PR #186/#188 | Registered separately from the CHI paper; source-level inspection has bounded scope and does not equal live browser validation |
 
+### F. Additional selected pedagogical and evaluation sources
+
+| Source ID | Source | Existing evidence | Migration decision |
+|---|---|---|---|
+| `raschka-bpe-from-scratch-2025` | [Raschka — BPE from Scratch](https://sebastianraschka.com/blog/2025/bpe-from-scratch.html) | #114 source audit | Register as a separate blog/tutorial from the Chapter 2 repository; partial scan |
+| `philip-mueller-bpe-explainer` | [Müller & Steinbach — BPE Explainer](https://philipmueller.dev/bpe-visualization/) | #114 source audit | Register as interactive tutorial; link-only, rights unknown |
+| `cornell-byte-pair-visualizer` | [Cornell CS4782 visualizer](https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/) | #114 source audit | Register as deferred external visualizer; historical UI exposed an undefined frequency field |
+| `bytebytego-how-llms-learn-from-internet-2025` | [How LLMs Learn from the Internet](https://blog.bytebytego.com/p/how-llms-learn-from-the-internet) | #147 and references page | Registered as corpus-preparation overview; secondary source, not primary measurement |
+| `bytebytego-how-llms-see-world-2025` | [How LLMs See the World](https://blog.bytebytego.com/p/how-llms-see-the-world) | #147 and references page | Registered as introductory tokens/embeddings overview; existing examples already cover its useful contrasts |
+| `vizuara-tokenization-from-scratch-bpe` | [Tokenization from Scratch: Building BPE by Hand](https://pods.vizuara.ai/courses/build-llm/tokenization-from-scratch-building-byte-pair-encoding-by-han) | #147 and references page | Registered as a course; landing-page description only, full course not claimed as scanned |
+| `vizuara-llms-from-30000-feet` | [LLMs from 30,000 Feet](https://mu.vizuara.ai/learn/llms-30k) | #147 and references page | Registered as a micro-course; source description and pedagogical format reviewed |
+| `goldman-unpacking-tokenization-2024` | [Unpacking Tokenization](https://aclanthology.org/2024.findings-acl.134/) | PR #137 and references page | Registered as research on compression/performance association; claims remain experiment-scoped |
+| `schmidt-tokenization-more-than-compression-2024` | [Tokenization Is More Than Compression](https://aclanthology.org/2024.emnlp-main.40/) | PR #137 and references page | Registered as research caution against treating token count as sufficient quality objective |
+| `mike-x-cohen-llm-breakdown-tokenization-2025` | [Mike X Cohen — Tokenization (words to integers)](https://mikexcohen.substack.com/p/llm-breakdown-16-tokenization-words) | #114 candidate-source review | Registered as optional reading/activity lead; qualify BPE optimality and token-count simplifications |
+| `rohan-paul-vocabulary-size-tradeoffs-2025` | [Rohan Paul — Balancing Vocabulary Size](https://www.rohan-paul.com/p/tutorial-balancing-vocabulary-size) | #114 candidate-source review | Registered as secondary reading lead; quantitative claims require primary-source verification |
+| `yael-gomez-tokenization-overview-2025` | [Yael Gomez — How LLMs See the World](https://yaelgomez.substack.com/p/how-llms-see-the-world-the-magic) | #114 candidate-source review | Registered as beginner-question discovery resource; no external figure reuse |
+
 ## 4. Known exclusions and non-source artifacts
 
 These items should not be turned into external-source records:
