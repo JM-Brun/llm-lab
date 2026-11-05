@@ -220,7 +220,7 @@ items:
       pages: [en/queries-keys-values, fr/queries-keys-values]
       concepts: [query, key, value]
     disposition: integrate-by-reference
-    disposition_rationale: "The assumption-explicit derivation remains a useful intermediate-level reference, but the dedicated attention-score-scaling lesson already owns the canonical derivation; do not duplicate it."
+    disposition_rationale: "Keep the alternative database/search analogy in the source record, but do not stack a second retrieval analogy into the canonical lesson; the existing index-card framing already serves this learner need."
 
   - id: mbrenndoerfer-qkv-attention-mechanism:convex-hull
     kind: claim
