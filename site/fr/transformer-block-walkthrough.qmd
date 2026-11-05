@@ -80,7 +80,7 @@ return x + self._mlp(layer_norm(x, self.ln2_gamma, self.ln2_beta))
 <button type="button" class="wf-chip" data-wf-links="br1" data-wf-note="Branche d’attention : ln1 prépare une copie normalisée de x, la sortie de w_o vient s’ajouter au tronc. L’identité reste le chemin par défaut : le bloc ne peut pas détruire son entrée.">x + _attention(ln1(x))</button>
 <button type="button" class="wf-chip" data-wf-links="br2" data-wf-note="Branche MLP : ln2 prépare une copie, fc1 élargit (d → hidden), GELU active, fc2 re-projette (hidden → d), puis la sortie s’ajoute au tronc, position par position.">x + _mlp(ln2(x))</button>
 <button type="button" class="wf-chip" data-wf-links="heads" data-wf-note="La tête h lit les colonnes h·(d/H) à (h+1)·(d/H) de Q, K et V : des tranches contiguës du même flux, jamais mélangées avant la projection w_o.">columns = slice(h·head_dim, …)</button>
-<button type="button" class="wf-chip" data-wf-links="init" data-wf-note="La profondeur L réduit l’écart-type des poids des deux branches (0.02/√(2L)) : la variance du tronc reste ≈ constante à travers toute la pile de blocs.">residual_std = 0.02/√(2L)</button>
+<button type="button" class="wf-chip" data-wf-links="init" data-wf-note="La profondeur L réduit l’écart-type des poids des deux branches (0.02/√(2L)) : ce choix aide à maîtriser l’échelle des contributions accumulées le long des chemins résiduels, sans garantir une variance constante.">residual_std = 0.02/√(2L)</button>
 </div>
 <p class="wf-note" aria-live="polite">Le trait vert traverse le bloc sans transformation : c’est le tronc résiduel. Chaque branche (attention, MLP) ne fait qu’ajouter une correction calculée sur une copie normalisée — l’ordre pré-LN de GPT-2.</p>
 </div>
