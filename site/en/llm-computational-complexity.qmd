@@ -1,6 +1,4 @@
 ---
-**Canonical lesson:** [LLM overview](llm-overview.qmd). This page deepens the computational and memory costs of LLMs; it complements the overview without being a required step.
-
 title: "Complexity and parallelism in LLMs"
 subtitle: "Where is computation linear or quadratic, parallel or sequential?"
 keywords: ["type:deep-dive", "destination:deepen", "topic:llm-computational-complexity", "level:advanced", "language:en", "status:published"]
@@ -187,6 +185,8 @@ Apply these distinctions to concrete architecture choices: [hybrid architectures
 4. **Is a recurrent model with linear work in \(T\) fully parallel?** No: a naïve recurrence depends on the previous state, although some structures enable parallel scans.
 5. **Does an MoE with few active experts store only those experts?** No: all expert weights must be hosted or accessible.
 :::
+
+**Canonical lesson:** [LLM overview](llm-overview.qmd). This page deepens the computational and memory costs of LLMs; it complements the overview without being a required step.
 
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-computational-complexity.qmd) · [English](llm-computational-complexity.qmd)
