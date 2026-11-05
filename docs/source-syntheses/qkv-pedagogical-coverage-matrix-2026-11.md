@@ -65,7 +65,11 @@ These are **candidate improvements**, not confirmed content gaps. Before impleme
 
 These items must not be marked as absent from the project merely because the tutorials do not cover them. They are source-scan boundaries or possible future audit topics.
 
-## 4. Integration decision rules
+## 4. Current project learning-impact baseline
+
+The project already has a Q/K/V self-check, a hand-worked weighted aggregation and a NumPy projection/shape exercise. The remaining opportunities are primarily assessment gaps: numerical dot-product versus cosine comparison, softmax mixture versus hard retrieval, and transfer of role discrimination to changed projection parameters. See the [learning-impact baseline and assessment plan](qkv-learning-impact-baseline-2026-11.md) for the page-by-page audit and proposed minimal diagnostic bundle. Do not add another generic projection or weighted-sum exercise.
+
+## 5. Integration decision rules
 
 For every new source contribution, record all of the following before deciding that it is redundant:
 
@@ -79,7 +83,7 @@ For every new source contribution, record all of the following before deciding t
 
 A topical match is not sufficient evidence for **already covered**. First test whether the source contributes a different explanatory lens, learner question, example, teaching move or useful limitation. Conversely, a different analogy alone does not justify adding another canonical paragraph if it creates no new learning outcome.
 
-## 5. How to extend this matrix
+## 6. How to extend this matrix
 
 - Add a source column only after its source-specific extraction and review exist.
 - Preserve source-local provenance; do not collapse disagreements into a synthetic source.
@@ -89,10 +93,11 @@ A topical match is not sufficient evidence for **already covered**. First test w
 - Update the decision and destination when the canonical lesson or exercises change.
 - Do not promote a pedagogical example into a canonical concept node unless it represents a stable concept or relation.
 
-## 6. Traceability
+## 7. Traceability
 
 - [Living Q/K/V source collection](../source-reviews/qkv-source-collection.md)
 - [Complementary explanatory perspectives](qkv-complementary-perspectives-2026-11.md)
+- [Learning-impact baseline and assessment plan](qkv-learning-impact-baseline-2026-11.md)
 - [Q/K/V learning-graph and route comparison](../source-reviews/qkv-learning-graph-comparison-2026-11.md)
 - [Nishanthan K source review](../source-reviews/qkv-nishanthan-devto-2026-11.md)
 - [Neha KK source review](../source-reviews/qkv-neha-kk-medium-2026-11.md)
