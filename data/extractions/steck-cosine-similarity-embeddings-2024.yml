@@ -1,0 +1,136 @@
+schema_version: 1
+source_id: steck-cosine-similarity-embeddings-2024
+scan:
+  accessed_at: "2026-11-05"
+  retrieval_method: direct-pdf
+  author_text:
+    status: partial
+    coverage: "Primary arXiv PDF: abstract, linear matrix-factorization objectives, regularization analysis, remedies, simulated experiments and implications."
+    notes: ["Focused extraction of the analytical argument; no experiment was independently reproduced."]
+  figures_media:
+    status: partial
+    coverage: "Main equations and simulated-data experiment description inspected in the rendered PDF."
+    notes: ["No figure or table asset was copied."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["No code or experimental implementation was independently executed."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Primary arXiv PDF and DOI/proceedings reference."
+    notes: ["All cited works and any supplementary materials were not exhaustively audited."]
+  metadata:
+    status: partial
+    coverage: "2024 paper version, arXiv:2403.05440."
+    notes: ["The extraction is anchored to the inspected arXiv PDF version."]
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["No figure reuse permission was established; this extraction contains paraphrases only."]
+  unresolved_questions:
+    - "The analytical conclusions should not be extrapolated to arbitrary nonlinear embedding models without additional theory."
+items:
+  - id: steck-cosine-similarity-embeddings-2024:regularization-dependence
+    kind: derivation
+    summary: "For linear matrix-factorization models, the paper compares regularizing the product of the factors with regularizing each factor separately; the objectives induce different embedding geometries and therefore different cosine similarities."
+    locator: {type: section, value: "§2.1–2.3, pp. 2–5; Equations 1–6", label: "Regularized matrix-factorization objectives"}
+    evidence:
+      kind: analytical-derivation
+      confidence: established
+      scope: "The two specified L2-regularized linear matrix-factorization/autoencoder objectives."
+      assumptions: []
+      limitations: ["The derivation is for linear models with closed-form solutions."]
+    technical_assessment:
+      status: correct
+      rationale: "The paper derives how the choice of regularization changes the learned factor scaling and resulting cosine geometry."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:cosine-similarity, topic:regularization, method:matrix-factorization]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/cosine-similarity, fr/cosine-similarity]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The project already includes the central warning and explicitly limits it to certain regularized linear model families."
+  - id: steck-cosine-similarity-embeddings-2024:non-uniqueness
+    kind: result
+    summary: "Under product-level regularization, diagonal rescalings of the two factor matrices can preserve the reconstructed product and predictions while changing cosine similarities between the learned embeddings; those cosine values are therefore not uniquely determined."
+    locator: {type: section, value: "§2.2, pp. 3–4; analytical solution and discussion", label: "Non-unique cosine geometry"}
+    evidence:
+      kind: mathematical-result
+      confidence: established
+      scope: "The paper's first regularized linear matrix-factorization objective."
+      assumptions: []
+      limitations: ["This is not a theorem that cosine similarity is arbitrary for all learned embeddings."]
+    technical_assessment:
+      status: correct
+      rationale: "The non-uniqueness follows from the factorization's diagonal rescaling freedom under the specified objective."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:cosine-similarity, topic:embedding-geometry]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/cosine-similarity, fr/cosine-similarity]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The current page already communicates the scoped non-uniqueness result."
+  - id: steck-cosine-similarity-embeddings-2024:unique-not-semantic
+    kind: limitation
+    summary: "Separate regularization of each factor yields a unique cosine geometry up to rotations that do not affect cosine, but uniqueness alone does not establish that the resulting similarities are semantically meaningful."
+    locator: {type: section, value: "§2.3, pp. 4–5", label: "Separately regularized factors"}
+    evidence:
+      kind: analytical-result-and-qualification
+      confidence: established
+      scope: "The paper's second regularized linear matrix-factorization objective."
+      assumptions: []
+      limitations: ["The uniqueness result is objective-specific and does not validate semantic interpretation."]
+    technical_assessment:
+      status: correct
+      rationale: "The paper explicitly separates uniqueness of the learned geometry from semantic validity."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:cosine-similarity, topic:regularization]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/cosine-similarity, fr/cosine-similarity]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "This is a useful nuance for an advanced mathematical reading, but the current page already states the practical caution."
+  - id: steck-cosine-similarity-embeddings-2024:simulated-experiment-scope
+    kind: limitation
+    summary: "The empirical illustration uses simulated user–item interactions with known cluster structure to show how regularization changes cosine geometry; it is not a benchmark of LLM embeddings or human semantic similarity."
+    locator: {type: section, value: "§4, pp. 6–7", label: "Simulated-data experiments"}
+    evidence:
+      kind: experimental-design
+      confidence: established
+      scope: "The paper's illustrative low-rank embedding experiment."
+      assumptions: []
+      limitations:
+        - "The data are simulated and use five ground-truth clusters."
+        - "The paper's deep-model discussion is an implication, not a direct deep-LLM experiment."
+    technical_assessment:
+      status: correct
+      rationale: "The experiment section explicitly motivates simulated data because ground-truth similarity is known."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:cosine-similarity, method:simulation]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/cosine-similarity, fr/cosine-similarity]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The project already warns against interpreting this as a theorem about all deep embeddings."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "Steck et al. provides a useful mathematical counterexample to naive cosine interpretation, but its derivation is restricted to two regularized linear model families and simulated experiments. The project already preserves these boundaries; no canonical concept or route change is warranted."
