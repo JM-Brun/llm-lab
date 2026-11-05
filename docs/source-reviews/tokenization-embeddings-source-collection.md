@@ -3,13 +3,14 @@
 **Status:** living source collection · **Review date:** 2026-11-05  
 **Catalogue:** [data/sources.yml](../../data/sources.yml)  
 **Migration map:** [Tokenization and embeddings source migration map](tokenization-embeddings-source-migration-map-2026-11.md)  
+**Method transfer assessment:** [Source-to-knowledge method transfer validation](../source-syntheses/tokenization-embeddings-method-transfer-validation-2026-11.md)  
 **Owning issue:** [#458](https://github.com/JM-Brun/llm-lab/issues/458)
 
 ## 1. Purpose and evidence boundary
 
 This dossier compares the source families already audited in #114, #147, #82 and #96. It is a synthesis of prior work, not a new exhaustive review of tokenization or embedding research.
 
-The source catalogue currently contains **46 records**: the three pre-existing Q/K/V and KV-cache records plus **43 migrated tokenization/embeddings-related records**. The registry distinguishes papers, documentation, repositories, videos, courses and articles. A record's existence does not mean every component was scanned.
+The source catalogue currently contains **47 records**: four Q/K/V and KV-cache records (including Codefinity) plus **43 migrated tokenization/embeddings-related records**. The registry distinguishes papers, documentation, repositories, videos, courses and articles. A record's existence does not mean every component was scanned.
 
 The source set is selected because it was already cited, inspected or used in the project. It is not a representative sample of all tokenizer research, embedding research or educational resources.
 
@@ -21,7 +22,7 @@ The source set is selected because it was already cited, inspected or used in th
 - Ali, Arnett, Ethayarajh, Li and Steck have more detailed primary-source reviews recorded in #114; preserve each paper's own model, task, corpus and experimental boundaries.
 - Sentence Transformers, Hugging Face and PyTorch documentation are living resources. Their inspected pages were not pinned to immutable documentation revisions unless explicitly recorded.
 - The Rushang Chauhan image, Arnett/Petrov/Hugging Face figures and other embedded assets remain under the site-wide rights workflow in #156. Attribution and repository-level licences are not substitutes for asset-level permission.
-- ByteByteGo and Vizuara were pedagogically reviewed, but their exact source URLs have not yet been recovered into this catalogue. Do not create guessed records; the prior review remains linked through #147.
+- The two ByteByteGo articles and two Vizuara course resources now have explicit canonical URLs in the catalogue. This does not imply that their full sites/courses were scanned. A potentially separate Vizuara embeddings resource remains unresolved; do not create a guessed record.
 
 ## 2. Source families and their distinct roles
 
@@ -247,10 +248,14 @@ This contribution should be used with strict boundaries:
 
 **Evidence boundary.** The full arXiv v3 PDF and main architecture/evaluation figures and tables were inspected. The historical code and pretrained vectors were not retrieved or executed; the negative-sampling follow-up was not scanned. The source remains partially scanned.
 
+### Method-transfer validation
+
+The source-to-knowledge workflow has now been retrospectively assessed against this broader collection. The [transfer-validation report](../source-syntheses/tokenization-embeddings-method-transfer-validation-2026-11.md) records the current catalogue/extraction baseline, what transfers from the Q/K/V calibration case, the limitations exposed, and the next validation gates. This is documentation/synthesis evidence, not browser, rights or learner-outcome validation.
+
 ### Remaining migration tasks
 
 1. Continue only where an already-audited source has a distinct, evidence-backed contribution not yet represented in the collection. Do not create extraction records solely to increase coverage counts.
-2. Recover exact canonical URLs for the ByteByteGo and Vizuara resources from their original historical references; do not guess them.
+2. Reconcile whether a separate Vizuara embeddings resource exists and recover its exact identity only from historical evidence; the currently registered ByteByteGo/Vizuara resources already have canonical URLs.
 3. Add source-specific review records only where a durable review cannot be represented adequately by this dossier and migration map.
 4. Keep asset rights verification in #156 and deferred browser review in #320/#329.
 5. Re-run catalogue/extraction validation and the bilingual Quarto workflow after extraction files and any generated projections are added.

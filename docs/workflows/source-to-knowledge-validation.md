@@ -1,6 +1,6 @@
 # Source-to-knowledge workflow: validation protocol
 
-**Status:** reusable validation protocol · **Version:** 0.1 · **Pilot:** Q/K/V
+**Status:** reusable validation protocol · **Version:** 0.3 · **Calibration:** Q/K/V; transfer assessment: tokenization/embeddings
 
 ## 1. Purpose and claim boundary
 
@@ -226,6 +226,7 @@ Reuse these checks when a source is added or the synthesis changes.
 | A10 | Partial source yields one valuable item | Integrate item while keeping source scan partial | Item integration upgrades scan completeness |
 | A11 | New contribution would add a duplicate paragraph | Prefer link/reference or no-op with rationale | Page length/source count optimized over learning |
 | A12 | Page changes in English only | Block publication or record explicit translation follow-up | Bilingual parity assumed from one page's build |
+| A13 | YAML item counts include nested source-local graph-node IDs | Count only schema-level extraction items; report pedagogical graph nodes separately | Recursive ID count is reported as atomic extraction-item count |
 
 For each check, record pass/fail/not-applicable, evidence pointer and reviewer/date. A checklist pass is not a substitute for technical judgement.
 
@@ -272,4 +273,6 @@ Treat this protocol as versioned project method. Change it only when a pilot rev
 - avoid new controlled vocabulary when a descriptive label or existing field is sufficient;
 - validate the protocol on a second concept collection before claiming general transfer.
 
-Q/K/V is the first calibration case, not proof of scalability. Tokenization/embeddings or another concept collection should be the next transfer test after the Q/K/V benchmark and the existing #475 vocabulary/validator reconciliation are complete.
+Q/K/V is the first calibration case. A retrospective transfer assessment has now been completed for the broader [tokenization/embeddings collection](../source-syntheses/tokenization-embeddings-method-transfer-validation-2026-11.md). It demonstrates transfer at the documentation and synthesis level, but does not establish full automation, learner efficacy or universal scalability. The report records remaining gates: final-head validators, instructional-source route triage, metadata recovery, rendered/accessibility review, rights checks and independent learner observations.
+
+The next scalability test should be a small, deliberately selected new source added to an already-covered subdomain, processed end-to-end with the current skills and templates. Measure traceability, review effort, regressions and learner-facing value before attempting another large migration.
