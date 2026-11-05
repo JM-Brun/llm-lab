@@ -20,6 +20,8 @@ related: ["en/transformer"]
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:en", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-en-text-data.qmd >}}
+
 ::: {.chapter-lead}
 A language model receives a sequence of numerical IDs, not raw text. Tokenization defines how text becomes IDs and how IDs are decoded. It is separate from the neural network, but affects vocabulary, sequence length, compute cost, and some observable behaviours.
 :::
