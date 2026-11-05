@@ -26,7 +26,7 @@ La page distingue un **parcours guidé** compact d'une **carte progressive**. Le
 - **Territoires** — les grandes parties du site : Comprendre, Construire, S'exercer, Approfondir, Références.
 - **Rubriques** — un clic sur un territoire affiche ses sous-parties ; le fil d'Ariane ou la touche Échap permet de remonter d'un niveau.
 - **Pages** — un clic sur une page affiche ses détails (objectif, sections, liens) ; « Ouvrir la page » y conduit directement.
-- **Notions** — la vue « Notions canoniques » liste les concepts du registre bilingue versionné dans `data/concepts.yml`, avec leurs définitions, relations typées et pages ressources.
+- **Notions** — la vue « Notions canoniques » regroupe les concepts du registre bilingue versionné dans `data/concepts.yml` par domaine de découverte, avec leurs définitions, relations typées et pages ressources. La recherche et le filtre par type de relation réduisent la liste, une notion sélectionnée met en évidence ses voisines, et les notions liées restent cliquables depuis le panneau de détails.
 
 Les intitulés de sections affichés dans les détails d'une page sont des repères éditoriaux, pas des concepts canoniques. La carte ne doit pas être interprétée comme un ordre de lecture unique : le parcours guidé ci-dessous joue ce rôle.
 
@@ -48,7 +48,7 @@ Six étapes conceptuelles donnent un point d'entrée et une progression conseill
 
 ## Explorer les ressources
 
-La carte progressive affiche d'abord les territoires, puis révèle chaque rubrique au clic, puis les pages. La vue « Notions canoniques » présente séparément les concepts du registre. Ces vues servent à explorer ; elles ne remplacent pas le parcours guidé ci-dessus. La carte comme la liste ci-dessous sont générées automatiquement par le méta-code Python à partir de la sidebar Quarto et des métadonnées des pages : une seule source à maintenir.
+La carte progressive affiche d'abord les territoires, puis révèle chaque rubrique au clic, puis les pages. La vue « Notions canoniques » présente séparément les concepts du registre, groupés par domaine. Ces vues servent à explorer ; elles ne remplacent pas le parcours guidé ci-dessus. Le bouton « Réinitialiser la vue » efface la recherche, le filtre et la sélection ; la touche Échap remonte d’un niveau à la fois. La carte comme la liste ci-dessous sont générées automatiquement par le méta-code Python à partir de la sidebar Quarto et des métadonnées des pages : une seule source à maintenir.
 
 {{< include ../includes/generated-map-territories-fr.qmd >}}
 
