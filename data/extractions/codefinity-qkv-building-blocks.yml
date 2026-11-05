@@ -246,7 +246,7 @@ items:
       applicability: {level: moderate, rationale: "Retain as a future exercise-design reference; avoid adding it without evidence of a learner gap."}
       redundancy: {level: moderate, rationale: "The attention lesson explains dynamic weighted aggregation, though not via this exact distractor set."}
       evidence_quality: {level: moderate, rationale: "The visible prompt and four alternatives are direct evidence; response feedback is unknown."}
-    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:attention], concept_ids: [query, key, attention-weight, weighted-aggregation]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:attention], concept_ids: [query, key, attention-weight]}
     candidate_destinations:
       pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
       concepts: [attention-weight, weighted-aggregation]
@@ -277,7 +277,7 @@ items:
       applicability: {level: moderate, rationale: "Retain as a future formative-assessment reference; no new page or exercise is justified yet."}
       redundancy: {level: moderate, rationale: "The canonical attention page explains the value of contextual weighted aggregation."}
       evidence_quality: {level: moderate, rationale: "The visible prompt and four alternatives are direct evidence; response feedback is unknown."}
-    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:contextualization], concept_ids: [contextualized-representation, weighted-aggregation]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:contextualization], concept_ids: [contextualized-representation]}
     candidate_destinations:
       pages: [fr/contextualized-representations, en/contextualized-representations, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
       concepts: [contextualized-representation, weighted-aggregation]
