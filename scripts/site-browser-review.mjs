@@ -240,7 +240,7 @@ for (const testCase of cases) {
     }
 
     if (kind === "build-tour") {
-      const currentPageId = `${lang}/${pagePath.replace(/\\.html$/, "")}`;
+      const currentPageId = `${lang}/${pagePath.replace(/\.html$/, "")}`;
       const tour = await page.evaluate(async ({ language, currentId }) => {
         const response = await fetch(`learning-map-data-${language}.json`);
         if (!response.ok) throw new Error(`learning-map metadata request failed: ${response.status}`);
