@@ -27,7 +27,7 @@ The six stages in `data/guided-route.yml` correspond to the conceptual order in 
 |---|---|---|---|
 | `orientation` | `llm-overview`, `generation` | G0; early preview of G7 | Understand |
 | `text-input` | `text-data`, `tokenization-strategies` | G1 | Understand → text/representations |
-| `representations` | `embedding-space`, `positional-encoding`, `contextualized-representations` | G3 | Understand → text/representations |
+| `representations` | `embedding-space`, `positional-encoding`, `contextualized-representations` | G3 for initial vectors; G4–G5 for contextualization | Understand → text/representations |
 | `computation` | `transformer`, `queries-keys-values`, `scaled-dot-product-attention`, `causal-masking` | G4–G5 | Understand → Transformer/attention |
 | `prediction` | `logits`, `probabilities`, `likelihood`, `generation` | G6 and a return to G7 | Understand → attention/output |
 | `learning-evaluation` | `cross-entropy`, `loss`, `gradients`, `evaluation-experimentale` | G8–G9 / E1 | Understand learning pages; Practice for evaluation |
@@ -133,7 +133,7 @@ Use the existing project checks; do not create a workflow per concept or a secon
 ```bash
 uv run --with-requirements docs/requirements-history-validation.txt python site/tools/check_page_metadata.py
 uv run --locked pytest
-python site/tools/build_learning_map.py
+uv run python site/tools/build_learning_map.py
 quarto render site
 ```
 
