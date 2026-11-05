@@ -54,7 +54,7 @@ This is sufficient to begin a breadcrumb projection for pages assigned to the si
 - [ ] Determine how multiple stage membership is presented, especially generation.
 - [ ] Inspect the Build milestone source and decide whether it already provides a stable parent/step context suitable for a separate Build breadcrumb.
 - [ ] Inspect Practice and Reference pages to confirm that omitting the conceptual breadcrumb remains coherent.
-- [ ] Identify all current `pipeline-stepper` occurrences and decide retain/replace on evidence.
+- [x] Identify all current `pipeline-stepper` occurrences and decide retain/replace on evidence (§14: exhaustive scan; eight five-stop blocks retired, text-data local stepper retained per §12.1).
 - [ ] Prototype a shared accessible breadcrumb using existing generated route data; do not add new page metadata until the projection is proven.
 - [ ] Add focused tests for route membership, localization, ambiguous membership, optional status, and links.
 - [ ] Run Quarto/CI and perform separate browser/accessibility/learner checks.
@@ -146,7 +146,7 @@ The Q/K/V and embedding lessons were intentionally not changed in PR #522 becaus
 - [ ] Verify keyboard focus, screen-reader announcement order, `aria-current`, contrast, and responsive wrapping.
 - [ ] Record the rendered review and any corrections in #337 / #368 before marking the breadcrumb/context pilot complete.
 - [ ] Run a small learner transfer/comprehension check; CI and visual review do not establish pedagogical effectiveness.
-- [ ] Search for any remaining `pipeline-stepper` occurrence and ensure no misleading linear chain remains.
+- [x] Search for any remaining `pipeline-stepper` occurrence and ensure no misleading linear chain remains (§14; rendered verification via the extended `scripts/site-browser-review.mjs` still to run on the deployed site).
 
 **Evidence boundary:** successful Python CI and Quarto render/publish establish technical generation and link integrity, not accessibility conformance or improved learner comprehension. The new component is a first implementation pilot, not yet a validated site-wide design. The four-page stepper removal is a corrective deletion, not evidence that breadcrumb rollout is complete.
 
@@ -178,7 +178,7 @@ This addendum supersedes the earlier exploratory proposal to derive a second loc
 
 ### 12.1 Text-data navigation decision
 
-The text-data pages retain their existing local text-to-representation stepper. They do not receive an additional generated guided-route cue because that would stack two page-level navigation elements for closely related instructional orientation. The short-lived inclusion from PR #530 was removed by the corrective navigation change in PR #532.
+The text-data pages retain their existing local text-to-representation stepper. They do not receive an additional generated guided-route cue because that would stack two page-level navigation elements for closely related instructional orientation. The short-lived inclusion from PR #530 was removed by the corrective navigation change in [PR #534](https://github.com/JM-Brun/llm-lab/pull/534).
 
 
 ## 13. Corrective review after learner-facing feedback (2026-11-05)
@@ -193,4 +193,18 @@ Corrective decision:
 - Do not add the generated route cue to text-data while its existing local text-to-representation stepper is present. Two navigation bars on the same page would be redundant.
 - The Q/K/V page should have one pedagogical context cue, not two adjacent representations of the same location.
 
-The corrective implementation is tracked in [PR #532](https://github.com/JM-Brun/llm-lab/pull/532). Browser-rendered visual verification is required before declaring the correction complete.
+The corrective implementation and its browser-rendered verification are tracked in [PR #534](https://github.com/JM-Brun/llm-lab/pull/534), merged 2026-11-05 (the earlier reference pointed to PR #532, a number that was never used).
+
+
+## 14. Exhaustive continuity scan and remaining-stepper correction (2026-11-05)
+
+A full continuity scan of the deployed French site (all published pages) and of every guided-route member in both language trees, cross-checked against `data/guided-route.yml`, the generator, and the deployed site at `d6c5f9f`, found that the §8 inventory was a bounded four-occurrence sample. After #524, ten `pipeline-stepper` occurrences remained on `main`:
+
+- `site/fr/text-data.qmd`, `site/en/text-data.qmd` — the local four-stop text-to-representation stepper, retained by the §12.1 decision.
+- `site/{fr,en}/scaled-dot-product-attention.qmd`, `site/{fr,en}/causal-masking.qmd`, `site/{fr,en}/logits.qmd`, `site/{fr,en}/cross-entropy.qmd` — the same five-stop chain retired by §8, with the same defects: from `logits` and `cross-entropy` the step-3 link skips scaled dot-product attention and causal masking; the step-5 link skips probabilities and likelihood; and the step-3 label differs across the four pages.
+
+Decision (extension of the §8 rationale): retire the eight five-stop blocks without relabelling, and add the generated single-membership guided-route context to those four lessons in both languages, mirroring the #524 + #528 sequence. `text-data` stays untouched (§12.1). `scripts/site-browser-review.mjs` is extended so the Chromium route-context audit covers all ten guided-context pages and asserts zero legacy steppers on the four corrected lessons.
+
+The full scan — cue-coverage map, the nested-route mapping, and the remaining rollout gaps (nine core route pages still carry no visual cue; the prediction → learning tail has no route cards after `logits`) — is recorded in [visual-route-continuity-audit-2026-11-05.md](visual-route-continuity-audit-2026-11-05.md).
+
+This closes the §5 and §11 stepper-inventory items at the source level only. Rendered/browser verification, the accessibility review and the learner check remain open, as does the #535 follow-up.

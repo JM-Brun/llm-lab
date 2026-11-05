@@ -19,7 +19,7 @@ const cases = [
     ...testCase, page: "learning-map.html", kind: "learning-map",
   })),
   ...visualCases.flatMap(testCase =>
-    ["llm-overview.html", "generation.html", "embedding-space.html", "queries-keys-values.html"].map(page => ({
+    ["llm-overview.html", "generation.html", "embedding-space.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "logits.html", "cross-entropy.html"].map(page => ({
       ...testCase, page, kind: "route-context",
     }))
   ),
@@ -279,6 +279,10 @@ for (const testCase of cases) {
           "llm-overview.html": "guided-stage-orientation",
           "embedding-space.html": "guided-stage-representations",
           "queries-keys-values.html": "guided-stage-computation",
+          "scaled-dot-product-attention.html": "guided-stage-computation",
+          "causal-masking.html": "guided-stage-computation",
+          "logits.html": "guided-stage-prediction",
+          "cross-entropy.html": "guided-stage-learning-evaluation",
         }[pagePath];
         if (!expectedStage || item.routeContext.isMultiple || !item.routeContext.navLandmark ||
             item.routeContext.currentPageMarkers !== 0 || stageFragments.length !== 1 ||
@@ -287,7 +291,7 @@ for (const testCase of cases) {
           throw new Error("single-stage context repeats the page heading or does not expose the expected labelled stage link");
         }
       }
-      if (pagePath === "embedding-space.html" || pagePath === "queries-keys-values.html") {
+      if (["embedding-space.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "logits.html", "cross-entropy.html"].includes(pagePath)) {
         item.routeContext.legacyStepperCount = await page.locator(".pipeline-stepper").count();
         if (item.routeContext.legacyStepperCount !== 0) {
           throw new Error("misleading legacy five-step pipeline stepper is still rendered");

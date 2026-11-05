@@ -20,6 +20,8 @@ related: ["fr/queries-keys-values"]
 tags: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-scaled-dot-product-attention.qmd >}}
+
 ::: {.chapter-lead}
 L'attention à produit scalaire compare les requêtes aux clés pour calculer des scores, puis transforme ces scores en poids qui servent à combiner les valeurs. Le softmax normalise les poids sur les positions accessibles ; il ne prouve ni pertinence sémantique ni causalité.
 :::
@@ -28,18 +30,6 @@ L'attention à produit scalaire compare les requêtes aux clés pour calculer de
   <span class="epistemic-badge badge-concept">Concept vérifié</span>
   <span class="epistemic-badge badge-code">Python · à exécuter localement</span>
   <span class="epistemic-badge badge-status">Architecture : Attention standard</span>
-</div>
-
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes du parcours LLM">
-  <a class="step-item" href="text-data.qmd">1. Texte</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">3. Attention à produit scalaire</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="logits.qmd">4. Logits</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="cross-entropy.qmd">5. Perte & Entraînement</a>
 </div>
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}

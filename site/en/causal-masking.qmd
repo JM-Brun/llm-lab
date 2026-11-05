@@ -20,6 +20,8 @@ related: ["en/logits"]
 tags: ["type:concept-lesson", "destination:understand", "topic:causal-masking", "level:core", "language:en", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-en-causal-masking.qmd >}}
+
 ::: {.chapter-lead}
 Causal masking is an information constraint: to predict the token at position $t+1$, the computation at position $t$ must depend only on the available prefix. It is not merely a visualization convention.
 :::
@@ -28,18 +30,6 @@ Causal masking is an information constraint: to predict the token at position $t
   <span class="epistemic-badge badge-concept">Verified Concept</span>
   <span class="epistemic-badge badge-code">Invariance test · run locally</span>
   <span class="epistemic-badge badge-status">Architecture: Autoregressive Decoder</span>
-</div>
-
-<div class="pipeline-stepper" role="navigation" aria-label="LLM learning path stages">
-  <a class="step-item" href="text-data.qmd">1. Text</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">3. Causal Mask & Attention</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="logits.qmd">4. Logits</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="cross-entropy.qmd">5. Loss & Training</a>
 </div>
 
 ::: {.callout-tip title="The one-minute mental model"}
