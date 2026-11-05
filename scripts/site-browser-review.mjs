@@ -59,9 +59,9 @@ for (const testCase of cases) {
     const response = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
     item.httpStatus = response?.status() ?? null;
     if (!response || !response.ok()) throw new Error(`HTTP status ${item.httpStatus}`);
-    await page.waitForLoadState("networkidle", { timeout: 5000 }).catch(() => {});
+    await page.waitForLoadState("networkidle", { timeout: 1500 }).catch(() => {});
     await page.evaluate(() => document.fonts?.ready.then(() => true));
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(300);
 
     item.title = await page.title();
     item.h1 = await page.locator("h1").first().innerText().catch(() => null);
