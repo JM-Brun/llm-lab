@@ -334,9 +334,16 @@ def validate_registry(
                 for index, relation in enumerate(relations):
                     if isinstance(relation, dict) and relation.get("type") == kind:
                         rationale = relation.get("rationale")
-                        if not isinstance(rationale, str) or not rationale.strip():
+                        if (
+                            not isinstance(rationale, dict)
+                            or set(rationale) != {"fr", "en"}
+                            or not all(
+                                isinstance(value, str) and value.strip()
+                                for value in rationale.values()
+                            )
+                        ):
                             errors.append(
-                                f"relations[{index}].rationale: required for learning dependency {kind!r}"
+                                f"relations[{index}].rationale: expected non-empty fr and en"
                             )
     return errors
 
