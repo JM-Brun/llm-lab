@@ -20,10 +20,16 @@ pedagogical_model:
     status: not-assessed # not-assessed | partial | complete
     basis: []
     inferred_elements: []
+  comparison:
+    dossier: "docs/source-reviews/source-topic-review.md"
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: ["data/guided-route.yml", "docs/learning-path.md", "page-level routes and Build route"]
+    decision: "State whether the source changes the graph, route, pages, or none of them."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
   source_graph:
     nodes:
       - id: "src-concept-or-operation"
-        kind: "concept | representation | parameter | operation | intermediate | constraint | example | visualization"
+        kind: "concept | computational-object | representation | parameter-set | operation | intermediate | constraint | pedagogical-anchor | visualization"
         description: "Concise paraphrase of the source-local element."
         locator: "Heading, section, timestamp, page or code symbol."
         inferred: false
@@ -52,7 +58,7 @@ pedagogical_model:
 # One item per atomic contribution. Include useful, redundant, rejected and deferred items.
 items:
   - id: "source-id:atomic-contribution-id"
-    kind: "definition | distinction | claim | equation | derivation | example | analogy | misconception | method | experiment | implementation | visualization | community-suggestion"
+    kind: "claim | definition | mechanism | derivation | assumption | result | limitation | counterexample | analogy | mental-model | teaching-sequence | question | misconception | figure | diagram | animation | visualization | experiment | benchmark | dataset | code-example | implementation-pattern | page-improvement | new-page-proposal | cross-link | open-question"
     summary: "Faithful concise paraphrase; do not copy extended source wording."
     locator: {type: section, value: "section or line locator", label: "Heading"}
     provenance:
@@ -60,22 +66,28 @@ items:
       component: "author-text | comment | figure | code | linked-resource | metadata"
     evidence:
       kind: "direct-statement | equation | example | code | comment | inferred"
-      confidence: medium # high | medium | low
+      confidence: well-supported # established | well-supported | context-dependent | disputed | speculative | unverified
       assumptions: []
       limitations: []
     technical_assessment:
       status: not-reviewed # correct | qualified | disputed | incorrect | not-reviewed
       rationale: ""
       corroborating_sources: []
-    pedagogical_assessment:
+    pedagogical_profile:
       learner_question: ""
       explanatory_lens: ""
       teaching_form: []
-      novelty: {level: unknown, rationale: ""}
-      complementarity: {level: unknown, rationale: ""}
-      learner_value: {level: unknown, rationale: ""}
-      redundancy: {level: unknown, rationale: ""}
-      integration_cost: {level: unknown, rationale: ""}
+      abstraction_level: introductory
+      prerequisites: []
+      distinctive_value: ""
+      limitations: []
+    pedagogical_assessment:
+      novelty: {level: uncertain, rationale: ""}
+      complementarity: {level: uncertain, rationale: ""}
+      pedagogical_value: {level: uncertain, rationale: ""}
+      applicability: {level: uncertain, rationale: ""}
+      redundancy: {level: uncertain, rationale: ""}
+      evidence_quality: {level: uncertain, rationale: ""}
     classification:
       primary_theme: "canonical-theme-id"
       tags: []
