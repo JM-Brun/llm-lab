@@ -122,7 +122,7 @@ Use these dimensions consistently:
 - **`type`**: `entry-point`, `system-overview`, `concept-lesson`, `concept-bridge`, `guided-build`, `deep-dive`, `exercise-hub`, `experiment-guide`, `glossary`, `historical-reference`, `bibliography`.
 - **`destination`**: `orient`, `understand`, `build`, `deepen`, `practice`, `reference`.
 - **`topic`**: a stable kebab-case subject/grouping identifier for the page; use the same identifier for French and English counterparts even when their filenames differ. It is not a canonical concept ID.
-- **`level`**: `overview`, `core`, `applied`, `advanced`, `reference`.
+- **`level`**: `overview`, `core`, `applied`, `advanced`, `reference`. This describes the page's editorial depth or role, **not whether it is mandatory in the guided route**. Route membership and optionality are defined independently by `pages` and `optional_pages` in `data/guided-route.yml`. A page can therefore be `level:core` and still be an optional route companion: it may explain a foundational idea without being required to follow the main sequence.
 - **`language`**: `fr`, `en`, or `shared` for language-neutral resources.
 - **`status`**: `published`, `planned`, or `retired`. Do not label a planned page as published.
 
