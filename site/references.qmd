@@ -266,6 +266,17 @@ Le format en courtes leçons autonomes et questions explicites est intéressant 
 Exemple de visualisations manipulables autour des vecteurs, du produit scalaire, de fonctions à plusieurs variables et de la température. L'intérêt retenu est éditorial : placer une manipulation au moment où elle éclaire une notion, plutôt que regrouper toutes les démonstrations dans une galerie sans contexte. L'aperçu public consulté ne permet pas d'identifier un fichier image pédagogique autonome réutilisable ; aucune image de cette publication n'est copiée dans le dépôt.
 :::
 
+## Références pédagogiques — requêtes, clés et valeurs
+
+Ressources consultées le 5 novembre 2026. Ces ressources secondaires apportent des angles pédagogiques complémentaires aux pages [Q, K et V](fr/queries-keys-values.qmd) et [scaled dot-product attention](fr/scaled-dot-product-attention.qmd). Elles ne remplacent ni les références primaires ni les dérivations du dépôt. Les figures externes restent hébergées par leurs sources : aucune illustration n'est copiée ici.
+
+- **Michael Brenndoerfer**, [*Query, Key, Value: The Foundation of Transformer Attention*](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism) — explication intermédiaire avec hypothèses explicites pour la variance des scores, déroulé numérique, formes de tenseurs et interprétations géométriques. Les hypothèses de la dérivation et les limites de la trace jouet sont détaillées dans la revue de source.
+- **Codefinity**, [*Queries, Keys, and Values: The Building Blocks*](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) — intuition géométrique sur Q/K, dépendance du produit scalaire aux normes et exemple d'ambiguïté lexicale (*bank*). Ressource pédagogique, pas source primaire.
+- **Neha KK**, [*Understanding Queries, Keys and Values in Transformers*](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) — motivation de la séparation des projections et exemple de coréférence. L'exemple ne rapporte aucun modèle, aucune tête, aucun poids mesuré ni expérience ; il illustre un flux d'information possible, pas une observation de résolution de coréférence.
+- **Nishanthan K**, [*How Query, Key, and Value (QKV) Work in Transformers*](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a) — présentation introductive et illustration complémentaire des rôles Q/K/V. Le miroir [Medium de l'auteur](https://nishanthan-k.medium.com/how-query-key-and-value-qkv-work-in-transformers-1274bfa14ea8) est également référencé dans la revue. Les métadonnées de publication et les droits des illustrations restent à vérifier.
+
+Les revues et extractions associées sont conservées dans [le dossier des sources Q/K/V](../docs/source-reviews/qkv-source-collection.md), avec les limites d'inspection et les décisions d'intégration. Une URL accessible ne vaut pas autorisation de réutilisation d'une figure.
+
 ## Entropie, compression et divergence KL
 
 ### Références mathématiques et scientifiques

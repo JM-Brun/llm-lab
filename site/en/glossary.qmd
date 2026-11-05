@@ -74,10 +74,10 @@ These topics are grouped in the [Representation geometry and interpretability](e
 - **Transformer** — a family of neural architectures built around attention and representation transformations, introduced by Vaswani and colleagues in 2017. The term does not name a single model family. See the [Transformer overview](transformer.qmd) and [history](transformer-history.qmd).
 - **GPT (*Generative Pre-trained Transformer*)** — a family of pretrained generative models built on Transformers; classic GPT models use a decoder-only architecture and an autoregressive objective. GPT is not synonymous with Transformer. See [GPT and Transformer](transformer.qmd) and [Transformer architectures](transformer-architectures.qmd).
 - **Attention** — a mechanism that computes weights from queries and keys, then aggregates the corresponding values. See [Q, K, and V](queries-keys-values.qmd).
-- **Query (Q)** — a projection used to compute compatibility scores with keys.
-- **Key (K)** — a projection compared with a query to produce a score.
-- **Value (V)** — a projection whose representations are aggregated using attention weights.
-- **Self-attention** — attention where queries, keys, and values are derived from representations of the same sequence.
+- **Query (Q)** — a projection used to compute compatibility scores with keys. See [Q, K, and V](queries-keys-values.qmd).
+- **Key (K)** — a projection compared with a query to produce a score. See [Q, K, and V](queries-keys-values.qmd).
+- **Value (V)** — a projection whose representations are aggregated using attention weights. See [Q, K, and V](queries-keys-values.qmd).
+- **Self-attention** — attention where queries, keys, and values are derived from representations of the same sequence. See [Q, K, and V](queries-keys-values.qmd).
 - **Multi-head attention** — several attention mechanisms computed in parallel and then combined.
 - **Causal mask** — a constraint preventing a position from accessing future positions. See [Causal masking](causal-masking.qmd).
 - **Autoregressive Transformer** — a Transformer trained to model a sequence from left to right, predicting each token conditioned on earlier tokens. “Autoregressive” describes the prediction objective; it does not require generating only one token at a time during training.
