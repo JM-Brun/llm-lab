@@ -1,6 +1,6 @@
 ---
-title: "Explore a Transformer: observe, test, critique"
-subtitle: "A guided activity around a real GPT-2 run and the limits of its visualization"
+title: "Explore and compare Transformers"
+subtitle: "Compare three model families, then observe and critique a real GPT-2 run"
 keywords: ["type:experiment-guide", "destination:practice", "topic:transformer-explainer", "level:applied", "language:en", "status:published"]
 lang: en
 ---
@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer-explainer"
-scope: "Guides an experimental exploration of GPT-2 small with Transformer Explainer: observe tokenization, representations, attention and decoding; design controlled comparisons; then audit visualization limits and selected design choices of the implementation. It does not re-explain GPT architecture."
-purpose: "Readers should be able to formulate and test a hypothesis about a GPT-2 run, distinguish visual observation from evidence about computation, identify the computation path behind the interface, and explain one concrete design choice in the top-p implementation (display truncation followed by nucleus)."
+scope: "Practice activity: run and compare BERT, GPT-2, and T5, then explore GPT-2 small with Transformer Explainer, design controlled experiments, and audit visualization limits and selected implementation choices. It does not replace the conceptual architecture lessons."
+purpose: "Readers should be able to run minimal examples of BERT, GPT-2, and T5, relate their usage interfaces to architecture families without inferring a quality ranking, then formulate and test hypotheses about GPT-2 and distinguish visual observation from evidence about computation."
 suggested_route:
   previous: null
   next: null
@@ -21,7 +21,7 @@ tags: ["type:experiment-guide", "destination:practice", "topic:transformer-expla
 -->
 
 ::: {.chapter-lead}
-Use the activity to **observe a real GPT-2 run, test controlled hypotheses, and examine what the tool actually shows**. Move from the interface to the computations, then assess the limits of the experiment.
+Compare representative models from the three main Transformer configurations, then **observe a real GPT-2 run, test controlled hypotheses, and examine what the tool actually shows**. Move from outputs to computations, then assess the limits of the experiments.
 :::
 
 ::: {.callout-note}
