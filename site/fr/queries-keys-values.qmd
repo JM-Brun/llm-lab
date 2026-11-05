@@ -118,6 +118,18 @@ Le premier exemple, repris par [Neha KK](https://medium.com/@nkk18072004/underst
 Dans les deux cas, l'explication Q/K/V reste une illustration du flux d'information. Ces exemples ne prouvent pas qu'une tête d'attention identifiée effectue à elle seule la coréférence ou la désambiguïsation lexicale. Pour le rôle plus général du contexte dans les représentations, voir [Représentations contextualisées](contextualized-representations.qmd).
 :::
 
+
+
+::: {.callout-note collapse="true" title="Une distinction utile : ce qui attire l'attention n'est pas nécessairement ce qui est transmis"}
+Brenndoerfer explicite particulièrement la séparation entre **routage** et **contenu**. Une clé participe à déterminer si une position reçoit de l'attention ; la valeur correspondante détermine ce que cette position apporte lorsqu'elle est sélectionnée. Ces deux rôles n'ont pas besoin d'encoder la même caractéristique.
+
+Par exemple, un token hypothétique pourrait être pris en compte parce que sa clé signale un rôle grammatical utile, tandis que sa valeur transporte un contenu sémantique. C'est une illustration fonctionnelle, pas l'affirmation qu'une tête entraînée a été observée en train de réaliser ce comportement linguistique.
+
+C'est pourquoi Q/K et V ne sont pas interchangeables : modifier V seul laisse les poids d'attention inchangés, même si cela peut modifier la somme pondérée obtenue. Les équations des scores et de l'agrégation sont détaillées dans la page sur l'[attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd).
+
+Perspective issue de [Brenndoerfer, *Query, Key, Value: The Foundation of Transformer Attention*](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism).
+:::
+
 ## Ce qu'il faut distinguer
 
 | Objet | Rôle dans le calcul |
