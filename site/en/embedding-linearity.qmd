@@ -132,3 +132,5 @@ When auditing a claim, ask: which layer and activation are studied? What capacit
 Linearity is a useful, testable hypothesis, not a universal law. A rigorous claim must specify the representation, concept, decoding criterion, and evaluation distribution. **Failure of linear decodability does not imply absence of information; linear decodability alone does not establish causality.**
 
 **Canonical lesson:** [Embedding space](embedding-space.qmd). This page examines hypotheses about features in that representation space; it does not replace the general introduction to embeddings.
+
+**Canonical lesson:** [Embedding space](embedding-space.qmd). This page examines hypotheses about features in that representation space; it does not replace the general introduction to embeddings.
