@@ -1,6 +1,4 @@
 ---
-**Notion canonique :** [Panorama des modèles de langage](llm-overview.qmd). Cette page approfondit les coûts de calcul et de mémoire des LLM ; elle complète la vue générale sans être une étape obligatoire.
-
 title: "Complexité et parallélisme dans les LLM"
 subtitle: "Où le calcul est-il linéaire ou quadratique, parallèle ou séquentiel ?"
 keywords: ["type:deep-dive", "destination:deepen", "topic:llm-computational-complexity", "level:advanced", "language:fr", "status:published"]
@@ -187,6 +185,8 @@ Pour appliquer ces distinctions à des choix d'architecture : [architectures hyb
 4. **Un modèle récurrent à travail linéaire en \(T\) est-il entièrement parallèle ?** Non : une récurrence naïve dépend de l'état précédent, même si certaines structures permettent un scan parallèle.
 5. **Un MoE avec peu d'experts actifs ne stocke-t-il que ces experts ?** Non : tous les poids experts doivent être hébergés ou accessibles.
 :::
+
+**Notion canonique :** [Panorama des modèles de langage](llm-overview.qmd). Cette page approfondit les coûts de calcul et de mémoire des LLM ; elle complète la vue générale sans être une étape obligatoire.
 
 ::: {.language-switch}
 **Langue :** [Français](llm-computational-complexity.qmd) · [English](../en/llm-computational-complexity.qmd)
