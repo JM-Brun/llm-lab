@@ -78,12 +78,22 @@ $$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
 $$
 
-Les matrices $W_Q$, $W_K$ et $W_V$ sont des paramètres appris conjointement pendant l'entraînement. Elles transforment chaque représentation d'entrée, mais remplissent des rôles distincts dans le mécanisme. Le fait de séparer ces projections permet au modèle d'apprendre indépendamment la manière de comparer les positions (Q et K) et le contenu à transmettre (V) ; une représentation unique pour ces deux fonctions les couplerait.
+Les matrices $W_Q$, $W_K$ et $W_V$ sont des paramètres appris conjointement pendant l'entraînement. Elles transforment chaque représentation d'entrée, mais remplissent des rôles distincts dans le mécanisme. Le fait de paramétrer ces projections séparément permet au modèle de représenter la compatibilité (Q et K) et le contenu à transmettre (V) dans des espaces appris distincts. Leurs paramètres restent néanmoins optimisés conjointement pendant l'entraînement : un paramétrage séparé ne signifie pas un apprentissage indépendant.
 
 Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model}\times d_v}$, les formes sont :
 
 - $Q,K\in\mathbb{R}^{T\times d_k}$ ;
 - $V\in\mathbb{R}^{T\times d_v}$.
+
+::: {.callout-note collapse="true" title="Périmètre : formulation standard et variantes"}
+Cette page présente la formulation standard avec des projections Q, K et V paramétrées séparément. C'est un modèle de référence utile, pas l'affirmation que tous les Transformers utilisent trois matrices de projection entièrement indépendantes ou le même nombre de têtes de requête et de clés/valeurs.
+
+Par exemple, **l'attention multi-query (MQA)** et **l'attention à requêtes groupées (GQA)** utilisent moins de têtes clé/valeur que de têtes de requête : chaque tête clé/valeur est partagée entre plusieurs têtes de requête afin de réduire le coût du cache KV à l'inférence. D'autres travaux récents étudient le partage des paramètres de projection, notamment entre les projections clé et valeur. Ce sont des variantes d'architecture avec des compromis empiriques ; elles ne remettent pas en cause la distinction fonctionnelle présentée ici.
+
+- Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — formulation standard de l'attention dans les Transformers.
+- Ainslie et al. (2023), [*GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints*](https://arxiv.org/abs/2305.13245) — partage de têtes clé/valeur.
+- Kayyam et al. (2026), [*Do Transformers Need Three Projections? Systematic Study of QKV Variants*](https://proceedings.mlr.press/v306/kayyam26a.html) — étude empirique du partage des projections.
+:::
 
 Les dimensions $d_k$ et $d_v$ ne sont donc pas nécessairement égales. Les biais éventuels sont omis dans cette écriture. Pour suivre ces projections dans le code réel du bloc, voir la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd) ; les conventions générales de dimensions et d'axes sont détaillées dans [Tenseurs](tensors.qmd).
 

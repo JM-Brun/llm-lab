@@ -1,7 +1,9 @@
 # Q/K/V source collection and comparative synthesis
 
 **Status:** living dossier · **Last reviewed:** 2026-11-05  
-**Scope:** external explanations of Query, Key, Value, self-attention and closely related mechanisms.  
+**Scope:** external explanations of Query, Key, Value, self-attention and closely related mechanisms.
+
+**Project self-assessment:** the [LLM Lab Q/K/V self-audit and comparative positioning](llm-lab-qkv-self-audit-2026-11.md) evaluates the canonical bilingual lesson as a potential public source, separately from this catalogue of external sources.  
 **Purpose:** accumulate complementary perspectives without turning the public curriculum into a stack of duplicated tutorials.
 
 This page is the entry point for the Q/K/V source collection. It is intentionally separate from the canonical concept graph and the learner route. Each source keeps its own extraction, evidence, pedagogical reconstruction and review record; this dossier compares their contributions across sources.
