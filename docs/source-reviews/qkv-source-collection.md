@@ -18,6 +18,10 @@ This page is the entry point for the Q/K/V source collection. It is intentionall
 
 **Important provenance rule:** the KV-cache suggestion is a reader-comment contribution associated with the DEV discussion. It is not part of Nishanthan's author-authored article and must not be attributed to him. Hugging Face documentation is a separate corroborating source.
 
+## 1.1 Pedagogical coverage matrix
+
+The [Q/K/V pedagogical coverage matrix](../source-syntheses/qkv-pedagogical-coverage-matrix-2026-11.md) maps learner questions against each scanned source and the current project. It distinguishes source coverage from project coverage, identifies genuine candidate improvements, and records explicit scan boundaries. Update it whenever a new source is fully reviewed or the canonical learning content changes.
+
 ## 2. Cross-source synthesis
 
 The three tutorials converge on the standard introductory account:
