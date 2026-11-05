@@ -233,7 +233,8 @@ The consolidated initial validator is `site/tools/check_source_catalogue.py`; it
 - namespaced tag syntax and duplicate detection;
 - scan-history dates, statuses, inspected scopes and limitations;
 - exact item locators and supported evidence-confidence values;
-- community-item voice, parent-source provenance, capture date, verification status and independent source references.
+- community-item voice, parent-source provenance, capture date, verification status and independent source references;
+- controlled evidence-confidence and item-disposition values, plus qualitative levels/rationales for pedagogical assessments.
 - instructional-source pedagogical-model status, source-local node identity, edge endpoint integrity, explicit graph interpretation, declared/inferred outcomes and prerequisites, contiguous teaching-route order, strengths/limits and comparison pointers.
 
 The initial validator does **not yet** validate BCP 47 language tags, publication/version chronology, licence identifiers or rights/status consistency, alias resolution, resource references, all optional item-level pedagogical fields, or the scientific validity of reconstructed source-graph relations. Keep these as explicit follow-up work; extend the consolidated validator and its tests rather than creating one script per data file. Do not treat a passing initial validator as proof that rights or scientific claims are valid.
