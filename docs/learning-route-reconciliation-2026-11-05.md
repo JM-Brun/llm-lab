@@ -73,6 +73,8 @@ The bilingual Quarto sidebars preserve the intended four destinations:
 
 The route is not a mirror of sidebar indentation. In particular, Practice is transversal rather than a mandatory final stage; Deepen is optional; glossary/history/reference pages support discovery rather than extend the core sequence. The Build branch is linked as a practical companion to the conceptual route, not inserted into the inference stages.
 
+**Sidebar order correction (PR #517, merged 2026-11-05):** both language sidebars now place the LLM panorama immediately before the generation preview. The architecture comparison and limits pages are grouped afterward under an explicitly optional/background section. This removes the misleading impression that those optional readings precede the core inference preview. No page, destination, prerequisite or curriculum stage was removed or reclassified.
+
 The route and navigation should be checked against the actual Quarto render list as well as the sidebar. A sidebar entry alone is not proof that a page is published; generated route links must resolve to published page IDs.
 
 ## 5. Graph correspondence and semantic boundaries
@@ -98,6 +100,7 @@ The concept graph is separate from the page graph. A concept's prerequisite rela
 | Conceptual route ↔ Build milestones | Aligned after this change | G0/G1/G3–G7 map to the inference route; G1b/G2 are a separate branch; G8/G9 follow |
 | Build branch ↔ navigation | Aligned after this change | Both languages expose corpus preparation and training examples under Build |
 | Quarto sidebar ↔ exploratory page map | Generated from the same navigation source | Map generator reads the Quarto sidebar and page metadata |
+| Orientation sidebar ↔ guided-route preview | Aligned after PR #517 | Both sidebars place panorama → generation first; architecture comparison and limits follow as optional background |
 | Page metadata integrity and FR/EN parity | Existing automated validator | Reuse the existing page-metadata validator; do not add a duplicate validator |
 | Concept graph ↔ curriculum | Deliberately separate | Typed concept relations are for semantic exploration, not route generation |
 | Rendered UX and learner comprehension | Not established by source checks | Desktop/mobile, keyboard/touch and learner validation remain separate evidence |
@@ -106,10 +109,10 @@ The concept graph is separate from the page graph. A concept's prerequisite rela
 
 ### P1 — Keep the sources synchronized
 
-- [ ] When G1b/G2 scope or evidence changes, update the learning-path crosswalk, content-section mapping and both Build tables in the same change.
-- [ ] Keep `data/guided-route.yml` limited to conceptual stages; do not add G1b/G2 as conceptual stages.
-- [ ] Keep the six-stage route and the G0–G9 implementation branch linked by a crosswalk, not by duplicating all milestone data in the route YAML.
-- [ ] Re-run the existing metadata, route-generation, bilingual Quarto render and local-link checks after edits.
+- [x] G1b/G2 scope is cross-referenced in the learning path, content-section mapping and both Build tables.
+- [x] `data/guided-route.yml` remains limited to conceptual stages; G1b/G2 are represented as a separate implementation branch.
+- [x] The six-stage route and G0–G9 implementation branch are linked by a crosswalk rather than duplicated milestone data.
+- [x] Existing metadata, route-generation, bilingual Quarto render and local-link checks passed on the reconciliation and sidebar-alignment changes (PRs #514 and #517).
 
 ### P2 — Reader-experience validation
 
@@ -121,7 +124,7 @@ The concept graph is separate from the page graph. A concept's prerequisite rela
 ### Ownership
 
 - **#225:** conceptual sequence, overview boundaries, progressive disclosure and learner-facing acceptance.
-- **#355:** canonical page ownership and residual cross-page duplication. The route crosswalk does not close its page-by-page editorial audit.
+- **#355:** canonical page ownership and residual cross-page duplication. Source-level lots A–D are complete: overview ownership (#357), text/tokenizer/corpus boundaries (#361/#364/#369), mathematical overlap (#372), and route/sidebar alignment (#514/#517). Rendered browser and learner validation remain explicitly outside this source audit and are tracked by #337/#417 and #225.
 - **#415:** guided route versus exploratory map and their source alignment. Source-level route generation/topology work is in place; rendered browser validation remains coordinated with #337/#417.
 - **#337 / #417:** rendered visual, responsive, keyboard and touch review.
 - **#78:** implementation dependency and concept-to-code evidence inventory.
