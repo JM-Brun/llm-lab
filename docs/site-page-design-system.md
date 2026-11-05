@@ -7,6 +7,7 @@
 | Concern | Canonical document |
 |---|---|
 | Reader experience, progressive disclosure, editorial method | [Reader-experience and editorial method](reader-experience-and-editorial-method.md) |
+| Pedagogical breadcrumb and route-context projection | [Pedagogical breadcrumb and page-navigation contract](pedagogical-breadcrumb-and-page-navigation-contract.md) and [pilot audit](pedagogical-breadcrumb-pilot-audit.md) |
 | Shared composition model and soft page templates | [Flexible page-template system](page-template-system.md) |
 | Scientific explanatory patterns | [Page patterns](page-patterns.md) |
 | Code-facing walkthroughs, verification, experiments, and performance | [Implementation-page patterns](implementation-page-patterns.md) |
