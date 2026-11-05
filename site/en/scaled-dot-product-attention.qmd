@@ -88,6 +88,20 @@ This small example separates the roles: the query and keys determine the weights
 
 The diagram also shows why three objects must not be conflated: **scores** (raw compatibility values), **weights** (normalized relative to accessible positions), and **outputs** (weighted combinations of values). In non-causal attention, the mask may be absent or encode another constraint. Softmax normalization does not turn the weights into a universal measure of semantic relevance.
 
+
+
+::: {.callout-note collapse="true" title="Two complementary views: message passing and convex combinations"}
+**Message passing.** Think of each token position as a node that can send a message: its value vector $v_j$. A query at position $i$ assigns weights to the accessible positions, and the output is the weighted mixture it receives. In this sense, self-attention is a content-dependent message-passing operation: the values are messages, while query-key scores determine their routing weights. This is an analogy for the computation, not a claim that the model uses a fixed graph.
+
+**Convex geometry.** If at least one key is accessible, the row-wise softmax weights satisfy $\alpha_{ij}\geq 0$ and $\sum_j\alpha_{ij}=1$. Therefore
+$$
+o_i=\sum_j\alpha_{ij}v_j
+$$
+is a convex combination of the accessible value vectors: before any subsequent output projection or residual addition, $o_i$ lies in their convex hull. This gives a precise geometric interpretation of the weighted sum. It does not mean that the final Transformer-block representation must remain inside that convex hull.
+
+This perspective is adapted from [Brenndoerfer's Q/K/V tutorial](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism); the property follows directly from the nonnegative, normalized softmax weights.
+:::
+
 ## Provenance and purpose
 
 The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762), which compares additive and dot-product attention and introduces the scaling factor. It supports efficient matrix computation and naturally fits multi-head mechanisms.
