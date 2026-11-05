@@ -192,9 +192,7 @@ def test_attention_dot_product_ranking_is_not_cosine_ranking() -> None:
     v = np.eye(2)
 
     dot_products = (q @ k.T)[0]
-    cosine_similarities = (q @ k.T)[0] / (
-        np.linalg.norm(q, axis=1)[0] * np.linalg.norm(k, axis=1)
-    )
+    cosine_similarities = (q @ k.T)[0] / (np.linalg.norm(q, axis=1)[0] * np.linalg.norm(k, axis=1))
     output, weights = scaled_dot_product_attention(q, k, v)
 
     assert dot_products[1] > dot_products[0]
