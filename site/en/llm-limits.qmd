@@ -20,6 +20,8 @@ related: ["en/experimental-evaluation", "en/emergence"]
 tags: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-llm-limits.qmd >}}
 ::: {.chapter-lead}
 Predicting the next token is a **training objective**. What a model gains from it is a matter of evaluation, not definition. This page separates what the objective guarantees — little beyond prediction itself — from what it merely makes plausible.
 :::
