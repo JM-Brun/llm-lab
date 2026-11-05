@@ -42,17 +42,27 @@ The 3Blue1Brown video is a useful reference for the role of a visual overview, n
 
 #### Level 2 — Guided model-building path
 
-Purpose: provide a dependency-aware route from text to a working small language model. The sequence below follows the computation graph rather than the order in which concepts happen to be introduced in a book.
+Purpose: provide a dependency-aware route from text to a working small language model. This is the **implementation route**, not the learner-facing conceptual order. It follows the minimal inference dependency chain first, then joins the separate training-data branch when parameter learning is introduced. The milestone IDs are shared with the bilingual Build path and [the canonical learning-path crosswalk](learning-path.md).
 
-1. **Text and tokenization:** text normalization, token IDs and special tokens.
-2. **Training examples:** context windows, shifted inputs/targets, batching and data hygiene.
-3. **Input representations:** tensor shapes, embedding lookup and positional information.
-4. **Contextual computation:** Q/K/V, attention, causal masking, multi-head attention, residual connections, normalization and MLP/FFN blocks.
-5. **Prediction:** output projection, vocabulary logits and probability distributions.
-6. **Learning objective:** likelihood, cross-entropy, loss, gradients and optimization signal.
-7. **From-scratch training:** optimizer updates, validation, checkpoints, reproducibility and learning curves.
-8. **Inference and generation:** autoregressive decoding, stopping rules and context-window constraints.
-9. **Verification and evaluation:** compatible reference comparisons, task-specific baselines, uncertainty and error analysis.
+**Inference branch — build and inspect a model with fixed parameters:**
+
+1. **G0 — Define the target:** select the small decoder-only GPT scope and distinguish it from other LLM families.
+2. **G1 — Prepare prompt text:** tokenize text and identify vocabulary, token IDs and special tokens.
+3. **G3 — Represent tokens:** embedding lookup, positional information and the required tensor shapes.
+4. **G4 — Implement attention:** Q/K/V, attention, causal masking and multi-head computation.
+5. **G5 — Assemble the GPT:** residual connections, normalization, MLP/FFN blocks and output projection.
+6. **G6 — Predict and select:** vocabulary logits, probability distributions and token-selection rules.
+7. **G7 — Demonstrate inference:** run the autoregressive decoding loop with fixed, initially random parameters. This demonstrates mechanics, not useful language generation.
+
+**Training-data branch — prepare the data needed for parameter learning:**
+
+- **G1b — Prepare corpus and tokenizer:** establish provenance and eligibility, parse/filter/deduplicate, define evaluation splits, and fit/freeze the tokenizer. This follows the shared text/tokenization foundation but is not required for the inference branch.
+- **G2 — Create training examples:** construct context windows, shifted inputs/targets, batches and masks from token streams. G2 depends on the prepared corpus/tokenizer (G1b) and joins the model path at G8; it is not a prerequisite for G3–G7.
+
+**Parameter-learning and verification path:**
+
+8. **G8 — Train and validate:** align logits and targets, calculate the objective/loss, backpropagate, update parameters, validate and checkpoint. This requires both the model path and the G1b → G2 data branch.
+9. **G9 / E1 — Verify and evaluate:** compare compatible references and use task-appropriate baselines, metrics, uncertainty and error analysis. Evaluation remains cross-cutting even though G9 is the practical verification checkpoint.
 
 **Separate adaptation branch:** pretrained checkpoint loading, classification, instruction SFT, LoRA and quantization. This branch reuses learned parameters; it is not a stage of training a GPT from random initialization.
 
