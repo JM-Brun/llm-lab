@@ -5,31 +5,25 @@
   const enhanceCalloutButtons = () => {
     document.querySelectorAll(selector).forEach((header) => {
       if (header.dataset.accessibilityEnhanced === "true") return;
-      header.dataset.accessibilityEnhanced = "true";
-      header.setAttribute("role", "button");
-      header.setAttribute("tabindex", "0");
 
-      const title = header.querySelector(".callout-title-container");
+      // Quarto currently renders a div as the collapse trigger. Replace it
+      // with a native button so keyboard activation and button semantics are
+      // provided by the browser rather than reimplemented with key handlers.
+      const button = document.createElement("button");
+      for (const attribute of [...header.attributes]) {
+        button.setAttribute(attribute.name, attribute.value);
+      }
+      button.type = "button";
+      button.dataset.accessibilityEnhanced = "true";
+      button.append(...header.childNodes);
+
+      const title = button.querySelector(".callout-title-container");
       const accessibleName = title?.textContent?.trim().replace(/\s+/g, " ");
       if (accessibleName) {
-        header.setAttribute("aria-label", accessibleName);
+        button.setAttribute("aria-label", accessibleName);
       }
 
-      header.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" && !event.repeat) {
-          event.preventDefault();
-          header.click();
-        } else if (event.key === " ") {
-          event.preventDefault();
-        }
-      });
-
-      header.addEventListener("keyup", (event) => {
-        if (event.key === " ") {
-          event.preventDefault();
-          header.click();
-        }
-      });
+      header.replaceWith(button);
     });
   };
 
