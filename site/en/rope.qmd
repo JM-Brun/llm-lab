@@ -1,4 +1,6 @@
 ---
+**Canonical lesson:** [Positional encoding](positional-encoding.qmd). This page deepens one particular mechanism; it does not replace the general introduction to positional information.
+
 title: "RoPE: geometry, derivation, and limitations"
 subtitle: "How query and key rotations encode relative positions"
 keywords: ["type:deep-dive", "destination:deepen", "topic:rope", "level:advanced", "language:en", "status:published"]
