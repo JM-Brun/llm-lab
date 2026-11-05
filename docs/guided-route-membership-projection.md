@@ -1,14 +1,25 @@
 # Guided-route page membership projection
 
-**Status:** implemented as a tested data projection; not yet rendered as page navigation.  
+**Status:** bilingual page-level pilot implemented on overview and generation; embeddings and Q/K/V integration is under review in PR #519.  
 **Source of truth:** `data/guided-route.yml`.  
-**Implementation:** `build_guided_route_memberships()` in `site/tools/build_learning_map.py`.  
+**Implementation:** `build_guided_route_memberships()`, `render_guided_page_context_markdown()`, and `write_guided_page_context_fragments()` in `site/tools/build_learning_map.py`.  
 **Tests:** `tests/site/test_guided_route_memberships.py`.  
 **Coordination:** [#368](https://github.com/JM-Brun/llm-lab/issues/368), [breadcrumb contract PR #516](https://github.com/JM-Brun/llm-lab/pull/516), [stepper cleanup PR #519](https://github.com/JM-Brun/llm-lab/pull/519).
 
 ## Purpose
 
 Provide a deterministic page-to-stage index for the Understand curriculum without treating a curriculum stage as a unique conceptual parent. The projection is a read-only view of the existing, validated route model. It does not create a second registry or change page metadata.
+
+## Navigation contract
+
+The route context answers **where this page is used in the guided Understand curriculum**. It is not a projection of the site sidebar, page hierarchy, suggested previous/next links, concept relations, Build dependencies, or the exploratory resource graph. These structures answer different questions and must remain distinct.
+
+- One membership: show a breadcrumb-like ordered context linking to the stage anchor and marking the current page with `aria-current="page"`.
+- Multiple memberships: show every valid stage context and its objective in a separate section; do not use breadcrumb semantics or invent a primary parent.
+- Optional membership: label it as optional, never as a prerequisite.
+- No membership: omit the route context. Build, Practice, Deepen and Reference pages must not receive an Understand context unless explicitly listed in that route.
+
+The shared navigation cue does not impose a universal lesson template. Overview, concept lesson, bridge, guided build, deep dive, practice and reference pages retain their appropriate editorial structures. The component should be placed near the page opening, remain compact, localize its labels, and preserve keyboard and screen-reader semantics.
 
 ## Output contract
 
