@@ -142,9 +142,11 @@ website:
         - section: "Comprendre les LLM"
           contents:
             - fr/llm-overview.qmd
-            - fr/transformer-architectures.qmd
-            - fr/llm-limits.qmd
             - fr/generation.qmd
+            - section: "Pour situer et approfondir (facultatif)"
+              contents:
+                - fr/transformer-architectures.qmd
+                - fr/llm-limits.qmd
             - section: "Du texte aux représentations et au calcul"
               contents:
                 - fr/text-data.qmd
@@ -232,9 +234,11 @@ website:
         - section: "Understand LLMs"
           contents:
             - en/llm-overview.qmd
-            - en/transformer-architectures.qmd
-            - en/llm-limits.qmd
             - en/generation.qmd
+            - section: "Background and optional depth"
+              contents:
+                - en/transformer-architectures.qmd
+                - en/llm-limits.qmd
             - section: "From text to representations and computation"
               contents:
                 - en/text-data.qmd
