@@ -314,9 +314,15 @@ for (const testCase of cases) {
           text: item.innerText.trim(),
         }))
       );
+      item.buildTour.navigationLinks = item.buildTour.navigationLinks.map(link => ({
+        ...link,
+        targetId: link.href
+          ? new URL(link.href, page.url()).pathname.replace(/^\\//, "").replace(/\\.html$/, "")
+          : null,
+      }));
       for (const expected of expectedLinks) {
         const actual = item.buildTour.navigationLinks.filter(link =>
-          link.href === expected.target && link.text.includes(expected.label)
+          link.targetId === expected.target && link.text.includes(expected.label)
         );
         if (actual.length !== 1) {
           throw new Error(`build-tour ${expected.label} link to ${expected.target} is missing or duplicated`);
@@ -324,7 +330,7 @@ for (const testCase of cases) {
       }
       if (item.buildTour.navigationLinks.some(link =>
         /(?:previous|next) stop|étape (?:précédente|suivante)/i.test(link.text) &&
-        !expectedLinks.some(expected => link.href === expected.target && link.text.includes(expected.label))
+        !expectedLinks.some(expected => link.targetId === expected.target && link.text.includes(expected.label))
       )) {
         throw new Error("build-tour has an unexpected previous/next link at this sequence boundary");
       }
