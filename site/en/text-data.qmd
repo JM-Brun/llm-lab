@@ -20,8 +20,20 @@ related: ["en/transformer"]
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:en", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-en-text-data.qmd >}}
+
 ::: {.chapter-lead}
 A language model receives a sequence of numerical IDs, not raw text. Tokenization defines how text becomes IDs and how IDs are decoded. It is separate from the neural network, but affects vocabulary, sequence length, compute cost, and some observable behaviours.
+:::
+
+::: {.callout-tip title="The one-minute mental model"}
+Think of a **catalogue with reference numbers**. The tokenizer splits text into units (tokens) and assigns each one an ID. The ID retrieves a row from the embedding table: it is not a score or a measure of meaning. The Transformer then transforms these vectors using the surrounding context.
+
+**The key chain:** Unicode text → tokens → IDs → embedding vectors → contextual representations. Each arrow is a distinct transformation; in particular, do not confuse **vocabulary size** ($V$) with **embedding dimension** ($d$).
+
+**First pass:** follow the diagram and keep the distinct roles of token, ID, and embedding in mind. You can leave Unicode details, BPE/WordPiece algorithms, and corpus preparation for later.
+
+[Tokenization strategies](tokenization-strategies.qmd) compare the trade-offs of real tokenizers; [embedding space](embedding-space.qmd) explains the lookup that maps each ID to a vector.
 :::
 
 <div class="pipeline-stepper" role="navigation" aria-label="Stages of model input">
@@ -33,16 +45,6 @@ A language model receives a sequence of numerical IDs, not raw text. Tokenizatio
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="contextualized-representations.qmd">4. Contextualized representations</a>
 </div>
-
-::: {.callout-tip title="The one-minute mental model"}
-Think of a **catalogue with reference numbers**. The tokenizer splits text into units (tokens) and assigns each one an ID. The ID retrieves a row from the embedding table: it is not a score or a measure of meaning. The Transformer then transforms these vectors using the surrounding context.
-
-**The key chain:** Unicode text → tokens → IDs → embedding vectors → contextual representations. Each arrow is a distinct transformation; in particular, do not confuse **vocabulary size** ($V$) with **embedding dimension** ($d$).
-
-**First pass:** follow the diagram and keep the distinct roles of token, ID, and embedding in mind. You can leave Unicode details, BPE/WordPiece algorithms, and corpus preparation for later.
-
-[Tokenization strategies](tokenization-strategies.qmd) compare the trade-offs of real tokenizers; [embedding space](embedding-space.qmd) explains the lookup that maps each ID to a vector.
-:::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 - Distinguish Unicode text, bytes, tokens, token IDs, and embeddings.
