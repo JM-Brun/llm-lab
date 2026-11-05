@@ -56,7 +56,7 @@ Les [stratégies de tokenisation](tokenization-strategies.qmd) comparent les com
 Le point de vue utile à ce stade est celui du **pipeline** : quelles transformations un texte traverse-t-il avant d'être traité par le réseau ?
 
 ```{mermaid}
-flowchart LR
+flowchart TB
     A["Texte source"] --> B["Prétraitement éventuel"]
     B --> C["Tokeniseur"]
     C --> D["Tokens"]
@@ -65,6 +65,7 @@ flowchart LR
     F --> G["Embeddings des tokens"]
     G --> H["Transformer et mécanisme positionnel"]
     H --> I["Représentations contextualisées"]
+    classDef default color:#14532D;
 ```
 
 Le dernier bloc regroupe volontairement le traitement positionnel et le Transformer. Les architectures n'introduisent pas toutes la position de la même manière : des vecteurs positionnels absolus appris peuvent être ajoutés aux embeddings des tokens, tandis que RoPE fait tourner les vecteurs requête et clé dans l'attention. La position n'est donc pas un vecteur supplémentaire universellement ajouté au moment du lookup ; voir [encodage positionnel et RoPE](positional-encoding.qmd).
@@ -89,6 +90,7 @@ Le même tokenizer sert à encoder un prompt à l'inférence et à convertir les
 - **Pré-entraînement :** préparation et partitionnement du corpus, ajustement puis fixation du tokenizer ([préparation du corpus](corpus-preparation.qmd)), puis construction de fenêtres, de cibles et de masques à partir du flux d'IDs ([exemples d'entraînement](training-examples.qmd)).
 
 La seconde branche n'est pas un prérequis pour comprendre comment un modèle encode un prompt.
+
 ## 2. Ce que la tokenisation change — et ce qu'elle ne dit pas
 
 La segmentation détermine la séquence d'IDs fournie au modèle. Elle influe notamment sur la couverture des entrées, la longueur de séquence et la compatibilité entre tokenizer et poids. Elle ne constitue ni une analyse linguistique garantie, ni une mesure du sens, ni un score de qualité du modèle.
