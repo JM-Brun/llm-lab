@@ -70,9 +70,11 @@ class GPTConfig:
         num_heads: Number ``H`` of attention heads. Multi-head attention is
             implemented as ``H`` independent single-head attentions over
             slices of the residual stream.
-        num_layers: Number of stacked pre-LN Transformer blocks. It also
-            scales the initialization of weights that feed a residual path
-            (see ``transformer_block``).
+        num_layers: Number of stacked pre-LN Transformer blocks. It sets
+            the depth used to scale the initialization standard deviation
+            of the two residual-output projections in each block: attention
+            ``w_o`` and MLP ``w_fc2`` (see ``transformer_block``). The other
+            projections retain the base initialization standard deviation.
         mlp_hidden_dim: Hidden width of the position-wise MLP. GPT-2 uses
             ``4 * embedding_dim``; the value is explicit here instead of
             implied, so learners can see and change it.
