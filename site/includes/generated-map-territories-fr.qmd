@@ -10,9 +10,18 @@
         <option value="concepts">Notions canoniques</option>
       </select>
     </div>
+    <div class="learning-map-relation-filter" hidden>
+      <label for="learning-map-relation-type">Type de relation</label>
+      <select id="learning-map-relation-type" data-map-relation-type></select>
+    </div>
     <div class="learning-map-search">
       <label for="learning-map-search">Rechercher dans la carte</label>
       <input id="learning-map-search" data-map-search type="search" autocomplete="off">
+    </div>
+    <div class="learning-map-actions">
+      <button type="button" class="map-reset" data-map-reset title="Efface la recherche, le filtre et la sélection ; Échap remonte d'un niveau à la fois.">
+        Réinitialiser la vue
+      </button>
     </div>
   </div>
   <div class="learning-map-concept-legend" hidden></div>
