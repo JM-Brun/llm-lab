@@ -24,17 +24,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 An **embedding** is a numerical vector associated with an object, such as a token. The collection of these vectors forms a representation space. We can compare their directions, distances, or neighbours, but interpretation depends on the model, its training, and the task: geometry is not a universal dictionary of meaning.
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="LLM learning path stages">
-  <a class="step-item" href="text-data.qmd">1. Text</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">2. Embeddings</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="queries-keys-values.qmd">3. Attention (Q, K, V)</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="logits.qmd">4. Logits</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="cross-entropy.qmd">5. Loss & Training</a>
-</div>
 
 ::: {.callout-tip title="The one-minute mental model"}
 An ID is a **row address**, not a semantic coordinate. The embedding matrix stores one learned vector per ID; lookup simply selects the corresponding row. Two occurrences of the same ID therefore retrieve the same initial vector. The Transformer then builds a context-dependent representation from it.
