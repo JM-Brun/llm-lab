@@ -97,7 +97,7 @@ In the attention path considered here:
 
 For a fixed input $X$, with no bias and the linear projections written above, the derivative rule has the form:
 
-$
+$$
 \frac{\partial\mathcal L}{\partial W_Q}
 =X^\top\frac{\partial\mathcal L}{\partial Q},
 \qquad
