@@ -524,6 +524,16 @@ sources:
         limitations:
           - "No language model was trained in the reported tokenizer comparison; downstream LM quality is not established."
           - "Results are scoped to the study's tokenizer families, training corpus, FLORES evaluation and statistical protocol."
+      - accessed_at: "2026-11-05"
+        status: partially-scanned
+        inspected_scope:
+          - "Published NeurIPS 2025 PDF: CTC/token-premium definitions, controlled 97-language monolingual tokenizer design, language-feature regressions, vocabulary-size and SuperBPE interventions, discussion and limitations"
+          - "Figures 1, 3 and 4 and selected appendices inspected; structured extraction created with five atomic items"
+        limitations:
+          - "No language models were trained with the experimental tokenizers; downstream model quality is not evaluated."
+          - "FLORES is the sole evaluation dataset and is translation-derived; the tokenizer-training data are 300 MB per language."
+          - "Code, tokenizer artifacts and raw corpora were not independently executed or audited."
+  
     related:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
@@ -563,6 +573,16 @@ sources:
         limitations:
           - "Associations are correlational and partly confounded by pretraining-data composition."
           - "MMLU-ProX uses a smaller subset than the intrinsic metric analysis; denominators must not be conflated."
+      - accessed_at: "2026-11-05"
+        status: partially-scanned
+        inspected_scope:
+          - "Published ACL 2026 SRW PDF: six metric definitions, 24-tokenizer/15-language intrinsic design, English benchmark analysis, MMLU-ProX mixed-effects analysis, Qwen2.5 family scaling and limitations"
+          - "Main figures inspected; linked GitHub repository README inspected; structured extraction created with six atomic items"
+        limitations:
+          - "The MMLU-ProX results use only 7 models and 11 languages; they must not be conflated with the full 24-tokenizer/15-language intrinsic analysis."
+          - "Associations remain partially confounded by pretraining data composition; Chinese, Japanese and Thai whitespace-unit fertility/STRR are not true word-level measures."
+          - "Repository code, data and benchmark outputs were not executed or independently audited."
+  
     related:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]

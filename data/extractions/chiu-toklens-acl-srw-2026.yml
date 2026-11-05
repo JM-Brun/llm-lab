@@ -1,0 +1,197 @@
+schema_version: 1
+source_id: chiu-toklens-acl-srw-2026
+scan:
+  accessed_at: "2026-11-05"
+  retrieval_method: direct-pdf
+  author_text:
+    status: partial
+    coverage: "Published ACL 2026 SRW PDF: six metric definitions, tokenizer/language corpus design, English benchmark correlations, MMLU-ProX mixed-effects analysis, Qwen2.5 scaling analysis, discussion and limitations."
+    notes: ["Main paper and selected appendix comparisons inspected; no statistical analysis was independently reproduced."]
+  figures_media:
+    status: partial
+    coverage: "Main parity, English benchmark, MMLU-ProX and Qwen2.5 scaling figures inspected in the rendered PDF."
+    notes: ["No figure or table asset was copied."]
+  code_data:
+    status: partial
+    coverage: "The linked open-source GitHub repository and its README were inspected for project scope and metric summary."
+    notes: ["Code, raw corpora, benchmark outputs and tokenizer artifacts were not executed or independently audited."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "ACL Anthology proceedings PDF, paper landing page and linked GitHub repository README."
+    notes: ["Repository history, releases, issues and full dependency/data provenance were not audited."]
+  metadata:
+    status: partial
+    coverage: "ACL 2026 Student Research Workshop, pp. 188–205; DOI 10.18653/v1/2026.acl-srw.18."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["No figure reuse permission was established; this extraction contains paraphrases only."]
+  unresolved_questions:
+    - "A reproducible rerun requires auditing the repository revision, dataset preparation, benchmark data and statistical scripts."
+    - "The current word-boundary assumptions for Chinese, Japanese and Thai need language-specific segmenter alternatives."
+items:
+  - id: chiu-toklens-acl-srw-2026:six-intrinsic-metrics
+    kind: definition
+    summary: "TokLens defines six complementary corpus-level tokenizer metrics: fertility (tokens per whitespace-delimited unit), characters per token, UTF-8 bytes per token, normalized sequence length (tokens per character), single-token retention rate, and cross-lingual parity (target tokens-per-character relative to English)."
+    locator: {type: section, value: "§3, pp. 189–190; Equations 1–2", label: "Metric definitions"}
+    evidence:
+      kind: formal-metric-definitions
+      confidence: established
+      scope: "Metrics computed over token-ID sequences with special tokens stripped."
+      assumptions: ["Fertility and STRR use whitespace-delimited units as word proxies."]
+      limitations:
+        - "Whitespace units are not linguistic words for Chinese, Japanese and Thai."
+        - "Characters per token can mislead across scripts because a character does not carry comparable information across writing systems."
+        - "Parity uses non-parallel native corpora and a fixed character budget; it is not the same protocol as aligned-sentence token premium."
+    technical_assessment:
+      status: correct
+      rationale: "The equations and metric definitions are explicit; the paper also states their language-dependent interpretation limits."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, method:intrinsic-evaluation]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "Issue #326 already documents all six metrics; this structured record preserves their precise denominators and warns against conflating native-corpus parity with parallel-text token premium."
+  - id: chiu-toklens-acl-srw-2026:benchmark-design-and-sample
+    kind: experiment
+    summary: "The intrinsic analysis evaluates 24 tokenizers across 15 languages using native-language Wikipedia samples of 100 articles and approximately 50,000 characters per language; 22 models have English leaderboard scores, while two additional tokenizers are metric-only. The multilingual MMLU-ProX analysis uses a smaller overlap of 7 models and 11 languages."
+    locator: {type: section, value: "§4.1–4.3, pp. 190–191; §5.6, pp. 194–195", label: "Tokenizer, corpus and benchmark design"}
+    evidence:
+      kind: experimental-protocol
+      confidence: established
+      scope: "The 24-tokenizer intrinsic evaluation, 22-model English benchmark analysis and 7-model/11-language MMLU-ProX subset."
+      assumptions: ["Wikipedia is used as a proxy corpus for language exposure and tokenizer evaluation."]
+      limitations:
+        - "Native Wikipedia samples are not parallel translations and may differ in domain and content."
+        - "The multilingual performance analysis is much smaller than the intrinsic metric analysis."
+        - "The models and language subsets are determined by benchmark availability."
+    technical_assessment:
+      status: correct
+      rationale: "The paper distinguishes the full intrinsic sample from the smaller benchmark-overlap subsets."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, method:benchmark]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "The subset distinction is critical to interpreting results and is already highlighted by issue #326; retain as machine-readable evidence."
+  - id: chiu-toklens-acl-srw-2026:english-benchmark-null
+    kind: result
+    summary: "Across the 22 models with English Open LLM Leaderboard v2 scores, no tokenizer metric correlation with the English benchmarks remains significant after controlling for model size and applying Bonferroni correction across 77 comparisons."
+    locator: {type: section, value: "§5.4, pp. 192–193; Table 2; Appendix E", label: "English downstream benchmark correlations"}
+    evidence:
+      kind: reported-statistical-result
+      confidence: established
+      scope: "English benchmark scores for the 22 models with leaderboard entries."
+      assumptions: []
+      limitations:
+        - "A null result in this sample does not establish that tokenizer properties never affect English model quality."
+        - "The authors discuss a possible metric/benchmark mismatch and limited statistical power."
+    technical_assessment:
+      status: correct
+      rationale: "The paper reports the correction threshold and explicitly states that no correlation survives it."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-evaluation, method:correlation, topic:downstream-performance]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The existing advanced comparison records the English null result; this extraction makes its sample size and multiple-comparison correction explicit."
+  - id: chiu-toklens-acl-srw-2026:multilingual-performance-association
+    kind: result
+    summary: "For 77 model-language observations from 7 models and 11 MMLU-ProX languages, partial rank correlations and linear mixed-effects models associate STRR, characters per token and parity with per-language scores; STRR remains significant in leave-one-language-out checks, while fertility loses significance under one Wikipedia-volume proxy."
+    locator: {type: section, value: "§5.6, pp. 194–195; Figure 6; Appendix D", label: "MMLU-ProX multilingual association"}
+    evidence:
+      kind: reported-statistical-analysis
+      confidence: well-supported
+      scope: "Seven overlapping models, eleven languages and 77 model-language observations; LME includes model random intercepts and model-size adjustment."
+      assumptions: ["Wikipedia article counts and vocabulary script allocation are proxies for pretraining-language exposure."]
+      limitations:
+        - "Associations are observational and partially confounded by pretraining data composition."
+        - "Model identity explains a large share of score variance."
+        - "For Chinese, Japanese and Thai, whitespace-based fertility and STRR do not represent linguistic word segmentation."
+        - "The study reports sensitivity checks, but the actual pretraining mixture is not fully controlled."
+    technical_assessment:
+      status: qualified
+      rationale: "The mixed-effects results are statistically detailed, but remain associations and depend on proxy controls and a limited model-language subset."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:multilingual-tokenization, topic:downstream-performance, method:mixed-effects-model]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Adds the exact statistical structure and robustness caveats behind the already-integrated summary; do not translate this association into causal evidence."
+  - id: chiu-toklens-acl-srw-2026:qwen-scaling-control
+    kind: experiment
+    summary: "The Qwen2.5 family provides a partial control because its five model sizes share the same tokenizer, training pipeline and data mixture; the paper finds that per-language scaling slopes are associated with STRR, but explicitly notes that the experiment does not eliminate every language-level pretraining-data confound."
+    locator: {type: section, value: "§5.7, pp. 195–196; Figure 7", label: "Qwen2.5 scaling experiment"}
+    evidence:
+      kind: controlled-family-analysis
+      confidence: well-supported
+      scope: "Qwen2.5 model sizes from 0.5B to 14B with a shared 152K tokenizer."
+      assumptions: ["A shared tokenizer, training pipeline and data mixture improve comparability across family members."]
+      limitations:
+        - "Language-level data composition remains a confound even within the model family."
+        - "The per-language observations are few and do not establish causality."
+    technical_assessment:
+      status: qualified
+      rationale: "The family comparison controls important model-level factors but does not randomize or independently manipulate tokenizer quality."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:multilingual-tokenization, method:controlled-comparison, topic:scaling-laws]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "The shared-tokenizer family design is a useful quasi-control for discussion, but its correlation must not be presented as a causal tokenizer effect."
+  - id: chiu-toklens-acl-srw-2026:qtok-complementarity
+    kind: claim
+    summary: "TokLens and Qtok inspect different levels: TokLens applies a tokenizer to corpora and reports sequence-level language metrics, whereas Qtok analyzes vocabulary entries and their category/allocation characteristics; the paper presents them as complementary rather than interchangeable."
+    locator: {type: section, value: "§2, pp. 189–190; Appendix G", label: "Related evaluation toolkits"}
+    evidence:
+      kind: author-comparison
+      confidence: established
+      scope: "The paper's comparison with Qtok and its reported 16-tokenizer overlap."
+      assumptions: []
+      limitations: ["This is the paper authors' characterization; the Qtok implementation was not independently audited in this scan."]
+    technical_assessment:
+      status: correct
+      rationale: "The distinction concerns vocabulary-level inspection versus corpus-run output metrics."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-evaluation, ecosystem:qtok]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "This provides a useful framework-level distinction for the source compilation; it does not warrant a second toolkit implementation in the curriculum."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "TokLens contributes a reusable evaluation framework and a nuanced statistical comparison: no corrected English association in its sample, positive multilingual associations in a smaller subset, and a same-tokenizer Qwen2.5 family analysis. Its most important complementarity is the distinction between corpus-level tokenizer behaviour, vocabulary-level Qtok analysis and downstream benchmark evidence. No new concept or route step is required."

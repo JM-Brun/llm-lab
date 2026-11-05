@@ -191,9 +191,35 @@ Five primary research papers now have source-scoped atomic extraction records, b
 
 **Evidence boundary.** The papers' main text and relevant tables/figures were inspected. Code, raw data, supplementary material and independent reproduction were not. Both source records therefore remain partially scanned; the extraction files do not imply complete source audits.
 
+### Structured extraction progress — second research backfill
+
+Two further primary papers have now been converted into source-scoped extraction records, bringing the collection to **eight structured extractions** (Karpathy plus seven research papers).
+
+- [Arnett et al. (2025)](../../data/extractions/arnett-explaining-mitigating-crosslingual-tokenizer-inequities-2025.yml): five atomic items covering token premium/CTC measurement, controlled monolingual tokenizer design, language-feature and whitespace effects, language-specific vocabulary sizing, and SuperBPE with its measured-versus-estimated boundaries.
+- [Chiu (2026), TokLens](../../data/extractions/chiu-toklens-acl-srw-2026.yml): six atomic items covering the six intrinsic metrics, benchmark/sample design, the English null result, multilingual mixed-effects associations, the Qwen2.5 family analysis, and complementarity with Qtok.
+
+**The three multilingual studies now form a useful evaluation matrix rather than one undifferentiated “fairness” topic.**
+
+| Study | Primary unit / design | What it can support | What it cannot support |
+|---|---|---|---|
+| Ali et al. (2024) | Controlled decoder-only LM training under selected tokenizer configurations | Downstream effects under a matched training-compute design | A universal tokenizer ranking across languages and tasks |
+| Arnett et al. (2025) | Approximately 7,000 monolingual tokenizers across 97 languages; CTC on parallel FLORES text | Language-linked compression differences and tokenizer-design interventions | Downstream LM quality: no LMs were trained with these tokenizers |
+| Wegmann et al. (2025) | Within-English linguistic variation and task-dependent sensitivity | Why tokenization should be evaluated against label semantics and task objective | Crosslingual inequity or multilingual compression claims |
+| TokLens (Chiu, 2026) | 24 existing tokenizers across 15 languages, then smaller benchmark-overlap analyses | A multi-metric audit framework and scoped observational associations with multilingual scores | Causal attribution to tokenizer quality independent of pretraining data |
+
+**A particularly important metric distinction:** Arnett et al. use corpus token count on parallel FLORES material to compare content-matched compression; TokLens parity uses tokens-per-character on native, non-parallel Wikipedia corpora with a shared character budget. Their denominators and corpus designs differ. They should not be merged into one parity statistic. TokLens fertility/STRR also use whitespace units, which are not linguistic words for Chinese, Japanese and Thai. The detailed extraction records preserve these protocol boundaries.
+
+**Integration decision.** No new canonical concept, learner-facing page, visual asset or route step is proposed. The advanced tokenizer-evaluation lesson already contains the relevant high-level findings. The added value is a machine-readable evidence layer that makes protocols, denominators, results and limitations directly comparable. In particular:
+- Arnett's optimal-vocabulary result counters the simplistic assumption that uniformly increasing vocabulary size removes crosslingual token premiums.
+- Arnett's SuperBPE results are not equivalent to a proven downstream-model improvement; the paper did not train LMs and some optimal-SuperBPE results are estimated rather than trained.
+- TokLens' English benchmark null result and multilingual associations are not contradictory: they concern different benchmark/language subsets, with different statistical power and controls.
+- TokLens and Qtok are complementary at different levels: corpus-run output metrics versus vocabulary-entry composition/allocation.
+
+**Evidence boundary.** The published PDFs and selected figures/tables/appendices were inspected. The TokLens repository README and Arnett's linked project destination were identified, but code, raw data and tokenizer artifacts were not executed or independently audited. Both sources remain partially scanned.
+
 ### Remaining migration tasks
 
-1. Continue structured extraction backfill for the remaining research sources with sufficiently precise primary-source locators. Next candidates are Arnett et al. and TokLens; assess Ahia et al. and Mikolov et al. separately against their existing evidence depth before deciding whether an extraction adds value. Reconstruct pedagogical models only for instructional sources where the inspected source supports them.
+1. Continue structured extraction backfill for the remaining research sources with sufficiently precise primary-source locators. Next candidates are Ahia et al. and Mikolov et al.; assess their existing evidence depth and source-specific contribution before deciding whether an extraction adds value. Reconstruct pedagogical models only for instructional sources where the inspected source supports them.
 2. Recover exact canonical URLs for the ByteByteGo and Vizuara resources from their original historical references; do not guess them.
 3. Add source-specific review records only where a durable review cannot be represented adequately by this dossier and migration map.
 4. Keep asset rights verification in #156 and deferred browser review in #320/#329.
