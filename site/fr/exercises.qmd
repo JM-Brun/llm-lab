@@ -283,7 +283,7 @@ print("Q:", Q.shape, "K:", K.shape, "V:", V.shape)
 
 Résultat attendu : Q=(3, 2), K=(3, 2), V=(3, 3). Les projections s'appliquent indépendamment à chaque position ; les trois matrices partagent ici le même nombre de lignes, mais pas nécessairement le même nombre de colonnes.
 
-Modifier W_V change les vecteurs agrégés, mais pas les scores ni les poids, qui dépendent de Q et K.
+Modifier W_V peut changer V et la sortie agrégée, mais ne change pas les scores ni les poids, qui dépendent de Q et K.
 
 </details>
 
