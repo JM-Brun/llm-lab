@@ -92,7 +92,7 @@ jobs:
       - name: Review rendered bilingual learning pages and concept navigation
         if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'review/site-browser-qa-')
         env:
-          QKV_BROWSER_BASE_URL: http://127.0.0.1:4173
+          SITE_BROWSER_BASE_URL: http://127.0.0.1:4173
         run: node scripts/site-browser-review.mjs
 
       - name: Upload screenshots and audit report
