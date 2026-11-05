@@ -162,11 +162,11 @@ Store one file per source in `data/extractions/<source-id>.yml`. Each item is at
 - exact locator and locator type;
 - optional `provenance` when the item's voice differs from the parent source (for example, a reader comment quoted on an article page): `voice` (`primary-author`, `reader-comment`, `editorial-note`, `maintainer`, or `other`), `speaker` when explicitly available, `parent_source_id`, `locator`, and `captured_at`. This identifies who made the statement and where it appeared; it does not validate the content.
 - optional `verification` for community-derived claims: status (`unverified`, `corroborated`, `contradicted`, `not-assessed`), independent source IDs/URLs, and a concise technical assessment. Keep the original comment claim separate from the verifier's interpretation.
-- evidence kind, confidence, scope, assumptions and limitations;
+- evidence kind, confidence, scope, assumptions and limitations. Evidence confidence uses exactly one of `established`, `well-supported`, `context-dependent`, `disputed`, `speculative`, or `unverified` (see `site/tools/check_source_catalogue.py`). This is distinct from pedagogical assessment levels (`low`, `moderate`, `high`, `uncertain`);
 - optional item-level classification, which can refine but not silently overwrite source classification;
 - existing canonical concept IDs, if justified;
 - candidate page/concept/resource destinations, explicitly marked as proposals;
-- disposition and rationale after Phase B review.
+- optional item-level `disposition` and rationale after Phase B review, using `item_dispositions` in `data/source-taxonomy.yml`. Source-level `integration_status` is a summary and must not replace item-level decisions.
 
 The extraction taxonomy is in `data/source-taxonomy.yml`. Use the sample and record rules in `data/extractions/README.md`.
 
@@ -228,7 +228,7 @@ The consolidated initial validator is `site/tools/check_source_catalogue.py`; it
 
 - YAML syntax and schema version for source, taxonomy, domain, concept and extraction files;
 - unique source and extraction-item IDs, and extraction-to-source referential integrity;
-- controlled source types, scan/integration statuses and extraction kinds;
+- controlled source types, scan/integration statuses, extraction kinds and item dispositions;
 - valid domain, concept and bilingual page references;
 - namespaced tag syntax and duplicate detection;
 - scan-history dates, statuses, inspected scopes and limitations;
@@ -237,6 +237,8 @@ The consolidated initial validator is `site/tools/check_source_catalogue.py`; it
 - instructional-source pedagogical-model status, source-local node identity, edge endpoint integrity, explicit graph interpretation, declared/inferred outcomes and prerequisites, contiguous teaching-route order, strengths/limits and comparison pointers.
 
 The initial validator does **not yet** validate BCP 47 language tags, publication/version chronology, licence identifiers or rights/status consistency, alias resolution, resource references, all optional item-level pedagogical fields, or the scientific validity of reconstructed source-graph relations. Keep these as explicit follow-up work; extend the consolidated validator and its tests rather than creating one script per data file. Do not treat a passing initial validator as proof that rights or scientific claims are valid.
+
+Source scan status, source integration status and item disposition are independent lifecycle axes: partial inspection can coexist with accepted item integrations, and a fully scanned source can produce no learner-facing change. Never infer scan completeness from integration status.
 
 Any schema change must update this contract, examples, taxonomy, validator fixtures, tests, skills and migration notes together. Keep JSON-LD and visualizations as derived projections; never hand-edit generated output.
 
