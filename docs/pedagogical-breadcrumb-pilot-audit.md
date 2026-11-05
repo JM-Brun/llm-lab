@@ -176,11 +176,9 @@ Consequences:
 This addendum supersedes the earlier exploratory proposal to derive a second local breadcrumb from page hierarchy. The canonical contract is this document; no separate nested-breadcrumb contract should be maintained.
 
 
-### 12.1 Text-data route-context parity follow-up
+### 12.1 Text-data navigation decision
 
-The source audit found that FR/EN text-data pages are core members of the `text-input` stage but did not include the generated per-page route-context partial, while Q/K/V and embeddings did. PR #530 adds the matching language-specific include to both text-data pages and a regression test that rejects cross-language partial references. The existing text-data stepper is retained as a local data-transformation sequence; it is not a second curriculum breadcrumb.
-
-This is a source-level correction only until PR #530 CI and Quarto checks pass and the rendered pages are reviewed. It does not implement the separate Quarto-derived site-location breadcrumb.
+The text-data pages retain their existing local text-to-representation stepper. They do not receive an additional generated guided-route cue because that would stack two page-level navigation elements for closely related instructional orientation. The short-lived inclusion from PR #530 was removed by the corrective navigation change in PR #532.
 
 
 ## 13. Corrective review after learner-facing feedback (2026-11-05)
