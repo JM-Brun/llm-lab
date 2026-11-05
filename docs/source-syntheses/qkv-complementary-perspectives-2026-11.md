@@ -141,6 +141,8 @@ Potential next work, only if later sources justify it:
 
 ## 9. Traceability
 
+- Pedagogical coverage matrix: [qkv-pedagogical-coverage-matrix-2026-11](qkv-pedagogical-coverage-matrix-2026-11.md)
+
 - Codefinity source review: [qkv-codefinity-course-2026-11](../source-reviews/qkv-codefinity-course-2026-11.md)
 - Codefinity extraction: [codefinity-qkv-building-blocks.yml](../../data/extractions/codefinity-qkv-building-blocks.yml)
 - Living source collection: [qkv-source-collection](../source-reviews/qkv-source-collection.md)
