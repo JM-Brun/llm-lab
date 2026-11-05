@@ -1,0 +1,138 @@
+schema_version: 1
+source_id: li-bert-flow-sentence-embeddings-2020
+scan:
+  accessed_at: "2026-11-05"
+  retrieval_method: direct-pdf
+  author_text:
+    status: partial
+    coverage: "Primary ACL Anthology PDF: abstract, sentence representation construction, anisotropy analysis, BERT-flow method and STS results."
+    notes: ["Focused extraction of sentence-level representation geometry; no result was independently reproduced."]
+  figures_media:
+    status: partial
+    coverage: "BERT-flow schematic and main STS result tables inspected in the rendered PDF."
+    notes: ["No figure or table asset was copied."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["The BERT-flow repository and benchmark data were not independently executed."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Primary ACL Anthology paper and the repository URL cited by the paper."
+    notes: ["Repository contents and all outbound references were not audited."]
+  metadata:
+    status: partial
+    coverage: "EMNLP 2020, pp. 9119–9130."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["No figure reuse permission was established; this extraction contains paraphrases only."]
+  unresolved_questions:
+    - "Reproduction would require checking the exact sentence pooling, flow training and target-split protocol against code."
+items:
+  - id: li-bert-flow-sentence-embeddings-2020:sentence-embedding-scope
+    kind: definition
+    summary: "The paper studies sentence embeddings derived from BERT by averaging contextual token representations from the last one or two layers; its claims concern sentence-level similarity, not token embeddings in general."
+    locator: {type: section, value: "§1 Introduction, pp. 9119–9120; footnote 1", label: "Sentence embedding construction"}
+    evidence:
+      kind: method-description
+      confidence: established
+      scope: "BERT sentence representations used in the paper's semantic textual similarity experiments."
+      assumptions: []
+      limitations: ["The choice of pooling and layers is specific to the evaluated BERT setup."]
+    technical_assessment:
+      status: correct
+      rationale: "The paper explicitly defines its sentence representation as an average of contextual token embeddings from the final one or two layers."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:sentence-embeddings, topic:pooling]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/embedding-space, fr/embedding-space, en/cosine-similarity, fr/cosine-similarity]
+      concepts: [contextualized-representation]
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The project already distinguishes token, contextualized and sentence-level representations; the extraction preserves the exact scope of this paper."
+  - id: li-bert-flow-sentence-embeddings-2020:anisotropic-sentence-space
+    kind: result
+    summary: "The authors find that the studied pretrained BERT sentence embeddings occupy a non-smooth anisotropic space, which can make simple cosine or dot-product similarity unreliable in some regions."
+    locator: {type: section, value: "§2.2, pp. 9120–9122", label: "Geometric analysis of BERT sentence embeddings"}
+    evidence:
+      kind: reported-analysis
+      confidence: well-supported
+      scope: "Sentence embeddings constructed from the BERT configurations and corpora evaluated in the paper."
+      assumptions: []
+      limitations: ["This is not a universal result for every sentence encoder or modern embedding model."]
+    technical_assessment:
+      status: correct
+      rationale: "The claim is the central empirical motivation for BERT-flow in the paper."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:sentence-embeddings, topic:anisotropy, topic:cosine-similarity]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/cosine-similarity, fr/cosine-similarity]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The cosine-similarity lesson already covers anisotropy with BERT-specific scope."
+  - id: li-bert-flow-sentence-embeddings-2020:normalizing-flow
+    kind: mechanism
+    summary: "BERT-flow learns an invertible normalizing-flow transformation that maps the BERT sentence-embedding distribution toward a standard isotropic Gaussian while keeping BERT's parameters fixed."
+    locator: {type: section, value: "§3, pp. 9122–9124; Figure 1", label: "BERT-flow calibration"}
+    evidence:
+      kind: method-description
+      confidence: established
+      scope: "The post-hoc sentence-embedding transformation proposed by the paper."
+      assumptions: []
+      limitations:
+        - "This is a particular post-hoc method, not a general correction for all embedding anisotropy."
+        - "The transformation is learned for a specified sentence-embedding distribution."
+    technical_assessment:
+      status: correct
+      rationale: "The paper describes an invertible mapping and an unsupervised flow objective while BERT remains unchanged."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [method:normalizing-flow, topic:sentence-embeddings]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/cosine-similarity, fr/cosine-similarity]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "A concrete optional example of geometric post-processing; a detailed flow implementation is outside the current essential path."
+  - id: li-bert-flow-sentence-embeddings-2020:target-adaptation-caveat
+    kind: limitation
+    summary: "The paper reports a target-distribution flow setting in which the transformation is fitted using target-dataset sentences without their semantic-similarity labels; this is a transductive-style protocol and should not be presented as evaluation on a wholly unseen target distribution."
+    locator: {type: section, value: "§4 Experimental Settings, pp. 9124–9125; Tables 2–3", label: "Target and NLI flow settings"}
+    evidence:
+      kind: protocol-qualification
+      confidence: context-dependent
+      scope: "The paper's flow-target setting in the reported STS benchmarks."
+      assumptions: ["The exact split composition should be checked against the implementation before making a stronger leakage claim."]
+      limitations:
+        - "No claim is made here that test labels are used for flow fitting."
+        - "The extraction does not independently verify the train/validation/test sentence partition in code."
+    technical_assessment:
+      status: qualified
+      rationale: "Unsupervised use of target-split text is distinct from label leakage, but it changes the evaluation protocol and should be disclosed."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:sentence-embeddings, topic:evaluation-protocol]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/cosine-similarity, fr/cosine-similarity]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The project audit already preserves this protocol caveat; no additional page text is needed."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "Li et al. provides a specific sentence-level example of anisotropy and post-hoc geometric calibration. It complements token-level contextuality studies but does not justify a universal embedding correction or new curriculum step."
