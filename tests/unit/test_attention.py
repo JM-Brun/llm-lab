@@ -201,6 +201,18 @@ def test_attention_dot_product_ranking_is_not_cosine_ranking() -> None:
     np.testing.assert_allclose(output, weights, rtol=1e-12)
 
 
+
+def test_attention_accepts_finite_additive_mask_biases() -> None:
+    q = np.zeros((1, 1))
+    k = np.zeros((2, 1))
+    v = np.array([[2.0], [6.0]])
+    mask = np.array([[0.0, np.log(3.0)]])
+
+    output, weights = scaled_dot_product_attention(q, k, v, mask=mask)
+
+    np.testing.assert_allclose(weights, [[0.25, 0.75]], rtol=1e-12)
+    np.testing.assert_allclose(output, [[5.0]], rtol=1e-12)
+
 def test_wrong_softmax_axis_fails_per_query_normalization_invariant() -> None:
     scores = np.array([[2.0, 0.0], [1.0, 0.0]])
 
