@@ -1,6 +1,4 @@
 ---
-**Notion canonique :** [Encodage positionnel](positional-encoding.qmd). Cette page approfondit un mécanisme particulier ; elle ne remplace pas l'introduction générale à l'information positionnelle.
-
 title: "RoPE : géométrie, dérivation et limites"
 subtitle: "Comment les rotations des requêtes et des clés encodent les positions relatives"
 keywords: ["type:deep-dive", "destination:deepen", "topic:rope", "level:advanced", "language:fr", "status:published"]
@@ -83,6 +81,8 @@ Vérifier les dimensions, l'ordre des paires de coordonnées, les positions util
 
 - [Su et al. (2021), *RoFormer: Enhanced Transformer with Rotary Position Embedding*](https://arxiv.org/abs/2104.09864) — formulation originale de RoPE.
 - [Hugging Face Transformers — documentation](https://huggingface.co/docs/transformers/) — les conventions d'implémentation varient selon les architectures.
+
+**Notion canonique :** [Encodage positionnel](positional-encoding.qmd). Cette page approfondit un mécanisme particulier ; elle ne remplace pas l'introduction générale à l'information positionnelle.
 
 ::: {.language-switch}
 **Langue :** [Français](rope.qmd) · [English](../en/rope.qmd)
