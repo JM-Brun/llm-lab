@@ -68,3 +68,57 @@ This baseline is based on source files and the generator implementation. It does
 - that Build or Practice currently has a suitable machine-readable route for breadcrumb generation.
 
 Do not report these as validated until the corresponding checks are completed.
+
+## 7. Bilingual counterpart audit (2026-11-05)
+
+The five archetypes were then checked in both language trees on the current `main` source:
+
+| Archetype | English page | French page | Parity and breadcrumb implications |
+|---|---|---|---|
+| System overview | `site/en/llm-overview.qmd` | `site/fr/llm-overview.qmd` | Both identify the page as an overview, expose learning outcomes, and point from the index to the generation preview. The French page is not a literal translation, but the scope and role are aligned. Both belong to `orientation`. |
+| Concept lesson — representations | `site/en/embedding-space.qmd` | `site/fr/embedding-space.qmd` | Both have the same page-map scope, purpose, suggested previous/next pages, core explanation and self-check structure. Both contain the same five-stop legacy stepper. Keep the bilingual treatment aligned when replacing it. |
+| Concept lesson — Q/K/V | `site/en/queries-keys-values.qmd` | `site/fr/queries-keys-values.qmd` | Both explain the same projection roles, use the same local predecessor/successor, include the same five-stop legacy stepper, and provide a self-check. The EN/FR chapter leads and terminology are semantically aligned. |
+| Guided build | `site/en/build-path.qmd` | `site/fr/build-path.qmd` | Both state that the route guides inspection and verification of the tested reference implementation, distinguish random-weight inference from training, and expose G0–G9 milestones. Neither should inherit an Understand-stage breadcrumb. |
+| Practice / experiment | `site/en/experimental-evaluation.qmd` | `site/fr/evaluation-experimentale.qmd` | Both describe a protocol-design transfer exercise rather than implementation or a benchmark result. Both link to relevant mathematical/training background; neither belongs to the six-stage Understand route. |
+
+The source-level bilingual parity is good for these five representative pages. This is not a full language-parity audit and does not validate translated rendered navigation or responsive behavior.
+
+## 8. Exact legacy stepper inventory and correction
+
+A repository-wide code search on the current default branch did not return a broader set of `pipeline-stepper` matches; direct inspection confirmed exactly four occurrences in the sampled content:
+
+- `site/en/embedding-space.qmd`
+- `site/fr/embedding-space.qmd`
+- `site/en/queries-keys-values.qmd`
+- `site/fr/queries-keys-values.qmd`
+
+The four blocks encode the same five stops: Text → Embeddings → Attention (Q, K, V) → Logits → Loss & Training.
+
+This sequence is not a valid projection of `data/guided-route.yml`: it omits tokenization as a distinct topic and positional/contextualized representations; places Q/K/V directly after embeddings, omitting Transformer computation context; jumps from Q/K/V to logits, omitting scaled dot-product attention and causal masking; then jumps from logits to loss/training, omitting probabilities, likelihood and the distinction between inference and learning. It presents a single linear chain where the curriculum is staged and includes optional material and an intentional revisit of generation.
+
+**Decision:** retire this five-stop stepper on all four pages. Do not preserve it under a new label and do not make it the breadcrumb. The page-level suggested-route links and explicit local chapter leads already provide valid immediate transitions. Replace the stepper only when the shared route projection is ready; until then, omission is less misleading than a false curriculum.
+
+The separate end-of-page `route-nav-cards` on Q/K/V are useful local previous/next links and should remain distinct from the global curriculum breadcrumb. Their labels should not be treated as proof of a single global linear sequence.
+
+## 9. Membership model confirmed by source
+
+The current six-stage registry supports a deterministic membership projection without new page metadata:
+
+- A page may have zero, one, or multiple memberships.
+- Membership must preserve both `core` and `optional` status.
+- Membership is language-local at the page-ID level but paired by the stage's localized title/objective.
+- `generation` is intentionally core in both `orientation` and `prediction`; the narrative explicitly defines the first as a black-box preview and the second as a return after logits/probabilities.
+- A breadcrumb cannot infer which occurrence the reader is following from the page URL alone.
+
+Therefore, a universal page-level breadcrumb is not always semantically well-defined. The safe default is to show the stage context as a **set of valid route contexts**, not fabricate a unique ancestor. For a single-membership page, a normal breadcrumb can identify the stage and current page. For a multi-membership page, show both labelled contexts (preview / prediction) or a compact “also appears in” relation; do not choose by YAML order. If the component cannot express this distinction accessibly and compactly, omit the breadcrumb on that page and retain the stage cards as entry points.
+
+## 10. Implementation sequence updated
+
+1. Remove the misleading five-stop stepper from the four bilingual pages in one coordinated content change.
+2. Implement a small, testable projection from the existing route registry to page membership, reusing the route loader/validation path. Do not introduce front-matter membership or another YAML registry.
+3. Render a shared component for pages with one unambiguous membership; explicitly handle optional membership and multiple membership.
+4. Keep Build, Practice, Deepen and Reference pages out of the Understand breadcrumb unless their own canonical route model is already documented and machine-readable.
+5. Add tests for the exact known cases: one core membership, one optional membership, no membership, and `generation` with two core memberships; assert FR/EN labels and stable links.
+6. Review rendered desktop/mobile and keyboard/screen-reader behavior before enabling the component broadly.
+
+**Branching note:** this audit was performed against current `main` content. PR #516's head is two commits behind `main`; synchronize/rebase before applying the four-page removal or implementing the projection. No content pages or runtime behavior were changed by this audit update.
