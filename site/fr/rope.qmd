@@ -1,4 +1,6 @@
 ---
+**Notion canonique :** [Encodage positionnel](positional-encoding.qmd). Cette page approfondit un mécanisme particulier ; elle ne remplace pas l'introduction générale à l'information positionnelle.
+
 title: "RoPE : géométrie, dérivation et limites"
 subtitle: "Comment les rotations des requêtes et des clés encodent les positions relatives"
 keywords: ["type:deep-dive", "destination:deepen", "topic:rope", "level:advanced", "language:fr", "status:published"]
