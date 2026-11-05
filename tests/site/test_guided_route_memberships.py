@@ -172,7 +172,6 @@ def test_writer_generates_page_contexts_for_every_route_member(
     )
 
 
-
 @pytest.mark.parametrize(
     ("language", "expected_include"),
     [
