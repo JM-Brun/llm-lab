@@ -29,8 +29,8 @@ The complete structured extraction is [`data/extractions/codefinity-qkv-building
 | Item | Contribution | Technical status | Pedagogical value | Disposition |
 |---|---|---|---|---|
 | Role definitions | Q seeks, K offers matching representation, V carries aggregated content | Correct at introductory level | Low complementarity; existing lesson is more precise | Already covered |
-| Geometric alignment | Q/K as arrows whose alignment controls information flow | Qualitative only; score function unspecified | Moderate alternative intuition, with risk of implying cosine/nearest-neighbour matching | Defer |
-| Bank/river example | Lexical ambiguity contextualized by river-related information | Illustrative, not empirical | Low; same example already exists in canonical contextualization lesson | Already covered |
+| Geometric alignment | Q/K as vectors whose alignment contributes to compatibility | Qualitative in source; project-authored bridge now supplies the dot-product geometry and its limits | High complementarity with the index-card analogy when bounded mathematically | Integrated as optional bilingual note |
+| Bank/river example | Lexical polysemy: riverbank vs financial institution | Illustrative, not empirical; differs from the Q/K/V page’s pronoun-coreference example | High complementarity as a contrast between two context-dependent language phenomena; full bank treatment remains elsewhere | Integrated by reference in bilingual contrast |
 | Multiple-choice check | Distractors distinguish the roles of Q, K and V | Visible question; feedback behaviour unknown | Moderate as an assessment-design reference | Integrate by reference |
 | Scope boundary | No equations or detailed attention computation in retrieved lesson | Accurate for inspected text only | High value for source curation | Integrate by reference |
 
@@ -83,8 +83,8 @@ The local sequence is compatible with LLM Lab's separation of the Q/K/V projecti
 | Learner question | Codefinity treatment | Existing project treatment | Gap or complementarity | Decision |
 |---|---|---|---|---|
 | What does each vector do? | Search / offer-to-match / information passed | Index-card analogy plus learned projections and explicit Q/K vs V distinction | Rephrasing, not a new model | Already covered |
-| How does matching look geometrically? | Arrows in high-dimensional space; alignment | Formal dot-product score, scaling, softmax and weighted aggregation on the next page | Alternative visual intuition, but incomplete and easy to overread | Preserve in extraction; defer publication |
-| How does context disambiguate a word? | “bank” in a riverside sentence | Bank ambiguity already appears in contextualized-representations; QKV page separately uses pronoun reference | Same example is already represented; the pronoun example serves a distinct cross-position learner difficulty | No page edit |
+| How can Q/K matching be pictured numerically? | Geometric alignment of Q and K vectors | Index-card analogy on the Q/K/V page; dot-product/scaling/softmax on the next page | Adds a spatial lens and bridges role intuition to vector algebra | Integrated as a collapsible geometric view, explicitly bounded against cosine similarity and nearest-neighbour interpretations |
+| What kinds of language phenomena need context? | “bank” in a riverside sentence (lexical polysemy) | Q/K/V page uses pronoun coreference; contextualized-representations has the fuller bank example | Distinct phenomena: competing senses of one word versus competing antecedents for a pronoun | Integrated as a compact contrast; link to the canonical bank discussion rather than duplicating it |
 | How do I check the key role? | One multiple-choice question with role-confusion distractors | Existing bilingual QKV self-check and extended exercises | Potential assessment-design reference, not missing content | Integrate by reference |
 | How is attention calculated? | Not in the retrieved text | Dedicated scaled-dot-product-attention lesson | Project has deeper, more rigorous treatment | No change |
 
@@ -94,20 +94,21 @@ The local sequence is compatible with LLM Lab's separation of the Q/K/V projecti
 - **Pedagogical route:** Codefinity uses a compact local sequence; it does not justify changing the canonical route.
 - **Site navigation:** no new page, sidebar item, prerequisite edge or route card is justified.
 
-## 8. Integration decision
+## 8. Integration decision and actual learning-system changes
 
-**No published-page or canonical-graph edit is justified.** The bank example is already present in the project's contextualized-representations treatment and the current Q/K/V page has a separate pronoun-context example. Adding Codefinity's role definitions or another search analogy would stack explanations without a distinct learner benefit.
+The source does not add a new canonical mechanism, but it does add two complementary teaching contributions. The first review incorrectly treated the bank example as simply redundant and the geometric framing as a deferred idea. The differential comparison now distinguishes topic overlap from explanatory function.
 
-The geometric framing is retained as a candidate alternative mental model, not published yet: a future use would need to connect vector intuition to dot-product scores, scaling, softmax and weighted aggregation, while explicitly rejecting the inference that attention is cosine similarity or hard nearest-neighbour retrieval.
+1. **Geometric Q/K perspective — integrated.** The bilingual Q/K/V pages now include an optional collapsible note that links the geometric intuition to the dot product, explains that both vector norms and angle matter, and connects scores to scaling, softmax and weighted aggregation. It explicitly rules out equating dot product with cosine similarity or interpreting attention as hard nearest-neighbour retrieval. This adds a spatial lens alongside the existing index-card analogy without replacing the formal next lesson.
+2. **Lexical polysemy — integrated by reference.** The Q/K/V pages now contrast Codefinity’s *bank* example (competing senses of one word) with Neha KK’s pronoun example (competing antecedents / coreference). The comparison teaches that context-dependent language phenomena are not all the same task. It links back to the fuller contextualized-representations lesson rather than duplicating its bank discussion.
+3. **Q/K/V role definitions — already covered.** The existing page has the clearer formulation, learned projections and dimensions.
+4. **Multiple-choice distractors — retained as an assessment-design reference.** The existing self-check and exercises make a new quiz unnecessary now.
 
-The quiz is retained as an assessment-design reference. It may inform a future revision of distractors, but the existing self-check and extended exercises make a new quiz unnecessary now.
-
-- **Concept graph:** no change.
-- **Pages:** none.
-- **Learning routes/navigation:** none.
-- **Exercises/experiments:** none.
-- **Build/implementation:** none.
-- **Visual assets:** none; no source image copied.
+- **Concept graph:** no change; no durable concept or relation is missing.
+- **Bilingual pages:** updated with two optional, attributed perspectives.
+- **Learning routes/navigation:** no change; optional depth does not create a new prerequisite.
+- **Exercises/experiments:** no new activity; quiz pattern remains available for future exercise revision.
+- **Build/implementation:** no change.
+- **Visual assets:** no source image copied; original media remains uninspected and rights unknown.
 - **New pages:** none.
 
 ## 9. Validation, provenance and open work
@@ -119,4 +120,4 @@ The quiz is retained as an assessment-design reference. It may inform a future r
 - The wider course sequence and interactive quiz feedback remain uninspected.
 - No CI, Quarto render, link check or visual browser validation is claimed by this source review.
 
-**Conclusion:** Codefinity contributes a concise beginner-facing formulation and a role-confusion quiz, but no unique technical content or unfilled pedagogical gap relative to the current LLM Lab Q/K/V and contextualization lessons. Its useful alternative framing is preserved for future synthesis without increasing the published curriculum.
+**Conclusion:** Codefinity’s most useful contribution is not a new Q/K/V definition. It is a complementary geometric explanation and a second kind of language example. These are now integrated into the existing bilingual lesson in bounded optional sections, while the canonical graph and learning route remain stable.
