@@ -105,7 +105,7 @@ items:
       tags: [topic:pre-tokenization, topic:multilingual-tokenization, method:regression]
       concept_ids: [token]
     candidate_destinations:
-      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/tokenization-pipeline, fr/tokenization-pipeline]
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/text-data, fr/text-data]
       concepts: []
       route_ids: []
     disposition: integrate-by-reference
