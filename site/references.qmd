@@ -207,6 +207,34 @@ Ces ressources ont été consultées pour comparer les explications, repérer le
 
 Les schémas originaux [flux de données GPT](images/gpt-data-flow.svg), [calcul d'attention](images/attention-calculation-flow.svg) et [auto-attention comparée au MLP](images/attention-vs-mlp.svg) ont été créés pour ce dépôt. Ils synthétisent des concepts présentés dans les références ci-dessus, mais ne sont ni des captures d'écran ni des adaptations pixel à pixel des images des auteurs cités.
 
+## Références pédagogiques — requêtes, clés et valeurs
+
+Ces sources secondaires sont citées dans les pages [Q, K et V](fr/queries-keys-values.qmd) (française et anglaise) pour l'intuition et les exemples. Elles ne sont pas les sources des schémas originaux du dépôt ; aucune de leurs illustrations n'est copiée.
+
+::: {.reference-card}
+### Codefinity — *Queries, Keys, and Values: The Building Blocks*
+
+[Consulter la leçon](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b).
+
+Cours en ligne cité pour deux apports : l'intuition géométrique de Q et K (orientation, alignement, rôle des normes dans le produit scalaire) et l'exemple d'ambiguïté lexicale (*bank*). Ressource pédagogique, pas une source primaire ; les définitions formelles, le calcul et les limites d'interprétation restent ceux des pages du dépôt. Aucun actif visuel n'est réutilisé ; les conditions de réutilisation du contenu du cours ne sont pas établies.
+:::
+
+::: {.reference-card}
+### Nishanthan K — *How Query, Key, and Value (QKV) Work in Transformers* (22 octobre 2026)
+
+[Article DEV Community](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a) · [Miroir Medium contrôlé par l'auteur](https://nishanthan-k.medium.com/how-query-key-and-value-qkv-work-in-transformers-1274bfa14ea8).
+
+Article cité pour une représentation visuelle complémentaire des rôles Q/K/V. L'illustration reste hébergée par sa source et liée depuis les pages, jamais intégrée : les droits de réutilisation ne sont pas établis. Statut détaillé (lien seul, inspection et droits en attente) dans `docs/visual-assets-register.md` et l'[issue #156](https://github.com/JM-Brun/llm-lab/issues/156).
+:::
+
+::: {.reference-card}
+### Neha KK — *Understanding Queries, Keys and Values in Transformers* (31 décembre 2025)
+
+[Lire l'article](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b).
+
+Article cité pour l'exemple linguistique de coréférence (« il » dans « L'animal n'a pas traversé la route parce qu'il était fatigué. »). Il ne fournit ni modèle, ni tête d'attention, ni poids mesurés, ni expérience : l'exemple illustre le flux d'information contextuel, pas un résultat d'observation. Aucun actif réutilisé ; conditions de réutilisation non établies.
+:::
+
 ## Politique de citation
 
 Pour chaque figure externe, indiquer près de l'image : l'auteur ou le détenteur des droits, le titre ou la page source, un lien direct vers la ressource, et toute licence connue. Une URL accessible n'implique pas que l'image soit libre de réutilisation.
