@@ -473,6 +473,31 @@ def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], languag
     return "\n".join(lines)
 
 
+
+def write_guided_page_context_fragments(
+    language: str, stages: list[ResolvedGuidedRouteStage]
+) -> list[Path]:
+    """Write generated context partials for every page in the guided route."""
+    memberships = build_guided_route_memberships(stages)
+    page_by_id = {
+        page.id: page
+        for stage in stages
+        for page in [*stage.pages, *stage.optional_pages]
+    }
+    includes = SITE / "includes"
+    includes.mkdir(parents=True, exist_ok=True)
+    outputs: list[Path] = []
+    for page_id, page_memberships in memberships.items():
+        page = page_by_id[page_id]
+        output = includes / f"generated-guided-context-{page_id.replace('/', '-')}.qmd"
+        output.write_text(
+            render_guided_page_context_markdown(page, page_memberships, language),
+            encoding="utf-8",
+        )
+        outputs.append(output)
+    return outputs
+
+
 def write_guided_route_fragment(language: str, stages: list[ResolvedGuidedRouteStage]) -> Path:
     """Write a generated Quarto Markdown partial for the requested language."""
     output = SITE / "includes" / f"generated-guided-route-{language}.qmd"
@@ -615,6 +640,7 @@ def build(language: str) -> Path:
     guided_route = load_guided_route(language, pages)
     navigation = load_navigation(language, pages)
     write_guided_route_fragment(language, guided_route)
+    write_guided_page_context_fragments(language, guided_route)
     write_map_fragments(language, navigation, pages)
     output.write_text(
         json.dumps(
