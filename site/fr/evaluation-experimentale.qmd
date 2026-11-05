@@ -20,6 +20,8 @@ related: []
 tags: ["type:experiment-guide", "destination:practice", "topic:evaluation-experimentale", "level:applied", "language:fr", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-fr-evaluation-experimentale.qmd >}}
 ## Objectif
 
 S'entraîner à concevoir une évaluation défendable pour un système de classement de passages scientifiques. L'exercice porte sur l'estimande, les dépendances entre observations, les fuites, le biais de sélection, l'interprétation des métriques et l'incertitude. Il n'ajoute aucune implémentation et ne constitue pas un résultat de benchmark.
