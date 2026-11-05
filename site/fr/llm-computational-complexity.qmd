@@ -1,4 +1,6 @@
 ---
+**Notion canonique :** [Panorama des modèles de langage](llm-overview.qmd). Cette page approfondit les coûts de calcul et de mémoire des LLM ; elle complète la vue générale sans être une étape obligatoire.
+
 title: "Complexité et parallélisme dans les LLM"
 subtitle: "Où le calcul est-il linéaire ou quadratique, parallèle ou séquentiel ?"
 keywords: ["type:deep-dive", "destination:deepen", "topic:llm-computational-complexity", "level:advanced", "language:fr", "status:published"]
