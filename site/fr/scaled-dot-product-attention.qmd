@@ -71,16 +71,16 @@ Ici, $M$ désigne un masque additif strict : $M_{ij}=0$ pour un couple requête-
 
 Considérons une requête et deux clés accessibles, sans masque :
 
-$
+$$
 q=(1,0),\quad k_1=(1,0),\quad k_2=(0,1),\quad
 v_1=(10,0),\quad v_2=(0,20).
-$
+$$
 
 Ici, $d_k=2$. Les scores bruts sont $qk_1^\top=1$ et $qk_2^\top=0$. Après mise à l'échelle, ils valent $(1/\sqrt{2},0)\approx(0{,}707,0)$. Le softmax donne des poids approximatifs $(0{,}67,0{,}33)$, dont la somme vaut un. La sortie est la somme pondérée des valeurs :
 
-$
+$$
 o\approx0{,}67(10,0)+0{,}33(0,20)=(6{,}7,6{,}6).
-$
+$$
 
 Cet exemple distingue les rôles : la requête et les clés déterminent les poids ; les valeurs déterminent ce qui est combiné. Les poids sont relatifs aux clés accessibles dans cette ligne ; ils ne mesurent pas la pertinence sémantique.
 
