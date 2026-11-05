@@ -23,6 +23,11 @@ const cases = [
       ...testCase, page, kind: "route-context",
     }))
   ),
+  ...visualCases.flatMap(testCase =>
+    ["gpt-config-walkthrough.html", "gpt-ops-walkthrough.html", "transformer-block-walkthrough.html", "gpt-model-walkthrough.html", "gpt-generation-walkthrough.html"].map(page => ({
+      ...testCase, page, kind: "build-tour",
+    }))
+  ),
 ];
 
 const browser = await chromium.launch({ headless: true });
@@ -232,6 +237,62 @@ for (const testCase of cases) {
         throw new Error("Enter did not activate the focused concept button");
       }
       await page.keyboard.press("Escape");
+    }
+
+    if (kind === "build-tour") {
+      const tour = [
+        { page: "gpt-config-walkthrough.html", previous: null, next: "gpt-ops-walkthrough.html" },
+        { page: "gpt-ops-walkthrough.html", previous: "gpt-config-walkthrough.html", next: "transformer-block-walkthrough.html" },
+        { page: "transformer-block-walkthrough.html", previous: "gpt-ops-walkthrough.html", next: "gpt-model-walkthrough.html" },
+        { page: "gpt-model-walkthrough.html", previous: "transformer-block-walkthrough.html", next: "gpt-generation-walkthrough.html" },
+        { page: "gpt-generation-walkthrough.html", previous: "gpt-model-walkthrough.html", next: null },
+      ];
+      const index = tour.findIndex(step => step.page === pagePath);
+      if (index < 0) throw new Error("unknown build-tour page");
+      const step = tour[index];
+      const lead = page.locator("main .chapter-lead").first();
+      const leadText = await lead.innerText();
+      const ordinalPattern = lang === "fr"
+        ? new RegExp(`\\b${index + 1}\\s+sur\\s+5\\b`, "i")
+        : new RegExp(`\\b${index + 1}\\s+of\\s+5\\b`, "i");
+      if (!await lead.count() || !ordinalPattern.test(leadText)) {
+        throw new Error("build-tour opening does not expose the correct localized step number");
+      }
+      const siteBreadcrumb = page.locator(".quarto-title-breadcrumbs");
+      item.buildTour = {
+        ordinal: index + 1,
+        leadText,
+        siteBreadcrumbCount: await siteBreadcrumb.count(),
+        guidedRouteContextCount: await page.locator(".guided-page-context").count(),
+      };
+      if (item.buildTour.siteBreadcrumbCount !== 1 || item.buildTour.guidedRouteContextCount !== 0) {
+        throw new Error("build-tour page must retain one site breadcrumb and no unrelated Understand route context");
+      }
+      const connectionsHeading = page.locator("main h2").filter({
+        hasText: lang === "fr" ? /^Connexions$/ : /^Connections$/,
+      }).last();
+      const connectionsList = connectionsHeading.locator("xpath=following-sibling::ul[1]");
+      const expectedLinks = [
+        { target: step.previous, label: lang === "fr" ? "Étape précédente" : "Previous stop" },
+        { target: step.next, label: lang === "fr" ? "Étape suivante" : "Next stop" },
+      ].filter(link => link.target);
+      item.buildTour.navigationLinks = await connectionsList.locator("a[href]").evaluateAll(links =>
+        links.map(link => ({ href: link.getAttribute("href"), text: link.innerText.trim() }))
+      );
+      for (const expected of expectedLinks) {
+        const actual = item.buildTour.navigationLinks.filter(link =>
+          link.href === expected.target && link.text.includes(expected.label)
+        );
+        if (actual.length !== 1) {
+          throw new Error(`build-tour ${expected.label} link to ${expected.target} is missing or duplicated`);
+        }
+      }
+      if (item.buildTour.navigationLinks.some(link =>
+        /(?:previous|next) stop|étape (?:précédente|suivante)/i.test(link.text) &&
+        !expectedLinks.some(expected => link.href === expected.target && link.text.includes(expected.label))
+      )) {
+        throw new Error("build-tour has an unexpected previous/next link at this sequence boundary");
+      }
     }
 
     if (kind === "route-context") {
