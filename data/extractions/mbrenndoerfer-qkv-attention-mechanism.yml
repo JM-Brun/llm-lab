@@ -26,6 +26,8 @@ pedagogical_model:
       - {id: src-attention-weights, kind: intermediate, description: "Row-wise softmax probabilities over accessible key positions, used to weight value vectors.", locator: "Step 3: Computing Attention Weights, lines 1020-1043"}
       - {id: src-weighted-output, kind: intermediate, description: "The row-wise weighted sum of value vectors using normalized attention weights.", locator: "Step 4: Aggregating Values, lines 1044-1060"}
       - {id: src-convex-hull, kind: geometric-property, description: "A normalized nonnegative weighted sum lies in the convex hull of the contributing value vectors.", locator: "Step 4: Aggregating Values, lines 1059-1060"}
+      - {id: src-routing-payload, kind: distinction, description: "Keys determine which positions receive attention; values determine the content contributed by those positions, so routing and payload can encode different features.", locator: "Step 1: learned projections and Step 4: Aggregating Values, lines 753-755 and 1044-1060"}
+      - {id: src-message-passing, kind: analogy, description: "Self-attention can be viewed as positions broadcasting value vectors and receiving query-dependent weighted mixtures.", locator: "Step 4: Aggregating Values, lines 1060-1062"}
       - {id: src-worked-example, kind: pedagogical-anchor, description: "A three-token sentence with hand-designed four-dimensional inputs and seeded random projections traces QKV through output.", locator: "A Worked Example with Real Words, lines 1270-1449"}
       - {id: src-quiz, kind: assessment, description: "A short quiz checks role distinctions and the attention computation.", locator: "11 Quiz, final section"}
     edges:
@@ -43,6 +45,9 @@ pedagogical_model:
       - {from: src-attention-weights, type: determines-aggregation-into, to: src-weighted-output}
       - {from: src-value, type: aggregated-into, to: src-weighted-output}
       - {from: src-weighted-output, type: satisfies, to: src-convex-hull}
+      - {from: src-key, type: determines-routing-for, to: src-attention-weights}
+      - {from: src-value, type: supplies-payload-for, to: src-weighted-output}
+      - {from: src-weighted-output, type: interpreted-as, to: src-message-passing}
       - {from: src-worked-example, type: illustrates, to: src-projection}
       - {from: src-worked-example, type: illustrates, to: src-weighted-output}
       - {from: src-quiz, type: assesses, to: src-query}
@@ -247,6 +252,68 @@ items:
       concepts: [attention-weight, weighted-aggregation]
     disposition: defer
     disposition_rationale: "Preserve as a candidate mathematical insight, but defer learner-facing integration until a specific transfer task or learner difficulty warrants it."
+
+  - id: mbrenndoerfer-qkv-attention-mechanism:routing-versus-payload
+    kind: claim
+    summary: "The key representation controls compatibility/routing while the value representation carries the content aggregated; these roles can emphasize different features."
+    locator: {type: section, value: "The QKV Mechanism, lines 753-755; Step 4, lines 1044-1060", label: "Decoupling key matching from value content"}
+    evidence:
+      kind: direct-explanation
+      confidence: well-supported
+      assumptions: ["The statement concerns the functional roles in standard attention, not a claim about a particular trained head."]
+      limitations: ["The grammatical-versus-semantic example is hypothetical and not supported by a model-specific experiment."]
+    pedagogical_profile:
+      learner_question: "Can a token attract attention for one reason but contribute different information?"
+      explanatory_lens: routing-versus-payload
+      teaching_form: [conceptual-distinction, hypothetical-example]
+      abstraction_level: introductory
+      prerequisites: [query, key, value, attention-weight]
+      distinctive_value: "Makes explicit that what controls information flow and what is transmitted are distinct learned representations."
+      limitations: ["Do not turn the hypothetical syntactic/semantic example into a claim about observed attention heads."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The project states that Q/K determine weights and V supplies content, but the source motivates the possibility that the routing feature and payload feature differ."}
+      complementarity: {level: high, rationale: "A short example deepens the existing role distinction without adding another analogy or derivation."}
+      pedagogical_value: {level: moderate, rationale: "Useful to prevent the misconception that a key is the content transmitted or that values are matched against queries."}
+      applicability: {level: high, rationale: "Suitable as a concise optional note in the canonical bilingual Q/K/V lesson."}
+      redundancy: {level: low, rationale: "It sharpens an existing distinction rather than repeating the role definitions."}
+      evidence_quality: {level: high, rationale: "The role separation follows directly from the computation; the linguistic example remains explicitly hypothetical."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:self-attention], concept_ids: [key, value, attention-weight]}
+    candidate_destinations:
+      pages: [en/queries-keys-values, fr/queries-keys-values]
+      concepts: [key, value]
+    disposition: integrated
+    disposition_rationale: "Added as a short, source-attributed, collapsible note in both language versions, explicitly marking the linguistic illustration as hypothetical."
+
+  - id: mbrenndoerfer-qkv-attention-mechanism:message-passing
+    kind: analogy
+    summary: "Self-attention can be understood as content-dependent message passing: positions broadcast values and receive weighted mixtures selected by query-key compatibility."
+    locator: {type: section, value: "Step 4: Aggregating Values, lines 1060-1062", label: "The information flow paradigm"}
+    evidence:
+      kind: analogy
+      confidence: well-supported
+      assumptions: ["The analogy is applied to the attention computation, not to a fixed graph architecture."]
+      limitations: ["Avoid implying a static graph or a one-to-one equivalence with graph neural networks."]
+    pedagogical_profile:
+      learner_question: "How does information move between token positions in one attention operation?"
+      explanatory_lens: message-passing
+      teaching_form: [analogy, information-flow]
+      abstraction_level: intermediate
+      prerequisites: [attention-weight, weighted-aggregation]
+      distinctive_value: "Connects attention to a familiar information-flow abstraction and graph message passing."
+      limitations: ["Keep the content-dependent, dense/ masked connectivity distinction explicit."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The project explains weighted aggregation but does not explicitly frame it as message passing."}
+      complementarity: {level: high, rationale: "This lens connects the existing formula to information-flow and graph perspectives."}
+      pedagogical_value: {level: moderate, rationale: "May support transfer to graph neural networks and contextual information flow."}
+      applicability: {level: high, rationale: "Fits as an optional note next to the weighted-sum equation."}
+      redundancy: {level: low, rationale: "It adds an interpretation rather than another computation."}
+      evidence_quality: {level: high, rationale: "The analogy is directly described in the source and maps cleanly to the attention computation."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:self-attention, topic:information-flow], concept_ids: [self-attention, attention-weight, value]}
+    candidate_destinations:
+      pages: [en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
+      concepts: [self-attention, attention-weight]
+    disposition: integrated
+    disposition_rationale: "Added as an optional, explicitly analogical note in both scaled-attention pages."
 
   - id: mbrenndoerfer-qkv-attention-mechanism:scope-claims
     kind: limitation
