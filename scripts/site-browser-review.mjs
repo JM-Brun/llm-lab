@@ -23,6 +23,11 @@ const cases = [
       ...testCase, page, kind: "route-context",
     }))
   ),
+  ...visualCases.flatMap(testCase =>
+    ["attention-score-scaling.html", "cross-attention.html", "rope.html", "unicode-text.html", "tensors.html", "cosine-similarity.html", "embedding-linearity.html", "language-modeling-math.html", "mathematical-foundations.html", "llm-computational-complexity.html"].map(page => ({
+      ...testCase, page, kind: "deep-dive-parent",
+    }))
+  ),
 ];
 
 const browser = await chromium.launch({ headless: true });
@@ -232,6 +237,34 @@ for (const testCase of cases) {
         throw new Error("Enter did not activate the focused concept button");
       }
       await page.keyboard.press("Escape");
+    }
+
+    if (kind === "deep-dive-parent") {
+      const currentPageId = `${lang}/${pagePath.replace(".html", "")}`;
+      const parents = await page.evaluate(async ({ language, currentId }) => {
+        const response = await fetch(`../learning-map-data-${language}.json`);
+        if (!response.ok) throw new Error(`learning-map metadata request failed: ${response.status}`);
+        const payload = await response.json();
+        const current = payload.pages.find(candidate => candidate.id === currentId);
+        if (!current) throw new Error(`missing page metadata: ${currentId}`);
+        return current.parents || [];
+      }, { language: lang, currentId: currentPageId });
+      if (!parents.length) throw new Error("deep-dive page has no declared canonical parent");
+      const mainLinks = await page.locator("main a[href]").evaluateAll(links =>
+        links.map(link => ({ href: link.getAttribute("href"), text: link.innerText.trim() }))
+      );
+      const resolvedLinks = mainLinks.map(link => ({
+        ...link,
+        targetId: link.href
+          ? new URL(link.href, page.url()).pathname.slice(1).replace(".html", "")
+          : null,
+      }));
+      item.deepDiveParent = { parents, resolvedLinks };
+      for (const parent of parents) {
+        if (!resolvedLinks.some(link => link.targetId === parent)) {
+          throw new Error(`deep-dive page does not expose a link back to canonical parent ${parent}`);
+        }
+      }
     }
 
     if (kind === "route-context") {
