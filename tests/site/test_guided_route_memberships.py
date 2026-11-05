@@ -160,13 +160,15 @@ def test_writer_generates_page_contexts_for_every_route_member(
     generation_id = f"{language}/generation"
     output_by_name = {path.name: path for path in outputs}
 
-    overview_file = output_by_name[f"generated-guided-context-{overview_id.replace('/', '-')}.qmd"]
+    overview_filename = f"generated-guided-context-{overview_id.replace('/', '-')}.qmd"
+    overview_file = output_by_name[overview_filename]
     generation_file = output_by_name[
         f"generated-guided-context-{generation_id.replace('/', '-')}.qmd"
     ]
-    assert overview_file.read_text(encoding="utf-8") == GENERATOR[
-        "render_guided_page_context_markdown"
-    ](page_by_id[overview_id], memberships[overview_id], language)
-    assert generation_file.read_text(encoding="utf-8") == GENERATOR[
-        "render_guided_page_context_markdown"
-    ](page_by_id[generation_id], memberships[generation_id], language)
+    render_context = GENERATOR["render_guided_page_context_markdown"]
+    assert overview_file.read_text(encoding="utf-8") == render_context(
+        page_by_id[overview_id], memberships[overview_id], language
+    )
+    assert generation_file.read_text(encoding="utf-8") == render_context(
+        page_by_id[generation_id], memberships[generation_id], language
+    )
