@@ -189,6 +189,25 @@ This is a pilot evaluation frame, not a claim that every dimension is closed. Ex
 
 The project synthesis should be stronger than each tutorial for the declared scope by combining precise definitions, equations/dimensions, complementary intuition, distinct examples, counterexamples, caveats, exercises and implementation links. This is a reasoned editorial assessment, not a measured universal ranking.
 
+
+### Worked incremental-addition case: Codefinity after the two article sources
+
+This is a concrete Q/K/V calibration example of adding one source to an already-populated collection. It demonstrates the method; it does not prove that the workflow scales to every domain.
+
+| Stage | Evidence from the Codefinity addition | Decision and non-regression check |
+|---|---|---|
+| Existing baseline | The canonical bilingual lesson already explained Q/K/V roles and projections; the attention lesson already derived scores, scaling, softmax and weighted aggregation. DEV and Medium records already supplied compact analogies and linguistic examples. | Do not add another role-definition paragraph or duplicate the full attention derivation. Preserve both earlier source records and their distinct examples. |
+| New source inspection | The Codefinity lesson text and parent course outline were directly inspected. The source remains partial: the two SVGs are interface icons whose bytes/rights were not inspected; JavaScript answer submission, other lessons and assignments were not scanned. | Keep source status **partially scanned**, even though useful text items can be extracted and integrated. |
+| Candidate A — geometric Q/K lens | Codefinity describes Q/K as vectors whose alignment influences information flow. It does not specify cosine similarity or the score function. | Integrate only as an optional bilingual geometric perspective, then bridge it to the actual dot product and its norm/angle dependence. Explicitly reject cosine-only and hard-nearest-neighbour interpretations. |
+| Candidate B — bank/river example | The source uses lexical polysemy: one word has competing senses. The existing Q/K/V page already has a pronoun-coreference example. | Add a concise contrast between lexical polysemy and coreference; keep the full bank treatment on contextualized-representations. Do not conflate the two phenomena or duplicate the full example. |
+| Candidate C — assessment design | Three visible four-option checks ask about Q/K/V purpose, dynamic attention versus pooling, and contextual aggregation. The interactive feedback behavior was not exercised. | Preserve the three question patterns in the source extraction and review as assessment-design references. Do not add a duplicate quiz without learner evidence of a gap. |
+| Candidate D — visual assets | Two unique SVG URLs resolve to definition/question interface icons; their bytes and licences remain uninspected. | Do not treat them as explanatory figures or copy them. Keep them link-only/deferred. |
+| Canonical result | The source extraction, review and collection dossier were extended; the bilingual Q/K/V pages gained bounded geometric and linguistic contrasts. | No new canonical concept, relation, route or Build implementation was justified. Existing content and the prior source provenance remain intact. |
+
+**What this case validates:** incremental addition can produce multiple item-level outcomes from one partially scanned source—integrate, integrate by reference, retain as a design reference, or defer—without upgrading scan completeness, creating a parallel concept registry, or expanding the core lesson indiscriminately.
+
+**Evidence boundary:** this is repository/process evidence plus source-text inspection. It is not browser/accessibility validation, visual inspection of third-party assets, execution of Codefinity's quiz, or learner-outcome evidence.
+
 ## 9. Adversarial regression suite
 
 Reuse these checks when a source is added or the synthesis changes.
