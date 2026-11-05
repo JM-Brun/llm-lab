@@ -334,7 +334,6 @@ def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[Resolv
     return resolved
 
 
-
 class GuidedRouteMembership(StrictModel):
     """One page's explicit membership in a guided-route stage."""
 
@@ -390,11 +389,7 @@ def render_guided_page_context_markdown(
 
     if len(memberships) == 1:
         membership = memberships[0]
-        aria_label = (
-            "Contexte du parcours pédagogique"
-            if language == "fr"
-            else "Learning path context"
-        )
+        aria_label = "Contexte du parcours pédagogique" if language == "fr" else "Learning path context"
         role_label = "Ressource facultative" if language == "fr" else "Optional resource"
         lines = [
             f'<nav class="guided-page-context" aria-label="{aria_label}">',
