@@ -29,6 +29,18 @@ La page précédente, [GPT et Transformer : architecture et flux des données](t
   <span class="epistemic-badge badge-status">Architecture : Transformer</span>
 </div>
 
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes du parcours LLM">
+  <a class="step-item" href="text-data.qmd">1. Texte</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">3. Attention (Q, K, V)</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="logits.qmd">4. Logits</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="cross-entropy.qmd">5. Perte & Entraînement</a>
+</div>
+
 ::: {.callout-tip title="L'idée à retenir"}
 **Q et K déterminent les poids ; V fournit le contenu agrégé.** C'est la distinction essentielle à retenir avant d'étudier le calcul de l'attention.
 :::
@@ -72,11 +84,13 @@ Pour situer historiquement les mécanismes d'attention avant l'architecture Tran
 
 ## D'où viennent Q, K et V ?
 
-Dans l'auto-attention, les trois projections partent du même flux de représentations. Ici, $X$ désigne l'entrée courante du sous-module d'attention, et pas nécessairement un embedding brut du token. Dans le premier bloc, elle part des embeddings de tokens ; l'information positionnelle est fournie soit en entrée (par exemple en ajoutant des embeddings positionnels), soit à l'intérieur de l'attention (par exemple, RoPE applique des rotations aux requêtes et aux clés). Dans les blocs suivants, $X$ est un état caché déjà contextualisé. Pour une séquence de $T$ positions, on note cette matrice $X\in\mathbb{R}^{T\times d_{model}}$ :
+Dans l'auto-attention, les trois projections partent du même flux de représentations. Ici, $X$ désigne l'entrée courante du sous-module d'attention, et pas nécessairement un embedding brut du token. Dans le premier bloc, elle part des embeddings de tokens ; l'information positionnelle est fournie soit en entrée (par exemple en ajoutant des [embeddings positionnels](positional-encoding.qmd)), soit à l'intérieur de l'attention (par exemple, [RoPE](rope.qmd) applique des rotations aux requêtes et aux clés). Dans les blocs suivants, $X$ est un état caché déjà contextualisé. Pour une séquence de $T$ positions, on note cette matrice $X\in\mathbb{R}^{T\times d_{model}}$ :
 
 $$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
 $$
+
+Cette paramétrisation en trois projections distinctes suit la formulation de l’attention des Transformers présentée par [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762).
 
 Les matrices $W_Q$, $W_K$ et $W_V$ sont des paramètres appris conjointement pendant l'entraînement. Elles transforment chaque représentation d'entrée, mais remplissent des rôles distincts dans le mécanisme. Le fait de paramétrer ces projections séparément permet au modèle de représenter la compatibilité (Q et K) et le contenu à transmettre (V) dans des espaces appris distincts. Leurs paramètres restent néanmoins optimisés conjointement pendant l'entraînement : un paramétrage séparé ne signifie pas un apprentissage indépendant.
 
@@ -113,7 +127,7 @@ Ces gradients sont calculés dans le contexte du réseau complet, puis l'optimis
 ::: {.callout-note collapse="true" title="Périmètre : formulation standard et variantes"}
 Cette page présente la formulation standard avec des projections Q, K et V paramétrées séparément. C'est un modèle de référence utile, pas l'affirmation que tous les Transformers utilisent trois matrices de projection entièrement indépendantes ou le même nombre de têtes de requête et de clés/valeurs.
 
-Par exemple, **l'attention multi-query (MQA)** et **l'attention à requêtes groupées (GQA)** utilisent moins de têtes clé/valeur que de têtes de requête : chaque tête clé/valeur est partagée entre plusieurs têtes de requête afin de réduire le coût du cache KV à l'inférence. D'autres travaux récents étudient le partage des paramètres de projection, notamment entre les projections clé et valeur. Ce sont des variantes d'architecture avec des compromis empiriques ; elles ne remettent pas en cause la distinction fonctionnelle présentée ici.
+Par exemple, **l'attention multi-query (MQA)** et **l'attention à requêtes groupées (GQA)** utilisent moins de têtes clé/valeur que de têtes de requête : chaque tête clé/valeur est partagée entre plusieurs têtes de requête afin de réduire le coût du [cache KV](llm-computational-complexity.qmd) à l'inférence. D'autres travaux récents étudient le partage des paramètres de projection, notamment entre les projections clé et valeur. Ce sont des variantes d'architecture avec des compromis empiriques ; elles ne remettent pas en cause la distinction fonctionnelle présentée ici.
 
 - Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — formulation standard de l'attention dans les Transformers.
 - Ainslie et al. (2023), [*GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints*](https://arxiv.org/abs/2305.13245) — partage de têtes clé/valeur.
