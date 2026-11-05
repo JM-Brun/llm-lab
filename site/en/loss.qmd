@@ -20,6 +20,8 @@ related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:loss", "level:core", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-loss.qmd >}}
 ::: {.chapter-lead}
 *Loss* refers to a scalar objective that training seeks to minimize. It is often built from per-token cross-entropies, but its exact aggregation is part of the experiment's definition.
 :::
