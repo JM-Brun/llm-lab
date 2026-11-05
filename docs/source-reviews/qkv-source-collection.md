@@ -100,7 +100,7 @@ The DEV comparison exposed that the concept registry did not give stable identit
 These nodes formalize existing teaching; they do not imply that either tutorial introduced a new scientific mechanism. The semantic graph and pedagogical route remain distinct structures.
 
 ### Curriculum and navigation
-No new Q/K/V page, curriculum stage, prerequisite edge, navigation edge, Build step or duplicated numerical explanation is justified by these three tutorials. The project route remains broader and more explicit than either article's local sequence.
+No new Q/K/V page, curriculum stage, prerequisite edge, navigation edge, Build step or duplicated numerical explanation is justified by these four tutorials. The project route remains broader and more explicit than either article's local sequence.
 
 ## 4. Comparison dossier
 
