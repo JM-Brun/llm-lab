@@ -375,7 +375,6 @@ def build_guided_route_memberships(
     return memberships
 
 
-
 def render_guided_page_context_markdown(
     page: ResolvedPage,
     memberships: list[GuidedRouteMembership],
