@@ -327,7 +327,8 @@ def validate_registry(
                         rationale = relation.get("rationale")
                         if not isinstance(rationale, str) or not rationale.strip():
                             errors.append(
-                                f"relations[{index}].rationale: required for learning dependency {kind!r}"
+                                f"relations[{index}].rationale: required for learning "
+                                f"dependency {kind!r}"
                             )
     return errors
 
