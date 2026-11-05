@@ -11,7 +11,7 @@ Comprendre ce qu'est un LLM et observer une génération complète avant d'en é
 - [Panorama : qu’est-ce qu’un LLM ?](llm-overview.html)
 - [Générer du texte : l'inférence pas à pas](generation.html)
 
-**Approfondissements facultatifs**
+**Ressources facultatives**
 
 - [Architectures Transformer : encodeur, encodeur-décodeur et décodeur](transformer-architectures.html)
 - [Objectif d'entraînement : garanties et limites](llm-limits.html)
@@ -29,7 +29,7 @@ Distinguer texte, tokenisation, vocabulaire et identifiants de tokens dans la co
 - [Du texte aux tokens : représenter le langage](text-data.html)
 - [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.html)
 
-**Approfondissements facultatifs**
+**Ressources facultatives**
 
 - [Unicode, UTF-8 et normalisation du texte](unicode-text.html)
 - [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.html)
@@ -48,7 +48,7 @@ Suivre la consultation des embeddings, l'information positionnelle et la context
 - [Encodage positionnel : donner un ordre aux tokens](positional-encoding.html)
 - [Pourquoi un même token peut-il avoir plusieurs représentations contextualisées ?](contextualized-representations.html)
 
-**Approfondissements facultatifs**
+**Ressources facultatives**
 
 - [Tenseurs dans un Transformer : formes et axes](tensors.html)
 - [RoPE : géométrie, dérivation et limites](rope.html)
@@ -68,7 +68,7 @@ Relier Q/K/V, les poids d'attention, l'agrégation et le masquage causal sans co
 - [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.html)
 - [Masque causal](causal-masking.html)
 
-**Approfondissements facultatifs**
+**Ressources facultatives**
 
 - [Attention croisée : faire communiquer deux séquences](cross-attention.html)
 
@@ -87,7 +87,7 @@ Relier logits, distribution de probabilité, vraisemblance et sélection du proc
 - [Vraisemblance et log-vraisemblance](vraisemblance.html)
 - [Générer du texte : l'inférence pas à pas](generation.html)
 
-**Approfondissements facultatifs**
+**Ressources facultatives**
 
 - [Stratégies avancées de décodage](decoding-strategies.html)
 
@@ -106,7 +106,7 @@ Découvrir les objectifs de perte et les gradients, puis examiner les preuves, m
 - [Gradients : relier la perte aux paramètres](gradients.html)
 - [Évaluer un modèle : du score au protocole expérimental](evaluation-experimentale.html)
 
-**Approfondissements facultatifs**
+**Ressources facultatives**
 
 - [Lois d'échelle : paramètres, données et calcul](scaling-laws.html)
 

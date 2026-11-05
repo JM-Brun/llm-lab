@@ -34,7 +34,7 @@ Les intitulés de sections affichés dans les détails d'une page sont des repè
 
 ## Parcours guidé
 
-Six étapes conceptuelles donnent un point d'entrée et une progression conseillée. Les liens principaux ouvrent les pages centrales ; les approfondissements sont facultatifs. Les pages d'une même étape sont des ressources complémentaires, pas une liste de prérequis stricts.
+Six étapes conceptuelles donnent un point d'entrée et une progression conseillée. Les pages centrales couvrent les idées principales de chaque étape ; les ressources facultatives apportent du contexte ou de la profondeur et peuvent appartenir à toute destination. Les pages d'une même étape sont des ressources complémentaires, pas une liste de prérequis stricts.
 
 {{< include ../includes/generated-guided-route-fr.qmd >}}
 
