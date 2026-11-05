@@ -1,0 +1,138 @@
+schema_version: 1
+source_id: ethayarajh-contextualized-representations-2019
+scan:
+  accessed_at: "2026-11-05"
+  retrieval_method: direct-pdf
+  author_text:
+    status: partial
+    coverage: "Primary ACL Anthology PDF: abstract, contextuality metrics, anisotropy adjustment, layer-wise results and conclusions."
+    notes: ["Focused extraction of the mathematical measures and empirical findings; no model inference was rerun."]
+  figures_media:
+    status: partial
+    coverage: "Figures 2 and 4 inspected in the rendered PDF for layer-wise self-similarity and maximum explainable variance."
+    notes: ["No external figure was copied."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["Pretrained model artifacts and analysis code were not independently executed."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Primary ACL Anthology paper."
+    notes: ["Referenced model checkpoints and all cited works were not exhaustively audited."]
+  metadata:
+    status: partial
+    coverage: "EMNLP-IJCNLP 2019, pp. 55–65."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["No figure reuse permission was established; this extraction contains paraphrases only."]
+  unresolved_questions:
+    - "The findings should not be generalized to model families or architectures absent from the study."
+items:
+  - id: ethayarajh-contextualized-representations-2019:contextuality-measures
+    kind: definition
+    summary: "The paper operationalizes contextuality using self-similarity across contexts, intra-sentence similarity to the sentence mean, and maximum explainable variance (MEV) from the first principal component."
+    locator: {type: section, value: "§3, pp. 57–58; Definitions 1–3", label: "Contextuality metrics"}
+    evidence:
+      kind: formal-definitions
+      confidence: established
+      scope: "Layer-specific measures defined for contextualized word occurrences."
+      assumptions: []
+      limitations: ["These are geometric diagnostics, not direct measures of semantic correctness or task quality."]
+    technical_assessment:
+      status: correct
+      rationale: "The measures are explicitly defined and distinguish cross-context variation from within-sentence geometry and static-vector explainability."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:contextualized-representations, method:cosine-similarity, method:principal-component-analysis]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/contextualized-representations, fr/contextualized-representations, en/cosine-similarity, fr/cosine-similarity]
+      concepts: [contextualized-representation]
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The project already separates contextualization from the cosine/anisotropy caveat; this extraction preserves the paper's specific measurement framework."
+  - id: ethayarajh-contextualized-representations-2019:anisotropy-baselines
+    kind: mechanism
+    summary: "Because anisotropy can inflate cosine similarity even for unrelated representations, the paper subtracts layer- and metric-specific random baselines before interpreting contextuality scores."
+    locator: {type: section, value: "§3.4, pp. 58–59; Equation 4", label: "Anisotropy-adjusted contextuality"}
+    evidence:
+      kind: mathematical-method
+      confidence: established
+      scope: "Baseline correction for the three contextuality measures in the evaluated models."
+      assumptions: []
+      limitations: ["The random baseline is specific to the sampled representations, model layer and metric."]
+    technical_assessment:
+      status: correct
+      rationale: "The paper explicitly defines separate baselines and subtracts them from each measure."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:anisotropy, topic:cosine-similarity]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/cosine-similarity, fr/cosine-similarity]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The cosine lesson already warns that raw cosine can be misleading in anisotropic spaces."
+  - id: ethayarajh-contextualized-representations-2019:layerwise-contextuality
+    kind: result
+    summary: "After anisotropy adjustment, self-similarity generally decreases in upper layers of ELMo, BERT and GPT-2, indicating more context-specific representations in those evaluated models."
+    locator: {type: section, value: "§4.1, pp. 59–60; Figure 2", label: "Layer-wise self-similarity"}
+    evidence:
+      kind: reported-empirical-result
+      confidence: well-supported
+      scope: "The ELMo, BERT and GPT-2 checkpoints and contextuality analysis used in the 2019 paper."
+      assumptions: []
+      limitations:
+        - "This is not a universal law for every architecture, model generation or layer."
+        - "The result concerns representation geometry, not proof that a layer performs a named linguistic task."
+    technical_assessment:
+      status: qualified
+      rationale: "The trend is directly reported, but its model and evaluation scope must remain attached."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:contextualized-representations, topic:layer-analysis]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/contextualized-representations, fr/contextualized-representations]
+      concepts: [contextualized-representation]
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The project uses the paper as scoped empirical motivation and already avoids claiming identical behaviour across all models."
+  - id: ethayarajh-contextualized-representations-2019:static-explainability-bound
+    kind: result
+    summary: "The paper reports that a single static vector explains less than 5% of the variance in contextualized representations on average across the evaluated models and layers, using its anisotropy-adjusted MEV measure."
+    locator: {type: section, value: "§4.3, pp. 61–62; Figure 4; Conclusion", label: "Maximum explainable variance"}
+    evidence:
+      kind: reported-empirical-result
+      confidence: well-supported
+      scope: "Average MEV in ELMo, BERT and GPT-2 under the paper's sampling and baseline procedure."
+      assumptions: []
+      limitations:
+        - "The value is not a general quality score for static embeddings."
+        - "It is a study-specific geometric upper-bound argument, not a benchmark result for a practical replacement model."
+    technical_assessment:
+      status: qualified
+      rationale: "The paper defines MEV as a first-principal-component variance ratio and reports the model-specific aggregate result."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:contextualized-representations, method:principal-component-analysis]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/contextualized-representations, fr/contextualized-representations]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "The numeric finding is useful as optional empirical depth but should not be elevated to a universal claim or expanded into the essential path."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "The paper's main value is its explicit geometric measurement framework and anisotropy-adjusted interpretation. The project already reflects its conceptual cautions; retain the precise measures and model scope as structured evidence."
