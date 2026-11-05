@@ -32,58 +32,57 @@ Consistency means stable cognitive and navigation cues, not identical page layou
 
 These projections may link to one another, but their semantics remain distinct. In particular, **a pedagogical breadcrumb is not a concept-graph ancestry path**.
 
-## 3. Breadcrumb behavior
+## 3. Breadcrumb and nested page context
 
-### 3.1 One coherent visual cue, not stacked breadcrumbs
+### 3.1 Three distinct navigation dimensions
 
-The learner-facing treatment should remain a **single, visually recognizable pedagogical context cue**. Do not stack a site-location breadcrumb and a pedagogical breadcrumb above the same page by default: that creates competing navigation bars and repeats the reader's location.
+The page opening may expose three related but non-interchangeable cues:
 
-The Quarto sidebar already provides global site navigation. It is not necessary to reproduce its ancestry as a second page-level breadcrumb. A separate site-location breadcrumb may be considered only if a demonstrated navigation problem remains after the pedagogical cue is corrected, and only if it adds information that is not already visible in the sidebar.
+1. **Site location** — the native Quarto breadcrumb, rendered as `.quarto-title-breadcrumbs` from the active sidebar hierarchy. It answers “Where am I in the published site?”
+2. **Pedagogical context** — the generated `.guided-page-context` projection of `data/guided-route.yml`. It answers “Which learning stage does this page serve?”
+3. **Local process or representation stepper** — a page-authored `.pipeline-stepper`, when useful. It answers “What are the steps of the process or representation described here?”
 
-For a page with one explicit guided-route membership, show the route stage as a visual, linked context chip near the page opening. The page heading itself identifies the current page; do **not** repeat the page title as the final breadcrumb item immediately above the heading. The route cue should resemble the site's established visual stepper treatment (clear surface, border, active green element, responsive wrapping), without implying a fabricated multi-step sequence.
+These cues can be nested in one page header, but they must not be concatenated into one synthetic ancestry chain. A curriculum stage is not a Quarto sidebar ancestor, and a process sequence is not a curriculum.
 
-For a page with multiple memberships, retain the distinct stage contexts and their objectives in a separate, clearly labelled contextual section. Do not present multiple memberships as one breadcrumb and do not select an arbitrary primary stage.
+### 3.2 One site breadcrumb: Quarto is canonical
 
-The guided-route cue is generated from `data/guided-route.yml`. Do not create a parallel renderer or derive the cue from `hierarchy.parents`, which describes conceptual containment and may be multi-parent.
+- Keep the native Quarto `.quarto-title-breadcrumbs` as the single site-location breadcrumb.
+- Do not inject a second breadcrumb from JavaScript or reconstruct the same sidebar ancestry in a parallel component.
+- The custom `.llm-breadcrumb` implementation is retired; the language-switch script must not create site-location navigation.
+- Preserve the Quarto breadcrumb's hierarchy and current-page indication. Style it for legibility and responsive wrapping without creating a second visual trail.
+- Do not remove or rename sidebar sections to manipulate the breadcrumb; the Quarto sidebar remains the source of site hierarchy.
 
-### 3.2 Guided-route context
+### 3.3 Pedagogical context is nested, not merged
 
-For pages assigned to exactly one curriculum stage, show the localized stage context using the existing stage name and page crosswalk. This cue communicates pedagogical context; it does not claim that every earlier stage is a strict prerequisite.
+For a page with exactly one guided-route membership, show the localized stage as a compact, linked context cue directly below the title/subtitle block and before the chapter lead. It is a subordinate context for the current page, not another breadcrumb path.
 
-Example (illustrative labels only):
+For a page with multiple memberships, retain all valid stage contexts and their objectives in a clearly labelled contextual section. Do not choose an arbitrary primary stage or render the memberships as one linear path.
 
-`Learning path · From IDs to representations`
+The context is generated from `data/guided-route.yml`; reuse the existing generated partials. Do not derive it from `hierarchy.parents`, which describes conceptual containment and may be multi-parent.
 
-Use localized labels in French and English. Stable identifiers may be used internally but must never leak into visible labels.
+### 3.4 Local steppers describe content, not location
 
-### 3.3 Multiple entry points
+A `.pipeline-stepper` is optional and page-specific. Retain it only when it accurately describes a process or representation sequence. Place it after the chapter lead and the short “idea to retain” explanation, so it supports the explanation rather than competing with the title and location cues.
+
+Its accessible label must identify the process it describes (for example, “Étapes de l’entrée du modèle” or “Étapes du calcul de l’attention”). Do not label a local process stepper “learning path” / “parcours pédagogique”.
+
+### 3.5 Multiple entry points
 
 A page may be reached from multiple stages, concepts, or companion lessons.
 
-- Select one primary pedagogical context only when the curriculum explicitly establishes one.
+- Preserve all explicit guided-route memberships and their core/optional status.
 - Offer other useful entry points as contextual links in the page body or a small related-navigation area.
-- Do not fabricate a single parent merely to make the breadcrumb look tree-shaped.
-- If no defensible primary route exists, omit the pedagogical breadcrumb rather than display a misleading one.
-- A deep dive may show its destination/domain and its canonical concept owner without pretending to be a mandatory child of one lesson.
+- Do not fabricate a single parent merely to make a breadcrumb look tree-shaped.
+- If no defensible guided-route membership exists, omit the pedagogical context rather than display a misleading one.
+- A deep dive may show its destination/domain and canonical concept owner without pretending to be a mandatory child of one lesson.
 
-### 3.4 Breadcrumb semantics and accessibility
+### 3.6 Semantics, accessibility, and duplication
 
-- Use semantic navigation markup with a localized accessible label such as “Learning path” / “Parcours pédagogique”.
-- Let the page heading identify the current page; do not repeat it in the context cue immediately above the heading.
-- Keep labels short, localized, and human-readable.
+- Use the native Quarto breadcrumb for site location and a separately labelled semantic `nav` for a single guided-route context.
+- Keep labels short, localized, and human-readable; stable identifiers must never leak into visible text.
 - Ensure keyboard focus, visible focus state, sufficient contrast, and a usable narrow-screen layout.
-- Avoid truncating away the current page identity. On small screens, collapse ancestors progressively or provide an accessible compact representation.
-- Do not use color alone to communicate the current position.
-
-### 3.5 Do not duplicate navigation
-
-The breadcrumb is an orientation aid, not a replacement for:
-- the global site navigation;
-- the page's meaningful previous/next route;
-- contextual links at the point where a concept is discussed;
-- the exploratory graph.
-
-Avoid rendering two visually competing breadcrumbs or repeating the same route in multiple adjacent blocks.
+- Do not use color alone to communicate current position.
+- A page may show one site breadcrumb, one pedagogical context, and one local process stepper when all three add distinct information. Never render duplicate instances of the same dimension.
 
 ## 4. Shared page contract and archetype-specific composition
 
@@ -113,14 +112,18 @@ The existing page metadata `type` and archetype/template guides remain authorita
 
 ## 5. Placement within a page
 
-For a substantive lesson, the preferred opening order is:
+For a substantive concept lesson, the preferred opening order is:
 
-1. pedagogical breadcrumb, when a reliable guided context exists;
-2. page title and specific learner question;
-3. concise orientation paragraph establishing the central idea and scope;
-4. learning outcomes, using the established collapsible convention when useful;
-5. essential prerequisites and useful background, only when they materially help;
-6. main explanation.
+1. native Quarto site breadcrumb;
+2. page title and subtitle;
+3. pedagogical stage context, when the page has a reliable guided-route membership;
+4. compact epistemic or status metadata, when useful;
+5. concise chapter lead establishing the central idea and scope;
+6. a short “idea to retain” or first-pass explanation, when it adds information rather than repeating the lead;
+7. a local process/representation stepper, only when it materially helps and only after the initial explanation;
+8. main explanation.
+
+Quarto renders the site breadcrumb in the title block; the generated pedagogical context belongs immediately after that title block. These are separate dimensions in one coherent header, not two breadcrumb trails. The local stepper belongs to the content flow, not to the breadcrumb hierarchy.
 
 This is a default, not a rigid template. Landing pages, references, experiments, and build walkthroughs should use their archetype-specific opening. Do not repeat the chapter lead in a second introductory callout.
 
