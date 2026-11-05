@@ -135,18 +135,18 @@ items:
       distinctive_value: "Uses a spatial alignment image rather than a database or index-card analogy."
       limitations: ["The score function is unspecified; do not infer cosine similarity or hard nearest-neighbour selection."]
     pedagogical_assessment:
-      novelty: {level: low, rationale: "Geometric matching imagery is common in introductory attention explanations."}
+      novelty: {level: low, rationale: "The dot-product mechanism itself is already canonical; the source contributes a distinct spatial explanatory lens rather than a new computation."}
       complementarity: {level: moderate, rationale: "It adds a spatial/vector framing alongside the project's index-card analogy, but its explanatory contribution is limited without a formula."}
       pedagogical_value: {level: moderate, rationale: "Could help learners picture Q and K as numerical vectors rather than literal text questions and labels."}
-      applicability: {level: low, rationale: "The current QKV lesson already uses a simpler analogy and the next page provides the precise computation; an extra image would increase clutter."}
+      applicability: {level: high, rationale: "A collapsible bilingual note can connect vector geometry to the dot-product formula while preserving the core index-card explanation and avoiding extra page clutter."}
       redundancy: {level: moderate, rationale: "Overlaps with the matching role but uses a different visual metaphor."}
       evidence_quality: {level: moderate, rationale: "Appropriate as a qualitative analogy, not as a technical account of the score function."}
     classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, method:vector-similarity], concept_ids: [query, key, attention-score, attention-weight]}
     candidate_destinations:
       pages: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
       concepts: [query, key, attention-score, attention-weight]
-    disposition: defer
-    disposition_rationale: "Preserve as an alternative mental model. Do not publish unless a future visual or exercise can explicitly connect geometric intuition to dot-product scores, scaling, softmax and weighted value aggregation without implying cosine similarity or hard retrieval."
+    disposition: integrate
+    disposition_rationale: "Integrated as an optional collapsible geometric perspective on both Q/K/V pages. The project-authored explanation explicitly bridges qᵀk to vector norms and angle, then to scaling, softmax and weighted V; it warns that dot product is not generally cosine similarity and does not imply hard nearest-neighbour selection. The original Codefinity visual was not copied because it was not inspected and reuse rights are unknown."
 
   - id: codefinity-qkv-building-blocks:bank-polysemy-example
     kind: mental-model
@@ -166,18 +166,18 @@ items:
       distinctive_value: "Shows lexical ambiguity using a short riverside sentence."
       limitations: ["No model-specific attention scores or observed word-sense disambiguation are provided."]
     pedagogical_assessment:
-      novelty: {level: low, rationale: "The same bank/river lexical ambiguity is already used in the canonical contextualized-representations lesson and is documented in the existing Neha KK source review."}
-      complementarity: {level: low, rationale: "It repeats the same example and learner question; its QKV narration is shorter but adds no distinct perspective beyond the existing source synthesis."}
-      pedagogical_value: {level: low, rationale: "The canonical lesson already introduces lexical ambiguity and the QKV lesson uses a separate pronoun example for cross-position information flow."}
-      applicability: {level: moderate, rationale: "It is useful evidence that the example is recurring across teaching sources, but not a reason to repeat it in the QKV lesson."}
-      redundancy: {level: high, rationale: "The example and intended lexical-disambiguation function already exist in the project."}
+      novelty: {level: low, rationale: "Lexical polysemy is already covered in contextualized-representations; the contribution is not a new scientific concept."}
+      complementarity: {level: high, rationale: "It addresses a different phenomenon from the pronoun-coreference example on the Q/K/V page: lexical polysemy (one word, competing senses) rather than reference resolution (one expression, competing antecedents). This contrast broadens transfer across two context-dependent language tasks."}
+      pedagogical_value: {level: high, rationale: "A short contrast table helps learners see that the same general contextual-information mechanism can be discussed for distinct linguistic phenomena, without implying one attention head solves either task."}
+      applicability: {level: high, rationale: "Integrated by reference in a collapsible bilingual comparison with the existing coreference example, and linked to contextualized-representations for the fuller treatment."}
+      redundancy: {level: moderate, rationale: "The phenomenon exists elsewhere in the project, but the juxtaposition with coreference on the Q/K/V page adds a new cross-example teaching function."}
       evidence_quality: {level: moderate, rationale: "A clear intuitive example, but no model-specific or empirical evidence."}
     classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:contextualization], concept_ids: [query, key, value, contextualized-representation]}
     candidate_destinations:
       pages: [fr/contextualized-representations, en/contextualized-representations]
       concepts: [query, key, value, contextualized-representation]
-    disposition: already-covered
-    disposition_rationale: "The project already uses bank ambiguity in the contextualized-representations lesson. Do not add a duplicate example to the QKV page or adjacent pages."
+    disposition: integrate-by-reference
+    disposition_rationale: "Do not duplicate the full bank example from contextualized-representations. Instead, use a concise contrast with the Q/K/V page’s pronoun-coreference example to distinguish lexical polysemy from coreference and show two different context-dependent language phenomena. Attribute Codefinity and link to the canonical contextualized-representations lesson."
 
   - id: codefinity-qkv-building-blocks:quiz-check
     kind: question
@@ -237,4 +237,4 @@ canonical_mapping:
   proposed_concepts: []
   proposed_relations: []
   route_implications: []
-  decision_summary: "No canonical concepts or relations are missing. The source reinforces existing QKV role definitions, repeats the already-integrated bank ambiguity example, offers a geometric analogy worth retaining but not publishing without qualification, and provides one quiz distractor pattern. No page, graph, route, implementation, experiment or asset change is justified."
+  decision_summary: "No canonical concepts or relations are missing. The source contributes a distinct geometric lens for Q/K and a lexical-polysemy example that complements the existing pronoun-coreference example. Both are integrated as optional, bounded perspectives in the bilingual Q/K/V lesson; the full bank treatment remains on contextualized-representations. The role definitions remain already covered, the quiz remains an assessment-design reference, and no graph or route change is justified."
