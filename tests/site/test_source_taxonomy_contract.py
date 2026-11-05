@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT / "site" / "tools"))
 
 from check_source_catalogue import (  # noqa: E402
     _validate_item_controlled_values,
+    _validate_pedagogical_assessment,
     validate_source_catalogue,
 )
 
@@ -85,3 +86,32 @@ def test_item_controlled_values_reject_unknown_values() -> None:
 
 def test_existing_source_catalogue_and_extractions_match_taxonomy() -> None:
     assert validate_source_catalogue(ROOT) == []
+
+
+def test_pedagogical_assessment_uses_separate_qualitative_levels() -> None:
+    taxonomy = _taxonomy()
+    errors: list[str] = []
+
+    _validate_pedagogical_assessment(
+        {
+            "novelty": {"level": "moderate", "rationale": "Distinct example."},
+            "complementarity": {"level": "high", "rationale": "New learner lens."},
+        },
+        "assessment",
+        set(taxonomy["assessment_levels"]),
+        errors,
+    )
+    assert errors == []
+
+
+def test_pedagogical_assessment_rejects_evidence_confidence_as_rating() -> None:
+    taxonomy = _taxonomy()
+    errors: list[str] = []
+
+    _validate_pedagogical_assessment(
+        {"novelty": {"level": "well-supported", "rationale": "Not a rating scale."}},
+        "assessment",
+        set(taxonomy["assessment_levels"]),
+        errors,
+    )
+    assert any("assessment.novelty.level: unsupported value 'well-supported'" in error for error in errors)
