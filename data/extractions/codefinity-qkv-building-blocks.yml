@@ -8,6 +8,33 @@ pedagogical_model:
       - "Direct page retrieval on 2026-11-05 exposed the lesson title, introduction, definition, bank/river example, explanatory recap and one multiple-choice question."
       - "The page explicitly identifies itself as Section 1, Chapter 2 of Neural Network Attention Mechanisms."
       - "The page requires JavaScript; the reconstruction covers the text exposed by the page reader, not the full interactive lesson runtime."
+    course_context:
+      source: "https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608"
+      retrieval: direct-course-overview
+      declared_level: advanced
+      structure:
+        module_count: 3
+        chapter_count: 10
+        assignment_count: 10
+        modules:
+          - title: "Foundations of Attention"
+            chapters:
+              - "The Need for Attention: Selective Focus in Neural Networks"
+              - "Queries, Keys, and Values: The Building Blocks"
+              - "Scoring Relevance: Similarity Functions in Attention"
+          - title: "Self-Attention and Multi-Head Attention"
+            chapters:
+              - "Self-Attention: Contextual Representations from Within"
+              - "Scaling and Softmax: Making Attention Work"
+              - "Multi-Head Attention: Multiple Perspectives"
+              - "Masking in Attention: Causal and Padding Masks"
+          - title: "Attention Inside Transformers"
+            chapters:
+              - "Attention in Transformer Blocks: Encoder and Decoder"
+              - "Self-Attention vs Cross-Attention: Conceptual Differences"
+              - "Long-Range Reasoning and Interpretability in Attention"
+      scope_limit: "Only the published course outline was inspected; the other lesson bodies and assignments were not scanned."
+      comparison_note: "The course places Q/K/V between attention motivation and similarity scoring. This is compatible with the LLM Lab split between the Q/K/V role/projection lesson and the following scaled-dot-product-attention lesson; the broader course order does not warrant a route change."
     inferred_elements:
       - "Learning outcomes and prerequisites are inferred; no formal outcome or prerequisite list is exposed."
       - "The example's implied computation path is reconstructed from the accompanying prose, not from observed model activations."
