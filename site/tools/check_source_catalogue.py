@@ -69,13 +69,24 @@ def _validate_pedagogical_assessment(
     assessment_levels: set[str],
     errors: list[str],
 ) -> None:
-    """Validate qualitative pedagogical ratings independently from evidence confidence."""
+    """Validate qualitative ratings, leaving descriptive pedagogical-profile fields alone."""
     if assessment is None:
         return
     if not isinstance(assessment, dict):
         errors.append(f"{where}: expected a mapping")
         return
-    for dimension, rating in assessment.items():
+    dimensions = (
+        "novelty",
+        "complementarity",
+        "pedagogical_value",
+        "applicability",
+        "redundancy",
+        "evidence_quality",
+    )
+    for dimension in dimensions:
+        if dimension not in assessment:
+            continue
+        rating = assessment[dimension]
         rating_where = f"{where}.{dimension}"
         if not isinstance(rating, dict):
             errors.append(f"{rating_where}: expected a mapping with level and rationale")
