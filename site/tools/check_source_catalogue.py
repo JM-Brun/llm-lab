@@ -21,14 +21,6 @@ ID_PATTERN = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 TAG_PATTERN = re.compile(
     r"(?:topic|method|modality|application|ecosystem):[a-z0-9]+(?:-[a-z0-9]+)*"
 )
-CONFIDENCE_LEVELS = {
-    "established",
-    "well-supported",
-    "context-dependent",
-    "disputed",
-    "speculative",
-    "unverified",
-}
 COMMUNITY_VOICES = {
     "primary-author",
     "reader-comment",
@@ -69,6 +61,61 @@ def _strings(value: Any, where: str, errors: list[str]) -> list[str]:
         errors.append(f"{where}: expected a list of strings")
         return []
     return value
+
+
+def _validate_pedagogical_assessment(
+    assessment: Any,
+    where: str,
+    assessment_levels: set[str],
+    errors: list[str],
+) -> None:
+    """Validate qualitative ratings, leaving descriptive pedagogical-profile fields alone."""
+    if assessment is None:
+        return
+    if not isinstance(assessment, dict):
+        errors.append(f"{where}: expected a mapping")
+        return
+    dimensions = (
+        "novelty",
+        "complementarity",
+        "pedagogical_value",
+        "applicability",
+        "redundancy",
+        "evidence_quality",
+    )
+    for dimension in dimensions:
+        if dimension not in assessment:
+            continue
+        rating = assessment[dimension]
+        rating_where = f"{where}.{dimension}"
+        if not isinstance(rating, dict):
+            errors.append(f"{rating_where}: expected a mapping with level and rationale")
+            continue
+        if rating.get("level") not in assessment_levels:
+            errors.append(f"{rating_where}.level: unsupported value {rating.get('level')!r}")
+        if not isinstance(rating.get("rationale"), str) or not rating["rationale"].strip():
+            errors.append(f"{rating_where}.rationale: expected non-empty text")
+
+
+def _validate_item_controlled_values(
+    item: dict[str, Any],
+    where: str,
+    evidence_confidence_levels: set[str],
+    item_dispositions: set[str],
+    errors: list[str],
+) -> None:
+    """Validate controlled evidence-confidence and item-disposition values."""
+    evidence = item.get("evidence")
+    if not isinstance(evidence, dict):
+        errors.append(f"{where}.evidence: expected a mapping")
+    elif evidence.get("confidence") not in evidence_confidence_levels:
+        errors.append(
+            f"{where}.evidence.confidence: unsupported value {evidence.get('confidence')!r}"
+        )
+
+    disposition = item.get("disposition")
+    if disposition is not None and disposition not in item_dispositions:
+        errors.append(f"{where}.disposition: unsupported value {disposition!r}")
 
 
 def _validate_tags(value: Any, where: str, errors: list[str]) -> None:
@@ -255,6 +302,9 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
     scan_statuses = set(taxonomy.get("scan_statuses", []))
     integration_statuses = set(taxonomy.get("integration_statuses", []))
     extraction_kinds = set(taxonomy.get("extraction_kinds", []))
+    evidence_confidence_levels = set(taxonomy.get("evidence_confidence_levels", []))
+    assessment_levels = set(taxonomy.get("assessment_levels", []))
+    item_dispositions = set(taxonomy.get("item_dispositions", []))
     domain_ids = {
         item.get("id")
         for item in domains.get("domains", [])
@@ -409,11 +459,19 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
             locator = item.get("locator")
             if not isinstance(locator, dict) or not locator.get("type") or not locator.get("value"):
                 errors.append(f"{item_where}.locator: expected type and value")
-            evidence = item.get("evidence")
-            if not isinstance(evidence, dict):
-                errors.append(f"{item_where}.evidence: expected a mapping")
-            elif evidence.get("confidence") not in CONFIDENCE_LEVELS:
-                errors.append(f"{item_where}.evidence.confidence: unsupported value")
+            _validate_item_controlled_values(
+                item,
+                item_where,
+                evidence_confidence_levels,
+                item_dispositions,
+                errors,
+            )
+            _validate_pedagogical_assessment(
+                item.get("pedagogical_assessment"),
+                f"{item_where}.pedagogical_assessment",
+                assessment_levels,
+                errors,
+            )
 
             classification = item.get("classification", {})
             if classification is not None and not isinstance(classification, dict):

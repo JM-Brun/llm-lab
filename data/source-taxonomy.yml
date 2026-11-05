@@ -33,7 +33,9 @@ contribution_types:
 audiences: [beginner, learner, practitioner, researcher, educator, maintainer]
 scan_statuses: [discovered, selected, scanned, partially-scanned, inaccessible, superseded, rejected]
 integration_statuses: [not-reviewed, reviewed, partially-integrated, integrated, deferred, rejected]
+item_dispositions: [integrate, correct, clarify, link, cite, case-study, experiment, integrate-by-reference, already-covered, defer, reject]
 assessment_levels: [low, moderate, high, uncertain]
+evidence_confidence_levels: [established, well-supported, context-dependent, disputed, speculative, unverified]
 extraction_kinds:
   - claim
   - definition

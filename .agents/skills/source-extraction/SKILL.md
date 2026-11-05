@@ -36,7 +36,7 @@ Record a stable language-independent ID and, where known:
 - publication date, update date, access date, language;
 - version, release, commit or archived edition;
 - licence and separate text/figure/code/data reuse status (unknown is valid);
-- scan status: `discovered`, `selected`, `scanned`, `partially-scanned`, `inaccessible`, `superseded`, `rejected` (or established equivalent);
+- scan status: use only `scan_statuses` from `data/source-taxonomy.yml`;
 - exact scope inspected: pages, sections, PDF pages, figures, appendices, code paths, commits, notebooks, supplementary files;
 - access limitations, quality/evidence assessment, primary/secondary status and last verification;
 - links to audit notes, PRs, issues and related existing concept/page/resource IDs.
@@ -69,7 +69,7 @@ Give every item a stable ID within its source and make it independently routable
 Each item records, as applicable:
 - concise original synthesis (not copied prose);
 - precise locator: section, page, timestamp, equation, figure/table, code path plus commit, notebook cell or dataset ID;
-- evidence kind, confidence (`established`, `well-supported`, `context-dependent`, `disputed`, `speculative`, `unverified`), scope and assumptions;
+- evidence kind and confidence: use only the evidence-confidence vocabulary documented in `docs/source-catalogue-schema.md` and enforced by `site/tools/check_source_catalogue.py`; keep this distinct from pedagogical assessment levels;
 - limitations, caveats, counterevidence and what the source does not establish;
 - learner difficulty addressed and potential pedagogical value;
 - candidate concepts/pages/resources/experiments and proposed destination (proposal only);
@@ -93,7 +93,7 @@ For each potentially useful item, assess these dimensions independently (qualita
 | redundancy | How much does it repeat existing content or an existing explanation, rather than merely sharing its topic? |
 | evidence_quality | How reliable, precise and inspectable is the source for this particular contribution? |
 
-Use low, moderate, high or uncertain for each level and add a concise rationale. Uncertain is preferable to guessing. For factual claims, evidence quality concerns correctness/support; for analogies and examples, assess whether they are clearly presented and appropriately bounded.
+Use `low`, `moderate`, `high` or `uncertain` for each pedagogical-assessment level and add a concise rationale. For later Phase B decisions, use only `item_dispositions` in `data/source-taxonomy.yml`; Phase A should not invent local disposition labels. Uncertain is preferable to guessing. For factual claims, evidence quality concerns correctness/support; for analogies and examples, assess whether they are clearly presented and appropriately bounded.
 
 When comparing with LLM Lab, identify the exact existing page/section and compare the explanatory function: learner question, mental model, example, sequence, level, caveats and likely misconceptions. A new analogy on an already-covered topic is not automatically redundant; nor is it automatically valuable. Record what it illuminates that the existing explanation does not, and where it may mislead.
 
