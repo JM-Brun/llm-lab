@@ -92,9 +92,7 @@ def _validate_pedagogical_assessment(
             errors.append(f"{rating_where}: expected a mapping with level and rationale")
             continue
         if rating.get("level") not in assessment_levels:
-            errors.append(
-                f"{rating_where}.level: unsupported value {rating.get('level')!r}"
-            )
+            errors.append(f"{rating_where}.level: unsupported value {rating.get('level')!r}")
         if not isinstance(rating.get("rationale"), str) or not rating["rationale"].strip():
             errors.append(f"{rating_where}.rationale: expected non-empty text")
 
