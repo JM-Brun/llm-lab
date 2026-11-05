@@ -1,9 +1,9 @@
 # Concept relation edge review
 
 **Date:** 2026-11-05  
-**Status:** first semantic review; rendered graph and learner validation remain open  
+**Status:** semantic registry review complete; source-level interaction review recorded; browser/accessibility and learner validation remain open  
 **Canonical data:** [`data/concepts.yml`](../data/concepts.yml)  
-**Tracking:** [LLM Lab #416](https://github.com/JM-Brun/llm-lab/issues/416), [validator PR #518](https://github.com/JM-Brun/llm-lab/pull/518)
+**Tracking:** [LLM Lab #416](https://github.com/JM-Brun/llm-lab/issues/416), [merged validator PR #520](https://github.com/JM-Brun/llm-lab/pull/520)
 
 ## Scope and method
 
@@ -91,3 +91,42 @@ The generated bilingual learning-map payload now preserves the relation type con
 The interactive learning-map JSON now preserves the relation metadata. The separate JSON-LD export in `site/tools/export_knowledge_graph.py` currently emits typed predicates for relation edges but does not export relation-type nodes with their family, direction, transitivity, acyclicity, learning-dependency and inverse metadata. This is a selective export, not a full serialization of the relation contract.
 
 A follow-up should decide whether external consumers need a published relation vocabulary (for example, relation-type nodes with bilingual SKOS labels/definitions and project-specific semantic properties). The exporter and validator also maintain hard-coded relation-type allowlists; assess whether those should be derived from the canonical `relation_types` mapping to reduce drift. Do not expand JSON-LD or add another vocabulary unless an interoperability consumer requires it.
+
+## Source-level interaction and accessibility review — 2026-11-05
+
+This is a review of the current source implementation, not a claim that the rendered pages have been visually or assistively tested in a browser.
+
+### Confirmed in source
+
+- The concept view is grouped by canonical discovery domain and uses a responsive CSS grid with a 240px minimum card width, rather than the earlier fixed three-column ordering.
+- The relation legend is shown persistently while the concept view is active. It exposes the source → target convention, localized relation labels, and localized descriptions.
+- Concepts are native buttons. Selection is represented with aria-pressed; selecting a concept highlights its neighbours and updates the details panel.
+- The details panel lists each relation with source, relation label, target, and a button to inspect the connected concept.
+- Mode, relation filter, and search controls have associated labels. The details panel uses a polite live region; the page also exposes a status region.
+- Escape clears a query, selected concept, or active relation filter in sequence; the reset control clears all map state.
+- CSS includes visible focus styles for concept buttons, relation links, map controls, and reduced-motion handling in the broader site styles.
+
+### Important semantic clarification
+
+The current canonical-concept view is a **domain-grouped concept browser**, not a node-link diagram: it does not draw connectors between concept nodes. Relationships are communicated through the persistent legend, neighbour highlighting, and the selected concept's textual relation list. Documentation and issue descriptions should not imply that visible edge geometry or graph layout has been validated.
+
+### Multi-domain concept presentation
+
+A concept assigned to multiple discovery domains is rendered once in each domain group. For example, contextualized representation belongs to both architectures/mechanisms and mathematical tools/geometry. The concept count reports unique concepts, while the grid can contain more buttons than unique concepts. Selecting one canonical concept marks each rendered copy of that same concept as pressed.
+
+This preserves all domain memberships but can create repeated cards. It is not automatically incorrect: domain membership is many-to-many. A follow-up should decide whether to retain repeated cards for cross-domain discovery or deduplicate the concept into one card with all domain labels. Do not assign a single primary domain without an explicit canonical rule. The browser test records both total buttons and unique concept IDs.
+
+### First browser run baseline — 2026-11-05
+
+The first browser run on the earlier review branch completed the Q/K/V and overview/generation route-context cases in FR/EN, desktop/mobile and light/dark modes. Those cases had no horizontal overflow; guided-stage anchors resolved; single and multi-membership semantics matched the contract; keyboard traversal found visible focus targets.
+
+The eight concept-map cases stopped at an over-strict test assertion: a concept with two domain memberships rendered two buttons with the same canonical ID, while the details panel updated correctly. The test now validates the selected canonical-ID set instead of requiring exactly one DOM button.
+
+Axe also reported two baseline issue types on the completed page cases:
+- critical aria-allowed-attr: Quarto collapsible-callout header divs expose aria-expanded without a role that supports it;
+- serious color-contrast: muted text #6c757d on #f8fafc measured 4.48:1; Mermaid green edge labels #16a34a on #ebecec measured 2.78:1.
+
+These findings require review on the current main-based rerun. They are not evidence that the new concept browser itself causes the issues. Inspect Axe output and screenshots separately; do not claim WCAG conformance from source review or Quarto success.
+
+
+The current-main rerun is implemented in [PR #531](https://github.com/JM-Brun/llm-lab/pull/531). It covers the concept browser plus all four guided-route context pilots (overview, generation, embeddings and Q/K/V), and explicitly verifies that the obsolete pipeline stepper is absent from the latter two lessons. The rerun also captures Axe target HTML snippets to distinguish Quarto-generated markup from project-owned components.
