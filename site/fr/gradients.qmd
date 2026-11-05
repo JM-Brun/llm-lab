@@ -20,6 +20,8 @@ related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:gradients", "level:core", "language:fr", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-fr-gradients.qmd >}}
 ::: {.chapter-lead}
 Le gradient $\nabla_\theta\mathcal{L}$ rassemble les dérivées partielles de l'objectif par rapport aux paramètres appris. Il indique comment la perte varie localement quand les paramètres changent ; il ne garantit pas, à lui seul, une amélioration globale.
 :::
