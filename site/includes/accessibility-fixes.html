@@ -1,0 +1,42 @@
+<script>
+(() => {
+  const selector = ".callout-header[data-bs-toggle='collapse']";
+
+  const enhanceCalloutButtons = () => {
+    document.querySelectorAll(selector).forEach((header) => {
+      if (header.dataset.accessibilityEnhanced === "true") return;
+      header.dataset.accessibilityEnhanced = "true";
+      header.setAttribute("role", "button");
+      header.setAttribute("tabindex", "0");
+
+      const title = header.querySelector(".callout-title-container");
+      const accessibleName = title?.textContent?.trim().replace(/\\s+/g, " ");
+      if (accessibleName) {
+        header.setAttribute("aria-label", accessibleName);
+      }
+
+      header.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !event.repeat) {
+          event.preventDefault();
+          header.click();
+        } else if (event.key === " ") {
+          event.preventDefault();
+        }
+      });
+
+      header.addEventListener("keyup", (event) => {
+        if (event.key === " ") {
+          event.preventDefault();
+          header.click();
+        }
+      });
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", enhanceCalloutButtons, { once: true });
+  } else {
+    enhanceCalloutButtons();
+  }
+})();
+</script>
