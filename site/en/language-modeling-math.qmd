@@ -1,6 +1,4 @@
 ---
-**Canonical lesson:** [LLM overview](llm-overview.qmd). This page deepens its probabilistic formalization; it complements the learning route without being a prerequisite.
-
 title: "The mathematics of language modeling"
 subtitle: "The chain rule, autoregressive factorization, and soft targets"
 keywords: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:en", "status:published"]
@@ -143,6 +141,8 @@ The [Cross-entropy](cross-entropy.qmd) lesson remains the canonical home for per
 - [Cross-entropy](cross-entropy.qmd): per-token loss and training conventions.
 - [The mathematical chain of LLM training](mathematical-foundations.qmd): a compact map from logits to gradients.
 - Bishop, *Pattern Recognition and Machine Learning*, Chapters 1–2, for probabilistic foundations.
+
+**Canonical lesson:** [LLM overview](llm-overview.qmd). This page deepens its probabilistic formalization; it complements the learning route without being a prerequisite.
 
 ::: {.language-switch}
 **Language:** [Français](../fr/language-modeling-math.qmd) · [English](language-modeling-math.qmd)
