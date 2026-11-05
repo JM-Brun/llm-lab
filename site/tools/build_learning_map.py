@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import json
 import re
+from html import escape
 import sys
 import unicodedata
 from collections import deque
@@ -404,9 +405,9 @@ def render_guided_page_context_markdown(
             "  <ol>",
             (
                 '    <li><a href="learning-map.html#guided-stage-'
-                f'{membership.stage_id}">{escape_markdown_text(membership.stage_title)}</a></li>'
+                f'{membership.stage_id}">{escape(membership.stage_title)}</a></li>'
             ),
-            f'    <li aria-current="page">{escape_markdown_text(page.title)}</li>',
+            f'    <li aria-current="page">{escape(page.title)}</li>',
             "  </ol>",
         ]
         if membership.role == "optional":
@@ -423,7 +424,7 @@ def render_guided_page_context_markdown(
         '<section class="guided-page-context guided-page-context--multiple"',
         '         aria-labelledby="guided-page-context-heading">',
         f'  <p id="guided-page-context-heading">{heading} : '
-        f'<strong>{escape_markdown_text(page.title)}</strong>.</p>',
+        f'<strong>{escape(page.title)}</strong>.</p>',
         "  <ul>",
     ]
     for membership in memberships:
@@ -437,10 +438,10 @@ def render_guided_page_context_markdown(
                 "    <li>",
                 (
                     '      <a href="learning-map.html#guided-stage-'
-                    f'{membership.stage_id}">{escape_markdown_text(membership.stage_title)}</a>'
+                    f'{membership.stage_id}">{escape(membership.stage_title)}</a>'
                 ),
                 f'      <span class="guided-page-context__role">{role_label}</span>',
-                f'      <p>{escape_markdown_text(membership.stage_objective)}</p>',
+                f'      <p>{escape(membership.stage_objective)}</p>',
                 "    </li>",
             ]
         )
