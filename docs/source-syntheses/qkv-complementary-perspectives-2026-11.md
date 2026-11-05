@@ -101,7 +101,7 @@ The shared teaching idea is contextual dependence, not a shared linguistic task.
 
 The three tutorials' agreement on Q/K matching and V aggregation should not be counted as three independent proofs. The project should ground technical correctness in the Transformer formulation and its own equations/tests. The tutorials are valuable because they make different aspects salient: design motivation, visual role mapping, vector geometry, contextual examples and likely misconceptions.
 
-## 6. Convergence, differences and evidence
+### 5.5 Evidence and scope boundaries
 
 - The sources converge on the high-level functional split between Q/K matching and V aggregation. This is pedagogical convergence, not independent empirical confirmation.
 - The sources differ in explanatory lens: index-card analogy, vector geometry, pronoun coreference and lexical polysemy.
