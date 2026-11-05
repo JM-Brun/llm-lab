@@ -1,6 +1,6 @@
 # Source-to-knowledge workflow: validation protocol
 
-**Status:** reusable validation protocol · **Version:** 0.3 · **Calibration:** Q/K/V; transfer assessment: tokenization/embeddings
+**Status:** reusable validation protocol · **Version:** 0.4 · **Calibration:** Q/K/V and tokenization/embeddings; incremental-source pilot: Brenndoerfer Q/K/V
 
 ## 1. Purpose and claim boundary
 
@@ -88,6 +88,8 @@ A tutorial can be a strong pedagogical source and weak evidence for a technical 
 Pass when identity, version/revision where applicable, retrieval route and inspected scope are recorded. Uninspected media, comments, code or appendices remain explicit gaps.
 
 **Fail / partial:** keep the source partial, narrow claims extracted, use a verified mirror/API where appropriate, or defer the affected component. Never infer absent material.
+
+For instructional and mixed-media sources, keep text reconstruction separate from whole-source inspection. Report component states independently (author text, figures/media, code/data, comments, linked resources, metadata and rights), using descriptive states such as complete, partial, not inspected or not applicable. A complete text reconstruction can coexist with a partially scanned source. Preserve the retrieval channel and evidence for each component; do not add a second registry or infer completeness from the extraction-item count.
 
 ### Gate B — extraction is faithful and reusable
 
@@ -227,6 +229,7 @@ Reuse these checks when a source is added or the synthesis changes.
 | A11 | New contribution would add a duplicate paragraph | Prefer link/reference or no-op with rationale | Page length/source count optimized over learning |
 | A12 | Page changes in English only | Block publication or record explicit translation follow-up | Bilingual parity assumed from one page's build |
 | A13 | YAML item counts include nested source-local graph-node IDs | Count only schema-level extraction items; report pedagogical graph nodes separately | Recursive ID count is reported as atomic extraction-item count |
+| A14 | A source is processed with substantial manual effort but no phase record | Record active human time, automation, review interventions, retries and blocked work by phase; separate CI waiting time | Scalability is claimed from file counts, tool-call counts or retrospective guesswork |
 
 For each check, record pass/fail/not-applicable, evidence pointer and reviewer/date. A checklist pass is not a substitute for technical judgement.
 
@@ -262,7 +265,8 @@ For each pilot or concept collection, report:
 5. **Integration:** before/after page, graph, route, asset, experiment and reference changes.
 6. **Quality gates:** automated, technical, editorial, bilingual, rendered/accessibility and learner checks—each with status and evidence.
 7. **Method defects:** extraction omissions, taxonomy/schema drift, template ambiguity, skill failure or non-scalable manual work.
-8. **Next iteration:** actionable gaps with owner/trigger; avoid duplicating existing issues.
+8. **Operational effort:** phase-level active human time, automation/tool time where measurable, review interventions, retries/blocked events, and the method used to capture them. Mark retrospective estimates explicitly; do not mix CI queue/wait time with active work.
+9. **Next iteration:** actionable gaps with owner/trigger; avoid duplicating existing issues.
 
 ## 12. Revision policy
 
@@ -273,6 +277,6 @@ Treat this protocol as versioned project method. Change it only when a pilot rev
 - avoid new controlled vocabulary when a descriptive label or existing field is sufficient;
 - validate the protocol on a second concept collection before claiming general transfer.
 
-Q/K/V is the first calibration case. A retrospective transfer assessment has now been completed for the broader [tokenization/embeddings collection](../source-syntheses/tokenization-embeddings-method-transfer-validation-2026-11.md). It demonstrates transfer at the documentation and synthesis level, but does not establish full automation, learner efficacy or universal scalability. The report records remaining gates: final-head validators, instructional-source route triage, metadata recovery, rendered/accessibility review, rights checks and independent learner observations.
+Q/K/V and tokenization/embeddings now provide two domain-level calibration cases. The Brenndoerfer incremental-source pilot (PR #501) tests adding one more tutorial to an already-covered subdomain. It found two extraction defects through CI (source-graph boundary placement and a non-canonical concept reference), both corrected on the pilot branch. The Quarto site build passed on the initial PR head; the catalogue validator must be rerun on the corrected head before the PR is merge-ready. This is evidence that automated validation catches structural defects, not evidence of fully automated or universally scalable extraction.
 
-The next scalability test should be a small, deliberately selected new source added to an already-covered subdomain, processed end-to-end with the current skills and templates. Measure traceability, review effort, regressions and learner-facing value before attempting another large migration.
+The next method iteration should compare measured phase-level effort across at least two further source additions, including one source with substantial visual or interactive content. Keep the learner-efficacy work separate and governed by #447/#483.

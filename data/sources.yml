@@ -2015,48 +2015,51 @@ sources:
         - docs/source-reviews/qkv-codefinity-course-2026-11.md
         - docs/source-reviews/qkv-source-collection.md
 
-  - id: varis-stephen-libovicky-tokcollate-2026
-    title: "TokCollate: A Comprehensive Tool for Tokenizer Evaluation and Visualization across Languages"
-    creators: ["Dušan Variš", "Abishek Stephen", "Jindřich Libovický"]
-    source_type: paper
-    identifiers:
-      doi: "10.18653/v1/2026.acl-demo.41"
-      anthology_id: "2026.acl-demo.41"
-    canonical_url: "https://aclanthology.org/2026.acl-demo.41/"
-    publisher: "Association for Computational Linguistics"
-    publication_date: "2026-07"
-    updated_date: null
+  - id: mbrenndoerfer-qkv-attention-mechanism
+    title: "Query, Key, Value: The Foundation of Transformer Attention"
+    creators: ["Michael Brenndoerfer"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism"
+    publisher: "Michael Brenndoerfer / Language AI Handbook"
+    publication_date: "2025-06-01"
+    updated_date: "2025-06-04"
     language: en
-    version: "ACL 2026 System Demonstrations proceedings version, pp. 418–427"
+    version: null
     revision: null
-    licence: {identifier: "CC-BY-4.0", url: "https://creativecommons.org/licenses/by/4.0/", status: verified}
-    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: link-only, data: unknown}
     classification:
-      primary_theme: text-tokenization
-      secondary_themes: []
-      tags: [topic:tokenizer-evaluation, topic:multilingual-tokenization, topic:visualization, ecosystem:python]
-      concept_ids: [token]
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:qkv, topic:self-attention, topic:attention, method:scaled-dot-product]
+      concept_ids: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention]
     metadata:
-      technical_level: advanced
-      contribution_types: [implementation, benchmark, visualization, experiment]
-      audiences: [researcher, practitioner, educator]
+      technical_level: intermediate
+      contribution_types: [pedagogy, mathematical-derivation, implementation, visualization]
+      audiences: [learner, practitioner]
     scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-11-05"
         status: partially-scanned
         inspected_scope:
-          - "Direct ACL Anthology proceedings PDF, all ten pages: system architecture, input/output contract, metric definitions, language metadata, visualizer, use cases, case study, related tools, limitations and configuration appendix"
-          - "ACL Anthology publication metadata, DOI, authors, venue and post-2016 CC BY 4.0 publication licence"
+          - "Canonical chapter page and 11-section structure; visible prose and chapter navigation"
+          - "QKV projection equations, dimensions, scaling variance derivation, softmax and weighted aggregation"
+          - "Python code snippets, displayed numerical outputs, shape walkthrough and The cat sat worked example"
+          - "Limitations, key parameters, summary and quiz section presence"
+          - "Compared selected contributions with the existing Q/K/V source collection and canonical bilingual lessons"
         limitations:
-          - "The GitHub repository and implementation were not inspected or executed; the paper's statement that the software is MIT-licensed was not independently verified against the repository."
-          - "The live visualizer was not opened or tested; screenshots were read in the paper but browser interaction, accessibility and current behavior remain unverified."
-          - "The paper reports tool capabilities; no independent benchmark reproduction or metric implementation audit was performed."
-          - "The paper's data-source dependencies and language metadata were recorded from its description, not independently audited."
-          - "Third-party figures/assets were not extracted or reused."
+          - "Code and notebook cells were inspected as published text; execution and numerical reproduction were not performed."
+          - "The retrieved page described plots and visualizations, but original media bytes were not retrieved or visually inspected."
+          - "Interactive controls, quiz feedback, comments, raw DOM, linked references and surrounding handbook chapters were not inspected."
+          - "Text and figure licences/reuse permissions were not established; retain link-only."
+          - "The chapter is secondary pedagogical material; technical claims were assessed mathematically but not all independently traced to primary sources."
     related:
-      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/tokenization-strategies, fr/tokenization-strategies]
-      concepts: [token]
+      pages: [en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
+      concepts: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention]
       audit_records:
-        - docs/source-syntheses/tokenization-embeddings-protocol-transferability-2026-11.md
-        - data/extractions/varis-stephen-libovicky-tokcollate-2026.yml
+        - data/extractions/mbrenndoerfer-qkv-attention-mechanism.yml
+        - docs/source-reviews/qkv-mbrenndoerfer-2026-11.md
+        - docs/source-reviews/qkv-source-collection.md
+        - docs/source-syntheses/qkv-incremental-source-pilot-2026-11-05.md

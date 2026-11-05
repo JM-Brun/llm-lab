@@ -1,0 +1,266 @@
+schema_version: 1
+source_id: mbrenndoerfer-qkv-attention-mechanism
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Direct retrieval of the canonical article on 2026-11-05; publication date 2025-06-01, updated 2025-06-04."
+      - "The page exposes 11 ordered sections, an interactive reading-level control, a 40-minute full-chapter estimate, equations, Python examples, generated outputs, visualizations and a quiz."
+      - "Textual inspection covered the full visible chapter structure and representative mathematical, code, numerical-example and limitation sections."
+    limitations:
+      - "The article's interactive controls, embedded notebook execution, quiz feedback, comments and raw DOM were not independently exercised."
+      - "The figures and charts were represented by textual descriptions in the retrieved page; original media bytes, visual quality, accessibility and rights were not inspected."
+      - "Linked references and the surrounding 513-chapter handbook were not audited."
+      - "The article is secondary pedagogical material; its technical claims require primary-source or independent mathematical checks."
+  source_graph:
+    nodes:
+      - {id: src-input-representation, kind: representation, description: "Per-position input representation projected into three learned spaces.", locator: "The QKV Mechanism, lines 694-727"}
+      - {id: src-query, kind: representation, description: "Learned query representation used to score candidate keys.", locator: "The QKV Mechanism, lines 707-725"}
+      - {id: src-key, kind: representation, description: "Learned key representation compared with queries.", locator: "The QKV Mechanism, lines 707-725"}
+      - {id: src-value, kind: representation, description: "Learned content representation aggregated using normalized attention weights.", locator: "Step 4: Aggregating Values, lines 1044-1060"}
+      - {id: src-projection, kind: operation, description: "Three learned linear projections produce Q, K and V; the text presents them as separately parameterized transformations.", locator: "The QKV Mechanism, lines 694-727"}
+      - {id: src-score-matrix, kind: intermediate, description: "Pairwise query-key dot products produce an n-by-n score matrix before scaling and normalization.", locator: "Scaled dot-product implementation and shape analysis, lines 973-1043"}
+      - {id: src-scaling, kind: operation, description: "Division by sqrt(d_k) is motivated by a variance calculation under independent zero-mean unit-variance component assumptions.", locator: "The Scaling Problem and Its Solution, lines 809-870"}
+      - {id: src-weighted-output, kind: intermediate, description: "Softmax weights form a weighted sum of value vectors at each query position.", locator: "Step 4: Aggregating Values, lines 1044-1060"}
+      - {id: src-convex-hull, kind: geometric-property, description: "A normalized nonnegative weighted sum lies in the convex hull of the contributing value vectors.", locator: "Step 4: Aggregating Values, lines 1059-1060"}
+      - {id: src-worked-example, kind: pedagogical-anchor, description: "A three-token sentence with hand-designed four-dimensional inputs and seeded random projections traces QKV through output.", locator: "A Worked Example with Real Words, lines 1270-1449"}
+      - {id: src-quiz, kind: assessment, description: "A short quiz checks role distinctions and the attention computation.", locator: "11 Quiz, final section"}
+    edges:
+      - {from: src-input-representation, type: transformed-by, to: src-projection}
+      - {from: src-projection, type: produces, to: src-query}
+      - {from: src-projection, type: produces, to: src-key}
+      - {from: src-projection, type: produces, to: src-value}
+      - {from: src-query, type: compared-with, to: src-key}
+      - {from: src-query, type: contributes-to, to: src-score-matrix}
+      - {from: src-key, type: contributes-to, to: src-score-matrix}
+      - {from: src-score-matrix, type: normalized-after-scaling, to: src-weighted-output}
+      - {from: src-value, type: aggregated-into, to: src-weighted-output}
+      - {from: src-weighted-output, type: satisfies, to: src-convex-hull}
+      - {from: src-worked-example, type: illustrates, to: src-projection}
+      - {from: src-worked-example, type: illustrates, to: src-weighted-output}
+      - {from: src-quiz, type: assesses, to: src-query}
+      - {from: src-quiz, type: assesses, to: src-key}
+      - {from: src-quiz, type: assesses, to: src-value}
+    interpretation: "Editorial reconstruction of the article's instructional model, not a formal ontology authored by the source. Section order is a teaching route, not proof of semantic prerequisites."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain why attention uses distinct learned query, key and value representations.", basis: "Introductory motivation and projection derivation."}
+    - {status: inferred, outcome: "Derive the scaled dot-product attention computation and track its matrix dimensions.", basis: "Stepwise formula development and shape analysis."}
+    - {status: inferred, outcome: "Explain the sqrt(d_k) scaling under explicit distributional assumptions.", basis: "Variance derivation and random-vector simulation."}
+    - {status: inferred, outcome: "Trace a small numerical example from input representations to weighted outputs.", basis: "Worked example using The cat sat."}
+    - {status: inferred, outcome: "Recognize limitations of the source's linguistic interpretations and the mechanism's scope.", basis: "Limitations section and caveats around random projections."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Matrix multiplication and vector dot products.", basis: "The derivation uses projection matrices and QK-transpose."}
+    - {status: inferred, topic: "Variance, independence and softmax.", basis: "Scaling derivation assumes elementary probability and exponential normalization."}
+  teaching_route:
+    - {order: 1, section: "Query, Key, Value", function: motivate-role-separation, moves: ["Contrast similarity with relevance", "Introduce query/key/value roles"]}
+    - {order: 2, section: "The Database Lookup Analogy", function: provide-functional-mental-model, moves: ["Map query to request", "Map key to searchable description", "Map value to returned content"]}
+    - {order: 3, section: "The QKV Mechanism: From Intuition to Formula", function: derive-computation, moves: ["Project inputs", "Compute query-key dot products", "Motivate scaling", "Normalize and aggregate values"]}
+    - {order: 4, section: "Dimensions and Shapes", function: formalize-tensor-contracts, moves: ["Track input and projected dimensions", "Distinguish score matrix and output shapes"]}
+    - {order: 5, section: "QKV as Learned Transformations", function: explain-parameter-learning, moves: ["Connect projection matrices to training objective"]}
+    - {order: 6, section: "Putting It All Together", function: consolidate-pipeline, moves: ["Present the end-to-end computation", "Use Python implementation"]}
+    - {order: 7, section: "A Worked Example with Real Words", function: numerical-tracing, moves: ["Use hand-designed toy inputs", "Use seeded random projections", "Trace scores, weights and outputs"]}
+    - {order: 8, section: "Limitations and Impact", function: qualify-scope, moves: ["Discuss linear projections", "Discuss structural limits and modality transfer"]}
+    - {order: 9, section: "Key Parameters", function: connect-design-parameters, moves: ["Discuss embed_dim, d_k, d_v and initialization"]}
+    - {order: 10, section: "Summary", function: consolidate, moves: ["Restate core roles and computation"]}
+    - {order: 11, section: "Quiz", function: retrieval-practice, moves: ["Check role and mechanism understanding"]}
+  pedagogical_strengths:
+    - "A coherent progression from intuition to equations, dimensions, code and a complete numerical trace."
+    - "The scaling section exposes assumptions and derives Var(q dot k)=d_k rather than presenting sqrt(d_k) as an unexplained convention."
+    - "The worked example exposes every stage and explicitly warns that seeded random projections do not produce linguistically meaningful patterns."
+    - "The article separates Q/K matching from V aggregation and states that d_v need not equal d_k."
+  pedagogical_limits:
+    - "The database analogy can over-literalize retrieval; standard attention computes a soft weighted mixture, not a database lookup or hard selection."
+    - "The article's variance derivation requires independence across q and k components and across dimensions, plus zero mean and unit variance; these assumptions are explanatory, not universal properties of trained activations."
+    - "The claim that scaling prevents saturation and preserves gradients is directionally useful but too categorical without discussing score distributions, masking, temperature and learned activation statistics."
+    - "The toy example uses hand-crafted interpretable inputs and random projection matrices; it demonstrates tensor flow, not learned linguistic behavior."
+    - "The statement that trained patterns become linguistically meaningful (for example, verbs attending to subjects) is not established by the example and risks implying a universal head-level interpretation."
+    - "The description of attention as treating all positions symmetrically omits the effect of causal/padding masks and positional mechanisms."
+    - "The claim that stacked linear attention operations approximate complex functions is imprecise: the full attention operation includes softmax and is nonlinear; the surrounding block also includes nonlinear feed-forward layers."
+    - "The phrase 'arbitrary attention patterns' overstates what parameterization, input, masking and finite model capacity guarantee."
+    - "The convex-hull property applies to a single normalized weighted sum over the values included in that row; it does not imply a convex hull of the original token embeddings or the whole layer output after output projection/residual/MLP."
+  comparison:
+    dossier: docs/source-reviews/qkv-source-collection.md
+    canonical_graph: data/concepts.yml
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md]
+    decision: "No new canonical concept, graph edge, page or route. Retain as a high-value optional derivation/reference for scaling assumptions, tensor shapes and an end-to-end numerical trace; do not duplicate the existing canonical attention derivation."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
+
+items:
+  - id: mbrenndoerfer-qkv-attention-mechanism:scaling-variance
+    kind: derivation
+    summary: "Under independent zero-mean, unit-variance query/key components, the dot product has variance d_k and standard deviation sqrt(d_k), motivating division by sqrt(d_k) before softmax."
+    locator: {type: section, value: "The Scaling Problem and Its Solution, lines 809-831", label: "Variance derivation"}
+    evidence:
+      kind: mathematical-derivation
+      confidence: context-dependent
+      assumptions: ["q and k components have zero mean and unit variance", "Products q_m k_m are independent across dimensions", "Query and key components are independent for the product variance argument"]
+      limitations: ["The derivation is conditional on its stated distributional assumptions; it is not a universal empirical description of trained Q/K activations."]
+    pedagogical_profile:
+      learner_question: "Why divide query-key dot products by sqrt(d_k)?"
+      explanatory_lens: probabilistic-derivation
+      teaching_form: [stepwise-derivation, numerical-scale-comparison, code-simulation]
+      abstraction_level: intermediate
+      prerequisites: [variance, independence, dot-product]
+      distinctive_value: "Makes the dimension dependence of score variance explicit and connects a formula to a probabilistic model."
+      limitations: ["The source's assumptions must remain visible; empirical simulation uses Gaussian random vectors."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The derivation is more explicit than a bare scaling formula, but the canonical attention lesson already owns the scaled-score computation."}
+      complementarity: {level: high, rationale: "A probabilistic route can help learners who need a reason for the square-root factor, rather than memorizing it."}
+      pedagogical_value: {level: high, rationale: "It links dimension, score scale and softmax concentration through an inspectable derivation."}
+      applicability: {level: high, rationale: "Useful as optional depth/reference linked from the existing scaled-attention lesson."}
+      redundancy: {level: moderate, rationale: "The concept is already canonical; the value is the explicit assumption-led derivation and simulation."}
+      evidence_quality: {level: high, rationale: "The algebra is independently checkable, with assumptions made explicit in the source."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:attention, method:scaled-dot-product], concept_ids: [query, key, attention-score, scaled-dot-product-attention]}
+    candidate_destinations:
+      pages: [en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
+      concepts: [attention-score, scaled-dot-product-attention]
+    disposition: integrate-by-reference
+    disposition_rationale: "Do not duplicate the derivation on the canonical page. Retain the source as an optional intermediate-level derivation/reference; revisit a concise project-authored derivation only if learner evidence shows that the scaling rationale remains a difficulty."
+
+  - id: mbrenndoerfer-qkv-attention-mechanism:shapes
+    kind: teaching-sequence
+    summary: "The article tracks X, W_Q/W_K/W_V, Q/K/V, the n-by-n attention matrix and the n-by-d_v output, explicitly allowing d_v to differ from d_k."
+    locator: {type: section, value: "Dimensions and Shapes; Python implementation, lines 1002-1043", label: "Tensor shape walkthrough"}
+    evidence:
+      kind: direct-statement
+      confidence: well-supported
+      assumptions: ["The displayed example is single-head and unbatched."]
+      limitations: ["The example does not cover batch/head axes, causal masks, cross-attention source lengths or GQA/MQA."]
+    pedagogical_profile:
+      learner_question: "How do the Q/K/V dimensions propagate through attention?"
+      explanatory_lens: tensor-contract
+      teaching_form: [shape-table, code-example]
+      abstraction_level: intermediate
+      prerequisites: [matrix-multiplication, tensor-shapes]
+      distinctive_value: "Makes the intermediate score matrix and output dimensions explicit."
+      limitations: ["The displayed implementation is a simplified single-head example."]
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "Shape reasoning already belongs to the canonical attention implementation."}
+      complementarity: {level: moderate, rationale: "The compact shape table is a useful alternative reference and explicitly distinguishes d_k from d_v."}
+      pedagogical_value: {level: moderate, rationale: "Supports learners moving from equations to code and tensor contracts."}
+      applicability: {level: moderate, rationale: "Keep as a linked reference; do not copy a second shape table into the canonical lesson."}
+      redundancy: {level: high, rationale: "The project already has a dedicated implementation and shape treatment."}
+      evidence_quality: {level: high, rationale: "Shapes follow directly from the displayed matrix products."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:attention], concept_ids: [query, key, value, attention-score]}
+    candidate_destinations:
+      pages: [en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
+      concepts: [query, key, value, attention-score]
+    disposition: already-covered
+    disposition_rationale: "The project already teaches the relevant tensor contracts and implementation; preserve the source as an alternative worked reference without adding duplicate content."
+
+  - id: mbrenndoerfer-qkv-attention-mechanism:worked-example
+    kind: code-example
+    summary: "A three-token 'The cat sat' example uses hand-designed four-dimensional inputs and seeded random projection matrices to trace Q/K/V, scores, softmax weights and weighted outputs."
+    locator: {type: section, value: "A Worked Example with Real Words, lines 1270-1449", label: "Numerical walkthrough"}
+    evidence:
+      kind: illustrative-example
+      confidence: well-supported
+      assumptions: ["Input dimensions are manually designed for interpretability", "Projection matrices are randomly initialized with a fixed seed"]
+      limitations: ["The outputs are not learned or linguistically meaningful; the example demonstrates computation only."]
+    pedagogical_profile:
+      learner_question: "What happens numerically from token representations to contextualized outputs?"
+      explanatory_lens: end-to-end-numerical-trace
+      teaching_form: [worked-example, python-code, intermediate-output]
+      abstraction_level: intermediate
+      prerequisites: [matrix-multiplication, dot-product, softmax]
+      distinctive_value: "Shows all intermediate representations and numerical outputs in one trace."
+      limitations: ["The toy values must not be interpreted as a trained model or linguistic evidence."]
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The project already has a hand-worked attention computation and runnable implementation."}
+      complementarity: {level: moderate, rationale: "Its explicit seeded-random caveat is a useful model for distinguishing computation from learned semantics."}
+      pedagogical_value: {level: moderate, rationale: "A complete trace can support debugging and implementation comparison, but duplicates the existing workbench's learner task."}
+      applicability: {level: moderate, rationale: "Keep as a source reference; reuse the caveat in reviews of toy demonstrations rather than adding another example."}
+      redundancy: {level: high, rationale: "A second end-to-end numerical example would duplicate the canonical attention workbench."}
+      evidence_quality: {level: high, rationale: "The displayed code and intermediate outputs are inspectable, but are illustrative rather than empirical."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:self-attention, ecosystem:python], concept_ids: [query, key, value, self-attention, contextualized-representation]}
+    candidate_destinations:
+      pages: [en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
+      concepts: [query, key, value, self-attention]
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain as an alternative reference but do not duplicate the project's existing hand-worked example. Explicitly preserve the distinction between random projections and trained linguistic behavior."
+
+  - id: mbrenndoerfer-qkv-attention-mechanism:database-analogy
+    kind: analogy
+    summary: "The article maps Q/K/V to a database or library lookup: query expresses the request, keys describe available entries, and values provide returned content."
+    locator: {type: section, value: "The Database Lookup Analogy, lines 676-682", label: "Database analogy"}
+    evidence:
+      kind: analogy
+      confidence: context-dependent
+      assumptions: []
+      limitations: ["A database lookup suggests discrete retrieval; attention uses score normalization and weighted aggregation over accessible positions."]
+    pedagogical_profile:
+      learner_question: "How can the three functional roles be remembered?"
+      explanatory_lens: information-retrieval-analogy
+      teaching_form: [analogy]
+      abstraction_level: introductory
+      prerequisites: []
+      distinctive_value: "Offers a compact alternative to the project's index-card analogy."
+      limitations: ["Must be explicitly bounded against hard lookup and argmax selection."]
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The project already uses an index-card analogy for the same role separation."}
+      complementarity: {level: low, rationale: "The database framing largely repeats the same functional mapping."}
+      pedagogical_value: {level: low, rationale: "No distinct learner obstacle is addressed beyond the current analogy."}
+      applicability: {level: low, rationale: "Keep in source references; do not stack a second retrieval analogy into the lesson."}
+      redundancy: {level: high, rationale: "The functional role analogy is already covered."}
+      evidence_quality: {level: moderate, rationale: "Clear pedagogical framing, not a literal computational description."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:self-attention], concept_ids: [query, key, value]}
+    candidate_destinations:
+      pages: [en/queries-keys-values, fr/queries-keys-values]
+      concepts: [query, key, value]
+    disposition: already-covered
+    disposition_rationale: "Do not add a second database/search analogy; the existing canonical index-card framing already serves this purpose."
+
+  - id: mbrenndoerfer-qkv-attention-mechanism:convex-hull
+    kind: claim
+    summary: "For one query row, the softmax-weighted sum of the included value vectors is a convex combination and therefore lies in their convex hull."
+    locator: {type: section, value: "Step 4: Aggregating Values, lines 1044-1060", label: "Convex-hull interpretation"}
+    evidence:
+      kind: mathematical-property
+      confidence: established
+      assumptions: ["Weights are nonnegative and sum to one", "The claim concerns the weighted sum before any output projection, residual addition or subsequent transformation"]
+      limitations: ["Do not extend the property to the whole transformer block output or to the original token embeddings."]
+    pedagogical_profile:
+      learner_question: "What geometric constraint does normalized value aggregation impose?"
+      explanatory_lens: convex-geometry
+      teaching_form: [geometric-property, equation]
+      abstraction_level: intermediate
+      prerequisites: [softmax, convex-combination]
+      distinctive_value: "Connects row-wise normalization to a geometric property of the output."
+      limitations: ["The property applies to the value vectors used in that particular attention row."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The geometric property is not a core concept currently foregrounded in the Q/K/V lesson."}
+      complementarity: {level: moderate, rationale: "It gives a precise geometric consequence of the weighted-sum formula."}
+      pedagogical_value: {level: uncertain, rationale: "Potentially useful for learners studying convex geometry, but no evidence shows it resolves a current learner difficulty."}
+      applicability: {level: moderate, rationale: "Retain as optional depth/reference; no canonical page change until a learner question justifies it."}
+      redundancy: {level: low, rationale: "The specific convex-hull consequence is not the same as the existing weighted-sum explanation."}
+      evidence_quality: {level: high, rationale: "Follows directly from nonnegative normalized weights."}
+    classification: {primary_theme: architectures-mechanisms, secondary_themes: [mathematical-tools-geometry], tags: [topic:attention, topic:weighted-aggregation], concept_ids: [attention-weight, value]}
+    candidate_destinations:
+      pages: [en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
+      concepts: [attention-weight, weighted-aggregation]
+    disposition: defer
+    disposition_rationale: "Preserve as a candidate mathematical insight, but defer learner-facing integration until a specific transfer task or learner difficulty warrants it."
+
+  - id: mbrenndoerfer-qkv-attention-mechanism:scope-claims
+    kind: limitation
+    summary: "The article makes broad claims about arbitrary learned attention patterns, positional symmetry, and linguistic specialization of trained heads that require qualification."
+    locator: {type: section, value: "Limitations and Impact, lines 1450-1455", label: "Scope and interpretability claims"}
+    evidence:
+      kind: direct-statement
+      confidence: context-dependent
+      assumptions: []
+      limitations: ["The claims are broad tutorial-level interpretations and are not backed by head-level empirical analysis in the inspected article."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The article's own limitations section exposes overgeneralizations worth preserving as review cautions."}
+      complementarity: {level: high, rationale: "It supplies concrete examples of how beginner explanations can overstate the scope of attention and linguistic interpretability."}
+      pedagogical_value: {level: high, rationale: "Useful as an adversarial review case for avoiding anthropomorphic or universal claims."}
+      applicability: {level: high, rationale: "Use as a source-review regression example and check canonical wording remains appropriately qualified."}
+      redundancy: {level: low, rationale: "This is a source-quality finding, not a duplicate lesson explanation."}
+      evidence_quality: {level: high, rationale: "The statements are directly visible in the source; the review identifies their scope limitations."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:attention, topic:interpretability], concept_ids: [query, key, value, self-attention]}
+    candidate_destinations:
+      pages: []
+      concepts: []
+    disposition: clarify
+    disposition_rationale: "Keep the caveats in the source review and use them as regression checks; do not add a new learner-facing section solely to rebut one tutorial."
