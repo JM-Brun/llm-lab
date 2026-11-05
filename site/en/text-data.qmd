@@ -26,16 +26,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "leve
 A language model receives a sequence of numerical IDs, not raw text. Tokenization defines how text becomes IDs and how IDs are decoded. It is separate from the neural network, but affects vocabulary, sequence length, compute cost, and some observable behaviours.
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Stages of model input">
-  <span class="step-item active" aria-current="step">1. Text, tokens and IDs</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="positional-encoding.qmd">3. Positional information</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="contextualized-representations.qmd">4. Contextualized representations</a>
-</div>
-
 ::: {.callout-tip title="The one-minute mental model"}
 Think of a **catalogue with reference numbers**. The tokenizer splits text into units (tokens) and assigns each one an ID. The ID retrieves a row from the embedding table: it is not a score or a measure of meaning. The Transformer then transforms these vectors using the surrounding context.
 
@@ -45,6 +35,16 @@ Think of a **catalogue with reference numbers**. The tokenizer splits text into 
 
 [Tokenization strategies](tokenization-strategies.qmd) compare the trade-offs of real tokenizers; [embedding space](embedding-space.qmd) explains the lookup that maps each ID to a vector.
 :::
+
+<div class="pipeline-stepper" role="navigation" aria-label="Stages of model input">
+  <span class="step-item active" aria-current="step">1. Text, tokens and IDs</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="positional-encoding.qmd">3. Positional information</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="contextualized-representations.qmd">4. Contextualized representations</a>
+</div>
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 - Distinguish Unicode text, bytes, tokens, token IDs, and embeddings.
