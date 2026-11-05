@@ -48,7 +48,7 @@ Without positional information, masks, or other position-dependent mechanisms, s
 
 - **Integrated into Q/K/V EN/FR:** routing versus payload (key controls compatibility/routing; value supplies transmitted content), with an explicit hypothetical-example caveat.
 - **Reference only:** database analogy, progressive eleven-section teaching route, and the source's worked example. The canonical page already has an index-card analogy and the project already owns a deterministic implementation.
-- **Potential integration into scaled attention:** convex-hull interpretation and message-passing lens. First compare against the current bilingual scaled-attention pages to avoid duplication.
+- **Integrated into scaled attention EN/FR:** message-passing lens and convex-hull interpretation, each as a collapsible advanced note. The convex-hull statement is bounded to the weighted sum before subsequent output projection/residual operations and excludes fully masked rows.
 - **Visuals:** no original assets reused. Candidate visual recreations must be independently generated, reproducible, licensed by the project, and accessible.
 - **Do not integrate as factual claims:** random-init heatmap patterns as linguistic evidence; guaranteed healthy gradients; literal database retrieval; claims that a specific head performs coreference or syntactic parsing.
 
