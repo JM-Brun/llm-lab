@@ -89,7 +89,26 @@ Both cases show how a source can improve the evidence layer without requiring a 
 6. **Validation must target the final head:** prior CI success cannot be reused after catalogue, extraction or protocol changes.
 7. **Automation is not proven:** schemas help, but deduplication, complementarity, route decisions and learner-value judgements still require human review.
 
-## 7. Transfer-specific regression cases
+## 7. Instructional-source route triage
+
+This is a bounded triage proposal based on the migration map and existing audits. It is not a new source registry and does not upgrade any source's scan status.
+
+| Registered source | Existing evidence | Route action | Boundary |
+|---|---|---|---|
+| Karpathy — GPT tokenizer video | Chapter markers and transcript-based review; source-local pedagogical model already present in its extraction | **Reconstructed** | Full audiovisual work was not watched; retain partial scan status |
+| Raschka — Chapter 2 | Existing #96 audit and repository/notebook review | **Reconstruct selectively** | Use inspected chapter/notebook sequence; do not infer clean-room execution or unpinned upstream revisions |
+| Hugging Face course — tokenizers chapter | Existing #114/#173 coverage matrix for BPE, WordPiece, Unigram and pipeline | **Reconstruct selectively** | Limit to audited chapter sections, not the entire course |
+| ByteByteGo — “How LLMs Learn from the Internet” and “How LLMs See the World” | Exact canonical URLs are now present in the source catalogue; #147/#58 historical pedagogical comparison | **Reconstruct from existing evidence if route detail is locatable** | Do not treat the whole site or course as scanned |
+| Vizuara — BPE course | #147 pedagogical review and registered course landing page | **Defer** | Landing-page description is not a full course scan; no lesson sequence should be invented |
+| Vizuara — “LLMs from 30,000 Feet” | #147 micro-course/pedagogical-format review | **Defer** | Keep the limited source-description evidence; no detailed route inferred |
+| Polo Club Transformer Explainer | Repository/code audit and #186/#188 integration evidence | **Reconstruct as an optional interactive route if source steps are locatable** | Preserve GPT-2-small and implementation-specific limits |
+| Hugging Face BPE visualizer article/repository | #114 implementation audit and #168 integration evidence | **Optional resource route; otherwise reference-only** | Visualizer is schematic and does not reproduce the complete production tokenizer pipeline |
+| Mike X Cohen and Yael Gomez articles | Candidate-source review and reference registration | **Defer** | Optional leads; do not claim a full source-local route without a locatable inspection record |
+| Rushang Chauhan embeddings article | Pedagogical bridge and visual-asset follow-up | **Defer** | Image reuse rights and full source scope remain separate questions |
+
+This triage exposes an important workflow distinction: **route reconstruction is conditional on source type and inspection scope**. A research paper can be fully useful as evidence without a learner route; a course with only its landing page inspected cannot be assigned a detailed route. Where the route is not yet justified, record the gap in the existing source review/extraction workflow rather than adding a new global status registry.
+
+## 8. Transfer-specific regression cases
 
 | ID | Scenario | Expected behavior |
 |---|---|---|
@@ -106,7 +125,7 @@ Both cases show how a source can improve the evidence layer without requiring a 
 
 These cases should be added to the canonical adversarial suite only after deciding whether to keep it compact or group cases by domain.
 
-## 8. Verdict and next actions
+## 9. Verdict and next actions
 
 **Transfer demonstrated at the documentation and synthesis level:** the method handles a broader, heterogeneous collection while preserving source roles, evidence scopes, learner questions and integration dispositions. It supports a cumulative knowledge resource whose evidence layer is richer than any one source while keeping the curriculum selective.
 
