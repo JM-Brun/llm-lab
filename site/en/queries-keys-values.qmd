@@ -106,7 +106,7 @@ $
 \qquad
 \frac{\partial\mathcal L}{\partial W_V}
 =X^\top\frac{\partial\mathcal L}{\partial V}.
-$
+$$
 
 These gradients are computed in the context of the full network, and the optimizer then updates the parameters. The three projections are therefore **parameterized separately but learned jointly**: changing one can alter the output, while the other parameters also adapt during training. This explains the principle; it does not replace the full derivation of attention or backpropagation.
 :::
