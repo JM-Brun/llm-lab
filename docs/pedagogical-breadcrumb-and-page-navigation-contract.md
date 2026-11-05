@@ -1,6 +1,6 @@
 # Pedagogical breadcrumb and page-navigation contract
 
-**Status:** proposed implementation contract  
+**Status:** canonical contract; guided-route context pilot implemented; site-location breadcrumb still under investigation  
 **Scope:** reader-facing navigation across the bilingual LLM Lab site.  
 **Coordination:** [#368 — consistent bilingual lesson-page template](https://github.com/JM-Brun/llm-lab/issues/368), [#225 — conceptual curriculum](https://github.com/JM-Brun/llm-lab/issues/225), [#415 — guided path vs resource graph](https://github.com/JM-Brun/llm-lab/issues/415), [#337 — rendered curriculum/navigation review](https://github.com/JM-Brun/llm-lab/issues/337).
 
@@ -34,7 +34,20 @@ These projections may link to one another, but their semantics remain distinct. 
 
 ## 3. Breadcrumb behavior
 
-### 3.1 Guided-route context
+### 3.1 Two complementary trails, not two competing curricula
+
+When both add distinct orientation value, render two separate trails with explicit, localized labels:
+
+1. **Site-location breadcrumb** — derived from the Quarto navigation hierarchy. It answers “Where am I in the published site?” It is a location aid, not a learning sequence.
+2. **Pedagogical route context** — derived from the existing guided-route registry and its page crosswalk. It answers “Which learning route or stage gives this page its instructional context?” It is not a conceptual-parent chain and does not imply that every earlier stage is a strict prerequisite.
+
+The two trails are separate projections of existing sources. Do not merge their items into one synthetic ancestry chain. Do not create a third breadcrumb from `hierarchy.parents`: that field describes conceptual containment/decomposition and can be multi-parent. Use it for contextual relationships, not automatically for reader-facing breadcrumb ancestry.
+
+The pedagogical context component already piloted by PR #522 is a generated projection of `data/guided-route.yml`. Reuse and extend that component rather than adding page-specific breadcrumb markup or a parallel renderer. The Quarto sidebar remains the source for site location; its ancestry should not be copied into page metadata.
+
+Render only the trails that provide distinct value. If both are shown, give them different accessible names (for example “Site location” / “Emplacement dans le site” and “Learning path” / “Parcours pédagogique”) and distinguish their visual hierarchy. Avoid duplicate adjacent links and avoid presenting the two trails as one continuous sequence.
+
+### 3.2 Guided-route context
 
 For pages assigned to a curriculum stage, show a compact breadcrumb using the existing stage names and page crosswalk. The breadcrumb should communicate the primary guided context, not claim that every item is a strict prerequisite.
 
@@ -44,7 +57,7 @@ Example (illustrative labels only):
 
 Use localized labels in French and English. Stable identifiers may be used internally but must never leak into visible labels.
 
-### 3.2 Multiple entry points
+### 3.3 Multiple entry points
 
 A page may be reached from multiple stages, concepts, or companion lessons.
 
@@ -54,16 +67,16 @@ A page may be reached from multiple stages, concepts, or companion lessons.
 - If no defensible primary route exists, omit the pedagogical breadcrumb rather than display a misleading one.
 - A deep dive may show its destination/domain and its canonical concept owner without pretending to be a mandatory child of one lesson.
 
-### 3.3 Breadcrumb semantics and accessibility
+### 3.4 Breadcrumb semantics and accessibility
 
-- Use semantic navigation markup with an accessible label such as “Learning path” / “Parcours pédagogique”.
+- Use semantic navigation markup with distinct accessible labels for the site-location and pedagogical trails when both are rendered; the pedagogical trail may use “Learning path” / “Parcours pédagogique”.
 - Mark the current page as the current item; do not make it a self-link.
 - Keep labels short, localized, and human-readable.
 - Ensure keyboard focus, visible focus state, sufficient contrast, and a usable narrow-screen layout.
 - Avoid truncating away the current page identity. On small screens, collapse ancestors progressively or provide an accessible compact representation.
 - Do not use color alone to communicate the current position.
 
-### 3.4 Do not duplicate navigation
+### 3.5 Do not duplicate navigation
 
 The breadcrumb is an orientation aid, not a replacement for:
 - the global site navigation;
@@ -128,13 +141,15 @@ Natural wording and section-heading differences are acceptable. Stable page/topi
 ## 7. Data and implementation rules
 
 1. Reuse the existing curriculum stage definitions and page crosswalk; do not duplicate stage definitions in page front matter.
-2. Keep `suggested_route`, `hierarchy`, `related`, concept relations, and build dependencies semantically separate.
-3. Treat the breadcrumb as a **projection** of an explicitly selected guided route context.
-4. Do not infer prerequisite edges from curriculum order, sidebar order, breadcrumb order, or graph layout.
-5. Prefer deriving the breadcrumb from existing curriculum data at render/build time over hand-maintaining a second per-page route.
-6. If the current data cannot express multiple route membership or a primary context, document the gap and propose the smallest extension before changing the schema.
-7. Keep LLM Lab independently buildable; do not introduce a runtime dependency on Wiki Knowledge.
-8. Do not create a workflow or GitHub Action per page or concept. Reuse the existing validation and site workflows.
+2. Reuse the generated guided-route context component introduced in PR #522; do not create a second pedagogical renderer.
+3. Derive site-location ancestry from Quarto navigation, not from page-map hierarchy.
+4. Keep `suggested_route`, `hierarchy`, `related`, concept relations, and build dependencies semantically separate.
+5. Treat the pedagogical context as a **projection** of the existing guided-route registry.
+6. Do not infer prerequisite edges from curriculum order, sidebar order, breadcrumb order, or graph layout.
+7. Prefer deriving both trails from their existing sources at render/build time over hand-maintaining a second per-page route.
+8. If the current data cannot express multiple route membership or a primary context, document the gap and propose the smallest extension before changing the schema.
+9. Keep LLM Lab independently buildable; do not introduce a runtime dependency on Wiki Knowledge.
+10. Do not create a workflow or GitHub Action per page or concept. Reuse the existing validation and site workflows.
 
 ## 8. Pilot and rollout
 
