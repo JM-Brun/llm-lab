@@ -333,6 +333,45 @@ def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[Resolv
     return resolved
 
 
+
+class GuidedRouteMembership(StrictModel):
+    """One page's explicit membership in a guided-route stage."""
+
+    stage_id: str
+    stage_title: str
+    role: Literal["core", "optional"]
+
+
+def build_guided_route_memberships(
+    stages: list[ResolvedGuidedRouteStage],
+) -> dict[str, list[GuidedRouteMembership]]:
+    """Index every route membership without inventing a unique parent.
+
+    A page can occur in several stages and can be core in one context while
+    optional in another. Preserve stage order and membership role exactly as
+    authored in the canonical route registry.
+    """
+    memberships: dict[str, list[GuidedRouteMembership]] = {}
+    for stage in stages:
+        for page in stage.pages:
+            memberships.setdefault(page.id, []).append(
+                GuidedRouteMembership(
+                    stage_id=stage.id,
+                    stage_title=stage.title,
+                    role="core",
+                )
+            )
+        for page in stage.optional_pages:
+            memberships.setdefault(page.id, []).append(
+                GuidedRouteMembership(
+                    stage_id=stage.id,
+                    stage_title=stage.title,
+                    role="optional",
+                )
+            )
+    return memberships
+
+
 def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], language: str) -> str:
     """Render the route as native Quarto Markdown; no browser-side route renderer."""
     if language not in {"fr", "en"}:
