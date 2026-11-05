@@ -146,3 +146,8 @@ At present, every edge has canonical concepts as both endpoints. The validator c
 The existing CI entry point remains `uv run python site/tools/check_concept_registry.py`; the existing `tests/site/test_concept_registry.py` now covers required relation metadata, learning-dependency invariants, relation-specific cycle policy, reciprocal inverse declarations, and mandatory rationale. The PR must pass the existing generic CI and Quarto render workflows before merge.
 
 This is a first contract increment, not proof that every current relation edge is semantically correct or that the rendered graph is pedagogically effective. The remaining manual review of the current edge inventory stays in #416.
+
+
+## Edge-level review
+
+The initial manual review of all 26 edges is documented separately in [`docs/audits/concept-relation-edge-review.md`](audits/concept-relation-edge-review.md). It records the intended reading and scope limitations for every edge. The review found no immediate direction reversal, but several high-level relations are explicitly not exhaustive computational data-flow claims. Rendered FR/EN graph UX and learner comprehension remain unverified.
