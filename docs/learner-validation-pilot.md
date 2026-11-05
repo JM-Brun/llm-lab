@@ -15,7 +15,7 @@ Invite a volunteer who knows basic Python but has not studied these lessons. Let
 5. **Transfer probe:** ask, “Two sequences share the same first three token IDs but differ at position four. In a causal decoder with identical parameters, can the logits at position two change because of position four? What assumption matters?” (FR: « Deux séquences ont les trois premiers ID de tokens identiques, mais diffèrent à la quatrième position. Dans un décodeur causal aux paramètres identiques, le token futur à la position quatre peut-il modifier les logits à la position deux ? Quelle hypothèse est déterminante ? ») Ask for reasoning, not only yes/no.
 6. Ask what they would change on the route, and whether any diagram, mathematical notation, disclosure or navigation control was unclear.
 
-If time permits, use the optional geometry probe: “Let q=(1,0), k₁=(0.1,0), and k₂=(10,10). Which key has the larger dot product with q? Which has the larger cosine similarity?” (FR: « Soient q=(1,0), k₁=(0,1) et k₂=(10,10). Quelle clé donne le plus grand produit scalaire avec q ? Laquelle donne la plus grande similarité cosinus ? ») This is a diagnostic for the distinction between dot product and cosine, not a required introductory learning objective.
+If time permits, use the optional geometry probe: “Let q=(1,0), k₁=(0.1,0), and k₂=(10,10). Which key has the larger dot product with q? Which has the larger cosine similarity?” (FR: « Soient q=(1,0), k₁=(0.1,0) et k₂=(10,10). Quelle clé donne le plus grand produit scalaire avec q ? Laquelle donne la plus grande similarité cosinus ? ») This is a diagnostic for the distinction between dot product and cosine, not a required introductory learning objective.
 
 ## Facilitator key
 
