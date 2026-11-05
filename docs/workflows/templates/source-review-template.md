@@ -22,13 +22,13 @@ State exactly how the source was accessed. Distinguish direct inspection from in
 | Metadata/version | unknown | | |
 | Licence/reuse rights | unknown | | |
 
-**Overall status:** discovered / selected / partially-scanned / scanned / inaccessible / superseded / rejected (see data/source-taxonomy.yml). Explain why. A citation or link alone is discovered/selected, not scanned. A complete text reconstruction does not make the whole source fully scanned if other in-scope components remain unresolved.
+**Overall status:** [exact value from `scan_statuses` in `data/source-taxonomy.yml`]. Explain why. A citation or link alone is discovered/selected, not scanned. A complete text reconstruction does not make the whole source fully scanned if other in-scope components remain unresolved.
 
 ## 2. Atomic contribution inventory
 
-Link the structured extraction. Summarize the strongest items and their disposition.
+Link the structured extraction. Summarize the strongest items and their disposition. Use `evidence_confidence_levels` for technical evidence and `item_dispositions` for each item; use `assessment_levels` for novelty and complementarity.
 
-| Item ID | Contribution | Technical status | Novelty | Complementarity | Disposition and rationale |
+| Item ID | Contribution | Evidence confidence | Novelty | Complementarity | Item disposition and rationale |
 |---|---|---|---|---|---|
 | `source-id:item-id` | | | | | |
 
