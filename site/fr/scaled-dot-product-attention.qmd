@@ -20,9 +20,7 @@ related: ["fr/queries-keys-values"]
 tags: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:fr", "status:published"]
 -->
 
-::: {.chapter-lead}
-L'attention à produit scalaire compare les requêtes aux clés pour calculer des scores, puis transforme ces scores en poids qui servent à combiner les valeurs. Le softmax normalise les poids sur les positions accessibles ; il ne prouve ni pertinence sémantique ni causalité.
-:::
+{{< include ../includes/generated-guided-context-fr-scaled-dot-product-attention.qmd >}}
 
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Concept vérifié</span>
@@ -30,7 +28,19 @@ L'attention à produit scalaire compare les requêtes aux clés pour calculer de
   <span class="epistemic-badge badge-status">Architecture : Attention standard</span>
 </div>
 
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes du parcours LLM">
+::: {.chapter-lead}
+L'attention à produit scalaire compare les requêtes aux clés pour calculer des scores, puis transforme ces scores en poids qui servent à combiner les valeurs. Le softmax normalise les poids sur les positions accessibles ; il ne prouve ni pertinence sémantique ni causalité.
+:::
+
+::: {.callout-tip title="L'idée à retenir en une minute"}
+L'attention n'est pas une opération unique : elle enchaîne **scores → mise à l'échelle → masque éventuel → softmax → agrégation**. Les scores comparent Q et K ; les poids sont normalisés ligne par ligne ; la sortie est une combinaison des V.
+
+**Première lecture :** suivez les quatre étapes et refaites l'exemple avec une requête et deux clés. Vérifiez séparément la forme de chaque matrice : les scores sont de taille $T\times T$, la sortie de taille $T\times d_v$.
+
+**Pour approfondir :** la dérivation du facteur d'échelle — pourquoi diviser par $\sqrt{d_k}$ et ce que cet argument ne garantit pas — est développée dans [Pourquoi mettre les scores à l'échelle ?](attention-score-scaling.qmd) ; la modification des positions accessibles avant le softmax est le rôle du [masque causal](causal-masking.qmd).
+:::
+
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes du calcul de l’attention">
   <a class="step-item" href="text-data.qmd">1. Texte</a>
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
@@ -41,14 +51,6 @@ L'attention à produit scalaire compare les requêtes aux clés pour calculer de
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="cross-entropy.qmd">5. Perte & Entraînement</a>
 </div>
-
-::: {.callout-tip title="L'idée à retenir en une minute"}
-L'attention n'est pas une opération unique : elle enchaîne **scores → mise à l'échelle → masque éventuel → softmax → agrégation**. Les scores comparent Q et K ; les poids sont normalisés ligne par ligne ; la sortie est une combinaison des V.
-
-**Première lecture :** suivez les quatre étapes et refaites l'exemple avec une requête et deux clés. Vérifiez séparément la forme de chaque matrice : les scores sont de taille $T\times T$, la sortie de taille $T\times d_v$.
-
-**Pour approfondir :** la dérivation du facteur d'échelle — pourquoi diviser par $\sqrt{d_k}$ et ce que cet argument ne garantit pas — est développée dans [Pourquoi mettre les scores à l'échelle ?](attention-score-scaling.qmd) ; la modification des positions accessibles avant le softmax est le rôle du [masque causal](causal-masking.qmd).
-:::
 
 ## Calcul en quatre étapes
 
