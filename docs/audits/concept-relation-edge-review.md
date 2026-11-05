@@ -119,3 +119,10 @@ The current canonical-concept view is a **domain-grouped concept browser**, not 
 - No learner-comprehension claim is supported until readers unfamiliar with the project complete a small task-based evaluation.
 
 The browser audit is being extended in [PR #524](https://github.com/JM-Brun/llm-lab/pull/526). Its result, not this source review, will provide rendered-browser evidence.
+
+
+### Multi-domain concept presentation
+
+The source and first rendered screenshots show that a concept assigned to multiple discovery domains is rendered once in each domain group. For example, contextualized representation belongs to both architectures/mechanisms and mathematical tools/geometry. The concept count reports unique concepts, while the grid can contain more buttons than unique concepts. Selecting one canonical concept marks each rendered copy of that same concept as pressed; this is why the browser test validates the set of selected concept IDs rather than requiring exactly one pressed DOM button.
+
+This behavior preserves all domain memberships but can create repeated cards. It is not automatically incorrect: domain membership is many-to-many. A follow-up should decide whether to retain repeated cards for cross-domain discovery or deduplicate the concept into one card with all domain labels. Do not assign a single primary domain without an explicit canonical rule. The current browser test records both total buttons and unique concept IDs so the behavior is measurable.
