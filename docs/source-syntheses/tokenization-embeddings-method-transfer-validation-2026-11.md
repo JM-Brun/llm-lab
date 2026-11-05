@@ -4,7 +4,7 @@
 **Protocol:** [Source-to-knowledge validation](../workflows/source-to-knowledge-validation.md)  
 **Collection:** [Tokenization and embeddings synthesis](../source-reviews/tokenization-embeddings-source-collection.md)  
 **Migration map:** [Source migration map](../source-reviews/tokenization-embeddings-source-migration-map-2026-11.md)  
-**Owning issue:** [#458](https://github.com/JM-Brun/llm-lab/issues/458)
+**Owning issue:** [#496](https://github.com/JM-Brun/llm-lab/issues/496) · **Backfill dependency:** [#458](https://github.com/JM-Brun/llm-lab/issues/458)
 
 ## 1. Purpose and boundary
 
@@ -16,7 +16,7 @@ The transfer case is harder than Q/K/V: tokenization and embeddings spans tokeni
 
 ## 2. Audited baseline
 
-At the reviewed repository state:
+At the reviewed repository state, while the structured migration/backfill in #458 remains open:
 
 | Inventory | Observed state |
 |---|---:|
@@ -132,7 +132,7 @@ These cases should be added to the canonical adversarial suite only after decidi
 **Full scalability and operational completeness are not yet demonstrated.** Outstanding evidence includes final-head validators, selective instructional-route reconstruction, metadata recovery, rendered/accessibility review, rights checks and independent learner observations. No learning-efficacy or universal-superiority claim is made.
 
 Next:
-1. Correct the collection count to 47 (4 Q/K/V/KV-cache + 43 tokenization/embeddings).
+1. Reconcile this snapshot after #458 closes; the current collection count is 47 (4 Q/K/V/KV-cache + 43 tokenization/embeddings).
 2. Run catalogue/extraction validators and record final-head CI/Quarto evidence.
 3. Explicitly triage route reconstruction for registered instructional sources, reusing existing fields.
 4. Recover missing ByteByteGo/Vizuara URLs only from historical evidence.
