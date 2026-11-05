@@ -1,0 +1,164 @@
+schema_version: 1
+source_id: wegmann-tokenization-language-variation-2025
+scan:
+  accessed_at: "2026-11-05"
+  retrieval_method: direct-pdf
+  author_text:
+    status: partial
+    coverage: "Primary ACL Anthology PDF: abstract, research framing, tokenizer settings, experimental setup, results, task-aware proxy and limitations."
+    notes: ["Focused extraction of the main argument; no experiment or appendix dataset was reproduced."]
+  figures_media:
+    status: partial
+    coverage: "Figure 1 and main results tables inspected in the rendered PDF."
+    notes: ["No figure or table asset was copied."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["Training/evaluation code, tokenizer artifacts and raw data were not executed or audited."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Primary ACL Anthology paper."
+    notes: ["Supplementary repositories and all cited works were not exhaustively inspected."]
+  metadata:
+    status: partial
+    coverage: "Findings of ACL 2025, pp. 10958–10983."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["No asset reuse permission was established; this record contains paraphrases only."]
+  unresolved_questions:
+    - "Generalization requires replication across languages, model families and generation tasks."
+    - "A reproducibility review would require the authors' code, data and tokenizer configurations."
+items:
+  - id: wegmann-tokenization-language-variation-2025:task-dependent-objectives
+    kind: definition
+    summary: "The paper distinguishes tasks that should be robust to linguistic variation (for example semantic inference) from tasks that should remain sensitive to form or style variation (for example authorship verification and dialect classification)."
+    locator: {type: section, value: "§1 Introduction, pp. 10958–10959; Figure 1", label: "Robustness versus sensitivity to language variation"}
+    evidence:
+      kind: explicit-task-framing
+      confidence: established
+      scope: "The paper's task distinction in its English-language variation experiments."
+      assumptions: []
+      limitations: ["The study examines variation within English, not cross-language tokenizer inequity."]
+    technical_assessment:
+      status: correct
+      rationale: "The distinction follows from whether task labels should ignore or preserve linguistic form."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:language-variation, topic:downstream-tasks]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "A distinct task-design lens that complements crosslingual efficiency studies; already summarized in the advanced lesson."
+  - id: wegmann-tokenization-language-variation-2025:pretokenizer-boundaries
+    kind: mechanism
+    summary: "Pre-tokenization boundaries can prevent character sequences from becoming one learned token; whitespace splitting, leading-space attachment and Unicode-category splitting therefore affect which spelling and phrase patterns can enter the vocabulary."
+    locator: {type: section, value: "§3.2 Pre-tokenizers, pp. 10960–10961; Appendix A.2", label: "Pre-tokenizer configurations"}
+    evidence:
+      kind: method-description
+      confidence: well-supported
+      scope: "Five BPE pre-tokenizer configurations compared: none, whitespace, leading-space attachment, GPT-2 and Llama 3."
+      assumptions: []
+      limitations: ["Exact behavior is implementation-specific and depends on the pre-tokenizer and fitting corpus."]
+    technical_assessment:
+      status: correct
+      rationale: "Pre-tokenization constrains the merge candidates available to the subword learner."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:pre-tokenization, method:bpe]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The tokenizer-strategies lesson already explains pre-tokenization boundaries."
+  - id: wegmann-tokenization-language-variation-2025:task-sensitive-results
+    kind: result
+    summary: "The best tokenizer settings differ between variation-robust and variation-sensitive tasks; pre-tokenizer choice had the largest overall impact among tested settings in these BERT-base experiments, although effects were generally modest and task-dependent."
+    locator: {type: section, value: "§6 Results, pp. 10963–10966; Tables 2–3", label: "Results across task types"}
+    evidence:
+      kind: reported-experimental-result
+      confidence: well-supported
+      scope: "BERT-base models pre-trained with BPE on selected English variation tasks."
+      assumptions: []
+      limitations:
+        - "The study does not directly evaluate large decoder-only LLMs."
+        - "Settings are varied one at a time around a default configuration, not as a full factorial design."
+        - "Effects are task-dependent and often modest."
+    technical_assessment:
+      status: qualified
+      rationale: "The conclusion is supported by the comparisons but bounded to the studied model and tasks."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:language-variation, topic:pre-tokenization, topic:tokenizer-evaluation]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The advanced deep dive already records this task-sensitive result and its BERT-base scope."
+  - id: wegmann-tokenization-language-variation-2025:task-aware-proxy
+    kind: mechanism
+    summary: "The authors test a task-aware proxy using logistic-regression performance on tokenizer-vocabulary features and task labels, then compare its correlation with fine-tuned BERT results against task-agnostic compression proxies."
+    locator: {type: section, value: "§7.1–7.2, pp. 10965–10966; Table 5", label: "Task-aware tokenizer impact measure"}
+    evidence:
+      kind: method-and-correlation-analysis
+      confidence: well-supported
+      scope: "The classification tasks and tokenizer vocabulary representations evaluated in this paper."
+      assumptions: []
+      limitations:
+        - "Not validated as a universal replacement for downstream evaluation, especially for generation or retrieval."
+        - "Correlation does not establish causality."
+    technical_assessment:
+      status: qualified
+      rationale: "The method is task-aware, but predictive value is bounded by the tested classification tasks and model setup."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-evaluation, method:task-aware-proxy]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Useful methodological perspective for research evaluation; another proxy on the learner-facing page is not currently justified."
+  - id: wegmann-tokenization-language-variation-2025:within-language-scope
+    kind: limitation
+    summary: "The study concerns linguistic variation within English and task sensitivity to that variation; it is not direct evidence of crosslingual token premiums or multilingual tokenizer fairness."
+    locator: {type: section, value: "§1 Introduction, pp. 10958–10959; §3, pp. 10960–10962", label: "Research scope and experimental design"}
+    evidence:
+      kind: scope-qualification
+      confidence: established
+      scope: "Language and model family used in the main experiments."
+      assumptions: []
+      limitations: ["Analogous multilingual research would require separate evidence."]
+    technical_assessment:
+      status: correct
+      rationale: "This boundary prevents conflating intralingual variation sensitivity with crosslingual inequity."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:language-variation, topic:multilingual-tokenization]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The project already distinguishes this study from crosslingual tokenizer-equity research."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "Wegmann adds a distinct task-objective lens: tokenization should preserve or suppress linguistic variation depending on what task labels mean. The insight is already integrated in the advanced bilingual deep dive; preserve structured evidence without changing canonical concepts or routes."
