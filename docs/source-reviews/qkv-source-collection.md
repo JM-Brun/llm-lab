@@ -144,30 +144,28 @@ These are complementary records, not duplicate versions of the same document: ca
 
 ## 9. Codefinity — “Queries, Keys, and Values: The Building Blocks” (2026-11-05)
 
-[Codefinity lesson](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) · [structured extraction](../../data/extractions/codefinity-qkv-building-blocks.yml) · [source review](qkv-codefinity-course-2026-11.md)
+[Codefinity lesson](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) · [structured extraction](../../data/extractions/codefinity-qkv-building-blocks.yml) · [source review](qkv-codefinity-course-2026-11.md) · [cross-source synthesis dossier](../source-syntheses/qkv-complementary-perspectives-2026-11.md)
 
-**Scan status: partially scanned.** The visible lesson text was retrieved directly: introductory vector framing, role definitions, the bank/river example, recap and one multiple-choice question. The page requires JavaScript; the linked image bytes, full interactive environment, broader course sequence, links, metadata and reuse rights were not inspected.
+**Scan status: partially scanned.** The visible lesson text was retrieved directly and the parent course outline was inspected. Linked image bytes, the interactive environment, other lesson bodies, assignments, linked resources and reuse rights remain uninspected.
 
-### Differential contribution
+### Differential contribution and integration
 
-| Learner question | Codefinity | Existing collection / LLM Lab | Decision |
-|---|---|---|---|
-| What do Q, K and V do? | Search vector, matching descriptor, transmitted content | Existing index-card analogy, learned projections and explicit matching/payload distinction | Already covered; no repeated paragraph |
-| How can matching be pictured? | Geometric alignment of Q and K arrows | Existing conceptual analogy plus formal dot-product → scaling → softmax → weighted aggregation on the next page | Preserve as an alternative intuition, but defer publication until explicitly bounded against cosine similarity and hard nearest-neighbour interpretations |
-| How can context disambiguate a word? | “bank” in a riverside sentence | The bank/river ambiguity is already used in the canonical contextualized-representations lesson; the Q/K/V lesson uses a distinct pronoun-reference example | No duplicate example |
-| How can learners check the key role? | One multiple-choice question with role-confusion distractors | Existing Q/K/V self-check and extended exercises | Keep as a future assessment-design reference; no new quiz |
+| Contribution | What it adds beyond current LLM Lab content | Integration |
+|---|---|---|
+| Q/K/V role definitions | Reinforces the canonical functional split but adds no new definition | Already covered; retain provenance |
+| Geometric Q/K framing | A spatial/vector lens alongside the existing index-card analogy; bridges the conceptual role to dot-product geometry | Integrated as an optional collapsible note on both Q/K/V pages, with dot-product norms/angle and warnings against cosine/nearest-neighbour interpretations |
+| Bank / river example | Lexical polysemy (competing senses of one word), distinct from the pronoun-coreference example already on the Q/K/V page | Integrated as a compact optional contrast on both pages; full bank discussion remains on contextualized-representations |
+| Multiple-choice check | Distractors explicitly test confusion among Q, K and V | Retained as a future exercise-design reference; no duplicate quiz |
+| Course-level sequence | Places Q/K/V between motivation and relevance scoring, then lists later attention topics | Confirms compatibility with current route; no route change from titles alone |
 
-### Source-specific assessment
+### What the combined explanation now offers
 
-The lesson is useful as a compact beginner explanation, but its geometric wording does not specify the compatibility function. It must not be paraphrased as cosine similarity or nearest-neighbour retrieval. The bank example is illustrative, not evidence that a particular head performs word-sense disambiguation. The lesson does not expose the mathematical or implementation detail already owned by the dedicated attention and Build lessons.
+1. **Functional analogy:** index cards distinguish what Q, K and V do.
+2. **Geometric perspective:** query/key vectors connect that role distinction to the dot product, with its magnitude-and-angle dependence.
+3. **Linguistic transfer:** pronoun coreference and lexical polysemy illustrate two different reasons context matters.
+4. **Formal computation:** the next page remains responsible for scaling, softmax, masking and weighted aggregation.
 
-### Impact on the learning system
+The new perspectives are optional and attributed. No canonical concept, graph edge, new page or route dependency is added. No source image is copied. The original examples remain illustrations, not evidence that one particular attention head performs a linguistic task.
 
-- **Semantic graph:** no new concept or relation.
-- **Canonical pages:** no edit; the bank example is already covered and the current Q/K/V page has a distinct pronoun example.
-- **Routes/navigation:** no change.
-- **Exercises:** no new activity; retain the quiz distractor pattern as reference.
-- **Visuals:** no asset copied; linked image was not visually inspected.
-- **Compilation value:** adds a further source-specific formulation and confirms convergence in beginner explanations, while preserving a geometric alternative for possible future teaching synthesis.
+The extraction and review preserve source-specific evidence and scan limitations. The cross-source dossier records the comparative reasoning and the contribution-to-page mapping.
 
-The extraction and review preserve all observed contributions and limitations. This source does not independently validate the technical mechanism; primary formulations and the project's mathematical treatment remain the technical reference.
