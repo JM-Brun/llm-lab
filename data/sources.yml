@@ -88,6 +88,7 @@ sources:
       audit_records:
         - docs/source-reviews/qkv-nishanthan-devto-2026-11.md
         - docs/source-reviews/qkv-learning-graph-comparison-2026-11.md
+        - docs/source-reviews/qkv-source-collection.md
 
   - id: neha-kk-understanding-qkv-medium
     title: "Understanding Queries, Keys and Values in Transformers"
@@ -148,6 +149,8 @@ sources:
       concepts: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax, contextualized-representation]
       audit_records:
         - docs/source-reviews/qkv-neha-kk-medium-2026-11.md
+        - docs/source-reviews/qkv-learning-graph-comparison-2026-11.md
+        - docs/source-reviews/qkv-source-collection.md
 
   - id: huggingface-transformers-kv-cache-explanation
     title: "Caching"

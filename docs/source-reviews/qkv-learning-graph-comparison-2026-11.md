@@ -312,3 +312,20 @@ The Medium article treats a word embedding as the direct Q/K/V input and describ
 - The input to an attention sublayer is the current representation. In the first block this begins with token embeddings; positional information may be added at the input or introduced within attention (for example, RoPE transforms Q and K). In later blocks, the input is a contextualized hidden state.
 
 The project already covers positional mechanisms in its dedicated lesson and the Transformer overview. The Q/K/V lesson now adds a short bilingual clarification at the point where X is introduced. This is a local integration of a source omission, not a new concept or graph relation.
+
+
+## 12. Living collection, workflow and latest source refinements
+
+The maintained index for future Q/K/V resources is [Q/K/V source collection and comparative synthesis](qkv-source-collection.md). The reusable method and deliverable templates are specified in [External-source to learning-system integration workflow](../workflows/source-to-learning-system-integration.md).
+
+The latest Medium scan refinement on the base branch adds important provenance and technical detail to the comparison:
+
+- The full text reconstruction is based on an indexed search snapshot, not direct live-page HTML/DOM inspection.
+- Four in-body visual placements are inventoried (three captioned figures and one uncaptioned placeholder), but none has been retrieved as image bytes or visually inspected. A cover/hero image remains unknown.
+- The source's description of embeddings as semantic vectors and as the Q/K/V input is qualified: the attention sublayer receives its current representation; deeper blocks receive contextualized hidden states, and positional information may enter at the input or inside attention (e.g. RoPE).
+- The phrase “closest matches” is distinguished from hard nearest-neighbour selection: the displayed softmax/weighted-sum computation is a soft mixture over accessible values.
+- The source's assertion of directional/non-symmetric scores is retained as a potential worked-matrix lesson, with the qualification that asymmetry is typical under distinct Q/K projections, not universal for every parameter/input configuration.
+
+The bilingual Q/K/V pages already received the bounded clarification about current hidden-state inputs and positional mechanisms in the base-branch update. The cross-source synthesis should therefore treat this as an existing integration, not propose it again. No new Q/K/V route step or canonical graph node is implied.
+
+Future sources must be appended to the collection index and compared against this updated baseline. Keep each source extraction independent and preserve the exact scan boundary and evidence quality.
