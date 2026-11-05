@@ -1,4 +1,6 @@
 ---
+**Notion canonique :** [Panorama des modèles de langage](llm-overview.qmd). Cette synthèse mathématique relie plusieurs notions du parcours ; elle sert de référence transversale et non de prérequis.
+
 title: "La chaîne mathématique de l’entraînement d’un LLM"
 subtitle: "Une chaîne cohérente, des scores du modèle à l'apprentissage"
 keywords: ["type:deep-dive", "destination:deepen", "topic:mathematical-foundations", "level:advanced", "language:fr", "status:published"]
