@@ -1,6 +1,6 @@
 # External-source to learning-system integration workflow
 
-**Status:** normative project workflow · **Version:** 1.1 · **Last reviewed:** 2026-11-05  
+**Status:** normative project workflow · **Version:** 1.2 · **Last reviewed:** 2026-11-05  
 **Related collection:** [Q/K/V source collection](../source-reviews/qkv-source-collection.md)
 
 ## 1. Objective
@@ -83,10 +83,16 @@ Each item should include:
 - candidate canonical concept IDs;
 - disposition and rationale.
 
-Use confidence labels consistently:
-- **High:** directly supported by an explicit source passage/equation and technically checked.
-- **Medium:** source supports the interpretation but assumptions or scope need qualification.
-- **Low:** inferred, ambiguous, weakly evidenced or not independently checked.
+Use the evidence-confidence vocabulary defined in `data/source-taxonomy.yml`:
+`established`, `well-supported`, `context-dependent`, `disputed`, `speculative`, or `unverified`.
+These labels describe the evidential status of an individual claim; they are not a numerical probability or a pedagogical rating. Use `low`, `moderate`, `high`, or `uncertain` only for the separate pedagogical-assessment dimensions (novelty, complementarity, value, applicability, redundancy and evidence quality), each with its own rationale.
+
+Keep three lifecycle axes independent:
+- source `scan_status`: completeness of inspection, summarized from `scan_history`;
+- source `integration_status`: whether the source's extracted items have been reviewed/integrated;
+- item `disposition`: the decision for one atomic contribution.
+
+A source may remain `partially-scanned` while selected items are integrated. An `integrated` source status never upgrades its scan status or implies that uninspected components were examined. A source may also be fully scanned but yield no learner-facing change.
 
 Learning outcomes, prerequisites, graph edges and teaching intent not explicitly stated by the author must be marked **inferred**.
 
@@ -154,11 +160,19 @@ Use these dispositions:
 
 | Disposition | Meaning | Typical action |
 |---|---|---|
-| `integrate` | Clear gap and meaningful benefit | Edit canonical page, graph, exercise, figure or implementation |
-| `integrate-by-reference` | Useful alternative but not worth duplicating | Link as optional perspective; preserve extraction |
-| `already-covered` | Canonical treatment is equal or stronger | No page change; point to canonical location |
-| `defer` | Potential value, insufficient evidence or wrong timing | Add scoped follow-up with trigger/owner if appropriate |
+| `integrate` | A contribution is accepted into a project artifact | Edit the appropriate page, graph, exercise, figure or implementation |
+| `correct` | Independently verified evidence requires correcting project content | Correct the precise claim and record verification |
+| `clarify` | Existing content is ambiguous or underspecified | Add a bounded clarification or qualification |
+| `link` | Useful material belongs in an existing destination | Add a contextual cross-link |
+| `cite` | Useful evidence supports an existing claim but adds no new explanation | Add or improve attribution/reference |
+| `case-study` | Contribution is specific to a model, implementation or context | Add to an appropriate case study |
+| `experiment` | Contribution is best tested empirically or numerically | Add a reproducible experiment/workbench task |
+| `integrate-by-reference` | Useful alternative is not worth duplicating | Link as optional perspective; preserve extraction |
+| `already-covered` | Canonical treatment is equal or stronger | No content change; point to canonical location |
+| `defer` | Potential value, insufficient evidence or wrong timing | Add a scoped follow-up with trigger/owner if appropriate |
 | `reject` | Incorrect, unsupported, misleading or low value | Preserve rejection rationale; do not integrate |
+
+The exact allowed values are owned by `data/source-taxonomy.yml`; templates and validators must not define competing lists.
 
 A source may produce zero page edits and still improve the concept graph, evidence quality, source map or future research queue. Conversely, a small example may justify one targeted edit even if most of the article is redundant.
 
