@@ -428,6 +428,14 @@ sources:
           - "Results are scoped to the five evaluated European languages, 2.6B decoder-only models and the paper's training/evaluation protocol."
           - "The reported 68% training-compute increase is specific to a German document comparison, not a universal cost multiplier."
           - "One seed and uneven per-language task counts limit generalization."
+    - accessed_at: "2026-11-05"
+      status: partially-scanned
+      inspected_scope:
+        - "Rechecked the published NAACL 2024 PDF: evaluation definitions, controlled 2.6B decoder-only setup, intrinsic/extrinsic results, compute comparison and limitations"
+        - "Created source-scoped atomic extraction items for protocol, results, proxy limitations and compute-cost interpretation"
+      limitations:
+        - "Code, raw data and independent reproduction were not inspected."
+        - "The single-seed design, uneven language task counts and five-language Latin-script scope remain material limitations."
     related:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
@@ -467,6 +475,14 @@ sources:
         limitations:
           - "The prior audit was abstract-level; full-paper methodology was not reviewed in that pass."
           - "The reported pre-tokenizer effect is scoped to BERT-base experiments."
+    - accessed_at: "2026-11-05"
+      status: partially-scanned
+      inspected_scope:
+        - "Full published ACL 2025 PDF: task framing, five pre-tokenizer settings, fitting-corpus design, BERT-base setup, results, task-aware proxy and limitations"
+        - "Created source-scoped atomic extraction items distinguishing within-English variation from crosslingual token-premium research"
+      limitations:
+        - "Code, raw data and independent reproduction were not inspected."
+        - "Main results concern selected English variation tasks and BERT-base models; they do not establish crosslingual tokenizer inequity."
     related:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
@@ -659,6 +675,14 @@ sources:
         limitations:
           - "Results are scoped to the models, layers, datasets and anisotropy-corrected measures in the 2019 study."
           - "The findings do not establish a universal degree of contextualization for contemporary models."
+    - accessed_at: "2026-11-05"
+      status: partially-scanned
+      inspected_scope:
+        - "Rechecked the published EMNLP-IJCNLP 2019 PDF: formal definitions, anisotropy-adjusted baselines, layer-wise results and MEV interpretation"
+        - "Created source-scoped atomic extraction items for measures, baselines, findings and scope limits"
+      limitations:
+        - "Model checkpoints and analysis code were not independently executed."
+        - "Results remain specific to ELMo, BERT and GPT-2 configurations studied in 2019."
     related:
       pages: [en/contextualized-representations, fr/contextualized-representations, en/cosine-similarity, fr/cosine-similarity]
       concepts: [contextualized-representation, token-embedding]
@@ -698,6 +722,14 @@ sources:
         limitations:
           - "The study concerns sentence embeddings from BERT, not all token embeddings or modern retrieval encoders."
           - "The target-split flow setup is transductive; it must not be described as strictly inductive evaluation."
+    - accessed_at: "2026-11-05"
+      status: partially-scanned
+      inspected_scope:
+        - "Rechecked the published EMNLP 2020 PDF: sentence pooling, anisotropy analysis, BERT-flow objective, STS results and full-target-dataset calibration protocol"
+        - "Created source-scoped atomic extraction items for sentence-level scope, geometric findings, flow method and transductive-style caveat"
+      limitations:
+        - "The repository and implementation were not independently inspected or executed."
+        - "The target-flow setting uses unlabeled sentences from train, validation and test portions; no test labels are used for flow fitting."
     related:
       pages: [en/cosine-similarity, fr/cosine-similarity, en/embedding-space, fr/embedding-space]
       concepts: [contextualized-representation]
@@ -737,6 +769,14 @@ sources:
         limitations:
           - "The analytic result is for specified regularized linear model families, not a direct theorem for all LLM embeddings."
           - "The experiments use simulated data and do not constitute a user study or LLM benchmark."
+    - accessed_at: "2026-11-05"
+      status: partially-scanned
+      inspected_scope:
+        - "Rechecked arXiv:2403.05440: both regularization objectives, diagonal rescaling freedom, uniqueness result and simulated-data experiment"
+        - "Created source-scoped atomic extraction items for analytical results and model-family limitations"
+      limitations:
+        - "No code or experimental reproduction was performed."
+        - "The analytical results concern specified regularized linear matrix-factorization/autoencoder models, not arbitrary nonlinear LLM embeddings."
     related:
       pages: [en/cosine-similarity, fr/cosine-similarity]
       concepts: [contextualized-representation]
