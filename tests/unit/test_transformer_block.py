@@ -42,3 +42,30 @@ def test_block_attention_rejects_inconsistent_head_count() -> None:
 
     with pytest.raises(ValueError, match="num_heads must be positive"):
         block._attention(np.zeros((1, 5, 16)))
+
+
+def test_gpt2_scaled_initialization_applies_only_to_residual_output_projections(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import llm_lab.foundations.transformer_block as transformer_block_module
+
+    observed_stds: list[float] = []
+    original_init_linear = transformer_block_module._init_linear
+
+    def recording_init_linear(
+        rng: np.random.Generator, out_features: int, in_features: int, std: float
+    ) -> tuple[np.ndarray, np.ndarray]:
+        observed_stds.append(std)
+        return original_init_linear(rng, out_features, in_features, std)
+
+    monkeypatch.setattr(transformer_block_module, "_init_linear", recording_init_linear)
+    config = _small_config()
+    TransformerBlock(config, np.random.default_rng(0))
+
+    residual_std = 0.02 / np.sqrt(2.0 * config.num_layers)
+    np.testing.assert_allclose(
+        observed_stds,
+        [0.02, 0.02, 0.02, residual_std, 0.02, residual_std],
+        rtol=0.0,
+        atol=1e-15,
+    )
