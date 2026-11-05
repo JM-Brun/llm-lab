@@ -72,7 +72,7 @@ $$
 A=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right).
 $$
 
-Future positions then receive zero weight in ideal arithmetic. In practice, libraries may represent the mask as a boolean tensor or use an attention primitive that incorporates the constraint.
+Future positions then receive zero weight in ideal arithmetic. In practice, libraries may represent the mask as a boolean tensor or use an attention primitive that incorporates the constraint. Each query row must retain at least one allowed key: if every score in a row is masked to $-\infty$, the ordinary softmax is undefined and needs explicit handling.
 
 ::: {.callout-note collapse="true" title="Code API conventions (advanced)"}
 In code, **boolean-mask polarity is API-specific**. For example, in [PyTorch scaled dot-product attention](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html), `True` means that a position is allowed to participate in attention; in [PyTorch MultiheadAttention](https://docs.pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html), `True` in `attn_mask` means that the position is masked out. Do not transfer a boolean mask between APIs without checking its documented convention. This is separate from the causal rule itself: the allowed query-key pairs must still exclude future keys.
@@ -95,6 +95,7 @@ Decoder-only Transformers such as GPT use this constraint to learn next-token pr
 ## Misconceptions and counterexamples
 
 - **“The data are already ordered, so masking is unnecessary.”** False: token order does not stop an unmasked attention operation from reading representations at future positions.
+- **“Softmax alone makes attention causal.”** No: without a mask, normalization still applies to future positions, which receive positive weights.
 - **“Zeroing future weights after softmax is sufficient.”** Without renormalization, the remaining weights may no longer sum to one. Masking and renormalizing are equivalent in exact arithmetic if the remaining sum is nonzero; masking scores before softmax is the usual formulation.
 - **“Testing only the mask matrix proves there is no leakage.”** False: another computation path could still pass future information.
 - **“Causal means attention sees only the previous token.”** False: it can see all earlier positions unless another restriction, such as a sliding window, is imposed.
@@ -165,6 +166,21 @@ In this synthetic case, changing future keys and values leaves earlier outputs u
 - [Scaled dot-product attention](scaled-dot-product-attention.qmd) explains the score → mask → softmax → aggregation sequence.
 - [Objective and mathematical foundations](mathematical-foundations.qmd) connects the constraint to next-token prediction and loss.
 - The [Transformer overview](transformer.qmd) places masking in the full architecture.
+
+::: {.self-check}
+## Check your understanding
+
+[Extended exercises on this topic](exercises.qmd#attention).
+
+1. A row of already-scaled scores is $(1,0)$. What do the weights become if the second position is forbidden by a causal mask? Why must the mask be applied before softmax?
+
+<details>
+<summary>Show the reasoning</summary>
+
+The forbidden score is masked before softmax (conceptually set to $-\infty$): the weights become $(1,0)$. Masking must happen before normalization; setting a weight to zero after softmax without renormalizing does not produce the same distribution, because the remaining sum would be below one.
+
+</details>
+:::
 
 ::: {.callout-note collapse="true" title="Reference code and tests (advanced)"}
 A tested reference implementation is available in `src/llm_lab/foundations/attention.py` (`causal_mask` and `scaled_dot_product_attention`). The test suite in `tests/unit/test_attention.py` includes a similar single-head invariance case and mask and shape checks; it does not test a complete GPT.
