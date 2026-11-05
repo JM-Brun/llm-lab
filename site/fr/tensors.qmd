@@ -21,6 +21,8 @@ related: []
 tags: ["type:deep-dive", "destination:deepen", "topic:tensors", "level:advanced", "language:fr", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-fr-tensors.qmd >}}
 ::: {.chapter-lead}
 Dans un Transformer, les tenseurs transportent les représentations des tokens, les logits, les masques et les gradients. Lire correctement leurs axes est indispensable : une opération peut s'exécuter sans erreur tout en portant sur le mauvais axe.
 :::
