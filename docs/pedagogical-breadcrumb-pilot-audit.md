@@ -1,7 +1,7 @@
 # Pedagogical breadcrumb pilot — source audit baseline
 
 **Audit date:** 2026-11-05  
-**Status:** source-level baseline; rendered/browser and learner validation not yet performed.  
+**Status:** guided-route projection implemented on a pilot set; source-level coverage review in progress; rendered/browser, accessibility and learner validation remain pending.  
 **Contract:** [Pedagogical breadcrumb and page-navigation contract](pedagogical-breadcrumb-and-page-navigation-contract.md)  
 **Coordination:** #368, #225, #415, #337.
 
@@ -10,7 +10,7 @@
 - `data/guided-route.yml`: six bilingual conceptual stages with core and optional page references.
 - `docs/learning-path.md`: explains the conceptual inference route and the separate practical GPT construction route.
 - `docs/content-section-mapping.md`: page ownership and four destination crosswalk.
-- `site/tools/build_learning_map.py`: validates and resolves the guided-route registry into learning-map stage cards; the route is not currently emitted as per-page breadcrumb metadata.
+- `site/tools/build_learning_map.py`: validates and resolves the guided-route registry, generates learning-map stage cards, and writes per-page guided-context partials.
 - `docs/page-metadata-schema.md`: keeps suggested route, conceptual hierarchy, related links, page destinations, and concept relations distinct.
 - Five representative French pages: LLM panorama, embeddings, Q/K/V, Build path, and experimental evaluation.
 
@@ -160,8 +160,9 @@ Evidence from the current source:
 - `site/_quarto.yml` defines distinct bilingual navigation trees. The FR Q/K/V page is nested under “Attention et sortie du Transformer”; the FR text-data page is nested under “Du texte aux représentations et au calcul”. Their site-location ancestry therefore differs.
 - `site/styles.scss` contains a `.llm-breadcrumb` style block labelled “Global breadcrumb”, but a stylesheet selector is not evidence that a matching element is emitted.
 - `site/includes/title-metadata.html` does not contain breadcrumb markup.
-- The Q/K/V page includes `generated-guided-context-fr-queries-keys-values.qmd`; this is the pedagogical-context projection introduced by PR #522.
-- The text-data page still contains a legacy `.pipeline-stepper` block in the inspected main snapshot. This is a process/representation sequence, not a site breadcrumb or the generated curriculum context. It must not be silently repurposed as either.
+- The FR and EN Q/K/V pages include their matching `generated-guided-context-<language>-queries-keys-values.qmd` partials; these are pedagogical-context projections from the shared generator.
+- The text-data page retains a local `.pipeline-stepper` block for the text-to-representation sequence. It is not a site breadcrumb or the generated curriculum context and must not be silently repurposed as either.
+- Unlike Q/K/V and embeddings, the FR/EN text-data pages did not yet include their generated route-context partials, despite both being core members of the `text-input` stage. This was recorded as a bounded integration gap and is addressed by [PR #530](https://github.com/JM-Brun/llm-lab/pull/530).
 - Q/K/V also has explicit previous/next route cards in its page body. These remain reading transitions and must not be conflated with either breadcrumb.
 
 Consequences:
@@ -173,3 +174,10 @@ Consequences:
 5. Record actual hrefs and destinations from rendered FR/EN output. Source-level inspection alone does not reproduce the browser behavior.
 
 This addendum supersedes the earlier exploratory proposal to derive a second local breadcrumb from page hierarchy. The canonical contract is this document; no separate nested-breadcrumb contract should be maintained.
+
+
+### 12.1 Text-data route-context parity follow-up
+
+The source audit found that FR/EN text-data pages are core members of the `text-input` stage but did not include the generated per-page route-context partial, while Q/K/V and embeddings did. PR #530 adds the matching language-specific include to both text-data pages and a regression test that rejects cross-language partial references. The existing text-data stepper is retained as a local data-transformation sequence; it is not a second curriculum breadcrumb.
+
+This is a source-level correction only until PR #530 CI and Quarto checks pass and the rendered pages are reviewed. It does not implement the separate Quarto-derived site-location breadcrumb.
