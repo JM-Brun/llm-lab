@@ -1732,3 +1732,23 @@ a.concept-link:focus-visible {
   .guided-page-context--multiple { padding: .6rem .7rem; }
   .guided-page-context--multiple ul { gap: .65rem; }
 }
+
+
+/* Keep Quarto navigation text above WCAG AA contrast on the paper background. */
+.nav-page-text,
+.quarto-title-breadcrumbs .breadcrumb-item a {
+  color: #5b6670 !important;
+}
+
+/* Mermaid edge labels use a dark green rather than the low-contrast brand accent. */
+.edgeLabel > p {
+  color: #14532d !important;
+}
+
+/* Quarto's collapsible callout header is a div enhanced as a button in
+   accessibility-fixes.html; provide a visible keyboard focus indicator. */
+.callout-header[role="button"]:focus-visible {
+  outline: 3px solid var(--llm-amber);
+  outline-offset: 3px;
+  border-radius: .25rem;
+}
