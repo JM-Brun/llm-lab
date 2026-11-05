@@ -36,6 +36,19 @@ def _valid_registry() -> dict[str, Any]:
         "relation_types": {
             kind: {
                 "direction": "symmetric" if kind in {"contrasts-with", "analogy"} else "directed",
+                "family": (
+                    "associative"
+                    if kind in {"contrasts-with", "analogy"}
+                    else "pedagogical"
+                    if kind == "prerequisite"
+                    else "structural"
+                    if kind in {"part-of", "generalizes"}
+                    else "functional"
+                ),
+                "transitive": kind in {"part-of", "generalizes"},
+                "acyclic": kind in {"prerequisite", "part-of", "generalizes"},
+                "learning_dependency": kind == "prerequisite",
+                "inverse": None,
                 "labels": {"fr": kind, "en": kind},
                 "descriptions": {"fr": "Relation.", "en": "Relationship."},
             }
@@ -144,7 +157,7 @@ def test_generalization_cycles_are_rejected_but_application_cycles_are_allowed()
 
     errors = validate_registry(data)
 
-    assert any("generalization graph must be acyclic" in error for error in errors)
+    assert any("generalizes graph must be acyclic" in error for error in errors)
     assert not any("applies-to" in error for error in errors)
 
 
@@ -232,3 +245,56 @@ def test_registry_validates_relation_direction_metadata() -> None:
     data["relation_types"]["implemented-by"]["direction"] = "symmetric"
     errors = validate_registry(data)
     assert any("is not defined as symmetric" in error for error in errors)
+
+
+def test_relation_contract_requires_semantic_metadata() -> None:
+    data = _valid_registry()
+    data["relation_types"]["implemented-by"].pop("family")
+    data["relation_types"]["implemented-by"].pop("transitive")
+    data["relation_types"]["implemented-by"].pop("acyclic")
+    data["relation_types"]["implemented-by"].pop("learning_dependency")
+
+    errors = validate_registry(data)
+
+    assert any(".family:" in error for error in errors)
+    assert any(".transitive:" in error for error in errors)
+    assert any(".acyclic:" in error for error in errors)
+    assert any(".learning_dependency:" in error for error in errors)
+
+
+def test_only_acyclic_relation_types_reject_cycles() -> None:
+    data = _valid_registry()
+    data["relations"] = [
+        {"from": "token", "type": "part-of", "to": "embedding"},
+        {"from": "embedding", "type": "part-of", "to": "token"},
+        {"from": "token", "type": "applies-to", "to": "embedding"},
+        {"from": "embedding", "type": "applies-to", "to": "token"},
+    ]
+
+    errors = validate_registry(data)
+
+    assert any("part-of graph must be acyclic" in error for error in errors)
+    assert not any("applies-to graph must be acyclic" in error for error in errors)
+
+
+def test_learning_dependency_contract_must_be_directed_pedagogical_and_acyclic() -> None:
+    data = _valid_registry()
+    data["relation_types"]["prerequisite"]["family"] = "functional"
+    data["relation_types"]["prerequisite"]["acyclic"] = False
+    data["relation_types"]["prerequisite"]["direction"] = "symmetric"
+
+    errors = validate_registry(data)
+
+    assert any("learning_dependency: must be directed" in error for error in errors)
+    assert any("learning_dependency: must be acyclic" in error for error in errors)
+    assert any("learning_dependency: family must be pedagogical" in error for error in errors)
+
+
+def test_inverse_relation_declarations_must_be_reciprocal() -> None:
+    data = _valid_registry()
+    data["relation_types"]["implemented-by"]["inverse"] = "applies-to"
+    data["relation_types"]["applies-to"]["inverse"] = None
+
+    errors = validate_registry(data)
+
+    assert any("must point back" in error for error in errors)

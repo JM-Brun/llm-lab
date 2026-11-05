@@ -32,6 +32,15 @@ RELATION_TYPES = {
     "mapped-by",
 }
 PAGE_ID = re.compile(r"(?:fr|en)/[a-z0-9]+(?:-[a-z0-9]+)*")
+RELATION_FAMILIES = {
+    "structural",
+    "pedagogical",
+    "representational",
+    "constraint",
+    "functional",
+    "evaluative",
+    "associative",
+}
 
 
 def _published_page_ids() -> set[str]:
@@ -218,8 +227,7 @@ def validate_registry(
         return errors
 
     seen: set[tuple[str, str, str]] = set()
-    prerequisite_edges: dict[str, list[str]] = {}
-    generalization_edges: dict[str, list[str]] = {}
+    edges_by_type: dict[str, dict[str, list[str]]] = {}
     for index, relation in enumerate(relations):
         where = f"relations[{index}]"
         if not isinstance(relation, dict):
@@ -245,10 +253,7 @@ def validate_registry(
                         f"{where}: {kind} must use canonical lexical order "
                         "(from < to) because it is symmetric"
                     )
-                if kind == "prerequisite":
-                    prerequisite_edges.setdefault(source, []).append(target)
-                elif kind == "generalizes":
-                    generalization_edges.setdefault(source, []).append(target)
+                edges_by_type.setdefault(kind, {}).setdefault(source, []).append(target)
 
     relation_types = data.get("relation_types")
     used_types = {kind for _, kind, _ in seen}
@@ -270,6 +275,23 @@ def validate_registry(
                 continue
             if definition.get("direction") not in {"directed", "symmetric"}:
                 errors.append(f"{where}.direction: expected directed or symmetric")
+            if definition.get("family") not in RELATION_FAMILIES:
+                errors.append(f"{where}.family: expected one of {sorted(RELATION_FAMILIES)}")
+            for field in ("transitive", "acyclic", "learning_dependency"):
+                if type(definition.get(field)) is not bool:
+                    errors.append(f"{where}.{field}: expected a boolean")
+            inverse = definition.get("inverse")
+            if inverse is not None and (
+                not isinstance(inverse, str) or inverse not in relation_types
+            ):
+                errors.append(f"{where}.inverse: expected null or a defined relation type")
+            if definition.get("learning_dependency") is True:
+                if definition.get("direction") != "directed":
+                    errors.append(f"{where}.learning_dependency: must be directed")
+                if definition.get("acyclic") is not True:
+                    errors.append(f"{where}.learning_dependency: must be acyclic")
+                if definition.get("family") != "pedagogical":
+                    errors.append(f"{where}.learning_dependency: family must be pedagogical")
             for field in ("labels", "descriptions"):
                 values = definition.get(field)
                 if not isinstance(values, dict) or set(values) != {"fr", "en"}:
@@ -282,11 +304,32 @@ def validate_registry(
                 kind not in SYMMETRIC_RELATION_TYPES and definition.get("direction") == "symmetric"
             ):
                 errors.append(f"{where}.direction: {kind} is not defined as symmetric")
+            if isinstance(inverse, str) and inverse in relation_types:
+                inverse_definition = relation_types[inverse]
+                if (
+                    isinstance(inverse_definition, dict)
+                    and inverse_definition.get("inverse") != kind
+                ):
+                    errors.append(
+                        f"{where}.inverse: inverse relation {inverse!r} must point back to {kind!r}"
+                    )
 
-    if _has_cycle(prerequisite_edges):
-        errors.append("relations: prerequisite graph must be acyclic")
-    if _has_cycle(generalization_edges):
-        errors.append("relations: generalization graph must be acyclic")
+        for kind, definition in relation_types.items():
+            if (
+                isinstance(definition, dict)
+                and definition.get("acyclic") is True
+                and _has_cycle(edges_by_type.get(kind, {}))
+            ):
+                errors.append(f"relations: {kind} graph must be acyclic")
+            if isinstance(definition, dict) and definition.get("learning_dependency") is True:
+                for index, relation in enumerate(relations):
+                    if isinstance(relation, dict) and relation.get("type") == kind:
+                        rationale = relation.get("rationale")
+                        if not isinstance(rationale, str) or not rationale.strip():
+                            errors.append(
+                                f"relations[{index}].rationale: required for learning "
+                                f"dependency {kind!r}"
+                            )
     return errors
 
 
