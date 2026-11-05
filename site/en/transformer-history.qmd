@@ -11,7 +11,7 @@ id: "en/transformer-history"
 scope: "Presents a selective, pedagogical timeline of precursors and milestones leading to Transformer architectures and modern LLM families, while distinguishing submission, announcement, and release dates. It explicitly avoids claiming an exhaustive history, absolute priority, or a single causal path from attention to current models."
 purpose: "Place major milestones in context, distinguish architecture families and training objectives, and critically interpret what a selective chronology can establish without inferring exhaustive coverage or simple causation."
 suggested_route:
-  previous: "en/glossary"
+  previous: null
   next: null
 hierarchy:
   parents: ["en/index"]
