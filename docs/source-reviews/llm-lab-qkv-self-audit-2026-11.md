@@ -180,3 +180,24 @@ The project's distinctive contribution is the **auditable synthesis and learning
 - [Codefinity source review](qkv-codefinity-course-2026-11.md)
 
 **Audit boundary:** this document records a source-content and repository-level audit. It does not substitute for rendered-site, accessibility, user-study or legal/licensing review.
+
+
+## 10. Post-audit implementation and publication status — 2026-11-05
+
+The audit above describes the pre-audit baseline at commit `79b91333a41bb74aa10a29f9e9a201eeb87a35a7`. The following changes were merged after that baseline; they should not be mistaken for evidence that every publication-readiness item is complete.
+
+| Follow-up | Result | Evidence / boundary |
+|---|---|---|
+| Comparative self-audit and bounded bilingual corrections | Merged in [PR #486](https://github.com/JM-Brun/llm-lab/pull/486), merge commit `0ccd87668f72a77174abf9254b58d3eaefe5426e` | CI, Quarto and publish workflows passed for the merged revision |
+| Attention regression fixtures | Merged in [PR #489](https://github.com/JM-Brun/llm-lab/pull/489), merge commit `bd1f9ac3045ae6f6ad70916cbdf15f83828c33f4` | Python CI and Quarto passed; deterministic fixtures now cover weighted aggregation, unequal key/value widths, one-position attention, masked-key normalization, dot-product/cosine ranking and a wrong-axis softmax failure |
+| Independent learner pilot protocol | Extended in [PR #490](https://github.com/JM-Brun/llm-lab/pull/490), merge commit `c3f980b21b5a9f56a7a226f409636eff608843e7` | Adds bilingual pre-reading and post-reading Q/K/V probes, an optional geometry transfer item and a lightweight rubric; protocol only, not executed |
+| Source comparison and provenance | Continued in [#483](https://github.com/JM-Brun/llm-lab/issues/483) | Fresh page-text inspection confirms figure placements and course quiz text; embedded source image bytes and reuse rights remain unresolved |
+| Browser/accessibility validation | Still open in [#483](https://github.com/JM-Brun/llm-lab/issues/483) | The published EN/FR URLs remain inaccessible to the available page reader. No graphical desktop/mobile, keyboard, focus, disclosure, equation or screen-reader review is claimed |
+| Citation/release | Still open in [#488](https://github.com/JM-Brun/llm-lab/issues/488) | A citation draft exists, but no immutable tag/release or DOI has been created. Wait for rendered/accessibility evidence before release |
+| Broader attention implementation | Still gated by [#82](https://github.com/JM-Brun/llm-lab/issues/82) | The current reference implementation is unbatched, single-head NumPy; this work does not add a PyTorch duplicate, multi-head API or gradient validation |
+
+### Current interpretation
+
+LLM Lab is a useful public educational source for the standard Q/K/V formulation because it combines a bilingual conceptual lesson, mathematical continuation, implementation reference, tests, source comparison and explicit epistemic limits. The new tests improve implementation confidence for the cases they exercise; they do **not** establish correctness for all shapes, numerical regimes, architectures or optimized kernels, and they do not establish learner mastery.
+
+The pilot protocol improves the ability to collect formative evidence but remains unrun. The source-media audit remains partial. A stable scholarly citation should identify an immutable release after the browser/accessibility review, not a moving branch or an unverified DOI.
