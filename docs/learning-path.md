@@ -10,7 +10,7 @@ The six-stage route displayed above the exploratory graphs on the bilingual lear
 
 The generator resolves every core and optional page ID against published page metadata and fails on missing or unpublished destinations. The route is conceptual, not a strict prerequisite DAG: pages within a stage are complementary resources, not mandatory sequential gates.
 
-The practical GPT construction route remains the separate [Build path](../site/fr/build-path.qmd) / [EN](../site/en/build-path.qmd). In particular, G2 corpus preparation and training-example construction form a branch for training, not a prerequisite for understanding inference.
+The practical GPT construction route remains the separate [Build path](../site/fr/build-path.qmd) / [EN](../site/en/build-path.qmd). In particular, G1b corpus preparation and G2 training-example construction form a branch for training, not a prerequisite for understanding or demonstrating inference.
 
 
 ## The conceptual order: see the system work before studying how it learns
@@ -23,7 +23,7 @@ The learner-facing course and the implementation dependency graph answer differe
 4. **Unpack representations and computation:** embeddings, positional information, contextual states, Transformer blocks, attention and causal masking.
 5. **Unpack prediction and decoding:** output logits, probabilities, selection strategies, stopping and inference-time efficiency.
 6. **Explain learning:** the next-token prediction objective, sequence likelihood, cross-entropy/loss, gradients, backpropagation, optimization, pretraining and validation. Introduce the parameter-update loop only after the inference path is understood; do not turn corpus engineering or batch construction into prerequisites for this conceptual explanation.
-7. **Prepare training data (G2 branch):** when following Build, prepare a traceable corpus and tokenizer ([corpus preparation](../site/fr/corpus-preparation.qmd) / [EN](../site/en/corpus-preparation.qmd)), then construct context windows and shifted targets ([training examples](../site/fr/training-examples.qmd) / [EN](../site/en/training-examples.qmd)). This branch depends on text/tokenization but is not a prerequisite for understanding or demonstrating inference.
+7. **Prepare training data (G1b → G2 branch):** when following Build, prepare a traceable corpus and fit/freeze its tokenizer ([corpus preparation](../site/fr/corpus-preparation.qmd) / [EN](../site/en/corpus-preparation.qmd), G1b), then construct context windows and shifted targets ([training examples](../site/fr/training-examples.qmd) / [EN](../site/en/training-examples.qmd), G2). This branch depends on G1 text/tokenization and joins the model path at G8 training; it is not a prerequisite for understanding or demonstrating inference (G3–G7).
 8. **Explain adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation; keep these distinct.
 
 ### Reader-facing sequence and operational branches
