@@ -21,6 +21,8 @@ related: ["fr/generation", "fr/logits", "fr/probabilites", "fr/evaluation-experi
 tags: ["type:deep-dive", "destination:deepen", "topic:decoding", "level:advanced", "language:fr", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-fr-decoding-strategies.qmd >}}
 ::: {.chapter-lead}
 La page [Générer du texte](generation.qmd) présente le mécanisme indispensable : produire une distribution conditionnelle, sélectionner un token, l'ajouter au contexte et recommencer. Cette page facultative étudie les choix plus fins qui transforment cette distribution ou recherchent des séquences. Ils ne modifient pas les paramètres du modèle, mais changent la distribution effective des sorties et les compromis entre diversité, cohérence et fidélité à la consigne.
 :::

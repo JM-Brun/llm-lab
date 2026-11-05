@@ -20,6 +20,8 @@ related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:probabilites", "level:core", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-probabilities.qmd >}}
 ::: {.chapter-lead}
 An LLM does not directly produce facts or probabilities of truth. At each position, it produces scores that are transformed into a distribution over possible tokens, conditioned on the prefix.
 :::

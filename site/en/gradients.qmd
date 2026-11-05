@@ -20,6 +20,8 @@ related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:gradients", "level:core", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-gradients.qmd >}}
 ::: {.chapter-lead}
 The gradient $\nabla_\theta\mathcal{L}$ collects partial derivatives of the loss with respect to learned parameters. It describes local objective variation; by itself, it does not guarantee global improvement.
 :::

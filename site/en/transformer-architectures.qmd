@@ -21,6 +21,8 @@ related: ["en/transformer-history", "en/transformer", "en/generation", "en/hybri
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-transformer-architectures.qmd >}}
 ::: {.chapter-lead}
 A Transformer can use an encoder, a decoder, or both. This choice determines which positions can exchange information and how the model processes a sequence. It does not, by itself, determine the training objective or the task being performed.
 :::

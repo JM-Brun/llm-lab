@@ -21,6 +21,8 @@ related: []
 tags: ["type:concept-lesson", "destination:deepen", "topic:scaling-laws", "level:advanced", "language:fr", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-fr-scaling-laws.qmd >}}
 ::: {.chapter-lead}
 Les **lois d'échelle** (*scaling laws*) décrivent des régularités empiriques entre les ressources utilisées pour entraîner un modèle — notamment le nombre de paramètres, la quantité de données et le calcul — et une mesure de performance telle que la perte de prédiction. Elles aident à comparer des régimes d'entraînement et à répartir un budget de calcul. Elles ne définissent pas une taille minimale universelle pour qu'un modèle soit un LLM.
 :::

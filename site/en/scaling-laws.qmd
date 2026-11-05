@@ -21,6 +21,8 @@ related: []
 tags: ["type:concept-lesson", "destination:deepen", "topic:scaling-laws", "level:advanced", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-scaling-laws.qmd >}}
 ::: {.chapter-lead}
 **Scaling laws** describe empirical regularities between the resources used to train a model—notably parameter count, data volume, and compute—and a performance measure such as prediction loss. They help compare training regimes and allocate a compute budget. They do not define a universal minimum size for a model to count as an LLM.
 :::

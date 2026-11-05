@@ -20,6 +20,8 @@ related: ["en/entropy", "en/cross-entropy"]
 tags: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-likelihood.qmd >}}
 ::: {.chapter-lead}
 Likelihood measures the probability of observed data for fixed parameters. In autoregressive language modeling, it is built from the conditional probabilities of each target token.
 :::

@@ -21,6 +21,8 @@ related: ["en/queries-keys-values", "en/scaled-dot-product-attention"]
 tags: ["type:deep-dive", "destination:deepen", "topic:rope", "level:advanced", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-rope.qmd >}}
 ::: {.chapter-lead}
 This page is an **advanced deep dive**. It assumes that the reader understands the role of positional information and the general attention computation. It studies the geometry of **RoPE** (*Rotary Position Embedding*), which applies position-dependent rotations to queries and keys before attention scores are computed.
 :::

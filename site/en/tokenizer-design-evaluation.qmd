@@ -21,6 +21,8 @@ related: ["en/tokenization-strategies", "en/text-data", "en/unicode-text", "en/e
 tags: ["type:deep-dive", "destination:deepen", "topic:tokenization", "level:advanced", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-tokenizer-design-evaluation.qmd >}}
 ::: {.chapter-lead}
 Understanding how a tokenizer segments text is not enough to select one or compare systems. Vocabulary size affects both sequence length and some model costs; compression metrics do not summarize downstream quality or differences across languages. This page brings together the design and evaluation questions that require a more advanced level of analysis.
 :::

@@ -20,6 +20,8 @@ related: ["fr/entropy", "fr/cross-entropy"]
 tags: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:fr", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-fr-vraisemblance.qmd >}}
 ::: {.chapter-lead}
 Pour des paramètres fixés, la vraisemblance indique la probabilité que le modèle attribue aux données observées. Dans un modèle autorégressif, elle se calcule à partir des probabilités conditionnelles des tokens cibles successifs.
 :::

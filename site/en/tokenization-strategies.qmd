@@ -20,6 +20,8 @@ related: ["en/training-examples"]
 tags: ["type:concept-lesson", "destination:understand", "topic:tokenization-strategies", "level:core", "language:en", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-en-tokenization-strategies.qmd >}}
 ::: {.chapter-lead}
 A tokenizer is a representation and engineering choice. It must cover expected inputs while managing vocabulary size and sequence cost. No segmentation—word, character, byte, or subword—is optimal for every corpus and task.
 :::

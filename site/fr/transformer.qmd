@@ -20,6 +20,8 @@ related: ["fr/text-data", "fr/transformer-block-walkthrough"]
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:fr", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-fr-transformer.qmd >}}
 ::: {.chapter-lead}
 Un **GPT** est un modèle de langage fondé sur un Transformer autorégressif : il reçoit en entrée une séquence de tokens — le contexte — et calcule, pour chaque position, un score non normalisé (*logit*) pour chaque token du vocabulaire. Une distribution de probabilité peut être obtenue à partir de ces scores. Cette page se concentre sur le calcul effectué par le réseau, des représentations d'entrée aux logits. Elle distingue ce calcul de la boucle d'inférence qui sélectionne et ajoute les tokens successifs.
 :::

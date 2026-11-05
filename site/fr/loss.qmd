@@ -20,6 +20,8 @@ related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:loss", "level:core", "language:fr", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-fr-loss.qmd >}}
 ::: {.chapter-lead}
 La *loss* (fonction de perte) est un nombre que l'entraînement cherche à minimiser. Elle est souvent calculée à partir de l'entropie croisée pour chaque token, puis agrégée. La manière de faire cette agrégation fait partie du protocole et doit être documentée.
 :::

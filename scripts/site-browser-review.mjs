@@ -19,7 +19,7 @@ const cases = [
     ...testCase, page: "learning-map.html", kind: "learning-map",
   })),
   ...visualCases.flatMap(testCase =>
-    ["llm-overview.html", "generation.html", "embedding-space.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "logits.html", "cross-entropy.html", "text-data.html"].map(page => ({
+    ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "cross-attention.html", "logits.html", "probabilities.html", "likelihood.html", "decoding-strategies.html", "cross-entropy.html", "loss.html", "gradients.html", "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
       ...testCase, page, kind: "route-context",
     }))
   ),
@@ -288,19 +288,47 @@ for (const testCase of cases) {
       } else {
         const expectedStage = {
           "llm-overview.html": "guided-stage-orientation",
+          "text-data.html": "guided-stage-text-input",
+          "tokenization-strategies.html": "guided-stage-text-input",
+          "unicode-text.html": "guided-stage-text-input",
+          "tokenizer-design-evaluation.html": "guided-stage-text-input",
           "embedding-space.html": "guided-stage-representations",
+          "positional-encoding.html": "guided-stage-representations",
+          "contextualized-representations.html": "guided-stage-representations",
+          "tensors.html": "guided-stage-representations",
+          "rope.html": "guided-stage-representations",
+          "transformer.html": "guided-stage-computation",
           "queries-keys-values.html": "guided-stage-computation",
           "scaled-dot-product-attention.html": "guided-stage-computation",
           "causal-masking.html": "guided-stage-computation",
+          "cross-attention.html": "guided-stage-computation",
           "logits.html": "guided-stage-prediction",
+          "probabilities.html": "guided-stage-prediction",
+          "likelihood.html": "guided-stage-prediction",
+          "decoding-strategies.html": "guided-stage-prediction",
           "cross-entropy.html": "guided-stage-learning-evaluation",
-          "text-data.html": "guided-stage-text-input",
+          "loss.html": "guided-stage-learning-evaluation",
+          "gradients.html": "guided-stage-learning-evaluation",
+          "experimental-evaluation.html": "guided-stage-learning-evaluation",
+          "scaling-laws.html": "guided-stage-learning-evaluation",
+          "transformer-architectures.html": "guided-stage-orientation",
+          "llm-limits.html": "guided-stage-orientation",
         }[pagePath];
+        const optionalPages = new Set([
+          "unicode-text.html", "tokenizer-design-evaluation.html", "tensors.html", "rope.html",
+          "cross-attention.html", "decoding-strategies.html", "scaling-laws.html",
+          "transformer-architectures.html", "llm-limits.html",
+        ]);
+        const optionalRole = context.locator(".guided-page-context__role");
+        const optionalRoleText = await optionalRole.innerText().catch(() => "");
+        const roleMatches = optionalPages.has(pagePath)
+          ? /optional|facultatif/i.test(optionalRoleText)
+          : await optionalRole.count() === 0;
         if (!expectedStage || item.routeContext.isMultiple || !item.routeContext.navLandmark ||
             item.routeContext.currentPageMarkers !== 0 || stageFragments.length !== 1 ||
             stageFragments[0] !== expectedStage || !item.routeContext.accessibleLabel ||
-            item.routeContext.visibleCurrentPageText.includes(item.h1)) {
-          throw new Error("single-stage context repeats the page heading or does not expose the expected labelled stage link");
+            item.routeContext.visibleCurrentPageText.includes(item.h1) || !roleMatches) {
+          throw new Error("single-stage context repeats the page heading, misstates its route stage/role, or lacks the expected labelled stage link");
         }
       }
       if (["embedding-space.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "logits.html", "cross-entropy.html"].includes(pagePath)) {

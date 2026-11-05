@@ -20,6 +20,8 @@ related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:fr", "status:published"]
 -->
 
+
+{{< include ../includes/generated-guided-context-fr-positional-encoding.qmd >}}
 ::: {.chapter-lead}
 L'attention compare des représentations de tokens, mais elle ne connaît pas spontanément leur ordre. Un mécanisme positionnel apporte cette information : il permet au modèle de distinguer, par exemple, « le chat poursuit le chien » de « le chien poursuit le chat ». Cette page présente les grandes familles de mécanismes à un niveau conceptuel ; les propriétés géométriques et la dérivation de RoPE sont réservées à un [approfondissement avancé](rope.qmd).
 :::
