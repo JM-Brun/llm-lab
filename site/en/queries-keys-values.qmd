@@ -48,9 +48,9 @@ Codefinity offers a geometric intuition: picture Q and K as vectors whose orient
 
 For two vectors, the dot product can be written as:
 
-$
+$$
 q^\top k = \lVert q\rVert\,\lVert k\rVert\cos(\theta).
-$
+$$
 
 The angle is only part of the score: **the dot product also depends on the norms** of Q and K. It is not, in general, cosine similarity. In attention, these scores are subsequently scaled, normalized with softmax over accessible keys, and used to weight V. There is no requirement to select one nearest neighbour, and no automatic semantic-relevance interpretation.
 
@@ -64,7 +64,7 @@ Source of this perspective: [Codefinity, *Queries, Keys, and Values: The Buildin
 ::: {.callout-note title="A complementary illustration in the source"}
 Nishanthan K provides a complementary visual explanation of the Q/K/V roles in the article. [Open the article and its original illustration on Medium](https://nishanthan-k.medium.com/how-query-key-and-value-qkv-work-in-transformers-1274bfa14ea8) (a mirror of the [DEV Community article](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a)).
 
-Reference: Nishanthan K, *How Query, Key, and Value (QKV) Work in Transformers*, DEV Community, posted October 22 (year not verified). The illustration remains hosted by its source; LLM Lab links to it rather than copying the asset because reuse rights have not been established.
+Reference: Nishanthan K, *How Query, Key, and Value (QKV) Work in Transformers*, DEV Community, posted October 22, 2026. The illustration remains hosted by its source; LLM Lab links to it rather than copying the asset because reuse rights have not been established.
 :::
 
 
