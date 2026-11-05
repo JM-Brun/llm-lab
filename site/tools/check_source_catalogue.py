@@ -76,8 +76,7 @@ def _validate_item_controlled_values(
         errors.append(f"{where}.evidence: expected a mapping")
     elif evidence.get("confidence") not in evidence_confidence_levels:
         errors.append(
-            f"{where}.evidence.confidence: unsupported value "
-            f"{evidence.get('confidence')!r}"
+            f"{where}.evidence.confidence: unsupported value {evidence.get('confidence')!r}"
         )
 
     disposition = item.get("disposition")
