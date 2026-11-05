@@ -60,6 +60,8 @@ For a page with multiple memberships, retain all valid stage contexts and their 
 
 The context is generated from `data/guided-route.yml`; reuse the existing generated partials. Do not derive it from `hierarchy.parents`, which describes conceptual containment and may be multi-parent.
 
+The pedagogical context keeps its own visual grammar: a labelled, numbered stage cue matching the learning-map numbering (for example «02 · Du texte aux tokens»), rendered as a compact pill rather than a text trail. A reader must distinguish the site-location breadcrumb from the pedagogical stage cue at a glance; where a stage title nearly coincides with a page title, the stage number is what keeps the two levels readable.
+
 ### 3.4 Local steppers describe content, not location
 
 A `.pipeline-stepper` is optional and page-specific. Retain it only when it accurately describes a process or representation sequence. Place it after the chapter lead and the short “idea to retain” explanation, so it supports the explanation rather than competing with the title and location cues.
@@ -79,6 +81,7 @@ A page may be reached from multiple stages, concepts, or companion lessons.
 ### 3.6 Semantics, accessibility, and duplication
 
 - Use the native Quarto breadcrumb for site location and a separately labelled semantic `nav` for a single guided-route context.
+- Keep the two levels visually distinct: the site breadcrumb stays a plain grey text trail, while the pedagogical context is a labelled, numbered stage cue and must not render chevron separators that mimic a breadcrumb.
 - Keep labels short, localized, and human-readable; stable identifiers must never leak into visible text.
 - Ensure keyboard focus, visible focus state, sufficient contrast, and a usable narrow-screen layout.
 - Do not use color alone to communicate current position.

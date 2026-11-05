@@ -338,6 +338,7 @@ class GuidedRouteMembership(StrictModel):
     """One page's explicit membership in a guided-route stage."""
 
     stage_id: str
+    stage_index: int
     stage_title: str
     stage_objective: str
     role: Literal["core", "optional"]
@@ -353,11 +354,12 @@ def build_guided_route_memberships(
     authored in the canonical route registry.
     """
     memberships: dict[str, list[GuidedRouteMembership]] = {}
-    for stage in stages:
+    for stage_index, stage in enumerate(stages, start=1):
         for page in stage.pages:
             memberships.setdefault(page.id, []).append(
                 GuidedRouteMembership(
                     stage_id=stage.id,
+                    stage_index=stage_index,
                     stage_title=stage.title,
                     stage_objective=stage.objective,
                     role="core",
@@ -367,6 +369,7 @@ def build_guided_route_memberships(
             memberships.setdefault(page.id, []).append(
                 GuidedRouteMembership(
                     stage_id=stage.id,
+                    stage_index=stage_index,
                     stage_title=stage.title,
                     stage_objective=stage.objective,
                     role="optional",
@@ -399,7 +402,8 @@ def render_guided_page_context_markdown(
             + "</span>",
             (
                 '  <a class="guided-page-context__stage" href="learning-map.html#guided-stage-'
-                f'{membership.stage_id}">{escape(membership.stage_title)}</a>'
+                f'{membership.stage_id}">{membership.stage_index:02d} · '
+                f"{escape(membership.stage_title)}</a>"
             ),
         ]
         if membership.role == "optional":
@@ -430,7 +434,8 @@ def render_guided_page_context_markdown(
                 "    <li>",
                 (
                     '      <a href="learning-map.html#guided-stage-'
-                    f'{membership.stage_id}">{escape(membership.stage_title)}</a>'
+                    f'{membership.stage_id}">{membership.stage_index:02d} · '
+                    f"{escape(membership.stage_title)}</a>"
                 ),
                 f'      <span class="guided-page-context__role">{role_label}</span>',
                 f"      <p>{escape(membership.stage_objective)}</p>",

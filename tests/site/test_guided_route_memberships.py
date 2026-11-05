@@ -82,6 +82,7 @@ def test_guided_route_stage_anchors_are_stable(language: str) -> None:
 def test_single_membership_renders_as_context_not_as_a_parent_claim() -> None:
     membership = GENERATOR["GuidedRouteMembership"](
         stage_id="representations",
+        stage_index=3,
         stage_title="From IDs to representations",
         stage_objective="Trace embedding lookup and contextualization.",
         role="optional",
@@ -100,6 +101,7 @@ def test_single_membership_renders_as_context_not_as_a_parent_claim() -> None:
         'class="guided-page-context__stage" '
         'href="learning-map.html#guided-stage-representations"' in rendered
     )
+    assert "03 · From IDs to representations" in rendered
     assert "Optional resource" in rendered
 
 
@@ -107,12 +109,14 @@ def test_multiple_memberships_are_all_rendered_with_their_purposes() -> None:
     memberships = [
         GENERATOR["GuidedRouteMembership"](
             stage_id="orientation",
+            stage_index=1,
             stage_title="Orient yourself",
             stage_objective="Observe a complete generation loop.",
             role="core",
         ),
         GENERATOR["GuidedRouteMembership"](
             stage_id="prediction",
+            stage_index=5,
             stage_title="From hidden states to predictions",
             stage_objective="Connect logits, probabilities and next-token selection.",
             role="core",
@@ -127,6 +131,8 @@ def test_multiple_memberships_are_all_rendered_with_their_purposes() -> None:
     assert "guided-page-context--multiple" in rendered
     assert "guided-stage-orientation" in rendered
     assert "guided-stage-prediction" in rendered
+    assert "01 · Orient yourself" in rendered
+    assert "05 · From hidden states to predictions" in rendered
     assert "Observe a complete generation loop." in rendered
     assert "Connect logits, probabilities and next-token selection." in rendered
     assert "Core stage" in rendered
