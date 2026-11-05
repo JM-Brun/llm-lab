@@ -43,7 +43,7 @@ The geometric perspective answers **what kind of objects are being compared**: Q
 q^	op k = lVert qVert,lVert kVertcos(	heta).
 ]
 
-This distinction matters. Describing vectors as “aligned” can tempt the learner to think only about angle or cosine similarity. The dot product is not generally cosine similarity because the vector norms also matter. In scaled dot-product attention, scores are divided by \\(\sqrt{d_k}\\), normalized with softmax over accessible keys, and used to weight values. No hard nearest-neighbour selection is implied.
+This distinction matters. Describing vectors as “aligned” can tempt the learner to think only about angle or cosine similarity. The dot product is not generally cosine similarity because the vector norms also matter. In scaled dot-product attention, scores are divided by \(\sqrt{d_k}\), normalized with softmax over accessible keys, and used to weight values. No hard nearest-neighbour selection is implied.
 
 **Integration:** the geometric perspective is an optional, collapsible note on both Q/K/V pages. It is attributed to Codefinity but rewritten in original project language and mathematically bounded. The original Codefinity figure was not reused: it was not visually inspected and its reuse rights are unknown.
 
