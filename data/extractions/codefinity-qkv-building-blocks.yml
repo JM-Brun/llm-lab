@@ -57,6 +57,7 @@ pedagogical_model:
       - {id: src-key, kind: representation, description: "Vector associated with each candidate position and framed as what it offers for matching.", locator: "Definition, lines 19–24"}
       - {id: src-value, kind: representation, description: "Vector framed as the information passed into the output when its key receives attention weight.", locator: "Definition, lines 19–24"}
       - {id: src-query-key-alignment, kind: intermediate, description: "Geometric alignment between query and key vectors, described qualitatively as determining how much information flows.", locator: "Introduction, lines 13–14"}
+      - {id: src-contextual-aggregation, kind: intermediate, description: "Context-dependent weighted combination of information from sequence positions, rather than equal or fixed pooling.", locator: "Introduction, lines 13–15; knowledge check, question 3, lines 72–85"}
       - {id: src-bank-example, kind: pedagogical-anchor, description: "Lexical ambiguity of bank in a riverside sentence; river-related context is used to motivate which information may inform the representation at bank.", locator: "Definition example, line 25"}
       - {id: src-quiz-purpose, kind: assessment, description: "Four-option question about the primary purpose of Q/K/V: assigning dynamic weights based on relevance.", locator: "Knowledge check, question 1, lines 36–55"}
       - {id: src-quiz-pooling, kind: assessment, description: "Four-option question contrasting attention dynamic weighting with equal or fixed pooling.", locator: "Knowledge check, question 2, lines 58–70"}
@@ -66,6 +67,8 @@ pedagogical_model:
       - {from: src-query-key-alignment, type: derived-from, to: src-query}
       - {from: src-query-key-alignment, type: derived-from, to: src-key}
       - {from: src-query-key-alignment, type: controls-contribution-of, to: src-value}
+      - {from: src-query-key-alignment, type: determines-weights-for, to: src-contextual-aggregation}
+      - {from: src-contextual-aggregation, type: aggregates, to: src-value}
       - {from: src-bank-example, type: illustrates, to: src-query}
       - {from: src-bank-example, type: illustrates, to: src-key}
       - {from: src-bank-example, type: illustrates, to: src-value}
@@ -73,7 +76,8 @@ pedagogical_model:
       - {from: src-quiz-purpose, type: assesses, to: src-key}
       - {from: src-quiz-purpose, type: assesses, to: src-value}
       - {from: src-quiz-pooling, type: assesses, to: src-query-key-alignment}
-      - {from: src-quiz-context, type: assesses, to: src-bank-example}
+      - {from: src-quiz-pooling, type: assesses, to: src-contextual-aggregation}
+      - {from: src-quiz-context, type: assesses, to: src-contextual-aggregation}
     interpretation: "This source-local graph is an editorial reconstruction of the lesson text, not a formal graph defined by Codefinity. The geometric-alignment wording is intentionally not translated into a claim that attention is cosine similarity or nearest-neighbour retrieval."
   learning_outcomes:
     - {status: inferred, outcome: "Distinguish the functional roles of queries, keys and values in attention.", basis: "The definition and recap explicitly contrast searching, matching and transmitted information."}
