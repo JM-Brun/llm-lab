@@ -1399,4 +1399,473 @@ sources:
       pages: [en/transformer, fr/transformer]
       concepts: [token, token-embedding, contextualized-representation, self-attention]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+  - id: raschka-bpe-from-scratch-2025
+    title: "BPE from Scratch"
+    creators: ["Sebastian Raschka"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://sebastianraschka.com/blog/2025/bpe-from-scratch.html"
+    publisher: "Sebastian Raschka"
+    publication_date: "2025"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, method:bpe, topic:implementation]
+      concept_ids: [token]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation, pedagogy]
+      audiences: [learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Article explanation of BPE training/encoding and companion implementation references"
+        limitations:
+          - "No independent clean-environment execution was recorded in this source audit."
+          - "No third-party figure or code reuse permission was established."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: philip-mueller-bpe-explainer
+    title: "BPE Explainer"
+    creators: ["Müller", "Steinbach"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://philipmueller.dev/bpe-visualization/"
+    publisher: "Philip Müller"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, method:bpe, topic:visualization]
+      concept_ids: [token]
+    metadata:
+      technical_level: introductory
+      contribution_types: [pedagogy, visualization]
+      audiences: [beginner, learner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Interactive sequence for pair frequency, merge selection, vocabulary growth and encoding"
+          - "Conceptual claims and teaching role in the source audit"
+        limitations:
+          - "Interactive behavior was reviewed as an external resource; no code or visual asset was copied."
+          - "Exact reuse rights for figures and interface assets were not established."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+
+  - id: cornell-byte-pair-visualizer
+    title: "Interactive Tokenization Visualizer"
+    creators: ["Cornell CS4782"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://www.cs.cornell.edu/courses/cs4782/2026sp/demos/bytepair/"
+    publisher: "Cornell University"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Spring 2026 course demo"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, method:bpe, method:wordpiece, topic:visualization]
+      concept_ids: [token]
+    metadata:
+      technical_level: introductory
+      contribution_types: [pedagogy, visualization]
+      audiences: [beginner, learner]
+    scan_status: partially-scanned
+    integration_status: deferred
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Interactive BPE/WordPiece comparison and visible UI output"
+        limitations:
+          - "The inspected UI displayed a 'Frequency: undefined' value; this may be a demo/data issue."
+          - "A dependable current interaction state was not established."
+          - "No screenshot or external asset was copied."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md]
+
+  - id: bytebytego-how-llms-learn-from-internet-2025
+    title: "How LLMs Learn from the Internet"
+    creators: ["ByteByteGo"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://blog.bytebytego.com/p/how-llms-learn-from-the-internet"
+    publisher: "ByteByteGo"
+    publication_date: "2025-12-01"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:corpus-preparation, topic:tokenization]
+      concept_ids: [token]
+    metadata:
+      technical_level: introductory
+      contribution_types: [pedagogy]
+      audiences: [beginner, learner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Article overview of data collection, deduplication, filtering, quality/compliance and tokenization"
+          - "Pedagogical role in the text-data pipeline comparison"
+        limitations:
+          - "Secondary overview; numerical scale estimates and broad claims are not treated as verified measurements."
+          - "No external image reuse rights were established."
+    related:
+      pages: [en/text-data, fr/text-data]
+      concepts: [token]
+      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+
+  - id: bytebytego-how-llms-see-world-2025
+    title: "How LLMs See the World"
+    creators: ["ByteByteGo"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://blog.bytebytego.com/p/how-llms-see-the-world"
+    publisher: "ByteByteGo"
+    publication_date: "2025-08-04"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:tokenization, topic:token-embedding, topic:contextualized-representations]
+      concept_ids: [token, token-embedding, contextualized-representation]
+    metadata:
+      technical_level: introductory
+      contribution_types: [pedagogy, visualization]
+      audiences: [beginner, learner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Article overview of tokens, IDs, embeddings, tokenizer families and contrastive examples"
+          - "Coverage cross-check against the bilingual text-data and tokenization lessons"
+        limitations:
+          - "Secondary explanatory source; claims linking fragmentation directly to reasoning errors require qualification."
+          - "Token count and embedding similarity are not treated as universal measures of model quality or meaning."
+          - "No external image reuse rights were established."
+    related:
+      pages: [en/text-data, fr/text-data, en/tokenization-strategies, fr/tokenization-strategies, en/embedding-space, fr/embedding-space]
+      concepts: [token, token-embedding, contextualized-representation]
+      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+
+  - id: vizuara-tokenization-from-scratch-bpe
+    title: "Tokenization from Scratch: Building Byte-Pair Encoding by Hand"
+    creators: ["Vizuara"]
+    source_type: course
+    identifiers: {}
+    canonical_url: "https://pods.vizuara.ai/courses/build-llm/tokenization-from-scratch-building-byte-pair-encoding-by-han"
+    publisher: "Vizuara"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, method:bpe, topic:pedagogy]
+      concept_ids: [token]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [pedagogy, implementation, visualization]
+      audiences: [learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Course landing-page description, advertised article/figures/equations/notebooks and case-study structure"
+          - "Pedagogical fit assessment recorded in issue #147"
+        limitations:
+          - "The full course content may be access-controlled; the audit does not claim inspection of all lessons or notebooks."
+          - "No course asset reuse rights were established."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+
+  - id: vizuara-llms-from-30000-feet
+    title: "LLMs from 30,000 Feet"
+    creators: ["Vizuara"]
+    source_type: course
+    identifiers: {}
+    canonical_url: "https://mu.vizuara.ai/learn/llms-30k"
+    publisher: "Vizuara"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:tokenization, topic:embeddings, topic:pedagogy]
+      concept_ids: [token, token-embedding, contextualized-representation]
+    metadata:
+      technical_level: introductory
+      contribution_types: [pedagogy]
+      audiences: [beginner, learner]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-10-30"
+        status: partially-scanned
+        inspected_scope:
+          - "Micro-course description and lesson topics including text-to-numbers and multilingual tokenizer difficulties"
+          - "Pedagogical format and fit assessment recorded in issue #147"
+        limitations:
+          - "The full course lesson content was not exhaustively inspected."
+          - "No visual asset reuse rights were established."
+    related:
+      pages: [en/text-data, fr/text-data, en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token, token-embedding, contextualized-representation]
+      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+
+  - id: goldman-unpacking-tokenization-2024
+    title: "Unpacking Tokenization: Evaluating Text Compression and its Correlation with Model Performance"
+    creators: ["Goldman et al."]
+    source_type: paper
+    identifiers: {}
+    canonical_url: "https://aclanthology.org/2024.findings-acl.134/"
+    publisher: "Findings of ACL 2024 / ACL Anthology"
+    publication_date: "2024"
+    updated_date: null
+    language: en
+    version: "Published proceedings version"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: [scale-research]
+      tags: [topic:tokenizer-evaluation, topic:compression, topic:downstream-performance]
+      concept_ids: [token]
+    metadata:
+      technical_level: advanced
+      contribution_types: [experiment, benchmark]
+      audiences: [researcher, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-29"
+        status: partially-scanned
+        inspected_scope:
+          - "Publication metadata and paper contribution as recorded in the tokenizer-evaluation source audit"
+          - "Role in the bilingual comparison of representation efficiency and downstream performance"
+        limitations:
+          - "The migration reuses the prior source audit; it does not independently re-audit the complete paper."
+          - "Reported associations remain scoped to the study's experimental setup."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: [token]
+      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+
+  - id: schmidt-tokenization-more-than-compression-2024
+    title: "Tokenization Is More Than Compression"
+    creators: ["Schmidt et al."]
+    source_type: paper
+    identifiers: {}
+    canonical_url: "https://aclanthology.org/2024.emnlp-main.40/"
+    publisher: "EMNLP 2024 / ACL Anthology"
+    publication_date: "2024"
+    updated_date: null
+    language: en
+    version: "Published proceedings version"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: [scale-research]
+      tags: [topic:tokenizer-evaluation, topic:compression, topic:downstream-performance]
+      concept_ids: [token]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, experiment, benchmark]
+      audiences: [researcher, practitioner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-10-29"
+        status: partially-scanned
+        inspected_scope:
+          - "Publication metadata and paper contribution as recorded in the tokenizer-evaluation source audit"
+          - "Role in distinguishing compression from downstream tokenizer quality"
+        limitations:
+          - "The migration reuses the prior source audit; it does not independently re-audit the complete paper."
+          - "Claims are scoped to the cited experiments and should not be generalized beyond their evaluation settings."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: [token]
+      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+
+  - id: mike-x-cohen-llm-breakdown-tokenization-2025
+    title: "LLM breakdown 1/6: Tokenization (words to integers)"
+    creators: ["Mike X Cohen"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://mikexcohen.substack.com/p/llm-breakdown-16-tokenization-words"
+    publisher: "Substack"
+    publication_date: "2025"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, topic:pedagogy, ecosystem:python]
+      concept_ids: [token]
+    metadata:
+      technical_level: introductory
+      contribution_types: [pedagogy, implementation]
+      audiences: [learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-10-29"
+        status: partially-scanned
+        inspected_scope:
+          - "Article explanatory structure, linked notebook and suggested inspection-first activity"
+          - "Claims about BPE and token count compared with canonical project treatment"
+        limitations:
+          - "The article's 'optimal chunking' and simple compression-ratio language require qualification."
+          - "Figures are not approved for reuse; notebook/code would require separate dependency review."
+    related:
+      pages: [en/text-data, fr/text-data, en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+
+  - id: rohan-paul-vocabulary-size-tradeoffs-2025
+    title: "Balancing Vocabulary Size in Modern LLMs (GPT-4, LLaMA, Mistral)"
+    creators: ["Rohan Paul"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://www.rohan-paul.com/p/tutorial-balancing-vocabulary-size"
+    publisher: "Rohan Paul"
+    publication_date: "2025"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:tokenizer-evaluation, topic:vocabulary-size, topic:embedding-geometry]
+      concept_ids: [token, token-embedding]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [pedagogy, theory]
+      audiences: [learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-10-29"
+        status: partially-scanned
+        inspected_scope:
+          - "Article's discussion of vocabulary size, sequence length and embedding/output matrix costs"
+          - "Fixed-token-budget versus fixed-epoch comparison and caveats recorded in the source audit"
+        limitations:
+          - "Secondary source; model-specific claims and quantitative statements require primary-source verification."
+          - "Larger vocabulary does not guarantee fewer tokens for every text or tokenizer."
+          - "No figure reuse rights were established."
+    related:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies, en/embedding-space, fr/embedding-space]
+      concepts: [token, token-embedding]
+      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+
+  - id: yael-gomez-tokenization-overview-2025
+    title: "How LLMs See the World: The Magic of Tokenization (Part 1)"
+    creators: ["Yael Gomez"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://yaelgomez.substack.com/p/how-llms-see-the-world-the-magic"
+    publisher: "Substack"
+    publication_date: "2025"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: []
+      tags: [topic:tokenization, topic:pedagogy]
+      concept_ids: [token]
+    metadata:
+      technical_level: introductory
+      contribution_types: [pedagogy]
+      audiences: [beginner, learner]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-10-29"
+        status: partially-scanned
+        inspected_scope:
+          - "Article's beginner questions, whitespace examples and model-dependent tokenization discussion"
+          - "Claims about sequence-length complexity and BPE compared with canonical technical treatment"
+        limitations:
+          - "Secondary overview; metaphors are not literal technical descriptions."
+          - "Quadratic complexity claims require scope to standard full self-attention's pairwise attention term."
+          - "Figures are not approved for reuse."
+    related:
+      pages: [en/text-data, fr/text-data, en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
