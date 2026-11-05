@@ -148,3 +148,12 @@ This is a source-content and canonical-source inspection, not a rendered browser
 **Synthesis update:** the fourth source adds depth and a more explicit teaching route, not a new canonical mechanism. Its scaling derivation remains reference-only because the dedicated deep dive owns the mathematical derivation. Routing/payload is integrated on the Q/K/V pages; message passing and the convex-hull property are integrated on the scaled-attention pages with explicit scope limits. This supersedes the earlier provisional deferral of convex hull. Source text inspection does not establish figure quality, code execution, interactive assessment quality or learner benefit.
 
 For the consolidated comparison across all four sources and both EN/FR page pairs, see the [four-source comparison and canonical-page audit](qkv-four-source-comparison-2026-11.md).
+
+
+## 8. Operational learner outcomes — 2026-11-05
+
+The canonical Q/K/V learning contract is expressed as five operations: recognize the three roles; reconstruct the projections; understand how the projections are learned; predict the consequences of changing projection parameters; and transfer the reasoning to other attention mechanisms.
+
+These operations are now documented in both canonical Q/K/V pages and represented by tasks in both language versions of the Attention exercise hub. The exercise map reuses the existing projection/shape task and role self-check, adds a gradient-learning explanation task, a W_Q/W_K/W_V counterfactual task, and a cross-attention transfer task. The weighted-sum calculation remains in its existing ownership location.
+
+This is a coverage claim about authored content and exercises, not evidence that learners have demonstrated mastery. Browser rendering and the #447 learner pilot remain separate validation gates.
