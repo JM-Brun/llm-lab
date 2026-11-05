@@ -325,10 +325,10 @@ In the standard mechanism, $W_Q$, $W_K$, and $W_V$ are trained from the model's 
 
 The projections have no independent targets: they are adjusted to reduce the model's prediction loss. The gradient to Q and K passes through compatibility-score computation and normalization; the gradient to V passes through weighted aggregation. For a linear projection $Q=XW_Q$, the chain rule gives:
 
-$
+$$
 \frac{\partial\mathcal L}{\partial W_Q}
 =X^\top\frac{\partial\mathcal L}{\partial Q}.
-$
+$$
 
 Likewise, $\partial\mathcal L/\partial W_K=X^\top(\partial\mathcal L/\partial K)$ and $\partial\mathcal L/\partial W_V=X^\top(\partial\mathcal L/\partial V)$. These are local linear-layer gradients; the gradients of Q, K, and V come from the complete attention and network computation.
 
@@ -349,9 +349,9 @@ A decoder consults representations produced by an encoder. Let $X_D$ denote deco
 
 In cross-attention, Q comes from the querying stream, while K and V come from the stream being queried:
 
-$
+$$
 Q=X_DW_Q,\qquad K=X_EW_K,\qquad V=X_EW_V.
-$
+$$
 
 With parameters fixed, changing $X_D$ directly affects Q; changing $X_E$ directly affects K and V. Scores and output may then change as a consequence. The functional distinction remains, but the projections no longer share a common input. In MQA, multiple query heads share one K/V head; in GQA, groups of query heads share K/V heads. The number or sharing of K/V heads changes, but the functional distinction remains: Q/K determine weights and V supplies aggregated content. Describe the exact parameterization rather than mechanically copying the standard case.
 

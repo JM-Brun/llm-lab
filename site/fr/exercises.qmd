@@ -325,10 +325,10 @@ Dans le mécanisme standard, les matrices $W_Q$, $W_K$ et $W_V$ sont entraînée
 
 Les projections n'ont pas de cibles indépendantes : elles sont ajustées pour réduire la perte de prédiction du modèle. Le gradient vers Q et K traverse le calcul des scores de compatibilité et leur normalisation ; celui vers V traverse l'agrégation pondérée. Pour une projection linéaire $Q=XW_Q$, la règle de chaîne donne :
 
-$
+$$
 \frac{\partial\mathcal L}{\partial W_Q}
 =X^\top\frac{\partial\mathcal L}{\partial Q}.
-$
+$$
 
 De même, $\partial\mathcal L/\partial W_K=X^\top(\partial\mathcal L/\partial K)$ et $\partial\mathcal L/\partial W_V=X^\top(\partial\mathcal L/\partial V)$. Ce sont des gradients locaux de la couche linéaire ; les gradients de Q, K et V proviennent du calcul complet de l'attention et du réseau.
 
@@ -349,9 +349,9 @@ Un décodeur consulte les représentations produites par un encodeur. On note $X
 
 En attention croisée, Q provient du flux qui consulte et K/V du flux consulté :
 
-$
+$$
 Q=X_DW_Q,\qquad K=X_EW_K,\qquad V=X_EW_V.
-$
+$$
 
 À paramètres fixés, modifier $X_D$ affecte directement Q ; modifier $X_E$ affecte directement K et V. Les scores et la sortie peuvent ensuite changer en conséquence. La distinction fonctionnelle demeure, mais les projections ne partagent plus une entrée commune. En MQA, plusieurs têtes de requête partagent une seule tête K/V ; en GQA, des groupes de têtes de requête partagent des têtes K/V. Le nombre ou le partage des têtes K/V change, mais la distinction fonctionnelle demeure : Q/K déterminent les poids et V fournit le contenu agrégé. Il faut décrire la paramétrisation exacte plutôt que recopier mécaniquement le cas standard.
 
