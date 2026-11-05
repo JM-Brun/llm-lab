@@ -175,5 +175,3 @@ def test_writer_generates_page_contexts_for_every_route_member(
     assert generation_file.read_text(encoding="utf-8") == render_context(
         page_by_id[generation_id], memberships[generation_id], language
     )
-
-
