@@ -1,6 +1,6 @@
 # External-source to learning-system integration workflow
 
-**Status:** normative project workflow · **Version:** 1.0 · **Last reviewed:** 2026-11-04  
+**Status:** normative project workflow · **Version:** 1.1 · **Last reviewed:** 2026-11-05  
 **Related collection:** [Q/K/V source collection](../source-reviews/qkv-source-collection.md)
 
 ## 1. Objective
@@ -187,6 +187,8 @@ Validation should match the changed artifacts:
 - visual inspection of rendered pages and any third-party media;
 - review of claims against primary papers or official technical documentation.
 
+**Visual preservation rule:** a rights audit must not remove, replace, hide, disable or convert an existing embedded illustration to link-only. Record unclear/restrictive rights as findings and escalate potential concerns to the project owner. Any exceptional change to an existing asset requires a separate explicit instruction. For proposed new uses, defer embedding/adaptation until the exact asset and permission are verified.
+
 Record actual CI run status and commit/PR head. A passing early run does not validate later commits. API write success is not content or build validation.
 
 ### Stage 8 — Publish a source comparison and update the collection index
@@ -270,8 +272,8 @@ Use the templates in [`docs/workflows/templates/`](templates/) as starting point
 - Keep the structured extraction as the evidence-oriented record and the Markdown review as its human-readable interpretation. Avoid maintaining two competing copies of the same facts.
 - The source register is the canonical bibliographic/provenance inventory; do not duplicate the full extraction into `data/sources.yml`.
 - Use one cross-source dossier per topic, not one comparison file per pair of sources.
-- Use the visual audit only when the source actually contains relevant media; unresolved figures remain explicitly unknown/link-only.
-- Template files are examples, not schemas. Run the repository's actual validators against completed records and update templates when the canonical data model changes.
+- Use the visual audit only when the source actually contains relevant media. Preserve existing embedded assets during the audit; unknown rights are recorded and escalated, not treated as authorization to remove or convert them. Link-only/defer applies to proposed new uses, not existing embeds.
+- Templates are operational starting points. The source catalogue contract, taxonomy and validator are authoritative; keep templates aligned with them and run the repository's validators against completed records.
 - Preserve unknown values as null/unknown and distinguish `not-inspected`, `unavailable`, `not-applicable` and `not-verified` where relevant.
 
 ## 8. Q/K/V worked application
