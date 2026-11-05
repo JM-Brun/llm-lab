@@ -629,4 +629,10 @@ console.log(JSON.stringify({
   })),
   failures: report.failures,
 }, null, 2));
+// Surface every failure as a GitHub Actions error annotation so the exact
+// failing case is visible in the run summary without downloading artifacts.
+for (const failure of report.failures) {
+  console.log(`::error title=Site browser review failure::${failure.replace(/\s+/g, " ").slice(0, 900)}`);
+}
+
 if (report.failures.length) process.exitCode = 1;
