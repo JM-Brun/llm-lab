@@ -293,6 +293,43 @@ for (const testCase of cases) {
       }
     }
 
+    const calloutSelector = ".callout-header[data-bs-toggle='collapse']";
+    const calloutHeaders = page.locator(calloutSelector);
+    item.callouts = { count: await calloutHeaders.count() };
+    if (item.callouts.count > 0) {
+      const callout = calloutHeaders.first();
+      const controlsId = await callout.getAttribute("aria-controls");
+      const initialExpanded = await callout.getAttribute("aria-expanded");
+      item.callouts.role = await callout.getAttribute("role");
+      item.callouts.tabIndex = await callout.getAttribute("tabindex");
+      item.callouts.accessibleName = await callout.getAttribute("aria-label");
+      item.callouts.controlsTargetExists = Boolean(
+        controlsId && await page.locator(`#${controlsId}`).count() === 1
+      );
+      if (item.callouts.role !== "button" || item.callouts.tabIndex !== "0" ||
+          !item.callouts.accessibleName || !item.callouts.controlsTargetExists ||
+          !["true", "false"].includes(initialExpanded)) {
+        throw new Error("collapsible callout is missing button semantics, name, or a valid controlled target");
+      }
+      const expandedAfterEnter = initialExpanded === "true" ? "false" : "true";
+      await callout.focus();
+      await page.keyboard.press("Enter");
+      await page.waitForFunction(
+        ({ selector, expected }) =>
+          document.querySelector(selector)?.getAttribute("aria-expanded") === expected,
+        { selector: calloutSelector, expected: expandedAfterEnter },
+        { timeout: 5000 }
+      );
+      await page.keyboard.press("Space");
+      await page.waitForFunction(
+        ({ selector, expected }) =>
+          document.querySelector(selector)?.getAttribute("aria-expanded") === expected,
+        { selector: calloutSelector, expected: initialExpanded },
+        { timeout: 5000 }
+      );
+      item.callouts.keyboardEnterAndSpace = true;
+    }
+
     const axe = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
       .analyze();
@@ -308,6 +345,13 @@ for (const testCase of cases) {
       incomplete: axe.incomplete.length,
     };
 
+    const blockingAxe = axe.violations.filter(v => ["aria-allowed-attr", "color-contrast"].includes(v.id));
+    item.axe.blockingViolationCount = blockingAxe.length;
+    if (blockingAxe.length) {
+      report.failures.push(
+        `${pagePath}/${lang}/${label}/${theme}: Axe blocking violations: ${blockingAxe.map(v => v.id).join(", ")}`
+      );
+    }
     if (item.layout.horizontalOverflow || item.learningMapLayout?.horizontalOverflow) {
       report.failures.push(`${pagePath}/${lang}/${label}/${theme}: horizontal overflow`);
     }
