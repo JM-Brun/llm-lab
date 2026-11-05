@@ -20,6 +20,8 @@ related: ["fr/contextualized-representations", "fr/scaled-dot-product-attention"
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-queries-keys-values.qmd >}}
+
 ::: {.chapter-lead}
 La page précédente, [GPT et Transformer : architecture et flux des données](transformer.qmd), situe l'auto-attention dans la passe avant du réseau. Ici, on isole les trois projections qui l'alimentent : **Q**, **K** et **V**. Ce ne sont pas trois catégories de tokens, mais trois transformations apprises d'une représentation. Q et K déterminent les poids ; V fournit le contenu agrégé. La page suivante détaille le calcul de ces poids et de cette agrégation.
 :::

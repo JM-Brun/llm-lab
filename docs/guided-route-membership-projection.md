@@ -1,14 +1,25 @@
 # Guided-route page membership projection
 
-**Status:** implemented as a tested data projection; not yet rendered as page navigation.  
+**Status:** bilingual page-level pilot implemented on overview, generation, embeddings and Q/K/V; visual and accessibility review remains pending.  
 **Source of truth:** `data/guided-route.yml`.  
-**Implementation:** `build_guided_route_memberships()` in `site/tools/build_learning_map.py`.  
+**Implementation:** `build_guided_route_memberships()`, `render_guided_page_context_markdown()`, and `write_guided_page_context_fragments()` in `site/tools/build_learning_map.py`.  
 **Tests:** `tests/site/test_guided_route_memberships.py`.  
-**Coordination:** [#368](https://github.com/JM-Brun/llm-lab/issues/368), [breadcrumb contract PR #516](https://github.com/JM-Brun/llm-lab/pull/516), [stepper cleanup PR #519](https://github.com/JM-Brun/llm-lab/pull/519).
+**Coordination:** [#368](https://github.com/JM-Brun/llm-lab/issues/368), [#337](https://github.com/JM-Brun/llm-lab/issues/337). Historical implementation attempts: [closed PR #516](https://github.com/JM-Brun/llm-lab/pull/516) and [closed PR #519](https://github.com/JM-Brun/llm-lab/pull/519).
 
 ## Purpose
 
 Provide a deterministic page-to-stage index for the Understand curriculum without treating a curriculum stage as a unique conceptual parent. The projection is a read-only view of the existing, validated route model. It does not create a second registry or change page metadata.
+
+## Navigation contract
+
+The route context answers **where this page is used in the guided Understand curriculum**. It is not a projection of the site sidebar, page hierarchy, suggested previous/next links, concept relations, Build dependencies, or the exploratory resource graph. These structures answer different questions and must remain distinct.
+
+- One membership: show a breadcrumb-like ordered context linking to the stage anchor and marking the current page with `aria-current="page"`.
+- Multiple memberships: show every valid stage context and its objective in a separate section; do not use breadcrumb semantics or invent a primary parent.
+- Optional membership: label it as optional, never as a prerequisite.
+- No membership: omit the route context. Build, Practice, Deepen and Reference pages must not receive an Understand context unless explicitly listed in that route.
+
+The shared navigation cue does not impose a universal lesson template. Overview, concept lesson, bridge, guided build, deep dive, practice and reference pages retain their appropriate editorial structures. The component should be placed near the page opening, remain compact, localize its labels, and preserve keyboard and screen-reader semantics.
 
 ## Output contract
 
@@ -50,9 +61,9 @@ The same branch now includes a renderer, `render_guided_page_context_markdown()`
 
 Stage anchors are added to the generated bilingual route fragments, and responsive styles are defined for the two context presentations.
 
-The renderer is covered by tests for a single optional membership, multiple core memberships, stable anchors, and an absent membership. A generator now emits one ignored Quarto partial per route-member page. The English and French overview and generation lessons include these partials as a first page-level pilot: the overview exercises the single-membership path, while generation exercises the multi-membership path. The Quarto build runs the generator before rendering; local builds must run `python site/tools/build_learning_map.py` before `quarto render site`.
+The renderer is covered by tests for a single optional membership, multiple core memberships, stable anchors, and an absent membership. A generator now emits one ignored Quarto partial per route-member page. The English and French overview and generation lessons exercise the single-membership and multi-membership paths. The embeddings and Q/K/V lessons now also include their generated route-context partials, exercising the `representations` and `computation` stages respectively. The Quarto build runs the generator before rendering; local builds must run `python site/tools/build_learning_map.py` before `quarto render site`.
 
-The next design/implementation step must choose an accessible presentation that does not misrepresent multi-membership:
+The remaining work is visual and accessibility validation of the implemented presentation; preserve the semantic distinction between single and multiple memberships:
 
 - one membership: identify the stage context and current page;
 - multiple memberships: show all relevant stage contexts with their distinct purpose, or omit the breadcrumb if the presentation becomes ambiguous or noisy;
@@ -63,4 +74,4 @@ The stage links should target stable anchors on the guided-route overview, not a
 
 ## Validation boundary
 
-The projection, renderer, fragment writer and regression tests are committed in the implementation PR. Python CI passes on the latest validated head. The page-level pilot is being checked by the Quarto workflow; visual review, keyboard navigation and screen-reader review remain pending. Do not describe this as a validated learner-facing breadcrumb until those checks have been completed.
+The projection, renderer, fragment writer and regression tests are integrated in `main` through PR #522. The four-page embeddings/Q/K/V integration is proposed separately in this change. Do not describe the learner-facing context as fully validated until Quarto/browser checks, visual review, keyboard navigation and screen-reader review have been completed.
