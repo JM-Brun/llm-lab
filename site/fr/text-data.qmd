@@ -20,8 +20,20 @@ related: ["fr/transformer"]
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-text-data.qmd >}}
+
 ::: {.chapter-lead}
 Un modèle de langage reçoit une séquence d'identifiants numériques, pas du texte brut. La tokenisation définit comment le texte est converti en identifiants et comment ceux-ci sont décodés. Elle est distincte du réseau neuronal, mais conditionne son vocabulaire, la longueur des séquences, le coût de calcul et certains comportements observables.
+:::
+
+::: {.callout-tip title="L'idée à retenir en une minute"}
+Pensez à un **catalogue avec des numéros de référence**. Le tokenizer découpe le texte en unités (les tokens) et attribue à chacune un ID. L'ID sert à retrouver une ligne dans la table d'embeddings : ce n'est ni un score, ni une mesure de sens. Le Transformer transforme ensuite ces vecteurs en tenant compte du contexte.
+
+**Le fil conducteur :** texte Unicode → tokens → IDs → vecteurs d'embedding → représentations contextualisées. Chaque flèche est une transformation distincte ; ne confondez notamment pas **taille du vocabulaire** ($V$) et **dimension des embeddings** ($d$).
+
+**Première lecture :** suivez le schéma et retenez le rôle distinct du token, de l'ID et de l'embedding. Vous pouvez remettre à plus tard les détails Unicode, les algorithmes BPE/WordPiece et le pipeline de préparation des corpus.
+
+Les [stratégies de tokenisation](tokenization-strategies.qmd) comparent les compromis de tokenizers réels ; l’[espace des embeddings](embedding-space.qmd) décrit le lookup qui associe ensuite un vecteur à chaque ID.
 :::
 
 <div class="pipeline-stepper" role="navigation" aria-label="Étapes de l'entrée du modèle">
@@ -33,16 +45,6 @@ Un modèle de langage reçoit une séquence d'identifiants numériques, pas du t
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="contextualized-representations.qmd">4. Représentations contextualisées</a>
 </div>
-
-::: {.callout-tip title="L'idée à retenir en une minute"}
-Pensez à un **catalogue avec des numéros de référence**. Le tokenizer découpe le texte en unités (les tokens) et attribue à chacune un ID. L'ID sert à retrouver une ligne dans la table d'embeddings : ce n'est ni un score, ni une mesure de sens. Le Transformer transforme ensuite ces vecteurs en tenant compte du contexte.
-
-**Le fil conducteur :** texte Unicode → tokens → IDs → vecteurs d'embedding → représentations contextualisées. Chaque flèche est une transformation distincte ; ne confondez notamment pas **taille du vocabulaire** ($V$) et **dimension des embeddings** ($d$).
-
-**Première lecture :** suivez le schéma et retenez le rôle distinct du token, de l'ID et de l'embedding. Vous pouvez remettre à plus tard les détails Unicode, les algorithmes BPE/WordPiece et le pipeline de préparation des corpus.
-
-Les [stratégies de tokenisation](tokenization-strategies.qmd) comparent les compromis de tokenizers réels ; l’[espace des embeddings](embedding-space.qmd) décrit le lookup qui associe ensuite un vecteur à chaque ID.
-:::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 - Distinguer texte Unicode, octets, tokens, identifiants et embeddings.
