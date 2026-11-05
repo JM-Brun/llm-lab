@@ -22,7 +22,7 @@ State exactly how the source was accessed. Distinguish direct inspection from in
 | Metadata/version | unknown | | |
 | Licence/reuse rights | unknown | | |
 
-**Overall status:** not-scanned / partially-scanned / scanned. Explain why. A complete text reconstruction does not make the whole source fully scanned if other in-scope components remain unresolved.
+**Overall status:** discovered / selected / partially-scanned / scanned / inaccessible / superseded / rejected (see data/source-taxonomy.yml). Explain why. A citation or link alone is discovered/selected, not scanned. A complete text reconstruction does not make the whole source fully scanned if other in-scope components remain unresolved.
 
 ## 2. Atomic contribution inventory
 
@@ -76,7 +76,9 @@ List exact files/pages/concepts/routes changed, or state explicitly why no proje
 
 ## 8. Visual assets and rights
 
-List each figure separately: locator, asset URL, actual-byte inspection, creator, caption, licence, attribution, accessibility, reuse decision. If only a placeholder/caption was seen, do not claim visual inspection.
+List each figure separately: locator, asset URL, actual-byte inspection, creator, caption, licence, attribution, accessibility, current-use context and reuse status. If only a placeholder/caption was seen, do not claim visual inspection.
+
+**Preservation rule:** an audit is not a removal exercise. Never remove, replace, hide, disable or convert an existing embedded illustration to link-only as part of rights review. Record unknown/restrictive terms and escalate potential concerns to the project owner. Any exceptional change to an existing asset requires a separate explicit instruction. For a proposed new use, defer embedding/adaptation until the exact asset and permission are verified.
 
 ## 9. Validation evidence
 
