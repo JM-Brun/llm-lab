@@ -118,4 +118,4 @@ The current canonical-concept view is a **domain-grouped concept browser**, not 
 - Relation family, transitivity, acyclicity, inverse, and learning-dependency metadata are preserved in the data projection but are not all exposed in the reader-facing legend. Decide whether exposing any of them improves interpretation without overwhelming the legend.
 - No learner-comprehension claim is supported until readers unfamiliar with the project complete a small task-based evaluation.
 
-The browser audit is being extended in [PR #524](https://github.com/JM-Brun/llm-lab/pull/524). Its result, not this source review, will provide rendered-browser evidence.
+The browser audit is being extended in [PR #524](https://github.com/JM-Brun/llm-lab/pull/526). Its result, not this source review, will provide rendered-browser evidence.
