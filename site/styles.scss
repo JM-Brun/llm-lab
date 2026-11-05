@@ -1680,45 +1680,82 @@ a.concept-link:focus-visible {
 }
 
 
-/* Guided-route context on lessons: context, not a claim of conceptual ancestry. */
+/* Guided-route context: one visual cue, without repeating the page heading. */
 .guided-route-stage[id] { scroll-margin-top: 5rem; }
-.guided-page-context,
+.guided-page-context {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .45rem .7rem;
+  margin: 1rem 0 1.5rem;
+  padding: .55rem .8rem;
+  border: 1px solid #D7E5DA;
+  border-radius: .55rem;
+  background: #F8FAFC;
+  color: #475569;
+  font-size: .82rem;
+  line-height: 1.4;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, .05);
+}
+.guided-page-context__label {
+  color: #64748B;
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+.guided-page-context__stage {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .28rem .62rem;
+  border-radius: .38rem;
+  background: #E5F1E8;
+  color: #14532D;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color .15s ease, color .15s ease;
+}
+.guided-page-context__stage::before {
+  content: "›";
+  color: #64748B;
+  font-weight: 700;
+}
+.guided-page-context__stage:hover {
+  background: #D1E7D7;
+  color: #14532D;
+  text-decoration: underline;
+}
+.guided-page-context__stage:focus-visible {
+  outline: 2px solid #14532D;
+  outline-offset: 2px;
+}
+.guided-page-context__role {
+  display: inline-flex;
+  align-items: center;
+  padding: .18rem .45rem;
+  border: 1px solid #D6D3D1;
+  border-radius: 999px;
+  color: #57534E;
+  font-size: .75rem;
+  font-weight: 650;
+}
 .guided-page-context--multiple {
-  margin: .85rem 0 1.1rem;
-  padding: .65rem .85rem;
-  border-left: 3px solid var(--llm-brand);
-  border-radius: .3rem;
-  background: #F3F8F4;
+  display: block;
+  margin: 1rem 0 1.5rem;
+  padding: .75rem .9rem;
+  border: 1px solid #D7E5DA;
+  border-left: 4px solid var(--llm-brand);
+  border-radius: .55rem;
+  background: #F8FAFC;
   color: var(--llm-ink);
   font-size: .86rem;
   line-height: 1.45;
 }
-.guided-page-context ol {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: .3rem .55rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.guided-page-context li + li::before {
-  content: "›";
-  margin-right: .55rem;
-  color: #64748B;
-}
-.guided-page-context [aria-current="page"] { font-weight: 700; }
-.guided-page-context__role {
-  display: inline-block;
-  margin-left: .35rem;
-  color: #52665A;
-  font-size: .78rem;
-  font-weight: 650;
-}
-.guided-page-context--multiple > p { margin: 0 0 .4rem; }
+.guided-page-context--multiple > p { margin: 0 0 .5rem; }
 .guided-page-context--multiple ul {
   display: grid;
-  gap: .5rem;
+  gap: .55rem;
   margin: 0;
   padding-left: 1.15rem;
 }
@@ -1728,7 +1765,8 @@ a.concept-link:focus-visible {
   font-size: .82rem;
 }
 @media (max-width: 600px) {
-  .guided-page-context,
-  .guided-page-context--multiple { padding: .6rem .7rem; }
+  .guided-page-context { gap: .4rem .55rem; padding: .55rem .65rem; }
+  .guided-page-context__label { flex-basis: 100%; }
+  .guided-page-context--multiple { padding: .65rem .7rem; }
   .guided-page-context--multiple ul { gap: .65rem; }
 }

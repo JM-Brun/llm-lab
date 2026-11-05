@@ -241,6 +241,7 @@ for (const testCase of cases) {
         isMultiple: await context.evaluate(el => el.classList.contains("guided-page-context--multiple")),
         stageLinks: await context.locator('a[href*="learning-map.html#guided-stage-"]').count(),
         currentPageMarkers: await context.locator('[aria-current="page"]').count(),
+        visibleCurrentPageText: await context.innerText(),
         listItems: await context.locator("li").count(),
         navLandmark: await context.evaluate(el => el.tagName.toLowerCase() === "nav"),
         accessibleLabel: await context.getAttribute("aria-label"),
@@ -280,9 +281,10 @@ for (const testCase of cases) {
           "queries-keys-values.html": "guided-stage-computation",
         }[pagePath];
         if (!expectedStage || item.routeContext.isMultiple || !item.routeContext.navLandmark ||
-            item.routeContext.currentPageMarkers !== 1 || stageFragments.length !== 1 ||
-            stageFragments[0] !== expectedStage || !item.routeContext.accessibleLabel) {
-          throw new Error("single-stage context is not exposed as the expected labelled breadcrumb");
+            item.routeContext.currentPageMarkers !== 0 || stageFragments.length !== 1 ||
+            stageFragments[0] !== expectedStage || !item.routeContext.accessibleLabel ||
+            item.routeContext.visibleCurrentPageText.includes(item.h1)) {
+          throw new Error("single-stage context repeats the page heading or does not expose the expected labelled stage link");
         }
       }
       if (pagePath === "embedding-space.html" || pagePath === "queries-keys-values.html") {
