@@ -1,4 +1,6 @@
 ---
+**Canonical lesson:** [GPT and the Transformer](transformer.qmd). This page is a technical reference for tensor shapes and axes; it is not a prerequisite for following the build path.
+
 title: "Tensors in a Transformer: shapes and axes"
 subtitle: "Read dimensions without confusing shape compatibility with correctness"
 keywords: ["type:deep-dive", "destination:deepen", "topic:tensors", "level:advanced", "language:en", "status:published"]
