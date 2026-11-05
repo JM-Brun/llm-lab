@@ -489,7 +489,7 @@ def test_render_guided_route_markdown_uses_native_quarto_blocks() -> None:
     markdown = MODULE["render_guided_route_markdown"]([stage], "fr")
 
     assert ":::: {.guided-route-grid}" in markdown
-    assert "::: {.guided-route-stage}" in markdown
+    assert "::: {.guided-route-stage #guided-stage-orientation}" in markdown
     assert "[Panorama](overview.html)" in markdown
     assert "**Ressources facultatives**" in markdown
     english = MODULE["render_guided_route_markdown"]([stage], "en")

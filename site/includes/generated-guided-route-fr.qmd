@@ -1,6 +1,6 @@
 :::: {.guided-route-grid}
 
-::: {.guided-route-stage}
+::: {.guided-route-stage #guided-stage-orientation}
 
 ### 01 · Situer le système
 
@@ -18,7 +18,7 @@ Comprendre ce qu'est un LLM et observer une génération complète avant d'en é
 
 :::
 
-::: {.guided-route-stage}
+::: {.guided-route-stage #guided-stage-text-input}
 
 ### 02 · Du texte aux tokens
 
@@ -36,7 +36,7 @@ Distinguer texte, tokenisation, vocabulaire et identifiants de tokens dans la co
 
 :::
 
-::: {.guided-route-stage}
+::: {.guided-route-stage #guided-stage-representations}
 
 ### 03 · Des identifiants aux représentations
 
@@ -55,7 +55,7 @@ Suivre la consultation des embeddings, l'information positionnelle et la context
 
 :::
 
-::: {.guided-route-stage}
+::: {.guided-route-stage #guided-stage-computation}
 
 ### 04 · Comprendre le calcul du Transformer
 
@@ -74,7 +74,7 @@ Relier Q/K/V, les poids d'attention, l'agrégation et le masquage causal sans co
 
 :::
 
-::: {.guided-route-stage}
+::: {.guided-route-stage #guided-stage-prediction}
 
 ### 05 · Des états aux prédictions
 
@@ -93,7 +93,7 @@ Relier logits, distribution de probabilité, vraisemblance et sélection du proc
 
 :::
 
-::: {.guided-route-stage}
+::: {.guided-route-stage #guided-stage-learning-evaluation}
 
 ### 06 · Comprendre l'apprentissage et évaluer
 

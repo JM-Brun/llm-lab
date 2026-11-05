@@ -20,6 +20,8 @@ related: ["en/build-path", "en/training-examples"]
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-en-generation.qmd >}}
+
 ::: {.chapter-lead}
 **Generating text**, for an already trained LLM, means repeating one loop: represent the current context, estimate the distribution of the next token, select one, append it to the context, and start over. Throughout the loop, **the model's parameters stay fixed**: this is **inference** (or generation), to be distinguished from learning, which updates those parameters.
 :::

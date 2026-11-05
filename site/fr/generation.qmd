@@ -20,6 +20,8 @@ related: ["fr/build-path", "fr/training-examples"]
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-generation.qmd >}}
+
 ::: {.chapter-lead}
 **Générer du texte**, pour un LLM déjà entraîné, c'est répéter une même boucle : représenter le contexte courant, estimer la distribution du prochain token, en sélectionner un, l'ajouter au contexte, puis recommencer. Pendant toute la boucle, **les paramètres du modèle restent fixes** : on parle d'**inférence** (ou de génération), à distinguer de l'apprentissage, qui modifie ces paramètres.
 :::
