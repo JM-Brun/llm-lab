@@ -329,5 +329,6 @@ The Understand sidebar has been reorganized on branch `navigation/scope-driven-u
 - **Evaluation remains under Practice & experiment.** Its cross-cutting role does not justify turning it into a final mandatory child of Training.
 - **Deepen and Reference remain separate destinations.** Their pages are not nested under a core module merely because they deepen one of its concepts.
 - The Quarto hierarchy is a site-location projection, not a prerequisite graph. The generated pedagogical context remains a separate projection of `data/guided-route.yml`; page `hierarchy` remains conceptual containment; `suggested_route` remains a recommended transition.
+- **Sidebar order preserves the reader-facing preview.** Orientation → inference/generation preview → shared core → scoring → training. This intentionally differs from the computational dependency direction: inference is previewed as a black box before the learner unpacks its shared predictor. Optional background pages follow the core route so Quarto previous/next navigation does not divert the reader before the generation preview.
 
 This is a source-level pilot. It does not yet establish rendered breadcrumb quality, mobile behavior, keyboard/screen-reader usability, or learner comprehension. Validate the bilingual rendered site before generalizing the approach to other destinations.
