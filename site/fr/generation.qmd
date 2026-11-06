@@ -57,7 +57,7 @@ Dans les systèmes d'inférence, le traitement du prompt initial et la générat
 
 Dans la référence NumPy de LLM Lab, `generate.py` traite d'abord le prompt complet, puis réexécute le modèle sur la fenêtre de contexte à chaque étape. Le code illustre donc les phases logiques, mais ne met pas en œuvre de cache KV ni de fonction de decode incrémental optimisée.
 
-Ne pas confondre **decode** (phase d'exécution après le prefill) et **décodage** (*decoding*, règle de sélection du prochain token). Le prefill n'est pas non plus du *teacher forcing* : celui-ci concerne le conditionnement des prédictions pendant l'entraînement.
+Ne pas confondre **decode** (phase d'exécution après le prefill) et **décodage** (*decoding*, règle de sélection du prochain token). Le prefill n'est pas non plus du [*teacher forcing*](training-examples.qmd) : celui-ci concerne le conditionnement des prédictions pendant l'entraînement.
 
 ### Que recouvre exactement le décodage ?
 
