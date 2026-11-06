@@ -153,8 +153,10 @@ Natural wording and section-heading differences are acceptable. Stable page/topi
 6. Do not infer prerequisite edges from curriculum order, sidebar order, breadcrumb order, or graph layout.
 7. Prefer deriving both trails from their existing sources at render/build time over hand-maintaining a second per-page route.
 8. If the current data cannot express multiple route membership or a primary context, document the gap and propose the smallest extension before changing the schema.
-9. Keep LLM Lab independently buildable; do not introduce a runtime dependency on Wiki Knowledge.
-10. Do not create a workflow or GitHub Action per page or concept. Reuse the existing validation and site workflows.
+9. Use the curriculum module scopes in `docs/learning-path.md` to review Quarto sidebar grouping and nesting: pages with a clear canonical module role should sit under the corresponding section, while cross-module roles should be expressed through contextual links or the guided-route projection rather than duplicate sidebar entries.
+10. Keep the projections distinct: Quarto ancestry determines the site-location breadcrumb; `data/guided-route.yml` determines pedagogical stage context; page `hierarchy` records conceptual containment. A module scope may inform an editorial placement decision, but must not be copied into a new per-page breadcrumb field or used to infer prerequisite/parent edges mechanically.
+11. Keep LLM Lab independently buildable; do not introduce a runtime dependency on Wiki Knowledge.
+12. Do not create a workflow or GitHub Action per page or concept. Reuse the existing validation and site workflows.
 
 ## 8. Pilot and rollout
 
