@@ -254,11 +254,11 @@ def sidebar_page_id(entry: object, language: str) -> str | None:
 
 
 def load_navigation(language: str, pages: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Derive the drill-down area structure from the authored Quarto sidebar.
+    """Derive the drill-down area structure recursively from the Quarto sidebar.
 
-    The sidebar is the only authored source of reader-facing grouping. Entries
-    that do not resolve to a published page identifier are ignored, and empty
-    groups are dropped, so the progressive map never shows a dead end.
+    The sidebar is the only authored source of reader-facing grouping. Nested
+    sections are preserved so the learning map and its static fallback reflect
+    the same hierarchy as the native Quarto navigation.
     """
     config = yaml.safe_load((SITE / "_quarto.yml").read_text(encoding="utf-8"))
     sidebars = (config or {}).get("website", {}).get("sidebar", [])
@@ -268,21 +268,42 @@ def load_navigation(language: str, pages: list[dict[str, Any]]) -> list[dict[str
     published = {page["id"] for page in pages}
 
     def collect(entries: list[object]) -> list[str]:
-        """Keep only sidebar entries that resolve to published pages."""
+        """Keep only sidebar entries that resolve to published page identifiers."""
         identifiers = (sidebar_page_id(entry, language) for entry in entries)
         return [value for value in identifiers if value in published]
+
+    def collect_section(entry: dict[str, Any]) -> dict[str, Any] | None:
+        """Preserve one sidebar section and all of its nested sections."""
+        contents = entry.get("contents", [])
+        pages_in_section = collect(contents)
+        nested = [
+            section
+            for item in contents
+            if isinstance(item, dict) and "section" in item
+            if (section := collect_section(item)) is not None
+        ]
+        if not pages_in_section and not nested:
+            return None
+        section: dict[str, Any] = {
+            "title": str(entry["section"]),
+            "pages": pages_in_section,
+        }
+        if nested:
+            section["sections"] = nested
+        return section
 
     areas: list[dict[str, Any]] = []
     for entry in sidebar.get("contents", []):
         if not isinstance(entry, dict) or "section" not in entry:
             continue
+        contents = entry.get("contents", [])
         sections = [
-            {"title": str(item["section"]), "pages": collect(item.get("contents", []))}
-            for item in entry.get("contents", [])
+            section
+            for item in contents
             if isinstance(item, dict) and "section" in item
+            if (section := collect_section(item)) is not None
         ]
-        sections = [section for section in sections if section["pages"]]
-        area_pages = collect(entry.get("contents", []))
+        area_pages = collect(contents)
         if not area_pages and not sections:
             continue
         areas.append(
