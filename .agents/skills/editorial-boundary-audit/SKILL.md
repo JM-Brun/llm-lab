@@ -227,3 +227,15 @@ quarto render site
 ```
 
 The metadata audit is a triage aid only. The final editorial decision must be grounded in the page bodies, learner objectives, and the actual core learning route.
+
+
+## Specialist boundaries and delegation
+
+This skill owns **conceptual ownership, scope overlap and editorial disposition**. It does not replace the following reviews:
+
+- For the internal quality of a single page's teaching sequence, use `page-content-audit`.
+- For coherence across a defined set of pages or transitions, use `page-group-audit`; invoke this skill only for the ownership/overlap questions found there.
+- For mathematical, statistical, algorithmic, empirical or code-level correctness, use `scientific-content-audit`. Similar wording or a suspected contradiction is not enough to decide which scientific claim is correct.
+- For canonical concept IDs, relation semantics, graph projections, route registries or schema integrity, use `knowledge-architecture-audit`.
+
+When a boundary audit discovers a correctness concern, record it as a linked scientific question with exact claims and evidence. Do not silently rewrite scientific content as an editorial cleanup. Keep a single canonical finding record and reference it from related audits.
