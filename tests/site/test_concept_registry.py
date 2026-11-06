@@ -393,22 +393,19 @@ def test_concept_importance_is_required_and_controlled() -> None:
     del data["concepts"][0]["importance"]
     errors = validate_registry(data)
     assert any(
-        ".importance: expected one of core, supporting, specialized" in error
-        for error in errors
+        ".importance: expected one of core, supporting, specialized" in error for error in errors
     )
 
     data["concepts"][0]["importance"] = "critical"
     errors = validate_registry(data)
     assert any(
-        ".importance: expected one of core, supporting, specialized" in error
-        for error in errors
+        ".importance: expected one of core, supporting, specialized" in error for error in errors
     )
 
     data["concepts"][0]["importance"] = []
     errors = validate_registry(data)
     assert any(
-        ".importance: expected one of core, supporting, specialized" in error
-        for error in errors
+        ".importance: expected one of core, supporting, specialized" in error for error in errors
     )
 
 
