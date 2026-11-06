@@ -557,6 +557,12 @@ relation_types:
     descriptions:
       fr: "La source est un mode ou une phase d'exécution de la cible."
       en: "The source is an execution mode or phase of the target."
+  precedes:
+    direction: directed
+    labels: {fr: "précède", en: "precedes"}
+    descriptions:
+      fr: "La source est exécutée avant la cible dans la séquence considérée."
+      en: "The source is executed before the target in the considered sequence."
   selects:
     direction: directed
     labels: {fr: "sélectionne", en: "selects"}
@@ -668,6 +674,7 @@ edges:
   - {id: e-observed-context, from: observed-target, type: conditions, to: training-context}
   - {id: e-training-forward, from: training-context, type: conditions, to: token-context}
   - {id: e-prefill-forward, from: prefill, type: applies, to: forward-computation}
+  - {id: e-prefill-before-decode, from: prefill, type: precedes, to: autoregressive-decode}
   - {id: e-decode-forward, from: autoregressive-decode, type: applies, to: forward-computation}
   - {id: e-prefill-cache, from: prefill, type: produces, to: kv-cache, optional: true}
   - {id: e-decode-cache, from: kv-cache, type: uses-optional, to: autoregressive-decode}
@@ -736,4 +743,4 @@ views:
       fr: "Distingue le traitement initial du prompt (prefill), le décodage itératif et le cache KV facultatif."
       en: "Distinguishes initial prompt processing (prefill), iterative decode, and the optional KV cache."
     nodes: [token-context, model-parameters, forward-computation, logits, vocabulary-softmax, prefill, autoregressive-decode, kv-cache, next-token-distribution, generated-token]
-    edges: [e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-prefill-forward, e-decode-forward, e-prefill-cache, e-decode-cache, e-token-feedback]
+    edges: [e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-prefill-forward, e-prefill-before-decode, e-decode-forward, e-prefill-cache, e-decode-cache, e-token-feedback]
