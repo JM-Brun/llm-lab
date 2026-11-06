@@ -46,6 +46,10 @@ Un LLM n'écrit pas un texte d'un bloc : il produit **un token à la fois**. À 
 4. **Ajouter le token et recommencer.** Le token sélectionné est ajouté au contexte, puis la boucle repart à l'étape 2, sous réserve de la limite de contexte.
 5. **Arrêter.** La génération s’arrête sur un critère explicite — token de fin, longueur maximale, ou règle imposée par l’application — jamais parce que le modèle « aurait fini de réfléchir ».
 
+## Carte computationnelle de la boucle de génération
+
+{{< include ../includes/generated-computational-graph-fr-generation.qmd >}}
+
 ## Prefill et decode : deux phases de l’inférence
 
 La première passe sur le prompt et les passes suivantes sur les tokens générés n’ont pas le même rôle. Dans les systèmes d’inférence, la boucle de génération est souvent décrite en deux phases :
