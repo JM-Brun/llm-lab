@@ -8,6 +8,7 @@ included by the relevant Quarto lessons; they are not edited by hand.
 from __future__ import annotations
 
 import argparse
+from html import escape
 import sys
 from pathlib import Path
 from typing import Any
@@ -18,11 +19,13 @@ ROOT = Path(__file__).resolve().parents[2]
 REGISTRY = ROOT / "data" / "computational-graph.yml"
 OUTPUT_DIR = ROOT / "site" / "includes"
 RENDERED_VIEWS = (
+    "persistent-spine",
     "representation-pipeline",
     "transformer-block",
     "generation",
     "inference-execution",
     "observed-target-scoring",
+    "evaluation",
     "training",
 )
 LANGUAGES = ("fr", "en")
@@ -85,7 +88,31 @@ def render_view(registry: dict[str, Any], view_id: str, language: str) -> str:
         relation = relation_types[edge["type"]]["labels"][language]
         lines.append(f"    n_{edge['from']} -->|{_mermaid_text(relation)}| n_{edge['to']}")
 
-    lines.extend(["`" * 3, ":::", ""])
+    summary = "Alternative textuelle" if language == "fr" else "Text alternative"
+    lines.extend(
+        [
+            "`" * 3,
+            "",
+            '<details class="computational-graph-text-alternative">',
+            f"<summary>{summary}</summary>",
+            "",
+            "<ul>",
+        ]
+    )
+    for node_id in selected_nodes:
+        node = nodes[node_id]
+        lines.append(
+            f"<li><strong>{escape(labels[node_id])}</strong>: "
+            f"{escape(node['descriptions'][language])}</li>"
+        )
+    lines.extend(["</ul>", "", "<ol>"])
+    for edge_id in selected_edges:
+        edge = edges[edge_id]
+        source = escape(labels[edge["from"]])
+        relation = escape(relation_types[edge["type"]]["labels"][language])
+        target = escape(labels[edge["to"]])
+        lines.append(f"<li><strong>{source}</strong> — {relation} → <strong>{target}</strong></li>")
+    lines.extend(["</ol>", "", "</details>", ":::", ""])
     return "\n".join(lines)
 
 
