@@ -57,7 +57,11 @@ COPY: dict[str, dict[str, Any]] = {
         "ungroupedConcepts": "Autres notions",
         "hiddenRelations": "{count} relation(s) masquée(s) par la recherche ou le filtre.",
         "viewConcept": "Voir la notion",
-        "importanceLabels": {"core": "Essentielle", "supporting": "Complémentaire", "specialized": "Spécialisée"},
+        "importanceLabels": {
+            "core": "Essentielle",
+            "supporting": "Complémentaire",
+            "specialized": "Spécialisée",
+        },
         "statusLoaded": "Carte chargée.",
         "destinations": {
             "orient": "S'orienter",
@@ -105,7 +109,11 @@ COPY: dict[str, dict[str, Any]] = {
         "ungroupedConcepts": "Other concepts",
         "hiddenRelations": "{count} relation(s) hidden by the search or filter.",
         "viewConcept": "Show concept",
-        "importanceLabels": {"core": "Core", "supporting": "Supporting", "specialized": "Specialized"},
+        "importanceLabels": {
+            "core": "Core",
+            "supporting": "Supporting",
+            "specialized": "Specialized",
+        },
         "statusLoaded": "Map loaded.",
         "destinations": {
             "orient": "Get oriented",
