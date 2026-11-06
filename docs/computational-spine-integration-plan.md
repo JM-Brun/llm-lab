@@ -19,6 +19,7 @@ This document is the durable hand-off for future work sessions. It records what 
 | Page tags `notion` / `domaine` | Intentionally not duplicated | Canonical concept IDs and domains remain in the concept registry; page tags retain editorial meaning |
 | Page metadata audit | Partial | Prediction → entropy → likelihood and current navigation boundaries reviewed; broader bilingual inventory remains |
 | Persistent-spine and evaluation views with text alternatives | Integrated | PR #589; bilingual renderer, overview integration and generated text alternatives |
+| Computational edge semantics | Correction under review | PR #599 makes target log-probability, NLL and decoding-selection edges explicit; focused regression tests added |
 | Build crosswalk | Updated; implementation evidence partial | PR #598 separates inference, scoring, evaluation and training in the Build explanation; end-to-end GPT training remains a gap |
 | Rendered navigation and accessibility | In progress | PR #597 checks localized Quarto previous/next names and visible-link / `rel` metadata parity; browser run not yet complete; manual screen-reader review remains required |
 
