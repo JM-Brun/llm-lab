@@ -115,6 +115,30 @@ for (const testCase of cases) {
           htmlMinWidth: getComputedStyle(document.documentElement).minWidth,
         };
       })(),
+      overflowRootCause: (() => {
+        const target = window.innerWidth + 1;
+        if (document.documentElement.scrollWidth <= target) return null;
+        const culprits = [];
+        let tested = 0;
+        for (const el of document.querySelectorAll("body *")) {
+          if (tested++ > 3000) break;
+          const rect = el.getBoundingClientRect();
+          const prev = el.style.display;
+          el.style.display = "none";
+          const fixed = document.documentElement.scrollWidth <= target;
+          el.style.display = prev;
+          if (fixed) {
+            culprits.push({
+              tag: el.tagName.toLowerCase(),
+              className: typeof el.className === "string" ? el.className.slice(0, 80) : null,
+              text: (el.innerText || "").trim().slice(0, 60),
+              left: Math.round(rect.left), right: Math.round(rect.right), width: Math.round(rect.width),
+            });
+          }
+          if (culprits.length >= 8) break;
+        }
+        return culprits;
+      })(),
       pageHeight: document.documentElement.scrollHeight,
       images: [...document.images].map(img => ({
         src: img.currentSrc || img.src,
@@ -625,8 +649,8 @@ for (const testCase of cases) {
     if (item.layout.horizontalOverflow || item.learningMapLayout?.horizontalOverflow) {
       let overflowing = (item.layout.overflowCandidates || []).filter(c => c.right <= item.layout.documentWidth + 1).slice(0, 10).map(c => `${c.tag}${c.className ? "." + String(c.className).split(" ")[0] : ""}[left=${c.left},right=${c.right}]`).join(" | ");
       if (!overflowing) {
-        const margins = (item.layout.marginOverflow || []).map(c => `${c.tag}${c.className ? "." + String(c.className).split(" ")[0] : ""}[right=${c.right},marginRight=${c.marginRight}]`).join(" | ");
-        overflowing = `marginOverflow: ${margins} ; bodyBox: ${JSON.stringify(item.layout.bodyBox)}`;
+        const causes = (item.layout.overflowRootCause || []).map(c => `${c.tag}${c.className ? "." + String(c.className).split(" ")[0] : ""}[left=${c.left},right=${c.right},w=${c.width}]:${c.text}`).join(" ; ");
+        overflowing = `rootCause: ${causes}`;
       }
       report.failures.push(`${pagePath}/${lang}/${label}/${theme}: horizontal overflow (document ${item.layout.documentWidth}px vs viewport ${item.layout.viewportWidth}px): ${overflowing}`);
     }
