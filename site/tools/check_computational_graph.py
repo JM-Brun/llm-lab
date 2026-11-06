@@ -245,9 +245,13 @@ def validate_graph(
             target_branches = nodes[target].get("branches", [])
             shared_branches = (
                 set(source_branches) & set(target_branches)
-                if all(
-                    isinstance(branch_id, str)
-                    for branch_id in (*source_branches, *target_branches)
+                if (
+                    isinstance(source_branches, list)
+                    and isinstance(target_branches, list)
+                    and all(
+                        isinstance(branch_id, str)
+                        for branch_id in (*source_branches, *target_branches)
+                    )
                 )
                 else set()
             )
