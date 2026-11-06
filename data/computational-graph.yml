@@ -509,11 +509,11 @@ nodes:
     resources: [fr/loss, en/loss, fr/evaluation-experimentale, en/experimental-evaluation]
   - id: teacher-forcing
     kind: policy
-    role: observed-prefix-context
+    role: context-policy
     labels: {fr: "Teacher forcing", en: "Teacher forcing"}
     descriptions:
-      fr: "Stratégie de conditionnement où les préfixes fournis aux positions d'entraînement proviennent de la séquence de référence."
-      en: "Conditioning strategy in which the prefixes supplied at training positions come from the reference sequence."
+      fr: "Stratégie de conditionnement où les préfixes fournis aux positions scorées proviennent de la séquence de référence."
+      en: "Conditioning strategy in which the prefixes supplied at scored positions come from the reference sequence."
     branches: [training, observed-target-scoring, evaluation]
     resources: [fr/training-examples, en/training-examples, fr/vraisemblance, en/likelihood]
   - id: observed-prefix-context
@@ -748,7 +748,7 @@ views:
     descriptions:
       fr: "Compare la distribution à une cible connue pour obtenir sa probabilité et la vraisemblance."
       en: "Compares the distribution with a known target to obtain its probability and likelihood."
-    nodes: [teacher-forcing, observed-prefix-context, token-context, next-token-distribution, observed-target, target-probability, target-probability-value, target-log-probability-computation, target-log-probability, negative-log-probability, token-nll, sequence-log-likelihood]
+    nodes: [teacher-forcing, observed-prefix-context, token-context, model-parameters, forward-computation, logits, vocabulary-softmax, next-token-distribution, observed-target, target-probability, target-probability-value, target-log-probability-computation, target-log-probability, negative-log-probability, token-nll, sequence-log-likelihood]
     edges: [e-teacher-context, e-observed-context, e-observed-prefix-forward, e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-distribution-target, e-target-score, e-target-probability-value, e-target-log-computation, e-target-log-probability, e-target-likelihood, e-target-negative-log, e-negative-log-nll]
   - id: evaluation
     branch: evaluation
