@@ -81,6 +81,10 @@ Le mot *décodage* peut couvrir des détails différents selon les bibliothèque
 
 Les prédictions suivantes sont donc aussi conditionnées par les tokens produits qui restent dans le contexte utilisé.
 
+## Carte computationnelle : prefill et decode
+
+{{< include ../includes/generated-computational-graph-fr-inference-execution.qmd >}}
+
 ## L'inférence n'apprend rien
 
 Dans la génération ordinaire, les paramètres du modèle restent fixes. Avec le même contexte, les mêmes paramètres et un calcul déterministe, une règle de décodage déterministe produit la même suite ; l'échantillonnage ou des calculs non déterministes peuvent introduire de la variabilité. Générer du texte ne met pas à jour les poids, même si une application peut conserver l'historique ou d'autres données en dehors du modèle.
