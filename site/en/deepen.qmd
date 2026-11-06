@@ -1,5 +1,5 @@
 ---
-title: "Deepen: knowledge map"
+title: "Knowledge map"
 description: "A thematic map of advanced LLM topics, organized around questions and domains."
 keywords: ["type:entry-point", "destination:deepen", "topic:deepen-hub", "level:overview", "language:en", "status:published"]
 ---

@@ -46,3 +46,13 @@
 
 - No rendered-browser walkthrough: JavaScript changes were reviewed against the existing script contracts only.
 - Learner comprehension, responsive layout and screen-reader behaviour of the new hash state were not empirically tested.
+
+## Suivi d'implémentation — 2026-11-06 (recommandations différées)
+
+- **LM-10** : liens `hreflang` fr/en ajoutés aux deux pages learning-map via le nouveau partial `site/includes/learning-map-hreflang.html` (`include-in-header` dans le front matter).
+- **LM-11** : le filtre « Type de relation » groupe désormais ses options par famille (`optgroup`), avec des libellés localisés (`relationFamilies` dans COPY).
+- **LM-12** : la puce de la page sélectionnée porte `aria-current="true"` (`state.pageId`, `data-page-id`, `markCurrentChip()`), réinitialisé comme le reste de l'état (reset, changement de mode, Échap, sélection d'une notion).
+- **LM-13** : titres deepen renommés « Carte des connaissances » / « Knowledge map » (décision utilisateur ; `deepen.qmd` + fragments map-list mis en cohérence).
+- **Bonus** : scope EN « Six-stage » → « Eight-stage » (`learning-map.qmd` EN) et « six-stage » → « eight-stage » (index EN).
+- **Drift de l'include** : `site/includes/learning-map.html` n'était plus synchronisé avec `render_map_script()` (sans impact en production, la CI régénère l'include à chaque rendu). Include régénéré et verrouillé par `test_committed_include_matches_render_map_script`.
+- **LM-14** : à re-vérifier après le merge de la PR de suivi (page déployée : huit étapes, hreflang, workflow publish vert).

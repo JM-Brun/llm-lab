@@ -61,7 +61,7 @@
   - Scale and research questions
     - [Scaling laws: parameters, data, and compute](scaling-laws.html)
     - [Emergent capabilities: what changes with scale?](emergence.html)
-  - [Deepen: knowledge map](deepen.html)
+  - [Knowledge map](deepen.html)
 - **Reference**
   - [LLM and Transformer glossary](glossary.html)
   - [A history of Transformers](transformer-history.html)

@@ -61,7 +61,7 @@
   - Échelle et questions de recherche
     - [Lois d'échelle : paramètres, données et calcul](scaling-laws.html)
     - [Émergence des capacités : que change l’échelle ?](emergence.html)
-  - [Approfondir : carte des connaissances](deepen.html)
+  - [Carte des connaissances](deepen.html)
 - **Références**
   - [Glossaire des LLM et des Transformers](glossary.html)
   - [Historique des Transformers](transformer-history.html)

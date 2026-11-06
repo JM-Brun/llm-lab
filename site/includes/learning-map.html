@@ -38,8 +38,17 @@
     "relationLegendTitle": "Sens des relations (source → cible)",
     "relationFilterLabel": "Type de relation",
     "relationFilterAll": "Tous les types",
+    "relationFamilies": {
+      "representational": "Représentation",
+      "pedagogical": "Apprentissage",
+      "structural": "Structure",
+      "constraint": "Contrainte",
+      "functional": "Fonctionnement",
+      "associative": "Associations",
+      "evaluative": "Évaluation"
+    },
     "resetView": "Réinitialiser la vue",
-    "resetHint": "Efface la recherche, le filtre et la sélection ; Échap remonte d'un niveau à la fois.",
+    "resetHint": "Efface recherche, filtre et sélection ; Échap remonte d'un niveau à la fois.",
     "ungroupedConcepts": "Autres notions",
     "hiddenRelations": "{count} relation(s) masquée(s) par la recherche ou le filtre.",
     "viewConcept": "Voir la notion",
@@ -90,6 +99,15 @@
     "relationLegendTitle": "Relationship meaning (source → target)",
     "relationFilterLabel": "Relation type",
     "relationFilterAll": "All types",
+    "relationFamilies": {
+      "representational": "Representation",
+      "pedagogical": "Learning",
+      "structural": "Structure",
+      "constraint": "Constraint",
+      "functional": "Functioning",
+      "associative": "Associations",
+      "evaluative": "Evaluation"
+    },
     "resetView": "Reset view",
     "resetHint": "Clears search, filter, and selection; Escape steps back one level at a time.",
     "ungroupedConcepts": "Other concepts",
@@ -165,7 +183,14 @@
     }
     var copy = COPY[lang];
     var dataSource = root.getAttribute("data-source") || "../learning-map-data-" + lang + ".json";
-    var state = { mode: "pages", areaId: null, query: "", relationType: "", conceptId: null };
+    var state = {
+      mode: "pages",
+      areaId: null,
+      query: "",
+      relationType: "",
+      conceptId: null,
+      pageId: null,
+    };
     var data = null;
     var pageById = {};
     var conceptById = {};
@@ -306,6 +331,12 @@
       );
     }
 
+    function appendRelationOption(parent, kind) {
+      var option = el("option", null, relationTypes[kind].label);
+      option.value = kind;
+      parent.appendChild(option);
+    }
+
     function fillRelationFilter() {
       if (!relationFilter) {
         return;
@@ -314,10 +345,26 @@
       var allOption = el("option", null, copy.relationFilterAll);
       allOption.value = "";
       relationFilter.appendChild(allOption);
+      var groupedKinds = [];
+      Object.keys(copy.relationFamilies).forEach(function (family) {
+        var kinds = Object.keys(relationTypes).filter(function (kind) {
+          return relationTypes[kind].family === family;
+        });
+        if (!kinds.length) {
+          return;
+        }
+        groupedKinds = groupedKinds.concat(kinds);
+        var group = el("optgroup", null);
+        group.label = copy.relationFamilies[family];
+        kinds.forEach(function (kind) {
+          appendRelationOption(group, kind);
+        });
+        relationFilter.appendChild(group);
+      });
       Object.keys(relationTypes).forEach(function (kind) {
-        var option = el("option", null, relationTypes[kind].label);
-        option.value = kind;
-        relationFilter.appendChild(option);
+        if (groupedKinds.indexOf(kind) < 0) {
+          appendRelationOption(relationFilter, kind);
+        }
       });
       relationFilter.value = state.relationType;
     }
@@ -358,9 +405,16 @@
       });
     }
 
+    function forEachSection(sections, visit) {
+      (sections || []).forEach(function (section) {
+        visit(section);
+        forEachSection(section.sections, visit);
+      });
+    }
+
     function areaDestination(area) {
       var ids = (area.pages || []).slice();
-      (area.sections || []).forEach(function (section) {
+      forEachSection(area.sections, function (section) {
         ids = ids.concat(section.pages || []);
       });
       for (var i = 0; i < ids.length; i += 1) {
@@ -372,9 +426,17 @@
       return "reference";
     }
 
+    function countSectionPages(section) {
+      var total = (section.pages || []).length;
+      (section.sections || []).forEach(function (child) {
+        total += countSectionPages(child);
+      });
+      return total;
+    }
+
     function countAreaPages(area) {
       var total = (area.pages || []).length;
-      (area.sections || []).forEach(function (section) {
+      forEachSection(area.sections, function (section) {
         total += (section.pages || []).length;
       });
       return total;
@@ -388,6 +450,10 @@
       var chip = el("a", "map-chip", page.title);
       chip.href = page.href;
       chip.setAttribute("data-destination", page.destination);
+      chip.setAttribute("data-page-id", page.id);
+      if (state.pageId === page.id) {
+        chip.setAttribute("aria-current", "true");
+      }
       chip.addEventListener("click", function (event) {
         if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
           event.preventDefault();
@@ -395,6 +461,17 @@
         }
       });
       return chip;
+    }
+
+    function markCurrentChip() {
+      var chips = viewport.querySelectorAll("[data-page-id]");
+      for (var i = 0; i < chips.length; i += 1) {
+        if (chips[i].getAttribute("data-page-id") === state.pageId) {
+          chips[i].setAttribute("aria-current", "true");
+        } else {
+          chips[i].removeAttribute("aria-current");
+        }
+      }
     }
 
     function matchesQuery(page, query) {
@@ -494,18 +571,18 @@
       crumbs.appendChild(el("span", "map-crumbs-current", area.title));
       viewport.appendChild(crumbs);
 
-      var sections = area.sections || [];
-      if (sections.length) {
-        var sectionGrid = el("div", "map-sections");
-        sections.forEach(function (section) {
-          var card = el("div", "map-section-card");
-          var title = el("h3", "map-section-title", section.title);
-          title.appendChild(
-            el("span", "map-section-count", String((section.pages || []).length))
-          );
-          card.appendChild(title);
+      function renderSection(section) {
+        var card = el("div", "map-section-card");
+        var title = el("h3", "map-section-title", section.title);
+        title.appendChild(
+          el("span", "map-section-count", String(countSectionPages(section)))
+        );
+        card.appendChild(title);
+
+        var pageIds = section.pages || [];
+        if (pageIds.length) {
           var chips = el("div", "map-chips");
-          (section.pages || []).forEach(function (pageId) {
+          pageIds.forEach(function (pageId) {
             var chip = chipFor(pageId);
             if (chip) {
               chips.appendChild(chip);
@@ -514,7 +591,24 @@
           if (chips.firstChild) {
             card.appendChild(chips);
           }
-          sectionGrid.appendChild(card);
+        }
+
+        var children = section.sections || [];
+        if (children.length) {
+          var nested = el("div", "map-sections map-subsections");
+          children.forEach(function (child) {
+            nested.appendChild(renderSection(child));
+          });
+          card.appendChild(nested);
+        }
+        return card;
+      }
+
+      var sections = area.sections || [];
+      if (sections.length) {
+        var sectionGrid = el("div", "map-sections");
+        sections.forEach(function (section) {
+          sectionGrid.appendChild(renderSection(section));
         });
         var sectionBlock = el("div", "map-entry-block");
         sectionBlock.appendChild(el("p", "map-entry-label", copy.sectionsLabel));
@@ -758,6 +852,7 @@
       if (!page) {
         return;
       }
+      state.pageId = pageId;
       clearNode(detailPanel);
       detailPanel.appendChild(el("h3", "map-detail-title", page.title));
       var meta = el("p", "map-detail-meta");
@@ -810,6 +905,7 @@
       open.href = page.href;
       detailPanel.appendChild(open);
       openDetailsBox();
+      markCurrentChip();
       setStatus(page.title);
     }
 
@@ -818,6 +914,8 @@
       if (!concept) {
         return;
       }
+      state.pageId = null;
+      markCurrentChip();
       clearNode(detailPanel);
       detailPanel.appendChild(el("h3", "map-detail-title", concept.label));
       var importanceLabel = copy.importanceLabels[concept.importance];
@@ -891,6 +989,7 @@
     modeSelect.addEventListener("change", function () {
       state.mode = modeSelect.value;
       state.conceptId = null;
+      state.pageId = null;
       render();
     });
 
@@ -912,6 +1011,7 @@
         state.relationType = "";
         state.areaId = null;
         state.conceptId = null;
+        state.pageId = null;
         searchInput.value = "";
         if (relationFilter) {
           relationFilter.value = "";
@@ -944,6 +1044,8 @@
         state.areaId = null;
         render();
       } else {
+        state.pageId = null;
+        markCurrentChip();
         renderPlaceholder();
       }
     });

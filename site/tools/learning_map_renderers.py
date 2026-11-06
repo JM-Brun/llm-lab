@@ -52,6 +52,15 @@ COPY: dict[str, dict[str, Any]] = {
         "relationLegendTitle": "Sens des relations (source → cible)",
         "relationFilterLabel": "Type de relation",
         "relationFilterAll": "Tous les types",
+        "relationFamilies": {
+            "representational": "Représentation",
+            "pedagogical": "Apprentissage",
+            "structural": "Structure",
+            "constraint": "Contrainte",
+            "functional": "Fonctionnement",
+            "associative": "Associations",
+            "evaluative": "Évaluation",
+        },
         "resetView": "Réinitialiser la vue",
         "resetHint": "Efface recherche, filtre et sélection ; Échap remonte d'un niveau à la fois.",
         "ungroupedConcepts": "Autres notions",
@@ -104,6 +113,15 @@ COPY: dict[str, dict[str, Any]] = {
         "relationLegendTitle": "Relationship meaning (source → target)",
         "relationFilterLabel": "Relation type",
         "relationFilterAll": "All types",
+        "relationFamilies": {
+            "representational": "Representation",
+            "pedagogical": "Learning",
+            "structural": "Structure",
+            "constraint": "Constraint",
+            "functional": "Functioning",
+            "associative": "Associations",
+            "evaluative": "Evaluation",
+        },
         "resetView": "Reset view",
         "resetHint": "Clears search, filter, and selection; Escape steps back one level at a time.",
         "ungroupedConcepts": "Other concepts",
@@ -191,7 +209,14 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
     }
     var copy = COPY[lang];
     var dataSource = root.getAttribute("data-source") || "../learning-map-data-" + lang + ".json";
-    var state = { mode: "pages", areaId: null, query: "", relationType: "", conceptId: null };
+    var state = {
+      mode: "pages",
+      areaId: null,
+      query: "",
+      relationType: "",
+      conceptId: null,
+      pageId: null,
+    };
     var data = null;
     var pageById = {};
     var conceptById = {};
@@ -332,6 +357,12 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       );
     }
 
+    function appendRelationOption(parent, kind) {
+      var option = el("option", null, relationTypes[kind].label);
+      option.value = kind;
+      parent.appendChild(option);
+    }
+
     function fillRelationFilter() {
       if (!relationFilter) {
         return;
@@ -340,10 +371,26 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       var allOption = el("option", null, copy.relationFilterAll);
       allOption.value = "";
       relationFilter.appendChild(allOption);
+      var groupedKinds = [];
+      Object.keys(copy.relationFamilies).forEach(function (family) {
+        var kinds = Object.keys(relationTypes).filter(function (kind) {
+          return relationTypes[kind].family === family;
+        });
+        if (!kinds.length) {
+          return;
+        }
+        groupedKinds = groupedKinds.concat(kinds);
+        var group = el("optgroup", null);
+        group.label = copy.relationFamilies[family];
+        kinds.forEach(function (kind) {
+          appendRelationOption(group, kind);
+        });
+        relationFilter.appendChild(group);
+      });
       Object.keys(relationTypes).forEach(function (kind) {
-        var option = el("option", null, relationTypes[kind].label);
-        option.value = kind;
-        relationFilter.appendChild(option);
+        if (groupedKinds.indexOf(kind) < 0) {
+          appendRelationOption(relationFilter, kind);
+        }
       });
       relationFilter.value = state.relationType;
     }
@@ -429,6 +476,10 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       var chip = el("a", "map-chip", page.title);
       chip.href = page.href;
       chip.setAttribute("data-destination", page.destination);
+      chip.setAttribute("data-page-id", page.id);
+      if (state.pageId === page.id) {
+        chip.setAttribute("aria-current", "true");
+      }
       chip.addEventListener("click", function (event) {
         if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
           event.preventDefault();
@@ -436,6 +487,17 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         }
       });
       return chip;
+    }
+
+    function markCurrentChip() {
+      var chips = viewport.querySelectorAll("[data-page-id]");
+      for (var i = 0; i < chips.length; i += 1) {
+        if (chips[i].getAttribute("data-page-id") === state.pageId) {
+          chips[i].setAttribute("aria-current", "true");
+        } else {
+          chips[i].removeAttribute("aria-current");
+        }
+      }
     }
 
     function matchesQuery(page, query) {
@@ -816,6 +878,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       if (!page) {
         return;
       }
+      state.pageId = pageId;
       clearNode(detailPanel);
       detailPanel.appendChild(el("h3", "map-detail-title", page.title));
       var meta = el("p", "map-detail-meta");
@@ -868,6 +931,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       open.href = page.href;
       detailPanel.appendChild(open);
       openDetailsBox();
+      markCurrentChip();
       setStatus(page.title);
     }
 
@@ -876,6 +940,8 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       if (!concept) {
         return;
       }
+      state.pageId = null;
+      markCurrentChip();
       clearNode(detailPanel);
       detailPanel.appendChild(el("h3", "map-detail-title", concept.label));
       var importanceLabel = copy.importanceLabels[concept.importance];
@@ -949,6 +1015,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
     modeSelect.addEventListener("change", function () {
       state.mode = modeSelect.value;
       state.conceptId = null;
+      state.pageId = null;
       render();
     });
 
@@ -970,6 +1037,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         state.relationType = "";
         state.areaId = null;
         state.conceptId = null;
+        state.pageId = null;
         searchInput.value = "";
         if (relationFilter) {
           relationFilter.value = "";
@@ -1002,6 +1070,8 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         state.areaId = null;
         render();
       } else {
+        state.pageId = null;
+        markCurrentChip();
         renderPlaceholder();
       }
     });

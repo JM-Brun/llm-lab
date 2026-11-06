@@ -902,3 +902,52 @@ def test_concept_importance_is_localized_in_cards_and_details() -> None:
     assert "Core" in script
     assert "Supporting" in script
     assert "Specialized" in script
+
+
+def test_committed_include_matches_render_map_script() -> None:
+    """Lock the committed include to the renderer output, byte for byte."""
+    include_path = MODULE_PATH.parents[2] / "site" / "includes" / "learning-map.html"
+    expected = MODULE["render_map_script"]()
+    actual = include_path.read_text(encoding="utf-8")
+    if actual == expected:
+        return
+    expected_lines = expected.splitlines()
+    actual_lines = actual.splitlines()
+    for index, (actual_line, expected_line) in enumerate(zip(actual_lines, expected_lines)):
+        if actual_line != expected_line:
+            pytest.fail(
+                f"{include_path} is stale: differs from render_map_script() at line"
+                f" {index + 1}:\n- {actual_line}\n+ {expected_line}\n"
+                "Regenerate with: uv run --no-project --with-requirements"
+                " docs/requirements-history-validation.txt --python 3.12"
+                " python site/tools/build_learning_map.py"
+            )
+    pytest.fail(
+        f"{include_path} is stale: render_map_script() produces {len(expected_lines)}"
+        f" lines against {len(actual_lines)}. Regenerate with:"
+        " uv run --no-project --with-requirements docs/requirements-history-validation.txt"
+        " --python 3.12 python site/tools/build_learning_map.py"
+    )
+
+
+def test_selected_page_chip_exposes_aria_current() -> None:
+    """The selected page keeps an aria-current chip across rerenders."""
+    script = MODULE["render_map_script"]()
+    assert 'chip.setAttribute("data-page-id", page.id);' in script
+    assert 'chip.setAttribute("aria-current", "true");' in script
+    assert "function markCurrentChip()" in script
+    assert "state.pageId = pageId;" in script
+    assert "state.pageId = null;" in script
+
+
+def test_relation_filter_groups_kinds_by_localized_family() -> None:
+    """Relation kinds are grouped under localized family optgroups."""
+    script = MODULE["render_map_script"]()
+    assert "Object.keys(copy.relationFamilies)" in script
+    assert 'el("optgroup", null)' in script
+    assert "appendRelationOption(group, kind);" in script
+    assert "appendRelationOption(relationFilter, kind);" in script
+    for label in ("Représentation", "Fonctionnement", "Évaluation"):
+        assert label in script
+    for label in ("Representation", "Functioning", "Evaluation"):
+        assert label in script
