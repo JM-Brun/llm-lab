@@ -110,7 +110,10 @@ def test_rendered_graph_validator_accepts_complete_references() -> None:
             "llmlab": "urn:llmlab:",
         },
         "@graph": [
-            {"@id": "https://jm-brun.github.io/llm-lab/id/scheme/concepts", "@type": "skos:ConceptScheme"},
+            {
+                "@id": "https://jm-brun.github.io/llm-lab/id/scheme/concepts",
+                "@type": "skos:ConceptScheme",
+            },
             {
                 "@id": "urn:concept",
                 "@type": "skos:Concept",
