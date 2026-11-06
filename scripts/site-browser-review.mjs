@@ -94,6 +94,27 @@ for (const testCase of cases) {
         };
       }).filter(x => x.right > window.innerWidth + 1 || x.left < -1)
         .sort((a, b) => b.right - a.right).slice(0, 60),
+      marginOverflow: [...document.querySelectorAll("body *")].map(el => {
+        const r = el.getBoundingClientRect();
+        const style = getComputedStyle(el);
+        return {
+          tag: el.tagName.toLowerCase(),
+          className: typeof el.className === "string" ? el.className.slice(0, 80) : null,
+          text: (el.innerText || "").trim().slice(0, 60),
+          right: Math.round(r.right),
+          width: Math.round(r.width),
+          marginRight: style.marginRight,
+        };
+      }).filter(x => x.right <= window.innerWidth + 1 && x.right + parseFloat(x.marginRight) > window.innerWidth + 1).slice(0, 10),
+      bodyBox: (() => {
+        const r = document.body.getBoundingClientRect();
+        return {
+          left: Math.round(r.left), right: Math.round(r.right), width: Math.round(r.width),
+          scrollWidth: document.body.scrollWidth,
+          bodyMinWidth: getComputedStyle(document.body).minWidth,
+          htmlMinWidth: getComputedStyle(document.documentElement).minWidth,
+        };
+      })(),
       pageHeight: document.documentElement.scrollHeight,
       images: [...document.images].map(img => ({
         src: img.currentSrc || img.src,
@@ -602,7 +623,11 @@ for (const testCase of cases) {
       );
     }
     if (item.layout.horizontalOverflow || item.learningMapLayout?.horizontalOverflow) {
-      const overflowing = (item.layout.overflowCandidates || []).filter(c => c.right <= item.layout.documentWidth + 1).slice(0, 10).map(c => `${c.tag}${c.className ? "." + String(c.className).split(" ")[0] : ""}[left=${c.left},right=${c.right}]`).join(" | ");
+      let overflowing = (item.layout.overflowCandidates || []).filter(c => c.right <= item.layout.documentWidth + 1).slice(0, 10).map(c => `${c.tag}${c.className ? "." + String(c.className).split(" ")[0] : ""}[left=${c.left},right=${c.right}]`).join(" | ");
+      if (!overflowing) {
+        const margins = (item.layout.marginOverflow || []).map(c => `${c.tag}${c.className ? "." + String(c.className).split(" ")[0] : ""}[right=${c.right},marginRight=${c.marginRight}]`).join(" | ");
+        overflowing = `marginOverflow: ${margins} ; bodyBox: ${JSON.stringify(item.layout.bodyBox)}`;
+      }
       report.failures.push(`${pagePath}/${lang}/${label}/${theme}: horizontal overflow (document ${item.layout.documentWidth}px vs viewport ${item.layout.viewportWidth}px): ${overflowing}`);
     }
     if (runInteractiveAudit && !item.keyboard.length) report.failures.push(`${pagePath}/${lang}/${label}/${theme}: no keyboard focus targets`);
