@@ -400,3 +400,8 @@ This skill owns **group-level pedagogy and coherence**, not every kind of page v
 - Use `audit-skill-routing` to select and sequence specialist skills when the request spans multiple audit dimensions.
 
 A group audit may identify a scientific, architectural or editorial risk as a finding. It should state the evidence and route the detailed investigation to the owning skill rather than expanding into an unbounded parallel audit. Avoid duplicate findings: maintain one canonical finding ID and reference it from related reports.
+
+
+### Rendered-site specialist hand-off
+
+This skill may inspect source-level navigation and report expected relationships. When the question is whether breadcrumbs, route cues, responsive layout, keyboard behavior, accessibility or interactive controls actually render and work, use `rendered-site-audit`. Do not mark rendered behavior verified from YAML, Quarto source or screenshots alone. Keep one canonical finding ID across the group and rendered reports.
