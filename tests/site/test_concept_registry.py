@@ -370,6 +370,9 @@ def test_shared_prediction_scoring_inference_and_training_concepts_are_distinct(
     # Training has an explicit observed-token policy and optimization path.
     assert ("teacher-forcing", "applies-to", "training-example") in edges
     assert ("training-objective", "produces", "gradient") in edges
+    # Next-token prediction names the task; the training objective names the
+    # function optimized. The task is not a structural component of that function.
+    assert ("next-token-prediction", "part-of", "training-objective") not in edges
     assert ("gradient", "prerequisite", "parameter-update") in edges
     assert ("optimizer", "contributes-to", "parameter-update") in edges
 
