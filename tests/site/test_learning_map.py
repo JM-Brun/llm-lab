@@ -91,6 +91,7 @@ def _write_concept_registry(root: Path) -> None:
         "concepts": [
             {
                 "id": "attention",
+                "importance": "essential",
                 "labels": {"fr": "Attention", "en": "Attention"},
                 "definitions": {"fr": "Mécanisme.", "en": "Mechanism."},
                 "domains": ["architectures-mechanisms"],
@@ -98,6 +99,7 @@ def _write_concept_registry(root: Path) -> None:
             },
             {
                 "id": "query",
+                "importance": "important",
                 "labels": {"fr": "Requête", "en": "Query"},
                 "definitions": {"fr": "Projection.", "en": "Projection."},
                 "domains": [],
@@ -569,6 +571,7 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
             "label": "Attention",
             "definition": "Mécanisme.",
             "domains": ["architectures-mechanisms"],
+            "importance": "essential",
             "resources": [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}],
         },
         {
@@ -576,6 +579,7 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
             "label": "Requête",
             "definition": "Projection.",
             "domains": [],
+            "importance": "important",
             "resources": [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}],
         },
     ]
@@ -756,6 +760,20 @@ def test_concept_graph_script_exposes_direction_and_relation_legend() -> None:
     assert 'relation.direction === "symmetric" ? "↔ " : "→ "' in source
 
 
+def test_load_concept_graph_exports_concept_importance(tmp_path: Path) -> None:
+    _write_concept_registry(tmp_path)
+    MODULE["load_concept_graph"].__globals__["ROOT"] = tmp_path
+    pages = [
+        {"id": "fr/attention", "title": "Attention", "href": "attention.html"},
+        {"id": "fr/queries", "title": "Requêtes", "href": "queries.html"},
+    ]
+
+    graph = MODULE["load_concept_graph"]("fr", pages)
+
+    assert graph["concepts"][0]["importance"] == "essential"
+    assert graph["concepts"][1]["importance"] == "important"
+
+
 def test_load_concept_graph_exports_localized_domains(tmp_path: Path) -> None:
     _write_concept_registry(tmp_path)
     _write_domain_registry(tmp_path)
@@ -800,6 +818,9 @@ def test_learning_map_script_groups_concepts_and_filters_relations() -> None:
     assert "conceptNeighbors" in script
     assert 'setAttribute("aria-pressed", "true")' in script
     assert "map-concept-dimmed" in script
+    assert "conceptMetadataFor" in script
+    assert "copy.importanceLabel" in script
+    assert "map-concept-domain" in script
     assert 'copy.hiddenRelations.replace("{count}", String(hiddenCount))' in script
     assert 'showConceptDetails(other.id, "details")' in script
     assert "loadedSummary()" in script

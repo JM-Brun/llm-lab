@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/generation"
-scope: "Décrit la boucle d’inférence autorégressive d’un modèle déjà entraîné, traité comme une boîte noire : contexte, distribution du prochain token, règle de décodage, ajout du token et arrêt ; les détails internes du Transformer et l’apprentissage des paramètres sont hors périmètre."
-purpose: "Le lecteur doit pouvoir dérouler une génération token par token, expliquer pourquoi les paramètres restent fixes pendant l’inférence et prévoir comment une règle de décodage modifie la sortie sans réentraîner le modèle."
+scope: "Décrit l’inférence autorégressive d’un modèle déjà entraîné, traité comme une boîte noire : contexte, prefill du prompt, decode itératif, distribution du prochain token, sélection, ajout du token et arrêt. Les détails internes du Transformer et l’apprentissage des paramètres sont hors périmètre ; les mécanismes du cache KV restent un approfondissement sur l’efficacité."
+purpose: "Le lecteur doit pouvoir distinguer le prefill du prompt du decode itératif, dérouler la génération token par token, expliquer pourquoi les paramètres restent fixes et distinguer la phase de decode de la procédure de sélection appelée décodage."
 suggested_route:
   previous: "fr/llm-overview"
   next: "fr/text-data"
@@ -29,7 +29,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:inference-generat
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À l’issue de cette page, vous pourrez :
 - dérouler les étapes d’une génération autorégressive, du contexte au critère d’arrêt ;
-- distinguer passe avant, décodage et génération ;
+- distinguer passe avant, phases de prefill et de decode, décodage comme sélection du token, et boucle complète de génération ;
 - expliquer pourquoi l’inférence ne modifie pas les paramètres du modèle ;
 - prévoir l’effet de la sélection gloutonne, de l’échantillonnage et de la température sur le texte produit.
 :::
@@ -45,6 +45,19 @@ Un LLM n'écrit pas un texte d'un bloc : il produit **un token à la fois**. À 
 3. **Décoder et sélectionner le prochain token.** Une règle de décodage exploite les logits ou la distribution pour produire un choix : par exemple le token de probabilité maximale, ou un token tiré par échantillonnage.
 4. **Ajouter le token et recommencer.** Le token sélectionné est ajouté au contexte, puis la boucle repart à l'étape 2, sous réserve de la limite de contexte.
 5. **Arrêter.** La génération s’arrête sur un critère explicite — token de fin, longueur maximale, ou règle imposée par l’application — jamais parce que le modèle « aurait fini de réfléchir ».
+
+## Prefill et decode : deux phases de l’inférence
+
+La première passe sur le prompt et les passes suivantes sur les tokens générés n’ont pas le même rôle. Dans les systèmes d’inférence, la boucle de génération est souvent décrite en deux phases :
+
+1. **Prefill** : le prompt initial est traité comme une séquence. Le modèle calcule les représentations contextualisées sous masque causal et obtient les logits de la dernière position du prompt, utilisés pour sélectionner le premier token généré. Les positions du prompt sont traitées ensemble par les opérations séquentielles ; le masque causal empêche toujours l’accès aux positions futures.
+2. **Decode** : phase itérative qui commence après la sélection du premier token. Chaque nouveau token généré est ajouté au contexte et conditionne la prédiction suivante. Dans une implémentation avec cache KV, les clés et valeurs calculées pour le prompt et les tokens générés précédemment sont réutilisées ; seule la nouvelle position nécessite de nouveaux calculs d’attention et les opérations associées.
+
+Un **cache KV** est une optimisation de l’inférence, pas une condition de validité de la génération autorégressive. Sans cache, une implémentation peut recalculer tout le contexte courant à chaque étape. Prefill et decode désignent donc des phases du calcul d’inférence, tandis que le **décodage** (dans la section suivante) désigne la procédure qui sélectionne un token à partir des sorties du modèle. Ces termes sont liés, mais non interchangeables.
+
+::: {.callout-note title="Ce que fait l’implémentation de référence de LLM Lab"}
+La boucle de référence dans [`generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py) exécute une passe avant sur la fenêtre de contexte courante à chaque étape de génération. Elle ne possède volontairement **pas de cache KV** et recalcule donc l’attention sur la fenêtre courante. Le premier appel joue le rôle du prefill du prompt ; les appels suivants réalisent le decode en recalculant le contexte croissant. Il s’agit d’une implémentation pédagogique transparente, pas d’un moteur de serving optimisé. Pour les mécanismes du cache et ses compromis mémoire, voir le [guide Hugging Face sur le cache KV](https://huggingface.co/docs/transformers/main/en/kv_cache).
+:::
 
 ### Que recouvre exactement le décodage ?
 

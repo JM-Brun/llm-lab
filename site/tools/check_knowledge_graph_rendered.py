@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+IMPORTANCE_LEVELS = {"essential", "important", "specialized"}
 EXPORT_NAME = "knowledge-graph.jsonld"
 EXPECTED_EXPORT_ID = "https://jm-brun.github.io/llm-lab/knowledge-graph.jsonld"
 REQUIRED_TYPES = {
@@ -50,6 +51,15 @@ def validate_graph(payload: dict[str, Any]) -> list[str]:
 
     if EXPECTED_EXPORT_ID not in identifiers:
         errors.append(f"JSON-LD graph is missing its export entity {EXPECTED_EXPORT_ID!r}")
+
+    for node in nodes:
+        node_id = node.get("@id")
+        if isinstance(node_id, str) and "/id/concept/" in node_id:
+            importance = node.get("llmlab:importance")
+            if importance not in IMPORTANCE_LEVELS:
+                errors.append(
+                    f"Concept {node_id!r} has missing or invalid llmlab:importance {importance!r}"
+                )
 
     for node in nodes:
         for predicate, value in node.items():

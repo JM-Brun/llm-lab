@@ -562,6 +562,7 @@ def load_concept_graph(
                 "label": item["labels"][language],
                 "definition": item["definitions"][language],
                 "domains": domains,
+                "importance": item["importance"],
                 "resources": resources,
             }
         )

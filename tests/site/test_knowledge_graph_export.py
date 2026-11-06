@@ -41,6 +41,7 @@ def test_export_has_stable_skos_schemes_and_bilingual_labels() -> None:
     )
     assert concept["@type"] == "skos:Concept"
     assert {item["@language"] for item in concept["skos:prefLabel"]} == {"fr", "en"}
+    assert concept["llmlab:importance"] == "essential"
 
 
 def test_export_describes_published_pages() -> None:
@@ -113,6 +114,7 @@ def test_rendered_graph_validator_accepts_complete_references() -> None:
             {
                 "@id": "urn:concept",
                 "@type": "skos:Concept",
+                "llmlab:importance": "essential",
                 "skos:inScheme": {"@id": "urn:scheme"},
             },
             {

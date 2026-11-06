@@ -31,6 +31,7 @@ RELATION_TYPES = {
     "mapped-by",
 }
 PAGE_ID = re.compile(r"(?:fr|en)/[a-z0-9]+(?:-[a-z0-9]+)*")
+IMPORTANCE_LEVELS = {"essential", "important", "specialized"}
 RELATION_FAMILIES = {
     "structural",
     "pedagogical",
@@ -177,6 +178,12 @@ def validate_registry(
             errors.append(f"{where}.id: duplicate identifier {identifier!r}")
         else:
             identifiers.add(identifier)
+
+        importance = concept.get("importance")
+        if not isinstance(importance, str) or importance not in IMPORTANCE_LEVELS:
+            errors.append(
+                f"{where}.importance: expected one of {sorted(IMPORTANCE_LEVELS)}"
+            )
 
         for field in ("labels", "definitions"):
             values = concept.get(field)

@@ -8,15 +8,15 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/training-examples"
-scope: "Covers the transformation of a tokenized stream into autoregressive input-target examples: one-token shifting, context windows and stride, document packing and boundaries, padding, attention and loss masks, and tensor shapes. It stops at correctly constructed training batches rather than deriving the probability and optimization objectives."
-purpose: "Construct aligned input-target batches from token IDs, distinguish windowing and masking decisions, verify tensor shapes, and diagnose common boundary or alignment errors that would change the training objective."
+scope: "Covers the transformation of a tokenized stream into autoregressive input-target examples: one-token shifting, teacher forcing, context windows and stride, document packing and boundaries, padding, attention and loss masks, and tensor shapes. It stops at correctly constructed training batches rather than deriving the probability and optimization objectives."
+purpose: "Construct aligned input-target batches from token IDs, explain why training conditions on ground-truth prefixes (teacher forcing), distinguish this from inference on generated prefixes, verify tensor shapes, and diagnose alignment errors."
 suggested_route:
   previous: "en/corpus-preparation"
   next: null
 hierarchy:
   parents: ["en/corpus-preparation"]
   children: []
-related: ["en/tokenization-strategies", "en/likelihood"]
+related: ["en/tokenization-strategies", "en/likelihood", "en/generation"]
 tags: ["type:concept-bridge", "destination:build", "topic:training-examples", "level:core", "language:en", "status:published"]
 -->
 
@@ -26,7 +26,7 @@ An autoregressive model learns to predict the next token from the available cont
 
 ## Learning objectives
 
-- Construct a one-token-shifted input-target pair.
+- Construct a one-token-shifted input-target pair.\n- Explain teacher forcing and distinguish ground-truth training prefixes from generated inference prefixes.
 - Distinguish context length, stride, batch size, and vocabulary size.
 - Compare sliding windows with packed sequences.
 - Separate document boundaries, attention masks, and loss masks.
@@ -60,6 +60,30 @@ Input and target have equal lengths. The target is shifted one position in the s
 At position 0 of the first example, the model receives token `8` and must predict `3`; at position 2, it receives context `[8, 3, 3]` and predicts `9`. An ID can repeat: alignment depends on position in the stream, not on the uniqueness of token values.
 
 </details>
+
+## Teacher forcing: training on the reference prefix
+
+In standard next-token training, the model is conditioned on the **ground-truth tokens** that precede each target. This training-time conditioning strategy is called **teacher forcing**. The shifted pair above makes it concrete:
+
+- input: `x = [t0, t1, t2, t3]`
+- target: `y = [t1, t2, t3, t4]`
+
+A single forward pass produces a vocabulary distribution at every input position. At position 0, the model predicts `t1`; at position 2, it uses the reference prefix `[t0, t1, t2]` to predict `t3`. The causal mask ensures that a position cannot attend to future positions. The target sequence is used to compute the loss; it is not exposed as future context to the model.
+
+This makes position-wise predictions parallelizable during training: the model does not have to sample a token, append it, and run another forward pass before it can compute the next position's training prediction. The loss is evaluated against the shifted targets, and a separate optimization step uses its gradients to update parameters.
+
+**Teacher forcing is a conditioning strategy, not the objective or the optimizer.** The objective remains next-token prediction (often expressed through negative log-likelihood or cross-entropy); the optimizer performs parameter updates.
+
+### Training and inference use different prefixes
+
+| | Training with teacher forcing | Autoregressive inference |
+|---|---|---|
+| Available context | Ground-truth preceding tokens | Initial prompt, then previously generated tokens |
+| Predictions | All supplied positions in a forward pass | One new position per generation step |
+| Future targets | Used only to evaluate the loss | Unknown |
+| Parameter updates | Part of the training procedure | None during ordinary generation |
+
+At inference, the model cannot consult the reference continuation: each selected token becomes part of the context for the next prediction. This difference can create **exposure bias**: the prefixes encountered at inference may differ from the ground-truth prefixes used during training. It is a potential train–inference mismatch, not a guarantee that errors always compound or that teacher forcing is inherently defective. Its practical impact depends on the model, data, task, and evaluation protocol. See the [generation lesson](generation.qmd) for the inference loop.
 
 ## 2. Sliding windows and stride
 

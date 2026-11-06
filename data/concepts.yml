@@ -2,6 +2,7 @@ schema_version: 1
 # Stable concept IDs are language-independent. Labels and descriptions are bilingual.
 concepts:
   - id: token
+    importance: essential
     labels: {fr: "Token", en: "Token"}
     definitions:
       fr: "Unité discrète produite par la tokenisation et consommée par le modèle."
@@ -9,6 +10,7 @@ concepts:
     domains: [text-tokenization]
     resources: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies]
   - id: token-embedding
+    importance: essential
     labels: {fr: "Plongement initial du token", en: "Initial token embedding"}
     definitions:
       fr: "Vecteur obtenu par consultation de la matrice de plongements à partir de l’identifiant du token."
@@ -16,6 +18,7 @@ concepts:
     domains: [text-tokenization, mathematical-tools-geometry]
     resources: [fr/embedding-space, en/embedding-space]
   - id: contextualized-representation
+    importance: essential
     labels: {fr: "Représentation contextualisée", en: "Contextualized representation"}
     definitions:
       fr: "État vectoriel dont la valeur dépend du token, de son contexte et des calculs du réseau."
@@ -23,6 +26,7 @@ concepts:
     domains: [architectures-mechanisms, mathematical-tools-geometry]
     resources: [fr/contextualized-representations, en/contextualized-representations]
   - id: query
+    importance: important
     labels: {fr: "Query (requête)", en: "Query"}
     definitions:
       fr: "Projection qui encode ce qu’une position cherche à récupérer dans les autres positions."
@@ -30,6 +34,7 @@ concepts:
     domains: [architectures-mechanisms, mathematical-tools-geometry]
     resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention]
   - id: key
+    importance: important
     labels: {fr: "Key (clé)", en: "Key"}
     definitions:
       fr: "Projection qui rend une position adressable par les requêtes des autres positions."
@@ -37,6 +42,7 @@ concepts:
     domains: [architectures-mechanisms, mathematical-tools-geometry]
     resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention]
   - id: value
+    importance: important
     labels: {fr: "Value (valeur)", en: "Value"}
     definitions:
       fr: "Projection porteuse de l’information agrégée selon les poids d’attention."
@@ -44,6 +50,7 @@ concepts:
     domains: [architectures-mechanisms, mathematical-tools-geometry]
     resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention]
   - id: self-attention
+    importance: essential
     labels: {fr: "Auto-attention", en: "Self-attention"}
     definitions:
       fr: "Mécanisme qui calcule des poids entre positions d’une même séquence et agrège leurs valeurs."
@@ -51,6 +58,7 @@ concepts:
     domains: [architectures-mechanisms]
     resources: [fr/transformer, en/transformer, fr/transformer-architectures, en/transformer-architectures, fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
   - id: attention-score
+    importance: important
     labels: {fr: "Score d'attention", en: "Attention score"}
     definitions:
       fr: >-
@@ -62,6 +70,7 @@ concepts:
     domains: [architectures-mechanisms, mathematical-tools-geometry]
     resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
   - id: attention-weight
+    importance: important
     labels: {fr: "Poids d'attention", en: "Attention weight"}
     definitions:
       fr: >-
@@ -73,6 +82,7 @@ concepts:
     domains: [architectures-mechanisms, mathematical-tools-geometry]
     resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
   - id: scaled-dot-product-attention
+    importance: essential
     labels: {fr: "Attention à produit scalaire mise à l'échelle", en: "Scaled dot-product attention"}
     definitions:
       fr: >-
@@ -84,6 +94,7 @@ concepts:
     domains: [architectures-mechanisms, mathematical-tools-geometry]
     resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
   - id: multi-head-attention
+    importance: important
     labels: {fr: "Attention multi-têtes", en: "Multi-head attention"}
     definitions:
       fr: >-
@@ -99,6 +110,7 @@ concepts:
       - fr/transformer-block-walkthrough
       - en/transformer-block-walkthrough
   - id: causal-mask
+    importance: essential
     labels: {fr: "Masque causal", en: "Causal mask"}
     definitions:
       fr: "Contrainte qui empêche une position de prendre en compte les positions futures."
@@ -112,6 +124,7 @@ concepts:
       - fr/transformer-architectures
       - en/transformer-architectures
   - id: positional-encoding
+    importance: essential
     labels: {fr: "Encodage positionnel", en: "Positional encoding"}
     definitions:
       fr: "Mécanisme qui injecte ou expose l’information de position dans les calculs du modèle."
@@ -119,6 +132,7 @@ concepts:
     domains: [architectures-mechanisms, mathematical-tools-geometry]
     resources: [fr/positional-encoding, en/positional-encoding]
   - id: output-projection
+    importance: important
     labels: {fr: "Projection de sortie", en: "Output projection"}
     definitions:
       fr: "Transformation qui projette l’état final d’une position vers les scores du vocabulaire."
@@ -126,6 +140,7 @@ concepts:
     domains: [architectures-mechanisms, mathematical-tools-geometry]
     resources: [fr/logits, en/logits]
   - id: logits
+    importance: essential
     labels: {fr: "Logits", en: "Logits"}
     definitions:
       fr: "Scores non normalisés produits pour les tokens du vocabulaire avant conversion en probabilités."
@@ -133,6 +148,7 @@ concepts:
     domains: [architectures-mechanisms, probabilistic-foundations-training]
     resources: [fr/logits, en/logits]
   - id: softmax
+    importance: essential
     labels: {fr: "Softmax", en: "Softmax"}
     definitions:
       fr: "Transformation qui convertit un vecteur de scores en une distribution de probabilité."
@@ -144,6 +160,7 @@ concepts:
       - fr/scaled-dot-product-attention
       - en/scaled-dot-product-attention
   - id: cross-entropy
+    importance: essential
     labels: {fr: "Entropie croisée", en: "Cross-entropy"}
     definitions:
       fr: "Quantité qui mesure le coût probabiliste d’une distribution prédite relativement à une cible."
@@ -151,13 +168,15 @@ concepts:
     domains: [probabilistic-foundations-training]
     resources: [fr/cross-entropy, en/cross-entropy]
   - id: training-objective
+    importance: essential
     labels: {fr: "Objectif d'entraînement", en: "Training objective"}
     definitions:
       fr: "Fonction optimisée pendant l'entraînement ; pour un GPT, la prédiction du prochain token. Ses garanties se limitent à la prédiction elle-même."
       en: "Function optimized during training; for a GPT, next-token prediction. Its guarantees are limited to prediction itself."
     domains: [probabilistic-foundations-training]
-    resources: [fr/llm-limits, en/llm-limits, fr/llm-overview, en/llm-overview]
+    resources: [fr/llm-limits, en/llm-limits, fr/llm-overview, en/llm-overview, fr/training-examples, en/training-examples, fr/loss, en/loss]
   - id: calibration
+    importance: important
     labels: {fr: "Calibration", en: "Calibration"}
     definitions:
       fr: "Accord entre les probabilités prédites et les fréquences observées ; non garanti par l'objectif, à établir par une évaluation."
@@ -165,6 +184,7 @@ concepts:
     domains: [probabilistic-foundations-training]
     resources: [fr/llm-limits, en/llm-limits, fr/evaluation-experimentale, en/experimental-evaluation]
   - id: emergent-ability
+    importance: specialized
     labels: {fr: "Capacité émergente", en: "Emergent ability"}
     definitions:
       fr: "Compétence qui semble apparaître au-delà d'une échelle de modèle ; sa réalité dépend de la tâche, de la métrique et du protocole."
@@ -172,12 +192,45 @@ concepts:
     domains: [scale-research]
     resources: [fr/llm-limits, en/llm-limits, fr/emergence, en/emergence]
   - id: operational-competence
+    importance: important
     labels: {fr: "Compétence opérationnelle", en: "Operational competence"}
     definitions:
       fr: "Capacité mesurée sur des tâches dans un périmètre donné, distincte d'une thèse de compréhension humaine."
       en: "Ability measured on tasks within a given scope, distinct from a claim of human-like understanding."
     domains: [probabilistic-foundations-training]
     resources: [fr/llm-limits, en/llm-limits]
+  - id: teacher-forcing
+    importance: essential
+    labels: {fr: "Teacher forcing", en: "Teacher forcing"}
+    definitions:
+      fr: "Stratégie de conditionnement à l’entraînement où chaque prédiction du prochain token utilise les tokens de référence précédents, plutôt que les sorties précédemment générées par le modèle."
+      en: "Training-time conditioning strategy in which each next-token prediction uses the ground-truth preceding tokens rather than the model’s previously generated outputs."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/training-examples, en/training-examples]
+  - id: autoregressive-generation
+    importance: essential
+    labels: {fr: "Génération autorégressive", en: "Autoregressive generation"}
+    definitions:
+      fr: "Processus d’inférence qui prédit un token à partir du contexte courant, l’ajoute au contexte, puis répète cette opération jusqu’à une condition d’arrêt."
+      en: "Inference process that predicts a token from the current context, appends it to that context, and repeats until a stopping condition is met."
+    domains: [inference-efficiency]
+    resources: [fr/generation, en/generation, fr/gpt-generation-walkthrough, en/gpt-generation-walkthrough]
+  - id: prefill
+    importance: important
+    labels: {fr: "Prefill du prompt", en: "Prompt prefill"}
+    definitions:
+      fr: "Phase initiale de l’inférence qui traite le prompt comme une séquence et calcule les représentations et logits nécessaires à la première sélection de token ; elle peut initialiser un cache KV."
+      en: "Initial inference phase that processes the prompt as a sequence and computes the representations and logits needed for the first token selection; it may populate a KV cache."
+    domains: [inference-efficiency]
+    resources: [fr/generation, en/generation, fr/gpt-generation-walkthrough, en/gpt-generation-walkthrough]
+  - id: autoregressive-decode
+    importance: essential
+    labels: {fr: "Decode autorégressif", en: "Autoregressive decode"}
+    definitions:
+      fr: "Phase itérative de l’inférence qui traite chaque nouveau token généré pour calculer la prédiction suivante, en réutilisant éventuellement les clés et valeurs mises en cache."
+      en: "Iterative inference phase that processes each newly generated token to compute the next prediction, optionally reusing cached keys and values."
+    domains: [inference-efficiency]
+    resources: [fr/generation, en/generation, fr/gpt-generation-walkthrough, en/gpt-generation-walkthrough]
 relation_types:
   represented-by:
     direction: directed
@@ -321,3 +374,8 @@ relations:
   - {from: logits, type: normalized-by, to: softmax}
   - {from: softmax, type: evaluated-by, to: cross-entropy}
   - {from: training-objective, type: evaluated-by, to: cross-entropy}
+  - {from: teacher-forcing, type: applies-to, to: training-objective}
+  - {from: prefill, type: part-of, to: autoregressive-generation}
+  - {from: autoregressive-decode, type: part-of, to: autoregressive-generation}
+  - {from: prefill, type: produces, to: logits}
+  - {from: autoregressive-decode, type: produces, to: logits}

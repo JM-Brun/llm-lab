@@ -20,6 +20,7 @@ def _valid_registry() -> dict[str, Any]:
         "concepts": [
             {
                 "id": "token",
+                "importance": "essential",
                 "labels": {"fr": "Token", "en": "Token"},
                 "definitions": {"fr": "Unité discrète.", "en": "Discrete unit."},
                 "domains": ["architectures-mechanisms"],
@@ -27,6 +28,7 @@ def _valid_registry() -> dict[str, Any]:
             },
             {
                 "id": "embedding",
+                "importance": "important",
                 "labels": {"fr": "Plongement", "en": "Embedding"},
                 "definitions": {"fr": "Vecteur.", "en": "Vector."},
                 "domains": ["mathematical-tools-geometry"],
@@ -66,6 +68,18 @@ def test_checked_in_registry_is_valid() -> None:
     domain_ids, domain_errors = validate_domains(domain_data)
     assert domain_errors == []
     assert validate_registry(data, published_pages, domain_ids) == []
+
+
+def test_concept_importance_is_required_and_controlled() -> None:
+    data = _valid_registry()
+    data["concepts"][0]["importance"] = "critical"
+    errors = validate_registry(data)
+    assert any(".importance: expected one of" in error for error in errors)
+
+    data["concepts"][0]["importance"] = "essential"
+    data["concepts"][1].pop("importance")
+    errors = validate_registry(data)
+    assert any(".importance: expected one of" in error for error in errors)
 
 
 def test_registry_rejects_duplicate_ids_and_unknown_relation_endpoints() -> None:

@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/generation"
-scope: "Describes autoregressive inference for an already trained model treated as a black box: context, next-token distribution, decoding rule, token appending, and stopping; Transformer internals and parameter learning are outside its scope."
-purpose: "Readers should be able to step through token-by-token generation, explain why parameters remain fixed during inference, and predict how a decoding rule changes the output without retraining the model."
+scope: "Describes autoregressive inference for an already trained model treated as a black box: context, prompt prefill, iterative decode, next-token distribution, selection, token appending, and stopping. Transformer internals and parameter learning are outside its scope; KV-cache mechanics remain an optional efficiency topic."
+purpose: "Readers should be able to distinguish prompt prefill from iterative decode, trace token-by-token generation, explain why parameters remain fixed during inference, and distinguish the decode phase from the token-selection procedure called decoding."
 suggested_route:
   previous: "en/llm-overview"
   next: "en/text-data"
@@ -29,7 +29,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:inference-generat
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this page, you will be able to:
 - step through autoregressive generation, from the context to the stopping criterion;
-- distinguish the forward pass, decoding, and generation;
+- distinguish the forward pass, the prefill and decode phases, token-selection decoding, and the complete generation loop;
 - explain why inference does not update model parameters;
 - predict how greedy selection, sampling, and temperature affect generated text.
 :::
@@ -45,6 +45,19 @@ An LLM does not write text in one block: it produces **one token at a time**. At
 3. **Decode and select the next token.** A decoding rule uses the logits or distribution to produce a choice: for example, the highest-probability token or a token drawn by sampling.
 4. **Append the token and repeat.** The selected token is added to the context, and the loop returns to step 2, subject to the context limit.
 5. **Stop.** Generation stops on an explicit criterion — an end-of-sequence token, a maximum length, or a rule imposed by the application — never because the model "finished thinking".
+
+## Prefill and decode: two phases of inference
+
+The first pass over the prompt and the later passes over generated tokens have different roles. In inference systems, the generation loop is commonly described in two phases:
+
+1. **Prefill** processes the initial prompt as a sequence. The model computes contextual representations under the causal mask and obtains the logits at the final prompt position, which are used to select the first generated token. Prompt positions are handled together by the sequence operations; causal masking still prevents access to future positions.
+2. **Decode** is the iterative phase after the first token has been selected. Each newly generated token is appended to the context and conditions the next prediction. In a KV-cached implementation, the keys and values computed for the prompt and earlier generated tokens are reused; only the new position needs fresh attention projections and associated computation.
+
+A **KV cache** is an inference optimization, not a requirement for autoregressive correctness. Without it, an implementation can recompute the full current context at every step. Prefill and decode therefore describe phases of the inference workload, whereas **decoding** (in the next section) describes the procedure that selects a token from model outputs. The terms are related but not interchangeable.
+
+::: {.callout-note title="What the LLM Lab reference implementation does"}
+The reference loop in [`generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py) runs a forward pass on the current context window at every generation step. It deliberately has **no KV cache**, so it recomputes attention over the current window. The first call plays the role of prompt prefill; later calls implement decode by recomputing the growing context. This is a transparent teaching implementation, not an optimized serving engine. For cache mechanics and memory trade-offs, see the [Hugging Face KV-cache guide](https://huggingface.co/docs/transformers/main/en/kv_cache).
+:::
 
 ### What exactly does decoding include?
 

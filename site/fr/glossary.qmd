@@ -38,6 +38,8 @@ Ce glossaire donne une définition courte des termes rencontrés dans le site. I
 - **Passe avant (*forward pass*)** — calcul du réseau qui transforme le contexte en représentations et en logits, avec les paramètres du modèle fixés. Voir [GPT et Transformer](transformer.qmd).
 - **Décodage (*decoding*)** — procédure qui exploite les logits ou leur distribution pour sélectionner le prochain token ; elle intervient après la passe avant et constitue une étape de la génération. Ne pas confondre avec le **décodeur** (*decoder*), partie de certaines architectures Transformer. Voir [Générer du texte](generation.qmd).
 - **Génération autorégressive** — processus itératif qui sélectionne un token, l’ajoute au contexte, puis recommence jusqu’à une condition d’arrêt. Voir [Générer du texte](generation.qmd).
+- **Prefill** — phase d’inférence qui traite le prompt initial comme une séquence et produit les logits utilisés pour sélectionner le premier token généré ; elle peut aussi initialiser un cache KV. Voir [Générer du texte](generation.qmd).
+- **Phase de decode** — phase itérative de l’inférence qui traite les nouveaux tokens générés pour obtenir les prédictions suivantes. Ne pas la confondre avec le **décodage**, la procédure de sélection du token. Voir [Générer du texte](generation.qmd).
 - **Fenêtre de contexte** — quantité de tokens que le modèle peut prendre en compte dans une entrée donnée.
 
 ## Représentations et géométrie
@@ -63,6 +65,8 @@ Ces notions sont regroupées dans le parcours [Géométrie et interprétabilité
 - **Cross-entropie** — coût moyen associé à une distribution cible et à une distribution prédictive. Voir [Cross-entropie et divergence KL](cross-entropy.qmd).
 - **Divergence KL** — mesure de la différence entre deux distributions, généralement non symétrique. Voir [Cross-entropie et divergence KL](cross-entropy.qmd).
 - **Loss / fonction de perte** — objectif numérique optimisé pendant l'entraînement ; ce n'est pas une mesure universelle de qualité. Voir [Loss](loss.qmd).
+- **Teacher forcing (conditionnement par les tokens de référence)** — stratégie d’entraînement où chaque prédiction du prochain token utilise les tokens de référence précédents, plutôt que les sorties échantillonnées du modèle. Voir [exemples d’entraînement](training-examples.qmd).
+- **Biais d’exposition (*exposure bias*)** — décalage potentiel entre les préfixes de référence utilisés pendant l’entraînement avec teacher forcing et les préfixes générés par le modèle à l’inférence ; son impact dépend de la tâche et du protocole. Voir [exemples d’entraînement](training-examples.qmd).
 - **Gradient** — dérivée de l'objectif par rapport à une variable ou à un paramètre. Voir [Gradients](gradients.qmd).
 - **Calibration** — accord empirique entre les probabilités annoncées et les fréquences observées d'événements comparables.
 

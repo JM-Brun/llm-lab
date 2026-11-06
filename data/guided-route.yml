@@ -57,8 +57,8 @@ stages:
       fr: "Des états aux prédictions"
       en: "From hidden states to predictions"
     objective:
-      fr: "Relier logits, distribution de probabilité, vraisemblance et sélection du prochain token."
-      en: "Connect logits, probability distributions, likelihood, and next-token selection."
+      fr: "Relier logits, distribution de probabilité, vraisemblance et sélection du prochain token, puis distinguer le prefill du prompt du decode itératif."
+      en: "Connect logits, probability distributions, likelihood, and next-token selection, then distinguish prompt prefill from iterative decode."
     pages:
       fr: [fr/logits, fr/probabilites, fr/vraisemblance, fr/generation]
       en: [en/logits, en/probabilities, en/likelihood, en/generation]
@@ -70,11 +70,11 @@ stages:
       fr: "Comprendre l'apprentissage et évaluer"
       en: "Understand learning and evaluate"
     objective:
-      fr: "Découvrir les objectifs de perte et les gradients, puis examiner les preuves, métriques et limites d'une évaluation."
-      en: "Explore loss objectives and gradients, then examine the evidence, metrics, and limits of evaluation."
+      fr: "Comprendre l’objectif de prédiction du prochain token, le conditionnement par les tokens de référence (teacher forcing), les pertes et les gradients, puis examiner les preuves et limites de l’évaluation."
+      en: "Understand the next-token objective, ground-truth conditioning (teacher forcing), losses, and gradients, then examine evaluation evidence and limitations."
     pages:
       fr: [fr/cross-entropy, fr/loss, fr/gradients, fr/evaluation-experimentale]
       en: [en/cross-entropy, en/loss, en/gradients, en/experimental-evaluation]
     optional_pages:
-      fr: [fr/scaling-laws]
-      en: [en/scaling-laws]
+      fr: [fr/scaling-laws, fr/training-examples]
+      en: [en/scaling-laws, en/training-examples]
