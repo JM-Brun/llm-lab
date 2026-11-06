@@ -135,6 +135,8 @@ The routes share foundations (text, tokenization, tensors, architecture, predict
 
 ### Guided build milestones
 
+The implementation-evidence status for these milestones is audited in [Build milestone implementation-evidence audit — 2026-11-06](audits/build-milestones-evidence-audit-2026-11-06.md). The table below remains the curriculum authority; the audit records the source/test basis and explicit limits.
+
 | ID | Learner question and milestone | Prerequisites | Expected learner artifact / evidence | Current public evidence and status | Owner |
 |---|---|---|---|---|---|
 | G0 | **What are we building?** Understand an autoregressive decoder-only GPT, next-token prediction, and the boundary between model, tokenizer, data and inference. | Basic programming and elementary linear algebra/probability. | Correct component/data-flow explanation; distinguish GPT-style decoder-only models from all LLMs and encoder–decoder Transformers. | Conceptual evidence: bilingual LLM panorama, Transformer overview, scaling-laws pages, glossary and history. No implementation or learner-assessment evidence is claimed at this milestone; rendered overview review remains tracked separately. | #108, #130, #337 |
