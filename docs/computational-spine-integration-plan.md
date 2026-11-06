@@ -40,6 +40,11 @@ The merges above establish the model and one navigation projection. They do **no
 
 ## 3. Remaining work, ordered by dependency
 
+### Metadata ownership invariant
+
+The repository has distinct canonical sources for distinct questions: `data/concepts.yml` owns concept identity, definitions, domains and typed semantic relations; `data/computational-graph.yml` owns computational dataflow and branch membership; `data/guided-route.yml` owns the reader-facing stage sequence; Quarto page-map metadata owns page editorial role and page-to-page navigation. These structures are connected through explicit references, but they are not interchangeable graphs. In particular, page tags must not duplicate concept IDs or domain memberships, computational edges must not be read as pedagogical prerequisites, and importance must not be used to infer route order. See [the concept-card metadata audit](audits/concept-card-metadata-audit-2026-11-06.md) for the detailed ownership contract.
+
+
 ### P0 — Verify the merged navigation in the rendered site
 
 - [ ] Run and inspect the current Quarto render for both languages after PR #582.
@@ -85,7 +90,7 @@ Use the existing page-map metadata schema and contract; do not add a new per-pag
 - [ ] Inventory pages belonging to the shared core and its three operational branches, in both languages.
 - [ ] For each page, review `hierarchy.parents/children` as **conceptual containment only**. Do not copy module membership into page parent/child edges mechanically.
 - [ ] Review `suggested_route.previous/next` as recommended pedagogical transitions. Do not infer them from sidebar order or computational dataflow alone.
-- [ ] Review tags (`notion`, `domaine`) and importance metadata against the canonical concept/domain registries and the Core/Deepen boundary.
+- [ ] Keep page tags within the existing editorial vocabulary. Do not introduce `notion:` or `domaine:` tags: concept identity and multi-domain membership are already owned by `data/concepts.yml`. If page-to-concept discoverability needs improvement, extend the existing learning-map projection from canonical concept resources rather than duplicating IDs in page metadata.
 - [ ] Ensure concepts such as prefill, decode step, KV cache, teacher forcing, observed target, likelihood, NLL, cross-entropy, gradient, optimizer, parameter update, and held-out evaluation are discoverable at their canonical pages.
 - [ ] Preserve existing stable slugs, especially French `probabilites`; do not create duplicate FR/EN concepts or pages.
 - [ ] Add or correct cross-links for cross-branch concepts rather than assigning misleading additional parents.
