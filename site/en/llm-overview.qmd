@@ -72,6 +72,24 @@ The diagram is a **system map**, not another explanation of every operation. It 
 - **Compute one forward pass:** see [GPT and Transformers](transformer.qmd), then the pages on [embeddings](embedding-space.qmd), [positional information](positional-encoding.qmd), and [attention](queries-keys-values.qmd).
 - **Produce a continuation:** see the canonical lesson on [autoregressive generation](generation.qmd), which explains the next-token distribution, decoding, context update, and stopping.
 
+### One shared prediction computation, several uses
+
+Context preparation and model computation produce a **conditional distribution over the next token**. This shared part does not depend on what happens to the distribution next: generate a token, score an observed target, or learn from known targets.
+
+{{< include ../includes/generated-computational-graph-en-persistent-spine.qmd >}}
+
+The `forward computation` node intentionally abstracts the internal layers; see [contextualized representations](contextualized-representations.qmd) and the [Transformer block walkthrough](transformer-block-walkthrough.qmd) for the internal steps.
+
+| Branch | How the distribution is used | Parameters |
+|---|---|---|
+| **Generation** | Select a token, append it to the context, and repeat the prediction; see [Generating text](generation.qmd) | Fixed |
+| **Scoring / evaluation** | Score an observed target (e.g. log-likelihood/NLL) or a generated output, then aggregate task-appropriate metrics on held-out data; see [Likelihood](likelihood.qmd) | Fixed |
+| **Training** | Compare predictions with reference targets (*teacher forcing*), compute loss and gradients; see [Training examples](training-examples.qmd), [Loss](loss.qmd), and [Gradients](gradients.qmd) | Updated at the update step |
+
+Target scoring and model evaluation are not synonyms: scoring computes a conditional probability; evaluation aggregates scores or task-specific metrics under a data protocol. Likelihood-based evaluation reuses the scoring path without updating parameters; task evaluation may also assess generated outputs.
+
+{{< include ../includes/generated-computational-graph-en-evaluation.qmd >}}
+
 Optimizations such as the **KV cache** reduce some repeated computation without changing the prediction objective; their compute and memory costs are covered in the [LLM computational complexity deep dive](llm-computational-complexity.qmd).
 
 ## 4. Three dimensions not to conflate

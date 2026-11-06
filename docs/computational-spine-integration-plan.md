@@ -7,6 +7,22 @@
 
 This document is the durable hand-off for future work sessions. It records what has been completed, what remains, the intended order, and the evidence required to close the work. It is a task plan, not a new concept registry, curriculum hierarchy, or computational graph.
 
+## 0. Current status — 2026-11-06
+
+| Work package | Status | Evidence |
+|---|---|---|
+| Canonical computational model and registry | Integrated | PR #577, #580, #583, #578 |
+| Eight-stage guided route and bilingual generated projections | Integrated | PR #578 and route-refresh PR #586 |
+| Teacher forcing, prefill and decode teaching | Integrated | FR/EN training-examples and generation lessons |
+| Concept-card domains and importance metadata | Integrated | `data/concepts.yml`, bilingual renderer and registry tests |
+| Page metadata audit | Partial | Prediction → entropy → likelihood navigation and reciprocal hierarchy reviewed; broader inventory remains |
+| Persistent-spine and evaluation views with text alternatives | In progress on this branch | Existing registry views reused; overview-page integration and renderer tests added |
+| Build crosswalk | Partial | G0–G9 and G1b → G2 branch documented; implementation evidence still has gaps |
+| Rendered desktop/mobile, keyboard and screen-reader review | Pending | Do not infer this evidence from source tests or a successful static render |
+
+PR #578 is merged to `main`; PR #586 refreshed the tracked bilingual guided-route fragments and corrected the Ruff formatting issue. Its Python CI and Quarto site workflows passed. The current branch is the bounded follow-up for the persistent visual and accessible text alternative.
+
+
 ## 1. Architectural invariant
 
 For a context containing preceding tokens (observed or generated), the model computes one conditional next-token distribution:
@@ -40,11 +56,6 @@ The merges above establish the model and one navigation projection. They do **no
 
 ## 3. Remaining work, ordered by dependency
 
-### Metadata ownership invariant
-
-The repository has distinct canonical sources for distinct questions: `data/concepts.yml` owns concept identity, definitions, domains and typed semantic relations; `data/computational-graph.yml` owns computational dataflow and branch membership; `data/guided-route.yml` owns the reader-facing stage sequence; Quarto page-map metadata owns page editorial role and page-to-page navigation. These structures are connected through explicit references, but they are not interchangeable graphs. In particular, page tags must not duplicate concept IDs or domain memberships, computational edges must not be read as pedagogical prerequisites, and importance must not be used to infer route order. See [the concept-card metadata audit](audits/concept-card-metadata-audit-2026-11-06.md) for the detailed ownership contract.
-
-
 ### P0 — Verify the merged navigation in the rendered site
 
 - [ ] Run and inspect the current Quarto render for both languages after PR #582.
@@ -58,84 +69,74 @@ The repository has distinct canonical sources for distinct questions: `data/conc
 
 ### P1 — Reconcile the guided route with the sibling branches
 
-Current source to audit: `data/guided-route.yml`. Its six-stage route currently includes generation in Orientation and again in Prediction, and includes likelihood in Prediction. The new topology gives generation a canonical Inference role and likelihood a Scoring role. This is not automatically a defect: the guided route may deliberately preview or revisit a page, but each appearance must have a clear learning objective and depth.
+The eight-stage projection is now integrated in `data/guided-route.yml` and the tracked bilingual route fragments:
 
-- [ ] Map every current stage and page membership to the canonical module IDs in `docs/learning-path.md`.
-- [ ] Decide whether the route should expose separate reader-facing stages for **Inference**, **Observed-target scoring**, **Training**, and **Evaluation**, or retain fewer stages with explicit branch labels. Do not force one stage per module if that makes the route harder to learn.
-- [ ] Preserve the early generation preview only if it is clearly labelled as an overview/black-box preview; distinguish it from the later detailed inference treatment without duplicating canonical page identity.
-- [ ] Move the conceptual role of likelihood out of the shared prediction stage: it is computed by comparing the shared distribution with an observed target.
-- [ ] Ensure cross-entropy is explained as target scoring and as a training objective component, without duplicate canonical ownership.
-- [ ] Place predictive entropy with the distribution/prediction concepts, not under observed-target scoring.
-- [ ] Represent evaluation as held-out scoring/metrics without a parameter-update edge.
-- [ ] Make teacher forcing explicit in the training/scoring context where observed targets are fed back; do not describe it as prefill.
-- [ ] Preserve optional-page memberships and reading-depth distinctions.
-- [ ] Validate FR/EN parity, page references, ordering, generated partials, and all consumers of the route data.
+`orientation → text-input → representations → computation → prediction → inference → scoring → training`.
 
-**Exit condition:** every route stage has one clear objective; every page membership has a justified role; the route explains the shared distribution and its sibling branches without suggesting one linear execution chain.
+- [x] Map stage and page membership to the canonical module IDs in `docs/learning-path.md`.
+- [x] Keep the early generation page as a black-box preview and revisit the same canonical page for detailed inference.
+- [x] End `prediction` at logits, the conditional distribution and predictive entropy.
+- [x] Put likelihood and cross-entropy in `scoring`; reuse cross-entropy as an optional bridge in `training`.
+- [x] Keep loss and gradients in `training`; keep `training-examples` optional as the Build bridge for shifted targets and teacher forcing.
+- [x] Keep evaluation cross-cutting; the current scientific-passage ranking exercise remains in Practice and is not misrepresented as an LLM-evaluation lesson.
+- [x] Preserve optional-page memberships and FR/EN parity.
+- [x] Regenerate and test the tracked route fragments in PR #586.
 
-### P1 — Reconcile concept-card metadata ownership
+**Exit condition:** met for the route projection. Further rendered-navigation review belongs to the validation section below.
 
-- [ ] Use [the 2026-11-06 concept-card metadata audit](audits/concept-card-metadata-audit-2026-11-06.md) as the source-level baseline.
-- [ ] Keep canonical notion identity in `data/concepts.yml`; do not add a redundant `notion:` page tag or page-level concept list.
-- [ ] Keep concept-domain membership many-to-many in `data/concepts.yml` and the controlled vocabulary in `data/domains.yml`; do not copy it into the Deepen-only page `domain` field.
-- [ ] Decide and review a controlled concept-importance classification independently of page `level`, destination, and domain. The audit proposes `core`, `supporting`, and `specialized` as project-relative values; do not implement the field until the 41 existing concepts can be classified consistently.
-- [ ] If adopted, validate the field in the existing concept-registry checker, pass it through the existing JSON projection, and expose it as a localized secondary cue in the existing concept cards. Do not reorder the route or alter graph relations from importance.
-
-**Exit condition:** notion identity, subject domain, concept importance, page depth, and page destination each have one clear owner and no duplicated metadata dimensions.
- 
 ### P1 — Audit page metadata and breadcrumb semantics
 
 Use the existing page-map metadata schema and contract; do not add a new per-page breadcrumb field.
 
-- [ ] Inventory pages belonging to the shared core and its three operational branches, in both languages.
-- [ ] For each page, review `hierarchy.parents/children` as **conceptual containment only**. Do not copy module membership into page parent/child edges mechanically.
-- [ ] Review `suggested_route.previous/next` as recommended pedagogical transitions. Do not infer them from sidebar order or computational dataflow alone.
-- [ ] Keep page tags within the existing editorial vocabulary. Do not introduce `notion:` or `domaine:` tags: concept identity and multi-domain membership are already owned by `data/concepts.yml`. If page-to-concept discoverability needs improvement, extend the existing learning-map projection from canonical concept resources rather than duplicating IDs in page metadata.
-- [ ] Ensure concepts such as prefill, decode step, KV cache, teacher forcing, observed target, likelihood, NLL, cross-entropy, gradient, optimizer, parameter update, and held-out evaluation are discoverable at their canonical pages.
-- [ ] Preserve existing stable slugs, especially French `probabilites`; do not create duplicate FR/EN concepts or pages.
-- [ ] Add or correct cross-links for cross-branch concepts rather than assigning misleading additional parents.
-- [ ] Check that the page metadata validator catches invalid IDs, asymmetric or dangling hierarchy links, inconsistent bilingual tags, and invalid route references.
+- [x] Review the prediction → entropy → likelihood transition in FR/EN: `suggested_route` now follows the reader-facing path, and the probabilities/entropy hierarchy is reciprocal.
+- [x] Keep `hierarchy.parents/children` as conceptual containment/decomposition only; guided-route membership does not create page parents.
+- [x] Keep `suggested_route.previous/next` as recommended pedagogical transitions, not computational dependencies.
+- [x] Keep concept identity (`notion`), controlled concept domains (`domaine`) and `importance` in the concept registry/card model. Do not add redundant `notion` or `domaine` Quarto page tags; page tags remain editorial classifications (type, destination, topic, level, language, status).
+- [x] Add controlled importance and localized domain metadata to concept cards, with registry and renderer tests.
+- [ ] Complete the broader bilingual inventory for all pages in the shared core and operational branches.
+- [ ] Check cross-links and metadata for the remaining scoring, training and evaluation pages.
+- [x] Run the page metadata validator and topology audit on the integrated route and current branch.
 
 **Exit condition:** metadata describes the actual content and intended reading transitions; no module scope is mistaken for conceptual containment or a prerequisite.
 
 ### P1 — Reconcile page content without losing knowledge
 
-- [ ] Audit the shared-core pages from text/tokens through embeddings, positional information, initial hidden states, Transformer blocks, final contextualized states, logits, and softmax.
-- [ ] Verify Q/K/V are presented as operations inside each Transformer block, not after final contextualized representations.
-- [ ] Clarify the common forward pass and its boundary at the conditional distribution.
-- [ ] Audit generation/decoding content: greedy selection, sampling, temperature, top-k/top-p, stopping, generated-token feedback, prefill, decode steps, and optional KV-cache details.
-- [ ] Audit scoring content: observed target, target probability, sequence likelihood, log-likelihood, NLL, token cross-entropy, reduction, masking, and numerical stability.
-- [ ] Audit training content: shifted inputs/targets, teacher forcing, token losses, batch aggregation, gradients, optimizer, parameter update, and recomputation with updated parameters.
-- [ ] Audit evaluation content: held-out split, leakage boundaries, metrics and uncertainty; make explicit that evaluation does not update model parameters.
-- [ ] Add explicit contrasts where confusion is likely: generated vs observed token; prefill vs teacher forcing; likelihood vs loss; evaluation vs training.
-- [ ] Keep mathematical derivations and implementation details at the appropriate Core/Deepen depth.
-- [ ] Map every moved or consolidated explanation to its canonical destination before editing; preserve examples, equations, citations, exercises, and caveats.
+- [ ] Complete the shared-core page audit from text/tokens through embeddings, positional information, initial hidden states, Transformer blocks, final contextualized states, logits and softmax. The high-level registry and overview now expose the common path; page-by-page depth review remains.
+- [x] Verify Q/K/V are operations inside each Transformer block and are projected from that block's input hidden states; the graph and walkthrough preserve this boundary.
+- [x] Clarify the common forward pass and its boundary at the conditional distribution in the registry and overview.
+- [x] Add the prefill/decode distinction, token-selection boundary, fixed-parameter inference and KV-cache limitation to the bilingual generation lesson.
+- [x] Add teacher forcing after shifted input/target construction in the bilingual training-examples lesson; distinguish reference-token conditioning from generated-token feedback and qualify exposure bias.
+- [ ] Complete the scoring-page audit for observed target, target probability, sequence likelihood, log-likelihood, NLL, token cross-entropy, reduction, masking and numerical stability.
+- [ ] Complete the training-page audit for batch aggregation, gradients, optimizer, parameter update and recomputation with updated parameters; keep missing end-to-end training implementation explicitly marked as a Build gap.
+- [x] Distinguish target scoring from held-out evaluation and state that evaluation aggregates metrics without updating parameters; the overview and evaluation graph view now expose this boundary.
+- [x] Add explicit contrasts for generated vs observed token and prefill vs teacher forcing; retain likelihood vs loss and evaluation vs training as separate concepts.
+- [x] Preserve the existing bilingual examples, equations, citations, exercises and implementation caveats in the teacher-forcing/prefill changes.
 
-**Exit condition:** each page states its scope, shared-spine position, branch role, prerequisites, and onward links; no scientific distinction or existing useful content is lost.
+**Exit condition:** partially met. The new inference/training concepts and branch boundaries are explicit; the broader shared-core, scoring and training page audits remain.
 
 ### P2 — Produce and integrate the persistent visual spine
 
-- [ ] Design one canonical, bilingual visual representation of the shared context → forward pass → logits → conditional distribution core and the sibling inference/scoring/training branches.
-- [ ] Show the two context-extension policies distinctly: generated-token feedback versus observed-token/teacher-forced feedback.
-- [ ] Show evaluation as a scoring/measurement path that stops before gradients and optimizer updates.
-- [ ] Make the visual explicit that these are conceptual connections, not one execution loop.
-- [ ] Decide the smallest maintainable implementation: preferably one reusable visual/include or a compact data-backed renderer, not a new graph framework or per-page pipeline.
-- [ ] Provide a semantic text/list equivalent and meaningful alternative text; the diagram must not be the only carrier of information.
-- [ ] Integrate the visual on a small representative page set first, then expand only where it materially improves orientation.
-- [ ] Validate FR/EN parity, responsive rendering, color contrast, keyboard/screen-reader fallback, and links to canonical pages.
+- [x] Reuse the canonical bilingual computational registry; its `persistent-spine`, generation, observed-target scoring, evaluation and training views already encode the common path and sibling branches.
+- [x] Preserve generated-token feedback separately from observed-token/teacher-forced feedback in the graph.
+- [x] Keep evaluation on held-out scoring/metrics and stop before gradients or optimizer updates.
+- [x] State in the overview that the branches are distinct uses of one conditional distribution, not one executable loop.
+- [x] Extend the existing renderer only: render the persistent-spine and evaluation views from the registry, with no new schema or frontend dependency.
+- [x] Generate a bilingual semantic HTML text alternative from the same node descriptions and directed edges.
+- [x] Pilot the persistent spine and evaluation view on the canonical FR/EN LLM overview; branch-specific views remain on their owning lessons.
+- [ ] Validate rendered FR/EN parity, responsive behavior, color contrast, keyboard operation and screen-reader usability; source-level alternatives and automated tests do not replace this review.
 
-**Exit condition:** one maintained source yields a consistent visual and accessible textual representation; no duplicated hand-authored diagrams drift across pages.
+**Exit condition:** met at source/render integration level. Manual rendered accessibility and responsive evidence remains.
 
 ### P2 — Align Build and practical implementation
 
-- [ ] Crosswalk the shared conceptual model to Build milestones without treating the Build sequence as the conceptual graph.
-- [ ] Locate tokenizer fitting/freezing, corpus preparation, context windows, shifted targets, batches, and masks in the training-data branch.
-- [ ] Ensure Build examples demonstrate teacher forcing and next-token target alignment explicitly.
-- [ ] Show that the training forward pass uses the same model prediction mechanism as inference, while differing in target supply, loss computation, gradient tracking, and parameter updates.
-- [ ] Keep prefill/decode/KV cache in the inference execution path; do not make them prerequisites for the training path.
-- [ ] Avoid duplicating conceptual explanations already owned by Understand pages; Build should emphasize implementation and evidence.
+- [x] Maintain the G0–G9 Build milestone crosswalk separately from the conceptual graph and guided route.
+- [x] Keep G1b corpus preparation → G2 training examples as a training-data branch, not an inference prerequisite.
+- [x] Add teacher forcing and shifted-target alignment to the bilingual Build training-examples lesson.
+- [x] State that training uses the same shared prediction computation as inference, but differs in reference-target supply, loss, gradient tracking and parameter updates.
+- [x] Keep prefill/decode/KV cache in the inference execution path.
+- [ ] Complete the implementation evidence for GPT-weight autograd, optimizer, train/validation loop, reproducible run and checkpoint; these remain explicit Build gaps.
 
-**Exit condition:** the conceptual and practical paths cross-reference each other while preserving their distinct ordering and purpose.
+**Exit condition:** the conceptual and practical paths are cross-referenced and remain distinct; end-to-end training implementation evidence remains outstanding.
 
 ### P2 — Automated and manual validation
 
@@ -151,14 +152,13 @@ Use the existing page-map metadata schema and contract; do not add a new per-pag
 
 ## 4. Recommended session sequence
 
-To keep each session reviewable and avoid excessive tooling, use this order:
+To keep each session reviewable and avoid excessive tooling, continue from the current integrated state:
 
-1. **Session A — Rendered navigation audit:** inspect the merged PR #582 result; fix only evidenced breadcrumb, learning-map, responsive, or accessibility defects.
-2. **Session B — Guided-route design:** produce a short FR/EN stage-to-module crosswalk and resolve generation/likelihood/entropy placement before editing route YAML.
-3. **Session C — Page metadata audit:** audit a bounded representative set first (prediction, generation, likelihood/cross-entropy, training examples/loss/gradients, evaluation), then expand based on findings.
-4. **Session D — Page-content audit:** review the same representative set for conceptual accuracy and content preservation; handle teacher forcing and prefill explicitly.
-5. **Session E — Persistent visual:** implement one maintainable bilingual visual and text fallback, then pilot it on the representative pages.
-6. **Session F — Build crosswalk and final validation:** reconcile practical milestones, run the full validation suite, and complete the rendered/browser review.
+1. **Complete the persistent-view PR:** validate the generated persistent-spine and evaluation views, bilingual text alternatives, and the overview-page embedding. Keep the existing registry and renderer as the only source.
+2. **Rendered navigation and accessibility review:** use the existing Quarto/browser review and issues #337, #347 and #320. Inspect breadcrumbs, nested sidebar, previous/next links, desktop/mobile layout, keyboard operation and screen-reader behavior; record evidence rather than inferring it from source tests.
+3. **Finish bounded metadata/content audits:** complete the remaining shared-core, scoring, training and evaluation page inventory. Preserve the distinction between conceptual containment, recommended reading transitions, route membership and computational edges.
+4. **Complete the Build crosswalk:** verify G0–G9 against actual implementation evidence, retain G1b → G2 as the separate training-data branch, and record the remaining end-to-end training gaps.
+5. **Final validation:** run format, lint, type checks, unit tests, full Quarto render and rendered browser review on the final integrated head.
 
 Each session should produce a small PR or a clearly bounded set of commits, update this checklist, and record test evidence. Do not combine broad page rewrites, route redesign, renderer refactors, and visual design into one large change.
 

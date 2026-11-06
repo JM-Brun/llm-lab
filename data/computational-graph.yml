@@ -684,8 +684,8 @@ views:
     branch: shared-prediction
     labels: {fr: "Tronc computationnel", en: "Computational spine"}
     descriptions:
-      fr: "Du contexte à la distribution conditionnelle, en passant par les représentations et le Transformer."
-      en: "From context to the conditional distribution, through representations and the Transformer."
+      fr: "Du contexte à la distribution conditionnelle ; le calcul interne des représentations et du Transformer est résumé dans un bloc de passe avant."
+      en: "From context to the conditional distribution; the internal representation and Transformer computation is summarized as one forward-pass block."
     nodes: [raw-text-context, tokenization, tokens, token-id-encoding, token-ids, token-context, model-parameters, forward-computation, logits, vocabulary-softmax, next-token-distribution]
     edges: [e-context-tokenization, e-tokenization-tokens, e-tokens-id-encoding, e-id-encoding-ids, e-ids-context, e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution]
   - id: representation-pipeline
@@ -724,8 +724,8 @@ views:
     branch: evaluation
     labels: {fr: "Branche évaluation", en: "Evaluation branch"}
     descriptions:
-      fr: "Agrège les scores sur des données tenues à l'écart sans modifier les paramètres."
-      en: "Aggregates scores on held-out data without changing parameters."
+      fr: "Illustre une évaluation fondée sur le scoring de cibles observées : agrège leurs scores sur des données tenues à l'écart sans modifier les paramètres."
+      en: "Illustrates evaluation based on observed-target scoring: aggregates their scores on held-out data without changing parameters."
     nodes: [next-token-distribution, observed-target, target-probability, target-probability-value, sequence-log-likelihood, token-nll, evaluation-metrics]
     edges: [e-distribution-target, e-target-score, e-target-probability-value, e-target-likelihood, e-target-nll, e-score-metrics, e-loss-metrics]
   - id: training
