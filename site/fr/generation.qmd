@@ -139,9 +139,14 @@ Les paramètres restent fixes pendant l'inférence : aucune mise à jour n'a lie
 
 </details>
 
-**Suite :** [Logits](logits.qmd) · [Probabilités](probabilites.qmd) · [Parcours de construction](build-path.qmd)
+:::
+
+::: {.callout-tip title="Étape suivante du parcours"}
+Vous avez maintenant vu **ce que fait le modèle** pendant la génération. Pour comprendre comment il traite votre demande, revenez à son entrée : **[Du texte aux tokens](text-data.qmd)** — texte, tokenisation et identifiants fournis au modèle.
+
+Pour approfondir un mécanisme rencontré ici : [Logits](logits.qmd) · [Probabilités](probabilites.qmd). Pour passer à l'implémentation : [Parcours de construction](build-path.qmd).
+:::
 
 ::: {.language-switch}
 [Français](generation.qmd) · [English](../en/generation.qmd)
-:::
 :::
