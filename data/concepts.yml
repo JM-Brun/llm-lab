@@ -326,6 +326,13 @@ concepts:
       en: "Adaptation of model behavior to instructions or examples in the prompt, without updating its parameters."
     domains: [inference-efficiency]
     resources: [fr/in-context-learning, en/in-context-learning, fr/llm-evolution, en/llm-evolution]
+  - id: pretraining
+    labels: {fr: "Pré-entraînement", en: "Pretraining"}
+    definitions:
+      fr: "Phase d'entraînement initiale qui ajuste les paramètres du modèle sur un corpus à grande échelle selon un objectif prédéfini, souvent la prédiction du prochain token."
+      en: "Initial training phase that adjusts model parameters on a large corpus using a defined objective, often next-token prediction."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/llm-evolution, en/llm-evolution]
   - id: post-training
     labels: {fr: "Post-entraînement", en: "Post-training"}
     definitions:
@@ -506,6 +513,7 @@ relation_types:
       fr: "La source est évaluée au moyen de la cible."
       en: "The source is evaluated using the target."
 relations:
+  - {from: post-training, type: contrasts-with, to: pretraining}
   - {from: instruction-tuning, type: part-of, to: post-training}
   - {from: reinforcement-learning-from-human-feedback, type: part-of, to: post-training}
   - {from: direct-preference-optimization, type: part-of, to: post-training}
