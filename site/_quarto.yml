@@ -143,12 +143,8 @@ website:
         - fr/learning-map.qmd
         - section: "Comprendre les LLM"
           contents:
-            - section: "Orientation"
-              contents:
-                - fr/llm-overview.qmd
-            - section: "Inférence et génération"
-              contents:
-                - fr/generation.qmd
+            - fr/llm-overview.qmd
+            - fr/generation.qmd
             - section: "Noyau de calcul partagé"
               contents:
                 - section: "Entrée : texte et tokens"
@@ -179,7 +175,7 @@ website:
               contents:
                 - fr/loss.qmd
                 - fr/gradients.qmd
-            - section: "Pour situer et approfondir (facultatif)"
+            - section: "Repères et limites"
               contents:
                 - fr/transformer-architectures.qmd
                 - fr/llm-limits.qmd
@@ -248,12 +244,8 @@ website:
         - en/learning-map.qmd
         - section: "Understand LLMs"
           contents:
-            - section: "Orientation"
-              contents:
-                - en/llm-overview.qmd
-            - section: "Inference and generation"
-              contents:
-                - en/generation.qmd
+            - en/llm-overview.qmd
+            - en/generation.qmd
             - section: "Shared computational core"
               contents:
                 - section: "Input: text and tokens"
@@ -284,7 +276,7 @@ website:
               contents:
                 - en/loss.qmd
                 - en/gradients.qmd
-            - section: "Background and optional depth"
+            - section: "Background and limitations"
               contents:
                 - en/transformer-architectures.qmd
                 - en/llm-limits.qmd
