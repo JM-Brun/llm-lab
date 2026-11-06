@@ -78,6 +78,8 @@ Context preparation and model computation produce a **conditional distribution o
 
 {{< include ../includes/generated-computational-graph-en-persistent-spine.qmd >}}
 
+The `forward computation` node intentionally abstracts the internal layers; see [contextualized representations](contextualized-representations.qmd) and the [Transformer block walkthrough](transformer-block-walkthrough.qmd) for the internal steps.
+
 | Branch | How the distribution is used | Parameters |
 |---|---|---|
 | **Generation** | Select a token, append it to the context, and repeat the prediction; see [Generating text](generation.qmd) | Fixed |
