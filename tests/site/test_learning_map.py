@@ -913,7 +913,9 @@ def test_committed_include_matches_render_map_script() -> None:
         return
     expected_lines = expected.splitlines()
     actual_lines = actual.splitlines()
-    for index, (actual_line, expected_line) in enumerate(zip(actual_lines, expected_lines)):
+    for index, (actual_line, expected_line) in enumerate(
+        zip(actual_lines, expected_lines, strict=False)
+    ):
         if actual_line != expected_line:
             pytest.fail(
                 f"{include_path} is stale: differs from render_map_script() at line"
