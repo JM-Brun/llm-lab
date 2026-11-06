@@ -1,6 +1,6 @@
 # Computational graph registry
 
-**Status:** first canonical structured model, under validation  
+**Status:** canonical structured model with bilingual generated views and text alternatives  
 **Source of truth:** `data/computational-graph.yml`  
 **Validator:** `site/tools/check_computational_graph.py`  
 **Tests:** `tests/site/test_computational_graph.py`  
@@ -135,7 +135,7 @@ The validator checks:
 - absence of unmarked directed cycles;
 - view branch membership and node/edge references.
 
-The graph is not yet consumed by a renderer. This first iteration stabilizes the data contract and validation boundary before introducing visual output.
+The registry is consumed by `site/tools/render_computational_graph.py`. The renderer validates the selected view's endpoints, emits localized Mermaid labels, and generates a semantic HTML text alternative from the same node descriptions and directed edges.
 
 ## 6. Deliberate exclusions and next steps
 
@@ -154,32 +154,36 @@ Next iterations should:
 
 1. validate the registry against the complete published page inventory and add focused negative tests;
 2. review the graph semantically against the bilingual lessons and the reference code;
-3. generate an accessible textual representation and one persistent visual spine from this registry;
-4. add page-level highlighting as a projection, not as hand-maintained per-page diagrams;
+3. audit the generated views in the rendered site at desktop and mobile widths, including keyboard and screen-reader behavior;
+4. add page-level highlighting only if it can be derived from the registry without per-page JavaScript configuration;
 5. reconcile Understand and Build as separate projections without deriving one from the other.
 
 ## 7. Rendering selected views
 
 `site/tools/render_computational_graph.py` renders selected views from this registry as bilingual Mermaid fragments. The renderer does not create a second graph model: node labels, relation labels, and topology are read directly from the YAML source.
 
-The current lesson mappings are deliberately limited to views with a clear instructional owner:
+The bilingual renderer emits eight selected views. The lesson mappings are deliberately limited to views with a clear instructional owner:
 
 | View | French page | English page |
 |---|---|---|
+| `persistent-spine` | `fr/llm-overview` | `en/llm-overview` |
 | `representation-pipeline` | `fr/transformer` | `en/transformer` |
 | `transformer-block` | `fr/transformer-block-walkthrough` | `en/transformer-block-walkthrough` |
 | `generation` | `fr/generation` | `en/generation` |
 | `inference-execution` | `fr/generation` | `en/generation` |
 | `observed-target-scoring` | `fr/vraisemblance` | `en/likelihood` |
+| `evaluation` | `fr/llm-overview` | `en/llm-overview` |
 | `training` | `fr/training-examples` | `en/training-examples` |
 
-The `persistent-spine` remains represented by the existing hand-maintained overview SVG; it is not yet generated from the registry. The `evaluation` view remains available in the registry until a lesson with matching scope is selected. These boundaries are intentional: a view is not embedded merely because it exists, and an existing pedagogical illustration is not silently replaced.
+The `persistent-spine` and `evaluation` views are embedded in the bilingual LLM overview. The persistent spine shows the shared context-to-distribution computation; the adjacent prose distinguishes generation, observed-target scoring/evaluation, and training. The evaluation view is placed there because it explains the cross-cutting held-out-data branch; the Practice exercise on scientific-passage ranking remains a separate applied resource.
 
-Generated fragments are ignored by Git and rebuilt by both CI and the Quarto workflow before rendering. Run locally with:
+Every rendered view includes a native `details/summary` text alternative. It lists each selected node with its localized description and each directed edge with its localized relation label. This alternative is generated from the same registry as the Mermaid diagram; it is not a second hand-maintained explanation.
+
+Generated computational-graph fragments are ignored by Git and rebuilt by both CI and the Quarto workflow before rendering. Run locally with:
 
 ```bash
 uv run python site/tools/render_computational_graph.py
 quarto render site
 ```
 
-The generated callouts are collapsed by default to keep the lesson readable. Mermaid arrows follow the declared edge direction; labels are the localized names of the controlled relation types.
+The generated callouts are collapsed by default to keep the lesson readable. The text alternative is independently expandable. Mermaid arrows follow the declared edge direction; labels are the localized names of the controlled relation types.
