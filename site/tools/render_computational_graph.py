@@ -8,6 +8,7 @@ included by the relevant Quarto lessons; they are not edited by hand.
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -110,7 +111,7 @@ def main() -> int:
 
     registry = yaml.safe_load(args.registry.read_text(encoding="utf-8"))
     written = render_all(registry, args.output_dir)
-    print(f"Rendered {len(written)} bilingual computational graph fragments.")
+    sys.stdout.write(f"Rendered {len(written)} bilingual computational graph fragments.\n")
     return 0
 
 
