@@ -57,6 +57,7 @@ COPY: dict[str, dict[str, Any]] = {
         "ungroupedConcepts": "Autres notions",
         "hiddenRelations": "{count} relation(s) masquée(s) par la recherche ou le filtre.",
         "viewConcept": "Voir la notion",
+        "importanceLabels": {"core": "Essentielle", "supporting": "Complémentaire", "specialized": "Spécialisée"},
         "statusLoaded": "Carte chargée.",
         "destinations": {
             "orient": "S'orienter",
@@ -104,6 +105,7 @@ COPY: dict[str, dict[str, Any]] = {
         "ungroupedConcepts": "Other concepts",
         "hiddenRelations": "{count} relation(s) hidden by the search or filter.",
         "viewConcept": "Show concept",
+        "importanceLabels": {"core": "Core", "supporting": "Supporting", "specialized": "Specialized"},
         "statusLoaded": "Map loaded.",
         "destinations": {
             "orient": "Get oriented",
@@ -643,6 +645,10 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       item.type = "button";
       item.setAttribute("data-concept-id", concept.id);
       item.appendChild(el("span", "map-concept-label", concept.label));
+      var importanceLabel = copy.importanceLabels[concept.importance];
+      if (importanceLabel) {
+        item.appendChild(el("span", "map-concept-importance", importanceLabel));
+      }
       if (concept.definition) {
         item.appendChild(el("span", "map-concept-def", concept.definition));
       }
@@ -809,6 +815,10 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       }
       clearNode(detailPanel);
       detailPanel.appendChild(el("h3", "map-detail-title", concept.label));
+      var importanceLabel = copy.importanceLabels[concept.importance];
+      if (importanceLabel) {
+        detailPanel.appendChild(el("p", "map-concept-importance", importanceLabel));
+      }
       if (concept.definition) {
         detailPanel.appendChild(el("p", "map-detail-purpose", concept.definition));
       }
