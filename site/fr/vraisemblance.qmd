@@ -45,6 +45,10 @@ $$
 
 La log transforme le produit en somme, plus stable et plus pratique pour les calculs.
 
+## Carte computationnelle du scoring d'une cible observée
+
+{{< include ../includes/generated-computational-graph-fr-observed-target-scoring.qmd >}}
+
 ## De la vraisemblance à la perte
 
 La négative log-vraisemblance $\operatorname{NLL}$ est :
