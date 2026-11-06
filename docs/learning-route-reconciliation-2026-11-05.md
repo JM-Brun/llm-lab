@@ -1,6 +1,6 @@
 # Reconciliation of the learning-path representations
 
-**Audit date:** 2026-11-05  
+**Audit date:** 2026-11-06 (revised after the shared-spine integration)  
 **Repository:** `JM-Brun/llm-lab`  
 **Scope:** reconcile the conceptual curriculum, the guided-route diagram, the Quarto navigation, the page graph, and the concept/resource graph. This audit coordinates [#225](https://github.com/JM-Brun/llm-lab/issues/225), [#355](https://github.com/JM-Brun/llm-lab/issues/355), and [#415](https://github.com/JM-Brun/llm-lab/issues/415).
 
@@ -11,7 +11,7 @@ The representations answer different questions and must not be forced into one s
 | Representation | Canonical source | What it represents | What it must not imply |
 |---|---|---|---|
 | Narrative curriculum | `docs/learning-path.md` | Conceptual learning order, explanations, branches and status-aware crosswalk | That every page is a mandatory step |
-| Guided-route diagram | `data/guided-route.yml` | Six bilingual conceptual stages, core pages and optional pages | The implementation dependency order |
+| Guided-route diagram | `data/guided-route.yml` | Eight bilingual conceptual stages, core pages and optional pages | The implementation dependency order |
 | Practical Build route | `site/fr/build-path.qmd`, `site/en/build-path.qmd` | G0–G9 implementation checkpoints, including the G1b → G2 training-data branch | That corpus/windows are needed to demonstrate inference |
 | Quarto navigation | `site/_quarto.yml` | Published destinations and reader-facing grouping | A strict prerequisite graph or a complete course sequence |
 | Page graph | Page-map metadata in `site/**/*.qmd`, projected by the learning-map generator | Suggested reading transitions, conceptual page hierarchy and cross-links | That hierarchy edges are reading-order or computational-dependency edges |
@@ -21,20 +21,24 @@ The narrative curriculum is authoritative for pedagogical intent. The route YAML
 
 ## 2. Canonical conceptual route ↔ diagram ↔ pages
 
-The six stages in `data/guided-route.yml` correspond to the conceptual order in `docs/learning-path.md`:
+The eight stages in `data/guided-route.yml` project the canonical module topology in `docs/learning-path.md` into a reader-facing progression. The route is preview-first, then separates the three sibling uses of the shared conditional distribution:
 
-| Guided stage | Core page IDs (FR; EN counterpart follows the same topic) | Build crosswalk | Quarto destination |
-|---|---|---|---|
-| `orientation` | `llm-overview`, `generation` | G0; early preview of G7 | Understand |
-| `text-input` | `text-data`, `tokenization-strategies` | G1 | Understand → text/representations |
-| `representations` | `embedding-space`, `positional-encoding`, `contextualized-representations` | G3 for initial vectors; G4–G5 for contextualization | Understand → text/representations |
-| `computation` | `transformer`, `queries-keys-values`, `scaled-dot-product-attention`, `causal-masking` | G4–G5 | Understand → Transformer/attention |
-| `prediction` | `logits`, `probabilities`, `likelihood`, `generation` | G6 and a return to G7 | Understand → attention/output |
-| `learning-evaluation` | `cross-entropy`, `loss`, `gradients`, `evaluation-experimentale` | G8–G9 / E1 | Understand learning pages; Practice for evaluation |
+| Guided stage | Core page IDs (FR; EN counterpart follows the same topic) | Optional / bridge pages | Build crosswalk | Quarto destination |
+|---|---|---|---|---|
+| `orientation` | `llm-overview`, `generation` (black-box preview) | `transformer-architectures`, `llm-limits` | G0; early preview of G7 | Understand → Orientation / Inference |
+| `text-input` | `text-data`, `tokenization-strategies` | `unicode-text`, `tokenizer-design-evaluation` | G1 | Understand → text and tokens |
+| `representations` | `embedding-space`, `positional-encoding`, `contextualized-representations` | `tensors`, `rope` | G3–G5 | Understand → Representations |
+| `computation` | `transformer`, `queries-keys-values`, `scaled-dot-product-attention`, `causal-masking` | `cross-attention`, `attention-score-scaling` | G4–G5 | Understand → Transformer computation |
+| `prediction` | `logits`, `probabilities`, `entropy` | — | G6: produce the conditional distribution | Understand → Prediction |
+| `inference` | `generation` (detailed treatment) | `decoding-strategies` | G7 | Understand → Inference |
+| `scoring` | `likelihood`, `cross-entropy` | — | Score observed targets; no token selection or parameter update | Understand → Observed-target scoring |
+| `training` | `loss`, `gradients` | `cross-entropy`, `training-examples`, `scaling-laws` | G8; G1b → G2 remains the separate training-data branch | Understand → Training; Build bridge for examples |
 
-The bilingual route generator resolves core and optional page IDs against published page metadata. The learning-map pages render the route before the exploratory maps. The route is a suggested conceptual progression: pages inside a stage are complementary, not strict prerequisites.
+The bilingual route generator resolves core and optional page IDs against published page metadata. The learning-map pages render the route before the exploratory maps. The route is a suggested conceptual progression: pages inside a stage are complementary, not strict prerequisites. A page may have multiple stage memberships without acquiring multiple Quarto parents or conceptual parents.
 
-**Intentional revisit:** `generation` appears in both `orientation` and `prediction`. The first occurrence is a black-box preview of the complete autoregressive loop with fixed parameters; the later occurrence reconnects token selection to logits and probabilities. This is a pedagogical revisit, not a second canonical generation lesson. The preview must not suggest that the model has useful learned parameters.
+**Intentional revisit:** `generation` appears in both `orientation` and `inference`. The first occurrence is a black-box preview of the complete autoregressive loop with fixed parameters; the later occurrence is the detailed explanation of prefill, iterative decode, token selection, feedback and stopping. The `prediction` stage ends at the conditional distribution: it does not contain generation or observed-target likelihood.
+
+**Three sibling uses of prediction:** after the shared computation produces a conditional distribution, inference selects and feeds back a generated token; scoring compares the distribution with an observed target; training uses observed targets and the scoring quantity to form a loss and update parameters. These are related branches, not one executable sequence. Evaluation remains cross-cutting rather than a final mandatory route stage. The current `evaluation-experimentale` page is a general Practice exercise on scientific-passage ranking, not a canonical LLM evaluation lesson, so it remains in Practice and is not included in this guided route.
 
 ## 3. Build dependencies: the separate training-data branch
 
@@ -95,7 +99,7 @@ The concept graph is separate from the page graph. A concept's prerequisite rela
 
 | Check | Result | Evidence / interpretation |
 |---|---|---|
-| Six-stage route ↔ narrative conceptual order | Aligned | Route YAML and `docs/learning-path.md` use orientation → inference preview → text → representations → computation → prediction → learning/evaluation |
+| Eight-stage route ↔ narrative conceptual order | Aligned | Route YAML and `docs/learning-path.md` use orientation → inference preview → text → representations → computation → prediction → learning/evaluation |
 | Route page references ↔ published bilingual pages | Generator-enforced | Core and optional IDs resolve against published metadata; FR/EN route copy is required |
 | Conceptual route ↔ Build milestones | Aligned after this change | G0/G1/G3–G7 map to the inference route; G1b/G2 are a separate branch; G8/G9 follow |
 | Build branch ↔ navigation | Aligned after this change | Both languages expose corpus preparation and training examples under Build |
@@ -111,7 +115,7 @@ The concept graph is separate from the page graph. A concept's prerequisite rela
 
 - [x] G1b/G2 scope is cross-referenced in the learning path, content-section mapping and both Build tables.
 - [x] `data/guided-route.yml` remains limited to conceptual stages; G1b/G2 are represented as a separate implementation branch.
-- [x] The six-stage route and G0–G9 implementation branch are linked by a crosswalk rather than duplicated milestone data.
+- [x] The eight-stage route and G0–G9 implementation branch are linked by a crosswalk rather than duplicated milestone data.
 - [x] Existing metadata, route-generation, bilingual Quarto render and local-link checks passed on the reconciliation and sidebar-alignment changes (PRs #514 and #517).
 
 ### P2 — Reader-experience validation
