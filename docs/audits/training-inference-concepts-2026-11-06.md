@@ -22,7 +22,7 @@ This increment closes a conceptual gap between the training-data branch and the 
 | KV-cache mechanics | Existing source extraction and external deep-dive reference | The current reference implementation does not implement a KV cache; a cache lesson/page is not created speculatively. |
 | Terminology lookup | Bilingual glossary | Concise definitions link to the canonical lessons. |
 | Stable notion identity, domain membership and importance | `data/concepts.yml` + `data/domains.yml` | One language-independent concept registry and one controlled domain registry remain authoritative. |
-| Guided-stage membership | `data/guided-route.yml` | Training examples are an optional companion in the learning/evaluation stage, not a mandatory prerequisite for inference. |
+| Guided-stage membership | `data/guided-route.yml` | Training examples are an optional companion in the training stage, not a mandatory prerequisite for inference. |
 
 ## Scientific distinctions retained
 
@@ -52,15 +52,15 @@ The implementation at `src/llm_lab/foundations/generate.py` explicitly recompute
 | `teacher-forcing` | `probabilistic-foundations-training` | `essential` | FR/EN training examples |
 | `autoregressive-generation` | `inference-efficiency` | `essential` | FR/EN generation and walkthrough |
 | `prefill` | `inference-efficiency` | `important` | FR/EN generation and walkthrough |
-| `autoregressive-decode` | `inference-efficiency` | `essential` | FR/EN generation and walkthrough |
+| `decode-step` | `inference-efficiency` | `essential` | FR/EN generation and walkthrough |
 
 ### New typed relations
 
 - `teacher-forcing --applies-to--> training-objective`
 - `prefill --part-of--> autoregressive-generation`
-- `autoregressive-decode --part-of--> autoregressive-generation`
+- `decode-step --part-of--> autoregressive-generation`
 - `prefill --produces--> logits`
-- `autoregressive-decode --produces--> logits`
+- `decode-step --produces--> logits`
 
 No new relation type was needed. The new `part-of` edges are structural, not prerequisite edges; they do not drive the learning route.
 
@@ -78,11 +78,15 @@ The word “notion” is derived from membership in the canonical concept regist
 
 ## Pedagogical route changes
 
-- The Prediction-stage objective now includes the distinction between prompt prefill and iterative decode.
-- The Learning/evaluation-stage objective now names ground-truth conditioning (teacher forcing).
-- Training examples are added as an **optional** resource in that stage. The Build route remains the canonical path for the corpus-preparation and training-example implementation branch.
-- The narrative learning path now explains prefill/decode before training, then introduces teacher forcing in the learning section and revisits it in the G2 training-data branch.
-- No page-level `suggested_route`, hierarchy or prerequisite edge is added merely to imitate the route order.
+The final reader-facing route has eight stages: `orientation`, `text-input`, `representations`, `computation`, `prediction`, `inference`, `scoring` and `training`.
+
+- The `prediction` stage ends at logits, the conditional distribution and predictive entropy. It does not include token selection or observed-target likelihood.
+- The `inference` stage revisits the canonical generation page for prefill, iterative decode, token selection, feedback and stopping. The same page remains an early black-box preview in `orientation`.
+- The `scoring` stage covers likelihood and cross-entropy for observed targets; it does not select a token or update parameters.
+- The `training` stage covers aggregated loss and gradients. Cross-entropy is also an optional bridge here, and the Build `training-examples` page remains optional; it explains teacher forcing and shifted targets without becoming an inference prerequisite.
+- Evaluation remains cross-cutting. The current scientific-passage ranking exercise stays in Practice and is not misrepresented as a canonical LLM-evaluation lesson in the guided route.
+- The narrative learning path distinguishes these branches from the separate G1b → G2 training-data implementation branch.
+- Page `suggested_route`, hierarchy and prerequisite edges are reviewed independently; route membership does not create page containment or computational edges.
 
 ## Page metadata boundary
 
