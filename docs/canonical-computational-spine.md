@@ -97,11 +97,11 @@ The computational graph uses its existing controlled edge types:
 | `combines` | An operation combines multiple inputs | embeddings + positional information → initial hidden states |
 | `constrains` | A control restricts an operation or intermediate result | causal mask → masked attention scores |
 | `applies` / `precedes` | A phase or mode applies to a computation, or one phase precedes another | prefill → decode |
-| `selects` | A policy selects from a distribution | next-token distribution → decoding policy |
+| `selects` | The source distribution determines the selected item | next-token distribution → generated token |
 | `scores` / `aggregates` | An observed target is scored and per-token/sequence values are aggregated | distribution + target → target probability → sequence log-likelihood |
 | `differentiates` / `updates` | An objective yields gradients and an optimizer updates parameters | objective → gradients → updated parameters |
 | `feeds-back` | A value becomes context or state for a later iteration | generated token → next context |
-| `conditions` | A policy or observed value determines the context/targets used | teacher forcing → observed training context |
+| `conditions` | A policy or observed value constrains target selection, context, or target assignment | decoding policy → generated token; teacher forcing → observed training context |
 | `uses-optional` | An optional optimization may be used without being required for correctness | KV cache → decode |
 
 The registry may express a familiar high-level idea such as *dataflow*, *transformation*, *decoding*, *optimization* or *evaluation* through these more precise operational relations. Those high-level words are explanatory categories, not additional edge types to add mechanically. In particular, evaluation is represented by scoring held-out targets and aggregating the resulting metrics; it stops before differentiation or parameter updates.
@@ -113,7 +113,7 @@ The registry may express a familiar high-level idea such as *dataflow*, *transfo
 - **Implementation correspondence:** expressed through concept/resource associations and the Build crosswalk; it does not imply that a page or code module is a computational node.
 - **Editorial navigation:** owned by page-map `hierarchy` and `suggested_route`; it expresses containment or a recommended reading transition, not computation.
 
-A prerequisite edge is not a substitute for a computational edge. The computational graph must not infer a total learning order from dataflow, nor infer dataflow from page order. Do not add a new relation type unless a concrete edge cannot be represented accurately by the existing vocabulary and its semantics are documented and validated.
+A pedagogical prerequisite relation is not a substitute for a computational relation. The computational graph must not infer a total learning order from dataflow, nor infer dataflow from page order. Do not add a new relation type unless a concrete edge cannot be represented accurately by the existing vocabulary and its semantics are documented and validated.
 
 ## 5. Reader-facing projections
 
