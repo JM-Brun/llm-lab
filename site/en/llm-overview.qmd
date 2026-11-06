@@ -84,7 +84,7 @@ Context preparation and model computation produce a **conditional distribution o
 | **Scoring / evaluation** | Score an observed target (e.g. log-likelihood/NLL) or a generated output, then aggregate task-appropriate metrics on held-out data; see [Likelihood](likelihood.qmd) | Fixed |
 | **Training** | Compare predictions with reference targets (*teacher forcing*), compute loss and gradients; see [Training examples](training-examples.qmd), [Loss](loss.qmd), and [Gradients](gradients.qmd) | Updated at the update step |
 
-Target scoring and model evaluation are not synonyms: scoring computes a conditional probability; evaluation aggregates scores and metrics under a data protocol. Evaluation reuses the scoring path without updating parameters.
+Target scoring and model evaluation are not synonyms: scoring computes a conditional probability; evaluation aggregates scores or task-specific metrics under a data protocol. Likelihood-based evaluation reuses the scoring path without updating parameters; task evaluation may also assess generated outputs.
 
 {{< include ../includes/generated-computational-graph-en-evaluation.qmd >}}
 
