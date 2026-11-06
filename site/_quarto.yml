@@ -144,10 +144,9 @@ website:
             - section: "Orientation"
               contents:
                 - fr/llm-overview.qmd
-            - section: "Pour situer et approfondir (facultatif)"
+            - section: "Inférence et génération"
               contents:
-                - fr/transformer-architectures.qmd
-                - fr/llm-limits.qmd
+                - fr/generation.qmd
             - section: "Noyau de calcul partagé"
               contents:
                 - section: "Entrée : texte et tokens"
@@ -170,9 +169,6 @@ website:
                     - fr/logits.qmd
                     - fr/probabilites.qmd
                     - fr/entropy.qmd
-            - section: "Inférence et génération"
-              contents:
-                - fr/generation.qmd
             - section: "Scoring des tokens observés"
               contents:
                 - fr/vraisemblance.qmd
@@ -181,6 +177,10 @@ website:
               contents:
                 - fr/loss.qmd
                 - fr/gradients.qmd
+            - section: "Pour situer et approfondir (facultatif)"
+              contents:
+                - fr/transformer-architectures.qmd
+                - fr/llm-limits.qmd
         - section: "Construire un petit GPT"
           contents:
             - fr/build-path.qmd
@@ -248,10 +248,9 @@ website:
             - section: "Orientation"
               contents:
                 - en/llm-overview.qmd
-            - section: "Background and optional depth"
+            - section: "Inference and generation"
               contents:
-                - en/transformer-architectures.qmd
-                - en/llm-limits.qmd
+                - en/generation.qmd
             - section: "Shared computational core"
               contents:
                 - section: "Input: text and tokens"
@@ -274,9 +273,6 @@ website:
                     - en/logits.qmd
                     - en/probabilities.qmd
                     - en/entropy.qmd
-            - section: "Inference and generation"
-              contents:
-                - en/generation.qmd
             - section: "Observed-target scoring"
               contents:
                 - en/likelihood.qmd
@@ -285,6 +281,10 @@ website:
               contents:
                 - en/loss.qmd
                 - en/gradients.qmd
+            - section: "Background and optional depth"
+              contents:
+                - en/transformer-architectures.qmd
+                - en/llm-limits.qmd
         - section: "Build a small GPT"
           contents:
             - en/build-path.qmd
