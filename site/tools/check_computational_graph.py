@@ -157,6 +157,8 @@ def validate_graph(
         memberships = node.get("branches")
         if not isinstance(memberships, list) or not memberships:
             errors.append(f"{where}.branches: expected a non-empty list")
+        elif not all(isinstance(branch_id, str) for branch_id in memberships):
+            errors.append(f"{where}.branches: values must be strings")
         else:
             if len(memberships) != len(set(memberships)):
                 errors.append(f"{where}.branches: duplicate branch IDs")
@@ -169,8 +171,9 @@ def validate_graph(
             errors.append(f"{where}.resources: expected a non-empty list of page IDs")
             continue
         languages: set[str] = set()
-        if len(resources) != len(set(resources)):
-            errors.append(f"{where}.resources: duplicate page IDs")
+        if all(isinstance(page_id, str) for page_id in resources):
+            if len(resources) != len(set(resources)):
+                errors.append(f"{where}.resources: duplicate page IDs")
         for page_id in resources:
             if not isinstance(page_id, str) or not PAGE_ID.fullmatch(page_id):
                 errors.append(f"{where}.resources: invalid page ID {page_id!r}")
@@ -204,11 +207,11 @@ def validate_graph(
             edge_ids.add(edge_id)
 
         source, kind, target = (edge.get(key) for key in ("from", "type", "to"))
-        if source not in node_ids:
+        if not isinstance(source, str) or source not in node_ids:
             errors.append(f"{where}.from: unknown node {source!r}")
-        if target not in node_ids:
+        if not isinstance(target, str) or target not in node_ids:
             errors.append(f"{where}.to: unknown node {target!r}")
-        if kind not in relation_type_ids or kind not in EDGE_TYPES:
+        if not isinstance(kind, str) or kind not in relation_type_ids or kind not in EDGE_TYPES:
             errors.append(f"{where}.type: unsupported relation {kind!r}")
 
         feedback = edge.get("feedback", False)
@@ -250,7 +253,7 @@ def validate_graph(
     for identifier, view in views.items():
         where = f"views.{identifier}"
         branch_id = view.get("branch")
-        if branch_id not in branch_ids:
+        if not isinstance(branch_id, str) or branch_id not in branch_ids:
             errors.append(f"{where}.branch: unknown branch {branch_id!r}")
         view_nodes = view.get("nodes")
         view_edges = view.get("edges")
@@ -260,12 +263,18 @@ def validate_graph(
         if not isinstance(view_edges, list):
             errors.append(f"{where}.edges: expected a list")
             view_edges = []
-        if len(view_nodes) != len(set(view_nodes)):
-            errors.append(f"{where}.nodes: duplicate node IDs")
-        if len(view_edges) != len(set(view_edges)):
-            errors.append(f"{where}.edges: duplicate edge IDs")
+        if all(isinstance(node_id, str) for node_id in view_nodes):
+            if len(view_nodes) != len(set(view_nodes)):
+                errors.append(f"{where}.nodes: duplicate node IDs")
+        else:
+            errors.append(f"{where}.nodes: values must be strings")
+        if all(isinstance(edge_id, str) for edge_id in view_edges):
+            if len(view_edges) != len(set(view_edges)):
+                errors.append(f"{where}.edges: duplicate edge IDs")
+        else:
+            errors.append(f"{where}.edges: values must be strings")
         for node_id in view_nodes:
-            if node_id not in node_ids:
+            if not isinstance(node_id, str) or node_id not in node_ids:
                 errors.append(f"{where}.nodes: unknown node {node_id!r}")
             elif branch_id not in nodes[node_id].get("branches", []):
                 errors.append(
@@ -277,7 +286,7 @@ def validate_graph(
             if isinstance(edge, dict) and isinstance(edge.get("id"), str)
         }
         for edge_id in view_edges:
-            edge = edge_index.get(edge_id)
+            edge = edge_index.get(edge_id) if isinstance(edge_id, str) else None
             if edge is None:
                 errors.append(f"{where}.edges: unknown edge {edge_id!r}")
                 continue
