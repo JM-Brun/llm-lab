@@ -4,7 +4,7 @@
 
 ### 01 · Situer le système
 
-Comprendre ce qu'est un LLM et suivre une génération complète comme une boîte noire, avec des paramètres fixes, avant d'en étudier les mécanismes internes\.
+Comprendre ce qu'est un LLM et suivre une génération complète comme une boîte noire, avec des paramètres fixes, avant d'en étudier les mécanismes internes.
 
 **Pages centrales**
 
@@ -22,7 +22,7 @@ Comprendre ce qu'est un LLM et suivre une génération complète comme une boît
 
 ### 02 · Du texte aux tokens
 
-Distinguer le texte, la tokenisation, le vocabulaire et les identifiants de tokens qui constituent le contexte discret fourni au modèle\.
+Distinguer le texte, la tokenisation, le vocabulaire et les identifiants de tokens qui constituent le contexte discret fourni au modèle.
 
 **Pages centrales**
 
@@ -40,7 +40,7 @@ Distinguer le texte, la tokenisation, le vocabulaire et les identifiants de toke
 
 ### 03 · Des identifiants aux représentations
 
-Suivre la consultation des embeddings et l'ajout d'information positionnelle, puis distinguer les états initiaux des représentations contextualisées\.
+Suivre la lecture des vecteurs d'embedding et l'ajout d'information positionnelle, puis distinguer les états initiaux des représentations contextualisées.
 
 **Pages centrales**
 
@@ -59,7 +59,7 @@ Suivre la consultation des embeddings et l'ajout d'information positionnelle, pu
 
 ### 04 · Comprendre le calcul du Transformer
 
-Relier les projections Q/K/V, les scores et poids d'attention, l'agrégation des valeurs, le masque causal et les autres opérations d'un bloc Transformer\.
+Relier les projections Q/K/V, les scores et poids d'attention, l'agrégation des valeurs, le masque causal et les autres opérations d'un bloc Transformer.
 
 **Pages centrales**
 
@@ -79,7 +79,7 @@ Relier les projections Q/K/V, les scores et poids d'attention, l'agrégation des
 
 ### 05 · Des états à la distribution prédictive
 
-Suivre la projection des états finaux vers les logits et la distribution conditionnelle du prochain token ; interpréter son entropie avant toute sélection ou observation d'une cible\.
+Suivre la projection des états finaux vers les logits et la distribution conditionnelle du prochain token ; interpréter son entropie avant toute sélection ou observation d'une cible.
 
 **Pages centrales**
 
@@ -93,7 +93,7 @@ Suivre la projection des états finaux vers les logits et la distribution condit
 
 ### 06 · Exécuter l'inférence et générer
 
-Distinguer le prefill du prompt du decode itératif, sélectionner un token selon une politique de décodage, le réinjecter dans le contexte et arrêter la génération sans mettre à jour les paramètres\.
+Distinguer le prefill du prompt du decode itératif, sélectionner un token selon une politique de décodage, le réinjecter dans le contexte et arrêter la génération sans mettre à jour les paramètres.
 
 **Pages centrales**
 
@@ -109,7 +109,7 @@ Distinguer le prefill du prompt du decode itératif, sélectionner un token selo
 
 ### 07 · Attribuer un score aux tokens observés
 
-Évaluer la probabilité attribuée à une cible connue, construire la vraisemblance d'une séquence et relier la log-vraisemblance négative à l'entropie croisée, sans sélectionner de token ni modifier les paramètres\.
+Évaluer la probabilité attribuée à une cible connue, construire la vraisemblance d'une séquence et relier la log-vraisemblance négative à l'entropie croisée, sans sélectionner de token ni modifier les paramètres.
 
 **Pages centrales**
 
@@ -122,7 +122,7 @@ Distinguer le prefill du prompt du decode itératif, sélectionner un token selo
 
 ### 08 · Apprendre et mettre à jour les paramètres
 
-Relier les cibles observées à la loss agrégée, aux gradients et aux mises à jour des paramètres ; approfondir le teacher forcing et les exemples décalés via la branche Build, sans en faire un prérequis à l'inférence\.
+Relier les cibles observées à la loss agrégée, aux gradients et aux mises à jour des paramètres ; approfondir le teacher forcing et les exemples décalés via la branche Build, sans en faire un prérequis à l'inférence.
 
 **Pages centrales**
 

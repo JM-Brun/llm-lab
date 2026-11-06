@@ -28,11 +28,11 @@
     - [Préparer un corpus pour le préentraînement](corpus-preparation.html)
     - [Du corpus tokenisé aux exemples d’entraînement](training-examples.html)
   - Visite guidée du code de référence
-    - [Visite guidée : la configuration du GPT (\`gpt\_config\.py\`)](gpt-config-walkthrough.html)
-    - [Visite guidée : les briques numériques (\`gpt\_ops\.py\`)](gpt-ops-walkthrough.html)
-    - [Visite guidée : le bloc Transformer (\`transformer\_block\.py\`)](transformer-block-walkthrough.html)
-    - [Visite guidée : l'assemblage du GPT (\`gpt\.py\`)](gpt-model-walkthrough.html)
-    - [Visite guidée : la génération (\`generate\.py\`)](gpt-generation-walkthrough.html)
+    - [Visite guidée : la configuration du GPT (`gpt_config.py`)](gpt-config-walkthrough.html)
+    - [Visite guidée : les briques numériques (`gpt_ops.py`)](gpt-ops-walkthrough.html)
+    - [Visite guidée : le bloc Transformer (`transformer_block.py`)](transformer-block-walkthrough.html)
+    - [Visite guidée : l'assemblage du GPT (`gpt.py`)](gpt-model-walkthrough.html)
+    - [Visite guidée : la génération (`generate.py`)](gpt-generation-walkthrough.html)
   - [Construire un petit GPT](build-path.html)
 - **S'exercer et expérimenter**
   - [Espace d’exercices](exercises.html)
@@ -43,7 +43,7 @@
     - [Pourquoi mettre les scores d'attention à l'échelle ?](attention-score-scaling.html)
     - [Attention croisée : faire communiquer deux séquences](cross-attention.html)
     - [RoPE : géométrie, dérivation et limites](rope.html)
-    - [Architectures hybrides : Nemotron 3 et 3\.5](hybrid-llm-architectures.html)
+    - [Architectures hybrides : Nemotron 3 et 3.5](hybrid-llm-architectures.html)
   - Texte et tokenisation
     - [Unicode, UTF-8 et normalisation du texte](unicode-text.html)
     - [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.html)

@@ -1,9 +1,10 @@
 ---
 title: "Carte interactive du parcours"
 subtitle: "Un parcours guidé, puis une carte progressive : territoires, rubriques, pages et notions"
+description: "Parcours guidé en huit étapes conceptuelles, carte progressive des territoires et registre des notions canoniques pour s'orienter dans le site."
 keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:fr", "status:published"]
 lang: fr
-toc: false
+toc: true
 ---
 
 <!--
@@ -34,7 +35,7 @@ Les intitulés de sections affichés dans les détails d'une page sont des repè
 
 ## Parcours guidé
 
-Six étapes conceptuelles donnent un point d'entrée et une progression conseillée. Les pages centrales couvrent les idées principales de chaque étape ; les ressources facultatives apportent du contexte ou de la profondeur et peuvent appartenir à toute destination. Les pages d'une même étape sont des ressources complémentaires, pas une liste de prérequis stricts.
+Huit étapes conceptuelles donnent un point d'entrée et une progression conseillée. Les pages centrales couvrent les idées principales de chaque étape ; les ressources facultatives apportent du contexte ou de la profondeur et peuvent appartenir à toute destination. Les pages d'une même étape sont des ressources complémentaires, pas une liste de prérequis stricts.
 
 {{< include ../includes/generated-guided-route-fr.qmd >}}
 
@@ -48,7 +49,7 @@ Six étapes conceptuelles donnent un point d'entrée et une progression conseill
 
 ## Explorer les ressources
 
-La carte progressive affiche d'abord les territoires, puis révèle chaque rubrique au clic, puis les pages. La vue « Notions canoniques » présente séparément les concepts du registre, groupés par domaine. Ces vues servent à explorer ; elles ne remplacent pas le parcours guidé ci-dessus. Le bouton « Réinitialiser la vue » efface la recherche, le filtre et la sélection ; la touche Échap remonte d’un niveau à la fois. La carte comme la liste ci-dessous sont générées automatiquement par le méta-code Python à partir de la sidebar Quarto et des métadonnées des pages : une seule source à maintenir.
+Ces vues servent à explorer ; elles ne remplacent pas le parcours guidé ci-dessus (le fonctionnement des territoires, rubriques, pages et notions est décrit en tête de page). Le bouton « Réinitialiser la vue » efface la recherche, le filtre et la sélection ; la touche Échap remonte d'un niveau à la fois. La carte comme la liste ci-dessous sont générées automatiquement par le méta-code Python à partir de la sidebar Quarto et des métadonnées des pages : une seule source à maintenir.
 
 {{< include ../includes/generated-map-territories-fr.qmd >}}
 
