@@ -186,4 +186,4 @@ uv run python site/tools/render_computational_graph.py
 quarto render site
 ```
 
-The generated callouts are collapsed by default to keep the lesson readable. The text alternative is independently expandable. Mermaid arrows follow the declared edge direction; labels are the localized names of the controlled relation types.
+The primary persistent-spine callout is expanded on the LLM overview page; branch-specific views remain collapsed by default to keep lessons readable. The text alternative is independently expandable. Mermaid arrows follow the declared edge direction; labels are the localized names of the controlled relation types.
