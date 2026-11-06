@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/training-examples"
-scope: "Covers the transformation of a tokenized stream into autoregressive input-target examples: one-token shifting, context windows and stride, document packing and boundaries, padding, attention and loss masks, and tensor shapes. It stops at correctly constructed training batches rather than deriving the probability and optimization objectives."
-purpose: "Construct aligned input-target batches from token IDs, distinguish windowing and masking decisions, verify tensor shapes, and diagnose common boundary or alignment errors that would change the training objective."
+scope: "Covers the transformation of a tokenized stream into autoregressive input-target examples and teacher-forced conditioning: one-token shifting, context windows and stride, document packing and boundaries, padding, attention and loss masks, and tensor shapes. It stops at constructing and interpreting examples; it does not implement the training loop or derive the optimization objectives."
+purpose: "Construct aligned input-target examples from token IDs, explain how teacher forcing conditions predictions on the observed prefix, distinguish windowing and masking decisions, and diagnose alignment errors that would change the training objective."
 suggested_route:
   previous: "en/corpus-preparation"
   next: null
@@ -29,6 +29,7 @@ An autoregressive model learns to predict the next token from the available cont
 ## Learning objectives
 
 - Construct a one-token-shifted input-target pair.
+- Explain teacher forcing and distinguish it from feeding generated tokens back during inference.
 - Distinguish context length, stride, batch size, and vocabulary size.
 - Compare sliding windows with packed sequences.
 - Separate document boundaries, attention masks, and loss masks.
