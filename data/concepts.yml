@@ -255,6 +255,13 @@ concepts:
       en: "Inference mechanism that retains previously computed keys and values to avoid recomputing the prefix at each step."
     domains: [inference-efficiency]
     resources: [fr/generation, en/generation]
+  - id: generated-token-feedback
+    labels: {fr: "Retour du token généré dans le contexte", en: "Generated-token context feedback"}
+    definitions:
+      fr: "Opération qui ajoute le token sélectionné au contexte afin que le calcul suivant conditionne sa prédiction sur ce token."
+      en: "Operation that appends the selected token to the context so the next computation conditions its prediction on that token."
+    domains: [inference-efficiency]
+    resources: [fr/generation, en/generation]
   - id: training-example
     labels: {fr: "Exemple d'entraînement", en: "Training example"}
     definitions:
@@ -487,9 +494,14 @@ relations:
       fr: "Dans le parcours minimal d'entraînement par descente de gradient, l'optimiseur utilise les gradients pour mettre à jour les paramètres."
       en: "In the minimum gradient-based training path, the optimizer uses gradients to update parameters."
   - {from: optimizer, type: contributes-to, to: parameter-update}
-  - {from: parameter-update, type: contributes-to, to: training-objective}
+  - {from: parameter-update, type: contributes-to, to: next-token-prediction}
+  - {from: observed-target, type: contributes-to, to: cross-entropy}
+  - {from: context-feedback, type: contributes-to, to: decode-step}
   - {from: decoding-policy, type: applies-to, to: conditional-distribution}
   - {from: decoding-policy, type: produces, to: token}
+  - {from: token, type: contributes-to, to: generated-token-feedback}
+  - {from: generated-token-feedback, type: part-of, to: autoregressive-generation}
+  - {from: generated-token-feedback, type: contributes-to, to: decode-step}
   - {from: prefill, type: part-of, to: autoregressive-generation}
   - {from: decode-step, type: part-of, to: autoregressive-generation}
   - {from: decoding-policy, type: part-of, to: autoregressive-generation}
