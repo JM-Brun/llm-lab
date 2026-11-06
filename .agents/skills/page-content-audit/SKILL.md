@@ -148,3 +148,8 @@ Before finalizing:
 ## Change control
 
 This skill is diagnostic by default. If implementation is explicitly requested, use a focused branch and change set, preserve the original content, update FR/EN together when applicable, run the relevant validators and render checks, and report observed results. Never merge without explicit authorization.
+
+
+## Rendered behavior hand-off
+
+This skill may identify a likely layout or navigation concern from source structure. For actual desktop/mobile, theme, keyboard, interaction and accessibility verification, use `rendered-site-audit`. State explicitly when a page was reviewed only at source level; do not imply rendered usability from a successful content audit.
