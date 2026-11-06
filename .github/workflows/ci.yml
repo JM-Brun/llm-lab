@@ -50,6 +50,9 @@ jobs:
       - name: Validate bilingual concept registry
         run: uv run python site/tools/check_concept_registry.py
 
+      - name: Validate canonical computational graph
+        run: uv run python site/tools/check_computational_graph.py
+
       - name: Validate first-class learning resources
         run: uv run python site/tools/check_resource_registry.py
 
