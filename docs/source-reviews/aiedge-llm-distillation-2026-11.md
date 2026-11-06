@@ -74,3 +74,15 @@ This is only a hypothesis pending comparison with the article and the existing l
 ## 7. Next action
 
 Obtain a readable copy of the article (pasted text, exported HTML/PDF, or a working canonical page). Then update this review rather than creating a competing dossier, complete the structured extraction, and validate the source catalogue and extraction against the repository schema.
+
+
+## 8. Additional independent cross-check discovered during follow-up
+
+A separate AiEdge article, [How To Deploy LLM Applications](https://newsletter.theaiedge.io/p/how-to-deploy-llm-applications) (2024-07-10), contains a short deployment-oriented taxonomy of knowledge distillation:
+- response-based: the student learns to produce similar output responses;
+- feature-based: the student learns to reproduce intermediate-layer representations;
+- relation-based: the student learns to reproduce relationships/interactions between layers.
+
+This is **not** the requested 2026 article and must not be attributed to it. It is a separately published source by the same newsletter author, surfaced during follow-up research. It offers a useful candidate cross-check for the extraction framework, but it is not yet registered or scanned as an independent source. In particular, this short taxonomy should not be treated as exhaustive: it does not by itself cover logit/soft-target objectives, rationale supervision, on-policy variants or detailed training losses.
+
+The target article remains inaccessible and its source status is unchanged. If this 2024 article is later selected for ingestion, register it under its own canonical source ID and perform a separate scan rather than folding its claims into this record.
