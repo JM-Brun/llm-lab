@@ -41,6 +41,7 @@ def test_export_has_stable_skos_schemes_and_bilingual_labels() -> None:
     )
     assert concept["@type"] == "skos:Concept"
     assert {item["@language"] for item in concept["skos:prefLabel"]} == {"fr", "en"}
+    assert concept["llmlab:importance"] == "core"
 
 
 def test_export_describes_published_pages() -> None:
