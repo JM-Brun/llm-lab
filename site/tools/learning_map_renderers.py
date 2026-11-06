@@ -359,7 +359,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       return total;
     }
 
-        function chipFor(pageId) {
+    function chipFor(pageId) {
       var page = pageById[pageId];
       if (!page) {
         return null;
@@ -535,7 +535,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       setStatus(area.title + " — " + total + " " + copy.pagesUnitPlural);
     }
 
-        function renderSearchResults() {
+    function renderSearchResults() {
       var query = state.query.toLowerCase();
       var matches = (data.pages || []).filter(function (page) {
         return matchesQuery(page, query);
