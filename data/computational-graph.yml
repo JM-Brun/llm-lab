@@ -684,8 +684,8 @@ views:
     branch: shared-prediction
     labels: {fr: "Tronc computationnel", en: "Computational spine"}
     descriptions:
-      fr: "Du contexte à la distribution conditionnelle, en passant par les représentations et le Transformer."
-      en: "From context to the conditional distribution, through representations and the Transformer."
+      fr: "Du contexte à la distribution conditionnelle ; le calcul interne des représentations et du Transformer est résumé dans un bloc de passe avant."
+      en: "From context to the conditional distribution; the internal representation and Transformer computation is summarized as one forward-pass block."
     nodes: [raw-text-context, tokenization, tokens, token-id-encoding, token-ids, token-context, model-parameters, forward-computation, logits, vocabulary-softmax, next-token-distribution]
     edges: [e-context-tokenization, e-tokenization-tokens, e-tokens-id-encoding, e-id-encoding-ids, e-ids-context, e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution]
   - id: representation-pipeline
