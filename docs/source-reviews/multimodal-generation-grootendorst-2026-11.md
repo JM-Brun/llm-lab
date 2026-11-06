@@ -111,8 +111,12 @@ Multimodal generation
 │   │   ├── Diffusion / denoising
 │   │   ├── Latent representations
 │   │   └── Diffusion Transformers
-│   ├── Audio  [section not fully inspected]
-│   └── Video  [section not fully inspected]
+│   ├── Audio
+│   │   ├── Semantic tokens (w2v-BERT)
+│   │   ├── Acoustic tokens (SoundStream)
+│   │   └── Hierarchical autoregressive Transformers
+│   └── Video
+│       └── Temporal dimension + diffusion / DiT
 └── Connect generation to multimodal LLMs
     ├── Late fusion
     │   ├── Text prompt → external generator
@@ -167,13 +171,13 @@ No new learning-route stage, page, concept-graph edge, computational-graph node 
 
 ## 7. Scan limitations and follow-up
 
-The source was retrieved through indexed search content because direct Substack retrieval returned a cache miss. The retrieved content was sufficient to identify the principal image-generation and LLM-integration ideas, but not to claim a complete article audit.
+The source was retrieved through indexed search content because direct Substack retrieval returned a cache miss. The indexed extraction exposes the main image, audio, video and LLM-integration sections. This is a broad content scan, but not a complete visual or citation audit. Primary-source spot checks were performed for AudioLM, Janus and NExT-GPT.
 
-Before creating or revising reader-facing material:
-1. Retrieve the complete audio and video sections.
-2. Inspect the figures individually and record their role; link to them rather than copying until reuse rights are known.
-3. Verify cited primary papers and model-specific architectural claims against their original papers or technical reports.
-4. Compare the source against existing multimodal coverage to identify genuinely complementary material.
+Remaining work before reader-facing integration:
+1. Inspect the figures individually and record their role; link to them rather than copying until reuse rights are known.
+2. Verify the remaining cited model papers (Stable Diffusion, SoundStream, w2v-BERT, Diffusion Transformers, OmniGen2 and BLIP-3o) against their primary sources.
+3. Compare the source against existing multimodal coverage to identify genuinely complementary material.
+4. Decide whether a concise optional multimodal overview page is justified; do not add the source to the main guided route.
 
 ## 8. Provenance
 
