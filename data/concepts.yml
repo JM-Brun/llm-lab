@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 # Stable concept IDs are language-independent. Labels and descriptions are bilingual.
 concepts:
   - id: token
@@ -325,6 +325,7 @@ concepts:
       fr: "Adaptation du comportement du modèle à des instructions ou exemples présents dans le prompt, sans mise à jour de ses paramètres."
       en: "Adaptation of model behavior to instructions or examples in the prompt, without updating its parameters."
     domains: [inference-efficiency]
+    importance: supporting
     resources: [fr/in-context-learning, en/in-context-learning, fr/llm-evolution, en/llm-evolution]
   - id: pretraining
     labels: {fr: "Pré-entraînement", en: "Pretraining"}
@@ -332,6 +333,7 @@ concepts:
       fr: "Phase d'entraînement initiale qui ajuste les paramètres du modèle sur un corpus à grande échelle selon un objectif prédéfini, souvent la prédiction du prochain token."
       en: "Initial training phase that adjusts model parameters on a large corpus using a defined objective, often next-token prediction."
     domains: [probabilistic-foundations-training]
+    importance: supporting
     resources: [fr/llm-evolution, en/llm-evolution]
   - id: post-training
     labels: {fr: "Post-entraînement", en: "Post-training"}
@@ -339,6 +341,7 @@ concepts:
       fr: "Ensemble de procédures appliquées après le pré-entraînement pour adapter le modèle à des instructions, préférences ou usages ciblés."
       en: "Set of procedures applied after pretraining to adapt a model to instructions, preferences, or targeted uses."
     domains: [probabilistic-foundations-training]
+    importance: supporting
     resources: [fr/llm-evolution, en/llm-evolution]
   - id: instruction-tuning
     labels: {fr: "Ajustement supervisé sur instructions", en: "Instruction tuning"}
@@ -346,6 +349,7 @@ concepts:
       fr: "Fine-tuning supervisé sur des exemples associant des instructions à des réponses attendues."
       en: "Supervised fine-tuning on examples pairing instructions with expected responses."
     domains: [probabilistic-foundations-training]
+    importance: supporting
     resources: [fr/llm-evolution, en/llm-evolution]
   - id: reinforcement-learning-from-human-feedback
     labels: {fr: "Apprentissage par renforcement à partir de retours humains", en: "Reinforcement learning from human feedback"}
@@ -353,6 +357,7 @@ concepts:
       fr: "Famille de méthodes qui utilisent des préférences ou évaluations humaines pour orienter l'optimisation du comportement d'un modèle."
       en: "Family of methods using human preferences or evaluations to guide optimization of model behavior."
     domains: [probabilistic-foundations-training]
+    importance: supporting
     resources: [fr/llm-evolution, en/llm-evolution]
   - id: direct-preference-optimization
     labels: {fr: "Optimisation directe sur préférences", en: "Direct preference optimization"}
@@ -360,6 +365,7 @@ concepts:
       fr: "Méthode d'optimisation qui ajuste directement une politique à partir de comparaisons de préférences, sans entraîner séparément un modèle de récompense dans sa formulation de base."
       en: "Optimization method that directly adjusts a policy from preference comparisons, without separately training a reward model in its basic formulation."
     domains: [probabilistic-foundations-training]
+    importance: specialized
     resources: [fr/llm-evolution, en/llm-evolution]
   - id: inference-time-compute
     labels: {fr: "Calcul à l'inférence", en: "Inference-time compute"}
@@ -367,6 +373,7 @@ concepts:
       fr: "Ressources de calcul supplémentaires mobilisées pendant l'utilisation du modèle pour traiter une requête, rechercher ou vérifier une réponse."
       en: "Additional compute resources used during model operation to process a request, search, or verify an answer."
     domains: [inference-efficiency]
+    importance: supporting
     resources: [fr/llm-evolution, en/llm-evolution]
   - id: reasoning-model
     labels: {fr: "Modèle orienté raisonnement", en: "Reasoning model"}
@@ -374,6 +381,7 @@ concepts:
       fr: "Modèle ou variante entraînée et/ou configurée pour consacrer davantage de calcul à la résolution de problèmes nécessitant plusieurs étapes."
       en: "Model or variant trained and/or configured to spend more compute on problems requiring multiple steps."
     domains: [inference-efficiency, scale-research]
+    importance: supporting
     resources: [fr/llm-evolution, en/llm-evolution]
   - id: tool-calling
     labels: {fr: "Appel d'outil", en: "Tool calling"}
@@ -381,6 +389,7 @@ concepts:
       fr: "Émission par le modèle d'une demande d'action structurée qu'une application ou un service externe peut exécuter."
       en: "Model emission of a structured action request that an application or external service can execute."
     domains: [inference-efficiency]
+    importance: supporting
     resources: [fr/llm-evolution, en/llm-evolution]
   - id: agentic-system
     labels: {fr: "Système agentique", en: "Agentic system"}
@@ -388,6 +397,7 @@ concepts:
       fr: "Système qui poursuit un objectif au moyen d'une boucle de planification, d'utilisation d'outils, d'observation des résultats et d'ajustement."
       en: "System that pursues a goal through a loop of planning, tool use, observing results, and adjustment."
     domains: [inference-efficiency]
+    importance: specialized
     resources: [fr/llm-evolution, en/llm-evolution]
 
 relation_types:
