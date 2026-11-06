@@ -100,7 +100,7 @@ A prerequisite edge is not a substitute for a computational edge. The graph must
 
 ## 5. Reader-facing projections
 
-The canonical graph is the source of truth. Reader-facing views are projections, not separate competing models:
+The existing knowledge architecture remains authoritative by information type: `data/concepts.yml` owns stable concepts and typed semantic relations; `data/domains.yml` owns controlled knowledge domains; `data/resources.yml` owns non-page artifacts; `docs/learning-path.md` owns curriculum modules, scope and pedagogical dependencies; `data/guided-route.yml` is the bilingual reader-facing route projection; page-map metadata owns page hierarchy and suggested page navigation. The computational spine is a crosswalk/projection assembled from these sources, not a replacement registry or a new general-purpose graph. Reader-facing views are projections, not separate competing models:
 
 - **Persistent spine:** shared input/forward/logits/distribution path, always visible on relevant pages.
 - **Generation view:** highlights decoding, token feedback, prefill/decode, and KV cache.
@@ -121,13 +121,13 @@ Candidate canonical page IDs already in the route include `contextualized-repres
 ## 7. Implementation sequence
 
 1. Audit the current concept registry, relation types, route, Build milestones, page metadata, and generated graph before changing them.
-2. Add the canonical graph as structured data with bilingual labels/descriptions, stable IDs, typed edges, branch membership, and explicit page references.
-3. Validate graph integrity: unique IDs, valid endpoints, valid relation types, valid page references, no cycles in prerequisite-only edges, bilingual parity.
-4. Generate the persistent spine and branch overlays from the canonical graph; provide a semantic text/list fallback for accessibility.
-5. Integrate the spine into relevant pages without duplicating concept explanations.
-6. Reconcile the guided route and Build crosswalk as separate projections; preserve the early overview / later deepening distinction.
-7. Add rendered desktop/mobile, keyboard, screen-reader, link and regression tests.
-8. Update the route reconciliation and close this issue only when generated artifacts and tests agree.
+2. Extend the existing concept registry only for missing language-independent concepts and reviewed semantic relations; keep curriculum-module identities and dependencies in `docs/learning-path.md`.
+3. Validate concept integrity with the existing registry checker: unique IDs, bilingual labels/definitions, valid published page references, domain membership, relation endpoints/types, rationales for prerequisites, and acyclic prerequisite/structural relations.
+4. Treat `data/guided-route.yml` as a projection of the curriculum model; reconcile its flat reader-facing stages only after module ownership and dependencies are stable.
+5. Generate the persistent spine and branch overlays as filtered projections; provide a semantic text/list fallback for accessibility.
+6. Integrate the spine into relevant pages without duplicating concept explanations.
+7. Keep the Build dependency crosswalk separate from conceptual/dataflow order; preserve the early generation preview and later detailed inference treatment.
+8. Add rendered desktop/mobile, keyboard, screen-reader, link and regression tests before considering the model fully integrated.
 
 ## 8. Non-goals and safeguards
 
@@ -138,3 +138,8 @@ Candidate canonical page IDs already in the route include `contextualized-repres
 - Do not imply that every Transformer uses identical residual/normalization ordering.
 - Do not move optional mathematical or architectural deep dives into the core route merely to make the diagram linear.
 - Do not remove existing content during consolidation; map every displaced explanation to its canonical page or preserve it as a clearly scoped deep dive.
+
+
+## 9. Adopted curriculum topology
+
+The module hierarchy and predecessor/successor model are now defined in [`docs/learning-path.md`](learning-path.md#canonical-module-topology-shared-core-and-operational-branches). This is a curriculum model, not a new concept ontology. The concept registry has been extended with reviewed concepts for conditional distributions, observed-target scoring, likelihood/NLL, autoregressive generation, prefill/decode/KV cache, teacher forcing, gradients, optimizers, parameter updates, and held-out evaluation. The rendered route and page bodies intentionally remain unchanged until the subsequent refactor.

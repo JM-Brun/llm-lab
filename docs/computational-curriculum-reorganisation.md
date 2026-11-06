@@ -1,9 +1,11 @@
 # Computational curriculum reorganisation
 
-**Status:** proposed editorial architecture for issue #575  
+**Status:** page-migration specification; canonical module topology is maintained in [docs/learning-path.md](learning-path.md#canonical-module-topology-shared-core-and-operational-branches)  
 **Date:** 2026-11-06  
 **Scope:** page ownership, core/advanced boundaries, guided route, Build crosswalk.  
 **Preservation rule:** no explanation, example, equation, citation, or exercise is deleted during restructuring. Every moved section must be mapped to a canonical destination.
+
+This document is subordinate to the canonical curriculum model in `docs/learning-path.md`. It maps page ownership, progressive disclosure and migration boundaries; it must not be treated as a second source of module hierarchy or dependency edges. The current page bodies, route projection and generated fragments remain unchanged until the later refactor.
 
 ## 1. Four connected parts
 

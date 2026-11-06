@@ -178,6 +178,146 @@ concepts:
       en: "Ability measured on tasks within a given scope, distinct from a claim of human-like understanding."
     domains: [probabilistic-foundations-training]
     resources: [fr/llm-limits, en/llm-limits]
+  - id: conditional-distribution
+    labels: {fr: "Distribution conditionnelle du prochain token", en: "Next-token conditional distribution"}
+    definitions:
+      fr: "Distribution de probabilité sur le vocabulaire, conditionnée par le contexte précédent et produite à partir des logits."
+      en: "Probability distribution over the vocabulary, conditioned on the preceding context and produced from logits."
+    domains: [probabilistic-foundations-training, inference-efficiency]
+    resources: [fr/probabilites, en/probabilities]
+  - id: next-token-prediction
+    labels: {fr: "Prédiction du prochain token", en: "Next-token prediction"}
+    definitions:
+      fr: "Tâche consistant à estimer, à chaque position, une distribution conditionnelle sur le token suivant à partir du contexte disponible."
+      en: "Task of estimating, at each position, a conditional distribution over the next token from the available context."
+    domains: [architectures-mechanisms, probabilistic-foundations-training]
+    resources: [fr/logits, en/logits, fr/probabilites, en/probabilities]
+  - id: observed-target
+    labels: {fr: "Token cible observé", en: "Observed target token"}
+    definitions:
+      fr: "Token suivant effectivement présent dans les données, utilisé pour évaluer la probabilité attribuée par le modèle."
+      en: "The actual next token present in the data, used to evaluate the probability assigned by the model."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/vraisemblance, en/likelihood, fr/training-examples, en/training-examples]
+  - id: sequence-likelihood
+    labels: {fr: "Vraisemblance d'une séquence", en: "Sequence likelihood"}
+    definitions:
+      fr: "Produit des probabilités conditionnelles attribuées par le modèle aux tokens observés successifs d'une séquence."
+      en: "Product of the conditional probabilities assigned by the model to the successive observed tokens in a sequence."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/vraisemblance, en/likelihood]
+  - id: log-likelihood
+    labels: {fr: "Log-vraisemblance", en: "Log-likelihood"}
+    definitions:
+      fr: "Logarithme de la vraisemblance d'une séquence, égal à la somme des log-probabilités conditionnelles des tokens observés."
+      en: "Logarithm of a sequence likelihood, equal to the sum of the conditional log-probabilities of observed tokens."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/vraisemblance, en/likelihood]
+  - id: logarithm
+    labels: {fr: "Logarithme", en: "Logarithm"}
+    definitions:
+      fr: "Transformation qui convertit une vraisemblance positive en log-vraisemblance et transforme un produit de probabilités en somme."
+      en: "Transformation that converts a positive likelihood into log-likelihood and turns a product of probabilities into a sum."
+    domains: [mathematical-tools-geometry, probabilistic-foundations-training]
+    resources: [fr/vraisemblance, en/likelihood]
+  - id: negation
+    labels: {fr: "Opposé additif", en: "Additive inverse"}
+    definitions:
+      fr: "Transformation qui change le signe de la log-vraisemblance pour obtenir une quantité à minimiser."
+      en: "Transformation that changes the sign of log-likelihood to obtain a quantity to minimize."
+    domains: [mathematical-tools-geometry, probabilistic-foundations-training]
+    resources: [fr/cross-entropy, en/cross-entropy]
+  - id: negative-log-likelihood
+    labels: {fr: "Négative log-vraisemblance", en: "Negative log-likelihood"}
+    definitions:
+      fr: "Opposé de la log-vraisemblance ; pour une cible one-hot au niveau token, elle correspond à l'entropie croisée."
+      en: "Negative log-likelihood; for a one-hot token-level target, it equals cross-entropy."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/cross-entropy, en/cross-entropy]
+  - id: autoregressive-generation
+    labels: {fr: "Génération autorégressive", en: "Autoregressive generation"}
+    definitions:
+      fr: "Procédure qui sélectionne un token à partir de la distribution prédite, l'ajoute au contexte, puis répète le calcul avec les mêmes paramètres."
+      en: "Procedure that selects a token from the predicted distribution, appends it to the context, and repeats computation with unchanged parameters."
+    domains: [inference-efficiency]
+    resources: [fr/generation, en/generation]
+  - id: decoding-policy
+    labels: {fr: "Politique de décodage", en: "Decoding policy"}
+    definitions:
+      fr: "Règle déterministe ou stochastique qui sélectionne un token à partir de la distribution conditionnelle prédite."
+      en: "Deterministic or stochastic rule that selects a token from the predicted conditional distribution."
+    domains: [inference-efficiency]
+    resources: [fr/decoding-strategies, en/decoding-strategies, fr/generation, en/generation]
+  - id: prefill
+    labels: {fr: "Prefill", en: "Prefill"}
+    definitions:
+      fr: "Phase d'inférence qui traite le prompt ou le contexte initial avant la génération incrémentale des tokens."
+      en: "Inference phase that processes the prompt or initial context before incremental token generation."
+    domains: [inference-efficiency]
+    resources: [fr/generation, en/generation]
+  - id: decode-step
+    labels: {fr: "Étape de décodage incrémental", en: "Incremental decode step"}
+    definitions:
+      fr: "Étape d'inférence qui calcule la distribution du prochain token à partir du contexte étendu, puis sélectionne ce token."
+      en: "Inference step that computes the next-token distribution from the extended context and selects that token."
+    domains: [inference-efficiency]
+    resources: [fr/generation, en/generation]
+  - id: kv-cache
+    labels: {fr: "Cache clé-valeur (KV cache)", en: "Key-value cache"}
+    definitions:
+      fr: "Mécanisme d'inférence qui conserve les clés et valeurs déjà calculées afin d'éviter de recalculer le préfixe à chaque étape."
+      en: "Inference mechanism that retains previously computed keys and values to avoid recomputing the prefix at each step."
+    domains: [inference-efficiency]
+    resources: [fr/generation, en/generation]
+  - id: generated-token-feedback
+    labels: {fr: "Retour du token généré dans le contexte", en: "Generated-token context feedback"}
+    definitions:
+      fr: "Opération qui ajoute le token sélectionné au contexte afin que le calcul suivant conditionne sa prédiction sur ce token."
+      en: "Operation that appends the selected token to the context so the next computation conditions its prediction on that token."
+    domains: [inference-efficiency]
+    resources: [fr/generation, en/generation]
+  - id: training-example
+    labels: {fr: "Exemple d'entraînement", en: "Training example"}
+    definitions:
+      fr: "Paire ou séquence d'entrées et de cibles alignées qui permet de calculer les prédictions du prochain token et leur coût."
+      en: "Aligned input and target sequence or pair used to compute next-token predictions and their cost."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/training-examples, en/training-examples]
+  - id: teacher-forcing
+    labels: {fr: "Teacher forcing", en: "Teacher forcing"}
+    definitions:
+      fr: "Stratégie qui fournit les tokens précédents observés comme contexte lors du calcul des prédictions d'entraînement, plutôt que les tokens générés par le modèle."
+      en: "Strategy that supplies observed previous tokens as context when computing training predictions, rather than tokens generated by the model."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/training-examples, en/training-examples]
+  - id: gradient
+    labels: {fr: "Gradient", en: "Gradient"}
+    definitions:
+      fr: "Dérivée de l'objectif par rapport aux paramètres, indiquant localement comment l'objectif varie lorsque les paramètres changent."
+      en: "Derivative of the objective with respect to parameters, indicating locally how the objective changes as parameters change."
+    domains: [probabilistic-foundations-training, mathematical-tools-geometry]
+    resources: [fr/gradients, en/gradients]
+  - id: optimizer
+    labels: {fr: "Optimiseur", en: "Optimizer"}
+    definitions:
+      fr: "Algorithme qui utilise les gradients et son état interne pour calculer une mise à jour des paramètres."
+      en: "Algorithm that uses gradients and its internal state to compute a parameter update."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/gradients, en/gradients]
+  - id: parameter-update
+    labels: {fr: "Mise à jour des paramètres", en: "Parameter update"}
+    definitions:
+      fr: "Modification des paramètres du modèle calculée par l'optimiseur à partir des gradients et de son état."
+      en: "Modification of model parameters computed by the optimizer from gradients and its state."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/gradients, en/gradients]
+  - id: held-out-evaluation
+    labels: {fr: "Évaluation sur données réservées", en: "Held-out evaluation"}
+    definitions:
+      fr: "Évaluation de prédictions sur des données qui n'ont pas servi à ajuster les paramètres, sans mise à jour de ceux-ci."
+      en: "Evaluation of predictions on data not used to fit parameters, without updating those parameters."
+    domains: [probabilistic-foundations-training, scale-research]
+    resources: [fr/evaluation-experimentale, en/experimental-evaluation, fr/llm-overview, en/llm-overview]
 relation_types:
   represented-by:
     direction: directed
@@ -278,6 +418,17 @@ relation_types:
     descriptions:
       fr: "La source est normalisée par la transformation cible."
       en: "The source is normalized by the target transformation."
+  contrasts-with:
+    direction: symmetric
+    family: associative
+    transitive: false
+    acyclic: false
+    learning_dependency: false
+    inverse: null
+    labels: {fr: "est à distinguer de", en: "contrasts with"}
+    descriptions:
+      fr: "La source et la cible doivent être distinguées pour éviter une confusion conceptuelle ; cela n'implique pas qu'elles soient des opposés."
+      en: "The source and target should be distinguished to prevent conceptual confusion; this does not imply that they are opposites."
   evaluated-by:
     direction: directed
     family: evaluative
@@ -321,3 +472,70 @@ relations:
   - {from: logits, type: normalized-by, to: softmax}
   - {from: softmax, type: evaluated-by, to: cross-entropy}
   - {from: training-objective, type: evaluated-by, to: cross-entropy}
+  - {from: softmax, type: produces, to: conditional-distribution}
+  - {from: next-token-prediction, type: part-of, to: training-objective}
+  - {from: conditional-distribution, type: contributes-to, to: sequence-likelihood}
+  - {from: observed-target, type: contributes-to, to: sequence-likelihood}
+  - from: conditional-distribution
+    type: prerequisite
+    to: sequence-likelihood
+    rationale:
+      fr: "La vraisemblance d'une séquence est construite à partir des probabilités conditionnelles des tokens observés."
+      en: "Sequence likelihood is built from conditional probabilities of the observed tokens."
+  - from: observed-target
+    type: prerequisite
+    to: sequence-likelihood
+    rationale:
+      fr: "Une vraisemblance de séquence porte sur des tokens effectivement observés."
+      en: "A sequence likelihood is defined with respect to actually observed tokens."
+  - {from: sequence-likelihood, type: mapped-by, to: logarithm}
+  - {from: logarithm, type: produces, to: log-likelihood}
+  - from: sequence-likelihood
+    type: prerequisite
+    to: log-likelihood
+    rationale:
+      fr: "La log-vraisemblance est obtenue en prenant le logarithme de la vraisemblance."
+      en: "Log-likelihood is obtained by taking the logarithm of likelihood."
+  - {from: log-likelihood, type: mapped-by, to: negation}
+  - {from: negation, type: produces, to: negative-log-likelihood}
+  - from: log-likelihood
+    type: prerequisite
+    to: negative-log-likelihood
+    rationale:
+      fr: "La négative log-vraisemblance est l'opposé de la log-vraisemblance."
+      en: "Negative log-likelihood is the negation of log-likelihood."
+  - {from: negative-log-likelihood, type: contributes-to, to: training-objective}
+  - {from: training-example, type: produces, to: observed-target}
+  - {from: teacher-forcing, type: applies-to, to: training-example}
+  - from: cross-entropy
+    type: prerequisite
+    to: training-objective
+    rationale:
+      fr: "L'objectif usuel d'un GPT agrège les coûts de prédiction des tokens cibles."
+      en: "The usual GPT objective aggregates prediction costs for target tokens."
+  - {from: training-objective, type: produces, to: gradient}
+  - from: gradient
+    type: prerequisite
+    to: parameter-update
+    rationale:
+      fr: "Dans le parcours minimal d'entraînement par descente de gradient, l'optimiseur utilise les gradients pour mettre à jour les paramètres."
+      en: "In the minimum gradient-based training path, the optimizer uses gradients to update parameters."
+  - {from: optimizer, type: contributes-to, to: parameter-update}
+  - {from: parameter-update, type: contributes-to, to: next-token-prediction}
+  - {from: observed-target, type: contributes-to, to: cross-entropy}
+  - {from: generated-token-feedback, type: contributes-to, to: decode-step}
+  - {from: decoding-policy, type: applies-to, to: conditional-distribution}
+  - {from: decoding-policy, type: produces, to: token}
+  - {from: token, type: contributes-to, to: generated-token-feedback}
+  - {from: generated-token-feedback, type: part-of, to: autoregressive-generation}
+  - {from: prefill, type: part-of, to: autoregressive-generation}
+  - {from: decode-step, type: part-of, to: autoregressive-generation}
+  - {from: decoding-policy, type: part-of, to: autoregressive-generation}
+  - {from: kv-cache, type: contributes-to, to: decode-step}
+  - {from: conditional-distribution, type: contributes-to, to: autoregressive-generation}
+  - {from: sequence-likelihood, type: contributes-to, to: held-out-evaluation}
+  - {from: cross-entropy, type: contributes-to, to: held-out-evaluation}
+  - {from: conditional-distribution, type: evaluated-by, to: held-out-evaluation}
+  - {from: conditional-distribution, type: evaluated-by, to: cross-entropy}
+  - {from: prefill, type: contrasts-with, to: teacher-forcing}
+

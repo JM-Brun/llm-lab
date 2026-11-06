@@ -328,3 +328,57 @@ def test_learning_dependency_requires_explicit_rationale() -> None:
         ),
     }
     assert validate_registry(data) == []
+
+
+def test_shared_prediction_scoring_inference_and_training_concepts_are_distinct() -> None:
+    registry_path = Path(__file__).resolve().parents[2] / "data" / "concepts.yml"
+    data = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
+    concepts = {item["id"] for item in data["concepts"]}
+    edges = {(item["from"], item["type"], item["to"]) for item in data["relations"]}
+
+    required = {
+        "conditional-distribution",
+        "next-token-prediction",
+        "observed-target",
+        "sequence-likelihood",
+        "log-likelihood",
+        "negative-log-likelihood",
+        "autoregressive-generation",
+        "decoding-policy",
+        "prefill",
+        "decode-step",
+        "kv-cache",
+        "generated-token-feedback",
+        "training-example",
+        "teacher-forcing",
+        "gradient",
+        "optimizer",
+        "parameter-update",
+        "held-out-evaluation",
+    }
+    assert required <= concepts
+
+    # Shared prediction feeds distinct observed-target and generation branches.
+    assert ("softmax", "produces", "conditional-distribution") in edges
+    assert ("conditional-distribution", "contributes-to", "sequence-likelihood") in edges
+    assert ("observed-target", "contributes-to", "sequence-likelihood") in edges
+    assert ("decoding-policy", "applies-to", "conditional-distribution") in edges
+    assert ("generated-token-feedback", "part-of", "autoregressive-generation") in edges
+
+    # Training has an explicit observed-token policy and optimization path.
+    assert ("teacher-forcing", "applies-to", "training-example") in edges
+    assert ("training-objective", "produces", "gradient") in edges
+    assert ("gradient", "prerequisite", "parameter-update") in edges
+    assert ("optimizer", "contributes-to", "parameter-update") in edges
+
+    # Prefill is deliberately distinct from teacher forcing; cache is an
+    # inference optimization, not a prerequisite for scoring or training.
+    assert ("prefill", "contrasts-with", "teacher-forcing") in edges
+    assert ("kv-cache", "contributes-to", "decode-step") in edges
+    assert not any(
+        source in {"sequence-likelihood", "log-likelihood", "negative-log-likelihood", "gradient"}
+        and relation == "prerequisite"
+        and target in {"autoregressive-generation", "prefill", "decode-step"}
+        for source, relation, target in edges
+    )
+    assert ("conditional-distribution", "evaluated-by", "held-out-evaluation") in edges
