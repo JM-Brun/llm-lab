@@ -173,7 +173,7 @@ The current lesson mappings are deliberately limited to views with a clear instr
 | `observed-target-scoring` | `fr/vraisemblance` | `en/likelihood` |
 | `training` | `fr/training-examples` | `en/training-examples` |
 
-The `persistent-spine` remains represented by the existing overview figure, while the `evaluation` view remains available in the registry until a lesson with matching scope is selected. This is intentional: a view is not embedded merely because it exists.
+The `persistent-spine` remains represented by the existing hand-maintained overview SVG; it is not yet generated from the registry. The `evaluation` view remains available in the registry until a lesson with matching scope is selected. These boundaries are intentional: a view is not embedded merely because it exists, and an existing pedagogical illustration is not silently replaced.
 
 Generated fragments are ignored by Git and rebuilt by both CI and the Quarto workflow before rendering. Run locally with:
 
