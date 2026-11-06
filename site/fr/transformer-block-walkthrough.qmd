@@ -30,10 +30,6 @@ Cette page est la troisième étape (3 sur 5) de la visite guidée du code de r�
 - décrire le rôle de chaque projection Q, K, V et O, et pourquoi les têtes restent isolées jusqu'à `w_o`.
 :::
 
-## Carte computationnelle du bloc
-
-{{< include ../includes/generated-computational-graph-fr-transformer-block.qmd >}}
-
 ## La recette du bloc : pré-LN avec résidus
 
 ```python

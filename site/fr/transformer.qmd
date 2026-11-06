@@ -48,10 +48,6 @@ Le réseau ne reçoit pas directement du texte : il reçoit une séquence d'iden
 
 Cette section donne seulement les repères nécessaires pour lire le calcul du réseau. Les explications de référence sont séparées : [texte et tokenisation](text-data.qmd), [espace des embeddings](embedding-space.qmd), [information positionnelle](positional-encoding.qmd) et [représentations contextualisées](contextualized-representations.qmd). Pour les formes et dimensions des tenseurs, voir [Tenseurs](tensors.qmd).
 
-## Carte computationnelle des représentations
-
-{{< include ../includes/generated-computational-graph-fr-representation-pipeline.qmd >}}
-
 ## 2. Les blocs Transformer
 
 Le cœur du réseau est un empilement de blocs identiques. Chaque bloc combine deux opérations :

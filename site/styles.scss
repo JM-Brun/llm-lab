@@ -1515,40 +1515,6 @@ a.concept-link:focus-visible {
   color: var(--map-muted);
 }
 
-.map-concept-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.2rem;
-}
-
-.map-concept-tag {
-  display: inline-flex;
-  align-items: center;
-  max-width: 100%;
-  padding: 0.08rem 0.38rem;
-  border: 1px solid var(--map-line);
-  border-radius: 999px;
-  background: var(--map-surface);
-  color: var(--map-muted);
-  font-size: 0.65rem;
-  line-height: 1.35;
-}
-
-.map-concept-kind {
-  color: var(--map-accent);
-  font-weight: 600;
-}
-
-.map-concept-importance {
-  color: var(--map-ink);
-  font-weight: 600;
-}
-
-.map-concept-domain {
-  font-weight: 400;
-}
-
 .map-concept-group {
   margin: 0 0 1.1rem;
 }

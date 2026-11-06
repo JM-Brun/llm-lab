@@ -71,6 +71,7 @@ Connect Q/K/V, attention weights, aggregation, and causal masking without confus
 **Optional resources**
 
 - [Cross-attention: connecting two sequences](cross-attention.html)
+- [Why scale attention scores?](attention-score-scaling.html)
 
 :::
 
@@ -78,7 +79,7 @@ Connect Q/K/V, attention weights, aggregation, and causal masking without confus
 
 ### 05 · From hidden states to predictions
 
-Connect logits, probability distributions, likelihood, and next-token selection, then distinguish prompt prefill from iterative decode\.
+Connect logits, probability distributions, likelihood, and next-token selection\.
 
 **Core pages**
 
@@ -97,7 +98,7 @@ Connect logits, probability distributions, likelihood, and next-token selection,
 
 ### 06 · Understand learning and evaluate
 
-Understand the next-token objective, ground-truth conditioning (teacher forcing), losses, and gradients, then examine evaluation evidence and limitations\.
+Explore loss objectives and gradients, then examine the evidence, metrics, and limits of evaluation\.
 
 **Core pages**
 
@@ -109,7 +110,6 @@ Understand the next-token objective, ground-truth conditioning (teacher forcing)
 **Optional resources**
 
 - [Scaling laws: parameters, data, and compute](scaling-laws.html)
-- [From tokenized corpus to training examples](training-examples.html)
 
 :::
 

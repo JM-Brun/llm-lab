@@ -30,10 +30,6 @@ By the end of this tour, you will be able to:
 - describe the role of each Q, K, V and O projection, and why heads stay isolated until `w_o`.
 :::
 
-## Computational view of the block
-
-{{< include ../includes/generated-computational-graph-en-transformer-block.qmd >}}
-
 ## The block's recipe: pre-LN with residuals
 
 ```python

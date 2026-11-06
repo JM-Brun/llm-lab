@@ -71,6 +71,7 @@ Relier Q/K/V, les poids d'attention, l'agrégation et le masquage causal sans co
 **Ressources facultatives**
 
 - [Attention croisée : faire communiquer deux séquences](cross-attention.html)
+- [Pourquoi mettre les scores d'attention à l'échelle ?](attention-score-scaling.html)
 
 :::
 
@@ -78,7 +79,7 @@ Relier Q/K/V, les poids d'attention, l'agrégation et le masquage causal sans co
 
 ### 05 · Des états aux prédictions
 
-Relier logits, distribution de probabilité, vraisemblance et sélection du prochain token, puis distinguer le prefill du prompt du decode itératif\.
+Relier logits, distribution de probabilité, vraisemblance et sélection du prochain token\.
 
 **Pages centrales**
 
@@ -97,7 +98,7 @@ Relier logits, distribution de probabilité, vraisemblance et sélection du proc
 
 ### 06 · Comprendre l'apprentissage et évaluer
 
-Comprendre l’objectif de prédiction du prochain token, le conditionnement par les tokens de référence (teacher forcing), les pertes et les gradients, puis examiner les preuves et limites de l’évaluation\.
+Découvrir les objectifs de perte et les gradients, puis examiner les preuves, métriques et limites d'une évaluation\.
 
 **Pages centrales**
 
@@ -109,7 +110,6 @@ Comprendre l’objectif de prédiction du prochain token, le conditionnement par
 **Ressources facultatives**
 
 - [Lois d'échelle : paramètres, données et calcul](scaling-laws.html)
-- [Du corpus tokenisé aux exemples d’entraînement](training-examples.html)
 
 :::
 

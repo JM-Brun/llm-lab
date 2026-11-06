@@ -248,16 +248,3 @@ Non-page learning and research artifacts are maintained separately in `data/reso
 Each resource has a stable language-independent ID, controlled kind, bilingual labels and descriptions, a BCP 47 tag for the human language used in the artifact, optional programming-language metadata, lifecycle status, a discriminated local-path or external-URL location, published page IDs that reference it, and concept IDs. Provenance fields are optional and must be omitted when unknown. The initial kind vocabulary contains only `implementation`; the first seed is limited to the five modules explicitly named by the bilingual guided-build route.
 
 The French and English walkthroughs reference one shared resource record rather than duplicate language-specific code resources. Published/deprecated resources require at least one published page reference; draft/retired records must have an empty `referenced_by` list. Run `python site/tools/check_resource_registry.py` to validate IDs, controlled values, BCP 47 extension-singleton uniqueness, canonical local path segments and containment (including symlink resolution), external HTTP(S) URL syntax and port validity without network access, published-page references, concept references, and optional provenance. The JSON-LD projection uses `schema:SoftwareSourceCode` for implementation resources. The interactive concept-map UI is not yet extended to render non-page resources.
-
-
-## 11. Concept metadata is not page metadata
-
-The words *notion*, *domain* and *importance* belong to the knowledge-entity model when they describe a scientific concept:
-
-- A **notion** is a record in `data/concepts.yml`, with one language-independent ID and bilingual labels/definitions. The concept-map UI may label its cards as “Notion” / “Concept”; do not add a page-level `notion:` tag to imitate this.
-- A concept's **domain** membership is recorded in its `domains` list and resolved against `data/domains.yml`. Membership can be many-to-many and is shown as localized domain labels on concept cards.
-- A concept's **importance** is recorded in its controlled `importance` metadata (`essential`, `important`, `specialized`). It describes conceptual centrality, not page depth, route optionality, or prerequisite status.
-
-These fields are not new dimensions of the page `tags` vocabulary and must not be copied into Quarto `keywords`. The page-level `domain` field remains a single primary discovery classification for Deepen pages only. The page `level` field continues to describe editorial depth/role; it is not an importance score.
-
-When a concept card needs a label, domain or importance, derive it from the canonical concept and domain registries. Do not duplicate these values in page metadata, generated JSON, or hand-maintained card definitions.

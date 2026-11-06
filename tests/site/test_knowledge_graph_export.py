@@ -41,7 +41,6 @@ def test_export_has_stable_skos_schemes_and_bilingual_labels() -> None:
     )
     assert concept["@type"] == "skos:Concept"
     assert {item["@language"] for item in concept["skos:prefLabel"]} == {"fr", "en"}
-    assert concept["llmlab:importance"] == "essential"
 
 
 def test_export_describes_published_pages() -> None:
@@ -110,15 +109,11 @@ def test_rendered_graph_validator_accepts_complete_references() -> None:
             "llmlab": "urn:llmlab:",
         },
         "@graph": [
-            {
-                "@id": "https://jm-brun.github.io/llm-lab/id/scheme/concepts",
-                "@type": "skos:ConceptScheme",
-            },
+            {"@id": "urn:scheme", "@type": "skos:ConceptScheme"},
             {
                 "@id": "urn:concept",
                 "@type": "skos:Concept",
-                "llmlab:importance": "essential",
-                "skos:inScheme": {"@id": "https://jm-brun.github.io/llm-lab/id/scheme/concepts"},
+                "skos:inScheme": {"@id": "urn:scheme"},
             },
             {
                 "@id": "urn:page",
@@ -136,32 +131,6 @@ def test_rendered_graph_validator_accepts_complete_references() -> None:
     }
 
     assert validate_graph(payload) == []
-
-
-def test_rendered_graph_validator_requires_controlled_concept_importance() -> None:
-    scheme_id = "https://jm-brun.github.io/llm-lab/id/scheme/concepts"
-    payload = {
-        "@context": {
-            "skos": "urn:skos:",
-            "schema": "urn:schema:",
-            "prov": "urn:prov:",
-            "dcterms": "urn:dcterms:",
-            "llmlab": "urn:llmlab:",
-        },
-        "@graph": [
-            {"@id": scheme_id, "@type": "skos:ConceptScheme"},
-            {
-                "@id": "https://jm-brun.github.io/llm-lab/id/concept/teacher-forcing",
-                "@type": "skos:Concept",
-                "skos:inScheme": {"@id": scheme_id},
-            },
-            {"@id": f"{BASE}/knowledge-graph.jsonld", "@type": "prov:Entity"},
-        ],
-    }
-
-    errors = validate_graph(payload)
-
-    assert any("missing or invalid llmlab:importance" in error for error in errors)
 
 
 def test_rendered_graph_validator_reports_dangling_references() -> None:

@@ -49,13 +49,6 @@ COPY: dict[str, dict[str, Any]] = {
         "relatedConcepts": "Notions liées",
         "sectionHeadingsTitle": "Dans cette page",
         "conceptResources": "Pages associées",
-        "conceptKind": "Notion",
-        "importanceLabel": "Importance",
-        "importanceLevels": {
-            "essential": "Fondamentale",
-            "important": "Importante",
-            "specialized": "Spécialisée",
-        },
         "relationLegendTitle": "Sens des relations (source → cible)",
         "relationFilterLabel": "Type de relation",
         "relationFilterAll": "Tous les types",
@@ -103,13 +96,6 @@ COPY: dict[str, dict[str, Any]] = {
         "relatedConcepts": "Related concepts",
         "sectionHeadingsTitle": "On this page",
         "conceptResources": "Pages covering this concept",
-        "conceptKind": "Concept",
-        "importanceLabel": "Importance",
-        "importanceLevels": {
-            "essential": "Foundational",
-            "important": "Important",
-            "specialized": "Specialized",
-        },
         "relationLegendTitle": "Relationship meaning (source → target)",
         "relationFilterLabel": "Relation type",
         "relationFilterAll": "All types",
@@ -652,38 +638,11 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       return hidden;
     }
 
-    function conceptMetadataFor(concept) {
-      var metadata = el("span", "map-concept-meta");
-      metadata.appendChild(el("span", "map-concept-tag map-concept-kind", copy.conceptKind));
-      var importance = copy.importanceLevels[concept.importance];
-      if (importance) {
-        metadata.appendChild(
-          el(
-            "span",
-            "map-concept-tag map-concept-importance",
-            copy.importanceLabel + ": " + importance
-          )
-        );
-      }
-      (concept.domains || []).forEach(function (domainId) {
-        var label = domainId;
-        for (var index = 0; index < conceptDomainList.length; index += 1) {
-          if (conceptDomainList[index].id === domainId) {
-            label = conceptDomainList[index].label;
-            break;
-          }
-        }
-        metadata.appendChild(el("span", "map-concept-tag map-concept-domain", label));
-      });
-      return metadata;
-    }
-
     function conceptItemFor(concept, neighbors) {
       var item = el("button", "map-concept-item");
       item.type = "button";
       item.setAttribute("data-concept-id", concept.id);
       item.appendChild(el("span", "map-concept-label", concept.label));
-      item.appendChild(conceptMetadataFor(concept));
       if (concept.definition) {
         item.appendChild(el("span", "map-concept-def", concept.definition));
       }
@@ -850,7 +809,6 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       }
       clearNode(detailPanel);
       detailPanel.appendChild(el("h3", "map-detail-title", concept.label));
-      detailPanel.appendChild(conceptMetadataFor(concept));
       if (concept.definition) {
         detailPanel.appendChild(el("p", "map-detail-purpose", concept.definition));
       }

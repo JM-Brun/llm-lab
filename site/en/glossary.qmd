@@ -38,8 +38,6 @@ This glossary gives a concise first definition for terms used across the site. I
 - **Forward pass** — the network computation that transforms the context into representations and logits while keeping model parameters fixed. See [GPT and Transformers](transformer.qmd).
 - **Decoding** — the procedure that uses logits or their distribution to select the next token; it follows the forward pass and is one step in generation. Do not confuse it with a **decoder**, a component of some Transformer architectures. See [Generating text](generation.qmd).
 - **Autoregressive generation** — an iterative process that selects a token, appends it to the context, and repeats until a stopping condition is met. See [Generating text](generation.qmd).
-- **Prefill** — the inference phase that processes the initial prompt as a sequence and produces the logits used for the first generated-token choice; it may also populate a KV cache. See [Generating text](generation.qmd).
-- **Decode phase** — the iterative inference phase that processes newly generated tokens to obtain subsequent predictions. Do not confuse it with **decoding**, the token-selection procedure. See [Generating text](generation.qmd).
 - **Context window** — the amount of token context a model can process in a given input.
 
 ## Representations and geometry
@@ -65,8 +63,6 @@ These topics are grouped in the [Representation geometry and interpretability](e
 - **Cross-entropy** — the average cost associated with a target distribution and a predictive distribution. See [Cross-entropy and KL divergence](cross-entropy.qmd).
 - **KL divergence** — a measure of discrepancy between distributions that is generally asymmetric. See [Cross-entropy and KL divergence](cross-entropy.qmd).
 - **Loss function** — the numerical objective optimized during training; it is not a universal measure of quality. See [Loss](loss.qmd).
-- **Teacher forcing** — a training-time conditioning strategy in which each next-token prediction uses the ground-truth preceding tokens rather than previously sampled model outputs. See [training examples](training-examples.qmd).
-- **Exposure bias** — a possible mismatch between ground-truth prefixes used during teacher-forced training and model-generated prefixes encountered at inference; its practical impact is task- and protocol-dependent. See [training examples](training-examples.qmd).
 - **Gradient** — a derivative of an objective with respect to a variable or parameter. See [Gradients](gradients.qmd).
 - **Calibration** — empirical agreement between predicted probabilities and observed frequencies for comparable events.
 

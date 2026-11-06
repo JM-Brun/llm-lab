@@ -40,22 +40,6 @@ Standards references:
 
 Concept IDs are language-independent and receive stable absolute identifiers under `https://jm-brun.github.io/llm-lab/id/concept/{id}`. These identifiers are currently used in the JSON-LD graph; dereferenceable concept landing pages are not yet published. French and English labels are language-tagged values on one concept node, not duplicate concepts.
 
-### Concept-card metadata: notion, domain and importance
-
-The concept collection is the canonical set of **notions**. The interactive concept map labels each record as a notion/concept; this is a presentation label derived from the collection, not a redundant `kind` field or a new page tag.
-
-- **Domain tag:** `concepts[].domains` is the canonical, controlled, potentially multi-valued domain membership. Cards display localized domain labels and the map groups notions under domain headings. A concept may appear in more than one group; this is intentional.
-- **Importance meta-tag:** every concept declares one controlled `importance` value in `data/concepts.yml`: `essential`, `important`, or `specialized`. The validator requires one of these values. The interactive card displays a localized importance label; JSON-LD exports it as `llmlab:importance`.
-- **Importance is not page depth or route status.** It expresses the conceptual centrality of a notion in the LLM Lab knowledge model. It does not imply that a page is mandatory, that a concept is a prerequisite, or that a notion is mathematically more important in every application.
-
-| Value | Editorial meaning |
-|---|---|
-| `essential` | Needed to understand the central conceptual model or a major core mechanism. |
-| `important` | Important for a substantial subtopic or a recurring technical distinction, but not a universal prerequisite. |
-| `specialized` | Useful for a narrower research question, advanced discussion, or qualification; not part of the minimum conceptual model. |
-
-Do not mirror these fields into Quarto page `keywords`. Page tags classify learning resources; concept domains and importance classify knowledge entities. The page-level `domain` remains a separate, single primary classification for Deepen pages.
-
 ### Domains
 
 The six controlled knowledge domains receive stable identifiers under `https://jm-brun.github.io/llm-lab/id/domain/{id}`. They are represented as a separate SKOS concept scheme. A concept can be associated with multiple domains using `dcterms:subject`; membership does not imply prerequisite, containment or exclusivity.

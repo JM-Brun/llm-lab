@@ -18,7 +18,6 @@ site/.quarto/
 site/_freeze/
 site/learning-map-data-*.json
 site/includes/generated-guided-context-*.qmd
-site/includes/generated-computational-graph-*.qmd
 
 # Test, coverage, and type-check caches
 .pytest_cache/

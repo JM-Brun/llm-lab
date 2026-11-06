@@ -140,6 +140,10 @@ Candidate canonical page IDs already in the route include `contextualized-repres
 - Do not remove existing content during consolidation; map every displaced explanation to its canonical page or preserve it as a clearly scoped deep dive.
 
 
+## 10. Integration hand-off
+
+The canonical model is established, and the scope-driven bilingual Understand sidebar has been merged in [PR #582](https://github.com/JM-Brun/llm-lab/pull/582). The remaining implementation and validation work is tracked in [computational-spine-integration-plan.md](computational-spine-integration-plan.md). That plan is the session hand-off for route reconciliation, page metadata/content audits, persistent visual integration, Build crosswalk, and rendered/accessibility validation. It deliberately reuses the existing registries and validators rather than introducing a parallel graph or workflow framework.
+
 ## 9. Adopted curriculum topology
 
 The module hierarchy and predecessor/successor model are now defined in [`docs/learning-path.md`](learning-path.md#canonical-module-topology-shared-core-and-operational-branches). This is a curriculum model, not a new concept ontology. The concept registry has been extended with reviewed concepts for conditional distributions, observed-target scoring, likelihood/NLL, autoregressive generation, prefill/decode/KV cache, teacher forcing, gradients, optimizers, parameter updates, and held-out evaluation. The rendered route and page bodies intentionally remain unchanged until the subsequent refactor.
