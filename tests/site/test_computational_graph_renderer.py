@@ -28,8 +28,8 @@ def test_render_view_uses_localized_node_and_relation_labels() -> None:
     assert "flowchart LR" in french
     assert "Contexte en identifiants" in french
     assert "Token-ID context" in english
-    assert "sélectionne" in french
-    assert "selects" in english
+    assert "sert à sélectionner" in french
+    assert "is used to select" in english
     assert "n_generated-token" in french
 
 
