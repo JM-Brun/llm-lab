@@ -28,11 +28,11 @@
     - [Preparing a corpus for pretraining](corpus-preparation.html)
     - [From tokenized corpus to training examples](training-examples.html)
   - Guided tour of the reference code
-    - [Guided tour: GPT configuration (\`gpt\_config\.py\`)](gpt-config-walkthrough.html)
-    - [Guided tour: building-block operations (\`gpt\_ops\.py\`)](gpt-ops-walkthrough.html)
-    - [Guided tour: the Transformer block (\`transformer\_block\.py\`)](transformer-block-walkthrough.html)
-    - [Guided tour: assembling the GPT (\`gpt\.py\`)](gpt-model-walkthrough.html)
-    - [Guided tour: generation (\`generate\.py\`)](gpt-generation-walkthrough.html)
+    - [Guided tour: GPT configuration (`gpt_config.py`)](gpt-config-walkthrough.html)
+    - [Guided tour: building-block operations (`gpt_ops.py`)](gpt-ops-walkthrough.html)
+    - [Guided tour: the Transformer block (`transformer_block.py`)](transformer-block-walkthrough.html)
+    - [Guided tour: assembling the GPT (`gpt.py`)](gpt-model-walkthrough.html)
+    - [Guided tour: generation (`generate.py`)](gpt-generation-walkthrough.html)
   - [Build a small GPT](build-path.html)
 - **Practice and experiment**
   - [Exercise space](exercises.html)
@@ -43,7 +43,7 @@
     - [Why scale attention scores?](attention-score-scaling.html)
     - [Cross-attention: connecting two sequences](cross-attention.html)
     - [RoPE: geometry, derivation, and limitations](rope.html)
-    - [Hybrid LLM architectures: Nemotron 3 and 3\.5](hybrid-llm-architectures.html)
+    - [Hybrid LLM architectures: Nemotron 3 and 3.5](hybrid-llm-architectures.html)
   - Text and tokenization
     - [Unicode, UTF-8, and text normalization](unicode-text.html)
     - [Designing and evaluating a tokenizer](tokenizer-design-evaluation.html)

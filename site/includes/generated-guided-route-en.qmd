@@ -4,7 +4,7 @@
 
 ### 01 · Orient yourself
 
-Understand what an LLM is and follow a complete generation loop as a black box with fixed parameters before studying its internal mechanisms\.
+Understand what an LLM is and follow a complete generation loop as a black box with fixed parameters before studying its internal mechanisms.
 
 **Core pages**
 
@@ -22,7 +22,7 @@ Understand what an LLM is and follow a complete generation loop as a black box w
 
 ### 02 · From text to tokens
 
-Distinguish text, tokenization, vocabulary, and token IDs that form the discrete context supplied to the model\.
+Distinguish text, tokenization, vocabulary, and token IDs that form the discrete context supplied to the model.
 
 **Core pages**
 
@@ -40,7 +40,7 @@ Distinguish text, tokenization, vocabulary, and token IDs that form the discrete
 
 ### 03 · From IDs to representations
 
-Trace embedding lookup and the addition of positional information, then distinguish initial states from contextualized representations\.
+Trace embedding lookup and the addition of positional information, then distinguish initial states from contextualized representations.
 
 **Core pages**
 
@@ -59,7 +59,7 @@ Trace embedding lookup and the addition of positional information, then distingu
 
 ### 04 · Understand Transformer computation
 
-Connect Q/K/V projections, attention scores and weights, value aggregation, causal masking, and the other operations in a Transformer block\.
+Connect Q/K/V projections, attention scores and weights, value aggregation, causal masking, and the other operations in a Transformer block.
 
 **Core pages**
 
@@ -79,7 +79,7 @@ Connect Q/K/V projections, attention scores and weights, value aggregation, caus
 
 ### 05 · From hidden states to the predictive distribution
 
-Trace the projection from final hidden states to logits and the conditional next-token distribution; interpret its entropy before any token selection or observed target\.
+Trace the projection from final hidden states to logits and the conditional next-token distribution; interpret its entropy before any token selection or observed target.
 
 **Core pages**
 
@@ -93,7 +93,7 @@ Trace the projection from final hidden states to logits and the conditional next
 
 ### 06 · Run inference and generate
 
-Distinguish prompt prefill from iterative decode, select a token with a decoding policy, feed it back into the context, and stop generation without updating parameters\.
+Distinguish prompt prefill from iterative decode, select a token with a decoding policy, feed it back into the context, and stop generation without updating parameters.
 
 **Core pages**
 
@@ -109,7 +109,7 @@ Distinguish prompt prefill from iterative decode, select a token with a decoding
 
 ### 07 · Score observed tokens
 
-Evaluate the probability assigned to a known target, build a sequence likelihood, and connect negative log-likelihood to cross-entropy without selecting a token or changing parameters\.
+Evaluate the probability assigned to a known target, build a sequence likelihood, and connect negative log-likelihood to cross-entropy without selecting a token or changing parameters.
 
 **Core pages**
 
@@ -122,7 +122,7 @@ Evaluate the probability assigned to a known target, build a sequence likelihood
 
 ### 08 · Learn and update parameters
 
-Connect observed targets to the aggregated loss, gradients, and parameter updates; deepen teacher forcing and shifted examples through the Build branch without making them prerequisites for inference\.
+Connect observed targets to the aggregated loss, gradients, and parameter updates; deepen teacher forcing and shifted examples through the Build branch without making them prerequisites for inference.
 
 **Core pages**
 

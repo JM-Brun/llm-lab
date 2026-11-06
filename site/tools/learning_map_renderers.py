@@ -189,6 +189,11 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
     var relationTypes = {};
     var conceptDomainList = [];
     var retryReload = false;
+    readStateFromHash();
+    modeSelect.value = state.mode;
+    if (state.query) {
+      searchInput.value = state.query;
+    }
 
     searchInput.setAttribute("placeholder", copy.searchPlaceholder);
     searchInput.setAttribute("aria-label", copy.searchLabel);
@@ -209,6 +214,50 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
     function renderPlaceholder() {
       clearNode(detailPanel);
       detailPanel.appendChild(el("p", "map-empty", copy.emptyDetails));
+    }
+
+    function readStateFromHash() {
+      if (!window.location.hash || window.location.hash.indexOf("=") === -1) {
+        return;
+      }
+      window.location.hash.slice(1).split("&").forEach(function (part) {
+        var pair = part.split("=");
+        var key = pair[0];
+        var value = pair.slice(1).join("=");
+        if (key === "mode" && value === "concepts") {
+          state.mode = "concepts";
+        } else if (key === "q") {
+          state.query = decodeURIComponent(value);
+        } else if (key === "area") {
+          state.areaId = value;
+        } else if (key === "concept") {
+          state.conceptId = value;
+        }
+      });
+    }
+
+    function syncStateToHash() {
+      var params = [];
+      if (state.mode === "concepts") {
+        params.push("mode=concepts");
+      }
+      if (state.query) {
+        params.push("q=" + encodeURIComponent(state.query));
+      }
+      if (state.mode === "pages" && state.areaId) {
+        params.push("area=" + state.areaId);
+      }
+      if (state.mode === "concepts" && state.conceptId) {
+        params.push("concept=" + state.conceptId);
+      }
+      var hash = params.length ? "#" + params.join("&") : "";
+      if (window.location.hash !== hash) {
+        window.history.replaceState(
+          null,
+          "",
+          hash || window.location.pathname + window.location.search
+        );
+      }
     }
 
     function load() {
@@ -237,6 +286,9 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
           conceptDomainList = data.concept_domains || [];
           render();
           fillRelationFilter();
+          if (state.conceptId && conceptById[state.conceptId]) {
+            showConceptDetails(state.conceptId);
+          }
           setStatus(loadedSummary());
           if (retryReload) {
             retryReload = false;
@@ -414,6 +466,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       } else {
         renderRoot();
       }
+      syncStateToHash();
     }
 
     function renderRoot() {
@@ -542,6 +595,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       });
       if (!matches.length) {
         viewport.appendChild(el("p", "map-empty", copy.noResults));
+        setStatus(copy.noResults);
         return;
       }
       var grid = el("div", "map-page-grid");
@@ -563,6 +617,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         grid.appendChild(card);
       });
       viewport.appendChild(grid);
+      setStatus(matches.length + " " + copy.pagesUnitPlural);
     }
 
     function renderConceptLegend() {
@@ -982,8 +1037,15 @@ TERRITORY_MAP_TEMPLATE = """<div class="learning-map" data-learning-map
 
 
 def escape_markdown_text(value: str) -> str:
-    """Escape Markdown syntax in text originating from authored metadata."""
-    special = "\\*_{}[]<>#+.!|" + chr(96)
+    """Escape Markdown constructs that would change list or link structure.
+
+    Paired backticks in authored titles are preserved on purpose: they delimit
+    code spans such as GPT configuration (with `gpt_config.py` inline), and
+    escaping them, or the characters inside the span, leaks backslashes into
+    the rendered text. Underscores, periods and similar characters stay
+    literal because they are harmless inside link text and list items.
+    """
+    special = "\\*[]"
     return "".join(f"\\{character}" if character in special else character for character in value)
 
 
