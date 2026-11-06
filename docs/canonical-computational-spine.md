@@ -79,7 +79,7 @@ Training can then aggregate per-token NLL using an explicit mask and reduction t
 
 Observed-target scoring, evaluation, and training all condition predictions on the observed prefix. Generation and teacher-forced scoring/training extend the context with different sources:
 - generation feeds back the model-selected token;
-- teacher forcing supplies the observed ground-truth prefix up to (but not including) the target token at each position.
+- teacher forcing supplies the observed ground-truth prefix up to (but not including) the target token at each scored position.
 
 Teacher forcing is a training/scoring context policy, not a separate prediction mechanism. Prefill computes the prompt/context states (and, when used, populates the KV cache); decode advances generation one token at a time using the cache. Neither should be confused with teacher forcing.
 
