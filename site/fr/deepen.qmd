@@ -34,14 +34,14 @@ Chaque entrée répond à une question plus précise : pourquoi un mécanisme fo
 
 | Votre question | Domaine |
 |---|---|
-| Comment une architecture spécialisée modifie-t-elle le flux d'information ? | [Architectures et mécanismes](#architectures-et-mecanismes) |
+| Comment une architecture spécialisée modifie-t-elle le flux d'information ? | [Attention, position et architectures](#architectures-et-mecanismes) |
 | Comment concevoir et évaluer la représentation du texte ? | [Texte et tokenisation](#texte-et-tokenisation) |
 | Quels outils mathématiques permettent d'analyser les représentations ? | [Outils mathématiques et géométrie](#outils-mathematiques-et-geometrie) |
-| Comment relier probabilités, objectif d'apprentissage et gradients ? | [Fondements probabilistes et entraînement](#fondements-probabilistes-et-entrainement) |
+| Comment relier probabilités, objectif d'apprentissage et gradients ? | [Formalisation probabiliste et chaîne de l’entraînement](#fondements-probabilistes-et-entrainement) |
 | Comment produire des sorties et quels coûts cela implique-t-il ? | [Inférence et efficacité](#inference-et-efficacite) |
 | Que peut-on conclure sur l'échelle et les capacités des modèles ? | [Échelle et questions de recherche](#echelle-et-questions-de-recherche) |
 
-## Architectures et mécanismes {#architectures-et-mecanismes}
+## Attention, position et architectures {#architectures-et-mecanismes}
 
 **Question directrice :** quelles variantes changent la circulation de l'information ou la structure de calcul ?
 
@@ -71,7 +71,7 @@ La page [Stratégies de tokenisation](tokenization-strategies.qmd) du parcours p
 
 Ces pages fournissent des outils d'analyse ; elles ne constituent pas un cours de prérequis à terminer avant de construire un petit GPT.
 
-## Fondements probabilistes et entraînement {#fondements-probabilistes-et-entrainement}
+## Formalisation probabiliste et chaîne de l’entraînement {#fondements-probabilistes-et-entrainement}
 
 **Question directrice :** comment relier distribution prédite, vraisemblance observée, fonction objectif et optimisation ?
 
