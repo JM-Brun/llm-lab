@@ -496,7 +496,7 @@ relations:
   - {from: optimizer, type: contributes-to, to: parameter-update}
   - {from: parameter-update, type: contributes-to, to: next-token-prediction}
   - {from: observed-target, type: contributes-to, to: cross-entropy}
-  - {from: context-feedback, type: contributes-to, to: decode-step}
+  - {from: generated-token-feedback, type: contributes-to, to: decode-step}
   - {from: decoding-policy, type: applies-to, to: conditional-distribution}
   - {from: decoding-policy, type: produces, to: token}
   - {from: token, type: contributes-to, to: generated-token-feedback}
