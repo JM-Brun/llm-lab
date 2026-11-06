@@ -21,6 +21,8 @@ related: ["en/probabilities"]
 tags: ["type:deep-dive", "destination:deepen", "topic:attention-score-scaling", "level:advanced", "language:en", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-en-attention-score-scaling.qmd >}}
+
 ::: {.chapter-lead}
 This page is an **advanced deep dive** into [scaled dot-product attention](scaled-dot-product-attention.qmd). It develops a question the main lesson covers in one sentence: why divide the scores by $\sqrt{d_k}$, and how far does that justification hold once its assumptions are made explicit?
 :::
