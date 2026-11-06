@@ -326,6 +326,30 @@ def test_load_navigation_derives_areas_from_sidebar(tmp_path: Path) -> None:
     ]
 
 
+def test_load_navigation_preserves_nested_sidebar_sections(tmp_path: Path) -> None:
+    site = tmp_path / "site"
+    _write_page(site, page_id="fr/attention", language="fr", title="Attention")
+    _write_sidebar(site)
+    config_path = site / "_quarto.yml"
+    config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+    config["website"]["sidebar"][0]["contents"][0]["contents"][0]["contents"] = [
+        {
+            "section": "Niveau trois",
+            "contents": ["fr/attention.qmd"],
+        }
+    ]
+    config_path.write_text(yaml.safe_dump(config, allow_unicode=True), encoding="utf-8")
+    MODULE["load_pages"].__globals__["SITE"] = site
+    pages = MODULE["load_pages"]()
+    MODULE["load_navigation"].__globals__["SITE"] = site
+
+    navigation = MODULE["load_navigation"]("fr", pages)
+
+    assert navigation[0]["sections"][0]["sections"] == [
+        {"title": "Niveau trois", "pages": ["fr/attention"]}
+    ]
+
+
 def test_load_navigation_requires_matching_sidebar(tmp_path: Path) -> None:
     site = tmp_path / "site"
     _write_sidebar(site)
@@ -404,6 +428,26 @@ def test_render_resource_list_nests_areas_sections_and_pages() -> None:
         "    - [Attention \\*elle\\*](attention.html)",
         "  - [Panorama](overview.html)",
     ]
+
+    nested = RENDERERS["render_resource_list"](
+        "fr",
+        [
+            {
+                "title": "Comprendre",
+                "pages": [],
+                "sections": [
+                    {
+                        "title": "Noyau partagé",
+                        "pages": [],
+                        "sections": [{"title": "Représentations", "pages": ["fr/attention"]}],
+                    }
+                ],
+            }
+        ],
+        page_by_id,
+    )
+    assert "    - Représentations" in nested
+    assert "      - [Attention \\*elle\\*](attention.html)" in nested
 
 
 def test_load_guided_route_resolves_language_specific_page_links(tmp_path: Path) -> None:

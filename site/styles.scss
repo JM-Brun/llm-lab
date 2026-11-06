@@ -1382,6 +1382,12 @@ a.concept-link:focus-visible {
   padding: 0.75rem 0.9rem;
 }
 
+.map-section-card > .map-subsections {
+  margin-top: 0.75rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--map-line);
+}
+
 .map-section-card .map-section-title {
   margin: 0 0 0.5rem;
   font-size: 0.95rem;
