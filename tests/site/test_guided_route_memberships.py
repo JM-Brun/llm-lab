@@ -57,9 +57,9 @@ def test_membership_projection_preserves_core_optional_and_multiple_contexts(
     ]
 
     training_examples = memberships[f"{language}/training-examples"]
-    assert [(item.stage_id, item.role) for item in training_examples] == [
-        ("training", "optional")
-    ]
+    assert [
+        (item.stage_id, item.role) for item in training_examples
+    ] == [("training", "optional")]
 
     optional_page = f"{language}/transformer-architectures"
     assert [(item.stage_id, item.role) for item in memberships[optional_page]] == [
