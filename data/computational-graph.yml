@@ -476,9 +476,9 @@ nodes:
     role: parameters
     labels: {fr: "Paramètres du modèle", en: "Model parameters"}
     descriptions:
-      fr: "Poids appris utilisés par le forward pass ; ils restent fixes pendant une génération ordinaire."
-      en: "Learned weights used by the forward pass; they remain fixed during ordinary generation."
-    branches: [shared-prediction, generation, training, inference-execution]
+      fr: "Poids appris utilisés par le forward pass ; ils restent fixes pendant l’inférence, le scoring et l’évaluation, et ne changent que lors des mises à jour de l’apprentissage."
+      en: "Learned weights used by the forward pass; they remain fixed during inference, scoring, and evaluation, and change only through training updates."
+    branches: [shared-prediction, generation, observed-target-scoring, evaluation, training, inference-execution]
     resources: [fr/transformer, en/transformer, fr/gradients, en/gradients]
   - id: optimizer-update
     kind: operation
