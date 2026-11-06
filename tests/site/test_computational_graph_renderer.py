@@ -22,7 +22,7 @@ def test_persistent_spine_is_expanded_but_other_views_remain_collapsed() -> None
     persistent = MODULE["render_view"](registry, "persistent-spine", "fr")
     evaluation = MODULE["render_view"](registry, "evaluation", "fr")
 
-    assert '::: {.callout-note title="Tronc computationnel partagé"}' in persistent
+    assert '::: {.callout-note title="Tronc computationnel"}' in persistent
     assert 'collapse="true"' not in persistent
     assert 'collapse="true"' in evaluation
 
