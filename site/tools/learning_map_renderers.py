@@ -336,9 +336,16 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       });
     }
 
+    function forEachSection(sections, visit) {
+      (sections || []).forEach(function (section) {
+        visit(section);
+        forEachSection(section.sections, visit);
+      });
+    }
+
     function areaDestination(area) {
       var ids = (area.pages || []).slice();
-      (area.sections || []).forEach(function (section) {
+      forEachSection(area.sections, function (section) {
         ids = ids.concat(section.pages || []);
       });
       for (var i = 0; i < ids.length; i += 1) {
@@ -350,9 +357,17 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       return "reference";
     }
 
+    function countSectionPages(section) {
+      var total = (section.pages || []).length;
+      (section.sections || []).forEach(function (child) {
+        total += countSectionPages(child);
+      });
+      return total;
+    }
+
     function countAreaPages(area) {
       var total = (area.pages || []).length;
-      (area.sections || []).forEach(function (section) {
+      forEachSection(area.sections, function (section) {
         total += (section.pages || []).length;
       });
       return total;
@@ -471,18 +486,18 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       crumbs.appendChild(el("span", "map-crumbs-current", area.title));
       viewport.appendChild(crumbs);
 
-      var sections = area.sections || [];
-      if (sections.length) {
-        var sectionGrid = el("div", "map-sections");
-        sections.forEach(function (section) {
-          var card = el("div", "map-section-card");
-          var title = el("h3", "map-section-title", section.title);
-          title.appendChild(
-            el("span", "map-section-count", String((section.pages || []).length))
-          );
-          card.appendChild(title);
+      function renderSection(section) {
+        var card = el("div", "map-section-card");
+        var title = el("h3", "map-section-title", section.title);
+        title.appendChild(
+          el("span", "map-section-count", String(countSectionPages(section)))
+        );
+        card.appendChild(title);
+
+        var pageIds = section.pages || [];
+        if (pageIds.length) {
           var chips = el("div", "map-chips");
-          (section.pages || []).forEach(function (pageId) {
+          pageIds.forEach(function (pageId) {
             var chip = chipFor(pageId);
             if (chip) {
               chips.appendChild(chip);
@@ -491,7 +506,24 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
           if (chips.firstChild) {
             card.appendChild(chips);
           }
-          sectionGrid.appendChild(card);
+        }
+
+        var children = section.sections || [];
+        if (children.length) {
+          var nested = el("div", "map-sections map-subsections");
+          children.forEach(function (child) {
+            nested.appendChild(renderSection(child));
+          });
+          card.appendChild(nested);
+        }
+        return card;
+      }
+
+      var sections = area.sections || [];
+      if (sections.length) {
+        var sectionGrid = el("div", "map-sections");
+        sections.forEach(function (section) {
+          sectionGrid.appendChild(renderSection(section));
         });
         var sectionBlock = el("div", "map-entry-block");
         sectionBlock.appendChild(el("p", "map-entry-label", copy.sectionsLabel));
@@ -1051,18 +1083,27 @@ def render_territory_map(
 def render_resource_list(
     language: str, navigation: list[dict[str, Any]], page_by_id: dict[str, dict[str, Any]]
 ) -> str:
-    """Return the whole navigation as a static, script-free Markdown list."""
+    """Return the whole nested navigation as a static, script-free Markdown list."""
     _copy_for(language)  # validate the language even though the list has no copy
     lines: list[str] = []
+
+    def append_section(section: dict[str, Any], indent: int) -> None:
+        prefix = " " * indent
+        lines.append(f"{prefix}- {escape_markdown_text(str(section['title']))}")
+        for page_id in section.get("pages", []):
+            page = page_by_id.get(page_id)
+            if page is not None:
+                lines.append(
+                    f"{' ' * (indent + 2)}- [{escape_markdown_text(page['title'])}]({page['href']})"
+                )
+        for child in section.get("sections", []):
+            append_section(child, indent + 2)
+
     for area in navigation:
         lines.append(f"- **{escape_markdown_text(str(area['title']))}**")
-        for section in area["sections"]:
-            lines.append(f"  - {escape_markdown_text(str(section['title']))}")
-            for page_id in section["pages"]:
-                page = page_by_id.get(page_id)
-                if page is not None:
-                    lines.append(f"    - [{escape_markdown_text(page['title'])}]({page['href']})")
-        for page_id in area["pages"]:
+        for section in area.get("sections", []):
+            append_section(section, 2)
+        for page_id in area.get("pages", []):
             page = page_by_id.get(page_id)
             if page is not None:
                 lines.append(f"  - [{escape_markdown_text(page['title'])}]({page['href']})")
