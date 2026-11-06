@@ -1044,7 +1044,7 @@ def escape_markdown_text(value: str) -> str:
     escaping them, or the characters inside the span, leaks backslashes into
     the rendered text. Underscores, periods and similar characters stay
     literal because they are harmless inside link text and list items.
-    """''.replace("''", "")
+    """
     special = "\\*[]"
     return "".join(f"\\{character}" if character in special else character for character in value)
 
