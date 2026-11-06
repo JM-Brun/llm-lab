@@ -479,12 +479,18 @@ for (const testCase of cases) {
       const availableStageAnchors = stageAnchorCache.get(lang);
       item.routeContext.stageAnchorsResolve = stageFragments.every(id => availableStageAnchors.has(id));
       if (!item.routeContext.stageAnchorsResolve) throw new Error("guided-route stage link points to a missing anchor");
-      if (pagePath === "generation.html") {
-        const expectedStages = ["guided-stage-orientation", "guided-stage-prediction"];
+      const multiStagePages = {
+        "generation.html": ["guided-stage-orientation", "guided-stage-inference"],
+        "cross-entropy.html": ["guided-stage-scoring", "guided-stage-training"],
+      };
+      if (multiStagePages[pagePath]) {
+        const expectedStages = multiStagePages[pagePath];
         if (!item.routeContext.isMultiple || item.routeContext.navLandmark ||
-            item.routeContext.listItems !== 2 || item.routeContext.currentPageMarkers !== 0 ||
+            item.routeContext.listItems !== expectedStages.length ||
+            item.routeContext.currentPageMarkers !== 0 ||
+            expectedStages.length !== stageFragments.length ||
             expectedStages.some(id => !stageFragments.includes(id))) {
-          throw new Error("multi-stage context is misleading or incomplete");
+          throw new Error("multi-stage context does not match the page's canonical and optional route memberships");
         }
         const labelledBy = await context.getAttribute("aria-labelledby");
         item.routeContext.accessibleNameReferenceResolves = Boolean(
@@ -493,6 +499,11 @@ for (const testCase of cases) {
         if (!item.routeContext.accessibleNameReferenceResolves) {
           throw new Error("multi-stage context has no valid accessible name reference");
         }
+      } else if (["experimental-evaluation.html", "evaluation-experimentale.html"].includes(pagePath)) {
+        if (await context.count() !== 0) {
+          throw new Error("cross-cutting evaluation page must not be assigned to a linear guided-route stage");
+        }
+        item.routeContext = { expectedAbsent: true, reason: "Evaluation is cross-cutting, not a guided-route stage." };
       } else {
         const expectedStage = {
           "llm-overview.html": "guided-stage-orientation",
@@ -514,15 +525,15 @@ for (const testCase of cases) {
           "logits.html": "guided-stage-prediction",
           "probabilities.html": "guided-stage-prediction",
           "probabilites.html": "guided-stage-prediction",
-          "likelihood.html": "guided-stage-prediction",
-          "vraisemblance.html": "guided-stage-prediction",
-          "decoding-strategies.html": "guided-stage-prediction",
-          "cross-entropy.html": "guided-stage-learning-evaluation",
-          "loss.html": "guided-stage-learning-evaluation",
-          "gradients.html": "guided-stage-learning-evaluation",
-          "experimental-evaluation.html": "guided-stage-learning-evaluation",
-          "evaluation-experimentale.html": "guided-stage-learning-evaluation",
-          "scaling-laws.html": "guided-stage-learning-evaluation",
+          "likelihood.html": "guided-stage-scoring",
+          "vraisemblance.html": "guided-stage-scoring",
+          "decoding-strategies.html": "guided-stage-inference",
+          
+          "loss.html": "guided-stage-training",
+          "gradients.html": "guided-stage-training",
+          
+          
+          "scaling-laws.html": "guided-stage-training",
           "transformer-architectures.html": "guided-stage-orientation",
           "llm-limits.html": "guided-stage-orientation",
         }[pagePath];
