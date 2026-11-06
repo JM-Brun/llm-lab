@@ -329,6 +329,7 @@ def test_load_navigation_derives_areas_from_sidebar(tmp_path: Path) -> None:
 def test_load_navigation_preserves_nested_sidebar_sections(tmp_path: Path) -> None:
     site = tmp_path / "site"
     _write_page(site, page_id="fr/attention", language="fr", title="Attention")
+    _write_sidebar(site)
     config_path = site / "_quarto.yml"
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     config["website"]["sidebar"][0]["contents"][0]["contents"][0]["contents"] = [
