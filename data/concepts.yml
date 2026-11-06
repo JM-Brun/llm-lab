@@ -528,7 +528,6 @@ relations:
   - {from: decoding-policy, type: produces, to: token}
   - {from: token, type: contributes-to, to: generated-token-feedback}
   - {from: generated-token-feedback, type: part-of, to: autoregressive-generation}
-  - {from: generated-token-feedback, type: contributes-to, to: decode-step}
   - {from: prefill, type: part-of, to: autoregressive-generation}
   - {from: decode-step, type: part-of, to: autoregressive-generation}
   - {from: decoding-policy, type: part-of, to: autoregressive-generation}
