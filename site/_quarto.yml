@@ -145,7 +145,7 @@ website:
           contents:
             - fr/llm-overview.qmd
             - fr/generation.qmd
-            - section: "Noyau de calcul partagé"
+            - section: "Du texte à la distribution du prochain token"
               contents:
                 - section: "Entrée : texte et tokens"
                   contents:
@@ -245,7 +245,7 @@ website:
           contents:
             - en/llm-overview.qmd
             - en/generation.qmd
-            - section: "Shared computational core"
+            - section: "From text to the next-token distribution"
               contents:
                 - section: "Input: text and tokens"
                   contents:
