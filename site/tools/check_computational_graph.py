@@ -21,6 +21,7 @@ EDGE_TYPES = {
     "combines",
     "constrains",
     "applies",
+    "precedes",
     "selects",
     "scores",
     "aggregates",
