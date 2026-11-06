@@ -78,25 +78,37 @@ Both generation and teacher-forced scoring/training extend the context, but with
 
 Teacher forcing is a training/scoring context policy, not a separate prediction mechanism. Prefill computes the prompt/context states (and, when used, populates the KV cache); decode advances generation one token at a time using the cache. Neither should be confused with teacher forcing.
 
-## 4. Relation taxonomy
+## 4. Typed relations and ownership boundaries
 
-The graph and its visual projections must distinguish at least:
+The project uses several relation vocabularies because they describe different kinds of connection. Do not merge them into one generic edge taxonomy.
 
-| Relation | Meaning | Example |
+### Computational registry: `data/computational-graph.yml`
+
+The computational graph uses its existing controlled edge types:
+
+| Registry type | Meaning | Example |
 |---|---|---|
-| `dataflow` | Tensor/value produced and consumed | hidden states → Q/K/V |
-| `transforms` | Operation transforms an input | logits → probabilities |
-| `conditions` | Restricts valid computation | causal mask → attention scores |
-| `aggregates` | Combines values or positions | probabilities → sequence likelihood |
-| `scores` | Compares prediction with an observed target | distribution + target → target probability |
-| `decodes` | Selects a token from a distribution | distribution → generated token |
-| `feeds-back` | Extends the next context | generated/observed token → next context |
-| `optimizes` | Computes parameter update from objective | gradients → updated parameters |
-| `evaluates` | Applies a scoring/metric procedure to held-out data | scoring → evaluation metrics |
-| `implements` | Conceptual operation realized by a component | attention → attention module |
-| `prerequisite` | Genuine pedagogical dependency | probabilities → likelihood |
+| `consumes` / `produces` | An operation consumes an input and produces an output | hidden states → Q/K/V projections → Q, K, V |
+| `combines` | An operation combines multiple inputs | embeddings + positional information → initial hidden states |
+| `constrains` | A control restricts an operation or intermediate result | causal mask → masked attention scores |
+| `applies` / `precedes` | A phase or mode applies to a computation, or one phase precedes another | prefill → decode |
+| `selects` | A policy selects from a distribution | next-token distribution → decoding policy |
+| `scores` / `aggregates` | An observed target is scored and per-token/sequence values are aggregated | distribution + target → target probability → sequence log-likelihood |
+| `differentiates` / `updates` | An objective yields gradients and an optimizer updates parameters | objective → gradients → updated parameters |
+| `feeds-back` | A value becomes context or state for a later iteration | generated token → next context |
+| `conditions` | A policy or observed value determines the context/targets used | teacher forcing → observed training context |
+| `uses-optional` | An optional optimization may be used without being required for correctness | KV cache → decode |
 
-A prerequisite edge is not a substitute for a computational edge. The graph must not infer a total learning order from dataflow, nor infer dataflow from page order.
+The registry may express a familiar high-level idea such as *dataflow*, *transformation*, *decoding*, *optimization* or *evaluation* through these more precise operational relations. Those high-level words are explanatory categories, not additional edge types to add mechanically. In particular, evaluation is represented by scoring held-out targets and aggregating the resulting metrics; it stops before differentiation or parameter updates.
+
+### Other project relations belong to their canonical sources
+
+- **Pedagogical prerequisite:** owned by the curriculum topology in `docs/learning-path.md`; it is not a computational-graph edge.
+- **Conceptual/semantic relation:** owned by the typed relations in `data/concepts.yml`; it connects concepts, not executable operations.
+- **Implementation correspondence:** expressed through concept/resource associations and the Build crosswalk; it does not imply that a page or code module is a computational node.
+- **Editorial navigation:** owned by page-map `hierarchy` and `suggested_route`; it expresses containment or a recommended reading transition, not computation.
+
+A prerequisite edge is not a substitute for a computational edge. The computational graph must not infer a total learning order from dataflow, nor infer dataflow from page order. Do not add a new relation type unless a concrete edge cannot be represented accurately by the existing vocabulary and its semantics are documented and validated.
 
 ## 5. Reader-facing projections
 
