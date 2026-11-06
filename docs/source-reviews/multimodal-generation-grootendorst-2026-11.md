@@ -98,7 +98,7 @@ In the LLM integration section, the article describes special modality markers s
 
 The article's stated motivation is parameter efficiency: train the interface/projectors rather than retrain all large pretrained encoders and decoders. Treat the reported parameter proportions as specific to the cited system, not a general property of projector-based architectures.
 
-These markers are examples from the architecture under discussion, not universal tokens shared by multimodal models. This is a known scan gap, not evidence that those sections are absent from the source.
+These markers are examples from the architecture under discussion, not universal tokens shared by multimodal models.
 
 ## 3. Source-local conceptual structure
 
