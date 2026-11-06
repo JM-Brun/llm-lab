@@ -1,9 +1,10 @@
 ---
 title: "Interactive learning map"
 subtitle: "A guided route followed by a progressive map: territories, sections, pages, and concepts"
+description: "An eight-stage guided route, a progressive territory map, and a canonical-concept registry to orient yourself across the site."
 keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:en", "status:published"]
 lang: en
-toc: false
+toc: true
 ---
 
 <!--
@@ -34,7 +35,7 @@ Section headings shown in a page's details are editorial landmarks, not canonica
 
 ## Guided route
 
-Six conceptual stages provide an entry point and a suggested progression. Core pages cover each stage's main ideas; optional resources offer further context or depth and can belong to any destination. Pages within a stage are complementary resources, not a list of strict prerequisites.
+Eight conceptual stages provide an entry point and a suggested progression. Core pages cover each stage's main ideas; optional resources offer further context or depth and can belong to any destination. Pages within a stage are complementary resources, not a list of strict prerequisites.
 
 {{< include ../includes/generated-guided-route-en.qmd >}}
 
@@ -48,7 +49,7 @@ Six conceptual stages provide an entry point and a suggested progression. Core p
 
 ## Explore the resources
 
-The progressive map first shows territories, then reveals each section on click, then the pages. The "Canonical concepts" view separately presents the registry concepts, grouped by domain. These views support exploration; they do not replace the guided route above. The "Reset view" button clears the search, the filter, and the selection; the Escape key steps back one level at a time. Both the map and the list below are generated automatically by the Python meta-code from the Quarto sidebar and page metadata: a single source to maintain.
+These views support exploration; they do not replace the guided route above (territories, sections, pages, and concepts are described at the top of the page). The "Reset view" button clears the search, the filter, and the selection; the Escape key steps back one level at a time. Both the map and the list below are generated automatically by the Python meta-code from the Quarto sidebar and page metadata: a single source to maintain.
 
 {{< include ../includes/generated-map-territories-en.qmd >}}
 

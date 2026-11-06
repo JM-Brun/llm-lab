@@ -33,7 +33,7 @@ stages:
       fr: "Des identifiants aux représentations"
       en: "From IDs to representations"
     objective:
-      fr: "Suivre la consultation des embeddings et l'ajout d'information positionnelle, puis distinguer les états initiaux des représentations contextualisées."
+      fr: "Suivre la lecture des vecteurs d'embedding et l'ajout d'information positionnelle, puis distinguer les états initiaux des représentations contextualisées."
       en: "Trace embedding lookup and the addition of positional information, then distinguish initial states from contextualized representations."
     pages:
       fr: [fr/embedding-space, fr/positional-encoding, fr/contextualized-representations]
