@@ -81,6 +81,10 @@ The word *decoding* can cover different details across libraries and papers. Her
 
 Later predictions are therefore also conditioned on the generated tokens that remain in the context used.
 
+## Computational view: prefill and decode
+
+{{< include ../includes/generated-computational-graph-en-inference-execution.qmd >}}
+
 ## Inference learns nothing
 
 In ordinary generation, the model's parameters remain fixed. With the same context, parameters, and deterministic computation, a deterministic decoding rule produces the same continuation; sampling or nondeterministic computation can introduce variability. Generating text does not update the weights, although an application may retain history or other data outside the model.
