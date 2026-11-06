@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/generation"
-scope: "Décrit la boucle d’inférence autorégressive d’un modèle déjà entraîné, traité comme une boîte noire : contexte, distribution du prochain token, règle de décodage, ajout du token et arrêt ; les détails internes du Transformer et l’apprentissage des paramètres sont hors périmètre."
-purpose: "Le lecteur doit pouvoir dérouler une génération token par token, expliquer pourquoi les paramètres restent fixes pendant l’inférence et prévoir comment une règle de décodage modifie la sortie sans réentraîner le modèle."
+scope: "Décrit l’inférence autorégressive d’un modèle déjà entraîné : contexte, phases de prefill et de decode incrémental, distribution du prochain token, règle de décodage, ajout du token et arrêt ; les détails internes du Transformer et l’apprentissage des paramètres sont hors périmètre."
+purpose: "Le lecteur doit pouvoir dérouler une génération token par token, distinguer prefill, decode incrémental et décodage (sélection du token), expliquer pourquoi les paramètres restent fixes pendant l’inférence et prévoir comment une règle de décodage modifie la sortie sans réentraîner le modèle."
 suggested_route:
   previous: "fr/llm-overview"
   next: "fr/text-data"
@@ -30,6 +30,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:inference-generat
 À l’issue de cette page, vous pourrez :
 - dérouler les étapes d’une génération autorégressive, du contexte au critère d’arrêt ;
 - distinguer passe avant, décodage et génération ;
+- distinguer prefill et decode incrémental, qui sont des phases d'exécution, de la règle de décodage qui sélectionne le token ;
 - expliquer pourquoi l’inférence ne modifie pas les paramètres du modèle ;
 - prévoir l’effet de la sélection gloutonne, de l’échantillonnage et de la température sur le texte produit.
 :::
