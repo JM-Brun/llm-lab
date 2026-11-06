@@ -665,7 +665,7 @@ views:
     descriptions:
       fr: "Détaille le passage des identifiants aux états initiaux, puis aux états contextualisés et aux logits."
       en: "Details the path from IDs to initial states, then contextualized states and logits."
-    nodes: [token-context, embedding-lookup, token-embeddings, positional-information, initial-hidden-states, transformer-block-input, contextualized-hidden-states, final-hidden-states, vocabulary-projection, logits]
+    nodes: [token-context, embedding-lookup, token-embeddings, positional-information, initial-hidden-states, transformer-block-input, block-update, contextualized-hidden-states, final-hidden-states, vocabulary-projection, logits]
     edges: [e-context-embedding, e-embedding-vectors, e-embeddings-initial, e-position-initial, e-initial-block-input, e-block-contextualized, e-contextualized-final, e-final-vocab, e-vocab-logits]
   - id: transformer-block
     branch: transformer-block
