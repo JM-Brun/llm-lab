@@ -158,6 +158,44 @@ def test_feedback_and_repeated_flags_are_restricted_to_their_edge_types() -> Non
     assert any("reserved for feeds-back" in error for error in errors)
 
 
+def test_scoring_graph_applies_log_and_negation_before_aggregation() -> None:
+    registry_path = Path(__file__).resolve().parents[2] / "data" / "computational-graph.yml"
+    data = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
+    nodes = {node["id"]: node for node in data["nodes"]}
+    edges = {edge["id"]: edge for edge in data["edges"]}
+
+    assert nodes["target-log-probability-computation"]["kind"] == "operation"
+    assert nodes["negative-log-probability"]["kind"] == "operation"
+    assert edges["e-target-log-computation"]["from"] == "target-probability-value"
+    assert edges["e-target-log-computation"]["to"] == "target-log-probability-computation"
+    assert edges["e-target-log-probability"]["to"] == "target-log-probability"
+    assert edges["e-target-likelihood"]["from"] == "target-log-probability"
+    assert edges["e-target-negative-log"]["from"] == "target-log-probability"
+    assert edges["e-negative-log-nll"]["to"] == "token-nll"
+    assert not any(
+        edge["from"] == "target-probability-value"
+        and edge["to"] in {"sequence-log-likelihood", "token-nll"}
+        for edge in data["edges"]
+    )
+
+
+def test_generation_graph_separates_distribution_selection_from_policy() -> None:
+    registry_path = Path(__file__).resolve().parents[2] / "data" / "computational-graph.yml"
+    data = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
+    edges = {edge["id"]: edge for edge in data["edges"]}
+
+    assert edges["e-distribution-select-token"] == {
+        "id": "e-distribution-select-token",
+        "from": "next-token-distribution",
+        "type": "selects",
+        "to": "generated-token",
+    }
+    assert edges["e-policy-conditions-token"]["from"] == "decoding-policy"
+    assert edges["e-policy-conditions-token"]["to"] == "generated-token"
+    assert "e-distribution-policy" not in edges
+    assert "e-policy-token" not in edges
+
+
 def test_views_must_resolve_nodes_edges_and_branch_membership() -> None:
     data = _valid_graph()
     data["views"][0]["nodes"] = ["context"]
