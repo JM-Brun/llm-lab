@@ -78,7 +78,7 @@ The implementation source validates 2-D single-head inputs, shape compatibility,
 - **Severity:** observation / P2.
 - **Evidence:** source pages contain interactive disclosures, SVG diagrams, equations and generated route context. The existing browser harness has a bounded page inventory and conditional workflow execution; no run covering this full route was observed in this audit.
 - **Impact:** source parity and Quarto compilation do not prove responsive layout, browser interaction, keyboard operation or accessibility exposure on these pages.
-- **Recommendation:** extend the existing browser-review inventory for this route only if the project wants a durable regression gate; otherwise perform a bounded manual browser review and record exact pages/viewports. Do not claim accessibility conformance from source inspection or an Axe pass alone.
+- **Action in this PR:** added the optional score-scaling page to the existing route-context browser inventory, asserted its computation-stage and optional-role semantics, and enabled the browser-review workflow for the `improve/audit-skills-*` branch family. The actual browser result remains pending. Do not claim accessibility conformance from source inspection or an Axe pass alone.
 
 ## 6. Skill-design conclusions
 
@@ -95,6 +95,6 @@ No separate skill is warranted for bilingual parity, route topology or transitio
 ## 7. Evidence limits and validation
 
 - Repository source, page metadata, guided-route YAML, narrative curriculum, Quarto sidebar, implementation and unit-test assertions were inspected.
-- No local test execution, rendered browser session, screenshot, keyboard test or assistive-technology review was performed in this audit.
+- No local test execution, rendered browser session, screenshot, keyboard test or assistive-technology review was performed during the source audit. This PR adds the page to the existing Playwright/Axe harness and opts the branch family into that workflow; the resulting CI evidence must be reviewed before claiming rendered validation.
 - The existing PR #571 had successful CI and Quarto workflows at the time of revalidation, but its branch was reported non-mergeable against the current base. This follow-up is therefore recreated on a fresh branch from current `main`.
 - This report records source-level findings and bounded changes, not measured learner outcomes.
