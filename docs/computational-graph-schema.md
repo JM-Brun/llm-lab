@@ -179,7 +179,7 @@ The `persistent-spine` and `evaluation` views are embedded in the bilingual LLM 
 
 Every rendered view includes a native `details/summary` text alternative. It lists each selected node with its localized description and each directed edge with its localized relation label. This alternative is generated from the same registry as the Mermaid diagram; it is not a second hand-maintained explanation.
 
-Generated computational-graph fragments are ignored by Git and rebuilt by both CI and the Quarto workflow before rendering. Run locally with:
+Generated computational-graph fragments are ignored by Git and rebuilt by the Quarto validation and GitHub Pages publication workflows before rendering. Run locally with:
 
 ```bash
 uv run python site/tools/render_computational_graph.py
