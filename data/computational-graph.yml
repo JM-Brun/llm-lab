@@ -8,37 +8,31 @@ branches:
       fr: "Calcul commun qui transforme un contexte en distribution conditionnelle sur le prochain token."
       en: "Common computation that maps a context to a conditional distribution over the next token."
   - id: generation
-    branch: generation
     labels: {fr: "Génération", en: "Generation"}
     descriptions:
       fr: "Sélection d'un token généré, puis extension du contexte avec ce token."
       en: "Selection of a generated token, followed by context extension with that token."
   - id: observed-target-scoring
-    branch: observed-target-scoring
     labels: {fr: "Scoring d'une cible observée", en: "Observed-target scoring"}
     descriptions:
       fr: "Évaluation de la probabilité attribuée à un token cible connu."
       en: "Evaluation of the probability assigned to a known target token."
   - id: evaluation
-    branch: evaluation
     labels: {fr: "Évaluation", en: "Evaluation"}
     descriptions:
       fr: "Agrégation de scores sur des données d'évaluation, sans mise à jour des paramètres."
       en: "Aggregation of scores on evaluation data, without parameter updates."
   - id: training
-    branch: training
     labels: {fr: "Apprentissage", en: "Training"}
     descriptions:
       fr: "Calcul d'un objectif à partir des cibles observées, puis différentiation et mise à jour des paramètres."
       en: "Computation of an objective from observed targets, followed by differentiation and parameter updates."
   - id: transformer-block
-    branch: transformer-block
     labels: {fr: "Calcul interne d'un bloc Transformer", en: "Transformer-block computation"}
     descriptions:
       fr: "Calcul répété dans chaque bloc : projections Q/K/V, attention, résidus, normalisation et MLP."
       en: "Computation repeated in each block: Q/K/V projections, attention, residuals, normalization, and MLP."
   - id: inference-execution
-    branch: inference-execution
     labels: {fr: "Exécution de l'inférence", en: "Inference execution"}
     descriptions:
       fr: "Organisation de l'inférence en prefill puis décodage autorégressif, avec cache KV facultatif."
@@ -663,16 +657,26 @@ views:
     descriptions:
       fr: "Du contexte à la distribution conditionnelle, en passant par les représentations et le Transformer."
       en: "From context to the conditional distribution, through representations and the Transformer."
-    nodes: [raw-text-context, tokenization, tokens, token-id-encoding, token-ids, token-context, forward-computation, embedding-lookup, token-embeddings, positional-information, initial-hidden-states, transformer-block-input, contextualized-hidden-states, final-hidden-states, vocabulary-projection, logits, vocabulary-softmax, next-token-distribution]
-    edges: [e-context-tokenization, e-tokenization-tokens, e-tokens-id-encoding, e-id-encoding-ids, e-ids-context, e-context-forward, e-forward-logits, e-context-embedding, e-embedding-vectors, e-embeddings-initial, e-position-initial, e-initial-block-input, e-block-contextualized, e-contextualized-final, e-final-vocab, e-vocab-logits, e-logits-softmax, e-softmax-distribution]
+    nodes: [raw-text-context, tokenization, tokens, token-id-encoding, token-ids, token-context, forward-computation, logits, vocabulary-softmax, next-token-distribution]
+    edges: [e-context-tokenization, e-tokenization-tokens, e-tokens-id-encoding, e-id-encoding-ids, e-ids-context, e-context-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution]
+  - id: representation-pipeline
+    branch: shared-prediction
+    labels: {fr: "Pipeline des représentations", en: "Representation pipeline"}
+    descriptions:
+      fr: "Détaille le passage des identifiants aux états initiaux, puis aux états contextualisés et aux logits."
+      en: "Details the path from IDs to initial states, then contextualized states and logits."
+    nodes: [token-context, embedding-lookup, token-embeddings, positional-information, initial-hidden-states, transformer-block-input, contextualized-hidden-states, final-hidden-states, vocabulary-projection, logits]
+    edges: [e-context-embedding, e-embedding-vectors, e-embeddings-initial, e-position-initial, e-initial-block-input, e-block-contextualized, e-contextualized-final, e-final-vocab, e-vocab-logits]
   - id: transformer-block
+    branch: transformer-block
     labels: {fr: "Intérieur d'un bloc Transformer", en: "Inside a Transformer block"}
     descriptions:
       fr: "Détail des projections Q/K/V, du masque causal, de l'attention et de la mise à jour des états."
       en: "Detail of Q/K/V projections, causal masking, attention, and state update."
     nodes: [transformer-block-input, query-projection, queries, key-projection, keys, value-projection, values, attention-score-computation, attention-scores, causal-mask, masked-attention-scores, attention-softmax, attention-weights, value-aggregation, attention-output, block-update, contextualized-hidden-states]
-    edges: [e-block-q, e-q-projection, e-block-k, e-k-projection, e-block-v, e-v-projection, e-q-scores, e-k-scores, e-score-output, e-score-mask, e-mask-scores, e-scores-masked, e-masked-softmax, e-softmax-weights, e-weights-aggregation, e-values-aggregation, e-aggregation-output, e-attention-block, e-block-contextualized, e-contextualized-next-block]
+    edges: [e-block-q, e-q-projection, e-block-k, e-k-projection, e-block-v, e-v-projection, e-q-scores, e-k-scores, e-score-output, e-mask-scores, e-scores-masked, e-masked-softmax, e-softmax-weights, e-weights-aggregation, e-values-aggregation, e-aggregation-output, e-attention-block, e-block-contextualized, e-contextualized-next-block]
   - id: generation
+    branch: generation
     labels: {fr: "Branche génération", en: "Generation branch"}
     descriptions:
       fr: "Sélectionne un token depuis la distribution puis le réinjecte dans le contexte."
@@ -680,6 +684,7 @@ views:
     nodes: [token-context, forward-computation, next-token-distribution, decoding-policy, generated-token]
     edges: [e-distribution-policy, e-policy-token, e-token-feedback]
   - id: observed-target-scoring
+    branch: observed-target-scoring
     labels: {fr: "Scoring d'une cible observée", en: "Observed-target scoring"}
     descriptions:
       fr: "Compare la distribution à une cible connue pour obtenir sa probabilité et la vraisemblance."
@@ -687,6 +692,7 @@ views:
     nodes: [next-token-distribution, observed-target, target-probability, target-probability-value, sequence-log-likelihood]
     edges: [e-distribution-target, e-target-score, e-target-probability-value, e-target-likelihood]
   - id: evaluation
+    branch: evaluation
     labels: {fr: "Branche évaluation", en: "Evaluation branch"}
     descriptions:
       fr: "Agrège les scores sur des données tenues à l'écart sans modifier les paramètres."
@@ -694,6 +700,7 @@ views:
     nodes: [observed-target, target-probability, target-probability-value, sequence-log-likelihood, token-nll, evaluation-metrics]
     edges: [e-target-score, e-target-probability-value, e-target-likelihood, e-target-nll, e-score-metrics, e-loss-metrics]
   - id: training
+    branch: training
     labels: {fr: "Branche apprentissage", en: "Training branch"}
     descriptions:
       fr: "Utilise les préfixes observés, calcule l'objectif, les gradients et la mise à jour des paramètres."
@@ -701,6 +708,7 @@ views:
     nodes: [teacher-forcing, training-context, observed-target, token-context, next-token-distribution, target-probability, target-probability-value, token-nll, loss-reduction, training-objective, model-parameters, gradients, optimizer-update, updated-parameters]
     edges: [e-teacher-context, e-observed-context, e-training-forward, e-distribution-target, e-target-score, e-target-probability-value, e-target-nll, e-nll-reduction, e-loss-objective, e-objective-gradients, e-gradients-optimizer, e-params-optimizer, e-optimizer-updated, e-updated-params-forward]
   - id: inference-execution
+    branch: inference-execution
     labels: {fr: "Phases d'exécution de l'inférence", en: "Inference execution phases"}
     descriptions:
       fr: "Distingue le traitement initial du prompt (prefill), le décodage itératif et le cache KV facultatif."
