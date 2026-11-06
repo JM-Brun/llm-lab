@@ -1826,3 +1826,13 @@ span.math.display, .math.display {
 span.math.inline, .math.inline {
   max-width: 100%;
 }
+
+/* The page title block must never widen the page on phones: long French
+   titles and subtitles wrap within the reading column. */
+.quarto-title-block,
+.quarto-title,
+.quarto-title h1.title,
+.quarto-title .subtitle {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
