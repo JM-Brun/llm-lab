@@ -79,8 +79,8 @@ pedagogical_model:
         locator: "Introduction; section heading 'Choose the right graph for the batch'"
         inferred: false
       - id: src-replay-tradeoff
-        kind: question
-        description: "Decision whether launch savings justify the memory and management cost of keeping graph variants ready."
+        kind: constraint
+        description: "Decision criterion: whether launch savings justify the memory and management cost of keeping graph variants ready."
         locator: "Introduction; section heading 'Decide whether replay pays'"
         inferred: false
     edges:
