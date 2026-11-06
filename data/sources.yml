@@ -2205,3 +2205,63 @@ sources:
       concepts: [prefill, decode-step, kv-cache]
       audit_records:
         - docs/source-reviews/aiedge-cuda-graphs-2026-11.md
+
+  - id: maarten-grootendorst-visual-guide-multimodal-generation
+    title: "A Visual Guide to Multimodal Generation"
+    creators: ["Maarten Grootendorst"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-multimodal-generation"
+    publisher: "Exploring Language Models (Substack)"
+    publication_date: "2026-10-29"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags:
+        - topic:multimodal-generation
+        - topic:multimodal-understanding
+        - topic:latent-diffusion
+        - topic:diffusion-transformer
+        - modality:image
+        - modality:audio
+        - modality:video
+        - method:late-fusion
+        - method:early-fusion
+      concept_ids: []
+    metadata:
+      technical_level: intermediate
+      contribution_types: [architecture, pedagogy, visualization]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: deferred
+    scan_history:
+      - accessed_at: "2026-11-06"
+        status: partially-scanned
+        inspected_scope:
+          - "Indexed article introduction and conceptual distinction between multimodal understanding and multimodal generation"
+          - "Image-generation section: Stable Diffusion components, latent-space denoising, latent diffusion and diffusion-transformer framing"
+          - "Multimodal LLM integration section: late fusion/output projection and early fusion/unified generation"
+          - "Audio generation: AudioLM, SoundStream acoustic tokens, w2v-BERT semantic tokens, and hierarchical Transformer stages"
+          - "Video generation: temporal dimension, diffusion and Diffusion Transformer framing"
+          - "LLM output routing: illustrative modality markers [IMG], [AUD], [VID], output projectors and pretrained diffusion decoders"
+          - "NExT-GPT and Janus architectural examples, including modality-specific encoders/projectors/decoders and staged training description"
+          - "Article metadata and publication date"
+        limitations:
+          - "Canonical Substack page returned a cache miss; the inspected body was obtained from the search index."
+          - "More than 50 embedded visuals are advertised, but their individual content, placement, authorship and reuse conditions were not audited."
+          - "Primary-source spot checks were performed for AudioLM, Janus and NExT-GPT; the remaining cited model papers and implementations were not independently verified."
+          - "The article video section was only inspected at a high level; temporal modeling and coherence mechanisms are not fully detailed in the extraction."
+          - "No code was executed and no model behavior or comparative performance was tested."
+          - "The article's examples are architectural illustrations, not evidence that all multimodal LLMs use the described designs."
+          - "No licence or permission for reproducing text, figures or code was established."
+    related:
+      pages: []
+      concepts: []
+      audit_records:
+        - docs/source-reviews/multimodal-generation-grootendorst-2026-11.md
