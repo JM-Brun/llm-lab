@@ -111,10 +111,7 @@ def render_view(registry: dict[str, Any], view_id: str, language: str) -> str:
         source = escape(labels[edge["from"]])
         relation = escape(relation_types[edge["type"]]["labels"][language])
         target = escape(labels[edge["to"]])
-        lines.append(
-            f"<li><strong>{source}</strong> — {relation} → "
-            f"<strong>{target}</strong></li>"
-        )
+        lines.append(f"<li><strong>{source}</strong> — {relation} → <strong>{target}</strong></li>")
     lines.extend(["</ol>", "", "</details>", ":::", ""])
     return "\n".join(lines)
 
