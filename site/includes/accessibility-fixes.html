@@ -44,7 +44,7 @@
       const title = link.querySelector(".nav-page-text")?.textContent?.trim()
         || link.textContent?.trim().replace(/\s+/g, " ");
       if (title) {
-        link.setAttribute("aria-label", `${labels[direction]}: ${title}`);
+        const separator = language === "fr" ? " : " : ": ";\n        link.setAttribute("aria-label", `${labels[direction]}${separator}${title}`);
       }
     }
   };
