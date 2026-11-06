@@ -373,9 +373,15 @@ def test_shared_prediction_scoring_inference_and_training_concepts_are_distinct(
     assert ("gradient", "prerequisite", "parameter-update") in edges
     assert ("optimizer", "contributes-to", "parameter-update") in edges
 
-    # Prefill is deliberately distinct from teacher forcing; cache is an
-    # inference optimization, not a prerequisite for scoring or training.
-    assert ("prefill", "contrasts-with", "teacher-forcing") in edges
+    # Prefill is an inference phase within autoregressive generation;
+    # teacher forcing is a training-time conditioning strategy. They are
+    # distinct execution-context concepts, not semantic opposites. The cache
+    # is an inference optimization, not a prerequisite for scoring or training.
+    assert ("prefill", "part-of", "autoregressive-generation") in edges
+    assert not any(
+        {source, target} == {"prefill", "teacher-forcing"} and relation == "contrasts-with"
+        for source, relation, target in edges
+    )
     assert ("kv-cache", "contributes-to", "decode-step") in edges
     assert not any(
         source in {"sequence-likelihood", "log-likelihood", "negative-log-likelihood", "gradient"}
