@@ -602,7 +602,8 @@ for (const testCase of cases) {
       );
     }
     if (item.layout.horizontalOverflow || item.learningMapLayout?.horizontalOverflow) {
-      report.failures.push(`${pagePath}/${lang}/${label}/${theme}: horizontal overflow: ${JSON.stringify((item.layout.overflowCandidates || []).slice(0, 5))}`);
+      const overflowing = (item.layout.overflowCandidates || []).slice(0, 10).map(c => `${c.tag}${c.className ? "." + String(c.className).split(" ")[0] : ""}[right=${c.right},ws=${c.whiteSpace}]`).join(" | ");
+      report.failures.push(`${pagePath}/${lang}/${label}/${theme}: horizontal overflow (document ${item.layout.documentWidth}px vs viewport ${item.layout.viewportWidth}px): ${overflowing}`);
     }
     if (runInteractiveAudit && !item.keyboard.length) report.failures.push(`${pagePath}/${lang}/${label}/${theme}: no keyboard focus targets`);
   } catch (error) {
