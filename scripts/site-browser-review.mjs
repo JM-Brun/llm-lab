@@ -581,7 +581,7 @@ for (const testCase of cases) {
             throw new Error("text-data process stepper must follow the introductory mental model");
           }
           item.routeContext.openingOrder = openingOrder;
-      }
+        }
       }
     }
 
