@@ -101,7 +101,8 @@ The cache is marked optional. Its presence in the conceptual graph does not clai
 
 The current views are:
 
-- `persistent-spine`: shared context-to-distribution path;
+- `persistent-spine`: compact shared context-to-distribution path;
+- `representation-pipeline`: embedding lookup, positional information, and contextualized states;
 - `transformer-block`: internal attention and block update;
 - `generation`: distribution, selection, and context feedback;
 - `observed-target-scoring`: target probability and sequence likelihood;
