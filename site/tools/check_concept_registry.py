@@ -187,9 +187,7 @@ def validate_registry(
 
         importance = concept.get("importance")
         if not isinstance(importance, str) or importance not in {"core", "supporting", "specialized"}:
-            errors.append(
-                f"{where}.importance: expected one of core, supporting, specialized"
-            )
+            errors.append(f"{where}.importance: expected one of core, supporting, specialized")
 
         importance = concept.get("importance")
         if importance not in {"core", "supporting", "specialized"}:
