@@ -32,9 +32,9 @@ La dérivation de cette factorisation à partir de la règle de chaîne et l'int
 
 Pour une séquence $x_{1:T}$ :
 
-$
+$$
 P_\theta(x_{1:T})=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}).
-$
+$$
 
 ### Scorer une séquence observée : le préfixe est connu
 
