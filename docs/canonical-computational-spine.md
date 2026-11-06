@@ -60,13 +60,18 @@ Temperature, top-k, top-p, greedy decoding, and sampling are decoding policies. 
 
 ### Branch B — observed-target scoring
 
-`conditional distribution + observed target → target probability → sequence likelihood / log-likelihood → NLL / token cross-entropy → aggregation and masking → objective value`
+`conditional distribution + observed target → target probability → target log-probability`
 
-For one-hot next-token targets, token-level cross-entropy equals negative log probability assigned to the target. Sequence likelihood is the product of the conditional probabilities over positions; log-likelihood is their sum. In practice, stable computations use log probabilities and reductions rather than multiplying many small probabilities.
+The target log-probability then supports two related quantities:
+
+- **Sequence log-likelihood:** sum the target log-probabilities over the included positions. This is the logarithm of the sequence likelihood, whose probability-space form is the product of the conditional target probabilities.
+- **Per-token NLL:** negate each target log-probability. For a one-hot next-token target, this is the token-level cross-entropy.
+
+Training can then aggregate per-token NLL using an explicit mask and reduction to obtain an objective value. Scoring need not perform that training reduction or update parameters. In practice, stable computations use log probabilities and reductions rather than multiplying many small probabilities.
 
 ### Branch C — evaluation and training
 
-- Evaluation consumes the scoring/objective results on held-out examples and reports metrics; it does not update parameters.
+- Evaluation applies observed-target scoring to held-out examples and reports task-appropriate metrics; it does not update parameters. For language modeling, the loss lesson introduces mean per-token NLL and perplexity. The experimental-evaluation lesson is a transfer exercise on a scientific-passage ranker, not an LLM benchmark or evidence of a locally trained GPT evaluation.
 - Training differentiates the objective, backpropagates gradients, and applies an optimizer update to parameters.
 - The updated parameters are used in a subsequent forward computation.
 
@@ -78,25 +83,37 @@ Both generation and teacher-forced scoring/training extend the context, but with
 
 Teacher forcing is a training/scoring context policy, not a separate prediction mechanism. Prefill computes the prompt/context states (and, when used, populates the KV cache); decode advances generation one token at a time using the cache. Neither should be confused with teacher forcing.
 
-## 4. Relation taxonomy
+## 4. Typed relations and ownership boundaries
 
-The graph and its visual projections must distinguish at least:
+The project uses several relation vocabularies because they describe different kinds of connection. Do not merge them into one generic edge taxonomy.
 
-| Relation | Meaning | Example |
+### Computational registry: `data/computational-graph.yml`
+
+The computational graph uses its existing controlled edge types:
+
+| Registry type | Meaning | Example |
 |---|---|---|
-| `dataflow` | Tensor/value produced and consumed | hidden states → Q/K/V |
-| `transforms` | Operation transforms an input | logits → probabilities |
-| `conditions` | Restricts valid computation | causal mask → attention scores |
-| `aggregates` | Combines values or positions | probabilities → sequence likelihood |
-| `scores` | Compares prediction with an observed target | distribution + target → target probability |
-| `decodes` | Selects a token from a distribution | distribution → generated token |
-| `feeds-back` | Extends the next context | generated/observed token → next context |
-| `optimizes` | Computes parameter update from objective | gradients → updated parameters |
-| `evaluates` | Applies a scoring/metric procedure to held-out data | scoring → evaluation metrics |
-| `implements` | Conceptual operation realized by a component | attention → attention module |
-| `prerequisite` | Genuine pedagogical dependency | probabilities → likelihood |
+| `consumes` / `produces` | An operation consumes an input and produces an output | hidden states → Q/K/V projections → Q, K, V |
+| `combines` | An operation combines multiple inputs | embeddings + positional information → initial hidden states |
+| `constrains` | A control restricts an operation or intermediate result | causal mask → masked attention scores |
+| `applies` / `precedes` | A phase or mode applies to a computation, or one phase precedes another | prefill → decode |
+| `selects` | The source distribution determines the selected item | next-token distribution → generated token |
+| `scores` / `aggregates` | An observed target is scored and per-token/sequence values are aggregated | distribution + target → target probability → sequence log-likelihood |
+| `differentiates` / `updates` | An objective yields gradients and an optimizer updates parameters | objective → gradients → updated parameters |
+| `feeds-back` | A value becomes context or state for a later iteration | generated token → next context |
+| `conditions` | A policy or observed value constrains target selection, context, or target assignment | decoding policy → generated token; teacher forcing → observed training context |
+| `uses-optional` | An optional optimization may be used without being required for correctness | KV cache → decode |
 
-A prerequisite edge is not a substitute for a computational edge. The graph must not infer a total learning order from dataflow, nor infer dataflow from page order.
+The registry may express a familiar high-level idea such as *dataflow*, *transformation*, *decoding*, *optimization* or *evaluation* through these more precise operational relations. Those high-level words are explanatory categories, not additional edge types to add mechanically. In particular, evaluation is represented by scoring held-out targets and aggregating the resulting metrics; it stops before differentiation or parameter updates.
+
+### Other project relations belong to their canonical sources
+
+- **Pedagogical prerequisite:** owned by the curriculum topology in `docs/learning-path.md`; it is not a computational-graph edge.
+- **Conceptual/semantic relation:** owned by the typed relations in `data/concepts.yml`; it connects concepts, not executable operations.
+- **Implementation correspondence:** expressed through concept/resource associations and the Build crosswalk; it does not imply that a page or code module is a computational node.
+- **Editorial navigation:** owned by page-map `hierarchy` and `suggested_route`; it expresses containment or a recommended reading transition, not computation.
+
+A pedagogical prerequisite relation is not a substitute for a computational relation. The computational graph must not infer a total learning order from dataflow, nor infer dataflow from page order. Do not add a new relation type unless a concrete edge cannot be represented accurately by the existing vocabulary and its semantics are documented and validated.
 
 ## 5. Reader-facing projections
 

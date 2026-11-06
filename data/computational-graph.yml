@@ -399,6 +399,33 @@ nodes:
       en: "Probability assigned to the target token at the position being scored."
     branches: [observed-target-scoring, evaluation, training]
     resources: [fr/vraisemblance, en/likelihood, fr/cross-entropy, en/cross-entropy]
+  - id: target-log-probability-computation
+    kind: operation
+    role: scoring
+    labels: {fr: "Calcul du log de la probabilité cible", en: "Target log-probability computation"}
+    descriptions:
+      fr: "Applique le logarithme à la probabilité de la cible observée ; une implémentation stable peut calculer directement le log-softmax depuis les logits."
+      en: "Applies the logarithm to the observed target probability; a numerically stable implementation may compute log-softmax directly from logits."
+    branches: [observed-target-scoring, evaluation, training]
+    resources: [fr/vraisemblance, en/likelihood, fr/cross-entropy, en/cross-entropy]
+  - id: target-log-probability
+    kind: data
+    role: score
+    labels: {fr: "Log-probabilité de la cible", en: "Target log-probability"}
+    descriptions:
+      fr: "Logarithme de la probabilité conditionnelle attribuée au token cible observé."
+      en: "Logarithm of the conditional probability assigned to the observed target token."
+    branches: [observed-target-scoring, evaluation, training]
+    resources: [fr/vraisemblance, en/likelihood, fr/cross-entropy, en/cross-entropy]
+  - id: negative-log-probability
+    kind: operation
+    role: loss
+    labels: {fr: "Opposé du log de la probabilité cible", en: "Negative target log-probability"}
+    descriptions:
+      fr: "Prend l'opposé de la log-probabilité pour obtenir la perte par token."
+      en: "Negates the log-probability to obtain the per-token loss."
+    branches: [observed-target-scoring, evaluation, training]
+    resources: [fr/cross-entropy, en/cross-entropy, fr/loss, en/loss]
   - id: sequence-log-likelihood
     kind: data
     role: score
@@ -415,7 +442,7 @@ nodes:
     descriptions:
       fr: "Opposé du logarithme de la probabilité attribuée à la cible observée."
       en: "Negative logarithm of the probability assigned to the observed target."
-    branches: [training, evaluation]
+    branches: [observed-target-scoring, training, evaluation]
     resources: [fr/cross-entropy, en/cross-entropy, fr/loss, en/loss]
   - id: loss-reduction
     kind: operation
@@ -476,10 +503,10 @@ nodes:
     role: metric
     labels: {fr: "Métriques d'évaluation", en: "Evaluation metrics"}
     descriptions:
-      fr: "Mesures calculées à partir des scores sur les données tenues à l'écart, sans mise à jour des paramètres."
-      en: "Measures computed from scores on held-out data, without parameter updates."
+      fr: "Mesures calculées à partir des scores sur les données tenues à l'écart, sans mise à jour des paramètres ; en modélisation du langage, cela inclut notamment la NLL et la perplexité."
+      en: "Measures computed from scores on held-out data, without parameter updates; in language modeling, these include NLL and perplexity."
     branches: [evaluation]
-    resources: [fr/evaluation-experimentale, en/experimental-evaluation]
+    resources: [fr/loss, en/loss, fr/evaluation-experimentale, en/experimental-evaluation]
   - id: teacher-forcing
     kind: policy
     role: training-context
@@ -603,8 +630,8 @@ relation_types:
     direction: directed
     labels: {fr: "conditionne", en: "conditions"}
     descriptions:
-      fr: "La source détermine les préfixes ou les cibles utilisés pour le calcul."
-      en: "The source determines the prefixes or targets used for computation."
+      fr: "La source détermine le contexte, la cible ou la contrainte de sélection utilisée par la cible."
+      en: "The source determines the context, target, or selection constraint used by the target."
   uses-optional:
     direction: directed
     labels: {fr: "peut être utilisé par", en: "may be used by"}
@@ -653,14 +680,17 @@ edges:
   - {id: e-vocab-logits, from: vocabulary-projection, type: produces, to: logits}
   - {id: e-logits-softmax, from: logits, type: consumes, to: vocabulary-softmax}
   - {id: e-softmax-distribution, from: vocabulary-softmax, type: produces, to: next-token-distribution}
-  - {id: e-distribution-policy, from: next-token-distribution, type: selects, to: decoding-policy}
-  - {id: e-policy-token, from: decoding-policy, type: produces, to: generated-token}
+  - {id: e-distribution-select-token, from: next-token-distribution, type: selects, to: generated-token}
+  - {id: e-policy-conditions-token, from: decoding-policy, type: conditions, to: generated-token}
   - {id: e-token-feedback, from: generated-token, type: feeds-back, to: token-context, feedback: true}
   - {id: e-distribution-target, from: next-token-distribution, type: scores, to: target-probability}
   - {id: e-target-score, from: observed-target, type: conditions, to: target-probability}
   - {id: e-target-probability-value, from: target-probability, type: produces, to: target-probability-value}
-  - {id: e-target-likelihood, from: target-probability-value, type: aggregates, to: sequence-log-likelihood}
-  - {id: e-target-nll, from: target-probability-value, type: aggregates, to: token-nll}
+  - {id: e-target-log-computation, from: target-probability-value, type: consumes, to: target-log-probability-computation}
+  - {id: e-target-log-probability, from: target-log-probability-computation, type: produces, to: target-log-probability}
+  - {id: e-target-likelihood, from: target-log-probability, type: aggregates, to: sequence-log-likelihood}
+  - {id: e-target-negative-log, from: target-log-probability, type: consumes, to: negative-log-probability}
+  - {id: e-negative-log-nll, from: negative-log-probability, type: produces, to: token-nll}
   - {id: e-nll-reduction, from: token-nll, type: consumes, to: loss-reduction}
   - {id: e-loss-objective, from: loss-reduction, type: produces, to: training-objective}
   - {id: e-objective-gradients, from: training-objective, type: differentiates, to: gradients}
@@ -711,31 +741,31 @@ views:
       fr: "Sélectionne un token depuis la distribution puis le réinjecte dans le contexte."
       en: "Selects a token from the distribution and feeds it back into the context."
     nodes: [token-context, model-parameters, forward-computation, logits, vocabulary-softmax, next-token-distribution, decoding-policy, generated-token]
-    edges: [e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-distribution-policy, e-policy-token, e-token-feedback]
+    edges: [e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-distribution-select-token, e-policy-conditions-token, e-token-feedback]
   - id: observed-target-scoring
     branch: observed-target-scoring
     labels: {fr: "Scoring d'une cible observée", en: "Observed-target scoring"}
     descriptions:
       fr: "Compare la distribution à une cible connue pour obtenir sa probabilité et la vraisemblance."
       en: "Compares the distribution with a known target to obtain its probability and likelihood."
-    nodes: [next-token-distribution, observed-target, target-probability, target-probability-value, sequence-log-likelihood]
-    edges: [e-distribution-target, e-target-score, e-target-probability-value, e-target-likelihood]
+    nodes: [next-token-distribution, observed-target, target-probability, target-probability-value, target-log-probability-computation, target-log-probability, negative-log-probability, token-nll, sequence-log-likelihood]
+    edges: [e-distribution-target, e-target-score, e-target-probability-value, e-target-log-computation, e-target-log-probability, e-target-likelihood, e-target-negative-log, e-negative-log-nll]
   - id: evaluation
     branch: evaluation
     labels: {fr: "Branche évaluation", en: "Evaluation branch"}
     descriptions:
       fr: "Illustre une évaluation fondée sur le scoring de cibles observées : agrège leurs scores sur des données tenues à l'écart sans modifier les paramètres."
       en: "Illustrates evaluation based on observed-target scoring: aggregates their scores on held-out data without changing parameters."
-    nodes: [next-token-distribution, observed-target, target-probability, target-probability-value, sequence-log-likelihood, token-nll, evaluation-metrics]
-    edges: [e-distribution-target, e-target-score, e-target-probability-value, e-target-likelihood, e-target-nll, e-score-metrics, e-loss-metrics]
+    nodes: [next-token-distribution, observed-target, target-probability, target-probability-value, target-log-probability-computation, target-log-probability, negative-log-probability, sequence-log-likelihood, token-nll, evaluation-metrics]
+    edges: [e-distribution-target, e-target-score, e-target-probability-value, e-target-log-computation, e-target-log-probability, e-target-likelihood, e-target-negative-log, e-negative-log-nll, e-score-metrics, e-loss-metrics]
   - id: training
     branch: training
     labels: {fr: "Branche apprentissage", en: "Training branch"}
     descriptions:
       fr: "Utilise les préfixes observés, calcule l'objectif, les gradients et la mise à jour des paramètres."
       en: "Uses observed prefixes, computes the objective and gradients, and updates parameters."
-    nodes: [teacher-forcing, training-context, observed-target, token-context, model-parameters, forward-computation, logits, vocabulary-softmax, next-token-distribution, target-probability, target-probability-value, token-nll, loss-reduction, training-objective, gradients, optimizer-update, updated-parameters]
-    edges: [e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-teacher-context, e-observed-context, e-training-forward, e-distribution-target, e-target-score, e-target-probability-value, e-target-nll, e-nll-reduction, e-loss-objective, e-objective-gradients, e-gradients-optimizer, e-params-optimizer, e-optimizer-updated, e-updated-parameters-feedback]
+    nodes: [teacher-forcing, training-context, observed-target, token-context, model-parameters, forward-computation, logits, vocabulary-softmax, next-token-distribution, target-probability, target-probability-value, target-log-probability-computation, target-log-probability, negative-log-probability, token-nll, loss-reduction, training-objective, gradients, optimizer-update, updated-parameters]
+    edges: [e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-teacher-context, e-observed-context, e-training-forward, e-distribution-target, e-target-score, e-target-probability-value, e-target-log-computation, e-target-log-probability, e-target-negative-log, e-negative-log-nll, e-nll-reduction, e-loss-objective, e-objective-gradients, e-gradients-optimizer, e-params-optimizer, e-optimizer-updated, e-updated-parameters-feedback]
   - id: inference-execution
     branch: inference-execution
     labels: {fr: "Phases d'exécution de l'inférence", en: "Inference execution phases"}
