@@ -87,10 +87,11 @@ def _write_page(
 def _write_concept_registry(root: Path) -> None:
     """Write a minimal bilingual concept registry for generator tests."""
     data = {
-        "schema_version": 1,
+        "schema_version": 2,
         "concepts": [
             {
                 "id": "attention",
+                "importance": "core",
                 "labels": {"fr": "Attention", "en": "Attention"},
                 "definitions": {"fr": "Mécanisme.", "en": "Mechanism."},
                 "domains": ["architectures-mechanisms"],
@@ -98,6 +99,7 @@ def _write_concept_registry(root: Path) -> None:
             },
             {
                 "id": "query",
+                "importance": "supporting",
                 "labels": {"fr": "Requête", "en": "Query"},
                 "definitions": {"fr": "Projection.", "en": "Projection."},
                 "domains": [],
@@ -612,6 +614,7 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
             "id": "attention",
             "label": "Attention",
             "definition": "Mécanisme.",
+            "importance": "core",
             "domains": ["architectures-mechanisms"],
             "resources": [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}],
         },
@@ -619,6 +622,7 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
             "id": "query",
             "label": "Requête",
             "definition": "Projection.",
+            "importance": "supporting",
             "domains": [],
             "resources": [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}],
         },
@@ -815,6 +819,8 @@ def test_load_concept_graph_exports_localized_domains(tmp_path: Path) -> None:
     assert english["concept_domains"] == [
         {"id": "architectures-mechanisms", "label": "Architectures and mechanisms"}
     ]
+    assert french["concepts"][0]["importance"] == "core"
+    assert french["concepts"][1]["importance"] == "supporting"
     assert french["concepts"][0]["domains"] == ["architectures-mechanisms"]
     assert french["concepts"][1]["domains"] == []
 
@@ -884,3 +890,15 @@ def test_learning_map_reset_and_escape_clear_filters_progressively() -> None:
     assert "renderPlaceholder();" in script
     assert 'state.relationType = "";' in script
     assert "state.conceptId = null;" in script
+
+
+def test_concept_importance_is_localized_in_cards_and_details() -> None:
+    script = MODULE["render_map_script"]()
+    assert "copy.importanceLabels[concept.importance]" in script
+    assert "map-concept-importance" in script
+    assert "Essentielle" in script
+    assert "Complémentaire" in script
+    assert "Spécialisée" in script
+    assert "Core" in script
+    assert "Supporting" in script
+    assert "Specialized" in script

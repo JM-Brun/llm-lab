@@ -38,7 +38,7 @@ Standards references:
 
 ### Concepts
 
-Concept IDs are language-independent and receive stable absolute identifiers under `https://jm-brun.github.io/llm-lab/id/concept/{id}`. These identifiers are currently used in the JSON-LD graph; dereferenceable concept landing pages are not yet published. French and English labels are language-tagged values on one concept node, not duplicate concepts.
+Concept IDs are language-independent and receive stable absolute identifiers under `https://jm-brun.github.io/llm-lab/id/concept/{id}`. These identifiers are currently used in the JSON-LD graph; dereferenceable concept landing pages are not yet published. French and English labels are language-tagged values on one concept node, not duplicate concepts. Concept records also carry a controlled project-relative `importance` value (`core`, `supporting`, or `specialized`). This is exported as `llmlab:importance`; it is a curriculum/display annotation, not a SKOS hierarchy relation, domain membership, page editorial level, or prerequisite weight. The registry schema is version 2.
 
 ### Domains
 

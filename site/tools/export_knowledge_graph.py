@@ -160,6 +160,7 @@ def build_graph() -> dict[str, Any]:
             "dcterms:subject": [
                 {"@id": f"{BASE}/id/domain/{domain_id}"} for domain_id in concept["domains"]
             ],
+            "llmlab:importance": concept["importance"],
         }
         graph.append(node)
 

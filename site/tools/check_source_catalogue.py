@@ -293,8 +293,8 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
         return ["data/source-taxonomy.yml: expected schema_version: 1"]
     if not isinstance(domains, dict) or domains.get("schema_version") != 1:
         return ["data/domains.yml: expected schema_version: 1"]
-    if not isinstance(concepts, dict) or concepts.get("schema_version") != 1:
-        return ["data/concepts.yml: expected schema_version: 1"]
+    if not isinstance(concepts, dict) or concepts.get("schema_version") != 2:
+        return ["data/concepts.yml: expected schema_version: 2"]
     if not isinstance(sources_data, dict) or sources_data.get("schema_version") != 1:
         return ["data/sources.yml: expected schema_version: 1"]
 

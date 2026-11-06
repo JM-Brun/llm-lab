@@ -16,10 +16,11 @@ validate_domains = MODULE["validate_domains"]
 
 def _valid_registry() -> dict[str, Any]:
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "concepts": [
             {
                 "id": "token",
+                "importance": "core",
                 "labels": {"fr": "Token", "en": "Token"},
                 "definitions": {"fr": "Unité discrète.", "en": "Discrete unit."},
                 "domains": ["architectures-mechanisms"],
@@ -27,6 +28,7 @@ def _valid_registry() -> dict[str, Any]:
             },
             {
                 "id": "embedding",
+                "importance": "supporting",
                 "labels": {"fr": "Plongement", "en": "Embedding"},
                 "definitions": {"fr": "Vecteur.", "en": "Vector."},
                 "domains": ["mathematical-tools-geometry"],
@@ -382,3 +384,33 @@ def test_shared_prediction_scoring_inference_and_training_concepts_are_distinct(
         for source, relation, target in edges
     )
     assert ("conditional-distribution", "evaluated-by", "held-out-evaluation") in edges
+
+
+def test_concept_importance_is_required_and_controlled() -> None:
+    data = _valid_registry()
+    assert validate_registry(data) == []
+
+    del data["concepts"][0]["importance"]
+    errors = validate_registry(data)
+    assert any(
+        ".importance: expected one of core, supporting, specialized" in error for error in errors
+    )
+
+    data["concepts"][0]["importance"] = "critical"
+    errors = validate_registry(data)
+    assert any(
+        ".importance: expected one of core, supporting, specialized" in error for error in errors
+    )
+
+    data["concepts"][0]["importance"] = []
+    errors = validate_registry(data)
+    assert any(
+        ".importance: expected one of core, supporting, specialized" in error for error in errors
+    )
+
+
+def test_concept_registry_requires_schema_version_two() -> None:
+    data = _valid_registry()
+    data["schema_version"] = 1
+    errors = validate_registry(data)
+    assert errors == ["registry: expected mapping with schema_version: 2"]
