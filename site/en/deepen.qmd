@@ -94,6 +94,7 @@ The core route introduces autoregressive generation and its minimum operations. 
 
 **Guiding question:** which empirical regularities and capability claims are supported by evidence?
 
+- [From GPT-2 to contemporary LLM systems](llm-evolution.qmd) — a cross-cutting synthesis from scale and post-training to reasoning and tool-using systems.
 - [Scaling laws: parameters, data, and compute](scaling-laws.qmd) — empirical relationships between training resources and loss, and limits to extrapolation.
 - [Emergence](emergence.qmd) — gradual improvement, metric-induced thresholds, and genuine discontinuities.
 

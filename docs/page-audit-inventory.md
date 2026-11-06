@@ -478,3 +478,18 @@ This is a source-level organizational change, not evidence that readers have tes
 | Editorial contract | Documented the six controlled IDs and clarified that each page has one primary domain; cross-domain links remain `related` edges. | Future additions must update FR/EN counterparts, metadata, and the map's controlled vocabulary together. |
 
 The graph still distinguishes suggested reading route, conceptual hierarchy, and cross-links. Domain is a classification attribute, not a new edge type or prerequisite relation.
+
+
+### Advanced LLM evolution synthesis — 2026-11-06
+
+**Scope:** add the bilingual advanced synthesis `site/fr/llm-evolution.qmd` / `site/en/llm-evolution.qmd`, linked from the existing Deepen map under Scale and research questions. This is a cross-cutting synthesis, not a new mandatory route or a new architecture specification.
+
+| Area | Change | Evidence boundary / remaining action |
+|---|---|---|
+| Historical comparison | Compare GPT-2 through GPT-6 across documented public milestones while explicitly stating that this is not a controlled comparison. | GPT-2 and GPT-3 claims are grounded in the original public materials; GPT-4 and GPT-5 claims in OpenAI's release/system-card materials; GPT-6 API behavior in current developer documentation. Internal architecture, training data, and recipes remain unknown where not disclosed. |
+| Conceptual organization | Separate scale/data, training and post-training, modality, architecture/efficiency, inference-time compute, and system integration. | The axes are an editorial synthesis, not a claim that every generation follows the same sequence or uses every technique. |
+| Scientific qualification | Correct the oversimplification that GPT-2 only continued text and had no task-transfer behavior; distinguish few-shot prompting from parameter updates; distinguish tool calling from tool execution. | Claims are bounded by cited sources. The ByteByteGo article is retained as a pedagogical starting point, not treated as the sole technical authority. |
+| Knowledge graph | Add bilingual concepts for pretraining, in-context learning, post-training, instruction tuning, RLHF, DPO, inference-time compute, reasoning models, tool calling, and agentic systems; add only typed relations whose semantics are explicit. | The concept registry now includes project-relative `importance` metadata (`core`, `supporting`, `specialized`). New advanced concepts are classified as supporting or specialized; this annotation does not imply guided-route membership or prerequisite status. |
+| Navigation | Add both language versions to Quarto rendering, the existing Deepen sidebar taxonomy, and the bilingual Deepen map. | Source-level validation only until CI and rendered/browser checks complete. |
+
+The new pages are intentionally outside the guided route: they are advanced synthesis pages, not prerequisites. Therefore they do not include generated guided-route context fragments.
