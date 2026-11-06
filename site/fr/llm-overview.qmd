@@ -73,6 +73,22 @@ Le schéma donne une **carte d'ensemble**, pas une nouvelle explication de chaqu
 - **Calculer une passe avant :** voir [GPT et Transformer](transformer.qmd), puis les pages sur les [embeddings](embedding-space.qmd), l'[information positionnelle](positional-encoding.qmd) et l'[attention](queries-keys-values.qmd).
 - **Produire une continuation :** voir la page de référence sur la [génération autorégressive](generation.qmd), qui explique la distribution du prochain token, le décodage, l'ajout au contexte et l'arrêt.
 
+### Un calcul prédictif partagé, plusieurs usages
+
+La préparation du contexte et le calcul du modèle produisent une **distribution conditionnelle du prochain token**. Cette partie commune ne dépend pas de ce que l'on fera ensuite de la distribution : générer un token, attribuer un score à une cible observée ou apprendre à partir de cibles connues.
+
+{{< include ../includes/generated-computational-graph-fr-persistent-spine.qmd >}}
+
+| Branche | Usage de la distribution | Paramètres |
+|---|---|---|
+| **Génération** | Sélectionner un token, l'ajouter au contexte et répéter la prédiction | Fixes |
+| **Scoring / évaluation** | Évaluer la probabilité d'un token observé, puis agréger des scores sur des données tenues à l'écart | Fixes |
+| **Apprentissage** | Comparer les prédictions aux cibles de référence (*teacher forcing*), calculer la loss, les gradients et mettre à jour les paramètres | Modifiés à l'étape de mise à jour |
+
+Le scoring d'une cible et l'évaluation d'un modèle ne sont pas synonymes : le premier calcule une probabilité conditionnelle ; la seconde agrège des scores et des métriques sur un protocole de données. L'évaluation réutilise le chemin de scoring sans mettre à jour les paramètres.
+
+{{< include ../includes/generated-computational-graph-fr-evaluation.qmd >}}
+
 Les optimisations comme le **cache KV** réduisent certains calculs répétés sans changer l'objectif de prédiction ; leur coût en mémoire et en calcul est traité dans l'[approfondissement sur la complexité des LLM](llm-computational-complexity.qmd).
 
 ## 4. Trois dimensions à ne pas confondre
