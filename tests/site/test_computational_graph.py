@@ -9,14 +9,9 @@ from typing import Any
 import yaml
 
 MODULE_PATH = (
-    Path(__file__).resolve().parents[2]
-    / "site"
-    / "tools"
-    / "check_computational_graph.py"
+    Path(__file__).resolve().parents[2] / "site" / "tools" / "check_computational_graph.py"
 )
-MODULE: dict[str, Any] = runpy.run_path(
-    str(MODULE_PATH), run_name="computational_graph_test"
-)
+MODULE: dict[str, Any] = runpy.run_path(str(MODULE_PATH), run_name="computational_graph_test")
 validate_graph = MODULE["validate_graph"]
 
 
@@ -83,11 +78,7 @@ def _valid_graph() -> dict[str, Any]:
 
 
 def test_checked_in_computational_graph_is_valid() -> None:
-    registry_path = (
-        Path(__file__).resolve().parents[2]
-        / "data"
-        / "computational-graph.yml"
-    )
+    registry_path = Path(__file__).resolve().parents[2] / "data" / "computational-graph.yml"
     data = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
 
     errors = validate_graph(data, MODULE["published_page_ids"]())
