@@ -304,3 +304,29 @@ Decision: keep both levels, one grammar per level.
 `scripts/site-browser-review.mjs` asserts the numbered stage labels and the absence of chevron separators inside the guided context. Validation gap recorded for the owner: the Chromium review runs only on `review/site-browser-qa-*` branches, never on `main` deployments, which is why this near-duplicate reached production; extending the workflow trigger is a separate decision.
 
 Honest limits: Python CI, Quarto render and the Chromium review were not executed in this session; the changes are source-level and need the standard checks on the branch before merge.
+
+## 9. Scope-driven Quarto hierarchy pilot (2026-11-06)
+
+The Understand sidebar has been reorganized on branch `navigation/scope-driven-understand-sidebar` to reflect the module scopes in the canonical topology in `docs/learning-path.md`. This changes the native Quarto site-location breadcrumb because that breadcrumb is derived from sidebar ancestry. It does **not** change the guided-route membership renderer.
+
+| Curriculum scope | Quarto section | Canonical page placement |
+|---|---|---|
+| Orientation | Orientation | LLM panorama |
+| Shared core → text input | Input: text and tokens | Text/data; tokenization |
+| Shared core → representations | Representations | Embedding space; positional encoding; contextualized representations |
+| Shared core → Transformer computation | Transformer computation | Transformer overview; Q/K/V; scaled attention; causal masking |
+| Shared core → prediction | Prediction | Logits; probabilities |
+| Inference | Inference and generation | Generation |
+| Scoring | Observed-target scoring | Likelihood; entropy; cross-entropy |
+| Training | Training | Loss; gradients |
+
+### Placement decisions and boundaries
+
+- **Generation has one site location under Inference.** Its early orientation and later prediction appearances remain reader-route contexts, not duplicate sidebar parents. The generated guided-route context preserves its explicit stage memberships.
+- **Cross-entropy has one site location under Scoring.** Its role in the training objective is a cross-module connection, not a reason to duplicate the page under Training. The loss and gradients pages remain under Training and should link back to the canonical scoring explanation where needed.
+- **Training examples and corpus preparation remain under Build.** Their operational role in G1b/G2 is distinct from the conceptual Training module; they must not be moved into the Understand sidebar merely to make the module table appear complete.
+- **Evaluation remains under Practice & experiment.** Its cross-cutting role does not justify turning it into a final mandatory child of Training.
+- **Deepen and Reference remain separate destinations.** Their pages are not nested under a core module merely because they deepen one of its concepts.
+- The Quarto hierarchy is a site-location projection, not a prerequisite graph. The generated pedagogical context remains a separate projection of `data/guided-route.yml`; page `hierarchy` remains conceptual containment; `suggested_route` remains a recommended transition.
+
+This is a source-level pilot. It does not yet establish rendered breadcrumb quality, mobile behavior, keyboard/screen-reader usability, or learner comprehension. Validate the bilingual rendered site before generalizing the approach to other destinations.
