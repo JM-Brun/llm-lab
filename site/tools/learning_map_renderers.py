@@ -626,7 +626,11 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       var importance = copy.importanceLevels[concept.importance];
       if (importance) {
         metadata.appendChild(
-          el("span", "map-concept-tag map-concept-importance", copy.importanceLabel + ": " + importance)
+          el(
+            "span",
+            "map-concept-tag map-concept-importance",
+            copy.importanceLabel + ": " + importance
+          )
         );
       }
       (concept.domains || []).forEach(function (domainId) {
