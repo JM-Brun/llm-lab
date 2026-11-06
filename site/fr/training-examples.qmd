@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/training-examples"
-scope: "Couvre la transformation d’un flux de tokens en exemples entrée-cible autorégressifs : décalage d’un token, fenêtres de contexte et stride, packing et frontières de documents, padding, masques d’attention et de loss, et dimensions des tenseurs. La page s’arrête à la construction correcte des lots d’entraînement, sans dériver les objectifs probabilistes et d’optimisation."
-purpose: "Construire des lots entrée-cible alignés à partir d’identifiants de tokens, distinguer les choix de fenêtrage et de masquage, vérifier les dimensions des tenseurs et diagnostiquer les erreurs courantes de frontière ou d’alignement qui modifieraient l’objectif d’entraînement."
+scope: "Couvre la transformation d’un flux de tokens en exemples entrée-cible autorégressifs et la stratégie de conditionnement par teacher forcing : décalage d’un token, fenêtres de contexte et stride, packing et frontières de documents, padding, masques d’attention et de loss, et dimensions des tenseurs. La page s’arrête à la construction et à l'interprétation des exemples, sans implémenter la boucle d'entraînement ni dériver les objectifs d'optimisation."
+purpose: "Construire des exemples entrée-cible alignés à partir d’identifiants de tokens, expliquer comment le teacher forcing conditionne les prédictions sur le préfixe observé, distinguer les choix de fenêtrage et de masquage, et diagnostiquer les erreurs d’alignement qui modifieraient l’objectif d’entraînement."
 suggested_route:
   previous: "fr/corpus-preparation"
   next: null
@@ -29,6 +29,7 @@ Un modèle autorégressif apprend à prédire le prochain token à partir du con
 ## Objectifs
 
 - Construire une paire entrée-cible décalée d’un token.
+- Expliquer le teacher forcing et le distinguer de la réinjection des tokens générés à l’inférence.
 - Distinguer longueur de contexte, stride, taille du lot et taille du vocabulaire.
 - Comparer fenêtres glissantes et séquences packées.
 - Distinguer frontière de document, masque d’attention et masque de perte.
@@ -62,6 +63,16 @@ Entrée et cible ont la même longueur. La cible est décalée d’une position 
 À la position 0 du premier exemple, le modèle reçoit le token `8` et doit prédire `3` ; à la position 2, il reçoit le contexte `[8, 3, 3]` et prédit `9`. Le même identifiant peut se répéter : l'alignement dépend de la position dans le flux, pas de l'unicité des valeurs.
 
 </details>
+
+### Teacher forcing : utiliser le préfixe observé pendant l'entraînement
+
+Dans l'entraînement autorégressif standard, le modèle reçoit les tokens observés du corpus comme contexte et prédit les tokens suivants. Pour une paire décalée `x = [t0, …, t(L−1)]` et `y = [t1, …, tL]`, le logit à la position `i` est comparé à la cible `y[i]`.
+
+On parle de **teacher forcing** parce que le préfixe fourni au modèle est le préfixe de référence, issu des données, et non une suite de tokens générés par le modèle. Le masque causal reste indispensable : à la position `i`, le calcul ne peut utiliser que `x[0]` à `x[i]`, jamais les tokens futurs. Le modèle peut ainsi traiter les positions de la séquence dans une même passe avant, puis calculer une perte sur les cibles décalées.
+
+Le teacher forcing est une **stratégie de conditionnement**. Ce n'est ni l'objectif de prédiction, ni la fonction de perte, ni l'optimiseur. L'objectif usuel est exprimé par la cross-entropie ou la NLL sur les cibles alignées. À l'[inférence](generation.qmd), les tokens de référence ne sont pas disponibles : le token sélectionné par le modèle est ajouté au contexte pour la prédiction suivante.
+
+La fonction de référence `sliding_input_target_pairs` construit uniquement les fenêtres et les cibles décalées ; elle ne réalise ni passe avant entraînable, ni teacher forcing exécuté, ni mise à jour des paramètres. Cette distinction est conceptuelle et décrit le contrat des exemples d'entraînement.
 
 ## 2. Fenêtres glissantes et stride
 
