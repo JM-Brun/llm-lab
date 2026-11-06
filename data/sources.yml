@@ -2186,7 +2186,7 @@ sources:
       contribution_types: [theory, architecture, pedagogy]
       audiences: [learner, practitioner]
     scan_status: partially-scanned
-    integration_status: not-reviewed
+    integration_status: reviewed
     scan_history:
       - accessed_at: "2026-11-06"
         status: partially-scanned
