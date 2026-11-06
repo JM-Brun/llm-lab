@@ -404,6 +404,17 @@ relation_types:
     descriptions:
       fr: "La source est normalisée par la transformation cible."
       en: "The source is normalized by the target transformation."
+  contrasts-with:
+    direction: symmetric
+    family: associative
+    transitive: false
+    acyclic: false
+    learning_dependency: false
+    inverse: null
+    labels: {fr: "est à distinguer de", en: "contrasts with"}
+    descriptions:
+      fr: "La source et la cible doivent être distinguées pour éviter une confusion conceptuelle ; cela n'implique pas qu'elles soient des opposés."
+      en: "The source and target should be distinguished to prevent conceptual confusion; this does not imply that they are opposites."
   evaluated-by:
     direction: directed
     family: evaluative
@@ -510,4 +521,6 @@ relations:
   - {from: sequence-likelihood, type: contributes-to, to: held-out-evaluation}
   - {from: cross-entropy, type: contributes-to, to: held-out-evaluation}
   - {from: conditional-distribution, type: evaluated-by, to: held-out-evaluation}
+  - {from: conditional-distribution, type: evaluated-by, to: cross-entropy}
+  - {from: prefill, type: contrasts-with, to: teacher-forcing}
 
