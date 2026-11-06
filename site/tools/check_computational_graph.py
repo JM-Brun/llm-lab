@@ -152,7 +152,7 @@ def validate_graph(
 
     for identifier, node in nodes.items():
         where = f"nodes.{identifier}"
-        if node.get("kind") not in NODE_KINDS:
+        if not isinstance(node.get("kind"), str) or node.get("kind") not in NODE_KINDS:
             errors.append(f"{where}.kind: expected one of {sorted(NODE_KINDS)}")
         memberships = node.get("branches")
         if not isinstance(memberships, list) or not memberships:
@@ -235,9 +235,21 @@ def validate_graph(
         ):
             errors.append(f"{where}: optional: true requires produces or uses-optional")
 
-        if isinstance(source, str) and source in nodes and isinstance(target, str) and target in nodes:
-            shared_branches = set(nodes[source].get("branches", [])) & set(
-                nodes[target].get("branches", [])
+        if (
+            isinstance(source, str)
+            and source in nodes
+            and isinstance(target, str)
+            and target in nodes
+        ):
+            source_branches = nodes[source].get("branches", [])
+            target_branches = nodes[target].get("branches", [])
+            shared_branches = (
+                set(source_branches) & set(target_branches)
+                if all(
+                    isinstance(branch_id, str)
+                    for branch_id in (*source_branches, *target_branches)
+                )
+                else set()
             )
             if not shared_branches:
                 errors.append(
@@ -251,7 +263,7 @@ def validate_graph(
             "edges: a directed cycle exists outside explicitly marked feedback/repeated edges"
         )
 
-    views, view_ids = _unique_records(data.get("views"), "views", errors)
+    views, _ = _unique_records(data.get("views"), "views", errors)
     for identifier, view in views.items():
         where = f"views.{identifier}"
         branch_id = view.get("branch")
