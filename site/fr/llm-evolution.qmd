@@ -75,7 +75,7 @@ Le **post-entraînement** regroupe plusieurs familles de procédures qui adapten
 
 Ces méthodes ne sont ni synonymes ni systématiquement utilisées ensemble. Leurs détails, leurs variantes et leurs compromis méritent des pages dédiées. Il faut aussi éviter d'attribuer une méthode précise à une génération lorsque la documentation publique ne la confirme pas.
 
-Le post-entraînement ne remplace pas le modèle prédictif de base : il modifie les paramètres ou la manière dont le modèle est entraîné afin d'orienter ses sorties.
+Le post-entraînement ne remplace pas le modèle prédictif de base : il modifie les paramètres ou la manière dont le modèle est entraîné afin d'orienter ses sorties. Pour revoir les exemples de prédiction et le teacher forcing, consulter [les exemples d'entraînement](training-examples.qmd) et [la chaîne mathématique de l'entraînement](mathematical-foundations.qmd).
 
 ## 3. De la modalité texte aux modèles multimodaux
 
