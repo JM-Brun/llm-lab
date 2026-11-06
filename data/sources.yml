@@ -2157,3 +2157,51 @@ sources:
       concepts: []
       audit_records:
         - docs/source-reviews/aiedge-llm-distillation-2026-11.md
+
+  - id: aiedge-how-cuda-graphs-speed-up-llm-inference
+    title: "How CUDA Graphs Speed Up LLM Inference"
+    creators: ["Damien Benveniste"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://newsletter.theaiedge.io/p/how-cuda-graphs-speed-up-llm-inference"
+    publisher: "The AiEdge Newsletter"
+    publication_date: "2026-10-30"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [architectures-mechanisms]
+      tags:
+        - topic:cuda-graphs
+        - topic:llm-inference
+        - method:graph-replay
+        - ecosystem:vllm
+      concept_ids: [prefill, decode-step, kv-cache]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [theory, architecture, pedagogy]
+      audiences: [learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: not-reviewed
+    scan_history:
+      - accessed_at: "2026-11-06"
+        status: partially-scanned
+        inspected_scope:
+          - "Search-indexed article text: title, author, date, subtitle, introductory explanation and summary"
+          - "Search-indexed explanation of graph replay, changing buffer values, stable input addresses and dynamic LLM state"
+          - "Article section headings and teaching sequence exposed by a syndicated mirror; mirror used only to recover the table of contents"
+        limitations:
+          - "Direct canonical page retrieval returned a cache miss."
+          - "Full article body, detailed technical sections, code, references and comments were not directly inspected."
+          - "The syndicated mirror is secondary retrieval evidence; its text was not treated as the canonical article."
+          - "Cover and in-body figures were not retrieved or visually inspected; figure rights remain unknown."
+          - "No performance measurements or numerical speedup claims were available in the inspected text."
+    related:
+      pages: [fr/generation, en/generation]
+      concepts: [prefill, decode-step, kv-cache]
+      audit_records:
+        - docs/source-reviews/aiedge-cuda-graphs-2026-11.md
