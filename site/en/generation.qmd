@@ -46,6 +46,10 @@ An LLM does not write text in one block: it produces **one token at a time**. At
 4. **Append the token and repeat.** The selected token is added to the context, and the loop returns to step 2, subject to the context limit.
 5. **Stop.** Generation stops on an explicit criterion — an end-of-sequence token, a maximum length, or a rule imposed by the application — never because the model "finished thinking".
 
+## Computational view of the generation loop
+
+{{< include ../includes/generated-computational-graph-en-generation.qmd >}}
+
 ## Prefill and decode: two phases of inference
 
 The first pass over the prompt and the later passes over generated tokens have different roles. In inference systems, the generation loop is commonly described in two phases:
