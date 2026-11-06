@@ -152,7 +152,7 @@ No new relation type or graph registry is introduced. A complete review of all 6
 
 ## Follow-up review of the 42 relations added after the original inventory — 2026-11-06
 
-After PR #609, the canonical registry contains 68 relations: the 26 relations in the original inventory and 42 later additions. The 42 additions were reviewed against their endpoint definitions, relation-type descriptions, and the separate computational spine. This is a semantic review of the selected concept graph, not a claim that it is a complete tensor-level execution DAG.
+After PR #609, the registry contained 68 relations. This follow-up removes one overgeneralized edge from the original 26-edge inventory; the current branch therefore contains 67 relations: 25 retained edges from that historical inventory and 42 later additions. The 42 additions were reviewed against their endpoint definitions, relation-type descriptions, and the separate computational spine. This is a semantic review of the selected concept graph, not a claim that it is a complete tensor-level execution DAG.
 
 ### Review of the 42 additional relations
 
@@ -212,4 +212,4 @@ Two earlier edges were re-examined against the narrower definitions and the comp
 
 - Decide whether edge 9 should be removed or rewritten after clarifying whether `training-objective` names the task, the loss function, or their combination. Do not silently reinterpret `part-of`.
 - Keep the distinction between the concept graph and the computational graph: the latter supplies the explicit differentiation and final-hidden-state operations.
-- The review is complete for the current 68 relation assertions at the source-semantic level, subject to the one explicitly unresolved edge above. Rendered graph usability, accessibility, and learner validation remain separate gates.
+- The review covers all 67 current relation assertions at the source-semantic level: 25 retained edges from the original inventory plus the 42 later additions. One explicitly unresolved edge remains (row 9 above). Rendered graph usability, accessibility, and learner validation remain separate gates.
