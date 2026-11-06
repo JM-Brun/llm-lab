@@ -601,7 +601,6 @@ relations:
   - {from: softmax, type: evaluated-by, to: cross-entropy}
   - {from: training-objective, type: evaluated-by, to: cross-entropy}
   - {from: softmax, type: produces, to: conditional-distribution}
-  - {from: next-token-prediction, type: part-of, to: training-objective}
   - {from: conditional-distribution, type: contributes-to, to: sequence-likelihood}
   - {from: observed-target, type: contributes-to, to: sequence-likelihood}
   - from: conditional-distribution
