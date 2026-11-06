@@ -47,7 +47,7 @@ The `role` is descriptive metadata, not another graph ontology. New roles should
 
 ### Edge contract
 
-An edge has a stable `id`, a `from` node, a controlled `type`, and a `to` node. The relation definitions explain the direction and meaning.
+An edge has a stable `id`, a `from` node, a controlled `type`, and a `to` node. The relation definitions explain the direction and meaning. Rendered labels are phrased to read along the arrow from source to target (for example, a data node is “consumed by” the operation it points to).
 
 Optional edge flags are deliberately narrow:
 
