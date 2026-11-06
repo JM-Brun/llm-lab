@@ -82,7 +82,7 @@ La préparation du contexte et le calcul du modèle produisent une **distributio
 | Branche | Usage de la distribution | Paramètres |
 |---|---|---|
 | **Génération** | Sélectionner un token, l'ajouter au contexte et répéter la prédiction ; voir [Générer du texte](generation.qmd) | Fixes |
-| **Scoring / évaluation** | Évaluer la probabilité d'un token observé, puis agréger des scores sur des données tenues à l'écart ; voir [Vraisemblance](vraisemblance.qmd) | Fixes |
+| **Scoring / évaluation** | Scorer une cible observée (p. ex. log-vraisemblance/NLL) ou une sortie générée, puis agréger des métriques adaptées sur des données tenues à l'écart ; voir [Vraisemblance](vraisemblance.qmd) | Fixes |
 | **Apprentissage** | Comparer les prédictions aux cibles de référence (*teacher forcing*), calculer la loss et les gradients ; voir [Exemples d'entraînement](training-examples.qmd), [Loss](loss.qmd) et [Gradients](gradients.qmd) | Modifiés à l'étape de mise à jour |
 
 Le scoring d'une cible et l'évaluation d'un modèle ne sont pas synonymes : le premier calcule une probabilité conditionnelle ; la seconde agrège des scores et des métriques sur un protocole de données. L'évaluation réutilise le chemin de scoring sans mettre à jour les paramètres.
