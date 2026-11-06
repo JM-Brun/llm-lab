@@ -1815,3 +1815,14 @@ mjx-container[jax="CHTML"] {
     font-size: 92% !important;
   }
 }
+
+/* Pandoc wraps display math in an inline span; give that wrapper proper block
+   containment so a wide equation can never widen the page. */
+span.math.display, .math.display {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+span.math.inline, .math.inline {
+  max-width: 100%;
+}
