@@ -50,8 +50,8 @@ stages:
       fr: [fr/transformer, fr/queries-keys-values, fr/scaled-dot-product-attention, fr/causal-masking]
       en: [en/transformer, en/queries-keys-values, en/scaled-dot-product-attention, en/causal-masking]
     optional_pages:
-      fr: [fr/cross-attention]
-      en: [en/cross-attention]
+      fr: [fr/cross-attention, fr/attention-score-scaling]
+      en: [en/cross-attention, en/attention-score-scaling]
   - id: prediction
     title:
       fr: "Des états aux prédictions"

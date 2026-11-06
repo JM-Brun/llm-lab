@@ -71,6 +71,7 @@ Connect Q/K/V, attention weights, aggregation, and causal masking without confus
 **Optional resources**
 
 - [Cross-attention: connecting two sequences](cross-attention.html)
+- [Why scale attention scores?](attention-score-scaling.html)
 
 :::
 

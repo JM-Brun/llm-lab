@@ -423,3 +423,18 @@ For every page ID that appears in multiple stage inventories:
 If a preview/revisit is intentional and documented, close the source-level duplication check as **Verified / no defect**. Keep only the rendered UX or learner-comprehension check open when it has not been performed. Do not change local previous/next metadata merely to imitate the order of a guided-stage list.
 
 **Regression case added 2026-11-06:** docs/audits/prediction-stage-2026-11-06.md — generation is intentionally present in both Orientation (system preview) and Prediction (revisit after logits/probabilities). Re-run this case when modifying guided-route membership, preview pages, or cross-stage reuse logic.
+
+
+## Specialist boundaries and delegation
+
+This skill owns **group-level pedagogy and coherence**, not every kind of page verification.
+
+- Use `page-content-audit` for a deep review of one page's internal teaching contract, explanation, examples and learner usability. A group audit may sample those checks on core pages, but must not reproduce a full page-by-page review unless requested.
+- Use `editorial-boundary-audit` when the central question is who owns an explanation, whether content is duplicated, or whether material should move, split or merge.
+- Use `knowledge-architecture-audit` when canonical concepts, typed relations, metadata schemas, route registries or generated graph projections may need to change. Do not infer graph defects from a confusing page sequence alone.
+- Use `scientific-content-audit` when mathematical, statistical, algorithmic, empirical or implementation claims need verification. A group audit may flag a concern, but must not certify a derivation or implementation without that review.
+- Use `rendered-site-audit` when the question concerns actual rendered layout, navigation, responsive behavior, keyboard interaction or accessibility.
+- Use `visual-asset-audit` when the question concerns exact visual-asset identity, provenance, licensing, permission or reuse. Rendered display and asset rights are separate questions.
+- Use `audit-skill-routing` to select and sequence specialist skills when the request spans multiple audit dimensions.
+
+A group audit may identify a specialist risk as a finding. It should state the evidence and route detailed investigation to the owning skill rather than expanding into an unbounded parallel audit. Avoid duplicate findings: maintain one canonical finding ID and reference it from related reports.

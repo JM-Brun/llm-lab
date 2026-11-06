@@ -21,7 +21,7 @@ const cases = [
     ...testCase, page: "learning-map.html", kind: "learning-map",
   })),
   ...routeContextCases.flatMap(testCase =>
-    ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "cross-attention.html", "logits.html", testCase.lang === "fr" ? "probabilites.html" : "probabilities.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "decoding-strategies.html", "cross-entropy.html", "loss.html", "gradients.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
+    ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "attention-score-scaling.html", "cross-attention.html", "logits.html", testCase.lang === "fr" ? "probabilites.html" : "probabilities.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "decoding-strategies.html", "cross-entropy.html", "loss.html", "gradients.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
       ...testCase, page, kind: "route-context",
     }))
   ),
@@ -506,6 +506,7 @@ for (const testCase of cases) {
           "queries-keys-values.html": "guided-stage-computation",
           "scaled-dot-product-attention.html": "guided-stage-computation",
           "causal-masking.html": "guided-stage-computation",
+          "attention-score-scaling.html": "guided-stage-computation",
           "cross-attention.html": "guided-stage-computation",
           "logits.html": "guided-stage-prediction",
           "probabilities.html": "guided-stage-prediction",
@@ -524,7 +525,7 @@ for (const testCase of cases) {
         }[pagePath];
         const optionalPages = new Set([
           "unicode-text.html", "tokenizer-design-evaluation.html", "tensors.html", "rope.html",
-          "cross-attention.html", "decoding-strategies.html", "scaling-laws.html",
+          "cross-attention.html", "attention-score-scaling.html", "decoding-strategies.html", "scaling-laws.html",
           "transformer-architectures.html", "llm-limits.html",
         ]);
         const optionalRole = context.locator(".guided-page-context__role");

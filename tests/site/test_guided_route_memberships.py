@@ -39,6 +39,11 @@ def test_membership_projection_preserves_core_optional_and_multiple_contexts(
         ("representations", "core")
     ]
 
+    optional_attention_depth = f"{language}/attention-score-scaling"
+    assert [(item.stage_id, item.role) for item in memberships[optional_attention_depth]] == [
+        ("computation", "optional")
+    ]
+
     assert f"{language}/build-path" not in memberships
     practice_page = (
         f"{language}/evaluation-experimentale"

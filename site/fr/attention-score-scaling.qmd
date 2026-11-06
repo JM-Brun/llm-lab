@@ -21,6 +21,8 @@ related: ["fr/probabilites"]
 tags: ["type:deep-dive", "destination:deepen", "topic:attention-score-scaling", "level:advanced", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-attention-score-scaling.qmd >}}
+
 ::: {.chapter-lead}
 Cette page est un **approfondissement avancé** de [l'attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd). Elle développe une question que la leçon principale traite en une phrase : pourquoi diviser les scores par $\sqrt{d_k}$, et que vaut cette justification une fois ses hypothèses rendues explicites ?
 :::

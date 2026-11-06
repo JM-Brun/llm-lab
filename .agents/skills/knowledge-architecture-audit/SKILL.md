@@ -135,3 +135,18 @@ For each iteration, report:
 8. **Residual risks** and next smallest useful step.
 
 State confidence and distinguish evidence from inference. Do not repeat a previous audit wholesale: update the matrix and findings based on the changed files and current branch state.
+
+
+## Specialist boundaries and delegation
+
+This skill owns **formal information architecture and machine-checkable invariants**. It does not certify the truth or reuse rights of the knowledge and media represented by that architecture.
+
+- Use `scientific-content-audit` to verify the correctness, assumptions, scope and evidence for scientific claims or relations.
+- Use `page-group-audit` for learner-facing sequence, group membership, transitions and cross-destination coherence.
+- Use `editorial-boundary-audit` for canonical explanatory ownership, overlap, duplication and relocation decisions.
+- Use `page-content-audit` for the internal pedagogical quality of an individual page.
+- Use `rendered-site-audit` for actual rendered route, layout, keyboard and accessibility behavior.
+- Use `visual-asset-audit` for asset provenance, licence and permitted reuse; graph validity does not establish image rights.
+- Use `audit-skill-routing` when a request spans these dimensions.
+
+A valid schema, graph edge or passing validator proves structural conformance only; it does not prove that a concept definition, scientific statement or external visual licence is correct. Record these distinctions in findings and validation reports.
