@@ -59,6 +59,10 @@ Un **cache KV** est une optimisation de l’inférence, pas une condition de val
 La boucle de référence dans [`generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py) exécute une passe avant sur la fenêtre de contexte courante à chaque étape de génération. Elle ne possède volontairement **pas de cache KV** et recalcule donc l’attention sur la fenêtre courante. Le premier appel joue le rôle du prefill du prompt ; les appels suivants réalisent le decode en recalculant le contexte croissant. Il s’agit d’une implémentation pédagogique transparente, pas d’un moteur de serving optimisé. Pour les mécanismes du cache et ses compromis mémoire, voir le [guide Hugging Face sur le cache KV](https://huggingface.co/docs/transformers/main/en/kv_cache).
 :::
 
+**Pour approfondir**
+- [Agrawal et al. (2023), *SARATHI: Efficient LLM Inference by Piggybacking Decodes with Chunked Prefills*](https://arxiv.org/abs/2308.16369), en particulier la section 2.2, formalise la distinction prefill/decode, le traitement parallèle du prompt et la réutilisation des clés et valeurs mises en cache. Ses résultats de performance dépendent du système de serving et du matériel étudiés.
+- [Hugging Face, stratégies de cache](https://huggingface.co/docs/transformers/main/en/kv_cache) documente les options de cache KV et leurs compromis mémoire/performance.
+
 ### Que recouvre exactement le décodage ?
 
 Le **décodage (*decoding*)** est le traitement qui transforme la sortie du modèle en prochain token. Il commence après la passe avant : le réseau calcule les logits, puis le décodage peut modifier ces scores ou la distribution (par exemple avec une température ou un filtre) avant de sélectionner un token.

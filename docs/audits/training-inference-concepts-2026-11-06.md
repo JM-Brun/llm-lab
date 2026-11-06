@@ -88,16 +88,34 @@ The word “notion” is derived from membership in the canonical concept regist
 
 No new page tags such as `notion:` or `domain:` are added to Quarto `keywords`. The existing six page-tag dimensions remain unchanged. Page-level `domain` is still a single primary discovery classification for Deepen pages; concept-level `domains` remains a many-to-many knowledge membership. Concept `importance` is not copied to page `level`.
 
+## Source-to-claim audit
+
+The source catalogue now records the following evidence and limitations. These sources serve different purposes; none should be treated as interchangeable proof for every statement.
+
+| Claim used in the lessons | Source and locator | What it supports | Boundary / qualification |
+|---|---|---|---|
+| GPT training uses shifted targets and obtains a next-token distribution at each input position | Raschka, *Build a Large Language Model (From Scratch)*, Chapter 5, especially §5.1.2 and the companion code | GPT-specific input/target alignment, per-position logits, loss and pretraining workflow | The chapter demonstrates the mechanism; it does not establish that the author names it *teacher forcing*. |
+| Training uses true previous tokens while inference uses model-generated previous tokens | Bengio et al. (2015), *Scheduled Sampling*, §1, §2.3–2.4 | The general sequence-prediction distinction and the rationale for scheduled sampling | The paper studies recurrent networks and 2015 sequence tasks. It supports the general conditioning distinction, not Transformer-specific implementation or a universal mitigation recommendation. |
+| The consequences of exposure bias should be stated cautiously | Schmidt (2019), *Generalization in Generation*, abstract and bibliographic record | Frames exposure bias as a train–test discrepancy and discusses the debate over its consequences and countermeasures | Only the abstract and metadata were inspected in this pass; the lesson therefore avoids claims about the paper's detailed experiments or a settled consensus. |
+| LLM inference has a prompt-prefill phase and an iterative decode phase | Agrawal et al. (2023), *SARATHI*, §2.2, pp. 2–3 | Prefill processes prompt positions in parallel; decode processes the newly generated token; cached K/V avoids recomputing previous projections | The paper is a serving-systems study. Its throughput, utilization and latency measurements are hardware/workload-specific and are not repeated as universal properties in the lesson. |
+| KV caching is an optional inference optimization with implementation and memory trade-offs | Hugging Face Transformers, *Cache strategies*, “Default cache” and cache-strategy overview | Cache reuse, DynamicCache, disabling cache, and the existence of alternative cache strategies | The page is versioned on `main`; only the overview and introductory examples were inspected, not every cache class or model-specific behavior. |
+
+### Source records added or updated
+
+- Added `sebastian-raschka-llms-from-scratch-ch05`, `bengio-scheduled-sampling-2015`, `schmidt-exposure-bias-2019`, `agrawal-sarathi-prefill-decode-2023`, and `huggingface-transformers-kv-cache-strategies` to `data/sources.yml`.
+- Updated the existing Hugging Face cache-explanation record to connect it to the generation lesson and the autoregressive-generation/decode concepts.
+- The source catalogue uses controlled source types, domain themes and retrieval tags. Tags remain retrieval facets; canonical concept identity is carried through `concept_ids`, not duplicated as tags.
+
 ## Files changed in this increment
 
-- `site/fr/training-examples.qmd`, `site/en/training-examples.qmd`
+- `site/fr/training-examples.qmd`, `site/en/training-examples.qmd` (including source-to-claim references)
 - `site/fr/generation.qmd`, `site/en/generation.qmd`
 - `site/fr/glossary.qmd`, `site/en/glossary.qmd`
-- `data/concepts.yml`, `data/guided-route.yml`
+- `data/concepts.yml`, `data/guided-route.yml`, `data/sources.yml`
 - `site/tools/check_concept_registry.py`, `site/tools/build_learning_map.py`, `site/tools/learning_map_renderers.py`, `site/tools/export_knowledge_graph.py`, `site/tools/check_knowledge_graph_rendered.py`
 - `site/styles.scss`
 - `tests/site/test_concept_registry.py`, `tests/site/test_learning_map.py`, `tests/site/test_knowledge_graph_export.py`
-- `docs/learning-path.md`, `docs/page-metadata-schema.md`, `docs/knowledge-graph-standards.md`
+- `docs/learning-path.md`, `docs/page-metadata-schema.md`, `docs/knowledge-graph-standards.md`, `docs/audits/training-inference-concepts-2026-11-06.md`
 
 ## Validation required before merge
 

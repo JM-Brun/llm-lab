@@ -84,6 +84,12 @@ This makes position-wise predictions parallelizable during training: the model d
 | Parameter updates | Part of the training procedure | None during ordinary generation |
 
 At inference, the model cannot consult the reference continuation: each selected token becomes part of the context for the next prediction. This difference can create **exposure bias**: the prefixes encountered at inference may differ from the ground-truth prefixes used during training. It is a potential train–inference mismatch, not a guarantee that errors always compound or that teacher forcing is inherently defective. Its practical impact depends on the model, data, task, and evaluation protocol. See the [generation lesson](generation.qmd) for the inference loop.
+::: {.callout-note title="Sources and scope"}
+- [Raschka, *Build a Large Language Model (From Scratch)*, Chapter 5](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch05) demonstrates GPT-specific shifted targets, per-position logits, loss calculation, and pretraining.
+- [Bengio et al. (2015), *Scheduled Sampling for Sequence Prediction with Recurrent Neural Networks*](https://papers.nips.cc/paper_files/paper/2015/hash/e995f98d56967d946471af29d7bf99f1-Abstract.html) describes the distinction between ground-truth previous tokens during training and model-generated tokens at inference. Its experiments concern recurrent networks, so use it for the general sequence-conditioning distinction, not as direct evidence about Transformer implementation.
+- [Schmidt (2019), *Generalization in Generation: A closer look at Exposure Bias*](https://aclanthology.org/D19-5616/) discusses the interpretation and consequences of this train–inference mismatch. The lesson therefore presents exposure bias as a possible mismatch, not an inevitable failure.
+:::
+
 
 ## 2. Sliding windows and stride
 

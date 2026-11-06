@@ -59,6 +59,10 @@ A **KV cache** is an inference optimization, not a requirement for autoregressiv
 The reference loop in [`generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py) runs a forward pass on the current context window at every generation step. It deliberately has **no KV cache**, so it recomputes attention over the current window. The first call plays the role of prompt prefill; later calls implement decode by recomputing the growing context. This is a transparent teaching implementation, not an optimized serving engine. For cache mechanics and memory trade-offs, see the [Hugging Face KV-cache guide](https://huggingface.co/docs/transformers/main/en/kv_cache).
 :::
 
+**Further reading**
+- [Agrawal et al. (2023), *SARATHI: Efficient LLM Inference by Piggybacking Decodes with Chunked Prefills*](https://arxiv.org/abs/2308.16369), especially §2.2, formalizes the prefill/decode distinction, parallel prompt processing, and reuse of cached keys and values. Its performance results are serving- and hardware-specific.
+- [Hugging Face, Cache strategies](https://huggingface.co/docs/transformers/main/en/kv_cache) documents KV-cache options and their memory/performance trade-offs.
+
 ### What exactly does decoding include?
 
 **Decoding** is the procedure that turns the model output into the next token. It starts after the forward pass: the network computes logits, then decoding may transform those scores or the distribution (for example, with temperature or a filter) before selecting a token.
