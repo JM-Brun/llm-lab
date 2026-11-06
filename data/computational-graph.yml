@@ -404,8 +404,8 @@ nodes:
     role: scoring
     labels: {fr: "Calcul du log de la probabilité cible", en: "Target log-probability computation"}
     descriptions:
-      fr: "Applique le logarithme à la probabilité de la cible observée."
-      en: "Applies the logarithm to the observed target probability."
+      fr: "Applique le logarithme à la probabilité de la cible observée ; une implémentation stable peut calculer directement le log-softmax depuis les logits."
+      en: "Applies the logarithm to the observed target probability; a numerically stable implementation may compute log-softmax directly from logits."
     branches: [observed-target-scoring, evaluation, training]
     resources: [fr/vraisemblance, en/likelihood, fr/cross-entropy, en/cross-entropy]
   - id: target-log-probability
