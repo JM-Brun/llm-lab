@@ -487,76 +487,76 @@ for (const testCase of cases) {
           } finally {
             await routeMapPage.close();
           }
-      }
-      const availableStageAnchors = stageAnchorCache.get(lang);
-      item.routeContext.stageAnchorsResolve = stageFragments.every(id => availableStageAnchors.has(id));
-      if (!item.routeContext.stageAnchorsResolve) throw new Error("guided-route stage link points to a missing anchor");
-      const multiStagePages = {
-        "generation.html": ["guided-stage-orientation", "guided-stage-inference"],
-        "cross-entropy.html": ["guided-stage-scoring", "guided-stage-training"],
-      };
-      if (multiStagePages[pagePath]) {
-        const expectedStages = multiStagePages[pagePath];
-        if (!item.routeContext.isMultiple || item.routeContext.navLandmark ||
-            item.routeContext.listItems !== expectedStages.length ||
-            item.routeContext.currentPageMarkers !== 0 ||
-            expectedStages.length !== stageFragments.length ||
-            expectedStages.some(id => !stageFragments.includes(id))) {
-          throw new Error("multi-stage context does not match the page's canonical and optional route memberships");
         }
-        const labelledBy = await context.getAttribute("aria-labelledby");
-        item.routeContext.accessibleNameReferenceResolves = Boolean(
-          labelledBy && await page.locator(`#${labelledBy}`).count() === 1
-        );
-        if (!item.routeContext.accessibleNameReferenceResolves) {
-          throw new Error("multi-stage context has no valid accessible name reference");
-        }
-      } else {
-        const expectedStage = {
-          "llm-overview.html": "guided-stage-orientation",
-          "text-data.html": "guided-stage-text-input",
-          "tokenization-strategies.html": "guided-stage-text-input",
-          "unicode-text.html": "guided-stage-text-input",
-          "tokenizer-design-evaluation.html": "guided-stage-text-input",
-          "embedding-space.html": "guided-stage-representations",
-          "positional-encoding.html": "guided-stage-representations",
-          "contextualized-representations.html": "guided-stage-representations",
-          "tensors.html": "guided-stage-representations",
-          "rope.html": "guided-stage-representations",
-          "transformer.html": "guided-stage-computation",
-          "queries-keys-values.html": "guided-stage-computation",
-          "scaled-dot-product-attention.html": "guided-stage-computation",
-          "causal-masking.html": "guided-stage-computation",
-          "attention-score-scaling.html": "guided-stage-computation",
-          "cross-attention.html": "guided-stage-computation",
-          "logits.html": "guided-stage-prediction",
-          "probabilities.html": "guided-stage-prediction",
-          "probabilites.html": "guided-stage-prediction",
-          "likelihood.html": "guided-stage-scoring",
-          "vraisemblance.html": "guided-stage-scoring",
-          "decoding-strategies.html": "guided-stage-inference",
-          "loss.html": "guided-stage-training",
-          "gradients.html": "guided-stage-training",
-          "scaling-laws.html": "guided-stage-training",
-          "transformer-architectures.html": "guided-stage-orientation",
-          "llm-limits.html": "guided-stage-orientation",
-        }[pagePath];
-        const optionalPages = new Set([
-          "unicode-text.html", "tokenizer-design-evaluation.html", "tensors.html", "rope.html",
-          "cross-attention.html", "attention-score-scaling.html", "decoding-strategies.html", "scaling-laws.html",
-          "transformer-architectures.html", "llm-limits.html",
-        ]);
-        const optionalRole = context.locator(".guided-page-context__role");
-        const optionalRoleText = await optionalRole.innerText().catch(() => "");
-        const roleMatches = optionalPages.has(pagePath)
-          ? /optional|facultatif|facultative/i.test(optionalRoleText)
-          : await optionalRole.count() === 0;
-        if (!expectedStage || item.routeContext.isMultiple || !item.routeContext.navLandmark ||
-            item.routeContext.currentPageMarkers !== 0 || stageFragments.length !== 1 ||
-            stageFragments[0] !== expectedStage || !item.routeContext.accessibleLabel ||
-            item.routeContext.visibleCurrentPageText.includes(item.h1) || !roleMatches) {
-          throw new Error("single-stage context repeats the page heading, misstates its route stage/role, or lacks the expected labelled stage link");
-        }
+        const availableStageAnchors = stageAnchorCache.get(lang);
+        item.routeContext.stageAnchorsResolve = stageFragments.every(id => availableStageAnchors.has(id));
+        if (!item.routeContext.stageAnchorsResolve) throw new Error("guided-route stage link points to a missing anchor");
+        const multiStagePages = {
+          "generation.html": ["guided-stage-orientation", "guided-stage-inference"],
+          "cross-entropy.html": ["guided-stage-scoring", "guided-stage-training"],
+        };
+        if (multiStagePages[pagePath]) {
+          const expectedStages = multiStagePages[pagePath];
+          if (!item.routeContext.isMultiple || item.routeContext.navLandmark ||
+              item.routeContext.listItems !== expectedStages.length ||
+              item.routeContext.currentPageMarkers !== 0 ||
+              expectedStages.length !== stageFragments.length ||
+              expectedStages.some(id => !stageFragments.includes(id))) {
+            throw new Error("multi-stage context does not match the page's canonical and optional route memberships");
+          }
+          const labelledBy = await context.getAttribute("aria-labelledby");
+          item.routeContext.accessibleNameReferenceResolves = Boolean(
+            labelledBy && await page.locator(`#${labelledBy}`).count() === 1
+          );
+          if (!item.routeContext.accessibleNameReferenceResolves) {
+            throw new Error("multi-stage context has no valid accessible name reference");
+          }
+        } else {
+          const expectedStage = {
+            "llm-overview.html": "guided-stage-orientation",
+            "text-data.html": "guided-stage-text-input",
+            "tokenization-strategies.html": "guided-stage-text-input",
+            "unicode-text.html": "guided-stage-text-input",
+            "tokenizer-design-evaluation.html": "guided-stage-text-input",
+            "embedding-space.html": "guided-stage-representations",
+            "positional-encoding.html": "guided-stage-representations",
+            "contextualized-representations.html": "guided-stage-representations",
+            "tensors.html": "guided-stage-representations",
+            "rope.html": "guided-stage-representations",
+            "transformer.html": "guided-stage-computation",
+            "queries-keys-values.html": "guided-stage-computation",
+            "scaled-dot-product-attention.html": "guided-stage-computation",
+            "causal-masking.html": "guided-stage-computation",
+            "attention-score-scaling.html": "guided-stage-computation",
+            "cross-attention.html": "guided-stage-computation",
+            "logits.html": "guided-stage-prediction",
+            "probabilities.html": "guided-stage-prediction",
+            "probabilites.html": "guided-stage-prediction",
+            "likelihood.html": "guided-stage-scoring",
+            "vraisemblance.html": "guided-stage-scoring",
+            "decoding-strategies.html": "guided-stage-inference",
+            "loss.html": "guided-stage-training",
+            "gradients.html": "guided-stage-training",
+            "scaling-laws.html": "guided-stage-training",
+            "transformer-architectures.html": "guided-stage-orientation",
+            "llm-limits.html": "guided-stage-orientation",
+          }[pagePath];
+          const optionalPages = new Set([
+            "unicode-text.html", "tokenizer-design-evaluation.html", "tensors.html", "rope.html",
+            "cross-attention.html", "attention-score-scaling.html", "decoding-strategies.html", "scaling-laws.html",
+            "transformer-architectures.html", "llm-limits.html",
+          ]);
+          const optionalRole = context.locator(".guided-page-context__role");
+          const optionalRoleText = await optionalRole.innerText().catch(() => "");
+          const roleMatches = optionalPages.has(pagePath)
+            ? /optional|facultatif|facultative/i.test(optionalRoleText)
+            : await optionalRole.count() === 0;
+          if (!expectedStage || item.routeContext.isMultiple || !item.routeContext.navLandmark ||
+              item.routeContext.currentPageMarkers !== 0 || stageFragments.length !== 1 ||
+              stageFragments[0] !== expectedStage || !item.routeContext.accessibleLabel ||
+              item.routeContext.visibleCurrentPageText.includes(item.h1) || !roleMatches) {
+            throw new Error("single-stage context repeats the page heading, misstates its route stage/role, or lacks the expected labelled stage link");
+          }
       }
       if (["embedding-space.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "logits.html", "cross-entropy.html"].includes(pagePath)) {
         item.routeContext.legacyStepperCount = await page.locator(".pipeline-stepper").count();
