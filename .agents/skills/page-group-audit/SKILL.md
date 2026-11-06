@@ -403,3 +403,23 @@ For any stage mixing destinations or page types:
 A Practice activity may be an intended required component of a stage without being the next conceptual step or depending on the preceding concept. Preserve that distinction in the report and acceptance criteria.
 
 **Regression case added 2026-11-06:** docs/audits/learning-evaluation-group-2026-11-06.md — mixed Understand sequence plus applied evaluation transfer exercise. Re-run this case when modifying group-boundary, transition, or guided-route logic.
+
+
+### L. Detect intentional cross-stage reuse and pedagogical revisits
+
+A canonical page can belong to more than one guided stage without being duplicated conceptually. Common patterns include:
+- an early black-box preview followed by a later detailed revisit;
+- a system overview reused as context for a component stage;
+- one resource serving as a bridge across two conceptual domains.
+
+For every page ID that appears in multiple stage inventories:
+1. List all stage memberships and the role the page plays in each.
+2. Compare each stage objective with the page's actual scope and with the narrative curriculum.
+3. Inspect page-level suggested_route and hierarchy separately from stage membership.
+4. Check the canonical reconciliation/architecture decision before calling repeated membership a duplicate or inconsistency.
+5. Distinguish **intent verified at source level** from **reader interpretation verified in the rendered experience**.
+6. Preserve one canonical page unless evidence shows genuinely different learning outcomes that require separate resources.
+
+If a preview/revisit is intentional and documented, close the source-level duplication check as **Verified / no defect**. Keep only the rendered UX or learner-comprehension check open when it has not been performed. Do not change local previous/next metadata merely to imitate the order of a guided-stage list.
+
+**Regression case added 2026-11-06:** docs/audits/prediction-stage-2026-11-06.md — generation is intentionally present in both Orientation (system preview) and Prediction (revisit after logits/probabilities). Re-run this case when modifying guided-route membership, preview pages, or cross-stage reuse logic.
