@@ -94,6 +94,7 @@ Le parcours principal présente la génération autorégressive et ses opératio
 
 **Question directrice :** quelles régularités empiriques et quelles affirmations sur les capacités sont soutenues par les données ?
 
+- [De GPT-2 aux systèmes LLM contemporains](llm-evolution.qmd) — synthèse transversale des évolutions de l'échelle au post-entraînement, du raisonnement aux systèmes utilisant des outils.
 - [Lois d'échelle : paramètres, données et calcul](scaling-laws.qmd) — relations empiriques entre ressources d'entraînement et perte, et limites d'extrapolation.
 - [Émergence](emergence.qmd) — amélioration graduelle, effets de seuil liés aux métriques et véritables discontinuités.
 
