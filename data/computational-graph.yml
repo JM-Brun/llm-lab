@@ -503,10 +503,10 @@ nodes:
     role: metric
     labels: {fr: "Métriques d'évaluation", en: "Evaluation metrics"}
     descriptions:
-      fr: "Mesures calculées à partir des scores sur les données tenues à l'écart, sans mise à jour des paramètres."
-      en: "Measures computed from scores on held-out data, without parameter updates."
+      fr: "Mesures calculées à partir des scores sur les données tenues à l'écart, sans mise à jour des paramètres ; en modélisation du langage, cela inclut notamment la NLL et la perplexité."
+      en: "Measures computed from scores on held-out data, without parameter updates; in language modeling, these include NLL and perplexity."
     branches: [evaluation]
-    resources: [fr/evaluation-experimentale, en/experimental-evaluation]
+    resources: [fr/loss, en/loss, fr/evaluation-experimentale, en/experimental-evaluation]
   - id: teacher-forcing
     kind: policy
     role: training-context
