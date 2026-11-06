@@ -38,6 +38,9 @@ This glossary gives a concise first definition for terms used across the site. I
 - **Forward pass** — the network computation that transforms the context into representations and logits while keeping model parameters fixed. See [GPT and Transformers](transformer.qmd).
 - **Decoding** — the procedure that uses logits or their distribution to select the next token; it follows the forward pass and is one step in generation. Do not confuse it with a **decoder**, a component of some Transformer architectures. See [Generating text](generation.qmd).
 - **Autoregressive generation** — an iterative process that selects a token, appends it to the context, and repeats until a stopping condition is met. See [Generating text](generation.qmd).
+- **Prefill** — the inference phase that processes the initial prompt as a sequence; logits at its final position are used to select the first generated token. See [Generating text](generation.qmd).
+- **Incremental decode** — the phase after prefill that repeats prediction from the context extended with generated tokens. Do not confuse it with *decoding*, the token-selection rule. See [Generating text](generation.qmd).
+- **KV cache** — a mechanism that retains previously computed attention keys and values to avoid recomputing the prefix during decode; an optional inference optimization.
 - **Context window** — the amount of token context a model can process in a given input.
 
 ## Representations and geometry
