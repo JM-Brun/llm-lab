@@ -120,6 +120,15 @@ nodes:
       en: "Information that lets the model distinguish positions in the sequence."
     branches: [shared-prediction]
     resources: [fr/positional-encoding, en/positional-encoding]
+  - id: forward-computation
+    kind: operation
+    role: model
+    labels: {fr: "Forward pass du modèle", en: "Model forward pass"}
+    descriptions:
+      fr: "Applique les calculs du modèle au contexte courant pour produire les logits de chaque position."
+      en: "Applies the model computation to the current context to produce logits at each position."
+    branches: [shared-prediction, generation, observed-target-scoring, evaluation, training]
+    resources: [fr/transformer, en/transformer, fr/generation, en/generation]
   - id: initial-hidden-states
     kind: data
     role: representation
@@ -355,12 +364,21 @@ nodes:
     branches: [observed-target-scoring, evaluation, training]
     resources: [fr/likelihood, en/likelihood, fr/training-examples, en/training-examples]
   - id: target-probability
+    kind: operation
+    role: scoring
+    labels: {fr: "Extraction de la probabilité cible", en: "Target-probability extraction"}
+    descriptions:
+      fr: "Extrait de la distribution la probabilité correspondant à l'identifiant du token cible observé."
+      en: "Extracts from the distribution the probability corresponding to the observed target-token ID."
+    branches: [observed-target-scoring, evaluation, training]
+    resources: [fr/likelihood, en/likelihood, fr/cross-entropy, en/cross-entropy]
+  - id: target-probability-value
     kind: data
     role: score
     labels: {fr: "Probabilité de la cible", en: "Target probability"}
     descriptions:
-      fr: "Probabilité extraite de la distribution à la position du token cible observé."
-      en: "Probability selected from the distribution at the observed target-token position."
+      fr: "Probabilité attribuée au token cible à la position considérée."
+      en: "Probability assigned to the target token at the position being scored."
     branches: [observed-target-scoring, evaluation, training]
     resources: [fr/likelihood, en/likelihood, fr/cross-entropy, en/cross-entropy]
   - id: sequence-log-likelihood
@@ -576,6 +594,8 @@ edges:
   - {id: e-tokens-id-encoding, from: tokens, type: consumes, to: token-id-encoding}
   - {id: e-id-encoding-ids, from: token-id-encoding, type: produces, to: token-ids}
   - {id: e-ids-context, from: token-ids, type: produces, to: token-context}
+  - {id: e-context-forward, from: token-context, type: consumes, to: forward-computation}
+  - {id: e-forward-logits, from: forward-computation, type: produces, to: logits}
   - {id: e-context-embedding, from: token-context, type: consumes, to: embedding-lookup}
   - {id: e-embedding-vectors, from: embedding-lookup, type: produces, to: token-embeddings}
   - {id: e-embeddings-initial, from: token-embeddings, type: combines, to: initial-hidden-states}
@@ -590,7 +610,6 @@ edges:
   - {id: e-q-scores, from: queries, type: consumes, to: attention-score-computation}
   - {id: e-k-scores, from: keys, type: consumes, to: attention-score-computation}
   - {id: e-score-output, from: attention-score-computation, type: produces, to: attention-scores}
-  - {id: e-score-mask, from: attention-scores, type: consumes, to: causal-mask}
   - {id: e-mask-scores, from: causal-mask, type: constrains, to: masked-attention-scores}
   - {id: e-scores-masked, from: attention-scores, type: combines, to: masked-attention-scores}
   - {id: e-masked-softmax, from: masked-attention-scores, type: consumes, to: attention-softmax}
@@ -610,9 +629,10 @@ edges:
   - {id: e-policy-token, from: decoding-policy, type: produces, to: generated-token}
   - {id: e-token-feedback, from: generated-token, type: feeds-back, to: token-context, feedback: true}
   - {id: e-distribution-target, from: next-token-distribution, type: scores, to: target-probability}
-  - {id: e-target-score, from: observed-target, type: scores, to: target-probability}
-  - {id: e-target-likelihood, from: target-probability, type: aggregates, to: sequence-log-likelihood}
-  - {id: e-target-nll, from: target-probability, type: aggregates, to: token-nll}
+  - {id: e-target-score, from: observed-target, type: conditions, to: target-probability}
+  - {id: e-target-probability-value, from: target-probability, type: produces, to: target-probability-value}
+  - {id: e-target-likelihood, from: target-probability-value, type: aggregates, to: sequence-log-likelihood}
+  - {id: e-target-nll, from: target-probability-value, type: aggregates, to: token-nll}
   - {id: e-nll-reduction, from: token-nll, type: consumes, to: loss-reduction}
   - {id: e-loss-objective, from: loss-reduction, type: produces, to: training-objective}
   - {id: e-objective-gradients, from: training-objective, type: differentiates, to: gradients}
@@ -625,8 +645,8 @@ edges:
   - {id: e-teacher-context, from: teacher-forcing, type: conditions, to: training-context}
   - {id: e-observed-context, from: observed-target, type: conditions, to: training-context}
   - {id: e-training-forward, from: training-context, type: conditions, to: token-context}
-  - {id: e-prefill-forward, from: prefill, type: applies, to: vocabulary-softmax}
-  - {id: e-decode-forward, from: autoregressive-decode, type: applies, to: vocabulary-softmax}
+  - {id: e-prefill-forward, from: prefill, type: applies, to: forward-computation}
+  - {id: e-decode-forward, from: autoregressive-decode, type: applies, to: forward-computation}
   - {id: e-prefill-cache, from: prefill, type: produces, to: kv-cache, optional: true}
   - {id: e-decode-cache, from: kv-cache, type: uses-optional, to: autoregressive-decode}
 
@@ -636,8 +656,8 @@ views:
     descriptions:
       fr: "Du contexte à la distribution conditionnelle, en passant par les représentations et le Transformer."
       en: "From context to the conditional distribution, through representations and the Transformer."
-    nodes: [raw-text-context, tokenization, tokens, token-id-encoding, token-ids, token-context, embedding-lookup, token-embeddings, positional-information, initial-hidden-states, transformer-block-input, contextualized-hidden-states, final-hidden-states, vocabulary-projection, logits, vocabulary-softmax, next-token-distribution]
-    edges: [e-context-tokenization, e-tokenization-tokens, e-tokens-id-encoding, e-id-encoding-ids, e-ids-context, e-context-embedding, e-embedding-vectors, e-embeddings-initial, e-position-initial, e-initial-block-input, e-block-contextualized, e-contextualized-final, e-final-vocab, e-vocab-logits, e-logits-softmax, e-softmax-distribution]
+    nodes: [raw-text-context, tokenization, tokens, token-id-encoding, token-ids, token-context, forward-computation, embedding-lookup, token-embeddings, positional-information, initial-hidden-states, transformer-block-input, contextualized-hidden-states, final-hidden-states, vocabulary-projection, logits, vocabulary-softmax, next-token-distribution]
+    edges: [e-context-tokenization, e-tokenization-tokens, e-tokens-id-encoding, e-id-encoding-ids, e-ids-context, e-context-forward, e-forward-logits, e-context-embedding, e-embedding-vectors, e-embeddings-initial, e-position-initial, e-initial-block-input, e-block-contextualized, e-contextualized-final, e-final-vocab, e-vocab-logits, e-logits-softmax, e-softmax-distribution]
   - id: transformer-block
     labels: {fr: "Intérieur d'un bloc Transformer", en: "Inside a Transformer block"}
     descriptions:
@@ -650,33 +670,33 @@ views:
     descriptions:
       fr: "Sélectionne un token depuis la distribution puis le réinjecte dans le contexte."
       en: "Selects a token from the distribution and feeds it back into the context."
-    nodes: [token-context, next-token-distribution, decoding-policy, generated-token]
+    nodes: [token-context, forward-computation, next-token-distribution, decoding-policy, generated-token]
     edges: [e-distribution-policy, e-policy-token, e-token-feedback]
   - id: observed-target-scoring
     labels: {fr: "Scoring d'une cible observée", en: "Observed-target scoring"}
     descriptions:
       fr: "Compare la distribution à une cible connue pour obtenir sa probabilité et la vraisemblance."
       en: "Compares the distribution with a known target to obtain its probability and likelihood."
-    nodes: [next-token-distribution, observed-target, target-probability, sequence-log-likelihood]
-    edges: [e-distribution-target, e-target-score, e-target-likelihood]
+    nodes: [next-token-distribution, observed-target, target-probability, target-probability-value, sequence-log-likelihood]
+    edges: [e-distribution-target, e-target-score, e-target-probability-value, e-target-likelihood]
   - id: evaluation
     labels: {fr: "Branche évaluation", en: "Evaluation branch"}
     descriptions:
       fr: "Agrège les scores sur des données tenues à l'écart sans modifier les paramètres."
       en: "Aggregates scores on held-out data without changing parameters."
-    nodes: [observed-target, target-probability, sequence-log-likelihood, token-nll, evaluation-metrics]
-    edges: [e-target-score, e-target-likelihood, e-target-nll, e-score-metrics, e-loss-metrics]
+    nodes: [observed-target, target-probability, target-probability-value, sequence-log-likelihood, token-nll, evaluation-metrics]
+    edges: [e-target-score, e-target-probability-value, e-target-likelihood, e-target-nll, e-score-metrics, e-loss-metrics]
   - id: training
     labels: {fr: "Branche apprentissage", en: "Training branch"}
     descriptions:
       fr: "Utilise les préfixes observés, calcule l'objectif, les gradients et la mise à jour des paramètres."
       en: "Uses observed prefixes, computes the objective and gradients, and updates parameters."
-    nodes: [teacher-forcing, training-context, observed-target, token-context, next-token-distribution, target-probability, token-nll, loss-reduction, training-objective, model-parameters, gradients, optimizer-update, updated-parameters]
-    edges: [e-teacher-context, e-observed-context, e-training-forward, e-distribution-target, e-target-score, e-target-nll, e-nll-reduction, e-loss-objective, e-objective-gradients, e-gradients-optimizer, e-params-optimizer, e-optimizer-updated, e-updated-params-forward]
+    nodes: [teacher-forcing, training-context, observed-target, token-context, next-token-distribution, target-probability, target-probability-value, token-nll, loss-reduction, training-objective, model-parameters, gradients, optimizer-update, updated-parameters]
+    edges: [e-teacher-context, e-observed-context, e-training-forward, e-distribution-target, e-target-score, e-target-probability-value, e-target-nll, e-nll-reduction, e-loss-objective, e-objective-gradients, e-gradients-optimizer, e-params-optimizer, e-optimizer-updated, e-updated-params-forward]
   - id: inference-execution
     labels: {fr: "Phases d'exécution de l'inférence", en: "Inference execution phases"}
     descriptions:
       fr: "Distingue le traitement initial du prompt (prefill), le décodage itératif et le cache KV facultatif."
       en: "Distinguishes initial prompt processing (prefill), iterative decode, and the optional KV cache."
-    nodes: [token-context, prefill, autoregressive-decode, kv-cache, next-token-distribution, generated-token]
+    nodes: [token-context, forward-computation, prefill, autoregressive-decode, kv-cache, next-token-distribution, generated-token]
     edges: [e-prefill-forward, e-decode-forward, e-prefill-cache, e-decode-cache, e-token-feedback]
