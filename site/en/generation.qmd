@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/generation"
-scope: "Describes autoregressive inference for an already trained model treated as a black box: context, next-token distribution, decoding rule, token appending, and stopping; Transformer internals and parameter learning are outside its scope."
-purpose: "Readers should be able to step through token-by-token generation, explain why parameters remain fixed during inference, and predict how a decoding rule changes the output without retraining the model."
+scope: "Describes autoregressive inference for an already trained model: context, prefill and incremental-decode phases, next-token distribution, decoding rule, token appending, and stopping; Transformer internals and parameter learning are outside its scope."
+purpose: "Readers should be able to step through token-by-token generation, distinguish prefill and incremental decode from the token-selection decoding rule, explain why parameters remain fixed during inference, and predict how a decoding rule changes the output without retraining the model."
 suggested_route:
   previous: "en/llm-overview"
   next: "en/text-data"
@@ -30,6 +30,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:inference-generat
 By the end of this page, you will be able to:
 - step through autoregressive generation, from the context to the stopping criterion;
 - distinguish the forward pass, decoding, and generation;
+- distinguish prefill and incremental decode execution phases from the decoding rule that selects a token;
 - explain why inference does not update model parameters;
 - predict how greedy selection, sampling, and temperature affect generated text.
 :::
