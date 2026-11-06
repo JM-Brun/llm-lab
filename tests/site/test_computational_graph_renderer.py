@@ -17,6 +17,16 @@ MODULE: dict[str, Any] = runpy.run_path(
 REGISTRY = yaml.safe_load((ROOT / "data" / "computational-graph.yml").read_text(encoding="utf-8"))
 
 
+def test_persistent_spine_is_expanded_but_other_views_remain_collapsed() -> None:
+    registry = MODULE["load_registry"]()
+    persistent = MODULE["render_view"](registry, "persistent-spine", "fr")
+    evaluation = MODULE["render_view"](registry, "evaluation", "fr")
+
+    assert '::: {.callout-note title="Tronc computationnel partagé"}' in persistent
+    assert 'collapse="true"' not in persistent
+    assert 'collapse="true"' in evaluation
+
+
 def test_render_view_uses_localized_node_and_relation_labels() -> None:
     render_view = MODULE["render_view"]
 
