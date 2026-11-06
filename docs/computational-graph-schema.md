@@ -77,7 +77,7 @@ The generation branch selects a token from the conditional distribution and feed
 
 ### Observed-target scoring and evaluation
 
-Observed-target scoring extracts the probability assigned to a known target token. Per-token values can contribute to sequence log-likelihood or token NLL. Evaluation aggregates held-out scores and metrics but does not update model parameters.
+Observed-target scoring extracts the probability assigned to a known target token, conditioned on the observed prefix (teacher forcing). The prefix at a position excludes that position's target token. Per-token values can contribute to sequence log-likelihood or token NLL. Evaluation reuses this scoring procedure on held-out sequences and aggregates metrics without updating model parameters.
 
 The graph keeps the scoring operation (`target-probability`) distinct from the resulting scalar data (`target-probability-value`).
 
