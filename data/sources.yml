@@ -2109,3 +2109,51 @@ sources:
         - docs/source-reviews/qkv-mbrenndoerfer-2026-11.md
         - docs/source-reviews/qkv-source-collection.md
         - docs/source-syntheses/qkv-incremental-source-pilot-2026-11-05.md
+
+  - id: aiedge-how-llm-distillation-trains-smaller-models
+    title: "How LLM Distillation Trains Smaller Models"
+    creators: []
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://newsletter.theaiedge.io/p/how-llm-distillation-trains-smaller-models"
+    publisher: "The AiEdge Newsletter"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency]
+      tags:
+        - topic:knowledge-distillation
+        - topic:model-compression
+        - method:teacher-student
+      concept_ids: []
+    metadata:
+      technical_level: unspecified
+      contribution_types: [theory, pedagogy]
+      audiences: [learner, practitioner]
+    scan_status: inaccessible
+    integration_status: not-reviewed
+    scan_history:
+      - accessed_at: "2026-11-06"
+        status: inaccessible
+        inspected_scope:
+          - "Canonical article URL and indexed search results"
+        limitations:
+          - "Direct article retrieval returned a cache miss."
+          - "Search-index queries did not expose the article body or its section structure."
+          - "The article author, publication/update dates, figures, linked references and claims could not be verified."
+          - "No article-specific knowledge items were extracted; related publications are not treated as substitutes for this source."
+    related:
+      pages:
+        - fr/training-examples
+        - en/training-examples
+        - fr/llm-evolution
+        - en/llm-evolution
+      concepts: []
+      audit_records:
+        - docs/source-reviews/aiedge-llm-distillation-2026-11.md
