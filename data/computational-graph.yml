@@ -476,9 +476,9 @@ nodes:
     role: parameters
     labels: {fr: "Paramètres du modèle", en: "Model parameters"}
     descriptions:
-      fr: "Poids appris utilisés par le forward pass ; ils restent fixes pendant une génération ordinaire."
-      en: "Learned weights used by the forward pass; they remain fixed during ordinary generation."
-    branches: [shared-prediction, generation, training, inference-execution]
+      fr: "Poids appris utilisés par le forward pass ; ils restent fixes pendant l’inférence, le scoring et l’évaluation, et ne changent que lors des mises à jour de l’apprentissage."
+      en: "Learned weights used by the forward pass; they remain fixed during inference, scoring, and evaluation, and change only through training updates."
+    branches: [shared-prediction, generation, observed-target-scoring, evaluation, training, inference-execution]
     resources: [fr/transformer, en/transformer, fr/gradients, en/gradients]
   - id: optimizer-update
     kind: operation
@@ -509,20 +509,20 @@ nodes:
     resources: [fr/loss, en/loss, fr/evaluation-experimentale, en/experimental-evaluation]
   - id: teacher-forcing
     kind: policy
-    role: training-context
+    role: context-policy
     labels: {fr: "Teacher forcing", en: "Teacher forcing"}
     descriptions:
-      fr: "Stratégie de conditionnement où les préfixes fournis aux positions d'entraînement proviennent de la séquence de référence."
-      en: "Conditioning strategy in which the prefixes supplied at training positions come from the reference sequence."
+      fr: "Stratégie de conditionnement où les préfixes fournis aux positions scorées proviennent de la séquence de référence."
+      en: "Conditioning strategy in which the prefixes supplied at scored positions come from the reference sequence."
     branches: [training, observed-target-scoring, evaluation]
     resources: [fr/training-examples, en/training-examples, fr/vraisemblance, en/likelihood]
-  - id: training-context
+  - id: observed-prefix-context
     kind: data
     role: state
-    labels: {fr: "Contexte d'entraînement observé", en: "Observed training context"}
+    labels: {fr: "Contexte de préfixe observé", en: "Observed-prefix context"}
     descriptions:
-      fr: "Entrées décalées construites à partir de tokens de référence ; les prédictions à toutes les positions sont calculées en parallèle sous masque causal."
-      en: "Shifted inputs built from reference tokens; predictions at all positions are computed in parallel under a causal mask."
+      fr: "Préfixes observés construits à partir des tokens de référence ; à chaque position, seul le préfixe antérieur à la cible est fourni, et les prédictions sont calculées en parallèle sous masque causal."
+      en: "Observed prefixes built from reference tokens; at each position, only the prefix preceding its target is supplied, and predictions are computed in parallel under a causal mask."
     branches: [training, observed-target-scoring, evaluation]
     resources: [fr/training-examples, en/training-examples, fr/causal-masking, en/causal-masking]
   - id: prefill
@@ -700,9 +700,9 @@ edges:
   - {id: e-updated-parameters-feedback, from: updated-parameters, type: feeds-back, to: model-parameters, feedback: true}
   - {id: e-score-metrics, from: sequence-log-likelihood, type: aggregates, to: evaluation-metrics}
   - {id: e-loss-metrics, from: token-nll, type: aggregates, to: evaluation-metrics}
-  - {id: e-teacher-context, from: teacher-forcing, type: conditions, to: training-context}
-  - {id: e-observed-context, from: observed-target, type: conditions, to: training-context}
-  - {id: e-training-forward, from: training-context, type: conditions, to: token-context}
+  - {id: e-teacher-context, from: teacher-forcing, type: conditions, to: observed-prefix-context}
+  - {id: e-observed-context, from: observed-target, type: conditions, to: observed-prefix-context}
+  - {id: e-observed-prefix-forward, from: observed-prefix-context, type: conditions, to: token-context}
   - {id: e-prefill-forward, from: prefill, type: applies, to: forward-computation}
   - {id: e-prefill-before-decode, from: prefill, type: precedes, to: autoregressive-decode}
   - {id: e-decode-forward, from: autoregressive-decode, type: applies, to: forward-computation}
@@ -748,24 +748,24 @@ views:
     descriptions:
       fr: "Compare la distribution à une cible connue pour obtenir sa probabilité et la vraisemblance."
       en: "Compares the distribution with a known target to obtain its probability and likelihood."
-    nodes: [next-token-distribution, observed-target, target-probability, target-probability-value, target-log-probability-computation, target-log-probability, negative-log-probability, token-nll, sequence-log-likelihood]
-    edges: [e-distribution-target, e-target-score, e-target-probability-value, e-target-log-computation, e-target-log-probability, e-target-likelihood, e-target-negative-log, e-negative-log-nll]
+    nodes: [teacher-forcing, observed-prefix-context, token-context, model-parameters, forward-computation, logits, vocabulary-softmax, next-token-distribution, observed-target, target-probability, target-probability-value, target-log-probability-computation, target-log-probability, negative-log-probability, token-nll, sequence-log-likelihood]
+    edges: [e-teacher-context, e-observed-context, e-observed-prefix-forward, e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-distribution-target, e-target-score, e-target-probability-value, e-target-log-computation, e-target-log-probability, e-target-likelihood, e-target-negative-log, e-negative-log-nll]
   - id: evaluation
     branch: evaluation
     labels: {fr: "Branche évaluation", en: "Evaluation branch"}
     descriptions:
       fr: "Illustre une évaluation fondée sur le scoring de cibles observées : agrège leurs scores sur des données tenues à l'écart sans modifier les paramètres."
       en: "Illustrates evaluation based on observed-target scoring: aggregates their scores on held-out data without changing parameters."
-    nodes: [next-token-distribution, observed-target, target-probability, target-probability-value, target-log-probability-computation, target-log-probability, negative-log-probability, sequence-log-likelihood, token-nll, evaluation-metrics]
-    edges: [e-distribution-target, e-target-score, e-target-probability-value, e-target-log-computation, e-target-log-probability, e-target-likelihood, e-target-negative-log, e-negative-log-nll, e-score-metrics, e-loss-metrics]
+    nodes: [teacher-forcing, observed-prefix-context, token-context, model-parameters, forward-computation, logits, vocabulary-softmax, next-token-distribution, observed-target, target-probability, target-probability-value, target-log-probability-computation, target-log-probability, negative-log-probability, sequence-log-likelihood, token-nll, evaluation-metrics]
+    edges: [e-teacher-context, e-observed-context, e-observed-prefix-forward, e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-distribution-target, e-target-score, e-target-probability-value, e-target-log-computation, e-target-log-probability, e-target-likelihood, e-target-negative-log, e-negative-log-nll, e-score-metrics, e-loss-metrics]
   - id: training
     branch: training
     labels: {fr: "Branche apprentissage", en: "Training branch"}
     descriptions:
       fr: "Utilise les préfixes observés, calcule l'objectif, les gradients et la mise à jour des paramètres."
       en: "Uses observed prefixes, computes the objective and gradients, and updates parameters."
-    nodes: [teacher-forcing, training-context, observed-target, token-context, model-parameters, forward-computation, logits, vocabulary-softmax, next-token-distribution, target-probability, target-probability-value, target-log-probability-computation, target-log-probability, negative-log-probability, token-nll, loss-reduction, training-objective, gradients, optimizer-update, updated-parameters]
-    edges: [e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-teacher-context, e-observed-context, e-training-forward, e-distribution-target, e-target-score, e-target-probability-value, e-target-log-computation, e-target-log-probability, e-target-negative-log, e-negative-log-nll, e-nll-reduction, e-loss-objective, e-objective-gradients, e-gradients-optimizer, e-params-optimizer, e-optimizer-updated, e-updated-parameters-feedback]
+    nodes: [teacher-forcing, observed-prefix-context, observed-target, token-context, model-parameters, forward-computation, logits, vocabulary-softmax, next-token-distribution, target-probability, target-probability-value, target-log-probability-computation, target-log-probability, negative-log-probability, token-nll, loss-reduction, training-objective, gradients, optimizer-update, updated-parameters]
+    edges: [e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-teacher-context, e-observed-context, e-observed-prefix-forward, e-distribution-target, e-target-score, e-target-probability-value, e-target-log-computation, e-target-log-probability, e-target-negative-log, e-negative-log-nll, e-nll-reduction, e-loss-objective, e-objective-gradients, e-gradients-optimizer, e-params-optimizer, e-optimizer-updated, e-updated-parameters-feedback]
   - id: inference-execution
     branch: inference-execution
     labels: {fr: "Phases d'exécution de l'inférence", en: "Inference execution phases"}

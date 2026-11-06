@@ -77,9 +77,9 @@ Training can then aggregate per-token NLL using an explicit mask and reduction t
 
 ### Context feedback is a typed relation
 
-Both generation and teacher-forced scoring/training extend the context, but with different sources:
-- generation feeds back the model-selected token;
-- teacher forcing feeds back the observed ground-truth token.
+Observed-target scoring, evaluation, and training all condition predictions on the observed prefix. Generation and teacher-forced scoring/training use different context sources:
+- generation appends the model-selected token before the next prediction;
+- at each scoring/training position, teacher forcing supplies only the observed ground-truth prefix preceding that position's target. After the target is scored, it becomes part of the prefix for the next position.
 
 Teacher forcing is a training/scoring context policy, not a separate prediction mechanism. Prefill computes the prompt/context states (and, when used, populates the KV cache); decode advances generation one token at a time using the cache. Neither should be confused with teacher forcing.
 
@@ -101,7 +101,7 @@ The computational graph uses its existing controlled edge types:
 | `scores` / `aggregates` | An observed target is scored and per-token/sequence values are aggregated | distribution + target → target probability → sequence log-likelihood |
 | `differentiates` / `updates` | An objective yields gradients and an optimizer updates parameters | objective → gradients → updated parameters |
 | `feeds-back` | A value becomes context or state for a later iteration | generated token → next context |
-| `conditions` | A policy or observed value constrains target selection, context, or target assignment | decoding policy → generated token; teacher forcing → observed training context |
+| `conditions` | A policy or observed value constrains target selection, context, or target assignment | decoding policy → generated token; teacher forcing → observed-prefix context |
 | `uses-optional` | An optional optimization may be used without being required for correctness | KV cache → decode |
 
 The registry may express a familiar high-level idea such as *dataflow*, *transformation*, *decoding*, *optimization* or *evaluation* through these more precise operational relations. Those high-level words are explanatory categories, not additional edge types to add mechanically. In particular, evaluation is represented by scoring held-out targets and aggregating the resulting metrics; it stops before differentiation or parameter updates.
