@@ -97,7 +97,7 @@ nodes:
     descriptions:
       fr: "Séquence ordonnée d'identifiants conditionnant la prochaine prédiction."
       en: "Ordered sequence of IDs conditioning the next prediction."
-    branches: [shared-prediction, generation, observed-target-scoring, evaluation, training]
+    branches: [shared-prediction, generation, observed-target-scoring, evaluation, training, inference-execution]
     resources: [fr/generation, en/generation, fr/vraisemblance, en/likelihood, fr/training-examples, en/training-examples]
   - id: embedding-lookup
     kind: operation
