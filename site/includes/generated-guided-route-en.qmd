@@ -2,7 +2,7 @@
 
 ::: {.guided-route-stage #guided-stage-orientation}
 
-### 01 · Orient yourself
+### 01 · Place the system in context
 
 Understand what an LLM is and follow a complete generation loop as a black box with fixed parameters before studying its internal mechanisms.
 
@@ -91,7 +91,7 @@ Trace the projection from final hidden states to logits and the conditional next
 
 ::: {.guided-route-stage #guided-stage-inference}
 
-### 06 · Run inference and generate
+### 06 · Run inference and generate text
 
 Distinguish prompt prefill from iterative decode, select a token with a decoding policy, feed it back into the context, and stop generation without updating parameters.
 

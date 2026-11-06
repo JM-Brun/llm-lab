@@ -3,7 +3,7 @@ stages:
   - id: orientation
     title:
       fr: "Situer le système"
-      en: "Orient yourself"
+      en: "Place the system in context"
     objective:
       fr: "Comprendre ce qu'est un LLM et suivre une génération complète comme une boîte noire, avec des paramètres fixes, avant d'en étudier les mécanismes internes."
       en: "Understand what an LLM is and follow a complete generation loop as a black box with fixed parameters before studying its internal mechanisms."
@@ -72,8 +72,8 @@ stages:
 
   - id: inference
     title:
-      fr: "Exécuter l'inférence et générer"
-      en: "Run inference and generate"
+      fr: "Exécuter l'inférence et générer du texte"
+      en: "Run inference and generate text"
     objective:
       fr: "Distinguer le prefill du prompt du decode itératif, sélectionner un token selon une politique de décodage, le réinjecter dans le contexte et arrêter la génération sans mettre à jour les paramètres."
       en: "Distinguish prompt prefill from iterative decode, select a token with a decoding policy, feed it back into the context, and stop generation without updating parameters."
