@@ -179,6 +179,17 @@ def test_scoring_graph_applies_log_and_negation_before_aggregation() -> None:
     )
 
 
+def test_evaluation_metrics_link_language_modeling_and_transfer_resources() -> None:
+    registry_path = Path(__file__).resolve().parents[2] / "data" / "computational-graph.yml"
+    data = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
+    metrics = next(node for node in data["nodes"] if node["id"] == "evaluation-metrics")
+
+    assert {"fr/loss", "en/loss"}.issubset(metrics["resources"])
+    assert {"fr/evaluation-experimentale", "en/experimental-evaluation"}.issubset(
+        metrics["resources"]
+    )
+
+
 def test_generation_graph_separates_distribution_selection_from_policy() -> None:
     registry_path = Path(__file__).resolve().parents[2] / "data" / "computational-graph.yml"
     data = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
