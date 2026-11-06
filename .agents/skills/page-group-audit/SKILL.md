@@ -387,3 +387,16 @@ Distinguish:
 - **Rejected:** a recommendation was considered and intentionally not adopted, with rationale.
 
 Do not leave "check whether X exists" in the action plan after confirming that X already exists. Close it as verified and cite the exact evidence. Re-read high-impact transitions in the page body and navigation cards; metadata alone does not establish that a reader-visible hand-off is present. If a second pass resolves a question, append a dated revalidation note to the audit report rather than silently rewriting the original reasoning.
+
+
+## Specialist boundaries and delegation
+
+This skill owns **group-level pedagogy and coherence**, not every kind of page verification.
+
+- Use `page-content-audit` for a deep review of one page's internal teaching contract, explanation, examples and learner usability. A group audit may sample that skill's checks on core pages, but must not reproduce a full page-by-page review unless requested.
+- Use `editorial-boundary-audit` when the central question is who owns an explanation, whether content is duplicated, or whether material should move, split or merge. Group-level overlap observations should identify the candidate pair and hand off detailed ownership decisions.
+- Use `knowledge-architecture-audit` when canonical concepts, typed relations, resource associations, metadata schemas, route registries or generated graph projections may need to change. Do not infer graph defects from a confusing page sequence alone.
+- Use `scientific-content-audit` when mathematical, statistical, algorithmic, empirical or implementation claims need verification. This skill may flag a scientific concern, but must not certify a derivation or implementation as correct without that review.
+- Use `audit-skill-routing` to select and sequence specialist skills when the request spans multiple audit dimensions.
+
+A group audit may identify a scientific, architectural or editorial risk as a finding. It should state the evidence and route the detailed investigation to the owning skill rather than expanding into an unbounded parallel audit. Avoid duplicate findings: maintain one canonical finding ID and reference it from related reports.
