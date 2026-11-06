@@ -20,6 +20,8 @@ related: ["fr/vraisemblance"]
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-entropy.qmd >}}
+
 ::: {.chapter-lead}
 Dans un LLM autorégressif, l'entropie décrit la dispersion de la distribution prédite pour le prochain token, dans un contexte donné. Elle caractérise cette distribution : elle ne dit pas si la réponse est vraie, ni si le modèle est fiable.
 :::
