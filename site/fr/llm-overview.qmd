@@ -85,7 +85,7 @@ La préparation du contexte et le calcul du modèle produisent une **distributio
 | **Scoring / évaluation** | Scorer une cible observée (p. ex. log-vraisemblance/NLL) ou une sortie générée, puis agréger des métriques adaptées sur des données tenues à l'écart ; voir [Vraisemblance](vraisemblance.qmd) | Fixes |
 | **Apprentissage** | Comparer les prédictions aux cibles de référence (*teacher forcing*), calculer la loss et les gradients ; voir [Exemples d'entraînement](training-examples.qmd), [Loss](loss.qmd) et [Gradients](gradients.qmd) | Modifiés à l'étape de mise à jour |
 
-Le scoring d'une cible et l'évaluation d'un modèle ne sont pas synonymes : le premier calcule une probabilité conditionnelle ; la seconde agrège des scores et des métriques sur un protocole de données. L'évaluation réutilise le chemin de scoring sans mettre à jour les paramètres.
+Le scoring d'une cible et l'évaluation d'un modèle ne sont pas synonymes : le premier calcule une probabilité conditionnelle ; la seconde agrège des scores ou des métriques selon la tâche et le protocole de données. L'évaluation fondée sur la vraisemblance réutilise le chemin de scoring sans mettre à jour les paramètres ; les évaluations de tâche peuvent aussi porter sur des sorties générées.
 
 {{< include ../includes/generated-computational-graph-fr-evaluation.qmd >}}
 
