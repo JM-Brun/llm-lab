@@ -1,0 +1,682 @@
+schema_version: 1
+# Canonical computational graph. This is not the concept graph or a learning route.
+# IDs are language-independent; labels and descriptions are bilingual.
+branches:
+  - id: shared-prediction
+    labels: {fr: "Prédiction partagée", en: "Shared prediction"}
+    descriptions:
+      fr: "Calcul commun qui transforme un contexte en distribution conditionnelle sur le prochain token."
+      en: "Common computation that maps a context to a conditional distribution over the next token."
+  - id: generation
+    labels: {fr: "Génération", en: "Generation"}
+    descriptions:
+      fr: "Sélection d'un token généré, puis extension du contexte avec ce token."
+      en: "Selection of a generated token, followed by context extension with that token."
+  - id: observed-target-scoring
+    labels: {fr: "Scoring d'une cible observée", en: "Observed-target scoring"}
+    descriptions:
+      fr: "Évaluation de la probabilité attribuée à un token cible connu."
+      en: "Evaluation of the probability assigned to a known target token."
+  - id: evaluation
+    labels: {fr: "Évaluation", en: "Evaluation"}
+    descriptions:
+      fr: "Agrégation de scores sur des données d'évaluation, sans mise à jour des paramètres."
+      en: "Aggregation of scores on evaluation data, without parameter updates."
+  - id: training
+    labels: {fr: "Apprentissage", en: "Training"}
+    descriptions:
+      fr: "Calcul d'un objectif à partir des cibles observées, puis différentiation et mise à jour des paramètres."
+      en: "Computation of an objective from observed targets, followed by differentiation and parameter updates."
+  - id: transformer-block
+    labels: {fr: "Calcul interne d'un bloc Transformer", en: "Transformer-block computation"}
+    descriptions:
+      fr: "Calcul répété dans chaque bloc : projections Q/K/V, attention, résidus, normalisation et MLP."
+      en: "Computation repeated in each block: Q/K/V projections, attention, residuals, normalization, and MLP."
+  - id: inference-execution
+    labels: {fr: "Exécution de l'inférence", en: "Inference execution"}
+    descriptions:
+      fr: "Organisation de l'inférence en prefill puis décodage autorégressif, avec cache KV facultatif."
+      en: "Organization of inference into prefill and autoregressive decode, with an optional KV cache."
+
+nodes:
+  - id: raw-text-context
+    kind: data
+    role: input
+    labels: {fr: "Contexte textuel", en: "Text context"}
+    descriptions:
+      fr: "Texte fourni initialement par l'utilisateur ou l'application."
+      en: "Text initially supplied by a user or application."
+    branches: [shared-prediction, generation]
+    resources: [fr/text-data, en/text-data, fr/generation, en/generation]
+  - id: tokenization
+    kind: operation
+    role: preprocessing
+    labels: {fr: "Tokenisation", en: "Tokenization"}
+    descriptions:
+      fr: "Segmente le texte en unités discrètes selon le tokenizer."
+      en: "Segments text into discrete units according to the tokenizer."
+    branches: [shared-prediction]
+    resources: [fr/tokenization-strategies, en/tokenization-strategies]
+  - id: tokens
+    kind: data
+    role: representation
+    labels: {fr: "Tokens", en: "Tokens"}
+    descriptions:
+      fr: "Unités discrètes produites par la tokenisation."
+      en: "Discrete units produced by tokenization."
+    branches: [shared-prediction]
+    resources: [fr/text-data, en/text-data]
+  - id: token-id-encoding
+    kind: operation
+    role: preprocessing
+    labels: {fr: "Encodage en identifiants", en: "Token-ID encoding"}
+    descriptions:
+      fr: "Associe chaque token à son identifiant dans le vocabulaire."
+      en: "Maps each token to its identifier in the vocabulary."
+    branches: [shared-prediction]
+    resources: [fr/tokenization-strategies, en/tokenization-strategies]
+  - id: token-ids
+    kind: data
+    role: representation
+    labels: {fr: "Identifiants de tokens", en: "Token IDs"}
+    descriptions:
+      fr: "Séquence d'entiers utilisée comme entrée du modèle."
+      en: "Integer sequence used as model input."
+    branches: [shared-prediction, generation, observed-target-scoring, training]
+    resources: [fr/text-data, en/text-data, fr/training-examples, en/training-examples]
+  - id: token-context
+    kind: data
+    role: state
+    labels: {fr: "Contexte en identifiants", en: "Token-ID context"}
+    descriptions:
+      fr: "Séquence ordonnée d'identifiants conditionnant la prochaine prédiction."
+      en: "Ordered sequence of IDs conditioning the next prediction."
+    branches: [shared-prediction, generation, observed-target-scoring, evaluation, training]
+    resources: [fr/generation, en/generation, fr/likelihood, en/likelihood, fr/training-examples, en/training-examples]
+  - id: embedding-lookup
+    kind: operation
+    role: representation
+    labels: {fr: "Consultation de la matrice d'embeddings", en: "Embedding lookup"}
+    descriptions:
+      fr: "Récupère un vecteur appris pour chaque identifiant de token."
+      en: "Retrieves a learned vector for each token ID."
+    branches: [shared-prediction]
+    resources: [fr/embedding-space, en/embedding-space]
+  - id: token-embeddings
+    kind: data
+    role: representation
+    labels: {fr: "Embeddings des tokens", en: "Token embeddings"}
+    descriptions:
+      fr: "Vecteurs initiaux associés aux identifiants, avant contextualisation."
+      en: "Initial vectors associated with token IDs, before contextualization."
+    branches: [shared-prediction]
+    resources: [fr/embedding-space, en/embedding-space]
+  - id: positional-information
+    kind: data
+    role: representation
+    labels: {fr: "Information positionnelle", en: "Positional information"}
+    descriptions:
+      fr: "Information qui permet au modèle de distinguer les positions dans la séquence."
+      en: "Information that lets the model distinguish positions in the sequence."
+    branches: [shared-prediction]
+    resources: [fr/positional-encoding, en/positional-encoding]
+  - id: initial-hidden-states
+    kind: data
+    role: representation
+    labels: {fr: "États cachés initiaux", en: "Initial hidden states"}
+    descriptions:
+      fr: "États issus des embeddings et de l'information positionnelle, avant les blocs Transformer."
+      en: "States formed from embeddings and positional information, before Transformer blocks."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/contextualized-representations, en/contextualized-representations, fr/transformer, en/transformer]
+  - id: transformer-block-input
+    kind: data
+    role: intermediate-state
+    labels: {fr: "Entrée d'un bloc Transformer", en: "Transformer-block input"}
+    descriptions:
+      fr: "États reçus par un bloc donné ; les projections Q/K/V sont calculées à partir de ces états."
+      en: "States received by a given block; Q/K/V projections are computed from these states."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough, fr/queries-keys-values, en/queries-keys-values]
+  - id: query-projection
+    kind: operation
+    role: attention
+    labels: {fr: "Projection Q", en: "Q projection"}
+    descriptions:
+      fr: "Projette les états d'entrée du bloc en requêtes."
+      en: "Projects the block input states into queries."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/queries-keys-values, en/queries-keys-values]
+  - id: queries
+    kind: data
+    role: attention
+    labels: {fr: "Requêtes Q", en: "Queries Q"}
+    descriptions:
+      fr: "Vecteurs utilisés pour calculer la compatibilité avec les clés."
+      en: "Vectors used to compute compatibility with keys."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/queries-keys-values, en/queries-keys-values]
+  - id: key-projection
+    kind: operation
+    role: attention
+    labels: {fr: "Projection K", en: "K projection"}
+    descriptions:
+      fr: "Projette les états d'entrée du bloc en clés."
+      en: "Projects the block input states into keys."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/queries-keys-values, en/queries-keys-values]
+  - id: keys
+    kind: data
+    role: attention
+    labels: {fr: "Clés K", en: "Keys K"}
+    descriptions:
+      fr: "Vecteurs adressables par les requêtes des positions."
+      en: "Vectors addressable by the positions' queries."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/queries-keys-values, en/queries-keys-values]
+  - id: value-projection
+    kind: operation
+    role: attention
+    labels: {fr: "Projection V", en: "V projection"}
+    descriptions:
+      fr: "Projette les états d'entrée du bloc en valeurs."
+      en: "Projects the block input states into values."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/queries-keys-values, en/queries-keys-values]
+  - id: values
+    kind: data
+    role: attention
+    labels: {fr: "Valeurs V", en: "Values V"}
+    descriptions:
+      fr: "Vecteurs dont les contributions sont agrégées par les poids d'attention."
+      en: "Vectors whose contributions are aggregated by attention weights."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/queries-keys-values, en/queries-keys-values]
+  - id: attention-score-computation
+    kind: operation
+    role: attention
+    labels: {fr: "Calcul des scores d'attention", en: "Attention-score computation"}
+    descriptions:
+      fr: "Calcule les compatibilités entre requêtes et clés, avec mise à l'échelle selon l'architecture."
+      en: "Computes query-key compatibility scores, with scaling according to the architecture."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+  - id: attention-scores
+    kind: data
+    role: attention
+    labels: {fr: "Scores d'attention", en: "Attention scores"}
+    descriptions:
+      fr: "Scores non normalisés entre positions."
+      en: "Unnormalized scores between positions."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+  - id: causal-mask
+    kind: control
+    role: constraint
+    labels: {fr: "Masque causal", en: "Causal mask"}
+    descriptions:
+      fr: "Empêche chaque position de prendre en compte les positions futures."
+      en: "Prevents each position from attending to future positions."
+    branches: [shared-prediction, transformer-block, training, generation]
+    resources: [fr/causal-masking, en/causal-masking]
+  - id: masked-attention-scores
+    kind: data
+    role: attention
+    labels: {fr: "Scores masqués", en: "Masked scores"}
+    descriptions:
+      fr: "Scores d'attention après application de la contrainte causale."
+      en: "Attention scores after applying the causal constraint."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/causal-masking, en/causal-masking, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+  - id: attention-softmax
+    kind: operation
+    role: attention
+    labels: {fr: "Softmax d'attention", en: "Attention softmax"}
+    descriptions:
+      fr: "Normalise les scores masqués en poids d'attention."
+      en: "Normalizes masked scores into attention weights."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+  - id: attention-weights
+    kind: data
+    role: attention
+    labels: {fr: "Poids d'attention", en: "Attention weights"}
+    descriptions:
+      fr: "Poids normalisés qui règlent la contribution des valeurs."
+      en: "Normalized weights that determine the contribution of values."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+  - id: value-aggregation
+    kind: operation
+    role: attention
+    labels: {fr: "Agrégation des valeurs", en: "Value aggregation"}
+    descriptions:
+      fr: "Combine les vecteurs V selon les poids d'attention."
+      en: "Combines V vectors according to attention weights."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+  - id: attention-output
+    kind: data
+    role: attention
+    labels: {fr: "Sortie d'attention", en: "Attention output"}
+    descriptions:
+      fr: "Résultat de l'agrégation des valeurs."
+      en: "Result of value aggregation."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+  - id: block-update
+    kind: operation
+    role: transformer
+    labels: {fr: "Résidus, normalisation et MLP", en: "Residuals, normalization, and MLP"}
+    descriptions:
+      fr: "Combine la sortie d'attention avec les connexions résiduelles, la normalisation et le sous-réseau MLP."
+      en: "Combines the attention output with residual connections, normalization, and the MLP sublayer."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough, fr/transformer-architectures, en/transformer-architectures]
+  - id: contextualized-hidden-states
+    kind: data
+    role: representation
+    labels: {fr: "États cachés contextualisés", en: "Contextualized hidden states"}
+    descriptions:
+      fr: "États transformés par les blocs ; chaque bloc reçoit les états du bloc précédent et recalcule ses projections Q/K/V."
+      en: "States transformed by the blocks; each block receives the previous block's states and recomputes its Q/K/V projections."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/contextualized-representations, en/contextualized-representations, fr/transformer, en/transformer]
+  - id: final-hidden-states
+    kind: data
+    role: representation
+    labels: {fr: "États cachés finaux", en: "Final hidden states"}
+    descriptions:
+      fr: "États contextualisés en sortie du dernier bloc."
+      en: "Contextualized states at the output of the final block."
+    branches: [shared-prediction]
+    resources: [fr/contextualized-representations, en/contextualized-representations, fr/logits, en/logits]
+  - id: vocabulary-projection
+    kind: operation
+    role: output
+    labels: {fr: "Projection vers le vocabulaire", en: "Vocabulary projection"}
+    descriptions:
+      fr: "Projette chaque état final vers un score par token du vocabulaire."
+      en: "Projects each final state to one score per vocabulary token."
+    branches: [shared-prediction]
+    resources: [fr/logits, en/logits]
+  - id: logits
+    kind: data
+    role: output
+    labels: {fr: "Logits", en: "Logits"}
+    descriptions:
+      fr: "Scores non normalisés sur le vocabulaire, calculés pour chaque position."
+      en: "Unnormalized vocabulary scores computed at each position."
+    branches: [shared-prediction, generation, observed-target-scoring, evaluation, training]
+    resources: [fr/logits, en/logits]
+  - id: vocabulary-softmax
+    kind: operation
+    role: probability
+    labels: {fr: "Softmax du vocabulaire", en: "Vocabulary softmax"}
+    descriptions:
+      fr: "Convertit les logits d'une position en distribution conditionnelle sur le prochain token."
+      en: "Converts one position's logits into a conditional distribution over the next token."
+    branches: [shared-prediction]
+    resources: [fr/probabilites, en/probabilities]
+  - id: next-token-distribution
+    kind: data
+    role: prediction
+    labels: {fr: "Distribution conditionnelle du prochain token", en: "Next-token conditional distribution"}
+    descriptions:
+      fr: "Distribution pθ(· | contexte) commune à la génération et au scoring d'une cible observée."
+      en: "The pθ(· | context) distribution shared by generation and observed-target scoring."
+    branches: [shared-prediction, generation, observed-target-scoring, evaluation, training]
+    resources: [fr/probabilites, en/probabilities, fr/generation, en/generation, fr/likelihood, en/likelihood]
+  - id: decoding-policy
+    kind: policy
+    role: generation
+    labels: {fr: "Politique de décodage", en: "Decoding policy"}
+    descriptions:
+      fr: "Règle de sélection ou d'échantillonnage appliquée à la distribution : greedy, température, top-k ou top-p."
+      en: "Selection or sampling rule applied to the distribution: greedy, temperature, top-k, or top-p."
+    branches: [generation]
+    resources: [fr/decoding-strategies, en/decoding-strategies, fr/generation, en/generation]
+  - id: generated-token
+    kind: data
+    role: generation
+    labels: {fr: "Token généré", en: "Generated token"}
+    descriptions:
+      fr: "Token sélectionné par la politique de décodage et ajouté au contexte suivant."
+      en: "Token selected by the decoding policy and appended to the next context."
+    branches: [generation]
+    resources: [fr/generation, en/generation]
+  - id: observed-target
+    kind: data
+    role: target
+    labels: {fr: "Cible observée", en: "Observed target"}
+    descriptions:
+      fr: "Token connu dans la séquence de référence, utilisé pour le scoring, l'évaluation ou l'apprentissage."
+      en: "Known token in the reference sequence, used for scoring, evaluation, or training."
+    branches: [observed-target-scoring, evaluation, training]
+    resources: [fr/likelihood, en/likelihood, fr/training-examples, en/training-examples]
+  - id: target-probability
+    kind: data
+    role: score
+    labels: {fr: "Probabilité de la cible", en: "Target probability"}
+    descriptions:
+      fr: "Probabilité extraite de la distribution à la position du token cible observé."
+      en: "Probability selected from the distribution at the observed target-token position."
+    branches: [observed-target-scoring, evaluation, training]
+    resources: [fr/likelihood, en/likelihood, fr/cross-entropy, en/cross-entropy]
+  - id: sequence-log-likelihood
+    kind: data
+    role: score
+    labels: {fr: "Log-vraisemblance de séquence", en: "Sequence log-likelihood"}
+    descriptions:
+      fr: "Somme des log-probabilités conditionnelles des tokens observés, selon le protocole de scoring."
+      en: "Sum of conditional log probabilities for observed tokens under the scoring protocol."
+    branches: [observed-target-scoring, evaluation]
+    resources: [fr/likelihood, en/likelihood]
+  - id: token-nll
+    kind: data
+    role: loss
+    labels: {fr: "NLL par token", en: "Per-token NLL"}
+    descriptions:
+      fr: "Opposé du logarithme de la probabilité attribuée à la cible observée."
+      en: "Negative logarithm of the probability assigned to the observed target."
+    branches: [training, evaluation]
+    resources: [fr/cross-entropy, en/cross-entropy, fr/loss, en/loss]
+  - id: loss-reduction
+    kind: operation
+    role: loss
+    labels: {fr: "Agrégation de la loss", en: "Loss reduction"}
+    descriptions:
+      fr: "Agrège les pertes par token selon une réduction et un masque explicitement définis."
+      en: "Aggregates per-token losses using an explicitly defined reduction and mask."
+    branches: [training, evaluation]
+    resources: [fr/loss, en/loss]
+  - id: training-objective
+    kind: data
+    role: objective
+    labels: {fr: "Objectif d'entraînement", en: "Training objective"}
+    descriptions:
+      fr: "Valeur scalaire optimisée pendant l'entraînement, construite à partir des pertes sur les cibles."
+      en: "Scalar value optimized during training, built from target losses."
+    branches: [training]
+    resources: [fr/loss, en/loss, fr/training-examples, en/training-examples]
+  - id: gradients
+    kind: data
+    role: optimization
+    labels: {fr: "Gradients", en: "Gradients"}
+    descriptions:
+      fr: "Dérivées de l'objectif par rapport aux paramètres du modèle."
+      en: "Derivatives of the objective with respect to model parameters."
+    branches: [training]
+    resources: [fr/gradients, en/gradients]
+  - id: model-parameters
+    kind: data
+    role: parameters
+    labels: {fr: "Paramètres du modèle", en: "Model parameters"}
+    descriptions:
+      fr: "Poids appris utilisés par le forward pass ; ils restent fixes pendant une génération ordinaire."
+      en: "Learned weights used by the forward pass; they remain fixed during ordinary generation."
+    branches: [shared-prediction, generation, training]
+    resources: [fr/transformer, en/transformer, fr/gradients, en/gradients]
+  - id: optimizer-update
+    kind: operation
+    role: optimization
+    labels: {fr: "Mise à jour par l'optimiseur", en: "Optimizer update"}
+    descriptions:
+      fr: "Applique une règle d'optimisation aux paramètres à partir des gradients."
+      en: "Applies an optimization rule to parameters using gradients."
+    branches: [training]
+    resources: [fr/gradients, en/gradients]
+  - id: updated-parameters
+    kind: data
+    role: parameters
+    labels: {fr: "Paramètres mis à jour", en: "Updated parameters"}
+    descriptions:
+      fr: "Paramètres après l'étape d'optimisation ; ils servent au forward pass suivant."
+      en: "Parameters after the optimization step; they are used by the next forward pass."
+    branches: [training, shared-prediction]
+    resources: [fr/gradients, en/gradients]
+  - id: evaluation-metrics
+    kind: data
+    role: metric
+    labels: {fr: "Métriques d'évaluation", en: "Evaluation metrics"}
+    descriptions:
+      fr: "Mesures calculées à partir des scores sur les données tenues à l'écart, sans mise à jour des paramètres."
+      en: "Measures computed from scores on held-out data, without parameter updates."
+    branches: [evaluation]
+    resources: [fr/evaluation-experimentale, en/experimental-evaluation]
+  - id: teacher-forcing
+    kind: policy
+    role: training-context
+    labels: {fr: "Teacher forcing", en: "Teacher forcing"}
+    descriptions:
+      fr: "Stratégie de conditionnement où les préfixes fournis aux positions d'entraînement proviennent de la séquence de référence."
+      en: "Conditioning strategy in which the prefixes supplied at training positions come from the reference sequence."
+    branches: [training, observed-target-scoring, evaluation]
+    resources: [fr/training-examples, en/training-examples, fr/likelihood, en/likelihood]
+  - id: training-context
+    kind: data
+    role: state
+    labels: {fr: "Contexte d'entraînement observé", en: "Observed training context"}
+    descriptions:
+      fr: "Entrées décalées construites à partir de tokens de référence ; les prédictions à toutes les positions sont calculées en parallèle sous masque causal."
+      en: "Shifted inputs built from reference tokens; predictions at all positions are computed in parallel under a causal mask."
+    branches: [training, observed-target-scoring, evaluation]
+    resources: [fr/training-examples, en/training-examples, fr/causal-masking, en/causal-masking]
+  - id: prefill
+    kind: operation
+    role: inference-phase
+    labels: {fr: "Prefill", en: "Prefill"}
+    descriptions:
+      fr: "Traite le prompt initial comme une séquence et calcule les états nécessaires au premier choix de token."
+      en: "Processes the initial prompt as a sequence and computes the states needed for the first token choice."
+    branches: [generation, inference-execution]
+    resources: [fr/generation, en/generation]
+  - id: autoregressive-decode
+    kind: operation
+    role: inference-phase
+    labels: {fr: "Décodage autorégressif", en: "Autoregressive decode"}
+    descriptions:
+      fr: "Avance la génération de manière itérative, normalement d'un nouveau token par étape."
+      en: "Advances generation iteratively, normally by one new token per step."
+    branches: [generation, inference-execution]
+    resources: [fr/generation, en/generation]
+  - id: kv-cache
+    kind: data
+    role: optional-optimization
+    labels: {fr: "Cache KV", en: "KV cache"}
+    descriptions:
+      fr: "Stocke des clés et valeurs déjà calculées afin d'éviter de recalculer tout le préfixe ; optimisation facultative."
+      en: "Stores previously computed keys and values to avoid recomputing the full prefix; an optional optimization."
+    branches: [inference-execution]
+    resources: [fr/generation, en/generation]
+
+relation_types:
+  consumes:
+    direction: directed
+    labels: {fr: "consomme", en: "consumes"}
+    descriptions:
+      fr: "La cible consomme la donnée source."
+      en: "The target operation consumes the source data."
+  produces:
+    direction: directed
+    labels: {fr: "produit", en: "produces"}
+    descriptions:
+      fr: "La source produit la donnée cible."
+      en: "The source operation produces the target data."
+  combines:
+    direction: directed
+    labels: {fr: "combine", en: "combines"}
+    descriptions:
+      fr: "La cible combine plusieurs données sources."
+      en: "The target operation combines multiple source data."
+  constrains:
+    direction: directed
+    labels: {fr: "contraint", en: "constrains"}
+    descriptions:
+      fr: "La source restreint les calculs admissibles de la cible."
+      en: "The source restricts the admissible computations of the target."
+  applies:
+    direction: directed
+    labels: {fr: "s'applique à", en: "applies to"}
+    descriptions:
+      fr: "La source est un mode ou une phase d'exécution de la cible."
+      en: "The source is an execution mode or phase of the target."
+  selects:
+    direction: directed
+    labels: {fr: "sélectionne", en: "selects"}
+    descriptions:
+      fr: "La cible sélectionne un élément selon la distribution source."
+      en: "The target selects an item according to the source distribution."
+  scores:
+    direction: directed
+    labels: {fr: "attribue un score à", en: "scores"}
+    descriptions:
+      fr: "La cible extrait le score attribué à la cible observée depuis la distribution source."
+      en: "The target extracts the score assigned to the observed target from the source distribution."
+  aggregates:
+    direction: directed
+    labels: {fr: "agrège", en: "aggregates"}
+    descriptions:
+      fr: "La cible agrège des scores ou des contributions sources."
+      en: "The target aggregates source scores or contributions."
+  differentiates:
+    direction: directed
+    labels: {fr: "différentie", en: "differentiates"}
+    descriptions:
+      fr: "La source est différentiée pour obtenir la cible."
+      en: "The source is differentiated to obtain the target."
+  updates:
+    direction: directed
+    labels: {fr: "met à jour", en: "updates"}
+    descriptions:
+      fr: "La cible applique une mise à jour à partir des gradients et paramètres sources."
+      en: "The target applies an update using source gradients and parameters."
+  feeds-back:
+    direction: directed
+    labels: {fr: "réinjecte dans le contexte", en: "feeds back into context"}
+    descriptions:
+      fr: "La donnée source étend le contexte utilisé à l'itération suivante ; cette relation forme une boucle intentionnelle."
+      en: "The source data extends the context used at the next iteration; this relation forms an intentional loop."
+  conditions:
+    direction: directed
+    labels: {fr: "conditionne", en: "conditions"}
+    descriptions:
+      fr: "La source détermine les préfixes ou les cibles utilisés pour le calcul."
+      en: "The source determines the prefixes or targets used for computation."
+  uses-optional:
+    direction: directed
+    labels: {fr: "utilise facultativement", en: "optionally uses"}
+    descriptions:
+      fr: "La cible peut utiliser la source comme optimisation, sans en dépendre pour la correction."
+      en: "The target may use the source as an optimization, without depending on it for correctness."
+
+edges:
+  - {id: e-context-tokenization, from: raw-text-context, type: consumes, to: tokenization}
+  - {id: e-tokenization-tokens, from: tokenization, type: produces, to: tokens}
+  - {id: e-tokens-id-encoding, from: tokens, type: consumes, to: token-id-encoding}
+  - {id: e-id-encoding-ids, from: token-id-encoding, type: produces, to: token-ids}
+  - {id: e-ids-context, from: token-ids, type: produces, to: token-context}
+  - {id: e-context-embedding, from: token-context, type: consumes, to: embedding-lookup}
+  - {id: e-embedding-vectors, from: embedding-lookup, type: produces, to: token-embeddings}
+  - {id: e-embeddings-initial, from: token-embeddings, type: combines, to: initial-hidden-states}
+  - {id: e-position-initial, from: positional-information, type: combines, to: initial-hidden-states}
+  - {id: e-initial-block-input, from: initial-hidden-states, type: produces, to: transformer-block-input}
+  - {id: e-block-q, from: transformer-block-input, type: consumes, to: query-projection}
+  - {id: e-q-projection, from: query-projection, type: produces, to: queries}
+  - {id: e-block-k, from: transformer-block-input, type: consumes, to: key-projection}
+  - {id: e-k-projection, from: key-projection, type: produces, to: keys}
+  - {id: e-block-v, from: transformer-block-input, type: consumes, to: value-projection}
+  - {id: e-v-projection, from: value-projection, type: produces, to: values}
+  - {id: e-q-scores, from: queries, type: consumes, to: attention-score-computation}
+  - {id: e-k-scores, from: keys, type: consumes, to: attention-score-computation}
+  - {id: e-score-output, from: attention-score-computation, type: produces, to: attention-scores}
+  - {id: e-score-mask, from: attention-scores, type: consumes, to: causal-mask}
+  - {id: e-mask-scores, from: causal-mask, type: constrains, to: masked-attention-scores}
+  - {id: e-scores-masked, from: attention-scores, type: combines, to: masked-attention-scores}
+  - {id: e-masked-softmax, from: masked-attention-scores, type: consumes, to: attention-softmax}
+  - {id: e-softmax-weights, from: attention-softmax, type: produces, to: attention-weights}
+  - {id: e-weights-aggregation, from: attention-weights, type: consumes, to: value-aggregation}
+  - {id: e-values-aggregation, from: values, type: consumes, to: value-aggregation}
+  - {id: e-aggregation-output, from: value-aggregation, type: produces, to: attention-output}
+  - {id: e-attention-block, from: attention-output, type: consumes, to: block-update}
+  - {id: e-block-contextualized, from: block-update, type: produces, to: contextualized-hidden-states}
+  - {id: e-contextualized-next-block, from: contextualized-hidden-states, type: produces, to: transformer-block-input}
+  - {id: e-contextualized-final, from: contextualized-hidden-states, type: produces, to: final-hidden-states}
+  - {id: e-final-vocab, from: final-hidden-states, type: consumes, to: vocabulary-projection}
+  - {id: e-vocab-logits, from: vocabulary-projection, type: produces, to: logits}
+  - {id: e-logits-softmax, from: logits, type: consumes, to: vocabulary-softmax}
+  - {id: e-softmax-distribution, from: vocabulary-softmax, type: produces, to: next-token-distribution}
+  - {id: e-distribution-policy, from: next-token-distribution, type: selects, to: decoding-policy}
+  - {id: e-policy-token, from: decoding-policy, type: produces, to: generated-token}
+  - {id: e-token-feedback, from: generated-token, type: feeds-back, to: token-context, feedback: true}
+  - {id: e-distribution-target, from: next-token-distribution, type: scores, to: target-probability}
+  - {id: e-target-score, from: observed-target, type: scores, to: target-probability}
+  - {id: e-target-likelihood, from: target-probability, type: aggregates, to: sequence-log-likelihood}
+  - {id: e-target-nll, from: target-probability, type: aggregates, to: token-nll}
+  - {id: e-nll-reduction, from: token-nll, type: consumes, to: loss-reduction}
+  - {id: e-loss-objective, from: loss-reduction, type: produces, to: training-objective}
+  - {id: e-objective-gradients, from: training-objective, type: differentiates, to: gradients}
+  - {id: e-gradients-optimizer, from: gradients, type: consumes, to: optimizer-update}
+  - {id: e-params-optimizer, from: model-parameters, type: consumes, to: optimizer-update}
+  - {id: e-optimizer-updated, from: optimizer-update, type: produces, to: updated-parameters}
+  - {id: e-updated-params-forward, from: updated-parameters, type: feeds-back, to: model-parameters, feedback: true}
+  - {id: e-score-metrics, from: sequence-log-likelihood, type: aggregates, to: evaluation-metrics}
+  - {id: e-loss-metrics, from: token-nll, type: aggregates, to: evaluation-metrics}
+  - {id: e-teacher-context, from: teacher-forcing, type: conditions, to: training-context}
+  - {id: e-observed-context, from: observed-target, type: conditions, to: training-context}
+  - {id: e-training-forward, from: training-context, type: conditions, to: token-context}
+  - {id: e-prefill-forward, from: prefill, type: applies, to: vocabulary-softmax}
+  - {id: e-decode-forward, from: autoregressive-decode, type: applies, to: vocabulary-softmax}
+  - {id: e-prefill-cache, from: prefill, type: produces, to: kv-cache, optional: true}
+  - {id: e-decode-cache, from: kv-cache, type: uses-optional, to: autoregressive-decode}
+
+views:
+  - id: persistent-spine
+    labels: {fr: "Tronc computationnel", en: "Computational spine"}
+    descriptions:
+      fr: "Du contexte à la distribution conditionnelle, en passant par les représentations et le Transformer."
+      en: "From context to the conditional distribution, through representations and the Transformer."
+    nodes: [raw-text-context, tokenization, tokens, token-id-encoding, token-ids, token-context, embedding-lookup, token-embeddings, positional-information, initial-hidden-states, transformer-block-input, contextualized-hidden-states, final-hidden-states, vocabulary-projection, logits, vocabulary-softmax, next-token-distribution]
+    edges: [e-context-tokenization, e-tokenization-tokens, e-tokens-id-encoding, e-id-encoding-ids, e-ids-context, e-context-embedding, e-embedding-vectors, e-embeddings-initial, e-position-initial, e-initial-block-input, e-block-contextualized, e-contextualized-final, e-final-vocab, e-vocab-logits, e-logits-softmax, e-softmax-distribution]
+  - id: transformer-block
+    labels: {fr: "Intérieur d'un bloc Transformer", en: "Inside a Transformer block"}
+    descriptions:
+      fr: "Détail des projections Q/K/V, du masque causal, de l'attention et de la mise à jour des états."
+      en: "Detail of Q/K/V projections, causal masking, attention, and state update."
+    nodes: [transformer-block-input, query-projection, queries, key-projection, keys, value-projection, values, attention-score-computation, attention-scores, causal-mask, masked-attention-scores, attention-softmax, attention-weights, value-aggregation, attention-output, block-update, contextualized-hidden-states]
+    edges: [e-block-q, e-q-projection, e-block-k, e-k-projection, e-block-v, e-v-projection, e-q-scores, e-k-scores, e-score-output, e-score-mask, e-mask-scores, e-scores-masked, e-masked-softmax, e-softmax-weights, e-weights-aggregation, e-values-aggregation, e-aggregation-output, e-attention-block, e-block-contextualized, e-contextualized-next-block]
+  - id: generation
+    labels: {fr: "Branche génération", en: "Generation branch"}
+    descriptions:
+      fr: "Sélectionne un token depuis la distribution puis le réinjecte dans le contexte."
+      en: "Selects a token from the distribution and feeds it back into the context."
+    nodes: [token-context, next-token-distribution, decoding-policy, generated-token]
+    edges: [e-distribution-policy, e-policy-token, e-token-feedback]
+  - id: observed-target-scoring
+    labels: {fr: "Scoring d'une cible observée", en: "Observed-target scoring"}
+    descriptions:
+      fr: "Compare la distribution à une cible connue pour obtenir sa probabilité et la vraisemblance."
+      en: "Compares the distribution with a known target to obtain its probability and likelihood."
+    nodes: [next-token-distribution, observed-target, target-probability, sequence-log-likelihood]
+    edges: [e-distribution-target, e-target-score, e-target-likelihood]
+  - id: evaluation
+    labels: {fr: "Branche évaluation", en: "Evaluation branch"}
+    descriptions:
+      fr: "Agrège les scores sur des données tenues à l'écart sans modifier les paramètres."
+      en: "Aggregates scores on held-out data without changing parameters."
+    nodes: [observed-target, target-probability, sequence-log-likelihood, token-nll, evaluation-metrics]
+    edges: [e-target-score, e-target-likelihood, e-target-nll, e-score-metrics, e-loss-metrics]
+  - id: training
+    labels: {fr: "Branche apprentissage", en: "Training branch"}
+    descriptions:
+      fr: "Utilise les préfixes observés, calcule l'objectif, les gradients et la mise à jour des paramètres."
+      en: "Uses observed prefixes, computes the objective and gradients, and updates parameters."
+    nodes: [teacher-forcing, training-context, observed-target, token-context, next-token-distribution, target-probability, token-nll, loss-reduction, training-objective, model-parameters, gradients, optimizer-update, updated-parameters]
+    edges: [e-teacher-context, e-observed-context, e-training-forward, e-distribution-target, e-target-score, e-target-nll, e-nll-reduction, e-loss-objective, e-objective-gradients, e-gradients-optimizer, e-params-optimizer, e-optimizer-updated, e-updated-params-forward]
+  - id: inference-execution
+    labels: {fr: "Phases d'exécution de l'inférence", en: "Inference execution phases"}
+    descriptions:
+      fr: "Distingue le traitement initial du prompt (prefill), le décodage itératif et le cache KV facultatif."
+      en: "Distinguishes initial prompt processing (prefill), iterative decode, and the optional KV cache."
+    nodes: [token-context, prefill, autoregressive-decode, kv-cache, next-token-distribution, generated-token]
+    edges: [e-prefill-forward, e-decode-forward, e-prefill-cache, e-decode-cache, e-token-feedback]
