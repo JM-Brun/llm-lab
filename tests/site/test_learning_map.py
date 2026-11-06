@@ -326,7 +326,6 @@ def test_load_navigation_derives_areas_from_sidebar(tmp_path: Path) -> None:
     ]
 
 
-
 def test_load_navigation_preserves_nested_sidebar_sections(tmp_path: Path) -> None:
     site = tmp_path / "site"
     _write_page(site, page_id="fr/attention", language="fr", title="Attention")
@@ -348,6 +347,7 @@ def test_load_navigation_preserves_nested_sidebar_sections(tmp_path: Path) -> No
     assert navigation[0]["sections"][0]["sections"] == [
         {"title": "Niveau trois", "pages": ["fr/attention"]}
     ]
+
 
 def test_load_navigation_requires_matching_sidebar(tmp_path: Path) -> None:
     site = tmp_path / "site"
