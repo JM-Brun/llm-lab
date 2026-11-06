@@ -186,11 +186,7 @@ def validate_registry(
                 errors.append(f"{where}.{field}: values must be non-empty strings")
 
         importance = concept.get("importance")
-        if not isinstance(importance, str) or importance not in {
-            "core",
-            "supporting",
-            "specialized",
-        }:
+        if not isinstance(importance, str) or importance not in {"core", "supporting", "specialized"}:
             errors.append(f"{where}.importance: expected one of core, supporting, specialized")
 
         memberships = concept.get("domains")
