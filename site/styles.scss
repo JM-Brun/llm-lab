@@ -1777,3 +1777,28 @@ main.content :not(pre) > code {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+/* Rendered math and Quarto pagination cards must never widen the page.
+   Long MathJax expressions scroll locally inside their container; prev/next
+   navigation cards wrap their titles instead of overflowing on phones. */
+mjx-container[jax="CHTML"],
+mjx-container[jax="CHTML"][display="true"] {
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+}
+@media (max-width: 600px) {
+  nav[role="doc-pagination"],
+  .nav-page {
+    max-width: 100%;
+    min-width: 0;
+  }
+  .nav-page .nav-page-text {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .nav-page code {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}
