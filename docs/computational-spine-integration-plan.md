@@ -11,14 +11,16 @@ This document is the durable hand-off for future work sessions. It records what 
 
 | Work package | Status | Evidence |
 |---|---|---|
-| Canonical computational model and registry | Integrated | PR #577, #580, #583, #578 |
-| Eight-stage guided route and bilingual generated projections | Integrated | PR #578 and route-refresh PR #586 |
-| Teacher forcing, prefill and decode teaching | Integrated | FR/EN training-examples and generation lessons |
-| Concept domains | Existing canonical metadata | `data/concepts.yml` and `data/domains.yml`; many-to-many concept classification |\n| Concept importance | Not implemented | The 2026-11-06 audit proposes a controlled `importance` field; no such field exists in the current registry or renderer |\n| Page tags `notion` / `domaine` | Intentionally not duplicated | Canonical concept IDs and domains remain in the concept registry; page tags retain editorial meaning |
-| Page metadata audit | Partial | Prediction → entropy → likelihood navigation and reciprocal hierarchy reviewed; broader inventory remains |
-| Persistent-spine and evaluation views with text alternatives | Merged | PR #589; bilingual renderer, overview integration and generated text alternatives |
-| Build crosswalk | Partial | G0–G9 and G1b → G2 branch documented; implementation evidence still has gaps |
-| Rendered desktop/mobile, keyboard and screen-reader review | Pending | Do not infer this evidence from source tests or a successful static render |
+| Canonical computational model and registry | Integrated | PR #577, #580, #583, #578, #589 |
+| Eight-stage guided route and bilingual generated projections | Integrated | PR #578, #586; route assertions corrected in PR #594 |
+| Teacher forcing, prefill and decode teaching | Integrated at conceptual level | FR/EN training-examples and generation lessons; implementation evidence remains separately tracked in Build |
+| Concept domains | Existing canonical metadata | `data/concepts.yml` and `data/domains.yml`; many-to-many concept classification |
+| Concept importance | Integrated | PR #593; required `core` / `supporting` / `specialized` field for all 41 concepts, with bilingual secondary display and JSON-LD export |
+| Page tags `notion` / `domaine` | Intentionally not duplicated | Canonical concept IDs and domains remain in the concept registry; page tags retain editorial meaning |
+| Page metadata audit | Partial | Prediction → entropy → likelihood and current navigation boundaries reviewed; broader bilingual inventory remains |
+| Persistent-spine and evaluation views with text alternatives | Integrated | PR #589; bilingual renderer, overview integration and generated text alternatives |
+| Build crosswalk | Updated; implementation evidence partial | PR #598 separates inference, scoring, evaluation and training in the Build explanation; end-to-end GPT training remains a gap |
+| Rendered navigation and accessibility | In progress | PR #597 checks localized Quarto previous/next names and visible-link / `rel` metadata parity; browser run not yet complete; manual screen-reader review remains required |
 
 PR #593, #594 and #598 are also merged to `main`. PR #593 integrates concept importance metadata; PR #594 aligns browser assertions with the eight-stage route; PR #598 reconciles the Build explanation with the shared computational spine. PR #589 integrates the persistent-spine and evaluation views, bilingual text alternatives, and workflow generation before both PR rendering and Pages publication. The current page-navigation accessibility follow-up is PR #597. Its Python quality checks and static Quarto render have passed; the rendered browser review is still running. Do not claim full accessibility validation until that review and a manual screen-reader check are complete.
 
