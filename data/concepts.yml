@@ -596,7 +596,6 @@ relations:
   - {from: causal-mask, type: constrains, to: self-attention}
   - {from: positional-encoding, type: contributes-to, to: self-attention}
   - {from: self-attention, type: contributes-to, to: contextualized-representation}
-  - {from: contextualized-representation, type: mapped-by, to: output-projection}
   - {from: output-projection, type: produces, to: logits}
   - {from: logits, type: normalized-by, to: softmax}
   - {from: softmax, type: evaluated-by, to: cross-entropy}
@@ -634,7 +633,7 @@ relations:
       fr: "La négative log-vraisemblance est l'opposé de la log-vraisemblance."
       en: "Negative log-likelihood is the negation of log-likelihood."
   - {from: negative-log-likelihood, type: contributes-to, to: training-objective}
-  - {from: training-example, type: produces, to: observed-target}
+  - {from: observed-target, type: part-of, to: training-example}
   - {from: teacher-forcing, type: applies-to, to: training-example}
   - from: cross-entropy
     type: prerequisite
