@@ -158,7 +158,7 @@ Next iterations should:
 4. add page-level highlighting as a projection, not as hand-maintained per-page diagrams;
 5. reconcile Understand and Build as separate projections without deriving one from the other.
 
-## 5. Rendering selected views
+## 7. Rendering selected views
 
 `site/tools/render_computational_graph.py` renders selected views from this registry as bilingual Mermaid fragments. The renderer does not create a second graph model: node labels, relation labels, and topology are read directly from the YAML source.
 
