@@ -78,6 +78,24 @@ for (const testCase of cases) {
 
     item.title = await page.title();
     item.h1 = await page.locator("h1").first().innerText().catch(() => null);
+    // Quarto footer navigation follows editorial sidebar order, independently
+    // of document-level rel metadata, the guided route, and the computational graph.
+    // Validate the actual visible control and its localized accessible name.
+    item.pageNavigation = await page.evaluate(() => {
+      const readLink = (direction) => {
+        const selector = direction === "previous" ? ".page-navigation .nav-page-previous a.pagination-link" : ".page-navigation .nav-page-next a.pagination-link";
+        const link = document.querySelector(selector);
+        return { href: link?.href || null, title: link?.querySelector(".nav-page-text")?.textContent?.trim().replace(/\s+/g, " ") || null, ariaLabel: link?.getAttribute("aria-label") || null };
+      };
+      return { previous: readLink("previous"), next: readLink("next") };
+    });
+    for (const [direction, navigation] of Object.entries(item.pageNavigation)) {
+      const visible = Boolean(navigation.href);
+      if (visible) {
+        const prefix = lang === "fr" ? (direction === "previous" ? "Page précédente:" : "Page suivante:") : (direction === "previous" ? "Previous page:" : "Next page:");
+        if (!navigation.title || !navigation.ariaLabel?.startsWith(prefix)) throw new Error(direction + " footer link lacks a localized directional accessible name");
+      }
+    }
     item.layout = await page.evaluate(() => ({
       viewportWidth: window.innerWidth,
       documentWidth: document.documentElement.scrollWidth,

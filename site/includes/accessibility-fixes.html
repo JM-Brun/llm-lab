@@ -27,10 +27,28 @@
     });
   };
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", enhanceCalloutButtons, { once: true });
-  } else {
+  const enhancePageNavigation = () => {
+    document.querySelectorAll(".page-navigation a.pagination-link").forEach((link) => {
+      const direction = link.closest(".nav-page-previous") ? "previous" : link.closest(".nav-page-next") ? "next" : null;
+      if (!direction || link.dataset.navigationLabelEnhanced === "true") return;
+      const title = link.querySelector(".nav-page-text")?.textContent?.trim().replace(/\s+/g, " ") || link.getAttribute("title")?.trim();
+      if (!title) return;
+      const french = document.documentElement.lang.toLowerCase().startsWith("fr");
+      const label = french ? (direction === "previous" ? "Page précédente" : "Page suivante") : (direction === "previous" ? "Previous page" : "Next page");
+      link.setAttribute("aria-label", label + ": " + title);
+      link.dataset.navigationLabelEnhanced = "true";
+    });
+  };
+
+  const enhanceAccessibility = () => {
     enhanceCalloutButtons();
+    enhancePageNavigation();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", enhanceAccessibility, { once: true });
+  } else {
+    enhanceAccessibility();
   }
 })();
 </script>
