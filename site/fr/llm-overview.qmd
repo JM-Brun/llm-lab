@@ -81,7 +81,7 @@ La préparation du contexte et le calcul du modèle produisent une **distributio
 
 | Branche | Usage de la distribution | Paramètres |
 |---|---|---|
-| **Génération** | Sélectionner un token, l'ajouter au contexte et répéter la prédiction | Fixes |
+| **Génération** | Sélectionner un token, l'ajouter au contexte et répéter la prédiction ; voir [Générer du texte](generation.qmd) | Fixes |
 | **Scoring / évaluation** | Évaluer la probabilité d'un token observé, puis agréger des scores sur des données tenues à l'écart | Fixes |
 | **Apprentissage** | Comparer les prédictions aux cibles de référence (*teacher forcing*), calculer la loss, les gradients et mettre à jour les paramètres | Modifiés à l'étape de mise à jour |
 
