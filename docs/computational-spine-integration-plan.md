@@ -7,7 +7,7 @@
 
 This document is the durable hand-off for future work sessions. It records what has been completed, what remains, the intended order, and the evidence required to close the work. It is a task plan, not a new concept registry, curriculum hierarchy, or computational graph.
 
-## 0. Current status — 2026-11-06 (reconciled after PR #598)
+## 0. Current status — 2026-11-06 (reconciled after PR #599)
 
 | Work package | Status | Evidence |
 |---|---|---|
@@ -19,11 +19,11 @@ This document is the durable hand-off for future work sessions. It records what 
 | Page tags `notion` / `domaine` | Intentionally not duplicated | Canonical concept IDs and domains remain in the concept registry; page tags retain editorial meaning |
 | Page metadata audit | Partial | Prediction → entropy → likelihood and current navigation boundaries reviewed; broader bilingual inventory remains |
 | Persistent-spine and evaluation views with text alternatives | Integrated | PR #589; bilingual renderer, overview integration and generated text alternatives |
-| Computational edge semantics | Correction under review | PR #599 makes target log-probability, NLL and decoding-selection edges explicit; focused regression tests added |
+| Computational edge semantics | Integrated | PR #599 merged: explicit target log-probability and NLL operations; distribution selects the generated token while decoding policy conditions selection |
 | Build crosswalk | Updated; implementation evidence partial | PR #598 separates inference, scoring, evaluation and training in the Build explanation; end-to-end GPT training remains a gap |
-| Rendered navigation and accessibility | In progress | PR #597: Python checks and Quarto render passed; first browser run exposed an overstrict assumption that every page has `rel=prev` / `rel=next`; the assertion was relaxed and the rerun is queued. Manual screen-reader review remains required |
+| Rendered navigation and accessibility | In progress | PR #597: Python checks and Quarto render pass; browser rerun after removing an invalid comparison between Quarto footer links and document-level `rel` metadata is running. Manual screen-reader review remains required |
 
-PR #593, #594 and #598 are also merged to `main`. PR #593 integrates concept importance metadata; PR #594 aligns browser assertions with the eight-stage route; PR #598 reconciles the Build explanation with the shared computational spine. PR #589 integrates the persistent-spine and evaluation views, bilingual text alternatives, and workflow generation before both PR rendering and Pages publication. The current page-navigation accessibility follow-up is PR #597. Its Python quality checks and static Quarto render have passed. The first rendered browser run failed only on the assumption that Quarto always emits `rel=prev` / `rel=next`; the check was corrected to compare those attributes only when present, and a rerun is queued. Do not claim full accessibility validation until that rerun and a manual screen-reader check are complete.
+PR #593, #594, #598 and #599 are merged to `main`. PR #593 integrates concept importance metadata; PR #594 aligns browser assertions with the eight-stage route; PR #598 reconciles the Build explanation with the shared computational spine. PR #589 integrates the persistent-spine and evaluation views, bilingual text alternatives, and workflow generation before both PR rendering and Pages publication. PR #599 corrects the mathematical scoring and generation edge semantics. PR #597 is the current page-navigation accessibility follow-up. Its Python quality checks and static Quarto render have passed; the browser audit now validates visible footer destinations and localized accessible names independently of document-level `rel` metadata. The rerun is in progress. Do not claim full accessibility validation until that rerun and a manual screen-reader check are complete. PR #602 additionally reconciles observed-prefix conditioning across scoring, evaluation, and training views.
 
 
 ## 1. Architectural invariant
@@ -38,10 +38,10 @@ p_\theta(\cdot\mid x_{<t})=\operatorname{softmax}(z_t).
 Three sibling operational branches use this shared result:
 
 - **Inference:** decode/select a token, append the generated token to the context, and continue with unchanged parameters.
-- **Scoring:** compare the distribution with an observed target, obtain its target probability and likelihood-related quantities; do not select a token and do not update parameters.
+- ****Scoring:** condition on the observed prefix (teacher forcing), compare the distribution with the next observed target, and obtain its target probability and likelihood-related quantities; do not select a token and do not update parameters.
 - **Training:** use teacher-forced observed targets to form a loss, compute gradients, and update parameters. The next training computation uses the updated parameters.
 
-Evaluation applies scoring to held-out data and stops before the optimizer update. These branches are related, but are not one executable loop. The context is extended with a generated token during inference and with an observed token during teacher-forced scoring/training.
+Evaluation applies the same observed-prefix scoring procedure to held-out data and stops before differentiation or the optimizer update. These branches are related, but are not one executable loop. The context is extended with a generated token during inference and with an observed token during teacher-forced scoring/training.
 
 The common forward computation ends at the conditional distribution. Decoding, likelihood, loss, gradients, and parameter updates must not be drawn as sequential stages of ordinary inference.
 
