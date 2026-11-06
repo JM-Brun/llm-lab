@@ -46,6 +46,18 @@ Un LLM n'écrit pas un texte d'un bloc : il produit **un token à la fois**. À 
 4. **Ajouter le token et recommencer.** Le token sélectionné est ajouté au contexte, puis la boucle repart à l'étape 2, sous réserve de la limite de contexte.
 5. **Arrêter.** La génération s’arrête sur un critère explicite — token de fin, longueur maximale, ou règle imposée par l’application — jamais parce que le modèle « aurait fini de réfléchir ».
 
+### Prefill et decode : deux phases de l'inférence
+
+Dans les systèmes d'inférence, le traitement du prompt initial et la génération incrémentale sont souvent distingués :
+
+- **Prefill :** le modèle traite le prompt initial comme une séquence, avec le masque causal. Une passe avant produit des logits pour chaque position ; la distribution à la dernière position sert à sélectionner le premier token généré.
+- **Decode incrémental :** après cette sélection, le token généré est ajouté au contexte. Le modèle calcule alors la distribution suivante, puis le processus se répète.
+- **Cache KV :** une implémentation optimisée peut conserver les clés et valeurs d'attention déjà calculées pendant le prefill et les étapes précédentes. Elle évite ainsi de recalculer tout le préfixe ; c'est une optimisation d'exécution, pas une condition de correction.
+
+Dans la référence NumPy de LLM Lab, `generate.py` traite d'abord le prompt complet, puis réexécute le modèle sur la fenêtre de contexte à chaque étape. Le code illustre donc les phases logiques, mais ne met pas en œuvre de cache KV ni de fonction de decode incrémental optimisée.
+
+Ne pas confondre **decode** (phase d'exécution après le prefill) et **décodage** (*decoding*, règle de sélection du prochain token). Le prefill n'est pas non plus du *teacher forcing* : celui-ci concerne le conditionnement des prédictions pendant l'entraînement.
+
 ### Que recouvre exactement le décodage ?
 
 Le **décodage (*decoding*)** est le traitement qui transforme la sortie du modèle en prochain token. Il commence après la passe avant : le réseau calcule les logits, puis le décodage peut modifier ces scores ou la distribution (par exemple avec une température ou un filtre) avant de sélectionner un token.
