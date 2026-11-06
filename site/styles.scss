@@ -1761,3 +1761,78 @@ a.concept-link:focus-visible {
   outline-offset: 3px;
   border-radius: .25rem;
 }
+
+/* Keep long code fragments inside the reading column on narrow screens.
+   Code blocks scroll locally; inline code wraps like prose. Desktop behavior
+   is unchanged: pre keeps its wrap policy (code-overflow: wrap). */
+main.content pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+main.content pre > code {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+main.content :not(pre) > code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Rendered math and Quarto pagination cards must never widen the page.
+   Long MathJax expressions scroll locally inside their container; prev/next
+   navigation cards wrap their titles instead of overflowing on phones. */
+mjx-container[jax="CHTML"],
+mjx-container[jax="CHTML"][display="true"] {
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+}
+@media (max-width: 600px) {
+  nav[role="doc-pagination"],
+  .nav-page {
+    max-width: 100%;
+    min-width: 0;
+  }
+  .nav-page .nav-page-text {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .nav-page code {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Wide aligned derivations shrink slightly on phones so rendered math never
+   exceeds the reading column; every expression stays legible and, when wider
+   than the column, remains fully available through its local scroll area. */
+mjx-container[jax="CHTML"] {
+  width: auto !important;
+}
+@media (max-width: 600px) {
+  mjx-container[jax="CHTML"],
+  mjx-container[jax="CHTML"][display="true"] {
+    font-size: 92% !important;
+  }
+}
+
+/* Pandoc wraps display math in an inline span; give that wrapper proper block
+   containment so a wide equation can never widen the page. */
+span.math.display, .math.display {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+span.math.inline, .math.inline {
+  max-width: 100%;
+}
+
+/* The page title block must never widen the page on phones: long French
+   titles and subtitles wrap within the reading column. */
+.quarto-title-block,
+.quarto-title,
+.quarto-title h1.title,
+.quarto-title .subtitle {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}

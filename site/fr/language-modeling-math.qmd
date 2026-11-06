@@ -142,6 +142,8 @@ La page [Entropie croisée](cross-entropy.qmd) reste la référence pour la pert
 - [Chaîne mathématique de l'entraînement](mathematical-foundations.qmd) : carte synthétique des logits aux gradients.
 - Bishop, *Pattern Recognition and Machine Learning*, chapitres 1–2, pour les fondements probabilistes.
 
+**Notion canonique :** [Panorama des modèles de langage](llm-overview.qmd). Cette page en approfondit la formalisation probabiliste ; elle complète les explications du parcours sans constituer un prérequis.
+
 ::: {.language-switch}
 **Langue :** [Français](language-modeling-math.qmd) · [English](../en/language-modeling-math.qmd)
 :::

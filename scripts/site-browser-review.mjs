@@ -21,13 +21,18 @@ const cases = [
     ...testCase, page: "learning-map.html", kind: "learning-map",
   })),
   ...routeContextCases.flatMap(testCase =>
-    ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "cross-attention.html", "logits.html", "probabilities.html", "likelihood.html", "decoding-strategies.html", "cross-entropy.html", "loss.html", "gradients.html", "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
+    ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "cross-attention.html", "logits.html", testCase.lang === "fr" ? "probabilites.html" : "probabilities.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "decoding-strategies.html", "cross-entropy.html", "loss.html", "gradients.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
       ...testCase, page, kind: "route-context",
     }))
   ),
   ...visualCases.flatMap(testCase =>
     ["gpt-config-walkthrough.html", "gpt-ops-walkthrough.html", "transformer-block-walkthrough.html", "gpt-model-walkthrough.html", "gpt-generation-walkthrough.html"].map(page => ({
       ...testCase, page, kind: "build-tour",
+    }))
+  ),
+  ...visualCases.flatMap(testCase =>
+    ["attention-score-scaling.html", "cross-attention.html", "rope.html", "unicode-text.html", "tensors.html", "cosine-similarity.html", testCase.lang === "fr" ? "linearite-embeddings.html" : "embedding-linearity.html", "language-modeling-math.html", "mathematical-foundations.html", "llm-computational-complexity.html"].map(page => ({
+      ...testCase, page, kind: "deep-dive-parent",
     }))
   ),
 ];
@@ -87,8 +92,55 @@ for (const testCase of cases) {
           whiteSpace: style.whiteSpace,
           overflowX: style.overflowX,
         };
-      }).filter(x => x.width > 0 && (x.right > window.innerWidth + 1 || x.left < -1))
-        .sort((a, b) => b.right - a.right).slice(0, 20),
+      }).filter(x => x.right > window.innerWidth + 1 || x.left < -1)
+        .sort((a, b) => b.right - a.right).slice(0, 60),
+      marginOverflow: [...document.querySelectorAll("body *")].map(el => {
+        const r = el.getBoundingClientRect();
+        const style = getComputedStyle(el);
+        return {
+          tag: el.tagName.toLowerCase(),
+          className: typeof el.className === "string" ? el.className.slice(0, 80) : null,
+          text: (el.innerText || "").trim().slice(0, 60),
+          right: Math.round(r.right),
+          width: Math.round(r.width),
+          marginRight: style.marginRight,
+        };
+      }).filter(x => x.right <= window.innerWidth + 1 && x.right + parseFloat(x.marginRight) > window.innerWidth + 1).slice(0, 10),
+      bodyBox: (() => {
+        const r = document.body.getBoundingClientRect();
+        return {
+          left: Math.round(r.left), right: Math.round(r.right), width: Math.round(r.width),
+          scrollWidth: document.body.scrollWidth,
+          bodyMinWidth: getComputedStyle(document.body).minWidth,
+          htmlMinWidth: getComputedStyle(document.documentElement).minWidth,
+        };
+      })(),
+      overflowRootCause: (() => {
+        const target = window.innerWidth + 1;
+        if (document.documentElement.scrollWidth <= target) return null;
+        const found = [];
+        let tested = 0;
+        for (const el of document.querySelectorAll("body *")) {
+          if (tested++ > 3000) break;
+          const prev = el.style.display;
+          el.style.display = "none";
+          const fixed = document.documentElement.scrollWidth <= target;
+          el.style.display = prev;
+          if (fixed) found.push(el);
+          if (found.length >= 40) break;
+        }
+        const leaves = found.filter(el => !found.some(other => other !== el && el.contains(other)));
+        return leaves.map(el => {
+          const r = el.getBoundingClientRect();
+          return {
+            tag: el.tagName.toLowerCase(),
+            className: typeof el.className === "string" ? el.className.slice(0, 80) : null,
+            text: (el.innerText || "").trim().slice(0, 80),
+            html: el.innerHTML.replace(/\s+/g, " ").slice(0, 150),
+            left: Math.round(r.left), right: Math.round(r.right), width: Math.round(r.width),
+          };
+        });
+      })(),
       pageHeight: document.documentElement.scrollHeight,
       images: [...document.images].map(img => ({
         src: img.currentSrc || img.src,
@@ -355,6 +407,34 @@ for (const testCase of cases) {
       }
     }
 
+    if (kind === "deep-dive-parent") {
+      const currentPageId = `${lang}/${pagePath.replace(".html", "")}`;
+      const parents = await page.evaluate(async ({ language, currentId }) => {
+        const response = await fetch(`../learning-map-data-${language}.json`);
+        if (!response.ok) throw new Error(`learning-map metadata request failed: ${response.status}`);
+        const payload = await response.json();
+        const current = payload.pages.find(candidate => candidate.id === currentId);
+        if (!current) throw new Error(`missing page metadata: ${currentId}`);
+        return current.parents || [];
+      }, { language: lang, currentId: currentPageId });
+      if (!parents.length) throw new Error("deep-dive page has no declared canonical parent");
+      const mainLinks = await page.locator("main a[href]").evaluateAll(links =>
+        links.map(link => ({ href: link.getAttribute("href"), text: link.innerText.trim() }))
+      );
+      const resolvedLinks = mainLinks.map(link => ({
+        ...link,
+        targetId: link.href
+          ? new URL(link.href, page.url()).pathname.slice(1).replace(".html", "")
+          : null,
+      }));
+      item.deepDiveParent = { parents, resolvedLinks };
+      for (const parent of parents) {
+        if (!resolvedLinks.some(link => link.targetId === parent)) {
+          throw new Error(`deep-dive page does not expose a link back to canonical parent ${parent}`);
+        }
+      }
+    }
+
     if (kind === "route-context") {
       const siteBreadcrumb = page.locator(".quarto-title-breadcrumbs");
       const duplicateBreadcrumb = page.locator(".llm-breadcrumb");
@@ -429,12 +509,15 @@ for (const testCase of cases) {
           "cross-attention.html": "guided-stage-computation",
           "logits.html": "guided-stage-prediction",
           "probabilities.html": "guided-stage-prediction",
+          "probabilites.html": "guided-stage-prediction",
           "likelihood.html": "guided-stage-prediction",
+          "vraisemblance.html": "guided-stage-prediction",
           "decoding-strategies.html": "guided-stage-prediction",
           "cross-entropy.html": "guided-stage-learning-evaluation",
           "loss.html": "guided-stage-learning-evaluation",
           "gradients.html": "guided-stage-learning-evaluation",
           "experimental-evaluation.html": "guided-stage-learning-evaluation",
+          "evaluation-experimentale.html": "guided-stage-learning-evaluation",
           "scaling-laws.html": "guided-stage-learning-evaluation",
           "transformer-architectures.html": "guided-stage-orientation",
           "llm-limits.html": "guided-stage-orientation",
@@ -447,7 +530,7 @@ for (const testCase of cases) {
         const optionalRole = context.locator(".guided-page-context__role");
         const optionalRoleText = await optionalRole.innerText().catch(() => "");
         const roleMatches = optionalPages.has(pagePath)
-          ? /optional|facultatif/i.test(optionalRoleText)
+          ? /optional|facultatif|facultative/i.test(optionalRoleText)
           : await optionalRole.count() === 0;
         if (!expectedStage || item.routeContext.isMultiple || !item.routeContext.navLandmark ||
             item.routeContext.currentPageMarkers !== 0 || stageFragments.length !== 1 ||
@@ -566,7 +649,12 @@ for (const testCase of cases) {
       );
     }
     if (item.layout.horizontalOverflow || item.learningMapLayout?.horizontalOverflow) {
-      report.failures.push(`${pagePath}/${lang}/${label}/${theme}: horizontal overflow`);
+      let overflowing = (item.layout.overflowCandidates || []).filter(c => c.right <= item.layout.documentWidth + 1).slice(0, 10).map(c => `${c.tag}${c.className ? "." + String(c.className).split(" ")[0] : ""}[left=${c.left},right=${c.right}]`).join(" | ");
+      if (!overflowing) {
+        const causes = (item.layout.overflowRootCause || []).map(c => `${c.tag}${c.className ? "." + String(c.className).split(" ")[0] : ""}[left=${c.left},right=${c.right},w=${c.width}]:${c.html}`).join(" ; ");
+        overflowing = `rootCause: ${causes}`;
+      }
+      report.failures.push(`${pagePath}/${lang}/${label}/${theme}: horizontal overflow (document ${item.layout.documentWidth}px vs viewport ${item.layout.viewportWidth}px): ${overflowing}`);
     }
     if (runInteractiveAudit && !item.keyboard.length) report.failures.push(`${pagePath}/${lang}/${label}/${theme}: no keyboard focus targets`);
   } catch (error) {
@@ -596,4 +684,10 @@ console.log(JSON.stringify({
   })),
   failures: report.failures,
 }, null, 2));
+// Surface every failure as a GitHub Actions error annotation so the exact
+// failing case is visible in the run summary without downloading artifacts.
+for (const failure of report.failures) {
+  console.log(`::error title=Site browser review failure::${failure.replace(/\s+/g, " ").slice(0, 900)}`);
+}
+
 if (report.failures.length) process.exitCode = 1;

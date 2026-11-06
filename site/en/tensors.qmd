@@ -207,6 +207,8 @@ In deep-learning libraries, “tensor” commonly means a multidimensional numer
 - [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch) — a complementary implementation-oriented reference.
 - [Visualization of tensors, part 1](https://www.youtube.com/watch?v=YxXyN2ifK8A) — a mathematical/physical perspective on tensor terminology; distinguish it from the simpler array usage common in deep-learning libraries.
 
+**Canonical lesson:** [GPT and the Transformer](transformer.qmd). This page is a technical reference for tensor shapes and axes; it is not a prerequisite for following the build path.
+
 :::: {.language-switch}
 [Français](../fr/tensors.qmd) · [English](tensors.qmd)
 ::::
