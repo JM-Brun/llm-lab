@@ -101,42 +101,42 @@ Use the existing page-map metadata schema and contract; do not add a new per-pag
 
 ### P1 — Reconcile page content without losing knowledge
 
-- [ ] Audit the shared-core pages from text/tokens through embeddings, positional information, initial hidden states, Transformer blocks, final contextualized states, logits, and softmax.
-- [ ] Verify Q/K/V are presented as operations inside each Transformer block, not after final contextualized representations.
-- [ ] Clarify the common forward pass and its boundary at the conditional distribution.
-- [ ] Audit generation/decoding content: greedy selection, sampling, temperature, top-k/top-p, stopping, generated-token feedback, prefill, decode steps, and optional KV-cache details.
-- [ ] Audit scoring content: observed target, target probability, sequence likelihood, log-likelihood, NLL, token cross-entropy, reduction, masking, and numerical stability.
-- [ ] Audit training content: shifted inputs/targets, teacher forcing, token losses, batch aggregation, gradients, optimizer, parameter update, and recomputation with updated parameters.
-- [ ] Audit evaluation content: held-out split, leakage boundaries, metrics and uncertainty; make explicit that evaluation does not update model parameters.
-- [ ] Add explicit contrasts where confusion is likely: generated vs observed token; prefill vs teacher forcing; likelihood vs loss; evaluation vs training.
-- [ ] Keep mathematical derivations and implementation details at the appropriate Core/Deepen depth.
-- [ ] Map every moved or consolidated explanation to its canonical destination before editing; preserve examples, equations, citations, exercises, and caveats.
+- [ ] Complete the shared-core page audit from text/tokens through embeddings, positional information, initial hidden states, Transformer blocks, final contextualized states, logits and softmax. The high-level registry and overview now expose the common path; page-by-page depth review remains.
+- [x] Verify Q/K/V are operations inside each Transformer block and are projected from that block's input hidden states; the graph and walkthrough preserve this boundary.
+- [x] Clarify the common forward pass and its boundary at the conditional distribution in the registry and overview.
+- [x] Add the prefill/decode distinction, token-selection boundary, fixed-parameter inference and KV-cache limitation to the bilingual generation lesson.
+- [x] Add teacher forcing after shifted input/target construction in the bilingual training-examples lesson; distinguish reference-token conditioning from generated-token feedback and qualify exposure bias.
+- [ ] Complete the scoring-page audit for observed target, target probability, sequence likelihood, log-likelihood, NLL, token cross-entropy, reduction, masking and numerical stability.
+- [ ] Complete the training-page audit for batch aggregation, gradients, optimizer, parameter update and recomputation with updated parameters; keep missing end-to-end training implementation explicitly marked as a Build gap.
+- [x] Distinguish target scoring from held-out evaluation and state that evaluation aggregates metrics without updating parameters; the overview and evaluation graph view now expose this boundary.
+- [x] Add explicit contrasts for generated vs observed token and prefill vs teacher forcing; retain likelihood vs loss and evaluation vs training as separate concepts.
+- [x] Preserve the existing bilingual examples, equations, citations, exercises and implementation caveats in the teacher-forcing/prefill changes.
 
-**Exit condition:** each page states its scope, shared-spine position, branch role, prerequisites, and onward links; no scientific distinction or existing useful content is lost.
+**Exit condition:** partially met. The new inference/training concepts and branch boundaries are explicit; the broader shared-core, scoring and training page audits remain.
 
 ### P2 — Produce and integrate the persistent visual spine
 
-- [ ] Design one canonical, bilingual visual representation of the shared context → forward pass → logits → conditional distribution core and the sibling inference/scoring/training branches.
-- [ ] Show the two context-extension policies distinctly: generated-token feedback versus observed-token/teacher-forced feedback.
-- [ ] Show evaluation as a scoring/measurement path that stops before gradients and optimizer updates.
-- [ ] Make the visual explicit that these are conceptual connections, not one execution loop.
-- [ ] Decide the smallest maintainable implementation: preferably one reusable visual/include or a compact data-backed renderer, not a new graph framework or per-page pipeline.
-- [ ] Provide a semantic text/list equivalent and meaningful alternative text; the diagram must not be the only carrier of information.
-- [ ] Integrate the visual on a small representative page set first, then expand only where it materially improves orientation.
-- [ ] Validate FR/EN parity, responsive rendering, color contrast, keyboard/screen-reader fallback, and links to canonical pages.
+- [x] Reuse the canonical bilingual computational registry; its `persistent-spine`, generation, observed-target scoring, evaluation and training views already encode the common path and sibling branches.
+- [x] Preserve generated-token feedback separately from observed-token/teacher-forced feedback in the graph.
+- [x] Keep evaluation on held-out scoring/metrics and stop before gradients or optimizer updates.
+- [x] State in the overview that the branches are distinct uses of one conditional distribution, not one executable loop.
+- [x] Extend the existing renderer only: render the persistent-spine and evaluation views from the registry, with no new schema or frontend dependency.
+- [x] Generate a bilingual semantic HTML text alternative from the same node descriptions and directed edges.
+- [x] Pilot the persistent spine and evaluation view on the canonical FR/EN LLM overview; branch-specific views remain on their owning lessons.
+- [ ] Validate rendered FR/EN parity, responsive behavior, color contrast, keyboard operation and screen-reader usability; source-level alternatives and automated tests do not replace this review.
 
-**Exit condition:** one maintained source yields a consistent visual and accessible textual representation; no duplicated hand-authored diagrams drift across pages.
+**Exit condition:** met at source/render integration level. Manual rendered accessibility and responsive evidence remains.
 
 ### P2 — Align Build and practical implementation
 
-- [ ] Crosswalk the shared conceptual model to Build milestones without treating the Build sequence as the conceptual graph.
-- [ ] Locate tokenizer fitting/freezing, corpus preparation, context windows, shifted targets, batches, and masks in the training-data branch.
-- [ ] Ensure Build examples demonstrate teacher forcing and next-token target alignment explicitly.
-- [ ] Show that the training forward pass uses the same model prediction mechanism as inference, while differing in target supply, loss computation, gradient tracking, and parameter updates.
-- [ ] Keep prefill/decode/KV cache in the inference execution path; do not make them prerequisites for the training path.
-- [ ] Avoid duplicating conceptual explanations already owned by Understand pages; Build should emphasize implementation and evidence.
+- [x] Maintain the G0–G9 Build milestone crosswalk separately from the conceptual graph and guided route.
+- [x] Keep G1b corpus preparation → G2 training examples as a training-data branch, not an inference prerequisite.
+- [x] Add teacher forcing and shifted-target alignment to the bilingual Build training-examples lesson.
+- [x] State that training uses the same shared prediction computation as inference, but differs in reference-target supply, loss, gradient tracking and parameter updates.
+- [x] Keep prefill/decode/KV cache in the inference execution path.
+- [ ] Complete the implementation evidence for GPT-weight autograd, optimizer, train/validation loop, reproducible run and checkpoint; these remain explicit Build gaps.
 
-**Exit condition:** the conceptual and practical paths cross-reference each other while preserving their distinct ordering and purpose.
+**Exit condition:** the conceptual and practical paths are cross-referenced and remain distinct; end-to-end training implementation evidence remains outstanding.
 
 ### P2 — Automated and manual validation
 
