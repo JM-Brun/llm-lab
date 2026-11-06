@@ -180,16 +180,7 @@ A tested reference implementation is available in `src/llm_lab/foundations/atten
 - [Planned acceptance criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
 :::
 
-<div class="route-nav-cards">
-  <a class="route-nav-card" href="scaled-dot-product-attention.qmd">
-    <span class="nav-direction">← Previous Step</span>
-    <span class="nav-title">Scaled Dot-Product Attention</span>
-  </a>
-  <a class="route-nav-card" href="logits.qmd">
-    <span class="nav-direction">Next Step →</span>
-    <span class="nav-title">Logits: scores before normalization</span>
-  </a>
-</div>
+{{< include ../includes/generated-suggested-route-en-causal-masking.qmd >}}
 
 :::: {.language-switch}
 **Language:** [Français](../fr/causal-masking.qmd) · [English](causal-masking.qmd)

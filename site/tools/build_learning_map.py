@@ -521,6 +521,70 @@ def write_guided_page_context_fragments(
     return outputs
 
 
+def render_suggested_route_markdown(
+    page: dict[str, Any],
+    page_by_id: dict[str, dict[str, Any]],
+    language: str,
+) -> str:
+    """Render local previous/next links from the page's canonical suggested route."""
+    if language not in {"fr", "en"}:
+        raise ValueError(f"unsupported suggested-route language: {language!r}")
+
+    route = page.get("route") or {}
+    directions = (
+        (
+            "previous",
+            "← Étape précédente" if language == "fr" else "← Previous step",
+        ),
+        (
+            "next",
+            "Étape suivante →" if language == "fr" else "Next step →",
+        ),
+    )
+    cards: list[str] = []
+    for direction, label in directions:
+        target_id = route.get(direction)
+        if target_id is None:
+            continue
+        if not isinstance(target_id, str):
+            raise ValueError(f"invalid {direction} route for {page['id']!r}: {target_id!r}")
+        target = page_by_id.get(target_id)
+        if target is None:
+            raise ValueError(f"unresolved {direction} route for {page['id']!r}: {target_id!r}")
+        href = str(target.get("href", ""))
+        if not href.endswith(".html"):
+            raise ValueError(f"route target has no published HTML href: {target_id!r}")
+        source_href = f"{href[:-5]}.qmd"
+        cards.extend(
+            [
+                f'  <a class="route-nav-card" href="{escape(source_href, quote=True)}">',
+                f'    <span class="nav-direction">{escape(label)}</span>',
+                f'    <span class="nav-title">{escape(str(target["title"]))}</span>',
+                "  </a>",
+            ]
+        )
+
+    if not cards:
+        return ""
+    return "\n".join(['<div class="route-nav-cards">', *cards, "</div>", ""])
+
+
+def write_suggested_route_fragments(language: str, pages: list[dict[str, Any]]) -> list[Path]:
+    """Write generated local-navigation partials for pages with route metadata."""
+    page_by_id = {page["id"]: page for page in pages}
+    includes = SITE / "includes"
+    includes.mkdir(parents=True, exist_ok=True)
+    outputs: list[Path] = []
+    for page in pages:
+        rendered = render_suggested_route_markdown(page, page_by_id, language)
+        if not rendered:
+            continue
+        output = includes / (f"generated-suggested-route-{page['id'].replace('/', '-')}.qmd")
+        output.write_text(rendered, encoding="utf-8")
+        outputs.append(output)
+    return outputs
+
+
 def write_guided_route_fragment(language: str, stages: list[ResolvedGuidedRouteStage]) -> Path:
     """Write a generated Quarto Markdown partial for the requested language."""
     output = SITE / "includes" / f"generated-guided-route-{language}.qmd"
@@ -674,6 +738,7 @@ def build(language: str) -> Path:
     navigation = load_navigation(language, pages)
     write_guided_route_fragment(language, guided_route)
     write_guided_page_context_fragments(language, guided_route)
+    write_suggested_route_fragments(language, pages)
     write_map_fragments(language, navigation, pages)
     output.write_text(
         json.dumps(

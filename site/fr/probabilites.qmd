@@ -222,7 +222,7 @@ Une probabilité de 0,9 ne signifie donc pas automatiquement « 90 % de chances 
 
 ## Pour poursuivre
 
-- [Entropie](entropy.qmd) — incertitude de la distribution du prochain token.
+
 - [Vraisemblance](vraisemblance.qmd) — probabilité des tokens observés et des séquences.
 - [Entropie croisée](cross-entropy.qmd) — objectif d'entraînement.
 - [Exercices de fondations mathématiques](exercises.qmd#fondations) — exercices corrigés sur la softmax, la perte et des notions associées ; d'autres thèmes restent prévus.
@@ -231,6 +231,8 @@ Une probabilité de 0,9 ne signifie donc pas automatiquement « 90 % de chances 
 
 - [PyTorch — Softmax](https://docs.pytorch.org/docs/stable/generated/torch.nn.Softmax.html) et [LogSoftmax](https://docs.pytorch.org/docs/stable/generated/torch.nn.LogSoftmax.html).
 - [PyTorch — Numerical accuracy](https://docs.pytorch.org/docs/stable/notes/numerical_accuracy.html).
+
+{{< include ../includes/generated-suggested-route-fr-probabilites.qmd >}}
 
 ::: {.language-switch}
 [Français](probabilites.qmd) · [English](../en/probabilities.qmd)

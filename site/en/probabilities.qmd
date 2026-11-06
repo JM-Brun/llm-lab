@@ -222,7 +222,7 @@ A probability of 0.9 therefore does not automatically mean “a 90% chance that 
 
 ## Further reading
 
-- [Entropy](entropy.qmd) — uncertainty in the next-token distribution.
+
 - [Likelihood](likelihood.qmd) — probability of observed tokens and sequences.
 - [Cross-entropy](cross-entropy.qmd) — the training objective.
 - [Mathematical foundations exercises](exercises.qmd#foundations) — worked exercises on softmax, loss and related topics; further topics remain planned.
@@ -231,6 +231,8 @@ A probability of 0.9 therefore does not automatically mean “a 90% chance that 
 
 - [PyTorch — Softmax](https://docs.pytorch.org/docs/stable/generated/torch.nn.Softmax.html) and [LogSoftmax](https://docs.pytorch.org/docs/stable/generated/torch.nn.LogSoftmax.html).
 - [PyTorch — Numerical accuracy](https://docs.pytorch.org/docs/stable/notes/numerical_accuracy.html).
+
+{{< include ../includes/generated-suggested-route-en-probabilities.qmd >}}
 
 :::: {.language-switch}
 [Français](../fr/probabilites.qmd) · [English](probabilities.qmd)
