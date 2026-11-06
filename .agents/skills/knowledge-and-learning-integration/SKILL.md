@@ -233,3 +233,8 @@ Final report:
 - FR/EN counterparts and navigation are substantively aligned.
 - Relevant checks and rendered-page review are reported.
 - Deferred/rejected items have explicit reasons.
+
+
+## Focused visual-rights hand-off
+
+This skill owns the pedagogical and architectural disposition of source-derived visuals, but a proposed use must be supported by asset-level evidence. Keep the source-extraction record as the primary source-scan record; do not duplicate its visual-first pass. Use `visual-asset-audit` only when exact asset identity, creator/rightsholder, permission, existing-use escalation or a proposed adaptation/reuse requires focused verification. An unknown or restrictive licence is not a reason to silently remove an existing project asset.
