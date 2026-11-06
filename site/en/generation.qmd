@@ -46,6 +46,18 @@ An LLM does not write text in one block: it produces **one token at a time**. At
 4. **Append the token and repeat.** The selected token is added to the context, and the loop returns to step 2, subject to the context limit.
 5. **Stop.** Generation stops on an explicit criterion — an end-of-sequence token, a maximum length, or a rule imposed by the application — never because the model "finished thinking".
 
+### Prefill and decode: two inference phases
+
+Inference systems often distinguish processing the initial prompt from incremental generation:
+
+- **Prefill:** the model processes the initial prompt as a sequence under the causal mask. One forward pass produces logits at every position; the distribution at the final prompt position is used to select the first generated token.
+- **Incremental decode:** after that selection, the generated token is appended to the context. The model then computes the next distribution, and the process repeats.
+- **KV cache:** an optimized implementation may retain attention keys and values computed during prefill and earlier steps. This avoids recomputing the entire prefix; it is an execution optimization, not a correctness requirement.
+
+In LLM Lab's NumPy reference, `generate.py` processes the full prompt first, then reruns the model on the context window at every step. The code therefore illustrates the logical phases but does not implement a KV cache or an optimized incremental-decode function.
+
+Do not confuse **decode** (the execution phase after prefill) with **decoding** (the next-token selection rule). Prefill is also not *teacher forcing*: teacher forcing concerns how predictions are conditioned during training.
+
 ### What exactly does decoding include?
 
 **Decoding** is the procedure that turns the model output into the next token. It starts after the forward pass: the network computes logits, then decoding may transform those scores or the distribution (for example, with temperature or a filter) before selecting a token.
