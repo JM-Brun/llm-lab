@@ -20,6 +20,8 @@ related: ["en/likelihood"]
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:en", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-en-entropy.qmd >}}
+
 ::: {.chapter-lead}
 In an autoregressive LLM, entropy describes how spread out the predicted next-token distribution is for a given context. It characterizes that distribution: it does not tell us whether the answer is true or the model is reliable.
 :::
