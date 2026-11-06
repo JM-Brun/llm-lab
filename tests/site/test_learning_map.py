@@ -894,7 +894,7 @@ def test_learning_map_reset_and_escape_clear_filters_progressively() -> None:
 
 def test_concept_importance_is_localized_in_cards_and_details() -> None:
     script = MODULE["render_map_script"]()
-    assert 'copy.importanceLabels[concept.importance]' in script
+    assert "copy.importanceLabels[concept.importance]" in script
     assert "map-concept-importance" in script
     assert "Essentielle" in script
     assert "Complémentaire" in script
