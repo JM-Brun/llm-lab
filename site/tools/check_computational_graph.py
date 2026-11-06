@@ -132,9 +132,9 @@ def validate_graph(data: Any, published_pages: set[str] | None = None) -> list[s
     ):
         return ["registry: expected mapping with schema_version: 1"]
 
-    branches, branch_ids = _unique_records(data.get("branches"), "branches", errors)
+    _, branch_ids = _unique_records(data.get("branches"), "branches", errors)
     nodes, node_ids = _unique_records(data.get("nodes"), "nodes", errors)
-    relation_types, relation_type_ids = _unique_records(
+    _, relation_type_ids = _unique_records(
         [
             {"id": key, **value}
             for key, value in data.get("relation_types", {}).items()
