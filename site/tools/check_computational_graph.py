@@ -230,7 +230,9 @@ def validate_graph(
             errors.append(f"{where}: feedback: true is reserved for feeds-back edges")
         if repeated is True and kind != "produces":
             errors.append(f"{where}: repeated: true is reserved for produces edges")
-        if optional is True and kind not in {"produces", "uses-optional"}:
+        if optional is True and (
+            not isinstance(kind, str) or kind not in {"produces", "uses-optional"}
+        ):
             errors.append(f"{where}: optional: true requires produces or uses-optional")
 
         if isinstance(source, str) and source in nodes and isinstance(target, str) and target in nodes:
