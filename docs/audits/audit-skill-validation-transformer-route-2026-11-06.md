@@ -88,7 +88,7 @@ This real case exposed one genuine boundary not covered by the initial four new 
 - It does **not** establish exact asset identity, creator/rightsholder, asset-level licence or permission to reproduce, adapt, host or redistribute it.
 - The repository already has a detailed asset-audit template and explicit preservation rules. This is a durable, distinct responsibility and warrants `visual-asset-audit`.
 
-The new `visual-asset-audit` skill therefore uses the existing template, separates existing use from proposed new use, treats attribution and licence as distinct evidence, and prohibits silent removal or replacement of existing assets. The routing matrix and rendered-site hand-off now make this boundary explicit.
+The new `visual-asset-audit` skill therefore uses the existing template, separates existing use from proposed new use, treats attribution and licence as distinct evidence, and prohibits silent removal or replacement of existing assets. A boundary review then exposed potential overlap with `source-extraction`, which already has a detailed visual-first media pass. The new skill is consequently narrowed to standalone or escalated asset-level decisions; full source scans remain owned by `source-extraction`, with a focused hand-off only when needed. The routing matrix and rendered-site hand-off now make this boundary explicit.
 
 No separate skill is warranted for bilingual parity, route topology or transition matrices: these remain responsibilities of page-content, page-group and knowledge-architecture audits, respectively.
 
