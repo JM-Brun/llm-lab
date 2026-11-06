@@ -21,8 +21,6 @@ related: ["en/scaling-laws", "en/emergence", "en/in-context-learning", "en/hybri
 tags: ["type:concept-lesson", "destination:deepen", "topic:llm-evolution", "level:advanced", "language:en", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-en-llm-evolution.qmd >}}
-
 ::: {.chapter-lead}
 Between GPT-2 and contemporary LLM systems, progress cannot be reduced to increasing parameter counts or replacing one architecture with another. It combines several changes: scale and data, in-context learning, post-training, input and output modalities, additional inference-time compute, efficiency, and integration into systems that use tools. This page provides a cross-cutting framework; it is not a technical specification of proprietary models.
 :::
