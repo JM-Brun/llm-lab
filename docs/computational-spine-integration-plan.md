@@ -7,6 +7,22 @@
 
 This document is the durable hand-off for future work sessions. It records what has been completed, what remains, the intended order, and the evidence required to close the work. It is a task plan, not a new concept registry, curriculum hierarchy, or computational graph.
 
+## 0. Current status — 2026-11-06
+
+| Work package | Status | Evidence |
+|---|---|---|
+| Canonical computational model and registry | Integrated | PR #577, #580, #583, #578 |
+| Eight-stage guided route and bilingual generated projections | Integrated | PR #578 and route-refresh PR #586 |
+| Teacher forcing, prefill and decode teaching | Integrated | FR/EN training-examples and generation lessons |
+| Concept-card domains and importance metadata | Integrated | `data/concepts.yml`, bilingual renderer and registry tests |
+| Page metadata audit | Partial | Prediction → entropy → likelihood navigation and reciprocal hierarchy reviewed; broader inventory remains |
+| Persistent-spine and evaluation views with text alternatives | In progress on this branch | Existing registry views reused; overview-page integration and renderer tests added |
+| Build crosswalk | Partial | G0–G9 and G1b → G2 branch documented; implementation evidence still has gaps |
+| Rendered desktop/mobile, keyboard and screen-reader review | Pending | Do not infer this evidence from source tests or a successful static render |
+
+PR #578 is merged to `main`; PR #586 refreshed the tracked bilingual guided-route fragments and corrected the Ruff formatting issue. Its Python CI and Quarto site workflows passed. The current branch is the bounded follow-up for the persistent visual and accessible text alternative.
+
+
 ## 1. Architectural invariant
 
 For a context containing preceding tokens (observed or generated), the model computes one conditional next-token distribution:
@@ -53,33 +69,33 @@ The merges above establish the model and one navigation projection. They do **no
 
 ### P1 — Reconcile the guided route with the sibling branches
 
-Current source to audit: `data/guided-route.yml`. Its six-stage route currently includes generation in Orientation and again in Prediction, and includes likelihood in Prediction. The new topology gives generation a canonical Inference role and likelihood a Scoring role. This is not automatically a defect: the guided route may deliberately preview or revisit a page, but each appearance must have a clear learning objective and depth.
+The eight-stage projection is now integrated in `data/guided-route.yml` and the tracked bilingual route fragments:
 
-- [ ] Map every current stage and page membership to the canonical module IDs in `docs/learning-path.md`.
-- [ ] Decide whether the route should expose separate reader-facing stages for **Inference**, **Observed-target scoring**, **Training**, and **Evaluation**, or retain fewer stages with explicit branch labels. Do not force one stage per module if that makes the route harder to learn.
-- [ ] Preserve the early generation preview only if it is clearly labelled as an overview/black-box preview; distinguish it from the later detailed inference treatment without duplicating canonical page identity.
-- [ ] Move the conceptual role of likelihood out of the shared prediction stage: it is computed by comparing the shared distribution with an observed target.
-- [ ] Ensure cross-entropy is explained as target scoring and as a training objective component, without duplicate canonical ownership.
-- [ ] Place predictive entropy with the distribution/prediction concepts, not under observed-target scoring.
-- [ ] Represent evaluation as held-out scoring/metrics without a parameter-update edge.
-- [ ] Make teacher forcing explicit in the training/scoring context where observed targets are fed back; do not describe it as prefill.
-- [ ] Preserve optional-page memberships and reading-depth distinctions.
-- [ ] Validate FR/EN parity, page references, ordering, generated partials, and all consumers of the route data.
+`orientation → text-input → representations → computation → prediction → inference → scoring → training`.
 
-**Exit condition:** every route stage has one clear objective; every page membership has a justified role; the route explains the shared distribution and its sibling branches without suggesting one linear execution chain.
+- [x] Map stage and page membership to the canonical module IDs in `docs/learning-path.md`.
+- [x] Keep the early generation page as a black-box preview and revisit the same canonical page for detailed inference.
+- [x] End `prediction` at logits, the conditional distribution and predictive entropy.
+- [x] Put likelihood and cross-entropy in `scoring`; reuse cross-entropy as an optional bridge in `training`.
+- [x] Keep loss and gradients in `training`; keep `training-examples` optional as the Build bridge for shifted targets and teacher forcing.
+- [x] Keep evaluation cross-cutting; the current scientific-passage ranking exercise remains in Practice and is not misrepresented as an LLM-evaluation lesson.
+- [x] Preserve optional-page memberships and FR/EN parity.
+- [x] Regenerate and test the tracked route fragments in PR #586.
+
+**Exit condition:** met for the route projection. Further rendered-navigation review belongs to the validation section below.
 
 ### P1 — Audit page metadata and breadcrumb semantics
 
 Use the existing page-map metadata schema and contract; do not add a new per-page breadcrumb field.
 
-- [ ] Inventory pages belonging to the shared core and its three operational branches, in both languages.
-- [ ] For each page, review `hierarchy.parents/children` as **conceptual containment only**. Do not copy module membership into page parent/child edges mechanically.
-- [ ] Review `suggested_route.previous/next` as recommended pedagogical transitions. Do not infer them from sidebar order or computational dataflow alone.
-- [ ] Review tags (`notion`, `domaine`) and importance metadata against the canonical concept/domain registries and the Core/Deepen boundary.
-- [ ] Ensure concepts such as prefill, decode step, KV cache, teacher forcing, observed target, likelihood, NLL, cross-entropy, gradient, optimizer, parameter update, and held-out evaluation are discoverable at their canonical pages.
-- [ ] Preserve existing stable slugs, especially French `probabilites`; do not create duplicate FR/EN concepts or pages.
-- [ ] Add or correct cross-links for cross-branch concepts rather than assigning misleading additional parents.
-- [ ] Check that the page metadata validator catches invalid IDs, asymmetric or dangling hierarchy links, inconsistent bilingual tags, and invalid route references.
+- [x] Review the prediction → entropy → likelihood transition in FR/EN: `suggested_route` now follows the reader-facing path, and the probabilities/entropy hierarchy is reciprocal.
+- [x] Keep `hierarchy.parents/children` as conceptual containment/decomposition only; guided-route membership does not create page parents.
+- [x] Keep `suggested_route.previous/next` as recommended pedagogical transitions, not computational dependencies.
+- [x] Keep concept identity (`notion`), controlled concept domains (`domaine`) and `importance` in the concept registry/card model. Do not add redundant `notion` or `domaine` Quarto page tags; page tags remain editorial classifications (type, destination, topic, level, language, status).
+- [x] Add controlled importance and localized domain metadata to concept cards, with registry and renderer tests.
+- [ ] Complete the broader bilingual inventory for all pages in the shared core and operational branches.
+- [ ] Check cross-links and metadata for the remaining scoring, training and evaluation pages.
+- [x] Run the page metadata validator and topology audit on the integrated route and current branch.
 
 **Exit condition:** metadata describes the actual content and intended reading transitions; no module scope is mistaken for conceptual containment or a prerequisite.
 
