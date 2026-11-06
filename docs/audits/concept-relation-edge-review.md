@@ -1,13 +1,13 @@
 # Concept relation edge review
 
 **Date:** 2026-11-05  
-**Status:** semantic registry review complete; source-level interaction review recorded; browser/accessibility and learner validation remain open  
+**Status:** source-semantic registry review complete (66 relations); rendered graph usability, browser/accessibility, and learner validation remain open  
 **Canonical data:** [`data/concepts.yml`](../data/concepts.yml)  
 **Tracking:** [LLM Lab #416](https://github.com/JM-Brun/llm-lab/issues/416), [merged validator PR #520](https://github.com/JM-Brun/llm-lab/pull/520)
 
 ## Scope and method
 
-This review covers the 10 declared relation types and all 26 current edges in the canonical concept registry. It checks the intended reading, direction, relation family, and whether the edge should influence learning order. It is a conceptual review, not a proof that the graph is a complete execution graph or a rendered-UX evaluation.
+The initial inventory below records the 10 declared relation types and 26 edges present when this review began; the dated follow-up sections record subsequent registry changes and reviews. It checks the intended reading, direction, relation family, and whether the edge should influence learning order. It is a conceptual review, not a proof that the graph is a complete execution graph or a rendered-UX evaluation.
 
 All current edge endpoints are canonical concept IDs. No domain-specific source/target restriction is imposed: concepts can belong to multiple domains and legitimate relations cross domain boundaries. Cardinality constraints are not currently justified; the registry is many-to-many.
 
@@ -152,7 +152,7 @@ No new relation type or graph registry is introduced. A complete review of all 6
 
 ## Follow-up review of the 42 relations added after the original inventory — 2026-11-06
 
-After PR #609, the registry contained 68 relations. This follow-up removes one overgeneralized edge from the original 26-edge inventory; the current branch therefore contains 67 relations: 25 retained edges from that historical inventory and 42 later additions. The 42 additions were reviewed against their endpoint definitions, relation-type descriptions, and the separate computational spine; one was subsequently removed as semantically ill-typed, leaving 41 retained additions. This is a semantic review of the selected concept graph, not a claim that it is a complete tensor-level execution DAG.
+After PR #609, the registry contained 68 relations. PR #613 removed one overgeneralized edge from the original 26-edge inventory, leaving 67 relations at that stage: 25 retained edges from the historical inventory and 42 later additions. The 42 additions were reviewed against their endpoint definitions, relation-type descriptions, and the separate computational spine. The present follow-up removes one of those later additions as semantically ill-typed, leaving 41 retained additions and 66 relations overall. This is a semantic review of the selected concept graph, not a claim that it is a complete tensor-level execution DAG.
 
 ### Review of the 42 additional relations
 
@@ -208,7 +208,7 @@ Two earlier edges were re-examined against the narrower definitions and the comp
 - Removed `contextualized-representation → mapped-by → output-projection`. The concept definition covers contextualized states generally, including intermediate block states. The vocabulary projection acts on final hidden states only. The separate computational graph already distinguishes `final-hidden-states → vocabulary-projection`; retaining the generic concept edge would overgeneralize the projection's input.
 - The original edge `softmax → evaluated-by → cross-entropy` is retained for now as a high-level shorthand, but the more precise edge `conditional-distribution → evaluated-by → cross-entropy` should be the reader-facing explanation. Revisit removal only if the graph UI makes the two edges look like competing descriptions of the same direct relation.
 
-### Remaining semantic decisions
+### Resolution and remaining validation
 
 - Edge 9 was removed without replacement: `next-token-prediction` is the task; `training-objective` is the optimized function. Their relationship is explained by the endpoint definitions and the computational graph, not by a structural `part-of` edge.
 - Keep the distinction between the concept graph and the computational graph: the latter supplies the explicit differentiation and final-hidden-state operations.
