@@ -66,21 +66,21 @@ jobs:
       # Run the browser audit against this exact PR render, not the deployed
       # Pages site. This makes the check reproducible and tests proposed CSS.
       - name: Set up Node
-        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-') || startsWith(github.head_ref, 'feat/persistent-computational-spine-view'))
+        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-'))
         uses: actions/setup-node@v4
         with:
           node-version: "22"
 
       - name: Install browser test dependencies
-        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-') || startsWith(github.head_ref, 'feat/persistent-computational-spine-view'))
+        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-'))
         run: npm install --no-save --package-lock=false playwright@1.56.1 @axe-core/playwright@4.10.2
 
       - name: Install Chromium
-        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-') || startsWith(github.head_ref, 'feat/persistent-computational-spine-view'))
+        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-'))
         run: npx playwright install --with-deps chromium
 
       - name: Serve this PR's rendered site
-        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-') || startsWith(github.head_ref, 'feat/persistent-computational-spine-view'))
+        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-'))
         run: |
           python3 -m http.server 4173 --directory site/_site >/tmp/qkv-site-server.log 2>&1 &
           for attempt in $(seq 1 30); do
@@ -93,13 +93,13 @@ jobs:
           exit 1
 
       - name: Review rendered bilingual learning pages and concept navigation
-        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-') || startsWith(github.head_ref, 'feat/persistent-computational-spine-view'))
+        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-'))
         env:
           SITE_BROWSER_BASE_URL: http://127.0.0.1:4173
         run: node scripts/site-browser-review.mjs
 
       - name: Upload screenshots and audit report
-        if: always() && github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-') || startsWith(github.head_ref, 'feat/persistent-computational-spine-view'))
+        if: always() && github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-'))
         uses: actions/upload-artifact@v4
         with:
           name: site-browser-review-${{ github.sha }}
