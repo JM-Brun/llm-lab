@@ -152,14 +152,13 @@ Use the existing page-map metadata schema and contract; do not add a new per-pag
 
 ## 4. Recommended session sequence
 
-To keep each session reviewable and avoid excessive tooling, use this order:
+To keep each session reviewable and avoid excessive tooling, continue from the current integrated state:
 
-1. **Session A — Rendered navigation audit:** inspect the merged PR #582 result; fix only evidenced breadcrumb, learning-map, responsive, or accessibility defects.
-2. **Session B — Guided-route design:** produce a short FR/EN stage-to-module crosswalk and resolve generation/likelihood/entropy placement before editing route YAML.
-3. **Session C — Page metadata audit:** audit a bounded representative set first (prediction, generation, likelihood/cross-entropy, training examples/loss/gradients, evaluation), then expand based on findings.
-4. **Session D — Page-content audit:** review the same representative set for conceptual accuracy and content preservation; handle teacher forcing and prefill explicitly.
-5. **Session E — Persistent visual:** implement one maintainable bilingual visual and text fallback, then pilot it on the representative pages.
-6. **Session F — Build crosswalk and final validation:** reconcile practical milestones, run the full validation suite, and complete the rendered/browser review.
+1. **Complete the persistent-view PR:** validate the generated persistent-spine and evaluation views, bilingual text alternatives, and the overview-page embedding. Keep the existing registry and renderer as the only source.
+2. **Rendered navigation and accessibility review:** use the existing Quarto/browser review and issues #337, #347 and #320. Inspect breadcrumbs, nested sidebar, previous/next links, desktop/mobile layout, keyboard operation and screen-reader behavior; record evidence rather than inferring it from source tests.
+3. **Finish bounded metadata/content audits:** complete the remaining shared-core, scoring, training and evaluation page inventory. Preserve the distinction between conceptual containment, recommended reading transitions, route membership and computational edges.
+4. **Complete the Build crosswalk:** verify G0–G9 against actual implementation evidence, retain G1b → G2 as the separate training-data branch, and record the remaining end-to-end training gaps.
+5. **Final validation:** run format, lint, type checks, unit tests, full Quarto render and rendered browser review on the final integrated head.
 
 Each session should produce a small PR or a clearly bounded set of commits, update this checklist, and record test evidence. Do not combine broad page rewrites, route redesign, renderer refactors, and visual design into one large change.
 
