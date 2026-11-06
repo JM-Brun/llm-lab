@@ -133,7 +133,7 @@ nodes:
     descriptions:
       fr: "Applique les calculs du modèle au contexte courant pour produire les logits de chaque position."
       en: "Applies the model computation to the current context to produce logits at each position."
-    branches: [shared-prediction, generation, observed-target-scoring, evaluation, training]
+    branches: [shared-prediction, generation, observed-target-scoring, evaluation, training, inference-execution]
     resources: [fr/transformer, en/transformer, fr/generation, en/generation]
   - id: initial-hidden-states
     kind: data
@@ -340,7 +340,7 @@ nodes:
     descriptions:
       fr: "Distribution pθ(· | contexte) commune à la génération et au scoring d'une cible observée."
       en: "The pθ(· | context) distribution shared by generation and observed-target scoring."
-    branches: [shared-prediction, generation, observed-target-scoring, evaluation, training]
+    branches: [shared-prediction, generation, observed-target-scoring, evaluation, training, inference-execution]
     resources: [fr/probabilites, en/probabilities, fr/generation, en/generation, fr/vraisemblance, en/likelihood]
   - id: decoding-policy
     kind: policy
@@ -358,7 +358,7 @@ nodes:
     descriptions:
       fr: "Token sélectionné par la politique de décodage et ajouté au contexte suivant."
       en: "Token selected by the decoding policy and appended to the next context."
-    branches: [generation]
+    branches: [generation, inference-execution]
     resources: [fr/generation, en/generation]
   - id: observed-target
     kind: data
