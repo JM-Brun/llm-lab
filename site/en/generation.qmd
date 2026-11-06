@@ -139,9 +139,14 @@ Parameters stay fixed during inference: no update happens, no matter how many to
 
 </details>
 
-**Next:** [Logits](logits.qmd) · [Probabilities](probabilities.qmd) · [Build path](build-path.qmd)
+:::
+
+::: {.callout-tip title="Next step in the learning path"}
+You have now seen **what the model does** during generation. To understand how it processes your request, return to its input: **[From text to tokens](text-data.qmd)** — text, tokenization, and the token IDs supplied to the model.
+
+To explore a mechanism encountered here: [Logits](logits.qmd) · [Probabilities](probabilities.qmd). To move into implementation: [Build path](build-path.qmd).
+:::
 
 ::: {.language-switch}
 [Français](../fr/generation.qmd) · [English](generation.qmd)
-:::
 :::
