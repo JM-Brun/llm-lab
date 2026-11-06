@@ -28,7 +28,7 @@ The YAML registry contains five top-level collections:
 - `nodes`: data, operations, controls, and policies;
 - `relation_types`: the controlled vocabulary for directed computational relations;
 - `edges`: typed relations between node IDs;
-- `views`: named subgraphs that select nodes and edges for a future diagram or page overlay.
+- `views`: named subgraphs that select nodes and edges for a diagram or page overlay.
 
 All IDs are stable, language-independent kebab-case strings. Labels and descriptions must contain non-empty `fr` and `en` values.
 
@@ -47,7 +47,7 @@ The `role` is descriptive metadata, not another graph ontology. New roles should
 
 ### Edge contract
 
-An edge has a stable `id`, a `from` node, a controlled `type`, and a `to` node. The relation definitions explain the direction and meaning.
+An edge has a stable `id`, a `from` node, a controlled `type`, and a `to` node. The relation definitions explain the direction and meaning. Rendered labels are phrased to read along the arrow from source to target (for example, a data node is “consumed by” the operation it points to).
 
 Optional edge flags are deliberately narrow:
 
@@ -157,3 +157,29 @@ Next iterations should:
 3. generate an accessible textual representation and one persistent visual spine from this registry;
 4. add page-level highlighting as a projection, not as hand-maintained per-page diagrams;
 5. reconcile Understand and Build as separate projections without deriving one from the other.
+
+## 7. Rendering selected views
+
+`site/tools/render_computational_graph.py` renders selected views from this registry as bilingual Mermaid fragments. The renderer does not create a second graph model: node labels, relation labels, and topology are read directly from the YAML source.
+
+The current lesson mappings are deliberately limited to views with a clear instructional owner:
+
+| View | French page | English page |
+|---|---|---|
+| `representation-pipeline` | `fr/transformer` | `en/transformer` |
+| `transformer-block` | `fr/transformer-block-walkthrough` | `en/transformer-block-walkthrough` |
+| `generation` | `fr/generation` | `en/generation` |
+| `inference-execution` | `fr/generation` | `en/generation` |
+| `observed-target-scoring` | `fr/vraisemblance` | `en/likelihood` |
+| `training` | `fr/training-examples` | `en/training-examples` |
+
+The `persistent-spine` remains represented by the existing hand-maintained overview SVG; it is not yet generated from the registry. The `evaluation` view remains available in the registry until a lesson with matching scope is selected. These boundaries are intentional: a view is not embedded merely because it exists, and an existing pedagogical illustration is not silently replaced.
+
+Generated fragments are ignored by Git and rebuilt by both CI and the Quarto workflow before rendering. Run locally with:
+
+```bash
+uv run python site/tools/render_computational_graph.py
+quarto render site
+```
+
+The generated callouts are collapsed by default to keep the lesson readable. Mermaid arrows follow the declared edge direction; labels are the localized names of the controlled relation types.

@@ -45,6 +45,10 @@ $$
 
 The logarithm turns products into sums, which are more stable and convenient to compute.
 
+## Computational view of observed-target scoring
+
+{{< include ../includes/generated-computational-graph-en-observed-target-scoring.qmd >}}
+
 ## From likelihood to loss
 
 Negative log-likelihood $\operatorname{NLL}$ is:

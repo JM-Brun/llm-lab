@@ -48,6 +48,10 @@ The network does not receive raw text: it receives a sequence of token IDs, mapp
 
 This section provides only the landmarks needed to follow the network computation. The canonical explanations are separate: [text and tokenization](text-data.qmd), [embedding space](embedding-space.qmd), [positional information](positional-encoding.qmd), and [contextualized representations](contextualized-representations.qmd). For tensor shapes and dimensions, see [Tensors](tensors.qmd).
 
+## Computational view of the representation pipeline
+
+{{< include ../includes/generated-computational-graph-en-representation-pipeline.qmd >}}
+
 ## 2. Transformer blocks
 
 The core of the network is a stack of identical blocks. Each block combines two operations:
