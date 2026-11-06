@@ -8,8 +8,8 @@ included by the relevant Quarto lessons; they are not edited by hand.
 from __future__ import annotations
 
 import argparse
-from html import escape
 import sys
+from html import escape
 from pathlib import Path
 from typing import Any
 
