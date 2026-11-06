@@ -32,9 +32,9 @@ The derivation of this factorization from the chain rule, and the interpretation
 
 For a sequence $x_{1:T}$:
 
-$
+$$
 P_\theta(x_{1:T})=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}).
-$
+$$
 
 ### Scoring an observed sequence: the prefix is known
 
