@@ -451,7 +451,7 @@ nodes:
     descriptions:
       fr: "Poids appris utilisés par le forward pass ; ils restent fixes pendant une génération ordinaire."
       en: "Learned weights used by the forward pass; they remain fixed during ordinary generation."
-    branches: [shared-prediction, generation, training]
+    branches: [shared-prediction, generation, training, inference-execution]
     resources: [fr/transformer, en/transformer, fr/gradients, en/gradients]
   - id: optimizer-update
     kind: operation
