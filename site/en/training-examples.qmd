@@ -91,6 +91,10 @@ At inference, the model cannot consult the reference continuation: each selected
 :::
 
 
+## Computational view of training
+
+{{< include ../includes/generated-computational-graph-en-training.qmd >}}
+
 ## 2. Sliding windows and stride
 
 Stride is the number of positions by which the window start moves between examples. It is distinct from context length.
