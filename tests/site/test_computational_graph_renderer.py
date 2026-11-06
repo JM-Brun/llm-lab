@@ -14,9 +14,7 @@ MODULE: dict[str, Any] = runpy.run_path(
     str(ROOT / "site" / "tools" / "render_computational_graph.py"),
     run_name="computational_graph_renderer_test",
 )
-REGISTRY = yaml.safe_load(
-    (ROOT / "data" / "computational-graph.yml").read_text(encoding="utf-8")
-)
+REGISTRY = yaml.safe_load((ROOT / "data" / "computational-graph.yml").read_text(encoding="utf-8"))
 
 
 def test_render_view_uses_localized_node_and_relation_labels() -> None:
