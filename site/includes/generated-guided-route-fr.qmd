@@ -91,7 +91,7 @@ Suivre la projection des états finaux vers les logits et la distribution condit
 
 ::: {.guided-route-stage #guided-stage-inference}
 
-### 06 · Exécuter l'inférence et générer
+### 06 · Exécuter l'inférence et générer du texte
 
 Distinguer le prefill du prompt du decode itératif, sélectionner un token selon une politique de décodage, le réinjecter dans le contexte et arrêter la génération sans mettre à jour les paramètres.
 
