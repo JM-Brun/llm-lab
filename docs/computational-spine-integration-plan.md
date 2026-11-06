@@ -38,7 +38,7 @@ p_\theta(\cdot\mid x_{<t})=\operatorname{softmax}(z_t).
 Three sibling operational branches use this shared result:
 
 - **Inference:** decode/select a token, append the generated token to the context, and continue with unchanged parameters.
-- ****Scoring:** condition on the observed prefix (teacher forcing), compare the distribution with the next observed target, and obtain its target probability and likelihood-related quantities; do not select a token and do not update parameters.
+- **Scoring:** condition on the observed prefix (teacher forcing), compare the distribution with the next observed target, and obtain its target probability and likelihood-related quantities; do not select a token and do not update parameters.
 - **Training:** use teacher-forced observed targets to form a loss, compute gradients, and update parameters. The next training computation uses the updated parameters.
 
 Evaluation applies the same observed-prefix scoring procedure to held-out data and stops before differentiation or the optimizer update. These branches are related, but are not one executable loop. The context is extended with a generated token during inference and with an observed token during teacher-forced scoring/training.
