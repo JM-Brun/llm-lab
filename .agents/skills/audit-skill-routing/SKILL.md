@@ -20,10 +20,11 @@ This is a routing skill, not a substitute for specialist analysis.
 | Are explanations duplicated, misplaced or ambiguously owned? | `editorial-boundary-audit` | `page-group-audit` for sequence implications; `scientific-content-audit` for factual disputes |
 | Are concepts, relations, domains, metadata, routes or graph projections coherent and valid? | `knowledge-architecture-audit` | `scientific-content-audit` when relation semantics depend on disputed technical truth; `page-group-audit` for learner-facing route effects |
 | Are equations, algorithms, statistical claims, code behavior or experimental conclusions correct? | `scientific-content-audit` | `page-content-audit` for teaching implications; `page-group-audit` for downstream route consequences |
+| Does the rendered site display or operate correctly across viewport, theme, language, keyboard and accessibility cases? | `rendered-site-audit` | `page-content-audit` for teaching implications; `page-group-audit` for route/group implications; `knowledge-architecture-audit` for canonical graph/route changes |
 | Should an external source be catalogued and decomposed into evidence-linked items? | `source-extraction` | `source-to-learning-integration` only if integration is also requested |
 | Should validated source items change pages, graph, visuals or experiments? | `knowledge-and-learning-integration` | `source-to-learning-integration` when coordinating both phases |
 
-Do not invoke every skill for every request. A named page does not automatically require a group audit; a graph-related word does not automatically require architecture changes.
+Do not invoke every skill for every request. A named page does not automatically require a group audit; a graph-related word does not automatically require architecture changes. Source-only inspection is not a substitute for `rendered-site-audit` when the requested outcome concerns what readers see or can operate.
 
 ## Coordination protocol
 
