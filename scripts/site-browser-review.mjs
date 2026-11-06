@@ -557,30 +557,30 @@ for (const testCase of cases) {
               item.routeContext.visibleCurrentPageText.includes(item.h1) || !roleMatches) {
             throw new Error("single-stage context repeats the page heading, misstates its route stage/role, or lacks the expected labelled stage link");
           }
-      }
-      if (["embedding-space.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "logits.html", "cross-entropy.html"].includes(pagePath)) {
-        item.routeContext.legacyStepperCount = await page.locator(".pipeline-stepper").count();
-        if (item.routeContext.legacyStepperCount !== 0) {
-          throw new Error("misleading legacy five-step pipeline stepper is still rendered");
         }
-      }
-      if (pagePath === "text-data.html") {
-        item.routeContext.localProcessStepperCount = await page.locator(".pipeline-stepper").count();
-        item.routeContext.localProcessStepperLabel = await page.locator(".pipeline-stepper").getAttribute("aria-label");
-        if (item.routeContext.localProcessStepperCount !== 1 ||
-            !item.routeContext.localProcessStepperLabel ||
-            /learning path|parcours pédagogique/i.test(item.routeContext.localProcessStepperLabel)) {
-          throw new Error("text-data local process stepper is missing or mislabelled as a curriculum breadcrumb");
+        if (["embedding-space.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "logits.html", "cross-entropy.html"].includes(pagePath)) {
+          item.routeContext.legacyStepperCount = await page.locator(".pipeline-stepper").count();
+          if (item.routeContext.legacyStepperCount !== 0) {
+            throw new Error("misleading legacy five-step pipeline stepper is still rendered");
+          }
         }
-        const openingOrder = await page.locator(".chapter-lead, .callout-tip, .pipeline-stepper").evaluateAll(nodes =>
-          nodes.map(node => node.classList.contains("chapter-lead") ? "lead" :
-            node.classList.contains("pipeline-stepper") ? "stepper" : "takeaway")
-        );
-        if (openingOrder.indexOf("lead") < 0 || openingOrder.indexOf("takeaway") < 0 ||
-            openingOrder.indexOf("stepper") <= openingOrder.indexOf("takeaway")) {
-          throw new Error("text-data process stepper must follow the introductory mental model");
-        }
-        item.routeContext.openingOrder = openingOrder;
+        if (pagePath === "text-data.html") {
+          item.routeContext.localProcessStepperCount = await page.locator(".pipeline-stepper").count();
+          item.routeContext.localProcessStepperLabel = await page.locator(".pipeline-stepper").getAttribute("aria-label");
+          if (item.routeContext.localProcessStepperCount !== 1 ||
+              !item.routeContext.localProcessStepperLabel ||
+              /learning path|parcours pédagogique/i.test(item.routeContext.localProcessStepperLabel)) {
+            throw new Error("text-data local process stepper is missing or mislabelled as a curriculum breadcrumb");
+          }
+          const openingOrder = await page.locator(".chapter-lead, .callout-tip, .pipeline-stepper").evaluateAll(nodes =>
+            nodes.map(node => node.classList.contains("chapter-lead") ? "lead" :
+              node.classList.contains("pipeline-stepper") ? "stepper" : "takeaway")
+          );
+          if (openingOrder.indexOf("lead") < 0 || openingOrder.indexOf("takeaway") < 0 ||
+              openingOrder.indexOf("stepper") <= openingOrder.indexOf("takeaway")) {
+            throw new Error("text-data process stepper must follow the introductory mental model");
+          }
+          item.routeContext.openingOrder = openingOrder;
       }
       }
     }
