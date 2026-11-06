@@ -14,10 +14,10 @@ This skill owns **asset-level provenance and reuse decisions**. It does not repl
 ## When to use
 
 Use when:
-- an external image, diagram, screenshot, chart, SVG or other visual asset is embedded, linked, copied or proposed for use;
+- an existing project asset or proposed external image, diagram, screenshot, chart, SVG or other visual asset needs a focused provenance/rights/reuse decision;
 - the project needs to establish exact asset identity, creator/rightsholder, licence or permission;
 - an existing asset's accessibility text, caption, attribution or reuse status is uncertain;
-- a source audit includes visual material whose bytes or rights have not been inspected;
+- a full source scan has already identified an asset-specific question that needs a separate rights or reuse decision;
 - a proposed crop, adaptation, recreation, local copy, redistribution or replacement needs review.
 
 Use `rendered-site-audit` for how an asset appears and behaves in the rendered site. Use `scientific-content-audit` to verify the technical claims represented by a diagram. Use `page-content-audit` or `page-group-audit` for its teaching role.
