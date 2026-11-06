@@ -334,7 +334,7 @@ nodes:
     descriptions:
       fr: "Scores non normalisés sur le vocabulaire, calculés pour chaque position."
       en: "Unnormalized vocabulary scores computed at each position."
-    branches: [shared-prediction, generation, observed-target-scoring, evaluation, training]
+    branches: [shared-prediction, generation, observed-target-scoring, evaluation, training, inference-execution]
     resources: [fr/logits, en/logits]
   - id: vocabulary-softmax
     kind: operation
@@ -343,7 +343,7 @@ nodes:
     descriptions:
       fr: "Convertit les logits d'une position en distribution conditionnelle sur le prochain token."
       en: "Converts one position's logits into a conditional distribution over the next token."
-    branches: [shared-prediction]
+    branches: [shared-prediction, generation, observed-target-scoring, evaluation, training, inference-execution]
     resources: [fr/probabilites, en/probabilities]
   - id: next-token-distribution
     kind: data
@@ -614,7 +614,6 @@ edges:
   - {id: e-ids-context, from: token-ids, type: produces, to: token-context}
   - {id: e-context-forward, from: token-context, type: consumes, to: forward-computation}
   - {id: e-parameters-forward, from: model-parameters, type: consumes, to: forward-computation}
-  - {id: e-updated-forward, from: updated-parameters, type: consumes, to: forward-computation}
   - {id: e-forward-logits, from: forward-computation, type: produces, to: logits}
   - {id: e-context-embedding, from: token-context, type: consumes, to: embedding-lookup}
   - {id: e-embedding-vectors, from: embedding-lookup, type: produces, to: token-embeddings}
@@ -704,7 +703,7 @@ views:
     descriptions:
       fr: "Sélectionne un token depuis la distribution puis le réinjecte dans le contexte."
       en: "Selects a token from the distribution and feeds it back into the context."
-    nodes: [token-context, model-parameters, forward-computation, next-token-distribution, decoding-policy, generated-token]
+    nodes: [token-context, model-parameters, forward-computation, logits, vocabulary-softmax, next-token-distribution, decoding-policy, generated-token]
     edges: [e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-distribution-policy, e-policy-token, e-token-feedback]
   - id: observed-target-scoring
     branch: observed-target-scoring
@@ -728,13 +727,13 @@ views:
     descriptions:
       fr: "Utilise les préfixes observés, calcule l'objectif, les gradients et la mise à jour des paramètres."
       en: "Uses observed prefixes, computes the objective and gradients, and updates parameters."
-    nodes: [teacher-forcing, training-context, observed-target, token-context, model-parameters, forward-computation, next-token-distribution, target-probability, target-probability-value, token-nll, loss-reduction, training-objective, model-parameters, gradients, optimizer-update, updated-parameters]
-    edges: [e-context-forward, e-parameters-forward, e-updated-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-teacher-context, e-observed-context, e-training-forward, e-distribution-target, e-target-score, e-target-probability-value, e-target-nll, e-nll-reduction, e-loss-objective, e-objective-gradients, e-gradients-optimizer, e-params-optimizer, e-optimizer-updated, e-updated-params-forward]
+    nodes: [teacher-forcing, training-context, observed-target, token-context, model-parameters, forward-computation, logits, vocabulary-softmax, next-token-distribution, target-probability, target-probability-value, token-nll, loss-reduction, training-objective, gradients, optimizer-update, updated-parameters]
+    edges: [e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-teacher-context, e-observed-context, e-training-forward, e-distribution-target, e-target-score, e-target-probability-value, e-target-nll, e-nll-reduction, e-loss-objective, e-objective-gradients, e-gradients-optimizer, e-params-optimizer, e-optimizer-updated, e-updated-params-forward]
   - id: inference-execution
     branch: inference-execution
     labels: {fr: "Phases d'exécution de l'inférence", en: "Inference execution phases"}
     descriptions:
       fr: "Distingue le traitement initial du prompt (prefill), le décodage itératif et le cache KV facultatif."
       en: "Distinguishes initial prompt processing (prefill), iterative decode, and the optional KV cache."
-    nodes: [token-context, model-parameters, forward-computation, prefill, autoregressive-decode, kv-cache, next-token-distribution, generated-token]
+    nodes: [token-context, model-parameters, forward-computation, logits, vocabulary-softmax, prefill, autoregressive-decode, kv-cache, next-token-distribution, generated-token]
     edges: [e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-prefill-forward, e-decode-forward, e-prefill-cache, e-decode-cache, e-token-feedback]
