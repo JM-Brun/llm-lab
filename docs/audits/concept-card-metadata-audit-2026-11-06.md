@@ -119,3 +119,26 @@ If adopted, `importance` should be an intrinsic annotation on each concept recor
 - it must not be inferred from how many pages mention a concept, its domain count, or its position in the current graph.
 
 The first implementation should be deliberately small: one required enum, one validator, one JSON field, and one localized secondary cue in the existing card/detail UI. If the concept set cannot be classified consistently from documented curriculum criteria, defer the field rather than publish false precision.
+
+
+## Reviewed classification for the 41 current concepts
+
+The assignment uses the canonical guided route and computational branches as evidence. It is a curriculum annotation, not a claim about the intrinsic importance of a scientific topic.
+
+| Importance | Concepts | Classification rationale |
+|---|---|---|
+| `core` | `token`, `token-embedding`, `contextualized-representation`, `self-attention`, `scaled-dot-product-attention`, `causal-mask`, `positional-encoding`, `output-projection`, `logits`, `softmax`, `conditional-distribution`, `next-token-prediction` | Required to follow the shared input → representation → Transformer → logits → conditional-distribution computation. |
+| `core` | `autoregressive-generation`, `prefill`, `decode-step` | Required to explain the principal inference execution path and distinguish initial prompt processing from incremental generation. |
+| `core` | `observed-target`, `sequence-likelihood`, `negative-log-likelihood`, `cross-entropy` | Required to explain observed-target scoring and the probabilistic quantity used as a training objective component. |
+| `core` | `training-objective`, `training-example`, `teacher-forcing`, `gradient`, `optimizer`, `parameter-update` | Required to explain training from observed examples through differentiation and parameter updates. |
+| `core` | `held-out-evaluation` | Required to distinguish evaluation on held-out data from training and parameter updates. |
+| `supporting` | `query`, `key`, `value`, `attention-score`, `attention-weight`, `multi-head-attention` | Important internal components and intermediate quantities that unpack attention, but are not separate top-level stages of the shared computational spine. |
+| `supporting` | `log-likelihood`, `logarithm`, `negation` | Mathematical steps that explain negative log-likelihood; useful for derivation, but not independent branches. |
+| `supporting` | `decoding-policy`, `generated-token-feedback` | Explain how the distribution becomes a selected token and how inference context is extended; subordinate to the autoregressive loop. |
+| `supporting` | `operational-competence` | Qualifies interpretation and measurement of model capabilities; it does not participate in the forward computation. |
+| `specialized` | `calibration`, `emergent-ability` | Evaluation/research topics that extend interpretation of model outputs and measured capabilities beyond the minimum route. |
+| `specialized` | `kv-cache` | Inference-efficiency optimization; the autoregressive process remains conceptually valid without it. |
+
+The classification treats the three operational branches as core even though they are not one linear execution loop. It also treats `training-objective` as core because the learning branch needs an explicit objective, while keeping narrower mathematical derivation steps supporting.
+
+The renderer exposes the localized label as secondary text only. Domain grouping, concept relations, search, and route ordering remain unchanged.
