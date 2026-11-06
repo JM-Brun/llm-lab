@@ -61,7 +61,7 @@ def render_view(registry: dict[str, Any], view_id: str, language: str) -> str:
         f"::: {{.callout-note collapse=\"true\" title=\"{view['labels'][language]}\"}}",
         view["descriptions"][language],
         "",
-        "\`\`\`{mermaid}",
+        ("`" * 3) + "{mermaid}",
         "flowchart LR",
     ]
 
@@ -83,10 +83,10 @@ def render_view(registry: dict[str, Any], view_id: str, language: str) -> str:
             raise ValueError(f"{view_id}: edge {edge_id} has an endpoint outside the view")
         relation = relation_types[edge["type"]]["labels"][language]
         lines.append(
-            f'    n_{edge["from"]} -->|"{_mermaid_text(relation)}"| n_{edge["to"]}'
+            f'    n_{edge["from"]} -->|{_mermaid_text(relation)}| n_{edge["to"]}'
         )
 
-    lines.extend(["\`\`\`", ":::", ""])
+    lines.extend(["`" * 3, ":::", ""])
     return "\n".join(lines)
 
 
