@@ -7,20 +7,20 @@
 
 This document is the durable hand-off for future work sessions. It records what has been completed, what remains, the intended order, and the evidence required to close the work. It is a task plan, not a new concept registry, curriculum hierarchy, or computational graph.
 
-## 0. Current status — 2026-11-06
+## 0. Current status — 2026-11-06 (reconciled after PR #589)
 
 | Work package | Status | Evidence |
 |---|---|---|
 | Canonical computational model and registry | Integrated | PR #577, #580, #583, #578 |
 | Eight-stage guided route and bilingual generated projections | Integrated | PR #578 and route-refresh PR #586 |
 | Teacher forcing, prefill and decode teaching | Integrated | FR/EN training-examples and generation lessons |
-| Concept-card domains and importance metadata | Integrated | `data/concepts.yml`, bilingual renderer and registry tests |
+| Concept domains | Existing canonical metadata | `data/concepts.yml` and `data/domains.yml`; many-to-many concept classification |\n| Concept importance | Not implemented | The 2026-11-06 audit proposes a controlled `importance` field; no such field exists in the current registry or renderer |\n| Page tags `notion` / `domaine` | Intentionally not duplicated | Canonical concept IDs and domains remain in the concept registry; page tags retain editorial meaning |
 | Page metadata audit | Partial | Prediction → entropy → likelihood navigation and reciprocal hierarchy reviewed; broader inventory remains |
-| Persistent-spine and evaluation views with text alternatives | In progress on this branch | Existing registry views reused; overview-page integration and renderer tests added |
+| Persistent-spine and evaluation views with text alternatives | Merged | PR #589; bilingual renderer, overview integration and generated text alternatives |
 | Build crosswalk | Partial | G0–G9 and G1b → G2 branch documented; implementation evidence still has gaps |
 | Rendered desktop/mobile, keyboard and screen-reader review | Pending | Do not infer this evidence from source tests or a successful static render |
 
-PR #578 is merged to `main`; PR #586 refreshed the tracked bilingual guided-route fragments and corrected the Ruff formatting issue. Its Python CI and Quarto site workflows passed. The current branch is the bounded follow-up for the persistent visual and accessible text alternative.
+PR #578, #586 and #589 are merged to `main`. PR #589 integrates the persistent-spine and evaluation views, bilingual text alternatives, and workflow generation before both PR rendering and Pages publication. Python CI and Quarto rendering passed on the PR head; main-branch CI, Quarto and publication workflows were triggered after merge. Browser review remains a separate validation gate.
 
 
 ## 1. Architectural invariant
