@@ -465,28 +465,28 @@ for (const testCase of cases) {
       } else {
         if (await context.count() !== 1) throw new Error("guided-route context is missing");
         item.routeContext = {
-        isMultiple: await context.evaluate(el => el.classList.contains("guided-page-context--multiple")),
-        stageLinks: await context.locator('a[href*="learning-map.html#guided-stage-"]').count(),
-        currentPageMarkers: await context.locator('[aria-current="page"]').count(),
-        visibleCurrentPageText: await context.innerText(),
-        listItems: await context.locator("li").count(),
-        navLandmark: await context.evaluate(el => el.tagName.toLowerCase() === "nav"),
-        accessibleLabel: await context.getAttribute("aria-label"),
-      };
-      if (!item.routeContext.stageLinks) throw new Error("guided-route context has no stage links");
-      const stageFragments = await context.locator('a[href*="learning-map.html#guided-stage-"]').evaluateAll(links =>
-        links.map(link => (link.getAttribute("href").split("#")[1] || ""))
-      );
-      if (!stageAnchorCache.has(lang)) {
-        const routeMapPage = await page.context().newPage();
-        try {
-          await routeMapPage.goto(`${BASE}/${lang}/learning-map.html`, { waitUntil: "domcontentloaded", timeout: 30000 });
-          await routeMapPage.waitForLoadState("networkidle", { timeout: 500 }).catch(() => {});
-          const ids = await routeMapPage.locator("[id^='guided-stage-']").evaluateAll(nodes => nodes.map(node => node.id));
-          stageAnchorCache.set(lang, new Set(ids));
-        } finally {
-          await routeMapPage.close();
-        }
+          isMultiple: await context.evaluate(el => el.classList.contains("guided-page-context--multiple")),
+          stageLinks: await context.locator('a[href*="learning-map.html#guided-stage-"]').count(),
+          currentPageMarkers: await context.locator('[aria-current="page"]').count(),
+          visibleCurrentPageText: await context.innerText(),
+          listItems: await context.locator("li").count(),
+          navLandmark: await context.evaluate(el => el.tagName.toLowerCase() === "nav"),
+          accessibleLabel: await context.getAttribute("aria-label"),
+        };
+        if (!item.routeContext.stageLinks) throw new Error("guided-route context has no stage links");
+        const stageFragments = await context.locator('a[href*="learning-map.html#guided-stage-"]').evaluateAll(links =>
+          links.map(link => (link.getAttribute("href").split("#")[1] || ""))
+        );
+        if (!stageAnchorCache.has(lang)) {
+          const routeMapPage = await page.context().newPage();
+          try {
+            await routeMapPage.goto(`${BASE}/${lang}/learning-map.html`, { waitUntil: "domcontentloaded", timeout: 30000 });
+            await routeMapPage.waitForLoadState("networkidle", { timeout: 500 }).catch(() => {});
+            const ids = await routeMapPage.locator("[id^='guided-stage-']").evaluateAll(nodes => nodes.map(node => node.id));
+            stageAnchorCache.set(lang, new Set(ids));
+          } finally {
+            await routeMapPage.close();
+          }
       }
       const availableStageAnchors = stageAnchorCache.get(lang);
       item.routeContext.stageAnchorsResolve = stageFragments.every(id => availableStageAnchors.has(id));
