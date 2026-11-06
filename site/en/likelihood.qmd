@@ -1,6 +1,6 @@
 ---
 title: "Likelihood and log-likelihood"
-subtitle: "Connecting observed tokens to the training objective"
+subtitle: "Scoring observed tokens and connecting likelihood to loss"
 keywords: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:en", "status:published"]
 lang: en
 ---

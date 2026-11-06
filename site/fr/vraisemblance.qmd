@@ -1,6 +1,6 @@
 ---
 title: "Vraisemblance et log-vraisemblance"
-subtitle: "Relier les tokens observés à l'objectif d'entraînement"
+subtitle: "Scorer les tokens observés et relier la vraisemblance à la loss"
 keywords: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
