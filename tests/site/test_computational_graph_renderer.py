@@ -29,6 +29,11 @@ def test_render_view_uses_localized_node_and_relation_labels() -> None:
     assert "sert à sélectionner" in french
     assert "is used to select" in english
     assert "n_generated-token" in french
+    assert '<summary>Alternative textuelle</summary>' in french
+    assert '<summary>Text alternative</summary>' in english
+    assert "<strong>Contexte en identifiants</strong>" in french
+    assert "<strong>Token-ID context</strong>" in english
+    assert "<ol>" in french
 
 
 def test_all_selected_views_render_for_both_languages(tmp_path: Path) -> None:
