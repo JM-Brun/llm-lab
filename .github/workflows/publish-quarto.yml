@@ -10,7 +10,9 @@ permissions:
 
 concurrency:
   group: publish-quarto-${{ github.ref }}
-  cancel-in-progress: true
+  # Let an active Pages deployment finish before starting the next one.
+  # Pending runs are still coalesced by GitHub Actions concurrency.
+  cancel-in-progress: false
 
 jobs:
   build:
