@@ -93,7 +93,7 @@ for (const testCase of cases) {
           overflowX: style.overflowX,
         };
       }).filter(x => x.width > 0 && (x.right > window.innerWidth + 1 || x.left < -1))
-        .sort((a, b) => b.right - a.right).slice(0, 20),
+        .sort((a, b) => b.right - a.right).slice(0, 60),
       pageHeight: document.documentElement.scrollHeight,
       images: [...document.images].map(img => ({
         src: img.currentSrc || img.src,
@@ -602,7 +602,7 @@ for (const testCase of cases) {
       );
     }
     if (item.layout.horizontalOverflow || item.learningMapLayout?.horizontalOverflow) {
-      const overflowing = (item.layout.overflowCandidates || []).slice(0, 10).map(c => `${c.tag}${c.className ? "." + String(c.className).split(" ")[0] : ""}[right=${c.right},ws=${c.whiteSpace}]`).join(" | ");
+      const overflowing = (item.layout.overflowCandidates || []).filter(c => c.right <= item.layout.documentWidth + 1).slice(0, 10).map(c => `${c.tag}${c.className ? "." + String(c.className).split(" ")[0] : ""}[left=${c.left},right=${c.right}]`).join(" | ");
       report.failures.push(`${pagePath}/${lang}/${label}/${theme}: horizontal overflow (document ${item.layout.documentWidth}px vs viewport ${item.layout.viewportWidth}px): ${overflowing}`);
     }
     if (runInteractiveAudit && !item.keyboard.length) report.failures.push(`${pagePath}/${lang}/${label}/${theme}: no keyboard focus targets`);
