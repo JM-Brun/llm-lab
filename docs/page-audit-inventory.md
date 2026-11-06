@@ -493,3 +493,20 @@ The graph still distinguishes suggested reading route, conceptual hierarchy, and
 | Navigation | Add both language versions to Quarto rendering, the existing Deepen sidebar taxonomy, and the bilingual Deepen map. | Source-level validation only until CI and rendered/browser checks complete. |
 
 The new pages are intentionally outside the guided route: they are advanced synthesis pages, not prerequisites. Therefore they do not include generated guided-route context fragments.
+
+
+### Training/inference concept repair — 2026-11-06
+
+**Scope:** source-level inspection of the bilingual generation, training-example and glossary pages, cross-checked against the concept registry, computational graph, and reference implementation. This is not a rendered-browser or full scientific peer review.
+
+| Page pair / artifact | Review result | Evidence boundary / remaining action |
+|---|---|---|
+| `site/fr/generation.qmd` / `site/en/generation.qmd` | The canonical generation lesson now distinguishes prompt **prefill**, iterative **decode**, token-selection **decoding**, and the full autoregressive generation loop. It states that the local NumPy reference recomputes the current context and has no KV cache or optimized incremental-decode function. | Source change in PR #601. Render both languages; inspect the new subsection, equations/terminology, links and responsive layout. Do not infer that the implementation has a KV cache. |
+| `site/fr/training-examples.qmd` / `site/en/training-examples.qmd` | The canonical training-example lesson now explains teacher forcing immediately after shifted input/target alignment. It states the causal-mask constraint and distinguishes conditioning from objective, loss and optimizer. | Source change in PR #601. The reference `training_examples.py` only constructs windows/targets; it does not execute teacher-forced model training. Render both languages and check the section transition. |
+| `site/fr/glossary.qmd` / `site/en/glossary.qmd` | Added concise entries for teacher forcing, prefill, incremental decode and KV cache, each linked to its canonical lesson where applicable. | Source change in PR #601. Verify links and bilingual terminology in the rendered site. |
+| `data/concepts.yml` / `data/computational-graph.yml` | The relevant concept nodes, domains, importance values and typed relations already existed. No graph schema, relation or route change was needed for this content repair. | Registry source inspected; graph/registry validation remains part of CI. Concept edges are not pedagogical prerequisites. |
+| `data/sources.yml` | The previous training/inference audit claimed that five source records had been added, but the current registry did not contain those identifiers. The corrected audit no longer claims source-catalogue ingestion. | Source ingestion remains a separate task; add records only after bibliographic metadata, locators and scan status are verified. |
+| `site/fr/evaluation-experimentale.qmd` / `site/en/experimental-evaluation.qmd` | The page pair is an applied protocol-design exercise for a scientific-passage ranker, not a canonical LLM evaluation chapter or benchmark. Its FR/EN metadata and stated scope correspond. | This limited scope check does not complete the page's scientific, example, link or rendered audit. Keep it in Practice; broader evaluation coverage remains open. |
+
+**Audit correction:** the prior `training-inference-concepts-2026-11-06.md` incorrectly reported the three lesson explanations as already present and reported source records absent from the current source catalogue as integrated. PR #601 adds the missing lesson content and corrects the audit. Exposure bias remains deferred; it is not claimed as covered by the current lesson or glossary.
+
