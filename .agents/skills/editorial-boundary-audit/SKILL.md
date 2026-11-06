@@ -227,3 +227,17 @@ quarto render site
 ```
 
 The metadata audit is a triage aid only. The final editorial decision must be grounded in the page bodies, learner objectives, and the actual core learning route.
+
+
+## Specialist boundaries and delegation
+
+This skill owns **conceptual ownership, scope overlap and editorial disposition**. It does not replace specialist verification.
+
+- Use `page-content-audit` for the internal quality of a single page's teaching sequence.
+- Use `page-group-audit` for coherence across a defined set of pages or transitions.
+- Use `scientific-content-audit` for mathematical, statistical, algorithmic, empirical or code-level correctness. Do not settle a factual dispute as an editorial decision.
+- Use `knowledge-architecture-audit` for canonical concept IDs, relation semantics, graph projections, route registries or schema integrity.
+- Use `rendered-site-audit` for browser-observed layout, navigation and interaction behavior.
+- Use `visual-asset-audit` for external visual provenance, exact-byte inspection, licence and reuse decisions.
+
+When a boundary audit discovers a correctness, rendering or rights concern, record it as a linked question with exact evidence and hand it to the owning skill. Do not silently rewrite scientific content or alter existing assets as an editorial cleanup. Keep one canonical finding record and reference it from related audits.

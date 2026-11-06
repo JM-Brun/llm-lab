@@ -211,3 +211,8 @@ Candidate graph nodes/edges must be marked as proposals. Reuse known IDs and rel
 - Historical sources are reconciled when initialization is in scope.
 - No pages or canonical graph structures were changed.
 - The Phase B hand-off and unresolved questions are explicit.
+
+
+## Focused asset-audit boundary
+
+This skill remains the primary workflow for a **complete external-source scan**, including the visual-first media pass and the recording of figure provenance and rights metadata. Do not launch a separate `visual-asset-audit` for every figure in every source. Use that specialist only when a particular asset's exact identity, asset-level permission, existing-use decision or proposed adaptation/reuse requires a focused follow-up beyond the source-level extraction record.
