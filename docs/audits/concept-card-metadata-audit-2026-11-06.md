@@ -22,7 +22,7 @@ Likewise, concept domains must not be copied into page-level `domain`: the forme
 
 ### 2. The concept-card projection currently omits importance
 
-The checked-in concept registry contains 41 concepts. Each record currently carries `id`, bilingual `labels`, bilingual `definitions`, `domains`, and `resources`; no `importance` field is defined.
+The baseline registry contained 41 concepts and no `importance` field. The implementation in the follow-up branch upgrades the concept-registry schema to version 2 and assigns every concept one controlled value. The values are relative to the project’s core conceptual route, not universal scientific rankings.
 
 The learning-map builder projects each concept to `id`, localized `label`, localized `definition`, `domains`, and resolved page `resources`. The interactive concept card renders the label and definition. Domain memberships are used to group cards under localized domain headings. There is no importance value in the projection, card, or concept-detail panel.
 
@@ -119,3 +119,26 @@ If adopted, `importance` should be an intrinsic annotation on each concept recor
 - it must not be inferred from how many pages mention a concept, its domain count, or its position in the current graph.
 
 The first implementation should be deliberately small: one required enum, one validator, one JSON field, and one localized secondary cue in the existing card/detail UI. If the concept set cannot be classified consistently from documented curriculum criteria, defer the field rather than publish false precision.
+
+
+## 5. Reviewed classification for the 41 current concepts
+
+The following assignment uses the route and computational-branch roles as evidence. It is a curriculum annotation, not a claim about the intrinsic importance of a scientific topic.
+
+| Importance | Concepts | Classification rationale |
+|---|---|---|
+| `core` | `token`, `token-embedding`, `contextualized-representation`, `self-attention`, `scaled-dot-product-attention`, `causal-mask`, `positional-encoding`, `output-projection`, `logits`, `softmax`, `conditional-distribution`, `next-token-prediction` | Required to follow the shared input → representation → Transformer → logits → conditional-distribution computation. |
+| `core` | `autoregressive-generation`, `prefill`, `decode-step` | Required to explain the principal inference execution path and its distinction between initial prompt processing and incremental generation. |
+| `core` | `observed-target`, `sequence-likelihood`, `negative-log-likelihood`, `cross-entropy` | Required to explain the observed-target scoring branch and the probabilistic quantity used as a training objective component. |
+| `core` | `training-objective`, `training-example`, `teacher-forcing`, `gradient`, `optimizer`, `parameter-update` | Required to explain the training branch from observed examples through differentiation and parameter updates. |
+| `core` | `held-out-evaluation` | Required to distinguish evaluation on held-out data from training and parameter updates. |
+| `supporting` | `query`, `key`, `value`, `attention-score`, `attention-weight`, `multi-head-attention` | Important internal components and intermediate quantities that unpack the attention mechanism, but are not separate top-level stages of the shared computational spine. |
+| `supporting` | `log-likelihood`, `logarithm`, `negation` | Mathematical steps that explain the construction of negative log-likelihood; useful for derivation, but not independent branches. |
+| `supporting` | `decoding-policy`, `generated-token-feedback` | Explain how the distribution is turned into a selected token and how the inference context is extended; subordinate to the autoregressive loop. |
+| `supporting` | `operational-competence` | Qualifies how model capability claims should be interpreted and measured; it does not participate in the forward computation. |
+| `specialized` | `calibration`, `emergent-ability` | Evaluation/research topics that qualify or extend the interpretation of model outputs and measured capabilities, beyond the minimum conceptual route. |
+| `specialized` | `kv-cache` | An inference-efficiency optimization; the autoregressive process remains conceptually valid without it. |
+
+The classification deliberately treats the three operational branches as core even though they are not one linear execution loop. It also treats `training-objective` as core because the learning branch needs an explicit objective, while keeping narrower mathematical derivation steps supporting.
+
+The renderer displays the localized importance label as secondary text only. Domain grouping, concept relations, search, and route ordering remain unchanged.
