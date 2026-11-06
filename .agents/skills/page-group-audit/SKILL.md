@@ -276,3 +276,114 @@ Before delivering the audit, verify:
 - Never delete information to make pages shorter. Any consolidation proposal must include a content-preservation map.
 - Recommend the smallest useful intervention that resolves the underlying problem.
 - Make findings actionable and verifiable.
+
+
+## Applied calibration protocol (added after the 2026-11-06 pilot)
+
+The first four pilot cases exposed a recurring failure mode: a flat page inventory can accidentally imply that every member is a mandatory, sequential lesson. Apply the following protocol in every future audit.
+
+### A. Assign a membership role to every page
+
+Use one primary role per page in the group map:
+- **Core:** part of the intended main sequence or central scope.
+- **Optional:** useful extension or advanced depth; not required for the core outcome.
+- **Branch:** belongs to a different but connected route, such as Build or training-data preparation.
+- **Context:** inspected to understand prerequisites, hand-offs, or boundaries, but not part of the audit core.
+- **Excluded related page:** relevant enough to mention, but outside the declared group boundary.
+
+A page may have secondary roles, but do not let that obscure its primary reader-facing purpose. Record destination (Understand, Build, Deepen, Practice, Reference) separately from membership role. Membership does not automatically imply order, prerequisite, or hierarchy.
+
+### B. Normalize the group boundary before auditing
+
+For local windows, state whether N means N pages total or N neighbors on each side. List core and context pages separately.
+
+For a route or concept family, do not force a page count. Record:
+- inclusion rationale;
+- primary membership role;
+- intended order, if any;
+- relevant but excluded neighbors;
+- the boundary at which the next group or destination begins.
+
+Do not silently expand the group whenever a related page is discovered. Add it as context or an excluded related page unless it changes the group's identity.
+
+### C. Inspect canonical projections separately
+
+For LLM Lab, consult only the projections relevant to the group, but do not treat them as interchangeable:
+- narrative curriculum in docs/learning-path.md;
+- guided stages and optional resources in data/guided-route.yml;
+- practical implementation order in the Build path;
+- published destination and sidebar order in site/_quarto.yml;
+- page-level suggested_route, hierarchy, related, type, destination and level metadata;
+- concept/resource relations where they materially explain the group.
+
+Record agreement and disagreement between projections. A sidebar order is not proof of pedagogical sequence; a hierarchy edge is not proof of prerequisite; a related link is not proof of group membership.
+
+### D. Classify transition types
+
+For every important hand-off, identify its type:
+- concept → concept;
+- concept → optional deep dive;
+- concept → Build implementation;
+- concept → Practice/experiment;
+- stage → stage;
+- overview → detailed mechanism;
+- mechanism → output or application.
+
+Judge the bridge against that transition type. A Build hand-off needs to explain what is implemented and what concepts it reuses; a deep-dive hand-off needs to explain why it is optional; an experiment hand-off must state what observation can and cannot establish. Do not demand the same transition wording everywhere.
+
+### E. Use an evidence ledger
+
+Before writing findings, maintain a compact internal ledger with:
+- claim or question;
+- exact source path and relevant field/heading/link;
+- evidence type: canonical documentation, page metadata, page body, navigation configuration, rendered observation, or inferred interpretation;
+- confidence;
+- whether the claim was verified in the rendered site.
+
+Never describe a rendered behavior as verified when only source files were inspected. Separate file/counterpart existence from semantic bilingual equivalence. Cite source paths in the report so a future maintainer can reproduce the audit.
+
+### F. Apply a two-stage bilingual check
+
+1. **Structural parity:** counterpart exists; page ID, destination, type, level, route membership and major links are aligned or intentionally different.
+2. **Semantic parity:** scope, learner outcomes, examples, terminology, caveats, transitions and references communicate equivalent teaching intent.
+
+Report these as separate results. A missing counterpart is a finding; a deliberate language-specific adaptation is not automatically a defect. Do not claim full parity after checking filenames alone.
+
+### G. Calibrate against regression cases
+
+When changing this skill, test the revised procedure against representative cases from docs/audits/page-group-audit-pilot-2026-11-06.md:
+- Group A: concept family with optional depth and a Build branch;
+- Group B: guided-route stage with optional deep dives;
+- Group C: heterogeneous cross-destination family;
+- Group D: five-page local sequential window.
+
+A skill refinement is acceptable only if it improves repeatability without flattening these different structures into one template. If a new project pattern is not represented, add a new regression case rather than weakening a useful distinction.
+
+### H. Keep diagnosis and implementation separate
+
+The audit report is diagnostic by default. When implementation is explicitly requested:
+- convert accepted findings into a coordinated change set;
+- identify canonical sources before editing generated projections;
+- update the source of truth, not generated files, unless project instructions say otherwise;
+- preserve content and explain any relocation;
+- verify metadata, route resolution, links, render output and CI as appropriate;
+- update the audit report with implemented, deferred and rejected decisions.
+
+Do not silently turn a recommendation into a canonical curriculum or navigation change.
+
+### I. Record lessons without bloating every audit
+
+The full audit report is the evidence record. The skill should contain reusable method rules, not copy every project's findings into its permanent instructions. Add a new rule only when a pilot reveals a repeatable methodological failure or ambiguity. Keep project-specific findings in dated audit reports and link them as calibration examples.
+
+
+### J. Track finding lifecycle and close verified checks
+
+Distinguish:
+- **Open finding:** evidence confirms a defect or material risk.
+- **Verified / no defect:** the audit question was checked and the expected behavior already exists.
+- **Open question:** evidence is insufficient or contradictory.
+- **Deferred decision:** a policy or architecture choice requires an explicit owner decision.
+- **Implemented:** a change was made and its acceptance criterion was checked.
+- **Rejected:** a recommendation was considered and intentionally not adopted, with rationale.
+
+Do not leave "check whether X exists" in the action plan after confirming that X already exists. Close it as verified and cite the exact evidence. Re-read high-impact transitions in the page body and navigation cards; metadata alone does not establish that a reader-visible hand-off is present. If a second pass resolves a question, append a dated revalidation note to the audit report rather than silently rewriting the original reasoning.
