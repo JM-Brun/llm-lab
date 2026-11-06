@@ -137,3 +137,14 @@ The current-main rerun is implemented in [PR #531](https://github.com/JM-Brun/ll
 The 40-case browser audit in merged [PR #531](https://github.com/JM-Brun/llm-lab/pull/531) established the rendered baseline. It tested browser prefers-color-scheme contexts; the Quarto site currently defines a single light theme, so this is not evidence of a dedicated dark theme.
 
 The two cross-cutting Axe findings are tracked in [#532](https://github.com/JM-Brun/llm-lab/issues/532) and are being addressed in [PR #535](https://github.com/JM-Brun/llm-lab/pull/535): semantic keyboard support for Quarto collapsible-callout headers, improved contrast for page-navigation/breadcrumb text and Mermaid edge labels, plus blocking Axe assertions in the existing browser audit. The PR is pending CI, Quarto and browser validation.
+
+
+## Follow-up semantic audit — 2026-11-06
+
+A fresh inspection of the current canonical `data/concepts.yml` found **69 relation assertions**, rather than the 26 edges covered by the original 2026-11-05 inventory above. The original 26-edge review remains valid for that historical subset, but it must not be presented as a complete review of the current registry. This count discrepancy is an audit-scope issue, not evidence that the remaining relations are wrong.
+
+One newly added relation was unambiguously misleading and is removed in the accompanying change:
+
+- Removed `prefill → contrasts-with → teacher-forcing`. The concepts' own definitions establish that prefill is an inference phase processing the initial prompt before incremental generation, whereas teacher forcing is a training-time conditioning strategy using observed preceding tokens. They operate in different execution contexts and are not conceptual opposites or mutually exclusive alternatives. The existing computational graph already models prefill as a phase of autoregressive generation and teacher forcing as a condition on observed-prefix scoring/training. No replacement edge is warranted: the two concepts are distinguished by their execution context in their canonical definitions and resources.
+
+No new relation type or graph registry is introduced. A complete review of all 69 current relation assertions remains necessary before the edge audit can be marked complete; prioritize relations added after the original 26-edge inventory and record the reviewed set explicitly.
