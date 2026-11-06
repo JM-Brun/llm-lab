@@ -67,6 +67,7 @@ Ces notions sont regroupées dans le parcours [Géométrie et interprétabilité
 - **Divergence KL** — mesure de la différence entre deux distributions, généralement non symétrique. Voir [Cross-entropie et divergence KL](cross-entropy.qmd).
 - **Loss / fonction de perte** — objectif numérique optimisé pendant l'entraînement ; ce n'est pas une mesure universelle de qualité. Voir [Loss](loss.qmd).
 - **Gradient** — dérivée de l'objectif par rapport à une variable ou à un paramètre. Voir [Gradients](gradients.qmd).
+- **Teacher forcing** — stratégie de conditionnement où les prédictions d'entraînement utilisent le préfixe observé dans les données plutôt que les tokens générés par le modèle. Le masque causal continue d'interdire l'accès aux tokens futurs. Voir [Exemples d'entraînement](training-examples.qmd).
 - **Calibration** — accord empirique entre les probabilités annoncées et les fréquences observées d'événements comparables.
 
 ## Architecture Transformer
