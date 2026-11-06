@@ -1,6 +1,6 @@
 # Guided-route page membership projection
 
-**Status:** bilingual page-level pilot implemented on overview, generation, embeddings and Q/K/V; visual and accessibility review remains pending.  
+**Status:** bilingual page-level pilot implemented on overview, generation, embeddings, Q/K/V and the optional attention-score-scaling deep dive; visual and accessibility review remains pending.  
 **Source of truth:** `data/guided-route.yml`.  
 **Implementation:** `build_guided_route_memberships()`, `render_guided_page_context_markdown()`, and `write_guided_page_context_fragments()` in `site/tools/build_learning_map.py`.  
 **Tests:** `tests/site/test_guided_route_memberships.py`.  
@@ -47,6 +47,7 @@ The bilingual tests exercise:
 
 - `generation`: core in both `orientation` and `prediction`;
 - `transformer-architectures`: optional in `orientation`;
+- `attention-score-scaling`: optional in `computation` (mathematical deep dive, not a core prerequisite);
 - `embedding-space`: core in `representations`;
 - `evaluation-experimentale` / `experimental-evaluation`: included because the canonical route explicitly lists it in `learning-evaluation`;
 - `build-path`: absent from the Understand route;
@@ -61,7 +62,7 @@ The same branch now includes a renderer, `render_guided_page_context_markdown()`
 
 Stage anchors are added to the generated bilingual route fragments, and responsive styles are defined for the two context presentations.
 
-The renderer is covered by tests for a single optional membership, multiple core memberships, stable anchors, and an absent membership. A generator now emits one ignored Quarto partial per route-member page. The English and French overview and generation lessons exercise the single-membership and multi-membership paths. The embeddings and Q/K/V lessons now also include their generated route-context partials, exercising the `representations` and `computation` stages respectively. The Quarto build runs the generator before rendering; local builds must run `python site/tools/build_learning_map.py` before `quarto render site`.
+The renderer is covered by tests for a single optional membership, multiple core memberships, stable anchors, and an absent membership. A generator now emits one ignored Quarto partial per route-member page. The English and French overview and generation lessons exercise the single-membership and multi-membership paths. The embeddings and Q/K/V lessons include their generated route-context partials, exercising the `representations` and `computation` stages respectively. The optional attention-score-scaling deep dive is also listed in the computation stage and receives an explicitly optional route context. The Quarto build runs the generator before rendering; local builds must run `python site/tools/build_learning_map.py` before `quarto render site`.
 
 The remaining work is visual and accessibility validation of the implemented presentation; preserve the semantic distinction between single and multiple memberships:
 
