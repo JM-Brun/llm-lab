@@ -56,12 +56,14 @@ project:
     - fr/deepen.qmd
     - fr/language-modeling-math.qmd
     - fr/scaling-laws.qmd
+    - fr/llm-evolution.qmd
     - fr/emergence.qmd
     - fr/in-context-learning.qmd
     - en/llm-overview.qmd
     - en/deepen.qmd
     - en/language-modeling-math.qmd
     - en/scaling-laws.qmd
+    - en/llm-evolution.qmd
     - en/emergence.qmd
     - en/in-context-learning.qmd
     - fr/transformer-architectures.qmd
@@ -231,6 +233,7 @@ website:
               contents:
                 - fr/scaling-laws.qmd
                 - fr/emergence.qmd
+                - fr/llm-evolution.qmd
         - section: "Références"
           contents:
             - fr/glossary.qmd
@@ -335,6 +338,7 @@ website:
               contents:
                 - en/scaling-laws.qmd
                 - en/emergence.qmd
+                - en/llm-evolution.qmd
         - section: "Reference"
           contents:
             - en/glossary.qmd
