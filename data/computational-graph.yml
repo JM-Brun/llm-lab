@@ -98,7 +98,7 @@ nodes:
       fr: "Séquence ordonnée d'identifiants conditionnant la prochaine prédiction."
       en: "Ordered sequence of IDs conditioning the next prediction."
     branches: [shared-prediction, generation, observed-target-scoring, evaluation, training]
-    resources: [fr/generation, en/generation, fr/likelihood, en/likelihood, fr/training-examples, en/training-examples]
+    resources: [fr/generation, en/generation, fr/vraisemblance, en/likelihood, fr/training-examples, en/training-examples]
   - id: embedding-lookup
     kind: operation
     role: representation
@@ -341,7 +341,7 @@ nodes:
       fr: "Distribution pθ(· | contexte) commune à la génération et au scoring d'une cible observée."
       en: "The pθ(· | context) distribution shared by generation and observed-target scoring."
     branches: [shared-prediction, generation, observed-target-scoring, evaluation, training]
-    resources: [fr/probabilites, en/probabilities, fr/generation, en/generation, fr/likelihood, en/likelihood]
+    resources: [fr/probabilites, en/probabilities, fr/generation, en/generation, fr/vraisemblance, en/likelihood]
   - id: decoding-policy
     kind: policy
     role: generation
@@ -368,7 +368,7 @@ nodes:
       fr: "Token connu dans la séquence de référence, utilisé pour le scoring, l'évaluation ou l'apprentissage."
       en: "Known token in the reference sequence, used for scoring, evaluation, or training."
     branches: [observed-target-scoring, evaluation, training]
-    resources: [fr/likelihood, en/likelihood, fr/training-examples, en/training-examples]
+    resources: [fr/vraisemblance, en/likelihood, fr/training-examples, en/training-examples]
   - id: target-probability
     kind: operation
     role: scoring
@@ -377,7 +377,7 @@ nodes:
       fr: "Extrait de la distribution la probabilité correspondant à l'identifiant du token cible observé."
       en: "Extracts from the distribution the probability corresponding to the observed target-token ID."
     branches: [observed-target-scoring, evaluation, training]
-    resources: [fr/likelihood, en/likelihood, fr/cross-entropy, en/cross-entropy]
+    resources: [fr/vraisemblance, en/likelihood, fr/cross-entropy, en/cross-entropy]
   - id: target-probability-value
     kind: data
     role: score
@@ -386,7 +386,7 @@ nodes:
       fr: "Probabilité attribuée au token cible à la position considérée."
       en: "Probability assigned to the target token at the position being scored."
     branches: [observed-target-scoring, evaluation, training]
-    resources: [fr/likelihood, en/likelihood, fr/cross-entropy, en/cross-entropy]
+    resources: [fr/vraisemblance, en/likelihood, fr/cross-entropy, en/cross-entropy]
   - id: sequence-log-likelihood
     kind: data
     role: score
@@ -395,7 +395,7 @@ nodes:
       fr: "Somme des log-probabilités conditionnelles des tokens observés, selon le protocole de scoring."
       en: "Sum of conditional log probabilities for observed tokens under the scoring protocol."
     branches: [observed-target-scoring, evaluation]
-    resources: [fr/likelihood, en/likelihood]
+    resources: [fr/vraisemblance, en/likelihood]
   - id: token-nll
     kind: data
     role: loss
@@ -476,7 +476,7 @@ nodes:
       fr: "Stratégie de conditionnement où les préfixes fournis aux positions d'entraînement proviennent de la séquence de référence."
       en: "Conditioning strategy in which the prefixes supplied at training positions come from the reference sequence."
     branches: [training, observed-target-scoring, evaluation]
-    resources: [fr/training-examples, en/training-examples, fr/likelihood, en/likelihood]
+    resources: [fr/training-examples, en/training-examples, fr/vraisemblance, en/likelihood]
   - id: training-context
     kind: data
     role: state
