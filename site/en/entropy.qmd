@@ -11,14 +11,16 @@ id: "en/entropy"
 scope: "Define Shannon entropy of the model's next-token distribution for a fixed context as a measure of predictive dispersion before the next token is observed; distinguish it from the realized token's surprisal, sequence likelihood, and cross-entropy against a target distribution."
 purpose: "Calculate and interpret the entropy of a categorical next-token distribution, state its bounds for a finite vocabulary, and distinguish expected predictive uncertainty from the surprisal of an observed token."
 suggested_route:
-  previous: null
-  next: null
+  previous: "en/probabilities"
+  next: "en/likelihood"
 hierarchy:
-  parents: []
+  parents: ["en/probabilities"]
   children: ["en/cross-entropy"]
 related: ["en/likelihood"]
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:en", "status:published"]
 -->
+
+{{< include ../includes/generated-guided-context-en-entropy.qmd >}}
 
 ::: {.chapter-lead}
 In an autoregressive LLM, entropy describes how spread out the predicted next-token distribution is for a given context. It characterizes that distribution: it does not tell us whether the answer is true or the model is reliable.

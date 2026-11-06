@@ -23,10 +23,42 @@ def test_membership_projection_preserves_core_optional_and_multiple_contexts(
     stages = GENERATOR["load_guided_route"](language, pages)
     memberships = GENERATOR["build_guided_route_memberships"](stages)
 
+    assert [stage.id for stage in stages] == [
+        "orientation",
+        "text-input",
+        "representations",
+        "computation",
+        "prediction",
+        "inference",
+        "scoring",
+        "training",
+    ]
+
     generation = memberships[f"{language}/generation"]
     assert [(item.stage_id, item.role) for item in generation] == [
         ("orientation", "core"),
-        ("prediction", "core"),
+        ("inference", "core"),
+    ]
+
+    entropy = memberships[f"{language}/entropy"]
+    assert [(item.stage_id, item.role) for item in entropy] == [("prediction", "core")]
+
+    likelihood = (
+        memberships[f"{language}/vraisemblance"]
+        if language == "fr"
+        else memberships[f"{language}/likelihood"]
+    )
+    assert [(item.stage_id, item.role) for item in likelihood] == [("scoring", "core")]
+
+    cross_entropy = memberships[f"{language}/cross-entropy"]
+    assert [(item.stage_id, item.role) for item in cross_entropy] == [
+        ("scoring", "core"),
+        ("training", "optional"),
+    ]
+
+    training_examples = memberships[f"{language}/training-examples"]
+    assert [(item.stage_id, item.role) for item in training_examples] == [
+        ("training", "optional")
     ]
 
     optional_page = f"{language}/transformer-architectures"
@@ -50,7 +82,7 @@ def test_membership_projection_preserves_core_optional_and_multiple_contexts(
         if language == "fr"
         else f"{language}/experimental-evaluation"
     )
-    assert practice_page in memberships
+    assert practice_page not in memberships
 
 
 def test_membership_projection_keeps_empty_membership_absent() -> None:

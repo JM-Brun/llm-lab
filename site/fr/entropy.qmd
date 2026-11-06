@@ -11,14 +11,16 @@ id: "fr/entropy"
 scope: "Définir l'entropie de Shannon de la distribution du prochain token pour un contexte fixé comme mesure de dispersion prédictive avant l'observation du token ; la distinguer de la surprise du token effectivement observé, de la vraisemblance d'une séquence et de l'entropie croisée avec une distribution cible."
 purpose: "Calculer et interpréter l'entropie d'une distribution catégorielle sur les prochains tokens, énoncer ses bornes pour un vocabulaire fini et distinguer l'incertitude prédictive moyenne de la surprise d'un token observé."
 suggested_route:
-  previous: null
-  next: null
+  previous: "fr/probabilites"
+  next: "fr/vraisemblance"
 hierarchy:
-  parents: []
+  parents: ["fr/probabilites"]
   children: ["fr/cross-entropy"]
 related: ["fr/vraisemblance"]
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:fr", "status:published"]
 -->
+
+{{< include ../includes/generated-guided-context-fr-entropy.qmd >}}
 
 ::: {.chapter-lead}
 Dans un LLM autorégressif, l'entropie décrit la dispersion de la distribution prédite pour le prochain token, dans un contexte donné. Elle caractérise cette distribution : elle ne dit pas si la réponse est vraie, ni si le modèle est fiable.

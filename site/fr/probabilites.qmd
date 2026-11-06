@@ -12,10 +12,10 @@ scope: "Définit la distribution catégorielle conditionnelle sur le vocabulaire
 purpose: "Interpréter une probabilité de prochain token, expliquer le passage des logits à une distribution normalisée et son rôle dans la sélection du token, puis distinguer normalisation, calibration, température et vérité factuelle."
 suggested_route:
   previous: "fr/logits"
-  next: "fr/vraisemblance"
+  next: "fr/entropy"
 hierarchy:
   parents: ["fr/logits", "fr/generation"]
-  children: ["fr/vraisemblance"]
+  children: ["fr/entropy", "fr/vraisemblance"]
 related: []
 tags: ["type:concept-lesson", "destination:understand", "topic:probabilites", "level:core", "language:fr", "status:published"]
 -->
