@@ -79,6 +79,8 @@ La préparation du contexte et le calcul du modèle produisent une **distributio
 
 {{< include ../includes/generated-computational-graph-fr-persistent-spine.qmd >}}
 
+Le nœud « passe avant » résume volontairement le calcul interne ; le [pipeline des représentations](contextualized-representations.qmd) et le [parcours d’un bloc Transformer](transformer-block-walkthrough.qmd) en détaillent les étapes.
+
 | Branche | Usage de la distribution | Paramètres |
 |---|---|---|
 | **Génération** | Sélectionner un token, l'ajouter au contexte et répéter la prédiction ; voir [Générer du texte](generation.qmd) | Fixes |
