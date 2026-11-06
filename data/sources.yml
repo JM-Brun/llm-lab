@@ -172,8 +172,8 @@ sources:
       tags:
         - topic:kv-cache
         - topic:autoregressive-generation
-        - topic:autoregressive-decode
-      concept_ids: [key, value, self-attention, autoregressive-generation, autoregressive-decode]
+        - topic:decode-step
+      concept_ids: [key, value, self-attention, autoregressive-generation, decode-step]
     metadata:
       technical_level: intermediate
       contribution_types: [architecture, implementation]
@@ -193,7 +193,7 @@ sources:
           - "Licence and figure/code reuse conditions were not independently checked."
     related:
       pages: [en/generation, fr/generation]
-      concepts: [key, value, self-attention, autoregressive-generation, autoregressive-decode]
+      concepts: [key, value, self-attention, autoregressive-generation, decode-step]
       audit_records:
         - docs/source-reviews/qkv-nishanthan-devto-2026-11.md
   - id: andrej-karpathy-gpt-tokenizer-video
@@ -2245,8 +2245,8 @@ sources:
     classification:
       primary_theme: inference-efficiency
       secondary_themes: [architectures-mechanisms]
-      tags: [topic:prefill, topic:autoregressive-decode, topic:autoregressive-generation, method:chunked-prefill, ecosystem:arxiv]
-      concept_ids: [autoregressive-generation, prefill, autoregressive-decode]
+      tags: [topic:prefill, topic:decode-step, topic:autoregressive-generation, method:chunked-prefill, ecosystem:arxiv]
+      concept_ids: [autoregressive-generation, prefill, decode-step]
     metadata:
       technical_level: advanced
       contribution_types: [theory, architecture, experiment]
@@ -2264,7 +2264,7 @@ sources:
           - "The lesson uses it to support the phase distinction, not to generalize its performance measurements to all deployments."
     related:
       pages: [en/generation, fr/generation]
-      concepts: [autoregressive-generation, prefill, autoregressive-decode]
+      concepts: [autoregressive-generation, prefill, decode-step]
       audit_records: [docs/audits/training-inference-concepts-2026-11-06.md]
 
   - id: huggingface-transformers-kv-cache-strategies
@@ -2284,8 +2284,8 @@ sources:
     classification:
       primary_theme: inference-efficiency
       secondary_themes: [architectures-mechanisms]
-      tags: [topic:kv-cache, topic:autoregressive-decode, topic:autoregressive-generation]
-      concept_ids: [key, value, autoregressive-generation, autoregressive-decode]
+      tags: [topic:kv-cache, topic:decode-step, topic:autoregressive-generation]
+      concept_ids: [key, value, autoregressive-generation, decode-step]
     metadata:
       technical_level: intermediate
       contribution_types: [architecture, implementation, pedagogy]
@@ -2303,5 +2303,5 @@ sources:
           - "The documentation is versioned on main and may change."
     related:
       pages: [en/generation, fr/generation]
-      concepts: [key, value, autoregressive-generation, autoregressive-decode]
+      concepts: [key, value, autoregressive-generation, decode-step]
       audit_records: [docs/audits/training-inference-concepts-2026-11-06.md]
