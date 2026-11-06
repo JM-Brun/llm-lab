@@ -20,13 +20,13 @@ The word *notion* should not become another page tag or page-map field. The stab
 
 Likewise, concept domains must not be copied into page-level `domain`: the former are multi-valued memberships; the latter is a single primary classification restricted to Deepen pages. The page metadata contract explicitly prohibits adding concept-list fields merely to control visual emphasis.
 
-### 2. The concept-card projection currently omits importance
+### 2. The inspected baseline concept-card projection omitted importance
 
-The checked-in concept registry contains 41 concepts. Each record currently carries `id`, bilingual `labels`, bilingual `definitions`, `domains`, and `resources`; no `importance` field is defined.
+At the inspected baseline commit, the checked-in concept registry contained 41 concepts. Each record carried `id`, bilingual `labels`, bilingual `definitions`, `domains`, and `resources`; no `importance` field was defined.
 
-The learning-map builder projects each concept to `id`, localized `label`, localized `definition`, `domains`, and resolved page `resources`. The interactive concept card renders the label and definition. Domain memberships are used to group cards under localized domain headings. There is no importance value in the projection, card, or concept-detail panel.
+At that baseline, the learning-map builder projected each concept to `id`, localized `label`, localized `definition`, `domains`, and resolved page `resources`. The interactive concept card rendered the label and definition. Domain memberships grouped cards under localized domain headings. Importance was absent from the projection, card, and concept-detail panel.
 
-Therefore, the statement that concept cards already expose importance metadata is not supported by the current `main` implementation. This is a concrete metadata/UI gap, not a reason to duplicate the concept registry.
+Therefore, the statement that concept cards already exposed importance metadata was not supported by the inspected implementation. This was a concrete metadata/UI gap, not a reason to duplicate the concept registry.
 
 ### 3. Importance must not duplicate page depth
 
