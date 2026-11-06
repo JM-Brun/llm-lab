@@ -141,34 +141,46 @@ website:
         - fr/learning-map.qmd
         - section: "Comprendre les LLM"
           contents:
-            - fr/llm-overview.qmd
-            - fr/generation.qmd
+            - section: "Orientation"
+              contents:
+                - fr/llm-overview.qmd
+            - section: "Inférence et génération"
+              contents:
+                - fr/generation.qmd
+            - section: "Noyau de calcul partagé"
+              contents:
+                - section: "Entrée : texte et tokens"
+                  contents:
+                    - fr/text-data.qmd
+                    - fr/tokenization-strategies.qmd
+                - section: "Représentations"
+                  contents:
+                    - fr/embedding-space.qmd
+                    - fr/positional-encoding.qmd
+                    - fr/contextualized-representations.qmd
+                - section: "Calcul du Transformer"
+                  contents:
+                    - fr/transformer.qmd
+                    - fr/queries-keys-values.qmd
+                    - fr/scaled-dot-product-attention.qmd
+                    - fr/causal-masking.qmd
+                - section: "Prédiction"
+                  contents:
+                    - fr/logits.qmd
+                    - fr/probabilites.qmd
+                    - fr/entropy.qmd
+            - section: "Scoring des tokens observés"
+              contents:
+                - fr/vraisemblance.qmd
+                - fr/cross-entropy.qmd
+            - section: "Entraînement"
+              contents:
+                - fr/loss.qmd
+                - fr/gradients.qmd
             - section: "Pour situer et approfondir (facultatif)"
               contents:
                 - fr/transformer-architectures.qmd
                 - fr/llm-limits.qmd
-            - section: "Du texte aux représentations et au calcul"
-              contents:
-                - fr/text-data.qmd
-                - fr/tokenization-strategies.qmd
-                - fr/embedding-space.qmd
-                - fr/positional-encoding.qmd
-                - fr/contextualized-representations.qmd
-                - fr/transformer.qmd
-            - section: "Attention et sortie du Transformer"
-              contents:
-                - fr/queries-keys-values.qmd
-                - fr/scaled-dot-product-attention.qmd
-                - fr/causal-masking.qmd
-                - fr/logits.qmd
-                - fr/probabilites.qmd
-            - section: "Apprendre à partir des données"
-              contents:
-                - fr/vraisemblance.qmd
-                - fr/entropy.qmd
-                - fr/cross-entropy.qmd
-                - fr/loss.qmd
-                - fr/gradients.qmd
         - section: "Construire un petit GPT"
           contents:
             - fr/build-path.qmd
@@ -233,34 +245,46 @@ website:
         - en/learning-map.qmd
         - section: "Understand LLMs"
           contents:
-            - en/llm-overview.qmd
-            - en/generation.qmd
+            - section: "Orientation"
+              contents:
+                - en/llm-overview.qmd
+            - section: "Inference and generation"
+              contents:
+                - en/generation.qmd
+            - section: "Shared computational core"
+              contents:
+                - section: "Input: text and tokens"
+                  contents:
+                    - en/text-data.qmd
+                    - en/tokenization-strategies.qmd
+                - section: "Representations"
+                  contents:
+                    - en/embedding-space.qmd
+                    - en/positional-encoding.qmd
+                    - en/contextualized-representations.qmd
+                - section: "Transformer computation"
+                  contents:
+                    - en/transformer.qmd
+                    - en/queries-keys-values.qmd
+                    - en/scaled-dot-product-attention.qmd
+                    - en/causal-masking.qmd
+                - section: "Prediction"
+                  contents:
+                    - en/logits.qmd
+                    - en/probabilities.qmd
+                    - en/entropy.qmd
+            - section: "Observed-target scoring"
+              contents:
+                - en/likelihood.qmd
+                - en/cross-entropy.qmd
+            - section: "Training"
+              contents:
+                - en/loss.qmd
+                - en/gradients.qmd
             - section: "Background and optional depth"
               contents:
                 - en/transformer-architectures.qmd
                 - en/llm-limits.qmd
-            - section: "From text to representations and computation"
-              contents:
-                - en/text-data.qmd
-                - en/tokenization-strategies.qmd
-                - en/embedding-space.qmd
-                - en/positional-encoding.qmd
-                - en/contextualized-representations.qmd
-                - en/transformer.qmd
-            - section: "Attention and the Transformer's output"
-              contents:
-                - en/queries-keys-values.qmd
-                - en/scaled-dot-product-attention.qmd
-                - en/causal-masking.qmd
-                - en/logits.qmd
-                - en/probabilities.qmd
-            - section: "Learn from data"
-              contents:
-                - en/likelihood.qmd
-                - en/entropy.qmd
-                - en/cross-entropy.qmd
-                - en/loss.qmd
-                - en/gradients.qmd
         - section: "Build a small GPT"
           contents:
             - en/build-path.qmd
