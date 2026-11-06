@@ -1,6 +1,6 @@
 ---
-title: "Carte interactive du parcours"
-subtitle: "Un parcours guidé, puis une carte progressive : territoires, rubriques, pages et notions"
+title: "Parcours guidé et carte des ressources"
+subtitle: "Huit étapes, territoires, rubriques, pages et notions canoniques"
 description: "Parcours guidé en huit étapes conceptuelles, carte progressive des territoires et registre des notions canoniques pour s'orienter dans le site."
 keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:fr", "status:published"]
 lang: fr

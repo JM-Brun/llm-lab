@@ -151,18 +151,18 @@ website:
                   contents:
                     - fr/text-data.qmd
                     - fr/tokenization-strategies.qmd
-                - section: "Représentations"
+                - section: "Embeddings, position et contexte"
                   contents:
                     - fr/embedding-space.qmd
                     - fr/positional-encoding.qmd
                     - fr/contextualized-representations.qmd
-                - section: "Calcul du Transformer"
+                - section: "Calcul d’un bloc Transformer"
                   contents:
                     - fr/transformer.qmd
                     - fr/queries-keys-values.qmd
                     - fr/scaled-dot-product-attention.qmd
                     - fr/causal-masking.qmd
-                - section: "Prédiction"
+                - section: "Logits, probabilités et entropie"
                   contents:
                     - fr/logits.qmd
                     - fr/probabilites.qmd
@@ -171,11 +171,11 @@ website:
               contents:
                 - fr/vraisemblance.qmd
                 - fr/cross-entropy.qmd
-            - section: "Entraînement"
+            - section: "Loss et gradients"
               contents:
                 - fr/loss.qmd
                 - fr/gradients.qmd
-            - section: "Repères et limites"
+            - section: "Architectures Transformer et limites des LLM"
               contents:
                 - fr/transformer-architectures.qmd
                 - fr/llm-limits.qmd
@@ -201,7 +201,7 @@ website:
         - section: "Approfondir"
           contents:
             - fr/deepen.qmd
-            - section: "Architectures et mécanismes"
+            - section: "Attention, position et architectures"
               contents:
                 - fr/attention-score-scaling.qmd
                 - fr/cross-attention.qmd
@@ -216,7 +216,7 @@ website:
                 - fr/tensors.qmd
                 - fr/cosine-similarity.qmd
                 - fr/linearite-embeddings.qmd
-            - section: "Fondements probabilistes et entraînement"
+            - section: "Formalisation probabiliste et chaîne de l’entraînement"
               contents:
                 - fr/language-modeling-math.qmd
                 - fr/mathematical-foundations.qmd
@@ -251,18 +251,18 @@ website:
                   contents:
                     - en/text-data.qmd
                     - en/tokenization-strategies.qmd
-                - section: "Representations"
+                - section: "Embeddings, position, and context"
                   contents:
                     - en/embedding-space.qmd
                     - en/positional-encoding.qmd
                     - en/contextualized-representations.qmd
-                - section: "Transformer computation"
+                - section: "Computing a Transformer block"
                   contents:
                     - en/transformer.qmd
                     - en/queries-keys-values.qmd
                     - en/scaled-dot-product-attention.qmd
                     - en/causal-masking.qmd
-                - section: "Prediction"
+                - section: "Logits, probabilities, and entropy"
                   contents:
                     - en/logits.qmd
                     - en/probabilities.qmd
@@ -271,11 +271,11 @@ website:
               contents:
                 - en/likelihood.qmd
                 - en/cross-entropy.qmd
-            - section: "Training"
+            - section: "Loss and gradients"
               contents:
                 - en/loss.qmd
                 - en/gradients.qmd
-            - section: "Background and limitations"
+            - section: "Transformer architectures and LLM limitations"
               contents:
                 - en/transformer-architectures.qmd
                 - en/llm-limits.qmd
@@ -301,7 +301,7 @@ website:
         - section: "Deepen your understanding"
           contents:
             - en/deepen.qmd
-            - section: "Architectures and mechanisms"
+            - section: "Attention, position, and architectures"
               contents:
                 - en/attention-score-scaling.qmd
                 - en/cross-attention.qmd
@@ -316,7 +316,7 @@ website:
                 - en/tensors.qmd
                 - en/cosine-similarity.qmd
                 - en/embedding-linearity.qmd
-            - section: "Probabilistic foundations and training"
+            - section: "Probabilistic formalization and the training chain"
               contents:
                 - en/language-modeling-math.qmd
                 - en/mathematical-foundations.qmd
