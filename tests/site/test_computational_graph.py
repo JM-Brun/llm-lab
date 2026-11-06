@@ -190,6 +190,22 @@ def test_evaluation_metrics_link_language_modeling_and_transfer_resources() -> N
     )
 
 
+def test_scoring_and_evaluation_views_include_observed_prefix_conditioning() -> None:
+    registry_path = Path(__file__).resolve().parents[2] / "data" / "computational-graph.yml"
+    data = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
+    views = {view["id"]: view for view in data["views"]}
+
+    expected_nodes = {"teacher-forcing", "observed-prefix-context", "token-context"}
+    expected_edges = {"e-teacher-context", "e-observed-context", "e-observed-prefix-forward"}
+    for view_id in ("observed-target-scoring", "evaluation", "training"):
+        assert expected_nodes.issubset(views[view_id]["nodes"])
+        assert expected_edges.issubset(views[view_id]["edges"])
+
+    context = next(node for node in data["nodes"] if node["id"] == "observed-prefix-context")
+    assert context["branches"] == ["training", "observed-target-scoring", "evaluation"]
+    assert "only the prefix preceding its target" in context["descriptions"]["en"]
+
+
 def test_generation_graph_separates_distribution_selection_from_policy() -> None:
     registry_path = Path(__file__).resolve().parents[2] / "data" / "computational-graph.yml"
     data = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
