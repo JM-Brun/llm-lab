@@ -5,6 +5,7 @@ description: "Parcours guidé en huit étapes conceptuelles, carte progressive d
 keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:fr", "status:published"]
 lang: fr
 toc: true
+include-in-header: /includes/learning-map-hreflang.html
 ---
 
 <!--

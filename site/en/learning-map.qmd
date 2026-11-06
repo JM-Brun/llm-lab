@@ -5,12 +5,13 @@ description: "An eight-stage guided route, a progressive territory map, and a ca
 keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:en", "status:published"]
 lang: en
 toc: true
+include-in-header: /includes/learning-map-hreflang.html
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/learning-map"
-scope: "Six-stage conceptual guided route followed by a progressive map: territories, sections, pages, and canonical concepts."
+scope: "Eight-stage conceptual guided route followed by a progressive map: territories, sections, pages, and canonical concepts."
 purpose: "Orient readers through a compact conceptual progression, then let them explore resources territory by territory and section by section, along with canonical concepts."
 suggested_route:
   previous: null

@@ -1,5 +1,5 @@
 ---
-title: "Approfondir : carte des connaissances"
+title: "Carte des connaissances"
 description: "Carte thématique des approfondissements avancés sur les LLM, organisée par questions et domaines."
 keywords: ["type:entry-point", "destination:deepen", "topic:deepen-hub", "level:overview", "language:fr", "status:published"]
 ---
