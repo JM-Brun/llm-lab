@@ -1,5 +1,5 @@
 ---
-title: "Exercise space"
+title: "Exercise catalogue"
 subtitle: "A separate place to test and transfer knowledge"
 keywords: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:en", "status:published"]
 lang: en
