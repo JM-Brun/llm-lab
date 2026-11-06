@@ -438,9 +438,7 @@ def test_render_resource_list_nests_areas_sections_and_pages() -> None:
                     {
                         "title": "Noyau partagé",
                         "pages": [],
-                        "sections": [
-                            {"title": "Représentations", "pages": ["fr/attention"]}
-                        ],
+                        "sections": [{"title": "Représentations", "pages": ["fr/attention"]}],
                     }
                 ],
             }
