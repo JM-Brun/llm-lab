@@ -169,13 +169,13 @@ website:
                   contents:
                     - fr/logits.qmd
                     - fr/probabilites.qmd
+                    - fr/entropy.qmd
             - section: "Inférence et génération"
               contents:
                 - fr/generation.qmd
             - section: "Scoring des tokens observés"
               contents:
                 - fr/vraisemblance.qmd
-                - fr/entropy.qmd
                 - fr/cross-entropy.qmd
             - section: "Entraînement"
               contents:
@@ -273,13 +273,13 @@ website:
                   contents:
                     - en/logits.qmd
                     - en/probabilities.qmd
+                    - en/entropy.qmd
             - section: "Inference and generation"
               contents:
                 - en/generation.qmd
             - section: "Observed-target scoring"
               contents:
                 - en/likelihood.qmd
-                - en/entropy.qmd
                 - en/cross-entropy.qmd
             - section: "Training"
               contents:
