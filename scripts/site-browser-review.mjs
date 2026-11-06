@@ -20,6 +20,9 @@ const cases = [
   ...visualCases.map(testCase => ({
     ...testCase, page: "learning-map.html", kind: "learning-map",
   })),
+  ...visualCases.map(testCase => ({
+    ...testCase, page: "llm-overview.html", kind: "spine-overview",
+  })),
   ...routeContextCases.flatMap(testCase =>
     ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "attention-score-scaling.html", "cross-attention.html", "logits.html", testCase.lang === "fr" ? "probabilites.html" : "probabilities.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "decoding-strategies.html", "cross-entropy.html", "loss.html", "gradients.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
       ...testCase, page, kind: "route-context",
