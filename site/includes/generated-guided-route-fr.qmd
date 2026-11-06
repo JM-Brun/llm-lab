@@ -71,6 +71,7 @@ Relier Q/K/V, les poids d'attention, l'agrégation et le masquage causal sans co
 **Ressources facultatives**
 
 - [Attention croisée : faire communiquer deux séquences](cross-attention.html)
+- [Pourquoi mettre les scores d'attention à l'échelle ?](attention-score-scaling.html)
 
 :::
 
