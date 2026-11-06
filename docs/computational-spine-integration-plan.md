@@ -7,7 +7,7 @@
 
 This document is the durable hand-off for future work sessions. It records what has been completed, what remains, the intended order, and the evidence required to close the work. It is a task plan, not a new concept registry, curriculum hierarchy, or computational graph.
 
-## 0. Current status — 2026-11-06 (reconciled after PR #589)
+## 0. Current status — 2026-11-06 (reconciled after PR #598)
 
 | Work package | Status | Evidence |
 |---|---|---|
@@ -20,7 +20,7 @@ This document is the durable hand-off for future work sessions. It records what 
 | Build crosswalk | Partial | G0–G9 and G1b → G2 branch documented; implementation evidence still has gaps |
 | Rendered desktop/mobile, keyboard and screen-reader review | Pending | Do not infer this evidence from source tests or a successful static render |
 
-PR #578, #586 and #589 are merged to `main`. PR #589 integrates the persistent-spine and evaluation views, bilingual text alternatives, and workflow generation before both PR rendering and Pages publication. Python CI and Quarto rendering passed on the PR head; main-branch CI, Quarto and publication workflows were triggered after merge. Browser review remains a separate validation gate.
+PR #593, #594 and #598 are also merged to `main`. PR #593 integrates concept importance metadata; PR #594 aligns browser assertions with the eight-stage route; PR #598 reconciles the Build explanation with the shared computational spine. PR #589 integrates the persistent-spine and evaluation views, bilingual text alternatives, and workflow generation before both PR rendering and Pages publication. The current page-navigation accessibility follow-up is PR #597. Its Python quality checks and static Quarto render have passed; the rendered browser review is still running. Do not claim full accessibility validation until that review and a manual screen-reader check are complete.
 
 
 ## 1. Architectural invariant
