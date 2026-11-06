@@ -804,6 +804,7 @@ def test_concept_graph_script_exposes_direction_and_relation_legend() -> None:
     assert 'relation.direction === "symmetric" ? "↔ " : "→ "' in source
 
 
+
 def test_load_concept_graph_exports_concept_importance(tmp_path: Path) -> None:
     _write_concept_registry(tmp_path)
     MODULE["load_concept_graph"].__globals__["ROOT"] = tmp_path
