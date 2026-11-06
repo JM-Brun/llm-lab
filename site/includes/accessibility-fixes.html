@@ -27,10 +27,37 @@
     });
   };
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", enhanceCalloutButtons, { once: true });
-  } else {
+  const enhancePageNavigationLabels = () => {
+    const language = document.documentElement.lang?.toLowerCase().startsWith("fr")
+      ? "fr"
+      : "en";
+    const labels = language === "fr"
+      ? { previous: "Page précédente", next: "Page suivante" }
+      : { previous: "Previous page", next: "Next page" };
+
+    for (const direction of ["previous", "next"]) {
+      const link = document.querySelector(
+        `.page-navigation .nav-page-${direction} a.pagination-link`
+      );
+      if (!link) continue;
+
+      const title = link.querySelector(".nav-page-text")?.textContent?.trim()
+        || link.textContent?.trim().replace(/\s+/g, " ");
+      if (title) {
+        link.setAttribute("aria-label", `${labels[direction]}: ${title}`);
+      }
+    }
+  };
+
+  const enhanceAccessibility = () => {
     enhanceCalloutButtons();
+    enhancePageNavigationLabels();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", enhanceAccessibility, { once: true });
+  } else {
+    enhanceAccessibility();
   }
 })();
 </script>
