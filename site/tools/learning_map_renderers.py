@@ -1052,8 +1052,7 @@ def render_resource_list(
             page = page_by_id.get(page_id)
             if page is not None:
                 lines.append(
-                    f"{' ' * (indent + 2)}- "
-                    f"[{escape_markdown_text(page['title'])}]({page['href']})"
+                    f"{' ' * (indent + 2)}- [{escape_markdown_text(page['title'])}]({page['href']})"
                 )
         for child in section.get("sections", []):
             append_section(child, indent + 2)
