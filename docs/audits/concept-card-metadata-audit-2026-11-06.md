@@ -34,9 +34,9 @@ The existing page `level` classifies a resource's editorial depth (for example, 
 
 A concept may be central while being treated in an advanced page, and a core page may introduce supporting concepts. Reusing page `level` for concept importance would therefore conflate two independent dimensions.
 
-## Recommended minimal contract
+## Implemented minimal contract
 
-If concept-card prioritization is retained as a requirement, add one controlled field to each concept in `data/concepts.yml`, not to page metadata:
+The follow-up implementation adds one required controlled field to each concept in `data/concepts.yml` (registry schema version 2), not to page metadata:
 
 ```yaml
 importance: core | supporting | specialized
@@ -54,16 +54,18 @@ This field must remain independent of:
 - `destination`: where the page sits in the site;
 - concept relations: semantic connections and genuine pedagogical prerequisites.
 
-The renderer should expose the localized human-readable importance label only as a restrained secondary cue on concept cards and in concept details. It must not sort concepts into a false prerequisite sequence, change graph topology, or infer learning order. Domain grouping and relation direction remain authoritative.
+The existing renderer exposes the localized human-readable importance label only as a restrained secondary cue on concept cards and in concept details. The learning-map projection carries the enum unchanged, and the JSON-LD export exposes it as `llmlab:importance`. It must not sort concepts into a false prerequisite sequence, change graph topology, or infer learning order. Domain grouping and relation direction remain authoritative.
 
-## Implementation gates
+## Implementation status
 
-1. Review and assign importance to all existing 41 concepts against the canonical curriculum and computational branches. Do not infer values from page level or domain.
-2. Add the controlled value to the concept-registry validator and its fixture/tests; reject missing or unknown values once the field becomes required.
-3. Pass the value through the existing learning-map JSON projection.
-4. Render the localized cue in the existing concept-card component; do not create another card system or another metadata registry.
-5. Test bilingual labels, filter/search compatibility, accessibility, and preservation of existing domain grouping and typed relations.
-6. Update the page-metadata and knowledge-graph documentation to make the ownership boundary explicit.
+- [x] Classify all 41 concepts against the guided route and computational branches; record the rationale below.
+- [x] Upgrade the concept registry to schema version 2 and require the controlled enum in the existing validator; cover missing, unknown, and malformed values in tests.
+- [x] Pass importance through the existing learning-map JSON projection.
+- [x] Render the localized secondary cue in the existing card and detail components; no parallel card system or registry was introduced.
+- [x] Export the value as `llmlab:importance` in the existing JSON-LD concept node and document its semantics.
+- [ ] Complete rendered FR/EN browser review, including responsive behavior, keyboard and screen-reader behavior, and search/filter compatibility.
+
+The structural tests cover the projection and generated script. They do not substitute for the outstanding rendered and accessibility review.
 
 ## Explicit non-goals
 
@@ -111,14 +113,14 @@ If page-level discoverability later proves insufficient, first assess whether th
 
 ### Importance classification is a display annotation, not a relation
 
-If adopted, `importance` should be an intrinsic annotation on each concept record, with a controlled vocabulary and explicit project-relative definitions. It must not become a relation type, a domain, or an implicit edge weight. In particular:
+`importance` is an intrinsic annotation on each concept record, with a controlled vocabulary and explicit project-relative definitions. It must not become a relation type, a domain, or an implicit edge weight. In particular:
 
 - it must not change the direction or meaning of existing relations;
 - it must not create prerequisite edges;
 - it must not reorder the guided route or computational branches;
 - it must not be inferred from how many pages mention a concept, its domain count, or its position in the current graph.
 
-The first implementation should be deliberately small: one required enum, one validator, one JSON field, and one localized secondary cue in the existing card/detail UI. If the concept set cannot be classified consistently from documented curriculum criteria, defer the field rather than publish false precision.
+The implementation is deliberately small: one required enum, the existing validator, one JSON projection field, one JSON-LD property, and one localized secondary cue in the existing card/detail UI. Importance does not change route ordering, graph topology, domain grouping, or relation semantics.
 
 
 ## Reviewed classification for the 41 current concepts
