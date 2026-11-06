@@ -92,7 +92,7 @@ for (const testCase of cases) {
           whiteSpace: style.whiteSpace,
           overflowX: style.overflowX,
         };
-      }).filter(x => x.width > 0 && (x.right > window.innerWidth + 1 || x.left < -1))
+      }).filter(x => x.right > window.innerWidth + 1 || x.left < -1)
         .sort((a, b) => b.right - a.right).slice(0, 60),
       pageHeight: document.documentElement.scrollHeight,
       images: [...document.images].map(img => ({
