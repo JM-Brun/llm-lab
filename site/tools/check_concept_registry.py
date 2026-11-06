@@ -155,9 +155,9 @@ def validate_registry(
     if (
         not isinstance(data, dict)
         or type(data.get("schema_version")) is not int
-        or data.get("schema_version") != 1
+         or data.get("schema_version") != 2
     ):
-        return ["registry: expected mapping with schema_version: 1"]
+        return ["registry: expected mapping with schema_version: 2"]
 
     concepts = data.get("concepts")
     if not isinstance(concepts, list) or not concepts:
@@ -184,6 +184,12 @@ def validate_registry(
                 errors.append(f"{where}.{field}: expected exactly fr and en")
             elif not all(isinstance(value, str) and value.strip() for value in values.values()):
                 errors.append(f"{where}.{field}: values must be non-empty strings")
+
+        importance = concept.get("importance")
+        if importance not in {"core", "supporting", "specialized"}:
+            errors.append(
+                f"{where}.importance: expected one of core, supporting, specialized"
+            )
 
         memberships = concept.get("domains")
         if not isinstance(memberships, list) or not memberships:
