@@ -118,26 +118,28 @@ for (const testCase of cases) {
       overflowRootCause: (() => {
         const target = window.innerWidth + 1;
         if (document.documentElement.scrollWidth <= target) return null;
-        const culprits = [];
+        const found = [];
         let tested = 0;
         for (const el of document.querySelectorAll("body *")) {
           if (tested++ > 3000) break;
-          const rect = el.getBoundingClientRect();
           const prev = el.style.display;
           el.style.display = "none";
           const fixed = document.documentElement.scrollWidth <= target;
           el.style.display = prev;
-          if (fixed) {
-            culprits.push({
-              tag: el.tagName.toLowerCase(),
-              className: typeof el.className === "string" ? el.className.slice(0, 80) : null,
-              text: (el.innerText || "").trim().slice(0, 60),
-              left: Math.round(rect.left), right: Math.round(rect.right), width: Math.round(rect.width),
-            });
-          }
-          if (culprits.length >= 8) break;
+          if (fixed) found.push(el);
+          if (found.length >= 40) break;
         }
-        return culprits;
+        const leaves = found.filter(el => !found.some(other => other !== el && el.contains(other)));
+        return leaves.map(el => {
+          const r = el.getBoundingClientRect();
+          return {
+            tag: el.tagName.toLowerCase(),
+            className: typeof el.className === "string" ? el.className.slice(0, 80) : null,
+            text: (el.innerText || "").trim().slice(0, 80),
+            html: el.innerHTML.replace(/\s+/g, " ").slice(0, 150),
+            left: Math.round(r.left), right: Math.round(r.right), width: Math.round(r.width),
+          };
+        });
       })(),
       pageHeight: document.documentElement.scrollHeight,
       images: [...document.images].map(img => ({
@@ -649,7 +651,7 @@ for (const testCase of cases) {
     if (item.layout.horizontalOverflow || item.learningMapLayout?.horizontalOverflow) {
       let overflowing = (item.layout.overflowCandidates || []).filter(c => c.right <= item.layout.documentWidth + 1).slice(0, 10).map(c => `${c.tag}${c.className ? "." + String(c.className).split(" ")[0] : ""}[left=${c.left},right=${c.right}]`).join(" | ");
       if (!overflowing) {
-        const causes = (item.layout.overflowRootCause || []).map(c => `${c.tag}${c.className ? "." + String(c.className).split(" ")[0] : ""}[left=${c.left},right=${c.right},w=${c.width}]:${c.text}`).join(" ; ");
+        const causes = (item.layout.overflowRootCause || []).map(c => `${c.tag}${c.className ? "." + String(c.className).split(" ")[0] : ""}[left=${c.left},right=${c.right},w=${c.width}]:${c.html}`).join(" ; ");
         overflowing = `rootCause: ${causes}`;
       }
       report.failures.push(`${pagePath}/${lang}/${label}/${theme}: horizontal overflow (document ${item.layout.documentWidth}px vs viewport ${item.layout.viewportWidth}px): ${overflowing}`);
