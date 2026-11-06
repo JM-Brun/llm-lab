@@ -10,7 +10,7 @@ toc: true
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/learning-map"
-scope: "Parcours guidé en six étapes conceptuelles, suivi d'une carte progressive : territoires, rubriques, pages et notions canoniques."
+scope: "Parcours guidé en huit étapes conceptuelles, suivi d'une carte progressive : territoires, rubriques, pages et notions canoniques."
 purpose: "Orienter le lecteur dans une progression conceptuelle compacte, puis lui permettre d'explorer les ressources territoire par territoire, rubrique par rubrique, ainsi que les notions canoniques."
 suggested_route:
   previous: null

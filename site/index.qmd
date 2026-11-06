@@ -50,7 +50,7 @@ Pour explorer les rubriques, les pages et les notions canoniques, consultez la [
 
 ## Vue synthétique du parcours conceptuel
 
-Cette vue regroupe la progression en huit jalons visuels. La carte des ressources et des notions présente séparément le parcours guidé canonique en six étapes, puis l’exploration des territoires, rubriques, pages et concepts : les deux vues ont des granularités et des fonctions distinctes.
+Cette vue regroupe la progression en huit jalons visuels. La carte des ressources et des notions présente séparément le parcours guidé canonique en huit étapes, puis l’exploration des territoires, rubriques, pages et concepts : les deux vues ont des granularités et des fonctions distinctes.
 
 Le parcours principal suit la logique **comprendre le fonctionnement avant d'étudier l'apprentissage**. Chaque bloc ouvre sa page de référence ; les petits liens donnent accès aux pages spécialisées. La branche G2 est distincte : elle prépare les données nécessaires à l'entraînement, mais n'est pas un prérequis pour comprendre l'inférence.
 
