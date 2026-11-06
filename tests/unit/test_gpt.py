@@ -46,7 +46,7 @@ def test_forward_validation_errors() -> None:
         model.forward(np.array([[1, -1]], dtype=np.int64))
 
 
-def test_same_seed_reproduces_identical_parameters_and_logits() -> None:
+def test_same_seed_reproduces_identical_logits() -> None:
     ids = np.array([[1, 2, 3, 4]], dtype=np.int64)
     logits_a = GPT(_small_config(seed=7)).forward(ids)
     logits_b = GPT(_small_config(seed=7)).forward(ids)
