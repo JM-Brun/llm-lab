@@ -155,7 +155,7 @@ def validate_registry(
     if (
         not isinstance(data, dict)
         or type(data.get("schema_version")) is not int
-         or data.get("schema_version") != 2
+        or data.get("schema_version") != 2
     ):
         return ["registry: expected mapping with schema_version: 2"]
 
