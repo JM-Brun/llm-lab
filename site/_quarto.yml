@@ -137,7 +137,7 @@ website:
     - id: fr
       title: "LLM Lab · Français"
       style: "docked"
-      collapse-level: 2
+      collapse-level: 1
       contents:
         - index.qmd
         - fr/learning-map.qmd
@@ -237,7 +237,7 @@ website:
     - id: en
       title: "LLM Lab · English"
       style: "docked"
-      collapse-level: 2
+      collapse-level: 1
       contents:
         - en/index.qmd
         - en/learning-map.qmd
