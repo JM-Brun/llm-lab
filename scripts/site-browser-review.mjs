@@ -91,8 +91,11 @@ for (const testCase of cases) {
     });
     for (const [direction, navigation] of Object.entries(item.pageNavigation)) {
       const visible = Boolean(navigation.href);
-      if (visible !== Boolean(navigation.relationHref) || (visible && navigation.href !== navigation.relationHref)) {
-        throw new Error(direction + " footer navigation does not match rel metadata");
+      // Quarto does not emit rel=prev/next for every page-navigation
+      // link (the learning map is one example). When it does emit relation
+      // metadata, it must agree with the visible destination.
+      if (navigation.relationHref && (!visible || navigation.href !== navigation.relationHref)) {
+        throw new Error(direction + " footer navigation does not match available rel metadata");
       }
       if (visible) {
         const prefix = lang === "fr" ? (direction === "previous" ? "Page précédente:" : "Page suivante:") : (direction === "previous" ? "Previous page:" : "Next page:");
