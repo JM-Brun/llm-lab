@@ -39,7 +39,7 @@ def published_page_ids() -> set[str]:
         for path in (ROOT / "site" / language).glob("*.qmd"):
             source = path.read_text(encoding="utf-8")
             match = re.search(
-                r"<!--\\s*\\nLLM-LAB-PAGE-MAP v1\\n(.*?)\\n-->",
+                r"<!--\s*\nLLM-LAB-PAGE-MAP v1\n(.*?)\n-->",
                 source,
                 re.DOTALL,
             )
