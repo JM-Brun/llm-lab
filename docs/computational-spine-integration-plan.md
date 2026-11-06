@@ -68,6 +68,16 @@ Current source to audit: `data/guided-route.yml`. Its six-stage route currently 
 
 **Exit condition:** every route stage has one clear objective; every page membership has a justified role; the route explains the shared distribution and its sibling branches without suggesting one linear execution chain.
 
+### P1 — Reconcile concept-card metadata ownership
+
+- [ ] Use [the 2026-11-06 concept-card metadata audit](audits/concept-card-metadata-audit-2026-11-06.md) as the source-level baseline.
+- [ ] Keep canonical notion identity in `data/concepts.yml`; do not add a redundant `notion:` page tag or page-level concept list.
+- [ ] Keep concept-domain membership many-to-many in `data/concepts.yml` and the controlled vocabulary in `data/domains.yml`; do not copy it into the Deepen-only page `domain` field.
+- [ ] Decide and review a controlled concept-importance classification independently of page `level`, destination, and domain. The audit proposes `core`, `supporting`, and `specialized` as project-relative values; do not implement the field until the 41 existing concepts can be classified consistently.
+- [ ] If adopted, validate the field in the existing concept-registry checker, pass it through the existing JSON projection, and expose it as a localized secondary cue in the existing concept cards. Do not reorder the route or alter graph relations from importance.
+
+**Exit condition:** notion identity, subject domain, concept importance, page depth, and page destination each have one clear owner and no duplicated metadata dimensions.
+ 
 ### P1 — Audit page metadata and breadcrumb semantics
 
 Use the existing page-map metadata schema and contract; do not add a new per-page breadcrumb field.
