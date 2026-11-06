@@ -213,6 +213,20 @@ concepts:
       en: "Logarithm of a sequence likelihood, equal to the sum of the conditional log-probabilities of observed tokens."
     domains: [probabilistic-foundations-training]
     resources: [fr/vraisemblance, en/likelihood]
+  - id: logarithm
+    labels: {fr: "Logarithme", en: "Logarithm"}
+    definitions:
+      fr: "Transformation qui convertit une vraisemblance positive en log-vraisemblance et transforme un produit de probabilités en somme."
+      en: "Transformation that converts a positive likelihood into log-likelihood and turns a product of probabilities into a sum."
+    domains: [mathematical-tools-geometry, probabilistic-foundations-training]
+    resources: [fr/vraisemblance, en/likelihood]
+  - id: negation
+    labels: {fr: "Opposé additif", en: "Additive inverse"}
+    definitions:
+      fr: "Transformation qui change le signe de la log-vraisemblance pour obtenir une quantité à minimiser."
+      en: "Transformation that changes the sign of log-likelihood to obtain a quantity to minimize."
+    domains: [mathematical-tools-geometry, probabilistic-foundations-training]
+    resources: [fr/cross-entropy, en/cross-entropy]
   - id: negative-log-likelihood
     labels: {fr: "Négative log-vraisemblance", en: "Negative log-likelihood"}
     definitions:
@@ -474,21 +488,23 @@ relations:
     rationale:
       fr: "Une vraisemblance de séquence porte sur des tokens effectivement observés."
       en: "A sequence likelihood is defined with respect to actually observed tokens."
-  - {from: sequence-likelihood, type: mapped-by, to: log-likelihood}
+  - {from: sequence-likelihood, type: mapped-by, to: logarithm}
+  - {from: logarithm, type: produces, to: log-likelihood}
   - from: sequence-likelihood
     type: prerequisite
     to: log-likelihood
     rationale:
       fr: "La log-vraisemblance est obtenue en prenant le logarithme de la vraisemblance."
       en: "Log-likelihood is obtained by taking the logarithm of likelihood."
-  - {from: log-likelihood, type: mapped-by, to: negative-log-likelihood}
+  - {from: log-likelihood, type: mapped-by, to: negation}
+  - {from: negation, type: produces, to: negative-log-likelihood}
   - from: log-likelihood
     type: prerequisite
     to: negative-log-likelihood
     rationale:
       fr: "La négative log-vraisemblance est l'opposé de la log-vraisemblance."
       en: "Negative log-likelihood is the negation of log-likelihood."
-  - {from: negative-log-likelihood, type: contributes-to, to: cross-entropy}
+  - {from: negative-log-likelihood, type: contributes-to, to: training-objective}
   - {from: training-example, type: produces, to: observed-target}
   - {from: teacher-forcing, type: applies-to, to: training-example}
   - from: cross-entropy
