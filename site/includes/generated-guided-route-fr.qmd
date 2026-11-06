@@ -4,7 +4,7 @@
 
 ### 01 · Situer le système
 
-Comprendre ce qu'est un LLM et observer une génération complète avant d'en étudier les mécanismes internes\.
+Comprendre ce qu'est un LLM et suivre une génération complète comme une boîte noire, avec des paramètres fixes, avant d'en étudier les mécanismes internes\.
 
 **Pages centrales**
 
@@ -22,7 +22,7 @@ Comprendre ce qu'est un LLM et observer une génération complète avant d'en é
 
 ### 02 · Du texte aux tokens
 
-Distinguer texte, tokenisation, vocabulaire et identifiants de tokens dans la construction de l'entrée du modèle\.
+Distinguer le texte, la tokenisation, le vocabulaire et les identifiants de tokens qui constituent le contexte discret fourni au modèle\.
 
 **Pages centrales**
 
@@ -40,7 +40,7 @@ Distinguer texte, tokenisation, vocabulaire et identifiants de tokens dans la co
 
 ### 03 · Des identifiants aux représentations
 
-Suivre la consultation des embeddings, l'information positionnelle et la contextualisation des états\.
+Suivre la consultation des embeddings et l'ajout d'information positionnelle, puis distinguer les états initiaux des représentations contextualisées\.
 
 **Pages centrales**
 
@@ -59,7 +59,7 @@ Suivre la consultation des embeddings, l'information positionnelle et la context
 
 ### 04 · Comprendre le calcul du Transformer
 
-Relier Q/K/V, les poids d'attention, l'agrégation et le masquage causal sans confondre mécanisme et ordre d'apprentissage\.
+Relier les projections Q/K/V, les scores et poids d'attention, l'agrégation des valeurs, le masque causal et les autres opérations d'un bloc Transformer\.
 
 **Pages centrales**
 
@@ -77,15 +77,26 @@ Relier Q/K/V, les poids d'attention, l'agrégation et le masquage causal sans co
 
 ::: {.guided-route-stage #guided-stage-prediction}
 
-### 05 · Des états aux prédictions
+### 05 · Des états à la distribution prédictive
 
-Relier logits, distribution de probabilité, vraisemblance et sélection du prochain token\.
+Suivre la projection des états finaux vers les logits et la distribution conditionnelle du prochain token ; interpréter son entropie avant toute sélection ou observation d'une cible\.
 
 **Pages centrales**
 
 - [Logits : les scores avant normalisation](logits.html)
 - [Probabilités de sortie : des logits aux tokens](probabilites.html)
-- [Vraisemblance et log-vraisemblance](vraisemblance.html)
+- [Entropie : incertitude sur le prochain token](entropy.html)
+
+:::
+
+::: {.guided-route-stage #guided-stage-inference}
+
+### 06 · Exécuter l'inférence et générer
+
+Distinguer le prefill du prompt du decode itératif, sélectionner un token selon une politique de décodage, le réinjecter dans le contexte et arrêter la génération sans mettre à jour les paramètres\.
+
+**Pages centrales**
+
 - [Générer du texte : l'inférence pas à pas](generation.html)
 
 **Ressources facultatives**
@@ -94,21 +105,34 @@ Relier logits, distribution de probabilité, vraisemblance et sélection du proc
 
 :::
 
-::: {.guided-route-stage #guided-stage-learning-evaluation}
+::: {.guided-route-stage #guided-stage-scoring}
 
-### 06 · Comprendre l'apprentissage et évaluer
+### 07 · Attribuer un score aux tokens observés
 
-Découvrir les objectifs de perte et les gradients, puis examiner les preuves, métriques et limites d'une évaluation\.
+Évaluer la probabilité attribuée à une cible connue, construire la vraisemblance d'une séquence et relier la log-vraisemblance négative à l'entropie croisée, sans sélectionner de token ni modifier les paramètres\.
 
 **Pages centrales**
 
+- [Vraisemblance et log-vraisemblance](vraisemblance.html)
 - [Entropie croisée : l'objectif de prédiction des tokens](cross-entropy.html)
+
+:::
+
+::: {.guided-route-stage #guided-stage-training}
+
+### 08 · Apprendre et mettre à jour les paramètres
+
+Relier les cibles observées à la loss agrégée, aux gradients et aux mises à jour des paramètres ; approfondir le teacher forcing et les exemples décalés via la branche Build, sans en faire un prérequis à l'inférence\.
+
+**Pages centrales**
+
 - [Loss : de la perte par token à l'objectif](loss.html)
 - [Gradients : relier la perte aux paramètres](gradients.html)
-- [Évaluer un modèle : du score au protocole expérimental](evaluation-experimentale.html)
 
 **Ressources facultatives**
 
+- [Entropie croisée : l'objectif de prédiction des tokens](cross-entropy.html)
+- [Du corpus tokenisé aux exemples d’entraînement](training-examples.html)
 - [Lois d'échelle : paramètres, données et calcul](scaling-laws.html)
 
 :::

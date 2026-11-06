@@ -4,7 +4,7 @@
 
 ### 01 · Orient yourself
 
-Understand what an LLM is and observe a complete generation loop before studying its internal mechanisms\.
+Understand what an LLM is and follow a complete generation loop as a black box with fixed parameters before studying its internal mechanisms\.
 
 **Core pages**
 
@@ -22,7 +22,7 @@ Understand what an LLM is and observe a complete generation loop before studying
 
 ### 02 · From text to tokens
 
-Distinguish text, tokenization, vocabulary, and token IDs in the construction of model input\.
+Distinguish text, tokenization, vocabulary, and token IDs that form the discrete context supplied to the model\.
 
 **Core pages**
 
@@ -40,7 +40,7 @@ Distinguish text, tokenization, vocabulary, and token IDs in the construction of
 
 ### 03 · From IDs to representations
 
-Trace embedding lookup, positional information, and the contextualization of hidden states\.
+Trace embedding lookup and the addition of positional information, then distinguish initial states from contextualized representations\.
 
 **Core pages**
 
@@ -59,7 +59,7 @@ Trace embedding lookup, positional information, and the contextualization of hid
 
 ### 04 · Understand Transformer computation
 
-Connect Q/K/V, attention weights, aggregation, and causal masking without confusing mechanism with learning order\.
+Connect Q/K/V projections, attention scores and weights, value aggregation, causal masking, and the other operations in a Transformer block\.
 
 **Core pages**
 
@@ -77,15 +77,26 @@ Connect Q/K/V, attention weights, aggregation, and causal masking without confus
 
 ::: {.guided-route-stage #guided-stage-prediction}
 
-### 05 · From hidden states to predictions
+### 05 · From hidden states to the predictive distribution
 
-Connect logits, probability distributions, likelihood, and next-token selection\.
+Trace the projection from final hidden states to logits and the conditional next-token distribution; interpret its entropy before any token selection or observed target\.
 
 **Core pages**
 
 - [Logits: scores before normalization](logits.html)
 - [Output probabilities: from logits to tokens](probabilities.html)
-- [Likelihood and log-likelihood](likelihood.html)
+- [Entropy: uncertainty over the next token](entropy.html)
+
+:::
+
+::: {.guided-route-stage #guided-stage-inference}
+
+### 06 · Run inference and generate
+
+Distinguish prompt prefill from iterative decode, select a token with a decoding policy, feed it back into the context, and stop generation without updating parameters\.
+
+**Core pages**
+
 - [Generating text: inference step by step](generation.html)
 
 **Optional resources**
@@ -94,21 +105,34 @@ Connect logits, probability distributions, likelihood, and next-token selection\
 
 :::
 
-::: {.guided-route-stage #guided-stage-learning-evaluation}
+::: {.guided-route-stage #guided-stage-scoring}
 
-### 06 · Understand learning and evaluate
+### 07 · Score observed tokens
 
-Explore loss objectives and gradients, then examine the evidence, metrics, and limits of evaluation\.
+Evaluate the probability assigned to a known target, build a sequence likelihood, and connect negative log-likelihood to cross-entropy without selecting a token or changing parameters\.
 
 **Core pages**
 
+- [Likelihood and log-likelihood](likelihood.html)
 - [Cross-entropy: the token-prediction objective](cross-entropy.html)
+
+:::
+
+::: {.guided-route-stage #guided-stage-training}
+
+### 08 · Learn and update parameters
+
+Connect observed targets to the aggregated loss, gradients, and parameter updates; deepen teacher forcing and shifted examples through the Build branch without making them prerequisites for inference\.
+
+**Core pages**
+
 - [Loss: from per-token penalty to training objective](loss.html)
 - [Gradients: connecting loss to parameters](gradients.html)
-- [Evaluating a model: from score to experimental protocol](experimental-evaluation.html)
 
 **Optional resources**
 
+- [Cross-entropy: the token-prediction objective](cross-entropy.html)
+- [From tokenized corpus to training examples](training-examples.html)
 - [Scaling laws: parameters, data, and compute](scaling-laws.html)
 
 :::
