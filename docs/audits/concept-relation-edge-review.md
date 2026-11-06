@@ -152,7 +152,7 @@ No new relation type or graph registry is introduced. A complete review of all 6
 
 ## Follow-up review of the 42 relations added after the original inventory — 2026-11-06
 
-After PR #609, the registry contained 68 relations. This follow-up removes one overgeneralized edge from the original 26-edge inventory; the current branch therefore contains 67 relations: 25 retained edges from that historical inventory and 42 later additions. The 42 additions were reviewed against their endpoint definitions, relation-type descriptions, and the separate computational spine. This is a semantic review of the selected concept graph, not a claim that it is a complete tensor-level execution DAG.
+After PR #609, the registry contained 68 relations. This follow-up removes one overgeneralized edge from the original 26-edge inventory; the current branch therefore contains 67 relations: 25 retained edges from that historical inventory and 42 later additions. The 42 additions were reviewed against their endpoint definitions, relation-type descriptions, and the separate computational spine; one was subsequently removed as semantically ill-typed, leaving 41 retained additions. This is a semantic review of the selected concept graph, not a claim that it is a complete tensor-level execution DAG.
 
 ### Review of the 42 additional relations
 
@@ -166,7 +166,7 @@ After PR #609, the registry contained 68 relations. This follow-up removes one o
 | 6 | `inference-time-compute → applies-to → reasoning-model` | **Accept.** Additional inference-time resources can be used by reasoning-oriented models; the edge does not claim that only reasoning models use them. |
 | 7 | `tool-calling → part-of → agentic-system` | **Accept within the registry's definition.** Tool use is explicitly part of the defined agentic loop; this should not be generalized to every possible use of the term outside this project. |
 | 8 | `softmax → produces → conditional-distribution` | **Accept.** Softmax maps logits to the conditional distribution over the vocabulary. |
-| 9 | `next-token-prediction → part-of → training-objective` | **Needs wording review.** The definitions identify next-token prediction as the training task and the training objective as the function optimized. A task is not obviously a structural component of a function. Keep this edge out of any execution or curriculum dependency interpretation until the intended abstraction is made explicit. |
+| 9 | `next-token-prediction → part-of → training-objective` | **Removed; no replacement.** The endpoint definitions distinguish the task (estimating the next-token conditional distribution) from the function optimized during training. A task is not a structural component of that function. The computational graph already represents the operational path from token-level NLL through loss reduction to the training objective. |
 | 10 | `conditional-distribution → contributes-to → sequence-likelihood` | **Accept.** Sequence likelihood is built from conditional probabilities at successive positions. |
 | 11 | `observed-target → contributes-to → sequence-likelihood` | **Accept.** The likelihood is evaluated for the observed sequence, not a model-selected continuation. |
 | 12 | `conditional-distribution → prerequisite → sequence-likelihood` | **Accept.** The bilingual rationale correctly describes the mathematical construction and learner dependency. |
@@ -210,6 +210,6 @@ Two earlier edges were re-examined against the narrower definitions and the comp
 
 ### Remaining semantic decisions
 
-- Decide whether edge 9 should be removed or rewritten after clarifying whether `training-objective` names the task, the loss function, or their combination. Do not silently reinterpret `part-of`.
+- Edge 9 was removed without replacement: `next-token-prediction` is the task; `training-objective` is the optimized function. Their relationship is explained by the endpoint definitions and the computational graph, not by a structural `part-of` edge.
 - Keep the distinction between the concept graph and the computational graph: the latter supplies the explicit differentiation and final-hidden-state operations.
-- The review covers all 67 current relation assertions at the source-semantic level: 25 retained edges from the original inventory plus the 42 later additions. One explicitly unresolved edge remains (row 9 above). Rendered graph usability, accessibility, and learner validation remain separate gates.
+- After removing row 9, the registry contains 66 relation assertions: 25 retained edges from the original inventory plus 41 retained later additions. All 66 have received a source-semantic review. Rendered graph usability, accessibility, and learner validation remain separate gates.
