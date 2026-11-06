@@ -529,7 +529,7 @@ nodes:
 relation_types:
   consumes:
     direction: directed
-    labels: {fr: "consomme", en: "consumes"}
+    labels: {fr: "est consommé par", en: "is consumed by"}
     descriptions:
       fr: "La cible consomme la donnée source."
       en: "The target operation consumes the source data."
@@ -541,7 +541,7 @@ relation_types:
       en: "The source operation produces the target data."
   combines:
     direction: directed
-    labels: {fr: "combine", en: "combines"}
+    labels: {fr: "est combiné par", en: "is combined by"}
     descriptions:
       fr: "La cible combine plusieurs données sources."
       en: "The target operation combines multiple source data."
@@ -565,31 +565,31 @@ relation_types:
       en: "The source is executed before the target in the considered sequence."
   selects:
     direction: directed
-    labels: {fr: "sélectionne", en: "selects"}
+    labels: {fr: "sert à sélectionner", en: "is used to select"}
     descriptions:
       fr: "La cible sélectionne un élément selon la distribution source."
       en: "The target selects an item according to the source distribution."
   scores:
     direction: directed
-    labels: {fr: "attribue un score à", en: "scores"}
+    labels: {fr: "fournit le score de", en: "provides the score for"}
     descriptions:
       fr: "La cible extrait le score attribué à la cible observée depuis la distribution source."
       en: "The target extracts the score assigned to the observed target from the source distribution."
   aggregates:
     direction: directed
-    labels: {fr: "agrège", en: "aggregates"}
+    labels: {fr: "est agrégé dans", en: "is aggregated into"}
     descriptions:
       fr: "La cible agrège des scores ou des contributions sources."
       en: "The target aggregates source scores or contributions."
   differentiates:
     direction: directed
-    labels: {fr: "différentie", en: "differentiates"}
+    labels: {fr: "est différentié pour obtenir", en: "is differentiated to obtain"}
     descriptions:
       fr: "La source est différentiée pour obtenir la cible."
       en: "The source is differentiated to obtain the target."
   updates:
     direction: directed
-    labels: {fr: "met à jour", en: "updates"}
+    labels: {fr: "est utilisé pour mettre à jour", en: "is used to update"}
     descriptions:
       fr: "La cible applique une mise à jour à partir des gradients et paramètres sources."
       en: "The target applies an update using source gradients and parameters."
@@ -607,7 +607,7 @@ relation_types:
       en: "The source determines the prefixes or targets used for computation."
   uses-optional:
     direction: directed
-    labels: {fr: "utilise facultativement", en: "optionally uses"}
+    labels: {fr: "peut être utilisé par", en: "may be used by"}
     descriptions:
       fr: "La cible peut utiliser la source comme optimisation, sans en dépendre pour la correction."
       en: "The target may use the source as an optimization, without depending on it for correctness."
