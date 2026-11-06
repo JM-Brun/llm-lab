@@ -317,13 +317,14 @@ The Understand sidebar has been reorganized on branch `navigation/scope-driven-u
 | Shared core → Transformer computation | Transformer computation | Transformer overview; Q/K/V; scaled attention; causal masking |
 | Shared core → prediction | Prediction | Logits; probabilities |
 | Inference | Inference and generation | Generation |
-| Scoring | Observed-target scoring | Likelihood; entropy; cross-entropy |
+| Predictive uncertainty | Prediction | Entropy of the next-token distribution |
+| Scoring | Observed-target scoring | Likelihood; cross-entropy |
 | Training | Training | Loss; gradients |
 
 ### Placement decisions and boundaries
 
 - **Generation has one site location under Inference.** Its early orientation and later prediction appearances remain reader-route contexts, not duplicate sidebar parents. The generated guided-route context preserves its explicit stage memberships.
-- **Cross-entropy has one site location under Scoring.** Its role in the training objective is a cross-module connection, not a reason to duplicate the page under Training. The loss and gradients pages remain under Training and should link back to the canonical scoring explanation where needed.
+- **Predictive entropy has one site location under Prediction.** It describes the model distribution before an observed target is scored, so it must not be grouped under observed-target scoring. **Cross-entropy has one site location under Scoring.** Its role in the training objective is a cross-module connection, not a reason to duplicate the page under Training. The loss and gradients pages remain under Training and should link back to the canonical scoring explanation where needed.
 - **Training examples and corpus preparation remain under Build.** Their operational role in G1b/G2 is distinct from the conceptual Training module; they must not be moved into the Understand sidebar merely to make the module table appear complete.
 - **Evaluation remains under Practice & experiment.** Its cross-cutting role does not justify turning it into a final mandatory child of Training.
 - **Deepen and Reference remain separate destinations.** Their pages are not nested under a core module merely because they deepen one of its concepts.
