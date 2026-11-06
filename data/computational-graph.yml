@@ -8,31 +8,37 @@ branches:
       fr: "Calcul commun qui transforme un contexte en distribution conditionnelle sur le prochain token."
       en: "Common computation that maps a context to a conditional distribution over the next token."
   - id: generation
+    branch: generation
     labels: {fr: "Génération", en: "Generation"}
     descriptions:
       fr: "Sélection d'un token généré, puis extension du contexte avec ce token."
       en: "Selection of a generated token, followed by context extension with that token."
   - id: observed-target-scoring
+    branch: observed-target-scoring
     labels: {fr: "Scoring d'une cible observée", en: "Observed-target scoring"}
     descriptions:
       fr: "Évaluation de la probabilité attribuée à un token cible connu."
       en: "Evaluation of the probability assigned to a known target token."
   - id: evaluation
+    branch: evaluation
     labels: {fr: "Évaluation", en: "Evaluation"}
     descriptions:
       fr: "Agrégation de scores sur des données d'évaluation, sans mise à jour des paramètres."
       en: "Aggregation of scores on evaluation data, without parameter updates."
   - id: training
+    branch: training
     labels: {fr: "Apprentissage", en: "Training"}
     descriptions:
       fr: "Calcul d'un objectif à partir des cibles observées, puis différentiation et mise à jour des paramètres."
       en: "Computation of an objective from observed targets, followed by differentiation and parameter updates."
   - id: transformer-block
+    branch: transformer-block
     labels: {fr: "Calcul interne d'un bloc Transformer", en: "Transformer-block computation"}
     descriptions:
       fr: "Calcul répété dans chaque bloc : projections Q/K/V, attention, résidus, normalisation et MLP."
       en: "Computation repeated in each block: Q/K/V projections, attention, residuals, normalization, and MLP."
   - id: inference-execution
+    branch: inference-execution
     labels: {fr: "Exécution de l'inférence", en: "Inference execution"}
     descriptions:
       fr: "Organisation de l'inférence en prefill puis décodage autorégressif, avec cache KV facultatif."
@@ -619,7 +625,7 @@ edges:
   - {id: e-aggregation-output, from: value-aggregation, type: produces, to: attention-output}
   - {id: e-attention-block, from: attention-output, type: consumes, to: block-update}
   - {id: e-block-contextualized, from: block-update, type: produces, to: contextualized-hidden-states}
-  - {id: e-contextualized-next-block, from: contextualized-hidden-states, type: produces, to: transformer-block-input}
+  - {id: e-contextualized-next-block, from: contextualized-hidden-states, type: produces, to: transformer-block-input, repeated: true}
   - {id: e-contextualized-final, from: contextualized-hidden-states, type: produces, to: final-hidden-states}
   - {id: e-final-vocab, from: final-hidden-states, type: consumes, to: vocabulary-projection}
   - {id: e-vocab-logits, from: vocabulary-projection, type: produces, to: logits}
@@ -652,6 +658,7 @@ edges:
 
 views:
   - id: persistent-spine
+    branch: shared-prediction
     labels: {fr: "Tronc computationnel", en: "Computational spine"}
     descriptions:
       fr: "Du contexte à la distribution conditionnelle, en passant par les représentations et le Transformer."
