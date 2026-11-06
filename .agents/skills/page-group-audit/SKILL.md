@@ -387,3 +387,19 @@ Distinguish:
 - **Rejected:** a recommendation was considered and intentionally not adopted, with rationale.
 
 Do not leave "check whether X exists" in the action plan after confirming that X already exists. Close it as verified and cite the exact evidence. Re-read high-impact transitions in the page body and navigation cards; metadata alone does not establish that a reader-visible hand-off is present. If a second pass resolves a question, append a dated revalidation note to the audit report rather than silently rewriting the original reasoning.
+
+
+### K. Separate stage membership from conceptual sequence in mixed-destination stages
+
+A guided stage may intentionally combine several destinations (for example, Understand concepts followed by a Practice transfer exercise). Do not infer that every item in a stage's ordered page list is the next conceptual prerequisite.
+
+For any stage mixing destinations or page types:
+1. Build a **conceptual dependency map** for prerequisite and sequential relationships.
+2. Build a separate **stage-experience map** for membership, intended activity, and destination.
+3. Compare page-level suggested_route, hierarchy, destination, and type against the stage registry.
+4. Classify transitions as concept → concept, concept → practice transfer, or stage membership without prerequisite.
+5. Inspect rendered route behavior before calling a source-level ordering ambiguity a user-visible defect. If rendering is unavailable, record the uncertainty and avoid speculative canonical-source edits.
+
+A Practice activity may be an intended required component of a stage without being the next conceptual step or depending on the preceding concept. Preserve that distinction in the report and acceptance criteria.
+
+**Regression case added 2026-11-06:** docs/audits/learning-evaluation-group-2026-11-06.md — mixed Understand sequence plus applied evaluation transfer exercise. Re-run this case when modifying group-boundary, transition, or guided-route logic.
