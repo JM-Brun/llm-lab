@@ -18,9 +18,8 @@ REGISTRY = yaml.safe_load((ROOT / "data" / "computational-graph.yml").read_text(
 
 
 def test_persistent_spine_is_expanded_but_other_views_remain_collapsed() -> None:
-    registry = MODULE["load_registry"]()
-    persistent = MODULE["render_view"](registry, "persistent-spine", "fr")
-    evaluation = MODULE["render_view"](registry, "evaluation", "fr")
+    persistent = MODULE["render_view"](REGISTRY, "persistent-spine", "fr")
+    evaluation = MODULE["render_view"](REGISTRY, "evaluation", "fr")
 
     assert '::: {.callout-note title="Tronc computationnel"}' in persistent
     assert 'collapse="true"' not in persistent
