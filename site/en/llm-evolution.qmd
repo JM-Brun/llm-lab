@@ -75,7 +75,7 @@ Pretraining learns statistical regularities from a corpus, often through autoreg
 
 These methods are neither synonyms nor necessarily used together. Their details, variants, and trade-offs deserve dedicated lessons. Avoid attributing a specific method to a model generation when public documentation does not confirm it.
 
-Post-training does not replace the underlying predictive model: it changes the parameters or the way the model is trained in order to shape its outputs.
+Post-training does not replace the underlying predictive model: it changes the parameters or the way the model is trained in order to shape its outputs. For the underlying prediction examples and teacher forcing, see [training examples](training-examples.qmd) and [the mathematical chain of LLM training](mathematical-foundations.qmd).
 
 ## 3. From text-only inputs to multimodal models
 
