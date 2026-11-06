@@ -23,7 +23,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-produc
 {{< include ../includes/generated-guided-context-en-scaled-dot-product-attention.qmd >}}
 
 ::: {.chapter-lead}
-Scaled dot-product attention turns learned compatibility scores between queries and keys into weights, then uses those weights to aggregate values. Softmax normalizes scores over accessible positions; it does not prove semantic relevance or causality.
+Scaled dot-product attention turns learned compatibility scores between queries and keys into weights, then uses those weights to aggregate values. Softmax exponentiates and normalizes the (scaled, optionally masked) scores into weights over accessible positions; it does not prove semantic relevance or causality.
 :::
 
 <div class="epistemic-badges">
