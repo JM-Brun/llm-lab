@@ -78,25 +78,19 @@ for (const testCase of cases) {
 
     item.title = await page.title();
     item.h1 = await page.locator("h1").first().innerText().catch(() => null);
-    // Quarto footer navigation follows editorial sidebar order, not the
-    // guided route or computational graph. Check visible links against rel metadata.
+    // Quarto footer navigation follows editorial sidebar order, independently
+    // of document-level rel metadata, the guided route, and the computational graph.
+    // Validate the actual visible control and its localized accessible name.
     item.pageNavigation = await page.evaluate(() => {
       const readLink = (direction) => {
         const selector = direction === "previous" ? ".page-navigation .nav-page-previous a.pagination-link" : ".page-navigation .nav-page-next a.pagination-link";
         const link = document.querySelector(selector);
-        const relation = document.querySelector('head link[rel="' + (direction === "previous" ? "prev" : "next") + '"]');
-        return { href: link?.href || null, relationHref: relation?.href || null, title: link?.querySelector(".nav-page-text")?.textContent?.trim().replace(/\s+/g, " ") || null, ariaLabel: link?.getAttribute("aria-label") || null };
+        return { href: link?.href || null, title: link?.querySelector(".nav-page-text")?.textContent?.trim().replace(/\s+/g, " ") || null, ariaLabel: link?.getAttribute("aria-label") || null };
       };
       return { previous: readLink("previous"), next: readLink("next") };
     });
     for (const [direction, navigation] of Object.entries(item.pageNavigation)) {
       const visible = Boolean(navigation.href);
-      // Quarto does not emit rel=prev/next for every page-navigation
-      // link (the learning map is one example). When it does emit relation
-      // metadata, it must agree with the visible destination.
-      if (navigation.relationHref && (!visible || navigation.href !== navigation.relationHref)) {
-        throw new Error(direction + " footer navigation does not match available rel metadata");
-      }
       if (visible) {
         const prefix = lang === "fr" ? (direction === "previous" ? "Page précédente:" : "Page suivante:") : (direction === "previous" ? "Previous page:" : "Next page:");
         if (!navigation.title || !navigation.ariaLabel?.startsWith(prefix)) throw new Error(direction + " footer link lacks a localized directional accessible name");
