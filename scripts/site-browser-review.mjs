@@ -451,8 +451,20 @@ for (const testCase of cases) {
       }
 
       const context = page.locator(".guided-page-context");
-      if (await context.count() !== 1) throw new Error("guided-route context is missing");
-      item.routeContext = {
+      const crossCuttingEvaluationPage = [
+        "experimental-evaluation.html", "evaluation-experimentale.html",
+      ].includes(pagePath);
+      if (crossCuttingEvaluationPage) {
+        if (await context.count() !== 0) {
+          throw new Error("cross-cutting evaluation page must not be assigned to a linear guided-route stage");
+        }
+        item.routeContext = {
+          expectedAbsent: true,
+          reason: "Evaluation is cross-cutting, not a guided-route stage.",
+        };
+      } else {
+        if (await context.count() !== 1) throw new Error("guided-route context is missing");
+        item.routeContext = {
         isMultiple: await context.evaluate(el => el.classList.contains("guided-page-context--multiple")),
         stageLinks: await context.locator('a[href*="learning-map.html#guided-stage-"]').count(),
         currentPageMarkers: await context.locator('[aria-current="page"]').count(),
@@ -499,11 +511,6 @@ for (const testCase of cases) {
         if (!item.routeContext.accessibleNameReferenceResolves) {
           throw new Error("multi-stage context has no valid accessible name reference");
         }
-      } else if (["experimental-evaluation.html", "evaluation-experimentale.html"].includes(pagePath)) {
-        if (await context.count() !== 0) {
-          throw new Error("cross-cutting evaluation page must not be assigned to a linear guided-route stage");
-        }
-        item.routeContext = { expectedAbsent: true, reason: "Evaluation is cross-cutting, not a guided-route stage." };
       } else {
         const expectedStage = {
           "llm-overview.html": "guided-stage-orientation",
@@ -528,11 +535,8 @@ for (const testCase of cases) {
           "likelihood.html": "guided-stage-scoring",
           "vraisemblance.html": "guided-stage-scoring",
           "decoding-strategies.html": "guided-stage-inference",
-          
           "loss.html": "guided-stage-training",
           "gradients.html": "guided-stage-training",
-          
-          
           "scaling-laws.html": "guided-stage-training",
           "transformer-architectures.html": "guided-stage-orientation",
           "llm-limits.html": "guided-stage-orientation",
@@ -577,6 +581,7 @@ for (const testCase of cases) {
           throw new Error("text-data process stepper must follow the introductory mental model");
         }
         item.routeContext.openingOrder = openingOrder;
+      }
       }
     }
 
