@@ -63,6 +63,16 @@ Entrée et cible ont la même longueur. La cible est décalée d’une position 
 
 </details>
 
+### Teacher forcing : utiliser le préfixe observé pendant l'entraînement
+
+Dans l'entraînement autorégressif standard, le modèle reçoit les tokens observés du corpus comme contexte et prédit les tokens suivants. Pour une paire décalée `x = [t0, …, t(L−1)]` et `y = [t1, …, tL]`, le logit à la position `i` est comparé à la cible `y[i]`.
+
+On parle de **teacher forcing** parce que le préfixe fourni au modèle est le préfixe de référence, issu des données, et non une suite de tokens générés par le modèle. Le masque causal reste indispensable : à la position `i`, le calcul ne peut utiliser que `x[0]` à `x[i]`, jamais les tokens futurs. Le modèle peut ainsi traiter les positions de la séquence dans une même passe avant, puis calculer une perte sur les cibles décalées.
+
+Le teacher forcing est une **stratégie de conditionnement**. Ce n'est ni l'objectif de prédiction, ni la fonction de perte, ni l'optimiseur. L'objectif usuel est exprimé par la cross-entropie ou la NLL sur les cibles alignées. À l'inférence, les tokens de référence ne sont pas disponibles : le token sélectionné par le modèle est ajouté au contexte pour la prédiction suivante.
+
+La fonction de référence `sliding_input_target_pairs` construit uniquement les fenêtres et les cibles décalées ; elle ne réalise ni passe avant entraînable, ni teacher forcing exécuté, ni mise à jour des paramètres. Cette distinction est conceptuelle et décrit le contrat des exemples d'entraînement.
+
 ## 2. Fenêtres glissantes et stride
 
 Le stride est le nombre de positions dont on décale le début de la fenêtre entre deux exemples. Il est distinct de la longueur de contexte.
