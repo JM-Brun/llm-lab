@@ -32,9 +32,15 @@ La dérivation de cette factorisation à partir de la règle de chaîne et l'int
 
 Pour une séquence $x_{1:T}$ :
 
-$$
+$
 P_\theta(x_{1:T})=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}).
-$$
+$
+
+### Scorer une séquence observée : le préfixe est connu
+
+À chaque position, le modèle reçoit le préfixe observé $x_{<t}$ et attribue une probabilité au token cible $x_t$. Ce conditionnement sur les tokens de référence est le même mécanisme de préfixe observé que celui utilisé par le *teacher forcing*. Ici, il sert uniquement à **scorer** la séquence : on ne sélectionne pas de token généré, on ne réinjecte pas une prédiction du modèle et les paramètres $\\theta$ restent fixes. Grâce au masque causal, les prédictions de toutes les positions peuvent être calculées dans un même *forward pass*.
+
+Cette opération se distingue donc de la génération : celle-ci réinjecte le token choisi par le modèle avant le pas suivant. Elle se distingue aussi de l'entraînement : le scoring ne calcule pas de gradient et ne met pas à jour les paramètres.
 
 Pour plusieurs séquences indépendantes de l'ensemble de données, la vraisemblance totale est le produit des probabilités de chaque séquence. Les produits de nombreux nombres inférieurs ou égaux à un deviennent rapidement minuscules ; on travaille donc avec la log-vraisemblance :
 
