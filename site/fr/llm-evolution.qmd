@@ -21,8 +21,6 @@ related: ["fr/scaling-laws", "fr/emergence", "fr/in-context-learning", "fr/hybri
 tags: ["type:concept-lesson", "destination:deepen", "topic:llm-evolution", "level:advanced", "language:fr", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-fr-llm-evolution.qmd >}}
-
 ::: {.chapter-lead}
 Entre GPT-2 et les systèmes LLM contemporains, l'évolution ne se résume pas à augmenter le nombre de paramètres ou à remplacer une architecture par une autre. Elle combine plusieurs transformations : échelle et données, apprentissage en contexte, post-entraînement, modalités d'entrée et de sortie, calcul supplémentaire à l'inférence, efficacité et intégration dans des systèmes capables d'utiliser des outils. Cette page propose une grille de lecture transversale ; elle ne constitue pas une spécification technique des modèles propriétaires.
 :::
