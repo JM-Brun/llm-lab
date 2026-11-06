@@ -233,7 +233,7 @@ def validate_graph(
         if optional is True and kind not in {"produces", "uses-optional"}:
             errors.append(f"{where}: optional: true requires produces or uses-optional")
 
-        if source in nodes and target in nodes:
+        if isinstance(source, str) and source in nodes and isinstance(target, str) and target in nodes:
             shared_branches = set(nodes[source].get("branches", [])) & set(
                 nodes[target].get("branches", [])
             )
