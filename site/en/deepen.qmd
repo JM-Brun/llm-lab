@@ -34,14 +34,14 @@ Each entry answers a more specific question: why a mechanism works, under which 
 
 | Your question | Domain |
 |---|---|
-| How does a specialized architecture change information flow? | [Architectures and mechanisms](#architectures-and-mechanisms) |
+| How does a specialized architecture change information flow? | [Attention, position, and architectures](#architectures-and-mechanisms) |
 | How can text representation be designed and evaluated? | [Text and tokenization](#text-and-tokenization) |
 | Which mathematical tools help analyze representations? | [Mathematical tools and geometry](#mathematical-tools-and-geometry) |
-| How are probabilities, the learning objective, and gradients connected? | [Probabilistic foundations and training](#probabilistic-foundations-and-training) |
+| How are probabilities, the learning objective, and gradients connected? | [Probabilistic formalization and the training chain](#probabilistic-foundations-and-training) |
 | How are outputs produced, and what resources do they require? | [Inference and efficiency](#inference-and-efficiency) |
 | What can evidence tell us about scale and model capabilities? | [Scale and research questions](#scale-and-research-questions) |
 
-## Architectures and mechanisms {#architectures-and-mechanisms}
+## Attention, position, and architectures {#architectures-and-mechanisms}
 
 **Guiding question:** which variants change information flow or a model's computational structure?
 
@@ -71,7 +71,7 @@ The core [Tokenization strategies](tokenization-strategies.qmd) lesson remains t
 
 These pages provide analytical tools; they are not a prerequisite mathematics course to complete before building a small GPT.
 
-## Probabilistic foundations and training {#probabilistic-foundations-and-training}
+## Probabilistic formalization and the training chain {#probabilistic-foundations-and-training}
 
 **Guiding question:** how are the predicted distribution, observed likelihood, objective function, and optimization connected?
 
