@@ -32,9 +32,15 @@ The derivation of this factorization from the chain rule, and the interpretation
 
 For a sequence $x_{1:T}$:
 
-$$
+$
 P_\theta(x_{1:T})=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}).
-$$
+$
+
+### Scoring an observed sequence: the prefix is known
+
+At each position, the model receives the observed prefix $x_{<t}$ and assigns a probability to the target token $x_t$. This conditioning on reference tokens is the same observed-prefix mechanism used in *teacher forcing*. Here, it is used only to **score** the sequence: no generated token is selected, no model prediction is fed back, and the parameters $\\theta$ remain fixed. Because of the causal mask, predictions at all positions can be computed in one *forward pass*.
+
+This differs from generation, which feeds the model-selected token back before the next step. It also differs from training: scoring computes no gradients and makes no parameter updates.
 
 For multiple independent dataset sequences, total likelihood is the product of each sequence probability. Products of many numbers at most one become tiny quickly, so we use log-likelihood:
 
