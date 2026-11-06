@@ -1,5 +1,5 @@
 ---
-title: "Espace d’exercices"
+title: "Catalogue des exercices"
 subtitle: "Un espace séparé du cours pour vérifier et transférer les connaissances"
 keywords: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
