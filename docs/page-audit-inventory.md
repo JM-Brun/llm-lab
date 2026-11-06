@@ -541,3 +541,14 @@ The source-level page-group review recorded above is now integrated with the can
 - The scoring/training/evaluation group audit in this inventory remains a **source-level review**. It does not certify every derivation independently, rendered FR/EN parity, screen-reader usability, or learner comprehension.
 
 The remaining #584 checks must therefore stay separate: complete the shared-core page audit; inspect rendered pages where evidence is still missing; and perform manual screen-reader and native-breadcrumb checks. Automated Quarto, Playwright and axe results are not substitutes for those manual checks.
+
+
+## Fifteenth slice: precise softmax wording in the attention overview
+
+A targeted FR/EN comparison of the scaled dot-product attention openings found a small but meaningful terminology mismatch. The French page said that softmax normalizes the weights, while the English page said that it “normalizes scores”. Strictly, softmax exponentiates the input scores and normalizes the resulting positive values; the output is the attention-weight vector. The English sentence now states this operation explicitly and retains the qualification that normalization is over accessible positions after optional masking.
+
+| Area | Finding | Change | Remaining work |
+|---|---|---|---|
+| Softmax terminology (site/en/scaled-dot-product-attention.qmd) | “Normalizes scores” compresses two operations and can suggest that softmax merely rescales the raw scores. | Reworded the English opening to say that softmax exponentiates and normalizes the scaled, optionally masked scores into weights. The French formulation already described normalization of the weights and was retained. | Verify rendered FR/EN equations and opening paragraphs; no mathematical code or behavior changed. |
+
+This is a narrow source-level correction, not a full audit of the attention lesson or its rendered presentation.
