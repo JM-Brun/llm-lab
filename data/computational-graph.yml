@@ -273,6 +273,24 @@ nodes:
       en: "Result of value aggregation."
     branches: [shared-prediction, transformer-block]
     resources: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+  - id: attention-output-projection
+    kind: operation
+    role: attention
+    labels: {fr: "Projection de sortie de l'attention", en: "Attention output projection"}
+    descriptions:
+      fr: "Projette la concaténation des sorties de têtes dans la dimension du flux résiduel."
+      en: "Projects the concatenated head outputs into the residual-stream dimension."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough, fr/transformer, en/transformer]
+  - id: projected-attention-output
+    kind: data
+    role: attention
+    labels: {fr: "Sortie d'attention projetée", en: "Projected attention output"}
+    descriptions:
+      fr: "Sortie multi-têtes après la projection de sortie."
+      en: "Multi-head output after the output projection."
+    branches: [shared-prediction, transformer-block]
+    resources: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
   - id: block-update
     kind: operation
     role: transformer
@@ -617,7 +635,10 @@ edges:
   - {id: e-weights-aggregation, from: attention-weights, type: consumes, to: value-aggregation}
   - {id: e-values-aggregation, from: values, type: consumes, to: value-aggregation}
   - {id: e-aggregation-output, from: value-aggregation, type: produces, to: attention-output}
-  - {id: e-attention-block, from: attention-output, type: consumes, to: block-update}
+  - {id: e-output-projection, from: attention-output, type: consumes, to: attention-output-projection}
+  - {id: e-projected-attention-output, from: attention-output-projection, type: produces, to: projected-attention-output}
+  - {id: e-attention-block, from: projected-attention-output, type: consumes, to: block-update}
+  - {id: e-block-residual, from: transformer-block-input, type: consumes, to: block-update}
   - {id: e-block-contextualized, from: block-update, type: produces, to: contextualized-hidden-states}
   - {id: e-contextualized-next-block, from: contextualized-hidden-states, type: produces, to: transformer-block-input, repeated: true}
   - {id: e-contextualized-final, from: contextualized-hidden-states, type: produces, to: final-hidden-states}
@@ -673,8 +694,8 @@ views:
     descriptions:
       fr: "Détail des projections Q/K/V, du masque causal, de l'attention et de la mise à jour des états."
       en: "Detail of Q/K/V projections, causal masking, attention, and state update."
-    nodes: [transformer-block-input, query-projection, queries, key-projection, keys, value-projection, values, attention-score-computation, attention-scores, causal-mask, masked-attention-scores, attention-softmax, attention-weights, value-aggregation, attention-output, block-update, contextualized-hidden-states]
-    edges: [e-block-q, e-q-projection, e-block-k, e-k-projection, e-block-v, e-v-projection, e-q-scores, e-k-scores, e-score-output, e-mask-scores, e-scores-masked, e-masked-softmax, e-softmax-weights, e-weights-aggregation, e-values-aggregation, e-aggregation-output, e-attention-block, e-block-contextualized, e-contextualized-next-block]
+    nodes: [transformer-block-input, query-projection, queries, key-projection, keys, value-projection, values, attention-score-computation, attention-scores, causal-mask, masked-attention-scores, attention-softmax, attention-weights, value-aggregation, attention-output, attention-output-projection, projected-attention-output, block-update, contextualized-hidden-states]
+    edges: [e-block-q, e-q-projection, e-block-k, e-k-projection, e-block-v, e-v-projection, e-q-scores, e-k-scores, e-score-output, e-mask-scores, e-scores-masked, e-masked-softmax, e-softmax-weights, e-weights-aggregation, e-values-aggregation, e-aggregation-output, e-output-projection, e-projected-attention-output, e-attention-block, e-block-residual, e-block-contextualized, e-contextualized-next-block]
   - id: generation
     branch: generation
     labels: {fr: "Branche génération", en: "Generation branch"}
@@ -682,7 +703,7 @@ views:
       fr: "Sélectionne un token depuis la distribution puis le réinjecte dans le contexte."
       en: "Selects a token from the distribution and feeds it back into the context."
     nodes: [token-context, forward-computation, next-token-distribution, decoding-policy, generated-token]
-    edges: [e-distribution-policy, e-policy-token, e-token-feedback]
+    edges: [e-context-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-distribution-policy, e-policy-token, e-token-feedback]
   - id: observed-target-scoring
     branch: observed-target-scoring
     labels: {fr: "Scoring d'une cible observée", en: "Observed-target scoring"}
@@ -697,8 +718,8 @@ views:
     descriptions:
       fr: "Agrège les scores sur des données tenues à l'écart sans modifier les paramètres."
       en: "Aggregates scores on held-out data without changing parameters."
-    nodes: [observed-target, target-probability, target-probability-value, sequence-log-likelihood, token-nll, evaluation-metrics]
-    edges: [e-target-score, e-target-probability-value, e-target-likelihood, e-target-nll, e-score-metrics, e-loss-metrics]
+    nodes: [next-token-distribution, observed-target, target-probability, target-probability-value, sequence-log-likelihood, token-nll, evaluation-metrics]
+    edges: [e-distribution-target, e-target-score, e-target-probability-value, e-target-likelihood, e-target-nll, e-score-metrics, e-loss-metrics]
   - id: training
     branch: training
     labels: {fr: "Branche apprentissage", en: "Training branch"}
@@ -706,7 +727,7 @@ views:
       fr: "Utilise les préfixes observés, calcule l'objectif, les gradients et la mise à jour des paramètres."
       en: "Uses observed prefixes, computes the objective and gradients, and updates parameters."
     nodes: [teacher-forcing, training-context, observed-target, token-context, next-token-distribution, target-probability, target-probability-value, token-nll, loss-reduction, training-objective, model-parameters, gradients, optimizer-update, updated-parameters]
-    edges: [e-teacher-context, e-observed-context, e-training-forward, e-distribution-target, e-target-score, e-target-probability-value, e-target-nll, e-nll-reduction, e-loss-objective, e-objective-gradients, e-gradients-optimizer, e-params-optimizer, e-optimizer-updated, e-updated-params-forward]
+    edges: [e-context-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-teacher-context, e-observed-context, e-training-forward, e-distribution-target, e-target-score, e-target-probability-value, e-target-nll, e-nll-reduction, e-loss-objective, e-objective-gradients, e-gradients-optimizer, e-params-optimizer, e-optimizer-updated, e-updated-params-forward]
   - id: inference-execution
     branch: inference-execution
     labels: {fr: "Phases d'exécution de l'inférence", en: "Inference execution phases"}
@@ -714,4 +735,4 @@ views:
       fr: "Distingue le traitement initial du prompt (prefill), le décodage itératif et le cache KV facultatif."
       en: "Distinguishes initial prompt processing (prefill), iterative decode, and the optional KV cache."
     nodes: [token-context, forward-computation, prefill, autoregressive-decode, kv-cache, next-token-distribution, generated-token]
-    edges: [e-prefill-forward, e-decode-forward, e-prefill-cache, e-decode-cache, e-token-feedback]
+    edges: [e-context-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-prefill-forward, e-decode-forward, e-prefill-cache, e-decode-cache, e-token-feedback]
