@@ -666,5 +666,4 @@ relations:
   - {from: cross-entropy, type: contributes-to, to: held-out-evaluation}
   - {from: conditional-distribution, type: evaluated-by, to: held-out-evaluation}
   - {from: conditional-distribution, type: evaluated-by, to: cross-entropy}
-  - {from: prefill, type: contrasts-with, to: teacher-forcing}
 
