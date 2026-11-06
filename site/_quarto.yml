@@ -230,11 +230,10 @@ website:
                 - fr/scaling-laws.qmd
                 - fr/emergence.qmd
                 - fr/llm-evolution.qmd
-        - section: "Références"
+        - section: "Glossaire et histoire"
           contents:
             - fr/glossary.qmd
             - fr/transformer-history.qmd
-            - references.qmd
     - id: en
       title: "LLM Lab · English"
       style: "docked"
@@ -331,11 +330,10 @@ website:
                 - en/scaling-laws.qmd
                 - en/emergence.qmd
                 - en/llm-evolution.qmd
-        - section: "Reference"
+        - section: "Glossary and history"
           contents:
             - en/glossary.qmd
             - en/transformer-history.qmd
-            - references.qmd
   page-footer:
     left: "LLM Lab · Mathématiques, code et expériences reproductibles"
     right:
