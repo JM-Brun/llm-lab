@@ -80,7 +80,7 @@ Context preparation and model computation produce a **conditional distribution o
 
 | Branch | How the distribution is used | Parameters |
 |---|---|---|
-| **Generation** | Select a token, append it to the context, and repeat the prediction | Fixed |
+| **Generation** | Select a token, append it to the context, and repeat the prediction; see [Generating text](generation.qmd) | Fixed |
 | **Scoring / evaluation** | Evaluate the probability of an observed token, then aggregate scores on held-out data | Fixed |
 | **Training** | Compare predictions with reference targets (*teacher forcing*), compute loss and gradients, then update parameters | Updated at the update step |
 
