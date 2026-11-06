@@ -168,6 +168,11 @@ Le meilleur modèle mental reste donc celui d'un **modèle prédictif au cœur d
 ### Sources primaires et documentation
 - Radford et al. (2019), [Better Language Models and Their Implications](https://openai.com/index/better-language-models/) — présentation de GPT-2.
 - Brown et al. (2020), [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) — GPT-3 et apprentissage en contexte.
+- Ouyang et al. (2022), [Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155) — supervised instruction tuning and RLHF.
+- Rafailov et al. (2023), [Direct Preference Optimization](https://arxiv.org/abs/2305.18290) — preference optimization without a separately trained reward model in the basic formulation.
+- Fedus et al. (2021), [Switch Transformers](https://arxiv.org/abs/2101.03961) — sparse mixture-of-experts routing.
+- Ainslie et al. (2023), [GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints](https://arxiv.org/abs/2305.13245) — grouped-query attention.
+- Leviathan et al. (2023), [Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192) — speculative decoding.
 - OpenAI (2023), [GPT-4](https://openai.com/index/gpt-4-research/) — capacités multimodales et alignement.
 - OpenAI (2025), [GPT-5 System Card](https://openai.com/index/gpt-5-system-card/) — modèles rapides, raisonnement et routage.
 - OpenAI, [Using GPT-6](https://developers.openai.com/api/docs/guides/latest-model?model=gpt-6-astra) — capacités documentées de l'API GPT-6.
