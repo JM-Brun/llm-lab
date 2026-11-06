@@ -181,9 +181,7 @@ def validate_registry(
 
         importance = concept.get("importance")
         if not isinstance(importance, str) or importance not in IMPORTANCE_LEVELS:
-            errors.append(
-                f"{where}.importance: expected one of {sorted(IMPORTANCE_LEVELS)}"
-            )
+            errors.append(f"{where}.importance: expected one of {sorted(IMPORTANCE_LEVELS)}")
 
         for field in ("labels", "definitions"):
             values = concept.get(field)
