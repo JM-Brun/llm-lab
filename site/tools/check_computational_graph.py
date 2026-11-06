@@ -122,9 +122,7 @@ def _has_cycle(edges: dict[str, list[str]]) -> bool:
     return False
 
 
-def validate_graph(
-    data: Any, published_pages: set[str] | None = None
-) -> list[str]:
+def validate_graph(data: Any, published_pages: set[str] | None = None) -> list[str]:
     """Return schema, bilingual, reference, and graph-structure errors."""
     errors: list[str] = []
     if (
@@ -256,9 +254,7 @@ def validate_graph(
                 else set()
             )
             if not shared_branches:
-                errors.append(
-                    f"{where}: endpoints have no shared branch membership"
-                )
+                errors.append(f"{where}: endpoints have no shared branch membership")
             if feedback is not True and repeated is not True:
                 acyclic_edges.setdefault(source, []).append(target)
 
@@ -309,9 +305,7 @@ def validate_graph(
                 errors.append(f"{where}.edges: unknown edge {edge_id!r}")
                 continue
             if edge.get("from") not in view_nodes or edge.get("to") not in view_nodes:
-                errors.append(
-                    f"{where}.edges: edge {edge_id!r} has an endpoint outside the view"
-                )
+                errors.append(f"{where}.edges: edge {edge_id!r} has an endpoint outside the view")
 
     return errors
 
