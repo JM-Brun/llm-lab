@@ -60,9 +60,14 @@ Temperature, top-k, top-p, greedy decoding, and sampling are decoding policies. 
 
 ### Branch B — observed-target scoring
 
-`conditional distribution + observed target → target probability → sequence likelihood / log-likelihood → NLL / token cross-entropy → aggregation and masking → objective value`
+`conditional distribution + observed target → target probability → target log-probability`
 
-For one-hot next-token targets, token-level cross-entropy equals negative log probability assigned to the target. Sequence likelihood is the product of the conditional probabilities over positions; log-likelihood is their sum. In practice, stable computations use log probabilities and reductions rather than multiplying many small probabilities.
+The target log-probability then supports two related quantities:
+
+- **Sequence log-likelihood:** sum the target log-probabilities over the included positions. This is the logarithm of the sequence likelihood, whose probability-space form is the product of the conditional target probabilities.
+- **Per-token NLL:** negate each target log-probability. For a one-hot next-token target, this is the token-level cross-entropy.
+
+Training can then aggregate per-token NLL using an explicit mask and reduction to obtain an objective value. Scoring need not perform that training reduction or update parameters. In practice, stable computations use log probabilities and reductions rather than multiplying many small probabilities.
 
 ### Branch C — evaluation and training
 
