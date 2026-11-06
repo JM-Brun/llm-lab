@@ -197,16 +197,7 @@ Q et K déterminent les poids d'attention ; V fournit les vecteurs dont le conte
 </details>
 :::
 
-<div class="route-nav-cards">
-  <a class="route-nav-card" href="transformer.qmd">
-    <span class="nav-direction">← Étape précédente</span>
-    <span class="nav-title">GPT et Transformer : architecture et flux des données</span>
-  </a>
-  <a class="route-nav-card" href="scaled-dot-product-attention.qmd">
-    <span class="nav-direction">Étape suivante →</span>
-    <span class="nav-title">Attention à produit scalaire mise à l'échelle</span>
-  </a>
-</div>
+{{< include ../includes/generated-suggested-route-fr-queries-keys-values.qmd >}}
 
 ::: {.language-switch}
 **Langue :** [Français](queries-keys-values.qmd) · [English](../en/queries-keys-values.qmd)

@@ -93,16 +93,7 @@ It identifies the token with the highest score in that vector. By itself, it doe
 
 </details>
 
-<div class="route-nav-cards">
-  <a class="route-nav-card" href="causal-masking.qmd">
-    <span class="nav-direction">← Previous Step</span>
-    <span class="nav-title">Causal Masking</span>
-  </a>
-  <a class="route-nav-card" href="probabilities.qmd">
-    <span class="nav-direction">Next Step →</span>
-    <span class="nav-title">Probabilities: Normalizing and Interpreting</span>
-  </a>
-</div>
+{{< include ../includes/generated-suggested-route-en-logits.qmd >}}
 :::
 
 :::: {.language-switch}

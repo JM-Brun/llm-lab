@@ -144,16 +144,7 @@ The test suite in `tests/unit/test_attention.py` checks shape preservation, weig
 - [Planned verification criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
 :::
 
-<div class="route-nav-cards">
-  <a class="route-nav-card" href="queries-keys-values.qmd">
-    <span class="nav-direction">← Previous Step</span>
-    <span class="nav-title">Queries, Keys, and Values (Q, K, V)</span>
-  </a>
-  <a class="route-nav-card" href="causal-masking.qmd">
-    <span class="nav-direction">Next Step →</span>
-    <span class="nav-title">Causal Masking</span>
-  </a>
-</div>
+{{< include ../includes/generated-suggested-route-en-scaled-dot-product-attention.qmd >}}
 
 :::: {.language-switch}
 **Language:** [Français](../fr/scaled-dot-product-attention.qmd) · [English](scaled-dot-product-attention.qmd)

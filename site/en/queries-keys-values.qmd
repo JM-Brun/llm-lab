@@ -197,16 +197,7 @@ Q and K determine the attention weights; V supplies the vectors whose content is
 </details>
 :::
 
-<div class="route-nav-cards">
-  <a class="route-nav-card" href="transformer.qmd">
-    <span class="nav-direction">← Previous step</span>
-    <span class="nav-title">GPT and Transformers: architecture and data flow</span>
-  </a>
-  <a class="route-nav-card" href="scaled-dot-product-attention.qmd">
-    <span class="nav-direction">Next step →</span>
-    <span class="nav-title">Scaled dot-product attention</span>
-  </a>
-</div>
+{{< include ../includes/generated-suggested-route-en-queries-keys-values.qmd >}}
 
 ::: {.language-switch}
 **Language:** [Français](../fr/queries-keys-values.qmd) · [English](queries-keys-values.qmd)

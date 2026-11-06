@@ -131,6 +131,8 @@ La [collection de fondations mathématiques](exercises.qmd#fondations) contient 
 - Cover & Thomas, [*Elements of Information Theory*](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X).
 - [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU) — intuition visuelle complémentaire à la dérivation.
 
+{{< include ../includes/generated-suggested-route-fr-cross-entropy.qmd >}}
+
 ::: {.language-switch}
 [Français](cross-entropy.qmd) · [English](../en/cross-entropy.qmd)
 :::
