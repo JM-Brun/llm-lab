@@ -591,8 +591,8 @@ relation_types:
     direction: directed
     labels: {fr: "réinjecte dans le contexte", en: "feeds back into context"}
     descriptions:
-      fr: "La donnée source étend le contexte utilisé à l'itération suivante ; cette relation forme une boucle intentionnelle."
-      en: "The source data extends the context used at the next iteration; this relation forms an intentional loop."
+      fr: "La donnée source devient un état ou une entrée de l'itération suivante ; cette relation forme une boucle intentionnelle."
+      en: "The source data becomes state or input for the next iteration; this relation forms an intentional loop."
   conditions:
     direction: directed
     labels: {fr: "conditionne", en: "conditions"}
@@ -661,7 +661,7 @@ edges:
   - {id: e-gradients-optimizer, from: gradients, type: consumes, to: optimizer-update}
   - {id: e-params-optimizer, from: model-parameters, type: consumes, to: optimizer-update}
   - {id: e-optimizer-updated, from: optimizer-update, type: produces, to: updated-parameters}
-  - {id: e-updated-params-forward, from: updated-parameters, type: feeds-back, to: model-parameters, feedback: true}
+  - {id: e-updated-parameters-feedback, from: updated-parameters, type: feeds-back, to: model-parameters, feedback: true}
   - {id: e-score-metrics, from: sequence-log-likelihood, type: aggregates, to: evaluation-metrics}
   - {id: e-loss-metrics, from: token-nll, type: aggregates, to: evaluation-metrics}
   - {id: e-teacher-context, from: teacher-forcing, type: conditions, to: training-context}
@@ -728,7 +728,7 @@ views:
       fr: "Utilise les préfixes observés, calcule l'objectif, les gradients et la mise à jour des paramètres."
       en: "Uses observed prefixes, computes the objective and gradients, and updates parameters."
     nodes: [teacher-forcing, training-context, observed-target, token-context, model-parameters, forward-computation, logits, vocabulary-softmax, next-token-distribution, target-probability, target-probability-value, token-nll, loss-reduction, training-objective, gradients, optimizer-update, updated-parameters]
-    edges: [e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-teacher-context, e-observed-context, e-training-forward, e-distribution-target, e-target-score, e-target-probability-value, e-target-nll, e-nll-reduction, e-loss-objective, e-objective-gradients, e-gradients-optimizer, e-params-optimizer, e-optimizer-updated, e-updated-params-forward]
+    edges: [e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-teacher-context, e-observed-context, e-training-forward, e-distribution-target, e-target-score, e-target-probability-value, e-target-nll, e-nll-reduction, e-loss-objective, e-objective-gradients, e-gradients-optimizer, e-params-optimizer, e-optimizer-updated, e-updated-parameters-feedback]
   - id: inference-execution
     branch: inference-execution
     labels: {fr: "Phases d'exécution de l'inférence", en: "Inference execution phases"}
