@@ -11,7 +11,7 @@ id: "fr/vraisemblance"
 scope: "Définir la probabilité attribuée à une séquence de tokens observée pour des paramètres de modèle fixés, à partir de la factorisation autorégressive par règle de chaîne et de son logarithme ; distinguer vraisemblance de séquence et log-vraisemblance de l'incertitude prédictive locale, de l'entropie croisée comme mesure entre distributions cible et prédite, et de l'agrégation de la loss sur un jeu de données."
 purpose: "Calculer la vraisemblance d'une séquence à partir des probabilités conditionnelles des tokens, transformer le produit en somme de log-probabilités et expliquer l'équivalence entre maximiser la log-vraisemblance et minimiser la log-vraisemblance négative pour des observations fixées."
 suggested_route:
-  previous: "fr/probabilites"
+  previous: "fr/entropy"
   next: "fr/cross-entropy"
 hierarchy:
   parents: ["fr/probabilites"]
