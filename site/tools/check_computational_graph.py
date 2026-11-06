@@ -169,9 +169,10 @@ def validate_graph(data: Any, published_pages: set[str] | None = None) -> list[s
             errors.append(f"{where}.resources: expected a non-empty list of page IDs")
             continue
         languages: set[str] = set()
-        if all(isinstance(page_id, str) for page_id in resources):
-            if len(resources) != len(set(resources)):
-                errors.append(f"{where}.resources: duplicate page IDs")
+        if all(isinstance(page_id, str) for page_id in resources) and len(resources) != len(
+            set(resources)
+        ):
+            errors.append(f"{where}.resources: duplicate page IDs")
         for page_id in resources:
             if not isinstance(page_id, str) or not PAGE_ID.fullmatch(page_id):
                 errors.append(f"{where}.resources: invalid page ID {page_id!r}")
