@@ -64,7 +64,7 @@ COPY: dict[str, dict[str, Any]] = {
         },
         "statusLoaded": "Carte chargée.",
         "destinations": {
-            "orient": "S'orienter",
+            "orient": "Parcours et carte des ressources",
             "understand": "Comprendre",
             "build": "Construire",
             "deepen": "Approfondir",
@@ -116,7 +116,7 @@ COPY: dict[str, dict[str, Any]] = {
         },
         "statusLoaded": "Map loaded.",
         "destinations": {
-            "orient": "Get oriented",
+            "orient": "Learning paths and resource map",
             "understand": "Understand",
             "build": "Build",
             "deepen": "Go deeper",
