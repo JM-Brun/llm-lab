@@ -85,3 +85,37 @@ Inspected:
 - `site/styles.scss`.
 
 This is a source-level audit. It does not claim rendered desktop/mobile, keyboard, screen-reader, or learner-comprehension validation.
+
+
+## 4. Relationship to the other canonical metadata layers
+
+The repository already has several distinct structures. They answer different questions and must not be collapsed into a single graph or tag vocabulary.
+
+| Layer | Canonical source | Question answered | Must not be used as |
+|---|---|---|---|
+| Concept catalogue | `data/concepts.yml` | Which concepts exist, what they mean, which domains they belong to, and how they relate semantically | A page hierarchy or executable dataflow |
+| Concept relations | `relations` and `relation_types` in `data/concepts.yml` | What kind of relation connects two concepts, including direction and whether it is a genuine learning dependency | An undifferentiated edge list or an automatically inferred reading order |
+| Computational architecture | `data/computational-graph.yml` | Which data, operations and states participate in each computational branch | A curriculum sequence or concept-importance ranking |
+| Reader-facing route | `data/guided-route.yml` | Which pages a learner is invited to visit, in what pedagogical stages, with which optional deep dives | A complete concept ontology or an execution trace |
+| Page editorial metadata | Page-map comments in each Quarto page | What a page is, where it belongs editorially, and how it relates to other pages | A duplicate concept registry |
+
+This distinction is already visible in the current route: the inference stage explicitly distinguishes prompt prefill from iterative decode, while the training stage places teacher forcing and shifted examples in a separate learning branch. That is a pedagogical organization, not a reason to make prefill and teacher forcing sequential computational steps in one path.
+
+The concept registry also already contains the canonical IDs `prefill` and `teacher-forcing`, with a typed contrast relation. Their presence in the concept catalogue does not imply that either should become a page tag. Pages remain resources associated with concepts through the existing `resources` field.
+
+### Page tags: do not introduce a second concept/domain vocabulary
+
+The page metadata contract does not currently define `notion:` or `domaine:` as controlled tags. The canonical concept IDs and concept-domain memberships already live in the concept registry. Adding page tags with those names would create a second, potentially divergent representation and would be especially misleading where one page discusses several concepts or one concept belongs to several domains.
+
+If page-level discoverability later proves insufficient, first assess whether the existing learning-map projection can expose the canonical concept-resource associations. Do not solve that by copying concept IDs or domain memberships into every page.
+
+### Importance classification is a display annotation, not a relation
+
+If adopted, `importance` should be an intrinsic annotation on each concept record, with a controlled vocabulary and explicit project-relative definitions. It must not become a relation type, a domain, or an implicit edge weight. In particular:
+
+- it must not change the direction or meaning of existing relations;
+- it must not create prerequisite edges;
+- it must not reorder the guided route or computational branches;
+- it must not be inferred from how many pages mention a concept, its domain count, or its position in the current graph.
+
+The first implementation should be deliberately small: one required enum, one validator, one JSON field, and one localized secondary cue in the existing card/detail UI. If the concept set cannot be classified consistently from documented curriculum criteria, defer the field rather than publish false precision.
