@@ -148,3 +148,68 @@ One newly added relation was unambiguously misleading and is removed in the acco
 - Removed `prefill → contrasts-with → teacher-forcing`. The concepts' own definitions establish that prefill is an inference phase processing the initial prompt before incremental generation, whereas teacher forcing is a training-time conditioning strategy using observed preceding tokens. They operate in different execution contexts and are not conceptual opposites or mutually exclusive alternatives. The existing computational graph already models prefill as a phase of autoregressive generation and teacher forcing as a condition on observed-prefix scoring/training. No replacement edge is warranted: the two concepts are distinguished by their execution context in their canonical definitions and resources.
 
 No new relation type or graph registry is introduced. A complete review of all 69 current relation assertions remains necessary before the edge audit can be marked complete; prioritize relations added after the original 26-edge inventory and record the reviewed set explicitly.
+
+
+## Follow-up review of the 42 relations added after the original inventory — 2026-11-06
+
+After PR #609, the canonical registry contains 68 relations: the 26 relations in the original inventory and 42 later additions. The 42 additions were reviewed against their endpoint definitions, relation-type descriptions, and the separate computational spine. This is a semantic review of the selected concept graph, not a claim that it is a complete tensor-level execution DAG.
+
+### Review of the 42 additional relations
+
+| # | Relation | Assessment |
+|---:|---|---|
+| 1 | `post-training → contrasts-with → pretraining` | **Accept with scope note.** These are distinguishable training phases, not opposites. This matches the controlled meaning of `contrasts-with`. |
+| 2 | `instruction-tuning → part-of → post-training` | **Accept.** Supervised instruction tuning is one post-training procedure. |
+| 3 | `reinforcement-learning-from-human-feedback → part-of → post-training` | **Accept.** RLHF is a family of post-training procedures. |
+| 4 | `direct-preference-optimization → part-of → post-training` | **Accept.** DPO is a post-training preference-optimization method. |
+| 5 | `in-context-learning → contrasts-with → instruction-tuning` | **Accept with scope note.** The edge distinguishes prompt-time adaptation without parameter updates from parameter-updating fine-tuning; it does not imply mutually exclusive model capabilities. |
+| 6 | `inference-time-compute → applies-to → reasoning-model` | **Accept.** Additional inference-time resources can be used by reasoning-oriented models; the edge does not claim that only reasoning models use them. |
+| 7 | `tool-calling → part-of → agentic-system` | **Accept within the registry's definition.** Tool use is explicitly part of the defined agentic loop; this should not be generalized to every possible use of the term outside this project. |
+| 8 | `softmax → produces → conditional-distribution` | **Accept.** Softmax maps logits to the conditional distribution over the vocabulary. |
+| 9 | `next-token-prediction → part-of → training-objective` | **Needs wording review.** The definitions identify next-token prediction as the training task and the training objective as the function optimized. A task is not obviously a structural component of a function. Keep this edge out of any execution or curriculum dependency interpretation until the intended abstraction is made explicit. |
+| 10 | `conditional-distribution → contributes-to → sequence-likelihood` | **Accept.** Sequence likelihood is built from conditional probabilities at successive positions. |
+| 11 | `observed-target → contributes-to → sequence-likelihood` | **Accept.** The likelihood is evaluated for the observed sequence, not a model-selected continuation. |
+| 12 | `conditional-distribution → prerequisite → sequence-likelihood` | **Accept.** The bilingual rationale correctly describes the mathematical construction and learner dependency. |
+| 13 | `observed-target → prerequisite → sequence-likelihood` | **Accept.** The target sequence must be identified before its likelihood can be defined. |
+| 14 | `sequence-likelihood → mapped-by → logarithm` | **Accept.** The logarithm transforms the positive sequence likelihood into log-likelihood. |
+| 15 | `logarithm → produces → log-likelihood` | **Accept.** The operation's output is correctly identified. |
+| 16 | `sequence-likelihood → prerequisite → log-likelihood` | **Accept.** The log-likelihood is defined from the sequence likelihood. |
+| 17 | `log-likelihood → mapped-by → negation` | **Accept.** Negation changes the sign of the log-likelihood. |
+| 18 | `negation → produces → negative-log-likelihood` | **Accept.** The operation produces the minimization-oriented quantity. |
+| 19 | `log-likelihood → prerequisite → negative-log-likelihood` | **Accept.** The mathematical dependency and bilingual rationale are explicit. |
+| 20 | `negative-log-likelihood → contributes-to → training-objective` | **Accept with scope note.** NLL is a common token-level contribution to the autoregressive training objective; the edge should not imply that all training objectives are NLL. |
+| 21 | `training-example → produces → observed-target` | **Corrected.** A training example contains aligned input and target tokens; it does not generate the target. Replaced with `observed-target → part-of → training-example`. |
+| 22 | `teacher-forcing → applies-to → training-example` | **Accept.** Teacher forcing describes how observed preceding tokens condition training predictions for the example. |
+| 23 | `cross-entropy → prerequisite → training-objective` | **Accept with scope note.** This is appropriate for the project's standard GPT next-token objective, not a universal prerequisite for every possible training objective. |
+| 24 | `training-objective → produces → gradient` | **Accept at the conceptual level.** Differentiation is implicit between the objective and its gradient; the separate computational graph carries the operation-level detail. |
+| 25 | `gradient → prerequisite → parameter-update` | **Accept.** In the represented gradient-based optimization path, the optimizer uses gradients to compute updates. |
+| 26 | `optimizer → contributes-to → parameter-update` | **Accept.** The optimizer and its state determine the update from the gradients. |
+| 27 | `parameter-update → contributes-to → next-token-prediction` | **Accept with scope note.** Parameter changes alter the function used for prediction; this does not guarantee improved predictive performance. |
+| 28 | `observed-target → contributes-to → cross-entropy` | **Accept.** Cross-entropy requires the target as well as the predicted distribution. |
+| 29 | `generated-token-feedback → contributes-to → decode-step` | **Accept.** The selected token extends the context used by the next incremental step. |
+| 30 | `decoding-policy → applies-to → conditional-distribution` | **Accept.** A decoding policy selects from the predicted distribution. |
+| 31 | `decoding-policy → produces → token` | **Accept.** The selection policy returns a token ID/token from the distribution. |
+| 32 | `token → contributes-to → generated-token-feedback` | **Accept.** The selected token is the payload appended to the context. |
+| 33 | `generated-token-feedback → part-of → autoregressive-generation` | **Accept.** Context feedback is a defining step of autoregressive generation. |
+| 34 | `prefill → part-of → autoregressive-generation` | **Accept.** Prefill processes the initial context before incremental decoding. |
+| 35 | `decode-step → part-of → autoregressive-generation` | **Accept.** Incremental decode steps are repeated during autoregressive generation. |
+| 36 | `decoding-policy → part-of → autoregressive-generation` | **Accept.** Token selection is part of the represented generation procedure. |
+| 37 | `kv-cache → contributes-to → decode-step` | **Accept with scope note.** The cache is an optional inference optimization, not a semantic or execution prerequisite for decoding. |
+| 38 | `conditional-distribution → contributes-to → autoregressive-generation` | **Accept.** The distribution is the basis for token selection at each generation step. |
+| 39 | `sequence-likelihood → contributes-to → held-out-evaluation` | **Accept.** Sequence likelihood can be aggregated as an evaluation score on held-out data. |
+| 40 | `cross-entropy → contributes-to → held-out-evaluation` | **Accept.** Cross-entropy is a standard held-out predictive metric as well as a training loss; the data split distinguishes the uses. |
+| 41 | `conditional-distribution → evaluated-by → held-out-evaluation` | **Accept.** The evaluation assesses predictions made by the conditional distribution without updating parameters. |
+| 42 | `conditional-distribution → evaluated-by → cross-entropy` | **Accept with scope note.** The predicted distribution is evaluated relative to an observed target; the target contribution is represented separately by edge 28. |
+
+### Revisions to earlier accepted edges
+
+Two earlier edges were re-examined against the narrower definitions and the computational graph:
+
+- Removed `contextualized-representation → mapped-by → output-projection`. The concept definition covers contextualized states generally, including intermediate block states. The vocabulary projection acts on final hidden states only. The separate computational graph already distinguishes `final-hidden-states → vocabulary-projection`; retaining the generic concept edge would overgeneralize the projection's input.
+- The original edge `softmax → evaluated-by → cross-entropy` is retained for now as a high-level shorthand, but the more precise edge `conditional-distribution → evaluated-by → cross-entropy` should be the reader-facing explanation. Revisit removal only if the graph UI makes the two edges look like competing descriptions of the same direct relation.
+
+### Remaining semantic decisions
+
+- Decide whether edge 9 should be removed or rewritten after clarifying whether `training-objective` names the task, the loss function, or their combination. Do not silently reinterpret `part-of`.
+- Keep the distinction between the concept graph and the computational graph: the latter supplies the explicit differentiation and final-hidden-state operations.
+- The review is complete for the current 68 relation assertions at the source-semantic level, subject to the one explicitly unresolved edge above. Rendered graph usability, accessibility, and learner validation remain separate gates.
