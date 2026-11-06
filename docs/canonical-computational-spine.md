@@ -71,7 +71,7 @@ Training can then aggregate per-token NLL using an explicit mask and reduction t
 
 ### Branch C — evaluation and training
 
-- Evaluation consumes the scoring/objective results on held-out examples and reports metrics; it does not update parameters.
+- Evaluation applies observed-target scoring to held-out examples and reports task-appropriate metrics; it does not update parameters. For language modeling, the loss lesson introduces mean per-token NLL and perplexity. The experimental-evaluation lesson is a transfer exercise on a scientific-passage ranker, not an LLM benchmark or evidence of a locally trained GPT evaluation.
 - Training differentiates the objective, backpropagates gradients, and applies an optimizer update to parameters.
 - The updated parameters are used in a subsequent forward computation.
 
