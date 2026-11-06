@@ -91,6 +91,10 @@ Les prédictions positionnelles peuvent ainsi être calculées en parallèle pen
 :::
 
 
+## Carte computationnelle de l’apprentissage
+
+{{< include ../includes/generated-computational-graph-fr-training.qmd >}}
+
 ## 2. Fenêtres glissantes et stride
 
 Le stride est le nombre de positions dont on décale le début de la fenêtre entre deux exemples. Il est distinct de la longueur de contexte.
