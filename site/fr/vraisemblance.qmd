@@ -38,7 +38,7 @@ $$
 
 ### Scorer une séquence observée : le préfixe est connu
 
-À chaque position, le modèle reçoit le préfixe observé $x_{<t}$ et attribue une probabilité au token cible $x_t$. Ce conditionnement sur les tokens de référence est le même mécanisme de préfixe observé que celui utilisé par le *teacher forcing*. Ici, il sert uniquement à **scorer** la séquence : on ne sélectionne pas de token généré, on ne réinjecte pas une prédiction du modèle et les paramètres $\theta$ restent fixes. Grâce au masque causal, les prédictions de toutes les positions peuvent être calculées dans un même *forward pass*.
+À chaque position, le modèle reçoit le préfixe observé $x_{<t}$ et attribue une probabilité au token cible $x_t$. Ce conditionnement sur les tokens de référence est le même mécanisme de préfixe observé que celui utilisé par le *teacher forcing*. Ici, il sert uniquement à **scorer** la séquence : on ne sélectionne pas de token généré, on ne réinjecte pas une prédiction du modèle et les paramètres $\theta$ restent fixes. Pour une séquence qui tient dans la fenêtre de contexte, le modèle peut calculer les logits de toutes les positions dans un même *forward pass* : les préfixes observés sont fournis simultanément, tandis que le masque causal empêche chaque position de lire les tokens ultérieurs. Au-delà de cette fenêtre, le scoring exige une stratégie de fenêtrage ou de stride et une convention explicite pour les préfixes réellement disponibles et les cibles comptabilisées.
 
 Cette opération se distingue donc de la génération : celle-ci réinjecte le token choisi par le modèle avant le pas suivant. Elle se distingue aussi de l'entraînement : le scoring ne calcule pas de gradient et ne met pas à jour les paramètres.
 
