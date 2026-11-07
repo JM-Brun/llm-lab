@@ -51,7 +51,7 @@ The article's central architectural distinction is:
 
 NExT-GPT is used as an example of a system with modality-specific input/output projectors and pretrained modality encoders/decoders. The article describes a relatively small trainable interface around otherwise frozen components. This is an example, not a universal recipe.
 
-OmniGen2 and BLIP-3o are mentioned as more recent examples of decoupled autoregressive text generation and diffusion-based image generation. Their details have not been independently checked in this scan.
+OmniGen2 and BLIP-3o are mentioned as more recent examples of decoupled text/image generation pathways. Their selected architectural claims have since been spot-checked against the cited primary papers (see the verification table below); this does not amount to a complete paper, implementation or benchmark audit.
 
 **Early fusion** is illustrated with Janus. The article describes separate visual representations for understanding and generation, then a unified autoregressive language-modeling path that can emit text or image representations. It highlights the difference in representational requirements. The labels *early fusion* and *late fusion* are useful architectural shorthand, not a complete or necessarily mutually exclusive taxonomy: the actual boundary between shared model, modality-specific pathway, projector and decoder must be described per system.
 - Understanding benefits from semantic, abstract representations.
