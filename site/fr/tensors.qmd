@@ -57,14 +57,14 @@ Les activations cachées ont souvent la forme \((B,T,D)\), les logits \((B,T,N_{
 
 ## Coût en paramètres : la table d'embeddings et la projection de sortie
 
-La taille du vocabulaire \(N_{\mathrm{vocab}}\) et la dimension d'embedding \(d\) sont deux choix distincts. La matrice d'embeddings \(E\in\mathbb{R}^{V\times d}\) contient \(V\) lignes — une par ID — et \(d\) composantes par ligne. Pour une séquence de longueur \(L\), le lookup produit une matrice de forme \(L\times d\) ; pour un lot de \(B\) séquences, la forme usuelle est \(B\times L\times d\).
+La taille du vocabulaire \(N_{\mathrm{vocab}}\) et la dimension d'embedding \(d\) sont deux choix distincts. La matrice d'embeddings \(E\in\mathbb{R}^{N_{\mathrm{vocab}}\times d}\) contient \(N_{\mathrm{vocab}}\) lignes — une par ID — et \(d\) composantes par ligne. Pour une séquence de longueur \(L\), le lookup produit une matrice de forme \(L\times d\) ; pour un lot de \(B\) séquences, la forme usuelle est \(B\times L\times d\).
 
 - **\(N_{\mathrm{vocab}}\)** dépend du tokenizer et du vocabulaire qu'il définit, y compris les tokens spéciaux.
-- **\(d\)** est un hyperparamètre de l'architecture, choisi avec la profondeur, les têtes d'attention et le budget de calcul ; il n'est pas déduit de \(V\).
+- **\(d\)** est un hyperparamètre de l'architecture, choisi avec la profondeur, les têtes d'attention et le budget de calcul ; il n'est pas déduit de \(N_{\mathrm{vocab}}\).
 - La table d'embeddings contient \(N_{\mathrm{vocab}}d\) paramètres.
 
-**Ordre de grandeur calculable :** avec \(V=50\,000\) tokens et \(d=768\), la table contient \(50\,000\times768=38\,400\,000\) paramètres. En précision 32 bits, les poids seuls occupent environ 153,6 MB en unités décimales (ou 146,5 MiB), hors gradients, états de l'optimiseur et autres paramètres. C'est une estimation du coût de la table, pas la description d'un modèle particulier.
-- Si la projection de sortie possède une matrice distincte, elle ajoute typiquement \(dN_vocab\) paramètres, éventuellement plus un biais. Certains modèles partagent les poids d'entrée et de sortie (*weight tying*) : il faut vérifier l'architecture avant d'additionner les deux matrices.
+**Ordre de grandeur calculable :** avec \(N_{\mathrm{vocab}}=50\,000\) tokens et \(d=768\), la table contient \(50\,000\times768=38\,400\,000\) paramètres. En précision 32 bits, les poids seuls occupent environ 153,6 MB en unités décimales (ou 146,5 MiB), hors gradients, états de l'optimiseur et autres paramètres. C'est une estimation du coût de la table, pas la description d'un modèle particulier.
+- Si la projection de sortie possède une matrice distincte, elle ajoute typiquement \(\(dN_{\mathrm{vocab}}\)\) paramètres, éventuellement plus un biais. Certains modèles partagent les poids d'entrée et de sortie (*weight tying*) : il faut vérifier l'architecture avant d'additionner les deux matrices.
 - Les IDs et les poids associés sont couplés. Modifier le vocabulaire, l'ordre des IDs ou \(N_{\mathrm{vocab}}\) exige une stratégie explicite d'adaptation ou de réentraînement ; ce n'est pas une substitution neutre.
 
 À chaque position, la distribution de sortie comporte en général \(N_{\mathrm{vocab}}\) logits ; la [page sur les logits](logits.qmd) approfondit les scores de sortie. Cette section héberge dans le parcours avancé le comptage détaillé des paramètres, dont le rôle conceptuel est présenté dans [l'espace des embeddings](embedding-space.qmd).
@@ -77,13 +77,13 @@ Supposons que \(X\) ait la forme \((B,T,D)\) et que la matrice de projection \(W
 Y=XW,\qquad \operatorname{shape}(Y)=(B,T,D').
 \]
 
-Les axes du batch et des positions sont conservés ; le dernier axe passe de \(D\) à \(D'\). Cette notation évite de confondre la dimension de sortie avec \(H\), qui désigne plus loin le nombre de têtes d'attention. Vérifier les formes permet de détecter certaines erreurs, mais ne garantit pas que les axes ont la bonne signification.
+Les axes du batch et des positions sont conservés ; le dernier axe passe de \(D\) à \(D'\). Cette notation évite de confondre la dimension de sortie avec \(H\), qui désigne plus loin le nombre de têtes d'attention. N_vocabérifier les formes permet de détecter certaines erreurs, mais ne garantit pas que les axes ont la bonne signification.
 
 ## Les axes ont une signification
 
 Une forme donne les tailles des axes, pas leur sémantique. Deux tenseurs de forme \((B,T,D)\) peuvent représenter des objets différents.
 
-- **Projection linéaire :** transforme généralement le dernier axe des caractéristiques, par exemple \((B,T,D)\to(B,T,V)\) pour produire des logits.
+- **Projection linéaire :** transforme généralement le dernier axe des caractéristiques, par exemple \((B,T,D)\to(B,T,N_{\mathrm{vocab}})\) pour produire des logits.
 - **Softmax :** pour une distribution sur le vocabulaire, la normalisation doit porter sur l'axe \(N_{\mathrm{vocab}}\), pas sur l'axe \(T\).
 - **Attention :** les scores relient les positions de requête et de clé ; le masque causal doit empêcher l'accès aux positions futures.
 - **Perte :** les logits et les labels doivent aligner les positions et le token cible attendu.
@@ -149,7 +149,7 @@ Les assertions rendent explicite la sémantique attendue. Il s'agit d'une vérif
 
 ## Exemple de lecture des dimensions
 
-Pour \(B=2\), \(T=4\) et \(D=8\), les états cachés ont la forme \((2,4,8)\). Une projection vers un vocabulaire de \(N_vocab=1000\) tokens produit des logits de forme \((2,4,1000)\). Le dernier axe correspond aux tokens candidats ; chaque couple batch-position porte ainsi une distribution après softmax sur cet axe.
+Pour \(B=2\), \(T=4\) et \(D=8\), les états cachés ont la forme \((2,4,8)\). Une projection vers un vocabulaire de \(N_{\mathrm{vocab}}=1000\) tokens produit des logits de forme \((2,4,1000)\). Le dernier axe correspond aux tokens candidats ; chaque couple batch-position porte ainsi une distribution après softmax sur cet axe.
 
 La compatibilité des formes ne garantit pas que la projection, le masque, le décalage causal ou la réduction soient corrects. Il faut également vérifier le sens des axes et la sémantique des cibles.
 
