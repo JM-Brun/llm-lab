@@ -289,6 +289,8 @@ for (const testCase of cases) {
       math: {
         katex: document.querySelectorAll(".katex").length,
         mathjax: document.querySelectorAll("mjx-container").length,
+        mathSpans: document.querySelectorAll("span.math").length,
+        mathSpansRendered: [...document.querySelectorAll("span.math")].filter(span => span.querySelector(".katex, mjx-container")).length,
         unrenderedMathDelimiters: ["\\(", "\\)", "\\[", "\\]"].reduce((n, delimiter) => n + document.body.innerText.split(delimiter).length - 1, 0),
       },
       disclosures: document.querySelectorAll("details").length,
@@ -826,6 +828,17 @@ for (const testCase of cases) {
         `${pagePath}/${lang}/${label}/${theme}: Axe blocking violations: ${blockingAxe.map(v => v.id).join(", ")}`
       );
     }
+    // Quarto renders each equation inside its pandoc math span client-side.
+    // A math span with no rendered output means the reader sees raw source
+    // text instead of an equation, so treat it as a blocking audit failure.
+    const mathSummary = item.layout.math;
+    const unrenderedMath = mathSummary.mathSpans - mathSummary.mathSpansRendered;
+    if (unrenderedMath > 0) {
+      report.failures.push(
+        `${pagePath}/${lang}/${label}/${theme}: ${unrenderedMath} of ${mathSummary.mathSpans} math expressions did not render (pandoc math span without KaTeX or MathJax output)`
+      );
+    }
+
     if (item.layout.horizontalOverflow || item.learningMapLayout?.horizontalOverflow) {
       let overflowing = (item.layout.overflowCandidates || []).filter(c => c.right <= item.layout.documentWidth + 1).slice(0, 10).map(c => `${c.tag}${c.className ? "." + String(c.className).split(" ")[0] : ""}[left=${c.left},right=${c.right}]`).join(" | ");
       if (!overflowing) {
@@ -858,6 +871,8 @@ console.log(JSON.stringify({
     focusTargets: c.keyboardSummary?.focusTargets,
     focusVisibleTargets: c.keyboardSummary?.focusVisibleTargets,
     axeViolations: c.axe?.violationCount,
+    mathSpans: c.layout?.math?.mathSpans,
+    unrenderedMath: (c.layout?.math?.mathSpans ?? 0) - (c.layout?.math?.mathSpansRendered ?? 0),
     error: c.error,
   })),
   failures: report.failures,
