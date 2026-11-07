@@ -1,9 +1,11 @@
 # LLM Lab — backlog dashboard
 
-**Snapshot:** 2026-11-04  
+**Snapshot:** 2026-11-07  
 **Source of truth:** GitHub issues and pull requests. This page is a navigation layer, not a second task tracker.
 
 ## Start here
+
+- **Current handoff and ordered remaining work:** [next-work-handoff-2026-11-07.md](next-work-handoff-2026-11-07.md)
 
 - [All open issues](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen)
 - [P0 — active slice](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+label%3AP0)
@@ -12,9 +14,9 @@
 - [P3 — deferred](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+label%3AP3)
 - [Issues needing attention / unclassified](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+-label%3AP0+-label%3AP1+-label%3AP2+-label%3AP3)
 
-40 issues are currently open. Thirty-four carry exactly one priority label (current split: P0=0, P1=11, P2=17, P3=6); six still need classification — #225, #266, #268, #280, #282, #368 — see [Issues needing attention](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+-label%3AP0+-label%3AP1+-label%3AP2+-label%3AP3). Re-run the filters above rather than relying on these dated counts.
+Live snapshot 2026-11-07: 51 open issues (excluding pull requests); priority labels: P0=0, P1=11, P2=17, P3=6; 17 issues have no single priority label. One open PR is visible in the current issue listing: [#628](https://github.com/JM-Brun/llm-lab/pull/628). These are point-in-time counts; re-run the filters above before prioritising.
 
-## Handoff — PR reconciliation and next sessions (2026-11-04)
+## Historical handoff — PR reconciliation (2026-11-04; superseded by the current handoff above)
 
 This is a **dated maintenance snapshot**, not an alternative issue tracker. Recheck [open PRs](https://github.com/JM-Brun/llm-lab/pulls?q=is%3Apr+is%3Aopen), current branch heads, `mergeable_state`, and the **latest-head** checks at the start of the next session: GitHub may be recomputing mergeability, and a green workflow on an older SHA is insufficient.
 
