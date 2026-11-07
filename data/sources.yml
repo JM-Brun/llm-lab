@@ -2281,7 +2281,7 @@ sources:
         - docs/source-reviews/multimodal-generation-grootendorst-2026-11.md
 
   - id: jay-joshi-transformer-mathematics-positional-embeddings
-    title: "The Mathematics of a Transformer Explained With Numbers You Can Check by Hand With Geometric Intuitions Using PyTorch — Part 1: Positional Encoding and Embedding Formation"
+    title: "The Mathematics of a Transformer Explained With Numbers You Can Check by Hand With Geometric Intutions Using Pytorch. Part-1 Positional Encoding and Embadding Formation."
     creators: ["Jay Joshi"]
     source_type: blog
     identifiers: {}
@@ -2290,7 +2290,7 @@ sources:
     publication_date: null
     updated_date: null
     language: en
-    version: "Part 1; indexed snapshot inspected 2026-11-07"
+    version: "Part 1; indexed Medium snapshot inspected 2026-11-07"
     revision: null
     licence: {identifier: null, url: null, status: unknown}
     reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
@@ -2300,30 +2300,35 @@ sources:
       tags:
         - topic:token-embeddings
         - topic:positional-encoding
+        - topic:self-attention
         - method:sinusoidal-encoding
+        - method:permutation-equivariance
         - modality:visualization
         - ecosystem:pytorch
-      concept_ids: [token-embedding, positional-encoding]
+      concept_ids: [token-embedding, positional-encoding, self-attention]
     metadata:
       technical_level: introductory
       contribution_types: [mathematical-derivation, visualization, pedagogy, implementation]
       audiences: [beginner, learner, practitioner]
     scan_status: partially-scanned
-    integration_status: reviewed
+    integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-07"
         status: partially-scanned
         inspected_scope:
-          - "Indexed article title, metadata, introduction, stated learning outcomes, notation, embedding lookup equation and sinusoidal positional-encoding equations"
-          - "Indexed explanation of permutation/order sensitivity, paired sine/cosine geometry and relative-offset rotation"
-          - "Indexed description of two PyTorch/Matplotlib cells and their visual outputs"
-          - "Related Part 2 located and inspected at the indexed-summary level; not treated as part of this source record"
+          - "Indexed Medium article body: introduction, stated outcomes, notation, row-vector convention and embedding lookup equation"
+          - "Sinusoidal positional-encoding equations and explanation of paired sine/cosine coordinates as frequency-specific circles"
+          - "Explicit claim that content-only self-attention permutes its outputs with a row permutation of its inputs"
+          - "Fixed-offset rotation explanation and the illustrative claim about learning to attend a fixed number of tokens back"
+          - "Descriptions of two PyTorch/Matplotlib code cells and multiple embedded visual-output placeholders"
+          - "Medium search metadata listing publication month as October 2026; exact publication day not exposed"
         limitations:
-          - "Direct Medium page retrieval returned a cache miss; extraction is based on the available indexed search snapshot, not the live article DOM."
-          - "The article's complete code cells, numerical values, figures, captions, image bytes and output were not available for independent execution or visual inspection."
-          - "Publication date and update history were not independently established; no date is asserted."
-          - "No licence or permission for text, figures or code reuse was established; retain link-only treatment."
-          - "The geometric interpretation is reviewed as an explanatory claim, not as empirical evidence about learned semantic spaces."
+          - "Direct Medium page retrieval returned a cache miss; article text and metadata were inspected through the indexed Medium search result, not the live page DOM."
+          - "The complete code cells, concrete numeric outputs, figure bytes, captions, axes and visual composition were not available for independent execution or visual inspection."
+          - "The stated outcomes about attention, scaling, causal masking, residuals, LayerNorm and gradients are broader series promises; they are not taught in the inspected Part 1 body."
+          - "The article's claim that similarly used token embeddings move toward similar directions is an oversimplification, not a general property guaranteed by training."
+          - "The fixed-offset rotation identity does not guarantee that a trained attention head learns a specific offset rule such as attending three tokens back."
+          - "No licence or permission for text, figures or code reuse was established; keep text and figures link-only and code/data reuse unknown."
     related:
       pages:
         - fr/embedding-space
@@ -2332,6 +2337,6 @@ sources:
         - en/positional-encoding
         - fr/rope
         - en/rope
-      concepts: [token-embedding, positional-encoding]
+      concepts: [token-embedding, positional-encoding, self-attention]
       audit_records:
         - docs/source-reviews/jay-joshi-transformer-mathematics-2026-11.md
