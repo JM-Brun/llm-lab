@@ -46,7 +46,7 @@ Lorsqu'on entraîne un modèle à prédire le token suivant, toutes les position
 
 ## Définition
 
-Pour une séquence de longueur $T$, la position $i$ peut accéder aux positions $j\leq i$. On peut définir un masque booléen supérieur strict ou un masque additif $M$ :
+Pour une séquence de longueur $T$, la position $i$ peut accéder aux positions $j\leq i$. On peut représenter cette relation par deux conventions booléennes complémentaires : $\mathrm{allowed}_{ij}=\mathbf{1}[j\leq i]$ (clé autorisée) et $\mathrm{blocked}_{ij}=\mathbf{1}[j>i]$ (clé interdite). On peut aussi utiliser le masque additif $M$ :
 
 $$
 M_{ij}=
@@ -173,7 +173,7 @@ Le score interdit est masqué avant le softmax (conceptuellement $-\infty$) : le
 :::
 
 ::: {.callout-note collapse="true" title="Code et tests de référence (approfondissement)"}
-Une implémentation de référence testée est disponible dans `src/llm_lab/foundations/attention.py` (`causal_mask` et `scaled_dot_product_attention`). La suite de tests `tests/unit/test_attention.py` comprend un cas similaire d'invariance sur une tête, ainsi que des vérifications du masque et des formes ; elle ne teste pas un GPT complet.
+Une implémentation de référence testée est disponible dans `src/llm_lab/foundations/attention.py` (`causal_mask` et `scaled_dot_product_attention`). La fonction d'attention accepte un masque additif 2D de forme exacte `(T_q, T_k)` ; elle ne prend pas en charge les masques booléens ni le broadcasting batch/tête. La suite de tests `tests/unit/test_attention.py` comprend un cas similaire d'invariance sur une tête, ainsi que des vérifications du masque et des formes ; elle ne teste pas un GPT complet.
 
 - [Implémentation du masque causal](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
 - [Tests d'invariance temporelle](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
