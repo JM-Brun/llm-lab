@@ -137,7 +137,7 @@ details > :last-child { margin-bottom: .15rem; }
 }
 .llm-flow { display: block; width: 100%; height: auto; overflow: visible; }
 .llm-flow .flow-connectors { stroke-linecap: round; stroke-linejoin: round; }
-.llm-flow .flow-node a { cursor: pointer; outline: none; }
+.llm-flow .flow-node[role="link"] { cursor: pointer; outline: none; }
 .llm-flow .flow-node rect {
   fill: #F8FAFC;
   stroke: #86EFAC;
@@ -152,8 +152,8 @@ details > :last-child { margin-bottom: .15rem; }
   stroke: #B45309;
   stroke-dasharray: 5 3;
 }
-.llm-flow .flow-node a:hover rect,
-.llm-flow .flow-node a:focus rect {
+.llm-flow .flow-node[role="link"]:hover rect,
+.llm-flow .flow-node[role="link"]:focus-visible rect {
   fill: #DCFCE7;
   stroke: var(--llm-brand);
   stroke-width: 3;

@@ -103,7 +103,7 @@ for (const testCase of cases) {
   const consoleErrors = [];
   const pageErrors = [];
   page.on("console", msg => { if (msg.type() === "error") consoleErrors.push(msg.text()); });
-  page.on("pageerror", error => pageErrors.push(String(error)));
+  page.on("pageerror", error => pageErrors.push(error.stack || String(error)));
 
   const url = kind === "homepage"
     ? (lang === "fr" ? `${BASE}/` : `${BASE}/en/`)
@@ -344,6 +344,36 @@ for (const testCase of cases) {
       tabCycleCompleted: Boolean(item.keyboardTabCycleCompleted),
       firstTargets: item.keyboard.slice(0, 12),
     };
+
+    // The homepage diagram uses SVG groups with role=link rather than native
+    // anchors. Verify the promised Enter activation, not only tab focusability.
+    if (kind === "homepage") {
+      const svgKeyboardPage = await page.context().newPage();
+      try {
+        await svgKeyboardPage.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
+        const svgLink = svgKeyboardPage.locator(".llm-flow .flow-node[role='link']").first();
+        if (await svgLink.count() !== 1) {
+          throw new Error("homepage SVG keyboard link is missing");
+        }
+        const target = await svgLink.getAttribute("data-href");
+        if (!target) throw new Error("homepage SVG keyboard link has no destination");
+        const expectedUrl = new URL(target, url).href;
+        await svgLink.focus();
+        await svgKeyboardPage.keyboard.press("Enter");
+        await svgKeyboardPage.waitForURL(expectedUrl, { timeout: 5000 });
+        item.svgKeyboardActivation = {
+          target,
+          expectedUrl,
+          actualUrl: svgKeyboardPage.url(),
+          activatedWithEnter: svgKeyboardPage.url() === expectedUrl,
+        };
+        if (!item.svgKeyboardActivation.activatedWithEnter) {
+          throw new Error("homepage SVG link did not navigate with Enter");
+        }
+      } finally {
+        await svgKeyboardPage.close();
+      }
+    }
 
     const summary = page.locator("details > summary").first();
     item.keyboardDisclosure = { available: await summary.count() > 0 };
@@ -782,11 +812,14 @@ for (const testCase of cases) {
       item.axe = { skipped: true, reason: "Axe runs once per page/language on desktop/light" };
     }
 
+    if (kind === "homepage" && pageErrors.length) {
+      report.failures.push(`${pagePath}/${lang}/${label}/${theme}: uncaught page errors: ${pageErrors.join(" | ")}`);
+    }
     if (kind === "spine-overview" && consoleErrors.some(message => message.includes("translate(undefined, NaN)"))) {
       const malformedSvgCount = (item.svgDiagnostics || []).reduce((count, svg) => count + svg.invalidTransforms.length, 0);
       report.failures.push(`${pagePath}/${lang}/${label}/${theme}: malformed SVG transforms (${malformedSvgCount} offending elements; see svgDiagnostics and consoleErrors)`);
     }
-    const blockingAxe = (item.axe.violations || []).filter(v => ["aria-allowed-attr", "color-contrast"].includes(v.id));
+    const blockingAxe = (item.axe.violations || []).filter(v => ["aria-allowed-attr", "color-contrast", "nested-interactive"].includes(v.id));
     item.axe.blockingViolationCount = blockingAxe.length;
     if (blockingAxe.length) {
       report.failures.push(

@@ -90,7 +90,7 @@ Le même modèle intervient dans plusieurs processus, mais leurs objectifs et le
 
 <figure class="llm-flow-figure">
 ```{=html}
-<svg class="llm-flow" viewBox="0 0 1220 650" role="img" aria-labelledby="llm-flow-title-fr llm-flow-desc-fr" xmlns="http://www.w3.org/2000/svg">
+<svg class="llm-flow" viewBox="0 0 1220 650" role="group" aria-labelledby="llm-flow-title-fr" aria-describedby="llm-flow-desc-fr" xmlns="http://www.w3.org/2000/svg">
 <title id="llm-flow-title-fr">Carte interactive des processus d'inférence, d'apprentissage et d'évaluation</title>
 <desc id="llm-flow-desc-fr">La ligne supérieure décrit l'inférence autorégressive avec des paramètres fixes, du contexte textuel au choix du prochain token puis son ajout au contexte. La deuxième ligne décrit l'apprentissage : corpus et tokenizer, exemples, passe avant, perte, gradients et mise à jour des paramètres. La troisième ligne présente l'évaluation sur des données tenues à l'écart. Chaque bloc cliquable ouvre une page de référence.</desc>
 <defs>
@@ -102,14 +102,14 @@ Le même modèle intervient dans plusieurs processus, mais leurs objectifs et le
 <path d="M150 105 H170"/><path d="M300 105 H320"/><path d="M450 105 H470"/><path d="M600 105 H620"/><path d="M750 105 H770"/><path d="M900 105 H920"/><path d="M1050 105 H1070"/>
 <path d="M1135 150 V194 H85 V150"/>
 </g>
-<g class="flow-node"><a href="fr/text-data.html" aria-label="Texte et données : contexte et tokens"><rect x="20" y="60" width="130" height="90" rx="12"/><text x="32" y="82" class="flow-kicker">ENTRÉE</text><text x="32" y="108" class="flow-title">Texte / prompt</text><text x="32" y="130" class="flow-subtitle">tokenisation → IDs</text></a></g>
-<g class="flow-node"><a href="fr/embedding-space.html" aria-label="Espace des embeddings"><rect x="170" y="60" width="130" height="90" rx="12"/><text x="182" y="82" class="flow-kicker">VECTEURS</text><text x="182" y="108" class="flow-title">Embeddings</text><text x="182" y="130" class="flow-subtitle">lookup</text></a></g>
-<g class="flow-node"><a href="fr/positional-encoding.html" aria-label="Information positionnelle"><rect x="320" y="60" width="130" height="90" rx="12"/><text x="332" y="82" class="flow-kicker">POSITION</text><text x="332" y="108" class="flow-title">Position</text><text x="332" y="130" class="flow-subtitle">encodage / RoPE</text></a></g>
-<g class="flow-node"><a href="fr/transformer.html" aria-label="Calcul du Transformer"><rect x="470" y="60" width="130" height="90" rx="12"/><text x="482" y="82" class="flow-kicker">RÉSEAU</text><text x="482" y="108" class="flow-title">Transformer</text><text x="482" y="130" class="flow-subtitle">attention + MLP</text></a></g>
-<g class="flow-node"><a href="fr/contextualized-representations.html" aria-label="Représentations contextualisées"><rect x="620" y="60" width="130" height="90" rx="12"/><text x="632" y="82" class="flow-kicker">SORTIE CACHÉE</text><text x="632" y="108" class="flow-title">États</text><text x="632" y="130" class="flow-subtitle">contextualisés</text></a></g>
-<g class="flow-node"><a href="fr/logits.html" aria-label="Logits"><rect x="770" y="60" width="130" height="90" rx="12"/><text x="782" y="82" class="flow-kicker">SCORES</text><text x="782" y="108" class="flow-title">Logits</text><text x="782" y="130" class="flow-subtitle">non normalisés</text></a></g>
-<g class="flow-node"><a href="fr/probabilites.html" aria-label="Probabilités"><rect x="920" y="60" width="130" height="90" rx="12"/><text x="932" y="82" class="flow-kicker">DISTRIBUTION</text><text x="932" y="108" class="flow-title">Probabilités</text><text x="932" y="130" class="flow-subtitle">softmax</text></a></g>
-<g class="flow-node"><a href="fr/generation.html" aria-label="Génération et sélection du prochain token"><rect x="1070" y="60" width="130" height="90" rx="12"/><text x="1082" y="82" class="flow-kicker">DÉCODAGE</text><text x="1082" y="108" class="flow-title">Sélection</text><text x="1082" y="130" class="flow-subtitle">ou sampling</text></a></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/text-data.html" aria-label="Texte et données : contexte et tokens"><rect x="20" y="60" width="130" height="90" rx="12"/><text x="32" y="82" class="flow-kicker">ENTRÉE</text><text x="32" y="108" class="flow-title">Texte / prompt</text><text x="32" y="130" class="flow-subtitle">tokenisation → IDs</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/embedding-space.html" aria-label="Espace des embeddings"><rect x="170" y="60" width="130" height="90" rx="12"/><text x="182" y="82" class="flow-kicker">VECTEURS</text><text x="182" y="108" class="flow-title">Embeddings</text><text x="182" y="130" class="flow-subtitle">lookup</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/positional-encoding.html" aria-label="Information positionnelle"><rect x="320" y="60" width="130" height="90" rx="12"/><text x="332" y="82" class="flow-kicker">POSITION</text><text x="332" y="108" class="flow-title">Position</text><text x="332" y="130" class="flow-subtitle">encodage / RoPE</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/transformer.html" aria-label="Calcul du Transformer"><rect x="470" y="60" width="130" height="90" rx="12"/><text x="482" y="82" class="flow-kicker">RÉSEAU</text><text x="482" y="108" class="flow-title">Transformer</text><text x="482" y="130" class="flow-subtitle">attention + MLP</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/contextualized-representations.html" aria-label="Représentations contextualisées"><rect x="620" y="60" width="130" height="90" rx="12"/><text x="632" y="82" class="flow-kicker">SORTIE CACHÉE</text><text x="632" y="108" class="flow-title">États</text><text x="632" y="130" class="flow-subtitle">contextualisés</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/logits.html" aria-label="Logits"><rect x="770" y="60" width="130" height="90" rx="12"/><text x="782" y="82" class="flow-kicker">SCORES</text><text x="782" y="108" class="flow-title">Logits</text><text x="782" y="130" class="flow-subtitle">non normalisés</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/probabilites.html" aria-label="Probabilités"><rect x="920" y="60" width="130" height="90" rx="12"/><text x="932" y="82" class="flow-kicker">DISTRIBUTION</text><text x="932" y="108" class="flow-title">Probabilités</text><text x="932" y="130" class="flow-subtitle">softmax</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/generation.html" aria-label="Génération et sélection du prochain token"><rect x="1070" y="60" width="130" height="90" rx="12"/><text x="1082" y="82" class="flow-kicker">DÉCODAGE</text><text x="1082" y="108" class="flow-title">Sélection</text><text x="1082" y="130" class="flow-subtitle">ou sampling</text></g>
 <text x="430" y="174" class="flow-note">Ajouter le token sélectionné au contexte, puis recommencer — sans modifier θ</text>
 <text x="20" y="216" class="flow-note">La position peut être ajoutée aux embeddings ou intégrée à l’attention (ex. RoPE), selon l’architecture.</text>
 
@@ -118,23 +118,48 @@ Le même modèle intervient dans plusieurs processus, mais leurs objectifs et le
 <path d="M240 315 H260"/><path d="M480 315 H500"/><path d="M720 315 H740"/><path d="M960 315 H980"/>
 <path d="M1090 360 V392 H610 V360"/>
 </g>
-<g class="flow-node"><a href="fr/corpus-preparation.html" aria-label="Préparation du corpus et du tokenizer"><rect x="20" y="270" width="220" height="90" rx="12"/><text x="34" y="292" class="flow-kicker">DONNÉES</text><text x="34" y="318" class="flow-title">Corpus + tokenizer</text><text x="34" y="340" class="flow-subtitle">provenance, filtres, partitions</text></a></g>
-<g class="flow-node"><a href="fr/training-examples.html" aria-label="Exemples d'entraînement"><rect x="260" y="270" width="220" height="90" rx="12"/><text x="274" y="292" class="flow-kicker">SÉQUENCES</text><text x="274" y="318" class="flow-title">Entrées + cibles</text><text x="274" y="340" class="flow-subtitle">fenêtres et décalage</text></a></g>
-<g class="flow-node"><a href="fr/transformer.html" aria-label="Passe avant du modèle"><rect x="500" y="270" width="220" height="90" rx="12"/><text x="514" y="292" class="flow-kicker">PRÉDICTIONS</text><text x="514" y="318" class="flow-title">Passe avant</text><text x="514" y="340" class="flow-subtitle">avec les paramètres θ</text></a></g>
-<g class="flow-node"><a href="fr/loss.html" aria-label="Fonction de perte"><rect x="740" y="270" width="220" height="90" rx="12"/><text x="754" y="292" class="flow-kicker">OBJECTIF</text><text x="754" y="318" class="flow-title">Loss / perte</text><text x="754" y="340" class="flow-subtitle">écart aux cibles</text></a></g>
-<g class="flow-node"><a href="fr/gradients.html" aria-label="Gradients et mise à jour"><rect x="980" y="270" width="220" height="90" rx="12"/><text x="994" y="292" class="flow-kicker">OPTIMISATION</text><text x="994" y="318" class="flow-title">Gradients + update</text><text x="994" y="340" class="flow-subtitle">modifier les paramètres θ</text></a></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/corpus-preparation.html" aria-label="Préparation du corpus et du tokenizer"><rect x="20" y="270" width="220" height="90" rx="12"/><text x="34" y="292" class="flow-kicker">DONNÉES</text><text x="34" y="318" class="flow-title">Corpus + tokenizer</text><text x="34" y="340" class="flow-subtitle">provenance, filtres, partitions</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/training-examples.html" aria-label="Exemples d'entraînement"><rect x="260" y="270" width="220" height="90" rx="12"/><text x="274" y="292" class="flow-kicker">SÉQUENCES</text><text x="274" y="318" class="flow-title">Entrées + cibles</text><text x="274" y="340" class="flow-subtitle">fenêtres et décalage</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/transformer.html" aria-label="Passe avant du modèle"><rect x="500" y="270" width="220" height="90" rx="12"/><text x="514" y="292" class="flow-kicker">PRÉDICTIONS</text><text x="514" y="318" class="flow-title">Passe avant</text><text x="514" y="340" class="flow-subtitle">avec les paramètres θ</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/loss.html" aria-label="Fonction de perte"><rect x="740" y="270" width="220" height="90" rx="12"/><text x="754" y="292" class="flow-kicker">OBJECTIF</text><text x="754" y="318" class="flow-title">Loss / perte</text><text x="754" y="340" class="flow-subtitle">écart aux cibles</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/gradients.html" aria-label="Gradients et mise à jour"><rect x="980" y="270" width="220" height="90" rx="12"/><text x="994" y="292" class="flow-kicker">OPTIMISATION</text><text x="994" y="318" class="flow-title">Gradients + update</text><text x="994" y="340" class="flow-subtitle">modifier les paramètres θ</text></g>
 <text x="650" y="414" class="flow-note">Les paramètres mis à jour servent au calcul suivant</text>
 
 <text x="20" y="448" class="flow-kicker">3 · ÉVALUATION — FONCTION TRANSVERSALE</text>
 <g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#flow-arrow-fr)">
 <path d="M240 525 H420"/><path d="M640 525 H820"/>
 </g>
-<g class="flow-node"><a href="fr/corpus-preparation.html" aria-label="Jeux de validation et de test"><rect x="20" y="480" width="220" height="90" rx="12"/><text x="34" y="502" class="flow-kicker">DONNÉES TENUES À L'ÉCART</text><text x="34" y="528" class="flow-title">Validation / test</text><text x="34" y="550" class="flow-subtitle">séparation sans fuite</text></a></g>
-<g class="flow-node"><a href="fr/evaluation-experimentale.html" aria-label="Métriques et analyse des erreurs"><rect x="420" y="480" width="220" height="90" rx="12"/><text x="434" y="502" class="flow-kicker">MESURES</text><text x="434" y="528" class="flow-title">Métriques + erreurs</text><text x="434" y="550" class="flow-subtitle">incertitude et analyse</text></a></g>
-<g class="flow-node"><a href="fr/evaluation-experimentale.html" aria-label="Interpréter les résultats de l’évaluation"><rect x="820" y="480" width="220" height="90" rx="12"/><text x="834" y="502" class="flow-kicker">INTERPRÉTATION</text><text x="834" y="528" class="flow-title">Décisions informées</text><text x="834" y="550" class="flow-subtitle">ajuster sans contaminer le test</text></a></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/corpus-preparation.html" aria-label="Jeux de validation et de test"><rect x="20" y="480" width="220" height="90" rx="12"/><text x="34" y="502" class="flow-kicker">DONNÉES TENUES À L'ÉCART</text><text x="34" y="528" class="flow-title">Validation / test</text><text x="34" y="550" class="flow-subtitle">séparation sans fuite</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/evaluation-experimentale.html" aria-label="Métriques et analyse des erreurs"><rect x="420" y="480" width="220" height="90" rx="12"/><text x="434" y="502" class="flow-kicker">MESURES</text><text x="434" y="528" class="flow-title">Métriques + erreurs</text><text x="434" y="550" class="flow-subtitle">incertitude et analyse</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/evaluation-experimentale.html" aria-label="Interpréter les résultats de l’évaluation"><rect x="820" y="480" width="220" height="90" rx="12"/><text x="834" y="502" class="flow-kicker">INTERPRÉTATION</text><text x="834" y="528" class="flow-title">Décisions informées</text><text x="834" y="550" class="flow-subtitle">ajuster sans contaminer le test</text></g>
 <text x="20" y="606" class="flow-hint">Les résultats de validation peuvent guider les choix de données, d'entraînement et de décodage ; le jeu de test reste réservé à l'évaluation finale.</text>
 <text x="20" y="630" class="flow-hint">Chaque bloc bordé est cliquable et ouvre une page canonique. Les flèches pleines indiquent le flux de calcul ; les boucles indiquent une répétition ou une mise à jour.</text>
 </svg>
+<script>
+(() => {
+  const svg = document.currentScript?.previousElementSibling;
+  if (!svg || !svg.matches(".llm-flow")) return;
+  const findNode = target => target instanceof Element
+    ? target.closest(".flow-node[role='link']")
+    : null;
+  const activate = node => {
+    const href = node?.getAttribute("data-href");
+    if (href) window.location.assign(href);
+  };
+  svg.addEventListener("click", event => {
+    const node = findNode(event.target);
+    if (node) activate(node);
+  });
+  svg.addEventListener("keydown", event => {
+    if (event.key !== "Enter") return;
+    const node = findNode(event.target);
+    if (node) {
+      event.preventDefault();
+      activate(node);
+    }
+  });
+})();
+</script>
 ```
 
 <figcaption>Inférence : paramètres fixes · Apprentissage : paramètres mis à jour · Évaluation : analyse transversale sur des données tenues à l'écart</figcaption>
