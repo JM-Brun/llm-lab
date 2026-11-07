@@ -8,7 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/positional-encoding"
-scope: "Présente pourquoi un Transformer a besoin d’information positionnelle et compare les grandes familles de mécanismes à un niveau conceptuel ; la géométrie, la dérivation et les variantes de RoPE sont réservées à la page d’approfondissement."
+scope: "Présente pourquoi un Transformer a besoin d’information positionnelle, distingue les encodages absolus des mécanismes relatifs et situe RoPE comme méthode rotative relative ; précise le rôle distinct du masque causal. La géométrie et les variantes de RoPE sont réservées à la page d’approfondissement."
 purpose: "Le lecteur doit pouvoir expliquer pourquoi un Transformer a besoin d’information positionnelle, distinguer plusieurs façons de l’introduire et décrire à quel endroit du calcul elles interviennent."
 suggested_route:
   previous: "fr/embedding-space"
@@ -23,7 +23,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 
 {{< include ../includes/generated-guided-context-fr-positional-encoding.qmd >}}
 ::: {.chapter-lead}
-L'attention fondée sur le contenu compare des représentations, mais ne fournit pas à elle seule une représentation explicite de leur position. Dans un décodeur autorégressif, le masque causal impose déjà une contrainte d'ordre en limitant chaque position à son préfixe ; il ne représente toutefois pas explicitement les positions absolues ou les décalages relatifs. Les mécanismes positionnels complètent cette contrainte. Cette page présente leurs grandes approches à un niveau conceptuel ; la géométrie et la dérivation de RoPE sont réservées à un [approfondissement avancé](rope.qmd).
+Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, « le chat poursuit le chien » de « le chien poursuit le chat ». Cette page présente les mécanismes positionnels et les distingue du masque causal ; la géométrie et la dérivation de RoPE sont réservées à un [approfondissement avancé](rope.qmd).
 :::
 
 ## Pourquoi ajouter une information de position ?
