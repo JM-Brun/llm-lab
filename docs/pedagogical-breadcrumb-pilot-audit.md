@@ -323,7 +323,7 @@ The Understand sidebar has been reorganized on branch `navigation/scope-driven-u
 
 ### Placement decisions and boundaries
 
-- **Generation has one site location under Inference.** Its early orientation and later prediction appearances remain reader-route contexts, not duplicate sidebar parents. The generated guided-route context preserves its explicit stage memberships.
+- **Generation remains a direct child of the Understand / Comprendre section in the Quarto sidebar**; the current configuration has no intermediate “Inference” section. This deliberately keeps the black-box preview visible before the shared core. Its two distinct guided-route memberships (orientation and inference) are supplied by the generated pedagogical context. Do not add another sidebar level solely to make the site breadcrumb more specific. The generated guided-route context preserves its explicit stage memberships.
 - **Predictive entropy has one site location under Prediction.** It describes the model distribution before an observed target is scored, so it must not be grouped under observed-target scoring. **Cross-entropy has one site location under Scoring.** Its role in the training objective is a cross-module connection, not a reason to duplicate the page under Training. The loss and gradients pages remain under Training and should link back to the canonical scoring explanation where needed.
 - **Training examples and corpus preparation remain under Build.** Their operational role in G1b/G2 is distinct from the conceptual Training module; they must not be moved into the Understand sidebar merely to make the module table appear complete.
 - **Evaluation remains under Practice & experiment.** Its cross-cutting role does not justify turning it into a final mandatory child of Training.
@@ -332,3 +332,70 @@ The Understand sidebar has been reorganized on branch `navigation/scope-driven-u
 - **Sidebar order preserves the reader-facing preview.** Orientation → inference/generation preview → shared core → scoring → training. This intentionally differs from the computational dependency direction: inference is previewed as a black box before the learner unpacks its shared predictor. Optional background pages follow the core route so Quarto previous/next navigation does not divert the reader before the generation preview.
 
 This is a source-level pilot. It does not yet establish rendered breadcrumb quality, mobile behavior, keyboard/screen-reader usability, or learner comprehension. Validate the bilingual rendered site before generalizing the approach to other destinations.
+
+
+## 10. Manual semantic audit of breadcrumb ancestry and conceptual transitions (2026-11-07)
+
+**Scope:** manual comparison of the current bilingual Quarto sidebar ancestry in `site/_quarto.yml` with page scope/purpose, the canonical module topology in `docs/learning-path.md`, and the existing page-map and guided-route semantics. This checks whether each ancestor is a meaningful site-location category; it is not a DOM-presence test, a screen-reader test, or a learner study.
+
+### 10.1 Site-location ancestry: semantic verdict
+
+The French and English sidebars use the same hierarchy and page placement. The current ancestry is:
+
+| Page group | FR site-location ancestry | EN site-location ancestry | Verdict |
+|---|---|---|---|
+| Embedding space, positional encoding, contextualized representations | Comprendre les LLM → Du texte à la distribution du prochain token → Embeddings, position et contexte | Understand LLMs → From text to the next-token distribution → Embeddings, position, and context | Appropriate: these pages explain the transition from discrete IDs to initial and context-dependent representations. |
+| Transformer overview, Q/K/V, scaled attention, causal masking | Comprendre les LLM → Du texte à la distribution du prochain token → Calcul d’un bloc Transformer | Understand LLMs → From text to the next-token distribution → Computing a Transformer block | Appropriate: all four pages explain the internal block computation at different levels. Q/K/V, attention and masking are siblings in the site hierarchy, not an artificial parent-child execution chain. |
+| Logits, probabilities, predictive entropy | Comprendre les LLM → Du texte à la distribution du prochain token → Logits, probabilités et entropie | Understand LLMs → From text to the next-token distribution → Logits, probabilities, and entropy | Appropriate: these pages describe the output scores, the conditional distribution and a property of that distribution before an observed target is scored. |
+| Likelihood and cross-entropy | Comprendre les LLM → Scoring des tokens observés | Understand LLMs → Observed-target scoring | Appropriate: both pages concern observed targets and their probabilistic score. Neither is nested under predictive entropy. |
+| Loss and gradients | Comprendre les LLM → Loss et gradients | Understand LLMs → Loss and gradients | Appropriate: this is the parameter-learning branch, distinct from fixed-parameter scoring. |
+| Generation | Comprendre les LLM → Génération | Understand LLMs → Generation | Defensible but intentionally broad: the page is an early black-box orientation and later inference lesson. Its generated route context supplies the more precise orientation/inference memberships. No extra sidebar section is warranted. |
+
+The site breadcrumb therefore provides a defensible **published-site location**, not a complete explanation of computational or conceptual ancestry. In particular, the contextualized-representations page belongs under the representation section even though its page-map has multiple conceptual parents; the native breadcrumb should not attempt to serialize those parents. Likewise, the likelihood page belongs under observed-target scoring even though its conceptual input is the conditional distribution.
+
+### 10.2 Navigation dimensions that must remain distinct
+
+The manual comparison confirms that the following are not interchangeable:
+
+- Quarto sidebar ancestry answers where a page is located in the published site.
+- The generated guided-route cue answers which curriculum stage(s) the page serves.
+- `suggested_route.previous/next` recommends a useful reading transition; it is not a prerequisite relation.
+- Page-map `hierarchy.parents/children` records conceptual containment/decomposition and may be multi-parent.
+- The concept graph records typed semantic relations.
+- The computational graph records operations and produced/consumed values.
+- The Build path records implementation dependencies.
+
+No page should gain a synthetic breadcrumb by serializing `hierarchy.parents`, and no computational edge should be converted into a sidebar parent or pedagogical prerequisite.
+
+### 10.3 Transition audit: representations → attention → prediction
+
+The current recommended transitions are pedagogically defensible when read as a sequence of explanations, not as a literal execution trace:
+
+1. **Representations:** embedding lookup → positional information → contextualized representations → Transformer overview. The transition distinguishes static initial lookup vectors from hidden states transformed by the network. The contextualized-representations page's multiple conceptual parents do not require multiple breadcrumb trails.
+2. **Attention computation:** Transformer overview → Q/K/V → scaled dot-product attention → causal masking. Q/K/V introduces the three projections; scaled attention explains score computation, normalization and value aggregation; causal masking then isolates the prefix-visibility constraint.
+3. **Important ordering qualification:** causal masking is applied to attention scores before softmax and value aggregation. Its position after the scaled-attention lesson is an explanatory teaching order, not a claim that masking executes after a completed attention operation. The route then returns to the block output path (remaining block operations and final hidden states) before logits are produced.
+4. **Prediction:** logits → conditional probabilities → predictive entropy. Entropy describes the predictive distribution before a target is observed; it is not a scoring result and does not select a token.
+
+The existing sequence does not need another pipeline or navigation layer. The Transformer overview and scaled-attention lesson already provide the broader computational context needed to interpret the focused Q/K/V and masking lessons.
+
+### 10.4 Transition audit: prediction → scoring → learning
+
+- **Prediction to scoring:** the conditional distribution is the shared boundary. Scoring combines it with an observed target and reads the probability assigned to that target. It does not sample a token and does not update parameters.
+- **Entropy to likelihood:** the existing transition from predictive entropy to likelihood is useful as a contrast between uncertainty about a distribution and the probability assigned to an observed sequence. It is not a mathematical prerequisite; the likelihood page correctly distinguishes these quantities.
+- **Likelihood to cross-entropy:** this is a valid bridge from sequence-level observed-target likelihood/log-likelihood to the one-hot token-level negative log-probability and its cross-entropy interpretation. The pages remain siblings in the site hierarchy because they have different scopes.
+- **Cross-entropy to loss to gradients:** this is a valid learning-oriented progression: per-target penalty → explicit masking/reduction into an objective → derivative of that objective with respect to parameters.
+- **Training examples and teacher forcing:** these remain in the Build/data-preparation branch. Their operational placement must not be mistaken for a missing scoring breadcrumb or a prerequisite for inference. The teacher-forced observed-prefix policy connects them to scoring and training without changing the shared predictor.
+- **Generation and scoring remain sibling uses** of the conditional distribution. The route must not imply that likelihood, cross-entropy, loss or gradients are steps in ordinary generation.
+
+### 10.5 Corrections and decisions
+
+- [x] Corrected the stale statement in §9: Generation is currently a direct child of Understand / Comprendre in the Quarto sidebar, not nested under an “Inference” section.
+- [x] Confirmed FR/EN sidebar ancestry and page grouping against the current Quarto source.
+- [x] Confirmed that the existing groups align with the shared-core / inference / scoring / training topology without forcing a linear computational chain.
+- [x] Confirmed that the entropy → likelihood transition is contrastive rather than a prerequisite, and that causal masking's teaching position must not be read as execution order.
+- [x] No sidebar restructuring, new route registry, graph schema, page metadata field, or JavaScript layer is justified by this audit.
+- [ ] Keep the separate FR/EN screen-reader review open.
+- [ ] Validate the visible breadcrumb labels and actual ancestor links in a rendered browser review; DOM presence and Axe checks alone do not establish semantic usefulness.
+- [ ] Obtain learner evidence before claiming that the ancestry or transition cues improve comprehension.
+
+**Evidence boundary:** the ancestry verdict is a manual semantic review of the current Quarto source and page contracts. The source establishes the configured parent labels and page placement; it does not by itself establish the exact rendered appearance, link usability, assistive-technology behavior, or learner comprehension. Existing automated browser results remain useful technical evidence but do not close these manual checks.
