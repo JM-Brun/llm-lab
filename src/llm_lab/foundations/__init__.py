@@ -46,5 +46,3 @@ def __getattr__(name: str) -> Any:
 def __dir__() -> list[str]:
     """Expose lazy public symbols to introspection tools."""
     return sorted(set(globals()) | set(__all__))
-
-
