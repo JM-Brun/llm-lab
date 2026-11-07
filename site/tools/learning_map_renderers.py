@@ -35,17 +35,20 @@ COPY: dict[str, dict[str, Any]] = {
         "notionsUnitSingular": "notion",
         "sectionsLabel": "Rubriques",
         "pagesLabel": "Pages",
-        "searchPlaceholder": "Filtrer les pages et les notions…",
+        "searchPlaceholderPages": "Filtrer les pages…",
+        "searchPlaceholderConcepts": "Filtrer les notions…",
         "searchLabel": "Rechercher dans la carte",
         "loading": "Chargement de la carte…",
         "loadError": "Impossible de charger les données de la carte.",
         "retry": "Réessayer",
         "noResults": "Aucun résultat pour cette recherche.",
+        "conceptMatchesHint": "Voir aussi {count} notion(s) dans la vue « Notions canoniques ».",
         "emptyDetails": "Cliquez sur une page ou une notion pour afficher ses détails ici.",
         "crumbsLabel": "Fil d'Ariane",
         "openPage": "Ouvrir la page",
         "asideHint": "Un clic sélectionne sans naviguer ; « Ouvrir la page » ouvre la ressource.",
         "suggestedNext": "Étape suivante suggérée",
+        "suggestedPrevious": "Étape précédente suggérée",
         "relatedPages": "Pages liées",
         "relatedConcepts": "Notions liées",
         "sectionHeadingsTitle": "Dans cette page",
@@ -101,17 +104,20 @@ COPY: dict[str, dict[str, Any]] = {
         "notionsUnitSingular": "concept",
         "sectionsLabel": "Sections",
         "pagesLabel": "Pages",
-        "searchPlaceholder": "Filter pages and concepts…",
+        "searchPlaceholderPages": "Filter pages…",
+        "searchPlaceholderConcepts": "Filter concepts…",
         "searchLabel": "Search the map",
         "loading": "Loading the map…",
         "loadError": "Could not load the map data.",
         "retry": "Retry",
         "noResults": "No results for this search.",
+        "conceptMatchesHint": "See also {count} concept(s) in the “Canonical concepts” view.",
         "emptyDetails": "Click a page or a concept to see its details here.",
         "crumbsLabel": "Breadcrumb",
         "openPage": "Open the page",
         "asideHint": "Clicking selects in place; use “Open the page” to open the resource.",
         "suggestedNext": "Suggested next step",
+        "suggestedPrevious": "Suggested previous step",
         "relatedPages": "Related pages",
         "relatedConcepts": "Related concepts",
         "sectionHeadingsTitle": "On this page",
@@ -185,6 +191,28 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
     return node;
   }
 
+  function appendMarkedText(node, text, query) {
+    if (!query) {
+      node.appendChild(document.createTextNode(text));
+      return;
+    }
+    var haystack = text.toLowerCase();
+    var needle = query.toLowerCase();
+    var cursor = 0;
+    var index = haystack.indexOf(needle);
+    while (index >= 0) {
+      if (index > cursor) {
+        node.appendChild(document.createTextNode(text.slice(cursor, index)));
+      }
+      node.appendChild(el("mark", "map-mark", text.slice(index, index + needle.length)));
+      cursor = index + needle.length;
+      index = haystack.indexOf(needle, cursor);
+    }
+    if (cursor < text.length) {
+      node.appendChild(document.createTextNode(text.slice(cursor)));
+    }
+  }
+
   function detectLanguage() {
     var lang = String(document.documentElement.lang || "").slice(0, 2).toLowerCase();
     if (lang !== "fr" && lang !== "en") {
@@ -243,7 +271,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       searchInput.value = state.query;
     }
 
-    searchInput.setAttribute("placeholder", copy.searchPlaceholder);
+    updateSearchPlaceholder();
     searchInput.setAttribute("aria-label", copy.searchLabel);
     renderPlaceholder();
 
@@ -262,6 +290,13 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
     function renderPlaceholder() {
       clearNode(detailPanel);
       detailPanel.appendChild(el("p", "map-empty", copy.emptyDetails));
+    }
+
+    function updateSearchPlaceholder() {
+      searchInput.setAttribute(
+        "placeholder",
+        state.mode === "concepts" ? copy.searchPlaceholderConcepts : copy.searchPlaceholderPages
+      );
     }
 
     function readStateFromHash() {
@@ -581,6 +616,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
 
     function render() {
       clearNode(viewport);
+      updateSearchPlaceholder();
       if (conceptLegend) {
         conceptLegend.hidden = state.mode !== "concepts";
       }
@@ -749,9 +785,13 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         card.href = page.href;
         card.setAttribute("data-destination", page.destination);
         card.appendChild(el("span", "map-page-meta", copy.destinations[page.destination] || ""));
-        card.appendChild(el("span", "map-page-title", page.title));
+        var pageTitle = el("span", "map-page-title");
+        appendMarkedText(pageTitle, page.title, query);
+        card.appendChild(pageTitle);
         if (page.purpose) {
-          card.appendChild(el("span", "map-page-summary", page.purpose));
+          var pageSummary = el("span", "map-page-summary");
+          appendMarkedText(pageSummary, page.purpose, query);
+          card.appendChild(pageSummary);
         }
         card.addEventListener("click", function (event) {
           if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
@@ -762,6 +802,19 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         grid.appendChild(card);
       });
       viewport.appendChild(grid);
+      var conceptMatches = (data.concepts || []).filter(function (concept) {
+        var haystack = (concept.label + " " + (concept.definition || "")).toLowerCase();
+        return haystack.indexOf(query) >= 0;
+      });
+      if (conceptMatches.length) {
+        viewport.appendChild(
+          el(
+            "p",
+            "map-cross-view-hint",
+            copy.conceptMatchesHint.replace("{count}", String(conceptMatches.length))
+          )
+        );
+      }
       var resultUnit = matches.length > 1 ? copy.pagesUnitPlural : copy.pagesUnit;
       setStatus(matches.length + " " + resultUnit);
     }
@@ -839,18 +892,22 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       return hidden;
     }
 
-    function conceptItemFor(concept, neighbors) {
+    function conceptItemFor(concept, neighbors, query) {
       var item = el("button", "map-concept-item");
       item.type = "button";
       item.setAttribute("data-concept-id", concept.id);
       item.setAttribute("aria-pressed", "false");
-      item.appendChild(el("span", "map-concept-label", concept.label));
+      var label = el("span", "map-concept-label");
+      appendMarkedText(label, concept.label, query);
+      item.appendChild(label);
       var importanceLabel = copy.importanceLabels[concept.importance];
       if (importanceLabel) {
         item.appendChild(el("span", "map-concept-importance", importanceLabel));
       }
       if (concept.definition) {
-        item.appendChild(el("span", "map-concept-def", concept.definition));
+        var definition = el("span", "map-concept-def");
+        appendMarkedText(definition, concept.definition, query);
+        item.appendChild(definition);
       }
       if (state.conceptId) {
         if (state.conceptId === concept.id) {
@@ -912,7 +969,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         group.appendChild(title);
         var grid = el("div", "map-concept-grid");
         grouped[domain.id].forEach(function (concept) {
-          grid.appendChild(conceptItemFor(concept, neighbors));
+          grid.appendChild(conceptItemFor(concept, neighbors, query));
         });
         group.appendChild(grid);
         viewport.appendChild(group);
@@ -924,7 +981,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         group.appendChild(title);
         var grid = el("div", "map-concept-grid");
         ungrouped.forEach(function (concept) {
-          grid.appendChild(conceptItemFor(concept, neighbors));
+          grid.appendChild(conceptItemFor(concept, neighbors, query));
         });
         group.appendChild(grid);
         viewport.appendChild(group);
@@ -994,6 +1051,16 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
           }
         });
         detailPanel.appendChild(relatedChips);
+      }
+      var previous = (page.route || {}).previous;
+      if (previous && pageById[previous]) {
+        detailPanel.appendChild(el("h4", "map-detail-heading", copy.suggestedPrevious));
+        var previousChips = el("div", "map-chips");
+        var previousChip = chipFor(previous);
+        if (previousChip) {
+          previousChips.appendChild(previousChip);
+        }
+        detailPanel.appendChild(previousChips);
       }
       var next = (page.route || {}).next;
       if (next && pageById[next]) {
