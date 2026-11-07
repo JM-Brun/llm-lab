@@ -54,7 +54,10 @@ if TYPE_CHECKING:
         scaled_dot_product_attention as scaled_dot_product_attention,
         softmax_with_temperature as softmax_with_temperature,
     )
-    from llm_lab.foundations.decoding_filters import top_k_filter as top_k_filter, top_p_filter as top_p_filter
+    from llm_lab.foundations.decoding_filters import (
+        top_k_filter as top_k_filter,
+        top_p_filter as top_p_filter,
+    )
     from llm_lab.foundations.generate import generate as generate
     from llm_lab.foundations.gpt import GPT as GPT
     from llm_lab.foundations.gpt_config import GPTConfig as GPTConfig
@@ -63,5 +66,7 @@ if TYPE_CHECKING:
         cross_entropy_from_logits as cross_entropy_from_logits,
         cross_entropy_gradient as cross_entropy_gradient,
     )
-    from llm_lab.foundations.training_examples import sliding_input_target_pairs as sliding_input_target_pairs
+    from llm_lab.foundations.training_examples import (
+        sliding_input_target_pairs as sliding_input_target_pairs,
+    )
     from llm_lab.foundations.transformer_block import TransformerBlock as TransformerBlock
