@@ -42,7 +42,7 @@ These approaches inject positional information at different points and do not ha
 
 ## Common misconceptions
 
-- **“Attention naturally knows which token comes first.”** Order must be supplied by a positional mechanism or an equivalent structure.
+- **“Attention naturally knows which token comes first.”** Content-based attention does not carry that order on its own; a positional mechanism or structural constraint such as causal masking must supply it.
 
 ## References
 
