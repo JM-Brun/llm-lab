@@ -96,18 +96,12 @@ for (const testCase of cases) {
           label: link.textContent.trim().replace(/\\s+/g, " "),
           path: new URL(link.getAttribute("href"), document.baseURI).pathname,
         }));
-        const practiceRegion = document.querySelector(".learning-practice");
         return {
           // The homepage has no separate top-level primary-navigation widget:
           // Quarto's sidebar is the global site navigation. The landing page's
           // own route choices are the hero actions, entry cards, and Practice links.
           entryCards: readLinks(".learning-entry-grid .learning-entry-link"),
-          // Quarto may restructure raw-HTML containers during rendering. Inspect
-          // the rendered main-content links rather than relying on a styling class.
-          practiceLinks: readLinks("main a[href]"),
-          practiceRegionCount: document.querySelectorAll(".learning-practice").length,
-          practiceRegionHtml: practiceRegion?.outerHTML.slice(0, 3000) ?? null,
-          mainLinks: readLinks("main a[href]"),
+          practiceLinks: readLinks(".learning-practice-links a"),
           heroLinks: readLinks(".hero-actions a"),
           entryCardCount: document.querySelectorAll(".learning-entry-grid .learning-entry").length,
         };
