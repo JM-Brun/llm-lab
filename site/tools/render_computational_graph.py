@@ -60,7 +60,7 @@ def render_view(registry: dict[str, Any], view_id: str, language: str) -> str:
         raise ValueError(f"{view_id}: unknown edges: {sorted(missing_edges)}")
 
     labels = {node_id: nodes[node_id]["labels"][language] for node_id in selected_nodes}
-    # Mermaid cannot lay out a diagram while its callout is collapsed (0×0 container).
+    # Mermaid cannot lay out a diagram while its callout is collapsed (zero-size container).
     # Keep the two overview diagrams expanded; deeper, page-specific views remain
     # progressive disclosures because they are not rendered in this system overview.
     expanded_views = {"persistent-spine", "evaluation"}
