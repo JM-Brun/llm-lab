@@ -64,13 +64,13 @@ Choisissez une porte d'entrée. Vous pourrez changer de parcours à tout moment 
 
 <div class="learning-practice">
   <div>
-    <p class="learning-entry-kicker">À TOUT MOMENT · PRATIQUER</p>
-    <strong>Vérifier par le calcul et l'expérience</strong>
-    <p>Confronter les explications à des exercices, des implémentations et des protocoles d'évaluation.</p>
+  <p class="learning-entry-kicker">À TOUT MOMENT · PRATIQUER</p>
+  <strong>Vérifier par le calcul et l'expérience</strong>
+  <p>Confronter les explications à des exercices, des implémentations et des protocoles d'évaluation.</p>
   </div>
   <div class="learning-practice-links">
-    <a href="fr/exercises.qmd">Exercices</a>
-    <a href="fr/evaluation-experimentale.qmd">Évaluation expérimentale</a>
+  <a href="fr/exercises.qmd">Exercices</a>
+  <a href="fr/evaluation-experimentale.qmd">Évaluation expérimentale</a>
   </div>
 </div>
 
