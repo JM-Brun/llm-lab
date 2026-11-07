@@ -56,7 +56,7 @@ pedagogical_model:
     - "Explicit row-vector convention and tensor shapes reduce ambiguity when checking matrix products."
     - "The embedding lookup equation connects token IDs to a concrete matrix operation."
     - "The paired sine/cosine interpretation gives a compact geometric explanation of sinusoidal position encodings."
-    - "Hand-checkable calculations align with LLM Lab's emphasis on small inspectable examples and numerical invariants."
+    - "The declared aim of hand-checkable calculations aligns with LLM Lab's emphasis on small inspectable examples; the inspected Part 1 snapshot does not expose the promised numerical worked example."
     - "The source attempts to connect equations, PyTorch tensors and geometric visualization."
   pedagogical_limits:
     - "The indexed snapshot does not expose full code cells, concrete numerical outputs or figures; hand-checkability and visual quality cannot be validated."
