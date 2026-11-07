@@ -46,7 +46,7 @@ When training a model to predict the next token, all positions in a sequence can
 
 ## Definition
 
-For a sequence of length $T$, position $i$ can access positions $j\leq i$. One can define a strict upper-triangular boolean mask or an additive mask $M$:
+For a sequence of length $T$, position $i$ can access positions $j\leq i$. Two complementary boolean conventions express this relation: $\mathrm{allowed}_{ij}=\mathbf{1}[j\leq i]$ (key allowed) and $\mathrm{blocked}_{ij}=\mathbf{1}[j>i]$ (key blocked). One can also use an additive mask $M$:
 
 $$
 M_{ij}=
@@ -67,6 +67,17 @@ Future positions then receive zero weight in ideal arithmetic. In practice, libr
 ::: {.callout-note collapse="true" title="Code API conventions (advanced)"}
 In code, **boolean-mask polarity is API-specific**. For example, in [PyTorch scaled dot-product attention](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html), `True` means that a position is allowed to participate in attention; in [PyTorch MultiheadAttention](https://docs.pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html), `True` in `attn_mask` means that the position is masked out. Do not transfer a boolean mask between APIs without checking its documented convention. This is separate from the causal rule itself: the allowed query-key pairs must still exclude future keys.
 :::
+
+**Boolean polarity matters:** an `allowed` matrix is true on the lower triangle (including the diagonal), whereas a `blocked` matrix is true on the strict upper triangle. PyTorch `scaled_dot_product_attention` expects the former convention; `MultiheadAttention.attn_mask` uses the latter. The mathematical rule is the same, but boolean tensors are not interchangeable without a possible inversion.
+
+## Causal masking and other masks have different roles
+
+- **Causal attention mask:** prevents a query from reading a future key; it enforces the autoregressive constraint.
+- **Padding attention mask:** generally prevents padding positions from being used as keys; it does not define temporal order. How padded query positions are handled depends on the implementation.
+- **Document-boundary attention mask:** when multiple documents are packed into one sequence, it can prevent interactions across distinct documents. It can be combined with causal masking.
+- **Loss/target mask:** excludes selected positions from the training objective; by itself, it does not prevent attention layers from accessing information. Shifted-target construction and padding/loss masks belong to the data-and-corpus lesson.
+
+These masks answer different questions and must not be substituted for one another.
 
 ![Four-position causal mask.](../images/causal-attention-mask.svg){fig-alt="Lower-triangular matrix: each position can access itself and all earlier positions" width=100%}
 
@@ -173,7 +184,7 @@ The forbidden score is masked before softmax (conceptually set to $-\infty$): th
 :::
 
 ::: {.callout-note collapse="true" title="Reference code and tests (advanced)"}
-A tested reference implementation is available in `src/llm_lab/foundations/attention.py` (`causal_mask` and `scaled_dot_product_attention`). The test suite in `tests/unit/test_attention.py` includes a similar single-head invariance case and mask and shape checks; it does not test a complete GPT.
+A tested reference implementation is available in `src/llm_lab/foundations/attention.py` (`causal_mask` and `scaled_dot_product_attention`). The attention function accepts an additive 2D mask of exact shape `(T_q, T_k)`; it does not support boolean masks or batch/head broadcasting. The test suite in `tests/unit/test_attention.py` includes a similar single-head invariance case and mask and shape checks; it does not test a complete GPT.
 
 - [Causal mask implementation](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
 - [Temporal invariance unit tests](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
