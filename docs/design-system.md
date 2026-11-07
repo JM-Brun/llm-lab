@@ -58,6 +58,8 @@ Green is the primary brand colour. It identifies the site, navigation, links, pr
 
 Every page reached through the Quarto sidebar should expose a compact **breadcrumb** above its title. It is generated from the active sidebar hierarchy, so the labels and nesting remain aligned with the actual site navigation in both languages. The breadcrumb answers “where am I?”; it is not a claim that readers must follow every parent page in sequence.
 
+The global navbar is the **primary task-oriented wayfinding layer**, limited to four stable learner intents: learning paths, understanding, building, and practice. It is language-aware (FR/EN) and should remain compact. The sidebar is the **secondary detailed information architecture** for topic-level navigation; it may be rich and hierarchical because it serves readers who already have a subject in mind. Do not duplicate the full sidebar in the navbar, and do not make references the only global entry point. Search and the language switch remain utility actions.
+
 Keep navigation patterns distinct:
 
 - **Breadcrumb:** the page's location in the site's information architecture; generated globally from the sidebar.

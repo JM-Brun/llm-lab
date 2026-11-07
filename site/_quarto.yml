@@ -129,9 +129,6 @@ website:
   navbar:
     background: "#14532D"
     foreground: "#f8fafc"
-    left:
-      - text: "Références / References"
-        href: references.qmd
     right:
       - icon: github
         href: https://github.com/JM-Brun/llm-lab
