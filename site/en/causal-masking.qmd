@@ -46,7 +46,7 @@ When training a model to predict the next token, all positions in a sequence can
 
 ## Definition
 
-For a sequence of length $T$, position $i$ can access positions $j\leq i$. One can define a strict upper-triangular boolean mask or an additive mask $M$:
+For a sequence of length $T$, position $i$ can access positions $j\leq i$. Two complementary boolean conventions express this relation: $\mathrm{allowed}_{ij}=\mathbf{1}[j\leq i]$ (key allowed) and $\mathrm{blocked}_{ij}=\mathbf{1}[j>i]$ (key blocked). One can also use an additive mask $M$:
 
 $$
 M_{ij}=
@@ -173,7 +173,7 @@ The forbidden score is masked before softmax (conceptually set to $-\infty$): th
 :::
 
 ::: {.callout-note collapse="true" title="Reference code and tests (advanced)"}
-A tested reference implementation is available in `src/llm_lab/foundations/attention.py` (`causal_mask` and `scaled_dot_product_attention`). The test suite in `tests/unit/test_attention.py` includes a similar single-head invariance case and mask and shape checks; it does not test a complete GPT.
+A tested reference implementation is available in `src/llm_lab/foundations/attention.py` (`causal_mask` and `scaled_dot_product_attention`). The attention function accepts an additive 2D mask of exact shape `(T_q, T_k)`; it does not support boolean masks or batch/head broadcasting. The test suite in `tests/unit/test_attention.py` includes a similar single-head invariance case and mask and shape checks; it does not test a complete GPT.
 
 - [Causal mask implementation](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
 - [Temporal invariance unit tests](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
