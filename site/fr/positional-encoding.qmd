@@ -8,7 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/positional-encoding"
-scope: "Présente pourquoi un Transformer a besoin d’information positionnelle et compare les grandes familles de mécanismes à un niveau conceptuel ; la géométrie, la dérivation et les variantes de RoPE sont réservées à la page d’approfondissement."
+scope: "Présente pourquoi un Transformer a besoin d’information positionnelle, distingue les encodages absolus des mécanismes relatifs et situe RoPE comme méthode rotative relative ; précise le rôle distinct du masque causal. La géométrie et les variantes de RoPE sont réservées à la page d’approfondissement."
 purpose: "Le lecteur doit pouvoir expliquer pourquoi un Transformer a besoin d’information positionnelle, distinguer plusieurs façons de l’introduire et décrire à quel endroit du calcul elles interviennent."
 suggested_route:
   previous: "fr/embedding-space"
@@ -23,26 +23,26 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 
 {{< include ../includes/generated-guided-context-fr-positional-encoding.qmd >}}
 ::: {.chapter-lead}
-L'attention compare des représentations de tokens, mais elle ne connaît pas spontanément leur ordre. Un mécanisme positionnel apporte cette information : il permet au modèle de distinguer, par exemple, « le chat poursuit le chien » de « le chien poursuit le chat ». Cette page présente les grandes familles de mécanismes à un niveau conceptuel ; les propriétés géométriques et la dérivation de RoPE sont réservées à un [approfondissement avancé](rope.qmd).
+Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, « le chat poursuit le chien » de « le chien poursuit le chat ». Cette page présente les mécanismes positionnels et les distingue du masque causal ; la géométrie et la dérivation de RoPE sont réservées à un [approfondissement avancé](rope.qmd).
 :::
 
 ## Pourquoi ajouter une information de position ?
 
-Sans information positionnelle, l'opération d'auto-attention ne porte pas elle-même de représentation générale de l'ordre. Dans un décodeur autorégressif, le masque causal impose toutefois une contrainte d'ordre partiel : une position ne peut accéder qu'à elle-même et aux positions précédentes. Cette contrainte de visibilité ne fournit pas à elle seule une représentation générale des positions absolues ou des distances relatives ; elle ne remplace donc pas un mécanisme positionnel.
+Les embeddings de contenu seuls ne codent pas la position. Le masque causal, lorsqu'il est utilisé, indique quelles positions peuvent être consultées (`j ≤ i`) ; les mécanismes positionnels peuvent en plus représenter la position absolue ou le décalage relatif. Ces signaux sont complémentaires, pas interchangeables.
 
 ![Où l'information de position entre dans le calcul : en entrée pour un encodage absolu, dans les requêtes et les clés pour RoPE.](../images/positional-info-insertion-fr.svg){fig-alt="Un encodage absolu est ajouté aux embeddings en entrée, avant toute projection. RoPE applique des rotations aux requêtes et aux clés après leurs projections, avant le produit QK, si bien que les scores d'attention portent l'information de position." width=100%}
 
-## Trois familles à distinguer
+## Trois approches à distinguer
 
 - **Encodage absolu ajouté au vecteur :** on ajoute à la représentation du token (son vecteur de plongement) un vecteur associé à sa position. Le Transformer original utilisait des encodages sinusoïdaux ; d'autres modèles apprennent leurs embeddings positionnels.
-- **Encodage ou biais relatif :** le calcul utilise explicitement la distance ou le décalage entre deux positions.
-- **RoPE :** des rotations dépendant de la position sont appliquées aux requêtes et aux clés avant le calcul des scores d'attention. Cette approche introduit l'information positionnelle à l'intérieur du mécanisme d'attention.
+- **Mécanismes relatifs :** ils introduisent le décalage entre positions dans le calcul de l'attention, par exemple au moyen d'un biais ajouté aux scores ou de représentations relatives.
+- **RoPE :** cette méthode rotative applique des rotations dépendant de la position aux requêtes et aux clés après leurs projections, avant le produit \(QK^\top\). Le score obtenu dépend alors du décalage relatif. RoPE est donc un mécanisme de position relative ; on le distingue ici pour rendre visible son mode d'injection particulier.
 
-Ces familles sont des repères pédagogiques, pas des catégories mathématiques parfaitement disjointes : RoPE applique des rotations dépendant de chaque position à Q et K, mais leur produit scalaire dépend du décalage relatif entre les positions. Ces approches injectent l'information positionnelle à des endroits différents et n'ont pas exactement les mêmes propriétés. Il suffit ici de retenir leur rôle et leur emplacement général dans le calcul. Pour comprendre la dépendance au décalage relatif, les conventions de rotation et les limites à longue séquence, voir l'[approfondissement avancé sur RoPE](rope.qmd).
+Ces approches injectent l'information positionnelle à des endroits différents et n'ont pas exactement les mêmes propriétés. Le schéma compare deux mécanismes positionnels explicites ; il ne représente pas le masque causal, qui constitue une contrainte d'accès distincte. Il suffit ici de retenir leur rôle et leur emplacement général dans le calcul. Pour comprendre la dépendance au décalage relatif, les conventions de rotation et les limites à longue séquence, voir l'[approfondissement avancé sur RoPE](rope.qmd).
 
 ## Idées reçues
 
-- **« L'attention sait naturellement quel token vient en premier. »** L'ordre doit être fourni par un mécanisme positionnel ou une structure équivalente.
+- **« L'attention sait naturellement quel token vient en premier. »** L'attention fondée sur le contenu ne porte pas cet ordre à elle seule ; un mécanisme positionnel ou une contrainte structurelle, comme le masque causal, doit le fournir.
 
 ## Références
 

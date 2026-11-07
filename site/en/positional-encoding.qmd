@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/positional-encoding"
-scope: "Introduces why a Transformer needs positional information and compares the main mechanism families at a conceptual level; RoPE geometry, derivation, and variants are reserved for the advanced deep dive."
+scope: "Introduces why a Transformer needs positional information, distinguishes absolute encodings from relative mechanisms, and situates RoPE as a rotary relative-position method; clarifies the separate role of causal masking. RoPE geometry and variants belong in the advanced deep dive."
 purpose: "Readers should be able to explain why a Transformer needs positional information, distinguish several ways of introducing it, and describe where these mechanisms enter the computation."
 suggested_route:
   previous: "en/embedding-space"
@@ -23,26 +23,26 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 
 {{< include ../includes/generated-guided-context-en-positional-encoding.qmd >}}
 ::: {.chapter-lead}
-Attention compares token representations, but it does not inherently know their order. A positional mechanism supplies this information, allowing a model to distinguish, for example, “the cat chases the dog” from “the dog chases the cat”. This page introduces the main mechanism families conceptually; RoPE geometry and derivation belong in an [advanced deep dive](rope.qmd).
+A Transformer needs an ordering signal to distinguish, for example, “the cat chases the dog” from “the dog chases the cat”. This page introduces positional mechanisms and distinguishes them from causal masking; RoPE geometry and derivation belong in an [advanced deep dive](rope.qmd).
 :::
 
 ## Why add positional information?
 
-The self-attention operation itself does not carry a general representation of order. In an autoregressive decoder, however, the causal mask imposes a partial order constraint: a position can access only itself and earlier positions. This visibility constraint does not by itself provide a general representation of absolute positions or relative distances, so it does not replace a positional mechanism.
+Content embeddings alone do not encode position. When used, the causal mask indicates which positions may be attended to (`j ≤ i`); positional mechanisms can additionally represent absolute positions or relative offsets. These signals are complementary, not interchangeable.
 
 ![Where positional information enters the computation: at the input for an absolute encoding, inside queries and keys for RoPE.](../images/positional-info-insertion-en.svg){fig-alt="An absolute encoding is added to the embeddings at the input, before any projection. RoPE applies rotations to queries and keys after their projections, before the QK product, so the attention scores carry positional information." width=100%}
 
 ## Three approaches to distinguish
 
 - **Absolute encoding added to the vector:** add a position-specific vector to the token representation. The original Transformer used sinusoidal encodings; other models learn positional embeddings.
-- **Relative encoding or bias:** the computation explicitly uses the distance or offset between two positions.
-- **RoPE:** apply position-dependent rotations to queries and keys before attention scores are computed. This approach introduces positional information inside the attention mechanism.
+- **Relative mechanisms:** introduce the offset between positions into the attention computation, for example through a bias added to attention scores or through relative representations.
+- **RoPE:** this rotary method applies position-dependent rotations to queries and keys after their projections and before the \(QK^\top\) product. The resulting score depends on the relative offset. RoPE is therefore a relative-position mechanism; it is separated here to make its particular insertion point clear.
 
-These are pedagogical families, not perfectly disjoint mathematical categories: RoPE applies position-dependent rotations to Q and K, while their dot product depends on the relative offset between positions. These approaches inject positional information at different points and do not have exactly the same properties. At this stage, it is enough to understand their role and approximate location in the computation. For relative-offset dependence, rotation conventions, and long-sequence limitations, see the [advanced RoPE deep dive](rope.qmd).
+These approaches inject positional information at different points and do not have exactly the same properties. The diagram compares two explicit positional mechanisms; it does not depict the causal mask, which is a separate visibility constraint. At this stage, it is enough to understand their role and approximate location in the computation. For relative-offset dependence, rotation conventions, and long-sequence limitations, see the [advanced RoPE deep dive](rope.qmd).
 
 ## Common misconceptions
 
-- **“Attention naturally knows which token comes first.”** Order must be supplied by a positional mechanism or an equivalent structure.
+- **“Attention naturally knows which token comes first.”** Content-based attention does not carry that order on its own; a positional mechanism or structural constraint such as causal masking must supply it.
 
 ## References
 

@@ -601,29 +601,40 @@ This is a narrow source-level correction, not a full audit of the attention less
 The browser review is conditional in `.github/workflows/quarto.yml`: it runs for selected branch prefixes (including `ux/`), not for every pull request. The successful render on the original `docs/` branch therefore did not execute Chromium, keyboard, Axe, screenshot or responsive-page checks. Do not report those as passed until the targeted browser run completes.
 
 
-## Seventeenth slice: positional information and tensor-shape contracts (2026-11-07)
+## Seventeenth slice: positional information and tensor-shape notation (2026-11-07)
 
-**Scope:** bounded FR/EN source audit of the conceptual positional-encoding pair and a cross-check of the advanced tensor reference against the attention/scoring equations audited in the sixteenth slice. This is a source and editorial review, not a complete implementation audit or manual accessibility test.
+**Scope:** bounded source-level review of the bilingual positional-encoding introduction and its RoPE deep dive, plus the FR/EN tensor-shape reference and its softmax-axis worked example. This pass checks conceptual distinctions, notation, representative dimensions and arithmetic; it is not a complete review of every positional-encoding architecture or every implementation API.
 
-### Positional encoding
+### A. Positional information versus causal visibility
 
-| Area | Finding | Change / boundary |
+| Page pair | Finding | Decision and remaining validation |
 |---|---|---|
-| Why position is needed | The self-attention operation itself does not encode a general notion of absolute position or distance. In a causal decoder, however, the causal mask already imposes a partial precedence relation by restricting each position to itself and earlier positions. | Both language pages now distinguish this visibility constraint from a general positional representation. The mask is not described as conveying no order information at all, nor as replacing positional encoding. |
-| Mechanism families | Absolute vectors, relative encodings/biases and RoPE are useful implementation families, but they are not perfectly disjoint mathematical categories. RoPE applies position-dependent rotations to Q and K; their dot product depends on the relative offset. | Added the same qualification in FR and EN. Detailed rotation geometry and derivation remain in the dedicated RoPE deep dive. |
-| Diagrams and metadata | Both diagrams accurately locate absolute encoding before projections and RoPE on Q/K after projections, before the QK product. FR/EN titles, purpose, topic, level and route relationships align. | No route or metadata change required. The visual claim is conceptual and does not imply that every architecture uses the same positional mechanism. |
+| positional-encoding.qmd (FR/EN) | The previous opening risked implying that a causal decoder has no order signal unless an explicit positional encoding is added. That is too broad: content-only attention does not itself represent position, but a causal mask imposes an ordering constraint by restricting position i to its prefix (j ≤ i). The mask does not explicitly encode absolute positions or relative offsets. | **Clarified in both languages.** The opening now distinguishes content-based attention, causal visibility and explicit positional mechanisms. The diagram is explicitly scoped to absolute input encoding and RoPE; it does not depict the causal mask. |
+| Absolute and relative mechanisms | Absolute encodings add position-specific vectors to token representations. Relative mechanisms can encode offsets through attention-score biases or relative representations. RoPE applies position-dependent rotations to Q/K after projection and before QK-transpose; its dot product depends on the relative offset. | **Taxonomy clarified.** RoPE is identified as a rotary relative-position mechanism, not as a category disjoint from all relative methods. It remains separately described because its insertion point and geometry differ from additive relative biases. |
+| rope.qmd (FR/EN) | For one coordinate pair and one frequency, qₘ = R(mθ)q and kₙ = R(nθ)k. The rotation identities R(α)ᵀ = R(−α) and R(α)R(β) = R(α+β) imply qₘᵀkₙ = qᵀR((n−m)θ)k. The page correctly scopes the derivation to a pair/frequency and states that standard RoPE rotates Q/K, not V. | **Source check passed for the displayed derivation and scope.** No derivation or variant catalogue was copied into the introductory page. Rendered equations and diagrams still require the browser/render pass. |
 
-### Tensor-shape cross-check
+The existing concept graph already distinguishes the roles: causal-mask constrains self-attention, while positional-encoding contributes to self-attention. No duplicate relation or new relation type was added. The concept registry already classifies positional encoding as core and associates it with the architecture/mechanisms and mathematical-tools/geometry domains.
 
-- The common conventions are consistent across FR/EN: hidden activations $(B,T,D)$, logits $(B,T,V)$, and multi-head activations commonly $(B,H,T,d_h)$, with $D=H d_h$ as a common architecture relation rather than a universal law.
-- A projection $XW$ with $X:(B,T,D)$ and $W:(D,D')$ preserves batch and sequence axes and yields $(B,T,D')$.
-- For attention, the audited single-head contracts remain consistent: $Q,K:(T,d_k)$ imply $QK^\top:(T,T)$; $A:(T,T)$ and $V:(T,d_v)$ imply $AV:(T,d_v)$. The batched/multi-head convention is a layout extension, not a change to the underlying axis semantics.
-- The vocabulary softmax belongs on $V$, not $T$. The page's counterexample is numerically consistent: softmax over $T$ is a valid operation but does not yield a per-position vocabulary distribution.
-- The embedding-table estimate $50,000\times768=38,400,000$ parameters and the 32-bit storage estimate (153.6 MB decimal; approximately 146.5 MiB) are arithmetically consistent. The page correctly qualifies separate output projection versus weight tying.
-- FR and EN cover the same major topics and technical caveats. One editorial asymmetry was found: the EN tensor page explicitly labels itself as an optional technical reference rather than a build prerequisite, while the FR page did not. Added the equivalent French callout; the page remains a Deepen resource, not a prerequisite.
+### B. Tensor shapes, axes and numerical examples
 
-### Validation boundary
+| Area | Finding | Decision |
+|---|---|---|
+| Vocabulary notation | The tensor reference used V for vocabulary size in the same conceptual area as the value tensor V in Q/K/V. Both usages are conventional, but the overload was avoidable. | **Disambiguated in FR/EN:** vocabulary size is now N_vocab, including shapes, equations, code-oriented labels and both softmax comparison SVGs. The attention value notation remains V. |
+| Shape contracts | Hidden activations (B,T,D), logits (B,T,N_vocab), and common multi-head activations (B,H,T,d_h) are correctly identified as common rather than universal. D = H d_h is appropriately qualified with “often”. The projection X with shape (B,T,D) and W with shape (D,D′) gives XW with shape (B,T,D′). | **Source check passed.** The page preserves the warning that shape compatibility does not establish axis semantics or computational correctness. |
+| Softmax counterexample | For logits [2,1,0] and [0,1,2], softmax over the vocabulary axis gives approximately [0.665,0.245,0.090] and [0.090,0.245,0.665]. Softmax over the two-position axis gives [0.881,0.500,0.119] and [0.119,0.500,0.881]; the sums over the vocabulary axis are 1.5, not 1. | **Numerical example independently checked.** The PyTorch assertions test both normalizations and make the intended probability invariant explicit. |
+| Embedding-table cost | N_vocab = 50,000 and d = 768 gives 38,400,000 parameters. At four bytes per parameter, the weights occupy 153.6 MB decimal, or about 146.5 MiB. A separate output projection may add d × N_vocab weights; weight tying changes that count. | **Arithmetic checked.** The page correctly excludes gradients, optimizer states and unrelated model parameters from the estimate. |
 
-**Completed:** source-level FR/EN comparison; conceptual correction for the causal-mask ordering signal; RoPE classification qualification; cross-check of tensor shapes, axis semantics and representative arithmetic; FR/EN placement-callout harmonization.
+### C. Bilingual and editorial reconciliation
 
-**Still outstanding:** re-render and inspect the newly changed positional/tensor pages; verify all linked SVGs and external references in rendered output; manual screen-reader review in FR and EN. The browser evidence from PR #638 covers the attention/scoring/training slice, not these new source edits.
+- FR/EN positional lessons now distinguish the causal visibility constraint from explicit positional mechanisms, use the same absolute/relative taxonomy, and retain the existing localized diagrams and links.
+- FR/EN tensor lessons use the same N_vocab notation and corresponding worked examples. The English-only learning-path callout was removed; its useful guidance about introducing PyTorch operations in context and keeping general tensor theory optional is now a concise paragraph in both languages.
+- No page was moved between Understand and Deepen: positional encoding remains a core concept lesson; tensor shapes remain an optional advanced reference.
+- No changes were needed in data/concepts.yml: its existing typed relations already represent causal masking and positional encoding as distinct contributions to self-attention.
+
+### D. Validation status and limits
+
+**Completed in this source pass:** FR/EN source comparison; correction of the causal-mask/position distinction; clarification that RoPE belongs to the relative-position family; check of the RoPE pairwise derivation; vocabulary-symbol disambiguation; independent checks of the tensor shapes, softmax values and parameter-memory estimate.
+
+**Rendered/browser evidence (workflow 42366358835, commit a3f44dd):** the Quarto site rendered successfully and the Chromium review completed with 232 cases and zero reported failures. For the three audited page pairs (positional encoding, RoPE, tensors), the report records HTTP 200, zero console/page errors, zero horizontal overflow, zero unrendered math delimiters, zero Axe violations on the full desktop-light cases, and working localized previous/next controls. FR/EN desktop-light reports each record exactly one native breadcrumb and zero custom duplicates; the breadcrumb ancestry is visible in the rendered pages. The guided-route context is a single labelled navigation landmark with one resolvable stage link. Keyboard review completed its tab cycle and reported visible focus for every sampled focus target (33 on positional encoding, 33 on RoPE, 40 on tensors, per language). The tensor SVGs loaded at desktop and mobile widths; the softmax comparison illustration remains legible in the reviewed desktop capture. FR desktop captures of positional encoding, RoPE and tensors were visually inspected; the mobile tensor capture was checked for layout and overflow.
+
+**Still not established:** external-link freshness; manual screen-reader behaviour in FR/EN; complete manual verification of breadcrumb semantics and navigation ancestry beyond the automated DOM/text checks; learner understanding. Axe and keyboard focus checks are not a screen-reader test, and source/render checks do not certify every mathematical claim.
