@@ -97,6 +97,13 @@ jobs:
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
         run: npm install --no-save --package-lock=false playwright@1.56.1 @axe-core/playwright@4.10.2
 
+      - name: Cache Playwright Chromium
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-1.56.1
+
       - name: Install Chromium
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
         run: npx playwright install --with-deps chromium
