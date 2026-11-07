@@ -2340,3 +2340,67 @@ sources:
       concepts: [token-embedding, positional-encoding, self-attention]
       audit_records:
         - docs/source-reviews/jay-joshi-transformer-mathematics-2026-11.md
+
+  - id: jay-joshi-transformer-mathematics-attention
+    title: "The Mathematics of a Transformer Explained With Numbers You Can Check by Hand With Geometric Intutions Using Pytorch. Part-2 Attention Mechanism."
+    creators: ["Jay Joshi"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://medium.com/@jayjj6272/the-mathematics-of-a-transformer-explained-with-numbers-you-can-check-by-hand-with-geometric-3c6abb1181ec"
+    publisher: "Medium"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags:
+        - topic:qkv
+        - topic:self-attention
+        - topic:attention-score
+        - topic:scaled-dot-product-attention
+        - topic:attention-output
+        - topic:multi-head-attention
+        - method:dot-product
+        - method:convex-combination
+        - modality:visualization
+        - ecosystem:pytorch
+      concept_ids: [query, key, value, self-attention, attention-score, attention-weight, scaled-dot-product-attention, softmax, multi-head-attention]
+    metadata:
+      technical_level: introductory
+      contribution_types: [mathematical-derivation, architecture, implementation, visualization, pedagogy]
+      audiences: [beginner, learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-07"
+        status: partially-scanned
+        inspected_scope:
+          - "Indexed Medium article body: introduction and all four stages (Q/K/V projections, query-key scoring and softmax, value aggregation, output projection W_o)"
+          - "Article metadata and author/title as exposed by the indexed Medium result"
+          - "Descriptions of the four geometric panels and PyTorch implementation"
+          - "Compared each extracted mechanism with existing bilingual Q/K/V and scaled-dot-product-attention lessons"
+          - "Independently checked dot-product geometry, softmax positivity/normalization, convex-hull membership and the role of W_o"
+        limitations:
+          - "Direct Medium page retrieval returned a cache miss; the full text was available through the indexed Medium search snapshot, not the live page DOM."
+          - "The actual figure bytes, axes, captions, plotted matrices, complete code cells and notebook execution were not available for inspection."
+          - "The exact publication date was not independently established; indexed metadata identifies October 2026."
+          - "The preview of residual connections, LayerNorm, FFN, backpropagation and masked attention is not treated as taught content in this article."
+          - "No licence or permission for text, figures or code reuse was established; text and figures remain link-only, code/data reuse unknown."
+    related:
+      pages:
+        - fr/queries-keys-values
+        - en/queries-keys-values
+        - fr/scaled-dot-product-attention
+        - en/scaled-dot-product-attention
+        - fr/attention-score-scaling
+        - en/attention-score-scaling
+        - fr/transformer
+        - en/transformer
+      concepts: [query, key, value, self-attention, attention-score, attention-weight, scaled-dot-product-attention, softmax, multi-head-attention]
+      audit_records:
+        - docs/source-reviews/jay-joshi-transformer-mathematics-attention-2026-11.md
