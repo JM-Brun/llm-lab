@@ -2279,3 +2279,59 @@ sources:
       concepts: []
       audit_records:
         - docs/source-reviews/multimodal-generation-grootendorst-2026-11.md
+
+  - id: jay-joshi-transformer-mathematics-positional-embeddings
+    title: "The Mathematics of a Transformer Explained With Numbers You Can Check by Hand With Geometric Intuitions Using PyTorch — Part 1: Positional Encoding and Embedding Formation"
+    creators: ["Jay Joshi"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://medium.com/@jayjj6272/the-mathematics-of-a-transformer-explained-with-numbers-you-can-check-by-hand-with-geometric-96b5873c95be"
+    publisher: "Medium"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Part 1; indexed snapshot inspected 2026-11-07"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags:
+        - topic:token-embeddings
+        - topic:positional-encoding
+        - method:sinusoidal-encoding
+        - modality:visualization
+        - ecosystem:pytorch
+      concept_ids: [token-embedding, positional-encoding]
+    metadata:
+      technical_level: introductory
+      contribution_types: [mathematical-derivation, visualization, pedagogy, implementation]
+      audiences: [beginner, learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-07"
+        status: partially-scanned
+        inspected_scope:
+          - "Indexed article title, metadata, introduction, stated learning outcomes, notation, embedding lookup equation and sinusoidal positional-encoding equations"
+          - "Indexed explanation of permutation/order sensitivity, paired sine/cosine geometry and relative-offset rotation"
+          - "Indexed description of two PyTorch/Matplotlib cells and their visual outputs"
+          - "Related Part 2 located and inspected at the indexed-summary level; not treated as part of this source record"
+        limitations:
+          - "Direct Medium page retrieval returned a cache miss; extraction is based on the available indexed search snapshot, not the live article DOM."
+          - "The article's complete code cells, numerical values, figures, captions, image bytes and output were not available for independent execution or visual inspection."
+          - "Publication date and update history were not independently established; no date is asserted."
+          - "No licence or permission for text, figures or code reuse was established; retain link-only treatment."
+          - "The geometric interpretation is reviewed as an explanatory claim, not as empirical evidence about learned semantic spaces."
+    related:
+      pages:
+        - fr/embedding-space
+        - en/embedding-space
+        - fr/positional-encoding
+        - en/positional-encoding
+        - fr/rope
+        - en/rope
+      concepts: [token-embedding, positional-encoding]
+      audit_records:
+        - docs/source-reviews/jay-joshi-transformer-mathematics-2026-11.md
