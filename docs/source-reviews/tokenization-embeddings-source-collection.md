@@ -1,6 +1,6 @@
 # Tokenization and embeddings — cross-source synthesis
 
-**Current inventory snapshot (2026-11-05).** The canonical catalogue contains 49 source records across LLM Lab. This collection has 11 structured tokenization/embeddings extraction records; the repository-wide extraction directory contains 16 records in total (11 tokenization/embeddings and 5 Q/K/V or KV-cache). These are inventory counts, not measures of scan completeness or pedagogical quality. Migration PRs #468 and #469 are merged. Exact ByteByteGo/Vizuara URLs and asset-level reuse checks remain unresolved as described below and in #156.
+**Current inventory snapshot (2026-11-08).** The canonical catalogue contains 54 source records across LLM Lab. This collection has 12 structured tokenization/embeddings extraction records; the repository-wide `data/extractions/` directory contains 20 YAML extraction records (12 tokenization/embeddings, 4 Q/K/V, and 4 records in adjacent attention, KV-cache, inference-efficiency and multimodal topics). These are inventory counts, not measures of scan completeness or pedagogical quality. The registration/extraction PRs #460, #463, #467, #468 and #469 are merged. Exact metadata and asset-level reuse gaps remain unresolved as described below and in #156.
 
 **Status:** living source collection · **Review date:** 2026-11-05  
 **Catalogue:** [data/sources.yml](../../data/sources.yml)  
@@ -12,7 +12,7 @@
 
 This dossier compares the source families already audited in #114, #147, #82 and #96. It is a synthesis of prior work, not a new exhaustive review of tokenization or embedding research.
 
-The source catalogue contains **48 records in the 2026-11-05 transfer-pilot branch**: four Q/K/V and KV-cache records (including Codefinity) plus **44 tokenization/embeddings-related records**, including the newly registered TokCollate paper. The pre-pilot `main` baseline contains 47 records (four Q/K/V/KV-cache plus 43 tokenization/embeddings records). The registry distinguishes papers, documentation, repositories, videos, courses and articles. A record's existence does not mean every component was scanned.
+For historical comparison only, the 2026-11-05 transfer-pilot branch contained 48 records (four Q/K/V/KV-cache plus 44 tokenization/embeddings-related records); its pre-pilot `main` baseline contained 47 (four plus 43). Those snapshots are superseded by the current 54-record catalogue stated above. The registry distinguishes papers, documentation, repositories, videos, courses and articles. A record's existence does not mean every component was scanned.
 
 The source set is selected because it was already cited, inspected or used in the project. It is not a representative sample of all tokenizer research, embedding research or educational resources.
 
