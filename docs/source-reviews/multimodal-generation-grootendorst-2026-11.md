@@ -51,9 +51,9 @@ The article's central architectural distinction is:
 
 NExT-GPT is used as an example of a system with modality-specific input/output projectors and pretrained modality encoders/decoders. The article describes a relatively small trainable interface around otherwise frozen components. This is an example, not a universal recipe.
 
-OmniGen2 and BLIP-3o are mentioned as more recent examples of decoupled autoregressive text generation and diffusion-based image generation. Their details have not been independently checked in this scan.
+OmniGen2 and BLIP-3o are mentioned as more recent examples of decoupled text/image generation pathways. Their selected architectural claims have since been spot-checked against the cited primary papers (see the verification table below); this does not amount to a complete paper, implementation or benchmark audit.
 
-**Early fusion** is illustrated with Janus. The article describes separate visual representations for understanding and generation, then a unified language-modeling path that can emit text or image representations. It highlights the difference in representational requirements:
+**Early fusion** is illustrated with Janus. The article describes separate visual representations for understanding and generation, then a unified autoregressive language-modeling path that can emit text or image representations. It highlights the difference in representational requirements. The labels *early fusion* and *late fusion* are useful architectural shorthand, not a complete or necessarily mutually exclusive taxonomy: the actual boundary between shared model, modality-specific pathway, projector and decoder must be described per system.
 - Understanding benefits from semantic, abstract representations.
 - Generation requires more detailed representations.
 
@@ -143,8 +143,8 @@ This is a source-local outline, not a proposed LLM Lab curriculum tree.
 - Forward/reverse diffusion mathematics, noise schedules and samplers.
 - Latent autoencoders, VAE/VQ representations and codebooks.
 - Diffusion Transformers and modality-specific decoder internals.
-- NExT-GPT and Janus architecture case studies.
-- Audio and video generation architectures, pending a complete scan.
+- NExT-GPT, Janus, OmniGen2 and BLIP3-o architecture case studies.
+- Audio and video generation architectures.
 
 These topics should not be inserted into the text-tokenization → representations → Transformer → prediction → inference spine. They form a separate multimodal extension branch.
 
@@ -194,7 +194,25 @@ These checks validate selected architectural descriptions; they do not constitut
 | SoundStream / AudioLM examples | [Google Research AudioLM page](https://google-research.github.io/seanet/audiolm/examples/) | Semantic/acoustic token complementarity and SoundStream reconstruction examples | Does not validate every implementation detail in the newsletter's diagrams |
 | Janus | [Wu et al., CVPR 2025 open-access paper](https://openaccess.thecvf.com/content/CVPR2025/html/Wu_Janus_Decoupling_Visual_Encoding_for_Unified_Multimodal_Understanding_and_Generation_CVPR_2025_paper.html) | Separate visual encoding pathways for understanding and generation with a shared autoregressive Transformer | Image-focused case study; not a universal multimodal architecture |
 | NExT-GPT | [Wu et al., ICML 2024 paper](https://proceedings.mlr.press/v235/wu24e.html) | LLM connected to modality adaptors and diffusion decoders; paper reports tuning a small subset of projection parameters | The paper's specific system and training setup; not a general parameter-efficiency guarantee |
+| Latent Diffusion / Stable Diffusion foundations | [Rombach et al., CVPR 2022](https://openaccess.thecvf.com/content/CVPR2022/html/Rombach_High-Resolution_Image_Synthesis_With_Latent_Diffusion_Models_CVPR_2022_paper.html) | Diffusion in the latent space of a pretrained autoencoder; cross-attention supports conditioning such as text | Supports the latent-diffusion principle, not every implementation detail or every Stable Diffusion release |
+| SoundStream | [Zeghidour et al., arXiv:2107.03312](https://arxiv.org/abs/2107.03312) | Neural audio codec with a convolutional encoder/decoder and residual vector quantization | Codec / reconstruction component; not by itself an autoregressive generator or semantic representation model |
+| w2v-BERT | [Chung et al., arXiv:2108.06209](https://arxiv.org/abs/2108.06209) | Self-supervised speech representation learning; contrastive learning discretizes speech into units and masked prediction learns contextualized representations | The paper describes representation learning, not a general-purpose audio generator; do not equate units with text tokens or word boundaries |
+| Diffusion Transformer (DiT) | [Peebles and Xie, ICCV 2023](https://openaccess.thecvf.com/content/ICCV2023/html/Peebles_Scalable_Diffusion_Models_with_Transformers_ICCV_2023_paper.html) | A Transformer backbone operates on latent patches in place of the commonly used U-Net in the studied latent-diffusion setup | A specific diffusion architecture; not the ordinary autoregressive Transformer used for next-token prediction |
+| OmniGen2 | [Wu et al., arXiv:2506.18871](https://arxiv.org/abs/2506.18871) | Distinct text/image decoding pathways, unshared parameters and a decoupled image tokenizer | Its design is model-specific; do not collapse it into a universal early-/late-fusion template |
+| BLIP3-o | [Chen et al., arXiv:2505.09568](https://arxiv.org/abs/2505.09568) | Unified image understanding/generation study using a diffusion Transformer to generate semantically rich CLIP image features | Distinct design from OmniGen2; preserve the paper's precise representation and training claims |
 
 ### Editorial correction to retain
 
 The newsletter is a visual explanatory resource, not the final authority for technical details. Where its shorthand risks conflating distinct mechanisms, LLM Lab should use the primary paper's terminology. In particular, AudioLM's semantic and acoustic streams should remain distinct in any diagram, and its original task should be described as audio continuation.
+
+
+## 10. Relation to the canonical computational spine
+
+The canonical computational spine in [docs/canonical-computational-spine.md](../canonical-computational-spine.md) describes next-token prediction in a text-oriented autoregressive LLM and its generation, scoring, evaluation and training branches. This source describes adjacent but non-identical generative mechanisms:
+
+- **AudioLM** is autoregressive, but its sequence elements are learned audio representations (semantic and codec tokens), and a neural audio decoder reconstructs the waveform. It is a modality-specific sequence-modeling case, not an extension of the ordinary text-token vocabulary.
+- **Latent diffusion / DiT image generation** uses iterative denoising in a learned latent space. Its sampling loop is not the same operation as autoregressive next-token decoding.
+- **Video generation** adds temporal structure to the generated visual representation; the inspected article does not specify enough detail to add temporal operations to the canonical graph.
+- **Multimodal LLM systems** may combine an autoregressive language-model core with modality-specific encoders, projectors and/or external decoders. Those interfaces should be represented explicitly rather than flattening every component into one generic forward pass.
+
+Consequently, this source belongs to a **multimodal extension branch** linked to (but not inserted into) the text-LM computational spine. Any future canonical representation should distinguish autoregressive sequence generation, iterative diffusion sampling, codec decoding and orchestration of external generators as different operation families. The source-local graph remains a source-analysis artifact, not a proposal to extend the canonical computational registry without a dedicated architecture audit.

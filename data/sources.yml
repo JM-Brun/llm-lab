@@ -2260,6 +2260,20 @@ sources:
           - "No code was executed and no model behavior or comparative performance was tested."
           - "The article's examples are architectural illustrations, not evidence that all multimodal LLMs use the described designs."
           - "No licence or permission for reproducing text, figures or code was established."
+      - accessed_at: "2026-11-07"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary-source verification of latent diffusion using the CVPR 2022 paper"
+          - "Primary-source verification of SoundStream and w2v-BERT using their arXiv papers"
+          - "Primary-source verification of Diffusion Transformers using the ICCV 2023 paper"
+          - "Primary-source verification of OmniGen2 and BLIP3-o using their arXiv papers"
+          - "Crosswalk of autoregressive audio-token generation, iterative diffusion sampling, codec decoding and multimodal LLM interfaces against the canonical computational spine"
+        limitations:
+          - "The article's more than 50 visuals remain individually uninspected; their placement, authorship and reuse conditions are unresolved."
+          - "Implementation repositories and full code/data provenance were not audited."
+          - "The video section remains a high-level scan; temporal modeling and coherence mechanisms are not established by this source."
+          - "No model was executed and no benchmark or comparative performance claim was reproduced."
+          - "No licence or permission for reproducing text, figures or code was established."
     related:
       pages: []
       concepts: []

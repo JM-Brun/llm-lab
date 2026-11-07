@@ -2,7 +2,7 @@ schema_version: 1
 source_id: maarten-grootendorst-visual-guide-multimodal-generation
 
 scan:
-  accessed_at: "2026-11-06"
+  accessed_at: "2026-11-07"
   retrieval_method: indexed-text
   author_text:
     status: partial
@@ -23,12 +23,13 @@ scan:
   comments: {status: not-inspected, coverage: null, notes: []}
   linked_resources:
     status: partial
-    coverage: "Primary-source spot checks for AudioLM, Janus and NExT-GPT."
+    coverage: "Primary-source spot checks for AudioLM, Janus, NExT-GPT, latent diffusion, SoundStream, w2v-BERT, Diffusion Transformers, OmniGen2 and BLIP3-o."
     notes:
-      - "AudioLM claims were checked against its arXiv paper and Google Research material."
+      - "AudioLM claims were checked against its arXiv paper and Google Research material; the original task is audio continuation from an audio prompt."
       - "Janus was checked against the CVPR 2025 open-access paper."
       - "NExT-GPT was checked against the ICML 2024 PMLR paper."
-      - "Other linked model papers and implementations remain unaudited."
+      - "Latent Diffusion was checked against the CVPR 2022 paper; SoundStream and w2v-BERT against their primary arXiv papers; DiT against the ICCV 2023 paper; OmniGen2 and BLIP3-o against their arXiv papers."
+      - "Implementation repositories, complete citation chains and the article visual assets remain unaudited."
   metadata:
     status: partial
     coverage: "Title, author, publication date and canonical URL."
@@ -41,15 +42,16 @@ scan:
       - "Public accessibility does not establish reuse rights; retain link-only."
   unresolved_questions:
     - "Inspect the article's figures individually and map them to the exact claims they illustrate."
-    - "Verify the Stable Diffusion, SoundStream, w2v-BERT, Diffusion Transformer, OmniGen2 and BLIP-3o references against primary sources."
     - "Compare against any existing or planned multimodal material before creating reader-facing pages."
+    - "Inspect implementation repositories only if a future reader-facing case study requires implementation-level claims."
+    - "Revisit the article figures if their original image assets become accessible."
 
 pedagogical_model:
   reconstruction:
     status: partial
     basis:
       - "Canonical indexed article text: introduction and sections on image, audio, video and multimodal LLM integration."
-      - "Primary-source spot checks for AudioLM, Janus and NExT-GPT."
+      - "Primary-source spot checks for AudioLM, Janus, NExT-GPT, latent diffusion, SoundStream, w2v-BERT, DiT, OmniGen2 and BLIP3-o."
     inferred_elements:
       - "The hierarchy below reconstructs the source's organization; it is not a canonical LLM Lab curriculum."
       - "The article's visual sequence and all local transitions could not be audited without the complete figure set."
