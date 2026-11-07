@@ -32,8 +32,8 @@ Les grands modèles de langage (LLM) sont une famille de modèles neuronaux entr
 **LLM Lab relie ces mécanismes à leurs explications mathématiques et à leur comportement observable.** Le but n’est pas de croire une intuition parce qu’un schéma paraît convaincant : c’est de comprendre ce qu’un composant calcule, de vérifier ce qu’on peut tester et d’identifier ce qui reste une hypothèse ou une limite.
 
 <div class="hero-actions">
-[Commencer le parcours guidé : comprendre ce qu’est un LLM](fr/llm-overview.qmd){.btn .btn-primary}
-[Voir le projet de construction d’un GPT](fr/build-path.qmd){.btn .btn-outline-primary}
+[Découvrir le fonctionnement des LLM](fr/llm-overview.qmd){.btn .btn-primary}
+[Explorer la carte des notions](fr/learning-map.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
