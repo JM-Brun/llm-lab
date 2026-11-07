@@ -290,6 +290,6 @@ items:
       pedagogical_value: {level: uncertain, rationale: "Potential value depends on accurate axes, labels, projections and the handling of high-dimensional geometry."}
       applicability: {level: uncertain, rationale: "Could be linked or used as inspiration after inspection; reuse rights are unknown."}
       redundancy: {level: uncertain, rationale: "The project already has distinct QKV and attention flow diagrams; visual comparison is pending."}
-      evidence_quality: {level: unverified, rationale: "Only the author's prose descriptions of the panels were retrievable."}
+      evidence_quality: {level: uncertain, rationale: "Only the author's prose descriptions of the panels were retrievable."}
     disposition: defer
     disposition_rationale: "Keep as a candidate visual reference. Revisit only when the original panels and notebook cells can be inspected; do not copy assets or code without verified reuse rights."
