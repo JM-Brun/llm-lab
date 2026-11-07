@@ -93,7 +93,7 @@ for (const testCase of cases) {
     if (kind === "homepage") {
       item.homepageOrientation = await page.evaluate(() => {
         const readLinks = selector => [...document.querySelectorAll(selector)].map(link => ({
-          label: link.textContent.trim().replace(/\\s+/g, " "),
+          label: link.textContent.trim().replace(/\s+/g, " "),
           path: new URL(link.getAttribute("href"), document.baseURI).pathname,
         }));
         return {
@@ -113,9 +113,7 @@ for (const testCase of cases) {
         && expected.every((suffix, index) => actual[index].path.endsWith(`/${lang}/${suffix}`));
       const cardsOk = item.homepageOrientation.entryCardCount === 3
         && endsWith(item.homepageOrientation.entryCards, ["llm-overview.html", "build-path.html", "deepen.html"]);
-      const practiceOk = expectedPractice.every(suffix =>
-        item.homepageOrientation.practiceLinks.some(link => link.path.endsWith(`/${lang}/${suffix}`))
-      );
+      const practiceOk = endsWith(item.homepageOrientation.practiceLinks, expectedPractice);
       const heroOk = item.homepageOrientation.heroLinks.length === 2
         && endsWith(item.homepageOrientation.heroLinks, ["llm-overview.html", "learning-map.html"]);
       if (!cardsOk) throw new Error("homepage must expose the three expected Understand / Build / Deepen entry cards");
