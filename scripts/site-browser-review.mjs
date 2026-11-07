@@ -100,7 +100,11 @@ for (const testCase of cases) {
           // Quarto's sidebar is global navigation. Homepage route choices are
           // the entry cards, transversal Practice links and hero actions.
           entryCards: readLinks(".learning-entry-grid .learning-entry-link"),
-          practiceLinks: readLinks(".learning-practice-links a"),
+          // Select from the semantic Practice section, not its nested styling wrapper.
+          // The wrapper may be transformed by Pandoc while the section and links remain valid.
+          practiceLinks: readLinks(".learning-practice a"),
+          practiceContainerPresent: Boolean(document.querySelector(".learning-practice")),
+          practiceAnchorCount: document.querySelectorAll(".learning-practice a").length,
           heroLinks: readLinks(".hero-actions a"),
           entryCardCount: document.querySelectorAll(".learning-entry-grid .learning-entry").length,
         };
@@ -116,7 +120,9 @@ for (const testCase of cases) {
       const heroOk = item.homepageOrientation.heroLinks.length === 2
         && endsWith(item.homepageOrientation.heroLinks, ["llm-overview.html", "learning-map.html"]);
       if (!cardsOk) throw new Error("homepage must expose the three expected Understand / Build / Deepen entry cards");
-      if (!practiceOk) throw new Error("homepage transversal Practice links are missing or misrouted");
+      if (!practiceOk) throw new Error(
+        `homepage transversal Practice links are missing or misrouted (container present: ${item.homepageOrientation.practiceContainerPresent}; anchors: ${item.homepageOrientation.practiceAnchorCount}; observed: ${JSON.stringify(item.homepageOrientation.practiceLinks)})`,
+      );
       if (!heroOk) throw new Error("homepage hero actions are missing or misrouted");
     }
     if (kind === "spine-overview") {
