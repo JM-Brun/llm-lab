@@ -180,7 +180,7 @@ def test_single_position_attention_returns_its_only_value() -> None:
     k = np.array([[0.5, 3.0]])
     v = np.array([[4.0, -2.0, 7.0]])
 
-    output, weights = scaled_dot_product_attention(q, k, v)
+    output, weights = scaled_dot_product_attention(q, k, v, mask=causal_mask(1))
 
     np.testing.assert_array_equal(weights, [[1.0]])
     np.testing.assert_array_equal(output, v)
