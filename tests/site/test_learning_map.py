@@ -566,7 +566,7 @@ def test_render_guided_route_marks_repeated_pages_as_recap() -> None:
 
     markdown = MODULE["render_guided_route_markdown"](stages, "fr")
 
-    assert markdown.count("- [Générer du texte](generation.html)") == 1
+    assert markdown.splitlines().count("- [Générer du texte](generation.html)") == 1
     assert "- [Générer du texte](generation.html) *(rappel)*" in markdown
     english = MODULE["render_guided_route_markdown"](stages, "en")
     assert "- [Générer du texte](generation.html) *(recap)*" in english
