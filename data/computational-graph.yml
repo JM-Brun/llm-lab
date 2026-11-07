@@ -752,6 +752,7 @@ views:
     edges: [e-teacher-context, e-observed-context, e-observed-prefix-forward, e-context-forward, e-parameters-forward, e-forward-logits, e-logits-softmax, e-softmax-distribution, e-distribution-target, e-target-score, e-target-probability-value, e-target-log-computation, e-target-log-probability, e-target-likelihood, e-target-negative-log, e-negative-log-nll]
   - id: evaluation
     branch: evaluation
+    collapsed: false
     labels: {fr: "Branche évaluation", en: "Evaluation branch"}
     descriptions:
       fr: "Illustre une évaluation fondée sur le scoring de cibles observées : agrège leurs scores sur des données tenues à l'écart sans modifier les paramètres."
