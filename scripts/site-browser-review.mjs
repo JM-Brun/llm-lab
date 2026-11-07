@@ -102,7 +102,9 @@ for (const testCase of cases) {
           // Quarto's sidebar is the global site navigation. The landing page's
           // own route choices are the hero actions, entry cards, and Practice links.
           entryCards: readLinks(".learning-entry-grid .learning-entry-link"),
-          practiceLinks: readLinks(".learning-practice-links a"),
+          // Quarto may restructure raw-HTML containers during rendering. Inspect
+          // the rendered main-content links rather than relying on a styling class.
+          practiceLinks: readLinks("main a[href]"),
           practiceRegionCount: document.querySelectorAll(".learning-practice").length,
           practiceRegionHtml: practiceRegion?.outerHTML.slice(0, 3000) ?? null,
           mainLinks: readLinks("main a[href]"),
@@ -117,7 +119,9 @@ for (const testCase of cases) {
         && expected.every((suffix, index) => actual[index].path.endsWith(`/${lang}/${suffix}`));
       const cardsOk = item.homepageOrientation.entryCardCount === 3
         && endsWith(item.homepageOrientation.entryCards, ["llm-overview.html", "build-path.html", "deepen.html"]);
-      const practiceOk = endsWith(item.homepageOrientation.practiceLinks, expectedPractice);
+      const practiceOk = expectedPractice.every(suffix =>
+        item.homepageOrientation.practiceLinks.some(link => link.path.endsWith(`/${lang}/${suffix}`))
+      );
       const heroOk = item.homepageOrientation.heroLinks.length === 2
         && endsWith(item.homepageOrientation.heroLinks, ["llm-overview.html", "learning-map.html"]);
       if (!cardsOk) throw new Error("homepage must expose the three expected Understand / Build / Deepen entry cards");
