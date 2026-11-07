@@ -387,6 +387,42 @@ The existing sequence does not need another pipeline or navigation layer. The Tr
 - **Training examples and teacher forcing:** these remain in the Build/data-preparation branch. Their operational placement must not be mistaken for a missing scoring breadcrumb or a prerequisite for inference. The teacher-forced observed-prefix policy connects them to scoring and training without changing the shared predictor.
 - **Generation and scoring remain sibling uses** of the conditional distribution. The route must not imply that likelihood, cross-entropy, loss or gradients are steps in ordinary generation.
 
+### 10.5 Cross-check against the canonical computational graph
+
+A second pass compared the prose transitions with the actual directed edges and branch views in `data/computational-graph.yml`. This is important because a pedagogical sequence must not silently replace the computation's dependency structure.
+
+**Representation and Transformer computation**
+
+`token-context → embedding lookup → token embeddings + positional information → initial hidden states → Transformer-block input → Q/K/V projections → query-key scores → causal constraint → softmax weights + V → value aggregation → output projection → residual/normalization/MLP block update → contextualized hidden states`.
+
+The graph explicitly repeats the block transition for subsequent layers and distinguishes the final hidden states from intermediate contextualized states. The final path is `final hidden states → vocabulary projection → logits → vocabulary softmax → conditional next-token distribution`. This supports the conceptual transition from representations to attention and prediction without treating the Q/K/V projections as a one-time preprocessing step.
+
+**Three uses of the conditional distribution**
+
+- Generation selects a token under a decoding policy and feeds it back into the context. Prefill processes the initial prompt; autoregressive decode is iterative; KV cache is optional.
+- Observed-target scoring combines the distribution with a known target, extracts its probability and log-probability, and may aggregate log-probabilities into sequence likelihood.
+- Training uses reference-derived prefixes, converts target log-probabilities to per-token negative log-probabilities, reduces them into an objective, differentiates and updates parameters.
+
+The graph's `teacher-forcing` definition is deliberately phrased as a **conditioning strategy**: prefixes at scored positions come from the reference sequence. Its membership in training, observed-target scoring and evaluation is therefore consistent with teacher-forced likelihood evaluation; it must not be confused with generated-token feedback. Similarly, prefill/decode belong only to inference execution.
+
+**Scoring versus learning**
+
+The graph makes an important distinction that the reader-facing route should preserve:
+
+- Sequence log-likelihood is an observed-target score and can feed evaluation metrics.
+- Per-token negative log-probability can feed evaluation metrics or, after an explicitly defined mask/reduction, a training objective.
+- Only the training branch continues from the objective through gradients and optimizer updates. Evaluation does not update parameters.
+
+This confirms that the conceptual path `likelihood → cross-entropy → loss → gradients` is a useful teaching bridge, but not a single obligatory execution path for every scoring operation. The graph's typed edges and branch-specific views carry the exact distinctions; the breadcrumbs and guided route should not attempt to reproduce them.
+
+**Abstraction boundary:** the `representation-pipeline` view intentionally summarizes a Transformer block rather than expanding every attention operation. The dedicated `transformer-block` view contains the Q/K/V, mask, softmax and aggregation edges. This is a useful progressive-disclosure split, not a missing dependency, provided the overview makes the block abstraction clear.
+
+### 10.6 Rendered-verification boundary
+
+The source-level audit can establish the configured Quarto ancestry and the semantic rationale for each parent. It cannot establish that the published page's breadcrumb labels, visual hierarchy, clickable destinations and keyboard/screen-reader announcements are all correct. The current public Pages host was not retrievable through the available browser inspection channel during this pass, so I did not claim a fresh manual visual inspection of the deployed pages.
+
+The existing GitHub browser evidence remains relevant but bounded: it verifies the specific pages, viewports and assertions included in those runs. The latest Q/K/V/attention/scoring/training and positional/tensor audits have their own recorded browser coverage; the source-based breadcrumb review here does not retroactively broaden those test cases. The remaining work is a targeted native-breadcrumb review on the affected FR/EN page groups, followed by actual screen-reader testing. Do not treat another generic DOM-presence assertion or an axe pass as closure.
+
 ### 10.5 Corrections and decisions
 
 - [x] Corrected the stale statement in §9: Generation is currently a direct child of Understand / Comprendre in the Quarto sidebar, not nested under an “Inference” section.
