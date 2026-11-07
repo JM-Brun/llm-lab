@@ -171,7 +171,7 @@ The eventual collection dossier should compare the sources on a consistent set o
 
 The following are explicit migration blockers for catalogue completeness, not reasons to repeat the technical audit:
 
-- Recover exact title, URL, authors and publication metadata for Ahia, Ali, Wegmann and TokLens from merged PR #326/#332/#333.
+- **Core catalogue metadata reconciled:** the current catalogue already contains records for Ahia (`Do All Languages Cost the Same?`, Ahia et al., ACL Anthology URL, 2023), Ali (`Tokenizer Choice For LLM Training`, Ali et al., ACL Anthology URL, 2024), Wegmann (`Tokenization is Sensitive to Language Variation`, Wegmann et al., ACL Anthology URL, 2025) and TokLens (Chiu, ACL Anthology URL, 2026). These records use stable IDs that differ from some historical candidate IDs in the migration tables. Do not register them again. Their `identifiers` fields are still empty and author lists are abbreviated with `et al.`; only fill DOI/full author metadata from an authoritative primary record, and do not treat those optional refinements as blockers for the already completed catalogue migration.
 - The two ByteByteGo articles are now separately registered with canonical URLs: one corpus-preparation overview and one introductory tokenization/embeddings overview. Do not create a speculative third record unless historical evidence demonstrates a distinct resource.
 - The Vizuara BPE course and 30,000 Feet micro-course are now registered with canonical URLs. A potentially separate Vizuara embeddings resource remains unresolved; recover it only from historical evidence and do not infer that it exists.
 - Recover the exact version/commit used for Raschka Chapter 2, Hugging Face course pages and Polo Club repository.
@@ -181,7 +181,7 @@ The following are explicit migration blockers for catalogue completeness, not re
 
 ## 7. Recommended migration sequence
 
-1. **Metadata reconciliation:** retrieve exact bibliographic fields from #114 comments, PR #326/#332/#333 and the references page. Resolve duplicates and exact source identity.
+1. **Metadata refinement (bounded):** do not repeat the completed catalogue migration for Ahia, Ali, Wegmann or TokLens. If persistent identifiers or full author lists are needed, verify them against the primary ACL Anthology records and update the existing stable IDs only. Continue to distinguish core catalogue registration from optional bibliographic enrichment.
 2. **Catalogue migration:** add stable records to `data/sources.yml` using the source-registration template. Keep scan and rights status component-specific.
 3. **Extraction migration:** create structured extraction files only for sources with sufficiently locatable evidence. Start with high-value primary sources (Karpathy transcript audit, Raschka Chapter 2, Hugging Face course, Gage, Mikolov, Ethayarajh, Li, Steck).
 4. **Review migration:** link the existing source-by-source review evidence; do not rewrite the historical issue audit.
