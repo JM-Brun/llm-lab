@@ -52,15 +52,15 @@ const cases = [
 if (process.env.SITE_BROWSER_PROFILE === "targeted") {
   const allCases = [...cases];
   const changedFiles = (process.env.SITE_BROWSER_CHANGED_FILES || "")
-    .split(/\\r?\\n/)
+    .split(/\r?\n/)
     .map(file => file.trim())
     .filter(Boolean);
   const changedPages = new Set(changedFiles
-    .filter(file => /^site\\/(en|fr)\\/.+\\.qmd$/.test(file))
-    .map(file => file.replace(/^site\\/(en|fr)\\//, "").replace(/\\.qmd$/, ".html")));
+    .filter(file => /^site\/(en|fr)\/.+\.qmd$/.test(file))
+    .map(file => file.replace(/^site\/(en|fr)\//, "").replace(/\.qmd$/, ".html")));
   const hasGlobalSiteChange = changedFiles.some(file =>
-    /^site\\/(\\.quarto|_quarto\\.yml|.*\\.(css|scss|js))$/.test(file) ||
-    /^site\\/_extensions\\//.test(file) || /^scripts\\//.test(file)
+    /^site\/(\.quarto|_quarto\.yml|.*\.(css|scss|js))$/.test(file) ||
+    /^site\/_extensions\//.test(file) || /^scripts\//.test(file)
   );
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
