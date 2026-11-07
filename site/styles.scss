@@ -1850,3 +1850,52 @@ span.math.inline, .math.inline {
   max-width: 100%;
   overflow-wrap: anywhere;
 }
+
+
+/* Global wayfinding: a small set of task-oriented routes, separate from the detailed sidebar. */
+#quarto-header .navbar .navbar-nav.me-auto {
+  align-items: center;
+  gap: clamp(.1rem, .55vw, .55rem);
+}
+#quarto-header .navbar .navbar-nav.me-auto .nav-link {
+  padding: .55rem .8rem;
+  border: 1px solid transparent;
+  border-radius: .4rem;
+  color: rgba(248, 250, 252, .88);
+  font-size: .94rem;
+  font-weight: 650;
+  text-decoration: none;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+#quarto-header .navbar .navbar-nav.me-auto .nav-link:hover,
+#quarto-header .navbar .navbar-nav.me-auto .nav-link:focus-visible {
+  color: #fff;
+  border-color: rgba(220, 252, 231, .35);
+  background: rgba(220, 252, 231, .12);
+}
+#quarto-header .navbar .navbar-nav.me-auto .nav-link[aria-current="page"] {
+  color: #fff;
+  border-color: rgba(187, 247, 208, .55);
+  background: rgba(220, 252, 231, .16);
+  box-shadow: inset 0 -2px 0 #86EFAC;
+}
+#quarto-header .navbar .language-toggle .nav-link {
+  min-width: 2.8rem;
+  text-align: center;
+  font-weight: 750;
+}
+@media (max-width: 991.98px) {
+  #quarto-header .navbar .navbar-nav.me-auto {
+    align-items: stretch;
+    gap: .1rem;
+    padding-top: .35rem;
+  }
+  #quarto-header .navbar .navbar-nav.me-auto .nav-link {
+    padding: .65rem .8rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #quarto-header .navbar .navbar-nav.me-auto .nav-link {
+    transition: none;
+  }
+}
