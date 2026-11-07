@@ -7,24 +7,26 @@
 
 This document is the durable hand-off for future work sessions. It records what has been completed, what remains, the intended order, and the evidence required to close the work. It is a task plan, not a new concept registry, curriculum hierarchy, or computational graph.
 
-## 0. Current status — 2026-11-06 (reconciled after PR #599)
+## 0. Current status — 2026-11-07 (after PRs #625 and #627)
 
-| Work package | Status | Evidence |
+| Work package | Status | Evidence / remaining boundary |
 |---|---|---|
-| Canonical computational model and registry | Integrated | PR #577, #580, #583, #578, #589 |
-| Eight-stage guided route and bilingual generated projections | Integrated | PR #578, #586; route assertions corrected in PR #594 |
-| Teacher forcing, prefill and decode teaching | Integrated at conceptual level | FR/EN training-examples and generation lessons; implementation evidence remains separately tracked in Build |
-| Concept domains | Existing canonical metadata | `data/concepts.yml` and `data/domains.yml`; many-to-many concept classification |
-| Concept importance | Integrated | PR #593; required `core` / `supporting` / `specialized` field for all 41 concepts, with bilingual secondary display and JSON-LD export |
-| Page tags `notion` / `domaine` | Intentionally not duplicated | Canonical concept IDs and domains remain in the concept registry; page tags retain editorial meaning |
-| Page metadata audit | Partial | Prediction → entropy → likelihood and current navigation boundaries reviewed; broader bilingual inventory remains |
-| Persistent-spine and evaluation views with text alternatives | Integrated | PR #589; bilingual renderer, overview integration and generated text alternatives |
-| Computational edge semantics | Integrated | PR #599 merged: explicit target log-probability and NLL operations; distribution selects the generated token while decoding policy conditions selection |
-| Build crosswalk | Updated; implementation evidence partial | PR #598 separates inference, scoring, evaluation and training in the Build explanation; end-to-end GPT training remains a gap |
-| Rendered navigation and accessibility | In progress | PR #597: Python checks and Quarto render pass; browser rerun after removing an invalid comparison between Quarto footer links and document-level `rel` metadata is running. Manual screen-reader review remains required |
+| Canonical computational model and typed branches | Integrated | `docs/canonical-computational-spine.md`; PRs #577, #578, #589, #599 and follow-ups |
+| Eight-stage guided route and bilingual projections | Integrated | `data/guided-route.yml`, generated FR/EN fragments; PRs #578, #586, #594, #616 |
+| Teacher forcing, prefill and incremental decode | Integrated in lessons | PR #601; conceptual teaching is present, but the reference code still has no optimized KV-cache decode |
+| Concept domains and importance | Integrated | `data/concepts.yml`, `data/domains.yml`; PR #593 |
+| Persistent spine and branch views | Integrated | PR #589; bilingual semantic text alternatives generated from the computational registry |
+| Scoring and observed-prefix semantics | Integrated at source level | PRs #599 and #604; page-by-page mathematical and rendered review remains |
+| Build crosswalk and implementation evidence | Reconciled; implementation gaps remain | PRs #598 and #600; no end-to-end GPT training loop, optimizer/checkpoint path or reproducible training run |
+| Contextual suggested-route navigation | Integrated | PR #625 generates route cues from existing `suggested_route.previous/next`; Quarto sidebar remains at `collapse-level: 1` |
+| Browser-audit routing for UX branches | Integrated | PR #627 adds `ux/` to the six existing conditions; no separate workflow/job was added |
+| Automated rendered/browser review | Passed with one investigation item | PR #627 workflow: 192 cases, 0 audit failures, 0 horizontal overflow, 0 axe violations; 360 SVG transform console errors were recorded on the FR/EN LLM overview cases |
+| Manual accessibility and breadcrumb review | Open | Actual screen-reader review and native breadcrumb ancestry/behavior still require explicit evidence |
+| Bounded FR/EN content audit | Partial | Existing `docs/page-audit-inventory.md`; shared-core, scoring/training/evaluation review is not complete |
 
-PR #593, #594, #598 and #599 are merged to `main`. PR #593 integrates concept importance metadata; PR #594 aligns browser assertions with the eight-stage route; PR #598 reconciles the Build explanation with the shared computational spine. PR #589 integrates the persistent-spine and evaluation views, bilingual text alternatives, and workflow generation before both PR rendering and Pages publication. PR #599 corrects the mathematical scoring and generation edge semantics. PR #597 is the current page-navigation accessibility follow-up. Its Python quality checks and static Quarto render have passed; the browser audit now validates visible footer destinations and localized accessible names independently of document-level `rel` metadata. The rerun is in progress. Do not claim full accessibility validation until that rerun and a manual screen-reader check are complete. PR #602 additionally reconciles observed-prefix conditioning across scoring, evaluation, and training views.
+The browser audit ran in the PR #627 workflow against the rendered tree containing the merged #625 navigation changes. The artifact is attached to workflow run [42261660816](https://github.com/JM-Brun/llm-lab/actions/runs/42261660816). It covers 192 browser cases across FR/EN, desktop/mobile and light/dark visual profiles, including the learning map, overview, route-context pages, Build tours and deep-dive parents. It reports no test failures, no horizontal overflow and no axe violations. Keyboard review ran in 90 cases and recorded 3,037 focus targets, all reported as focus-visible.
 
+**Important qualification:** the report also records repeated SVG console errors on `llm-overview.html` in both languages: `<g> attribute transform: Expected number, "translate(undefined, NaN)"` (360 occurrences across the reviewed cases). These did not fail the current audit and did not produce page errors or axe violations, but they are a real rendered defect to trace and fix before treating the overview visualization as clean. Automated axe checks do not replace manual screen-reader testing.
 
 ## 1. Architectural invariant
 
@@ -59,16 +61,21 @@ The merges above establish the model and one navigation projection. They do **no
 
 ## 3. Remaining work, ordered by dependency
 
-### P0 — Verify the merged navigation in the rendered site
+### P0 — Close the rendered-navigation review without overstating accessibility
 
-- [ ] Run and inspect the current Quarto render for both languages after PR #582.
-- [ ] Verify native breadcrumb ancestry on representative pages at each nesting depth: overview, text input, representations, Transformer computation, prediction, scoring, training, and optional depth.
-- [ ] Verify the learning map and its static fallback preserve all nested sections, page counts, links, and empty-section behavior.
-- [ ] Review desktop and mobile layouts; check wrapping, nested-card density, focus order, keyboard operation, accessible names, and screen-reader structure.
-- [ ] Check Quarto previous/next links. The reader-facing preview-first order is intentional, but no accidental navigation into optional material should interrupt the core sequence.
-- [ ] Record screenshots or browser-review evidence and fix concrete defects before generalizing the hierarchy to Build, Deepen, Practice, or Reference.
+The current bilingual Quarto/browser workflow has now run successfully on the merged tree through PR #627. The previous branch-prefix gap is fixed for the `ux/` family by reusing the existing workflow.
 
-**Exit condition:** bilingual rendered pages and learning-map views agree with the authored sidebar hierarchy; no dead links, misleading ancestry, inaccessible nested controls, or unintended previous/next transitions remain.
+- [x] Render the bilingual site and validate the learning-map controls, knowledge-graph export, history timeline parity and local links.
+- [x] Review the learning map and its rendered controls in FR/EN, desktop/mobile and light/dark profiles.
+- [x] Check Quarto footer previous/next links and localized accessible names independently of document-level `rel` metadata.
+- [x] Exercise keyboard focus and interactions in the automated review; confirm no axe violations and no horizontal overflow in the 192 recorded cases.
+- [x] Keep `collapse-level: 1` in both language sidebars.
+- [ ] Trace and fix the repeated SVG transform error on the FR/EN LLM overview (`translate(undefined, NaN)`); add a regression assertion so console errors of this class are not silently ignored.
+- [ ] Verify native breadcrumb ancestry and behavior manually on representative pages at each nesting depth.
+- [ ] Perform a real screen-reader pass in FR and EN and record browser, assistive technology, pages, and findings. Axe is not a substitute.
+- [ ] Inspect the saved overview screenshots and route cards for information hierarchy and reader usefulness; automated assertions alone do not establish that the cues are pedagogically clear.
+
+**Exit condition:** the browser audit is clean of relevant console/runtime errors; rendered pages, breadcrumbs and suggested-route cues are coherent in both languages; manual keyboard and screen-reader evidence is recorded. The current automated success is an intermediate gate, not full accessibility sign-off.
 
 ### P1 — Reconcile the guided route with the sibling branches
 
@@ -187,4 +194,48 @@ Issue #575 can be considered complete when:
 5. Automated structural checks and full rendered/browser review pass.
 6. Representative FR/EN pages have been manually checked for content preservation and conceptual clarity.
 7. The remaining limitations and validation evidence are recorded in this plan.
+
+
+## 7. Next tasks and remaining work — 2026-11-07
+
+The following order minimizes churn and keeps each task independently verifiable.
+
+### P0 — Repair the overview SVG runtime error
+
+- [ ] Identify the SVG/diagram whose group transform receives undefined coordinates on `llm-overview.qmd` in both languages.
+- [ ] Trace whether the cause is missing node coordinates, a zero-sized/hidden layout container, or an initialization/measurement race; do not assume the cause from the browser message alone.
+- [ ] Fix the shared source or renderer once, not the FR and EN outputs independently.
+- [ ] Add a focused regression test for finite SVG transform coordinates or the underlying layout invariant.
+- [ ] Re-run the existing Quarto/browser workflow and confirm the console error count is zero on both overview pages.
+
+### P1 — Complete reader-facing accessibility and navigation evidence
+
+- [ ] Manually verify native breadcrumbs and their ancestry/labels at overview, nested concept, Build, scoring/training and deep-dive levels.
+- [ ] Perform a screen-reader review in both languages; record the actual browser/AT combination and any reading-order, landmark, disclosure, diagram alternative or navigation issues.
+- [ ] Review the contextual route cues from PR #625 in their rendered page context; ensure they are distinct from Quarto previous/next, hierarchy breadcrumbs and related links.
+- [ ] Keep the sidebars at `collapse-level: 1`; assess improvements through better entry/exit links and local context rather than expanding all sidebar levels.
+
+### P1 — Finish the bounded scientific/content audit
+
+- [ ] Complete the first shared-core slice: Q/K/V, scaled dot-product attention, causal masking, positional encoding and tensor shapes; verify equations, conventions, dimensions, FR/EN parity and references.
+- [ ] Finish the scoring chain: observed prefix/target alignment, target probability, sequence likelihood/log-likelihood, NLL/cross-entropy, masking/reduction and numerical stability.
+- [ ] Finish the training/evaluation boundary review: teacher forcing, batch aggregation, gradients, optimizer update, held-out scoring and metric interpretation.
+- [ ] Reconcile each finding in `docs/page-audit-inventory.md`; do not mark a page complete merely because it renders or has a source list.
+- [ ] Preserve the implementation boundary: the project does not yet provide end-to-end GPT-weight autograd, optimizer training, checkpointing or a reproducible trained checkpoint.
+
+### P2 — Run the remaining page-group and navigation audits
+
+- [ ] #320: text → tokens → embeddings page group, rendered FR/EN.
+- [ ] #337: curriculum map, site navigation, breadcrumbs and route crosswalk in the published/rendered site.
+- [ ] #347: training-examples → loss → generation → evaluation page group, rendered FR/EN.
+- [ ] #415: make the guided route and resource map visibly distinct while reusing the existing curriculum and metadata.
+- [ ] #416: improve typed concept-graph readability and relation semantics without implying an unsupported prerequisite DAG.
+
+These are existing audit owners; do not create duplicate issues or a parallel roadmap. Keep #130 as the coordination epic and #584 as the computational-spine integration hand-off.
+
+### Separate implementation roadmap — #78
+
+- [ ] Retain G1 end-to-end tokenizer/corpus pipeline and G3 modularity as separately scoped implementation gaps.
+- [ ] Treat G8 end-to-end training (autograd through GPT weights, optimizer, train/validation loop, checkpointing) and G9 reproducible evaluation as future implementation work, subject to the existing prerequisite-knowledge gate.
+- [ ] Do not let these implementation gaps block source-level conceptual audits or reader-navigation improvements.
 
