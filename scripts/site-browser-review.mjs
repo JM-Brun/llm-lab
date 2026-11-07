@@ -103,7 +103,7 @@ for (const testCase of cases) {
   const consoleErrors = [];
   const pageErrors = [];
   page.on("console", msg => { if (msg.type() === "error") consoleErrors.push(msg.text()); });
-  page.on("pageerror", error => pageErrors.push(String(error)));
+  page.on("pageerror", error => pageErrors.push(error.stack || String(error)));
 
   const url = kind === "homepage"
     ? (lang === "fr" ? `${BASE}/` : `${BASE}/en/`)
@@ -782,11 +782,11 @@ for (const testCase of cases) {
       item.axe = { skipped: true, reason: "Axe runs once per page/language on desktop/light" };
     }
 
-    if (kind === "spine-overview" && consoleErrors.some(message => message.includes("translate(undefined, NaN)"))) {
+    if (kind === "homepage" && pageErrors.length) {\n      report.failures.push(`${pagePath}/${lang}/${label}/${theme}: uncaught page errors: ${pageErrors.join(" | ")}`);\n    }\n    if (kind === "spine-overview" && consoleErrors.some(message => message.includes("translate(undefined, NaN)"))) {
       const malformedSvgCount = (item.svgDiagnostics || []).reduce((count, svg) => count + svg.invalidTransforms.length, 0);
       report.failures.push(`${pagePath}/${lang}/${label}/${theme}: malformed SVG transforms (${malformedSvgCount} offending elements; see svgDiagnostics and consoleErrors)`);
     }
-    const blockingAxe = (item.axe.violations || []).filter(v => ["aria-allowed-attr", "color-contrast"].includes(v.id));
+    const blockingAxe = (item.axe.violations || []).filter(v => ["aria-allowed-attr", "color-contrast", "nested-interactive"].includes(v.id));
     item.axe.blockingViolationCount = blockingAxe.length;
     if (blockingAxe.length) {
       report.failures.push(
