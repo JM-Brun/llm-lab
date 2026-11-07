@@ -57,14 +57,14 @@ Hidden activations often have shape \((B,T,D)\), logits \((B,T,N_{\mathrm{vocab}
 
 ## Parameter cost: the embedding table and the output projection
 
-Vocabulary size \(N_{\mathrm{vocab}}\) and embedding dimension \(d\) are separate design choices. The embedding matrix \(E\in\mathbb{R}^{V\times d}\) has \(V\) rows—one per ID—and \(d\) components per row. For a sequence of length \(L\), lookup produces a matrix of shape \(L\times d\); for a batch of \(B\) sequences, the common shape is \(B\times L\times d\).
+Vocabulary size \(N_{\mathrm{vocab}}\) and embedding dimension \(d\) are separate design choices. The embedding matrix \(E\in\mathbb{R}^{N_{\mathrm{vocab}}\times d}\) has \(N_{\mathrm{vocab}}\) rows—one per ID—and \(d\) components per row. For a sequence of length \(L\), lookup produces a matrix of shape \(L\times d\); for a batch of \(B\) sequences, the common shape is \(B\times L\times d\).
 
 - **\(N_{\mathrm{vocab}}\)** depends on the tokenizer and its vocabulary, including special tokens.
 - **\(d\)** is an architectural hyperparameter chosen alongside depth, attention heads, and compute budget; it is not derived from \(N_{\mathrm{vocab}}\).
 - The embedding table contains \(N_{\mathrm{vocab}}d\) parameters.
 
-**A hand-checkable scale estimate:** with \(V=50\,000\) tokens and \(d=768\), the table contains \(50\,000\times768=38\,400\,000\) parameters. At 32-bit precision, the weights alone occupy about 153.6 MB in decimal units (or 146.5 MiB), excluding gradients, optimizer states, and other parameters. This estimates the table's cost; it does not describe a particular model.
-- If the output projection has a separate weight matrix, it typically adds \(dN_vocab\) parameters, possibly plus a bias. Some models share input and output weights (*weight tying*), so check the architecture before counting both matrices.
+**A hand-checkable scale estimate:** with \(N_{\mathrm{vocab}}=50\,000\) tokens and \(d=768\), the table contains \(50\,000\times768=38\,400\,000\) parameters. At 32-bit precision, the weights alone occupy about 153.6 MB in decimal units (or 146.5 MiB), excluding gradients, optimizer states, and other parameters. This estimates the table's cost; it does not describe a particular model.
+- If the output projection has a separate weight matrix, it typically adds \(\(dN_{\mathrm{vocab}}\)\) parameters, possibly plus a bias. Some models share input and output weights (*weight tying*), so check the architecture before counting both matrices.
 - IDs and their associated weights are coupled. Changing the vocabulary, ID assignments, or \(N_{\mathrm{vocab}}\) requires an explicit adaptation or retraining strategy; it is not a neutral substitution.
 
 At each position, the output distribution generally has \(N_{\mathrm{vocab}}\) logits; the [logits](logits.qmd) page covers output scores in more depth. This section hosts, in the advanced route, the detailed parameter accounting whose conceptual role is presented in [the embedding space](embedding-space.qmd).
@@ -83,7 +83,7 @@ The batch and position axes are preserved; the final axis changes from \(D\) to 
 
 A shape gives axis sizes, not semantics. Two tensors with shape \((B,T,D)\) can represent different objects.
 
-- **Linear projection:** typically transforms the final feature axis, for example \((B,T,D)\to(B,T,V)\) to produce logits.
+- **Linear projection:** typically transforms the final feature axis, for example \((B,T,D)\to(B,T,N_{\mathrm{vocab}})\) to produce logits.
 - **Softmax:** for a distribution over the vocabulary, normalization must operate on axis \(N_{\mathrm{vocab}}\), not axis \(T\).
 - **Attention:** scores relate query and key positions; the causal mask must prevent access to future positions.
 - **Loss:** logits and labels must align on positions and the expected target token.
@@ -118,7 +118,7 @@ For this example, the rows become approximately `[0.881, 0.500, 0.119]` and `[0.
 
 **Debugging invariant:** if the output is intended to represent \(p(\text{token}\mid\text{context at this position})\), check that probabilities sum to 1 over the vocabulary axis for every batch-position pair. Correct shape is not enough; the invariant depends on the intended interpretation.
 
-![Comparison of softmax over the vocabulary axis V, which gives a distribution per position, and over the sequence axis T, which gives row sums of 1.5 in this example.](../images/softmax-axis-comparison-en.svg){fig-alt="The left matrix normalized over V has each row sum to one. The right matrix normalized over T has row sums of 1.5, showing a shape-compatible but semantically incorrect operation for next-token probabilities." width=100%}
+![Comparison of softmax over the vocabulary axis N_vocab, which gives a distribution per position, and over the sequence axis T, which gives row sums of 1.5 in this example.](../images/softmax-axis-comparison-en.svg){fig-alt="The left matrix normalized over N_vocab has each row sum to one. The right matrix normalized over T has row sums of 1.5, showing a shape-compatible but semantically incorrect operation for next-token probabilities." width=100%}
 
 *Figure — The same logits produce different meanings depending on the normalized axis.*
 
@@ -149,7 +149,7 @@ The assertions make the intended semantics explicit. They are a compact teaching
 
 ## Reading dimensions in an example
 
-For \(B=2\), \(T=4\), and \(D=8\), hidden states have shape \((2,4,8)\). A projection to a vocabulary of \(N_vocab=1000\) tokens produces logits of shape \((2,4,1000)\). The final axis corresponds to candidate tokens; each batch-position pair therefore has a distribution after softmax over that axis.
+For \(B=2\), \(T=4\), and \(D=8\), hidden states have shape \((2,4,8)\). A projection to a vocabulary of \(N_{\mathrm{vocab}}=1000\) tokens produces logits of shape \((2,4,1000)\). The final axis corresponds to candidate tokens; each batch-position pair therefore has a distribution after softmax over that axis.
 
 Shape compatibility does not guarantee that the projection, mask, causal shift, or reduction is correct. Axis meaning and target semantics must also be checked.
 
