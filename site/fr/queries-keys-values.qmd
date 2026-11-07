@@ -202,3 +202,4 @@ Q et K déterminent les poids d'attention ; V fournit les vecteurs dont le conte
 ::: {.language-switch}
 **Langue :** [Français](queries-keys-values.qmd) · [English](../en/queries-keys-values.qmd)
 :::
+<!-- ci evidence for PR #658: QKV-only changed-page set for targeted browser review; no reader-facing change; do not merge -->
