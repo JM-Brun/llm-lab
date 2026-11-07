@@ -638,3 +638,29 @@ The existing concept graph already distinguishes the roles: causal-mask constrai
 **Rendered/browser evidence (workflow 42366358835, commit a3f44dd):** the Quarto site rendered successfully and the Chromium review completed with 232 cases and zero reported failures. For the three audited page pairs (positional encoding, RoPE, tensors), the report records HTTP 200, zero console/page errors, zero horizontal overflow, zero unrendered math delimiters, zero Axe violations on the full desktop-light cases, and working localized previous/next controls. FR/EN desktop-light reports each record exactly one native breadcrumb and zero custom duplicates; the breadcrumb ancestry is visible in the rendered pages. The guided-route context is a single labelled navigation landmark with one resolvable stage link. Keyboard review completed its tab cycle and reported visible focus for every sampled focus target (33 on positional encoding, 33 on RoPE, 40 on tensors, per language). The tensor SVGs loaded at desktop and mobile widths; the softmax comparison illustration remains legible in the reviewed desktop capture. FR desktop captures of positional encoding, RoPE and tensors were visually inspected; the mobile tensor capture was checked for layout and overflow.
 
 **Still not established:** external-link freshness; manual screen-reader behaviour in FR/EN; complete manual verification of breadcrumb semantics and navigation ancestry beyond the automated DOM/text checks; learner understanding. Axe and keyboard focus checks are not a screen-reader test, and source/render checks do not certify every mathematical claim.
+
+## External-link and API-claim check: cross-entropy pair (2026-11-07)
+
+**Scope:** bounded verification for `site/en/cross-entropy.qmd` + `site/fr/cross-entropy.qmd` of the two source items left open for this pair: external-link freshness, and confirmation of the API-specific claims against the current PyTorch documentation. This is not a rendered-page review, an external-content certification, or a learner check.
+
+### Numerical spot checks (independent computation)
+
+- $-\ln 0.9 \approx 0.10536$ nats and $-\ln 0.1 \approx 2.30259$ nats match the figure and text values in both languages (0.105 / 2.303); the "nearly 22 times larger" statement matches (ratio $\approx 21.85$).
+- The logit form $\ell(z,y)=-z_y+\log\sum_j e^{z_j}$ equals $-\log\operatorname{softmax}(z)_y$ to machine precision on a random four-vocabulary example.
+- The gradient claim $\partial\ell/\partial z_i = p_i-\mathbb{1}[i=y]$ was confirmed against centered finite differences (agreement below $10^{-4}$).
+
+### External links
+
+| Link | Check result (2026-11-07) |
+|---|---|
+| PyTorch CrossEntropyLoss documentation (`docs.pytorch.org/docs/stable`) | Resolves; titled "CrossEntropyLoss — PyTorch 2.15 documentation" at check time. The API detail on the site pages is confirmed: the criterion computes cross entropy **between input logits and target**, and "the input is expected to contain the unnormalized logits for each class (which do not need to be positive or sum to 1)". The signature `ignore_index=-100, reduction='mean', label_smoothing=0.0` and the input/target shape contracts `(N,C,d_1,\dots,d_K)` / `(N,d_1,\dots,d_K)` confirm the pages' advice to check shapes, `ignore_index`, targets and reduction. The "CrossEntropyLoss expects probabilities" misconception is correctly marked false in FR/EN. |
+| Shannon (1948), A Mathematical Theory of Communication (Harvard-hosted PDF) | Resolves; the document is the Bell System Technical Journal reprint by C. E. Shannon. |
+| Cover & Thomas, Elements of Information Theory (Wiley, DOI 10.1002/047174882X) | The DOI resolves, but the publisher page is behind a bot-protection wall; the content could not be re-verified from this check. Keep the bibliographic citation; no freshness or content claim is made. |
+| 3Blue1Brown — But what is cross-entropy? (YouTube) | Resolves; the title matches the citation ("But what is cross-entropy? | Compression is Intelligence Part 2", 3Blue1Brown). |
+
+### Result
+
+- **API-specific claims confirmed against the current stable PyTorch documentation** (2026-11-07). The earlier remaining item "confirm API-specific claims against the pinned/current PyTorch documentation" is discharged for the checked claims; the site links to the rolling `stable` documentation rather than a pinned version, so this confirmation is dated, not permanent.
+- No external link is dead. The Wiley DOI is reachable only behind bot protection; its content freshness remains unverified.
+- The FR/EN reference lists are identical in content and intent, including the "API behaviour, not the general mathematical definition" annotation.
+- **Still not established for this pair:** rendered inspection of the derivation, equations and the target-probability SVG at desktop/mobile widths; a PyTorch version-pinning policy; screen-reader behaviour; learner understanding. Link checks do not certify the videos' or books' full content.
