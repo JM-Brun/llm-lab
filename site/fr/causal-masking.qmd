@@ -68,6 +68,17 @@ Les positions futures reçoivent alors un poids nul en arithmétique idéale. En
 En code, **la polarité d'un masque booléen dépend de l'API**. Par exemple, dans [l'attention à produit scalaire mise à l'échelle de PyTorch](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html), `True` signifie qu'une position peut participer à l'attention ; dans [PyTorch MultiheadAttention](https://docs.pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html), `True` dans `attn_mask` signifie que la position est masquée. Ne transférez pas un masque booléen d'une API à l'autre sans vérifier la convention documentée. Cela ne change pas la règle causale elle-même : les couples requête-clé autorisés doivent toujours exclure les clés futures.
 :::
 
+**Attention à la polarité booléenne :** une matrice `allowed` vaut vrai sur le triangle inférieur (diagonale comprise), tandis qu'une matrice `blocked` vaut vrai sur le triangle supérieur strict. PyTorch `scaled_dot_product_attention` attend la première convention ; `MultiheadAttention.attn_mask` utilise la seconde. La règle mathématique est identique, mais les tenseurs booléens ne sont pas interchangeables sans inversion éventuelle.
+
+## Masque causal et autres masques : des rôles distincts
+
+- **Masque causal (attention)** : interdit à une requête de lire une clé située dans le futur ; il impose la contrainte autorégressive.
+- **Masque de padding (attention)** : empêche généralement les positions de padding d'être utilisées comme clés ; il ne définit pas l'ordre temporel. Le traitement des requêtes correspondant au padding dépend de l'implémentation.
+- **Masque de frontière de document (attention)** : dans des séquences où plusieurs documents sont concaténés, peut interdire les interactions entre documents distincts. Il peut se combiner avec le masque causal.
+- **Masque de loss / de cible** : exclut certaines positions du calcul de l'objectif d'entraînement ; il ne bloque pas à lui seul l'accès à l'information dans les couches d'attention. La construction des cibles décalées et des masques de padding/loss relève de la leçon sur les données et les corpus.
+
+Ces masques répondent donc à des questions différentes et ne doivent pas être substitués les uns aux autres.
+
 ![Masque causal à quatre positions.](../images/causal-attention-mask.svg){fig-alt="Matrice triangulaire inférieure : chaque position accède à elle-même et aux positions précédentes" width=100%}
 
 ## Provenance et utilité
