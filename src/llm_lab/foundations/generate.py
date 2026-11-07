@@ -35,7 +35,6 @@ import numpy as np
 from numpy.typing import NDArray
 
 from llm_lab.foundations.attention import softmax_with_temperature
-from llm_lab.foundations.decoding_filters import top_k_filter, top_p_filter
 from llm_lab.foundations.gpt import GPT
 
 # Token ids are int64 throughout the reference implementation.
@@ -145,10 +144,18 @@ def generate(
             # top-k -> top-p order is a teaching convention. rng.choice
             # finally draws one id from the retained distribution.
             probs = softmax_with_temperature(logits, temperature=temperature)
-            if top_k is not None:
-                probs = top_k_filter(probs, k=top_k)
-            if top_p is not None:
-                probs = top_p_filter(probs, p=top_p)
+            # Optional decoding extensions are loaded only on the sampling
+            # path. Greedy generation therefore stays independent of them.
+            if top_k is not None or top_p is not None:
+                from llm_lab.foundations.decoding_filters import (
+                    top_k_filter,
+                    top_p_filter,
+                )
+
+                if top_k is not None:
+                    probs = top_k_filter(probs, k=top_k)
+                if top_p is not None:
+                    probs = top_p_filter(probs, p=top_p)
             next_token = int(rng.choice(model.config.vocab_size, p=probs))
         # Append and loop: the generated token becomes context.
         context = np.append(context, np.int64(next_token))
