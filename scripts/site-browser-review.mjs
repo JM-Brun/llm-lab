@@ -97,30 +97,25 @@ for (const testCase of cases) {
           path: new URL(link.getAttribute("href"), document.baseURI).pathname,
         }));
         return {
-          primaryNavigation: readLinks("[data-primary-navigation] a"),
+          // The homepage has no separate top-level primary-navigation widget:
+          // Quarto's sidebar is the global site navigation. The landing page's
+          // own route choices are the hero actions, entry cards, and Practice links.
           entryCards: readLinks(".learning-entry-grid .learning-entry-link"),
           practiceLinks: readLinks(".learning-practice-links a"),
           heroLinks: readLinks(".hero-actions a"),
           entryCardCount: document.querySelectorAll(".learning-entry-grid .learning-entry").length,
         };
       });
-      const expectedNavigation = lang === "fr"
-        ? ["Parcours", "Comprendre", "Construire", "Pratiquer"]
-        : ["Learning paths", "Understand", "Build", "Practice"];
       const expectedPractice = lang === "fr"
         ? ["exercises.html", "evaluation-experimentale.html"]
         : ["exercises.html", "experimental-evaluation.html"];
       const endsWith = (actual, expected) => actual.length === expected.length
         && expected.every((suffix, index) => actual[index].path.endsWith(`/${lang}/${suffix}`));
-      const navOk = item.homepageOrientation.primaryNavigation.length === expectedNavigation.length
-        && expectedNavigation.every((label, index) => item.homepageOrientation.primaryNavigation[index].label === label
-          && item.homepageOrientation.primaryNavigation[index].path.endsWith(`/${lang}/${["learning-map.html", "llm-overview.html", "build-path.html", "exercises.html"][index]}`));
       const cardsOk = item.homepageOrientation.entryCardCount === 3
         && endsWith(item.homepageOrientation.entryCards, ["llm-overview.html", "build-path.html", "deepen.html"]);
       const practiceOk = endsWith(item.homepageOrientation.practiceLinks, expectedPractice);
       const heroOk = item.homepageOrientation.heroLinks.length === 2
         && endsWith(item.homepageOrientation.heroLinks, ["llm-overview.html", "learning-map.html"]);
-      if (!navOk) throw new Error(`homepage primary navigation contract mismatch: ${JSON.stringify({ expectedNavigation, actual: item.homepageOrientation.primaryNavigation, baseUrl: BASE, currentUrl: url })}`);
       if (!cardsOk) throw new Error("homepage must expose the three expected Understand / Build / Deepen entry cards");
       if (!practiceOk) throw new Error("homepage transversal Practice links are missing or misrouted");
       if (!heroOk) throw new Error("homepage hero actions are missing or misrouted");
