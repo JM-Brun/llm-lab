@@ -36,7 +36,7 @@ Les embeddings de contenu seuls ne codent pas la position. Le masque causal, lor
 
 - **Encodage absolu ajouté au vecteur :** on ajoute à la représentation du token (son vecteur de plongement) un vecteur associé à sa position. Le Transformer original utilisait des encodages sinusoïdaux ; d'autres modèles apprennent leurs embeddings positionnels.
 - **Mécanismes relatifs :** ils introduisent le décalage entre positions dans le calcul de l'attention, par exemple au moyen d'un biais ajouté aux scores ou de représentations relatives.
-- **RoPE :** cette méthode rotative applique des rotations dépendant de la position aux requêtes et aux clés après leurs projections, avant le produit (QK^	op). Le score obtenu dépend alors du décalage relatif. RoPE est donc un mécanisme de position relative ; on le distingue ici pour rendre visible son mode d'injection particulier.
+- **RoPE :** cette méthode rotative applique des rotations dépendant de la position aux requêtes et aux clés après leurs projections, avant le produit \(QK^\top\). Le score obtenu dépend alors du décalage relatif. RoPE est donc un mécanisme de position relative ; on le distingue ici pour rendre visible son mode d'injection particulier.
 
 Ces approches injectent l'information positionnelle à des endroits différents et n'ont pas exactement les mêmes propriétés. Le schéma compare deux mécanismes positionnels explicites ; il ne représente pas le masque causal, qui constitue une contrainte d'accès distincte. Il suffit ici de retenir leur rôle et leur emplacement général dans le calcul. Pour comprendre la dépendance au décalage relatif, les conventions de rotation et les limites à longue séquence, voir l'[approfondissement avancé sur RoPE](rope.qmd).
 
