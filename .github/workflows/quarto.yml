@@ -5,9 +5,12 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * *"
 
 permissions:
   contents: read
+  pull-requests: read
 
 concurrency:
   group: quarto-${{ github.workflow }}-${{ github.ref }}
@@ -65,22 +68,41 @@ jobs:
 
       # Run the browser audit against this exact PR render, not the deployed
       # Pages site. This makes the check reproducible and tests proposed CSS.
+      - name: Collect changed paths for targeted browser review
+        id: browser_changes
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          changed_files="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" --paginate --jq '.[].filename')"
+          {
+            echo "files<<EOF"
+            printf '%s\n' "$changed_files"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+          if printf '%s\n' "$changed_files" | grep -Eq '^(site/|scripts/site-browser-review.mjs$)'; then
+            echo "relevant=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "relevant=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Set up Node
-        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'fix/browser-review-') || startsWith(github.head_ref, 'fix/quarto-page-navigation-a11y-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-') || startsWith(github.head_ref, 'ux/') || startsWith(github.head_ref, 'fix/diagnose-overview-svg-transforms') || startsWith(github.head_ref, 'fix/render-collapsed-computational-graphs'))
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
         uses: actions/setup-node@v4
         with:
           node-version: "22"
 
       - name: Install browser test dependencies
-        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'fix/browser-review-') || startsWith(github.head_ref, 'fix/quarto-page-navigation-a11y-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-') || startsWith(github.head_ref, 'ux/') || startsWith(github.head_ref, 'fix/diagnose-overview-svg-transforms') || startsWith(github.head_ref, 'fix/render-collapsed-computational-graphs'))
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
         run: npm install --no-save --package-lock=false playwright@1.56.1 @axe-core/playwright@4.10.2
 
       - name: Install Chromium
-        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'fix/browser-review-') || startsWith(github.head_ref, 'fix/quarto-page-navigation-a11y-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-') || startsWith(github.head_ref, 'ux/') || startsWith(github.head_ref, 'fix/diagnose-overview-svg-transforms') || startsWith(github.head_ref, 'fix/render-collapsed-computational-graphs'))
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
         run: npx playwright install --with-deps chromium
 
       - name: Serve this PR's rendered site
-        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'fix/browser-review-') || startsWith(github.head_ref, 'fix/quarto-page-navigation-a11y-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-') || startsWith(github.head_ref, 'ux/') || startsWith(github.head_ref, 'fix/diagnose-overview-svg-transforms') || startsWith(github.head_ref, 'fix/render-collapsed-computational-graphs'))
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
         run: |
           python3 -m http.server 4173 --directory site/_site >/tmp/qkv-site-server.log 2>&1 &
           for attempt in $(seq 1 30); do
@@ -93,13 +115,15 @@ jobs:
           exit 1
 
       - name: Review rendered bilingual learning pages and concept navigation
-        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'fix/browser-review-') || startsWith(github.head_ref, 'fix/quarto-page-navigation-a11y-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-') || startsWith(github.head_ref, 'ux/') || startsWith(github.head_ref, 'fix/diagnose-overview-svg-transforms') || startsWith(github.head_ref, 'fix/render-collapsed-computational-graphs'))
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
         env:
           SITE_BROWSER_BASE_URL: http://127.0.0.1:4173
+          SITE_BROWSER_PROFILE: ${{ github.event_name == 'pull_request' && 'targeted' || 'full' }}
+          SITE_BROWSER_CHANGED_FILES: ${{ steps.browser_changes.outputs.files }}
         run: node scripts/site-browser-review.mjs
 
       - name: Upload screenshots and audit report
-        if: always() && github.event_name == 'pull_request' && (startsWith(github.head_ref, 'review/site-browser-qa-') || startsWith(github.head_ref, 'fix/browser-review-') || startsWith(github.head_ref, 'fix/quarto-page-navigation-a11y-') || startsWith(github.head_ref, 'docs/deepen-canonical-return-links') || startsWith(github.head_ref, 'improve/audit-skills-') || startsWith(github.head_ref, 'ux/') || startsWith(github.head_ref, 'fix/diagnose-overview-svg-transforms') || startsWith(github.head_ref, 'fix/render-collapsed-computational-graphs'))
+        if: always() && github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
         uses: actions/upload-artifact@v4
         with:
           name: site-browser-review-${{ github.sha }}
