@@ -78,7 +78,11 @@ Pour situer historiquement les mécanismes d'attention avant l'architecture Tran
 Dans l'auto-attention, les trois projections partent du même flux de représentations. Ici, $X$ désigne l'entrée courante du sous-module d'attention, et pas nécessairement un embedding brut du token. Dans le premier bloc, elle part des embeddings de tokens ; l'information positionnelle est fournie soit en entrée (par exemple en ajoutant des [embeddings positionnels](positional-encoding.qmd)), soit à l'intérieur de l'attention (par exemple, [RoPE](rope.qmd) applique des rotations aux requêtes et aux clés). Dans les blocs suivants, $X$ est un état caché déjà contextualisé. Pour une séquence de $T$ positions, on note cette matrice $X\in\mathbb{R}^{T\times d_{model}}$ :
 
 $$
-Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
+\begin{aligned}
+Q &= XW_Q,\\
+K &= XW_K,\\
+V &= XW_V.
+\end{aligned}
 $$
 
 Cette paramétrisation en trois projections distinctes suit la formulation de l’attention des Transformers présentée par [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762).
