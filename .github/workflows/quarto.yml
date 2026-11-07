@@ -69,17 +69,18 @@ jobs:
       # Pages site. This makes the check reproducible and tests proposed CSS.
       - name: Collect changed paths for targeted browser review
         id: browser_changes
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
+        if: github.event_name == 'pull_request'
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
+          changed_files="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" --paginate --jq '.[].filename')"
           {
             echo "files<<EOF"
-            gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" --paginate --jq '.[].filename'
+            printf '%s\\n' "$changed_files"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
-          if gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" --paginate --jq '.[].filename' | grep -Eq '^(site/|scripts/site-browser-review\\.mjs$)'; then
+          if printf '%s\\n' "$changed_files" | grep -Eq '^(site/|scripts/site-browser-review.mjs$)'; then
             echo "relevant=true" >> "$GITHUB_OUTPUT"
           else
             echo "relevant=false" >> "$GITHUB_OUTPUT"
