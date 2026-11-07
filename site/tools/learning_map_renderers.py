@@ -63,6 +63,10 @@ COPY: dict[str, dict[str, Any]] = {
         },
         "resetView": "Réinitialiser la vue",
         "resetHint": "Efface recherche, filtre et sélection ; Échap remonte d'un niveau à la fois.",
+        "copyLink": "Copier le lien",
+        "copyHint": "Copie l'URL de la vue courante (recherche, filtre, sélection).",
+        "linkCopied": "Lien copié.",
+        "linkCopyFailed": "Copie impossible : copiez l'URL depuis la barre d'adresse.",
         "ungroupedConcepts": "Autres notions",
         "hiddenRelations": "{count} relation(s) masquée(s) par la recherche ou le filtre.",
         "viewConcept": "Voir la notion",
@@ -124,6 +128,10 @@ COPY: dict[str, dict[str, Any]] = {
         },
         "resetView": "Reset view",
         "resetHint": "Clears search, filter, and selection; Escape steps back one level at a time.",
+        "copyLink": "Copy link",
+        "copyHint": "Copy the URL of the current view (search, filter, selection).",
+        "linkCopied": "Link copied.",
+        "linkCopyFailed": "Could not copy: copy the URL from the address bar.",
         "ungroupedConcepts": "Other concepts",
         "hiddenRelations": "{count} relation(s) hidden by the search or filter.",
         "viewConcept": "Show concept",
@@ -199,6 +207,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
     var conceptLegend = root.querySelector(".learning-map-concept-legend");
     var relationFilter = root.querySelector("[data-map-relation-type]");
     var resetButton = root.querySelector("[data-map-reset]");
+    var copyButton = root.querySelector("[data-map-copy]");
     if (!viewport || !modeSelect || !searchInput || !detailPanel) {
       return;
     }
@@ -224,6 +233,8 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
     var relationTypes = {};
     var conceptDomainList = [];
     var retryReload = false;
+    var commitNextSync = false;
+    var searchTimer = null;
     readStateFromHash();
     modeSelect.value = state.mode;
     if (state.query) {
@@ -262,16 +273,32 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         if (key === "mode" && value === "concepts") {
           state.mode = "concepts";
         } else if (key === "q") {
-          state.query = decodeURIComponent(value);
+          try {
+            state.query = decodeURIComponent(value);
+          } catch (error) {
+            state.query = value;
+          }
         } else if (key === "area") {
           state.areaId = value;
         } else if (key === "concept") {
           state.conceptId = value;
+        } else if (key === "rel") {
+          state.relationType = value;
         }
       });
     }
 
-    function syncStateToHash() {
+    function applyHashToState() {
+      state.mode = "pages";
+      state.query = "";
+      state.relationType = "";
+      state.areaId = null;
+      state.conceptId = null;
+      state.pageId = null;
+      readStateFromHash();
+    }
+
+    function syncStateToHash(commit) {
       var params = [];
       if (state.mode === "concepts") {
         params.push("mode=concepts");
@@ -282,54 +309,55 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       if (state.mode === "pages" && state.areaId) {
         params.push("area=" + state.areaId);
       }
+      if (state.mode === "concepts" && state.relationType) {
+        params.push("rel=" + state.relationType);
+      }
       if (state.mode === "concepts" && state.conceptId) {
         params.push("concept=" + state.conceptId);
       }
       var hash = params.length ? "#" + params.join("&") : "";
       if (window.location.hash !== hash) {
-        window.history.replaceState(
-          null,
-          "",
-          hash || window.location.pathname + window.location.search
-        );
+        if (commit) {
+          window.history.pushState(
+            null,
+            "",
+            hash || window.location.pathname + window.location.search
+          );
+        } else {
+          window.history.replaceState(
+            null,
+            "",
+            hash || window.location.pathname + window.location.search
+          );
+        }
       }
     }
 
     function load() {
+      var inline = document.querySelector('script[data-map-data]');
+      if (inline) {
+        try {
+          hydrate(JSON.parse(inline.textContent));
+        } catch (error) {
+          // Malformed inline data falls back to the JSON request below.
+        }
+      }
+      if (!data) {
+        fetchMapData();
+      }
+    }
+
+    function fetchMapData() {
       setStatus(copy.loading);
       window
-        .fetch(dataSource, { cache: "no-cache" })
+        .fetch(dataSource)
         .then(function (response) {
           if (!response.ok) {
             throw new Error("HTTP " + response.status);
           }
           return response.json();
         })
-        .then(function (payload) {
-          data = payload;
-          pageById = {};
-          for (var i = 0; i < data.pages.length; i += 1) {
-            pageById[data.pages[i].id] = data.pages[i];
-          }
-          conceptById = {};
-          var concepts = data.concepts || [];
-          for (var j = 0; j < concepts.length; j += 1) {
-            conceptById[concepts[j].id] = concepts[j];
-          }
-          areas = normalizeAreas(data.navigation || []);
-          relationTypes = data.concept_relation_types || {};
-          conceptDomainList = data.concept_domains || [];
-          render();
-          fillRelationFilter();
-          if (state.conceptId && conceptById[state.conceptId]) {
-            showConceptDetails(state.conceptId);
-          }
-          setStatus(loadedSummary());
-          if (retryReload) {
-            retryReload = false;
-            modeSelect.focus();
-          }
-        })
+        .then(hydrate)
         .catch(function () {
           clearNode(viewport);
           viewport.appendChild(el("p", "map-load-error", copy.loadError));
@@ -341,6 +369,35 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
           });
           viewport.appendChild(retry);
         });
+    }
+
+    function hydrate(payload) {
+      data = payload;
+      pageById = {};
+      for (var i = 0; i < data.pages.length; i += 1) {
+        pageById[data.pages[i].id] = data.pages[i];
+      }
+      conceptById = {};
+      var concepts = data.concepts || [];
+      for (var j = 0; j < concepts.length; j += 1) {
+        conceptById[concepts[j].id] = concepts[j];
+      }
+      if (state.conceptId && !conceptById[state.conceptId]) {
+        state.conceptId = null;
+      }
+      areas = normalizeAreas(data.navigation || []);
+      relationTypes = data.concept_relation_types || {};
+      conceptDomainList = data.concept_domains || [];
+      render();
+      fillRelationFilter();
+      if (state.conceptId) {
+        showConceptDetails(state.conceptId);
+      }
+      setStatus(loadedSummary());
+      if (retryReload) {
+        retryReload = false;
+        modeSelect.focus();
+      }
     }
 
     function loadedSummary() {
@@ -538,7 +595,8 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       } else {
         renderRoot();
       }
-      syncStateToHash();
+      syncStateToHash(commitNextSync);
+      commitNextSync = false;
     }
 
     function renderRoot() {
@@ -566,6 +624,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         }
         card.addEventListener("click", function () {
           state.areaId = area.id;
+          commitNextSync = true;
           render();
           var home = viewport.querySelector("[data-map-home]");
           if (home) {
@@ -586,6 +645,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       home.setAttribute("aria-label", copy.backLabel);
       home.addEventListener("click", function () {
         state.areaId = null;
+        commitNextSync = true;
         render();
         var card = viewport.querySelector('[data-area-id="' + area.id + '"]');
         if (card) {
@@ -786,6 +846,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       }
       item.addEventListener("click", function () {
         state.conceptId = concept.id;
+        commitNextSync = true;
         render();
         showConceptDetails(concept.id);
         var selected = viewport.querySelector('[data-concept-id="' + concept.id + '"]');
@@ -978,6 +1039,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
             link.type = "button";
             link.addEventListener("click", function () {
               state.conceptId = other.id;
+              commitNextSync = true;
               render();
               showConceptDetails(other.id, "details");
             });
@@ -1016,23 +1078,32 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       state.mode = modeSelect.value;
       state.conceptId = null;
       state.pageId = null;
+      commitNextSync = true;
       render();
     });
 
     searchInput.addEventListener("input", function () {
-      state.query = searchInput.value.trim();
-      render();
+      if (searchTimer) {
+        window.clearTimeout(searchTimer);
+      }
+      searchTimer = window.setTimeout(function () {
+        searchTimer = null;
+        state.query = searchInput.value.trim();
+        render();
+      }, 120);
     });
 
     if (relationFilter) {
       relationFilter.addEventListener("change", function () {
         state.relationType = relationFilter.value;
+        commitNextSync = true;
         render();
       });
     }
 
     if (resetButton) {
       resetButton.addEventListener("click", function () {
+        commitNextSync = true;
         state.query = "";
         state.relationType = "";
         state.areaId = null;
@@ -1048,30 +1119,78 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       });
     }
 
+    if (copyButton) {
+      copyButton.addEventListener("click", function () {
+        syncStateToHash(false);
+        var url = window.location.href;
+        function reportCopied(successful) {
+          setStatus(successful ? copy.linkCopied : copy.linkCopyFailed);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(
+            function () {
+              reportCopied(true);
+            },
+            function () {
+              reportCopied(false);
+            }
+          );
+        } else {
+          reportCopied(false);
+        }
+      });
+    }
+
     document.addEventListener("keydown", function (event) {
       if (event.key !== "Escape" || !data) {
         return;
       }
+      var target = event.target;
+      if (target && target !== document.body && !root.contains(target)) {
+        return;
+      }
       if (state.query) {
+        commitNextSync = true;
         state.query = "";
         searchInput.value = "";
         render();
       } else if (state.mode === "concepts" && state.conceptId) {
+        commitNextSync = true;
         state.conceptId = null;
         render();
         renderPlaceholder();
       } else if (state.mode === "concepts" && state.relationType) {
+        commitNextSync = true;
         state.relationType = "";
         if (relationFilter) {
           relationFilter.value = "";
         }
         render();
       } else if (state.mode === "pages" && state.areaId) {
+        commitNextSync = true;
         state.areaId = null;
         render();
       } else {
         state.pageId = null;
         markCurrentChip();
+        renderPlaceholder();
+      }
+    });
+
+    window.addEventListener("popstate", function () {
+      if (!data) {
+        return;
+      }
+      applyHashToState();
+      modeSelect.value = state.mode;
+      searchInput.value = state.query;
+      if (relationFilter) {
+        relationFilter.value = state.relationType;
+      }
+      render();
+      if (state.mode === "concepts" && state.conceptId) {
+        showConceptDetails(state.conceptId);
+      } else {
         renderPlaceholder();
       }
     });
@@ -1101,6 +1220,9 @@ TERRITORY_MAP_TEMPLATE = """<div class="learning-map" data-learning-map
       <input id="learning-map-search" data-map-search type="search" autocomplete="off">
     </div>
     <div class="learning-map-actions">
+      <button type="button" class="map-copy" data-map-copy title="__COPY_HINT__">
+        __COPY_LINK__
+      </button>
       <button type="button" class="map-reset" data-map-reset title="__RESET_HINT__">
         __RESET_VIEW__
       </button>
@@ -1111,7 +1233,7 @@ TERRITORY_MAP_TEMPLATE = """<div class="learning-map" data-learning-map
     <div class="learning-map-canvas learning-map-viewport" data-map-viewport>
       <p class="map-load-status">__LOADING__</p>
     </div>
-    <aside class="learning-map-details" aria-live="polite" aria-atomic="true">
+    <aside class="learning-map-details">
       <details data-map-details open>
         <summary>__DETAILS_SUMMARY__</summary>
         <p class="map-selection-hint">__ASIDE_HINT__</p>
@@ -1179,11 +1301,33 @@ def render_territory_map(
                 "__RELATION_FILTER_LABEL__": html.escape(copy["relationFilterLabel"]),
                 "__RESET_VIEW__": html.escape(copy["resetView"]),
                 "__RESET_HINT__": html.escape(copy["resetHint"]),
+                "__COPY_LINK__": html.escape(copy["copyLink"]),
+                "__COPY_HINT__": html.escape(copy["copyHint"]),
                 "__LOADING__": html.escape(copy["loading"]),
                 "__DETAILS_SUMMARY__": html.escape(copy["detailsSummary"]),
                 "__ASIDE_HINT__": html.escape(copy["asideHint"]),
             },
         )
+        + "```\n"
+    )
+
+
+def render_inline_map_data(payload: dict[str, Any]) -> str:
+    """Return the map payload as an inline JSON script next to the map shell.
+
+    Embedding the data removes the loading state and the failure path of a
+    second request; the JSON request stays available as a fallback when the
+    inline block is missing or malformed.
+    """
+    data = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace(
+        "</", "<\\/"
+    )
+    return (
+        GENERATED_FILE_NOTE
+        + "```{=html}\n"
+        + '<script type="application/json" data-map-data>'
+        + data
+        + "</script>\n"
         + "```\n"
     )
 

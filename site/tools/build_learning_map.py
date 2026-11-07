@@ -22,7 +22,12 @@ from pathlib import Path
 from typing import Any, Literal
 
 import yaml
-from learning_map_renderers import REPRESENTATIONS, escape_markdown_text, render_map_script
+from learning_map_renderers import (
+    REPRESENTATIONS,
+    escape_markdown_text,
+    render_inline_map_data,
+    render_map_script,
+)
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -594,7 +599,10 @@ def write_guided_route_fragment(language: str, stages: list[ResolvedGuidedRouteS
 
 
 def write_map_fragments(
-    language: str, navigation: list[dict[str, Any]], pages: list[dict[str, Any]]
+    language: str,
+    navigation: list[dict[str, Any]],
+    pages: list[dict[str, Any]],
+    payload: dict[str, Any],
 ) -> None:
     """Write every generated presentation artifact for one language."""
     page_by_id = {page["id"]: page for page in pages}
@@ -607,6 +615,9 @@ def write_map_fragments(
             representation.render(language, navigation, page_by_id),
             encoding="utf-8",
         )
+    (includes / f"generated-map-data-{language}.qmd").write_text(
+        render_inline_map_data(payload), encoding="utf-8"
+    )
 
 
 def load_domain_labels(language: str) -> dict[str, str] | None:
@@ -739,20 +750,16 @@ def build(language: str) -> Path:
     write_guided_route_fragment(language, guided_route)
     write_guided_page_context_fragments(language, guided_route)
     write_suggested_route_fragments(language, pages)
-    write_map_fragments(language, navigation, pages)
+    payload = {
+        "language": language,
+        "source": "LLM-LAB-PAGE-MAP v1 + data/guided-route.yml + data/concepts.yml",
+        "pages": pages,
+        "navigation": navigation,
+        **concept_graph,
+    }
+    write_map_fragments(language, navigation, pages, payload)
     output.write_text(
-        json.dumps(
-            {
-                "language": language,
-                "source": "LLM-LAB-PAGE-MAP v1 + data/guided-route.yml + data/concepts.yml",
-                "pages": pages,
-                "navigation": navigation,
-                **concept_graph,
-            },
-            ensure_ascii=False,
-            indent=2,
-        )
-        + "\n",
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
     return output

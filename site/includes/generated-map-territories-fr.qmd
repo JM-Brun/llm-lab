@@ -19,7 +19,10 @@
       <input id="learning-map-search" data-map-search type="search" autocomplete="off">
     </div>
     <div class="learning-map-actions">
-      <button type="button" class="map-reset" data-map-reset title="Efface la recherche, le filtre et la sélection ; Échap remonte d'un niveau à la fois.">
+      <button type="button" class="map-copy" data-map-copy title="Copie l&#x27;URL de la vue courante (recherche, filtre, sélection).">
+        Copier le lien
+      </button>
+      <button type="button" class="map-reset" data-map-reset title="Efface recherche, filtre et sélection ; Échap remonte d&#x27;un niveau à la fois.">
         Réinitialiser la vue
       </button>
     </div>
@@ -29,7 +32,7 @@
     <div class="learning-map-canvas learning-map-viewport" data-map-viewport>
       <p class="map-load-status">Chargement de la carte…</p>
     </div>
-    <aside class="learning-map-details" aria-live="polite" aria-atomic="true">
+    <aside class="learning-map-details">
       <details data-map-details open>
         <summary>Détails</summary>
         <p class="map-selection-hint">Un clic sélectionne sans naviguer ; « Ouvrir la page » ouvre la ressource.</p>
