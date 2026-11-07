@@ -959,7 +959,7 @@ def test_render_territory_map_exposes_copy_link_and_single_live_region() -> None
     """The map shell ships a copy-link button and keeps a single live region."""
     for language in ("fr", "en"):
         shell = RENDERERS["render_territory_map"](language, [], {})
-        assert 'data-map-copy' in shell
+        assert "data-map-copy" in shell
         assert "learning-map-actions" in shell
         assert shell.count('aria-live="polite"') == 1
         assert 'aria-atomic="true"' not in shell

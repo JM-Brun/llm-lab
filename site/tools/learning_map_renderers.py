@@ -1319,9 +1319,7 @@ def render_inline_map_data(payload: dict[str, Any]) -> str:
     second request; the JSON request stays available as a fallback when the
     inline block is missing or malformed.
     """
-    data = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace(
-        "</", "<\\/"
-    )
+    data = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     return (
         GENERATED_FILE_NOTE
         + "```{=html}\n"

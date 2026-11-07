@@ -124,7 +124,7 @@ website:
   repo-actions: [source, issue]
   page-navigation: true
   search: true
-  opengraph: true
+  open-graph: true
   twitter-card: true
   navbar:
     background: "#14532D"
