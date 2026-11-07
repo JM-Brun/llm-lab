@@ -120,7 +120,7 @@ for (const testCase of cases) {
       const practiceOk = endsWith(item.homepageOrientation.practiceLinks, expectedPractice);
       const heroOk = item.homepageOrientation.heroLinks.length === 2
         && endsWith(item.homepageOrientation.heroLinks, ["llm-overview.html", "learning-map.html"]);
-      if (!navOk) throw new Error("homepage primary navigation labels or destinations do not match the bilingual route contract");
+      if (!navOk) throw new Error(`homepage primary navigation contract mismatch: ${JSON.stringify({ expectedNavigation, actual: item.homepageOrientation.primaryNavigation, baseUrl: BASE, currentUrl: url })}`);
       if (!cardsOk) throw new Error("homepage must expose the three expected Understand / Build / Deepen entry cards");
       if (!practiceOk) throw new Error("homepage transversal Practice links are missing or misrouted");
       if (!heroOk) throw new Error("homepage hero actions are missing or misrouted");
