@@ -88,6 +88,7 @@ These markers describe the evidence available; they do not make all evidence equ
 The same model participates in several processes, but their objectives and dynamics differ:
 
 <figure class="llm-flow-figure">
+```{=html}
 <svg class="llm-flow" viewBox="0 0 1220 650" role="img" aria-labelledby="llm-flow-title-en llm-flow-desc-en" xmlns="http://www.w3.org/2000/svg">
 <title id="llm-flow-title-en">Interactive map of inference, learning, and evaluation</title>
 <desc id="llm-flow-desc-en">The top lane describes autoregressive inference with fixed parameters, from text context through next-token selection and appending it to the context. The second lane describes learning: corpus and tokenizer, examples, forward pass, loss, gradients, and parameter updates. The third lane shows evaluation on held-out data. Each clickable block opens a canonical lesson.</desc>
@@ -133,6 +134,8 @@ The same model participates in several processes, but their objectives and dynam
 <text x="20" y="606" class="flow-hint">Validation results may guide data, training, and decoding choices; the test set remains reserved for final assessment.</text>
 <text x="20" y="630" class="flow-hint">Every bordered block is clickable and opens a canonical lesson. Solid arrows show computation flow; loops show repetition or parameter updates.</text>
 </svg>
+```
+
 <figcaption>Inference: fixed parameters · Learning: updated parameters · Evaluation: cross-cutting analysis on held-out data</figcaption>
 </figure>
 

@@ -89,6 +89,7 @@ Ces repères décrivent les preuves disponibles ; ils ne rendent pas toutes les 
 Le même modèle intervient dans plusieurs processus, mais leurs objectifs et leurs dynamiques diffèrent :
 
 <figure class="llm-flow-figure">
+```{=html}
 <svg class="llm-flow" viewBox="0 0 1220 650" role="img" aria-labelledby="llm-flow-title-fr llm-flow-desc-fr" xmlns="http://www.w3.org/2000/svg">
 <title id="llm-flow-title-fr">Carte interactive des processus d'inférence, d'apprentissage et d'évaluation</title>
 <desc id="llm-flow-desc-fr">La ligne supérieure décrit l'inférence autorégressive avec des paramètres fixes, du contexte textuel au choix du prochain token puis son ajout au contexte. La deuxième ligne décrit l'apprentissage : corpus et tokenizer, exemples, passe avant, perte, gradients et mise à jour des paramètres. La troisième ligne présente l'évaluation sur des données tenues à l'écart. Chaque bloc cliquable ouvre une page de référence.</desc>
@@ -134,6 +135,8 @@ Le même modèle intervient dans plusieurs processus, mais leurs objectifs et le
 <text x="20" y="606" class="flow-hint">Les résultats de validation peuvent guider les choix de données, d'entraînement et de décodage ; le jeu de test reste réservé à l'évaluation finale.</text>
 <text x="20" y="630" class="flow-hint">Chaque bloc bordé est cliquable et ouvre une page canonique. Les flèches pleines indiquent le flux de calcul ; les boucles indiquent une répétition ou une mise à jour.</text>
 </svg>
+```
+
 <figcaption>Inférence : paramètres fixes · Apprentissage : paramètres mis à jour · Évaluation : analyse transversale sur des données tenues à l'écart</figcaption>
 </figure>
 
