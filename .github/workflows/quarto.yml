@@ -122,7 +122,7 @@ jobs:
         run: node scripts/site-browser-review.mjs
 
       - name: Upload screenshots and audit report
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
+        if: always() && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true'))
         uses: actions/upload-artifact@v4
         with:
           name: site-browser-review-${{ github.sha }}
