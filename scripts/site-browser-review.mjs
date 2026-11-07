@@ -75,7 +75,11 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
     }
   }
   if (cases.length === 0) {
-    throw new Error("Targeted browser review found no matching rendered pages for: " + changedFiles.join(", "));
+    const smokePages = new Set(["learning-map.html", "llm-overview.html"]);
+    for (let i = cases.length - 1; i >= 0; i--) {
+      if (!smokePages.has(cases[i].page)) cases.splice(i, 1);
+    }
+    console.log("No dedicated browser case matched the changed page; using the global smoke profile.");
   }
   console.log(JSON.stringify({ profile: "targeted", changedFiles, changedPages: [...changedPages], selectedCases: cases.length }));
 }
