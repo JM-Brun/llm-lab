@@ -1,9 +1,18 @@
-"""Foundations package with lazy, compatibility-preserving public exports.
+"""Foundations package: numerical reference implementations for core LLM operations.
 
-Importing the package itself does not import the GPT implementation or optional
-extensions. Public names are resolved on first access, so the minimal model
-route can depend on the package namespace without eagerly loading advanced
-decoding algorithms. Existing package-level imports remain supported.
+The reference decoder-only GPT is split into focused modules, in reading
+order: ``gpt_config`` (dimensions), ``gpt_ops`` (building blocks),
+``transformer_block`` (one block), ``gpt`` (the assembled model) and
+``generate`` (the decoding loop). ``training_examples`` builds the
+aligned input/target windows that pretraining consumes, and
+``decoding_filters`` implements the optional top-k/top-p truncations of
+the decoding deep dive, applied by ``generate`` in sampling mode.
+
+This package re-exports that public surface so callers can import from
+``llm_lab.foundations`` directly. Exports are resolved lazily: importing
+the package does not eagerly load the GPT implementation or optional
+decoding filters. The minimal model route can therefore remain independent
+of advanced decoding algorithms until a caller explicitly requests them.
 """
 
 from importlib import import_module
