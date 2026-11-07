@@ -37,6 +37,8 @@ Pour une auto-attention fondée uniquement sur le contenu, sans biais positionne
 \operatorname{Attention}(PX)=P\,\operatorname{Attention}(X).
 \]
 
+On peut le vérifier en posant $S=QK^\top/\sqrt{d_k}$ et $A=\operatorname{softmax}(S)$, avec un softmax appliqué ligne par ligne. Pour l’entrée permutée, $Q'=PQ$, $K'=PK$ et $V'=PV$. Ainsi, $A'=\operatorname{softmax}(PSP^\top)=PAP^\top$, puis $A'V'=PAP^\top PV=PAV$.
+
 Le calcul est **équivariant par permutation** : il réordonne ses sorties avec ses entrées. Il ne fournit donc pas, à lui seul, un repère permettant de distinguer les positions dans la séquence.
 
 Cette propriété suppose l’absence de signal positionnel et de contrainte dépendant de l’ordre. Un masque causal fixe introduit justement une contrainte structurelle d’ordre ; il ne faut pas confondre ce rôle avec celui d’un encodage positionnel explicite.
