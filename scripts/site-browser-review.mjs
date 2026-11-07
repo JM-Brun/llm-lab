@@ -103,7 +103,7 @@ for (const testCase of cases) {
   const consoleErrors = [];
   const pageErrors = [];
   page.on("console", msg => { if (msg.type() === "error") consoleErrors.push(msg.text()); });
-  page.on("pageerror", error => pageErrors.push(String(error)));
+  page.on("pageerror", error => pageErrors.push({ message: error.message, stack: error.stack || null }));
 
   const url = kind === "homepage"
     ? (lang === "fr" ? `${BASE}/` : `${BASE}/en/`)
@@ -825,6 +825,7 @@ console.log(JSON.stringify({
     focusTargets: c.keyboardSummary?.focusTargets,
     focusVisibleTargets: c.keyboardSummary?.focusVisibleTargets,
     axeViolations: c.axe?.violationCount,
+    pageErrors: c.pageErrors,
     error: c.error,
   })),
   failures: report.failures,
