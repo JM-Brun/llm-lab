@@ -63,13 +63,13 @@ Choose an entry point. You can change routes at any time: concepts and their rel
 
 <div class="learning-practice">
   <div>
-    <p class="learning-entry-kicker">AT ANY TIME · PRACTICE</p>
-    <strong>Verify through calculation and experiment</strong>
-    <p>Challenge explanations with exercises, implementations, and documented evaluation protocols.</p>
+  <p class="learning-entry-kicker">AT ANY TIME · PRACTICE</p>
+  <strong>Verify through calculation and experiment</strong>
+  <p>Challenge explanations with exercises, implementations, and documented evaluation protocols.</p>
   </div>
   <div class="learning-practice-links">
-    <a href="exercises.qmd">Exercises</a>
-    <a href="experimental-evaluation.qmd">Experimental evaluation</a>
+  <a href="exercises.qmd">Exercises</a>
+  <a href="experimental-evaluation.qmd">Experimental evaluation</a>
   </div>
 </div>
 
