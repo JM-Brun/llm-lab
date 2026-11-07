@@ -78,7 +78,11 @@ For the historical development of attention before the Transformer architecture,
 In self-attention, all three projections start from the same representation stream. Here, $X$ denotes the current input to the attention sublayer, not necessarily a raw token embedding. In the first block it starts from token embeddings; positional information is supplied either at the input (for example, by adding [positional embeddings](positional-encoding.qmd)) or inside attention (for example, [RoPE](rope.qmd) rotates queries and keys). In later blocks, $X$ is an already contextualized hidden state. For a sequence of $T$ positions, let this matrix be $X\in\mathbb{R}^{T\times d_{model}}$:
 
 $$
-Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
+\begin{aligned}
+Q &= XW_Q,\\
+K &= XW_K,\\
+V &= XW_V.
+\end{aligned}
 $$
 
 This parameterization into three distinct projections follows the Transformer attention formulation presented in [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762).
