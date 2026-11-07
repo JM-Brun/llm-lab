@@ -79,7 +79,7 @@ In code, **boolean-mask polarity is API-specific**. For example, in [PyTorch sca
 
 These masks answer different questions and must not be substituted for one another.
 
-![Four-position causal mask causal mask.](../images/causal-attention-mask.svg){fig-alt="Lower-triangular matrix: each position can access itself and all earlier positions" width=100%}
+![Four-position causal mask.](../images/causal-attention-mask.svg){fig-alt="Lower-triangular matrix: each position can access itself and all earlier positions" width=100%}
 
 ## Provenance and purpose
 
