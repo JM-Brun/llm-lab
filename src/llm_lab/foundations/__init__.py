@@ -49,24 +49,18 @@ def __dir__() -> list[str]:
 
 
 if TYPE_CHECKING:
-    from llm_lab.foundations.attention import (
-        causal_mask as causal_mask,
-        scaled_dot_product_attention as scaled_dot_product_attention,
-        softmax_with_temperature as softmax_with_temperature,
-    )
-    from llm_lab.foundations.decoding_filters import (
-        top_k_filter as top_k_filter,
-        top_p_filter as top_p_filter,
-    )
+    from llm_lab.foundations.attention import causal_mask as causal_mask
+    from llm_lab.foundations.attention import scaled_dot_product_attention as scaled_dot_product_attention
+    from llm_lab.foundations.attention import softmax_with_temperature as softmax_with_temperature
+    from llm_lab.foundations.decoding_filters import top_k_filter as top_k_filter
+    from llm_lab.foundations.decoding_filters import top_p_filter as top_p_filter
     from llm_lab.foundations.generate import generate as generate
     from llm_lab.foundations.gpt import GPT as GPT
     from llm_lab.foundations.gpt_config import GPTConfig as GPTConfig
-    from llm_lab.foundations.gpt_ops import gelu as gelu, layer_norm as layer_norm, linear as linear
-    from llm_lab.foundations.losses import (
-        cross_entropy_from_logits as cross_entropy_from_logits,
-        cross_entropy_gradient as cross_entropy_gradient,
-    )
-    from llm_lab.foundations.training_examples import (
-        sliding_input_target_pairs as sliding_input_target_pairs,
-    )
+    from llm_lab.foundations.gpt_ops import gelu as gelu
+    from llm_lab.foundations.gpt_ops import layer_norm as layer_norm
+    from llm_lab.foundations.gpt_ops import linear as linear
+    from llm_lab.foundations.losses import cross_entropy_from_logits as cross_entropy_from_logits
+    from llm_lab.foundations.losses import cross_entropy_gradient as cross_entropy_gradient
+    from llm_lab.foundations.training_examples import sliding_input_target_pairs as sliding_input_target_pairs
     from llm_lab.foundations.transformer_block import TransformerBlock as TransformerBlock
