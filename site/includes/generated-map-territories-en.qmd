@@ -19,6 +19,9 @@
       <input id="learning-map-search" data-map-search type="search" autocomplete="off">
     </div>
     <div class="learning-map-actions">
+      <button type="button" class="map-copy" data-map-copy title="Copy the URL of the current view (search, filter, selection).">
+        Copy link
+      </button>
       <button type="button" class="map-reset" data-map-reset title="Clears search, filter, and selection; Escape steps back one level at a time.">
         Reset view
       </button>
@@ -29,7 +32,7 @@
     <div class="learning-map-canvas learning-map-viewport" data-map-viewport>
       <p class="map-load-status">Loading the map…</p>
     </div>
-    <aside class="learning-map-details" aria-live="polite" aria-atomic="true">
+    <aside class="learning-map-details">
       <details data-map-details open>
         <summary>Details</summary>
         <p class="map-selection-hint">Clicking selects in place; use “Open the page” to open the resource.</p>

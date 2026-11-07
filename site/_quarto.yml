@@ -2,6 +2,7 @@ project:
   type: website
   output-dir: _site
   resources:
+    - 404.html
     - learning-map-data-fr.json
     - learning-map-data-en.json
     - knowledge-graph.jsonld
@@ -123,6 +124,8 @@ website:
   repo-actions: [source, issue]
   page-navigation: true
   search: true
+  open-graph: true
+  twitter-card: true
   navbar:
     background: "#14532D"
     foreground: "#f8fafc"

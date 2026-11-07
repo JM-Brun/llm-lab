@@ -23,7 +23,9 @@ related: []
 tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:fr", "status:published"]
 -->
 
-La page distingue un **parcours guidé** compact d'une **carte progressive**. Le parcours est dérivé du curriculum canonique ; la carte commence par les territoires de haut niveau, puis révèle rubriques et pages au fil des clics.
+La page distingue un **parcours guidé** compact d'une **carte progressive**. Le parcours est dérivé du curriculum canonique ; la carte commence par les territoires de haut niveau, puis révèle rubriques et pages au fil des clics. Les repères de lecture ci-dessous se replient ; la carte reflète la recherche, le filtre et la sélection dans l'URL, et le bouton « Copier le lien » la partage telle quelle.
+
+::: {.callout-note collapse="true" title="Comment lire cette carte"}
 
 - **Territoires** — les grandes parties du site : Comprendre, Construire, S'exercer, Approfondir, Références.
 - **Rubriques** — un clic sur un territoire affiche ses sous-parties ; le fil d'Ariane ou la touche Échap permet de remonter d'un niveau.
@@ -31,6 +33,8 @@ La page distingue un **parcours guidé** compact d'une **carte progressive**. Le
 - **Notions** — la vue « Notions canoniques » regroupe les concepts du registre bilingue versionné dans `data/concepts.yml` par domaine de découverte, avec leurs définitions, relations typées et pages ressources. La recherche et le filtre par type de relation réduisent la liste, une notion sélectionnée met en évidence ses voisines, et les notions liées restent cliquables depuis le panneau de détails.
 
 Les intitulés de sections affichés dans les détails d'une page sont des repères éditoriaux, pas des concepts canoniques. La carte ne doit pas être interprétée comme un ordre de lecture unique : le parcours guidé ci-dessous joue ce rôle.
+
+:::
 
 ::: {.guided-route-section}
 
@@ -50,9 +54,11 @@ Huit étapes conceptuelles donnent un point d'entrée et une progression conseil
 
 ## Explorer les ressources
 
-Ces vues servent à explorer ; elles ne remplacent pas le parcours guidé ci-dessus (le fonctionnement des territoires, rubriques, pages et notions est décrit en tête de page). Le bouton « Réinitialiser la vue » efface la recherche, le filtre et la sélection ; la touche Échap remonte d'un niveau à la fois. La carte comme la liste ci-dessous sont générées automatiquement par le méta-code Python à partir de la sidebar Quarto et des métadonnées des pages : une seule source à maintenir.
+Ces vues servent à explorer ; elles ne remplacent pas le parcours guidé ci-dessus (le fonctionnement des territoires, rubriques, pages et notions est décrit en tête de page). Le bouton « Réinitialiser la vue » efface la recherche, le filtre et la sélection ; « Copier le lien » copie l'URL de la vue courante ; la touche Échap remonte d'un niveau à la fois. La carte comme la liste ci-dessous sont générées automatiquement par le méta-code Python à partir de la sidebar Quarto et des métadonnées des pages : une seule source à maintenir.
 
 {{< include ../includes/generated-map-territories-fr.qmd >}}
+
+{{< include ../includes/generated-map-data-fr.qmd >}}
 
 La carte est un outil d'orientation : elle n'indique pas qu'une page est un prérequis strict. Les pages de niveau avancé peuvent être consultées directement lorsque la question le justifie.
 

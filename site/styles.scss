@@ -1551,7 +1551,7 @@ a.concept-link:focus-visible {
 }
 
 .map-concept-dimmed {
-  opacity: 0.45;
+  opacity: 0.6;
 }
 
 .map-hidden-relations {
@@ -1577,6 +1577,13 @@ a.concept-link:focus-visible {
   border-color: var(--map-accent);
 }
 
+.learning-map-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.learning-map-actions .map-copy,
 .learning-map-actions .map-reset {
   min-height: 2.65rem;
   padding: 0.5rem 0.9rem;
@@ -1587,6 +1594,8 @@ a.concept-link:focus-visible {
   cursor: pointer;
 }
 
+.learning-map-actions .map-copy:hover,
+.learning-map-actions .map-copy:focus-visible,
 .learning-map-actions .map-reset:hover,
 .learning-map-actions .map-reset:focus-visible {
   border-color: var(--llm-brand-action);
