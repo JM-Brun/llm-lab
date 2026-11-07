@@ -17,6 +17,9 @@ pedagogical_model:
       - {id: src-position-index, kind: input, description: "Integer sequence position used to construct a position-dependent vector.", locator: "Positional encoding"}
       - {id: src-sinusoidal-position-vector, kind: representation, description: "Position vector whose even and odd coordinates use sine and cosine at dimension-dependent frequencies.", locator: "Positional encoding"}
       - {id: src-initial-hidden-states, kind: representation, description: "Token vectors combined with positional vectors before Transformer processing.", locator: "Equation (1)"}
+      - {id: src-additive-position-combination, kind: operation, description: "Adds the positional vector to each token embedding to form the initial input states.", locator: "Equation (1)"}
+      - {id: src-content-only-self-attention, kind: mechanism, description: "Self-attention applied without position-dependent signals or order-dependent constraints.", locator: "Positional encoding"}
+      - {id: src-permutation-equivariance, kind: mathematical-property, description: "Permuting input rows permutes output rows in the same way for content-only self-attention.", locator: "Positional encoding"}
       - {id: src-frequency-pairs, kind: mathematical-structure, description: "Paired sine/cosine coordinates interpreted as points on circles with different angular frequencies.", locator: "Positional encoding"}
       - {id: src-relative-offset-rotation, kind: mathematical-property, description: "For each frequency pair, shifting position by a fixed offset corresponds to a fixed two-dimensional rotation.", locator: "Positional encoding"}
       - {id: src-pytorch-visualization, kind: pedagogical-artifact, description: "Described code cells for inspecting embedding vectors and positional encodings with Matplotlib.", locator: "Code"}
@@ -24,9 +27,11 @@ pedagogical_model:
       - {from: src-token-ids, type: indexes, to: src-embedding-table}
       - {from: src-embedding-table, type: yields, to: src-token-vectors}
       - {from: src-position-index, type: determines, to: src-sinusoidal-position-vector}
-      - {from: src-token-vectors, type: combined-with, to: src-sinusoidal-position-vector}
-      - {from: src-token-vectors, type: contributes-to, to: src-initial-hidden-states}
-      - {from: src-sinusoidal-position-vector, type: contributes-to, to: src-initial-hidden-states}
+      - {from: src-token-vectors, type: input-to, to: src-additive-position-combination}
+      - {from: src-sinusoidal-position-vector, type: input-to, to: src-additive-position-combination}
+      - {from: src-additive-position-combination, type: yields, to: src-initial-hidden-states}
+      - {from: src-token-vectors, type: input-to, to: src-content-only-self-attention}
+      - {from: src-content-only-self-attention, type: exhibits, to: src-permutation-equivariance}
       - {from: src-sinusoidal-position-vector, type: contains, to: src-frequency-pairs}
       - {from: src-frequency-pairs, type: exhibits, to: src-relative-offset-rotation}
       - {from: src-token-vectors, type: visualized-by, to: src-pytorch-visualization}
@@ -45,7 +50,7 @@ pedagogical_model:
   teaching_route:
     - {order: 1, section: "Introduction and notation", function: "establish-a-small-checkable-model", moves: ["Set n, d, d_k and the row-vector convention", "Use a small tensor shape to make operations inspectable"]}
     - {order: 2, section: "Embeddings", function: "connect-discrete-identifiers-to-vectors", moves: ["Define the embedding lookup table", "Express token vectors as selected rows"]}
-    - {order: 3, section: "Positional encoding", function: "motivate-and-formalize-order-information", moves: ["Explain why content-only self-attention is permutation equivariant", "Introduce sinusoidal coordinates", "Interpret sine/cosine pairs as rotations at different frequencies"]}
+    - {order: 3, section: "Positional encoding", function: "motivate-and-formalize-order-information", moves: ["Explain why content-only self-attention is permutation equivariant", "Introduce sinusoidal coordinates", "Interpret sine/cosine pairs as rotations at different frequencies", "Distinguish the sinusoidal offset-rotation identity from RoPE rotations of projected Q and K"]}
     - {order: 4, section: "Code cells and visual outputs", function: "connect-equations-to-visual-inspection", moves: ["Describe vector visualization with Matplotlib", "Describe positional and non-positional vector comparison"]}
   pedagogical_strengths:
     - "Explicit row-vector convention and tensor shapes reduce ambiguity when checking matrix products."
@@ -67,6 +72,41 @@ pedagogical_model:
     decision: "Use as a complementary worked-example and geometric-visualization reference for existing embedding and positional-encoding lessons. Do not create a new concept, page, route stage or graph registry. Candidate improvements are small numeric checks and a qualified geometric explanation, subject to independent verification."
     structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-computational-graph, canonical-learning-routes, site-navigation]
 items:
+  - id: jay-joshi-transformer-mathematics-positional-embeddings:permutation-equivariance
+    kind: claim
+    summary: "The article states that content-only self-attention treats the sequence as a set: permuting input rows permutes output rows in the same way. This is permutation equivariance, not permutation invariance."
+    locator: {type: section, value: "Positional encoding", label: "Why positional information is needed"}
+    evidence:
+      kind: source-claim-with-independent-mathematical-check
+      confidence: well-supported
+      scope: "The indexed article explicitly states the row-shuffling property. The matrix derivation is an independent LLM Lab verification, not a derivation reproduced from the source."
+      assumptions: ["Self-attention uses content-derived Q, K and V.", "No position-dependent bias, positional encoding or order-dependent mask is applied; the row permutation is applied consistently to Q, K and V."]
+      limitations: ["A fixed causal mask is order-dependent and changes this symmetry; the statement must not be generalized to every causal Transformer computation.", "Permutation equivariance does not mean outputs are invariant to reordering."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:self-attention, topic:positional-encoding, method:permutation-equivariance]
+      concept_ids: [self-attention, positional-encoding]
+    candidate_destinations:
+      pages: [fr/positional-encoding, en/positional-encoding]
+      concepts: [self-attention, positional-encoding]
+    pedagogical_profile:
+      learner_question: "Why does content-based self-attention need an additional ordering signal?"
+      explanatory_lens: symmetry
+      teaching_form: [mathematical-derivation, mental-model]
+      abstraction_level: intermediate
+      prerequisites: [self-attention, matrix-permutation]
+      distinctive_value: "Turns the informal set analogy into a precise symmetry property and clarifies the assumptions under which it holds."
+      limitations: ["The source states the property informally; the matrix proof added to LLM Lab is an independent explanation."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The existing page says content embeddings alone do not encode position but does not expose the permutation-equivariance argument."}
+      complementarity: {level: high, rationale: "A short optional proof explains why the need for positional information follows from the symmetry of content-only self-attention."}
+      pedagogical_value: {level: high, rationale: "The distinction between equivariance and invariance prevents a common conceptual error and gives a mathematical reason for positional signals."}
+      applicability: {level: high, rationale: "A compact optional note fits the existing positional-encoding concept lesson without adding a new page or concept."}
+      redundancy: {level: low, rationale: "The current lesson does not derive this property."}
+      evidence_quality: {level: high, rationale: "The source claim is visible in the indexed article; the property is independently checkable from the self-attention equations under stated assumptions."}
+    disposition: integrate
+    disposition_rationale: "Add a concise optional note to the existing bilingual positional-encoding lesson. Do not create a separate concept or computational-graph node: this is a property explaining the role of the existing self-attention and positional-encoding concepts."
   - id: jay-joshi-transformer-mathematics-positional-embeddings:embedding-lookup
     kind: mechanism
     summary: "A token ID indexes one row of an embedding table E in R^(V x d); selecting a sequence of IDs yields X in R^(n x d)."
@@ -153,7 +193,7 @@ items:
       tags: [topic:positional-encoding, method:sinusoidal-encoding]
       concept_ids: [positional-encoding]
     candidate_destinations:
-      pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
+      pages: [fr/positional-encoding, en/positional-encoding]
       concepts: [positional-encoding]
     pedagogical_profile:
       learner_question: "How can a position encoding expose the offset between two positions?"
@@ -170,8 +210,8 @@ items:
       applicability: {level: moderate, rationale: "Potentially useful as an optional note if distinguished from RoPE's Q/K rotations."}
       redundancy: {level: uncertain, rationale: "The existing RoPE derivation has not been compared line by line."}
       evidence_quality: {level: moderate, rationale: "The identity is standard, but source details and code are not directly inspectable."}
-    disposition: defer
-    disposition_rationale: "Compare with the current FR/EN RoPE deep dive before placement to avoid duplicating rotation mathematics or conflating sinusoidal input encodings with RoPE."
+    disposition: integrate
+    disposition_rationale: "Integrate only the sinusoidal encoding's own fixed-offset rotation identity in an optional note on the existing positional-encoding pages. Explicitly distinguish it from RoPE, which rotates projected Q and K; do not move this derivation into the RoPE page."
   - id: jay-joshi-transformer-mathematics-positional-embeddings:visualization
     kind: visualization
     summary: "The article describes Matplotlib/PyTorch cells that visualize random embedding vectors and compare positional with non-positional vector representations; exact figures and code are not exposed."
