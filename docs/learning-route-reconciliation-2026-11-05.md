@@ -81,6 +81,8 @@ The route is not a mirror of sidebar indentation. In particular, Practice is tra
 
 The route and navigation should be checked against the actual Quarto render list as well as the sidebar. A sidebar entry alone is not proof that a page is published; generated route links must resolve to published page IDs.
 
+**Text-input local-stepper correction (2026-11-08):** the FR/EN text-data stepper previously jumped from token IDs directly to embeddings, omitting the canonical tokenization-strategies lesson even though the guided route and Quarto sidebar place that lesson first. Both steppers now follow the same local sequence: text/tokens/IDs → tokenization strategies → embeddings → positional information → contextualized representations. This is a local navigation projection only; it does not add a new curriculum stage or change page ownership. The existing transition at the end of generation already directs readers to text-data, so it is retained rather than duplicated.
+
 ## 5. Graph correspondence and semantic boundaries
 
 Three graph-like structures coexist:
