@@ -664,3 +664,33 @@ The existing concept graph already distinguishes the roles: causal-mask constrai
 - No external link is dead. The Wiley DOI is reachable only behind bot protection; its content freshness remains unverified.
 - The FR/EN reference lists are identical in content and intent, including the "API behaviour, not the general mathematical definition" annotation.
 - **Still not established for this pair:** rendered inspection of the derivation, equations and the target-probability SVG at desktop/mobile widths; a PyTorch version-pinning policy; screen-reader behaviour; learner understanding. Link checks do not certify the videos' or books' full content.
+
+## External-link and API-claim check: loss and gradients pairs (2026-11-07)
+
+**Scope:** the same bounded verification as the cross-entropy slice above, applied to `site/en/loss.qmd` + `site/fr/loss.qmd` and `site/en/gradients.qmd` + `site/fr/gradients.qmd` (scoring/training branch of #584). Not a rendered-page review, screen-reader or learner check.
+
+### Numerical spot checks (independent computation)
+
+- **Chain rule** $\nabla_\theta\mathcal{L}=(\partial z/\partial\theta)^\top\nabla_z\mathcal{L}$: verified on a linear logit map $z=W\theta$ (4 logits, 3 parameters, one-hot cross-entropy). The analytic gradient $W^\top(p-\mathbb{1}[i=y])$ matches centered finite differences to below $10^{-5}$.
+- **Centered-difference formula** $(f(\theta_i+\epsilon)-f(\theta_i-\epsilon))/(2\epsilon)$: sanity check on $f(x)=x^2$ at $x=3$ returns 6 to numerical precision.
+- **SGD direction:** one step $\theta-\eta\nabla_\theta\mathcal{L}$ with $\eta=0.05$ reduces the loss on the example (2.1164 → 2.0839), consistent with the "steepest local decrease" statement.
+- **Perplexity:** $\exp(0.768)\approx 2.156$, consistent with the likelihood-page example's mean NLL and the $\operatorname{PPL}=\exp(\operatorname{NLL}_{\mathrm{mean}})$ convention (nats).
+- The masking claim that ignored positions contribute to neither numerator nor denominator of a mean over valid targets matches the PyTorch behaviour documented for `ignore_index` (loss averaged over non-ignored targets).
+
+### External links
+
+| Link | Check result (2026-11-07) |
+|---|---|
+| PyTorch CrossEntropyLoss documentation (loss pair, FR/EN) | Already verified the same day in the cross-entropy slice above; the loss pages' annotations (unnormalized logits, ignored targets, class weights, reduction modes) are confirmed by the same documentation. |
+| PyTorch — Autograd mechanics notes (gradients pair, FR/EN) | Resolves; "Autograd mechanics — PyTorch 2.15 documentation" at check time. The annotation (reverse-mode automatic differentiation and the computation graph) matches the page's subject. |
+| PyTorch — `gradcheck` API documentation (gradients pair, FR/EN) | Resolves; the page states "Check gradients computed via small finite differences against analytical gradients", confirming the pages' annotation about numerical checking of analytical gradients against finite differences. |
+
+### Deployed-page spot check
+
+The published FR/EN pages resolve with the expected localized titles: "Loss: from per-token penalty to training objective", "Loss : de la perte par token à l'objectif", "Gradients: connecting loss to parameters", "Gradients : relier la perte aux paramètres". This is an availability and title check, not a rendered-mathematics or responsive review.
+
+### Result
+
+- **API-specific claims confirmed** for both pairs against the current stable PyTorch documentation (dated 2026-11-07; the site links the rolling `stable` docs).
+- No external link is dead; no FR/EN divergence found in reference lists, misconceptions, callouts or self-check structure. The loss pair's cross-language links to the likelihood pair (`likelihood.qmd` / `vraisemblance.qmd`) are correctly localized.
+- **Still not established for these pairs:** rendered inspection of equations at desktop/mobile widths, manual screen-reader behaviour, and learner understanding.
