@@ -53,7 +53,7 @@ NExT-GPT is used as an example of a system with modality-specific input/output p
 
 OmniGen2 and BLIP-3o are mentioned as more recent examples of decoupled autoregressive text generation and diffusion-based image generation. Their details have not been independently checked in this scan.
 
-**Early fusion** is illustrated with Janus. The article describes separate visual representations for understanding and generation, then a unified language-modeling path that can emit text or image representations. It highlights the difference in representational requirements:
+**Early fusion** is illustrated with Janus. The article describes separate visual representations for understanding and generation, then a unified autoregressive language-modeling path that can emit text or image representations. It highlights the difference in representational requirements. The labels *early fusion* and *late fusion* are useful architectural shorthand, not a complete or necessarily mutually exclusive taxonomy: the actual boundary between shared model, modality-specific pathway, projector and decoder must be described per system.
 - Understanding benefits from semantic, abstract representations.
 - Generation requires more detailed representations.
 
@@ -143,8 +143,8 @@ This is a source-local outline, not a proposed LLM Lab curriculum tree.
 - Forward/reverse diffusion mathematics, noise schedules and samplers.
 - Latent autoencoders, VAE/VQ representations and codebooks.
 - Diffusion Transformers and modality-specific decoder internals.
-- NExT-GPT and Janus architecture case studies.
-- Audio and video generation architectures, pending a complete scan.
+- NExT-GPT, Janus, OmniGen2 and BLIP3-o architecture case studies.
+- Audio and video generation architectures.
 
 These topics should not be inserted into the text-tokenization → representations → Transformer → prediction → inference spine. They form a separate multimodal extension branch.
 
@@ -198,3 +198,15 @@ These checks validate selected architectural descriptions; they do not constitut
 ### Editorial correction to retain
 
 The newsletter is a visual explanatory resource, not the final authority for technical details. Where its shorthand risks conflating distinct mechanisms, LLM Lab should use the primary paper's terminology. In particular, AudioLM's semantic and acoustic streams should remain distinct in any diagram, and its original task should be described as audio continuation.
+
+
+## 10. Relation to the canonical computational spine
+
+The canonical computational spine in [docs/canonical-computational-spine.md](../canonical-computational-spine.md) describes next-token prediction in a text-oriented autoregressive LLM and its generation, scoring, evaluation and training branches. This source describes adjacent but non-identical generative mechanisms:
+
+- **AudioLM** is autoregressive, but its sequence elements are learned audio representations (semantic and codec tokens), and a neural audio decoder reconstructs the waveform. It is a modality-specific sequence-modeling case, not an extension of the ordinary text-token vocabulary.
+- **Latent diffusion / DiT image generation** uses iterative denoising in a learned latent space. Its sampling loop is not the same operation as autoregressive next-token decoding.
+- **Video generation** adds temporal structure to the generated visual representation; the inspected article does not specify enough detail to add temporal operations to the canonical graph.
+- **Multimodal LLM systems** may combine an autoregressive language-model core with modality-specific encoders, projectors and/or external decoders. Those interfaces should be represented explicitly rather than flattening every component into one generic forward pass.
+
+Consequently, this source belongs to a **multimodal extension branch** linked to (but not inserted into) the text-LM computational spine. Any future canonical representation should distinguish autoregressive sequence generation, iterative diffusion sampling, codec decoding and orchestration of external generators as different operation families. The source-local graph remains a source-analysis artifact, not a proposal to extend the canonical computational registry without a dedicated architecture audit.
