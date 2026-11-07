@@ -14,7 +14,7 @@
 - [P3 — deferred](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+label%3AP3)
 - [Issues needing attention / unclassified](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+-label%3AP0+-label%3AP1+-label%3AP2+-label%3AP3)
 
-Live snapshot 2026-11-07: 51 open issues (excluding pull requests); priority labels: P0=0, P1=11, P2=17, P3=6; 17 issues have no single priority label. One open PR is visible in the current issue listing: [#628](https://github.com/JM-Brun/llm-lab/pull/628). These are point-in-time counts; re-run the filters above before prioritising.
+Live snapshot 2026-11-07: 51 open issues (excluding pull requests); priority labels: P0=0, P1=11, P2=17, P3=6; 17 issues have no single priority label. The active PRs at this dashboard refresh are [#628](https://github.com/JM-Brun/llm-lab/pull/628) and this handoff [#629](https://github.com/JM-Brun/llm-lab/pull/629). These are point-in-time counts; re-run the filters above before prioritising.
 
 ## Historical handoff — PR reconciliation (2026-11-04; superseded by the current handoff above)
 
