@@ -17,6 +17,10 @@ const visualCases = ["light", "dark"].flatMap(theme => [
 const routeContextCases = visualCases.filter(testCase => testCase.theme === "light" && testCase.label === "desktop");
 
 const cases = [
+  // The French homepage is the site root; English has its own /en/ landing page.
+  ...visualCases.map(testCase => ({
+    ...testCase, page: "index.html", kind: "homepage",
+  })),
   ...visualCases.map(testCase => ({
     ...testCase, page: "learning-map.html", kind: "learning-map",
   })),
@@ -67,7 +71,9 @@ for (const testCase of cases) {
   page.on("console", msg => { if (msg.type() === "error") consoleErrors.push(msg.text()); });
   page.on("pageerror", error => pageErrors.push(String(error)));
 
-  const url = `${BASE}/${lang}/${pagePath}`;
+  const url = kind === "homepage"
+    ? (lang === "fr" ? `${BASE}/` : `${BASE}/en/`)
+    : `${BASE}/${lang}/${pagePath}`;
   const item = { lang, viewport, label, theme, page: pagePath, kind, url, consoleErrors, pageErrors };
   const runInteractiveAudit = viewport.width >= 1000 && theme === "light";
   item.auditProfile = runInteractiveAudit ? "full-desktop-light" : "visual-responsive";
@@ -84,6 +90,36 @@ for (const testCase of cases) {
     await page.waitForTimeout(150);
 
     item.title = await page.title();
+    if (kind === "homepage") {
+      item.homepageOrientation = await page.evaluate(() => {
+        const readLinks = selector => [...document.querySelectorAll(selector)].map(link => ({
+          label: link.textContent.trim().replace(/\\s+/g, " "),
+          path: new URL(link.getAttribute("href"), document.baseURI).pathname,
+        }));
+        return {
+          // The homepage has no separate top-level primary-navigation widget:
+          // Quarto's sidebar is the global site navigation. The landing page's
+          // own route choices are the hero actions, entry cards, and Practice links.
+          entryCards: readLinks(".learning-entry-grid .learning-entry-link"),
+          practiceLinks: readLinks(".learning-practice-links a"),
+          heroLinks: readLinks(".hero-actions a"),
+          entryCardCount: document.querySelectorAll(".learning-entry-grid .learning-entry").length,
+        };
+      });
+      const expectedPractice = lang === "fr"
+        ? ["exercises.html", "evaluation-experimentale.html"]
+        : ["exercises.html", "experimental-evaluation.html"];
+      const endsWith = (actual, expected) => actual.length === expected.length
+        && expected.every((suffix, index) => actual[index].path.endsWith(`/${lang}/${suffix}`));
+      const cardsOk = item.homepageOrientation.entryCardCount === 3
+        && endsWith(item.homepageOrientation.entryCards, ["llm-overview.html", "build-path.html", "deepen.html"]);
+      const practiceOk = endsWith(item.homepageOrientation.practiceLinks, expectedPractice);
+      const heroOk = item.homepageOrientation.heroLinks.length === 2
+        && endsWith(item.homepageOrientation.heroLinks, ["llm-overview.html", "learning-map.html"]);
+      if (!cardsOk) throw new Error("homepage must expose the three expected Understand / Build / Deepen entry cards");
+      if (!practiceOk) throw new Error("homepage transversal Practice links are missing or misrouted");
+      if (!heroOk) throw new Error("homepage hero actions are missing or misrouted");
+    }
     if (kind === "spine-overview") {
       item.svgDiagnostics = await page.evaluate(() => [...document.querySelectorAll("svg")].map((svg, index) => {
         const rect = svg.getBoundingClientRect();
