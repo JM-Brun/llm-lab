@@ -20,13 +20,15 @@ This document is the durable hand-off for future work sessions. It records what 
 | Build crosswalk and implementation evidence | Reconciled; implementation gaps remain | PRs #598 and #600; no end-to-end GPT training loop, optimizer/checkpoint path or reproducible training run |
 | Contextual suggested-route navigation | Integrated | PR #625 generates route cues from existing `suggested_route.previous/next`; Quarto sidebar remains at `collapse-level: 1` |
 | Browser-audit routing for UX branches | Integrated | PR #627 adds `ux/` to the six existing conditions; no separate workflow/job was added |
-| Automated rendered/browser review | Passed with one investigation item | PR #627 workflow: 192 cases, 0 audit failures, 0 horizontal overflow, 0 axe violations; 360 SVG transform console errors were recorded on the FR/EN LLM overview cases |
+| Automated rendered/browser review | Passed; overview SVG defect fixed | PR #627: 192 cases, 0 failures/overflow/axe violations; PR #634 traced and fixed the 360 malformed SVG transforms by keeping both overview Mermaid diagrams expanded; run #42362540076 confirms 0 console errors, 0 page errors and 0 invalid transforms across the 8 FR/EN responsive/theme overview cases. PR #638 adds mobile review for the attention-to-training slice; run #42363790102 passed. |
 | Manual accessibility and breadcrumb review | Open | Actual screen-reader review and native breadcrumb ancestry/behavior still require explicit evidence |
 | Bounded FR/EN content audit | Partial | Existing `docs/page-audit-inventory.md`; shared-core, scoring/training/evaluation review is not complete |
 
-The browser audit ran in the PR #627 workflow against the rendered tree containing the merged #625 navigation changes. The artifact is attached to workflow run [42261660816](https://github.com/JM-Brun/llm-lab/actions/runs/42261660816). It covers 192 browser cases across FR/EN, desktop/mobile and light/dark visual profiles, including the learning map, overview, route-context pages, Build tours and deep-dive parents. It reports no test failures, no horizontal overflow and no axe violations. Keyboard review ran in 90 cases and recorded 3,037 focus targets, all reported as focus-visible.
+The PR #627 browser audit ran against the rendered tree containing the merged #625 navigation changes. Its artifact is attached to workflow run [42261660816](https://github.com/JM-Brun/llm-lab/actions/runs/42261660816): 192 cases across FR/EN, desktop/mobile and light/dark profiles, with no audit failures, horizontal overflow or axe violations. It also recorded 360 SVG transform errors on the overview pages.
 
-**Important qualification:** the report also records repeated SVG console errors on `llm-overview.html` in both languages: `<g> attribute transform: Expected number, "translate(undefined, NaN)"` (360 occurrences across the reviewed cases). These did not fail the current audit and did not produce page errors or axe violations, but they are a real rendered defect to trace and fix before treating the overview visualization as clean. Automated axe checks do not replace manual screen-reader testing.
+**Resolved by PR #634:** the failing SVG was the evaluation Mermaid view, initialized inside a collapsed Quarto callout whose container measured 0×0. Mermaid then emitted `translate(undefined, NaN)` for edge labels. The renderer now keeps both overview views (`persistent-spine` and `evaluation`) expanded while retaining collapsed disclosures for deeper page-specific views. The regression test encodes this distinction. The follow-up Quarto/Chromium run [42362540076](https://github.com/JM-Brun/llm-lab/actions/runs/42362540076) passed: 192 cases, no audit failures, and zero console errors, page errors or malformed transforms across the eight FR/EN overview viewport/theme cases. PR #638 also extended the existing browser suite with mobile cases for the attention → scoring → training page group; its Quarto/Chromium run [42363790102](https://github.com/JM-Brun/llm-lab/actions/runs/42363790102) passed.
+
+Automated axe checks and browser keyboard checks still do not replace manual screen-reader or native-breadcrumb review.
 
 ## 1. Architectural invariant
 
@@ -202,13 +204,9 @@ Issue #575 can be considered complete when:
 
 The following order minimizes churn and keeps each task independently verifiable.
 
-### P0 — Repair the overview SVG runtime error
+### P0 — Overview SVG runtime error
 
-- [ ] Identify the SVG/diagram whose group transform receives undefined coordinates on `llm-overview.qmd` in both languages.
-- [ ] Trace whether the cause is missing node coordinates, a zero-sized/hidden layout container, or an initialization/measurement race; do not assume the cause from the browser message alone.
-- [ ] Fix the shared source or renderer once, not the FR and EN outputs independently.
-- [ ] Add a focused regression test for finite SVG transform coordinates or the underlying layout invariant.
-- [ ] Re-run the existing Quarto/browser workflow and confirm the console error count is zero on both overview pages.
+Resolved in PR #634 and verified by workflow #42362540076; see the P0 evidence in section 3. No further renderer or registry change is needed for this defect.
 
 ### P1 — Complete reader-facing accessibility and navigation evidence
 
@@ -219,11 +217,12 @@ The following order minimizes churn and keeps each task independently verifiable
 
 ### P1 — Finish the bounded scientific/content audit
 
-- [ ] Complete the first shared-core slice: Q/K/V, scaled dot-product attention, causal masking, positional encoding and tensor shapes; verify equations, conventions, dimensions, FR/EN parity and references.
-- [ ] Finish the scoring chain: observed prefix/target alignment, target probability, sequence likelihood/log-likelihood, NLL/cross-entropy, masking/reduction and numerical stability.
-- [ ] Finish the training/evaluation boundary review: teacher forcing, batch aggregation, gradients, optimizer update, held-out scoring and metric interpretation.
+- [x] Source-audit the Q/K/V → scaled dot-product attention → causal masking chain and the scoring/training boundary for the inspected FR/EN pages; record assumptions, dimensions, worked-example checks and scope in the sixteenth slice of `docs/page-audit-inventory.md` (PR #638).
+- [x] Qualify observed-sequence scoring: one forward pass applies only when the sequence fits the context window; longer sequences need an explicit window/stride and target-counting convention (PR #638).
+- [ ] Complete the remaining shared-core review for positional encoding and tensor shapes, including rendered equations, examples, references and FR/EN parity. The tensor page was not re-audited line by line in PR #638.
+- [ ] Finish rendered review of the audited attention/scoring/training pages: SVGs, equations, code blocks and local links. PR #638 supplies responsive/browser coverage, not a full mathematical or screen-reader certification.
+- [ ] Complete the training/evaluation page review for batch aggregation, gradients, optimizer update, held-out metrics and interpretation; retain explicit implementation gaps for end-to-end GPT-weight autograd, optimizer training, checkpointing and a reproducible trained checkpoint.
 - [ ] Reconcile each finding in `docs/page-audit-inventory.md`; do not mark a page complete merely because it renders or has a source list.
-- [ ] Preserve the implementation boundary: the project does not yet provide end-to-end GPT-weight autograd, optimizer training, checkpointing or a reproducible trained checkpoint.
 
 ### P2 — Run the remaining page-group and navigation audits
 
