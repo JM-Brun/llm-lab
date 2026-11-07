@@ -7,7 +7,7 @@
 ## Current repository state
 
 - 51 open issues; 11 P1, 17 P2, 6 P3 and 17 without exactly one priority label. No P0 slice is designated.
-- One open PR was present in the live issue listing: [#628 — multimodal primary-source cross-check](https://github.com/JM-Brun/llm-lab/pull/628).
+- Two PRs are open at this handoff refresh: [#628 — multimodal primary-source cross-check](https://github.com/JM-Brun/llm-lab/pull/628) and [#629 — this work handoff](https://github.com/JM-Brun/llm-lab/pull/629).
 - [PR #623](https://github.com/JM-Brun/llm-lab/pull/623), the AiEdge CUDA Graphs source registration and extraction, is merged.
 - [PR #626](https://github.com/JM-Brun/llm-lab/pull/626), the correction of the CUDA Graphs source-review status, is merged. Its Python CI and Quarto workflow both passed. The status `reviewed` means the integration decision was documented; it does **not** mean the article was fully scanned or accepted for canonical integration.
 - [PR #628](https://github.com/JM-Brun/llm-lab/pull/628) extends the multimodal source review with primary-paper checks. Its head has changed during validation; previous workflow attempts were cancelled after subsequent pushes. Recheck the latest head and its latest CI + Quarto runs before considering merge.
