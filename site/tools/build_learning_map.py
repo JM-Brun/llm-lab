@@ -478,6 +478,15 @@ def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], languag
         raise ValueError(f"unsupported guided-route language: {language!r}")
     core_label = "Pages centrales" if language == "fr" else "Core pages"
     optional_label = "Ressources facultatives" if language == "fr" else "Optional resources"
+    recap_label = "rappel" if language == "fr" else "recap"
+    seen_page_ids: set[str] = set()
+
+    def page_line(page: ResolvedPage) -> str:
+        """Mark pages already listed in an earlier stage as a recap."""
+        marker = f" *({recap_label})*" if page.id in seen_page_ids else ""
+        seen_page_ids.add(page.id)
+        return f"- [{escape_markdown_text(page.title)}]({page.href}){marker}"
+
     lines = [":::: {.guided-route-grid}", ""]
     for index, stage in enumerate(stages, start=1):
         lines.extend(
@@ -492,13 +501,10 @@ def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], languag
                 "",
             ]
         )
-        lines.extend(f"- [{escape_markdown_text(page.title)}]({page.href})" for page in stage.pages)
+        lines.extend(page_line(page) for page in stage.pages)
         if stage.optional_pages:
             lines.extend(["", f"**{optional_label}**", ""])
-            lines.extend(
-                f"- [{escape_markdown_text(page.title)}]({page.href})"
-                for page in stage.optional_pages
-            )
+            lines.extend(page_line(page) for page in stage.optional_pages)
         lines.extend(["", ":::", ""])
     lines.extend(["::::", ""])
     return "\n".join(lines)

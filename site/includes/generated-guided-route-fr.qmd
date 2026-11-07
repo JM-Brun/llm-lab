@@ -97,7 +97,7 @@ Distinguer le prefill du prompt du decode itératif, sélectionner un token selo
 
 **Pages centrales**
 
-- [Générer du texte : l'inférence pas à pas](generation.html)
+- [Générer du texte : l'inférence pas à pas](generation.html) *(rappel)*
 
 **Ressources facultatives**
 
@@ -131,7 +131,7 @@ Relier les cibles observées à la loss agrégée, aux gradients et aux mises à
 
 **Ressources facultatives**
 
-- [Entropie croisée : l'objectif de prédiction des tokens](cross-entropy.html)
+- [Entropie croisée : l'objectif de prédiction des tokens](cross-entropy.html) *(rappel)*
 - [Du corpus tokenisé aux exemples d’entraînement](training-examples.html)
 - [Lois d'échelle : paramètres, données et calcul](scaling-laws.html)
 

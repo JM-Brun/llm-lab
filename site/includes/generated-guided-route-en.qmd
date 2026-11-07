@@ -97,7 +97,7 @@ Distinguish prompt prefill from iterative decode, select a token with a decoding
 
 **Core pages**
 
-- [Generating text: inference step by step](generation.html)
+- [Generating text: inference step by step](generation.html) *(recap)*
 
 **Optional resources**
 
@@ -131,7 +131,7 @@ Connect observed targets to the aggregated loss, gradients, and parameter update
 
 **Optional resources**
 
-- [Cross-entropy: the token-prediction objective](cross-entropy.html)
+- [Cross-entropy: the token-prediction objective](cross-entropy.html) *(recap)*
 - [From tokenized corpus to training examples](training-examples.html)
 - [Scaling laws: parameters, data, and compute](scaling-laws.html)
 

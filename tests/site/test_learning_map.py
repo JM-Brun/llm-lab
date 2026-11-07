@@ -544,6 +544,34 @@ def test_render_guided_route_markdown_uses_native_quarto_blocks() -> None:
     assert "<a " not in markdown
 
 
+def test_render_guided_route_marks_repeated_pages_as_recap() -> None:
+    """A page repeated across stages carries a recap marker on later stages (LM-23)."""
+    stage_model = MODULE["ResolvedGuidedRouteStage"]
+    page_model = MODULE["ResolvedPage"]
+    shared = page_model(id="fr/generation", title="Générer du texte", href="generation.html")
+    stages = [
+        stage_model(
+            id="orientation",
+            title="Situer le système",
+            objective="Observer une génération.",
+            pages=[shared],
+        ),
+        stage_model(
+            id="inference",
+            title="Exécuter l'inférence",
+            objective="Décoder pas à pas.",
+            pages=[shared],
+        ),
+    ]
+
+    markdown = MODULE["render_guided_route_markdown"](stages, "fr")
+
+    assert markdown.splitlines().count("- [Générer du texte](generation.html)") == 1
+    assert "- [Générer du texte](generation.html) *(rappel)*" in markdown
+    english = MODULE["render_guided_route_markdown"](stages, "en")
+    assert "- [Générer du texte](generation.html) *(recap)*" in english
+
+
 def test_repository_guided_route_resolves_against_published_pages(monkeypatch) -> None:
     repository_root = MODULE_PATH.parents[2]
     monkeypatch.setitem(MODULE["load_pages"].__globals__, "SITE", repository_root / "site")
