@@ -32,6 +32,7 @@ COPY: dict[str, dict[str, Any]] = {
         "pagesUnitPlural": "pages",
         "territoriesUnit": "territoires",
         "notionsUnit": "notions",
+        "notionsUnitSingular": "notion",
         "sectionsLabel": "Rubriques",
         "pagesLabel": "Pages",
         "searchPlaceholder": "Filtrer les pages et les notions…",
@@ -97,6 +98,7 @@ COPY: dict[str, dict[str, Any]] = {
         "pagesUnitPlural": "pages",
         "territoriesUnit": "territories",
         "notionsUnit": "concepts",
+        "notionsUnitSingular": "concept",
         "sectionsLabel": "Sections",
         "pagesLabel": "Pages",
         "searchPlaceholder": "Filter pages and concepts…",
@@ -280,6 +282,8 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
           }
         } else if (key === "area") {
           state.areaId = value;
+        } else if (key === "page") {
+          state.pageId = value;
         } else if (key === "concept") {
           state.conceptId = value;
         } else if (key === "rel") {
@@ -308,6 +312,9 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       }
       if (state.mode === "pages" && state.areaId) {
         params.push("area=" + state.areaId);
+      }
+      if (state.mode === "pages" && state.pageId) {
+        params.push("page=" + encodeURIComponent(state.pageId));
       }
       if (state.mode === "concepts" && state.relationType) {
         params.push("rel=" + state.relationType);
@@ -385,6 +392,9 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       if (state.conceptId && !conceptById[state.conceptId]) {
         state.conceptId = null;
       }
+      if (state.pageId && !pageById[state.pageId]) {
+        state.pageId = null;
+      }
       areas = normalizeAreas(data.navigation || []);
       relationTypes = data.concept_relation_types || {};
       conceptDomainList = data.concept_domains || [];
@@ -392,6 +402,8 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       fillRelationFilter();
       if (state.conceptId) {
         showConceptDetails(state.conceptId);
+      } else if (state.mode === "pages" && state.pageId) {
+        showPageDetails(state.pageId);
       }
       setStatus(loadedSummary());
       if (retryReload) {
@@ -406,7 +418,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         " " +
         data.pages.length +
         " " +
-        copy.pagesUnitPlural +
+        (data.pages.length > 1 ? copy.pagesUnitPlural : copy.pagesUnit) +
         " · " +
         areas.length +
         " " +
@@ -540,7 +552,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       chip.addEventListener("click", function (event) {
         if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
           event.preventDefault();
-          showPageDetails(page.id);
+          showPageDetails(page.id, detailPanel.contains(event.currentTarget));
         }
       });
       return chip;
@@ -717,7 +729,8 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       }
 
       var total = countAreaPages(area);
-      setStatus(area.title + " — " + total + " " + copy.pagesUnitPlural);
+      var areaUnit = total > 1 ? copy.pagesUnitPlural : copy.pagesUnit;
+      setStatus(area.title + " — " + total + " " + areaUnit);
     }
 
     function renderSearchResults() {
@@ -749,7 +762,8 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         grid.appendChild(card);
       });
       viewport.appendChild(grid);
-      setStatus(matches.length + " " + copy.pagesUnitPlural);
+      var resultUnit = matches.length > 1 ? copy.pagesUnitPlural : copy.pagesUnit;
+      setStatus(matches.length + " " + resultUnit);
     }
 
     function renderConceptLegend() {
@@ -829,6 +843,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       var item = el("button", "map-concept-item");
       item.type = "button";
       item.setAttribute("data-concept-id", concept.id);
+      item.setAttribute("aria-pressed", "false");
       item.appendChild(el("span", "map-concept-label", concept.label));
       var importanceLabel = copy.importanceLabels[concept.importance];
       if (importanceLabel) {
@@ -924,7 +939,8 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
           )
         );
       }
-      setStatus(concepts.length + " " + copy.notionsUnit);
+      var conceptUnit = concepts.length > 1 ? copy.notionsUnit : copy.notionsUnitSingular;
+      setStatus(concepts.length + " " + conceptUnit);
     }
 
     function openDetailsBox() {
@@ -934,12 +950,13 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       }
     }
 
-    function showPageDetails(pageId) {
+    function showPageDetails(pageId, focusTarget) {
       var page = pageById[pageId];
       if (!page) {
         return;
       }
       state.pageId = pageId;
+      syncStateToHash(false);
       clearNode(detailPanel);
       detailPanel.appendChild(el("h3", "map-detail-title", page.title));
       var meta = el("p", "map-detail-meta");
@@ -994,6 +1011,13 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       openDetailsBox();
       markCurrentChip();
       setStatus(page.title);
+      if (focusTarget === "details") {
+        var title = detailPanel.querySelector(".map-detail-title");
+        if (title) {
+          title.tabIndex = -1;
+          title.focus();
+        }
+      }
     }
 
     function showConceptDetails(conceptId, focusTarget) {
@@ -1170,10 +1194,13 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         commitNextSync = true;
         state.areaId = null;
         render();
-      } else {
+      } else if (state.pageId) {
+        commitNextSync = true;
         state.pageId = null;
         markCurrentChip();
         renderPlaceholder();
+        syncStateToHash(commitNextSync);
+        commitNextSync = false;
       }
     });
 
@@ -1190,6 +1217,8 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       render();
       if (state.mode === "concepts" && state.conceptId) {
         showConceptDetails(state.conceptId);
+      } else if (state.mode === "pages" && state.pageId) {
+        showPageDetails(state.pageId);
       } else {
         renderPlaceholder();
       }
