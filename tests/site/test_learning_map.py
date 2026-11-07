@@ -720,7 +720,7 @@ def test_learning_map_node_selection_is_separate_from_navigation() -> None:
     source = script_path.read_text(encoding="utf-8")
     script = source.split("<script>", maxsplit=1)[1].split("</script>", maxsplit=1)[0]
 
-    assert script.count("showPageDetails(page.id);") == 2
+    assert script.count("showPageDetails(page.id") == 2
     assert "showConceptDetails(concept.id);" in script
     assert "event.preventDefault();" in script
     assert "chip.href = page.href;" in script
@@ -940,6 +940,39 @@ def test_selected_page_chip_exposes_aria_current() -> None:
     assert "function markCurrentChip()" in script
     assert "state.pageId = pageId;" in script
     assert "state.pageId = null;" in script
+
+
+def test_selected_page_round_trips_through_the_url_hash() -> None:
+    """A selected page is shareable like a selected concept (LM-15)."""
+    script = MODULE["render_map_script"]()
+    assert 'key === "page"' in script
+    assert 'params.push("page=" + encodeURIComponent(state.pageId))' in script
+    assert "if (state.pageId && !pageById[state.pageId]) {" in script
+    assert "showPageDetails(state.pageId);" in script
+    assert 'else if (state.mode === "pages" && state.pageId) {' in script
+    assert script.count("syncStateToHash(false);") == 2
+
+
+def test_concept_buttons_expose_explicit_aria_pressed_state() -> None:
+    """Unselected concept buttons declare aria-pressed false, not a missing state (LM-17)."""
+    script = MODULE["render_map_script"]()
+    assert 'setAttribute("aria-pressed", "false")' in script
+    assert 'setAttribute("aria-pressed", "true")' in script
+
+
+def test_details_panel_keeps_focus_when_selecting_related_chips() -> None:
+    """Selecting a related page from the details panel restores focus there (LM-18)."""
+    script = MODULE["render_map_script"]()
+    assert "function showPageDetails(pageId, focusTarget) {" in script
+    assert "showPageDetails(page.id, detailPanel.contains(event.currentTarget));" in script
+    assert 'if (focusTarget === "details") {' in script
+
+
+def test_map_status_counts_use_localized_singular_and_plural_units() -> None:
+    """Status counts avoid pluralizing a single item in either language (LM-19)."""
+    script = MODULE["render_map_script"]()
+    assert "copy.pagesUnitPlural : copy.pagesUnit" in script
+    assert "copy.notionsUnit : copy.notionsUnitSingular" in script
 
 
 def test_relation_filter_groups_kinds_by_localized_family() -> None:
