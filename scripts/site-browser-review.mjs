@@ -700,7 +700,7 @@ for (const testCase of cases) {
       item.axe = { skipped: true, reason: "Axe runs once per page/language on desktop/light" };
     }
 
-    if (kind === "spine-overview" && consoleErrors.some(message => /attribute transform: Expected number.*translate\\(undefined, NaN\\)/.test(message))) {
+    if (kind === "spine-overview" && consoleErrors.some(message => message.includes("translate(undefined, NaN)"))) {
       const malformedSvgCount = (item.svgDiagnostics || []).reduce((count, svg) => count + svg.invalidTransforms.length, 0);
       report.failures.push(`${pagePath}/${lang}/${label}/${theme}: malformed SVG transforms (${malformedSvgCount} offending elements; see svgDiagnostics and consoleErrors)`);
     }
