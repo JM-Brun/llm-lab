@@ -68,7 +68,18 @@ Future positions then receive zero weight in ideal arithmetic. In practice, libr
 In code, **boolean-mask polarity is API-specific**. For example, in [PyTorch scaled dot-product attention](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html), `True` means that a position is allowed to participate in attention; in [PyTorch MultiheadAttention](https://docs.pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html), `True` in `attn_mask` means that the position is masked out. Do not transfer a boolean mask between APIs without checking its documented convention. This is separate from the causal rule itself: the allowed query-key pairs must still exclude future keys.
 :::
 
-![Four-position causal mask.](../images/causal-attention-mask.svg){fig-alt="Lower-triangular matrix: each position can access itself and all earlier positions" width=100%}
+**Boolean polarity matters:** an `allowed` matrix is true on the lower triangle (including the diagonal), whereas a `blocked` matrix is true on the strict upper triangle. PyTorch `scaled_dot_product_attention` expects the former convention; `MultiheadAttention.attn_mask` uses the latter. The mathematical rule is the same, but boolean tensors are not interchangeable without a possible inversion.
+
+## Causal masking and other masks have different roles
+
+- **Causal attention mask:** prevents a query from reading a future key; it enforces the autoregressive constraint.
+- **Padding attention mask:** generally prevents padding positions from being used as keys; it does not define temporal order. How padded query positions are handled depends on the implementation.
+- **Document-boundary attention mask:** when multiple documents are packed into one sequence, it can prevent interactions across distinct documents. It can be combined with causal masking.
+- **Loss/target mask:** excludes selected positions from the training objective; by itself, it does not prevent attention layers from accessing information. Shifted-target construction and padding/loss masks belong to the data-and-corpus lesson.
+
+These masks answer different questions and must not be substituted for one another.
+
+![Four-position causal mask causal mask.](../images/causal-attention-mask.svg){fig-alt="Lower-triangular matrix: each position can access itself and all earlier positions" width=100%}
 
 ## Provenance and purpose
 
