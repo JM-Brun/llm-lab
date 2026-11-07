@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/positional-encoding"
-scope: "Introduces why a Transformer needs positional information and compares the main mechanism families at a conceptual level; RoPE geometry, derivation, and variants are reserved for the advanced deep dive."
+scope: "Introduces why a Transformer needs positional information, distinguishes absolute encodings from relative mechanisms, and situates RoPE as a rotary relative-position method; clarifies the separate role of causal masking. RoPE geometry and variants belong in the advanced deep dive."
 purpose: "Readers should be able to explain why a Transformer needs positional information, distinguish several ways of introducing it, and describe where these mechanisms enter the computation."
 suggested_route:
   previous: "en/embedding-space"
@@ -23,7 +23,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 
 {{< include ../includes/generated-guided-context-en-positional-encoding.qmd >}}
 ::: {.chapter-lead}
-Content-based attention compares representations, but does not by itself provide an explicit representation of their positions. In an autoregressive decoder, the causal mask already imposes an ordering constraint by limiting each position to its prefix; however, it does not explicitly represent absolute positions or relative offsets. Positional mechanisms complement this constraint. This page introduces their main approaches conceptually; RoPE geometry and derivation belong in an [advanced deep dive](rope.qmd).
+A Transformer needs an ordering signal to distinguish, for example, “the cat chases the dog” from “the dog chases the cat”. This page introduces positional mechanisms and distinguishes them from causal masking; RoPE geometry and derivation belong in an [advanced deep dive](rope.qmd).
 :::
 
 ## Why add positional information?
