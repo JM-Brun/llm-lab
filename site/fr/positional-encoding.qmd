@@ -42,7 +42,7 @@ Ces approches injectent l'information positionnelle à des endroits différents 
 
 ## Idées reçues
 
-- **« L'attention sait naturellement quel token vient en premier. »** L'ordre doit être fourni par un mécanisme positionnel ou une structure équivalente.
+- **« L'attention sait naturellement quel token vient en premier. »** L'attention fondée sur le contenu ne porte pas cet ordre à elle seule ; un mécanisme positionnel ou une contrainte structurelle, comme le masque causal, doit le fournir.
 
 ## Références
 
