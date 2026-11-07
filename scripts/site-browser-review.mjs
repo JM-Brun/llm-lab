@@ -93,7 +93,7 @@ for (const testCase of cases) {
     if (kind === "homepage") {
       item.homepageOrientation = await page.evaluate(() => {
         const readLinks = selector => [...document.querySelectorAll(selector)].map(link => ({
-          label: link.textContent.trim().replace(/\\s+/g, " "),
+          label: link.textContent.trim().replace(/\s+/g, " "),
           path: new URL(link.getAttribute("href"), document.baseURI).pathname,
         }));
         return {
