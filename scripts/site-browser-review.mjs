@@ -345,6 +345,36 @@ for (const testCase of cases) {
       firstTargets: item.keyboard.slice(0, 12),
     };
 
+    // The homepage diagram uses SVG groups with role=link rather than native
+    // anchors. Verify the promised Enter activation, not only tab focusability.
+    if (kind === "homepage") {
+      const svgKeyboardPage = await page.context().newPage();
+      try {
+        await svgKeyboardPage.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
+        const svgLink = svgKeyboardPage.locator(".llm-flow .flow-node[role='link']").first();
+        if (await svgLink.count() !== 1) {
+          throw new Error("homepage SVG keyboard link is missing");
+        }
+        const target = await svgLink.getAttribute("data-href");
+        if (!target) throw new Error("homepage SVG keyboard link has no destination");
+        const expectedUrl = new URL(target, url).href;
+        await svgLink.focus();
+        await svgKeyboardPage.keyboard.press("Enter");
+        await svgKeyboardPage.waitForURL(expectedUrl, { timeout: 5000 });
+        item.svgKeyboardActivation = {
+          target,
+          expectedUrl,
+          actualUrl: svgKeyboardPage.url(),
+          activatedWithEnter: svgKeyboardPage.url() === expectedUrl,
+        };
+        if (!item.svgKeyboardActivation.activatedWithEnter) {
+          throw new Error("homepage SVG link did not navigate with Enter");
+        }
+      } finally {
+        await svgKeyboardPage.close();
+      }
+    }
+
     const summary = page.locator("details > summary").first();
     item.keyboardDisclosure = { available: await summary.count() > 0 };
     if (item.keyboardDisclosure.available) {
