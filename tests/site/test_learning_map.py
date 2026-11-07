@@ -1027,3 +1027,40 @@ def test_learning_map_script_hydrates_inline_data_and_history_state() -> None:
     assert "window.clearTimeout(searchTimer)" in script
     assert 'key === "rel"' in script
     assert 'params.push("rel=" + state.relationType)' in script
+
+
+def test_search_placeholder_follows_the_active_view() -> None:
+    """The search placeholder names only what the active view filters (LM-20)."""
+    script = MODULE["render_map_script"]()
+    assert "Filtrer les pages…" in script
+    assert "Filtrer les notions…" in script
+    assert "Filter pages…" in script
+    assert "Filter concepts…" in script
+    assert "function updateSearchPlaceholder()" in script
+    assert "copy.searchPlaceholderConcepts : copy.searchPlaceholderPages" in script
+    assert '"map-cross-view-hint"' in script
+    assert 'copy.conceptMatchesHint.replace("{count}"' in script
+    assert '"searchPlaceholder":' not in script
+
+
+def test_search_results_highlight_matches_with_marks() -> None:
+    """Matching text is wrapped in mark elements for faster scanning (LM-21)."""
+    script = MODULE["render_map_script"]()
+    assert "function appendMarkedText(node, text, query)" in script
+    assert 'el("mark", "map-mark"' in script
+    assert "appendMarkedText(pageTitle, page.title, query);" in script
+    assert "appendMarkedText(pageSummary, page.purpose, query);" in script
+    assert "appendMarkedText(label, concept.label, query);" in script
+    assert "appendMarkedText(definition, concept.definition, query);" in script
+    assert script.count("grid.appendChild(conceptItemFor(concept, neighbors, query));") == 2
+    assert script.count("conceptItemFor(concept, neighbors)") == 0
+
+
+def test_page_details_expose_previous_and_next_steps() -> None:
+    """Details also suggest the previous step when the route provides one (LM-22)."""
+    script = MODULE["render_map_script"]()
+    assert "copy.suggestedPrevious" in script
+    assert "var previous = (page.route || {}).previous;" in script
+    assert 'var previousChips = el("div", "map-chips");' in script
+    assert '"suggestedPrevious": "Étape précédente suggérée",' in script
+    assert '"suggestedPrevious": "Suggested previous step",' in script
