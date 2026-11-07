@@ -51,6 +51,40 @@ const cases = [
   ),
 ];
 
+// PRs use a changed-page profile; the complete matrix remains available for
+// scheduled/manual audits. The workflow supplies changed paths via the PR API.
+if (process.env.SITE_BROWSER_PROFILE === "targeted") {
+  const allCases = [...cases];
+  const changedFiles = (process.env.SITE_BROWSER_CHANGED_FILES || "")
+    .split(/\r?\n/)
+    .map(file => file.trim())
+    .filter(Boolean);
+  const changedPages = new Set(changedFiles
+    .filter(file => /^site\/(en|fr)\/.+\.qmd$/.test(file))
+    .map(file => file.replace(/^site\/(en|fr)\//, "").replace(/\.qmd$/, ".html")));
+  const hasGlobalSiteChange = changedFiles.some(file =>
+    /^site\/(\.quarto|_quarto\.yml|.*\.(css|scss|js))$/.test(file) ||
+    /^site\/_extensions\//.test(file) || /^scripts\//.test(file)
+  );
+
+  if (hasGlobalSiteChange || changedPages.size === 0) {
+    const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html"]);
+    for (let i = cases.length - 1; i >= 0; i--) {
+      if (!smokePages.has(cases[i].page)) cases.splice(i, 1);
+    }
+  } else {
+    for (let i = cases.length - 1; i >= 0; i--) {
+      if (!changedPages.has(cases[i].page)) cases.splice(i, 1);
+    }
+  }
+  if (cases.length === 0) {
+    const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html"]);
+    cases.push(...allCases.filter(testCase => smokePages.has(testCase.page)));
+    console.log("No dedicated browser case matched the changed page; using global smoke cases.");
+  }
+  console.log(JSON.stringify({ profile: "targeted", changedFiles, changedPages: [...changedPages], selectedCases: cases.length }));
+}
+
 const browser = await chromium.launch({ headless: true });
 const stageAnchorCache = new Map();
 const report = {
