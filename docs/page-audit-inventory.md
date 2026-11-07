@@ -599,3 +599,31 @@ This is a narrow source-level correction, not a full audit of the attention less
 **Not completed:** Quarto render for this change; rendered FR/EN equation and SVG inspection; page-level browser/responsive/keyboard review; full external-link validation; manual breadcrumb and screen-reader review; end-to-end model scoring/training execution; learner testing.
 
 The browser review is conditional in `.github/workflows/quarto.yml`: it runs for selected branch prefixes (including `ux/`), not for every pull request. The successful render on the original `docs/` branch therefore did not execute Chromium, keyboard, Axe, screenshot or responsive-page checks. Do not report those as passed until the targeted browser run completes.
+
+
+## Seventeenth slice: positional information and tensor-shape contracts (2026-11-07)
+
+**Scope:** bounded FR/EN source audit of the conceptual positional-encoding pair and a cross-check of the advanced tensor reference against the attention/scoring equations audited in the sixteenth slice. This is a source and editorial review, not a complete implementation audit or manual accessibility test.
+
+### Positional encoding
+
+| Area | Finding | Change / boundary |
+|---|---|---|
+| Why position is needed | The self-attention operation itself does not encode a general notion of absolute position or distance. In a causal decoder, however, the causal mask already imposes a partial precedence relation by restricting each position to itself and earlier positions. | Both language pages now distinguish this visibility constraint from a general positional representation. The mask is not described as conveying no order information at all, nor as replacing positional encoding. |
+| Mechanism families | Absolute vectors, relative encodings/biases and RoPE are useful implementation families, but they are not perfectly disjoint mathematical categories. RoPE applies position-dependent rotations to Q and K; their dot product depends on the relative offset. | Added the same qualification in FR and EN. Detailed rotation geometry and derivation remain in the dedicated RoPE deep dive. |
+| Diagrams and metadata | Both diagrams accurately locate absolute encoding before projections and RoPE on Q/K after projections, before the QK product. FR/EN titles, purpose, topic, level and route relationships align. | No route or metadata change required. The visual claim is conceptual and does not imply that every architecture uses the same positional mechanism. |
+
+### Tensor-shape cross-check
+
+- The common conventions are consistent across FR/EN: hidden activations $(B,T,D)$, logits $(B,T,V)$, and multi-head activations commonly $(B,H,T,d_h)$, with $D=H d_h$ as a common architecture relation rather than a universal law.
+- A projection $XW$ with $X:(B,T,D)$ and $W:(D,D')$ preserves batch and sequence axes and yields $(B,T,D')$.
+- For attention, the audited single-head contracts remain consistent: $Q,K:(T,d_k)$ imply $QK^\top:(T,T)$; $A:(T,T)$ and $V:(T,d_v)$ imply $AV:(T,d_v)$. The batched/multi-head convention is a layout extension, not a change to the underlying axis semantics.
+- The vocabulary softmax belongs on $V$, not $T$. The page's counterexample is numerically consistent: softmax over $T$ is a valid operation but does not yield a per-position vocabulary distribution.
+- The embedding-table estimate $50,000\times768=38,400,000$ parameters and the 32-bit storage estimate (153.6 MB decimal; approximately 146.5 MiB) are arithmetically consistent. The page correctly qualifies separate output projection versus weight tying.
+- FR and EN cover the same major topics and technical caveats. One editorial asymmetry was found: the EN tensor page explicitly labels itself as an optional technical reference rather than a build prerequisite, while the FR page did not. Added the equivalent French callout; the page remains a Deepen resource, not a prerequisite.
+
+### Validation boundary
+
+**Completed:** source-level FR/EN comparison; conceptual correction for the causal-mask ordering signal; RoPE classification qualification; cross-check of tensor shapes, axis semantics and representative arithmetic; FR/EN placement-callout harmonization.
+
+**Still outstanding:** re-render and inspect the newly changed positional/tensor pages; verify all linked SVGs and external references in rendered output; manual screen-reader review in FR and EN. The browser evidence from PR #638 covers the attention/scoring/training slice, not these new source edits.

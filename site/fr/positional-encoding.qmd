@@ -28,7 +28,7 @@ L'attention compare des représentations de tokens, mais elle ne connaît pas sp
 
 ## Pourquoi ajouter une information de position ?
 
-Sans information positionnelle, l'auto-attention standard ne dispose pas à elle seule d'un signal explicite indiquant si un token apparaît avant ou après un autre. L'ordre compte ; il doit donc intervenir dans les représentations ou dans le calcul de l'attention.
+Sans information positionnelle, l'opération d'auto-attention ne porte pas elle-même de représentation générale de l'ordre. Dans un décodeur autorégressif, le masque causal impose toutefois une contrainte d'ordre partiel : une position ne peut accéder qu'à elle-même et aux positions précédentes. Cette contrainte de visibilité ne fournit pas à elle seule une représentation générale des positions absolues ou des distances relatives ; elle ne remplace donc pas un mécanisme positionnel.
 
 ![Où l'information de position entre dans le calcul : en entrée pour un encodage absolu, dans les requêtes et les clés pour RoPE.](../images/positional-info-insertion-fr.svg){fig-alt="Un encodage absolu est ajouté aux embeddings en entrée, avant toute projection. RoPE applique des rotations aux requêtes et aux clés après leurs projections, avant le produit QK, si bien que les scores d'attention portent l'information de position." width=100%}
 
@@ -38,7 +38,7 @@ Sans information positionnelle, l'auto-attention standard ne dispose pas à elle
 - **Encodage ou biais relatif :** le calcul utilise explicitement la distance ou le décalage entre deux positions.
 - **RoPE :** des rotations dépendant de la position sont appliquées aux requêtes et aux clés avant le calcul des scores d'attention. Cette approche introduit l'information positionnelle à l'intérieur du mécanisme d'attention.
 
-Ces approches injectent l'information positionnelle à des endroits différents et n'ont pas exactement les mêmes propriétés. Il suffit ici de retenir leur rôle et leur emplacement général dans le calcul. Pour comprendre la dépendance au décalage relatif, les conventions de rotation et les limites à longue séquence, voir l'[approfondissement avancé sur RoPE](rope.qmd).
+Ces familles sont des repères pédagogiques, pas des catégories mathématiques parfaitement disjointes : RoPE applique des rotations dépendant de chaque position à Q et K, mais leur produit scalaire dépend du décalage relatif entre les positions. Ces approches injectent l'information positionnelle à des endroits différents et n'ont pas exactement les mêmes propriétés. Il suffit ici de retenir leur rôle et leur emplacement général dans le calcul. Pour comprendre la dépendance au décalage relatif, les conventions de rotation et les limites à longue séquence, voir l'[approfondissement avancé sur RoPE](rope.qmd).
 
 ## Idées reçues
 
