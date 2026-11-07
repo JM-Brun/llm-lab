@@ -16,7 +16,7 @@ pedagogical_model:
       - {id: src-token-vectors, kind: representation, description: "Rows selected from E for the input token IDs.", locator: "Embeddings"}
       - {id: src-position-index, kind: input, description: "Integer sequence position used to construct a position-dependent vector.", locator: "Positional encoding"}
       - {id: src-sinusoidal-position-vector, kind: representation, description: "Position vector whose even and odd coordinates use sine and cosine at dimension-dependent frequencies.", locator: "Positional encoding"}
-      - {id: src-initial-hidden-states, kind: representation, description: "Token vectors combined with positional vectors before Transformer processing.", locator: "Equation (1)"}
+      - {id: src-initial-hidden-states, kind: representation, description: "Initial input states formed by adding positional vectors to token embeddings.", locator: "Equation (1)"}
       - {id: src-additive-position-combination, kind: operation, description: "Adds the positional vector to each token embedding to form the initial input states.", locator: "Equation (1)"}
       - {id: src-content-only-self-attention, kind: mechanism, description: "Self-attention applied without position-dependent signals or order-dependent constraints.", locator: "Positional encoding"}
       - {id: src-permutation-equivariance, kind: mathematical-property, description: "Permuting input rows permutes output rows in the same way for content-only self-attention.", locator: "Positional encoding"}
@@ -77,7 +77,7 @@ items:
     summary: "The article states that content-only self-attention treats the sequence as a set: permuting input rows permutes output rows in the same way. This is permutation equivariance, not permutation invariance."
     locator: {type: section, value: "Positional encoding", label: "Why positional information is needed"}
     evidence:
-      kind: source-claim-with-independent-mathematical-check
+      kind: claim
       confidence: well-supported
       scope: "The indexed article explicitly states the row-shuffling property. The matrix derivation is an independent LLM Lab verification, not a derivation reproduced from the source."
       assumptions: ["Self-attention uses content-derived Q, K and V.", "No position-dependent bias, positional encoding or order-dependent mask is applied; the row permutation is applied consistently to Q, K and V."]
