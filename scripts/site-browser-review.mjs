@@ -32,6 +32,14 @@ const cases = [
       ...testCase, page, kind: "route-context",
     }))
   ),
+  // The training-example and Build-path pages are part of the #347 review
+  // group but are not members of the canonical linear route. Cover them in the
+  // same visual/viewport matrix without assigning them a route-context kind.
+  ...visualCases.flatMap(testCase =>
+    ["training-examples.html", "build-path.html"].map(page => ({
+      ...testCase, page, kind: "training-build-review",
+    }))
+  ),
   // Focused mobile review for the attention → scoring → training slice.
   // Desktop/light route-context cases above remain the keyboard/Axe baseline.
   ...visualCases.filter(testCase => testCase.label === "mobile").flatMap(testCase =>
