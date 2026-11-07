@@ -28,7 +28,7 @@ Attention compares token representations, but it does not inherently know their 
 
 ## Why add positional information?
 
-Without positional information, standard self-attention has no explicit signal on its own indicating whether one token appears before or after another. Order matters, so it must be introduced into the representations or the attention computation.
+The self-attention operation itself does not carry a general representation of order. In an autoregressive decoder, however, the causal mask imposes a partial order constraint: a position can access only itself and earlier positions. This visibility constraint does not by itself provide a general representation of absolute positions or relative distances, so it does not replace a positional mechanism.
 
 ![Where positional information enters the computation: at the input for an absolute encoding, inside queries and keys for RoPE.](../images/positional-info-insertion-en.svg){fig-alt="An absolute encoding is added to the embeddings at the input, before any projection. RoPE applies rotations to queries and keys after their projections, before the QK product, so the attention scores carry positional information." width=100%}
 
@@ -38,7 +38,7 @@ Without positional information, standard self-attention has no explicit signal o
 - **Relative encoding or bias:** the computation explicitly uses the distance or offset between two positions.
 - **RoPE:** apply position-dependent rotations to queries and keys before attention scores are computed. This approach introduces positional information inside the attention mechanism.
 
-These approaches inject positional information at different points and do not have exactly the same properties. At this stage, it is enough to understand their role and approximate location in the computation. For relative-offset dependence, rotation conventions, and long-sequence limitations, see the [advanced RoPE deep dive](rope.qmd).
+These are pedagogical families, not perfectly disjoint mathematical categories: RoPE applies position-dependent rotations to Q and K, while their dot product depends on the relative offset between positions. These approaches inject positional information at different points and do not have exactly the same properties. At this stage, it is enough to understand their role and approximate location in the computation. For relative-offset dependence, rotation conventions, and long-sequence limitations, see the [advanced RoPE deep dive](rope.qmd).
 
 ## Common misconceptions
 
