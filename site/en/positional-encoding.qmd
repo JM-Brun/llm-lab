@@ -37,6 +37,8 @@ For content-only self-attention, with no positional bias or order-dependent mask
 \operatorname{Attention}(PX)=P\,\operatorname{Attention}(X).
 \]
 
+To verify this, let $S=QK^\top/\sqrt{d_k}$ and $A=\operatorname{softmax}(S)$, with softmax applied row-wise. For the permuted input, $Q'=PQ$, $K'=PK$, and $V'=PV$. Hence $A'=\operatorname{softmax}(PSP^\top)=PAP^\top$, and $A'V'=PAP^\top PV=PAV$.
+
 The computation is **permutation equivariant**: it reorders its outputs along with its inputs. By itself, it therefore provides no reference that distinguishes positions in the sequence.
 
 This property assumes that no positional signal or order-dependent constraint is present. A fixed causal mask introduces a structural ordering constraint; that role should not be confused with an explicit positional encoding.
