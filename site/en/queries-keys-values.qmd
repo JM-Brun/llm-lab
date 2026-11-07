@@ -202,3 +202,4 @@ Q and K determine the attention weights; V supplies the vectors whose content is
 ::: {.language-switch}
 **Language:** [Français](../fr/queries-keys-values.qmd) · [English](queries-keys-values.qmd)
 :::
+<!-- ci evidence for PR #658: QKV-only changed-page set for targeted browser review; no reader-facing change; do not merge -->
