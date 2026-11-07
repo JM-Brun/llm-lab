@@ -31,8 +31,8 @@ Large language models (LLMs) are a family of neural models trained on large amou
 **LLM Lab connects these mechanisms to their mathematical explanations and observable behaviour.** The goal is not to trust an intuition because a diagram looks convincing: it is to understand what a component computes, verify what can be tested, and identify what remains an assumption or limitation.
 
 <div class="hero-actions">
-[Start the guided route: understand what an LLM is](llm-overview.qmd){.btn .btn-primary}
-[See the GPT build project](build-path.qmd){.btn .btn-outline-primary}
+[Discover how LLMs work](llm-overview.qmd){.btn .btn-primary}
+[Explore the concept map](learning-map.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
