@@ -423,7 +423,7 @@ The source-level audit can establish the configured Quarto ancestry and the sema
 
 The existing GitHub browser evidence remains relevant but bounded: it verifies the specific pages, viewports and assertions included in those runs. The latest Q/K/V/attention/scoring/training and positional/tensor audits have their own recorded browser coverage; the source-based breadcrumb review here does not retroactively broaden those test cases. The remaining work is a targeted native-breadcrumb review on the affected FR/EN page groups, followed by actual screen-reader testing. Do not treat another generic DOM-presence assertion or an axe pass as closure.
 
-### 10.5 Corrections and decisions
+### 10.7 Corrections and decisions
 
 - [x] Corrected the stale statement in §9: Generation is currently a direct child of Understand / Comprendre in the Quarto sidebar, not nested under an “Inference” section.
 - [x] Confirmed FR/EN sidebar ancestry and page grouping against the current Quarto source.
