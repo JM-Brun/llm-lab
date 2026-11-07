@@ -77,6 +77,27 @@ for (const testCase of cases) {
     await page.waitForTimeout(150);
 
     item.title = await page.title();
+    if (kind === "spine-overview") {
+      item.svgDiagnostics = await page.evaluate(() => [...document.querySelectorAll("svg")].map((svg, index) => {
+        const rect = svg.getBoundingClientRect();
+        const invalidTransforms = [...svg.querySelectorAll("[transform]")].map(el => ({
+          tag: el.tagName.toLowerCase(),
+          className: typeof el.className === "object" ? el.className.baseVal : String(el.className || ""),
+          transform: el.getAttribute("transform"),
+          outerHTML: el.outerHTML.slice(0, 1200),
+        })).filter(item => /undefined|NaN|Infinity/.test(item.transform || ""));
+        return {
+          index,
+          className: typeof svg.className === "object" ? svg.className.baseVal : String(svg.className || ""),
+          viewBox: svg.getAttribute("viewBox"),
+          width: Math.round(rect.width),
+          height: Math.round(rect.height),
+          hidden: rect.width === 0 || rect.height === 0 || getComputedStyle(svg).display === "none",
+          invalidTransforms,
+          parent: svg.parentElement?.outerHTML.slice(0, 700) || null,
+        };
+      }));
+    }
     item.h1 = await page.locator("h1").first().innerText().catch(() => null);
     // Quarto footer navigation follows editorial sidebar order, independently
     // of document-level rel metadata, the guided route, and the computational graph.
@@ -679,6 +700,10 @@ for (const testCase of cases) {
       item.axe = { skipped: true, reason: "Axe runs once per page/language on desktop/light" };
     }
 
+    if (kind === "spine-overview" && consoleErrors.some(message => message.includes("translate(undefined, NaN)"))) {
+      const malformedSvgCount = (item.svgDiagnostics || []).reduce((count, svg) => count + svg.invalidTransforms.length, 0);
+      report.failures.push(`${pagePath}/${lang}/${label}/${theme}: malformed SVG transforms (${malformedSvgCount} offending elements; see svgDiagnostics and consoleErrors)`);
+    }
     const blockingAxe = (item.axe.violations || []).filter(v => ["aria-allowed-attr", "color-contrast"].includes(v.id));
     item.axe.blockingViolationCount = blockingAxe.length;
     if (blockingAxe.length) {
