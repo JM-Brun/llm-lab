@@ -17,13 +17,15 @@ MODULE: dict[str, Any] = runpy.run_path(
 REGISTRY = yaml.safe_load((ROOT / "data" / "computational-graph.yml").read_text(encoding="utf-8"))
 
 
-def test_persistent_spine_is_expanded_but_other_views_remain_collapsed() -> None:
+def test_overview_views_are_expanded_but_deep_dive_views_remain_collapsed() -> None:
     persistent = MODULE["render_view"](REGISTRY, "persistent-spine", "fr")
     evaluation = MODULE["render_view"](REGISTRY, "evaluation", "fr")
 
     assert '::: {.callout-note title="Tronc computationnel"}' in persistent
+    transformer_block = MODULE["render_view"](REGISTRY, "transformer-block", "fr")
     assert 'collapse="true"' not in persistent
-    assert 'collapse="true"' in evaluation
+    assert 'collapse="true"' not in evaluation
+    assert 'collapse="true"' in transformer_block
 
 
 def test_render_view_uses_localized_node_and_relation_labels() -> None:
