@@ -8,7 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/positional-encoding"
-scope: "Présente pourquoi un Transformer a besoin d’information positionnelle, distingue les encodages absolus des mécanismes relatifs et situe RoPE comme méthode rotative relative ; précise le rôle distinct du masque causal. La géométrie et les variantes de RoPE sont réservées à la page d’approfondissement."
+scope: "Présente pourquoi un Transformer a besoin d’information positionnelle, distingue les encodages absolus des mécanismes relatifs et situe RoPE comme méthode rotative relative ; précise le rôle distinct du masque causal. La dérivation détaillée de RoPE et ses variantes sont réservées à la page d’approfondissement."
 purpose: "Le lecteur doit pouvoir expliquer pourquoi un Transformer a besoin d’information positionnelle, distinguer plusieurs façons de l’introduire et décrire à quel endroit du calcul elles interviennent."
 suggested_route:
   previous: "fr/embedding-space"
@@ -23,12 +23,26 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 
 {{< include ../includes/generated-guided-context-fr-positional-encoding.qmd >}}
 ::: {.chapter-lead}
-Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, « le chat poursuit le chien » de « le chien poursuit le chat ». Cette page présente les mécanismes positionnels et les distingue du masque causal ; la géométrie et la dérivation de RoPE sont réservées à un [approfondissement avancé](rope.qmd).
+Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, « le chat poursuit le chien » de « le chien poursuit le chat ». Cette page présente les mécanismes positionnels et les distingue du masque causal ; la dérivation détaillée de RoPE est réservée à un [approfondissement avancé](rope.qmd).
 :::
 
 ## Pourquoi ajouter une information de position ?
 
 Les embeddings de contenu seuls ne codent pas la position. Le masque causal, lorsqu'il est utilisé, indique quelles positions peuvent être consultées (`j ≤ i`) ; les mécanismes positionnels peuvent en plus représenter la position absolue ou le décalage relatif. Ces signaux sont complémentaires, pas interchangeables.
+
+::: {.callout-note collapse="true" title="Pourquoi l’auto-attention seule ne suffit-elle pas ?"}
+Pour une auto-attention fondée uniquement sur le contenu, sans biais positionnel ni masque dépendant de l’ordre, permuter les lignes de l’entrée permute les lignes de sortie de la même façon. Si $P$ est une matrice de permutation, alors :
+
+\[
+\operatorname{Attention}(PX)=P\,\operatorname{Attention}(X).
+\]
+
+On peut le vérifier en posant $S=QK^\top/\sqrt{d_k}$ et $A=\operatorname{softmax}(S)$, avec un softmax appliqué ligne par ligne. Pour l’entrée permutée, $Q'=PQ$, $K'=PK$ et $V'=PV$. Ainsi, $A'=\operatorname{softmax}(PSP^\top)=PAP^\top$, puis $A'V'=PAP^\top PV=PAV$.
+
+Le calcul est **équivariant par permutation** : il réordonne ses sorties avec ses entrées. Il ne fournit donc pas, à lui seul, un repère permettant de distinguer les positions dans la séquence.
+
+Cette propriété suppose l’absence de signal positionnel et de contrainte dépendant de l’ordre. Un masque causal fixe introduit justement une contrainte structurelle d’ordre ; il ne faut pas confondre ce rôle avec celui d’un encodage positionnel explicite.
+:::
 
 ![Où l'information de position entre dans le calcul : en entrée pour un encodage absolu, dans les requêtes et les clés pour RoPE.](../images/positional-info-insertion-fr.svg){fig-alt="Un encodage absolu est ajouté aux embeddings en entrée, avant toute projection. RoPE applique des rotations aux requêtes et aux clés après leurs projections, avant le produit QK, si bien que les scores d'attention portent l'information de position." width=100%}
 
@@ -40,6 +54,33 @@ Les embeddings de contenu seuls ne codent pas la position. Le masque causal, lor
 
 Ces approches injectent l'information positionnelle à des endroits différents et n'ont pas exactement les mêmes propriétés. Le schéma compare deux mécanismes positionnels explicites ; il ne représente pas le masque causal, qui constitue une contrainte d'accès distincte. Il suffit ici de retenir leur rôle et leur emplacement général dans le calcul. Pour comprendre la dépendance au décalage relatif, les conventions de rotation et les limites à longue séquence, voir l'[approfondissement avancé sur RoPE](rope.qmd).
 
+::: {.callout-note collapse="true" title="Approfondissement facultatif — géométrie des encodages sinusoïdaux"}
+Dans l’encodage sinusoïdal original, chaque paire de coordonnées utilise une fréquence propre. En posant $\omega_i=10000^{-2i/d}$, la paire associée à l’indice $i$ s’écrit :
+
+\[
+p_i(t)=
+\begin{bmatrix}
+\sin(\omega_i t)\\
+\cos(\omega_i t)
+\end{bmatrix}.
+\]
+
+Pour un décalage fixé $k$, les identités trigonométriques donnent :
+
+\[
+p_i(t+k)=
+\begin{bmatrix}
+\cos(\omega_i k) & \sin(\omega_i k)\\
+-\sin(\omega_i k) & \cos(\omega_i k)
+\end{bmatrix}
+p_i(t).
+\]
+
+Le décalage $k$ correspond donc à une rotation fixe **pour une paire et une fréquence données**. Par exemple, avec $d=2$, la seule paire a $\omega_0=1$ : $p_0(0)=[0,1]^\top$ et $p_0(1)=[\sin(1),\cos(1)]^\top\approx[0.8415,0.5403]^\top$.
+
+Dans cette construction, $P$ est ajouté aux embeddings à l’entrée, $X_0=E[\text{token IDs}]+P$. Ce n’est pas RoPE : RoPE applique des rotations aux projections $Q$ et $K$ après leur calcul, avant les scores d’attention. La propriété géométrique ci-dessus rend les décalages accessibles à une transformation linéaire ; elle ne garantit pas qu’une tête apprendra effectivement une règle telle que « regarder trois tokens en arrière ».
+:::
+
 ## Idées reçues
 
 - **« L'attention sait naturellement quel token vient en premier. »** L'attention fondée sur le contenu ne porte pas cet ordre à elle seule ; un mécanisme positionnel ou une contrainte structurelle, comme le masque causal, doit le fournir.
@@ -49,6 +90,7 @@ Ces approches injectent l'information positionnelle à des endroits différents 
 - [Vaswani et al. (2017), Attention Is All You Need](https://arxiv.org/abs/1706.03762) — encodages positionnels sinusoïdaux.
 - [Su et al. (2021), RoFormer: Enhanced Transformer with Rotary Position Embedding](https://arxiv.org/abs/2104.09864) — article original sur RoPE.
 - [Hugging Face Transformers — documentation](https://huggingface.co/docs/transformers/) — détails d'implémentation selon les architectures.
+- [Jay Joshi, *The Mathematics of a Transformer… Part 1*](https://medium.com/@jayjj6272/the-mathematics-of-a-transformer-explained-with-numbers-you-can-check-by-hand-with-geometric-96b5873c95be) — ressource pédagogique complémentaire sur la lecture géométrique des embeddings et des encodages sinusoïdaux ; les calculs présentés ici ont été vérifiés indépendamment.
 
 ::: {.language-switch}
 **Langue :** [Français](positional-encoding.qmd) · [English](../en/positional-encoding.qmd)

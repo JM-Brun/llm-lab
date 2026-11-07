@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/positional-encoding"
-scope: "Introduces why a Transformer needs positional information, distinguishes absolute encodings from relative mechanisms, and situates RoPE as a rotary relative-position method; clarifies the separate role of causal masking. RoPE geometry and variants belong in the advanced deep dive."
+scope: "Introduces why a Transformer needs positional information, distinguishes absolute encodings from relative mechanisms, and situates RoPE as a rotary relative-position method; clarifies the separate role of causal masking. The detailed RoPE derivation and its variants belong in the advanced deep dive."
 purpose: "Readers should be able to explain why a Transformer needs positional information, distinguish several ways of introducing it, and describe where these mechanisms enter the computation."
 suggested_route:
   previous: "en/embedding-space"
@@ -23,12 +23,26 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 
 {{< include ../includes/generated-guided-context-en-positional-encoding.qmd >}}
 ::: {.chapter-lead}
-A Transformer needs an ordering signal to distinguish, for example, “the cat chases the dog” from “the dog chases the cat”. This page introduces positional mechanisms and distinguishes them from causal masking; RoPE geometry and derivation belong in an [advanced deep dive](rope.qmd).
+A Transformer needs an ordering signal to distinguish, for example, “the cat chases the dog” from “the dog chases the cat”. This page introduces positional mechanisms and distinguishes them from causal masking; The detailed RoPE derivation belongs in an [advanced deep dive](rope.qmd).
 :::
 
 ## Why add positional information?
 
 Content embeddings alone do not encode position. When used, the causal mask indicates which positions may be attended to (`j ≤ i`); positional mechanisms can additionally represent absolute positions or relative offsets. These signals are complementary, not interchangeable.
+
+::: {.callout-note collapse="true" title="Why is self-attention alone not enough?"}
+For content-only self-attention, with no positional bias or order-dependent mask, permuting the input rows permutes the output rows in the same way. If $P$ is a permutation matrix, then:
+
+\[
+\operatorname{Attention}(PX)=P\,\operatorname{Attention}(X).
+\]
+
+To verify this, let $S=QK^\top/\sqrt{d_k}$ and $A=\operatorname{softmax}(S)$, with softmax applied row-wise. For the permuted input, $Q'=PQ$, $K'=PK$, and $V'=PV$. Hence $A'=\operatorname{softmax}(PSP^\top)=PAP^\top$, and $A'V'=PAP^\top PV=PAV$.
+
+The computation is **permutation equivariant**: it reorders its outputs along with its inputs. By itself, it therefore provides no reference that distinguishes positions in the sequence.
+
+This property assumes that no positional signal or order-dependent constraint is present. A fixed causal mask introduces a structural ordering constraint; that role should not be confused with an explicit positional encoding.
+:::
 
 ![Where positional information enters the computation: at the input for an absolute encoding, inside queries and keys for RoPE.](../images/positional-info-insertion-en.svg){fig-alt="An absolute encoding is added to the embeddings at the input, before any projection. RoPE applies rotations to queries and keys after their projections, before the QK product, so the attention scores carry positional information." width=100%}
 
@@ -40,6 +54,33 @@ Content embeddings alone do not encode position. When used, the causal mask indi
 
 These approaches inject positional information at different points and do not have exactly the same properties. The diagram compares two explicit positional mechanisms; it does not depict the causal mask, which is a separate visibility constraint. At this stage, it is enough to understand their role and approximate location in the computation. For relative-offset dependence, rotation conventions, and long-sequence limitations, see the [advanced RoPE deep dive](rope.qmd).
 
+::: {.callout-note collapse="true" title="Optional deepening — the geometry of sinusoidal encodings"}
+In the original sinusoidal encoding, each coordinate pair uses its own frequency. Let $\omega_i=10000^{-2i/d}$. The pair associated with index $i$ is:
+
+\[
+p_i(t)=
+\begin{bmatrix}
+\sin(\omega_i t)\\
+\cos(\omega_i t)
+\end{bmatrix}.
+\]
+
+For a fixed offset $k$, trigonometric identities give:
+
+\[
+p_i(t+k)=
+\begin{bmatrix}
+\cos(\omega_i k) & \sin(\omega_i k)\\
+-\sin(\omega_i k) & \cos(\omega_i k)
+\end{bmatrix}
+p_i(t).
+\]
+
+Thus, a fixed offset corresponds to a fixed rotation **for a given pair and frequency**. For example, with $d=2$, the only pair has $\omega_0=1$: $p_0(0)=[0,1]^\top$ and $p_0(1)=[\sin(1),\cos(1)]^\top\approx[0.8415,0.5403]^\top$.
+
+In this construction, $P$ is added to the embeddings at the input, $X_0=E[\text{token IDs}]+P$. This is not RoPE: RoPE rotates the projected $Q$ and $K$ after they are computed and before attention scores are formed. The geometric property above makes offsets accessible to a linear transformation; it does not guarantee that a head will actually learn a rule such as “look three tokens back”.
+:::
+
 ## Common misconceptions
 
 - **“Attention naturally knows which token comes first.”** Content-based attention does not carry that order on its own; a positional mechanism or structural constraint such as causal masking must supply it.
@@ -49,6 +90,7 @@ These approaches inject positional information at different points and do not ha
 - [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — sinusoidal positional encodings.
 - [Su et al. (2021), *RoFormer: Enhanced Transformer with Rotary Position Embedding*](https://arxiv.org/abs/2104.09864) — the original RoPE paper.
 - [Hugging Face Transformers documentation](https://huggingface.co/docs/transformers/) — implementation details vary by architecture.
+- [Jay Joshi, *The Mathematics of a Transformer… Part 1*](https://medium.com/@jayjj6272/the-mathematics-of-a-transformer-explained-with-numbers-you-can-check-by-hand-with-geometric-96b5873c95be) — complementary pedagogical treatment of embedding and sinusoidal-encoding geometry; the calculations shown here were independently checked.
 
 ::: {.language-switch}
 **Language:** [Français](../fr/positional-encoding.qmd) · [English](positional-encoding.qmd)

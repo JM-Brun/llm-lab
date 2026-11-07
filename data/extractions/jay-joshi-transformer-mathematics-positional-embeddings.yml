@@ -1,0 +1,248 @@
+schema_version: 1
+source_id: jay-joshi-transformer-mathematics-positional-embeddings
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Reconstructed from the indexed Medium snapshot available on 2026-11-07: introduction, stated outcomes, notation, embedding lookup, sinusoidal equations, geometric explanation and descriptions of two code cells."
+      - "The live article, full code cells and figures were not directly retrievable; only claims visible in the indexed snapshot are retained."
+    inferred_elements:
+      - "The source's stated outcomes are declared; prerequisites are inferred from the equations and tensor notation."
+      - "The source-local graph is a compact reconstruction, not a formal graph supplied by the author."
+  source_graph:
+    nodes:
+      - {id: src-token-ids, kind: input, description: "Integer token identifiers supplied to the embedding lookup.", locator: "Embeddings"}
+      - {id: src-embedding-table, kind: parameter, description: "Embedding lookup table E with shape vocabulary-size by model-width.", locator: "Embeddings"}
+      - {id: src-token-vectors, kind: representation, description: "Rows selected from E for the input token IDs.", locator: "Embeddings"}
+      - {id: src-position-index, kind: input, description: "Integer sequence position used to construct a position-dependent vector.", locator: "Positional encoding"}
+      - {id: src-sinusoidal-position-vector, kind: representation, description: "Position vector whose even and odd coordinates use sine and cosine at dimension-dependent frequencies.", locator: "Positional encoding"}
+      - {id: src-initial-hidden-states, kind: representation, description: "Initial input states formed by adding positional vectors to token embeddings.", locator: "Equation (1)"}
+      - {id: src-additive-position-combination, kind: operation, description: "Adds the positional vector to each token embedding to form the initial input states.", locator: "Equation (1)"}
+      - {id: src-content-only-self-attention, kind: mechanism, description: "Self-attention applied without position-dependent signals or order-dependent constraints.", locator: "Positional encoding"}
+      - {id: src-permutation-equivariance, kind: mathematical-property, description: "Permuting input rows permutes output rows in the same way for content-only self-attention.", locator: "Positional encoding"}
+      - {id: src-frequency-pairs, kind: mathematical-structure, description: "Paired sine/cosine coordinates interpreted as points on circles with different angular frequencies.", locator: "Positional encoding"}
+      - {id: src-relative-offset-rotation, kind: mathematical-property, description: "For each frequency pair, shifting position by a fixed offset corresponds to a fixed two-dimensional rotation.", locator: "Positional encoding"}
+      - {id: src-pytorch-visualization, kind: pedagogical-artifact, description: "Described code cells for inspecting embedding vectors and positional encodings with Matplotlib.", locator: "Code"}
+    edges:
+      - {from: src-token-ids, type: indexes, to: src-embedding-table}
+      - {from: src-embedding-table, type: yields, to: src-token-vectors}
+      - {from: src-position-index, type: determines, to: src-sinusoidal-position-vector}
+      - {from: src-token-vectors, type: input-to, to: src-additive-position-combination}
+      - {from: src-sinusoidal-position-vector, type: input-to, to: src-additive-position-combination}
+      - {from: src-additive-position-combination, type: yields, to: src-initial-hidden-states}
+      - {from: src-token-vectors, type: input-to, to: src-content-only-self-attention}
+      - {from: src-content-only-self-attention, type: exhibits, to: src-permutation-equivariance}
+      - {from: src-sinusoidal-position-vector, type: contains, to: src-frequency-pairs}
+      - {from: src-frequency-pairs, type: exhibits, to: src-relative-offset-rotation}
+      - {from: src-token-vectors, type: visualized-by, to: src-pytorch-visualization}
+      - {from: src-sinusoidal-position-vector, type: visualized-by, to: src-pytorch-visualization}
+    interpretation: "Partial source-local reconstruction from indexed article text. Relations summarize the visible explanation and are not an author-specified formal graph. The source teaching order does not define canonical LLM Lab prerequisites or computational edges."
+  learning_outcomes:
+    - {status: declared, outcome: "Compute self-attention by hand and explain each matrix.", basis: "Author's stated outcomes; attention is promised but not developed in Part 1."}
+    - {status: declared, outcome: "Derive why division by the square root of the key dimension is used and inspect an experiment.", basis: "Author's stated outcomes; detailed derivation is outside the inspected Part 1 content."}
+    - {status: declared, outcome: "Explain causal masking, residual connections and LayerNorm.", basis: "Author's stated outcomes; these mechanisms are not developed in the inspected Part 1 text."}
+    - {status: declared, outcome: "Derive the gradient through attention and compare it with finite differences.", basis: "Author's stated outcomes; the derivation is not present in the inspected Part 1 text."}
+    - {status: declared, outcome: "Read a Transformer implementation line by line.", basis: "Author's stated outcomes; only descriptions of two code cells are visible."}
+    - {status: inferred, outcome: "Explain how token IDs select rows from an embedding matrix and how sinusoidal position vectors are added to token vectors.", basis: "Visible equations and accompanying explanation."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic vector and matrix notation, including tensor shapes.", basis: "The article introduces X in R^(n x d) and a three-dimensional tensor example."}
+    - {status: inferred, topic: "Basic trigonometry and sine/cosine functions.", basis: "The positional-encoding equations and circle interpretation use these concepts."}
+  teaching_route:
+    - {order: 1, section: "Introduction and notation", function: "establish-a-small-checkable-model", moves: ["Set n, d, d_k and the row-vector convention", "Use a small tensor shape to make operations inspectable"]}
+    - {order: 2, section: "Embeddings", function: "connect-discrete-identifiers-to-vectors", moves: ["Define the embedding lookup table", "Express token vectors as selected rows"]}
+    - {order: 3, section: "Positional encoding", function: "motivate-and-formalize-order-information", moves: ["Explain why content-only self-attention is permutation equivariant", "Introduce sinusoidal coordinates", "Interpret sine/cosine pairs as rotations at different frequencies", "Distinguish the sinusoidal offset-rotation identity from RoPE rotations of projected Q and K"]}
+    - {order: 4, section: "Code cells and visual outputs", function: "connect-equations-to-visual-inspection", moves: ["Describe vector visualization with Matplotlib", "Describe positional and non-positional vector comparison"]}
+  pedagogical_strengths:
+    - "Explicit row-vector convention and tensor shapes reduce ambiguity when checking matrix products."
+    - "The embedding lookup equation connects token IDs to a concrete matrix operation."
+    - "The paired sine/cosine interpretation gives a compact geometric explanation of sinusoidal position encodings."
+    - "The declared aim of hand-checkable calculations aligns with LLM Lab's emphasis on small inspectable examples; the inspected Part 1 snapshot does not expose the promised numerical worked example."
+    - "The source attempts to connect equations, PyTorch tensors and geometric visualization."
+  pedagogical_limits:
+    - "The indexed snapshot does not expose full code cells, concrete numerical outputs or figures; hand-checkability and visual quality cannot be validated."
+    - "The promised attention, masking, residual, LayerNorm and gradient topics are not developed in inspected Part 1 content."
+    - "The claim that training moves similarly used token vectors toward similar directions is an oversimplification; embedding geometry is model-, objective- and task-dependent."
+    - "The relative-shift rotation property is algebraic; it does not guarantee that the network learns a particular relative-position rule."
+    - "The phrase 'attend three tokens back' is motivation, not a theorem."
+    - "A three-dimensional visualization cannot establish properties of a high-dimensional representation space."
+  comparison:
+    dossier: docs/source-reviews/jay-joshi-transformer-mathematics-2026-11.md
+    canonical_graph: "data/concepts.yml and data/computational-graph.yml"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Page-level suggested_route metadata and Build route"]
+    decision: "Use as a complementary worked-example and geometric-visualization reference for existing embedding and positional-encoding lessons. Do not create a new concept, page, route stage or graph registry. Candidate improvements are small numeric checks and a qualified geometric explanation, subject to independent verification."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-computational-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: jay-joshi-transformer-mathematics-positional-embeddings:permutation-equivariance
+    kind: claim
+    summary: "The article states that content-only self-attention treats the sequence as a set: permuting input rows permutes output rows in the same way. This is permutation equivariance, not permutation invariance."
+    locator: {type: section, value: "Positional encoding", label: "Why positional information is needed"}
+    evidence:
+      kind: claim
+      confidence: well-supported
+      scope: "The indexed article explicitly states the row-shuffling property. The matrix derivation is an independent LLM Lab verification, not a derivation reproduced from the source."
+      assumptions: ["Self-attention uses content-derived Q, K and V.", "No position-dependent bias, positional encoding or order-dependent mask is applied; the row permutation is applied consistently to Q, K and V."]
+      limitations: ["A fixed causal mask is order-dependent and changes this symmetry; the statement must not be generalized to every causal Transformer computation.", "Permutation equivariance does not mean outputs are invariant to reordering."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:self-attention, topic:positional-encoding, method:permutation-equivariance]
+      concept_ids: [self-attention, positional-encoding]
+    candidate_destinations:
+      pages: [fr/positional-encoding, en/positional-encoding]
+      concepts: [self-attention, positional-encoding]
+    pedagogical_profile:
+      learner_question: "Why does content-based self-attention need an additional ordering signal?"
+      explanatory_lens: symmetry
+      teaching_form: [mathematical-derivation, mental-model]
+      abstraction_level: intermediate
+      prerequisites: [self-attention, matrix-permutation]
+      distinctive_value: "Turns the informal set analogy into a precise symmetry property and clarifies the assumptions under which it holds."
+      limitations: ["The source states the property informally; the matrix proof added to LLM Lab is an independent explanation."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The existing page says content embeddings alone do not encode position but does not expose the permutation-equivariance argument."}
+      complementarity: {level: high, rationale: "A short optional proof explains why the need for positional information follows from the symmetry of content-only self-attention."}
+      pedagogical_value: {level: high, rationale: "The distinction between equivariance and invariance prevents a common conceptual error and gives a mathematical reason for positional signals."}
+      applicability: {level: high, rationale: "A compact optional note fits the existing positional-encoding concept lesson without adding a new page or concept."}
+      redundancy: {level: low, rationale: "The current lesson does not derive this property."}
+      evidence_quality: {level: high, rationale: "The source claim is visible in the indexed article; the property is independently checkable from the self-attention equations under stated assumptions."}
+    disposition: integrate
+    disposition_rationale: "Add a concise optional note to the existing bilingual positional-encoding lesson. Do not create a separate concept or computational-graph node: this is a property explaining the role of the existing self-attention and positional-encoding concepts."
+  - id: jay-joshi-transformer-mathematics-positional-embeddings:embedding-lookup
+    kind: mechanism
+    summary: "A token ID indexes one row of an embedding table E in R^(V x d); selecting a sequence of IDs yields X in R^(n x d)."
+    locator: {type: section, value: "Embeddings", label: "Embedding lookup and equation (1)"}
+    evidence:
+      kind: mathematical-formulation
+      confidence: well-supported
+      scope: "The indexed snapshot states the embedding-table shape and X0 = E[token_ids] + P."
+      assumptions: ["The matrix uses vocabulary rows and model-width columns.", "The article adopts row vectors and right multiplication."]
+      limitations: ["Concrete numeric values and code are not visible.", "The claim about similarly used tokens moving toward similar directions is not a universal geometric guarantee."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:token-embeddings, method:embedding-lookup]
+      concept_ids: [token-embedding]
+    candidate_destinations:
+      pages: [fr/embedding-space, en/embedding-space]
+      concepts: [token-embedding]
+    pedagogical_profile:
+      learner_question: "How does a discrete token ID become a vector the network can compute with?"
+      explanatory_lens: geometric
+      teaching_form: [worked-example, mental-model]
+      abstraction_level: introductory
+      prerequisites: [tokenization, matrix-lookup]
+      distinctive_value: "Explicit matrix shape and row-vector convention support a hand-checkable lookup example."
+      limitations: ["The retrieved snapshot does not expose the concrete numeric lookup values."]
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The existing bilingual embedding lesson already explains indexed lookup and includes a small explicit matrix example."}
+      complementarity: {level: moderate, rationale: "The tensor convention and geometry-first framing may help compare explanations, but the actual example is unavailable."}
+      pedagogical_value: {level: moderate, rationale: "A concise row-vector reminder may reduce shape confusion."}
+      applicability: {level: low, rationale: "The current page already has a numerical lookup example and separates initial embeddings from contextualized representations."}
+      redundancy: {level: high, rationale: "The core lookup operation and distinction between IDs and vectors are already taught."}
+      evidence_quality: {level: moderate, rationale: "The equation is standard, but the article is a secondary tutorial retrieved through an indexed snapshot."}
+    disposition: already-covered
+    disposition_rationale: "The canonical embedding-space lesson already contains the lookup equation, matrix dimensions and a numeric row-selection example. Do not duplicate it."
+  - id: jay-joshi-transformer-mathematics-positional-embeddings:sinusoidal-position-encoding
+    kind: derivation
+    summary: "The article gives the standard sinusoidal encoding: even coordinates use sin(pos / 10000^(2i/d)) and odd coordinates use cos(pos / 10000^(2i/d)). Each paired coordinate is interpreted as a point on a circle with a dimension-dependent frequency."
+    locator: {type: section, value: "Positional encoding", label: "Equations (2) and (3)"}
+    evidence:
+      kind: mathematical-formulation
+      confidence: well-supported
+      scope: "The indexed snapshot exposes the even/odd sine and cosine equations and geometric explanation."
+      assumptions: ["The formula follows the original Transformer sinusoidal positional encoding convention.", "The coordinate index i ranges over paired dimensions."]
+      limitations: ["Full article formatting and numerical examples are not directly inspectable.", "This is one positional mechanism, not a universal Transformer design."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-encoding, method:sinusoidal-encoding]
+      concept_ids: [positional-encoding]
+    candidate_destinations:
+      pages: [fr/positional-encoding, en/positional-encoding]
+      concepts: [positional-encoding]
+    pedagogical_profile:
+      learner_question: "What do sine and cosine coordinates encode, and why are they paired?"
+      explanatory_lens: geometric
+      teaching_form: [worked-example, mental-model]
+      abstraction_level: introductory
+      prerequisites: [trigonometry, vector-notation]
+      distinctive_value: "The circle/rotation interpretation bridges the sinusoidal formula and relative offsets."
+      limitations: ["The analogy does not establish that a trained model uses a specific relative-offset rule."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The existing core lesson stays conceptual and delegates derivations to the RoPE deep dive; this source gives an accessible geometric interpretation of the original sinusoidal method."}
+      complementarity: {level: moderate, rationale: "It can complement the comparison of absolute, relative and rotary mechanisms with one worked sinusoidal case."}
+      pedagogical_value: {level: moderate, rationale: "A bounded paired-coordinate example may connect the formula to geometry."}
+      applicability: {level: moderate, rationale: "A small optional worked example could fit existing positional-encoding material if independently checked."}
+      redundancy: {level: moderate, rationale: "The sinusoidal method is already referenced, but its geometric derivation is not developed in the core page."}
+      evidence_quality: {level: moderate, rationale: "The identity is standard; the source's numerical and visual presentation cannot be verified from the indexed snapshot."}
+    disposition: integrate
+    disposition_rationale: "Retain as a candidate for a compact, independently verified worked example in existing positional-encoding material. Do not add a page or copy figures."
+  - id: jay-joshi-transformer-mathematics-positional-embeddings:relative-offset-rotation
+    kind: claim
+    summary: "For each sine/cosine frequency pair, the encoding at position pos + k is obtained from the pair at pos by a fixed two-dimensional rotation whose angle depends on k and that pair's frequency."
+    locator: {type: section, value: "Positional encoding", label: "Relative-offset rotation explanation"}
+    evidence:
+      kind: mathematical-property
+      confidence: well-supported
+      scope: "The indexed snapshot invokes sine/cosine addition identities to motivate the fixed-rotation property."
+      assumptions: ["The offset k is fixed.", "The rotation is considered separately for each frequency pair."]
+      limitations: ["This does not guarantee that an attention head learns a discrete offset detector or attends to a fixed number of tokens back.", "The informal 'attend k tokens back' phrasing is motivation, not a theorem."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-encoding, method:sinusoidal-encoding]
+      concept_ids: [positional-encoding]
+    candidate_destinations:
+      pages: [fr/positional-encoding, en/positional-encoding]
+      concepts: [positional-encoding]
+    pedagogical_profile:
+      learner_question: "How can a position encoding expose the offset between two positions?"
+      explanatory_lens: geometric
+      teaching_form: [mathematical-derivation, mental-model]
+      abstraction_level: intermediate
+      prerequisites: [sine-cosine-addition-identities, rotation-matrix]
+      distinctive_value: "Connects trigonometric addition identities to a linear transformation on each frequency pair."
+      limitations: ["The informal attention-back-by-k wording must be qualified."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The core lesson defers geometry; the advanced RoPE lesson may already cover adjacent rotation mathematics."}
+      complementarity: {level: moderate, rationale: "The sinusoidal construction can be a precursor to position-dependent rotations, but it is not RoPE."}
+      pedagogical_value: {level: moderate, rationale: "A two-coordinate identity makes the sine/cosine pairing concrete."}
+      applicability: {level: moderate, rationale: "Potentially useful as an optional note if distinguished from RoPE's Q/K rotations."}
+      redundancy: {level: uncertain, rationale: "The existing RoPE derivation has not been compared line by line."}
+      evidence_quality: {level: moderate, rationale: "The identity is standard, but source details and code are not directly inspectable."}
+    disposition: integrate
+    disposition_rationale: "Integrate only the sinusoidal encoding's own fixed-offset rotation identity in an optional note on the existing positional-encoding pages. Explicitly distinguish it from RoPE, which rotates projected Q and K; do not move this derivation into the RoPE page."
+  - id: jay-joshi-transformer-mathematics-positional-embeddings:visualization
+    kind: visualization
+    summary: "The article describes Matplotlib/PyTorch cells that visualize random embedding vectors and compare positional with non-positional vector representations; exact figures and code are not exposed."
+    locator: {type: section, value: "Code cells and outputs", label: "Two described visualization cells"}
+    evidence:
+      kind: source-description
+      confidence: unverified
+      scope: "Only the author's description of the two code cells and visual outputs is visible."
+      assumptions: []
+      limitations: ["No code, image bytes, axes, captions or numerical outputs were inspected.", "No execution or visual review was possible."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:token-embeddings, topic:positional-encoding, modality:visualization, ecosystem:pytorch]
+      concept_ids: [token-embedding, positional-encoding]
+    candidate_destinations:
+      pages: [fr/embedding-space, en/embedding-space, fr/positional-encoding, en/positional-encoding]
+      concepts: [token-embedding, positional-encoding]
+    pedagogical_profile:
+      learner_question: "What changes geometrically when positional information is added to token vectors?"
+      explanatory_lens: geometric
+      teaching_form: [visualization, comparison]
+      abstraction_level: introductory
+      prerequisites: [vector-notation, positional-encoding]
+      distinctive_value: "Attempts to show the distinction between content-only and position-enriched vectors."
+      limitations: ["Exact visual encoding and explanatory correctness are unknown."]
+    pedagogical_assessment:
+      novelty: {level: uncertain, rationale: "Source images are not available to compare with existing illustrations."}
+      complementarity: {level: uncertain, rationale: "The visualization may add value, but its exact content and quality are inaccessible."}
+      pedagogical_value: {level: uncertain, rationale: "Cannot judge whether the figure reveals an invariant or merely decorates the text."}
+      applicability: {level: uncertain, rationale: "Do not copy or reproduce the visual until content and reuse conditions are established."}
+      redundancy: {level: uncertain, rationale: "Existing pages already contain diagrams; exact visual overlap cannot be assessed."}
+      evidence_quality: {level: low, rationale: "Only a textual description of the figures is available."}
+    disposition: defer
+    disposition_rationale: "Retain a source link only; revisit only if the original figure can be inspected and a distinct learner need is identified. No reuse permission is known."
