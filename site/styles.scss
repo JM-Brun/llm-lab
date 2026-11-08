@@ -25,6 +25,12 @@ $font-size-base: 1.02rem;
   --llm-soft-shadow: 0 8px 24px rgba(18, 61, 42, .07);
 }
 
+/* Keep reading-area links on the documented AA action-green token. */
+main.content a:not(.btn):not(.nav-link),
+main.content a:not(.btn):not(.nav-link):visited {
+  color: var(--llm-brand-action);
+}
+
 body { line-height: 1.72; }
 p, li { max-width: 78ch; }
 #title-block-header { margin-bottom: 2rem; }
