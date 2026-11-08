@@ -35,7 +35,7 @@ Les pages de cours utilisent un composant homogène **« Vérifier sa compréhen
 |---|---|---|
 | [Fondations mathématiques](#fondations) | Tenseurs, probabilités, logits, entropie, cross-entropie, vraisemblance, gradients, stabilité numérique | 7 exercices progressifs rédigés ; vérification de gradients et autres thèmes à compléter |
 | [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Auto-vérifications dans les pages texte/embeddings ; trois exercices formatifs TR-A à TR-C publiés ; BPE, fenêtres et fuites à construire |
-| [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Somme pondérée et projections Q/K/V ; trois exercices formatifs AT-A à AT-C publiés (attention multi-têtes) ; masque causal et invariants à construire |
+| [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Somme pondérée et projections Q/K/V ; CA-A sur le masque causal et l’invariance de préfixe ; trois exercices formatifs AT-A à AT-C publiés (attention multi-têtes) ; variantes avancées à construire |
 | [Transformer](#transformer) | Embeddings, position, résidus, normalisation, MLP et variantes d’architecture | Trois exercices formatifs TF-A à TF-C publiés (formes et normalisation d'un bloc pré-LN, paramètres du bloc, diagnostic et interventions) ; variantes d'architecture à construire |
 | [Préentraînement](#preentrainement) | Objectif, entraînement/validation, perplexité, checkpoints et reproductibilité | Structure à compléter |
 | [Génération](#generation) | Décodage, température, top-k/top-p, arrêt, contexte et cache KV | Structure à compléter |
