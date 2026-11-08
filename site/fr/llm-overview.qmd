@@ -176,6 +176,8 @@ La prédiction du prochain token ne garantit ni la vérité des sorties ni une c
 
 :::
 
+{{< include ../includes/generated-suggested-route-fr-llm-overview.qmd >}}
+
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../en/llm-overview.qmd)
 :::

@@ -238,6 +238,8 @@ La taille du vocabulaire, les budgets d'entraînement et l'évaluation comparati
 - [tiktoken](https://github.com/openai/tiktoken)
 
 
+{{< include ../includes/generated-suggested-route-fr-tokenization-strategies.qmd >}}
+
 ::: {.language-switch}
 **Langue :** [Français](tokenization-strategies.qmd) · [English](../en/tokenization-strategies.qmd)
 :::

@@ -129,6 +129,8 @@ The gradient describes a local change. A step that is too large can leave the re
 - [PyTorch — Autograd mechanics](https://docs.pytorch.org/docs/stable/notes/autograd.html): explains reverse-mode automatic differentiation and the computation graph.
 - [PyTorch — `gradcheck`](https://docs.pytorch.org/docs/stable/generated/torch.autograd.gradcheck.gradcheck.html): documents numerical checking of analytical gradients against finite differences.
 
+{{< include ../includes/generated-suggested-route-en-gradients.qmd >}}
+
 :::: {.language-switch}
 [Français](../fr/gradients.qmd) · [English](gradients.qmd)
 ::::

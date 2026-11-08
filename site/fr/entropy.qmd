@@ -124,6 +124,8 @@ Une température plus faible tend à concentrer la distribution ; une températu
 - Cover & Thomas, [*Elements of Information Theory*](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X) — entropie et codage.
 - [3Blue1Brown — Reinventing Entropy](https://www.youtube.com/watch?v=l6DKRf-fAAM) — intuition visuelle complémentaire.
 
+{{< include ../includes/generated-suggested-route-fr-entropy.qmd >}}
+
 ::: {.language-switch}
 [Français](entropy.qmd) · [English](../en/entropy.qmd)
 :::

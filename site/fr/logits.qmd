@@ -93,8 +93,9 @@ Il identifie le token dont le score est le plus élevé dans ce vecteur. Il ne d
 
 </details>
 
-{{< include ../includes/generated-suggested-route-fr-logits.qmd >}}
 :::
+
+{{< include ../includes/generated-suggested-route-fr-logits.qmd >}}
 
 ::: {.language-switch}
 [Français](logits.qmd) · [English](../en/logits.qmd)

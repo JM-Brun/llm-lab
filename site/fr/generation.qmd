@@ -147,6 +147,8 @@ Vous avez maintenant vu **ce que fait le modèle** pendant la génération. Pour
 Pour approfondir un mécanisme rencontré ici : [Logits](logits.qmd) · [Probabilités](probabilites.qmd). Pour passer à l'implémentation : [Parcours de construction](build-path.qmd).
 :::
 
+{{< include ../includes/generated-suggested-route-fr-generation.qmd >}}
+
 ::: {.language-switch}
 [Français](generation.qmd) · [English](../en/generation.qmd)
 :::

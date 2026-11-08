@@ -164,7 +164,9 @@ class ResolvedGuidedRouteStage(StrictModel):
 def page_href(page_id: str, language: str) -> str:
     """Return a path relative to a language-specific learning-map page."""
     if page_id == f"{language}/index":
-        return "../index.html"
+        # The French landing page is the site root; the English landing page
+        # lives in site/en/, the same directory as the pages linking to it.
+        return "index.html" if language == "en" else "../index.html"
     if page_id == "reference/references":
         return "../references.html"
     prefix, slug = page_id.split("/", maxsplit=1)

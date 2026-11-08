@@ -152,7 +152,7 @@ La table d'embeddings contient $V \times d$ paramètres ; une projection de sort
 
 Le lookup s'arrête à la sélection d'une ligne de la matrice : il ne contextualise pas le vecteur. L'information positionnelle et le traitement par les couches du Transformer interviennent ensuite ; leur mécanisme dépend de l'architecture. Pour éviter de confondre ces étapes, voir la page dédiée à [l'encodage positionnel](positional-encoding.qmd), puis celle sur les [représentations contextualisées](contextualized-representations.qmd).
 
-Pendant l'entraînement, les gradients peuvent modifier les lignes de la table d'embeddings utilisées par les exemples. Pour les conventions de dimensions et les opérations sur les tenseurs, voir la page [Tenseurs](tensors.qmd) ; pour l'étape précédente, voir [du texte aux tokens](text-data.qmd).
+Pendant l'entraînement, les gradients peuvent modifier les lignes de la table d'embeddings utilisées par les exemples. Pour les conventions de dimensions et les opérations sur les tenseurs, voir la page [Tenseurs](tensors.qmd) ; pour les étapes précédentes de la chaîne d’entrée, voir [du texte aux tokens](text-data.qmd) et les [stratégies de tokenisation](tokenization-strategies.qmd).
 
 ## Interpréter la géométrie avec prudence
 
@@ -195,6 +195,8 @@ Non. Une projection 2D ne préserve qu’une partie de la géométrie et peut cr
 - [Li et al. (2020), On the Sentence Embeddings from Pre-trained Language Models](https://aclanthology.org/2020.emnlp-main.733/).
 - [Steck, Ekanadham & Kallus (2024), Is Cosine-Similarity of Embeddings Really About Similarity?](https://arxiv.org/abs/2403.05440).
 - [Sentence Transformers — Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html).
+
+{{< include ../includes/generated-suggested-route-fr-embedding-space.qmd >}}
 
 ::: {.language-switch}
 **Langue :** [Français](embedding-space.qmd) · [English](../en/embedding-space.qmd)

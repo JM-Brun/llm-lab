@@ -158,6 +158,8 @@ Window construction, shifted inputs and targets, and training masks are detailed
 
 These resources are complementary, not interchangeable: visualizations build intuition, the primary paper records the original formulation, annotated code exposes implementation choices, and API documentation specifies one library contract.
 
+{{< include ../includes/generated-suggested-route-en-transformer.qmd >}}
+
 ::: {.language-switch}
 **Language:** [Français](../fr/transformer.qmd) · [English](transformer.qmd)
 :::
