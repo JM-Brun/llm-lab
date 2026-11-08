@@ -65,7 +65,7 @@ const cases = [
     }))
   ),
   ...visualCases.flatMap(testCase =>
-    ["attention-score-scaling.html", "cross-attention.html", "rope.html", "unicode-text.html", "tensors.html", "cosine-similarity.html", testCase.lang === "fr" ? "linearite-embeddings.html" : "embedding-linearity.html", "language-modeling-math.html", "mathematical-foundations.html", "llm-computational-complexity.html"].map(page => ({
+    ["entropy.html", "attention-score-scaling.html", "cross-attention.html", "rope.html", "unicode-text.html", "tensors.html", "cosine-similarity.html", testCase.lang === "fr" ? "linearite-embeddings.html" : "embedding-linearity.html", "language-modeling-math.html", "mathematical-foundations.html", "llm-computational-complexity.html"].map(page => ({
       ...testCase, page, kind: "deep-dive-parent",
     }))
   ),
@@ -89,7 +89,7 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
-    const scoringPages = new Set(["likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
+    const scoringPages = new Set(["entropy.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
     // A browser-review script change must exercise the scoring pages too:
     // they share the page-navigation and responsive assertions, and their
     // screenshots are part of the manual review evidence.
@@ -887,6 +887,11 @@ for (const testCase of cases) {
     // text instead of an equation, so treat it as a blocking audit failure.
     const mathSummary = item.layout.math;
     const unrenderedMath = mathSummary.mathSpans - mathSummary.mathSpansRendered;
+    // Entropy is an equation-heavy lesson. Zero parsed math spans means the
+    // source delimiters were stripped as Markdown escapes, not that math passed.
+    if (pagePath === "entropy.html" && mathSummary.mathSpans === 0) {
+      report.failures.push(`${pagePath}/${lang}/${label}/${theme}: expected entropy equations, but Quarto produced no math spans`);
+    }
     if (unrenderedMath > 0) {
       report.failures.push(
         `${pagePath}/${lang}/${label}/${theme}: ${unrenderedMath} of ${mathSummary.mathSpans} math expressions did not render (pandoc math span without KaTeX or MathJax output)`
