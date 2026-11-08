@@ -45,6 +45,14 @@ const cases = [
       ...testCase, page, kind: "attention-training-mobile",
     }))
   ),
+  // The other scoring lessons already receive desktop-light route-context
+  // and mobile light/dark coverage above. Add their missing desktop-dark
+  // screenshots so the four-page scoring group has a complete visual matrix.
+  ...visualCases.filter(testCase => testCase.label === "desktop" && testCase.theme === "dark").flatMap(testCase =>
+    [testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "loss.html", "gradients.html"].map(page => ({
+      ...testCase, page, kind: "scoring-page",
+    }))
+  ),
   ...visualCases.flatMap(testCase =>
     ["gpt-config-walkthrough.html", "gpt-ops-walkthrough.html", "transformer-block-walkthrough.html", "gpt-model-walkthrough.html", "gpt-generation-walkthrough.html"].map(page => ({
       ...testCase, page, kind: "build-tour",
@@ -75,9 +83,15 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
-    // A global script/style change adds smoke coverage; it must not suppress
-    // dedicated cases for page files changed in the same PR.
-    const selectedPages = new Set([...smokePages, ...changedPages]);
+    const scoringPages = new Set(["likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html"]);
+    // A browser-review script change must exercise the scoring pages too:
+    // they share the page-navigation and responsive assertions, and their
+    // screenshots are part of the manual review evidence.
+    const selectedPages = new Set([
+      ...smokePages,
+      ...(changedFiles.includes("scripts/site-browser-review.mjs") ? scoringPages : []),
+      ...changedPages,
+    ]);
     for (let i = cases.length - 1; i >= 0; i--) {
       if (!selectedPages.has(cases[i].page)) cases.splice(i, 1);
     }
