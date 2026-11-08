@@ -249,7 +249,7 @@ for (const testCase of cases) {
       const visible = Boolean(navigation.href);
       if (visible) {
         const prefix = lang === "fr" ? (direction === "previous" ? "Page précédente:" : "Page suivante:") : (direction === "previous" ? "Previous page:" : "Next page:");
-        const normalizedAriaLabel = navigation.ariaLabel?.replace(/\\s+:/g, ":");
+        const normalizedAriaLabel = navigation.ariaLabel?.replace(/\s+:/g, ":");
         if (!navigation.title || !normalizedAriaLabel?.startsWith(prefix)) throw new Error(direction + " footer link lacks a localized directional accessible name");
       }
     }
