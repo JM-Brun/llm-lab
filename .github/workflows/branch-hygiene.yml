@@ -71,7 +71,12 @@ jobs:
             branch_ref="refs/remotes/origin/$branch"
             ahead="$(git rev-list --count "refs/remotes/origin/main..$branch_ref")"
             if git merge-base --is-ancestor "$branch_ref" refs/remotes/origin/main; then
-              printf '%s\tbranch tip is an ancestor of main (fully merged)\n' "$branch" >> "$redundant"
+              behind="$(git rev-list --count "$branch_ref..refs/remotes/origin/main")"
+              if [ "$behind" -eq 0 ]; then
+                printf '%s\ttip equals the current main tip (fresh or unchanged branch); never deleted automatically\n' "$branch" >> "$kept"
+              else
+                printf '%s\tbranch tip is an ancestor of main (fully merged)\n' "$branch" >> "$redundant"
+              fi
               continue
             fi
             merge_status=0
@@ -116,7 +121,7 @@ jobs:
               echo 'Mode: **dry run** (no branch was deleted; re-run with `apply` enabled to delete the branches listed below).'
             fi
             echo
-            echo "Redundancy is proven by one of two Git checks: the branch tip is an ancestor of main, or a three-way merge of the branch into current main reproduces main's exact tree. Diverged branches with unique content are always kept."
+            echo "Redundancy is proven by one of two Git checks: the branch tip is an ancestor of main, or a three-way merge of the branch into current main reproduces main's exact tree. Diverged branches with unique content are always kept, and a branch whose tip equals the current main tip is never deleted automatically (it may be a freshly created working branch)."
             echo
             echo "### Redundant branches (proven)"
             echo
