@@ -89,13 +89,12 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
-    const scoringPages = new Set(["entropy.html", "scaled-dot-product-attention.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
-    // A browser-review script change must exercise the scoring pages too:
-    // they share the page-navigation and responsive assertions, and their
-    // screenshots are part of the manual review evidence.
+    const targetedReviewPages = new Set(["entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
+    // A browser-review script change must exercise the focused lesson pages:
+    // they share page-navigation, responsive, and rendered-math assertions.
     const selectedPages = new Set([
       ...smokePages,
-      ...(changedFiles.includes("scripts/site-browser-review.mjs") ? scoringPages : []),
+      ...(changedFiles.includes("scripts/site-browser-review.mjs") ? targetedReviewPages : []),
       ...changedPages,
     ]);
     for (let i = cases.length - 1; i >= 0; i--) {
