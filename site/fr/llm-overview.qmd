@@ -30,7 +30,7 @@ Un **modèle de langage** estime la plausibilité de séquences de texte à part
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À l’issue de cette page, vous pourrez :
-- expliquer intuitivement pourquoi un modèle doit comparer plusieurs continuations possibles ;
+- expliquer intuitivement comment un modèle attribue des scores aux tokens candidats pour un contexte donné ;
 - distinguer modèle de langage, modèle génératif, LLM, GPT et Transformer ;
 - expliquer comment les notions de modèle de langage, GPT et Transformer s'articulent ;
 - identifier la page de référence pour approfondir le calcul du réseau ou la génération.
@@ -53,7 +53,7 @@ Un **token** est une unité de représentation du texte ; un **paramètre** est 
 
 ## 2. Le problème : continuer un texte à partir d'un contexte
 
-À partir d'un préfixe tel que « Le rapport indique que la concentration », le modèle doit estimer quels tokens pourraient suivre. Il n'existe pas nécessairement une unique suite correcte : plusieurs continuations peuvent être grammaticales et cohérentes, tout en différant par leur sens, leur précision ou leur pertinence.
+À partir d'un préfixe tel que « Le rapport indique que la concentration », le modèle doit estimer quels tokens pourraient suivre. À chaque position, il calcule des scores pour les tokens du vocabulaire ; après normalisation, ces scores forment une distribution conditionnelle sur le token suivant. Il ne compare pas explicitement toutes les séquences complètes possibles. Plusieurs continuations peuvent être grammaticales et cohérentes, tout en différant par leur sens, leur précision ou leur pertinence.
 
 Ce problème de modélisation du langage consiste à attribuer une plausibilité à des séquences conditionnellement au contexte. Pour un GPT autorégressif, la factorisation probabiliste de cette estimation est présentée dans la [formalisation mathématique du langage](language-modeling-math.qmd). La manière dont un modèle entraîné transforme cette estimation en texte, token après token, relève du cours dédié à la [génération](generation.qmd).
 
@@ -92,13 +92,13 @@ La préparation du contexte et le calcul du modèle produisent une **distributio
 
 {{< include ../includes/generated-computational-graph-fr-persistent-spine.qmd >}}
 
-Le nœud « passe avant » (*forward pass*, une exécution du réseau qui transforme le contexte en scores de sortie) résume volontairement le calcul interne. Le réseau produit des **logits** (scores non normalisés) ; une fonction *softmax* les convertit en distribution de probabilités sur le vocabulaire.  le [pipeline des représentations](contextualized-representations.qmd) et le [parcours d’un bloc Transformer](transformer-block-walkthrough.qmd) en détaillent les étapes.
+Le nœud « passe avant » (*forward pass*, une exécution du réseau qui transforme le contexte en scores de sortie) résume volontairement le calcul interne. Le réseau produit des **logits** (scores non normalisés) ; une fonction *softmax* les convertit en distribution de probabilités sur le vocabulaire. Le [pipeline des représentations](contextualized-representations.qmd) et le [parcours d’un bloc Transformer](transformer-block-walkthrough.qmd) en détaillent les étapes.
 
 | Branche | Usage de la distribution | Paramètres |
 |---|---|---|
 | **Génération** | Sélectionner un token, l'ajouter au contexte et répéter la prédiction ; voir [Générer du texte](generation.qmd) | Fixes |
 | **Scoring / évaluation** | Scorer une cible observée (p. ex. log-vraisemblance ou log-vraisemblance négative, NLL) ou une sortie générée, puis agréger des métriques adaptées sur des données tenues à l'écart ; voir [Vraisemblance](vraisemblance.qmd) | Fixes |
-| **Apprentissage** | Fournir les préfixes observés comme contexte (*teacher forcing*), comparer les prédictions aux tokens cibles, puis calculer la fonction de perte (*loss*) et ses gradients ; voir [Exemples d'entraînement](training-examples.qmd), [Loss](loss.qmd) et [Gradients](gradients.qmd) | Modifiés à l'étape de mise à jour |
+| **Apprentissage** | Fournir à chaque position le préfixe issu de la séquence de référence (*teacher forcing*), comparer la distribution au token cible, agréger les pertes (*loss*), puis calculer leurs gradients par rapport aux paramètres ; voir [Exemples d'entraînement](training-examples.qmd), [Loss](loss.qmd) et [Gradients](gradients.qmd) | Modifiés à l'étape de mise à jour |
 
 Le scoring d'une cible et l'évaluation d'un modèle ne sont pas synonymes : le premier calcule une probabilité conditionnelle ; la seconde agrège des scores ou des métriques selon la tâche et le protocole de données. L'évaluation fondée sur la vraisemblance réutilise le chemin de scoring sans mettre à jour les paramètres ; les évaluations de tâche peuvent aussi porter sur des sorties générées.
 
@@ -129,8 +129,8 @@ flowchart LR
   A --> I["3. Inférence<br/>Calculer une sortie<br/>avec des paramètres fixes"]
 ```
 
-1. **[Pré-entraînement (*pretraining*)](build-path.qmd).** Le modèle apprend à partir d’un corpus selon un objectif — pour un GPT, la prédiction du prochain token. L’apprentissage est dit *auto-supervisé* : les cibles sont construites à partir des données elles-mêmes, sans étiquettes humaines. Il produit un modèle pré-entraîné, souvent appelé *base model*. Le terme *foundation model* désigne plus largement un modèle conçu pour être réutilisé et adapté à de nombreuses tâches ; les deux expressions ne sont pas strictement synonymes.
-2. **[Adaptation facultative des poids](build-path.qmd).** Après le pré-entraînement, on peut mettre à jour les paramètres : fine-tuning pour une tâche (par exemple la classification), *supervised fine-tuning* (SFT) sur des exemples instruction-réponse, ou optimisation par préférences. Cette étape n’est pas obligatoire : un modèle pré-entraîné peut être utilisé directement.
+1. **Pré-entraînement (*pretraining*).** Le modèle apprend à partir d’un corpus selon un objectif — pour un GPT, la prédiction du prochain token. L’apprentissage est dit *auto-supervisé* : les cibles sont construites à partir des données elles-mêmes, sans étiquettes humaines. Il produit un modèle pré-entraîné, souvent appelé *base model*. Le terme *foundation model* désigne plus largement un modèle conçu pour être réutilisé et adapté à de nombreuses tâches ; les deux expressions ne sont pas strictement synonymes.
+2. **Adaptation facultative des poids.** Après le pré-entraînement, on peut mettre à jour les paramètres : fine-tuning pour une tâche (par exemple la classification), *supervised fine-tuning* (SFT) sur des exemples instruction-réponse, ou optimisation par préférences. Cette étape n’est pas obligatoire : un modèle pré-entraîné peut être utilisé directement.
 
 3. **[Inférence](generation.qmd).** On utilise les paramètres obtenus pour traiter une entrée et calculer une sortie. Pour un modèle autorégressif, l’inférence suit la boucle de génération décrite dans [la page dédiée](generation.qmd). Le prompt et, éventuellement, des documents récupérés par un système RAG fournissent du contexte ; ils ne constituent pas une phase supplémentaire de l’apprentissage et ne modifient pas les poids du modèle.
 
