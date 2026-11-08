@@ -80,13 +80,15 @@ Pour décrire un modèle, posons trois questions distinctes :
 
 Ces dimensions interagissent, mais ne décrivent pas la même chose. Une architecture ne détermine pas à elle seule l'objectif d'apprentissage ni la tâche d'utilisation. De même, adapter les paramètres ne signifie pas nécessairement changer la famille d'architecture.
 
-Le [parcours de construction d'un petit GPT](build-path.qmd) distingue les étapes de construction, l'apprentissage encore partiellement implémenté dans le projet et l'utilisation du modèle à paramètres fixes.
+Un modèle issu du pré-entraînement est souvent appelé **modèle de base** (*base model*). L'expression **modèle de fondation** (*foundation model*) désigne plus largement un modèle conçu pour être réutilisé et adapté à plusieurs tâches : les deux expressions sont proches, mais pas strictement synonymes. Un modèle pré-entraîné peut être utilisé directement ou adapté ensuite, par exemple par *fine-tuning*, apprentissage supervisé par instructions ou optimisation des préférences. Le [parcours de construction d'un petit GPT](build-path.qmd) distingue les étapes de construction, l'apprentissage encore partiellement implémenté dans le projet et l'utilisation du modèle à paramètres fixes.
 
 ## 5. La génération, en quelques étapes
 
 La figure résume le principe d'une génération autorégressive. Elle ne décrit pas les opérations internes du Transformer : elle sert uniquement à situer le chemin général entre le texte fourni et le token ajouté.
 
 ![Vue d'ensemble de la génération : le texte est découpé en tokens, traité par le modèle, puis prolongé par un token sélectionné.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Le texte fourni est découpé en tokens, transmis au modèle dont les paramètres restent fixes, puis le modèle produit une distribution à partir de laquelle un token est sélectionné et ajouté au contexte. Le processus recommence."}
+
+*Le découpage dessiné est schématique : les unités réellement obtenues dépendent du tokenizer.*
 
 1. **Préparer l'entrée** : le texte est converti en tokens, puis en représentations utilisables par le modèle. Voir [texte et données](text-data.qmd), [tokenisation](tokenization-strategies.qmd) et [embeddings](embedding-space.qmd).
 2. **Calculer** : le Transformer traite le contexte et produit des scores pour les tokens possibles. Voir [GPT et Transformer](transformer.qmd).
@@ -95,13 +97,13 @@ La figure résume le principe d'une génération autorégressive. Elle ne décri
 
 Cette boucle est appelée **génération autorégressive**. La page [Générer du texte : l'inférence pas à pas](generation.qmd) explique la distribution, les stratégies de décodage, le préremplissage du contexte (*prefill*) et la génération incrémentale (*decode*). Les détails du calcul interne sont développés dans le [parcours des représentations contextualisées](contextualized-representations.qmd) et le [parcours d'un bloc Transformer](transformer-block-walkthrough.qmd).
 
-Le même calcul prédictif peut aussi servir à attribuer un score à un token observé ou à calculer une loss pendant l'apprentissage. Ces usages partagent le calcul qui produit la distribution, mais ne constituent pas des étapes de la boucle de génération : voir [vraisemblance](vraisemblance.qmd), [exemples d'entraînement](training-examples.qmd) et [loss](loss.qmd).
+Le même calcul prédictif peut aussi servir à attribuer un score à un token observé ou à calculer une loss pendant l'apprentissage. Ces usages partagent le calcul qui produit la distribution, mais ne constituent pas des étapes de la boucle de génération : voir [vraisemblance](vraisemblance.qmd), [exemples d'entraînement](training-examples.qmd) et [loss](loss.qmd). Le **scoring** calcule un score sur des cibles observées ; l'**évaluation** agrège des scores ou des métriques selon un protocole et des données définis. Des optimisations comme le **cache KV** accélèrent certaines étapes de l'inférence sans changer l'objectif de prédiction ; elles sont traitées dans l'[approfondissement sur la complexité des LLM](llm-computational-complexity.qmd).
 
 ## 6. À quoi servent les LLM ?
 
 Les usages courants comprennent la génération et la reformulation de texte, le résumé, la traduction, l'extraction structurée, la classification, l'assistance à la programmation et les interfaces de question-réponse.
 
-Un modèle généraliste peut être réutilisé pour plusieurs tâches, mais son adéquation doit être vérifiée sur la tâche réelle. Il faut notamment examiner la qualité des résultats, les erreurs, la robustesse, le coût, la latence, la confidentialité et la provenance des données. Une démonstration convaincante sur quelques prompts ne constitue pas une évaluation.
+Un modèle généraliste peut être réutilisé pour plusieurs tâches, mais son adéquation doit être vérifiée sur la tâche réelle. Un système peut aussi compléter le contexte fourni au modèle avec des documents récupérés : c'est le principe de la **génération augmentée par récupération** (*retrieval-augmented generation*, ou **RAG**). Cette récupération enrichit l'entrée au moment de l'utilisation ; elle ne modifie pas, à elle seule, les paramètres du modèle. Il faut notamment examiner la qualité des résultats, les erreurs, la robustesse, le coût, la latence, la confidentialité et la provenance des données. Une démonstration convaincante sur quelques prompts ne constitue pas une évaluation.
 
 ::: {.self-check}
 [Exercices et mises en pratique](exercises.qmd).
