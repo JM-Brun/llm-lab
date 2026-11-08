@@ -22,6 +22,8 @@ def test_overview_views_are_expanded_but_deep_dive_views_remain_collapsed() -> N
     evaluation = MODULE["render_view"](REGISTRY, "evaluation", "fr")
 
     assert '::: {.callout-note title="Tronc computationnel"}' in persistent
+    assert "flowchart TB" in persistent
+    assert "flowchart TB" in evaluation
     transformer_block = MODULE["render_view"](REGISTRY, "transformer-block", "fr")
     assert 'collapse="true"' not in persistent
     assert 'collapse="true"' not in evaluation
