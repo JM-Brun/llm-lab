@@ -38,26 +38,31 @@ const cases = [
   ...textDataResponsiveCases.map(testCase => ({
     ...testCase, page: "text-data.html", kind: "route-context",
   })),
-  // #347 also reviews the training-example and Build bridge pages. Keep them
-  // outside route-context assertions: neither is an extra guided-route stage.
-  ...visualCases.filter(testCase => testCase.label === "desktop").map(testCase => ({
-    ...testCase, page: "training-examples.html", kind: "training-build-review",
-  })),
-  ...visualCases.map(testCase => ({
+  // #347: review the Build bridge and desktop training entry without
+  // treating either as an additional guided-route stage. Only light is a
+  // rendered site theme; color-scheme dark is not dark-theme coverage.
+  ...visualCases.filter(testCase => testCase.theme === "light").map(testCase => ({
     ...testCase, page: "build-path.html", kind: "training-build-review",
   })),
-  // Complete #347's responsive review for the other training/scoring pages.
-  // Their desktop/light route-context cases remain the semantic baseline.
-  ...visualCases.filter(testCase => testCase.theme === "dark" || testCase.label === "mobile").flatMap(testCase =>
-    ["generation.html", "loss.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html"].map(page => ({
-      ...testCase, page, kind: "training-build-review",
-    }))
-  ),
+  ...visualCases.filter(testCase => testCase.theme === "light" && testCase.label === "desktop").map(testCase => ({
+    ...testCase, page: "training-examples.html", kind: "training-build-review",
+  })),
+  ...visualCases.filter(testCase => testCase.theme === "light" && testCase.label === "mobile").map(testCase => ({
+    ...testCase, page: "generation.html", kind: "training-build-review",
+  })),
   // Focused mobile review for the attention → scoring → training slice.
   // Desktop/light route-context cases above remain the keyboard/Axe baseline.
   ...visualCases.filter(testCase => testCase.label === "mobile").flatMap(testCase =>
     ["queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "attention-score-scaling.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "cross-entropy.html", "loss.html", "gradients.html", "training-examples.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html"].map(page => ({
       ...testCase, page, kind: "attention-training-mobile",
+    }))
+  ),
+  // The other scoring lessons already receive desktop-light route-context
+  // and mobile light/dark coverage above. Add their missing desktop-dark
+  // screenshots so the four-page scoring group has a complete visual matrix.
+  ...visualCases.filter(testCase => testCase.label === "desktop" && testCase.theme === "dark").flatMap(testCase =>
+    [testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "loss.html", "gradients.html"].map(page => ({
+      ...testCase, page, kind: "scoring-page",
     }))
   ),
   ...visualCases.flatMap(testCase =>
@@ -83,7 +88,6 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
   const changedPages = new Set(changedFiles
     .filter(file => /^site\/(en|fr)\/.+\.qmd$/.test(file))
     .map(file => file.replace(/^site\/(en|fr)\//, "").replace(/\.qmd$/, ".html")));
-  const browserReviewScriptChanged = changedFiles.includes("scripts/site-browser-review.mjs");
   const hasGlobalSiteChange = changedFiles.some(file =>
     /^site\/(\.quarto|_quarto\.yml|.*\.(css|scss|js))$/.test(file) ||
     /^site\/_extensions\//.test(file) || /^scripts\//.test(file)
@@ -91,12 +95,15 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
-    // A selector change must exercise the pages it adds, not only unrelated
-    // smoke pages. Preserve changed-page coverage when global files also change.
-    const selectorPages = browserReviewScriptChanged
-      ? ["generation.html", "training-examples.html", "loss.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]
-      : [];
-    const selectedPages = new Set([...smokePages, ...selectorPages, ...changedPages]);
+    const scoringPages = new Set(["likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
+    // A browser-review script change must exercise the scoring pages too:
+    // they share the page-navigation and responsive assertions, and their
+    // screenshots are part of the manual review evidence.
+    const selectedPages = new Set([
+      ...smokePages,
+      ...(changedFiles.includes("scripts/site-browser-review.mjs") ? scoringPages : []),
+      ...changedPages,
+    ]);
     for (let i = cases.length - 1; i >= 0; i--) {
       if (!selectedPages.has(cases[i].page)) cases.splice(i, 1);
     }
@@ -131,7 +138,7 @@ for (const testCase of cases) {
   const consoleErrors = [];
   const pageErrors = [];
   page.on("console", msg => { if (msg.type() === "error") consoleErrors.push(msg.text()); });
-  page.on("pageerror", error => pageErrors.push(error.stack || String(error)));
+  page.on("pageerror", error => pageErrors.push({ name: error.name, message: error.message, stack: error.stack || null }));
 
   const url = kind === "homepage"
     ? (lang === "fr" ? `${BASE}/` : `${BASE}/en/`)
@@ -153,6 +160,31 @@ for (const testCase of cases) {
 
     item.title = await page.title();
     if (kind === "homepage") {
+      // Quarto's index.html URL fixup iterates every <a> and assumes href is
+      // a string. SVGAnchorElement.href is an SVGAnimatedString, so report
+      // non-string href properties without changing the rendered page.
+      item.linkHrefDiagnostics = await page.evaluate(() => ({
+        nonStringHrefAnchors: [...document.querySelectorAll("a")]
+          .filter(link => typeof link.href !== "string")
+          .map(link => ({
+            namespaceURI: link.namespaceURI,
+            hrefAttribute: link.getAttribute("href"),
+            hrefType: typeof link.href,
+            hrefConstructor: link.href?.constructor?.name || null,
+            outerHTML: link.outerHTML.slice(0, 1000),
+          })),
+        svgAnchors: [...document.querySelectorAll("svg a")].map(link => ({
+          hrefAttribute: link.getAttribute("href"),
+          hrefType: typeof link.href,
+          hrefConstructor: link.href?.constructor?.name || null,
+          outerHTML: link.outerHTML.slice(0, 1000),
+        })),
+        scripts: [...document.scripts].map(script => ({
+          src: script.src || null,
+          inlinePreview: script.src ? null : script.textContent.trim().slice(0, 180),
+        })),
+      }));
+
       item.homepageOrientation = await page.evaluate(() => {
         const readLinks = selector => [...document.querySelectorAll(selector)].map(link => ({
           label: link.textContent.trim().replace(/\\s+/g, " "),
