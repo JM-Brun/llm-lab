@@ -637,7 +637,7 @@ Recomptez les frontières entre unités adjacentes ; les anciennes fréquences n
 <details>
 <summary>Afficher le corrigé détaillé</summary>
 
-Après `o + w → ow), la paire `l + ow` apparaît trois fois : deux fois dans `low) et une fois dans `lower). Les autres paires les plus fréquentes sont `ow + </w>` (deux fois), puis des paires de fréquence 1. La deuxième fusion est donc `l + ow → low`.
+Après `o + w → ow), la paire `l + ow` apparaît trois fois : deux fois dans `low` et une fois dans `lower`. Les autres paires les plus fréquentes sont `ow + </w>` (deux fois), puis des paires de fréquence 1. La deuxième fusion est donc `l + ow → low`.
 
 Le corpus devient :
 
@@ -651,7 +651,7 @@ Le corpus devient :
 
 **Étape 3 — Transférer les règles à un texte inédit.**
 
-Le mot `lowest` n'apparaît pas dans le corpus d'apprentissage. En partant des caractères `l · o · w · e · s · t · </w>), appliquez dans l'ordre les deux fusions apprises. Donnez la segmentation finale et expliquez pourquoi il ne faut pas recompter les fréquences sur ce nouveau mot.
+Le mot `lowest` n'apparaît pas dans le corpus d'apprentissage. En partant des caractères `l · o · w · e · s · t · </w>`, appliquez dans l'ordre les deux fusions apprises. Donnez la segmentation finale et expliquez pourquoi il ne faut pas recompter les fréquences sur ce nouveau mot.
 
 <details>
 <summary>Afficher le corrigé détaillé</summary>
