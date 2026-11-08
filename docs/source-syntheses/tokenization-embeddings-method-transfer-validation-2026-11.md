@@ -27,7 +27,7 @@ The snapshot below is reconciled against the collection dossier and source-revie
 | Topic-level synthesis | One living dossier organized around learner questions and six source families |
 | Migration map | One, preserving historical scan boundaries and unresolved metadata |
 
-**Count reconciliation:** the 2026-11-05 pilot snapshot reported 47 catalogue records (four Q/K/V or KV-cache plus 43 tokenization/embeddings) and 10 topic-specific extraction files. The current collection dossier and index report 54 catalogue records, 12 tokenization/embeddings extraction files and 20 extraction files repository-wide. The additional records are already integrated through PRs #460, #463, #467, #468 and #469. These are inventory changes, not evidence of new exhaustive scans or improved pedagogical quality.
+**Count reconciliation:** the 2026-11-05 pilot snapshot reported 47 catalogue records (four Q/K/V or KV-cache plus 43 tokenization/embeddings) and 10 topic-specific extraction files. The current collection dossier and index report 54 catalogue records, 12 tokenization/embeddings extraction files and 20 extraction files repository-wide. The current inventory reflects registration and extraction work integrated through PRs #460, #463, #467, #468 and #469. These are inventory changes, not evidence of new exhaustive scans or improved pedagogical quality.
 
 The earlier 10 extraction files covered Karpathy, Ahia, Ali, Wegmann, Arnett, Chiu/TokLens, Ethayarajh, Li, Mikolov and Steck. Their historical 49 top-level items remain a count for that earlier set only. A recursive YAML count had incorrectly included nested pedagogical-graph node IDs; those nodes are not extraction items. Do not extrapolate the 49-item count to the current 12-file collection.
 
