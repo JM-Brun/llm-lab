@@ -861,3 +861,44 @@ No evidence in this source pass justifies claiming that end-to-end training, che
 ### Evidence boundary
 
 This pass inspected source-level page contracts and the two Build landing pages. It did not certify every advanced derivation, reference, interactive widget, code tour, generated route UI or rendered layout. It does not constitute the complete Practice activity audit or learner validation. Reuse existing #646 and earlier exact-scope evidence rather than repeating those checks.
+
+
+## Twenty-first slice: five guided code tours, from configuration to generation
+
+**Review date:** 2026-11-08  
+**Scope:** source-level comparison of the five guided Build tour pairs (FR/EN), including metadata, page contract, learning outcomes, previous/next links, declared exclusions, exercise/test sections and relation to the Build landing page. This is not a line-by-line audit of the Python source or an execution of every code sample/test.
+
+| Tour pair | Distinct learning outcome and place in Build sequence | What this pass confirmed | Remaining check / decision |
+|---|---|---|---|
+| `gpt-config-walkthrough.qmd` (FR/EN) | 1/5: understand model configuration before operations exist | Both pages focus on `GPTConfig`, seven named dimensions, immutability and construction-time validation. They explicitly exclude model computation, the Transformer block and generation. Learning outcomes connect configuration fields to tensor shapes and early validation. | Keep first. The first page has no previous tour and links forward to operations. Verify each claimed field and validation case against the source/tests in the code audit. |
+| `gpt-ops-walkthrough.qmd` (FR/EN) | 2/5: understand independently testable numerical primitives | Both pages cover initialization, linear projection, per-position layer normalization and approximate GELU; they explicitly exclude block/model assembly. They connect output-shape prediction to the `axis=-1` convention and tests. | Keep second. Check that initialization claims are scoped to this educational implementation and that the GELU approximation explanation does not imply exact equivalence. |
+| `transformer-block-walkthrough.qmd` (FR/EN) | 3/5: trace a pre-LN block, residual branches, attention heads and MLP | Both pages focus on the repeated block, pre-LN residual order, residual-weight initialization, explicit attention loops, head slicing and position-wise MLP. They exclude embeddings, output head and generation. The links to Q/K/V, attention, causal masking and contextualized states are relevant rather than a duplicate concept course. | Keep third. The block imports attention operations that have no separate tour; the Build landing page already calls out this dependency. Verify the actual call graph and that loop-based code is presented as an inspectable reference implementation, not as the only/fastest implementation. |
+| `gpt-model-walkthrough.qmd` (FR/EN) | 4/5: assemble the forward pass from token IDs to vocabulary logits | Both pages cover token/position embedding tables, stacked blocks, final normalization, untied output head and parameter counting. They explicitly exclude generation. The shape contract is ((B,T)\to(B,T,V)), and the page links back to the conceptual representation/logit lessons. | Keep fourth. The causal evidence is a prefix-invariance test, not a universal proof over all possible inputs; preserve that qualification. Verify broadcasting and parameter accounting against the source/tests. |
+| `gpt-generation-walkthrough.qmd` (FR/EN) | 5/5: unroll the autoregressive loop after model assembly | Both pages explain prompt validation, sliding context, last-position logits, greedy or temperature-sampled selection and deliberate absence of KV cache/early stopping. They explicitly exclude the forward-pass computation and assume the model tour has been read. | Keep fifth. The page has no next tour by design and links back to the conceptual generation/logits/probabilities lessons. Verify that “generated text” language remains qualified where the current implementation actually returns token IDs and has no compatible tokenizer/checkpoint loader. |
+
+### Build-tour sequence and pedagogical boundary
+
+The five tours provide a coherent implementation-facing progression:
+
+**configuration → numerical operations → Transformer block → GPT assembly/forward pass → autoregressive generation.**
+
+This is intentionally different from the conceptual learning route. The latter introduces generation as a black-box behavior before internal mechanisms; Build constructs the mechanism before running it. The two paths are complementary, not contradictory.
+
+Each tour has a distinct declared scope and learning outcomes. The tour sequence uses reciprocal previous/next metadata and a shared Build parent; the last tour correctly has no next item. The FR/EN pairs have matching stage numbers, conceptual exclusions, exercise/test sections and link intent.
+
+### Specific pedagogical cautions
+
+- The numerical operations tour is a set of reusable primitives, not a separate mathematical prerequisite course.
+- The block tour's explicit loops are a deliberate inspectability choice; do not imply that they are the preferred optimized production implementation.
+- The model tour's prefix-invariance test supports a specific causal property under the tested extension; it is not a general formal proof.
+- The generation tour returns token IDs in the current reference implementation. Readable text requires a compatible tokenizer; useful language output requires trained or pretrained parameters.
+- The implementation currently recomputes the context on each generation step and deliberately omits KV caching and an EOS/early-stopping rule. This is a useful baseline for understanding the loop, not an inference-performance implementation.
+- An operation's unit test, a model-level test and a learner's ability to explain/modify the code are different forms of evidence.
+
+### Decision
+
+Keep all five tours as separate Build pages. Their outcomes and file boundaries are distinct, and merging them would collapse the inspectable progression from configuration through numerical operations and architecture to sequence generation. No new tour or extra prerequisite page is justified.
+
+### Remaining evidence
+
+The next code-focused pass should compare each tour's code excerpts and stated test claims with the current source and unit tests, execute the examples, and inspect the rendered exercises/answer disclosures. This source pass did not certify code correctness, numerical examples, responsive layout, keyboard/screen-reader behavior or learner transfer. Reuse the existing Build-path status matrix and do not create a second implementation-status catalogue.
