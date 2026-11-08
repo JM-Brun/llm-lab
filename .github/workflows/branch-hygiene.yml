@@ -162,7 +162,7 @@ jobs:
               echo 'Mode: **dry run** (no branch was deleted; set `apply: true` in `.github/branch-hygiene-trigger.md`, or re-run the workflow with `apply` enabled, to delete the branches listed below).'
             fi
             echo
-            echo "Redundancy is proven by one of two Git checks: the branch tip is an ancestor of main, or a three-way merge of the branch into current main reproduces main's exact tree. Diverged branches with unique content are always kept, and a branch whose tip equals the current main tip is never deleted automatically (it may be a freshly created working branch). Branches listed in `delete:` are deleted as obsolete by explicit human decision; protected branches (main, open pull-request heads, excluded names) are never deleted."
+            echo "Redundancy is proven by one of two Git checks: the branch tip is an ancestor of main, or a three-way merge of the branch into current main reproduces main's exact tree. Diverged branches with unique content are always kept, and a branch whose tip equals the current main tip is never deleted automatically (it may be a freshly created working branch). Branches listed in 'delete:' are deleted as obsolete by explicit human decision; protected branches (main, open pull-request heads, excluded names) are never deleted."
             echo
             echo "### Redundant branches (proven)"
             echo
