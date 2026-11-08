@@ -466,9 +466,9 @@ Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un ch
 
 On considère le flux d'identifiants :
 
-$
+$$
 s = [11, 4, 4, 9, 2, 7, 5]
-$
+$$
 
 avec une longueur de contexte $L=3$ et un stride $S=2$.
 
@@ -492,7 +492,7 @@ avec une longueur de contexte $L=3$ et un stride $S=2$.
 
 Les débuts valides sont $a=0$ et $a=2$ :
 
-$
+$$
 X = \begin{bmatrix}
 11 & 4 & 4 \\
 4 & 9 & 2
@@ -502,7 +502,7 @@ Y = \begin{bmatrix}
 4 & 4 & 9 \\
 9 & 2 & 7
 \end{bmatrix}.
-$
+$$
 
 Les deux tableaux ont la forme $(2,3)$ : deux exemples et trois positions par exemple. À chaque position, la cible est le token qui suit l'entrée correspondante dans le flux source.
 
@@ -515,9 +515,9 @@ Le début suivant après $a=2$ serait $a=4$.
 1. Pourquoi cette fenêtre n'est-elle pas conservée ?
 2. Combien de fenêtres obtiendrait-on avec un stride de 1, puis avec un stride de 3 ?
 3. Pour $N$ tokens, une longueur $L$ et un stride $S$, expliquez le rôle du terme $N-L-1$ dans la formule
-   $
+   $$
    n_{\text{fenêtres}} = 1 + \left\lfloor\frac{N-L-1}{S}\right\rfloor,
-   $
+   $$
    lorsque $N\geq L+1$.
 
 <details>
