@@ -147,3 +147,6 @@ The authoritative command sequence is defined in the existing workflows:
 For a local reproduction, use the exact run commands in those workflow files rather than maintaining a second command list here. The relevant entry points are `site/tools/check_page_metadata.py`, `site/tools/audit_page_metadata.py`, `site/tools/build_learning_map.py`, and the rendered-site checks under `site/tools/`.
 
 A passing structural validator proves reference integrity and declared parity, not pedagogical quality or learner mastery.
+
+
+**Rendered stepper refinement (PR follow-up, 2026-11-08):** the desktop browser artifact for PR #672 showed that the full French label for the fifth step extended beyond the initially visible portion of the horizontal stepper. The sequence remains horizontally scrollable, but its labels are now shortened visually in both languages while full meanings are retained as accessible names. This is a presentation-only adjustment: the five destinations and their order are unchanged. The browser artifact covered desktop (1440 px) only; it does not establish mobile responsiveness.
