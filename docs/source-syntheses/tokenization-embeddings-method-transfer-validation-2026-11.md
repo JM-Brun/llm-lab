@@ -35,7 +35,7 @@ The earlier 10 extraction files covered Karpathy, Ahia, Ali, Wegmann, Arnett, Ch
 
 | Dimension | Result | Evidence and limits |
 |---|---|---|
-| Identity/provenance | Partial | Stable IDs and URLs exist for registered sources; exact historical URLs for some ByteByteGo/Vizuara resources and some immutable revisions remain unresolved. |
+| Identity/provenance | Partial | Stable IDs and canonical URLs exist for the registered ByteByteGo articles and two Vizuara courses; the identity of a potentially separate Vizuara embeddings resource and some immutable upstream revisions remain unresolved. |
 | Inspection coverage | Pass with explicit partial states | The dossier distinguishes PDF inspection, transcript/chapter-marker review, documentation and historical audit migration; uninspected code, data, supplements, media and rights remain visible. |
 | Extraction fidelity | Promising; final validator check required | The current collection contains 12 structured extraction records with evidence scope and dispositions. The earlier 49-item count applies only to the previous 10-file snapshot; no current top-level item count is asserted here. This report does not replace a fresh final-head validation run. |
 | Technical validity | Pass within stated scopes | Primary research is distinguished from tutorial explanation; models, tasks, corpora, denominators and limits are preserved. No independent reproduction is claimed. |
@@ -98,7 +98,7 @@ This sample is sufficient to test whether the workflow can preserve evidence cla
 ## 7. Defects and scalability limits exposed
 
 1. **Inventory drift:** the source count became stale after Codefinity was registered. A deterministic catalogue/dossier consistency check is needed.
-2. **Instructional route status is implicit for some sources:** among the ten topic-specific extraction files, only Karpathy has a pedagogical model. That is appropriate for research papers, but registered instructional sources such as Raschka, the Hugging Face course, Vizuara and ByteByteGo need explicit needed/not-applicable/deferred triage.
+2. **Instructional route status is implicit for some sources:** in the original ten-file pilot set, only Karpathy had a source-local pedagogical model. That is appropriate for research papers, but registered instructional sources such as Raschka, the Hugging Face course, Vizuara and ByteByteGo need explicit needed/not-applicable/deferred triage.
 3. **Metadata gaps remain:** the registered ByteByteGo/Vizuara resources have canonical URLs, but a potentially separate Vizuara embeddings resource and some upstream revisions still need reconciliation from existing evidence, never guesswork.
 4. **Rights and inspection are independent:** reading an article or paper does not clear figures, videos, repositories, code or supplements.
 5. **Dossier size needs governance:** future additions should update the relevant learner-question section and compact decision table; large details belong in extraction/review records.
@@ -152,6 +152,6 @@ Next:
 1. Keep this snapshot aligned with the living collection dossier and index; current counts are 54 catalogue records, 12 tokenization/embeddings extraction files and 20 extraction files repository-wide. Reconcile counts only from those canonical inventories, not from scan-completeness assumptions.
 2. Run catalogue/extraction validators and record final-head CI/Quarto evidence.
 3. Explicitly triage route reconstruction for registered instructional sources, reusing existing fields.
-4. Recover missing ByteByteGo/Vizuara URLs only from historical evidence.
+4. Resolve the identity of a potentially distinct Vizuara embeddings resource only if historical evidence supports it; the registered ByteByteGo articles and two Vizuara courses already have canonical URLs.
 5. Keep asset rights and browser review with #156 and #320/#329.
 6. Stress-test one small new source end-to-end before scaling to another large collection.
