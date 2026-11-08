@@ -11,6 +11,10 @@ on:
         description: "Comma-separated branch names that must never be deleted"
         type: string
         default: ""
+      delete:
+        description: "Comma-separated branch names to delete as obsolete (explicit human arbitration)"
+        type: string
+        default: ""
   push:
     branches: [main]
     paths: ['.github/branch-hygiene-trigger.md']
@@ -52,6 +56,8 @@ jobs:
             fi
             exclude="$(sed -n 's/^[[:space:]]*exclude[[:space:]]*[:=][[:space:]]*//p' "$marker" | head -n 1)"
             echo "EXCLUDE=$exclude" >> "$GITHUB_ENV"
+            delete_list="$(sed -n 's/^[[:space:]]*delete[[:space:]]*[:=][[:space:]]*//p' "$marker" | head -n 1)"
+            echo "DELETE_LIST=$delete_list" >> "$GITHUB_ENV"
           else
             if [ "${{ inputs.apply }}" = "true" ]; then
               echo "APPLY=true" >> "$GITHUB_ENV"
@@ -59,6 +65,7 @@ jobs:
               echo "APPLY=false" >> "$GITHUB_ENV"
             fi
             echo "EXCLUDE=${{ inputs.exclude }}" >> "$GITHUB_ENV"
+            echo "DELETE_LIST=${{ inputs.delete }}" >> "$GITHUB_ENV"
           fi
 
       - name: Collect protected branch names
@@ -93,6 +100,11 @@ jobs:
               continue
             fi
             branch_ref="refs/remotes/origin/$branch"
+            if printf '%s' "$DELETE_LIST" | tr ',' '\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | grep -qx "$branch"; then
+              tip="$(git rev-parse --short "$branch_ref")"
+              printf '%s\tobsolete (tip %s): explicit human arbitration on issue #652\n' "$branch" "$tip" >> "$redundant"
+              continue
+            fi
             ahead="$(git rev-list --count "refs/remotes/origin/main..$branch_ref")"
             if git merge-base --is-ancestor "$branch_ref" refs/remotes/origin/main; then
               behind="$(git rev-list --count "$branch_ref..refs/remotes/origin/main")"
@@ -150,7 +162,7 @@ jobs:
               echo 'Mode: **dry run** (no branch was deleted; set `apply: true` in `.github/branch-hygiene-trigger.md`, or re-run the workflow with `apply` enabled, to delete the branches listed below).'
             fi
             echo
-            echo "Redundancy is proven by one of two Git checks: the branch tip is an ancestor of main, or a three-way merge of the branch into current main reproduces main's exact tree. Diverged branches with unique content are always kept, and a branch whose tip equals the current main tip is never deleted automatically (it may be a freshly created working branch)."
+            echo "Redundancy is proven by one of two Git checks: the branch tip is an ancestor of main, or a three-way merge of the branch into current main reproduces main's exact tree. Diverged branches with unique content are always kept, and a branch whose tip equals the current main tip is never deleted automatically (it may be a freshly created working branch). Branches listed in `delete:` are deleted as obsolete by explicit human decision; protected branches (main, open pull-request heads, excluded names) are never deleted."
             echo
             echo "### Redundant branches (proven)"
             echo
