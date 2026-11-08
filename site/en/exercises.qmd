@@ -36,7 +36,7 @@ Lesson pages use a consistent **“Check your understanding”** component: shor
 | [Mathematical foundations](#foundations) | Tensors, probability, logits, entropy, cross-entropy, likelihood, gradients, numerical stability | 7 progressive exercises drafted; gradient checking and other topics remain to be developed |
 | [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Self-checks in the text/embedding lessons; three formative exercises TR-A–TR-C published; BPE, window and leakage exercises to be developed |
 | [Attention](#attention) | Q/K/V, scores, scaling, causal masks, multi-head attention, invariants | Exercises on weighted aggregation and Q/K/V projections; further exercises remain to be developed |
-| [Transformer](#transformer) | Embeddings, position, residuals, normalization, MLP and architecture variants | Structure to be filled |
+| [Transformer](#transformer) | Embeddings, position, residuals, normalization, MLP and architecture variants | Three formative exercises TF-A–TF-C published (shapes and normalization of a pre-LN block, block parameter count, diagnosis and interventions); architecture-variant exercises to be developed |
 | [Pretraining](#pretraining) | Objective, train/validation, perplexity, checkpoints and reproducibility | Structure to be filled |
 | [Generation](#generation) | Decoding, temperature, top-k/top-p, stopping, context and KV cache | Structure to be filled |
 | [Fine-tuning](#fine-tuning) | Classification, SFT, loss masking, data quality and overfitting | Structure to be filled |
@@ -614,7 +614,221 @@ With parameters fixed, changing $X_D$ directly affects Q; changing $X_E$ directl
 
 **Prerequisites:** [Transformer overview](transformer.qmd), [embedding space](embedding-space.qmd), [position and RoPE](positional-encoding.qmd).
 
-**Planned focus:** trace representations through a block, compare attention and MLP roles, and distinguish architecture families.
+**Current scope:** three progressive formative exercises, with stable IDs TF-A, TF-B and TF-C shared with the French version, cover shape tracing and a by-hand normalization computation in the reference pre-LN block, counting that block's parameters, then claim diagnosis and controlled-intervention prediction. Exercises on architecture variants (post-LN, RMSNorm, MQA/GQA, windowed attention) remain to be developed. Suggested order: TF-A, then TF-B, then TF-C.
+
+#### Exercise TF-A — Trace a pre-LN block, from shapes to normalization
+
+**Preparation:** the [Transformer overview](transformer.qmd) for the roles of attention and the MLP; the [reference block walkthrough](transformer-block-walkthrough.qmd) for the pre-LN order and head slicing. The exercise progresses in three stages: normalize by hand, trace the attention branch, trace the MLP branch.
+
+**Stage 1 — Normalize a vector by hand.** In the reference block, normalization applies to each position's hidden vector separately, with $\gamma$ initialized to ones and $\beta$ to zeros. Consider the vector $x=(1,3)$ of one position, with $\gamma=(2,1)$ and $\beta=(1,-1)$, neglecting the $\varepsilon$ term:
+
+1. Compute the mean and the (biased) variance of the components.
+2. Write the normalized vector.
+3. Apply $\gamma$ and $\beta$.
+4. Does the operation mix information across positions?
+
+<details>
+<summary>Show hints</summary>
+
+1. The mean and variance are computed over the components of that position's vector.
+2. Subtract the mean, then divide by the standard deviation.
+3. $\gamma$ multiplies component-wise; $\beta$ is added afterwards.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+The mean is $(1+3)/2=2$; the biased variance is $\big((1-2)^2+(3-2)^2\big)/2=1$, so the standard deviation is $1$. The normalized vector is $(-1,1)$. Then $\gamma\odot(-1,1)+\beta=(2\cdot(-1)+1,\;1\cdot1+(-1))=(-1,0)$.
+
+Normalization acts on each position independently: it mixes no information across positions or across batch examples. The biased-variance convention is the one used by the reference implementation; another convention would change the numerical values, not the role of the operation.
+
+**Common errors:**
+
+- Confusing this with batch normalization, whose statistics are computed over other examples.
+- Forgetting $\gamma$ and $\beta$: at initialization ($\gamma=1$, $\beta=0$) the output equals the normalized vector, but not in general.
+- Using the unbiased variance (here $2$ instead of $1$) without saying so.
+
+</details>
+
+**Stage 2 — Trace the attention branch.** A batch contains $B=1$ sequence of $T=3$ positions, with $d=4$ and $H=2$ heads. Complete the missing shapes:
+
+| Object | Shape |
+|---|---:|
+| Input $x$ | $(1,3,4)$ |
+| $\operatorname{LN}_1(x)$ | ? |
+| $Q$ (same for $K$, $V$) | ? |
+| Head 0 slice of $q$ | ? |
+| One head's scores (before masking) | ? |
+| One head's attention weights (after causal mask and softmax) | ? |
+| One head's output | ? |
+| `attended` (heads reassembled, before $w_o$) | ? |
+| Attention branch output | ? |
+| $x' = x + \operatorname{attention}(\operatorname{LN}_1(x))$ | ? |
+
+Does head 0's slice have 2 or 4 columns? Justify from $\text{head\_dim}=d/H$. Do heads exchange information before $w_o$?
+
+<details>
+<summary>Show hints</summary>
+
+1. The projections $W_Q$, $W_K$, $W_V$ and $W_O$ all have shape $(4,4)$ in the reference block.
+2. Head 0 reads columns $0$ to $1$ of $q$, $k$ and $v$.
+3. Scores compare each query position with the allowed key positions.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+$\operatorname{LN}_1(x)$, $Q$, $K$ and $V$ keep the shape $(1,3,4)$. Head 0 reads columns $0$ to $1$: its slice has shape $(3,2)$, consistent with $\text{head\_dim}=d/H=2$. One head's scores form a $(3,3)$ matrix; after the causal mask and softmax, the weights keep the shape $(3,3)$ (rows sum to 1, future positions get zero weight). One head's output has shape $(3,2)$; `attended` reassembles the slices into $(1,3,4)$; $w_o$'s output has shape $(1,3,4)$, and so does $x'$.
+
+Heads stay isolated until $w_o$: the output projection is the first operation that mixes information across heads. Keeping a head axis after the computation is a possible layout in other implementations; in the reference block, slices are reassembled by columns into a $(B,T,d)$ tensor.
+
+**Common errors:**
+
+- Giving $(3,4)$ for a head's slice forgets the column split.
+- Giving $(3,3,2)$ for the reassembled tensor confuses other implementations' per-head layout with the reference block's slice reassembly.
+- Believing the mask changes shapes: it changes score values, not dimensions.
+
+</details>
+
+**Stage 3 — Trace the MLP branch and the block output.** The MLP's intermediate dimension is $8$ (`mlp_hidden_dim` in the walkthrough). Complete:
+
+| Object | Shape |
+|---|---:|
+| $\operatorname{LN}_2(x')$ | ? |
+| `fc1` output | ? |
+| `gelu` output | ? |
+| `fc2` output | ? |
+| $x'' = x' + \operatorname{MLP}(\operatorname{LN}_2(x'))$ | ? |
+
+Does the block change the width $d$? Which path carries the input to the output unchanged?
+
+<details>
+<summary>Show the worked solution</summary>
+
+$(1,3,4)$; $(1,3,8)$; $(1,3,8)$; $(1,3,4)$; $(1,3,4)$. The MLP temporarily widens the representation ($d\to d_{\text{ff}}\to d$) for the non-linear transformation, then returns to $d$. The width is preserved from the block's input to its output: the residual trunk carries an unmodified copy of the input to each addition, and each branch adds a correction computed on a normalized copy.
+
+**Common errors:**
+
+- Writing $(1,3,4)$ after `fc1` confuses the intermediate dimension with the stream width.
+- Believing the MLP mixes positions: it transforms each position separately, with shared weights.
+- Believing the residual connection replaces the representation: it adds the correction to the input.
+
+</details>
+
+#### Exercise TF-B — Count the parameters of the reference block
+
+**Preparation:** the initialization section of the [block walkthrough](transformer-block-walkthrough.qmd). The reference block has $d=16$, $H=4$, an MLP intermediate dimension of $64$, biased projections, and two normalizations (each with $\gamma$ and $\beta$).
+
+1. Count the weights and biases of the attention projections $Q$, $K$, $V$ and $O$.
+2. Count the parameters of the two normalizations.
+3. Count the weights and biases of the two MLP layers.
+4. Give the block total, checking each subtotal before summing.
+5. If $H$ goes from $4$ to $8$ (with $d$ unchanged), does the total change in the reference block? Why?
+6. In the GPT-2 variant described by the walkthrough, which projections receive the reduced initialization standard deviation $0.02/\sqrt{2L}$, and why those two?
+
+<details>
+<summary>Show hints</summary>
+
+1. The four attention matrices have shape $(d,d)$ in the reference block.
+2. Each normalization holds two vectors of size $d$.
+3. The MLP has the form $d\to d_{\text{ff}}\to d$.
+4. The head count does not appear in the projection matrix shapes of the reference block.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+- **Attention:** four $(16,16)$ matrices, i.e. $4\times256=1024$ weights, plus four biases of size $16$, i.e. $64$.
+- **Normalizations:** $2\times(16+16)=64$ parameters.
+- **MLP:** `fc1`, $16\times64=1024$ weights and $64$ biases; `fc2`, $64\times16=1024$ weights and $16$ biases; that is $2128$ parameters.
+- **Total:** $1024+64+64+2128=3280$ parameters.
+
+Going from $H=4$ to $H=8$ does not change the total in the reference block: the projections stay $(d,d)$ and heads are only column slices; $\text{head\_dim}$ alone goes from $4$ to $2$. Other implementations parameterize heads separately; if $H\cdot d_{\text{head}}\neq d$, the total changes. Check the parameterization before counting.
+
+In the GPT-2 variant, only $w_o$ and `fc2` receive the reduced standard deviation $0.02/\sqrt{2L}$: they are the two output projections whose results are added to the residual trunk, and the factor accounts for the two additive contributions per block over $L$ blocks. It reduces the initial scale of those contributions; it does not guarantee a constant residual-stream variance. The other projections keep the base standard deviation.
+
+**Common errors:**
+
+- Multiplying the attention parameters by $H$: in the reference block, heads share the same $(d,d)$ matrices via slices.
+- Forgetting biases, or counting one vector per normalization ($\gamma$ and $\beta$ are two distinct vectors).
+- Extending the $1/\sqrt{2L}$ factor to every matrix: it concerns only the two output projections added to the trunk.
+
+</details>
+
+#### Exercise TF-C — Diagnose claims and predict interventions
+
+**Preparation:** the [Transformer overview](transformer.qmd), especially its limits and misconceptions, after TF-A and TF-B; [causal masking](causal-masking.qmd) for Stage 2. "The reference block" means the pre-LN block of the walkthrough.
+
+**Stage 1 — Classify claims.** Classify each statement as **valid**, **invalid**, or **architecture-dependent**, and justify your choice.
+
+A. In the reference block, normalization prepares a copy of $x$ inside the branch, and the residual trunk carries the input to the addition.
+B. All Transformers place normalization before the sublayers.
+C. In the reference block, doubling the number of heads doubles the attention parameters.
+D. Every head necessarily develops a specialization interpretable by a human.
+E. The MLP applies the same learned transformation to every position, with weights shared across positions.
+F. Only attention is learned; the MLP applies fixed rules.
+G. Depth and width describe the same dimension of the network.
+
+<details>
+<summary>Show hints</summary>
+
+1. Separate a property of the reference block from a universal claim about all Transformers.
+2. For parameters, recall the matrix shapes in the reference block.
+3. For heads, separate what the architecture allows from what is an empirical question.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+- **A — Valid** for the reference block: normalization sits in the branch, the residual trunk carries the input to the addition; identity is the default path.
+- **B — Architecture-dependent:** the reference block is pre-LN, but the pre-LN/post-LN order and normalization variants differ across models; the universal claim is invalid.
+- **C — Invalid:** attention projections are $(d,d)$ and heads are column slices; the head count does not change the parameter count in this block.
+- **D — Invalid:** heads *can* learn different patterns, but a clean, interpretable specialization is an empirical question, not an architectural guarantee.
+- **E — Valid** for the reference block: same MLP, same weights for all positions; its precise design varies across architectures.
+- **F — Invalid:** attention and the MLP are both learned; attention mixes information across positions, the MLP transforms each position locally.
+- **G — Invalid:** depth counts the stacked blocks; width is the dimension of the representations flowing between blocks.
+
+**Common error:** the reference block's properties (pre-LN, $(d,d)$ projections, head slices) are design choices; presenting them as invariants of all Transformers is the main source of false claims.
+
+</details>
+
+**Stage 2 — Predict interventions.** Start from the reference block at standard initialization (small, non-zero weights), unless stated otherwise. For each intervention, predict what changes and what stays invariant:
+
+1. $w_o$ and its bias are initialized to zero, and nothing else. What is $x'$? Does the block output equal $x$?
+2. `fc2` and its bias are also initialized to zero. What is the block output? Does the loss gradient reach $w_q$ through the attention branch, at that exact point? And $w_o$?
+3. The causal mask is removed from the attention. Do shapes change? Can hidden states change? Which next-token-prediction principle is violated during training?
+
+<details>
+<summary>Show hints</summary>
+
+1. Each branch only adds its output to the trunk.
+2. For the gradient, follow the computation path: through which matrices does the attention branch's output pass?
+3. The mask replaces scores with $-\infty$; it does not touch dimensions.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+1. The attention branch contributes exactly zero: $x'=x$. The block output is $x+\operatorname{MLP}(\operatorname{LN}_2(x))$, generally different from $x$: only the attention branch is neutralized.
+2. The block output is exactly $x$: each branch adds zero. At that exact point, the gradient does not reach $w_q$ (or $w_k$, $w_v$) through the attention branch, because all of the branch's influence passes through the zero $w_o$; $w_o$ however generally receives a non-zero gradient (its input `attended` is not zero), and so does `fc2`. The residual trunk lets the gradient flow to earlier blocks and layers. These zero initializations therefore do not freeze the branches: as soon as $w_o$ moves away from zero, the branch transmits again. This is behavior at the exact intervention point, not a permanent property.
+3. Shapes do not change: the mask modifies values (future positions receive $-\infty$, hence zero weight after softmax), not dimensions. Hidden states can change: every position can now draw from future tokens. During autoregressive training, position $i$ would see token $i+1$, precisely the target to predict: the next-token objective would be bypassed by a future-information leak. The mask is a modeling choice: models trained with different masks exist, but the computation no longer matches the causal GPT of the reference block.
+
+**Common errors:**
+
+- "Output equals input, so nothing can be learned": the zeroed output projections receive gradients and move away from zero; the trunk keeps carrying information and gradients.
+- "The mask changes shapes": no, it changes score values.
+- "Removing the mask has no effect since softmax renormalizes": weights redistribute towards future positions, and hidden states change.
+
+**Success criterion:** correct predictions on all three interventions; distinguishing values from shapes, the gradient path from the output value, and reference-block properties from modeling choices.
+
+</details>
+
+**Further work:** exercises on architecture variants (post-LN, RMSNorm, MQA/GQA, windowed attention) and on stacking blocks will complete this collection.
 
 ### Pretraining {#pretraining}
 
