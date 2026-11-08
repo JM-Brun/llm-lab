@@ -694,3 +694,281 @@ The published FR/EN pages resolve with the expected localized titles: "Loss: fro
 - **API-specific claims confirmed** for both pairs against the current stable PyTorch documentation (dated 2026-11-07; the site links the rolling `stable` docs).
 - No external link is dead; no FR/EN divergence found in reference lists, misconceptions, callouts or self-check structure. The loss pair's cross-language links to the likelihood pair (`likelihood.qmd` / `vraisemblance.qmd`) are correctly localized.
 - **Still not established for these pairs:** rendered inspection of equations at desktop/mobile widths, manual screen-reader behaviour, and learner understanding.
+
+
+## Eighteenth slice: opening learner route — orientation → generation preview → text and representations
+
+**Review date:** 2026-11-08  
+**Scope:** source-level pass over the opening stages of `data/guided-route.yml`, including the optional Unicode deep dive. This pass inspected page metadata, declared purpose/scope, section hierarchy, opening explanations and route links. It is **not** a complete scientific audit, a rendered browser review, or evidence of learner mastery.
+
+The route deliberately starts with a black-box generation experience before explaining the input and internal computation. This is pedagogically coherent if the learner is told that the first pass is an observable system-level preview and that the same generation page is revisited later as the detailed inference stage.
+
+| Page pair | Role and route position | What this pass confirmed | Remaining check / decision |
+|---|---|---|---|
+| `llm-overview.qmd` (FR/EN) | System overview; orientation entry point | Both versions establish vocabulary, frame next-token continuation as the problem, introduce GPT computation, show the shared prediction spine, distinguish architecture / parameter learning / use, and situate inference in the lifecycle. The page points to generation as the next step. | Review the rendered first screen and diagram hierarchy. Check that the vocabulary list is sufficient but does not become an implicit prerequisite checklist; verify that the three dimensions remain distinct from chronological lifecycle stages. |
+| `generation.qmd` (FR/EN) | Core concept lesson; orientation preview and later inference stage | Both versions define the fixed-parameter autoregressive loop and explicitly distinguish prefill, incremental decode, token-selection decoding, and generation. The declared scope excludes Transformer internals and parameter learning; the next route step is text/data. | **Intentional repeated membership:** this one canonical page occurs in both orientation and the later inference stage. Verify the rendered route context makes the first reading a preview and the later membership a return/deepening, rather than suggesting that the learner must reread an unchanged page. Check overlap with the temperature/sampling material on the probabilities page. |
+| `text-data.qmd` (FR/EN) | Core concept lesson; text-input stage | Both versions connect preprocessing, tokenization, IDs and embedding lookup; distinguish prompt encoding from training-corpus preparation; and delegate Unicode and algorithm details to specialist pages. The route continues to tokenization strategies, with links to Unicode and embedding space. | Verify that the embedding lookup is introduced only as a preview here and that the later representation stage adds the necessary detail. Check that “preprocessing”, tokenizer behavior and corpus preparation remain distinct rather than being read as one universal pipeline. |
+| `tokenization-strategies.qmd` (FR/EN) | Core concept lesson; text-input stage | Both versions cover granularity, tokenizer pipeline components, special tokens, BPE/WordPiece/unigram, a worked BPE example, and the distinction between tokenizer training and encoding at inference. The declared next destination is embedding space. | Check the rendered BPE example and terminology parity. Explicitly verify that “training the tokenizer” cannot be mistaken for pretraining the language model; keep tokenizer-specific claims scoped to the stated algorithm and pipeline. |
+| `unicode-text.qmd` (FR/EN) | Optional advanced deep dive; not on the required core sequence | Both versions explicitly state that the page is optional, distinguish Unicode code points, UTF-8 bytes and normalization, and provide a return link to the main route. Its page metadata marks it as Deepen/advanced rather than a core Understand lesson. | Verify the return link and rendered code-point/byte examples. No reason to promote it into the core route: it is useful when representation differences matter, but not required for the first conceptual pass. |
+| `embedding-space.qmd` (FR/EN) | Core concept lesson; representations stage | Both versions distinguish static historical word vectors from learned token embeddings, demonstrate ID-indexed lookup, label the numerical embedding/position weights as synthetic rather than GPT-2 parameters, and transition from initial embeddings to contextualized representations. | Recheck the complete worked trace and its assertions in both languages; verify the referenced tokenizer version and rendered code. Keep the synthetic values and illustrative positional vectors visibly distinct from actual pretrained GPT-2 weights. |
+| `positional-encoding.qmd` (FR/EN) | Core concept lesson; representations stage | Both versions are intentionally concise: why order is needed, three approaches, misconceptions and references. The existing #643/#646 audit work already covers the source/rendered distinction between positional encoding, causal masking, RoPE classification and tensor notation. | Reuse #646 evidence rather than repeat its source audit. Confirm its final-head browser evidence remains the evidence associated with the merged content; keep RoPE derivations in the optional deep-dive page. |
+| `contextualized-representations.qmd` (FR/EN) | Core concept lesson; representations stage | Both versions explain why repeated occurrences share an initial embedding but can produce different contextualized hidden states; distinguish the objects and locate the transformation in Transformer layers. | Check that this page's transition into the Transformer overview is explicit in the rendered route. Preserve the distinction between token identity, position, initial embedding and contextualized state. |
+
+### Opening-route synthesis
+
+- The high-level sequence is coherent: **orient → observe generation → unpack text input → inspect tokenization → build representations → contextualize them**.
+- The first generation page is a deliberate black-box preview, not a claim that a useful model can generate coherent language before training. Keep the parameter-quality caveat visible in the overview and the generation lesson.
+- The route has a useful distinction between required core pages and the optional Unicode deep dive. Do not turn every useful technical prerequisite into a mandatory detour.
+- The text/data overview necessarily previews embedding lookup; the representations stage must deepen it rather than repeat the same explanation.
+- The most important unresolved reader-experience question in this slice is the **second appearance of the generation page** in the guided route. Its pedagogical intent is sound, but the interface must communicate the return/revisit.
+- No substantive content deletion or new page is justified by this source pass. Follow-up changes should be driven by the rendered review or a reproducible learning obstacle.
+
+### Evidence boundary
+
+This review is based on the current `main` source files and route registry. It does not certify every equation, external resource, figure, code example, or rendered layout. The previous #646 evidence is referenced only for the positional-encoding/tensor slice and is not generalized to the other pages. Learner comprehension still requires the separate pilot protocol; route coherence alone is not outcome evidence.
+
+
+## Nineteenth slice: Transformer computation → prediction → inference, scoring and training
+
+**Review date:** 2026-11-08  
+**Scope:** source-level pass over the remaining required stages in `data/guided-route.yml`, plus the directly linked Build bridge and optional decoding deep dive. The review compared FR/EN metadata, declared purpose/scope, section hierarchy, key conceptual distinctions, route placement and exercise discoverability. It did not independently re-derive every equation, execute every snippet, inspect every rendered page, or test learner outcomes.
+
+| Page pair | Role and route position | What this pass confirmed | Remaining check / decision |
+|---|---|---|---|
+| `transformer.qmd` (FR/EN) | System overview; computation stage | Both pages explain one forward pass from token IDs to logits, the repeated Transformer block, depth versus width, and the distinction between a forward pass and autoregressive generation. The practice section links to a separate GPT-2 exploration and explicitly says it is not required to follow the main explanation. The short training/inference comparison links to training examples and computational complexity rather than embedding an implementation tutorial. | Keep the system-level explanation as the overview. During rendered review, verify that the practice link and training/inference comparison read as optional context, not as a second Build tutorial. Reuse the existing architecture-history and block-walkthrough pages for deeper material. |
+| `queries-keys-values.qmd` (FR/EN) | Core concept lesson; computation stage | Both versions distinguish Q/K projections (which determine attention weights) from V (which supplies aggregated content), derive the projections, state dimensions, and provide a self-check. | No additional core exercise is required based on this pass: the bilingual exercise hub already includes Q/K/V projection, parameter-intervention, gradient-learning and cross-attention transfer exercises. Verify their rendered answer disclosures and code blocks as part of the exercise review. |
+| `scaled-dot-product-attention.qmd` (FR/EN) | Core concept lesson / worked derivation; computation stage | Both pages organize the calculation into four steps, include a numerical worked example, explain scaling, distinguish scores/weights/output, and address misconceptions before a self-check. | Reuse the prior #638 numerical/source audit and existing deterministic fixtures rather than repeating arithmetic. Rendered equation/diagram review remains separate. |
+| `causal-masking.qmd` (FR/EN) | Core concept lesson / correctness invariant; computation stage | Both versions define allowed versus blocked positions, distinguish causal, padding and loss masks, connect the constraint to autoregressive factorization, and include a future-token perturbation example. The lesson treats causal masking as a correctness condition, not merely a decoding option. | The page is relatively dense because it combines definition, mask distinctions and a multi-step adversarial example. Check progressive disclosure and figure/code rendering before deciding whether any material should move to an optional deep dive; do not remove the invariant or imply a separator token alone prevents cross-document attention. |
+| `logits.qmd` (FR/EN) | Core concept lesson; prediction stage | Both pages define vocabulary-sized unnormalized scores and distinguish ranking from a normalized probability distribution. Their short structure is appropriate for this single conceptual transition. | Verify the output projection link and ensure notation for vocabulary size and final sequence position agrees with the Transformer and probabilities pages. |
+| `probabilites.qmd` / `probabilities.qmd` | Core concept lesson with interactive exploration; prediction stage | Both pages explain categorical next-token distributions, conditional probabilities, temperature, calibration and the distinction from factual truth. The numerical example and interactive temperature exploration support interpretation rather than treating softmax as a truth detector. | There is deliberate topic overlap with the generation lesson (temperature/sampling) and the advanced decoding deep dive (temperature/top-k/top-p). Preserve distinct roles: probability normalization and calibration here; a compact operational introduction in generation; full decoding algorithms and trade-offs in the optional deep dive. Check that the interactive experiment is not required to understand the mathematical explanation. |
+| `entropy.qmd` (FR/EN) | Core concept lesson; prediction stage | Both versions distinguish predictive entropy of the distribution from the surprisal of a particular observed token, include numerical examples and bounds, and warn against interpreting entropy as factual uncertainty or correctness. | Verify consistent use of entropy, surprisal and nats/bits across the probabilities and likelihood pages. Do not conflate predictive entropy with target-token NLL. |
+| `likelihood.qmd` / `vraisemblance.qmd` | Core concept lesson; scoring stage | Both versions introduce autoregressive factorization, score a known sequence from observed prefixes, convert products to summed log-probabilities, and connect log-likelihood maximization to NLL minimization for fixed observations. | Keep this as the canonical explanation of sequence likelihood. Verify that the observed-prefix framing remains distinct from generated-token feedback and from a parameter update; reuse #604's observed-prefix audit. |
+| `cross-entropy.qmd` (FR/EN) | Core concept bridge; scoring stage and optional training reference | Both versions derive the target-distribution objective, recover NLL for a one-hot target, and connect multiple positions to shifted targets, valid-target masks, perplexity and gradients. This makes it a useful bridge between observed-target scoring and training rather than a separate model operation. | Inspect overlap with `loss.qmd` and `gradients.qmd`: retain the per-token objective and mathematical identities here, while batch reduction belongs to loss and parameter differentiation belongs to gradients. Avoid duplicating full derivations across pages. |
+| `loss.qmd` (FR/EN) | Core concept lesson; training stage | Both versions move from per-token penalty to batch objective, explain target masking and sum/mean/weighted reduction, and distinguish training loss from evaluation metrics. | Verify denominator/mask conventions and reduction labels against the Build implementation. Keep perplexity's log-base and tokenization caveats consistent with cross-entropy. |
+| `gradients.qmd` (FR/EN) | Core concept lesson; training stage | Both pages start with gradients with respect to logits, apply the chain rule to parameters, show a gradient-descent update and include a numerical verification path. They explicitly avoid claiming that a gradient alone defines an optimizer or guarantees global improvement. | Keep the scope distinction explicit: gradient is a derivative of the objective; optimizer/scheduler behavior is a separate update policy. Reuse the existing finite-difference and autograd references, and inspect code/math rendering. |
+| `training-examples.qmd` (FR/EN) | Concept bridge; Build destination, optional from the conceptual route | Both versions explain input-target shifting, teacher forcing on observed prefixes, windows/stride, document boundaries/packing, padding/loss masks, tensor shapes and alignment debugging. Its page type and destination correctly separate data construction from the Understand concept sequence. | The conceptual training stage links it as optional/Build rather than making it an inference prerequisite. Verify that loss masks, attention masks and document-boundary policies remain distinct and that the examples' target shift is consistent with the causal-mask page. |
+| `build-path.qmd` (FR/EN) | Guided implementation route; Build destination | Both pages describe the construction order, reference modules, guided tours and milestones, and explicitly present generation, scoring and training as three uses of the shared computation. They also preserve the caveat that random initialization demonstrates mechanics, not useful language quality. | Keep this path distinct from the conceptual route. Check each milestone against actual code/tests and preserve explicit implementation gaps; a route link or lesson is not evidence that the corresponding model feature exists. |
+| `decoding-strategies.qmd` (FR/EN) | Optional advanced deep dive; Deepen destination | Both versions distinguish distribution transformations from sequence search, cover temperature/top-k/top-p, greedy/beam/contrastive decoding and quality-diversity evaluation, and call for reproducible comparison protocols. | Keep it optional. The core route should explain the next-token selection problem without requiring beam search, contrastive decoding or open-ended generation research. |
+
+### Exercise and transfer audit — Q/K/V
+
+The bilingual exercise hub already contains the requested Q/K/V transfer sequence; this is not a missing-content issue:
+
+- distinguish weighted aggregation from hard selection;
+- project a sequence into Q, K and V and infer their shapes before running NumPy;
+- predict which quantities can change under isolated changes to (W_Q), (W_K) or (W_V);
+- explain how the projections are learned indirectly through the final prediction loss and where their gradients flow;
+- transfer the provenance of Q, K and V to cross-attention, then distinguish MQA/GQA sharing from the functional roles of the projections.
+
+These tasks are distinct from the stable AT-A/AT-B/AT-C exercises, which focus on multi-head calculation, shapes, and intervention diagnosis. Do not replace the Q/K/V tasks with the multi-head collection or create a duplicate exercise series. The exercise hub is explicit about these competencies in both languages; the rendered answer/code disclosures remain part of #329's browser review.
+
+### End-to-end route synthesis
+
+The complete eight-stage route is conceptually coherent at source level:
+
+1. **Orientation:** understand the system and see generation as a black-box behavior.
+2. **Text input:** unpack text, tokens, tokenizer and IDs.
+3. **Representations:** follow lookup, positional information and contextualized states.
+4. **Computation:** inspect a Transformer pass and the operations inside its blocks.
+5. **Prediction:** interpret logits, probabilities and predictive entropy.
+6. **Inference:** revisit generation with prefill, incremental decode and token-selection policies.
+7. **Scoring:** evaluate probabilities assigned to observed targets and sequence likelihood.
+8. **Training:** connect token-level objectives to batch loss and gradients; use the Build branch for teacher forcing, shifted examples and implementation detail.
+
+This order does not imply that the model executes these eight stages as one linear runtime. In particular, scoring and training are sibling uses of the shared prediction computation; teacher forcing is a context policy for observed prefixes, not a prerequisite for inference; and prefill/decode are inference execution phases, not training operations.
+
+### Priority findings
+
+- **No major sequence inversion found** in the required pages reviewed. The route progresses from a system-level mental model to input, representations, internal computation, output distribution and the distinct operational uses.
+- **The most important overlap to manage** is temperature/sampling across generation, probabilities and advanced decoding. Their scopes should remain complementary, with one canonical home for each level of detail.
+- **The strongest existing practice asset** is the Q/K/V exercise sequence. It already tests causal reasoning about projections, parameter interventions, learning and transfer; do not add redundant exercises.
+- **The most important conceptual boundary** is between the shared forward prediction, observed-target scoring, and training updates. Keep the distinctions visible across likelihood, cross-entropy, loss, gradients and Build.
+- **The largest remaining evidence gap** is not route structure but rendered and learner-facing validation: equation/figure inspection for the remaining pages, manual screen-reader/touch review where applicable, and an independent learner pilot. Automated CI or a page inventory cannot establish comprehension.
+
+### Evidence boundary
+
+This is a structured source-level audit of the current bilingual route and linked pages. It does not claim a full scientific certification of every statement or a complete visual inspection. Existing #638/#604/#646 evidence is reused only for their exact audited scopes. The rendered exercise-hub review remains owned by #329/#710; Q/K/V rendered/media provenance remains under #483; independent learner validation remains under #447.
+
+
+## Twentieth slice: optional branches and the practical Build route
+
+**Review date:** 2026-11-08  
+**Scope:** source-level review of every optional page declared by the eight stages in `data/guided-route.yml`, plus the French and English Build-path pages. Compared declared purpose/scope, metadata level/destination, section hierarchy, relation to the main sequence, Build dependencies and explicit implementation-status claims. This is not a complete audit of every linked Practice activity or every code tour.
+
+### A. Optional branches
+
+| Optional page pair | Declared pedagogical role | Finding | Remaining check / decision |
+|---|---|---|---|
+| `transformer-architectures.qmd` (FR/EN) | Optional core-level Understand comparison from orientation | The page has a distinct role from the GPT computation overview: compare encoder-only, encoder–decoder and decoder-only configurations, information visibility, architecture/objective/task, and classification limits. The comparison is a useful optional branch before committing to the lab's decoder-only scope. | Keep optional: it broadens the learner's model-family map without becoming a prerequisite to understanding the chosen GPT. Rendered comparison diagram and cross-attention links still need review. |
+| `llm-limits.qmd` (FR/EN) | Optional overview-level critical companion | Its scope is deliberately limited to what next-token training does and does not guarantee, meanings of “understanding”, emergent-ability claims and scale effects. It does not compete with the experimental-evaluation lesson. | Keep adjacent to orientation as a critical perspective. Check that “objective guarantee”, calibration, factuality and measured capability remain distinct in the final examples. |
+| `unicode-text.qmd` (FR/EN) | Optional advanced text representation | Already reviewed in the opening slice. It distinguishes code points, bytes and normalization without burdening the core tokenization sequence. | Keep optional; reuse the previous slice's return-link/render check. |
+| `tokenizer-design-evaluation.qmd` (FR/EN) | Advanced Deepen branch from tokenization | The scope progresses from tokenizer-family mechanisms to vocabulary/budget choices, reproducibility, evaluation metrics and multilingual disparities. It is genuinely deeper than the core BPE/WordPiece/Unigram introduction. | Keep optional and advanced. Its protocol and empirical claims need their own source/freshness and rendered code/figure audit; do not move it into the required sequence. |
+| `tensors.qmd` (FR/EN) | Advanced technical reference | It provides shape/axis reasoning, projection dimensions, softmax-axis counterexample and parameter-cost calculation. It explicitly says it is not a prerequisite course for Build. | Keep as a just-in-time reference. Ensure concept pages link to the exact relevant sections instead of making the whole page compulsory. Existing #646 numerical/render evidence is reusable for its audited scope. |
+| `rope.qmd` (FR/EN) | Advanced mathematical deep dive | It derives relative-offset dependence for a coordinate pair, locates rotations in Q/K and discusses implementation/extrapolation limits without repeating the general position lesson. | Keep optional. Reuse the existing positional/RoPE derivation evidence; rendered equations and implementation details remain subject to the exact prior audit scope. |
+| `cross-attention.qmd` (FR/EN) | Advanced architecture/mechanism deep dive | It explicitly establishes the distinct provenance of Q versus K/V, dimensions, masks and placement in encoder–decoder and multimodal models. It supports Q/K/V transfer rather than extending the decoder-only core into an unnecessary prerequisite. | Keep optional. Its connection to the Transformer-architecture comparison and Q/K/V exercise should be navigable, but it should not be required to understand decoder-only self-attention. |
+| `attention-score-scaling.qmd` (FR/EN) | Advanced mathematical deep dive | It isolates the variance argument for (1/\sqrt{d_k}), states the Gaussian assumptions and their limits, and avoids repeating the full attention calculation or causal masking. | Keep optional. The distinction between an explanatory independent-Gaussian model and learned projected Q/K must remain visible in both languages. |
+| `decoding-strategies.qmd` (FR/EN) | Advanced inference deep dive | It progresses from distribution transforms (temperature/top-k/top-p) to sequence search (greedy/beam/contrastive) and reproducible quality-diversity comparisons. This is a distinct outcome from the short generation and probability explanations. | Keep optional. Preserve the explicit division of depth already identified in the main-route slice; inspect the rendered protocol/figures before changing the page. |
+| `scaling-laws.qmd` (FR/EN) | Advanced research-oriented Deepen branch | It explains empirical relations between parameters, data, compute and loss, while explicitly rejecting a universal parameter-count threshold for LLMs. This complements rather than replaces the small-GPT Build route. | Keep optional. It should not be framed as a required prerequisite to training mechanics or as a universal model taxonomy. |
+
+### B. Build path: sequence, dependency and evidence
+
+Both `build-path.qmd` versions explicitly distinguish three things that must remain separate:
+
+1. the order in which the code tours are presented;
+2. the implementation dependencies/imports;
+3. the learner's conceptual route through Understand pages.
+
+The code-tour order is configuration → numerical operations → Transformer block → model assembly → generation. The page explicitly warns that this is a useful reading order, not a complete dependency graph: the block imports attention operations and generation imports optional decoding filters. The minimal inference path is not yet separated from those extensions.
+
+The build milestones preserve the important split:
+- G0/G1/G3–G7 construct and inspect the inference path, with random initialization clearly qualified.
+- G1b/G2 form a parallel corpus/tokenizer/training-example branch; they are required before training, not before generation.
+- G8 covers loss, parameter gradients, updates and fixed-parameter validation as the intended outcome, while the implementation is explicitly partial.
+- G9 is a parity criterion, not a claim that an independent reference comparison already exists.
+- E1 is cross-cutting task evaluation, not another sequential model-construction stage.
+
+This is pedagogically sound and consistent with the conceptual eight-stage route. The Build route should not be forced into the same page order: a reader can learn the generation loop before building the training-data pipeline.
+
+### C. Important implementation-status precision
+
+The current Build page states that the training implementation is partial and names `losses.py` functions `cross_entropy_from_logits` and `cross_entropy_gradient`, while also stating that there is no complete training loop, optimizer, automated validation runner or checkpoint. This is an important distinction to preserve: a gradient of the loss with respect to logits is not yet backpropagation of gradients through all model parameters, and neither is a parameter-update/optimizer implementation.
+
+The Build page also correctly distinguishes:
+- a conceptual lesson from implemented code;
+- a worked example from a test;
+- a passing test from a complete proof of a property;
+- a validation score at fixed parameters from an optimizer step;
+- token IDs from readable generated text (which requires a compatible tokenizer).
+
+No evidence in this source pass justifies claiming that end-to-end training, checkpoint loading, EOS stopping, KV cache, corpus provenance/deduplication, full padding/packing/masking, or independent implementation parity is already available.
+
+### D. Bilingual and editorial assessment
+
+- Optional-page metadata is consistent across FR/EN in type, destination, level and declared purpose for all pairs reviewed.
+- Optional does not mean pedagogically unimportant: the architecture comparison and LLM-limits companion are overview-level resources; tokenizer design, tensors, RoPE, cross-attention, attention scaling, decoding and scaling laws are genuinely advanced.
+- The advanced pages have distinct stated outcomes; no page split/merge is justified from this source pass.
+- The Build page has matching milestone identifiers and substantive claims in both languages. The English and French route links point to localized concept pages.
+- No new page, registry, route, workflow or exercise collection is justified.
+
+### E. Follow-up priorities
+
+1. Render the Build route and its milestone table at desktop/mobile widths; inspect table overflow and code-example legibility.
+2. Verify the route context around optional links: the reader should understand why a branch is optional and where to return.
+3. Audit the actual guided code tours (configuration, operations, block, model, generation) against their code and tests; the Build landing page is not a substitute for those page reviews.
+4. Review Practice activities for observable learning outcomes, feedback quality, answer disclosure, and alignment with the corresponding concept and Build milestone.
+5. Keep independent learner validation under #447; neither page metadata nor test coverage demonstrates transfer.
+
+### Evidence boundary
+
+This pass inspected source-level page contracts and the two Build landing pages. It did not certify every advanced derivation, reference, interactive widget, code tour, generated route UI or rendered layout. It does not constitute the complete Practice activity audit or learner validation. Reuse existing #646 and earlier exact-scope evidence rather than repeating those checks.
+
+
+## Twenty-first slice: five guided code tours, from configuration to generation
+
+**Review date:** 2026-11-08  
+**Scope:** source-level comparison of the five guided Build tour pairs (FR/EN), including metadata, page contract, learning outcomes, previous/next links, declared exclusions, exercise/test sections and relation to the Build landing page. This is not a line-by-line audit of the Python source or an execution of every code sample/test.
+
+| Tour pair | Distinct learning outcome and place in Build sequence | What this pass confirmed | Remaining check / decision |
+|---|---|---|---|
+| `gpt-config-walkthrough.qmd` (FR/EN) | 1/5: understand model configuration before operations exist | Both pages focus on `GPTConfig`, seven named dimensions, immutability and construction-time validation. They explicitly exclude model computation, the Transformer block and generation. Learning outcomes connect configuration fields to tensor shapes and early validation. | Keep first. The first page has no previous tour and links forward to operations. Verify each claimed field and validation case against the source/tests in the code audit. |
+| `gpt-ops-walkthrough.qmd` (FR/EN) | 2/5: understand independently testable numerical primitives | Both pages cover initialization, linear projection, per-position layer normalization and approximate GELU; they explicitly exclude block/model assembly. They connect output-shape prediction to the `axis=-1` convention and tests. | Keep second. Check that initialization claims are scoped to this educational implementation and that the GELU approximation explanation does not imply exact equivalence. |
+| `transformer-block-walkthrough.qmd` (FR/EN) | 3/5: trace a pre-LN block, residual branches, attention heads and MLP | Both pages focus on the repeated block, pre-LN residual order, residual-weight initialization, explicit attention loops, head slicing and position-wise MLP. They exclude embeddings, output head and generation. The links to Q/K/V, attention, causal masking and contextualized states are relevant rather than a duplicate concept course. | Keep third. The block imports attention operations that have no separate tour; the Build landing page already calls out this dependency. Verify the actual call graph and that loop-based code is presented as an inspectable reference implementation, not as the only/fastest implementation. |
+| `gpt-model-walkthrough.qmd` (FR/EN) | 4/5: assemble the forward pass from token IDs to vocabulary logits | Both pages cover token/position embedding tables, stacked blocks, final normalization, untied output head and parameter counting. They explicitly exclude generation. The shape contract is ((B,T)\to(B,T,V)), and the page links back to the conceptual representation/logit lessons. | Keep fourth. The causal evidence is a prefix-invariance test, not a universal proof over all possible inputs; preserve that qualification. Verify broadcasting and parameter accounting against the source/tests. |
+| `gpt-generation-walkthrough.qmd` (FR/EN) | 5/5: unroll the autoregressive loop after model assembly | Both pages explain prompt validation, sliding context, last-position logits, greedy or temperature-sampled selection and deliberate absence of KV cache/early stopping. They explicitly exclude the forward-pass computation and assume the model tour has been read. | Keep fifth. The page has no next tour by design and links back to the conceptual generation/logits/probabilities lessons. Verify that “generated text” language remains qualified where the current implementation actually returns token IDs and has no compatible tokenizer/checkpoint loader. |
+
+### Build-tour sequence and pedagogical boundary
+
+The five tours provide a coherent implementation-facing progression:
+
+**configuration → numerical operations → Transformer block → GPT assembly/forward pass → autoregressive generation.**
+
+This is intentionally different from the conceptual learning route. The latter introduces generation as a black-box behavior before internal mechanisms; Build constructs the mechanism before running it. The two paths are complementary, not contradictory.
+
+Each tour has a distinct declared scope and learning outcomes. The tour sequence uses reciprocal previous/next metadata and a shared Build parent; the last tour correctly has no next item. The FR/EN pairs have matching stage numbers, conceptual exclusions, exercise/test sections and link intent.
+
+### Specific pedagogical cautions
+
+- The numerical operations tour is a set of reusable primitives, not a separate mathematical prerequisite course.
+- The block tour's explicit loops are a deliberate inspectability choice; do not imply that they are the preferred optimized production implementation.
+- The model tour's prefix-invariance test supports a specific causal property under the tested extension; it is not a general formal proof.
+- The generation tour returns token IDs in the current reference implementation. Readable text requires a compatible tokenizer; useful language output requires trained or pretrained parameters.
+- The implementation currently recomputes the context on each generation step and deliberately omits KV caching and an EOS/early-stopping rule. This is a useful baseline for understanding the loop, not an inference-performance implementation.
+- An operation's unit test, a model-level test and a learner's ability to explain/modify the code are different forms of evidence.
+
+### Decision
+
+Keep all five tours as separate Build pages. Their outcomes and file boundaries are distinct, and merging them would collapse the inspectable progression from configuration through numerical operations and architecture to sequence generation. No new tour or extra prerequisite page is justified.
+
+### Remaining evidence
+
+The next code-focused pass should compare each tour's code excerpts and stated test claims with the current source and unit tests, execute the examples, and inspect the rendered exercises/answer disclosures. This source pass did not certify code correctness, numerical examples, responsive layout, keyboard/screen-reader behavior or learner transfer. Reuse the existing Build-path status matrix and do not create a second implementation-status catalogue.
+
+
+## Twenty-second slice: Practice catalogue and formative exercise progression
+
+**Review date:** 2026-11-08  
+**Scope:** source-level FR/EN comparison of the exercise hub, availability/status table, learning purpose and current collection coverage. Also checked the collection headings and declared maturity against the conceptual/Build route. This is not a complete correctness audit of every answer, rendered disclosure or interactive activity.
+
+### A. Exercise hub contract
+
+The FR/EN exercise hubs have matching roles and status claims:
+- They are a registry/navigation point for extended exercises and transfer tasks, not another lesson.
+- They explicitly distinguish short lesson-level self-checks from longer, multi-step formative collections.
+- They ask learners to attempt problems before opening collapsed solutions and explain assumptions/limits; a correct numerical result alone is not treated as mastery.
+- The availability table distinguishes published exercises from collections that are only planned.
+
+This is a useful and pedagogically important contract. Preserve it; do not present all collection headings as available activities.
+
+### B. Current exercise coverage
+
+| Collection | Current published material | Main gap explicitly acknowledged by the hub |
+|---|---|---|
+| Mathematical foundations | Seven progressive exercises: logits/softmax/NLL; loss masking and denominator; logit-to-parameter chain rule; soft targets/KL; batch shapes; stable log-sum-exp/log-softmax; NLL-to-perplexity | Finite-difference gradient verification and further topics |
+| Text data | TR-A representation pipeline reconstruction; TR-B embedding lookup and tensor shapes; TR-C identity/position/context distinctions | Dedicated BPE, windows, shifted targets and leakage exercises |
+| Attention | Weighted aggregation; Q/K/V projection reconstruction; isolated projection interventions; gradient-learning path; cross-attention transfer; AT-A–AT-C multi-head exercises | Causal-mask and invariance exercises |
+| Transformer | TF-A pre-LN block/shape trace; TF-B block parameter count; TF-C diagnosis and interventions | Architecture-variant exercises |
+| Pretraining | Prerequisite and focus outline only | Collection not yet authored |
+| Generation | Prerequisite and focus outline only | Collection not yet authored |
+| Fine-tuning | Prerequisite and focus outline only | Collection not yet authored |
+| Evaluation | Prerequisite and focus outline only | Collection not yet authored |
+| Efficiency | Prerequisite and focus outline only | Collection not yet authored |
+| Advanced topics | Prerequisite and focus outline only | Collection not yet authored |
+
+The English and French hubs match in the collection names, published counts/identifiers, prerequisite framing and explicit not-yet-authored status. The first four collections align with the concepts currently taught and with the transfer expectations from the route. The later collections are honest roadmaps, not falsely advertised exercises.
+
+### C. Pedagogical implications
+
+- **Do not create duplicate Q/K/V exercises.** The existing attention collection already covers role recognition, reconstructing projections, predicting the effect of parameter interventions, explaining learning through gradients and transfer to cross-attention. AT-A/B/C cover a separate multi-head outcome.
+- **Prioritize the causal-mask/invariance gap next.** It is a central correctness invariant used in the conceptual route and Build G4. A formative task should make the learner predict which earlier-position outputs can or cannot change when future tokens are appended, then distinguish this invariant from padding and loss masks.
+- **Complete the text-data transfer gap after that.** TR-A/B/C establish representations, but BPE merge tracing, shifted windows and leakage/boundary handling are explicitly listed as not yet covered by extended exercises. They are good candidates for a single coherent sequence rather than unrelated one-off exercises.
+- **Do not author all planned collections at once.** Pretraining, generation, fine-tuning, evaluation and efficiency need the corresponding model/data/code milestones to become sufficiently concrete. Add them when the core implementation and lessons can support realistic tasks.
+- **Keep feedback formative.** For each new task, require a prediction or explanation before code/calculation, expose the worked solution after an attempt, and include at least one transfer or counterexample question where the concept warrants it.
+
+### D. Priority decision
+
+The next exercise-development work should be:
+
+1. Causal masking and prefix invariance (one connected task with a prediction, a small counterexample and a test interpretation).
+2. Tokenization/BPE and text-window alignment (a progression from merge trace to shifted targets and leakage detection).
+3. Only then consider pretraining/generation collections, based on the state of the actual training and inference code.
+
+This is a priority recommendation, not a claim that the new exercises already exist. It should be coordinated with #220 (text-to-representation formative sequence), #329 (rendered review) and #447 (learner validation), rather than creating a parallel exercise project.
+
+### Evidence boundary
+
+This is a source-level catalogue and coverage review. It does not independently certify all seven mathematical solutions, all TR/AT/TF answers, disclosure accessibility, or learner mastery. The next pass should verify representative calculations and code-backed claims, then review all answer disclosures in the rendered bilingual site. Reuse the existing exercise hub; no new registry is warranted.
+
+
+### E. Independent arithmetic spot-check — seven mathematical exercises
+
+A separate arithmetic pass on the seven published mathematical exercises found no numerical or algebraic discrepancy in the stated answers:
+
+- Exercise 1: softmax ((1/9,1/3,5/9)), target NLL (ln 3), gradient ((1/9,-2/3,5/9)).
+- Exercise 2: valid-target mean (2\ln 2=\ln 4\approx1.3863); incorrect denominator-four result (1.5\ln2\approx1.0397).
+- Exercise 3: (J^\top g=(0.3,-0.5)).
+- Exercise 4: (H(q,p)=\ln2\approx0.6931), (H(q)\approx0.5623), and (D_{KL}(q\Vert p)\approx0.1308).
+- Exercise 5: logits shape ((2,4,10)), targets/losses by position ((2,4)), six valid positions, vocabulary softmax on the last axis.
+- Exercise 6: stable log-sum-exp (\approx1001.4076) and target NLL (\approx0.4076).
+- Exercise 7: (\exp(1.2)\approx3.3201).
+
+This was an independent calculation/identity check of the displayed values, not execution of every code block or validation of all pedagogical wording. The finite-difference gradient-check exercise remains explicitly unfinished in the hub.
