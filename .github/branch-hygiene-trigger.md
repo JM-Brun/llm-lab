@@ -7,3 +7,5 @@ any other value performs a dry run that deletes nothing.
 
 apply: true
 exclude:
+
+Note: temporary apply run to clean up the workflow's own stale branch; will be reverted to a dry-run default afterwards.
