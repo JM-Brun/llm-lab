@@ -158,6 +158,8 @@ La construction des fenêtres, le décalage entrées/cibles et les masques d'ent
 
 Ces ressources sont complémentaires, pas interchangeables : les visualisations construisent l'intuition, l'article original documente la formulation, le code annoté expose les choix d'implémentation et la documentation d'API précise le contrat d'une opération de bibliothèque.
 
+{{< include ../includes/generated-suggested-route-fr-transformer.qmd >}}
+
 ::: {.language-switch}
 **Langue :** [Français](transformer.qmd) · [English](../en/transformer.qmd)
 :::

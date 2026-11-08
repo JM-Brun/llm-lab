@@ -121,7 +121,10 @@ Two occurrences of the **same token ID** appear in two different sentences. Assu
 
 You have understood this step if you can explain the difference between **identity of the initial vector** and **context-dependence of hidden states**, without attributing sentence understanding to the lookup itself.
 
+:::
+
+{{< include ../includes/generated-suggested-route-en-contextualized-representations.qmd >}}
+
 ::: {.language-switch}
 **Language:** [Français](../fr/contextualized-representations.qmd) · [English](contextualized-representations.qmd)
-:::
 :::

@@ -92,6 +92,8 @@ In this construction, $P$ is added to the embeddings at the input, $X_0=E[\text{
 - [Hugging Face Transformers documentation](https://huggingface.co/docs/transformers/) — implementation details vary by architecture.
 - [Jay Joshi, *The Mathematics of a Transformer… Part 1*](https://medium.com/@jayjj6272/the-mathematics-of-a-transformer-explained-with-numbers-you-can-check-by-hand-with-geometric-96b5873c95be) — complementary pedagogical treatment of embedding and sinusoidal-encoding geometry; the calculations shown here were independently checked.
 
+{{< include ../includes/generated-suggested-route-en-positional-encoding.qmd >}}
+
 ::: {.language-switch}
 **Language:** [Français](../fr/positional-encoding.qmd) · [English](positional-encoding.qmd)
 :::

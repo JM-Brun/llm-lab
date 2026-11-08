@@ -239,6 +239,8 @@ Vocabulary size, training budgets, and comparative tokenizer evaluation raise qu
 - [tiktoken](https://github.com/openai/tiktoken)
 
 
+{{< include ../includes/generated-suggested-route-en-tokenization-strategies.qmd >}}
+
 ::: {.language-switch}
 **Language:** [Français](../fr/tokenization-strategies.qmd) · [English](tokenization-strategies.qmd)
 :::

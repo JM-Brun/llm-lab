@@ -151,7 +151,7 @@ The embedding table contains $V \times d$ parameters; a separate output projecti
 
 Lookup ends when a row is selected from the embedding matrix; it does not contextualize the vector. Positional information and processing by Transformer layers come afterwards, with mechanisms that depend on the architecture. To keep these stages distinct, see the dedicated lessons on [positional encoding](positional-encoding.qmd) and [contextualized representations](contextualized-representations.qmd).
 
-During training, gradients can update the embedding-table rows used by the examples. For tensor shapes and operations, see [tensors](tensors.qmd); for the preceding tokenizer stage, see [from text to tokens](text-data.qmd).
+During training, gradients can update the embedding-table rows used by the examples. For tensor shapes and operations, see [tensors](tensors.qmd); for the preceding stages of the input chain, see [from text to tokens](text-data.qmd) and [tokenization strategies](tokenization-strategies.qmd).
 
 ## Interpreting geometry with care
 
@@ -194,6 +194,8 @@ No. A 2D projection preserves only selected aspects of the geometry and may crea
 - [Li et al. (2020), *On the Sentence Embeddings from Pre-trained Language Models*](https://aclanthology.org/2020.emnlp-main.733/).
 - [Steck, Ekanadham & Kallus (2024), *Is Cosine-Similarity of Embeddings Really About Similarity?*](https://arxiv.org/abs/2403.05440).
 - [Sentence Transformers — Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html).
+
+{{< include ../includes/generated-suggested-route-en-embedding-space.qmd >}}
 
 ::: {.language-switch}
 **Language:** [Français](../fr/embedding-space.qmd) · [English](embedding-space.qmd)

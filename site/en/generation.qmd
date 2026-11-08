@@ -147,6 +147,8 @@ You have now seen **what the model does** during generation. To understand how i
 To explore a mechanism encountered here: [Logits](logits.qmd) · [Probabilities](probabilities.qmd). To move into implementation: [Build path](build-path.qmd).
 :::
 
+{{< include ../includes/generated-suggested-route-en-generation.qmd >}}
+
 ::: {.language-switch}
 [Français](../fr/generation.qmd) · [English](generation.qmd)
 :::

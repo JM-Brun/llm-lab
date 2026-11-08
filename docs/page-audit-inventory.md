@@ -972,3 +972,33 @@ A separate arithmetic pass on the seven published mathematical exercises found n
 - Exercise 7: (\exp(1.2)\approx3.3201).
 
 This was an independent calculation/identity check of the displayed values, not execution of every code block or validation of all pedagogical wording. The finite-difference gradient-check exercise remains explicitly unfinished in the hub.
+
+## Eighteenth slice: guided-route card harmonization across the core chain (2026-11-08)
+
+**Scope:** source-level, file-by-file review of the suggested-reading cards (the generated `route-nav-cards` fragments) along the 18-page core guided chain, FR and EN: index → llm-overview → generation → text-data → tokenization-strategies → embedding-space → positional-encoding → contextualized-representations → transformer → queries-keys-values → scaled-dot-product-attention → causal-masking → logits → probabilites → entropy → vraisemblance → cross-entropy → loss → gradients. This slice serves the reader-side navigation spine of #584 and informs the open card/stepper harmonization decision of #337. It records source evidence only; rendered, screen-reader and learner evidence are not claimed.
+
+### Findings
+
+- The `suggested_route` metadata chain is exact across the 36 FR/EN page files: every previous/next anchor resolves to a published page, the FR and EN chains mirror each other, and gradients terminates with `next: null`.
+- Card coverage was asymmetric: only 8 of 18 core pages included the generated fragment (queries-keys-values, scaled-dot-product-attention, causal-masking, logits, probabilites, vraisemblance, cross-entropy, loss). Nine chain pages carried no card at all (llm-overview, generation, tokenization-strategies, embedding-space, positional-encoding, contextualized-representations, transformer, entropy, gradients), so the probabilites → entropy and loss → gradients transitions were one-way: a neighbour's card pointed at a page without a reciprocal card.
+- text-data (FR/EN) hand-maintained a `route-nav-cards` div duplicating the generator output, contrary to the derive-at-build rule (contract §7.7), with an effective divergence: the EN hand cards used « ← Previous Step » / « Next Step → » where the generator emits « ← Previous step » / « Next step → ».
+- logits (FR/EN) placed the generated include inside the `.self-check` div; contextualized-representations (FR/EN) nested the `.language-switch` block inside the `.self-check` div.
+- The embedding-space pair mislabelled its input-chain link: FR « pour l’étape précédente » and EN "for the preceding tokenizer stage" pointed at text-data, which is two steps back in the route; the immediately preceding page is tokenization-strategies.
+- `build_learning_map.py` `page_href` resolved both `fr/index` and `en/index` to `../index.html`. This is correct for FR (the French landing page is the site root) but wrong for EN consumers: from pages under `site/en/`, `../index.html` is the French homepage, not `site/en/index.qmd`. The defect was latent (no EN page included an index-targeted card) and becomes reader-visible as soon as en/llm-overview includes its previous-step card.
+
+### Changes made in this slice
+
+- Added the generated suggested-route include to the ten pages above (FR and EN), immediately before the language-switch block, matching the placement convention of the eight already-carded pages.
+- Replaced the hand-written text-data cards with the generated fragment; targets are unchanged, labels now follow the generator in both languages.
+- Moved the logits include after the self-check closing fence; closed the contextualized-representations self-check div before its language-switch block.
+- Corrected the embedding-space pair to name both input-chain predecessors (text-data and tokenization-strategies).
+- Fixed `page_href`: `en/index` now resolves to `index.html` for pages under `site/en/`, mirroring the FR root landing case.
+- Deliberately retained: the generation end-of-page next-step callout (contract §4/§5) and the page-specific `pipeline-stepper` on text-data (contract §3.4).
+
+### Validation status and limits
+
+**Completed in this source pass:** comparison of include statements, div nesting and route metadata across the 36 page files; reading of `write_suggested_route_fragments`, `render_suggested_route_markdown` and `page_href` in `build_learning_map.py` to confirm fragment naming, `next: null` handling, label vocabulary and index href resolution.
+
+**Delegated to the Quarto workflow on the accompanying pull request:** fragment resolution at render time, `check_site_links` over the rendered site, the rendered learning-map and knowledge-graph checks, and the targeted rendered browser review. This slice claims no rendered evidence.
+
+**Still not established:** manual screen-reader behaviour; learner validation (#447); the broader rendered navigation review (#337) and the remaining #584 items.

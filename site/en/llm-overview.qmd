@@ -175,6 +175,8 @@ Next-token prediction guarantees neither the truth of a model's outputs nor huma
 
 :::
 
+{{< include ../includes/generated-suggested-route-en-llm-overview.qmd >}}
+
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-overview.qmd) · [English](llm-overview.qmd)
 :::

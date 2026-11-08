@@ -123,7 +123,10 @@ Deux occurrences du **même ID de token** apparaissent dans deux phrases différ
 
 Vous avez compris cette étape si vous pouvez expliquer la différence entre **identité du vecteur initial** et **dépendance contextuelle des états cachés**, sans attribuer au lookup lui-même une compréhension de la phrase.
 
+:::
+
+{{< include ../includes/generated-suggested-route-fr-contextualized-representations.qmd >}}
+
 ::: {.language-switch}
 **Langue :** [Français](contextualized-representations.qmd) · [English](../en/contextualized-representations.qmd)
-:::
 :::
