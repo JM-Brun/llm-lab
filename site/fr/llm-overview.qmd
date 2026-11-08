@@ -41,11 +41,11 @@ Un **modèle de langage** estime la plausibilité de séquences de texte à part
 Quelques termes doivent être compris avant de suivre le raisonnement.
 
 - **Token :** unité discrète produite par un *tokenizer* à partir du texte. Un token peut correspondre à un mot, une partie de mot, un caractère ou une autre séquence de caractères ; il ne correspond donc pas nécessairement à un mot.
-- **Tokenizer et vocabulaire :** le *tokenizer* définit le découpage et associe les tokens à des identifiants entiers (*token IDs*). Son vocabulaire est l'ensemble des unités qu'il sait représenter. Le découpage dépend du tokenizer utilisé.
-- **Contexte :** dans une prédiction autorégressive, il s'agit des tokens précédents auxquels le modèle a accès pour calculer la suite. Le contexte peut contenir le prompt (texte fourni en entrée) et, au fil de la génération, les tokens déjà produits.
-- **Paramètres :** valeurs numériques apprises pendant l'entraînement — notamment les poids et biais — qui déterminent les calculs du réseau. Pendant l'inférence ordinaire, ils restent fixes.
+- **Tokenizer et vocabulaire :** le *tokenizer* définit le découpage et associe les tokens à des identifiants entiers (*token IDs*). Son vocabulaire est l'ensemble des unités qu'il sait représenter. Le découpage dépend du tokenizer utilisé ; voir [texte et données](text-data.qmd) et [stratégies de tokenisation](tokenization-strategies.qmd).
+- **Contexte :** dans une prédiction autorégressive, il s'agit des tokens précédents auxquels le modèle a accès pour calculer la suite. Le contexte peut contenir le prompt (texte fourni en entrée) et, au fil de la génération, les tokens déjà produits ; la [génération pas à pas](generation.qmd) montre comment il évolue.
+- **Paramètres :** valeurs numériques apprises pendant l'entraînement — notamment les poids et biais — qui déterminent les calculs du réseau. Pendant l'inférence ordinaire, ils restent fixes. La [configuration d'un petit GPT](gpt-config-walkthrough.qmd) permet de repérer les principales dimensions et les paramètres du modèle.
 - **Échelle (*scale*) :** notion multidimensionnelle qui recouvre notamment le nombre de paramètres, la quantité et la qualité des données d'entraînement et le calcul mobilisé. Le nombre de paramètres n'est qu'un indicateur ; il ne définit pas à lui seul un LLM. Les [lois d'échelle](scaling-laws.qmd) étudient empiriquement ces relations.
-- **Inférence :** utilisation d'un modèle dont les paramètres sont fixés pour calculer une sortie à partir d'une entrée. La génération autorégressive est un cas particulier d'inférence.
+- **Inférence :** utilisation d'un modèle dont les paramètres sont fixés pour calculer une sortie à partir d'une entrée. La génération autorégressive est un cas particulier d'inférence ; voir [Générer du texte](generation.qmd).
 
 ::: {.callout-tip title="Trois repères essentiels"}
 Un **token** est une unité de représentation du texte ; un **paramètre** est une valeur apprise par le modèle ; l'**échelle** décrit plusieurs ressources et dimensions, pas seulement la taille du réseau.
