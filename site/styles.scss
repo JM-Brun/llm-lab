@@ -2026,7 +2026,7 @@ span.math.inline, .math.inline {
    green resolved to #2c8c50 (4.03:1 on #f8fafc); use a darker green for 4.5:1+.
    Dark-theme link colors remain controlled by the theme. */
 .quarto-light main.content a {
-  color: #166534;
+  color: #166534 !important;
 }
 .quarto-light main.content a:hover,
 .quarto-light main.content a:focus-visible {
