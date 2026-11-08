@@ -31,7 +31,7 @@ const cases = [
     ...testCase, page: "llm-overview.html", kind: "spine-overview",
   })),
   ...routeContextCases.flatMap(testCase =>
-    ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "entropy.html", "scaled-dot-product-attention.html", "causal-masking.html", "attention-score-scaling.html", "cross-attention.html", "logits.html", testCase.lang === "fr" ? "probabilites.html" : "probabilities.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "decoding-strategies.html", "entropy.html", "cross-entropy.html", "loss.html", "gradients.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
+    ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "attention-score-scaling.html", "cross-attention.html", "logits.html", testCase.lang === "fr" ? "probabilites.html" : "probabilities.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "decoding-strategies.html", "cross-entropy.html", "loss.html", "gradients.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
       ...testCase, page, kind: "route-context",
     }))
   ),
@@ -65,7 +65,7 @@ const cases = [
     }))
   ),
   ...visualCases.flatMap(testCase =>
-    ["attention-score-scaling.html", "cross-attention.html", "rope.html", "unicode-text.html", "tensors.html", "cosine-similarity.html", testCase.lang === "fr" ? "linearite-embeddings.html" : "embedding-linearity.html", "language-modeling-math.html", "mathematical-foundations.html", "llm-computational-complexity.html"].map(page => ({
+    ["entropy.html", "attention-score-scaling.html", "cross-attention.html", "rope.html", "unicode-text.html", "tensors.html", "cosine-similarity.html", testCase.lang === "fr" ? "linearite-embeddings.html" : "embedding-linearity.html", "language-modeling-math.html", "mathematical-foundations.html", "llm-computational-complexity.html"].map(page => ({
       ...testCase, page, kind: "deep-dive-parent",
     }))
   ),
