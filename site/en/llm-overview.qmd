@@ -29,7 +29,7 @@ A **language model** estimates the plausibility of text sequences from a context
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this page, you will be able to:
-- explain intuitively why a model must compare multiple possible continuations;
+- explain intuitively how a model assigns scores to candidate tokens for a given context;
 - distinguish a language model, generative model, LLM, GPT, and Transformer;
 - explain how the concepts language model, GPT, and Transformer relate;
 - identify the canonical page for the network computation or the generation process.
@@ -52,7 +52,7 @@ A **token** is a unit used to represent text; a **parameter** is a value learned
 
 ## 2. The problem: continue text from a context
 
-Given a prefix such as “The report indicates that the concentration”, the model must estimate which tokens could follow. There is not necessarily one uniquely correct continuation: several continuations may be grammatical and coherent while differing in meaning, precision, or relevance.
+Given a prefix such as “The report indicates that the concentration”, the model must estimate which tokens could follow. At each position, it computes scores for vocabulary tokens; after normalization, these scores form a conditional distribution over the next token. It does not explicitly compare every possible complete sequence. Several continuations may be grammatical and coherent while differing in meaning, precision, or relevance.
 
 This language-modeling problem consists in assigning plausibility to sequences conditional on their context. For an autoregressive GPT, the probabilistic factorization of this estimate is presented in the [mathematical formalization of language modeling](language-modeling-math.qmd). How a trained model turns that estimate into text, one token at a time, belongs to the dedicated lesson on [generation](generation.qmd).
 
@@ -91,13 +91,13 @@ Context preparation and model computation produce a **conditional distribution o
 
 {{< include ../includes/generated-computational-graph-en-persistent-spine.qmd >}}
 
-The `forward computation` node (one network execution mapping the context to output scores) intentionally abstracts the internal layers. The network produces **logits** (unnormalized scores); a *softmax* function converts them into a probability distribution over the vocabulary.  see [contextualized representations](contextualized-representations.qmd) and the [Transformer block walkthrough](transformer-block-walkthrough.qmd) for the internal steps.
+The `forward computation` node (one network execution mapping the context to output scores) intentionally abstracts the internal layers. The network produces **logits** (unnormalized scores); a *softmax* function converts them into a probability distribution over the vocabulary. A single forward pass can produce scores at every position: generation from a prompt uses the distribution at the final position, whereas scoring or training a known sequence uses the distributions at multiple positions, each aligned with the next target token under a causal mask. See [contextualized representations](contextualized-representations.qmd) and the [Transformer block walkthrough](transformer-block-walkthrough.qmd) for the internal steps.
 
 | Branch | How the distribution is used | Parameters |
 |---|---|---|
-| **Generation** | Select a token, append it to the context, and repeat the prediction; see [Generating text](generation.qmd) | Fixed |
-| **Scoring / evaluation** | Score an observed target (e.g. log-likelihood or negative log-likelihood, NLL) or a generated output, then aggregate task-appropriate metrics on held-out data; see [Likelihood](likelihood.qmd) | Fixed |
-| **Training** | Provide observed prefixes as context (*teacher forcing*), compare predictions with target tokens, then compute the loss function and its gradients; see [Training examples](training-examples.qmd), [Loss](loss.qmd), and [Gradients](gradients.qmd) | Updated at the update step |
+| **Generation** | Process the initial prompt (*prefill*), then select a token, append it to the context, and repeat during *decode*; see [Generating text](generation.qmd) | Fixed |
+| **Scoring / evaluation** | Score a known target from its observed prefix (a form of *teacher forcing*), compute its likelihood or NLL, then aggregate task-appropriate metrics on held-out data; see [Likelihood](likelihood.qmd) | Fixed |
+| **Training** | At each position, provide the prefix from the reference sequence (*teacher forcing*), compare the distribution with the target token, aggregate the losses, then compute their gradients with respect to the parameters; see [Training examples](training-examples.qmd), [Loss](loss.qmd), and [Gradients](gradients.qmd) | Updated at the update step |
 
 Target scoring and model evaluation are not synonyms: scoring computes a conditional probability; evaluation aggregates scores or task-specific metrics under a data protocol. Likelihood-based evaluation reuses the scoring path without updating parameters; task evaluation may also assess generated outputs.
 
@@ -128,8 +128,8 @@ flowchart LR
   A --> I["3. Inference<br/>Compute an output<br/>with fixed parameters"]
 ```
 
-1. **[Pretraining](build-path.qmd).** The model learns from a corpus according to an objective — for a GPT, next-token prediction. The learning is called *self-supervised*: the targets are built from the data itself, without human labels. It produces a pretrained model, often called a *base model*. The term *foundation model* more broadly refers to a model intended for reuse and adaptation across many tasks; the two expressions are not exact synonyms.
-2. **[Optional weight adaptation](build-path.qmd).** After pretraining, parameters can be updated: task fine-tuning (for example, classification), supervised fine-tuning (SFT) on instruction–response examples, or preference optimization. This stage is not mandatory: a pretrained model can be used directly.
+1. **Pretraining.** The model learns from a corpus according to an objective — for a GPT, next-token prediction. The learning is called *self-supervised*: the targets are built from the data itself, without human labels. It produces a pretrained model, often called a *base model*. The term *foundation model* more broadly refers to a model intended for reuse and adaptation across many tasks; the two expressions are not exact synonyms.
+2. **Optional weight adaptation.** After pretraining, parameters can be updated: task fine-tuning (for example, classification), supervised fine-tuning (SFT) on instruction–response examples, or preference optimization. This stage is not mandatory: a pretrained model can be used directly.
 
 3. **[Inference](generation.qmd).** The obtained parameters are used to process an input and compute an output. For an autoregressive model, inference follows the generation loop described in the [dedicated lesson](generation.qmd). The prompt and, optionally, documents retrieved by a RAG system provide context; they are not an additional learning phase and do not update the model's weights.
 
