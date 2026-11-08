@@ -38,6 +38,13 @@ const cases = [
   ...textDataResponsiveCases.map(testCase => ({
     ...testCase, page: "text-data.html", kind: "route-context",
   })),
+  // #347 also reviews the training-example and Build bridge pages. Keep them
+  // outside route-context assertions: neither is an extra guided-route stage.
+  ...visualCases.filter(testCase => testCase.label === "desktop").flatMap(testCase =>
+    ["training-examples.html", "build-path.html"].map(page => ({
+      ...testCase, page, kind: "training-build-review",
+    }))
+  ),
   // Focused mobile review for the attention → scoring → training slice.
   // Desktop/light route-context cases above remain the keyboard/Axe baseline.
   ...visualCases.filter(testCase => testCase.label === "mobile").flatMap(testCase =>
@@ -68,6 +75,7 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
   const changedPages = new Set(changedFiles
     .filter(file => /^site\/(en|fr)\/.+\.qmd$/.test(file))
     .map(file => file.replace(/^site\/(en|fr)\//, "").replace(/\.qmd$/, ".html")));
+  const browserReviewScriptChanged = changedFiles.includes("scripts/site-browser-review.mjs");
   const hasGlobalSiteChange = changedFiles.some(file =>
     /^site\/(\.quarto|_quarto\.yml|.*\.(css|scss|js))$/.test(file) ||
     /^site\/_extensions\//.test(file) || /^scripts\//.test(file)
@@ -75,9 +83,12 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
-    // A global script/style change adds smoke coverage; it must not suppress
-    // dedicated cases for page files changed in the same PR.
-    const selectedPages = new Set([...smokePages, ...changedPages]);
+    // A selector change must exercise the pages it adds, not only unrelated
+    // smoke pages. Preserve changed-page coverage when global files also change.
+    const selectorPages = browserReviewScriptChanged
+      ? ["training-examples.html", "build-path.html"]
+      : [];
+    const selectedPages = new Set([...smokePages, ...selectorPages, ...changedPages]);
     for (let i = cases.length - 1; i >= 0; i--) {
       if (!selectedPages.has(cases[i].page)) cases.splice(i, 1);
     }
