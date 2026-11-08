@@ -91,12 +91,12 @@ Context preparation and model computation produce a **conditional distribution o
 
 {{< include ../includes/generated-computational-graph-en-persistent-spine.qmd >}}
 
-The `forward computation` node (one network execution mapping the context to output scores) intentionally abstracts the internal layers. The network produces **logits** (unnormalized scores); a *softmax* function converts them into a probability distribution over the vocabulary. See [contextualized representations](contextualized-representations.qmd) and the [Transformer block walkthrough](transformer-block-walkthrough.qmd) for the internal steps.
+The `forward computation` node (one network execution mapping the context to output scores) intentionally abstracts the internal layers. The network produces **logits** (unnormalized scores); a *softmax* function converts them into a probability distribution over the vocabulary. A single forward pass can produce scores at every position: generation from a prompt uses the distribution at the final position, whereas scoring or training a known sequence uses the distributions at multiple positions, each aligned with the next target token under a causal mask. See [contextualized representations](contextualized-representations.qmd) and the [Transformer block walkthrough](transformer-block-walkthrough.qmd) for the internal steps.
 
 | Branch | How the distribution is used | Parameters |
 |---|---|---|
-| **Generation** | Select a token, append it to the context, and repeat the prediction; see [Generating text](generation.qmd) | Fixed |
-| **Scoring / evaluation** | Score an observed target (e.g. log-likelihood or negative log-likelihood, NLL) or a generated output, then aggregate task-appropriate metrics on held-out data; see [Likelihood](likelihood.qmd) | Fixed |
+| **Generation** | Process the initial prompt (*prefill*), then select a token, append it to the context, and repeat during *decode*; see [Generating text](generation.qmd) | Fixed |
+| **Scoring / evaluation** | Score a known target from its observed prefix (a form of *teacher-forcing* conditioning), compute its likelihood or NLL, then aggregate task-appropriate metrics on held-out data; see [Likelihood](likelihood.qmd) | Fixed |
 | **Training** | At each position, provide the prefix from the reference sequence (*teacher forcing*), compare the distribution with the target token, aggregate the losses, then compute their gradients with respect to the parameters; see [Training examples](training-examples.qmd), [Loss](loss.qmd), and [Gradients](gradients.qmd) | Updated at the update step |
 
 Target scoring and model evaluation are not synonyms: scoring computes a conditional probability; evaluation aggregates scores or task-specific metrics under a data protocol. Likelihood-based evaluation reuses the scoring path without updating parameters; task evaluation may also assess generated outputs.
