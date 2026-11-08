@@ -1,6 +1,6 @@
 # Source-to-knowledge method transfer: tokenization and embeddings
 
-**Status:** retrospective transfer assessment · **Version:** 0.1 · **Review date:** 2026-11-05  
+**Status:** retrospective transfer assessment · **Version:** 0.2 · **Review date:** 2026-11-08  
 **Protocol:** [Source-to-knowledge validation](../workflows/source-to-knowledge-validation.md)  
 **Collection:** [Tokenization and embeddings synthesis](../source-reviews/tokenization-embeddings-source-collection.md)  
 **Migration map:** [Source migration map](../source-reviews/tokenization-embeddings-source-migration-map-2026-11.md)  
@@ -16,27 +16,28 @@ The transfer case is harder than Q/K/V: tokenization and embeddings spans tokeni
 
 ## 2. Audited baseline
 
-At the reviewed repository state, while the structured migration/backfill in #458 remains open:
+The snapshot below is reconciled against the collection dossier and source-review index on 2026-11-08. It supersedes the 2026-11-05 pilot counts; it does not imply that every registered source or source component has been inspected.
 
 | Inventory | Observed state |
 |---|---:|
-| Canonical source catalogue | 47 records: 4 Q/K/V or KV-cache records + 43 tokenization/embeddings records |
-| Structured extraction records | 14 YAML files: 10 tokenization/embeddings + 4 Q/K/V/KV-cache |
-| Top-level extraction items in the 10 topic-specific extraction files | 49 |
+| Canonical source catalogue | 54 records across LLM Lab |
+| Structured extraction records in this collection | 12 YAML files for tokenization/embeddings |
+| Structured extraction records repository-wide | 20 YAML files: 12 tokenization/embeddings, 4 Q/K/V, and 4 adjacent-topic records |
+| Top-level extraction items | Not re-counted in this reconciliation; the earlier count of 49 applied only to the prior 10 topic-specific files |
 | Topic-level synthesis | One living dossier organized around learner questions and six source families |
 | Migration map | One, preserving historical scan boundaries and unresolved metadata |
 
-**Count reconciliation:** before this PR, the collection dossier stated 46 records (three Q/K/V/KV-cache records plus 43 migrated records). The current catalogue has 47 because Codefinity's Q/K/V lesson is now registered. This PR updates the dossier to the correct decomposition: four Q/K/V/KV-cache records plus 43 tokenization/embeddings records. This is a metadata reconciliation, not a new source discovery.
+**Count reconciliation:** the 2026-11-05 pilot snapshot reported 47 catalogue records (four Q/K/V or KV-cache plus 43 tokenization/embeddings) and 10 topic-specific extraction files. The current collection dossier and index report 54 catalogue records, 12 tokenization/embeddings extraction files and 20 extraction files repository-wide. The current inventory reflects registration and extraction work integrated through PRs #460, #463, #467, #468 and #469. These are inventory changes, not evidence of new exhaustive scans or improved pedagogical quality.
 
-The 10 topic-specific extraction records cover Karpathy, Ahia, Ali, Wegmann, Arnett, Chiu/TokLens, Ethayarajh, Li, Mikolov and Steck. They contain 49 top-level extraction items. A recursive YAML count had incorrectly included 10 nested pedagogical-graph node IDs; those nodes are not extraction items. The 49 items are an inventory count, not 49 independent claims or proof of complete source coverage.
+The earlier 10 extraction files covered Karpathy, Ahia, Ali, Wegmann, Arnett, Chiu/TokLens, Ethayarajh, Li, Mikolov and Steck. Their historical 49 top-level items remain a count for that earlier set only. A recursive YAML count had incorrectly included nested pedagogical-graph node IDs; those nodes are not extraction items. Do not extrapolate the 49-item count to the current 12-file collection.
 
 ## 3. Transfer assessment
 
 | Dimension | Result | Evidence and limits |
 |---|---|---|
-| Identity/provenance | Partial | Stable IDs and URLs exist for registered sources; exact historical URLs for some ByteByteGo/Vizuara resources and some immutable revisions remain unresolved. |
+| Identity/provenance | Partial | Stable IDs and canonical URLs exist for the registered ByteByteGo articles and two Vizuara courses; the identity of a potentially separate Vizuara embeddings resource and some immutable upstream revisions remain unresolved. |
 | Inspection coverage | Pass with explicit partial states | The dossier distinguishes PDF inspection, transcript/chapter-marker review, documentation and historical audit migration; uninspected code, data, supplements, media and rights remain visible. |
-| Extraction fidelity | Promising; final validator check required | Ten topic-specific YAML records contain 49 top-level extraction items with evidence scope and dispositions; nested pedagogical graph nodes are counted separately. This report does not replace a fresh final-head validation run. |
+| Extraction fidelity | Promising; final validator check required | The current collection contains 12 structured extraction records with evidence scope and dispositions. The earlier 49-item count applies only to the previous 10-file snapshot; no current top-level item count is asserted here. This report does not replace a fresh final-head validation run. |
 | Technical validity | Pass within stated scopes | Primary research is distinguished from tutorial explanation; models, tasks, corpora, denominators and limits are preserved. No independent reproduction is claimed. |
 | Evidence independence | Pass in synthesis design | Compression, fertility, parity, downstream quality and cosine geometry are not treated as interchangeable measures. |
 | Pedagogical reconstruction | Partial | Karpathy's instructional source has a source-local pedagogical model. Most other extracted sources are research papers, where a teaching route is not applicable. Several registered instructional sources still need explicit route triage. |
@@ -92,12 +93,12 @@ The transfer test must not imply that all registered sources were inspected to t
 | Interactive pedagogical resource | Polo Club Transformer Explainer; #186/#188 review | Interactive GPT-2-small forward-pass design and a specific top-p implementation caveat | Generalization to every Transformer or evidence of learning gains |
 | Course material | Hugging Face course chapter and Vizuara courses; historical #114/#147 audits | Specific tokenization sections or course landing-page descriptions | Full course completion, runtime behavior or uninspected assignments |
 
-This sample is sufficient to test whether the workflow can preserve evidence class and inspection scope. It is not a claim that the entire 47-record catalogue has been re-audited.
+This sample is sufficient to test whether the workflow can preserve evidence class and inspection scope. It is not a claim that the entire 54-record catalogue has been re-audited.
 
 ## 7. Defects and scalability limits exposed
 
 1. **Inventory drift:** the source count became stale after Codefinity was registered. A deterministic catalogue/dossier consistency check is needed.
-2. **Instructional route status is implicit for some sources:** among the ten topic-specific extraction files, only Karpathy has a pedagogical model. That is appropriate for research papers, but registered instructional sources such as Raschka, the Hugging Face course, Vizuara and ByteByteGo need explicit needed/not-applicable/deferred triage.
+2. **Instructional route status is implicit for some sources:** in the original ten-file pilot set, only Karpathy had a source-local pedagogical model. That is appropriate for research papers, but registered instructional sources such as Raschka, the Hugging Face course, Vizuara and ByteByteGo need explicit needed/not-applicable/deferred triage.
 3. **Metadata gaps remain:** the registered ByteByteGo/Vizuara resources have canonical URLs, but a potentially separate Vizuara embeddings resource and some upstream revisions still need reconciliation from existing evidence, never guesswork.
 4. **Rights and inspection are independent:** reading an article or paper does not clear figures, videos, repositories, code or supplements.
 5. **Dossier size needs governance:** future additions should update the relevant learner-question section and compact decision table; large details belong in extraction/review records.
@@ -148,9 +149,9 @@ These cases should be added to the canonical adversarial suite only after decidi
 **Full scalability and operational completeness are not yet demonstrated.** Outstanding evidence includes final-head validators, selective instructional-route reconstruction, metadata recovery, rendered/accessibility review, rights checks and independent learner observations. No learning-efficacy or universal-superiority claim is made.
 
 Next:
-1. Reconcile this snapshot after #458 closes; the current collection count is 47 (4 Q/K/V/KV-cache + 43 tokenization/embeddings).
+1. Keep this snapshot aligned with the living collection dossier and index; current counts are 54 catalogue records, 12 tokenization/embeddings extraction files and 20 extraction files repository-wide. Reconcile counts only from those canonical inventories, not from scan-completeness assumptions.
 2. Run catalogue/extraction validators and record final-head CI/Quarto evidence.
 3. Explicitly triage route reconstruction for registered instructional sources, reusing existing fields.
-4. Recover missing ByteByteGo/Vizuara URLs only from historical evidence.
+4. Resolve the identity of a potentially distinct Vizuara embeddings resource only if historical evidence supports it; the registered ByteByteGo articles and two Vizuara courses already have canonical URLs.
 5. Keep asset rights and browser review with #156 and #320/#329.
 6. Stress-test one small new source end-to-end before scaling to another large collection.
