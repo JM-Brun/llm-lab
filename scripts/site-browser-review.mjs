@@ -250,7 +250,7 @@ for (const testCase of cases) {
 
     if (kind === "exercise-hub") {
       const hub = page.locator("main");
-      const visibleText = (await hub.innerText()).replace(/\\s+/g, " ");
+      const visibleText = await hub.innerText();
       const exerciseIds = ["TR-A", "TR-B", "TR-C", "TF-A", "TF-B", "TF-C", "AT-A", "AT-B", "AT-C"];
       item.exerciseHub = await page.evaluate(() => {
         const lang = document.documentElement.lang || "en";
@@ -267,10 +267,10 @@ for (const testCase of cases) {
         };
       });
       item.exerciseHub.exerciseIdsPresent = exerciseIds.filter(id =>
-        new RegExp(`\\\\b${id}\\\\b`).test(visibleText)
+        visibleText.includes(id)
       );
       item.exerciseHub.missingExerciseIds = exerciseIds.filter(id =>
-        !new RegExp(`\\\\b${id}\\\\b`).test(visibleText)
+        !visibleText.includes(id)
       );
       if (item.exerciseHub.collectionAnchors.some(anchor => !anchor.exists)) {
         throw new Error("one or more canonical exercise collection anchors are missing");
