@@ -24,7 +24,7 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 {{< include ../includes/generated-guided-context-fr-llm-overview.qmd >}}
 
 ::: {.chapter-lead}
-Un **modèle de langage** estime la plausibilité de séquences de texte à partir d’un contexte. Dans un GPT, cette capacité sert notamment à estimer quel token pourrait suivre le texte déjà fourni. Un **modèle génératif** peut produire de nouveaux échantillons à partir d'une distribution apprise ; il peut être conditionné par une entrée. Un **LLM** (*large language model*) est un modèle de langage entraîné à grande échelle : il n'existe pas de seuil universel de paramètres qui sépare mécaniquement les « petits » modèles des LLM. La [taille n’est qu’une dimension de l’échelle](scaling-laws.qmd). La catégorie LLM ne présuppose pas une architecture particulière.
+Un **modèle de langage** estime la plausibilité de séquences de texte à partir d’un contexte. Dans un GPT, cette capacité sert notamment à estimer quelle unité textuelle pourrait suivre le texte déjà fourni. Un **modèle génératif** peut produire de nouveaux échantillons à partir d'une distribution apprise ; il peut être conditionné par une entrée. Un **LLM** (*large language model*) est un modèle de langage entraîné à grande échelle : il n'existe pas de seuil numérique universel qui sépare mécaniquement les « petits » modèles des LLM. L'[échelle est multidimensionnelle](scaling-laws.qmd). La catégorie LLM ne présuppose pas une architecture particulière.
 
 :::
 
@@ -77,7 +77,7 @@ La préparation du contexte et le calcul du modèle produisent une **distributio
 
 {{< include ../includes/generated-computational-graph-fr-persistent-spine.qmd >}}
 
-Le nœud « passe avant » (*forward pass*, une exécution du réseau qui transforme le contexte en scores de sortie) résume volontairement le calcul interne ; le [pipeline des représentations](contextualized-representations.qmd) et le [parcours d’un bloc Transformer](transformer-block-walkthrough.qmd) en détaillent les étapes.
+Le nœud « passe avant » (*forward pass*, une exécution du réseau qui transforme le contexte en scores de sortie) résume volontairement le calcul interne. Le réseau produit des **logits** (scores non normalisés) ; une fonction *softmax* les convertit en distribution de probabilités sur le vocabulaire.  le [pipeline des représentations](contextualized-representations.qmd) et le [parcours d’un bloc Transformer](transformer-block-walkthrough.qmd) en détaillent les étapes.
 
 | Branche | Usage de la distribution | Paramètres |
 |---|---|---|
@@ -99,7 +99,7 @@ Pour décrire un LLM, trois questions indépendantes doivent être posées. Elle
 |---|---|---|---|
 | **Architecture** | Comment l’information circule-t-elle dans le modèle ? | Les opérations et connexions qui définissent le calcul effectué | Encodeur seul, encodeur-décodeur, décodeur seul ; voir [la comparaison des architectures Transformer](transformer-architectures.qmd) |
 | **Apprentissage des poids** | Comment les paramètres ont-ils été obtenus ou modifiés ? | Les objectifs et procédures qui apprennent ou ajustent les paramètres | Pré-entraînement, fine-tuning/SFT, optimisation des préférences |
-| **Inférence et utilisation** | Que fait-on du modèle une fois ses paramètres fixés ? | Le calcul d’une sortie à partir d’une entrée, éventuellement dans un système avec recherche ou outils | Classification, score, génération autorégressive ; prompt et RAG conditionnent le contexte sans modifier les poids |
+| **Inférence et utilisation** | Que fait-on du modèle une fois ses paramètres fixés ? | Le calcul d’une sortie à partir d’une entrée, éventuellement dans un système avec recherche ou outils | Classification, score, génération autorégressive ; prompt (texte fourni en entrée) et RAG (documents récupérés puis ajoutés au contexte) conditionnent le contexte sans modifier les poids |
 
 La génération autorégressive relève de l’inférence. L’entraînement relève de l’apprentissage. Un même modèle peut changer d’usage sans changer d’architecture : c’est ce que détaillent les sections suivantes.
 
@@ -135,9 +135,7 @@ Essayez de répondre avant d’ouvrir les raisonnements. L’objectif est de man
 
 1. **Un token est-il nécessairement un mot ?** Non : un tokenizer peut découper un mot en plusieurs tokens ou regrouper d'autres séquences.
 2. **Le nombre de paramètres suffit-il à définir un LLM ?** Non : l'échelle dépend aussi des données, du calcul et de leur allocation.
-3. **Le fine-tuning d'un GPT modifie-t-il nécessairement sa famille d'architecture ?** Distinguez la mise à jour des paramètres d'une éventuelle modification de la structure du modèle.
-
-4. Le fine-tuning d'un GPT modifie-t-il nécessairement sa famille d'architecture ? Distinguez la mise à jour des paramètres d'une éventuelle modification de la structure du modèle.
+3. Le fine-tuning d'un GPT modifie-t-il nécessairement sa famille d'architecture ? Distinguez la mise à jour des paramètres d'une éventuelle modification de la structure du modèle.
 
 <details>
 <summary>Afficher le raisonnement</summary>
@@ -146,7 +144,7 @@ Non. Le fine-tuning désigne d'abord une procédure d'adaptation des paramètres
 
 </details>
 
-2. Une application doit répondre à partir d’une documentation qui change chaque jour. Comparez l’ajout d’une recherche documentaire (RAG) à un fine-tuning : lequel peut exploiter les nouveaux documents sans réentraîner les poids ?
+4. Une application doit répondre à partir d’une documentation qui change chaque jour. Comparez l’ajout d’une recherche documentaire (RAG) à un fine-tuning : lequel peut exploiter les nouveaux documents sans réentraîner les poids ?
 
 <details>
 <summary>Afficher le raisonnement</summary>
