@@ -1,6 +1,6 @@
 # Formative sequence: text to representations
 
-> **Status: design draft — not learner-release ready.** This document operationalizes issue [#220](https://github.com/JM-Brun/llm-lab/issues/220). It reuses canonical lesson content; it is not a new concept chapter. Release remains gated by the deferred desktop/mobile browser review in [#320](https://github.com/JM-Brun/llm-lab/issues/320); source-level foundational work is tracked separately in the now-closed [#82](https://github.com/JM-Brun/llm-lab/issues/82).
+> **Status: integrated into the bilingual exercise hub on 2026-11-08; learner release still gated by browser review.** This document operationalizes issue [#220](https://github.com/JM-Brun/llm-lab/issues/220). It reuses canonical lesson content; it is not a new concept chapter. The three bundles are published in the exercise hub (see the integration record below); rendered review remains tracked in [#329](https://github.com/JM-Brun/llm-lab/issues/329), the canonical prerequisite-page review in [#320](https://github.com/JM-Brun/llm-lab/issues/320), and source-level foundational work in the now-closed [#82](https://github.com/JM-Brun/llm-lab/issues/82).
 
 ## Design contract
 
@@ -526,4 +526,13 @@ Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un ch
 - Milestone mapping: [#87](https://github.com/JM-Brun/llm-lab/issues/87).
 - Reader-facing architecture: [#130](https://github.com/JM-Brun/llm-lab/issues/130).
 
-The source-level review above does not constitute a second human expert review or learner evidence. Learner-facing rendering and browser validation remain pending until integration.
+The source-level review above does not constitute a second human expert review or learner evidence. Learner-facing integration is recorded below; rendering and browser validation remain pending until [#329](https://github.com/JM-Brun/llm-lab/issues/329).
+
+
+## Learner-facing integration record — 2026-11-08
+
+- The three bundles are published in the bilingual exercise hub: [French](../site/fr/exercises.qmd) and [English](../site/en/exercises.qmd), "Text data" collection, under the stable IDs TR-A, TR-B and TR-C.
+- Publication decision: a separate practice destination (the exercise hub), not embedding into lesson pages. Lesson self-checks are unchanged.
+- Formatting follows the hub pattern (collapsed progressive hints and worked solutions). Prompts, hints, worked values, misconception feedback and architectural qualifications are carried over unchanged from this document.
+- Rendered desktop/mobile review of the published pages is tracked in [#329](https://github.com/JM-Brun/llm-lab/issues/329); the canonical prerequisite-page review remains in [#320](https://github.com/JM-Brun/llm-lab/issues/320). Learner-pilot evidence remains downstream in [#447](https://github.com/JM-Brun/llm-lab/issues/447).
+- This record claims neither rendered review, independent second review, nor learner evidence; those gates remain open.

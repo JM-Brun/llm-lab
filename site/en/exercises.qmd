@@ -34,7 +34,7 @@ Lesson pages use a consistent **“Check your understanding”** component: shor
 | Collection | Scope | Status |
 |---|---|---|
 | [Mathematical foundations](#foundations) | Tensors, probability, logits, entropy, cross-entropy, likelihood, gradients, numerical stability | 7 progressive exercises drafted; gradient checking and other topics remain to be developed |
-| [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Self-checks on IDs and tokenizers in text/embedding pages; extended exercises to be developed |
+| [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Self-checks in the text/embedding lessons; three formative exercises TR-A–TR-C published; BPE, window and leakage exercises to be developed |
 | [Attention](#attention) | Q/K/V, scores, scaling, causal masks, multi-head attention, invariants | Exercises on weighted aggregation and Q/K/V projections; further exercises remain to be developed |
 | [Transformer](#transformer) | Embeddings, position, residuals, normalization, MLP and architecture variants | Structure to be filled |
 | [Pretraining](#pretraining) | Objective, train/validation, perplexity, checkpoints and reproducibility | Structure to be filled |
@@ -224,7 +224,243 @@ A comparison requires checking, among other things, the tokenizer and its segmen
 
 **Prerequisites:** [text and tokenization](text-data.qmd), [embedding space](embedding-space.qmd), and [training examples and input-target shifting](training-examples.qmd).
 
-**Planned focus:** sequence windows, input-target alignment, special tokens and train/validation overlap.
+**Current scope:** three progressive formative exercises, with stable IDs TR-A, TR-B and TR-C shared with the French version, cover reconstructing the text → representations pipeline, calculating an embedding lookup with tensor-shape tracing, and diagnosing identity / position / context. Exercises on BPE, training windows and partition leakage remain to be developed. Suggested order: TR-A, then TR-B (calculate, complete a scaffold, generalize to a batch), then TR-C.
+
+#### Exercise TR-A — Reconstruct the representation pipeline
+
+**Preparation:** a first pass through [text and data](text-data.qmd) and [embedding space](embedding-space.qmd) is enough.
+
+Place these items in causal order, then write one sentence describing what each arrow does:
+
+- token IDs
+- contextualized hidden states
+- source text
+- token strings/fragments
+- initial token embeddings
+
+Do not insert a universal "position vector added at lookup" step. State where position handling belongs at this level of abstraction.
+
+<details>
+<summary>Show hints</summary>
+
+1. Which component defines the token vocabulary?
+2. An ID is used to retrieve a row; it is not itself a vector.
+3. Contextualization happens after the initial lookup.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+Source text → tokenizer output (tokens/fragments) → integer token IDs → embedding-table lookup → initial token embeddings → architecture-dependent position handling and network processing → contextualized hidden states.
+
+The tokenizer maps text to discrete vocabulary entries. The IDs index the embedding table. The lookup selects vectors but does not mix information across sequence positions. Subsequent model computation produces context-dependent states. Position handling is architecture-dependent: learned absolute position embeddings may be added to token embeddings, while RoPE acts on query/key vectors inside attention.
+
+**Common errors:**
+
+- "The tokenizer produces embeddings": it produces token units and IDs; the model's embedding table supplies the vectors.
+- "The ID is a coordinate": it is a discrete vocabulary index; arithmetic distance between IDs has no general semantic interpretation.
+- "Every model adds a position vector immediately after lookup": positional mechanisms differ across architectures.
+
+**Success criterion:** all stages are ordered correctly; token, ID, initial vector and contextualized state are distinguished; positional handling is not presented as universal.
+
+</details>
+
+#### Exercise TR-B — Calculate lookup and trace tensor shapes
+
+**Preparation:** [embedding space](embedding-space.qmd) for the matrix and the lookup; [tensors](tensors.qmd) is an optional notation reference. The exercise progresses in three stages: calculate, complete, generalize.
+
+**Stage 1 — Perform an embedding lookup.** Use the synthetic matrix from the canonical lesson:
+
+$$
+E = \begin{bmatrix}
+0.1 & 0.0 \\
+0.0 & 0.2 \\
+0.8 & -0.1 \\
+-0.2 & 0.5 \\
+0.3 & 0.7
+\end{bmatrix}
+\in \mathbb{R}^{5\times 2}.
+$$
+
+For token IDs $[2,0,3]$:
+
+1. Which rows are selected, in order?
+2. Write the resulting matrix $X$.
+3. Give its shape.
+4. Would changing ID 3 to ID 4 mean "moving one unit" in embedding space?
+
+<details>
+<summary>Show hints</summary>
+
+1. IDs are zero-based row indices in this example.
+2. Copy the selected rows without adding or averaging them.
+3. The sequence length is the number of selected IDs; the embedding dimension is the number of columns.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+The selected rows are $E_2$, $E_0$ and $E_3$, so
+
+$$
+X = \begin{bmatrix}
+0.8 & -0.1 \\
+0.1 & 0.0 \\
+-0.2 & 0.5
+\end{bmatrix}
+\in \mathbb{R}^{3\times 2}.
+$$
+
+The shape is $(L,d)=(3,2)$: three token positions and two features per token. Replacing ID 3 by ID 4 selects a different row; the integer difference is not a distance or displacement in the learned vector space.
+
+**Common errors:**
+
+- Selecting columns instead of rows confuses the embedding dimension with the vocabulary index.
+- Adding or averaging the selected rows changes the operation: a lookup returns one row per ID.
+- "ID 4 is one unit from ID 3" confuses discrete labels with geometric coordinates.
+
+</details>
+
+**Stage 2 — Complete a shape trace.** A batch contains two sequences of three token IDs each. The embedding table has vocabulary size $V=5$ and embedding dimension $d=2$. Complete the missing entries:
+
+| Object | Shape | Meaning |
+|---|---:|---|
+| Embedding table $E$ | $(5,2)$ | vocabulary entries × features |
+| Token IDs | $(2,3)$ | batch × sequence |
+| Lookup result | ? | batch × sequence × features |
+| One sequence after lookup | ? | sequence × features |
+
+Then explain why the vocabulary size $V$ does not appear as an axis in the lookup result.
+
+<details>
+<summary>Show hints</summary>
+
+1. Each of the six IDs selects one row of $E$.
+2. The selected row has length $d=2$.
+3. The lookup output contains one vector for each batch-position pair, not the entire vocabulary table.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+The lookup result has shape $(2,3,2)$; one sequence has shape $(3,2)$. The vocabulary axis indexes the source table. After row selection, the output axes describe the batch, sequence positions and features. The vocabulary dimension is therefore not retained as an output axis.
+
+**Notation note:** this activity uses $d$ for the embedding width. The tensor reference uses $D$ for the model feature width and $d_h$ for a per-head width. Here, $d$ and $D$ denote the same feature-axis role; they are local notation choices, not universally interchangeable symbols.
+
+**Common errors:**
+
+- $(2,3,5,2)$ would incorrectly retain the whole vocabulary table as an extra output axis.
+- $(2,3,5)$ confuses vocabulary size with embedding width.
+- $(2,2,3)$ swaps the sequence and feature axes.
+
+</details>
+
+**Stage 3 — Generalize to the batch.** A batch contains $B=2$ sequences, each with $L=3$ token IDs. The embedding dimension is $d=2$.
+
+1. Give the shape of the ID tensor.
+2. Give its shape after the embedding lookup.
+3. Does the lookup combine information between the three positions?
+4. If a later width-preserving Transformer block returns hidden states, what is their common shape?
+
+<details>
+<summary>Show hints</summary>
+
+1. Count examples, then positions.
+2. Each ID is replaced by a vector of length $d$.
+3. Lookup is an indexed selection, not a contextual mixing operation.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+$$
+\text{IDs}: (B,L)=(2,3), \qquad
+\text{embeddings}: (B,L,d)=(2,3,2).
+$$
+
+Lookup preserves the batch and sequence-position axes and adds the feature axis. It does not mix information across positions. A width-preserving block commonly returns hidden states of shape $(2,3,2)$, although exact conventions depend on the architecture and implementation.
+
+**Common errors:**
+
+- $(2,2,3)$ swaps the position and feature axes.
+- $(2,3)$ omits the vector dimension after the lookup.
+- Claiming that the lookup contextualizes tokens assigns the Transformer's later computation to the embedding table.
+
+</details>
+
+#### Exercise TR-C — Diagnose identity, position and context
+
+**Preparation:** [contextualized representations](contextualized-representations.qmd) and [position and RoPE](positional-encoding.qmd), after TR-A and TR-B. The exercise progresses in two stages: diagnose claims, then predict under controlled changes.
+
+**Stage 1 — Classify claims.** For a fixed tokenizer and fixed embedding matrix, classify each statement as **valid**, **invalid**, or **architecture-dependent**, and justify your choice. No specific model configuration is supplied: when a statement refers to "this model", decide whether the information given is sufficient to determine its behavior.
+
+A. The same token ID selects the same initial embedding row on every occurrence.
+B. Two token IDs with consecutive integer values must have similar embeddings.
+C. The same token ID must have the same contextualized hidden state in every sentence.
+D. This model adds a learned absolute position vector to each token embedding before its first Transformer block.
+E. RoPE is applied to query/key representations inside attention, rather than being a vector universally added by the embedding lookup.
+
+<details>
+<summary>Show hints</summary>
+
+1. Hold the tokenizer and matrix fixed.
+2. Separate the lookup result from later network states.
+3. Distinguish a common architecture family from a universal rule.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+- **A — Valid**, under the stated fixed-matrix condition: lookup selects the same row.
+- **B — Invalid:** row indices are labels, not coordinates.
+- **C — Invalid:** context and position can change later hidden states even when the initial lookup is identical.
+- **D — Architecture-dependent / not decidable from the information given:** learned absolute position embeddings are one possible design, but the exercise does not specify which positional mechanism this model uses. A possible design must not become a universal claim.
+- **E — Valid as a description of RoPE:** it acts on query/key vectors within attention; other positional mechanisms exist.
+
+**Common error:** the decisive distinction separates a property of the tokenizer, a property of a fixed lookup table, and a property of the complete network computation. The third does not follow from the first two.
+
+</details>
+
+**Stage 2 — Predict what changes, and what stays invariant.** Assume a deterministic tokenizer and a fixed model checkpoint. Consider the same token ID $t$ in three situations:
+
+1. It occurs twice in the same input sequence.
+2. It occurs in two different input sequences with different preceding (visible) context; in a decoder-only causal model, tokens to the right are masked and cannot affect this position.
+3. It is replaced by a different ID $u$, while all other positions remain unchanged.
+
+For each situation, predict whether the initial embedding selected by lookup, the effect of the positional mechanism (whether applied to the token stream before the first block or inside attention), and the contextualized hidden state can change. State any architectural qualification needed; do not assume that a change at one position leaves all later states unchanged.
+
+<details>
+<summary>Show hints</summary>
+
+1. A fixed embedding table maps an ID to a fixed row.
+2. Some architectures add position information to the token stream before the first block; RoPE instead transforms query/key vectors inside attention. Do not assume every model has a distinct position-aware input embedding.
+3. Contextualized states depend on the network computation and surrounding input.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+1. The same ID selects the same initial embedding row. If the architecture adds learned absolute position embeddings before the first block, the resulting input representation can differ by position. With a mechanism such as RoPE, the token embedding itself is not changed by a position vector; positional effects enter later inside attention. Contextualized states may differ because position and surrounding context matter.
+2. The initial lookup row remains the same for the same ID and fixed table. The positional mechanism may act on the token stream or inside attention, depending on the architecture. Contextualized states can differ when the preceding (visible) context differs; in a causal decoder, tokens to the right cannot affect this position.
+3. A different ID generally selects a different row. If its position is unchanged, the positional operation itself need not change: an absolute scheme adds the same position vector, while RoPE applies the same position-dependent rotation to the newly computed query/key vectors. The resulting position-aware representations can nevertheless change because their content inputs changed. Contextualized states may change at that position and at other positions that depend on it.
+
+These are qualitative predictions, not guarantees about the magnitude of a numerical change. Exact effects depend on architecture, masking, position mechanism and model parameters.
+
+**Common errors:**
+
+- "Same ID means same hidden state": only the initial lookup row is invariant under a fixed table; later computation is context-sensitive.
+- "Changing one ID affects only one output position": contextual mixing can propagate the change to other positions, subject to the architecture and attention mask.
+- "Different IDs must produce very different vectors": distinct rows need not be far apart geometrically.
+
+</details>
+
+**Further work:** exercises on BPE, training windows, input-target shifting and partition leakage will complete this collection.
 
 ### Attention {#attention}
 

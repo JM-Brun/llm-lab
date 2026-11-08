@@ -34,7 +34,7 @@ Les pages de cours utilisent un composant homogène **« Vérifier sa compréhen
 | Collection | Périmètre | Statut |
 |---|---|---|
 | [Fondations mathématiques](#fondations) | Tenseurs, probabilités, logits, entropie, cross-entropie, vraisemblance, gradients, stabilité numérique | 7 exercices progressifs rédigés ; vérification de gradients et autres thèmes à compléter |
-| [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Auto-vérifications sur IDs et tokenizers dans les pages texte/embeddings ; exercices approfondis à construire |
+| [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Auto-vérifications dans les pages texte/embeddings ; trois exercices formatifs TR-A à TR-C publiés ; BPE, fenêtres et fuites à construire |
 | [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Exercices sur la somme pondérée et les projections Q/K/V ; autres exercices à construire |
 | [Transformer](#transformer) | Embeddings, position, résidus, normalisation, MLP et variantes d’architecture | Structure à compléter |
 | [Préentraînement](#preentrainement) | Objectif, entraînement/validation, perplexité, checkpoints et reproductibilité | Structure à compléter |
@@ -222,9 +222,245 @@ Une comparaison exige notamment de contrôler le tokenizer et sa segmentation, l
 
 ### Données textuelles {#donnees-textuelles}
 
-**Notions préalables :** [texte et tokenisation](text-data.qmd), [espace des embeddings](embedding-space.qmd) et [exemples d’entraînement et décalage entrée-cible](training-examples.qmd).
+**Notions préalables :** [texte et tokenisation](text-data.qmd), [espace des embeddings](embedding-space.qmd) et [exemples d'entraînement et décalage entrée-cible](training-examples.qmd).
 
-**À préparer :** découpage de séquences, alignement entrée-cible, gestion des tokens spéciaux et contrôle des recouvrements entre partitions.
+**Périmètre actuel :** trois exercices formatifs progressifs, aux identifiants stables TR-A, TR-B et TR-C partagés avec la version anglaise, couvrent la reconstruction de la chaîne texte → représentations, le calcul d'un lookup avec le suivi des formes de tenseurs, puis le diagnostic identité / position / contexte. Les exercices sur BPE, les fenêtres d'entraînement et les fuites entre partitions restent à construire. Ordre conseillé : TR-A, puis TR-B (calculer, compléter un tableau guidé, généraliser au batch), puis TR-C.
+
+#### Exercice TR-A — Reconstruire la chaîne des représentations
+
+**Préparation :** une première lecture de [texte et données](text-data.qmd) et de l'[espace des embeddings](embedding-space.qmd) suffit.
+
+Remettez ces éléments dans l'ordre causal, puis décrivez en une phrase ce que réalise chaque flèche :
+
+- IDs des tokens
+- états cachés contextualisés
+- texte source
+- fragments ou chaînes de tokens
+- embeddings initiaux des tokens
+
+N'insérez pas une étape universelle « vecteur de position ajouté au lookup » : indiquez où se situe le traitement positionnel à ce niveau d'abstraction.
+
+<details>
+<summary>Afficher les indices</summary>
+
+1. Quel composant définit le vocabulaire des tokens ?
+2. Un ID sert à sélectionner une ligne ; ce n'est pas un vecteur.
+3. La contextualisation intervient après le lookup initial.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+Texte source → sortie du tokenizer (tokens/fragments) → IDs entiers → lookup dans la table d'embeddings → embeddings initiaux → traitement positionnel et calcul du réseau, dépendants de l'architecture → états cachés contextualisés.
+
+Le tokenizer transforme le texte en unités discrètes du vocabulaire. Les IDs indexent la table d'embeddings. Le lookup sélectionne des vecteurs, sans mélanger les informations entre positions de la séquence. Les calculs ultérieurs du modèle produisent des états dépendant du contexte. Le traitement positionnel dépend de l'architecture : des embeddings positionnels absolus appris peuvent être ajoutés aux embeddings des tokens, tandis que RoPE agit sur les vecteurs requête/clé dans l'attention.
+
+**Erreurs fréquentes :**
+
+- « Le tokenizer produit les embeddings » : il produit des unités de tokens et des IDs ; la table du modèle fournit les vecteurs.
+- « L'ID est une coordonnée » : c'est un indice discret du vocabulaire ; la distance arithmétique entre IDs n'a pas d'interprétation sémantique générale.
+- « Tous les modèles ajoutent un vecteur de position juste après le lookup » : les mécanismes positionnels diffèrent selon l'architecture.
+
+**Critère de réussite :** ordre correct ; distinction entre token, ID, vecteur initial et état contextualisé ; absence de généralisation abusive sur le traitement positionnel.
+
+</details>
+
+#### Exercice TR-B — Calculer un lookup et suivre les formes des tenseurs
+
+**Préparation :** l'[espace des embeddings](embedding-space.qmd) pour la matrice et le lookup ; [tenseurs](tensors.qmd) sert de référence facultative sur les conventions de notation. L'exercice progresse en trois étapes : calculer, compléter, généraliser.
+
+**Étape 1 — Effectuer un lookup d'embedding.** Utilisez la matrice synthétique de la leçon :
+
+$$
+E = \begin{bmatrix}
+0.1 & 0.0 \\
+0.0 & 0.2 \\
+0.8 & -0.1 \\
+-0.2 & 0.5 \\
+0.3 & 0.7
+\end{bmatrix}
+\in \mathbb{R}^{5\times 2}.
+$$
+
+Pour les IDs $[2,0,3]$ :
+
+1. Quelles lignes sont sélectionnées, dans quel ordre ?
+2. Écrivez la matrice résultante $X$.
+3. Donnez sa forme.
+4. Remplacer l'ID 3 par l'ID 4 revient-il à « avancer d'une unité » dans l'espace des embeddings ?
+
+<details>
+<summary>Afficher les indices</summary>
+
+1. Dans cet exemple, les IDs sont des indices de lignes commençant à zéro.
+2. Recopiez les lignes sélectionnées, sans les additionner ni en faire la moyenne.
+3. La longueur de séquence est le nombre d'IDs ; la dimension d'embedding est le nombre de colonnes.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+Les lignes sélectionnées sont $E_2$, $E_0$ et $E_3$, donc
+
+$$
+X = \begin{bmatrix}
+0.8 & -0.1 \\
+0.1 & 0.0 \\
+-0.2 & 0.5
+\end{bmatrix}
+\in \mathbb{R}^{3\times 2}.
+$$
+
+La forme est $(L,d)=(3,2)$ : trois positions de tokens et deux caractéristiques par token. Remplacer l'ID 3 par l'ID 4 sélectionne une autre ligne ; la différence entre les entiers n'est ni une distance ni un déplacement dans l'espace vectoriel appris.
+
+**Erreurs fréquentes :**
+
+- Sélectionner des colonnes au lieu des lignes confond dimension d'embedding et indice de vocabulaire.
+- Additionner ou moyenner les lignes sélectionnées change l'opération : un lookup renvoie une ligne par ID.
+- « L'ID 4 est à une unité de l'ID 3 » confond étiquettes discrètes et coordonnées géométriques.
+
+</details>
+
+**Étape 2 — Compléter une trace de formes.** Un batch contient deux séquences de trois IDs chacune. La table d'embeddings possède un vocabulaire de taille $V=5$ et une dimension d'embedding $d=2$. Complétez les formes manquantes :
+
+| Objet | Forme | Signification |
+|---|---:|---|
+| Table d'embeddings $E$ | $(5,2)$ | entrées du vocabulaire × caractéristiques |
+| IDs des tokens | $(2,3)$ | batch × séquence |
+| Résultat du lookup | ? | batch × séquence × caractéristiques |
+| Une séquence après lookup | ? | séquence × caractéristiques |
+
+Expliquez ensuite pourquoi la taille du vocabulaire $V$ ne figure pas parmi les axes du résultat du lookup.
+
+<details>
+<summary>Afficher les indices</summary>
+
+1. Chacun des six IDs sélectionne une ligne de $E$.
+2. La ligne sélectionnée possède une longueur $d=2$.
+3. Le résultat contient un vecteur par couple batch-position, et non toute la table du vocabulaire.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+Le résultat du lookup a pour forme $(2,3,2)$ ; une séquence a pour forme $(3,2)$. L'axe du vocabulaire indexe la table source. Après sélection des lignes, les axes du résultat décrivent le batch, les positions de séquence et les caractéristiques. La dimension du vocabulaire n'est donc pas conservée comme axe de sortie.
+
+**Note de notation :** cette activité utilise $d$ pour la largeur d'embedding ; la référence sur les tenseurs utilise $D$ pour la largeur des caractéristiques du modèle et $d_h$ pour une largeur par tête. Ici, $d$ et $D$ désignent le même rôle d'axe de caractéristiques ; ce sont des conventions locales, pas des symboles universellement interchangeables.
+
+**Erreurs fréquentes :**
+
+- $(2,3,5,2)$ conserverait à tort toute la table du vocabulaire comme axe supplémentaire.
+- $(2,3,5)$ confond la taille du vocabulaire et la largeur des embeddings.
+- $(2,2,3)$ échange les axes séquence et caractéristiques.
+
+</details>
+
+**Étape 3 — Généraliser au batch.** Un batch contient $B=2$ séquences, chacune composée de $L=3$ IDs. La dimension d'embedding vaut $d=2$.
+
+1. Quelle est la forme du tenseur d'IDs ?
+2. Quelle est sa forme après le lookup ?
+3. Le lookup combine-t-il les informations entre les trois positions ?
+4. Si un bloc Transformer ultérieur conserve la largeur, quelle est la forme usuelle de ses états cachés ?
+
+<details>
+<summary>Afficher les indices</summary>
+
+1. Comptez d'abord les exemples, puis les positions.
+2. Chaque ID est remplacé par un vecteur de longueur $d$.
+3. Le lookup est une sélection indexée, pas une opération de mélange contextuel.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+$$
+\text{IDs} : (B,L)=(2,3), \qquad
+\text{embeddings} : (B,L,d)=(2,3,2).
+$$
+
+Le lookup conserve les axes batch et position, et ajoute l'axe des caractéristiques. Il ne mélange pas les informations entre positions. Un bloc Transformer qui conserve la largeur renvoie couramment des états cachés de forme $(2,3,2)$, mais les conventions exactes dépendent de l'architecture et de l'implémentation.
+
+**Erreurs fréquentes :**
+
+- $(2,2,3)$ échange les axes position et caractéristiques.
+- $(2,3)$ omet la dimension vectorielle après le lookup.
+- Dire que le lookup contextualise les tokens attribue à la table d'embeddings un calcul réalisé plus tard par le Transformer.
+
+</details>
+
+#### Exercice TR-C — Distinguer identité, position et contexte
+
+**Préparation :** [représentations contextualisées](contextualized-representations.qmd) et [position et RoPE](positional-encoding.qmd), après TR-A et TR-B. L'exercice progresse en deux étapes : diagnostiquer des affirmations, puis prédire sous modifications contrôlées.
+
+**Étape 1 — Classifier des affirmations.** Pour un tokenizer et une matrice d'embeddings fixés, classez chaque affirmation comme **valide**, **invalide** ou **dépendante de l'architecture**, puis justifiez votre choix. Aucune configuration de modèle particulière n'est fournie : lorsqu'une affirmation parle de « ce modèle », déterminez si les informations données suffisent pour établir son comportement.
+
+A. Le même ID sélectionne la même ligne d'embedding initial à chaque occurrence.
+B. Deux IDs consécutifs doivent avoir des embeddings similaires.
+C. Un même ID doit produire le même état caché contextualisé dans toutes les phrases.
+D. Ce modèle ajoute un vecteur positionnel absolu appris à chaque embedding de token avant son premier bloc Transformer.
+E. RoPE s'applique aux représentations requête/clé dans l'attention ; ce n'est pas un vecteur ajouté universellement par le lookup.
+
+<details>
+<summary>Afficher les indices</summary>
+
+1. Considérez le tokenizer et la matrice comme fixes.
+2. Séparez le résultat du lookup des états produits ensuite par le réseau.
+3. Distinguez une famille d'architectures courante d'une règle universelle.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+- **A — Valide**, sous l'hypothèse d'une matrice fixe : le lookup sélectionne la même ligne.
+- **B — Invalide :** les indices de lignes sont des étiquettes, pas des coordonnées.
+- **C — Invalide :** le contexte et la position peuvent modifier les états cachés ultérieurs même si le lookup initial est identique.
+- **D — Dépendante de l'architecture / indéterminable avec les informations fournies :** les embeddings positionnels absolus appris constituent une conception possible, mais l'exercice ne précise pas le mécanisme positionnel utilisé par ce modèle. Une conception possible ne doit pas devenir une règle universelle.
+- **E — Valide comme description de RoPE :** le mécanisme agit sur les vecteurs requête/clé dans l'attention ; d'autres mécanismes positionnels existent.
+
+**Erreur fréquente :** la distinction décisive sépare une propriété du tokenizer, une propriété d'une table de lookup fixée et une propriété du calcul complet du réseau. La troisième ne découle pas des deux premières.
+
+</details>
+
+**Étape 2 — Prédire ce qui change et ce qui reste invariant.** Supposez que le tokenizer soit déterministe et que le checkpoint du modèle soit fixe. Considérez le même ID $t$ dans trois situations :
+
+1. Il apparaît deux fois dans la même séquence d'entrée.
+2. Il apparaît dans deux séquences différentes, avec un contexte précédent (visible) différent ; dans un modèle décodeur causal, les tokens situés à droite sont masqués et ne peuvent pas influer sur cette position.
+3. Il est remplacé par un autre ID $u$, tous les autres emplacements restant inchangés.
+
+Pour chaque situation, prévoyez si l'embedding initial sélectionné par lookup, l'effet du mécanisme positionnel (appliqué au flux de tokens avant le premier bloc ou à l'intérieur de l'attention) et l'état caché contextualisé peuvent changer. Précisez les réserves liées à l'architecture ; ne supposez pas qu'un changement à une position laisse nécessairement inchangés tous les états ultérieurs.
+
+<details>
+<summary>Afficher les indices</summary>
+
+1. Une table d'embeddings fixe associe un ID à une ligne fixe.
+2. Certaines architectures ajoutent l'information positionnelle au flux de tokens avant le premier bloc ; RoPE transforme plutôt les vecteurs requête/clé à l'intérieur de l'attention. Ne supposez pas que chaque modèle possède un embedding d'entrée distinct tenant compte de la position.
+3. Les états contextualisés dépendent du calcul du réseau et du contexte de la séquence.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+1. Le même ID sélectionne la même ligne d'embedding initial. Si l'architecture ajoute des embeddings positionnels absolus appris avant le premier bloc, la représentation d'entrée peut différer selon la position. Avec un mécanisme comme RoPE, l'embedding du token n'est pas modifié par un vecteur positionnel ; les effets de position interviennent plus tard, dans l'attention. Les états contextualisés peuvent différer en raison de la position et du contexte.
+2. La ligne initiale sélectionnée reste la même pour un ID donné et une table fixe. Le mécanisme positionnel peut agir sur le flux de tokens ou à l'intérieur de l'attention, selon l'architecture. Les états contextualisés peuvent différer lorsque le contexte précédent (visible) change ; dans un décodeur causal, les tokens situés à droite ne peuvent pas influer sur cette position.
+3. Un ID différent sélectionne généralement une autre ligne. Si sa position reste inchangée, l'opération positionnelle elle-même n'a pas besoin de changer : un mécanisme absolu ajoute le même vecteur de position, tandis que RoPE applique la même rotation dépendant de la position aux nouveaux vecteurs requête/clé calculés. Les représentations résultantes peuvent néanmoins changer puisque leur contenu d'entrée a changé. Les états contextualisés peuvent changer à cette position ainsi qu'à d'autres positions qui en dépendent.
+
+Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un changement numérique. Les effets exacts dépendent de l'architecture, du masque, du mécanisme positionnel et des paramètres du modèle.
+
+**Erreurs fréquentes :**
+
+- « Même ID signifie même état caché » : seule la ligne du lookup initial est invariante pour une table fixe ; les calculs ultérieurs dépendent du contexte.
+- « Changer un ID ne modifie que la sortie à cette position » : le mélange contextuel peut propager le changement à d'autres positions, selon l'architecture et le masque d'attention.
+- « Des IDs différents doivent produire des vecteurs très éloignés » : des lignes distinctes ne sont pas nécessairement éloignées géométriquement.
+
+</details>
+
+**Pour aller plus loin :** les exercices sur BPE, les fenêtres d'entraînement, le décalage entrée-cible et les fuites entre partitions complèteront cette collection.
 
 ### Attention {#attention}
 
