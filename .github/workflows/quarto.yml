@@ -26,9 +26,14 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@8a96df13519ee81fd526f2dfca5962811136661b # v2.2.0
-        with:
-          version: "1.11.9"
+        env:
+          QUARTO_VERSION: "1.11.9"
+        run: |
+          installer="$RUNNER_TEMP/quarto-${QUARTO_VERSION}-linux-amd64.deb"
+          url="https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb"
+          curl --fail --location --retry 5 --retry-all-errors --retry-delay 5 --retry-max-time 240 --output "$installer" "$url"
+          sudo apt-get install --yes "$installer"
+          quarto --version
 
       - name: Set up uv and Python
         uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
