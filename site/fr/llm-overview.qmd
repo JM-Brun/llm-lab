@@ -9,7 +9,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
-scope: "Situe les LLM dans l'intelligence artificielle et l'apprentissage automatique ; définit modèle de langage, modèle génératif, LLM, GPT et Transformer ; distingue architecture, apprentissage des poids et utilisation ; oriente vers les pages dédiées sans détailler la boucle de génération ni les mécanismes internes."
+scope: "Introduit le vocabulaire préalable (token, tokenizer, contexte, paramètres, échelle, inférence) ; situe les LLM dans l'intelligence artificielle et l'apprentissage automatique ; définit modèle de langage, modèle génératif, LLM, GPT et Transformer ; conserve le tronc computationnel partagé et ses branches ; distingue architecture, apprentissage des poids et utilisation."
 purpose: "À l’issue de cette page, le lecteur doit pouvoir situer les LLM, distinguer les principaux termes et les trois dimensions architecture/apprentissage/utilisation, et choisir la page spécialisée pertinente pour comprendre le calcul Transformer ou l’inférence autorégressive."
 suggested_route:
   previous: "fr/index"
@@ -24,7 +24,7 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 {{< include ../includes/generated-guided-context-fr-llm-overview.qmd >}}
 
 ::: {.chapter-lead}
-Un **modèle de langage** estime la plausibilité de séquences de texte à partir d’un contexte. Un modèle génératif peut exploiter cette capacité pour produire une continuation, unité après unité. Un **modèle génératif** peut produire de nouveaux échantillons à partir d'une distribution apprise ; il peut être conditionné par une entrée. Un **LLM** (*large language model*) est un modèle de langage entraîné à grande échelle : il n'existe pas de seuil numérique universel qui sépare mécaniquement les « petits » modèles des LLM. L'[échelle est multidimensionnelle](scaling-laws.qmd). La catégorie LLM ne présuppose pas une architecture particulière.
+Un **modèle de langage** estime la plausibilité de séquences de texte à partir d’un contexte. Un **modèle génératif** peut produire de nouveaux échantillons à partir d'une distribution apprise, éventuellement conditionnée par une entrée ; pour un modèle de langage, cela peut prendre la forme d'une continuation du texte, unité après unité. Un **LLM** (*large language model*) est un modèle de langage entraîné à grande échelle : il n'existe pas de seuil numérique universel qui sépare mécaniquement les « petits » modèles des LLM. L'[échelle est multidimensionnelle](scaling-laws.qmd). La catégorie LLM ne présuppose pas une architecture particulière.
 
 :::
 
