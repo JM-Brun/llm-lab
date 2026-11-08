@@ -70,13 +70,26 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
   const changedPages = new Set(changedFiles
     .filter(file => /^site\/(en|fr)\/.+\.qmd$/.test(file))
     .map(file => file.replace(/^site\/(en|fr)\//, "").replace(/\.qmd$/, ".html")));
+  const browserReviewScriptChanged = changedFiles.includes("scripts/site-browser-review.mjs");
   const hasGlobalSiteChange = changedFiles.some(file =>
     /^site\/(\.quarto|_quarto\.yml|.*\.(css|scss|js))$/.test(file) ||
-    /^site\/_extensions\//.test(file) || /^scripts\//.test(file)
+    /^site\/_extensions\//.test(file) ||
+    (/^scripts\//.test(file) && file !== "scripts/site-browser-review.mjs")
   );
 
-  if (hasGlobalSiteChange || changedPages.size === 0) {
-    const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html"]);
+  const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html"]);
+  if (hasGlobalSiteChange) {
+    for (let i = cases.length - 1; i >= 0; i--) {
+      if (!smokePages.has(cases[i].page)) cases.splice(i, 1);
+    }
+  } else if (browserReviewScriptChanged && changedPages.size === 0) {
+    // A change to this selector itself must exercise the pages it was intended
+    // to add, rather than falling back to unrelated smoke pages.
+    const reviewPages = new Set([...smokePages, "training-examples.html", "build-path.html"]);
+    for (let i = cases.length - 1; i >= 0; i--) {
+      if (!reviewPages.has(cases[i].page)) cases.splice(i, 1);
+    }
+  } else if (changedPages.size === 0) {
     for (let i = cases.length - 1; i >= 0; i--) {
       if (!smokePages.has(cases[i].page)) cases.splice(i, 1);
     }
