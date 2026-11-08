@@ -34,7 +34,7 @@ Les pages de cours utilisent un composant homogène **« Vérifier sa compréhen
 | Collection | Périmètre | Statut |
 |---|---|---|
 | [Fondations mathématiques](#fondations) | Tenseurs, probabilités, logits, entropie, cross-entropie, vraisemblance, gradients, stabilité numérique | 7 exercices progressifs rédigés ; vérification de gradients et autres thèmes à compléter |
-| [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Auto-vérifications dans les pages texte/embeddings ; trois exercices formatifs TR-A à TR-C publiés ; BPE, fenêtres et fuites à construire |
+| [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Auto-vérifications dans les pages texte/embeddings ; quatre exercices formatifs TR-A à TR-D publiés ; BPE et fuites entre partitions à construire |
 | [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Somme pondérée et projections Q/K/V ; CA-A sur le masque causal et l’invariance de préfixe ; trois exercices formatifs AT-A à AT-C publiés (attention multi-têtes) ; variantes avancées à construire |
 | [Transformer](#transformer) | Embeddings, position, résidus, normalisation, MLP et variantes d’architecture | Trois exercices formatifs TF-A à TF-C publiés (formes et normalisation d'un bloc pré-LN, paramètres du bloc, diagnostic et interventions) ; variantes d'architecture à construire |
 | [Préentraînement](#preentrainement) | Objectif, entraînement/validation, perplexité, checkpoints et reproductibilité | Structure à compléter |
@@ -460,7 +460,113 @@ Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un ch
 
 </details>
 
-**Pour aller plus loin :** les exercices sur BPE, les fenêtres d'entraînement, le décalage entrée-cible et les fuites entre partitions complèteront cette collection.
+#### Exercice TR-D — Construire des fenêtres et aligner les cibles
+
+**Préparation :** la section « fenêtres glissantes et stride » de [du corpus tokenisé aux exemples d'entraînement](training-examples.qmd), après TR-A et TR-B. Cet exercice porte sur le contrat entrée-cible ; il ne demande pas d'implémenter un tokenizer ni un chargeur de données.
+
+On considère le flux d'identifiants :
+
+$
+s = [11, 4, 4, 9, 2, 7, 5]
+$
+
+avec une longueur de contexte $L=3$ et un stride $S=2$.
+
+**Étape 1 — Construire les exemples.**
+
+1. Écrivez les fenêtres d'entrée conservées.
+2. Pour chacune, écrivez la cible décalée d'une position dans le flux source.
+3. Donnez les formes des tableaux d'entrée et de cible.
+
+<details>
+<summary>Afficher les indices</summary>
+
+- Une fenêtre commençant à la position $a$ utilise $s[a:a+L]$ comme entrée.
+- Sa cible est $s[a+1:a+L+1]$.
+- Le stride donne les débuts successifs : $0, 2, 4, \ldots$ ; une fenêtre n'est conservée que si sa cible est complète.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+Les débuts valides sont $a=0$ et $a=2$ :
+
+$
+X = \begin{bmatrix}
+11 & 4 & 4 \\
+4 & 9 & 2
+\end{bmatrix},
+\qquad
+Y = \begin{bmatrix}
+4 & 4 & 9 \\
+9 & 2 & 7
+\end{bmatrix}.
+$
+
+Les deux tableaux ont la forme $(2,3)$ : deux exemples et trois positions par exemple. À chaque position, la cible est le token qui suit l'entrée correspondante dans le flux source.
+
+</details>
+
+**Étape 2 — Diagnostiquer la fin du corpus.**
+
+Le début suivant après $a=2$ serait $a=4$.
+
+1. Pourquoi cette fenêtre n'est-elle pas conservée ?
+2. Combien de fenêtres obtiendrait-on avec un stride de 1, puis avec un stride de 3 ?
+3. Pour $N$ tokens, une longueur $L$ et un stride $S$, expliquez le rôle du terme $N-L-1$ dans la formule
+   $
+   n_{\text{fenêtres}} = 1 + \left\lfloor\frac{N-L-1}{S}\right\rfloor,
+   $
+   lorsque $N\geq L+1$.
+
+<details>
+<summary>Afficher les indices</summary>
+
+- Une entrée de longueur $L$ consomme $L$ tokens, mais sa cible décalée consomme le successeur du dernier token d'entrée.
+- Il faut donc au moins $L+1$ tokens source pour un exemple complet.
+- Les débuts valides sont les multiples de $S$ qui ne dépassent pas $N-L-1$.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+À $a=4$, l'entrée serait $[2,7,5]$, mais sa cible devrait être $[7,5,\,?]$ : le dernier successeur n'existe pas dans le flux fourni. L'implémentation de référence écarte cette fenêtre ; elle n'invente ni token de fin ni padding.
+
+Avec $N=7$ et $L=3$ :
+
+- $S=1$ : débuts $0,1,2,3$, donc **4 fenêtres**.
+- $S=2$ : débuts $0,2$, donc **2 fenêtres**.
+- $S=3$ : débuts $0,3$, donc **2 fenêtres**.
+
+Le terme $N-L-1$ est le dernier début possible : après les $L$ tokens d'entrée, il doit rester un token cible. La formule compte les multiples de $S$ compris entre zéro et cette borne incluse.
+
+</details>
+
+**Étape 3 — Repérer une erreur d'alignement.**
+
+Une implémentation fautive construit les cibles en recopiant exactement les entrées. Expliquez pourquoi les formes peuvent être correctes alors que l'objectif de prédiction du prochain token ne l'est pas. Donnez un test simple qui détecterait cette erreur.
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+La forme $(n_{\text{fenêtres}},L)$ ne vérifie que la structure des tableaux, pas leur alignement sémantique. Si les cibles sont identiques aux entrées, le modèle est entraîné à reproduire le token déjà présent à chaque position au lieu de prédire son successeur.
+
+Un test direct vérifie, pour chaque fenêtre, que la cible à la position $(k,i)$ est égale au token source situé immédiatement après l'entrée correspondante. Pour les positions internes, on peut aussi vérifier l'invariant selon lequel les cibles sauf la dernière colonne sont égales aux entrées à partir de la deuxième colonne ; la dernière position doit être comparée au token suivant dans le flux source. Les tests de **sliding_input_target_pairs** couvrent déjà ces invariants.
+
+**Erreurs fréquentes :**
+
+- Oublier le token supplémentaire nécessaire à la dernière cible et compter une fenêtre incomplète.
+- Confondre longueur d'entrée $L$ et longueur $L+1$ du segment source qui détermine une paire complète.
+- Croire que des formes identiques garantissent un décalage correct.
+- Interpréter le stride comme une modification du décalage : le stride change le début des fenêtres, pas la relation entre chaque entrée et sa cible.
+
+</details>
+
+**Critère de réussite :** les paires sont exactes, la fin du corpus est traitée sans token inventé, le nombre de fenêtres est justifié et l'erreur de copie entrée-cible est détectée par un invariant vérifiable.
+
+**Pour aller plus loin :** BPE et les fuites entre partitions restent à construire. Le batching et les masques de perte sont des sujets distincts ; ils ne sont pas implémentés par la fonction de référence utilisée ici.
 
 ### Attention {#attention}
 
