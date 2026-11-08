@@ -887,6 +887,11 @@ for (const testCase of cases) {
     // text instead of an equation, so treat it as a blocking audit failure.
     const mathSummary = item.layout.math;
     const unrenderedMath = mathSummary.mathSpans - mathSummary.mathSpansRendered;
+    // Entropy is an equation-heavy lesson. Zero parsed math spans means the
+    // source delimiters were stripped as Markdown escapes, not that math passed.
+    if (pagePath === "entropy.html" && mathSummary.mathSpans === 0) {
+      report.failures.push(`${pagePath}/${lang}/${label}/${theme}: expected entropy equations, but Quarto produced no math spans`);
+    }
     if (unrenderedMath > 0) {
       report.failures.push(
         `${pagePath}/${lang}/${label}/${theme}: ${unrenderedMath} of ${mathSummary.mathSpans} math expressions did not render (pandoc math span without KaTeX or MathJax output)`
