@@ -2034,3 +2034,20 @@ span.math.inline, .math.inline {
     transition: none;
   }
 }
+
+
+/* Overview computation graphs keep their desktop layout. On phones, allow
+   horizontal scrolling instead of shrinking every node label to fit the
+   narrow reading column. The text alternative remains available below. */
+@media (max-width: 600px) {
+  .computational-graph .callout-body {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  .computational-graph .mermaid svg {
+    min-width: 520px;
+    max-width: none !important;
+  }
+}
