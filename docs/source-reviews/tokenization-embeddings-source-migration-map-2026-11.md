@@ -167,28 +167,28 @@ The eventual collection dossier should compare the sources on a consistent set o
 9. What does a visualizer actually execute, omit or approximate?
 10. Which teaching moves add value beyond the canonical LLM Lab route?
 
-## 6. Unresolved metadata and evidence retrieval queue
+## 6. Remaining evidence and provenance queue
 
-The following are explicit migration blockers for catalogue completeness, not reasons to repeat the technical audit:
+The catalogue migration, structured extraction backfill and cross-source synthesis are already integrated. The remaining items below are bounded evidence-retrieval questions; they are not reasons to repeat the source audit or restart the migration.
 
-- **Core catalogue metadata reconciled:** the current catalogue already contains records for Ahia (`Do All Languages Cost the Same?`, Ahia et al., ACL Anthology URL, 2023), Ali (`Tokenizer Choice For LLM Training`, Ali et al., ACL Anthology URL, 2024), Wegmann (`Tokenization is Sensitive to Language Variation`, Wegmann et al., ACL Anthology URL, 2025) and TokLens (Chiu, ACL Anthology URL, 2026). These records use stable IDs that differ from some historical candidate IDs in the migration tables. Do not register them again. Their `identifiers` fields are still empty and author lists are abbreviated with `et al.`; only fill DOI/full author metadata from an authoritative primary record, and do not treat those optional refinements as blockers for the already completed catalogue migration.
-- The two ByteByteGo articles are now separately registered with canonical URLs: one corpus-preparation overview and one introductory tokenization/embeddings overview. Do not create a speculative third record unless historical evidence demonstrates a distinct resource.
-- The Vizuara BPE course and 30,000 Feet micro-course are now registered with canonical URLs. A potentially separate Vizuara embeddings resource remains unresolved; recover it only from historical evidence and do not infer that it exists.
-- Recover the exact version/commit used for Raschka Chapter 2, Hugging Face course pages and Polo Club repository.
-- Confirm whether Karpathy's transcript source and timestamp guide have a stable record URL and preserve the limitation that the full video was not watched.
+- **ACL bibliographic metadata reconciled:** PR #687 enriched the existing stable records for Ahia, Ali, Wegmann and TokLens with DOI identifiers, complete author lists and corrected full titles where needed. Do not re-register these sources or keep their old abbreviated-author/empty-identifier status as an open task.
+- The two ByteByteGo articles are separately registered with canonical URLs: one corpus-preparation overview and one introductory tokenization/embeddings overview. Do not create a speculative third record unless historical evidence demonstrates a distinct resource.
+- The Vizuara BPE course and 30,000 Feet micro-course are registered with canonical URLs. A potentially separate Vizuara embeddings resource remains unresolved; recover its identity only from historical evidence and do not infer that it exists.
+- Exact upstream revisions remain unknown for the inspected Raschka Chapter 2 source, Hugging Face course pages and Polo Club repository. Pin a revision only if the existing audit records, archived links or local Git history identify the exact inspected state; do not substitute today's revision.
+- Confirm whether Karpathy's transcript source and timestamp guide have a stable, independently citable URL. Preserve the limitation that the full video was not watched.
 - Keep all visual asset-level rights checks in #156; do not infer them from source repository licences or attribution.
 - Do not invent missing scan dates, creators, publication dates or revision identifiers.
 
-## 7. Recommended migration sequence
+## 7. Current follow-up sequence after migration
 
-1. **Metadata refinement (bounded):** do not repeat the completed catalogue migration for Ahia, Ali, Wegmann or TokLens. If persistent identifiers or full author lists are needed, verify them against the primary ACL Anthology records and update the existing stable IDs only. Continue to distinguish core catalogue registration from optional bibliographic enrichment.
-2. **Catalogue migration:** add stable records to `data/sources.yml` using the source-registration template. Keep scan and rights status component-specific.
-3. **Extraction migration:** create structured extraction files only for sources with sufficiently locatable evidence. Start with high-value primary sources (Karpathy transcript audit, Raschka Chapter 2, Hugging Face course, Gage, Mikolov, Ethayarajh, Li, Steck).
-4. **Review migration:** link the existing source-by-source review evidence; do not rewrite the historical issue audit.
-5. **Collection synthesis:** create a single tokenization/embeddings dossier with the multi-source template, separating the subdomains above.
-6. **Validation:** run existing YAML/schema/catalogue validators, source-link checks, Python CI and Quarto if any rendered data/page is changed.
-7. **Review the PR diff:** verify that no canonical learner content, external figure or route has been changed unintentionally.
+1. [x] **Catalogue migration:** stable source records and the migration map were integrated via #460; later corrections and metadata enrichments preserve existing source IDs.
+2. [x] **Structured extraction backfill:** PRs #463, #467, #468 and #469 are integrated. The current collection has 12 tokenization/embeddings extraction records; the repository has 20 YAML extraction records overall. These counts are inventory facts, not coverage or quality scores.
+3. [x] **Review migration and collection synthesis:** existing source-by-source audit evidence is linked, and the cross-source dossier is maintained in `tokenization-embeddings-source-collection.md`.
+4. [ ] **Revision provenance:** retrieve exact revisions for Raschka, Hugging Face and Polo Club only when recoverable from historical evidence. Otherwise retain `revision: null` and document the limit.
+5. [ ] **Vizuara identity:** resolve whether a distinct embeddings resource exists using historical references only; do not create a guessed record.
+6. [ ] **Media rights:** continue the asset-level review under #156; preserve existing visuals until a specific rights decision is documented.
+7. [ ] **Validation:** run the existing catalogue/extraction validators and relevant CI only when source records or extraction files change. Reuse the current dossier and index; do not recreate the migration inventory.
 
 ## 8. Current conclusion
 
-The project already has substantive technical and pedagogical coverage of tokenization and embeddings. The immediate gap is **evidence normalization and provenance navigation**, not a missing introductory lesson. The migration should make the source set inspectable and reusable while preserving partial-scan limitations, existing content decisions and the separation between the source graph, canonical concept graph and learner route.
+The project already has substantive technical and pedagogical coverage of tokenization and embeddings. The catalogue migration, structured extraction backfill and cross-source synthesis are complete as bounded inventory work; the remaining gap is **specific evidence and provenance retrieval**, not a missing introductory lesson or a need for more records. Preserve partial-scan limitations, unknown revisions and unresolved asset rights, and keep the source graph distinct from the canonical concept graph and learner route.
