@@ -96,7 +96,7 @@ The `forward computation` node (one network execution mapping the context to out
 | Branch | How the distribution is used | Parameters |
 |---|---|---|
 | **Generation** | Process the initial prompt (*prefill*), then select a token, append it to the context, and repeat during *decode*; see [Generating text](generation.qmd) | Fixed |
-| **Scoring / evaluation** | Score a known target from its observed prefix (a form of *teacher-forcing* conditioning), compute its likelihood or NLL, then aggregate task-appropriate metrics on held-out data; see [Likelihood](likelihood.qmd) | Fixed |
+| **Scoring / evaluation** | Score a known target from its observed prefix (a form of *teacher forcing*), compute its likelihood or NLL, then aggregate task-appropriate metrics on held-out data; see [Likelihood](likelihood.qmd) | Fixed |
 | **Training** | At each position, provide the prefix from the reference sequence (*teacher forcing*), compare the distribution with the target token, aggregate the losses, then compute their gradients with respect to the parameters; see [Training examples](training-examples.qmd), [Loss](loss.qmd), and [Gradients](gradients.qmd) | Updated at the update step |
 
 Target scoring and model evaluation are not synonyms: scoring computes a conditional probability; evaluation aggregates scores or task-specific metrics under a data protocol. Likelihood-based evaluation reuses the scoring path without updating parameters; task evaluation may also assess generated outputs.
