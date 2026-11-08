@@ -10,6 +10,10 @@ explicit human arbitration (see issue #652), in addition to proven-redundant
 branches. Protected branches (main, open pull-request heads, `exclude:`)
 are never deleted, even if listed.
 
-apply: true
+The default state is a dry run (`apply: false`): edit this file to trigger a
+report on issue #652, and only switch to `apply: true` when the report shows
+branches that should really be deleted.
+
+apply: false
 exclude:
-delete: ci/branch-hygiene-default-dry
+delete:
