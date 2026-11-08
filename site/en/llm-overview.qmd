@@ -40,11 +40,11 @@ By the end of this page, you will be able to:
 A few terms should be clear before following the discussion.
 
 - **Token:** a discrete unit produced from text by a *tokenizer*. A token may correspond to a word, part of a word, a character, or another sequence of characters; it is not necessarily a word.
-- **Tokenizer and vocabulary:** the *tokenizer* defines the segmentation and maps tokens to integer identifiers (*token IDs*). Its vocabulary is the set of units it can represent. Segmentation depends on the tokenizer in use.
-- **Context:** in autoregressive prediction, the preceding tokens available to the model when computing a continuation. It may contain the prompt and, during generation, tokens already produced.
-- **Parameters:** numerical values learned during training — including weights and biases — that determine the network's computations. During ordinary inference, they remain fixed.
+- **Tokenizer and vocabulary:** the *tokenizer* defines the segmentation and maps tokens to integer identifiers (*token IDs*). Its vocabulary is the set of units it can represent. Segmentation depends on the tokenizer in use; see [text and data](text-data.qmd) and [tokenization strategies](tokenization-strategies.qmd).
+- **Context:** in autoregressive prediction, the preceding tokens available to the model when computing a continuation. It may contain the prompt and, during generation, tokens already produced; [step-by-step generation](generation.qmd) shows how it evolves.
+- **Parameters:** numerical values learned during training — including weights and biases — that determine the network's computations. During ordinary inference, they remain fixed. The [configuration of a small GPT](gpt-config-walkthrough.qmd) introduces the model's main dimensions and parameters.
 - **Scale:** a multidimensional notion that includes, among other things, parameter count, the quantity and quality of training data, and the compute used. Parameter count is only one indicator; it does not define an LLM by itself. [Scaling laws](scaling-laws.qmd) study these relationships empirically.
-- **Inference:** using a model with fixed parameters to compute an output from an input. Autoregressive generation is one particular form of inference.
+- **Inference:** using a model with fixed parameters to compute an output from an input. Autoregressive generation is one particular form of inference; see [Generating text](generation.qmd).
 
 ::: {.callout-tip title="Three essential reference points"}
 A **token** is a unit used to represent text; a **parameter** is a value learned by the model; **scale** describes several resources and dimensions, not just network size.
