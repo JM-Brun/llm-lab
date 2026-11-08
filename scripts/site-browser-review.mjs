@@ -20,6 +20,10 @@ const routeContextCases = visualCases.filter(testCase => testCase.theme === "lig
 const textDataResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
 const transformerOverviewResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
 
+// #329: the bilingual exercise hub contains the TR, TF and AT collections.
+// Review it in both languages and at desktop/mobile sizes, not only as a smoke page.
+const exerciseHubCases = visualCases;
+
 const cases = [
   // The French homepage is the site root; English has its own /en/ landing page.
   ...visualCases.map(testCase => ({
@@ -27,6 +31,9 @@ const cases = [
   })),
   ...visualCases.map(testCase => ({
     ...testCase, page: "learning-map.html", kind: "learning-map",
+  })),
+  ...exerciseHubCases.map(testCase => ({
+    ...testCase, page: "exercises.html", kind: "exercise-hub",
   })),
   ...visualCases.map(testCase => ({
     ...testCase, page: "llm-overview.html", kind: "spine-overview",
@@ -95,7 +102,7 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
-    const targetedReviewPages = new Set(["transformer.html", "entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
+    const targetedReviewPages = new Set(["exercises.html", "transformer.html", "entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
     // A browser-review script change must exercise the focused lesson pages:
     // they share page-navigation, responsive, and rendered-math assertions.
     const selectedPages = new Set([
@@ -186,7 +193,7 @@ for (const testCase of cases) {
 
       item.homepageOrientation = await page.evaluate(() => {
         const readLinks = selector => [...document.querySelectorAll(selector)].map(link => ({
-          label: link.textContent.trim().replace(/\\s+/g, " "),
+          label: link.textContent.trim().replace(/\s+/g, " "),
           path: new URL(link.getAttribute("href"), document.baseURI).pathname,
         }));
         return {
@@ -240,6 +247,53 @@ for (const testCase of cases) {
       }));
     }
     item.h1 = await page.locator("h1").first().innerText().catch(() => null);
+
+    if (kind === "exercise-hub") {
+      const hub = page.locator("main");
+      const visibleText = await hub.innerText();
+      const exerciseIds = ["TR-A", "TR-B", "TR-C", "TF-A", "TF-B", "TF-C", "AT-A", "AT-B", "AT-C"];
+      item.exerciseHub = await page.evaluate(() => {
+        const lang = document.documentElement.lang || "en";
+        const anchors = lang.startsWith("fr")
+          ? ["donnees-textuelles", "attention", "transformer"]
+          : ["text-data", "attention", "transformer"];
+        const details = [...document.querySelectorAll("main details")];
+        return {
+          collectionAnchors: anchors.map(id => ({ id, exists: Boolean(document.getElementById(id)) })),
+          detailsCount: details.length,
+          summariesCount: details.filter(node => node.querySelector(":scope > summary")).length,
+          openDetailsAtLoad: details.filter(node => node.open).length,
+          tableCount: document.querySelectorAll("main table").length,
+        };
+      });
+      item.exerciseHub.exerciseIdsPresent = exerciseIds.filter(id =>
+        visibleText.includes(id)
+      );
+      item.exerciseHub.missingExerciseIds = exerciseIds.filter(id =>
+        !visibleText.includes(id)
+      );
+      if (item.exerciseHub.collectionAnchors.some(anchor => !anchor.exists)) {
+        throw new Error("one or more canonical exercise collection anchors are missing");
+      }
+      if (item.exerciseHub.missingExerciseIds.length) {
+        throw new Error(`missing stable exercise IDs: ${item.exerciseHub.missingExerciseIds.join(", ")}`);
+      }
+      if (item.exerciseHub.detailsCount < 9 ||
+          item.exerciseHub.summariesCount !== item.exerciseHub.detailsCount ||
+          item.exerciseHub.openDetailsAtLoad !== 0) {
+        throw new Error("exercise hints/solutions must use native collapsed details/summary disclosures");
+      }
+      if (item.exerciseHub.tableCount < 3) {
+        throw new Error("expected exercise tables are missing from the rendered hub");
+      }
+      const firstSummary = hub.locator("details > summary").first();
+      await firstSummary.focus();
+      await page.keyboard.press("Enter");
+      await page.waitForFunction(() => document.querySelector("main details")?.open === true);
+      await page.keyboard.press("Space");
+      await page.waitForFunction(() => document.querySelector("main details")?.open === false);
+      item.exerciseHub.nativeDisclosureKeyboard = true;
+    }
     // Quarto footer navigation follows editorial sidebar order, independently
     // of document-level rel metadata, the guided route, and the computational graph.
     // Validate the actual visible control and its localized accessible name.
