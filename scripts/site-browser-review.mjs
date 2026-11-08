@@ -31,7 +31,7 @@ const cases = [
     ...testCase, page: "llm-overview.html", kind: "spine-overview",
   })),
   ...routeContextCases.flatMap(testCase =>
-    ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "attention-score-scaling.html", "cross-attention.html", "logits.html", testCase.lang === "fr" ? "probabilites.html" : "probabilities.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "decoding-strategies.html", "cross-entropy.html", "loss.html", "gradients.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
+    ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "entropy.html", "scaled-dot-product-attention.html", "causal-masking.html", "attention-score-scaling.html", "cross-attention.html", "logits.html", testCase.lang === "fr" ? "probabilites.html" : "probabilities.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "decoding-strategies.html", "entropy.html", "cross-entropy.html", "loss.html", "gradients.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
       ...testCase, page, kind: "route-context",
     }))
   ),
@@ -89,7 +89,7 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
-    const scoringPages = new Set(["likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
+    const scoringPages = new Set(["entropy.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
     // A browser-review script change must exercise the scoring pages too:
     // they share the page-navigation and responsive assertions, and their
     // screenshots are part of the manual review evidence.
