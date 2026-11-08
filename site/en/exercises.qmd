@@ -35,7 +35,7 @@ Lesson pages use a consistent **“Check your understanding”** component: shor
 |---|---|---|
 | [Mathematical foundations](#foundations) | Tensors, probability, logits, entropy, cross-entropy, likelihood, gradients, numerical stability | 7 progressive exercises drafted; gradient checking and other topics remain to be developed |
 | [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Self-checks in the text/embedding lessons; three formative exercises TR-A–TR-C published; BPE, window and leakage exercises to be developed |
-| [Attention](#attention) | Q/K/V, scores, scaling, causal masks, multi-head attention, invariants | Weighted aggregation and Q/K/V projections; three formative multi-head exercises AT-A–AT-C published; causal-mask and invariant exercises to be developed |
+| [Attention](#attention) | Q/K/V, scores, scaling, causal masks, multi-head attention, invariants | Weighted aggregation and Q/K/V projections; CA-A on causal masking and prefix invariance; three formative multi-head exercises AT-A–AT-C published; advanced variants remain to be developed |
 | [Transformer](#transformer) | Embeddings, position, residuals, normalization, MLP and architecture variants | Three formative exercises TF-A–TF-C published (shapes and normalization of a pre-LN block, block parameter count, diagnosis and interventions); architecture-variant exercises to be developed |
 | [Pretraining](#pretraining) | Objective, train/validation, perplexity, checkpoints and reproducibility | Structure to be filled |
 | [Generation](#generation) | Decoding, temperature, top-k/top-p, stopping, context and KV cache | Structure to be filled |
@@ -464,11 +464,11 @@ These are qualitative predictions, not guarantees about the magnitude of a numer
 
 ### Attention {#attention}
 
-**Preparation:** the Q/K/V exercises use [Q/K/V projections](queries-keys-values.qmd), matrix shapes, and NumPy; [tensors](tensors.qmd) is an optional shape reference. Score, softmax, and aggregation exercises rely on [scaled dot-product attention](scaled-dot-product-attention.qmd). None of the exercises below requires studying causal masking first.
+**Preparation:** the Q/K/V exercises use [Q/K/V projections](queries-keys-values.qmd), matrix shapes, and NumPy; [tensors](tensors.qmd) is an optional shape reference. Score, softmax, and aggregation exercises rely on [scaled dot-product attention](scaled-dot-product-attention.qmd). The Q/K/V and AT-A–AT-C exercises do not require prior study of causal masking; CA-A introduces and works through that invariant itself.
 
 **Q/K/V competencies assessed:** recognizing the roles, reconstructing projections, explaining how they are learned, predicting parameter-change effects, and transferring the reasoning to cross-attention. The existing weighted-sum task remains the aggregation calculation.
 
-**Current scope:** in addition to the weighted-aggregation and Q/K/V projection exercises above, three progressive formative exercises, with stable IDs AT-A, AT-B and AT-C shared with the French version, cover computing a multi-head attention by hand, tracing multi-head shapes, then claim diagnosis and intervention prediction. Multi-head causal masking and advanced invariants remain to be developed. Suggested order: AT-A, then AT-B, then AT-C.
+**Current scope:** CA-A introduces causal masking, shifted targets, and prefix invariance using a mask matrix and the existing tests. Three separate progressive formative exercises, with stable IDs AT-A, AT-B and AT-C shared with the French version, cover multi-head attention calculation, shape tracing, then claim diagnosis and intervention prediction. Multi-head-specific masking variants and advanced invariants remain to be developed. Suggested order: CA-A for causal masking, then AT-A, AT-B and AT-C for the multi-head sequence.
 
 #### Calculate an aggregation by hand
 
@@ -609,6 +609,68 @@ Q=X_DW_Q,\qquad K=X_EW_K,\qquad V=X_EW_V.
 $$
 
 With parameters fixed, changing $X_D$ directly affects Q; changing $X_E$ directly affects K and V. Scores and output may then change as a consequence. The functional distinction remains, but the projections no longer share a common input. In MQA, multiple query heads share one K/V head; in GQA, groups of query heads share K/V heads. The number or sharing of K/V heads changes, but the functional distinction remains: Q/K determine weights and V supplies aggregated content. Describe the exact parameterization rather than mechanically copying the standard case.
+
+</details>
+
+#### Exercise CA-A — Causal masking and prefix invariance
+
+Consider four input tokens \(x_0,x_1,x_2,x_3\). At query position \(i\), causal self-attention allows only keys at positions \(j\leq i\).
+
+1. Complete the matrix \(A\) of **allowed** positions, defined by \(A_{ij}=1\) when \(j\leq i\), and \(A_{ij}=0\) otherwise.
+2. Derive the matrix \(B\) of **blocked** positions. What relation connects \(A\) and \(B\)?
+3. With targets shifted by one token, position \(i\) predicts \(x_{i+1}\). Why must the diagonal of \(A\) be allowed without revealing the target?
+4. Append \(x_4\) to the sequence. Which outputs at positions \(0,1,2,3\) must remain invariant? Is the output at position 4 subject to the same constraint?
+5. Distinguish the roles of a causal mask, a padding mask, a loss/target mask, and a document-boundary mask.
+
+<details>
+<summary>Show the reasoned solution</summary>
+
+The allowed-position matrix is lower triangular:
+
+\[
+A=
+\begin{pmatrix}
+1&0&0&0\\
+1&1&0&0\\
+1&1&1&0\\
+1&1&1&1
+\end{pmatrix}.
+\]
+
+The blocked-position matrix is its complement:
+
+\[
+B=
+\begin{pmatrix}
+0&1&1&1\\
+0&0&1&1\\
+0&0&0&1\\
+0&0&0&0
+\end{pmatrix},
+\qquad B_{ij}=1-A_{ij}.
+\]
+
+The diagonal is allowed because the input at position \(i\) already contains \(x_i\), and the model predicts the next token \(x_{i+1}\). The input-target shift is essential: the model does not receive \(x_{i+1}\) as input at that position. Without this shift, allowing the diagonal could expose the target.
+
+After appending \(x_4\), outputs at positions 0–3 must remain unchanged in causal self-attention, with fixed parameters and the same prefix inputs/positions. The future token's key and value are blocked for those queries. The new position 4 may attend to positions 0–4; its output is not required to match the output at position 3.
+
+The masks are not interchangeable:
+
+- **Causal:** prevents a query from attending to a future key.
+- **Padding:** generally prevents attention to key positions that contain only padding; handling padded query positions depends on the implementation.
+- **Loss/target:** excludes selected targets from the objective and its denominator; by itself it does not define attention visibility.
+- **Document boundary:** may prevent attention across concatenated documents; this is a data/attention policy, not a universal consequence of causal masking.
+
+The existing tests provide two complementary levels of evidence:
+
+- **test_scaled_dot_product_attention_causal_invariance** in **tests/unit/test_attention.py** perturbs a future key and value and checks that earlier-position outputs remain unchanged. It tests the attention primitive.
+- **test_prefix_invariance_future_tokens_do_not_change_earlier_logits** in **tests/unit/test_gpt.py** compares a prefix's logits with the corresponding logits from an extended sequence under the same GPT. It covers the full model path for this case.
+
+These tests are targeted checks, not formal proofs for every input, architecture, or implementation. Run them with:
+
+~~~bash
+uv run --locked pytest --no-cov -q tests/unit/test_attention.py tests/unit/test_gpt.py
+~~~
 
 </details>
 
