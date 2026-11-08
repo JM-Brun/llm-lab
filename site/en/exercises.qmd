@@ -34,7 +34,7 @@ Lesson pages use a consistent **“Check your understanding”** component: shor
 | Collection | Scope | Status |
 |---|---|---|
 | [Mathematical foundations](#foundations) | Tensors, probability, logits, entropy, cross-entropy, likelihood, gradients, numerical stability | 7 progressive exercises drafted; gradient checking and other topics remain to be developed |
-| [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Self-checks in the text/embedding lessons; three formative exercises TR-A–TR-C published; BPE, window and leakage exercises to be developed |
+| [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Self-checks in the text/embedding lessons; four formative exercises TR-A–TR-D published; BPE and partition-leakage exercises remain to be developed |
 | [Attention](#attention) | Q/K/V, scores, scaling, causal masks, multi-head attention, invariants | Weighted aggregation and Q/K/V projections; CA-A on causal masking and prefix invariance; three formative multi-head exercises AT-A–AT-C published; advanced variants remain to be developed |
 | [Transformer](#transformer) | Embeddings, position, residuals, normalization, MLP and architecture variants | Three formative exercises TF-A–TF-C published (shapes and normalization of a pre-LN block, block parameter count, diagnosis and interventions); architecture-variant exercises to be developed |
 | [Pretraining](#pretraining) | Objective, train/validation, perplexity, checkpoints and reproducibility | Structure to be filled |
@@ -460,7 +460,113 @@ These are qualitative predictions, not guarantees about the magnitude of a numer
 
 </details>
 
-**Further work:** exercises on BPE, training windows, input-target shifting and partition leakage will complete this collection.
+#### Exercise TR-D — Build windows and align targets
+
+**Preparation:** the “sliding windows and stride” section of [from tokenized corpus to training examples](training-examples.qmd), after TR-A and TR-B. This exercise focuses on the input-target contract; it does not ask you to implement a tokenizer or data loader.
+
+Consider the token-ID stream:
+
+$
+s = [11, 4, 4, 9, 2, 7, 5]
+$
+
+with context length $L=3$ and stride $S=2$.
+
+**Stage 1 — Construct the examples.**
+
+1. Write the retained input windows.
+2. For each one, write the target shifted one position in the source stream.
+3. Give the shapes of the input and target arrays.
+
+<details>
+<summary>Show hints</summary>
+
+- A window starting at position $a$ uses $s[a:a+L]$ as input.
+- Its target is $s[a+1:a+L+1]$.
+- Stride gives the successive starts: $0, 2, 4, \ldots$; a window is retained only when its target is complete.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+The valid starts are $a=0$ and $a=2$:
+
+$
+X = \begin{bmatrix}
+11 & 4 & 4 \\
+4 & 9 & 2
+\end{bmatrix},
+\qquad
+Y = \begin{bmatrix}
+4 & 4 & 9 \\
+9 & 2 & 7
+\end{bmatrix}.
+$
+
+Both arrays have shape $(2,3)$: two examples and three positions per example. At every position, the target is the token immediately following the corresponding input token in the source stream.
+
+</details>
+
+**Stage 2 — Diagnose the corpus tail.**
+
+The next start after $a=2$ would be $a=4$.
+
+1. Why is this window not retained?
+2. How many windows would be obtained with stride 1, then with stride 3?
+3. For $N$ tokens, context length $L$, and stride $S$, explain the role of $N-L-1$ in the formula
+   $
+   n_{\text{windows}} = 1 + \left\lfloor\frac{N-L-1}{S}\right\rfloor,
+   $
+   when $N\geq L+1$.
+
+<details>
+<summary>Show hints</summary>
+
+- An input of length $L$ consumes $L$ tokens, but its shifted target also needs the successor of the final input token.
+- At least $L+1$ source tokens are therefore required for one complete example.
+- Valid starts are multiples of $S$ that do not exceed $N-L-1$.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+At $a=4$, the input would be $[2,7,5]$, but its target would have to be $[7,5,\,?]$: the final successor does not exist in the supplied stream. The reference implementation drops this window; it invents neither an end token nor padding.
+
+For $N=7$ and $L=3$:
+
+- $S=1$: starts $0,1,2,3$, so **4 windows**.
+- $S=2$: starts $0,2$, so **2 windows**.
+- $S=3$: starts $0,3$, so **2 windows**.
+
+The term $N-L-1$ is the final valid start: after the $L$ input tokens, one target token must remain. The formula counts multiples of $S$ from zero through this inclusive bound.
+
+</details>
+
+**Stage 3 — Detect an alignment bug.**
+
+A faulty implementation builds targets by copying inputs exactly. Explain why the shapes can be correct while the next-token prediction objective is not. Give a simple test that would detect this error.
+
+<details>
+<summary>Show the worked solution</summary>
+
+The shape $(n_{\text{windows}},L)$ checks array structure, not semantic alignment. If targets equal inputs, the model is trained to reproduce the token already present at each position instead of predicting its successor.
+
+A direct test checks, for every window, that the target at position $(k,i)$ equals the source token immediately following the corresponding input. For internal positions, one can also check the invariant that all target columns except the last equal the input columns starting from the second; the final position must be compared with the next token in the source stream. The existing **sliding_input_target_pairs** tests already cover these invariants.
+
+**Common errors:**
+
+- Forgetting the extra token required by the final target and counting an incomplete window.
+- Confusing input length $L$ with the $L+1$ source segment needed for a complete pair.
+- Assuming equal shapes guarantee correct shifting.
+- Treating stride as a change to the shift: stride changes window starts, not the relationship between each input and its target.
+
+</details>
+
+**Success criterion:** the pairs are exact, the corpus tail is handled without an invented token, the window count is justified, and the input-target copy bug is detected by a checkable invariant.
+
+**Further work:** BPE and partition leakage remain to be developed. Batching and loss masks are separate topics; they are not implemented by the reference function used here.
 
 ### Attention {#attention}
 
