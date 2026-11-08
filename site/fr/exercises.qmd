@@ -464,11 +464,11 @@ Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un ch
 
 ### Attention {#attention}
 
-**Préparation :** les exercices Q/K/V mobilisent la page [projections Q/K/V](queries-keys-values.qmd), les formes matricielles et NumPy ; les [tenseurs](tensors.qmd) sont une référence facultative. Les exercices de score, softmax et agrégation s'appuient sur l'[attention à produit scalaire](scaled-dot-product-attention.qmd). Aucun exercice ci-dessous n'exige d'étudier d'abord le masque causal.
+**Préparation :** les exercices Q/K/V mobilisent la page [projections Q/K/V](queries-keys-values.qmd), les formes matricielles et NumPy ; les [tenseurs](tensors.qmd) sont une référence facultative. Les exercices de score, softmax et agrégation s'appuient sur l'[attention à produit scalaire](scaled-dot-product-attention.qmd). Les exercices Q/K/V et AT-A à AT-C ne supposent pas d'avoir étudié le masque causal ; CA-A introduit et travaille lui-même cet invariant.
 
 **Compétences Q/K/V évaluées :** reconnaître les rôles, reconstruire les projections, expliquer leur apprentissage, prédire les effets d'une modification de paramètres et transférer le raisonnement à l'attention croisée. La somme pondérée existante reste l'exercice de calcul de l'agrégation.
 
-**Périmètre actuel :** en plus des exercices ci-dessus sur l'agrégation pondérée et les projections Q/K/V, trois exercices formatifs progressifs, aux identifiants stables AT-A, AT-B et AT-C partagés avec la version anglaise, couvrent le calcul d'une attention multi-têtes à la main, la trace des formes multi-têtes, puis le diagnostic d'affirmations et la prédiction d'interventions. Le masque causal multi-têtes et les invariants avancés restent à construire. Ordre conseillé : AT-A, puis AT-B, puis AT-C.
+**Périmètre actuel :** CA-A introduit le masque causal, le décalage des cibles et l'invariance de préfixe à partir d'une matrice et des tests existants. Trois exercices formatifs progressifs, aux identifiants stables AT-A, AT-B et AT-C partagés avec la version anglaise, couvrent séparément le calcul d'une attention multi-têtes, la trace des formes, puis le diagnostic d'affirmations et la prédiction d'interventions. Les variantes spécifiques au masquage multi-têtes et les invariants avancés restent à approfondir. Ordre conseillé : CA-A pour le masque causal, puis AT-A, AT-B et AT-C pour la progression multi-têtes.
 
 #### Calculer une agrégation à la main
 
@@ -609,6 +609,68 @@ Q=X_DW_Q,\qquad K=X_EW_K,\qquad V=X_EW_V.
 $$
 
 À paramètres fixés, modifier $X_D$ affecte directement Q ; modifier $X_E$ affecte directement K et V. Les scores et la sortie peuvent ensuite changer en conséquence. La distinction fonctionnelle demeure, mais les projections ne partagent plus une entrée commune. En MQA, plusieurs têtes de requête partagent une seule tête K/V ; en GQA, des groupes de têtes de requête partagent des têtes K/V. Le nombre ou le partage des têtes K/V change, mais la distinction fonctionnelle demeure : Q/K déterminent les poids et V fournit le contenu agrégé. Il faut décrire la paramétrisation exacte plutôt que recopier mécaniquement le cas standard.
+
+</details>
+
+#### Exercice CA-A — Masque causal et invariance de préfixe
+
+On considère quatre tokens d'entrée \(x_0,x_1,x_2,x_3\). À la position de requête \(i\), l'auto-attention causale n'autorise que les clés des positions \(j\leq i\).
+
+1. Compléter la matrice \(A\) des positions **autorisées**, définie par \(A_{ij}=1\) si \(j\leq i\), et \(A_{ij}=0\) sinon.
+2. En déduire la matrice \(B\) des positions **bloquées**. Quelle relation relie \(A\) et \(B\) ?
+3. Avec des cibles décalées d'un token, la position \(i\) prédit \(x_{i+1}\). Pourquoi la diagonale de \(A\) doit-elle être autorisée sans révéler la cible ?
+4. On ajoute \(x_4\) à la fin de la séquence. Quelles sorties aux positions \(0,1,2,3\) doivent rester invariantes ? La sortie à la position 4 est-elle soumise à la même contrainte ?
+5. Distinguer le rôle d'un masque causal, d'un masque de padding, d'un masque de loss/cible et d'un masque de frontière de document.
+
+<details>
+<summary>Afficher le corrigé raisonné</summary>
+
+La matrice des positions autorisées est triangulaire inférieure :
+
+\[
+A=
+\begin{pmatrix}
+1&0&0&0\\
+1&1&0&0\\
+1&1&1&0\\
+1&1&1&1
+\end{pmatrix}.
+\]
+
+La matrice bloquée est son complément :
+
+\[
+B=
+\begin{pmatrix}
+0&1&1&1\\
+0&0&1&1\\
+0&0&0&1\\
+0&0&0&0
+\end{pmatrix},
+\qquad B_{ij}=1-A_{ij}.
+\]
+
+La diagonale est autorisée parce qu'à la position \(i\), l'entrée contient déjà \(x_i\) et le modèle prédit le token suivant \(x_{i+1}\). Le décalage entrée-cible est essentiel : le modèle ne reçoit pas \(x_{i+1}\) comme entrée à cette position. Sans ce décalage, autoriser la diagonale pourrait exposer la cible.
+
+Après ajout de \(x_4\), les sorties des positions \(0\) à \(3\) doivent rester inchangées dans une auto-attention causale, à paramètres fixes et avec les mêmes entrées/positions pour le préfixe. Les clés et valeurs du futur token \(x_4\) sont bloquées pour ces requêtes. La nouvelle position 4 peut, elle, consulter les positions \(0\) à \(4\) : sa sortie n'est pas tenue d'être identique à celle de la position 3.
+
+Les masques ne sont pas interchangeables :
+
+- **Causal :** interdit à une requête de consulter une clé future.
+- **Padding :** empêche généralement de consulter des positions de clé qui ne correspondent qu'au remplissage ; le traitement des positions de requête paddées dépend de l'implémentation.
+- **Loss/cible :** exclut certaines cibles de l'objectif et de son dénominateur ; il ne définit pas à lui seul la visibilité dans l'attention.
+- **Frontière de document :** peut empêcher l'attention entre documents concaténés ; c'est une politique de préparation/attention, pas une conséquence universelle du masque causal.
+
+Les tests existants apportent deux niveaux de preuve complémentaires :
+
+- \`test_scaled_dot_product_attention_causal_invariance\` dans \`tests/unit/test_attention.py\` perturbe une clé et une valeur futures et vérifie que les sorties des positions antérieures restent inchangées. Il teste le primitive d'attention.
+- \`test_prefix_invariance_future_tokens_do_not_change_earlier_logits\` dans \`tests/unit/test_gpt.py\` compare les logits d'un préfixe aux logits correspondants d'une séquence prolongée avec le même GPT. Il couvre le chemin complet du modèle pour ce cas.
+
+Ces tests sont des vérifications ciblées, pas une preuve formelle pour toute entrée, architecture ou implémentation. Pour les exécuter :
+
+\`\`\`bash
+uv run --locked pytest --no-cov -q tests/unit/test_attention.py tests/unit/test_gpt.py
+\`\`\`
 
 </details>
 
