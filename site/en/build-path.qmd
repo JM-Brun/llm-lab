@@ -21,7 +21,7 @@ tags: ["type:guided-build", "destination:build", "topic:build-path", "level:appl
 -->
 
 ::: {.chapter-lead}
-This path guides you through an existing small decoder-only GPT: inspect its configuration and numerical building blocks, trace the Transformer block and assembled model, then run the generation loop. The tested reference code lives in [`src/llm_lab/foundations/`](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations); each of the five tours includes exercises with worked answers. You can use these tours to guide your own construction, but reading and running the reference is not evidence that you built it independently. Familiarity with Python and basic NumPy is useful; consult the linked concept pages for the mathematics and shapes as needed.
+This path guides you through an existing small decoder-only GPT: inspect its configuration and numerical building blocks, trace the Transformer block and assembled model, then run the generation loop. LLM Lab uses small, inspectable models to teach mechanisms, not to reproduce production-scale capabilities. The tested reference code lives in [`src/llm_lab/foundations/`](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations); each of the five tours includes exercises with worked answers. You can use these tours to guide your own construction, but reading and running the reference is not evidence that you built it independently. Familiarity with Python and basic NumPy is useful; consult the linked concept pages for the mathematics and shapes as needed.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
