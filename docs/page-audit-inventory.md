@@ -957,3 +957,18 @@ This is a priority recommendation, not a claim that the new exercises already ex
 ### Evidence boundary
 
 This is a source-level catalogue and coverage review. It does not independently certify all seven mathematical solutions, all TR/AT/TF answers, disclosure accessibility, or learner mastery. The next pass should verify representative calculations and code-backed claims, then review all answer disclosures in the rendered bilingual site. Reuse the existing exercise hub; no new registry is warranted.
+
+
+### E. Independent arithmetic spot-check — seven mathematical exercises
+
+A separate arithmetic pass on the seven published mathematical exercises found no numerical or algebraic discrepancy in the stated answers:
+
+- Exercise 1: softmax ((1/9,1/3,5/9)), target NLL (ln 3), gradient ((1/9,-2/3,5/9)).
+- Exercise 2: valid-target mean (2\ln 2=\ln 4\approx1.3863); incorrect denominator-four result (1.5\ln2\approx1.0397).
+- Exercise 3: (J^\top g=(0.3,-0.5)).
+- Exercise 4: (H(q,p)=\ln2\approx0.6931), (H(q)\approx0.5623), and (D_{KL}(q\Vert p)\approx0.1308).
+- Exercise 5: logits shape ((2,4,10)), targets/losses by position ((2,4)), six valid positions, vocabulary softmax on the last axis.
+- Exercise 6: stable log-sum-exp (\approx1001.4076) and target NLL (\approx0.4076).
+- Exercise 7: (\exp(1.2)\approx3.3201).
+
+This was an independent calculation/identity check of the displayed values, not execution of every code block or validation of all pedagogical wording. The finite-difference gradient-check exercise remains explicitly unfinished in the hub.
