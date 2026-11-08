@@ -35,7 +35,8 @@
       if (!title) return;
       const french = document.documentElement.lang.toLowerCase().startsWith("fr");
       const label = french ? (direction === "previous" ? "Page précédente" : "Page suivante") : (direction === "previous" ? "Previous page" : "Next page");
-      link.setAttribute("aria-label", label + ": " + title);
+      const separator = french ? " : " : ": ";
+      link.setAttribute("aria-label", label + separator + title);
       link.dataset.navigationLabelEnhanced = "true";
     });
   };
