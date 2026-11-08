@@ -466,9 +466,9 @@ These are qualitative predictions, not guarantees about the magnitude of a numer
 
 Consider the token-ID stream:
 
-$
+$$
 s = [11, 4, 4, 9, 2, 7, 5]
-$
+$$
 
 with context length $L=3$ and stride $S=2$.
 
@@ -492,7 +492,7 @@ with context length $L=3$ and stride $S=2$.
 
 The valid starts are $a=0$ and $a=2$:
 
-$
+$$
 X = \begin{bmatrix}
 11 & 4 & 4 \\
 4 & 9 & 2
@@ -502,7 +502,7 @@ Y = \begin{bmatrix}
 4 & 4 & 9 \\
 9 & 2 & 7
 \end{bmatrix}.
-$
+$$
 
 Both arrays have shape $(2,3)$: two examples and three positions per example. At every position, the target is the token immediately following the corresponding input token in the source stream.
 
@@ -515,9 +515,9 @@ The next start after $a=2$ would be $a=4$.
 1. Why is this window not retained?
 2. How many windows would be obtained with stride 1, then with stride 3?
 3. For $N$ tokens, context length $L$, and stride $S$, explain the role of $N-L-1$ in the formula
-   $
+   $$
    n_{\text{windows}} = 1 + \left\lfloor\frac{N-L-1}{S}\right\rfloor,
-   $
+   $$
    when $N\geq L+1$.
 
 <details>
