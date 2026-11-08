@@ -33,9 +33,9 @@ main.content a:not(.btn):not(.nav-link):visited {
 
 /* Preserve the darker text color on pale guided-route pills.
    The general reading-link rule above is more specific than the component rule. */
-main.content .guided-page-context__stage,
-main.content .guided-page-context__stage:visited,
-main.content .guided-page-context__stage:hover {
+main.content a.guided-page-context__stage:not(.btn):not(.nav-link),
+main.content a.guided-page-context__stage:not(.btn):not(.nav-link):visited,
+main.content a.guided-page-context__stage:not(.btn):not(.nav-link):hover {
   color: #14532D;
 }
 
