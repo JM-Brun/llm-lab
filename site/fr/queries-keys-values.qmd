@@ -96,13 +96,13 @@ Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model
 
 Chaque ligne correspond à une position de la séquence. Pour la position $t$, les projections donnent :
 
-$
+$$
 \begin{aligned}
 q_t &= x_tW_Q,\\
 k_t &= x_tW_K,\\
 v_t &= x_tW_V.
 \end{aligned}
-$
+$$
 
 Les mêmes matrices de projection sont appliquées à toutes les positions ; ce sont les représentations d'entrée qui varient d'une position à l'autre.
 
