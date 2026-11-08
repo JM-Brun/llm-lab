@@ -40,8 +40,16 @@ const cases = [
   })),
   // #347 also reviews the training-example and Build bridge pages. Keep them
   // outside route-context assertions: neither is an extra guided-route stage.
-  ...visualCases.filter(testCase => testCase.label === "desktop").flatMap(testCase =>
-    ["training-examples.html", "build-path.html"].map(page => ({
+  ...visualCases.filter(testCase => testCase.label === "desktop").map(testCase => ({
+    ...testCase, page: "training-examples.html", kind: "training-build-review",
+  })),
+  ...visualCases.map(testCase => ({
+    ...testCase, page: "build-path.html", kind: "training-build-review",
+  })),
+  // Complete #347's responsive review for the other training/scoring pages.
+  // Their desktop/light route-context cases remain the semantic baseline.
+  ...visualCases.filter(testCase => testCase.theme === "dark" || testCase.label === "mobile").flatMap(testCase =>
+    ["generation.html", "loss.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html"].map(page => ({
       ...testCase, page, kind: "training-build-review",
     }))
   ),
