@@ -94,7 +94,7 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
     // A selector change must exercise the pages it adds, not only unrelated
     // smoke pages. Preserve changed-page coverage when global files also change.
     const selectorPages = browserReviewScriptChanged
-      ? ["training-examples.html", "build-path.html"]
+      ? ["generation.html", "training-examples.html", "loss.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]
       : [];
     const selectedPages = new Set([...smokePages, ...selectorPages, ...changedPages]);
     for (let i = cases.length - 1; i >= 0; i--) {
