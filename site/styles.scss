@@ -31,6 +31,14 @@ main.content a:not(.btn):not(.nav-link):visited {
   color: var(--llm-brand-action);
 }
 
+/* Preserve the darker text color on pale guided-route pills.
+   The general reading-link rule above is more specific than the component rule. */
+main.content .guided-page-context__stage,
+main.content .guided-page-context__stage:visited,
+main.content .guided-page-context__stage:hover {
+  color: #14532D;
+}
+
 body { line-height: 1.72; }
 p, li { max-width: 78ch; }
 #title-block-header { margin-bottom: 2rem; }
