@@ -65,4 +65,4 @@ The [roadmap](docs/roadmap.md) records priorities; the [information architecture
 
 ## License
 
-Project code is released under the MIT License. CC BY-SA 4.0 applies only to original project-authored prose in Quarto pages and documentation; it excludes all visual assets whose rights are not established. Third-party materials retain their own terms. See [LICENSE.md](LICENSE.md), [licensing scope](docs/licensing-scope.md), and the [visual asset register](docs/visual-assets-register.md).
+Project code is released under the MIT License. CC BY-SA 4.0 applies only to original project-authored prose in Quarto pages and documentation. All non-text assets (including local SVGs, diagrams, images, screenshots and fonts) are excluded from these project grants unless a separate asset-level licence is explicitly recorded. Third-party materials retain their own terms. See [LICENSE.md](LICENSE.md), [licensing scope](docs/licensing-scope.md), and the [visual asset register](docs/visual-assets-register.md).
