@@ -75,8 +75,11 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html"]);
+    // A global script/style change adds smoke coverage; it must not suppress
+    // dedicated cases for page files changed in the same PR.
+    const selectedPages = new Set([...smokePages, ...changedPages]);
     for (let i = cases.length - 1; i >= 0; i--) {
-      if (!smokePages.has(cases[i].page)) cases.splice(i, 1);
+      if (!selectedPages.has(cases[i].page)) cases.splice(i, 1);
     }
   } else {
     for (let i = cases.length - 1; i >= 0; i--) {
