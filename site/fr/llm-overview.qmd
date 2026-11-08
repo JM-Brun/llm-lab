@@ -24,7 +24,7 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 {{< include ../includes/generated-guided-context-fr-llm-overview.qmd >}}
 
 ::: {.chapter-lead}
-Un **modèle de langage** estime la plausibilité de séquences de texte à partir d’un contexte. Un **modèle génératif** peut produire de nouveaux échantillons à partir d'une distribution apprise, éventuellement conditionnée par une entrée ; pour un modèle de langage, cela peut prendre la forme d'une continuation du texte, unité après unité. Un **LLM** (*large language model*) est un modèle de langage entraîné à grande échelle : il n'existe pas de seuil numérique universel qui sépare mécaniquement les « petits » modèles des LLM. L'[échelle est multidimensionnelle](scaling-laws.qmd). La catégorie LLM ne présuppose pas une architecture particulière.
+Un **modèle de langage** estime la plausibilité de séquences de texte à partir d’un contexte. Un **modèle génératif** peut produire de nouveaux échantillons à partir d'une distribution apprise, éventuellement conditionnée par une entrée ; pour un modèle de langage, cela peut prendre la forme d'une continuation du texte, unité après unité. Un **LLM** (*large language model*) est un modèle de langage entraîné à grande échelle, en mobilisant une capacité de modèle, des données et du calcul importants : il n'existe pas de seuil numérique universel qui sépare mécaniquement les « petits » modèles des LLM. L'[échelle est multidimensionnelle](scaling-laws.qmd). La catégorie LLM ne présuppose pas une architecture particulière.
 
 :::
 
