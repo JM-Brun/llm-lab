@@ -48,6 +48,10 @@ def render_view(registry: dict[str, Any], view_id: str, language: str) -> str:
     if view is None:
         raise ValueError(f"Unknown computational graph view: {view_id}")
 
+    direction = view.get("direction", "LR")
+    if direction not in {"LR", "TB"}:
+        raise ValueError(f"{view_id}: unsupported Mermaid direction: {direction}")
+
     selected_nodes = view["nodes"]
     selected_edges = view["edges"]
     missing_nodes = set(selected_nodes) - nodes.keys()
@@ -71,7 +75,7 @@ def render_view(registry: dict[str, Any], view_id: str, language: str) -> str:
         view["descriptions"][language],
         "",
         ("`" * 3) + "{mermaid}",
-        "flowchart LR",
+        f"flowchart {direction}",
     ]
 
     shape_by_kind = {
