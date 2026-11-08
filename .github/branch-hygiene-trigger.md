@@ -12,4 +12,4 @@ are never deleted, even if listed.
 
 apply: true
 exclude:
-delete: audit/316-entropy-attention-browser-coverage,ci/browser-audit-math-render-gate,ci/targeted-browser-review,docs/audit-position-tensor-precision,docs/cross-entropy-link-api-check,docs/knowledge-architecture-interoperability,docs/pedagogical-breadcrumb-contract,docs/rebase-qkv-self-cross-attention,fix/browser-audit-pageerror-diagnostics,fix/diagnose-overview-svg-transforms,fix/homepage-inline-svg-raw-html,fix/quarto-page-navigation-a11y,fix/remove-misleading-pipeline-steppers,repair/pr-468-sync-main,repair/pr-471-current-main,repair/pr-471-sync-main,repair/pr-471-sync-main-v2,source/medium-neha-kk-qkv-integration,test/build-tour-rendered-navigation,tokenization-embeddings-migration-base,ux/audit-position-tensor-precision,ux/audit-positional-and-tensor-pages,ux/browser-audit-homepage
+delete: ci/branch-hygiene-default-dry
