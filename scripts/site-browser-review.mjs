@@ -15,6 +15,7 @@ const visualCases = ["light", "dark"].flatMap(theme => [
 ]);
 
 const routeContextCases = visualCases.filter(testCase => testCase.theme === "light" && testCase.label === "desktop");
+const textDataResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
 
 const cases = [
   // The French homepage is the site root; English has its own /en/ landing page.
@@ -32,6 +33,11 @@ const cases = [
       ...testCase, page, kind: "route-context",
     }))
   ),
+  // The text-input stepper is a local process aid; check its responsive layout
+  // in both languages and themes, not only the desktop keyboard/Axe baseline.
+  ...textDataResponsiveCases.map(testCase => ({
+    ...testCase, page: "text-data.html", kind: "route-context",
+  })),
   // Focused mobile review for the attention → scoring → training slice.
   // Desktop/light route-context cases above remain the keyboard/Axe baseline.
   ...visualCases.filter(testCase => testCase.label === "mobile").flatMap(testCase =>
@@ -299,7 +305,7 @@ for (const testCase of cases) {
       languageSwitchLinks: [...document.querySelectorAll("a[href]")].filter(a => { const href = a.getAttribute("href") || ""; return href.includes("/en/") || href.includes("/fr/"); }).length,
     }));
 
-    const capturePage = kind !== "route-context" || label === "desktop";
+    const capturePage = kind !== "route-context" || label === "desktop" || pagePath === "text-data.html";
     if (capturePage) {
       const screenshot = path.join(OUT, `${pagePath.replace(".html", "")}-${lang}-${label}-${theme}.png`);
       await page.screenshot({ path: screenshot, fullPage: true, animations: "disabled" });
