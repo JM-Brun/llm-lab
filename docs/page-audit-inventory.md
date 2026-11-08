@@ -788,3 +788,76 @@ This order does not imply that the model executes these eight stages as one line
 ### Evidence boundary
 
 This is a structured source-level audit of the current bilingual route and linked pages. It does not claim a full scientific certification of every statement or a complete visual inspection. Existing #638/#604/#646 evidence is reused only for their exact audited scopes. The rendered exercise-hub review remains owned by #329/#710; Q/K/V rendered/media provenance remains under #483; independent learner validation remains under #447.
+
+
+## Twentieth slice: optional branches and the practical Build route
+
+**Review date:** 2026-11-08  
+**Scope:** source-level review of every optional page declared by the eight stages in `data/guided-route.yml`, plus the French and English Build-path pages. Compared declared purpose/scope, metadata level/destination, section hierarchy, relation to the main sequence, Build dependencies and explicit implementation-status claims. This is not a complete audit of every linked Practice activity or every code tour.
+
+### A. Optional branches
+
+| Optional page pair | Declared pedagogical role | Finding | Remaining check / decision |
+|---|---|---|---|
+| `transformer-architectures.qmd` (FR/EN) | Optional core-level Understand comparison from orientation | The page has a distinct role from the GPT computation overview: compare encoder-only, encoder–decoder and decoder-only configurations, information visibility, architecture/objective/task, and classification limits. The comparison is a useful optional branch before committing to the lab's decoder-only scope. | Keep optional: it broadens the learner's model-family map without becoming a prerequisite to understanding the chosen GPT. Rendered comparison diagram and cross-attention links still need review. |
+| `llm-limits.qmd` (FR/EN) | Optional overview-level critical companion | Its scope is deliberately limited to what next-token training does and does not guarantee, meanings of “understanding”, emergent-ability claims and scale effects. It does not compete with the experimental-evaluation lesson. | Keep adjacent to orientation as a critical perspective. Check that “objective guarantee”, calibration, factuality and measured capability remain distinct in the final examples. |
+| `unicode-text.qmd` (FR/EN) | Optional advanced text representation | Already reviewed in the opening slice. It distinguishes code points, bytes and normalization without burdening the core tokenization sequence. | Keep optional; reuse the previous slice's return-link/render check. |
+| `tokenizer-design-evaluation.qmd` (FR/EN) | Advanced Deepen branch from tokenization | The scope progresses from tokenizer-family mechanisms to vocabulary/budget choices, reproducibility, evaluation metrics and multilingual disparities. It is genuinely deeper than the core BPE/WordPiece/Unigram introduction. | Keep optional and advanced. Its protocol and empirical claims need their own source/freshness and rendered code/figure audit; do not move it into the required sequence. |
+| `tensors.qmd` (FR/EN) | Advanced technical reference | It provides shape/axis reasoning, projection dimensions, softmax-axis counterexample and parameter-cost calculation. It explicitly says it is not a prerequisite course for Build. | Keep as a just-in-time reference. Ensure concept pages link to the exact relevant sections instead of making the whole page compulsory. Existing #646 numerical/render evidence is reusable for its audited scope. |
+| `rope.qmd` (FR/EN) | Advanced mathematical deep dive | It derives relative-offset dependence for a coordinate pair, locates rotations in Q/K and discusses implementation/extrapolation limits without repeating the general position lesson. | Keep optional. Reuse the existing positional/RoPE derivation evidence; rendered equations and implementation details remain subject to the exact prior audit scope. |
+| `cross-attention.qmd` (FR/EN) | Advanced architecture/mechanism deep dive | It explicitly establishes the distinct provenance of Q versus K/V, dimensions, masks and placement in encoder–decoder and multimodal models. It supports Q/K/V transfer rather than extending the decoder-only core into an unnecessary prerequisite. | Keep optional. Its connection to the Transformer-architecture comparison and Q/K/V exercise should be navigable, but it should not be required to understand decoder-only self-attention. |
+| `attention-score-scaling.qmd` (FR/EN) | Advanced mathematical deep dive | It isolates the variance argument for (1/\sqrt{d_k}), states the Gaussian assumptions and their limits, and avoids repeating the full attention calculation or causal masking. | Keep optional. The distinction between an explanatory independent-Gaussian model and learned projected Q/K must remain visible in both languages. |
+| `decoding-strategies.qmd` (FR/EN) | Advanced inference deep dive | It progresses from distribution transforms (temperature/top-k/top-p) to sequence search (greedy/beam/contrastive) and reproducible quality-diversity comparisons. This is a distinct outcome from the short generation and probability explanations. | Keep optional. Preserve the explicit division of depth already identified in the main-route slice; inspect the rendered protocol/figures before changing the page. |
+| `scaling-laws.qmd` (FR/EN) | Advanced research-oriented Deepen branch | It explains empirical relations between parameters, data, compute and loss, while explicitly rejecting a universal parameter-count threshold for LLMs. This complements rather than replaces the small-GPT Build route. | Keep optional. It should not be framed as a required prerequisite to training mechanics or as a universal model taxonomy. |
+
+### B. Build path: sequence, dependency and evidence
+
+Both `build-path.qmd` versions explicitly distinguish three things that must remain separate:
+
+1. the order in which the code tours are presented;
+2. the implementation dependencies/imports;
+3. the learner's conceptual route through Understand pages.
+
+The code-tour order is configuration → numerical operations → Transformer block → model assembly → generation. The page explicitly warns that this is a useful reading order, not a complete dependency graph: the block imports attention operations and generation imports optional decoding filters. The minimal inference path is not yet separated from those extensions.
+
+The build milestones preserve the important split:
+- G0/G1/G3–G7 construct and inspect the inference path, with random initialization clearly qualified.
+- G1b/G2 form a parallel corpus/tokenizer/training-example branch; they are required before training, not before generation.
+- G8 covers loss, parameter gradients, updates and fixed-parameter validation as the intended outcome, while the implementation is explicitly partial.
+- G9 is a parity criterion, not a claim that an independent reference comparison already exists.
+- E1 is cross-cutting task evaluation, not another sequential model-construction stage.
+
+This is pedagogically sound and consistent with the conceptual eight-stage route. The Build route should not be forced into the same page order: a reader can learn the generation loop before building the training-data pipeline.
+
+### C. Important implementation-status precision
+
+The current Build page states that the training implementation is partial and names `losses.py` functions `cross_entropy_from_logits` and `cross_entropy_gradient`, while also stating that there is no complete training loop, optimizer, automated validation runner or checkpoint. This is an important distinction to preserve: a gradient of the loss with respect to logits is not yet backpropagation of gradients through all model parameters, and neither is a parameter-update/optimizer implementation.
+
+The Build page also correctly distinguishes:
+- a conceptual lesson from implemented code;
+- a worked example from a test;
+- a passing test from a complete proof of a property;
+- a validation score at fixed parameters from an optimizer step;
+- token IDs from readable generated text (which requires a compatible tokenizer).
+
+No evidence in this source pass justifies claiming that end-to-end training, checkpoint loading, EOS stopping, KV cache, corpus provenance/deduplication, full padding/packing/masking, or independent implementation parity is already available.
+
+### D. Bilingual and editorial assessment
+
+- Optional-page metadata is consistent across FR/EN in type, destination, level and declared purpose for all pairs reviewed.
+- Optional does not mean pedagogically unimportant: the architecture comparison and LLM-limits companion are overview-level resources; tokenizer design, tensors, RoPE, cross-attention, attention scaling, decoding and scaling laws are genuinely advanced.
+- The advanced pages have distinct stated outcomes; no page split/merge is justified from this source pass.
+- The Build page has matching milestone identifiers and substantive claims in both languages. The English and French route links point to localized concept pages.
+- No new page, registry, route, workflow or exercise collection is justified.
+
+### E. Follow-up priorities
+
+1. Render the Build route and its milestone table at desktop/mobile widths; inspect table overflow and code-example legibility.
+2. Verify the route context around optional links: the reader should understand why a branch is optional and where to return.
+3. Audit the actual guided code tours (configuration, operations, block, model, generation) against their code and tests; the Build landing page is not a substitute for those page reviews.
+4. Review Practice activities for observable learning outcomes, feedback quality, answer disclosure, and alignment with the corresponding concept and Build milestone.
+5. Keep independent learner validation under #447; neither page metadata nor test coverage demonstrates transfer.
+
+### Evidence boundary
+
+This pass inspected source-level page contracts and the two Build landing pages. It did not certify every advanced derivation, reference, interactive widget, code tour, generated route UI or rendered layout. It does not constitute the complete Practice activity audit or learner validation. Reuse existing #646 and earlier exact-scope evidence rather than repeating those checks.
