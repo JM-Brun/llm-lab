@@ -55,7 +55,7 @@ const cases = [
   // Focused mobile review for the attention → scoring → training slice.
   // Desktop/light route-context cases above remain the keyboard/Axe baseline.
   ...visualCases.filter(testCase => testCase.label === "mobile").flatMap(testCase =>
-    ["queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "attention-score-scaling.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "cross-entropy.html", "loss.html", "gradients.html", "training-examples.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html"].map(page => ({
+    ["queries-keys-values.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "causal-masking.html", "attention-score-scaling.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "cross-entropy.html", "loss.html", "gradients.html", "training-examples.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html"].map(page => ({
       ...testCase, page, kind: "attention-training-mobile",
     }))
   ),
@@ -89,13 +89,12 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
-    const scoringPages = new Set(["entropy.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
-    // A browser-review script change must exercise the scoring pages too:
-    // they share the page-navigation and responsive assertions, and their
-    // screenshots are part of the manual review evidence.
+    const targetedReviewPages = new Set(["entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
+    // A browser-review script change must exercise the focused lesson pages:
+    // they share page-navigation, responsive, and rendered-math assertions.
     const selectedPages = new Set([
       ...smokePages,
-      ...(changedFiles.includes("scripts/site-browser-review.mjs") ? scoringPages : []),
+      ...(changedFiles.includes("scripts/site-browser-review.mjs") ? targetedReviewPages : []),
       ...changedPages,
     ]);
     for (let i = cases.length - 1; i >= 0; i--) {
@@ -889,8 +888,9 @@ for (const testCase of cases) {
     const unrenderedMath = mathSummary.mathSpans - mathSummary.mathSpansRendered;
     // Entropy is an equation-heavy lesson. Zero parsed math spans means the
     // source delimiters were stripped as Markdown escapes, not that math passed.
-    if (pagePath === "entropy.html" && mathSummary.mathSpans === 0) {
-      report.failures.push(`${pagePath}/${lang}/${label}/${theme}: expected entropy equations, but Quarto produced no math spans`);
+    const equationBearingPages = new Set(["entropy.html", "scaled-dot-product-attention.html"]);
+    if (equationBearingPages.has(pagePath) && mathSummary.mathSpans === 0) {
+      report.failures.push(`${pagePath}/${lang}/${label}/${theme}: expected lesson equations, but Quarto produced no math spans`);
     }
     if (unrenderedMath > 0) {
       report.failures.push(
