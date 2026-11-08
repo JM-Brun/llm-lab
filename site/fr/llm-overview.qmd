@@ -92,12 +92,12 @@ La préparation du contexte et le calcul du modèle produisent une **distributio
 
 {{< include ../includes/generated-computational-graph-fr-persistent-spine.qmd >}}
 
-Le nœud « passe avant » (*forward pass*, une exécution du réseau qui transforme le contexte en scores de sortie) résume volontairement le calcul interne. Le réseau produit des **logits** (scores non normalisés) ; une fonction *softmax* les convertit en distribution de probabilités sur le vocabulaire. Le [pipeline des représentations](contextualized-representations.qmd) et le [parcours d’un bloc Transformer](transformer-block-walkthrough.qmd) en détaillent les étapes.
+Le nœud « passe avant » (*forward pass*, une exécution du réseau qui transforme le contexte en scores de sortie) résume volontairement le calcul interne. Le réseau produit des **logits** (scores non normalisés) ; une fonction *softmax* les convertit en distribution de probabilités sur le vocabulaire. Un même passage avant peut produire des scores à toutes les positions : en génération à partir d'un prompt, on utilise la distribution de la dernière position ; pour scorer ou entraîner une séquence connue, on exploite les distributions des différentes positions, chacune associée au token cible suivant sous masque causal. Le [pipeline des représentations](contextualized-representations.qmd) et le [parcours d’un bloc Transformer](transformer-block-walkthrough.qmd) en détaillent les étapes.
 
 | Branche | Usage de la distribution | Paramètres |
 |---|---|---|
-| **Génération** | Sélectionner un token, l'ajouter au contexte et répéter la prédiction ; voir [Générer du texte](generation.qmd) | Fixes |
-| **Scoring / évaluation** | Scorer une cible observée (p. ex. log-vraisemblance ou log-vraisemblance négative, NLL) ou une sortie générée, puis agréger des métriques adaptées sur des données tenues à l'écart ; voir [Vraisemblance](vraisemblance.qmd) | Fixes |
+| **Génération** | Traiter le prompt initial (*prefill*), puis sélectionner un token, l'ajouter au contexte et répéter en *decode* ; voir [Générer du texte](generation.qmd) | Fixes |
+| **Scoring / évaluation** | Évaluer une cible connue à partir de son préfixe observé (conditionnement de type *teacher forcing*), calculer sa vraisemblance ou une NLL, puis agréger des métriques adaptées sur des données tenues à l'écart ; voir [Vraisemblance](vraisemblance.qmd) | Fixes |
 | **Apprentissage** | Fournir à chaque position le préfixe issu de la séquence de référence (*teacher forcing*), comparer la distribution au token cible, agréger les pertes (*loss*), puis calculer leurs gradients par rapport aux paramètres ; voir [Exemples d'entraînement](training-examples.qmd), [Loss](loss.qmd) et [Gradients](gradients.qmd) | Modifiés à l'étape de mise à jour |
 
 Le scoring d'une cible et l'évaluation d'un modèle ne sont pas synonymes : le premier calcule une probabilité conditionnelle ; la seconde agrège des scores ou des métriques selon la tâche et le protocole de données. L'évaluation fondée sur la vraisemblance réutilise le chemin de scoring sans mettre à jour les paramètres ; les évaluations de tâche peuvent aussi porter sur des sorties générées.
