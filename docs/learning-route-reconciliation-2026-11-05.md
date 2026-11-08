@@ -147,3 +147,6 @@ The authoritative command sequence is defined in the existing workflows:
 For a local reproduction, use the exact run commands in those workflow files rather than maintaining a second command list here. The relevant entry points are `site/tools/check_page_metadata.py`, `site/tools/audit_page_metadata.py`, `site/tools/build_learning_map.py`, and the rendered-site checks under `site/tools/`.
 
 A passing structural validator proves reference integrity and declared parity, not pedagogical quality or learner mastery.
+
+
+**Rendered stepper refinement (PR follow-up, 2026-11-08):** the compact FR/EN labels were checked in the rendered desktop artifact (1440 px); all five labels are visible and the page has no horizontal overflow. Full meanings are retained as accessible names. The artifact exposed a coverage gap rather than a confirmed mobile defect: the targeted browser profile did not include `text-data.html` at mobile widths. `scripts/site-browser-review.mjs` now adds this page to the existing mobile responsive matrix (390 × 844 px, both languages and themes), records mobile screenshots, and reuses the existing layout-overflow and local-stepper assertions. No new workflow or dependency is introduced.
