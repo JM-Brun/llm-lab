@@ -36,7 +36,7 @@ Les pages de cours utilisent un composant homogène **« Vérifier sa compréhen
 | [Fondations mathématiques](#fondations) | Tenseurs, probabilités, logits, entropie, cross-entropie, vraisemblance, gradients, stabilité numérique | 7 exercices progressifs rédigés ; vérification de gradients et autres thèmes à compléter |
 | [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Auto-vérifications dans les pages texte/embeddings ; trois exercices formatifs TR-A à TR-C publiés ; BPE, fenêtres et fuites à construire |
 | [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Exercices sur la somme pondérée et les projections Q/K/V ; autres exercices à construire |
-| [Transformer](#transformer) | Embeddings, position, résidus, normalisation, MLP et variantes d’architecture | Structure à compléter |
+| [Transformer](#transformer) | Embeddings, position, résidus, normalisation, MLP et variantes d’architecture | Trois exercices formatifs TF-A à TF-C publiés (formes et normalisation d'un bloc pré-LN, paramètres du bloc, diagnostic et interventions) ; variantes d'architecture à construire |
 | [Préentraînement](#preentrainement) | Objectif, entraînement/validation, perplexité, checkpoints et reproductibilité | Structure à compléter |
 | [Génération](#generation) | Décodage, température, top-k/top-p, arrêt, contexte et cache KV | Structure à compléter |
 | [Fine-tuning](#fine-tuning) | Classification, SFT, masquage de loss, qualité des données et surapprentissage | Structure à compléter |
@@ -614,7 +614,221 @@ $$
 
 **Notions préalables :** [synthèse Transformer](transformer.qmd), [espace des embeddings](embedding-space.qmd), [position et RoPE](positional-encoding.qmd).
 
-**À préparer :** suivre les représentations à travers un bloc, comparer les rôles de l’attention et du MLP, distinguer architectures et variantes.
+**Périmètre actuel :** trois exercices formatifs progressifs, aux identifiants stables TF-A, TF-B et TF-C partagés avec la version anglaise, couvrent le suivi des formes et un calcul de normalisation à la main dans le bloc de référence pré-LN, le comptage des paramètres de ce bloc, puis le diagnostic d'affirmations et la prédiction d'interventions contrôlées. Les exercices sur les variantes d'architecture (post-LN, RMSNorm, MQA/GQA, attention fenêtrée) restent à construire. Ordre conseillé : TF-A, puis TF-B, puis TF-C.
+
+#### Exercice TF-A — Tracer un bloc pré-LN, des formes à la normalisation
+
+**Préparation :** la [synthèse Transformer](transformer.qmd) pour les rôles de l'attention et du MLP ; la [visite guidée du bloc de référence](transformer-block-walkthrough.qmd) pour l'ordre pré-LN et le découpage en têtes. L'exercice progresse en trois étapes : normaliser à la main, tracer la branche d'attention, tracer la branche MLP.
+
+**Étape 1 — Normaliser un vecteur à la main.** Dans le bloc de référence, la normalisation s'applique au vecteur caché de chaque position séparément, avec $\gamma$ initialisé à uns et $\beta$ à zéros. On considère le vecteur $x=(1,3)$ d'une position, avec $\gamma=(2,1)$ et $\beta=(1,-1)$, en négligeant le terme $\varepsilon$ :
+
+1. Calculer la moyenne et la variance (biaisée) des composantes.
+2. Écrire le vecteur normalisé.
+3. Appliquer $\gamma$ et $\beta$.
+4. L'opération mélange-t-elle l'information entre positions ?
+
+<details>
+<summary>Afficher les indices</summary>
+
+1. La moyenne et la variance se calculent sur les composantes du vecteur de la position.
+2. Soustraire la moyenne, puis diviser par l'écart-type.
+3. $\gamma$ multiplie composante par composante ; $\beta$ s'ajoute ensuite.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+La moyenne vaut $(1+3)/2=2$ ; la variance biaisée vaut $\big((1-2)^2+(3-2)^2\big)/2=1$, d'où un écart-type de $1$. Le vecteur normalisé est $(-1,1)$. Puis $\gamma\odot(-1,1)+\beta=(2\cdot(-1)+1,\;1\cdot1+(-1))=(-1,0)$.
+
+La normalisation agit sur chaque position indépendamment : elle ne mélange l'information ni entre positions, ni entre exemples du batch. La convention de variance biaisée est celle de l'implémentation de référence ; une autre convention changerait les valeurs numériques, pas le rôle de l'opération.
+
+**Erreurs fréquentes :**
+
+- Confondre avec une normalisation par batch, dont les statistiques se calculent sur d'autres exemples.
+- Oublier $\gamma$ et $\beta$ : à l'initialisation ($\gamma=1$, $\beta=0$) la sortie égale le vecteur normalisé, mais ce n'est pas le cas en général.
+- Utiliser la variance non biaisée (ici $2$ au lieu de $1$) sans le signaler.
+
+</details>
+
+**Étape 2 — Tracer la branche d'attention.** Un batch contient $B=1$ séquence de $T=3$ positions, avec $d=4$ et $H=2$ têtes. Complétez les formes manquantes :
+
+| Objet | Forme |
+|---|---:|
+| Entrée $x$ | $(1,3,4)$ |
+| $\operatorname{LN}_1(x)$ | ? |
+| $Q$ (idem $K$, $V$) | ? |
+| Tranche de la tête 0 de $q$ | ? |
+| Scores d'une tête (avant masque) | ? |
+| Poids d'attention d'une tête (après masque causal et softmax) | ? |
+| Sortie d'une tête | ? |
+| `attended` (têtes recollées, avant $w_o$) | ? |
+| Sortie de la branche d'attention | ? |
+| $x' = x + \operatorname{attention}(\operatorname{LN}_1(x))$ | ? |
+
+La tranche de la tête 0 possède-t-elle 2 ou 4 colonnes ? Justifiez à partir de $\text{head\_dim}=d/H$. Les têtes échangent-elles de l'information avant $w_o$ ?
+
+<details>
+<summary>Afficher les indices</summary>
+
+1. Les projections $W_Q$, $W_K$, $W_V$ et $W_O$ ont toutes la forme $(4,4)$ dans le bloc de référence.
+2. La tête 0 lit les colonnes $0$ à $1$ de $q$, $k$ et $v$.
+3. Les scores comparent chaque position requête aux positions clés autorisées.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+$\operatorname{LN}_1(x)$, $Q$, $K$ et $V$ gardent la forme $(1,3,4)$. La tête 0 lit les colonnes $0$ à $1$ : sa tranche a la forme $(3,2)$, conformément à $\text{head\_dim}=d/H=2$. Les scores d'une tête forment une matrice $(3,3)$ ; après masque causal et softmax, les poids gardent la forme $(3,3)$ (les lignes somment à 1, les positions futures reçoivent un poids nul). La sortie d'une tête a la forme $(3,2)$ ; `attended` recolle les tranches en $(1,3,4)$ ; la sortie de $w_o$ a la forme $(1,3,4)$, et $x'$ aussi.
+
+Les têtes restent isolées jusqu'à $w_o$ : la projection de sortie est la première opération qui mélange l'information entre têtes. Garder un axe des têtes après le calcul est une disposition possible dans d'autres implémentations ; dans le bloc de référence, les tranches recollent par colonnes dans un tenseur $(B,T,d)$.
+
+**Erreurs fréquentes :**
+
+- Donner $(3,4)$ à la tranche d'une tête oublie le découpage en colonnes.
+- Donner $(3,3,2)$ au tenseur recollé confond la disposition par têtes d'autres implémentations avec le recollement par tranches du bloc de référence.
+- Croire que le masque change les formes : il modifie des valeurs de scores, pas des dimensions.
+
+</details>
+
+**Étape 3 — Tracer la branche MLP et la sortie du bloc.** La dimension intermédiaire du MLP vaut $8$ (`mlp_hidden_dim` dans la visite guidée). Complétez :
+
+| Objet | Forme |
+|---|---:|
+| $\operatorname{LN}_2(x')$ | ? |
+| Sortie de `fc1` | ? |
+| Sortie de `gelu` | ? |
+| Sortie de `fc2` | ? |
+| $x'' = x' + \operatorname{MLP}(\operatorname{LN}_2(x'))$ | ? |
+
+Le bloc change-t-il la largeur $d$ ? Quel chemin porte l'entrée jusqu'à la sortie sans transformation ?
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+$(1,3,4)$ ; $(1,3,8)$ ; $(1,3,8)$ ; $(1,3,4)$ ; $(1,3,4)$. Le MLP élargit temporairement la représentation ($d\to d_{\text{ff}}\to d$) pour la transformation non linéaire, puis revient à $d$. La largeur est conservée de l'entrée à la sortie du bloc : le tronc résiduel transporte une copie non modifiée de l'entrée jusqu'à chaque addition, et chaque branche ajoute une correction calculée sur une copie normalisée.
+
+**Erreurs fréquentes :**
+
+- Écrire $(1,3,4)$ après `fc1` confond dimension intermédiaire et largeur du flux.
+- Croire que le MLP mélange les positions : il transforme chaque position séparément, avec des poids partagés.
+- Croire que la connexion résiduelle remplace la représentation : elle ajoute la correction à l'entrée.
+
+</details>
+
+#### Exercice TF-B — Compter les paramètres du bloc de référence
+
+**Préparation :** la section d'initialisation de la [visite guidée du bloc](transformer-block-walkthrough.qmd). Le bloc de référence possède $d=16$, $H=4$, une dimension intermédiaire de MLP de $64$, des projections avec biais et deux normalisations (chacune avec $\gamma$ et $\beta$).
+
+1. Compter les poids et biais des projections $Q$, $K$, $V$ et $O$ de l'attention.
+2. Compter les paramètres des deux normalisations.
+3. Compter les poids et biais des deux couches du MLP.
+4. Donner le total du bloc, en vérifiant chaque sous-total avant de sommer.
+5. Si $H$ passe de $4$ à $8$ (avec $d$ inchangé), le total change-t-il dans le bloc de référence ? Pourquoi ?
+6. Dans la variante GPT-2 décrite par la visite guidée, quelles projections reçoivent l'écart-type d'initialisation réduit $0{,}02/\sqrt{2L}$, et pourquoi ces deux-là ?
+
+<details>
+<summary>Afficher les indices</summary>
+
+1. Les quatre matrices d'attention ont la forme $(d,d)$ dans le bloc de référence.
+2. Chaque normalisation possède deux vecteurs de taille $d$.
+3. Le MLP a une forme $d\to d_{\text{ff}}\to d$.
+4. Le nombre de têtes ne figure pas dans les formes des matrices de projection du bloc de référence.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+- **Attention :** quatre matrices $(16,16)$, soit $4\times256=1024$ poids, plus quatre biais de taille $16$, soit $64$.
+- **Normalisations :** $2\times(16+16)=64$ paramètres.
+- **MLP :** `fc1`, $16\times64=1024$ poids et $64$ biais ; `fc2`, $64\times16=1024$ poids et $16$ biais ; soit $2128$ paramètres.
+- **Total :** $1024+64+64+2128=3280$ paramètres.
+
+Passer de $H=4$ à $H=8$ ne change pas le total dans le bloc de référence : les projections restent $(d,d)$ et les têtes ne sont que des tranches de colonnes ; seule $\text{head\_dim}$ passe de $4$ à $2$. D'autres implémentations paramètrent les têtes séparément ; si $H\cdot d_{\text{head}}\neq d$, le total change. Il faut vérifier la paramétrisation avant de compter.
+
+Dans la variante GPT-2, seules $w_o$ et `fc2` reçoivent l'écart-type réduit $0{,}02/\sqrt{2L}$ : ce sont les deux projections de sortie dont le résultat s'ajoute au tronc résiduel, et le facteur tient compte des deux contributions additives par bloc sur $L$ blocs. Ce facteur réduit l'échelle initiale de ces contributions ; il ne garantit pas une variance constante du flux résiduel. Les autres projections conservent l'écart-type de base.
+
+**Erreurs fréquentes :**
+
+- Multiplier les paramètres d'attention par $H$ : dans le bloc de référence, les têtes partagent les mêmes matrices $(d,d)$ par tranches.
+- Oublier les biais, ou compter un seul vecteur par normalisation ($\gamma$ et $\beta$ sont deux vecteurs distincts).
+- Étendre le facteur $1/\sqrt{2L}$ à toutes les matrices : il ne concerne que les deux projections de sortie ajoutées au tronc.
+
+</details>
+
+#### Exercice TF-C — Diagnostiquer des affirmations et prédire des interventions
+
+**Préparation :** la [synthèse Transformer](transformer.qmd), en particulier ses limites et idées reçues, après TF-A et TF-B ; le [masque causal](causal-masking.qmd) pour l'étape 2. « Le bloc de référence » désigne le bloc pré-LN de la visite guidée.
+
+**Étape 1 — Classifier des affirmations.** Classez chaque affirmation comme **valide**, **invalide** ou **dépendante de l'architecture**, puis justifiez.
+
+A. Dans le bloc de référence, la normalisation prépare une copie de $x$ dans la branche, et le tronc résiduel porte l'entrée jusqu'à l'addition.
+B. Tous les Transformers placent la normalisation avant les sous-couches.
+C. Dans le bloc de référence, doubler le nombre de têtes double les paramètres d'attention.
+D. Chaque tête développe nécessairement une spécialisation interprétable par un humain.
+E. Le MLP applique la même transformation apprise à chaque position, avec des poids partagés entre positions.
+F. Seule l'attention est apprise ; le MLP applique des règles fixes.
+G. Profondeur et largeur décrivent la même dimension du réseau.
+
+<details>
+<summary>Afficher les indices</summary>
+
+1. Distinguez une propriété du bloc de référence d'une prétention universelle sur tous les Transformers.
+2. Pour les paramètres, repensez aux formes des matrices dans le bloc de référence.
+3. Pour les têtes, distinguez ce que l'architecture permet et ce qui relève d'une question empirique.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+- **A — Valide** pour le bloc de référence : la normalisation est dans la branche, le tronc résiduel transporte l'entrée jusqu'à l'addition ; l'identité est le chemin par défaut.
+- **B — Dépendante de l'architecture :** le bloc de référence est pré-LN, mais l'ordre pré-LN/post-LN et les variantes de normalisation diffèrent entre modèles ; l'affirmation universelle est invalide.
+- **C — Invalide :** les projections d'attention sont $(d,d)$ et les têtes sont des tranches de colonnes ; le nombre de têtes ne change pas le nombre de paramètres dans ce bloc.
+- **D — Invalide :** les têtes *peuvent* apprendre des motifs différents, mais une spécialisation nette et interprétable est une question empirique, pas une garantie de l'architecture.
+- **E — Valide** pour le bloc de référence : même MLP, mêmes poids pour toutes les positions ; sa conception précise varie selon les architectures.
+- **F — Invalide :** l'attention et le MLP sont tous deux appris ; l'attention mélange l'information entre positions, le MLP transforme chaque position localement.
+- **G — Invalide :** la profondeur compte les blocs empilés ; la largeur est la dimension des représentations qui circulent entre les blocs.
+
+**Erreur fréquente :** les propriétés du bloc de référence (pré-LN, projections $(d,d)$, tranches de têtes) sont des choix de conception ; les présenter comme des invariants de tous les Transformers est la principale source d'affirmations fausses.
+
+</details>
+
+**Étape 2 — Prédire des interventions.** On part du bloc de référence à l'initialisation standard (poids petits, non nuls), sauf indication contraire. Pour chaque intervention, prévoyez ce qui change et ce qui reste invariant :
+
+1. On initialise $w_o$ et son biais à zéro, et seulement eux. Que vaut $x'$ ? La sortie du bloc vaut-elle $x$ ?
+2. On initialise aussi `fc2` et son biais à zéro. Que vaut la sortie du bloc ? Le gradient de la perte atteint-il $w_q$ à travers la branche d'attention, à ce point précis ? Et $w_o$ ?
+3. On retire le masque causal de l'attention. Les formes changent-elles ? Les états cachés peuvent-ils changer ? Quel principe de la prédiction du prochain token est violé pendant l'entraînement ?
+
+<details>
+<summary>Afficher les indices</summary>
+
+1. Chaque branche ne fait qu'ajouter sa sortie au tronc.
+2. Pour le gradient, suivez le chemin du calcul : par quelles matrices la sortie de la branche d'attention passe-t-elle ?
+3. Le masque remplace des scores par $-\infty$ ; il ne touche pas aux dimensions.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+1. La branche d'attention contribue exactement zéro : $x'=x$. La sortie du bloc vaut $x+\operatorname{MLP}(\operatorname{LN}_2(x))$, généralement différente de $x$ : seule la branche d'attention est neutralisée.
+2. La sortie du bloc vaut exactement $x$ : chaque branche ajoute zéro. À ce point précis, le gradient n'atteint pas $w_q$ (ni $w_k$, $w_v$) par la branche d'attention, car toute l'influence de la branche passe par $w_o$ nulle ; en revanche, $w_o$ reçoit généralement un gradient non nul (son entrée `attended` ne l'est pas), de même pour `fc2`. Le tronc résiduel laisse passer le gradient vers les blocs et couches précédents. Ces initialisations nulles ne figent donc pas les branches : dès que $w_o$ s'écarte de zéro, la branche transmet à nouveau. C'est un comportement au point exact de l'intervention, pas une propriété permanente.
+3. Les formes ne changent pas : le masque modifie des valeurs (les positions futures reçoivent $-\infty$, donc un poids nul après softmax), pas des dimensions. Les états cachés peuvent changer : chaque position peut puiser dans les tokens futurs. Pendant l'entraînement autorégressif, la position $i$ verrait alors le token $i+1$, précisément la cible à prédire : l'objectif de prédiction du prochain token serait contourné par une fuite d'information future. Ce masque est un choix de modélisation : des modèles entraînés avec des masques différents existent, mais le calcul ne correspond plus au GPT causal du bloc de référence.
+
+**Erreurs fréquentes :**
+
+- « Sortie égale à l'entrée, donc rien ne s'apprend » : les projections de sortie nulles reçoivent des gradients et sortent de zéro ; le tronc continue de transporter l'information et le gradient.
+- « Le masque change les formes » : non, il change des valeurs de scores.
+- « Retirer le masque est sans effet, le softmax renormalise » : les poids se redistribuent vers les positions futures, et les états cachés changent.
+
+**Critère de réussite :** prédictions correctes sur les trois interventions ; distinction entre valeurs et formes, entre chemin du gradient et valeur de la sortie, et entre propriété du bloc de référence et choix de modélisation.
+
+</details>
+
+**Pour aller plus loin :** les exercices sur les variantes d'architecture (post-LN, RMSNorm, MQA/GQA, attention fenêtrée) et sur l'empilement des blocs complèteront cette collection.
 
 ### Préentraînement {#preentrainement}
 
