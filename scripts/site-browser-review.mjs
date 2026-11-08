@@ -126,7 +126,7 @@ for (const testCase of cases) {
   const consoleErrors = [];
   const pageErrors = [];
   page.on("console", msg => { if (msg.type() === "error") consoleErrors.push(msg.text()); });
-  page.on("pageerror", error => pageErrors.push(error.stack || String(error)));
+  page.on("pageerror", error => pageErrors.push({ name: error.name, message: error.message, stack: error.stack || null }));
 
   const url = kind === "homepage"
     ? (lang === "fr" ? `${BASE}/` : `${BASE}/en/`)
@@ -148,6 +148,31 @@ for (const testCase of cases) {
 
     item.title = await page.title();
     if (kind === "homepage") {
+      // Quarto's index.html URL fixup iterates every <a> and assumes href is
+      // a string. SVGAnchorElement.href is an SVGAnimatedString, so report
+      // non-string href properties without changing the rendered page.
+      item.linkHrefDiagnostics = await page.evaluate(() => ({
+        nonStringHrefAnchors: [...document.querySelectorAll("a")]
+          .filter(link => typeof link.href !== "string")
+          .map(link => ({
+            namespaceURI: link.namespaceURI,
+            hrefAttribute: link.getAttribute("href"),
+            hrefType: typeof link.href,
+            hrefConstructor: link.href?.constructor?.name || null,
+            outerHTML: link.outerHTML.slice(0, 1000),
+          })),
+        svgAnchors: [...document.querySelectorAll("svg a")].map(link => ({
+          hrefAttribute: link.getAttribute("href"),
+          hrefType: typeof link.href,
+          hrefConstructor: link.href?.constructor?.name || null,
+          outerHTML: link.outerHTML.slice(0, 1000),
+        })),
+        scripts: [...document.scripts].map(script => ({
+          src: script.src || null,
+          inlinePreview: script.src ? null : script.textContent.trim().slice(0, 180),
+        })),
+      }));
+
       item.homepageOrientation = await page.evaluate(() => {
         const readLinks = selector => [...document.querySelectorAll(selector)].map(link => ({
           label: link.textContent.trim().replace(/\\s+/g, " "),
