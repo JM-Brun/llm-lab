@@ -18,6 +18,7 @@ const visualCases = [
 
 const routeContextCases = visualCases.filter(testCase => testCase.theme === "light" && testCase.label === "desktop");
 const textDataResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
+const transformerOverviewResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
 
 const cases = [
   // The French homepage is the site root; English has its own /en/ landing page.
@@ -51,6 +52,11 @@ const cases = [
   })),
   ...visualCases.filter(testCase => testCase.theme === "light" && testCase.label === "mobile").map(testCase => ({
     ...testCase, page: "generation.html", kind: "training-build-review",
+  })),
+  // Focused mobile review of the Transformer system overview (FR/EN).
+  // Desktop keyboard/Axe coverage remains in the route-context matrix.
+  ...transformerOverviewResponsiveCases.map(testCase => ({
+    ...testCase, page: "transformer.html", kind: "transformer-overview-mobile",
   })),
   // Focused mobile review for the attention → scoring → training slice.
   // Desktop/light route-context cases above remain the keyboard/Axe baseline.
@@ -89,7 +95,7 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
-    const targetedReviewPages = new Set(["entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
+    const targetedReviewPages = new Set(["transformer.html", "entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
     // A browser-review script change must exercise the focused lesson pages:
     // they share page-navigation, responsive, and rendered-math assertions.
     const selectedPages = new Set([
