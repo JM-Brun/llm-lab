@@ -902,3 +902,58 @@ Keep all five tours as separate Build pages. Their outcomes and file boundaries 
 ### Remaining evidence
 
 The next code-focused pass should compare each tour's code excerpts and stated test claims with the current source and unit tests, execute the examples, and inspect the rendered exercises/answer disclosures. This source pass did not certify code correctness, numerical examples, responsive layout, keyboard/screen-reader behavior or learner transfer. Reuse the existing Build-path status matrix and do not create a second implementation-status catalogue.
+
+
+## Twenty-second slice: Practice catalogue and formative exercise progression
+
+**Review date:** 2026-11-08  
+**Scope:** source-level FR/EN comparison of the exercise hub, availability/status table, learning purpose and current collection coverage. Also checked the collection headings and declared maturity against the conceptual/Build route. This is not a complete correctness audit of every answer, rendered disclosure or interactive activity.
+
+### A. Exercise hub contract
+
+The FR/EN exercise hubs have matching roles and status claims:
+- They are a registry/navigation point for extended exercises and transfer tasks, not another lesson.
+- They explicitly distinguish short lesson-level self-checks from longer, multi-step formative collections.
+- They ask learners to attempt problems before opening collapsed solutions and explain assumptions/limits; a correct numerical result alone is not treated as mastery.
+- The availability table distinguishes published exercises from collections that are only planned.
+
+This is a useful and pedagogically important contract. Preserve it; do not present all collection headings as available activities.
+
+### B. Current exercise coverage
+
+| Collection | Current published material | Main gap explicitly acknowledged by the hub |
+|---|---|---|
+| Mathematical foundations | Seven progressive exercises: logits/softmax/NLL; loss masking and denominator; logit-to-parameter chain rule; soft targets/KL; batch shapes; stable log-sum-exp/log-softmax; NLL-to-perplexity | Finite-difference gradient verification and further topics |
+| Text data | TR-A representation pipeline reconstruction; TR-B embedding lookup and tensor shapes; TR-C identity/position/context distinctions | Dedicated BPE, windows, shifted targets and leakage exercises |
+| Attention | Weighted aggregation; Q/K/V projection reconstruction; isolated projection interventions; gradient-learning path; cross-attention transfer; AT-A–AT-C multi-head exercises | Causal-mask and invariance exercises |
+| Transformer | TF-A pre-LN block/shape trace; TF-B block parameter count; TF-C diagnosis and interventions | Architecture-variant exercises |
+| Pretraining | Prerequisite and focus outline only | Collection not yet authored |
+| Generation | Prerequisite and focus outline only | Collection not yet authored |
+| Fine-tuning | Prerequisite and focus outline only | Collection not yet authored |
+| Evaluation | Prerequisite and focus outline only | Collection not yet authored |
+| Efficiency | Prerequisite and focus outline only | Collection not yet authored |
+| Advanced topics | Prerequisite and focus outline only | Collection not yet authored |
+
+The English and French hubs match in the collection names, published counts/identifiers, prerequisite framing and explicit not-yet-authored status. The first four collections align with the concepts currently taught and with the transfer expectations from the route. The later collections are honest roadmaps, not falsely advertised exercises.
+
+### C. Pedagogical implications
+
+- **Do not create duplicate Q/K/V exercises.** The existing attention collection already covers role recognition, reconstructing projections, predicting the effect of parameter interventions, explaining learning through gradients and transfer to cross-attention. AT-A/B/C cover a separate multi-head outcome.
+- **Prioritize the causal-mask/invariance gap next.** It is a central correctness invariant used in the conceptual route and Build G4. A formative task should make the learner predict which earlier-position outputs can or cannot change when future tokens are appended, then distinguish this invariant from padding and loss masks.
+- **Complete the text-data transfer gap after that.** TR-A/B/C establish representations, but BPE merge tracing, shifted windows and leakage/boundary handling are explicitly listed as not yet covered by extended exercises. They are good candidates for a single coherent sequence rather than unrelated one-off exercises.
+- **Do not author all planned collections at once.** Pretraining, generation, fine-tuning, evaluation and efficiency need the corresponding model/data/code milestones to become sufficiently concrete. Add them when the core implementation and lessons can support realistic tasks.
+- **Keep feedback formative.** For each new task, require a prediction or explanation before code/calculation, expose the worked solution after an attempt, and include at least one transfer or counterexample question where the concept warrants it.
+
+### D. Priority decision
+
+The next exercise-development work should be:
+
+1. Causal masking and prefix invariance (one connected task with a prediction, a small counterexample and a test interpretation).
+2. Tokenization/BPE and text-window alignment (a progression from merge trace to shifted targets and leakage detection).
+3. Only then consider pretraining/generation collections, based on the state of the actual training and inference code.
+
+This is a priority recommendation, not a claim that the new exercises already exist. It should be coordinated with #220 (text-to-representation formative sequence), #329 (rendered review) and #447 (learner validation), rather than creating a parallel exercise project.
+
+### Evidence boundary
+
+This is a source-level catalogue and coverage review. It does not independently certify all seven mathematical solutions, all TR/AT/TF answers, disclosure accessibility, or learner mastery. The next pass should verify representative calculations and code-backed claims, then review all answer disclosures in the rendered bilingual site. Reuse the existing exercise hub; no new registry is warranted.
