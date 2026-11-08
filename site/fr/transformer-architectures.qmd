@@ -38,11 +38,19 @@ Vous pourrez :
 
 ## Vue comparative
 
+Sur téléphone, le tableau conserve ses six dimensions : faites défiler horizontalement la région ci-dessous pour consulter les colonnes suivantes. La région est accessible au clavier.
+
+::: {.table-responsive role="region" tabindex="0" aria-label="Tableau comparatif des architectures Transformer" aria-describedby="architecture-table-hint"}
+
 | Famille | Flux d'information | Masque et attention | Objectifs typiques | Usages fréquents | Exemples |
 |---|---|---|---|---|---|
 | **Encodeur seul** | L'encodeur transforme une séquence entière en représentations contextualisées. | Auto-attention généralement bidirectionnelle : chaque position peut exploiter les autres positions de l'entrée. | Prédiction de tokens masqués (*masked language modeling*), parmi d'autres objectifs possibles. | Classification, recherche sémantique, extraction et représentation de texte. | [BERT](https://huggingface.co/google-bert/bert-base-uncased), [RoBERTa](https://huggingface.co/FacebookAI/roberta-base) |
 | **Encodeur-décodeur** | L'encodeur représente l'entrée ; le décodeur produit une séquence cible en s'appuyant sur cette représentation. | Attention de l'encodeur sur l'entrée ; auto-attention causale du décodeur ; attention croisée vers les états de l'encodeur. | Reconstruction, débruitage ou apprentissage texte-vers-texte, selon le modèle. | Traduction, résumé, transformation d'une séquence en une autre. | [Transformer original](https://arxiv.org/abs/1706.03762), [T5](https://huggingface.co/google-t5/t5-base) |
 | **Décodeur seul** | Le décodeur prolonge un préfixe en produisant des représentations utiles à la prédiction suivante. | Auto-attention causale : une position ne consulte pas les tokens futurs. | Prédiction autorégressive du prochain token, dans les GPT classiques. | Continuation et génération conditionnée par un prompt. | [GPT (2018)](https://openai.com/index/language-unsupervised/), [GPT-2](https://huggingface.co/openai-community/gpt2) |
+
+:::
+
+<p id="architecture-table-hint">Faites défiler horizontalement pour lire les six colonnes.</p>
 
 Les liens renvoient aux fiches de modèles ou aux publications d'origine. Pour les articles : [BERT](https://arxiv.org/abs/1810.04805), [RoBERTa](https://arxiv.org/abs/1907.11692), [T5](https://jmlr.org/papers/v21/20-074.html), [GPT](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf) et [GPT-2](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf). **RoBERTa reste un modèle encodeur seul** : il reprend la base architecturale de BERT et modifie surtout la recette de pré-entraînement ; ce n'est pas une quatrième configuration.
 
