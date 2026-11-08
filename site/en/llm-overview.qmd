@@ -80,13 +80,15 @@ To describe a model, ask three separate questions:
 
 These dimensions interact, but they do not describe the same thing. An architecture does not by itself determine the learning objective or the task. Likewise, adapting parameters does not necessarily change the architecture family.
 
-The [small-GPT build path](build-path.qmd) distinguishes construction, the still-partially-implemented learning workflow in this project, and use of the model with fixed parameters.
+A model produced by pretraining is often called a **base model**. The term **foundation model** more broadly describes a model intended for reuse and adaptation across several tasks: the terms are related, but not exact synonyms. A pretrained model can be used directly or adapted later through fine-tuning, supervised instruction tuning, or preference optimization. The [small-GPT build path](build-path.qmd) distinguishes construction, the still-partially-implemented learning workflow in this project, and use of the model with fixed parameters.
 
 ## 5. Generation in a few steps
 
 The figure summarizes the principle of autoregressive generation. It does not describe the internal operations of the Transformer; its purpose is only to locate the overall path from the input text to the appended token.
 
 ![Overview of generation: text is split into tokens, processed by the model, then extended with a selected token.](../images/llm-generation-process-en.svg){#fig-gpt-generation-process fig-alt="Input text is split into tokens and passed to a model whose parameters remain fixed. The model produces a distribution from which a token is selected and appended to the context. The process repeats."}
+
+*The token split shown is schematic: actual units depend on the tokenizer.*
 
 1. **Prepare the input**: text is converted into tokens and then into representations the model can use. See [text and data](text-data.qmd), [tokenization](tokenization-strategies.qmd), and [embeddings](embedding-space.qmd).
 2. **Compute**: the Transformer processes the context and produces scores for possible tokens. See [GPT and Transformers](transformer.qmd).
@@ -95,13 +97,13 @@ The figure summarizes the principle of autoregressive generation. It does not de
 
 This loop is called **autoregressive generation**. The lesson [Generating text: inference step by step](generation.qmd) explains the distribution, decoding strategies, context prefill, and incremental generation (*decode*). The internal computation is developed in [contextualized representations](contextualized-representations.qmd) and the [Transformer block walkthrough](transformer-block-walkthrough.qmd).
 
-The same predictive computation can also score an observed token or calculate a loss during learning. These uses share the computation that produces the distribution, but they are not steps in the generation loop: see [likelihood](likelihood.qmd), [training examples](training-examples.qmd), and [loss](loss.qmd).
+The same predictive computation can also score an observed token or calculate a loss during learning. These uses share the computation that produces the distribution, but they are not steps in the generation loop: see [likelihood](likelihood.qmd), [training examples](training-examples.qmd), and [loss](loss.qmd). **Scoring** computes a score for observed targets; **evaluation** aggregates scores or metrics under a defined protocol and data set. Optimizations such as the **KV cache** speed up parts of inference without changing the prediction objective; they are covered in the [LLM computational complexity deep dive](llm-computational-complexity.qmd).
 
 ## 6. What are LLMs used for?
 
 Common uses include text generation and rewriting, summarization, translation, structured extraction, classification, programming assistance, and question-answering interfaces.
 
-A general-purpose model can be reused across tasks, but its suitability must be checked on the actual task. Relevant considerations include output quality, errors, robustness, cost, latency, confidentiality, and data provenance. A convincing demonstration on a few prompts is not an evaluation.
+A general-purpose model can be reused across tasks, but its suitability must be checked on the actual task. A system can also supplement the supplied context with retrieved documents: this is the principle of **retrieval-augmented generation (RAG)**. Retrieval enriches the input at use time; by itself, it does not modify the model's parameters. Relevant considerations include output quality, errors, robustness, cost, latency, confidentiality, and data provenance. A convincing demonstration on a few prompts is not an evaluation.
 
 ::: {.self-check}
 [Exercises and practice](exercises.qmd).
