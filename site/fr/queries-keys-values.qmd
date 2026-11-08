@@ -94,7 +94,17 @@ Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model
 - $Q,K\in\mathbb{R}^{T\times d_k}$ ;
 - $V\in\mathbb{R}^{T\times d_v}$.
 
-Chaque ligne correspond à une position de la séquence : pour la position $t$, on obtient $q_t=x_tW_Q$, $k_t=x_tW_K$ et $v_t=x_tW_V$. Les mêmes matrices de projection sont appliquées à toutes les positions ; ce sont les représentations d'entrée qui varient d'une position à l'autre.
+Chaque ligne correspond à une position de la séquence. Pour la position $t$, les projections donnent :
+
+$$
+\begin{aligned}
+q_t &= x_tW_Q,\\
+k_t &= x_tW_K,\\
+v_t &= x_tW_V.
+\end{aligned}
+$$
+
+Les mêmes matrices de projection sont appliquées à toutes les positions ; ce sont les représentations d'entrée qui varient d'une position à l'autre.
 
 ::: {.callout-note collapse="true" title="Comment l'entraînement apprend-il ces projections ?"}
 Les matrices $W_Q$, $W_K$ et $W_V$ ne reçoivent pas chacune une cible explicite « correcte ». Elles sont ajustées indirectement à partir de la fonction de perte du modèle, par rétropropagation du gradient.
