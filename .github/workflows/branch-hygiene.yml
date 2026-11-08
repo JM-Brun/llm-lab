@@ -1,0 +1,135 @@
+name: Branch hygiene
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "Delete branches proven redundant against main (false = dry run)"
+        type: boolean
+        default: false
+      exclude:
+        description: "Comma-separated branch names that must never be deleted"
+        type: string
+        default: ""
+
+permissions:
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: branch-hygiene
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: Classify branches against main
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out full repository history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Fetch all branch tips
+        run: |
+          set -euo pipefail
+          git fetch --prune origin '+refs/heads/*:refs/remotes/origin/*'
+
+      - name: Collect protected branch names
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXCLUDE: ${{ inputs.exclude }}
+        run: |
+          set -euo pipefail
+          {
+            printf 'main
+'
+            gh pr list --repo "$GITHUB_REPOSITORY" --state open --json headRefName --jq '.[].headRefName'
+            printf '%s
+' "$EXCLUDE" | tr ',' '
+'
+          } | sed 's/[[:space:]]//g' | grep -v '^$' | sort -u > "$RUNNER_TEMP/protected.txt"
+          echo "Protected branches:"
+          cat "$RUNNER_TEMP/protected.txt"
+
+      - name: Classify each branch against main
+        run: |
+          set -euo pipefail
+          main_tree="$(git rev-parse 'refs/remotes/origin/main^{tree}')"
+          redundant="$RUNNER_TEMP/redundant.tsv"
+          kept="$RUNNER_TEMP/kept.tsv"
+          : > "$redundant"
+          : > "$kept"
+
+          for ref in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin); do
+            branch="${ref#origin/}"
+            if [ "$branch" = "HEAD" ]; then
+              continue
+            fi
+            if grep -qx "$branch" "$RUNNER_TEMP/protected.txt"; then
+              printf '%s\tprotected (main, open pull request, or explicit exclusion)\n' "$branch" >> "$kept"
+              continue
+            fi
+            branch_ref="refs/remotes/origin/$branch"
+            ahead="$(git rev-list --count "refs/remotes/origin/main..$branch_ref")"
+            if git merge-base --is-ancestor "$branch_ref" refs/remotes/origin/main; then
+              printf '%s\tbranch tip is an ancestor of main (fully merged)\n' "$branch" >> "$redundant"
+              continue
+            fi
+            merge_status=0
+            merge_output="$(git merge-tree --write-tree refs/remotes/origin/main "$branch_ref")" || merge_status=$?
+            merge_tree="$(printf '%s\n' "$merge_output" | sed -n '1p')"
+            if [ "$merge_status" -eq 0 ] && [ "$merge_tree" = "$main_tree" ]; then
+              printf '%s\tmerging into main reproduces the exact main tree (changes already integrated)\n' "$branch" >> "$redundant"
+            elif [ "$merge_status" -ne 0 ]; then
+              printf '%s\t%s unique commit(s); merging conflicts with current main\n' "$branch" "$ahead" >> "$kept"
+            else
+              printf '%s\t%s unique commit(s); merge result differs from main (content not fully integrated)\n' "$branch" "$ahead" >> "$kept"
+            fi
+          done
+
+          echo "Redundant branches:"
+          cat "$redundant"
+          echo "Kept branches:"
+          cat "$kept"
+
+      - name: Delete redundant branches
+        if: ${{ inputs.apply }}
+        run: |
+          set -euo pipefail
+          cut -f1 "$RUNNER_TEMP/redundant.tsv" | while IFS= read -r branch; do
+            [ -n "$branch" ] || continue
+            echo "Deleting origin/$branch"
+            git push origin --delete "$branch"
+          done
+
+      - name: Write job summary
+        if: ${{ always() }}
+        env:
+          APPLY: ${{ inputs.apply }}
+        run: |
+          set -euo pipefail
+          {
+            echo "## Branch hygiene report"
+            echo
+            if [ "$APPLY" = "true" ]; then
+              echo "Mode: **apply** (the branches listed below as redundant were deleted)."
+            else
+              echo "Mode: **dry run** (no branch was deleted; re-run with `apply` enabled to delete the branches listed below)."
+            fi
+            echo
+            echo "Redundancy is proven by one of two Git checks: the branch tip is an ancestor of main, or a three-way merge of the branch into current main reproduces main's exact tree. Diverged branches with unique content are always kept."
+            echo
+            echo "### Redundant branches (proven)"
+            echo
+            echo "| Branch | Proof of redundancy |"
+            echo "| --- | --- |"
+            awk -F'\t' 'NF >= 2 { printf "| \`%s\` | %s |\n", $1, $2 }' "$RUNNER_TEMP/redundant.tsv"
+            echo
+            echo "### Kept branches"
+            echo
+            echo "| Branch | Reason |"
+            echo "| --- | --- |"
+            awk -F'\t' 'NF >= 2 { printf "| \`%s\` | %s |\n", $1, $2 }' "$RUNNER_TEMP/kept.tsv"
+          } >> "$GITHUB_STEP_SUMMARY"
