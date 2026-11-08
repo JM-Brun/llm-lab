@@ -11,10 +11,14 @@ on:
         description: "Comma-separated branch names that must never be deleted"
         type: string
         default: ""
+  push:
+    branches: [main]
+    paths: ['.github/branch-hygiene-trigger.md']
 
 permissions:
   contents: write
   pull-requests: read
+  issues: write
 
 concurrency:
   group: branch-hygiene
@@ -36,16 +40,36 @@ jobs:
           set -euo pipefail
           git fetch --prune origin '+refs/heads/*:refs/remotes/origin/*'
 
+      - name: Resolve run mode
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_EVENT_NAME" = "push" ] && [ -f .github/branch-hygiene-trigger.md ]; then
+            marker=".github/branch-hygiene-trigger.md"
+            if grep -Eq '^[[:space:]]*apply[[:space:]]*[:=][[:space:]]*true[[:space:]]*$' "$marker"; then
+              echo "APPLY=true" >> "$GITHUB_ENV"
+            else
+              echo "APPLY=false" >> "$GITHUB_ENV"
+            fi
+            exclude="$(sed -n 's/^[[:space:]]*exclude[[:space:]]*[:=][[:space:]]*//p' "$marker" | head -n 1)"
+            echo "EXCLUDE=$exclude" >> "$GITHUB_ENV"
+          else
+            if [ "${{ inputs.apply }}" = "true" ]; then
+              echo "APPLY=true" >> "$GITHUB_ENV"
+            else
+              echo "APPLY=false" >> "$GITHUB_ENV"
+            fi
+            echo "EXCLUDE=${{ inputs.exclude }}" >> "$GITHUB_ENV"
+          fi
+
       - name: Collect protected branch names
         env:
           GH_TOKEN: ${{ github.token }}
-          EXCLUDE: ${{ inputs.exclude }}
         run: |
           set -euo pipefail
           {
             printf 'main\n'
             gh pr list --repo "$GITHUB_REPOSITORY" --state open --limit 200 --json headRefName --jq '.[].headRefName'
-            printf '%s\n' "$EXCLUDE" | tr ',' '\n'
+            printf '%s\n' "$EXCLUDE"
           } | sed 's/[[:space:]]//g' | grep -v '^$' | sort -u > "$RUNNER_TEMP/protected.txt"
           echo "Protected branches:"
           cat "$RUNNER_TEMP/protected.txt"
@@ -97,7 +121,7 @@ jobs:
           cat "$kept"
 
       - name: Delete redundant branches
-        if: ${{ inputs.apply }}
+        if: ${{ env.APPLY == 'true' }}
         run: |
           set -euo pipefail
           cut -f1 "$RUNNER_TEMP/redundant.tsv" | while IFS= read -r branch; do
@@ -106,19 +130,24 @@ jobs:
             git push origin --delete "$branch"
           done
 
-      - name: Write job summary
+      - name: Write job summary and publish report
         if: ${{ always() }}
         env:
-          APPLY: ${{ inputs.apply }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+          APPLY="${APPLY:-false}"
+          redundant="$RUNNER_TEMP/redundant.tsv"
+          kept="$RUNNER_TEMP/kept.tsv"
+          [ -f "$redundant" ] || : > "$redundant"
+          [ -f "$kept" ] || : > "$kept"
           {
             echo "## Branch hygiene report"
             echo
             if [ "$APPLY" = "true" ]; then
               echo "Mode: **apply** (the branches listed below as redundant were deleted)."
             else
-              echo 'Mode: **dry run** (no branch was deleted; re-run with `apply` enabled to delete the branches listed below).'
+              echo 'Mode: **dry run** (no branch was deleted; set `apply: true` in `.github/branch-hygiene-trigger.md`, or re-run the workflow with `apply` enabled, to delete the branches listed below).'
             fi
             echo
             echo "Redundancy is proven by one of two Git checks: the branch tip is an ancestor of main, or a three-way merge of the branch into current main reproduces main's exact tree. Diverged branches with unique content are always kept, and a branch whose tip equals the current main tip is never deleted automatically (it may be a freshly created working branch)."
@@ -127,11 +156,13 @@ jobs:
             echo
             echo "| Branch | Proof of redundancy |"
             echo "| --- | --- |"
-            awk -F'\t' 'NF >= 2 { printf "| \`%s\` | %s |\n", $1, $2 }' "$RUNNER_TEMP/redundant.tsv"
+            awk -F'\t' 'NF >= 2 { printf "| \`%s\` | %s |\n", $1, $2 }' "$redundant"
             echo
             echo "### Kept branches"
             echo
             echo "| Branch | Reason |"
             echo "| --- | --- |"
-            awk -F'\t' 'NF >= 2 { printf "| \`%s\` | %s |\n", $1, $2 }' "$RUNNER_TEMP/kept.tsv"
-          } >> "$GITHUB_STEP_SUMMARY"
+            awk -F'\t' 'NF >= 2 { printf "| \`%s\` | %s |\n", $1, $2 }' "$kept"
+          } > "$RUNNER_TEMP/report.md"
+          cat "$RUNNER_TEMP/report.md" >> "$GITHUB_STEP_SUMMARY"
+          gh issue comment 652 --repo "$GITHUB_REPOSITORY" --body-file "$RUNNER_TEMP/report.md"
