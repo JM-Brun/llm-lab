@@ -30,16 +30,16 @@ In an autoregressive LLM, entropy describes how spread out the predicted next-to
 
 Given a prefix $x_{<t}$, the model produces a categorical distribution over its vocabulary:
 
-$
+$$
 p_\theta(v\mid x_{<t}),\qquad v\in\mathcal V.
-$
+$$
 
 Its entropy, using natural logarithms, is (with the convention $0\log 0=0$):
 
-$
+$$
 H_t=-\sum_{v\in\mathcal V}p_\theta(v\mid x_{<t})
 \log p_\theta(v\mid x_{<t}).
-$
+$$
 
 A distribution concentrated on a few tokens generally has lower entropy than a spread-out distribution. For a vocabulary of size $V$, entropy lies between 0 and $\log V$ nats. This bound assumes a normalized discrete distribution over a finite vocabulary.
 
@@ -53,24 +53,24 @@ For two candidate tokens with probabilities $(0.5,0.5)$, entropy is 1 bit, or $\
 
 Average entropy describes uncertainty *before* the next token is known. Once the target token $x_t$ is observed, its surprisal under the model is:
 
-$
+$$
 -\log p_\theta(x_t\mid x_{<t}).
-$
+$$
 
 This is a contribution to the token-prediction loss. It can be high even when the distribution had high entropy, or low when the observed token received high probability. Do not confuse a distribution's entropy with the surprisal of one particular outcome.
 
 For a full sequence, autoregressive factorization gives:
 
-$
+$$
 p_\theta(x_{1:T})=\prod_{t=1}^{T}p_\theta(x_t\mid x_{<t}),
-$
+$$
 
 and therefore:
 
-$
+$$
 -\log p_\theta(x_{1:T})
 =-\sum_{t=1}^{T}\log p_\theta(x_t\mid x_{<t}).
-$
+$$
 
 This sum of negative log-probabilities directly connects token-by-token prediction to sequence likelihood. A corpus average depends on which tokens are included, the tokenizer, and the reduction protocol.
 
@@ -78,9 +78,9 @@ This sum of negative log-probabilities directly connects token-by-token predicti
 
 Temperature $\tau>0$ transforms logits $z$ into a distribution:
 
-$
+$$
 p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i.
-$
+$$
 
 Lower temperature tends to concentrate the distribution; higher temperature tends to flatten it. For $\tau>0$, logit ordering and argmax remain unchanged, but probabilities and entropy change. Entropy after temperature scaling should not be presented as calibrated model uncertainty without empirical evaluation.
 
