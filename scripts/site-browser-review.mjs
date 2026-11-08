@@ -7,12 +7,14 @@ const BASE = (process.env.SITE_BROWSER_BASE_URL || "https://jm-brun.github.io/ll
 const OUT = "artifacts/site-browser-review";
 fs.mkdirSync(OUT, { recursive: true });
 
-const visualCases = ["light", "dark"].flatMap(theme => [
-  { lang: "en", viewport: { width: 1440, height: 1000 }, label: "desktop", theme },
-  { lang: "fr", viewport: { width: 1440, height: 1000 }, label: "desktop", theme },
-  { lang: "en", viewport: { width: 390, height: 844 }, label: "mobile", theme },
-  { lang: "fr", viewport: { width: 390, height: 844 }, label: "mobile", theme },
-]);
+// The published site currently exposes only the light Quarto theme.
+// Do not label prefers-color-scheme emulation as dark-theme coverage.
+const visualCases = [
+  { lang: "en", viewport: { width: 1440, height: 1000 }, label: "desktop", theme: "light" },
+  { lang: "fr", viewport: { width: 1440, height: 1000 }, label: "desktop", theme: "light" },
+  { lang: "en", viewport: { width: 390, height: 844 }, label: "mobile", theme: "light" },
+  { lang: "fr", viewport: { width: 390, height: 844 }, label: "mobile", theme: "light" },
+];
 
 const routeContextCases = visualCases.filter(testCase => testCase.theme === "light" && testCase.label === "desktop");
 const textDataResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
@@ -34,7 +36,7 @@ const cases = [
     }))
   ),
   // The text-input stepper is a local process aid; check its responsive layout
-  // in both languages and themes, not only the desktop keyboard/Axe baseline.
+  // in both languages, not only the desktop keyboard/Axe baseline.
   ...textDataResponsiveCases.map(testCase => ({
     ...testCase, page: "text-data.html", kind: "route-context",
   })),
@@ -55,14 +57,6 @@ const cases = [
   ...visualCases.filter(testCase => testCase.label === "mobile").flatMap(testCase =>
     ["queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "attention-score-scaling.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "cross-entropy.html", "loss.html", "gradients.html", "training-examples.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html"].map(page => ({
       ...testCase, page, kind: "attention-training-mobile",
-    }))
-  ),
-  // The other scoring lessons already receive desktop-light route-context
-  // and mobile light/dark coverage above. Add their missing desktop-dark
-  // screenshots so the four-page scoring group has a complete visual matrix.
-  ...visualCases.filter(testCase => testCase.label === "desktop" && testCase.theme === "dark").flatMap(testCase =>
-    [testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "loss.html", "gradients.html"].map(page => ({
-      ...testCase, page, kind: "scoring-page",
     }))
   ),
   ...visualCases.flatMap(testCase =>
@@ -367,7 +361,7 @@ for (const testCase of cases) {
     }
 
     // Keyboard and accessibility interaction checks run once per language/page
-    // on desktop/light. Mobile and dark cases remain visual/responsive checks.
+    // on desktop/light. Mobile cases remain visual/responsive checks.
     if (runInteractiveAudit) {
     // Keyboard traversal: record actual focus targets and whether the browser
     // exposes a visible focus indicator while tabbing through the page.
