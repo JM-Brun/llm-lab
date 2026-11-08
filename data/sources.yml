@@ -356,9 +356,9 @@ sources:
 
   - id: ahia-do-all-languages-cost-the-same-2023
     title: "Do All Languages Cost the Same?"
-    creators: ["Ahia et al."]
+    creators: ["Orevaoghene Ahia", "Sachin Kumar", "Hila Gonen", "Jungo Kasai", "David Mortensen", "Noah Smith", "Yulia Tsvetkov"]
     source_type: paper
-    identifiers: {}
+    identifiers: {doi: "10.18653/v1/2023.emnlp-main.614"}
     canonical_url: "https://aclanthology.org/2023.emnlp-main.614/"
     publisher: "EMNLP 2023 / ACL Anthology"
     publication_date: "2023"
@@ -403,10 +403,10 @@ sources:
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: ali-tokenizer-choice-llm-training-2024
-    title: "Tokenizer Choice For LLM Training"
-    creators: ["Ali et al."]
+    title: "Tokenizer Choice For LLM Training: Negligible or Crucial?"
+    creators: ["Mehdi Ali", "Michael Fromm", "Klaudia Thellmann", "Richard Rutmann", "Max Lübbering", "Johannes Leveling", "Katrin Klug", "Jan Ebert", "Niclas Doll", "Jasper Buschhoff", "Charvi Jain", "Alexander Weber", "Lena Jurkschat", "Hammam Abdelwahab", "Chelsea John", "Pedro Ortiz Suarez", "Malte Ostendorff", "Samuel Weinbach", "Rafet Sifa", "Stefan Kesselheim", "Nicolas Flores-Herr"]
     source_type: paper
-    identifiers: {}
+    identifiers: {doi: "10.18653/v1/2024.findings-naacl.247"}
     canonical_url: "https://aclanthology.org/2024.findings-naacl.247/"
     publisher: "Findings of NAACL 2024 / ACL Anthology"
     publication_date: "2024"
@@ -453,9 +453,9 @@ sources:
 
   - id: wegmann-tokenization-language-variation-2025
     title: "Tokenization is Sensitive to Language Variation"
-    creators: ["Wegmann et al."]
+    creators: ["Anna Wegmann", "Dong Nguyen", "David Jurgens"]
     source_type: paper
-    identifiers: {}
+    identifiers: {doi: "10.18653/v1/2025.findings-acl.572"}
     canonical_url: "https://aclanthology.org/2025.findings-acl.572/"
     publisher: "Findings of ACL 2025 / ACL Anthology"
     publication_date: "2025"
@@ -549,10 +549,10 @@ sources:
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: chiu-toklens-acl-srw-2026
-    title: "TokLens"
-    creators: ["Chiu"]
+    title: "TokLens: A Multilingual Lens on Tokenizer Quality for LLMs"
+    creators: ["Guan-Ming Chiu"]
     source_type: paper
-    identifiers: {}
+    identifiers: {doi: "10.18653/v1/2026.acl-srw.18"}
     canonical_url: "https://aclanthology.org/2026.acl-srw.18/"
     publisher: "ACL Anthology — ACL 2026 Student Research Workshop"
     publication_date: "2026"
