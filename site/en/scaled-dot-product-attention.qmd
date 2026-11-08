@@ -62,8 +62,10 @@ Here $M$ denotes an additive hard mask: $M_{ij}=0$ for an allowed query-key pair
 Consider one query and two accessible keys, with no mask:
 
 $$
-q=(1,0),\quad k_1=(1,0),\quad k_2=(0,1),\quad
-v_1=(10,0),\quad v_2=(0,20).
+\begin{aligned}
+q&=(1,0),\quad k_1=(1,0),\quad k_2=(0,1),\\
+v_1&=(10,0),\quad v_2=(0,20).
+\end{aligned}
 $$
 
 Here $d_k=2$. The raw scores are $qk_1^\top=1$ and $qk_2^\top=0$. After scaling, the scores are $(1/\sqrt{2},0)\approx(0.707,0)$. Applying softmax gives weights approximately $(0.67,0.33)$, which sum to one. The output is their weighted sum of the values:
