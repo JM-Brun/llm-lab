@@ -43,12 +43,9 @@ jobs:
         run: |
           set -euo pipefail
           {
-            printf 'main
-'
-            gh pr list --repo "$GITHUB_REPOSITORY" --state open --json headRefName --jq '.[].headRefName'
-            printf '%s
-' "$EXCLUDE" | tr ',' '
-'
+            printf 'main\n'
+            gh pr list --repo "$GITHUB_REPOSITORY" --state open --limit 200 --json headRefName --jq '.[].headRefName'
+            printf '%s\n' "$EXCLUDE" | tr ',' '\n'
           } | sed 's/[[:space:]]//g' | grep -v '^$' | sort -u > "$RUNNER_TEMP/protected.txt"
           echo "Protected branches:"
           cat "$RUNNER_TEMP/protected.txt"
@@ -116,7 +113,7 @@ jobs:
             if [ "$APPLY" = "true" ]; then
               echo "Mode: **apply** (the branches listed below as redundant were deleted)."
             else
-              echo "Mode: **dry run** (no branch was deleted; re-run with `apply` enabled to delete the branches listed below)."
+              echo 'Mode: **dry run** (no branch was deleted; re-run with `apply` enabled to delete the branches listed below).'
             fi
             echo
             echo "Redundancy is proven by one of two Git checks: the branch tip is an ancestor of main, or a three-way merge of the branch into current main reproduces main's exact tree. Diverged branches with unique content are always kept."
