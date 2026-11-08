@@ -35,7 +35,7 @@ Lesson pages use a consistent **“Check your understanding”** component: shor
 |---|---|---|
 | [Mathematical foundations](#foundations) | Tensors, probability, logits, entropy, cross-entropy, likelihood, gradients, numerical stability | 7 progressive exercises drafted; gradient checking and other topics remain to be developed |
 | [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Self-checks in the text/embedding lessons; three formative exercises TR-A–TR-C published; BPE, window and leakage exercises to be developed |
-| [Attention](#attention) | Q/K/V, scores, scaling, causal masks, multi-head attention, invariants | Exercises on weighted aggregation and Q/K/V projections; further exercises remain to be developed |
+| [Attention](#attention) | Q/K/V, scores, scaling, causal masks, multi-head attention, invariants | Weighted aggregation and Q/K/V projections; three formative multi-head exercises AT-A–AT-C published; causal-mask and invariant exercises to be developed |
 | [Transformer](#transformer) | Embeddings, position, residuals, normalization, MLP and architecture variants | Three formative exercises TF-A–TF-C published (shapes and normalization of a pre-LN block, block parameter count, diagnosis and interventions); architecture-variant exercises to be developed |
 | [Pretraining](#pretraining) | Objective, train/validation, perplexity, checkpoints and reproducibility | Structure to be filled |
 | [Generation](#generation) | Decoding, temperature, top-k/top-p, stopping, context and KV cache | Structure to be filled |
@@ -468,6 +468,8 @@ These are qualitative predictions, not guarantees about the magnitude of a numer
 
 **Q/K/V competencies assessed:** recognizing the roles, reconstructing projections, explaining how they are learned, predicting parameter-change effects, and transferring the reasoning to cross-attention. The existing weighted-sum task remains the aggregation calculation.
 
+**Current scope:** in addition to the weighted-aggregation and Q/K/V projection exercises above, three progressive formative exercises, with stable IDs AT-A, AT-B and AT-C shared with the French version, cover computing a multi-head attention by hand, tracing multi-head shapes, then claim diagnosis and intervention prediction. Multi-head causal masking and advanced invariants remain to be developed. Suggested order: AT-A, then AT-B, then AT-C.
+
 #### Calculate an aggregation by hand
 
 A position receives attention weights $(0.75,\,0.25)$ and the value vectors are $v_1=(2,0)$ and $v_2=(0,4)$. Calculate the output. If you swap $v_1$ and $v_2$ while keeping the weights fixed, does the output stay the same?
@@ -609,6 +611,175 @@ $$
 With parameters fixed, changing $X_D$ directly affects Q; changing $X_E$ directly affects K and V. Scores and output may then change as a consequence. The functional distinction remains, but the projections no longer share a common input. In MQA, multiple query heads share one K/V head; in GQA, groups of query heads share K/V heads. The number or sharing of K/V heads changes, but the functional distinction remains: Q/K determine weights and V supplies aggregated content. Describe the exact parameterization rather than mechanically copying the standard case.
 
 </details>
+
+#### Exercise AT-A — Compute a multi-head attention by hand
+
+**Preparation:** the four computation steps of one head in [scaled dot-product attention](scaled-dot-product-attention.qmd); head slicing and reassembly in the [reference block walkthrough](transformer-block-walkthrough.qmd). The exercise covers a single query position of a $T=2$-position sequence, with $d=4$ and $H=2$ heads ($\text{head\_dim}=2$), no mask. The scores below are already scaled.
+
+For the query under study:
+
+- **Head 0:** scaled scores $(\ln 3,\,0)$; $V$ slice: $v_1=(2,0)$, $v_2=(0,4)$.
+- **Head 1:** scaled scores $(0,\,\ln 3)$; $V$ slice: $v_1=(0,2)$, $v_2=(4,0)$.
+
+The output projection is set to $w_o=I_4$ for this exercise.
+
+1. Compute the attention weights of each head.
+2. Compute each head's output.
+3. Write the reassembled vector `attended` in $\mathbb{R}^{4}$.
+4. Do head 0's weights depend on head 1's scores? Does its output depend on head 1's values?
+5. Which operation is the first to mix information across heads? Why is $w_o=I_4$ a special case?
+
+<details>
+<summary>Show hints</summary>
+
+1. Each head applies its own softmax to its own scores.
+2. A head's output is the weighted sum of its $V$ slice.
+3. Reassembly concatenates the slices: head 0 into columns $0$ to $1$, head 1 into columns $2$ to $3$.
+4. Go back to the computation's dependencies, not to the intuition of a single attention.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+1. Head 0: $e^{\ln 3}=3$ and $e^0=1$, sum $4$, so the weights are $(3/4,\,1/4)$. Head 1: $(1/4,\,3/4)$.
+2. Head 0's output: $\frac34(2,0)+\frac14(0,4)=(1.5,\,1)$. Head 1's output: $\frac14(0,2)+\frac34(4,0)=(3,\,0.5)$.
+3. `attended`$=(1.5,\,1,\,3,\,0.5)$: head 0's two components, then head 1's.
+4. No, and no: each head reads only its own $Q$, $K$ and $V$ slices; its scores and output depend only on those slices.
+5. The output projection $w_o$: it is the first operation whose weights read columns coming from both heads. With $w_o=I_4$, every column stays within its head and no mixing occurs: that is an exercise choice, not the general case. In the real block, $w_o$ is learned and mixes columns across heads.
+
+**Common errors:**
+
+- Adding the two heads' outputs instead of juxtaposing them: reassembly concatenates, it does not add.
+- Normalizing all four scores together: each head has its own softmax over its two scores.
+- Believing one head's weights depend on the other head or on its values: until $w_o$, heads are independent.
+
+**Success criterion:** exact weights and outputs per head; reassembly by juxtaposition; head isolation up to $w_o$.
+
+</details>
+
+#### Exercise AT-B — Trace the shapes of a multi-head attention
+
+**Preparation:** the shape trace from the Transformer collection (TF-A) or the [block walkthrough](transformer-block-walkthrough.qmd) for head slicing; [scaled dot-product attention](scaled-dot-product-attention.qmd) for one head's shapes ($T\times T$ then $T\times d_v$).
+
+A batch contains $B=2$ sequences of $T=3$ positions, with $d=6$ and $H=2$ heads. Complete the missing shapes:
+
+| Object | Shape |
+|---|---:|
+| Input $x$ | $(2,3,6)$ |
+| $Q$ (same for $K$, $V$) | ? |
+| Slice of $Q$ for head 0 (whole batch) | ? |
+| Head 0's scores for one batch element | ? |
+| Head 0's weights for one element (after causal mask and softmax) | ? |
+| Head 0's output (whole batch) | ? |
+| `attended` (heads reassembled) | ? |
+| Output of the projection $w_o$ | ? |
+
+Then answer:
+
+1. What is $\text{head\_dim}$? By which factor are one head's scores scaled?
+2. If $H$ goes to $3$ (with $d=6$), which shapes change, and which stay $(3,3)$?
+3. If $H=4$, is the configuration realizable in the reference block? Why?
+4. Does the total number of attention parameters change when $H$ changes?
+
+<details>
+<summary>Show hints</summary>
+
+1. The projections stay $(d,d)$; heads are column slices.
+2. Scores compare queries and keys of the same width: count positions, not features.
+3. $\text{head\_dim}=d/H$ must be an integer in the reference block.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+$Q$, $K$ and $V$ have shape $(2,3,6)$. Head 0's slice: $(2,3,3)$. Head 0's scores for one batch element: $(3,3)$; so are the weights after the causal mask and softmax. Head 0's output (whole batch): $(2,3,3)$. `attended`: $(2,3,6)$. $w_o$'s output: $(2,3,6)$.
+
+1. $\text{head\_dim}=6/2=3$; one head's scores are divided by $\sqrt{3}$: a head's key width is $\text{head\_dim}$, not $d$.
+2. The slices become $(2,3,2)$; one head's scores stay $(3,3)$ (three queries compared with three keys); `attended` stays $(2,3,6)$. The scaling factor goes from $1/\sqrt{3}$ to $1/\sqrt{2}$: a head's weights can change.
+3. $H=4$ would give $\text{head\_dim}=1.5$, not an integer: the reference block's column slicing requires $H$ to divide $d$. Per-head projection implementations do not have exactly this constraint.
+4. No: in the reference block the projections stay $(d,d)$ and heads are slices of them; only the number of slices changes (cf. TF-B).
+
+**Common errors:**
+
+- Giving a head's scores the width $\text{head\_dim}$: scores cross queries and keys, so their shape is $(T,T)$.
+- Scaling scores by $\sqrt{d}$: a head's key width is $\text{head\_dim}$.
+- Adding a head axis to the reassembled tensor: the reference block reassembles by columns into a $(B,T,d)$ tensor.
+
+</details>
+
+#### Exercise AT-C — Diagnose multi-head claims and predict interventions
+
+**Preparation:** [scaled dot-product attention](scaled-dot-product-attention.qmd) and [Q/K/V projections](queries-keys-values.qmd) after AT-A and AT-B; the [block walkthrough](transformer-block-walkthrough.qmd) for the reference parameterization. "The reference block" means the pre-LN block of the walkthrough.
+
+**Stage 1 — Classify claims.** Classify each statement as **valid**, **invalid**, or **architecture-dependent**, and justify your choice.
+
+A. Each head computes its own weights from its own $Q$ and $K$ slices.
+B. Heads exchange information before the output projection $w_o$.
+C. In the reference block, one head's scores are scaled by $1/\sqrt{\text{head\_dim}}$, not by $1/\sqrt{d}$.
+D. A head's weights depend on the values of its $V$ slice.
+E. Doubling the number of heads doubles the size of each head's scores.
+F. An attention with $H$ heads of width $\text{head\_dim}=d/H$ is equivalent to a single head of width $d$.
+G. Every model has as many query heads as key/value heads.
+
+<details>
+<summary>Show hints</summary>
+
+1. Separate one head's computation from reassembly and $w_o$.
+2. For the scale, recall a head's key width.
+3. For statement G, reread the MQA and GQA note in the Q/K/V lesson.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+- **A — Valid:** each head computes its scores and its softmax on its own slices.
+- **B — Invalid:** heads stay isolated until $w_o$, the first operation that mixes columns from several heads.
+- **C — Valid for the reference block:** a head's key width is $\text{head\_dim}$; scaling follows the key width. The precise convention depends on the parameterization.
+- **D — Invalid:** the weights depend on the $Q$ and $K$ slices; the $V$ slice supplies the aggregated content.
+- **E — Invalid:** a head's scores cross queries and keys, shape $(T,T)$; when $H$ changes, it is $\text{head\_dim}$ that changes, not the shape of the scores.
+- **F — Invalid:** $H$ heads compute $H$ score matrices from dot products of width $\text{head\_dim}$; a single head of width $d$ would compute different dot products. These are not the same functions.
+- **G — Architecture-dependent:** the standard formulation balances query and key/value heads, but MQA and GQA share K/V heads across several query heads to reduce inference-time KV-cache cost.
+
+**Common error:** describing multi-head attention as "several attentions at the same scale": each head works in a subspace of width $\text{head\_dim}$, with its own scaling factor and its own normalization.
+
+</details>
+
+**Stage 2 — Predict interventions.** Start from the reference block at standard initialization. For each intervention, predict what changes and what stays invariant:
+
+1. Head 1's $V$ slice is set to zero, and nothing else. What happens to head 1's weights? Its output? The reassembled tensor? The block output?
+2. The reassembly order is swapped: head 0's output lands in head 1's columns, and conversely. What happens to each head's weights and outputs? The reassembled tensor? $w_o$'s output?
+3. $H$ goes from $2$ to $3$, with $d=6$ and the same projection matrices. Does the number of attention parameters change? $\text{head\_dim}$? The scaling factor? Can a head's weights change? The shape of the reassembled tensor?
+
+<details>
+<summary>Show hints</summary>
+
+1. A head's weights read only its $Q$ and $K$ slices.
+2. The intervention happens after the heads' computation, but before $w_o$.
+3. Reuse TF-B's reasoning on parameters, then AT-B's on the scaling factor.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+1. Head 1's weights do not change: they depend on its $Q$ and $K$ slices. Its output becomes the zero vector (a weighted sum of zero values). The reassembled tensor keeps its shape: head 0's columns unchanged, head 1's columns zero. The block output generally changes: the attention branch now contributes only head 0's output.
+2. Each head's weights and outputs are unchanged: the intervention happens after the heads' computation. The reassembled tensor changes: the slices land in the wrong columns. $w_o$ applies learned weights to specific columns; applied to a permuted reassembly, it generally produces a different output. Reassembly is not a neutral permutation.
+3. The attention parameters do not change: the projections stay $(d,d)$ and heads are slices of them (cf. TF-B). $\text{head\_dim}$ goes from $3$ to $2$; the scaling factor goes from $1/\sqrt{3}$ to $1/\sqrt{2}$; scores divided by a different factor generally give different weights. The reassembled tensor keeps shape $(2,3,6)$.
+
+**Common errors:**
+
+- "A zero $V$ slice kills the head": the head still produces weights; it is its aggregated content that becomes zero.
+- "Reordering the reassembly has no effect": $w_o$ reads specific columns, and the slice-to-column correspondence matters.
+- "Changing $H$ only changes shapes": the score scaling factor changes too, and therefore the weights.
+
+**Success criterion:** correct predictions on all three interventions; distinguishing weights from content; slice-to-column correspondence in reassembly; the effect of $H$ on the scaling factor.
+
+</details>
+
+**Further work:** exercises on multi-head causal masking, normalization invariants and MQA/GQA variants will complete this collection.
 
 ### Transformer {#transformer}
 
