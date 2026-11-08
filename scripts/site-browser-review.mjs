@@ -74,7 +74,7 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
   );
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
-    const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html"]);
+    const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
     // A global script/style change adds smoke coverage; it must not suppress
     // dedicated cases for page files changed in the same PR.
     const selectedPages = new Set([...smokePages, ...changedPages]);
@@ -87,7 +87,7 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
     }
   }
   if (cases.length === 0) {
-    const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html"]);
+    const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
     cases.push(...allCases.filter(testCase => smokePages.has(testCase.page)));
     console.log("No dedicated browser case matched the changed page; using global smoke cases.");
   }
