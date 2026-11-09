@@ -7,6 +7,8 @@ order: ``gpt_config`` (dimensions), ``gpt_ops`` (building blocks),
 aligned input/target windows that pretraining consumes, and
 ``decoding_filters`` implements the optional top-k/top-p truncations of
 the decoding deep dive, applied by ``generate`` in sampling mode.
+``gpt2_weights`` maps GPT-2 checkpoint parameters onto the reference model,
+for the reference-parity check and for inference with published weights.
 
 This package re-exports that public surface so callers can import from
 ``llm_lab.foundations`` directly. Exports are resolved lazily: importing
@@ -20,6 +22,7 @@ from typing import Any
 
 _EXPORTS = {
     "GPT": "gpt",
+    "GPT2_SMALL_CONFIG": "gpt2_weights",
     "GPTConfig": "gpt_config",
     "TransformerBlock": "transformer_block",
     "causal_mask": "attention",
@@ -29,6 +32,7 @@ _EXPORTS = {
     "generate": "generate",
     "layer_norm": "gpt_ops",
     "linear": "gpt_ops",
+    "load_gpt2_state_dict": "gpt2_weights",
     "scaled_dot_product_attention": "attention",
     "sliding_input_target_pairs": "training_examples",
     "softmax_with_temperature": "attention",

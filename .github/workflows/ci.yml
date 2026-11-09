@@ -38,6 +38,13 @@ jobs:
       - name: Install YAML data validation dependencies
         run: uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
 
+      - name: Install GPT-2 reference-parity dependencies
+        # torch comes from the CPU-only index to avoid multi-gigabyte CUDA wheels;
+        # its pin matches docs/requirements-gpt2-reference.txt.
+        run: |
+          uv pip install --python .venv/bin/python --index-url https://download.pytorch.org/whl/cpu torch==2.15.0
+          uv pip install --python .venv/bin/python -r docs/requirements-gpt2-reference.txt
+
       - name: Validate source catalogue and extraction records
         run: uv run python site/tools/check_source_catalogue.py
 

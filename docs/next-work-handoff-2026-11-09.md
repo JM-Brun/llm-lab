@@ -81,6 +81,7 @@ The 2026-11-03 `work-backlog-status.md`, the 2026-11-07 handoff and the old prio
 The [2026-11-09 adversarial project review](reviews/adversarial-project-review-2026-11-09.md) maps each of its recommendations to an existing owner and **changes no label or step above**. Three proposals await an explicit owner decision:
 
 1. **Reference parity (G9) before training (G8):** loading pretrained GPT-2 small weights into the existing NumPy forward pass needs no backward pass, optimizer or training loop, so it stays outside the #656 gate; it would be a child of #78. The roadmap currently orders reference comparison after pre-training (P5, step 2).
+   **Accepted by the maintainer on 2026-11-09, G9 part only.** `gpt2_weights.py` and `tests/unit/test_gpt2_reference_parity.py` compare the NumPy GPT with Hugging Face GPT-2 under identical random weights; no checkpoint is downloaded. Loading the published GPT-2 small checkpoint (A1, readable text) is not started: the download was not approved at this step.
 2. **#268 from P3 to P2:** the review documents the concrete learner need that the P3 deferral asks for (local setup friction before any code runs).
 3. **Clearing the #656 gate as the next P1 learning slice,** ahead of further training-related source audits; the gate itself stays in force until cleared.
 

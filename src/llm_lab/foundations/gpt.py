@@ -23,7 +23,8 @@ Scope and limitations:
   training loop.
 - A randomly initialized model produces incoherent text. This is expected:
   it separates the mechanics of generation from the quality acquired by
-  learning.
+  learning. ``gpt2_weights`` can replace the random values with the
+  published GPT-2 parameters, without changing this architecture.
 
 Line-by-line walkthrough (bilingual site pages):
 - https://jm-brun.github.io/llm-lab/fr/gpt-model-walkthrough.html
