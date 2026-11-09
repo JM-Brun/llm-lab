@@ -129,7 +129,9 @@ print("mean:", mean_loss.item())  # 0.860645...
 print("softmax-first:", softmax_first_loss.item())  # 0.946560...
 ```
 
-The final position is ignored by `ignore_index); it contributes neither to the sum nor to the mean denominator. `reduction="none"` exposes local losses, while `reduction="mean"` averages valid targets (with no class weights in this example). Applying softmax first is incorrect for the intended API use: it turns probabilities into a new set of input scores and changes the loss. This example demonstrates the API and reduction; it does not replace causal masking, target alignment, or a training loop.
+The final position is ignored by `ignore_index`; it contributes neither to the sum nor to the mean denominator. `reduction="none"` exposes local losses, while `reduction="mean"` averages valid targets (with no class weights in this example). Applying softmax first is incorrect for the intended API use: it turns probabilities into a new set of input scores and changes the loss. This example demonstrates the API and reduction; it does not replace causal masking, target alignment, or a training loop.
+
+PyTorch also accepts probability-distribution targets (for example with *label smoothing*), but `ignore_index` applies only to class-index targets. This example deliberately uses integer indices.
 :::
 
 ## Connection to perplexity
