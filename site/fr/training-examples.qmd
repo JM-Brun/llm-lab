@@ -96,9 +96,9 @@ Le tableau décrit **uniquement les fenêtres d’entrée**. Pour l’entraînem
 
 ### Exemple calculé : ce que le stride fait répéter
 
-Prenons le flux `[0, 1, 2, 3, 4, 5, 6, 7, 8]`, une longueur d’entrée (L=4) et des cibles décalées d’un token.
+Prenons le flux `[0, 1, 2, 3, 4, 5, 6, 7, 8]`, une longueur d’entrée $L=4$ et des cibles décalées d’un token.
 
-| Stride | Départ | Entrée (x) | Cible (y) |
+| Stride | Départ | Entrée $x$ | Cible $y$ |
 |---:|---:|---|---|
 | 4 | 0 | [0, 1, 2, 3] | [1, 2, 3, 4] |
 | 4 | 4 | [4, 5, 6, 7] | [5, 6, 7, 8] |
