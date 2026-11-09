@@ -143,7 +143,7 @@ At present, every edge has canonical concepts as both endpoints. The validator c
 
 ### Validation coverage
 
-The existing CI entry point remains `uv run python site/tools/check_concept_registry.py`; the existing `tests/site/test_concept_registry.py` now covers required relation metadata, learning-dependency invariants, relation-specific cycle policy, reciprocal inverse declarations, and mandatory rationale. The PR must pass the existing generic CI and Quarto render workflows before merge.
+The existing CI entry point remains `uv run python site/tools/check_concept_registry.py`; the existing `tests/knowledge/test_concept_registry.py` now covers required relation metadata, learning-dependency invariants, relation-specific cycle policy, reciprocal inverse declarations, and mandatory rationale. The PR must pass the existing generic CI and Quarto render workflows before merge.
 
 This is a first contract increment, not proof that every current relation edge is semantically correct or that the rendered graph is pedagogically effective. The remaining manual review of the current edge inventory stays in #416.
 
