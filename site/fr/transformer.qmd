@@ -160,9 +160,9 @@ La construction des fenêtres, le décalage entrées/cibles et les masques d'ent
 - [Harvard NLP — *The Annotated Transformer*](https://nlp.seas.harvard.edu/annotated-transformer/) : une implémentation exécutable et annotée, liée à l'article original. Elle aide à relier les équations au code, mais son architecture et ses choix d'entraînement ne définissent pas tous les LLM modernes.
 - [PyTorch — attention à produit scalaire mise à l'échelle](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html) : le contrat d'API d'une opération, pas une explication ou une implémentation complète d'un Transformer.
 
-### Suivre un parcours structuré
+### Livres et cours complémentaires (facultatifs)
 
-- [Sebastian Raschka — *Build a Large Language Model (From Scratch)*](https://www.sebastianraschka.com/llms-from-scratch/) et [le dépôt source](https://github.com/rasbt/LLMs-from-scratch) : un parcours associant livre et code sur les données, l'attention, l'implémentation de GPT, le préentraînement et le fine-tuning. C'est une référence importante, pas l'ordre de lecture obligatoire de ce site.
+- [Sebastian Raschka — *Build a Large Language Model (From Scratch)*](https://www.sebastianraschka.com/llms-from-scratch/) et [le dépôt source](https://github.com/rasbt/LLMs-from-scratch) : un parcours associant livre et code sur les données, l'attention, l'implémentation de GPT, le préentraînement et le fine-tuning. C'est une référence importante, pas l'ordre de lecture obligatoire de ce site. Ces ressources sont des approfondissements facultatifs : elles ne constituent pas des étapes du parcours principal.
 - [Raschka — conseils de lecture](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch01/reading-recommendations.md) : conseils pour construire d'abord une vue d'ensemble, puis approfondir avec le code.
 - [DeepLearning.AI — *How Transformer LLMs Work*](https://www.deeplearning.ai/courses/how-transformer-llms-work) : un cours vidéo compact de Jay Alammar et Maarten Grootendorst sur la tokenisation, les embeddings, l'attention, les blocs modernes et quelques variantes d'efficacité. L'accès et les conditions du cours peuvent évoluer.
 
