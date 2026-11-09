@@ -57,7 +57,7 @@ In a second stage, the tokenizer is frozen and a concept Transformer learns to p
 
 At inference, the model produces levels successively. Parallelism applies to positions within a level, not to the entire hierarchy. Once all levels have been generated, the tokenizer decoder reconstructs the text sequence.
 
-La page du laboratoire Hazy Research fournit le schéma d'ensemble et détaille les deux phases : [présentation du projet](https://hazyresearch.stanford.edu/blog/2026-10-12-ncm).
+The Hazy Research project page provides an overview diagram and details the two stages: [project presentation](https://hazyresearch.stanford.edu/blog/2026-10-12-ncm).
 
 ## What the results do — and do not — establish
 
