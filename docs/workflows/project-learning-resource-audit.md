@@ -2,7 +2,7 @@
 
 **Status:** normative workflow · **Version:** 1.0 · **Introduced:** 2026-11-09  
 **Coordinator:** [#756 — project-by-project pedagogical value audit](https://github.com/JM-Brun/llm-lab/issues/756)  
-**Related workflows:** [source-to-learning-system integration](source-to-learning-system-integration.md) · [source-to-knowledge validation](source-to-knowledge-validation.md)
+**Related workflows:** [source-to-learning-system integration](source-to-learning-system-integration.md) · [source-to-knowledge validation](source-to-knowledge-validation.md) · [project audit template](templates/project-learning-resource-audit-template.md)
 
 ## 1. Purpose and boundary
 
