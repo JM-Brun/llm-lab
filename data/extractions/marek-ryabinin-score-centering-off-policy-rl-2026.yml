@@ -14,8 +14,10 @@ scan:
     notes: ["No figures were copied or evaluated for reuse."]
   code_data:
     status: partial
-    coverage: "Official README and public losses.py implementation, including token loss, effective centering mass, supported ratio corrections and top-k tail path; tests were not executed."
-    notes: ["Implementation source files and tests were not executed."]
+    coverage: "Official README, public losses.py and the sole official CPU test file tests/test_loss.py. The exact test file was executed against the exact losses.py snapshot from upstream commit fdca22b19793babdf08e33e5ba51537e82cbed2f; all 7 parametrized test cases passed."
+    notes:
+      - "Execution used JAX 0.9.0.1 and pytest 9.0.2 in the available CPU environment; upstream requirements currently declare jax>=0.11.1, so this is a successful compatibility check, not a run in the declared minimum-version environment."
+      - "The repository exposes one test module; no large-scale paper sweeps, framework integrations or experimental results were reproduced."
   comments: {status: not-inspected, coverage: null, notes: []}
   linked_resources:
     status: partial
