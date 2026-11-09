@@ -101,7 +101,7 @@ Le bloc calcule deux mises à jour **additives** du même flux `x` :
 1. `x + attention(ln(x))` — la branche d'attention ;
 2. `x + mlp(ln(x))` — la branche MLP.
 
-La normalisation est **dans la branche**, pas sur le tronc. Le tronc (`x + ...`) porte donc toujours une copie non modifiée de l'entrée vers la sortie : l'identité est le défaut, chaque branche ne fait qu'*ajouter* une correction. C'est l'ordre **pré-LN** de GPT-2 — plus stable quand on empile beaucoup de blocs que l'ordre post-LN du Transformer original.
+La normalisation est **dans la branche**, pas sur le tronc. Le tronc (`x + ...`) porte donc toujours une copie non modifiée de l'entrée vers la sortie : l'identité est le défaut, chaque branche ne fait qu'*ajouter* une correction. C'est l'ordre **pré-LN** de GPT-2. Ce placement est souvent plus favorable à l'optimisation des Transformers profonds : Xiong et al. (2020) montrent, dans leur cadre théorique et expérimental, des gradients mieux comportés à l'initialisation qu'en post-LN, ce qui peut réduire le besoin de *warm-up*. Ce résultat ne garantit pas une stabilité ou une supériorité universelle : celles-ci dépendent aussi de l'architecture, de l'initialisation et du protocole d'entraînement. [Xiong et al. (2020), *On Layer Normalization in the Transformer Architecture*](https://proceedings.mlr.press/v119/xiong20b.html).
 
 ## Initialiser : pourquoi `rng` est un argument
 
