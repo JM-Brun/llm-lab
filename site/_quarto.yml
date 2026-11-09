@@ -353,6 +353,8 @@ format:
       - styles.scss
     template-partials:
       - includes/title-metadata.html
+    filters:
+      - filters/meta-description.lua
     include-after-body:
       - includes/language-switch.html
       - includes/learning-map.html
