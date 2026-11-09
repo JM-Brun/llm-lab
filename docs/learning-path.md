@@ -25,8 +25,7 @@ The learner-facing course and the implementation dependency graph answer differe
 4. **Unpack representations and computation:** embeddings, positional information, contextual states, Transformer blocks, attention and causal masking.
 5. **Unpack prediction and decoding:** output logits, probabilities, selection strategies, stopping and inference-time efficiency.
 6. **Explain learning:** the next-token prediction objective, sequence likelihood, cross-entropy/loss, gradients, backpropagation, optimization, pretraining and validation. Introduce the parameter-update loop only after the inference path is understood; do not turn corpus engineering or batch construction into prerequisites for this conceptual explanation.
-7. **Prepare training data (G1b → G2 branch):** when following Build, prepare a traceable corpus and fit/freeze its tokenizer ([corpus preparation](../site/fr/corpus-preparation.qmd) / [EN](../site/en/corpus-preparation.qmd), G1b), then construct context windows and shifted targets ([training examples](../site/fr/training-examples.qmd) / [EN](../site/en/training-examples.qmd), G2). This branch depends on G1 text/tokenization and joins the model path at G8 training; it is not a prerequisite for understanding or demonstrating inference (G3–G7).
-8. **Explain adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation; keep these distinct.
+7. **Explain adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation; keep these distinct.
 
 ### Reader-facing sequence and operational branches
 
@@ -36,9 +35,7 @@ The public page-navigation arrows follow the **conceptual inference route**, not
 
 The generation lesson appears early as a system-level preview: it establishes the autoregressive loop with fixed parameters before the learner studies each internal component. Its appearance before the detailed input and probability lessons is deliberate, not a claim that those details are unnecessary.
 
-The learning route branches from the shared foundations rather than continuing the inference chain:
-
-`corpus preparation + tokenizer → training examples (windows and shifted targets) → forward pass → loss → gradients and parameter updates`.
+The Theory route explains why training uses observed targets, a loss and parameter updates. Operational corpus preparation and training-example construction belong exclusively to the separate Build path; they are not numbered stages or prerequisites in this conceptual route.
 
 Evaluation is cross-cutting. Validation results may inform model, data, and decoding choices; the test set must remain held out until final assessment. The landing-page diagram links each available stage to its canonical lesson. A missing implementation milestone must remain visibly distinct from an available conceptual explanation.
 
@@ -336,6 +333,8 @@ This is a **modelling completion**, not the page/site refactor. Until the subseq
 The Build path is a separate course with its own entry point, milestones, implementation prerequisites and completion criteria. Its order is determined by what must exist in code before the next component can be implemented and tested; it is not a reordering of the Theory path.
 
 The current Build milestones are G0–G9 and retain their established branches:
+
+The implementation-specific data branch is owned here, not by the Theory route: G1b prepares a traceable corpus and fits/freezes the tokenizer; G2 constructs context windows, shifted inputs/targets and batches. It joins the model path at G8. It is not required to follow the Theory route's explanation of inference or learning.
 
 - **Model/inference branch:** define the small GPT scope; prepare prompt tokenization; implement embeddings and positional information; implement attention and Transformer blocks; assemble the model; produce logits and select tokens; demonstrate autoregressive generation with fixed parameters.
 - **Training-data branch:** prepare a traceable corpus and tokenizer (G1b), then construct windows, shifted targets and batches (G2). This branch joins the model path at training; it is not a prerequisite for implementing or understanding inference.
