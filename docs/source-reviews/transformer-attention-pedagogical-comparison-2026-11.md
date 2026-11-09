@@ -100,6 +100,36 @@ This is a concise intuition-to-current-architecture route, not a from-scratch im
 
 Only the outline and announcement were inspected. No claim is made about the correctness or depth of the individual videos or code examples.
 
+### 2.6 3Blue1Brown: *But what is a GPT?* (Deep Learning Chapter 5)
+
+This is the preceding lesson to the attention chapter and, importantly, the video used as the video baseline in the Polo Club CHI 2026 study. Its text adaptation was inspected, and the public animation source scripts for generation, embeddings, autoregression and machine-learning basics were sampled.
+
+Its source-local progression is unusually relevant to LLM Lab's overall computational spine:
+1. Predict, sample and repeat: input text produces a next-token distribution, a token is sampled, appended and the cycle repeats.
+2. Tokens and embeddings: text is segmented into tokens and mapped to vectors.
+3. Neural-network premise: learned weights, matrix operations, nonlinearities and data flow.
+4. Embedding geometry: vector directions, dot products, nearest neighbors and illustrative semantic directions.
+5. Contextualization: the same initial token representation is refined by context through repeated attention and MLP blocks.
+6. Unembedding: the final sequence representation is projected to vocabulary logits.
+7. Softmax and temperature: logits become a distribution used for sampling.
+8. Parallel training intuition: every position can provide a next-token prediction during training, even though generation consumes the final position and then feeds the sampled token back.
+
+The public scene scripts reinforce this structure:
+- generation/autoregression scenes animate the predict → distribution → sample → append → repeat loop, including temperature examples and parallel next-token predictions;
+- embedding scenes visualize token segmentation, embedding matrices, vector spaces, dot products and contextual updates;
+- machine-learning scenes visualize weights versus data, matrix computations, softmax and the neural-network premise.
+
+This offers a clear big-picture mental model and a useful bridge between the model's forward computation and autoregressive decoding. It is complementary to Chapter 6: Chapter 5 explains the end-to-end system; Chapter 6 opens the internal attention mechanism.
+
+Qualifications:
+- The vector arithmetic/nearest-neighbor examples are illustrative. The animation code uses a separate GloVe/word-vector model for some geometric demonstrations; these are not measurements of GPT-3 token embeddings.
+- The lesson sometimes describes token embeddings as also carrying positional information. LLM Lab should distinguish the token-embedding lookup from positional embeddings/encodings and the combined input representation.
+- GPT-3 parameter counts, vocabulary size and context length are historical model-specific examples.
+- Temperature zero is best understood as the limit as temperature approaches zero from above; the formula is not evaluated by dividing by literal zero.
+- The parallel next-token explanation motivates shifted targets and teacher-forced training, but does not fully define teacher forcing, target alignment, loss masking or gradient updates.
+
+The text adaptation and scene source provide a substantial structural review, but the rendered video has not yet been independently watched. Pacing, animation timing, visual legibility and the exact transitions remain open.
+
 ## 3. Cross-project synthesis
 
 These resources serve different learning needs:
@@ -156,9 +186,11 @@ MQA/GQA and sparse attention should first be compared as architectural variants 
 - [Jay Alammar — The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/)
 - [DeepLearning.AI — How Transformer LLMs Work](https://www.deeplearning.ai/courses/how-transformer-llms-work)
 - [Jay Alammar — 2025 course announcement](https://newsletter.languagemodels.co/p/how-transformer-llms-work-free-course)
+- [3Blue1Brown — But what is a GPT?](https://www.3blue1brown.com/lessons/gpt/)
 - [3Blue1Brown — Attention in Transformers, step by step](https://www.3blue1brown.com/lessons/attention/)
 - [3Blue1Brown — video and timestamps](https://www.youtube.com/watch?v=eMlx5fFNoYc)
-- [3Blue1Brown — animation source code for the lesson](https://github.com/3b1b/videos/blob/master/_2024/transformers/attention.py)
+- [3Blue1Brown — animation source code for Chapter 5](https://github.com/3b1b/videos/tree/master/_2024/transformers)
+- [3Blue1Brown — animation source code for Chapter 6](https://github.com/3b1b/videos/blob/master/_2024/transformers/attention.py)
 - [Polo Club — Transformer Explainer repository](https://github.com/poloclub/transformer-explainer)
 - [Polo Club — CHI 2026 paper](https://doi.org/10.1145/3772318.3791725)
 - [LLM Lab — existing bilingual experiment guide](../../site/fr/transformer-explainer.qmd)
