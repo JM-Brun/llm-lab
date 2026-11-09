@@ -15,7 +15,7 @@ suggested_route:
   next: "en/text-data"
 hierarchy:
   parents: ["en/llm-overview"]
-  children: []
+  children: ["en/text-data", "en/logits", "en/probabilities"]
 related: ["en/decoding-strategies", "en/gpt-generation-walkthrough", "en/training-examples"]
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:published"]
 -->
