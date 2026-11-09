@@ -174,7 +174,7 @@ Separate several dimensions during evaluation:
 - **Repetition:** does the text loop or repeat segments?
 - **Probabilistic fidelity:** what probability does the model assign to observed tokens or sequences?
 
-Perplexity does not summarize these dimensions. A strategy can improve some human judgments or sequence-level metrics while degrading other properties. Work on *sampling adapters* analyzes, in particular, the precision-recall trade-offs induced by local distribution transformations.
+Perplexity does not summarize these dimensions. Likelihood (or mean NLL, and the perplexity derived from it under the chosen logarithm convention) measures the probability assigned to observed tokens on a given corpus; it does not directly measure factuality, instruction following, or user utility. Conversely, a task metric measures only the properties defined by that task and its protocol. For example, the [Average Precision in the evaluation exercise](experimental-evaluation.qmd) measures ranking quality, not probability calibration; the [likelihood lesson](likelihood.qmd) clarifies what the probabilistic score measures. A strategy can improve some human judgments or sequence-level metrics while degrading other properties. Work on *sampling adapters* analyzes, in particular, the precision-recall trade-offs induced by local distribution transformations.
 
 ::: {.callout-warning title="Interpretation caveat"}
 Holtzman et al.'s results primarily concern open-ended generation and the models/protocols studied. Their conclusions do not automatically transfer to translation, code, structured generation, or modern LLMs with complex post-processing. Comparing strategies requires holding the model, prompt, corpus, constraints, and evaluation protocol constant.
