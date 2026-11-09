@@ -1310,3 +1310,14 @@ The user-supplied YouTube URL in issue #84 could not be verified through the ava
 **Limit.** This targeted profile selected the two changed language variants at desktop size only. It does not establish mobile layout, dark-theme behavior, screen-reader usability, or learner comprehension. Those remain separate checks; do not describe this as a full manual review.
 
 The YouTube resource supplied in issue #84 remains unverified: direct retrieval previously returned a cache miss and an exact video-ID web search on 2026-11-09 returned no result. No title, transcript, timestamps, or claims are inferred from the URL.
+
+
+## 2026-11-09: ranking quality versus probability calibration
+
+**Scope.** Added a deterministic binary-ranking counterexample to the FR/EN decoding-strategies lessons, extending the existing distinction between Average Precision (AP) and calibration. No new page, concept-registry entry, dependency, model benchmark or evaluation framework was added.
+
+The four labels are `[1, 0, 1, 0]`. Score set A is `[0.65, 0.55, 0.45, 0.35]`; score set B is `[0.99, 0.89, 0.11, 0.01]`. B is a strictly increasing transformation of A, so both produce the same ranking and AP = 5/6 ≈ 0.833. With the explicitly fixed bins [0, 0.5) and [0.5, 1], both bins have observed positive frequency 0.5. The weighted ECE is 0.10 for A and 0.44 for B.
+
+A standard-library Python snippet in each language page computes AP and this two-bin ECE and asserts the expected values. The text states that ECE depends on binning and that the four-observation example is illustrative, not a reliable calibration estimate or an empirical LLM evaluation.
+
+**Validation still required:** execute both snippets, verify FR/EN semantic parity, run Python CI and Quarto render/local-link checks, then inspect the exact rendered changes. Mobile layout is intentionally not a gate for this source/content slice and remains a later release-review task.
