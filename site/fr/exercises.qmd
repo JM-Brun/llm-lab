@@ -1402,7 +1402,7 @@ Un prompt contient les identifiants de tokens $(A,B,C)$. On suppose un Transform
 1. Pendant le prefill, combien de positions du prompt sont traitées ?
 2. Les logits de quelle position servent-ils à sélectionner le premier token généré $D$ ?
 3. Pour prédire le token suivant $E$, quel token est nouvellement fourni pendant le decode incrémental ?
-4. Pourquoi le prefill n'est-il pas du teacher forcing ?
+4. Pourquoi le prefill n'est-il pas la même opération que le teacher forcing ?
 5. Les paramètres du modèle sont-ils mis à jour pendant ces phases d'inférence ?
 
 <details>
