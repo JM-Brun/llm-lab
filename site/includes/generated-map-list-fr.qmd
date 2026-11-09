@@ -49,6 +49,7 @@
     - [Attention croisée : faire communiquer deux séquences](cross-attention.html)
     - [RoPE : géométrie, dérivation et limites](rope.html)
     - [Architectures hybrides : Nemotron 3 et 3.5](hybrid-llm-architectures.html)
+    - [Next-Concept Modeling : générer par niveaux de représentation](next-concept-modeling.html)
   - Texte et tokenisation
     - [Unicode, UTF-8 et normalisation du texte](unicode-text.html)
     - [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.html)

@@ -13,7 +13,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: []
+  children: ["fr/next-concept-modeling"]
 related: []
 tags:
   - "type:entry-point"
@@ -49,6 +49,7 @@ Chaque entrée répond à une question plus précise : pourquoi un mécanisme fo
 - [Attention croisée](cross-attention.qmd) — transfert d'information entre deux séquences, notamment dans les architectures encodeur-décodeur et multimodales.
 - [RoPE : encodage positionnel rotatif](rope.qmd) — géométrie des rotations, dépendance aux positions relatives et limites d'extrapolation.
 - [Architectures hybrides : Nemotron 3 et 3.5](hybrid-llm-architectures.qmd) — combinaison de récurrence, attention, experts et prédiction multi-token dans un cas concret.
+- [Next-Concept Modeling](next-concept-modeling.qmd) — génération non autorégressive par niveaux de codes discrets, comparée à GPT et aux modèles de diffusion.
 
 Les variantes spécialisées ne rejoignent pas le parcours principal simplement parce qu'un modèle récent les utilise. Il faut démontrer qu'elles sont indispensables à la compréhension générale.
 

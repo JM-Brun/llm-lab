@@ -2821,3 +2821,48 @@ sources:
       pages: [en/text-data, fr/text-data, en/embedding-space, fr/embedding-space, en/contextualized-representations, fr/contextualized-representations, en/transformer, fr/transformer, en/generation, fr/generation, en/probabilities]
       concepts: [token, token-embedding, contextualized-representation, positional-encoding, next-token-prediction, conditional-distribution, logits, softmax, autoregressive-generation, decoding-policy, training-objective]
       audit_records: [docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md]
+
+  - id: bdtech-next-concept-modeling-2026
+    title: "Next-Concept Modeling shows that AI doesn’t need to ‘think’ one token at a time"
+    creators: ["Ben Dickson"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://bdtechtalks.substack.com/p/next-concept-modeling-shows-that"
+    publisher: "TechTalks / BD Tech Talks"
+    publication_date: "2026-11-07"
+    updated_date: null
+    language: en
+    version: "Article body retrieved through indexed search; related primary research and project materials checked 2026-11-09"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: link-only}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency, probabilistic-foundations-training]
+      tags: [topic:next-concept-modeling, topic:non-autoregressive-generation, topic:hierarchical-discrete-codes, topic:coarse-to-fine-generation, method:residual-vector-quantization, method:nested-dropout, application:machine-translation, application:summarization, application:constraint-solving]
+      concept_ids: [next-concept-modeling, hierarchical-discrete-codes, coarse-to-fine-generation, multiscale-residual-vector-quantization]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [architecture, experiment, benchmark, pedagogy]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-09"
+        status: partially-scanned
+        inspected_scope:
+          - "Full author-attributed article body exposed by indexed search, including architecture, two-stage training, benchmarks, limitations and future directions"
+          - "Stanford Hazy Research project explanation and reported evaluation summary"
+          - "Primary arXiv abstract and bibliographic metadata"
+          - "Official HazyResearch/ncm repository README, released tasks, evaluation commands and MIT licence statement"
+          - "Crosswalk against LLM Lab's canonical computational spine, concept registry, architecture pages and source catalogue"
+        limitations:
+          - "Direct Substack page retrieval returned a cache miss; article text was available through indexed search content."
+          - "The full arXiv paper PDF, supplementary material, training code and checkpoints were not independently executed or exhaustively audited."
+          - "Figures and animations were not retrieved as independent assets; no reuse permission for article visuals was established."
+          - "Reported benchmark comparisons are reproduced as claims of the authors and are not independent replications."
+          - "Comparisons with autoregressive models are task- and protocol-specific; the headline 10–31x speedups primarily compare against diffusion baselines."
+    related:
+      pages: [en/transformer-architectures, fr/transformer-architectures, en/hybrid-llm-architectures, fr/hybrid-llm-architectures, en/generation, fr/generation]
+      concepts: [next-concept-modeling, hierarchical-discrete-codes, coarse-to-fine-generation, multiscale-residual-vector-quantization, autoregressive-generation, next-token-prediction, conditional-distribution]
+      audit_records: [docs/source-reviews/next-concept-modeling-2026-11.md]
