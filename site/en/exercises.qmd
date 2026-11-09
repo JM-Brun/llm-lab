@@ -38,7 +38,7 @@ Lesson pages use a consistent **“Check your understanding”** component: shor
 | [Attention](#attention) | Q/K/V, scores, scaling, causal masks, multi-head attention, invariants | Weighted aggregation and Q/K/V projections; CA-A on causal masking and prefix invariance; three formative multi-head exercises AT-A–AT-C published; advanced variants remain to be developed |
 | [Transformer](#transformer) | Embeddings, position, residuals, normalization, MLP and architecture variants | Three formative exercises TF-A–TF-C published (shapes and normalization of a pre-LN block, block parameter count, diagnosis and interventions); architecture-variant exercises to be developed |
 | [Pretraining](#pretraining) | Objective, train/validation, perplexity, checkpoints and reproducibility | Structure to be filled |
-| [Generation](#generation) | Next-token prediction, decoding, autoregressive loop, stopping, context and KV cache | Three GE-A–GE-C exercises published; prefill/decode and KV cache remain to be developed |
+| [Generation](#generation) | Next-token prediction, decoding, autoregressive loop, stopping, context and KV cache | Five GE-A–GE-E exercises published; GE-D covers prefill/decode and GE-E covers the KV cache |
 | [Fine-tuning](#fine-tuning) | Classification, SFT, loss masking, data quality and overfitting | Structure to be filled |
 | [Evaluation](#evaluation) | Baselines, metrics, contamination, uncertainty and error analysis | One standalone transfer exercise is published in [Experimental evaluation](experimental-evaluation.qmd); the full collection remains to be built |
 | [Efficiency](#efficiency) | LoRA/QLoRA, memory, cost and trade-offs | Structure to be filled |
