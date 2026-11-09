@@ -108,9 +108,14 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
     const sidebarPilotPages = new Set(["embedding-space.html", "positional-encoding.html", "contextualized-representations.html"]);
     // A Quarto sidebar change must inspect the linked section entry and its children.
     // they share page-navigation, responsive, and rendered-math assertions.
+    // When a sidebar change and this audit script change travel together,
+    // keep the browser run focused on the affected section. A script-only
+    // change still exercises the broader targeted review profile.
+    const reviewScriptOnly = changedFiles.includes("scripts/site-browser-review.mjs")
+      && !changedFiles.includes("site/_quarto.yml");
     const selectedPages = new Set([
       ...smokePages,
-      ...(changedFiles.includes("scripts/site-browser-review.mjs") ? targetedReviewPages : []),
+      ...(reviewScriptOnly ? targetedReviewPages : []),
       ...(changedFiles.includes("site/_quarto.yml") ? sidebarPilotPages : []),
       ...changedPages,
     ]);
