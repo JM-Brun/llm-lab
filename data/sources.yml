@@ -2440,6 +2440,7 @@ sources:
         status: partially-scanned
         inspected_scope:
           - "Canonical Substack URL, title and author identity"
+          - "Repeated direct retrieval and indexed searches; the exact article body remains unavailable"
           - "Search-indexed references connecting the article to Score Centering Stabilizes Off-policy Reinforcement Learning (arXiv:2609.20807)"
         limitations:
           - "Direct Substack retrieval returned a cache miss; the article body, equations, section structure and examples were not independently inspected."
@@ -2477,7 +2478,7 @@ sources:
         - topic:importance-sampling
         - method:score-function
         - ecosystem:jax
-      concept_ids: []
+      concept_ids: [policy-gradient, score-function, off-policy-reinforcement-learning, training-inference-mismatch, score-centering, importance-sampling]
     metadata:
       technical_level: advanced
       contribution_types: [theory, mathematical-derivation, experiment, implementation]
@@ -2489,6 +2490,7 @@ sources:
         status: partially-scanned
         inspected_scope:
           - "arXiv abstract and bibliographic metadata"
+          - "alphaXiv full-text rendering, including method and selected experiment/implementation sections (pp. 1, 5–9 and 12)"
           - "Official implementation README: loss contract, top-k sampler-logprob approximation, importance-sampling composition, supported correction families and test command"
           - "Public implementation notes and independent technical explanations used only as cross-checks"
         limitations:
@@ -2497,8 +2499,8 @@ sources:
           - "Reported model-scale and stability results are author-reported, not independently reproduced."
           - "The paper's reuse licence and rights for figures/data were not independently established."
     related:
-      pages: []
-      concepts: []
+      pages: [fr/score-centering, en/score-centering]
+      concepts: [policy-gradient, score-function, off-policy-reinforcement-learning, training-inference-mismatch, score-centering, importance-sampling]
       audit_records:
         - data/extractions/marek-ryabinin-score-centering-off-policy-rl-2026.yml
         - docs/source-reviews/score-centering-2026-11.md
