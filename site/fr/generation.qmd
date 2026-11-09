@@ -52,6 +52,7 @@ Pour **une étape de génération**, le modèle effectue une passe avant à para
 
 \[
 p_\theta(\cdot \mid c_t) = \operatorname{softmax}(z_t).
+\]
 
 Pour un token candidat \(v\), \(p_\theta(v \mid c_t)\) désigne la probabilité qu'il soit le prochain token sachant le contexte courant. Chaque probabilité est comprise entre 0 et 1 et leur somme, sur tout le vocabulaire, vaut 1. La distribution dépend du contexte ; la génération utilise celle de la dernière position du contexte.
 
