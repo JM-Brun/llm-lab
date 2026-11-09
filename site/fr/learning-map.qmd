@@ -23,7 +23,7 @@ related: []
 tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:fr", "status:published"]
 -->
 
-La page distingue un **parcours guidé** compact d'une **carte progressive**. Le parcours est dérivé du curriculum canonique ; la carte commence par les territoires de haut niveau, puis révèle rubriques et pages au fil des clics. Les repères de lecture ci-dessous se replient ; la carte reflète la recherche, le filtre et la sélection dans l'URL, et le bouton « Copier le lien » la partage telle quelle.
+Cette page présente le **parcours théorique Understand** en huit étapes, puis une carte progressive pour explorer les ressources. Le **parcours Build est indépendant** : il possède son propre ordre d'implémentation et son propre point d'entrée. Le parcours est dérivé du curriculum canonique ; la carte commence par les territoires de haut niveau, puis révèle rubriques et pages au fil des clics. Les repères de lecture ci-dessous se replient ; la carte reflète la recherche, le filtre et la sélection dans l'URL, et le bouton « Copier le lien » la partage telle quelle.
 
 ::: {.callout-note collapse="true" title="Comment lire cette carte"}
 
@@ -38,15 +38,15 @@ Les intitulés de sections affichés dans les détails d'une page sont des repè
 
 ::: {.guided-route-section}
 
-## Parcours guidé
+## Parcours théorique — Understand
 
-Huit étapes conceptuelles donnent un point d'entrée et une progression conseillée. Les pages centrales couvrent les idées principales de chaque étape ; les ressources facultatives apportent du contexte ou de la profondeur et peuvent appartenir à toute destination. Les pages d'une même étape sont des ressources complémentaires, pas une liste de prérequis stricts.
+Huit étapes conceptuelles donnent une progression conseillée pour comprendre le fonctionnement des LLM. Elles ne décrivent pas le parcours Build. Les pages centrales couvrent les idées principales de chaque étape ; les ressources facultatives apportent du contexte ou de la profondeur et peuvent appartenir à toute destination. Les pages d'une même étape sont des ressources complémentaires, pas une liste de prérequis stricts.
 
 {{< include ../includes/generated-guided-route-fr.qmd >}}
 
 ::: {.guided-route-companion}
 
-**Fil pratique complémentaire :** Pour construire un petit GPT, suivez le [parcours de construction](build-path.html). La préparation du corpus et des exemples d'entraînement constitue une branche dédiée à l'apprentissage du modèle, et non un prérequis à l'inférence.
+**Autre parcours principal — Build :** Pour construire un petit GPT, suivez le [parcours Build indépendant](build-path.html). Il a ses propres jalons et prérequis d'implémentation ; il ne constitue pas une suite obligatoire du parcours théorique. La préparation du corpus et des exemples d'entraînement constitue une branche dédiée à l'apprentissage du modèle, et non un prérequis à l'inférence.
 
 :::
 
