@@ -1,5 +1,5 @@
 ---
-title: "Panorama: what is an LLM?"
+title: "Overview: what is an LLM?"
 subtitle: "Understand the model, its computation, and its main uses"
 description: "An overview of language models: definition, next-token prediction, architecture, learning, and inference."
 keywords: ["type:system-overview","destination:understand","topic:llm-overview","level:overview","language:en","status:published"]
@@ -24,22 +24,22 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 {{< include ../includes/generated-guided-context-en-llm-overview.qmd >}}
 
 ::: {.chapter-lead}
-A **large language model** (LLM) is a language model trained at large scale using substantial data and compute resources. There is no universal parameter-count threshold that defines the category: scale also depends on data and compute ([scaling laws](scaling-laws.qmd)). The term LLM does not specify a particular architecture.
+A **large language model** (LLM) is a language model trained at scale on large text corpora using a substantial compute budget. There is no agreed parameter-count threshold for the category: the training data and compute also matter ([scaling laws](scaling-laws.qmd); [Zhao et al., 2023](https://arxiv.org/abs/2303.18223); [Hoffmann et al., 2022](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html)). The term LLM does not specify a particular architecture or training objective.
 :::
 
 ## 1. LLM, GPT, and Transformer are different concepts
 
-A **language model** assigns a probability or score to token sequences given a context. In an autoregressive model, this computation is repeated one token at a time: the model does not enumerate every possible complete continuation. **GPT** (*Generative Pre-trained Transformer*) is a family of pretrained models based on the Transformer architecture. Classic GPT models are **decoder-only** Transformers trained to predict the next token.
+A **language model** assigns a probability or score to token sequences given a context. In an autoregressive model, this computation is repeated one token at a time: the model does not enumerate every possible complete continuation. **GPT** (*Generative Pre-trained Transformer*) is a family of pretrained models based on the Transformer architecture. Classic GPT models are **decoder-only** Transformers pretrained to predict the next token.
 
-A **Transformer** is an architecture family, not a synonym for GPT or LLM. Its main configurations include:
+A **Transformer** is an architecture family, not a synonym for GPT or LLM. The original paper introduced an encoder–decoder architecture ([Vaswani et al., 2017](https://arxiv.org/abs/1706.03762)). Common configurations include:
 
 | Family | General behavior | Example |
 |---|---|---|
-| **Encoder-only** | Builds contextual representations of the input; often used for understanding or classification tasks | BERT |
-| **Encoder–decoder** | Produces an output conditioned on an input; commonly used for sequence-to-sequence tasks | T5 |
-| **Decoder-only** | Processes a causal context and predicts subsequent tokens | GPT |
+| **Encoder-only** | Builds contextual representations of the input; often used for understanding or classification tasks | [BERT](https://arxiv.org/abs/1810.04805) |
+| **Encoder–decoder** | Produces an output conditioned on an input; commonly used for sequence-to-sequence tasks | [Original Transformer](https://arxiv.org/abs/1706.03762), [T5](https://jmlr.org/papers/v21/20-074.html) |
+| **Decoder-only** | Processes a causal context and predicts subsequent tokens | [GPT-3](https://arxiv.org/abs/2005.14165) |
 
-These architectures and their differences are explained in the [Transformer architecture comparison](transformer-architectures.qmd). Natural language processing (NLP) is a **problem domain**, whereas deep learning is a **family of methods**: an LLM is one possible approach to language tasks. For historical context, see the [history of Transformers](transformer-history.qmd).
+The differences in information flow, masking, and training objectives are explained in the [Transformer architecture comparison](transformer-architectures.qmd).
 
 LLM Lab uses a small decoder-only GPT as a **teaching model**: its autoregressive computation can be inspected and implemented end to end. Its dimensions and optimizations are not intended to reproduce a production system. This is a pedagogical choice, not a claim that all LLMs are GPTs or decoder-only Transformers. The [Build path](build-path.qmd) develops this implementation step by step.
 
@@ -53,11 +53,11 @@ A few terms are enough to follow this computation:
 - **Context:** the tokens available to compute a continuation. During generation, it contains the prompt followed by tokens already produced; see [generation](generation.qmd).
 - **Parameters:** learned values — including weights and biases — that determine the network's computation. They remain fixed during ordinary inference; see the [configuration of a small GPT](gpt-config-walkthrough.qmd).
 
-These estimates are learned from heterogeneous corpora (domains, languages, styles, and quality levels) and must generalize beyond observed sequences; see [text and data](text-data.qmd).\n\nFor a GPT, the probability of a sequence factorizes into successive conditional probabilities. The [mathematical formulation of language modeling](language-modeling-math.qmd) presents this factorization. The mathematical tools used throughout the course are collected in the [mathematical foundations](mathematical-foundations.qmd). [Autoregressive generation](generation.qmd) explains how a distribution becomes a continuation, one token at a time.
+The model learns these distributions from a corpus; its quality and diversity affect what it can learn ([text and data](text-data.qmd)). For a GPT, a sequence probability factorizes into successive conditional probabilities; the [mathematical formulation of language modeling](language-modeling-math.qmd) derives this result. The course's mathematical prerequisites are collected in [mathematical foundations](mathematical-foundations.qmd). [Autoregressive generation](generation.qmd) shows how the distribution is used to produce a continuation.
 
 Predicting a plausible continuation is not the same as verifying that it is true. The prediction objective guarantees neither factual outputs nor human-like understanding of the world; these limits are discussed in [The training objective: guarantees and limits](llm-limits.qmd).
 
-The challenges behind this problem are covered in several focused lessons: dependencies between tokens in the [contextualized representation pipeline](contextualized-representations.qmd), probability in the [mathematical foundations of language modeling](language-modeling-math.qmd), corpus quality in [text and data](text-data.qmd), and trade-offs among parameters, data, and compute in [scaling laws](scaling-laws.qmd).
+
 
 ## 3. From text to a distribution, then to different uses
 
@@ -83,7 +83,9 @@ The model maps the context to **logits** (unnormalized scores); the *softmax* fu
 | **Observed-target scoring** | Compute the probability of a known token from its observed prefix, then the sequence likelihood or NLL | Fixed |
 | **Training** | Supply prefixes from the reference sequence (*teacher forcing*), compare distributions with target tokens, compute the loss and its gradients, then update parameters | Updated at the update step |
 
-*Prefill* and *decode* are inference execution phases. *Teacher forcing* describes conditioning on reference tokens during scoring or training; it is not a generation phase. For scoring and training on a known sequence, a forward pass produces distributions at each position; the causal mask ensures that each prediction depends only on the preceding prefix. [Training examples](training-examples.qmd), [loss](loss.qmd), and [gradients](gradients.qmd) explain the training branch; [likelihood](likelihood.qmd) explains scoring.
+These three uses share the same predictive computation, but they are not one execution loop: generation feeds a selected token back into the context, scoring evaluates an observed target, and training updates the parameters.
+
+*Prefill* and *decode* are inference execution phases. *Teacher forcing* describes conditioning on reference tokens during scoring or training; it is not a generation phase. When scoring or training on a known sequence, a forward pass produces a distribution at each position. Each distribution is aligned with the next target token; the causal mask prevents the model from accessing future tokens. [Training examples](training-examples.qmd), [loss](loss.qmd), and [gradients](gradients.qmd) explain the training branch; [likelihood](likelihood.qmd) explains scoring.
 
 **Target scoring** and **model evaluation** are not synonyms. Scoring computes probabilities for observed targets; evaluation aggregates scores or metrics under a defined data protocol. It may also assess generated outputs. The following view illustrates evaluation based on scoring, without updating parameters.
 
@@ -99,19 +101,19 @@ Describing a model requires three distinct questions:
 |---|---|---|
 | **Architecture** | How does the network transform information? | Encoder-only, encoder–decoder, decoder-only — [Transformer architectures](transformer-architectures.qmd) |
 | **Learning** | How are the parameters obtained or adapted? | Pretraining, fine-tuning, SFT, and preference optimization |
-| **Use** | What do we do with the model while its parameters are fixed? | Generation, classification, scoring, prompting, and retrieval-augmented generation (RAG) |
+| **Use** | What do we do with the model while its parameters are fixed? | Generation, classification, scoring, [in-context learning](in-context-learning.qmd), and retrieval-augmented generation (RAG) |
 
-For a GPT, **pretraining** learns to predict the next token from a corpus. It is self-supervised: targets are constructed from the data itself. The resulting model is often called a *base model*. *Foundation model* more broadly refers to a model intended for reuse across multiple tasks; the terms are related but not synonymous.
+For a GPT, **pretraining** learns to predict the next token from a corpus. It is self-supervised: targets are constructed from the data itself. The model before adaptation is often called a *base model*. A **foundation model** is a broader category: it is trained on broad data at scale and can be adapted to many tasks, including tasks beyond language ([Bommasani et al., 2021](https://crfm.stanford.edu/report)). The terms are therefore not synonymous.
 
 After pretraining, **parameter adaptation** is possible but not mandatory: task fine-tuning, *supervised fine-tuning* (SFT) on instruction–response examples, or preference optimization. A pretrained model can also be used directly.
 
-At inference time, parameters remain fixed. A prompt and documents retrieved by a **RAG** system change the context supplied to the model, not its weights. Evaluation occurs at several stages; test data must remain held out until final evaluation to avoid biased measurements.
+At inference time, parameters remain fixed. The **prompt** (input text), in-context learning, and documents retrieved by a **retrieval-augmented generation** (RAG) system change the context supplied to the model, not its weights. Evaluation occurs at several stages; test data must remain held out until final evaluation to avoid biased measurements.
 
 ## 5. Uses and choosing an approach
 
 LLMs are commonly used to generate or rewrite text, summarize, translate, extract information, classify, assist with programming, and answer questions.
 
-Reusing a general-purpose model is attractive when it can cover several tasks or when labeled examples are scarce. Choosing between reusing a model, retrieving documents with RAG, or adapting its parameters then depends on the task. RAG can provide up-to-date knowledge without retraining the model; adaptation may help with a specific format, domain, or behavior. Compare these options using measured criteria: quality, errors, robustness, cost, latency, confidentiality, data provenance, and maintenance. A demonstration on a few prompts is not an evaluation.
+Reusing a general-purpose model is attractive when it can cover several tasks or when labeled examples are scarce. Choosing between reusing a model, retrieving documents with RAG, or adapting its parameters then depends on the task. A RAG system can provide up-to-date information if its document corpus or index is updated, without retraining the model ([Lewis et al., 2020](https://arxiv.org/abs/2005.11401)). Adaptation may help with a specific format, domain, or behavior. Compare these options using measured criteria: quality, errors, robustness, cost, latency, confidentiality, data provenance, and maintenance. A demonstration on a few prompts is not an evaluation.
 
 ::: {.self-check}
 [Exercises and practice](exercises.qmd).

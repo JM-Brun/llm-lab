@@ -8,7 +8,7 @@ Understand what an LLM is and follow a complete generation loop as a black box w
 
 **Core pages**
 
-- [Panorama: what is an LLM?](llm-overview.html)
+- [Overview: what is an LLM?](llm-overview.html)
 - [Generating text: inference step by step](generation.html)
 
 **Optional resources**
