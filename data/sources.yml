@@ -2404,3 +2404,101 @@ sources:
       concepts: [query, key, value, self-attention, attention-score, attention-weight, scaled-dot-product-attention, softmax, multi-head-attention]
       audit_records:
         - docs/source-reviews/jay-joshi-transformer-mathematics-attention-2026-11.md
+
+
+  - id: cameron-wolfe-score-centering-substack
+    title: "Score Centering"
+    creators: ["Cameron R. Wolfe"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://cameronrwolfe.substack.com/p/score-centering"
+    publisher: "Cameron R. Wolfe / Substack"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency]
+      tags:
+        - topic:score-centering
+        - topic:off-policy-reinforcement-learning
+        - topic:training-inference-mismatch
+        - method:policy-gradient
+      concept_ids: []
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation, pedagogy]
+      audiences: [learner, practitioner, researcher]
+    scan_status: partially-scanned
+    integration_status: deferred
+    scan_history:
+      - accessed_at: "2026-11-09"
+        status: partially-scanned
+        inspected_scope:
+          - "Canonical Substack URL, title and author identity"
+          - "Search-indexed references connecting the article to Score Centering Stabilizes Off-policy Reinforcement Learning (arXiv:2609.20807)"
+        limitations:
+          - "Direct Substack retrieval returned a cache miss; the article body, equations, section structure and examples were not independently inspected."
+          - "The primary paper and its official implementation are recorded separately; their contents are not attributed to Wolfe."
+          - "Publication date, linked references, comments, figures and reuse rights remain unverified."
+    related:
+      pages: []
+      concepts: []
+      audit_records:
+        - docs/source-reviews/score-centering-2026-11.md
+
+  - id: marek-ryabinin-score-centering-off-policy-rl-2026
+    title: "Score Centering Stabilizes Off-policy Reinforcement Learning"
+    creators: ["Martin Marek", "Max Ryabinin"]
+    source_type: paper
+    identifiers:
+      arxiv: "2609.20807"
+    canonical_url: "https://arxiv.org/abs/2609.20807"
+    publisher: "arXiv"
+    publication_date: "2026-09-17"
+    updated_date: null
+    language: en
+    version: "arXiv preprint"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency]
+      tags:
+        - topic:score-centering
+        - topic:off-policy-reinforcement-learning
+        - topic:training-inference-mismatch
+        - topic:policy-gradient
+        - topic:importance-sampling
+        - method:score-function
+        - ecosystem:jax
+      concept_ids: []
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation, experiment, implementation]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-09"
+        status: partially-scanned
+        inspected_scope:
+          - "arXiv abstract and bibliographic metadata"
+          - "Official implementation README: loss contract, top-k sampler-logprob approximation, importance-sampling composition, supported correction families and test command"
+          - "Public implementation notes and independent technical explanations used only as cross-checks"
+        limitations:
+          - "The complete paper PDF and appendices were not read line by line; theorem assumptions, exact derivations and all experimental tables remain to be audited."
+          - "The official code was not cloned, executed or tested in this pass."
+          - "Reported model-scale and stability results are author-reported, not independently reproduced."
+          - "The paper's reuse licence and rights for figures/data were not independently established."
+    related:
+      pages: []
+      concepts: []
+      audit_records:
+        - data/extractions/marek-ryabinin-score-centering-off-policy-rl-2026.yml
+        - docs/source-reviews/score-centering-2026-11.md
