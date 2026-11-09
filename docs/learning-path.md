@@ -19,12 +19,12 @@ The practical GPT construction route remains the separate [Build path](../site/f
 
 The learner-facing course and the implementation dependency graph answer different questions. **The conceptual course starts with what a model does; the build route follows the dependencies needed to construct one.** Do not force these into one identical chapter order.
 
-1. **Orient:** what the broad term LLM covers, where GPT fits, and how architecture differs from objective and task. Use the landing page's system map to distinguish inference, learning and evaluation.
-2. **Preview inference:** follow one complete request through input, model computation, next-token prediction, selection and repeated generation. Treat the model as a system with fixed parameters; do not require training theory.
-3. **Unpack the input:** raw text, tokenization, vocabulary, token IDs and the prompt/context supplied at inference. Unicode/UTF-8 representation and normalization are optional technical depth, not a prerequisite in the core route.
-4. **Understand representations:** embeddings, positional information and the distinction between initial and contextualized hidden states.
-5. **Understand Transformer computation:** Transformer blocks, Q/K/V projections, attention, causal masking, MLP, residual connections and normalization.
-6. **Understand prediction and inference:** final hidden states, vocabulary logits, probabilities, decoding/selection strategies, stopping and the autoregressive loop.
+1. **Orient and preview inference:** what the broad term LLM covers, where GPT fits, and how architecture differs from objective and task. Follow one complete request as a black box with fixed parameters to establish the autoregressive loop before unpacking its mechanisms.
+2. **Unpack the input:** raw text, tokenization, vocabulary, token IDs and the prompt/context supplied at inference. Unicode/UTF-8 representation and normalization are optional technical depth, not a prerequisite in the core route.
+3. **Understand representations:** embeddings, positional information and the distinction between initial and contextualized hidden states.
+4. **Understand Transformer computation:** Transformer blocks, Q/K/V projections, attention, causal masking, MLP, residual connections and normalization.
+5. **Understand prediction:** final hidden states, vocabulary logits and the conditional next-token probability distribution.
+6. **Understand inference and generation:** prefill, iterative decoding, token selection, stopping and the autoregressive feedback loop. The generation lesson is revisited here in detail after its initial overview.
 7. **Score observed targets:** target probabilities, sequence likelihood, log-likelihood, negative log-likelihood and cross-entropy; distinguish scoring/evaluation from generation and parameter updates.
 8. **Explain learning:** the next-token objective, loss aggregation, gradients, backpropagation, optimization, pretraining and validation. Explain teacher forcing as the use of the observed prefix; do not turn corpus engineering or batch construction into prerequisites for this conceptual explanation.
 
