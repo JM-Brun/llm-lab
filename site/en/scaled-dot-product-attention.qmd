@@ -29,7 +29,6 @@ Scaled dot-product attention turns learned compatibility scores between queries 
 
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Verified Concept</span>
-  <span class="epistemic-badge badge-code">Python · run locally</span>
   <span class="epistemic-badge badge-status">Architecture: Standard Attention</span>
 </div>
 
@@ -134,18 +133,10 @@ First divide the scores by $\sqrt{4}=2$, giving $(1,0)$. Softmax is approximatel
 </details>
 :::
 
-::: {.callout-note collapse="true" title="Implementation and verification (advanced)"}
-The current NumPy reference in `src/llm_lab/foundations/attention.py` (`scaled_dot_product_attention`) implements **one unbatched head**: Q has shape `(T_q, d_k)`, K has shape `(T_k, d_k)`, and V has shape `(T_k, d_v)`. It supports different query and key lengths, and the value width need not equal the key width.
 
-This lesson uses a **hard additive mask** (0 for allowed positions and `-inf` for forbidden ones). The reference function also accepts finite additive biases; that API capability is not needed for the introductory causal-mask path. If a row is fully masked, the implementation deliberately returns zero weights and zero output. Such a row is not a probability distribution; rows with at least one accessible key normalize to one over the accessible keys.
+## From the computation to the implementation
 
-The test suite in `tests/unit/test_attention.py` checks shape preservation, weighted aggregation, mask behavior, normalization invariants and numerical edge cases. Input and output dimensions matter as much as the formula; see [tensors](tensors.qmd).
-
-- [Reference implementation](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations/attention.py)
-- [Unit tests](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
-- [Current implementation and validation status](https://github.com/JM-Brun/llm-lab/blob/main/docs/project-status.md)
-- [Planned verification criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
-:::
+This page establishes the mechanism and its invariants without detailing the NumPy primitive's software contract. To trace its use inside a multi-head block, inspect intermediate shapes and review the tests, see the [Transformer-block walkthrough](transformer-block-walkthrough.qmd). General axis and dimension conventions are collected in [tensors](tensors.qmd).
 
 {{< include ../includes/generated-suggested-route-en-scaled-dot-product-attention.qmd >}}
 
