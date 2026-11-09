@@ -1,5 +1,5 @@
 ---
-title: "Overview: what is an LLM?"
+title: "Panorama: what is an LLM?"
 subtitle: "Understand the model, its computation, and its main uses"
 description: "An overview of language models: definition, next-token prediction, architecture, learning, and inference."
 keywords: ["type:system-overview","destination:understand","topic:llm-overview","level:overview","language:en","status:published"]
