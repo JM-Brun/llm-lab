@@ -40,6 +40,14 @@ By the end of this page, you will be able to:
 The model does not directly choose a word from the text. It assigns a probability to each possible token given the current context. A selection rule then turns that distribution into one concrete token.
 :::
 
+::: {.callout-note collapse="true" title="This page appears at two points in the route"}
+During the first stage (**Place the system in context**), use this page only to observe the general principle: context, distribution, selection, and repetition. The mental model above is enough.
+
+During the **Run inference and generate text** stage, return to this page for the details: forward pass, autoregressive loop, prefill, incremental decode, KV cache, and decoding strategies.
+
+This is an intentional revisit of the same phenomenon at two levels of depth, not two separate concepts or routes.
+:::
+
 ## 1. One elementary step: predict and select a token
 
 Consider the current context, consisting of tokens already available from the prompt or previous generation steps. Write it as:
