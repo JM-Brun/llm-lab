@@ -26,6 +26,15 @@ tags: ["type:system-overview", "destination:understand", "topic:transformer", "l
 Un **GPT** est un modèle de langage fondé sur un Transformer autorégressif : il reçoit en entrée une séquence de tokens — le contexte — et calcule, pour chaque position, un score non normalisé (*logit*) pour chaque token du vocabulaire. Une distribution de probabilité peut être obtenue à partir de ces scores. Cette page se concentre sur le calcul effectué par le réseau, des représentations d'entrée aux logits. Elle distingue ce calcul de la boucle d'inférence qui sélectionne et ajoute les tokens successifs.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+- **Entrée :** les IDs sélectionnent des embeddings ; l'architecture introduit l'information positionnelle selon son mécanisme.
+- **Bloc Transformer :** l'auto-attention échange de l'information entre positions autorisées ; le MLP transforme chaque position séparément. Résidus et normalisation structurent le flux entre ces sous-couches.
+- **Répétition :** les blocs transforment progressivement les états ; Q/K/V sont des projections internes à l'auto-attention, pas une étape après les représentations contextualisées finales.
+- **Sortie :** la tête de sortie produit des logits. Softmax, sélection du token et réinjection dans le contexte sont des opérations distinctes, traitées dans les pages sur les probabilités et la génération.
+
+**Question de contrôle :** pouvez-vous retracer une passe avant des IDs aux logits et distinguer le calcul interne du réseau de la boucle de génération ?
+:::
+
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 Vous pourrez :
 - retracer le calcul depuis la séquence de tokens jusqu’aux logits, en repérant embeddings et information positionnelle ;

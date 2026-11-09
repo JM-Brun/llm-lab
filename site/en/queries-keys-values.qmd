@@ -32,8 +32,13 @@ The previous page, [GPT and Transformers: architecture and data flow](transforme
 </div>
 
 
-::: {.callout-tip title="The essential idea"}
-**Q and K determine the weights; V supplies the aggregated content.** This is the key distinction to retain before studying the attention computation.
+::: {.callout-tip title="The one-minute mental model"}
+- **Same input, three projections:** in self-attention, $Q=XW_Q$, $K=XW_K$, and $V=XW_V$. The matrices are distinct and learned jointly.
+- **Routing and content:** Q and K determine scores and then attention weights; V supplies the vectors to which those weights are applied.
+- **Useful invariance:** if only V changes, the weights stay fixed; the aggregated content may change. Changing Q or K can change the weights.
+- **Scope:** these equations describe standard self-attention. In cross-attention, Q and K/V come from different streams; GQA/MQA change how K/V heads are shared.
+
+**Check yourself:** can you write the three projections, distinguish weights from content, and predict what changes when one matrix alone is modified?
 :::
 
 ## Intuition: compare, then transmit

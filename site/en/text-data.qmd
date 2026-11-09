@@ -76,7 +76,7 @@ The final box deliberately groups positional handling with Transformer processin
 
 - **Source text:** a string that may contain punctuation, whitespace, numbers, code, or multiple languages.
 - **Preprocessing:** some inputs are normalized or pre-split; these operations depend on the tokenizer.
-- **Tokenizer:** applies rules and a learned vocabulary to convert text into units called *tokens*.
+- **Tokenizer:** applies rules and a defined vocabulary—often learned for modern subword tokenizers—to convert text into units called *tokens*.
 - **IDs:** each token maps to an integer used as an index in the vocabulary. The integer is a label, not a measure of meaning.
 - **Embeddings:** IDs select learned vectors. The Transformer then turns them into context-dependent representations.
 

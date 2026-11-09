@@ -32,8 +32,13 @@ La page précédente, [GPT et Transformer : architecture et flux des données](t
 </div>
 
 
-::: {.callout-tip title="L'idée à retenir"}
-**Q et K déterminent les poids ; V fournit le contenu agrégé.** C'est la distinction essentielle à retenir avant d'étudier le calcul de l'attention.
+::: {.callout-tip title="L'idée à retenir en une minute"}
+- **Même entrée, trois projections :** en auto-attention, $Q=XW_Q$, $K=XW_K$ et $V=XW_V$. Les matrices sont distinctes, apprises conjointement.
+- **Routage et contenu :** Q et K déterminent les scores puis les poids d'attention ; V fournit les vecteurs auxquels ces poids sont appliqués.
+- **Invariance utile :** si V change seul, les poids restent fixes ; le contenu agrégé peut changer. Modifier Q ou K peut changer les poids.
+- **Périmètre :** ces équations décrivent l'auto-attention standard. En attention croisée, Q et K/V proviennent de flux différents ; GQA/MQA modifient le partage des têtes K/V.
+
+**Question de contrôle :** pouvez-vous écrire les trois projections, distinguer poids et contenu, puis prédire ce qui change si une seule matrice est modifiée ?
 :::
 
 ## L'intuition : comparer, puis transmettre

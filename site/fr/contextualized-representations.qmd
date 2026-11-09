@@ -26,6 +26,15 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 Un même ID de token sélectionne toujours la même ligne dans une matrice d'embeddings (ou table de plongements) fixe. Pourtant, ce token peut jouer des rôles différents selon la phrase. La distinction essentielle est la suivante : **le lookup fournit un vecteur de plongement initial ; le Transformer construit ensuite des représentations qui dépendent du contexte**.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+- **Lookup :** un ID fixe et une matrice fixe donnent le même embedding initial, quelle que soit l'occurrence.
+- **Position et contexte :** l'architecture ajoute ou injecte l'information positionnelle ; les blocs Transformer transforment ensuite les états en fonction des autres tokens accessibles.
+- **Architecture :** dans un décodeur causal comme GPT, une position ne consulte pas le futur ; un encodeur bidirectionnel suit un autre masque.
+- **Limite d'interprétation :** contextualisé ne signifie pas automatiquement « sens humain isolé » ou géométrie sémantique garantie.
+
+**Question de contrôle :** comment deux occurrences peuvent-elles partager le même vecteur initial tout en ayant des états cachés différents ?
+:::
+
 
 ![Vue d'ensemble du parcours du texte et des IDs à travers une table d'embeddings et le traitement positionnel jusqu'aux représentations contextualisées.](https://media.licdn.com/dms/image/v2/D4D12AQHkmEd7fMhztQ/article-cover_image-shrink_720_1280/B4DZ3YWKZfI0AM-/0/1777451187827?e=2147483647&t=ETNuRHmhKfKe0FYbI-a9g2NaUZ3QNv9xue4OYjI1qUs&v=beta){fig-alt="Pipeline schématique : le texte est tokenisé en IDs, les IDs sélectionnent des lignes d'une table d'embeddings apprise, l'information positionnelle est traitée, les couches d'attention traitent la séquence et produisent des représentations contextualisées." fig-cap="Vue d'ensemble de Rushang Chauhan. Le traitement positionnel est schématique : des architectures comme RoPE n'ajoutent pas simplement un vecteur de position à chaque embedding de token. Voir les explications ci-dessous et la page sur l'encodage positionnel." width=100%}
 

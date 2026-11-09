@@ -23,7 +23,15 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 
 {{< include ../includes/generated-guided-context-en-positional-encoding.qmd >}}
 ::: {.chapter-lead}
-A Transformer needs an ordering signal to distinguish, for example, “the cat chases the dog” from “the dog chases the cat”. This page introduces positional mechanisms and distinguishes them from causal masking; The detailed RoPE derivation belongs in an [advanced deep dive](rope.qmd).
+A Transformer needs an ordering signal to distinguish, for example, “the cat chases the dog” from “the dog chases the cat”. This page introduces positional mechanisms and distinguishes them from causal masking; the detailed RoPE derivation belongs in an [advanced deep dive](rope.qmd).
+:::
+
+::: {.callout-tip title="The one-minute mental model"}
+- **Why:** content embeddings alone do not say where a token occurs. Without positional information or an order-dependent constraint, self-attention is permutation equivariant.
+- **Where:** absolute encodings are added to input representations; relative mechanisms act inside attention; **RoPE** rotates queries and keys after projection.
+- **Do not conflate:** the causal mask limits which positions are visible (no future tokens), but it does not replace a mechanism that represents positions or their offsets.
+
+**Check yourself:** can you explain why swapping two tokens must be able to change the computation, and identify where each mechanism introduces that information?
 :::
 
 ## Why add positional information?
