@@ -29,7 +29,7 @@ Un **grand modèle de langage** (*large language model*, LLM) est un modèle de 
 
 ## 1. LLM, GPT et Transformer : trois notions différentes
 
-Un **modèle de langage** attribue une probabilité ou un score à des séquences de tokens en fonction d'un contexte. Un **GPT** (*Generative Pre-trained Transformer*) est une famille de modèles pré-entraînés fondés sur l'architecture Transformer. Les GPT classiques sont des Transformers **décodeur seul** entraînés à prédire le prochain token.
+Un **modèle de langage** attribue une probabilité ou un score à des séquences de tokens en fonction d'un contexte. Dans un modèle autorégressif, ce calcul est répété token après token : le modèle n'énumère pas toutes les continuations complètes possibles. Un **GPT** (*Generative Pre-trained Transformer*) est une famille de modèles pré-entraînés fondés sur l'architecture Transformer. Les GPT classiques sont des Transformers **décodeur seul** entraînés à prédire le prochain token.
 
 Un **Transformer** est une famille d'architectures, pas un synonyme de GPT ni de LLM. On distingue notamment :
 
@@ -41,7 +41,7 @@ Un **Transformer** est une famille d'architectures, pas un synonyme de GPT ni de
 
 Les architectures et leurs différences sont détaillées dans la [comparaison des architectures Transformer](transformer-architectures.qmd). Le traitement automatique des langues (TAL) désigne un **domaine de problèmes**, tandis que l'apprentissage profond désigne une **famille de méthodes** : un LLM est l'une des approches possibles pour traiter le langage. Pour replacer ces familles dans leur contexte historique, voir l'[historique des Transformers](transformer-history.qmd).
 
-LLM Lab utilise un petit GPT décodeur seul comme **modèle pédagogique** : son calcul autorégressif peut être suivi et implémenté de bout en bout. Ce choix facilite l'étude ; il ne signifie pas que tous les LLM sont des GPT ou des Transformers décodeur seul. Le [parcours Build](build-path.qmd) montre cette implémentation progressive.
+LLM Lab utilise un petit GPT décodeur seul comme **modèle pédagogique** : son calcul autorégressif peut être suivi et implémenté de bout en bout. Ses dimensions et ses optimisations ne visent pas à reproduire un système de production. Ce choix facilite l'étude ; il ne signifie pas que tous les LLM sont des GPT ou des Transformers décodeur seul. Le [parcours Build](build-path.qmd) montre cette implémentation progressive.
 
 ## 2. Ce que prédit un GPT autorégressif
 
@@ -73,7 +73,7 @@ La figure résume la génération : le texte est tokenisé, le réseau calcule u
 
 ### Un calcul partagé, trois usages
 
-Le calcul du modèle transforme le contexte en **logits**, puis en distribution de probabilités sur le vocabulaire. Ce passage avant (*forward pass*) est commun aux usages ci-dessous ; c'est ce que l'on fait de la distribution qui change.
+Le calcul du modèle transforme le contexte en **logits** (scores non normalisés), puis la fonction *softmax* convertit ces scores en distribution de probabilités sur le vocabulaire. Ce passage avant (*forward pass*) est commun aux usages ci-dessous ; c'est ce que l'on fait de la distribution qui change.
 
 {{< include ../includes/generated-computational-graph-fr-persistent-spine.qmd >}}
 
@@ -83,7 +83,7 @@ Le calcul du modèle transforme le contexte en **logits**, puis en distribution 
 | **Scoring d'une cible observée** | On calcule la probabilité d'un token connu à partir de son préfixe observé, puis la vraisemblance ou la NLL de la séquence | Fixes |
 | **Apprentissage** | On fournit les préfixes de la séquence de référence (*teacher forcing*), compare les distributions aux tokens cibles, calcule la *loss* et ses gradients, puis met à jour les paramètres | Modifiés lors de la mise à jour |
 
-Le *prefill* et le *decode* sont deux phases d'exécution de l'inférence. Le *teacher forcing* décrit le conditionnement sur les tokens de référence pendant le scoring ou l'apprentissage : ce n'est pas une phase de génération. Les [exemples d'entraînement](training-examples.qmd), la [loss](loss.qmd) et les [gradients](gradients.qmd) détaillent la branche apprentissage ; la [vraisemblance](vraisemblance.qmd) détaille le scoring.
+Le *prefill* et le *decode* sont deux phases d'exécution de l'inférence. Le *teacher forcing* décrit le conditionnement sur les tokens de référence pendant le scoring ou l'apprentissage : ce n'est pas une phase de génération. Pour le scoring et l'apprentissage d'une séquence connue, un passage avant produit des distributions à chaque position ; le masque causal garantit que chaque prédiction ne dépend que du préfixe précédent. Les [exemples d'entraînement](training-examples.qmd), la [loss](loss.qmd) et les [gradients](gradients.qmd) détaillent la branche apprentissage ; la [vraisemblance](vraisemblance.qmd) détaille le scoring.
 
 Le **scoring** d'une cible et l'**évaluation** d'un modèle ne sont pas synonymes. Le scoring calcule des probabilités pour des cibles observées ; l'évaluation agrège des scores ou des métriques sur un protocole et des données définis. Elle peut aussi porter sur des sorties générées. La vue suivante illustre une évaluation fondée sur le scoring, sans mise à jour des paramètres.
 
