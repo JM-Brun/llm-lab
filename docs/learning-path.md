@@ -1,30 +1,34 @@
 # Learning path
 
-> **Editorial boundary (2026-10-30):** the public site distinguishes four reader-facing destinations: **Understand** (the conceptual course), **Build** (the guided implementation route), **Deepen** (optional mathematical/technical depth), and **Practice & experiment** (exercises and evidence-producing investigations). These are destinations, not four duplicated curricula. Build reuses the canonical concept pages and introduces only the local tensor, probability, and gradient operations needed at each milestone. Advanced mathematics is not a blanket prerequisite. The exhaustive page-by-page classification and milestone-to-code/test evidence matrix are maintained in [content-section-mapping.md](content-section-mapping.md); the four-destination navigation complements, rather than replaces, the three learning depths described below.
+> **Decision (2026-11-09): LLM Lab has two distinct learning paths.** The **Theory / Understand path** teaches how LLMs work, in a coherent conceptual and scientific progression. The **Build path** teaches how to implement, train, validate and use a small GPT from scratch, in an implementation dependency order. They share canonical concepts, sources and code references, but neither is a required continuation of the other. A theory lesson is not an implementation checkpoint; a Build milestone does not require the learner to complete the corresponding theory route first. Links between them are contextual cross-references, not prerequisite edges.
+>
+> **Understand** and **Build** are the two primary pathways. **Deepen** contains optional advanced theory or technical detail; **Practice & experiment** contains activities that reinforce or test either pathway. These are complementary content destinations, not additional linear curricula. The page-level roles and evidence crosswalk remain in [content-section-mapping.md](content-section-mapping.md).
 
-This plan is a sequence of evidence-producing modules, not a promise of mastery after a fixed number of hours. Each module is complete only when its implementation, tests, experiment notes, and limitations are available. See [project status](project-status.md) for the current inventory and the [roadmap](roadmap.md) for priorities and acceptance criteria.
+This plan defines two paths with different completion evidence, not one sequence of paired theory-and-code modules. A Theory lesson is complete when its explanation, assumptions, examples, sources and conceptual checks are sound; a Build milestone is complete when its implementation, tests, expected outputs and limitations are evidenced. Neither path claims learner mastery merely because its materials exist. See [project status](project-status.md) for the current inventory and the [roadmap](roadmap.md) for priorities and acceptance criteria.
 
-## Reader-facing guided route — machine-readable map source
+## Theory / Understand guided route — machine-readable map source
 
-The eight-stage route displayed above the exploratory graphs on the bilingual learning-map pages is maintained in [`data/guided-route.yml`](../data/guided-route.yml), a versioned bilingual YAML registry. This file is the **single machine-readable source** for stage IDs, titles, objectives, core page links and optional resources. A resource's optional role in a stage is distinct from its destination: it can be an Understand page or a Deepen page. The present document remains the narrative curriculum and explains the conceptual order; do not duplicate the stage registry here or in JavaScript.
+The eight-stage **Theory / Understand route** displayed above the exploratory graphs on the bilingual learning-map pages is maintained in [`data/guided-route.yml`](../data/guided-route.yml), a versioned bilingual YAML registry. It is not the Build route. This file is the **single machine-readable source** for stage IDs, titles, objectives, core page links and optional resources. A resource's optional role in a stage is distinct from its destination: it can be an Understand page or a Deepen page. The present document remains the narrative curriculum and explains the conceptual order; do not duplicate the stage registry here or in JavaScript.
 
 The generator resolves every core and optional page ID against published page metadata and fails on missing or unpublished destinations. The route is conceptual, not a strict prerequisite DAG: pages within a stage are complementary resources, not mandatory sequential gates. See the [2026-11-06 reconciliation audit](learning-route-reconciliation-2026-11-05.md) for the crosswalk between curriculum, guided route, Quarto navigation, page graph and concept/resource graph.
 
 The practical GPT construction route remains the separate [Build path](../site/fr/build-path.qmd) / [EN](../site/en/build-path.qmd). In particular, G1b corpus preparation and G2 training-example construction form a branch for training, not a prerequisite for understanding or demonstrating inference.
 
 
-## The conceptual order: see the system work before studying how it learns
+## Path A — Theory / Understand: the conceptual order
 
 The learner-facing course and the implementation dependency graph answer different questions. **The conceptual course starts with what a model does; the build route follows the dependencies needed to construct one.** Do not force these into one identical chapter order.
 
-1. **Orient:** what the broad term LLM covers, where GPT fits, and how architecture differs from objective and task. Use the landing page's interactive process map to distinguish inference, learning and evaluation; trace text → tokens/IDs → embeddings → positional information → Transformer → contextualized states → logits → probabilities → selection. Open the dedicated architecture comparison only when that distinction needs detail. Keep optional weight adaptation distinct from prompting/RAG at inference.
-2. **Preview inference:** follow one complete request through input, model computation, next-token prediction, selection and repeated generation. At this stage, treat the model as a system with fixed parameters; do not require training theory.
-3. **Unpack the input:** raw text, tokenization, vocabulary, token IDs and the prompt/context supplied at inference. Unicode/UTF-8 representation and normalization are optional technical depth, not a prerequisite in the linear route.
-4. **Unpack representations and computation:** embeddings, positional information, contextual states, Transformer blocks, attention and causal masking.
-5. **Unpack prediction and decoding:** output logits, probabilities, selection strategies, stopping and inference-time efficiency.
-6. **Explain learning:** the next-token prediction objective, sequence likelihood, cross-entropy/loss, gradients, backpropagation, optimization, pretraining and validation. Introduce the parameter-update loop only after the inference path is understood; do not turn corpus engineering or batch construction into prerequisites for this conceptual explanation.
-7. **Prepare training data (G1b → G2 branch):** when following Build, prepare a traceable corpus and fit/freeze its tokenizer ([corpus preparation](../site/fr/corpus-preparation.qmd) / [EN](../site/en/corpus-preparation.qmd), G1b), then construct context windows and shifted targets ([training examples](../site/fr/training-examples.qmd) / [EN](../site/en/training-examples.qmd), G2). This branch depends on G1 text/tokenization and joins the model path at G8 training; it is not a prerequisite for understanding or demonstrating inference (G3–G7).
-8. **Explain adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation; keep these distinct.
+1. **Orient and preview inference:** what the broad term LLM covers, where GPT fits, and how architecture differs from objective and task. Follow one complete request as a black box with fixed parameters to establish the autoregressive loop before unpacking its mechanisms.
+2. **Unpack the input:** raw text, tokenization, vocabulary, token IDs and the prompt/context supplied at inference. Unicode/UTF-8 representation and normalization are optional technical depth, not a prerequisite in the core route.
+3. **Understand representations:** embeddings, positional information and the distinction between initial and contextualized hidden states.
+4. **Understand Transformer computation:** Transformer blocks, Q/K/V projections, attention, causal masking, MLP, residual connections and normalization.
+5. **Understand prediction:** final hidden states, vocabulary logits and the conditional next-token probability distribution.
+6. **Understand inference and generation:** prefill, iterative decoding, token selection, stopping and the autoregressive feedback loop. The generation lesson is revisited here in detail after its initial overview.
+7. **Score observed targets:** target probabilities, sequence likelihood, log-likelihood, negative log-likelihood and cross-entropy; distinguish scoring/evaluation from generation and parameter updates.
+8. **Explain learning:** the next-token objective, loss aggregation, gradients, backpropagation, optimization, pretraining and validation. Explain teacher forcing as the use of the observed prefix; do not turn corpus engineering or batch construction into prerequisites for this conceptual explanation.
+
+**Optional extension — adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation. Keep context-only methods, parameter updates and model use distinct; this extension is discoverable from the core route but is not an additional mandatory stage in the eight-stage guided route.
 
 ### Reader-facing sequence and operational branches
 
@@ -34,13 +38,11 @@ The public page-navigation arrows follow the **conceptual inference route**, not
 
 The generation lesson appears early as a system-level preview: it establishes the autoregressive loop with fixed parameters before the learner studies each internal component. Its appearance before the detailed input and probability lessons is deliberate, not a claim that those details are unnecessary.
 
-The learning route branches from the shared foundations rather than continuing the inference chain:
-
-`corpus preparation + tokenizer → training examples (windows and shifted targets) → forward pass → loss → gradients and parameter updates`.
+The Theory route explains why training uses observed targets, a loss and parameter updates. Operational corpus preparation and training-example construction belong exclusively to the separate Build path; they are not numbered stages or prerequisites in this conceptual route.
 
 Evaluation is cross-cutting. Validation results may inform model, data, and decoding choices; the test set must remain held out until final assessment. The landing-page diagram links each available stage to its canonical lesson. A missing implementation milestone must remain visibly distinct from an available conceptual explanation.
 
-## Page ownership: one canonical explanation, deliberate reminders
+## Theory-path page ownership: one canonical explanation, deliberate reminders
 
 The sequence above is a **route through concepts**, not permission to explain the same mechanism in every chapter. Each concept has a canonical page; the panorama and system overviews provide orientation, while component lessons carry the substantive explanation. The Understand route contains only the minimum conceptual model needed to follow the system. Mathematical derivations, architectural variants, and implementation edge cases belong in Deepen, even when they could fit inside a collapsed callout. A later page may recall a prerequisite, but should not repeat its worked example or complete explanation unless it adds a distinct learning outcome.
 
@@ -328,3 +330,25 @@ This is a **modelling completion**, not the page/site refactor. Until the subseq
 - do not mechanically rewrite page-level `hierarchy` to mirror module containment;
 - do not promote every advanced concept into a new page;
 - reconcile the guided-route projection, page ownership and bilingual navigation only in a later, separately validated change set.
+
+## Path B — Build: an independent implementation progression
+
+The Build path is a separate course with its own entry point, milestones, implementation prerequisites and completion criteria. Its order is determined by what must exist in code before the next component can be implemented and tested; it is not a reordering of the Theory path.
+
+The current Build milestones are G0–G9 and retain their established branches:
+
+- **Model/inference branch:** define the small GPT scope; prepare prompt tokenization; implement embeddings and positional information; implement attention and Transformer blocks; assemble the model; produce logits and select tokens; demonstrate autoregressive generation with fixed parameters.
+- **Training-data branch:** prepare a traceable corpus and tokenizer (G1b), then construct windows, shifted targets and batches (G2). This branch joins the model path at training; it is not a prerequisite for implementing or understanding inference.
+- **Parameter-learning branch:** combine the implemented model and training examples to compute the objective, gradients, optimizer updates, validation and checkpoints (G8), then verify/evaluate (G9/E1).
+- **Adaptation branch:** pretrained checkpoint loading, fine-tuning, LoRA and quantization remain separate from training a GPT from random initialization.
+
+A learner may enter Build directly and use concise local explanations, notation and references as needed. A link to an Understand lesson is a reference to the canonical conceptual explanation, not a gate. Conversely, the Theory path may link to a Build result or experiment as an illustration, without importing Build milestones into its route. The detailed implementation status and code/test evidence remain owned by the Build path and its existing issue #78.
+
+## Relationship contract
+
+- Shared concepts have one canonical explanation; do not duplicate full theory inside Build walkthroughs.
+- Build pages explain implementation decisions, interfaces, tensor contracts, expected outputs and tests; they may include only the local theory needed to understand that implementation.
+- Theory pages explain mechanisms, assumptions, equations, interpretation and limitations; they may use small illustrative pseudocode but do not become code walkthroughs.
+- Deepen pages are optional and may serve either path; each must state which question it deepens and whether it is useful to Theory, Build or both.
+- Practice activities identify their target path(s), prerequisites and evidence. They are not automatically prerequisites for either route.
+- The concept graph and computational graph describe knowledge and computation respectively; neither determines the order of both paths.

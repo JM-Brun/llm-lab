@@ -32,26 +32,26 @@ Les grands modèles de langage (LLM) sont une famille de modèles neuronaux entr
 **LLM Lab relie ces mécanismes à leurs explications mathématiques et à leur comportement observable.** Le but n’est pas de croire une intuition parce qu’un schéma paraît convaincant : c’est de comprendre ce qu’un composant calcule, de vérifier ce qu’on peut tester et d’identifier ce qui reste une hypothèse ou une limite.
 
 <div class="hero-actions">
-[Découvrir le fonctionnement des LLM](fr/llm-overview.qmd){.btn .btn-primary}
+[Comprendre le fonctionnement des LLM](fr/llm-overview.qmd){.btn .btn-primary}
 [Explorer la carte des notions](fr/learning-map.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
 ## Par où commencer ?
 
-Choisissez une porte d'entrée. Vous pourrez changer de parcours à tout moment : les notions et leurs relations restent accessibles depuis la [carte des ressources et des notions](fr/learning-map.qmd).
+Deux parcours principaux et indépendants sont proposés : **comprendre théoriquement les LLM** ou **construire un petit GPT**. Ils partagent les mêmes notions de référence, mais ont des objectifs, des progressions et des prérequis distincts. Aucun n'est la suite obligatoire de l'autre. La [carte des ressources et des notions](fr/learning-map.qmd) permet de naviguer librement entre les deux.
 
 <div class="learning-entry-grid">
   <article class="learning-entry learning-entry-primary">
-    <p class="learning-entry-kicker">01 · COMPRENDRE</p>
-    <h3>Découvrir le fonctionnement des LLM</h3>
+    <p class="learning-entry-kicker">01 · PARCOURS THÉORIQUE</p>
+    <h3>Comprendre le fonctionnement des LLM</h3>
     <p>Construire une vue d'ensemble : données, représentations, Transformer, prédiction et génération.</p>
     <a class="learning-entry-link" href="fr/llm-overview.qmd">Commencer par le panorama <span aria-hidden="true">→</span></a>
   </article>
   <article class="learning-entry">
-    <p class="learning-entry-kicker">02 · CONSTRUIRE</p>
+    <p class="learning-entry-kicker">02 · PARCOURS BUILD INDÉPENDANT</p>
     <h3>Implémenter un petit GPT</h3>
-    <p>Suivre un projet guidé, du fonctionnement des composants à leur assemblage. L'inférence de référence est testée ; l'entraînement complet reste à réaliser.</p>
+    <p>Construire et vérifier un petit GPT selon les dépendances d'implémentation, sans devoir suivre le parcours théorique au préalable. L'inférence de référence est testée ; l'entraînement complet reste à réaliser.</p>
     <a class="learning-entry-link" href="fr/build-path.qmd">Voir le parcours de construction <span aria-hidden="true">→</span></a>
   </article>
   <article class="learning-entry">

@@ -24,6 +24,8 @@ tags: ["type:guided-build", "destination:build", "topic:build-path", "level:appl
 Ce parcours vous guide dans un petit GPT décodeur seul existant : examinez sa configuration et ses briques numériques, suivez le bloc Transformer et le modèle assemblé, puis exécutez la boucle de génération. LLM Lab utilise de petits modèles inspectables pour expliquer les mécanismes, pas pour reproduire les capacités des modèles de production. Le code de référence testé vit dans [`src/llm_lab/foundations/`](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations) ; chacune des cinq visites comprend des exercices corrigés. Ces visites peuvent guider votre propre construction, mais lire et exécuter le code ne prouve pas que vous l'avez construit de manière autonome. Une familiarité avec Python et les bases de NumPy est utile ; consultez au besoin les pages conceptuelles pour les mathématiques et les formes.
 :::
 
+Ce parcours est **indépendant du parcours théorique Understand** : vous pouvez commencer ici sans avoir suivi ses huit étapes. Les pages conceptuelles liées sont des références à consulter lorsque vous en avez besoin, pas des prérequis. La progression ci-dessous suit les dépendances du code et les résultats que vous pouvez exécuter et vérifier.
+
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
 À l'issue de ce parcours, vous pourrez :
 - situer les cinq modules du code de référence et leur ordre de construction ;
@@ -76,7 +78,7 @@ print("IDs échantillonnés :", sampled_ids)
 
 Pour cette configuration, le décompte attendu est de **21 426 paramètres**. Chaque résultat contient les trois IDs du prompt suivis de huit IDs générés ; les deux appels partent du même prompt. Le code de référence est en NumPy pur (float64) : lisibilité d'abord, vitesse ensuite.
 
-## Comprendre, construire, approfondir
+## Construire et vérifier à chaque jalon
 
 À chaque jalon :
 
