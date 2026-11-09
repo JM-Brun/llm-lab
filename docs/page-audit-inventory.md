@@ -1346,3 +1346,24 @@ A standard-library Python snippet in each language page computes AP and this two
 **Sources.** Li et al., https://aclanthology.org/2023.acl-long.687/ ; Su et al., https://papers.nips.cc/paper_files/paper/2022/file/871cae8f599cb8bbfcb0f58fe1af95ad-Paper-Conference.pdf ; version-specific Transformers 4.46 guide, https://huggingface.co/docs/transformers/v4.46.0/en/generation_strategies.
 
 **Boundary.** The Transformers reference is explicitly versioned; no claim is made that the same parameterization is present in the current release. This is a conceptual clarification, not a new implementation, concept node, page or dependency.
+
+
+## 2026-11-09: beam-search score and stopping-policy qualification
+
+**Scope.** Completed the bounded source audit of the beam-search explanation in the FR/EN decoding-strategies lessons against the current Hugging Face generation API and implementation documentation, while rechecking the existing local top-k/top-p reference implementation and tests.
+
+**Findings.**
+- The local `top_k_filter` keeps exactly the requested number of highest-probability entries (stable ties by original index), then renormalizes. `top_p_filter` keeps the smallest descending-probability prefix whose cumulative mass reaches or exceeds the threshold, including the crossing token, then renormalizes. The unit tests cover these contracts, ties, threshold boundaries, distribution-shape dependence, temperature-before-filtering behavior, determinism, input immutability and invalid inputs.
+- The teaching generation path applies temperature, then top-k, then top-p before sampling. This is a deliberately bounded pedagogical contract, not a universal ordering. The reference does not implement beam search, configurable logits processors, contrastive decoding or penalties.
+- Beam search accumulates token log-probability scores, but practical implementations may apply length normalization and distinct early-stopping policies. The current Transformers documentation describes `length_penalty` and `early_stopping` options; these affect hypothesis ranking and termination. The existing fixed-horizon A/B counterexample is correctly scoped as unnormalized sequence-MAP, not a complete production beam-search specification.
+- The current Transformers source assembles multiple logits processors/warpers in an implementation-specific sequence; its ordering is not a cross-library standard. Parameter names alone therefore do not define an experiment.
+
+**Change.** Added a concise FR/EN qualification after the beam-search definition, explicitly separating fixed-length sequence probability from length-penalized beam scores and early-stopping behavior. Added the official generation API reference. No new implementation, dependency, concept node, page or workflow was added.
+
+**Sources.**
+- Transformers generation API: https://huggingface.co/docs/transformers/main_classes/text_generation
+- Transformers generation configuration: https://github.com/huggingface/transformers/blob/main/src/transformers/generation/configuration_utils.py
+- Transformers generation processor construction: https://github.com/huggingface/transformers/blob/main/src/transformers/generation/utils.py
+- Local implementation: `src/llm_lab/foundations/decoding_filters.py`; tests: `tests/unit/test_decoding_filters.py`.
+
+**Validation boundary.** The top-k/top-p code and tests were inspected at source level in this pass; no new local test run is claimed. PR CI and Quarto render are required for this documentation change. This does not close the outstanding mobile/dark-theme, screen-reader or independent learner-evidence tasks in #84/#584/#447.
