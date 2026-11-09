@@ -1236,3 +1236,19 @@ Changed the fixture to non-monotonic token IDs unrelated to positions, then comp
 
 The corrected expected final targets for the fixture are `[3, 14]` at source positions 4 and 7. The Python CI run for the updated PR head is required to confirm the change; no local test execution is claimed.
 
+## 2026-11-09: loss-to-gradient aggregation bridge
+
+**Scope.** Compared the FR/EN `loss` and `gradients` pages with `cross_entropy_from_logits`, `cross_entropy_gradient` and their tests.
+
+The reference NumPy loss computes an unweighted mean across batch rows; its gradient correspondingly divides each row's (p-y) vector by the batch size. The lesson on gradients displayed the correct local, one-position derivative (p_i-\mathbf 1[i=y]), then moved to a vector of all batch logits without explicitly showing how the mean-over-valid-positions convention changes that derivative. The preceding loss page defined the denominator, but the hand-off between pages was implicit.
+
+Added the explicit FR/EN formula for the unweighted mean over valid target positions:
+- valid position: ((p_{b,t,i}-\mathbf 1[i=y_{b,t}])/|\mathcal M|);
+- ignored position: zero derivative with respect to that position's logits for this objective.
+
+The text states that sum, weighting and other reductions change the corresponding factor. This connects the local cross-entropy derivative to the actual batch objective without claiming that the reference classification primitive implements sequence masks or a complete LLM loss.
+
+### Checks
+
+For a batch of (B) rows, the implementation returns ((p-y)/B); its unit tests compare this gradient with central finite differences, verify row sums of zero, check invariance to row-wise constant shifts and reject invalid inputs. The conceptual page remains broader than this primitive and keeps sequence shifting/masking outside the implementation's scope.
+
