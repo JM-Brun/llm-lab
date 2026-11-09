@@ -174,3 +174,19 @@ Pas de registre, taxonomie ou workflow parallèle ; pas de refonte générale de
 - **Déjà vérifié par automatisation/rendu antérieur :** plusieurs cas FR/EN, desktop/mobile, contextes de parcours, interactions clavier du graphe, absence de débordement dans les cas testés et contrôles Axe ciblés. Réutiliser SHA et artefacts existants.
 - **Proposé, non validé :** section Quarto avec `href + contents` et généralisation à d'autres groupes.
 - **Non démontré :** tactile réel, revue lecteur d'écran sur les composants concernés, amélioration de la compréhension et choix autonome de la prochaine étape.
+
+
+## 12. Décision du pilote « texte et tokens » — 2026-11-09
+
+La vérification du PAGE-MAP de `tokenization-strategies` révèle une contrainte éditoriale importante : cette page est explicitement `type:deep-dive`, `destination:deepen`, `level:advanced`. Elle ne doit donc pas être déplacée sous Understand uniquement pour remplir le groupe de navigation « Du texte aux identifiants ».
+
+Le pilote retenu est plus conservateur que l'hypothèse initiale :
+- supprimer le groupe intermédiaire « Du texte aux identifiants » qui ne contenait qu'une seule page ;
+- placer directement `text-data` sous « Comment le modèle calcule sa prédiction » (FR/EN) ;
+- conserver `tokenization-strategies` et les autres pages de tokenisation avancée sous Deepen ;
+- ne pas dupliquer une page dans deux destinations ;
+- laisser Quarto produire le breadcrumb natif à partir de la hiérarchie simplifiée.
+
+Cette variante réduit un niveau de navigation sans mélanger les niveaux pédagogiques et sans ajouter de JavaScript. Elle est appliquée comme pilote source dans la branche `nav/pilot-flatten-text-data-entry`. Son acceptation dépend du rendu Quarto/Chromium : vérifier les destinations, breadcrumbs, carte générée, contexte pédagogique et parité FR/EN. En cas de régression, revenir au groupe initial plutôt que compenser par du code spécifique.
+
+Le test porte sur une simplification de hiérarchie, pas sur la fonctionnalité expérimentale « section cliquable + disclosure ». Cette dernière reste non validée et n'est pas nécessaire pour ce groupe à page unique.

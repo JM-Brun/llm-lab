@@ -151,9 +151,7 @@ website:
             - fr/generation.qmd
             - section: "Comment le modèle calcule sa prédiction"
               contents:
-                - section: "Du texte aux identifiants"
-                  contents:
-                    - fr/text-data.qmd
+                - fr/text-data.qmd
                 - section: "Des identifiants aux représentations"
                   contents:
                     - fr/embedding-space.qmd
@@ -254,9 +252,7 @@ website:
             - en/generation.qmd
             - section: "How the model computes a prediction"
               contents:
-                - section: "From text to token IDs"
-                  contents:
-                    - en/text-data.qmd
+                - en/text-data.qmd
                 - section: "From IDs to representations"
                   contents:
                     - en/embedding-space.qmd
