@@ -29,7 +29,7 @@ A **large language model** (LLM) is a language model trained at scale on large t
 
 ## 1. LLM, GPT, and Transformer are different concepts
 
-A **language model** assigns a probability or score to token sequences given a context. In an autoregressive model, this computation is repeated one token at a time: the model does not enumerate every possible complete continuation. **GPT** (*Generative Pre-trained Transformer*) is a family of pretrained models based on the Transformer architecture. Classic GPT models are **decoder-only** Transformers trained to predict the next token.
+A **language model** assigns a probability or score to token sequences given a context. In an autoregressive model, this computation is repeated one token at a time: the model does not enumerate every possible complete continuation. **GPT** (*Generative Pre-trained Transformer*) is a family of pretrained models based on the Transformer architecture. Classic GPT models are **decoder-only** Transformers pretrained to predict the next token.
 
 A **Transformer** is an architecture family, not a synonym for GPT or LLM. The original paper introduced an encoder–decoder architecture ([Vaswani et al., 2017](https://arxiv.org/abs/1706.03762)). Common configurations include:
 
