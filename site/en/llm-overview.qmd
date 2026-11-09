@@ -120,13 +120,6 @@ Reusing a general-purpose model is attractive when it can cover several tasks or
 2. **Documentation changes every day: RAG or fine-tuning?** RAG can retrieve new documents at inference time without changing the weights. It does not guarantee that retrieved documents are relevant or that the answer is faithful to them.
 :::
 
-::: {.callout-note collapse="true" title="Further reading"}
-- [Generating text](generation.qmd): follow the generation loop and decoding.
-- [Transformer architecture comparison](transformer-architectures.qmd): distinguish model families.
-- [The training objective: guarantees and limits](llm-limits.qmd): interpret LLM capabilities and limitations.
-- [LLM computational complexity](llm-computational-complexity.qmd): understand execution costs.
-:::
-
 {{< include ../includes/generated-suggested-route-en-llm-overview.qmd >}}
 
 ::: {.language-switch}
