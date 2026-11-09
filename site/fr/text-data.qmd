@@ -76,7 +76,7 @@ Le dernier bloc regroupe volontairement le traitement positionnel et le Transfor
 
 - **Texte source** : une chaîne pouvant contenir ponctuation, espaces, nombres, code ou plusieurs langues.
 - **Prétraitement** : certaines chaînes sont normalisées ou pré-découpées ; ces opérations dépendent du tokeniseur.
-- **Tokeniseur** : applique des règles et un vocabulaire appris pour convertir le texte en unités appelées *tokens*.
+- **Tokeniseur** : applique des règles et un vocabulaire défini — souvent appris pour les tokenizers modernes à sous-mots — pour convertir le texte en unités appelées *tokens*.
 - **IDs** : chaque token est associé à un entier servant d'indice dans le vocabulaire. Cet entier est une étiquette, pas une mesure de sens.
 - **Embeddings** : les IDs sélectionnent des vecteurs appris. Le Transformer les transforme ensuite en représentations dépendant du contexte.
 
