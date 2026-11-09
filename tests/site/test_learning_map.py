@@ -352,6 +352,26 @@ def test_load_navigation_preserves_nested_sidebar_sections(tmp_path: Path) -> No
     ]
 
 
+def test_load_navigation_accepts_sidebar_items_with_custom_text(tmp_path: Path) -> None:
+    """A ``{text, href}`` item relabels a page in Quarto's sidebar and breadcrumbs only."""
+    site = tmp_path / "site"
+    _write_page(site, page_id="fr/attention", language="fr", title="Attention")
+    _write_sidebar(site)
+    config_path = site / "_quarto.yml"
+    config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+    config["website"]["sidebar"][0]["contents"][0]["contents"][0]["contents"] = [
+        {"text": "Vue d'ensemble", "href": "fr/attention.qmd"}
+    ]
+    config_path.write_text(yaml.safe_dump(config, allow_unicode=True), encoding="utf-8")
+    MODULE["load_pages"].__globals__["SITE"] = site
+    pages = MODULE["load_pages"]()
+    MODULE["load_navigation"].__globals__["SITE"] = site
+
+    navigation = MODULE["load_navigation"]("fr", pages)
+
+    assert navigation[0]["sections"] == [{"title": "Sous-rubrique", "pages": ["fr/attention"]}]
+
+
 def test_load_navigation_requires_matching_sidebar(tmp_path: Path) -> None:
     site = tmp_path / "site"
     _write_sidebar(site)
