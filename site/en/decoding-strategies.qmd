@@ -174,7 +174,61 @@ Separate several dimensions during evaluation:
 - **Repetition:** does the text loop or repeat segments?
 - **Probabilistic fidelity:** what probability does the model assign to observed tokens or sequences?
 
-Perplexity does not summarize these dimensions. Likelihood (or mean NLL, and the perplexity derived from it under the chosen logarithm convention) measures the probability assigned to observed tokens on a given corpus; it does not directly measure factuality, instruction following, or user utility. Conversely, a task metric measures only the properties defined by that task and its protocol. For example, the [Average Precision in the evaluation exercise](experimental-evaluation.qmd) measures ranking quality, not probability calibration; the [likelihood lesson](likelihood.qmd) clarifies what the probabilistic score measures. A strategy can improve some human judgments or sequence-level metrics while degrading other properties. Work on *sampling adapters* analyzes, in particular, the precision-recall trade-offs induced by local distribution transformations.
+Perplexity does not summarize these dimensions. Likelihood (or mean NLL, and the perplexity derived from it under the chosen logarithm convention) measures the probability assigned to observed tokens on a given corpus; it does not directly measure factuality, instruction following, or user utility. Conversely, a task metric measures only the properties defined by that task and its protocol. For example, the [Average Precision in the evaluation exercise](experimental-evaluation.qmd) measures ranking quality, not probability calibration; the [likelihood lesson](likelihood.qmd) clarifies what the probabilistic score measures.
+
+### Example: same ranking, different calibration
+
+Consider four binary observations, two positive and two negative, in the following ranking order:
+
+| Observation | Target | Score A | Score B |
+|---|---:|---:|---:|
+| 1 | 1 | 0.65 | 0.99 |
+| 2 | 0 | 0.55 | 0.89 |
+| 3 | 1 | 0.45 | 0.11 |
+| 4 | 0 | 0.35 | 0.01 |
+
+Scores B are a strictly increasing transformation of scores A, so **the ranking is unchanged**. Average Precision is therefore $5/6 \approx 0.833$ in both cases. However, with two fixed calibration bins $[0,0.5)$ and $[0.5,1]$, the observed positive frequency is $0.5$ in each bin. The mean predicted score is respectively $0.40$ and $0.60$ for A, versus $0.06$ and $0.94$ for B. The size-weighted expected calibration error (ECE) is thus $0.10$ for A and $0.44$ for B.
+
+```python
+labels = [1, 0, 1, 0]
+scores_a = [0.65, 0.55, 0.45, 0.35]
+scores_b = [0.99, 0.89, 0.11, 0.01]
+
+def average_precision(y_true, scores):
+    order = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)
+    positives = sum(y_true)
+    return sum(
+        sum(y_true[j] for j in order[:rank + 1]) / (rank + 1)
+        for rank, i in enumerate(order)
+        if y_true[i]
+    ) / positives
+
+def two_bin_ece(y_true, probabilities):
+    groups = [
+        [i for i, p in enumerate(probabilities) if p < 0.5],
+        [i for i, p in enumerate(probabilities) if p >= 0.5],
+    ]
+    return sum(
+        len(group) / len(y_true)
+        * abs(
+            sum(y_true[i] for i in group) / len(group)
+            - sum(probabilities[i] for i in group) / len(group)
+        )
+        for group in groups
+    )
+
+ap_a, ap_b = average_precision(labels, scores_a), average_precision(labels, scores_b)
+ece_a = two_bin_ece(labels, scores_a)
+ece_b = two_bin_ece(labels, scores_b)
+
+assert abs(ap_a - 5 / 6) < 1e-12 and abs(ap_a - ap_b) < 1e-12
+assert abs(ece_a - 0.10) < 1e-12 and abs(ece_b - 0.44) < 1e-12
+print(f"AP: {ap_a:.3f} / {ap_b:.3f}; ECE: {ece_a:.2f} / {ece_b:.2f}")
+```
+
+This counterexample shows that a rank-based metric cannot distinguish two calibrations when ordering is preserved. ECE depends on the number and placement of bins; on a small sample, these values illustrate a property rather than provide a reliable calibration estimate. This binary example explains the metric distinction; it is not an empirical evaluation of an LLM.
+
+A strategy can improve some human judgments or sequence-level metrics while degrading other properties. Work on *sampling adapters* analyzes, in particular, the precision-recall trade-offs induced by local distribution transformations.
 
 ::: {.callout-warning title="Interpretation caveat"}
 Holtzman et al.'s results primarily concern open-ended generation and the models/protocols studied. Their conclusions do not automatically transfer to translation, code, structured generation, or modern LLMs with complex post-processing. Comparing strategies requires holding the model, prompt, corpus, constraints, and evaluation protocol constant.
