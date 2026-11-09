@@ -73,7 +73,9 @@ Implementation and validation are split across existing owner issues to avoid pa
 
 ## Prioritized plan
 
-### P0 — Audit and validate existing knowledge (current priority)
+> **Priority reconciliation — 2026-11-09:** the P0/P1 headings below preserve the 2026-10-28 planning rationale; they are not live GitHub priority labels. The current live execution order, issue labels and dependency gates are in [the backlog dashboard](backlog-dashboard.md) and [the 2026-11-09 handoff](next-work-handoff-2026-11-09.md). Current live state has no P0 issue. Do not treat the historical P0 heading below as an active P0 task.
+
+### Historical priority — audit and validate existing knowledge (2026-10-28 baseline)
 **Goal:** improve the quality and teachability of existing material without increasing the repository's scope.
 
 Tasks:
@@ -104,7 +106,7 @@ A textual, bilingual review of `site/fr/entropy.qmd`, `site/en/entropy.qmd`, `si
 
 **Next step (updated 2026-10-29):** the active text-to-embedding example executes in CI from both language versions using pinned documentation-only `tiktoken==0.14.0` ([PR #120](https://github.com/JM-Brun/llm-lab/pull/120); Python CI and Quarto render/local-link checks passed). The first source-by-source audit and bilingual resource corrections are proposed in replacement [PR #123](https://github.com/JM-Brun/llm-lab/pull/123), which supersedes conflicted [PR #121](https://github.com/JM-Brun/llm-lab/pull/121) (closed, not merged). The replacement branch's Python CI and Quarto render/local-link checks both passed; this does not complete browser review or the full source inventory. Both language versions warn about the observed Cornell visualizer frequency-display inconsistency, and the English tokenizer-strategies page links to the English Hugging Face BPE lesson. The Müller–Steinbach BPE Explainer is linked externally only because reuse rights were not verified; the inaccessible Gage source, unwatched Karpathy video, and unchecked Raschka notebook cells remain explicit gaps. Remaining: review PR #123's diff, inspect published EN/FR pages and SVGs at desktop/mobile widths, finish remaining source checks, then collect private transfer-question evidence. Do not mark page quality or learner mastery complete without evidence.
 
-### P1 — Keep the existing learning experience dependable
+### Historical priority — keep the existing learning experience dependable (2026-10-28 baseline)
 **Goal:** ensure the existing site and numerical exercise are correct, navigable, and easy to reproduce.
 
 Tasks:
