@@ -1367,3 +1367,28 @@ A standard-library Python snippet in each language page computes AP and this two
 - Local implementation: `src/llm_lab/foundations/decoding_filters.py`; tests: `tests/unit/test_decoding_filters.py`.
 
 **Validation boundary.** The top-k/top-p code and tests were inspected at source level in this pass; no new local test run is claimed. PR CI and Quarto render are required for this documentation change. This does not close the outstanding mobile/dark-theme, screen-reader or independent learner-evidence tasks in #84/#584/#447.
+
+
+## 2026-11-09: PyTorch cross-entropy API example (FR/EN)
+
+**Scope.** Add one bounded, self-contained PyTorch example to the bilingual cross-entropy lessons, complementing rather than replacing the project's NumPy reference.
+
+**Teaching contract.** The snippet uses logits `(B,T,V)` and integer targets `(B,T)` already aligned to the prediction positions; it flattens `(B,T)` to the batch axis required by `CrossEntropyLoss`. It shows per-position losses with `reduction='none'`, a valid-target mean with `ignore_index=-100`, agreement with an explicit `log_softmax`/gather calculation, and the numerical change caused by incorrectly applying softmax before the loss API. It explicitly does not implement autoregressive shifting, attention masks, or a training loop.
+
+**Execution.** The exact example was executed locally with PyTorch 2.10.0+cpu. Per-token losses were `[0.169846..., 1.551444..., 0.0]`; mean loss and manual calculation both equalled `0.860645...`; applying softmax first yielded `0.946560...`. All `torch.testing.assert_close` assertions and the negative-control assertion passed.
+
+**Boundaries.** This is a documentation example, not a new runtime dependency or package implementation. The existing maintained NumPy reference remains limited to `(B,C)` row-wise mean loss; the PyTorch snippet demonstrates sequence-shaped API adaptation and ignored targets. It assumes the caller has already aligned labels and logits.
+
+**Sources.** PyTorch `CrossEntropyLoss` API: https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html ; PyTorch `LogSoftmax`: https://docs.pytorch.org/docs/stable/generated/torch.nn.LogSoftmax.html.
+
+
+### Source-to-claim mapping — cross-entropy API example
+
+| Claim in the bilingual example | Source | Scope/qualification |
+|---|---|---|
+| `CrossEntropyLoss` consumes unnormalized class logits; class-index targets, `ignore_index` and `reduction` determine the per-target and aggregated loss. | [PyTorch 2.14 CrossEntropyLoss documentation](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) | Official API contract. The example uses unweighted class-index targets and the default `ignore_index=-100`; it does not cover probability targets, class weights or label smoothing. |
+| `LogSoftmax` computes log-softmax as one operation with better numerical properties than separate softmax then log. | [PyTorch 2.14 LogSoftmax documentation](https://docs.pytorch.org/docs/stable/generated/torch.nn.LogSoftmax.html) | API/numerical guidance used for the manual cross-check; not a new mathematical definition. |
+| The common language-model logits shape `(B,T,V)` must be rearranged to place classes at dimension 1 for the flattened `(B*T,V)` class-index call. | CrossEntropyLoss input-shape contract above; executable example in FR/EN lesson. | This example flattens positions into the sample dimension. It assumes targets are already aligned and does not implement the causal shift. |
+| The ignored target does not contribute to the mean reduction. | CrossEntropyLoss `ignore_index`/`reduction='mean'` documentation above. | Valid for this unweighted class-index example; weighted-mean semantics differ and are not demonstrated. |
+
+The source table covers the newly added PyTorch API example only. It does not close the wider source-to-claim audit for the complete logits → probabilities → likelihood → cross-entropy → loss page group.
