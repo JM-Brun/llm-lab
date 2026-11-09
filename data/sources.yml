@@ -1438,10 +1438,20 @@ sources:
         limitations:
           - "The 2024 arXiv preprint and 2026 CHI paper are different versions and must not be conflated."
           - "The paper's reported user study does not establish learning outcomes for LLM Lab."
+      - accessed_at: "2026-11-09"
+        status: partially-scanned
+        inspected_scope:
+          - "Full-text CHI 2026 paper sections on design, system, controlled study, results and limitations"
+          - "Study baseline identification: Jay Alammar Illustrated GPT-2 and 3Blue1Brown But what is a GPT?"
+          - "Reported quiz accuracy, question-level results and study limitations"
+        limitations:
+          - "The study was a short immediate post-test with 90 non-experts and seven multiple-choice questions; it did not measure long-term retention, transfer or detailed mathematical mastery."
+          - "The 3Blue1Brown baseline was But what is a GPT?, not the separate Attention in Transformers, step by step lesson."
+          - "No claim is made that the study demonstrates learning gains for LLM Lab."
     related:
-      pages: [en/transformer, fr/transformer, en/text-data, fr/text-data, en/embedding-space, fr/embedding-space]
-      concepts: [token, token-embedding, contextualized-representation, self-attention]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      pages: [en/transformer, fr/transformer, en/transformer-explainer, fr/transformer-explainer, en/text-data, fr/text-data, en/embedding-space, fr/embedding-space]
+      concepts: [token, token-embedding, contextualized-representation, self-attention, multi-head-attention, logits, decoding-policy]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md]
 
   - id: poloclub-transformer-explainer-repository
     title: "Transformer Explainer"
@@ -1478,10 +1488,19 @@ sources:
           - "Inspection is bounded to files relevant to the educational explorer, not the full repository history."
           - "The top-p implementation truncates logits to the top 50 before cumulative probability; it is not necessarily exact full-vocabulary nucleus sampling."
           - "The live third-party iframe and deployed browser/mobile behavior are not covered by repository source inspection."
+      - accessed_at: "2026-11-09"
+        status: partially-scanned
+        inspected_scope:
+          - "Current repository model metadata and selected QKV, attention, MLP, temperature and sampling components"
+          - "Top-k/top-p implementation and ONNX Runtime Web data extraction path"
+          - "Comparison with the pinned source commit used by the LLM Lab experiment page"
+        limitations:
+          - "This was selected-file static inspection, not a full repository audit or browser execution."
+          - "Keyboard/mobile accessibility and numerical parity against a reference implementation remain unverified."
     related:
-      pages: [en/transformer, fr/transformer]
-      concepts: [token, token-embedding, contextualized-representation, self-attention]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      pages: [en/transformer, fr/transformer, en/transformer-explainer, fr/transformer-explainer]
+      concepts: [token, token-embedding, contextualized-representation, self-attention, multi-head-attention, logits, decoding-policy]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md]
   - id: raschka-bpe-from-scratch-2025
     title: "BPE from Scratch"
     creators: ["Sebastian Raschka"]
@@ -2591,3 +2610,168 @@ sources:
       audit_records:
         - data/extractions/marek-ryabinin-score-centering-off-policy-rl-2026.yml
         - docs/source-reviews/score-centering-2026-11.md
+
+  - id: jay-alammar-illustrated-transformer
+    title: "The Illustrated Transformer"
+    creators: ["Jay Alammar"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://jalammar.github.io/illustrated-transformer/"
+    publisher: "Jay Alammar"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:transformer, topic:self-attention, topic:multi-head-attention, modality:illustration]
+      concept_ids: [token-embedding, self-attention, multi-head-attention, causal-mask]
+    metadata:
+      technical_level: introductory
+      contribution_types: [architecture, visualization, pedagogy, historical-context]
+      audiences: [beginner, learner, educator]
+    scan_status: partially-scanned
+    integration_status: deferred
+    scan_history:
+      - accessed_at: "2026-11-09"
+        status: partially-scanned
+        inspected_scope:
+          - "Full article text and explanatory sequence"
+          - "Architecture scope and model-specific example values"
+          - "Progressive transition from token/vector explanation to attention matrices"
+        limitations:
+          - "No fresh asset-level provenance or licence review was performed."
+          - "The article primarily explains the original encoder-decoder Transformer, not a decoder-only GPT architecture."
+          - "Visuals were not copied or independently assessed for reuse."
+    related:
+      pages: [en/transformer, fr/transformer, en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention, en/transformer-architectures, fr/transformer-architectures]
+      concepts: [token-embedding, self-attention, multi-head-attention, causal-mask]
+      audit_records: [docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md]
+
+  - id: jay-alammar-illustrated-gpt2
+    title: "The Illustrated GPT-2"
+    creators: ["Jay Alammar"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://jalammar.github.io/illustrated-gpt2/"
+    publisher: "Jay Alammar"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:decoder-only-transformer, topic:self-attention, topic:causal-masking, topic:autoregressive-generation, topic:kv-cache, modality:illustration]
+      concept_ids: [token-embedding, contextualized-representation, self-attention, multi-head-attention, causal-mask, autoregressive-generation, kv-cache]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [architecture, visualization, pedagogy, historical-context]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: deferred
+    scan_history:
+      - accessed_at: "2026-11-09"
+        status: partially-scanned
+        inspected_scope:
+          - "Full article text and GPT-2 architecture walkthrough"
+          - "QKV projections, causal masking, multi-head aggregation, output projection and cache intuition"
+          - "Training versus autoregressive inference distinctions"
+        limitations:
+          - "No fresh asset-level provenance or licence review was performed."
+          - "The article is GPT-2-era and should not be generalized to all contemporary architectures."
+          - "The cache explanation is conceptual and does not replace a precise prefill/decode or per-layer KV-cache specification."
+    related:
+      pages: [en/transformer, fr/transformer, en/generation, fr/generation, en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
+      concepts: [token-embedding, contextualized-representation, self-attention, multi-head-attention, causal-mask, autoregressive-generation, kv-cache]
+      audit_records: [docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md]
+
+  - id: jay-alammar-how-transformer-llms-work-2025
+    title: "How Transformer LLMs Work"
+    creators: ["Jay Alammar", "Maarten Grootendorst"]
+    source_type: course
+    identifiers: {}
+    canonical_url: "https://www.deeplearning.ai/courses/how-transformer-llms-work"
+    publisher: "DeepLearning.AI"
+    publication_date: "2025-02-10"
+    updated_date: null
+    language: en
+    version: "13-lesson short course; official outline checked 2026-11-09"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [text-tokenization, inference-efficiency]
+      tags: [topic:transformer, topic:self-attention, topic:kv-cache, topic:multi-query-attention, topic:grouped-query-attention, topic:sparse-attention, topic:mixture-of-experts, ecosystem:huggingface, modality:video]
+      concept_ids: [token, token-embedding, contextualized-representation, self-attention, multi-head-attention, kv-cache]
+    metadata:
+      technical_level: mixed
+      contribution_types: [architecture, implementation, visualization, pedagogy]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: deferred
+    scan_history:
+      - accessed_at: "2026-11-09"
+        status: partially-scanned
+        inspected_scope:
+          - "Official course page, lesson outline and published learning objectives"
+          - "Author announcement and linked Hands-On Large Language Models code repository"
+          - "Crosswalk against current LLM Lab reader-facing pages and existing issue owners"
+        limitations:
+          - "Course videos, code examples and quiz were not completed or independently reviewed."
+          - "The public announcement links the book's code repository; this does not establish that a separate public repository contains all course-specific code."
+          - "Advanced topics are recorded as candidates from the outline, not as fully audited explanations."
+    related:
+      pages: [en/transformer, fr/transformer, en/transformer-block-walkthrough, fr/transformer-block-walkthrough, en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
+      concepts: [token, token-embedding, contextualized-representation, self-attention, multi-head-attention, kv-cache]
+      audit_records: [docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md]
+
+  - id: 3blue1brown-attention-transformers-step-by-step-2024
+    title: "Attention in Transformers, step by step — Deep Learning Chapter 6"
+    creators: ["Grant Sanderson", "Justin Sun"]
+    source_type: video
+    identifiers: {}
+    canonical_url: "https://www.3blue1brown.com/lessons/attention/"
+    publisher: "3Blue1Brown"
+    publication_date: "2024-04-07"
+    updated_date: null
+    language: en
+    version: "Text adaptation and video description checked 2026-11-09"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:self-attention, topic:scaled-dot-product-attention, topic:causal-masking, topic:multi-head-attention, topic:contextualized-representation, modality:video, modality:visualization]
+      concept_ids: [token-embedding, contextualized-representation, query, key, value, self-attention, attention-score, attention-weight, scaled-dot-product-attention, multi-head-attention, causal-mask, output-projection]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [theory, mathematical-derivation, visualization, pedagogy]
+      audiences: [learner, educator]
+    scan_status: partially-scanned
+    integration_status: deferred
+    scan_history:
+      - accessed_at: "2026-11-09"
+        status: partially-scanned
+        inspected_scope:
+          - "Full text adaptation, lesson sequence, embedded retrieval questions and mathematical notation"
+          - "Video description and published timestamps"
+          - "Column-vector convention, value-map factorization, multi-head output projection and parallel next-token training explanation"
+        limitations:
+          - "The full audiovisual video was not independently watched; animation timing and visual details remain unreviewed."
+          - "The noun/adjective attention-head example is hypothetical and not an interpretation of a trained head."
+          - "The training explanation motivates parallel next-token prediction but does not formally define teacher forcing, target shifting or loss aggregation."
+          - "No figure or animation asset was copied or assessed for reuse."
+    related:
+      pages: [en/contextualized-representations, fr/contextualized-representations, en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention, en/causal-masking, fr/causal-masking]
+      concepts: [token-embedding, contextualized-representation, query, key, value, self-attention, attention-score, attention-weight, scaled-dot-product-attention, multi-head-attention, causal-mask, output-projection]
+      audit_records: [docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md]
