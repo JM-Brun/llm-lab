@@ -26,6 +26,14 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, « le chat poursuit le chien » de « le chien poursuit le chat ». Cette page présente les mécanismes positionnels et les distingue du masque causal ; la dérivation détaillée de RoPE est réservée à un [approfondissement avancé](rope.qmd).
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+- **Pourquoi :** les embeddings de contenu seuls ne disent pas où se trouve un token. Sans signal positionnel ni contrainte d'ordre, l'auto-attention est équivariante par permutation.
+- **Où :** les encodages absolus sont ajoutés aux représentations d'entrée ; les mécanismes relatifs agissent dans l'attention ; **RoPE** fait tourner les requêtes et les clés après projection.
+- **À ne pas confondre :** le masque causal limite les positions visibles (pas de futur), mais ne remplace pas un mécanisme qui représente les positions ou leurs décalages.
+
+**Question de contrôle :** pouvez-vous expliquer pourquoi inverser deux tokens doit pouvoir changer le calcul, et indiquer à quel endroit chaque mécanisme introduit cette information ?
+:::
+
 ## Pourquoi ajouter une information de position ?
 
 Les embeddings de contenu seuls ne codent pas la position. Le masque causal, lorsqu'il est utilisé, indique quelles positions peuvent être consultées (`j ≤ i`) ; les mécanismes positionnels peuvent en plus représenter la position absolue ou le décalage relatif. Ces signaux sont complémentaires, pas interchangeables.
