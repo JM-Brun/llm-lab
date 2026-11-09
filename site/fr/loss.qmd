@@ -65,6 +65,12 @@ La somme, la moyenne par séquence ou une moyenne pondérée sont également pos
 
 En langage causal, les logits à la position $t$ prédisent généralement le token à la position $t+1$. La perte doit comparer les logits au bon token cible décalé. Les tokens de padding ou les positions explicitement ignorées doivent être exclus du numérateur **et** du dénominateur d'une moyenne sur les cibles valides. Le masque de perte détermine uniquement quelles cibles contribuent à l'objectif ; il ne détermine pas quels tokens peuvent influencer les représentations utilisées pour prédire ces cibles. Cette visibilité relève du masque d'attention (masque causal, de padding ou de frontière documentaire, selon le cas). Exclure une cible de la loss ne suffit donc pas, à lui seul, à empêcher son information d'entrer dans le contexte. Voir aussi [les exemples d'entraînement](training-examples.qmd) et [le masquage causal](causal-masking.qmd).
 
+### Préfixe observé et teacher forcing
+
+Pendant un passage avant avec *teacher forcing*, le contexte fourni à la position $t$ est le préfixe de référence $x_{<t}$ et la cible évaluée est le token suivant $x_t$. Le modèle ne reçoit donc pas sa propre prédiction précédente comme entrée à chaque position : les tokens de référence servent de contexte, tandis que les prédictions sont comparées aux cibles correspondantes. Le masque causal interdit à chaque position de consulter les tokens de référence futurs. Cette convention de conditionnement est distincte du calcul de la loss et de la mise à jour des paramètres : le *teacher forcing* définit le contexte, la loss mesure l'écart aux cibles, puis les gradients et l'optimiseur déterminent si et comment les paramètres changent.
+
+Le *teacher forcing* ne doit pas être confondu avec le *prefill*. Le prefill traite le prompt connu au début d'une inférence ; le teacher forcing désigne l'utilisation du préfixe de référence comme contexte lors du scoring ou de l'apprentissage. Voir [la génération](generation.qmd) pour le prefill et [la vraisemblance](vraisemblance.qmd) pour le scoring à paramètres fixes.
+
 Une erreur d'alignement d'un token peut donner une loss finie et décroissante tout en entraînant la mauvaise tâche.
 
 ## Loss d'entraînement et métriques
