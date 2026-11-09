@@ -1,0 +1,150 @@
+---
+title: "Score centering in off-policy LLM reinforcement learning"
+subtitle: "Removing sampler-induced score drift under training–inference mismatch"
+keywords: ["type:deep-dive", "destination:deepen", "topic:score-centering", "domain:probabilistic-foundations-training", "importance:specialized", "level:advanced", "language:en", "status:published"]
+lang: en
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/score-centering"
+scope: "Explains score centering as an additive per-prefix correction for policy-gradient drift under training-inference mismatch; distinguishes it from attention scores, group-centered advantages, and importance sampling."
+purpose: "Derive the centered policy score, explain the mismatch it addresses, and assess composition with importance-sampling corrections."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: "en/gradients"
+  next: null
+hierarchy:
+  parents: ["en/gradients"]
+  children: []
+related: ["en/llm-evolution"]
+tags: ["type:deep-dive", "destination:deepen", "topic:score-centering", "domain:probabilistic-foundations-training", "importance:specialized", "level:advanced", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+**Score centering** is an additive correction for policy-gradient updates when the inference engine that generated an LLM rollout and the training engine that computes its gradient implement different effective token distributions. It subtracts the sampler-expected trainer score at each prefix to remove an identified drift component.
+:::
+
+::: {.callout-note}
+**Source scope.** This lesson synthesizes Marek and Ryabinin's paper and its official implementation. Cameron R. Wolfe's [*Score Centering*](https://cameronrwolfe.substack.com/p/score-centering) is catalogued separately, but its article body could not be retrieved during this review. No explanation below is attributed to Wolfe until that source is inspected.
+:::
+
+## 1. The mismatch: who sampled, and who learns?
+
+The **sampler** generates rollout tokens, with next-token distribution \(q(\cdot\mid h)\) at prefix \(h\). The **trainer** evaluates those tokens and computes parameter gradients, with distribution \(p_\theta(\cdot\mid h)\). Ideally they match. In practice they can differ because of numerical differences between inference and training kernels, quantization, or stale sampler weights in asynchronous training.
+
+The paper argues that a persistent discrepancy can create a systematic update component. As the sampler is refreshed from the trainer, that component can feed back and accumulate as drift. Eliminating every mismatch may impose a substantial cost on rollout efficiency.
+
+## 2. The object being centered is a gradient
+
+For token \(v\) at prefix \(h\), define the trainer's **score function**
+
+\[
+s_v(h)=\nabla_\theta \log p_\theta(v\mid h).
+\]
+
+This is a vector in parameter space. It is not the token's log-probability, a reward, an advantage, or an attention compatibility score.
+
+The sampler-expected trainer score is
+
+\[
+\bar{s}(h)=
+\mathbb{E}_{v\sim q(\cdot\mid h)}[s_v(h)].
+\]
+
+Score centering replaces the sampled token's score by
+
+\[
+\widetilde{s}_v(h)=s_v(h)-\bar{s}(h),
+\qquad
+\mathbb{E}_{v\sim q(\cdot\mid h)}[\widetilde{s}_v(h)]=0.
+\]
+
+When \(q=p_\theta\), the usual score identity gives
+
+\[
+\mathbb{E}_{v\sim p_\theta(\cdot\mid h)}
+[\nabla_\theta\log p_\theta(v\mid h)]
+=\nabla_\theta\sum_v p_\theta(v\mid h)=0,
+\]
+
+so the correction is inactive on-policy. Under mismatch, the trainer score averaged under the sampler need not have zero expectation.
+
+The paper's interpretation is that subtracting this per-prefix expectation removes an update component that can pull the trainer toward the sampler independently of which sampled tokens earned reward. With a reward or advantage signal, the remaining expected update is a reward–score covariance under \(q\). It is **not generally the covariance under \(p_\theta\)**. Score centering removes the identified drift term; it does not make arbitrary off-policy samples equivalent to on-policy samples.
+
+## 3. A small Bernoulli example
+
+Consider a one-parameter binary policy with \(p_\theta(v=1)=p\) and \(p_\theta(v=0)=1-p\). Its scores are \(s_1=1-p\) and \(s_0=-p\). Let the sampler use \(q(v=1)=r\). Then
+
+\[
+\bar{s}_q=r(1-p)+(1-r)(-p)=r-p.
+\]
+
+For \(p=0.6\) and \(r=0.8\), the trainer scores are \(0.4\) and \(-0.6\), and their sampler expectation is \(0.2\). The centered scores are \(0.2\) and \(-0.8\), so
+
+\[
+0.8(0.2)+0.2(-0.8)=0.
+\]
+
+This isolates the mechanism: the non-zero mean comes from averaging the trainer score under a different distribution. It is not a complete LLM gradient derivation.
+
+## 4. Three different operations called “centering”
+
+- **Score centering** subtracts the sampler-expected trainer gradient at each prefix.
+- **Group reward/advantage centering** makes advantages sum to zero across a prompt's sampled rollouts; it does not guarantee zero expected advantage at every prefix.
+- **Attention-score processing** operates on compatibility scores such as \(QK^\top/\sqrt{d_k}\) before attention softmax.
+
+The first is a policy-gradient correction, the second concerns the reward signal used by methods such as GRPO, and the third belongs to Transformer attention. Similar words do not imply a shared mathematical object.
+
+## 5. Relation to importance sampling
+
+Importance sampling applies multiplicative weights based on a ratio between trainer and sampler probabilities. Clipping or masking can control large ratios, but may introduce or retain bias. Score centering is additive: it subtracts an expected score.
+
+The paper and reference implementation support composition with compatible ratio-based corrections. In that case, centering is performed under the **effective sampling mass** \(q\,w\), where \(w\) is the detached importance weight.
+
+The implementation exposes token- and sequence-level ratios, trust bands, clamp/drop behavior, and sign selection. Its named configurations include PG, naive IS, TIS, MIS, PPO, DAPO, GSPO, TOPR and DPPO. There is an important boundary: score centering composes with corrections using stat=ratio, but the implementation explicitly rejects composition with stat=tv (the TV-based DPPO correction). “Composes with importance sampling” does not mean “composes with every off-policy correction.”
+
+Group-centered rewards in GRPO-style training are orthogonal to score centering; one does not substitute for the other.
+
+## 6. Efficient estimation: top-k and the vocabulary tail
+
+Exact centering requires the sampler's full next-token distribution. The reference implementation also supports a top-k sampler head (README default \(k=128\)) and models the remaining tail as proportional to the trainer's tail distribution, rescaled to match the sampler tail mass.
+
+Implementation details matter: trainer log-probabilities are computed in float32; sampler top-k log-probabilities are not renormalized; the sampled token's sampler log-probability is retained even outside the top-k head; sampler-derived centering weights/residuals and advantages are detached; and the generated-token mask is applied to the token loss.
+
+The paper rendering reports top-32/top-128 estimates close to full-vocabulary centering in tested settings, top-128 covering more than 99.9% of sampler mass in most tested configurations, and under 1% added overhead in the authors' matched-hardware setup. Overhead for vLLM or SGLang was not measured. These are author-reported results, not independent reproductions.
+
+## 7. Experimental evidence and limitations
+
+The paper reports experiments with models from 0.6B to 30B parameters, including quantized samplers and stale rollouts.
+
+- In a severe Qwen3-30B-A3B-Base sampler configuration (INT8 weights/activations and INT4 KV cache), it reports 30% training accuracy for score centering versus 12% for TIS, with other methods below 5%.
+- Here, **training accuracy means mean reward on sampled rollouts**, not held-out benchmark accuracy.
+- Under a milder FP8 mismatch, plain policy gradient can remain stable; score centering is not always necessary.
+- In Qwen3-0.6B Countdown with sampler refresh every 64 steps, score centering combined with TIS/MIS performs best in the reported staleness comparison.
+- Seed counts vary across some comparisons.
+
+These results support the method in tested mismatch regimes. They do not establish universal superiority, eliminate every train/inference discrepancy, or demonstrate held-out generalization gains.
+
+## 8. Placement in LLM Lab
+
+This is an **advanced post-training / RL topic** at the boundary between probabilistic optimization and inference systems. It belongs in the probabilistic-training domain, with a secondary connection to inference efficiency.
+
+A sensible learning order is: expected reward and policy-gradient objective; log-probability gradient / score function; on-policy score identity; behavior policy versus trainer policy; rollout staleness and training–inference mismatch; per-prefix drift and score centering; distinction from group-centered rewards; importance sampling and PPO-family constraints; top-k estimation and empirical limitations.
+
+It is not a new stage in the core next-token predictive spine and does not replace supervised teacher-forced training.
+
+## Further reading
+
+- Marek & Ryabinin, [*Score Centering Stabilizes Off-policy Reinforcement Learning*](https://arxiv.org/abs/2609.20807).
+- [Full-text rendering inspected for this review](https://www.alphaxiv.org/abs/2609.20807).
+- [Official implementation and README](https://github.com/martin-marek/score-centering), including the [loss implementation](https://github.com/martin-marek/score-centering/blob/main/losses.py).
+- Cameron R. Wolfe, [*Score Centering*](https://cameronrwolfe.substack.com/p/score-centering) — separate commentary source; body retrieval pending.
+- Related follow-up, [*On the Origin and Evolution of Training-Inference Mismatch in LLM Reinforcement Learning*](https://arxiv.org/abs/2610.40945), to review separately.
+
+::: {.callout-warning}
+**Research boundary:** the canonical arXiv PDF and all appendices have not yet been independently audited, official tests have not been executed, and the Cameron Wolfe article body remains unavailable. Treat empirical figures as author-reported and the top-k tail as an implementation approximation.
+:::
+
+:::: {.language-switch}
+[Français](../fr/score-centering.qmd) · [English](score-centering.qmd)
+::::
