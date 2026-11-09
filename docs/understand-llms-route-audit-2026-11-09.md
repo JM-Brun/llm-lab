@@ -278,3 +278,81 @@ Ne pas entreprendre une réécriture simultanée de toutes les pages. Commencer 
 **Ne pas ajouter davantage d'étapes au parcours.** La prochaine amélioration à fort rendement consiste à réduire la complexité perçue : trois questions pour comprendre, une distribution prédictive comme pivot conceptuel, trois usages frères, et trois parcours complémentaires (Construire, Pratiquer, Approfondir).
 
 Le parcours détaillé à huit étapes et le graphe computationnel restent utiles en arrière-plan. L'interface doit en proposer une projection pédagogique plus simple, fidèle à leur structure et compréhensible dès la première visite.
+
+
+## 11. Intégration avec les audits et travaux déjà existants — revue du 2026-11-09
+
+Cette section complète l'audit après comparaison avec les audits de parcours, de navigation et de pages déjà présents dans le dépôt. Elle prévaut sur toute recommandation antérieure de ce document qui conduirait à dupliquer un dispositif existant.
+
+### 11.1 Références propriétaires et non-duplication
+
+| Sujet | Référence propriétaire | Rôle de cet audit |
+|---|---|---|
+| Coordination du design pédagogique global | Issue #130 | Fournir une synthèse de haut niveau et ses décisions, sans créer de roadmap parallèle |
+| Ergonomie et navigation | `docs/reviews/navigation-ergonomics-audit-2026-11-09.md`, issue #337 | Vérifier la cohérence du parcours simplifié avec les règles et pilotes de navigation existants |
+| Curriculum et dépendances | `docs/learning-path.md`, `data/guided-route.yml`, `docs/learning-path-audit-2026-11-05.md` | Ne pas remplacer ni recopier les huit étapes |
+| Revue des pages et transitions | `docs/audits/learning-route-page-review-2026-11-09.md`, `docs/guided-route-page-review-2026-11-09.md` | Ne pas relancer les audits de contenu déjà effectués ; signaler uniquement les écarts de présentation globale |
+| Cohérence des motifs de page | `docs/audits/guided-route-pattern-coherence-2026-11-09.md` | Réutiliser les rappels et self-checks existants |
+| Graphe computationnel | `docs/canonical-computational-spine.md`, issue #584 | Utiliser le pivot distribution et ses branches sans créer de nouveau graphe |
+| Accueil et son rendu | Issue #341 | Confier à cette issue la vérification navigateur du schéma détaillé et des quatre portes d'entrée |
+| Validation formative | Issue #447 | Ne pas confondre navigation réussie et compréhension effective |
+
+### 11.2 Vérifications qui changent les recommandations initiales
+
+L'inspection directe des sources actuelles montre que plusieurs suggestions de la section 6 sont **déjà satisfaites** ou doivent être limitées :
+
+1. **Les trois usages de la distribution sont déjà présentés dans le panorama.** `site/fr/llm-overview.qmd` et son équivalent EN contiennent un rappel d'une minute, un schéma partagé avec trois branches, une version mobile et les explications de génération, scoring et apprentissage. Le texte distingue également l'évaluation du scoring.
+2. **Prefill/decode et teacher forcing sont déjà introduits dans ce panorama.** Ils sont associés aux branches correctes : phases d'inférence d'une part, politique de contexte en apprentissage d'autre part.
+3. **La page d'accueil a déjà quatre destinations lisibles.** Son schéma computationnel détaillé vient après les portes d'entrée et le texte explicatif ; il n'est donc pas affiché comme unique première représentation du système.
+4. **La carte sépare déjà explicitement parcours guidé et exploration.** Elle dérive le premier du curriculum et la seconde de la sidebar et des métadonnées.
+5. **La sidebar possède déjà des regroupements pour le calcul de la prédiction, le scoring et l'apprentissage.** Une nouvelle hiérarchie proposée sans comparer les pilotes existants serait redondante.
+
+En conséquence, les propositions initiales suivantes sont retirées comme actions immédiates :
+- créer une nouvelle page ou un nouveau registre « Comprendre » ;
+- ajouter une seconde figure des trois branches dans le panorama ;
+- remplacer le parcours guidé à huit étapes par un parcours à trois étapes dans `data/guided-route.yml` ;
+- déplacer ou supprimer le schéma détaillé de l'accueil sans défaut de rendu démontré ;
+- réorganiser toute la sidebar sur la seule base de la maquette de cet audit.
+
+### 11.3 Projection simplifiée à retenir — sans nouvelle source de données
+
+Les trois questions proposées dans cet audit sont un **résumé éditorial** du parcours existant, et non une nouvelle structure de curriculum :
+
+1. **Qu'est-ce qu'un LLM ?** — déjà porté par l'accueil et `llm-overview`.
+2. **Comment calcule-t-il une prédiction ?** — étapes 2 à 5 du guided route, dont les pages centrales sont déjà reliées.
+3. **Que fait-on de cette prédiction ?** — étapes 6 à 8, à présenter comme trois usages frères ; l'évaluation reste transversale.
+
+Cette synthèse peut être réutilisée dans des textes d'orientation, des introductions ou des explications orales. Elle ne doit pas générer une deuxième navigation, un deuxième stepper ou une deuxième liste de pages. Le parcours détaillé à huit étapes reste la progression conseillée ; les trois questions en donnent une lecture de niveau supérieur.
+
+### 11.4 Application concrète et propriétaires
+
+| Action | Décision après réconciliation | Propriétaire / preuve |
+|---|---|---|
+| Accueil : premier écran et schéma détaillé | Conserver la source actuelle ; vérifier le rendu, la lisibilité, les interactions SVG, les labels et le responsive | #341 ; réutiliser les artefacts de navigateur existants |
+| Panorama : trois usages | Conserver les schémas desktop/mobile et le rappel existants ; ne pas dupliquer | Revue de source déjà réalisée ; rendu spécifique à intégrer aux contrôles existants |
+| Sidebar : groupes de calcul | Suivre le pilote limité de `navigation-ergonomics-audit` : commencer par le groupe texte/tokens avec `text-data` comme destination, seulement si lien et disclosure sont distincts et accessibles | #337 |
+| Sidebar : autres groupes | Ne pas généraliser avant validation du pilote ; examiner ensuite embeddings, Transformer et logits ; scoring/loss séparément | #337 |
+| Guided route | Garder huit étapes et leurs appartenances multiples intentionnelles (notamment generation et cross-entropy) | `data/guided-route.yml` ; audits de cohérence existants |
+| Carte | Conserver la séparation route / exploration et vérifier que la sidebar modifiée ne crée aucun doublon | #337 ; générateur de carte existant |
+| Build / Practice / Deepen | Maintenir ces destinations complémentaires ; ne pas les convertir en étapes de Understand | `docs/content-section-mapping.md`, #78 et #130 |
+| Validation d'apprentissage | Tester si le lecteur sait reformuler le calcul partagé et distinguer les trois usages ; ne pas inférer ce résultat des tests CI | #447, après les prérequis de rendu indiqués dans cette issue |
+
+### 11.5 Ordre de mise en œuvre révisé
+
+1. **Ne pas modifier les sources canoniques du curriculum ou du graphe** : elles décrivent déjà correctement les relations et les huit étapes.
+2. **Réaliser le pilote de sidebar déjà spécifié dans #337**, en commençant par un seul groupe et en respectant le contrat d'accessibilité. Si Quarto ne permet pas deux actions distinctes, ne pas ajouter de JavaScript ad hoc.
+3. **Vérifier l'effet de ce pilote sur la carte générée**, les destinations, les contextes pédagogiques et la parité FR/EN.
+4. **Achever la revue de l'accueil dans #341**, en réutilisant les preuves existantes et en n'ouvrant des corrections que sur des défauts reproductibles.
+5. **Faire une revue de tâches de navigation** N1–N6 décrites dans l'audit ergonomique, puis une session manuelle clavier/tactile/lecteur d'écran pour N7–N8.
+6. **Exécuter le pilote apprenant #447** une fois les conditions de rendu/accessibilité satisfaites.
+
+### 11.6 Critère de décision pour toute modification supplémentaire
+
+Avant toute modification de page ou de navigation, répondre à ces questions :
+- Quel problème lecteur observable est corrigé ?
+- Quelle source canonique possède déjà cette information ?
+- La proposition réutilise-t-elle cette source ou crée-t-elle une projection concurrente ?
+- Le changement préserve-t-il les appartenances multiples et les différences de granularité ?
+- Quel contrôle existant valide le résultat (CI, rendu navigateur, tâche de navigation ou pilote apprenant) ?
+
+Si aucun défaut concret n'est identifié, conserver l'existant. Le principal résultat de cet audit est la clarification de la lecture haut niveau et la priorisation des travaux existants, pas une refonte supplémentaire.
