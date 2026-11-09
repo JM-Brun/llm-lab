@@ -1,7 +1,7 @@
 ---
 title: "Tokenization strategies: granularity, algorithms, and trade-offs"
 subtitle: "Choosing a discrete representation without conflating compression, linguistics, and quality"
-keywords: ["type:concept-lesson", "destination:understand", "topic:tokenization-strategies", "level:core", "language:en", "status:published"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:tokenization-strategies", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
 
@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/tokenization-strategies"
 scope: "Compares segmentation units and tokenization algorithm families—including BPE, WordPiece, and unigram—and their coverage, sequence-length, and cost trade-offs; assumes the input is already represented as text and stops before embedding lookup."
 purpose: "Readers should be able to describe major segmentation strategies, compare their assumptions and trade-offs, explain why tokens and IDs depend on the tokenizer and its version, and demonstrate the limits of whitespace-only splitting."
+domain: "text-tokenization"
 suggested_route:
   previous: null
   next: null
@@ -17,7 +18,7 @@ hierarchy:
   parents: ["en/text-data"]
   children: []
 related: ["en/training-examples"]
-tags: ["type:concept-lesson", "destination:understand", "topic:tokenization-strategies", "level:core", "language:en", "status:published"]
+tags: ["type:deep-dive", "destination:deepen", "topic:tokenization-strategies", "level:advanced", "language:en", "status:published"]
 -->
 
 
