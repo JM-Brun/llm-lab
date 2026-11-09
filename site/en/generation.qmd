@@ -21,6 +21,8 @@ related: ["en/text-data", "en/build-path", "en/decoding-strategies", "en/gpt-gen
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-en-generation.qmd >}}
+
 ::: {.chapter-lead}
 An LLM generates text **one token at a time**. From the available context, it estimates the probability of each vocabulary token appearing at the next position. These probabilities form a **conditional probability distribution over the next token**. The system then selects a token, appends it to the context, and repeats. During inference, **the model's parameters remain fixed**: generation is not learning.
 :::

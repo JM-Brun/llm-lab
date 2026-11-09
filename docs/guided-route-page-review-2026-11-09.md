@@ -33,3 +33,9 @@ The page-level suggested_route chain is continuous over all 18 core pages and ma
 ## Maintenance note
 
 This is a textual and metadata review from the repository sources. It does not substitute for the browser-render, accessibility or learner evidence tracked in #483, #584 and #447, and it modifies neither `data/guided-route.yml` nor `data/concepts.yml`.
+
+## Follow-up: guided-context partial verification (2026-11-09)
+
+Re-inspecting the generated partials confirmed that the first open observation corresponded to a concrete page defect: `site/fr/generation.qmd` and `site/en/generation.qmd` were the only guided-route pages that did not include their generated guided-context partial (`generated-guided-context-<lang>-generation.qmd`), so the multi-stage section presenting the stage-1 and stage-6 memberships was never rendered on the page. The include has been added in both languages, in the same position as on the other route pages (between the PAGE-MAP comment and the chapter lead). All other core and optional route pages (58 pages checked across FR and EN) include their guided-context partial; optional pages whose suggested route is null correctly omit the suggested-route partial. No change to `data/guided-route.yml`, `data/concepts.yml` or `site/tools/build_learning_map.py` was required: the partial already exists and the memberships are already indexed from the canonical route registry.
+
+Additional observation for a later Build-branch review: `fr/training-examples` and `en/training-examples` declare a non-null `previous` route (`<lang>/corpus-preparation`, `next: null`) but include no suggested-route partial.
