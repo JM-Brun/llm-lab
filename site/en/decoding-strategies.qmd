@@ -165,16 +165,16 @@ This method illustrates a change in scoring function rather than a simple transf
 <aside>
 **Do not confuse contrastive decoding with contrastive search.**
 
-Su et al.'s (2022) *contrastive search* is a different method: it uses a single model and selects among its (k) most likely candidates. It combines model confidence with a degeneration penalty based on the maximum cosine similarity between the candidate representation and the representations of tokens in the context:
+Su et al.'s (2022) *contrastive search* is a different method: it uses a single model and selects among its \\(k\\) most likely candidates. It combines model confidence with a degeneration penalty based on the maximum cosine similarity between the candidate representation and the representations of tokens in the context:
 
 \[
-x_t = \arg\max_{v \in V^{(k)}} \left[
+x_t = \arg\max_{v \in V^{\\(k\\)}} \left[
 (1-\alpha)\,p_\theta(v\mid x_{<t})
 -\alpha\max_{j<t}\operatorname{sim}(h_v,h_{x_j})
 \right].
 \]
 
-Here, (k) defines the candidate set and (alpha\in[0,1]) controls the trade-off between confidence and penalty. When (alpha=0), the method reduces to greedy selection among the candidates. This (k) does not mean *top-k sampling*: top-k sampling truncates a distribution and then samples, whereas *contrastive search* selects the candidate that maximizes a penalized score.
+Here, \\(k\\) defines the candidate set and (alpha\in[0,1]) controls the trade-off between confidence and penalty. When \\(\\alpha=0\\), the method reduces to greedy selection among the candidates. This \\(k\\) does not mean *top-k sampling*: top-k sampling truncates a distribution and then samples, whereas *contrastive search* selects the candidate that maximizes a penalized score.
 
 The two similarly named methods have different mechanisms and requirements: two models (expert/amateur) for *contrastive decoding*; one model and its contextualized representations for *contrastive search*. See [Su et al., 2022, §3.2](https://papers.nips.cc/paper_files/paper/2022/file/871cae8f599cb8bbfcb0f58fe1af95ad-Paper-Conference.pdf) and the [Transformers 4.46 documentation](https://huggingface.co/docs/transformers/v4.46.0/en/generation_strategies) for its historical configuration. This lesson situates the mechanism without claiming to implement it in the teaching GPT.
 </aside>
