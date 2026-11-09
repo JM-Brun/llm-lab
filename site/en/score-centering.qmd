@@ -1,7 +1,7 @@
 ---
 title: "Score centering in off-policy LLM reinforcement learning"
 subtitle: "Removing sampler-induced score drift under training–inference mismatch"
-keywords: ["type:deep-dive", "destination:deepen", "topic:score-centering", "domain:probabilistic-foundations-training", "importance:specialized", "level:advanced", "language:en", "status:published"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:score-centering", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
 <!--
@@ -11,12 +11,12 @@ scope: "Explains score centering as an additive per-prefix correction for policy
 purpose: "Derive the centered policy score, explain the mismatch it addresses, and assess composition with importance-sampling corrections."
 domain: "probabilistic-foundations-training"
 suggested_route:
-  previous: "en/gradients"
+  previous: null
   next: null
 hierarchy:
-  parents: ["en/gradients"]
+  parents: []
   children: []
-related: ["en/llm-evolution"]
+related: ["en/gradients", "en/llm-evolution"]
 tags: ["type:deep-dive", "destination:deepen", "topic:score-centering", "domain:probabilistic-foundations-training", "importance:specialized", "level:advanced", "language:en", "status:published"]
 -->
 
