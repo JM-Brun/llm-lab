@@ -86,7 +86,7 @@ Les tests vérifient une valeur connue, l'accord avec des différences finies ce
 :::
 
 ::: {.callout-note collapse="true" title="Exemple PyTorch : logits, cibles et positions ignorées"}
-L'exemple autonome suivant utilise la forme de sortie courante d'un modèle de langage, `(B,T,V)), puis aplatit les deux premières dimensions car `CrossEntropyLoss` attend les classes dans la deuxième dimension. Les cibles sont supposées **déjà alignées** sur les logits : ce code ne construit pas le décalage autorégressif des entrées et cibles.
+L'exemple autonome suivant utilise la forme de sortie courante d'un modèle de langage, `(B,T,V)`, puis aplatit les deux premières dimensions car `CrossEntropyLoss` attend les classes dans la deuxième dimension. Les cibles sont supposées **déjà alignées** sur les logits : ce code ne construit pas le décalage autorégressif des entrées et cibles.
 
 ```python
 import torch
