@@ -645,7 +645,7 @@ relation_types:
       en: "The source is evaluated using the target."
 relations:
   - {from: policy-gradient, type: part-of, to: post-training}
-  - {from: policy-gradient, type: contributes-to, to: score-function}
+  - {from: score-function, type: part-of, to: policy-gradient}
   - from: score-function
     type: prerequisite
     to: score-centering
@@ -653,7 +653,6 @@ relations:
       fr: "Le centrage porte sur le gradient de log-probabilité de la politique ; il faut définir cette fonction score avant de la centrer."
       en: "Centering operates on the policy log-probability gradient; define the score function before centering it."
   - {from: off-policy-reinforcement-learning, type: part-of, to: post-training}
-  - {from: off-policy-reinforcement-learning, type: produces, to: training-inference-mismatch}
   - {from: training-inference-mismatch, type: constrains, to: policy-gradient}
   - {from: score-centering, type: applies-to, to: off-policy-reinforcement-learning}
   - {from: score-centering, type: contrasts-with, to: attention-score}
