@@ -76,7 +76,7 @@ Use Raschka's *LLMs from Scratch* as an important implementation and coverage re
 
 #### Deepen — deep dives and open exploration
 
-Purpose: let readers pursue a question without completing the guided path first.
+Purpose: let readers pursue a question without completing either primary path first.
 
 - Define notation, state assumptions, explain local prerequisites, and include a worked example or derivation where appropriate.
 - Link to the big-picture component, guided-path position, prerequisite concepts, related concepts, experiments, tests and sources.
