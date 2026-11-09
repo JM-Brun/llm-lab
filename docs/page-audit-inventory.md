@@ -1002,3 +1002,50 @@ This was an independent calculation/identity check of the displayed values, not 
 **Delegated to the Quarto workflow on the accompanying pull request:** fragment resolution at render time, `check_site_links` over the rendered site, the rendered learning-map and knowledge-graph checks, and the targeted rendered browser review. This slice claims no rendered evidence.
 
 **Still not established:** manual screen-reader behaviour; learner validation (#447); the broader rendered navigation review (#337) and the remaining #584 items.
+
+## 2026-11-09: guided-route page-by-page structural audit
+
+**Scope and method.** Inspected the bilingual page-map metadata, stated scope/purpose, headings and route placement for the 21 core page pairs in the eight stages of `data/guided-route.yml`. Read targeted body excerpts for the system panorama, generation, Transformer overview and output-probability lessons to check the most important cross-page boundaries. This is a route-structure and editorial-contract audit, **not** a line-by-line scientific certification of all 42 files, a rendered review, or learner testing.
+
+### Stage-to-page review
+
+| Guided stage | Core page pairs inspected | Pedagogical role and result |
+|---|---|---|
+| Orientation | `llm-overview`, `generation` | Starts with the problem and a black-box generation loop. The early generation membership is intentional: it previews inference before requiring knowledge of tokenization or Transformer internals. |
+| Text input | `text-data`, `tokenization-strategies` | Moves from raw text to tokens and IDs, then explains segmentation strategies. Unicode and tokenizer design/evaluation remain optional depth rather than gates. |
+| Representations | `embedding-space`, `positional-encoding`, `contextualized-representations` | Separates ID lookup, positional information and context-dependent hidden states. Tensor algebra and RoPE derivations remain optional. |
+| Computation | `transformer`, `queries-keys-values`, `scaled-dot-product-attention`, `causal-masking` | The overview locates the block; Q/K/V are projections from each block's input states; attention computes scores and aggregates values; causal masking constrains visibility. The order does not imply that Q/K/V follow the final contextualized states. |
+| Prediction | `logits`, `probabilities`, `entropy` | Separates unnormalized vocabulary scores, the normalized next-token distribution and uncertainty of that distribution. |
+| Inference | `generation` (second membership) | Returns to the canonical generation lesson for prefill/decode, token selection, context feedback and stopping. It is the same page as the early preview, not a second generation lesson. |
+| Scoring | `likelihood`, `cross-entropy` | Moves from an observed target's conditional probability to sequence likelihood/log-likelihood and the token-level target-distribution penalty. Parameters remain fixed. |
+| Training | `loss`, `gradients` | Aggregates valid per-token penalties into an objective, then differentiates it and discusses parameter updates. Training-example construction remains an optional Build bridge, not an inference prerequisite. |
+
+The route is consistent with the narrative separation in `docs/learning-path.md`: first understand what the model computes and how inference works; then study scoring and learning; follow corpus preparation and shifted training examples through the separate Build branch.
+
+### Cross-page boundaries checked
+
+- **Generation versus training:** the generation lesson defines prefill and incremental decode as inference execution phases and explicitly distinguishes them from teacher forcing. The latter is explained in `training-examples`, where observed-prefix conditioning and shifted targets belong.
+- **Input versus training data:** `text-data` owns prompt encoding at inference; `corpus-preparation` owns provenance, filtering, deduplication, held-out splits and tokenizer fitting; `training-examples` owns windows, shifted targets, document boundaries, padding and masks.
+- **Representations versus block computation:** initial embeddings, positional information and contextualized states have separate concept pages. Q/K/V are internal projections in each Transformer block, not a stage after final contextualization.
+- **Attention versus prediction:** Q/K/V, score/weight/value aggregation and causal visibility have separate explanations; the Transformer overview stops at logits, and the generation loop owns selection and feedback.
+- **Probability versus scoring:** predictive entropy concerns the distribution before observing a target; likelihood scores an observed sequence; cross-entropy compares a target distribution with the prediction; batch loss adds explicit masking/reduction; gradients describe sensitivity and the route to parameter updates.
+- **Evaluation scope:** the linked experimental-evaluation page is explicitly a protocol-design exercise for a scientific-passage ranker. It is not represented as a benchmark of a locally trained language model.
+- **Optional depth:** architecture comparison, Unicode, tokenizer design/evaluation, tensor details, RoPE, cross-attention and advanced attention/decode mechanisms remain optional resources; they do not become prerequisites for the core route.
+
+### Targeted correction: make the two generation readings explicit
+
+The route deliberately places the canonical `generation` page in both Orientation and Inference. Before this pass, the source explained the mechanism but did not tell a first-time reader how to handle this repeated membership. Added a short bilingual instruction to the existing one-minute summary:
+
+- At **Orientation**, read the loop as a black-box preview and retain the fixed-parameter distinction.
+- At **Inference**, return to the same page for prefill, incremental decode and selection strategies.
+
+This clarifies the route without creating a duplicate page, a second route registry, or another visual component.
+
+### Remaining validation and limits
+
+- This pass checked the source-level route and page contracts; it did not independently recompute every equation or execute every code block.
+- The browser reviews remain separate: #320 (text-to-representations), #337 (global map/navigation), #347 (data → loss → generation and Build crosswalk), and #329 (exercise hub). Use their existing workflows and evidence; do not add another browser workflow.
+- Manual screen-reader evidence and native breadcrumb verification remain open under #584. Automated Axe/browser results do not replace them.
+- Learner comprehension and transfer have not been measured; retain the pilot under #447.
+- No content was removed or merged. The next scientific pass should inspect complete page bodies in small vertical slices, beginning with the probability → entropy → likelihood → cross-entropy → loss chain, then the Build data branch, and record only reproducible or evidence-backed corrections.
+
