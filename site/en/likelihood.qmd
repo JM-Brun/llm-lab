@@ -26,6 +26,15 @@ tags: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "
 Likelihood measures the probability of observed data for fixed parameters. In autoregressive language modeling, it is built from the conditional probabilities of each target token.
 :::
 
+::: {.callout-tip title="The one-minute mental model"}
+- **Scoring:** the model receives the reference prefix and assigns probability to the observed target; no generated token is fed back and parameters remain fixed.
+- **Sequence:** the chain rule gives $P_\theta(x_{1:T})=\prod_t P_\theta(x_t\mid x_{<t})$; the logarithm turns this product into a sum.
+- **Objective:** NLL is $-\log P_\theta(x_{1:T})$. For the same observations and positions, maximizing log-likelihood is equivalent to minimizing NLL.
+- **Comparison:** state the tokenizer, included positions, and sum or per-token mean; these conventions change the scale.
+
+**Check yourself:** why is scoring an observed sequence neither generation nor a parameter update?
+:::
+
 ## Autoregressive factorization
 
 The derivation of this factorization from the chain rule, and the interpretation of conditional probabilities, are developed in [the mathematical formalization of language modeling](language-modeling-math.qmd). Here, the focus is on likelihood as an evaluation criterion for observed sequences and on its connection to the loss.
