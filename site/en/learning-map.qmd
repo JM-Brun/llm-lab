@@ -1,7 +1,7 @@
 ---
 title: "Guided route and resource map"
-subtitle: "Eight stages, territories, sections, pages, and canonical concepts"
-description: "An eight-stage guided route, a progressive territory map, and a canonical-concept registry to orient yourself across the site."
+subtitle: "Three questions, eight stages, territories, sections, pages, and canonical concepts"
+description: "A guided route in three questions detailed as eight conceptual stages, a progressive territory map, and a canonical-concept registry to orient yourself across the site."
 keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:en", "status:published"]
 lang: en
 toc: true
@@ -40,7 +40,7 @@ Section headings shown in a page's details are editorial landmarks, not canonica
 
 ## Theory path — Understand
 
-Eight conceptual stages provide a suggested progression for understanding how LLMs work. They do not describe the Build path. Core pages cover each stage's main ideas; optional resources offer further context or depth and can belong to any destination. Pages within a stage are complementary resources, not a list of strict prerequisites.
+This theory path first answers three questions: what is an LLM, how does it compute a prediction, and what can be done with that prediction? The first part places the system in context; the second covers four stages, from text to the next-token distribution; the third presents three sibling uses, generating, scoring an observed target, and learning by updating the parameters, which are not successive prerequisites. Evaluation remains cross-cutting: it measures the model on held-out data ([experimental evaluation](experimental-evaluation.qmd)). The eight detailed stages remain the suggested progression: core pages cover each stage's main ideas; optional resources offer further context or depth and can belong to any destination. Pages within a stage are complementary resources, not a list of strict prerequisites.
 
 {{< include ../includes/generated-guided-route-en.qmd >}}
 
