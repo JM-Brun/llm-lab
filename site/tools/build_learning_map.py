@@ -28,12 +28,10 @@ from learning_map_renderers import (
     render_map_script,
 )
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
-from strict_yaml import load_yaml, parse_yaml
+from strict_yaml import load_yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
-COMMENT = re.compile(r"<!--\s*\nLLM-LAB-PAGE-MAP v1\n(.*?)\n-->", re.DOTALL)
-FRONT_MATTER = re.compile(r"\A---\s*\n(.*?)\n---\s*(?:\n|\Z)", re.DOTALL)
 HEADING = re.compile(r"^#{2,3}\s+(.+?)\s*#*\s*$", re.MULTILINE)
 INLINE_MARKUP = re.compile(r"[*_]|<[^>]+>")
 EXCLUDED_HEADINGS = {
@@ -179,32 +177,17 @@ def clean_heading(value: str) -> str:
 
 
 def load_pages() -> list[dict[str, Any]]:
-    """Read published page maps and extract editorial section headings."""
+    """Project the shared published-page index into learning-map records."""
+    from page_index import load_published_pages
+
     pages: list[dict[str, Any]] = []
-    for path in sorted(SITE.rglob("*.qmd")):
-        source = path.read_text(encoding="utf-8")
-        front_match = FRONT_MATTER.match(source)
-        comments = COMMENT.findall(source)
-        if front_match is None or len(comments) != 1:
+    for page in load_published_pages(SITE):
+        page_id, language = page.page_id, page.language
+        if page_id.endswith("/learning-map"):
             continue
-        front = parse_yaml(front_match.group(1), source=f"{path} (front matter)")
-        metadata = parse_yaml(comments[0], source=f"{path} (page map)")
-        if not isinstance(front, dict) or not isinstance(metadata, dict):
+        if language == "shared" and page_id != "reference/references":
             continue
-        tags = {
-            key: value
-            for tag in metadata.get("tags", [])
-            if isinstance(tag, str) and ":" in tag
-            for key, value in [tag.split(":", maxsplit=1)]
-        }
-        language = tags.get("language")
-        if tags.get("status") != "published" or language not in {"fr", "en", "shared"}:
-            continue
-        page_id = metadata.get("id")
-        if not isinstance(page_id, str) or page_id.endswith("/learning-map"):
-            continue
-        if language not in {"fr", "en"} and page_id != "reference/references":
-            continue
+        source, front, metadata, tags = page.source, page.front, page.metadata, page.tags
 
         section_headings: list[str] = []
         for heading in HEADING.findall(source):

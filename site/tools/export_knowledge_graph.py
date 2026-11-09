@@ -14,7 +14,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from strict_yaml import load_yaml, parse_yaml
+from strict_yaml import load_yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
@@ -44,50 +44,27 @@ RELATION_TYPES = {
 
 
 def _page_records() -> dict[str, dict[str, Any]]:
-    """Read published page metadata without inferring concepts from headings."""
+    """Project the published-page index into linked-data page records."""
+    from page_index import load_published_pages
+
     records: dict[str, dict[str, Any]] = {}
-    for path in sorted(SITE.rglob("*.qmd")):
-        source = path.read_text(encoding="utf-8")
-        front_match = re.match(r"\A---\s*\n(.*?)\n---\s*(?:\n|\Z)", source, re.DOTALL)
-        match = re.search(
-            r"<!--\s*\nLLM-LAB-PAGE-MAP v1\n(.*?)\n-->",
-            source,
-            re.DOTALL,
-        )
-        if match is None or front_match is None:
-            continue
-        front = parse_yaml(front_match.group(1), source=f"{path} (front matter)")
-        metadata = parse_yaml(match.group(1), source=f"{path} (page map)")
-        if not isinstance(metadata, dict):
-            continue
-        tags = {
-            key: value
-            for item in metadata.get("tags", [])
-            if isinstance(item, str) and ":" in item
-            for key, value in [item.split(":", maxsplit=1)]
-        }
-        if tags.get("status") != "published":
-            continue
-        page_id = metadata.get("id")
-        language = tags.get("language")
-        if not isinstance(page_id, str) or language not in {"fr", "en"}:
-            continue
-        if "/" not in page_id:
-            continue
-        _, slug = page_id.split("/", maxsplit=1)
-        href = f"{BASE}/{language}/" if slug == "index" else f"{BASE}/{language}/{slug}.html"
-        records[page_id] = {
-            "id": page_id,
-            "url": href,
-            "language": language,
-            "title": str(front.get("title", slug)),
-            "scope": str(metadata.get("scope", "")),
-            "purpose": str(metadata.get("purpose", "")),
-            "type": tags.get("type", "concept-lesson"),
-            "level": tags.get("level", "core"),
+    for page in load_published_pages(SITE):
+        relative = page.path.relative_to(SITE)
+        slug = page.page_id.rsplit("/", maxsplit=1)[-1]
+        content_language = page.language
+        if content_language == "shared":
+            content_language = page.front.get("lang")
+        records[page.page_id] = {
+            "id": page.page_id,
+            "url": f"{BASE}/{relative.with_suffix('.html').as_posix()}",
+            "language": content_language,
+            "title": str(page.front.get("title", slug)),
+            "scope": str(page.metadata.get("scope", "")),
+            "purpose": str(page.metadata.get("purpose", "")),
+            "type": page.tags.get("type", "concept-lesson"),
+            "level": page.tags.get("level", "core"),
             "source_uri": (
-                "https://github.com/JM-Brun/llm-lab/blob/main/site/"
-                f"{path.relative_to(SITE).as_posix()}"
+                f"https://github.com/JM-Brun/llm-lab/blob/main/site/{relative.as_posix()}"
             ),
         }
     return records
