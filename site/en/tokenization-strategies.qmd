@@ -232,12 +232,51 @@ Vocabulary size, training budgets, and comparative tokenizer evaluation raise qu
 - **IDs transfer between models.** Generally not: the same ID can denote different fragments.
 - **Byte-level = language-independent.** No: coverage guarantees neither uniform cost nor uniform quality.
 
+## Where does this step sit in the route?
+
+[Text and data](text-data.qmd) places tokenization in the path that leads from raw text to the IDs supplied to the model. This page compares segmentation strategies; the [embedding space](embedding-space.qmd), the next step in the route, shows how those IDs select initial vectors. To go further: [tokenizer design and evaluation](tokenizer-design-evaluation.qmd) for empirical criteria, and [Unicode and text](unicode-text.qmd) for the underlying character representation.
+
 ## External tools
 
 - [Hugging Face Tokenizers](https://huggingface.co/docs/tokenizers/index)
 - [SentencePiece](https://github.com/google/sentencepiece)
 - [tiktoken](https://github.com/openai/tiktoken)
 
+
+::: {.self-check}
+## Check your understanding
+
+Formative exercises extend this page, notably on BPE merges, in the [Text-data collection](exercises.qmd#text-data).
+
+1. One tokenizer produces fewer tokens than another on the same text. Does that prove it is better?
+
+<details>
+<summary>Show the answer</summary>
+
+No: a shorter sequence first demonstrates a difference in granularity and compression. Length is neither a quality metric nor a guarantee of linguistic analysis; the useful comparison concerns the corpus, tokenizer, and objective together.
+
+</details>
+
+2. Is training the tokenizer already pretraining the language model?
+
+<details>
+<summary>Show the answer</summary>
+
+No. The tokenizer has its own training (merge rules, vocabulary, normalization) on its own data, and is then frozen. Pretraining the language model optimizes the network weights to predict tokens, with the tokenizer frozen. The two trainings share neither objective nor parameters.
+
+</details>
+
+3. Can the same token ID denote different fragments in two models?
+
+<details>
+<summary>Show the answer</summary>
+
+Generally yes: an ID only has meaning relative to the vocabulary of the tokenizer that produced it. Unless the tokenizer or its revision is identical, the same integer can correspond to different fragments; IDs do not transfer as-is between models.
+
+</details>
+
+You have understood this step if you can distinguish training the tokenizer from encoding at inference, and explain why IDs depend on the vocabulary and its version.
+:::
 
 {{< include ../includes/generated-suggested-route-en-tokenization-strategies.qmd >}}
 
