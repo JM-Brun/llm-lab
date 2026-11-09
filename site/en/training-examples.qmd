@@ -94,6 +94,22 @@ flowchart LR
 
 The table describes **input windows only**. For next-token training, each window also needs a one-token-shifted target; the last input token therefore needs a successor in the source stream. The corpus tail must be handled explicitly (for example, by dropping an incomplete example or using a deliberate end-of-sequence convention).
 
+### Worked example: what stride repeats
+
+Take the stream `[0, 1, 2, 3, 4, 5, 6, 7, 8]`, input length $L=4$, and one-token-shifted targets.
+
+| Stride | Start | Input $x$ | Target $y$ |
+|---:|---:|---|---|
+| 4 | 0 | [0, 1, 2, 3] | [1, 2, 3, 4] |
+| 4 | 4 | [4, 5, 6, 7] | [5, 6, 7, 8] |
+| 2 | 0 | [0, 1, 2, 3] | [1, 2, 3, 4] |
+| 2 | 2 | [2, 3, 4, 5] | [3, 4, 5, 6] |
+| 2 | 4 | [4, 5, 6, 7] | [5, 6, 7, 8] |
+
+With stride 2, the inputs share two consecutive tokens, and targets in successive windows also repeat positions (for example, 3 and 4). These repetitions increase the number of training occurrences; they do not create new independent observations. With stride 4, the input windows are adjacent and the targets cover the following positions without overlap in this example.
+
+This table assumes that the stream provides a successor for every target position. It illustrates windowing, not a complete packing or batching policy.
+
 A smaller stride generally increases the number of examples and overlap. There is no universally optimal stride: the choice depends on the pipeline, compute budget, and handling of the corpus tail. A pedagogical sliding window does not necessarily represent a production pipeline.
 
 ::: {.callout-note collapse="true" title="NumPy implementation and tests (deep dive)"}
@@ -132,6 +148,28 @@ flowchart TB
     B["Loss mask: 1 1 1 0 0"] --> C
     C --> D["Only valid positions contribute"]
 ```
+
+### Worked example: exclude padding from the reduction
+
+Consider the following per-position losses, which are **illustrative**:
+
+| Position | Target | Loss mask (m_i) | Loss (ell_i) |
+|---:|---|---:|---:|
+| 0 | 12 | 1 | 0.2 |
+| 1 | 8 | 1 | 1.1 |
+| 2 | 4 | 1 | 0.7 |
+| 3 | PAD | 0 | 4.0 |
+| 4 | PAD | 0 | 3.0 |
+
+The mean over valid positions only is:
+
+[
+\mathcal{L}=\frac{\sum_i m_i\ell_i}{\sum_i m_i}
+=\frac{0.2+1.1+0.7}{3}
+=\frac{2}{3}\approx 0.667.
+]
+
+The illustrative losses at PAD positions do not contribute. A naive mean over all five positions would be (1.8), making the objective depend on the amount of padding. In practice, the exact reduction convention (sum, per-sequence mean, or valid-token mean) must be stated; this example illustrates only the valid-token mean.
 
 The **attention mask** determines which positions may be attended to. The **loss mask** determines which targets contribute to the optimization objective. They have distinct roles and are not interchangeable.
 
