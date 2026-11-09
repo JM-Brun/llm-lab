@@ -26,7 +26,7 @@
   - Transformer architectures and LLM limitations
     - [Transformer architectures: encoder, encoder–decoder, and decoder](transformer-architectures.html)
     - [The training objective: guarantees and limits](llm-limits.html)
-  - [Panorama: what is an LLM?](llm-overview.html)
+  - [Overview: what is an LLM?](llm-overview.html)
   - [Generating text: inference step by step](generation.html)
 - **Build a small GPT**
   - Prepare training data
