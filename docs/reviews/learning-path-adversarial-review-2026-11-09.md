@@ -4,9 +4,11 @@ This document is written so that a new session can fix everything without the or
 conversation. It has four parts:
 
 1. [Start here](#1-start-here) — state of the repository, traps, and what is already done.
-2. [Findings](#2-findings) — what is wrong, with evidence.
+2. [Findings](#2-findings) — what is wrong, with evidence, including a check of the four declared
+   purposes (§2.5).
 3. [Target design](#3-target-design-for-the-learning-path) — what the learning path and navigation
-   should become.
+   should become. §3.6 records the maintainer's two-track model, which takes precedence where it
+   differs from §3.1–§3.3.
 4. [Work packages](#4-work-packages) — ordered, self-contained tasks with files, acceptance criteria
    and checks.
 
@@ -32,9 +34,10 @@ work packages in group B should respect or explicitly supersede.
 | Item | State |
 |---|---|
 | Anchor fix | Merged: PR [JM-Brun/llm-lab#812](https://github.com/JM-Brun/llm-lab/pull/812), `a5de714` on `main`. |
-| Leftover worktree | `.worktrees/fix-learning-map-anchor` (branch merged; safe to remove) |
+| This review | Merged: PR [JM-Brun/llm-lab#813](https://github.com/JM-Brun/llm-lab/pull/813), `5572868` on `main`. §2.5, §3.6 and group D were added afterwards, measured on `5572868`. |
+| Leftover worktree | `.worktrees/fix-learning-map-anchor` removed on 2026-11-09, local branch deleted. |
 | Main checkout | On `codex/check-guided-route-freshness`, **256+ commits behind `origin/main`**, with uncommitted edits in `src/llm_lab/foundations/` (the `FloatArray` consolidation, see WP-C2) and `.serena/project.yml`. Do not build on this branch. |
-| This document | `docs/reviews/learning-path-adversarial-review-2026-11-09.md`. An older untracked copy may remain in the main checkout at `docs/adversarial-review-2026-11-09.md`; delete it. |
+| This document | `docs/reviews/learning-path-adversarial-review-2026-11-09.md`. The older untracked copy in the main checkout was deleted. |
 
 ### 1.2 Traps met during the review
 
@@ -173,6 +176,81 @@ LLM Lab's real differences are worth keeping: bilingual parity, the separation o
 scoring and training, the explicit evidence levels, and the misconception lists. They do not
 require the present navigation complexity.
 
+### 2.5 The four declared purposes, verified
+
+The home page and both sidebars promise four things: **Understand**, **Build**, **Deepen**, and
+**Practice and experiment**. Each was checked against `main` at `5572868`, English pages only.
+Counts come from the sidebar sections of `site/_quarto.yml`; words exclude code blocks and the
+page-map comment.
+
+| Purpose | Promise on the home page | Delivered | Verdict |
+|---|---|---|---|
+| Understand | A system-level picture: data, representations, Transformer, prediction, generation | 19 pages, 25,504 words, 17 of 19 with a self-check | Holds, with gaps |
+| Build | "Implement a small GPT" | 8 pages, 9,367 words, touring code that already exists | The name oversells |
+| Deepen | Optional derivations and references, not prerequisites | 21 pages, 29,655 words, all listed in the hub | Reachable, uneven |
+| Practice and experiment | "Verify through calculation and experiment" | 3 pages; 31 paper exercises; no experiment a learner can run from the site | Half delivered |
+
+The `destination:` tag matches the sidebar section on all 53 pages. The classification is clean;
+the problems are in what each section contains.
+
+**Understand**
+
+- Reading only: 6 static Python blocks, none executed at build time, one interactive widget
+  (`probabilities`).
+- The inside of a block has no lesson of its own. Multi-head attention, the MLP, residual
+  connections and layer normalization appear only in the `transformer` overview; layer
+  normalization is mentioned in 1 Understand page and 5 Build pages.
+- Learning stops at one section, "Gradient-descent update" in `gradients`. There is no lesson on a
+  training loop or an optimizer.
+- No page covers chat templates or instruction tuning. The site explains a raw GPT, not how one
+  becomes an assistant.
+- `llm-overview` and `queries-keys-values` (the longest lesson, 2,338 words) have no self-check.
+
+**Build**
+
+- What works: the quick-start example on `build-path` runs as printed (21,426 parameters, greedy
+  and sampled token IDs); the 140 unit tests pass with 97.6 % coverage.
+- The learner writes no code. There is no skeleton and no "implement this, then make the test
+  pass". Each tour ends with about 100 words of predict-the-shape questions.
+- Milestone table: G0 and G1 are conceptual, G3–G7 are reference code, G2 is partial, G8 (train)
+  and G9 (verify against a reference) do not exist.
+- The output is random token IDs: no tokenizer, no text, no trained weights. The learner never
+  sees the model produce language.
+- `uv sync --locked --dev` followed by `uv run --locked pytest` fails with 6 collection errors
+  (`No module named 'pydantic'`). The two extra installs are documented only in a footnote of
+  `build-path` and in the README (see WP-C3).
+
+**Deepen**
+
+- It is larger than Understand, so the optional layer outweighs the core.
+- Three pages have no inbound link from any Understand or Build page: `next-concept-modeling`,
+  `score-centering`, `llm-evolution`. Ten more have exactly one.
+- 12 of 20 pages state no prerequisite; 12 of 20 have no self-check.
+- `tensors` (8 inbound links from core pages) and `mathematical-foundations` (5) act as
+  prerequisites but are tagged `level:advanced`.
+- Where the core is thin, Deepen is empty too: no deep dive on layer normalization, the MLP or
+  multi-head attention.
+
+**Practice and experiment**
+
+- The exercises are real: 31 exercises with 63 collapsed answers, in 5 collections.
+- The other 5 of 10 collections are placeholders ("Structure to be filled"): pretraining,
+  fine-tuning, evaluation, efficiency, advanced topics.
+- Almost all are pen-and-paper: one Python block and one `pytest` command in 12,555 words.
+- The repository has one experiment, `experiments/decoding-distribution`. It is reproducible: a
+  fresh run is byte-identical to `reports/decoding-distribution.json`. No site page links to it.
+- "Experimental evaluation" is one written case with a checklist. "Transformer Explainer" embeds a
+  third-party tool. `notebooks/` contains only a README.
+
+**Across the four**
+
+- The home page orders them 01 Understand, 02 Build, 03 Deepen, with Practice "at any time". The
+  sidebar orders them Understand, Build, Practice, Deepen.
+- `data/guided-route.yml` contains only the Understand path: all 18 core entries are
+  `destination:understand`. Seven of the 8 Build pages, 12 of the 21 Deepen pages and all 3
+  Practice pages are outside the route. The Build progression G0–G9 exists only as a table in
+  `build-path.qmd`.
+
 ---
 
 ## 3. Target design for the learning path
@@ -264,6 +342,59 @@ One sentence used in every lesson (suggestion: "The cat sat on the" → " mat"),
 configuration (`vocab_size=50, context_length=8, embedding_dim=8, num_heads=2, num_layers=2`,
 `seed=0`), and the same five token IDs. Every worked number on the path comes from this model, and
 a test asserts each number printed on a page.
+
+### 3.6 Maintainer's model: two paired tracks on a shared corpus
+
+After §3.1–§3.5 were written, the maintainer stated the intended structure (2026-11-09, quoted as
+given):
+
+> **Corpus de connaissances partagé** — Concepts · Sources · Relations · Mathématiques ·
+> Architectures · Méthodes
+>
+> **Theory / Understand** — Progression conceptuelle et scientifique
+>
+> **Build (from scratch)** — Progression d'implémentation et de validation
+>
+> **Deepen · Practice & experiment** — Ressources facultatives et activités transversales,
+> rattachées à l'un ou aux deux parcours.
+
+This is the target. It **supersedes** two points above: principle 1 of §3.1 ("one spine") and the
+last sentence of the "Changes from today" paragraph of §3.2 (code tours folded into lessons). The
+target is two parallel tracks whose stages are paired, not one spine. The rest of §3.1–§3.5 still
+applies to each track: one numbering, one name, one lesson template, one running example.
+
+How the project compares with the model today (evidence in §2.5):
+
+| Layer of the model | Today | Gap |
+|---|---|---|
+| Shared corpus | Exists: `data/concepts.yml`, `sources.yml`, `resources.yml`, `domains.yml`, `computational-graph.yml` | Sound, but the reader sees a "map", not the base that both tracks draw from |
+| Theory / Understand | A real track: `data/guided-route.yml`, 8 stages, core pages all `destination:understand` | None structural |
+| Build (from scratch) | Not a track in the data: no stages, no stage badge, no generated next link; G0–G9 is a table | The second track is missing |
+| Deepen, Practice and experiment, attached to one or both tracks | 9 Deepen pages are optional pages of an Understand stage; 12 Deepen pages and all Practice pages are attached to nothing; nothing is attached to Build | Attachment is partial and one-sided |
+
+What the model requires:
+
+1. **Two tracks in the route data.** `data/guided-route.yml` gains a `tracks` level with
+   `understand` and `build`. Build stages are G0–G9, each with its pages, the result to verify and
+   the test that checks it.
+2. **Paired stages.** Each stage may name its counterpart in the other track (`pairs_with`). The
+   generator renders the cross-link in both directions: "Build this" on an Understand lesson,
+   "The idea behind this" on a Build step. In the lesson template (§3.4), section 5 "In the code"
+   keeps a short excerpt and links to the paired Build step.
+3. **Declared attachment.** Every Deepen page, exercise collection and experiment declares
+   `attached_to` with one or more `track/stage` values. The generator renders a "Go deeper" block
+   and a "Practice" block per stage from these declarations. A page with no attachment fails the
+   build.
+4. **The corpus shown as the base.** The home page replaces the 01/02/03 doors with the four-layer
+   diagram. The concept registry and territory map (the "Explore" page of WP-B4) are presented as
+   the shared corpus.
+5. **Build keeps its promise.** "Implementation and validation" means the learner implements and
+   the result is validated: stub functions with failing tests per step, training (G8) and
+   comparison with a reference (G9). Until then the track's title should say what it is.
+
+Navigation under this model, replacing the first two bullets of §3.3: the navbar is
+Understand · Build · Practice · Explore · FR/EN · search; the sidebar shows the current track's
+numbered stages, with that stage's attached Deepen and Practice items beneath it.
 
 ---
 
@@ -373,15 +504,67 @@ real text.
 **WP-C7 Housekeeping.** Hide empty exercise collections; rename or justify the "Verified Concept"
 badge; stop tracking `.serena/`; archive dated audit and handoff documents under `docs/archive/`.
 
+### Group D — the two-track model (§3.6)
+
+Group D changes the shape that group B works on. Do D1 before B1; B1 then orders the Understand
+track only, and B3 builds the sidebar per track.
+
+**WP-D1 Two tracks in the route data.** Files: `data/guided-route.yml` (schema version 2),
+`site/tools/build_learning_map.py`, `site/tools/learning_map_renderers.py`, tests under
+`tests/knowledge/`. Add `tracks: {understand, build}`; move the existing 8 stages under
+`understand` unchanged; add Build stages G0–G9 using the existing Build pages, each with
+`verify` (text) and `test` (path, optional). Generate badge and route cards for Build pages.
+Accept: every Build page shows a stage badge and one next card; `build-path` renders its milestone
+table from the data; existing Understand output is unchanged byte for byte.
+
+**WP-D2 Paired stages.** Add `pairs_with` to stages; render the cross-link in both directions in
+the generated context partial.
+Accept: a test asserts pairing is symmetric; `en/scaled-dot-product-attention.html` links to the
+attention Build step and back.
+
+**WP-D3 Declared attachment.** Add `attached_to: ["track/stage", …]` to the page-map comment of
+every Deepen and Practice page, to each exercise collection and to each experiment in
+`data/resources.yml`. Replace `optional_pages` in the route file with this declaration. Generate
+per-stage "Go deeper" and "Practice" blocks.
+Accept: `site/tools/check_page_metadata.py` fails on a `destination:deepen` or
+`destination:practice` page without `attached_to`; the three pages with no inbound core link
+(`next-concept-modeling`, `score-centering`, `llm-evolution`) are attached or moved to Reference.
+
+**WP-D4 Home page and names.** Replace the three doors and the practice strip on both home pages
+with the four-layer diagram of §3.6; make the sidebar order match it; retag `tensors` and
+`mathematical-foundations` as prerequisites rather than `level:advanced`.
+Accept: the same four names, in the same order, on the home page, navbar and sidebar in both
+languages.
+
+**WP-D5 First learner-run experiment.** Link `experiments/decoding-distribution` from
+`decoding-strategies` and from the Practice hub with a task: change the temperature, predict the
+entropy, run, compare with the report. Attach it to the prediction stage.
+Accept: at least one site page gives the run command and the expected output.
+
+**WP-D6 Build tasks.** For each of the five tours, add one stub function and its failing test
+under `exercises/` (solutions are the reference code); the tour's exercise section points to it.
+Until D6 and C5 are done, title the track "Read and run a small GPT" in both languages.
+Accept: `uv run pytest exercises/` fails before the learner's work and passes with the reference
+implementation substituted.
+
+**WP-D7 Fill the gaps the verification found.** Block-internals lessons are WP-B8. Add a self-check
+to `llm-overview` and `queries-keys-values`; add a prerequisite line and a self-check to the 12
+Deepen pages that lack them; hide the five empty exercise collections (same as WP-C7).
+
 ### Suggested sequence
 
-A1 → A3 → A5 → A2 → A4 → B1 → B2 → B3 → B5 → B6 → B4 → B7 → B8 → B9, with C1–C4 in parallel and
-C5 started as soon as B1 is merged.
+A1 → A3 → A5 → A2 → A4 → D1 → B1 → D2 → D3 → B2 → B3 → D4 → B5 → B6 → B4 → B7 → B8 → B9, with
+C1–C4, D5 and D7 in parallel, C5 started as soon as B1 is merged, and D6 after C5.
 
 ### Not verified in this review
 
 - French pages beyond the home page and `fr/gradients.html`.
 - Colour contrast and keyboard operation of the interactive map.
-- Most "Deepen" pages and the exercise solutions.
+- The prose of most "Deepen" pages and the correctness of the exercise solutions (§2.5 measured
+  structure and reachability, not content).
+- §2.5 and §3.6 measured English pages only; the French side is assumed symmetric because the
+  route file declares both languages.
+- The full test suite with the two extra requirement files installed was not re-run for §2.5; only
+  the 140 unit tests were.
 - Raschka's and Karpathy's material was described from general knowledge, not re-read.
 - The proposed spine has not been tested with a learner.
