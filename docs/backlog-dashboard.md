@@ -1,11 +1,11 @@
 # LLM Lab — backlog dashboard
 
-**Snapshot:** 2026-11-07  
+**Snapshot:** 2026-11-09  
 **Source of truth:** GitHub issues and pull requests. This page is a navigation layer, not a second task tracker.
 
 ## Start here
 
-- **Current handoff and ordered remaining work:** [next-work-handoff-2026-11-07.md](next-work-handoff-2026-11-07.md)
+- **Current handoff and ordered remaining work:** [next-work-handoff-2026-11-09.md](next-work-handoff-2026-11-09.md)
 
 - [All open issues](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen)
 - [P0 — active slice](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+label%3AP0)
@@ -52,35 +52,32 @@ Do not infer that an entire issue is blocked when only one component is waiting 
 
 ## Now — active
 
-**No P0 slice is currently designated.** The previous P0 slice, [#82](https://github.com/JM-Brun/llm-lab/issues/82), is closed: the source-level trace (text → token IDs → embeddings → contextual states) is complete, and its rendered-page browser review was transferred to [#320](https://github.com/JM-Brun/llm-lab/issues/320) (P2) — a release check, not an implementation blocker. Attention and GPT-block implementation has since landed under #78/#270.
+**Current active slice: reconcile [PR #760](https://github.com/JM-Brun/llm-lab/pull/760) against current `main`.** It is the only open PR, but GitHub reports `mergeable_state=dirty`; its branch is 31 commits ahead and 3 behind current main. Earlier-head CI/browser success is not evidence for the current head. Rebase or perform a three-way reconciliation, preserve already-merged #767/#777 changes, then rerun and inspect checks on the new head.
 
-Select the next single active slice before resuming implementation work; the candidates below are sequencing suggestions, not decisions.
+There is deliberately no P0 issue. Do not start another implementation or source-ingestion slice while this PR's current-head status is unresolved.
 
 ## Next — at most three follow-up work items
 
-These are sequencing candidates, not simultaneous active tasks.
+These are ordered candidates, not simultaneous active tasks.
 
-1. [#78 — Reconcile the concept-to-code roadmap](https://github.com/JM-Brun/llm-lab/issues/78). Preserve explicit prerequisite gates and link implementation evidence.
-2. [#58 — Corpus → training examples](https://github.com/JM-Brun/llm-lab/issues/58). Continue the remaining gaps (corpus loading, packing, padding/masks, batching, splits), one concept per PR, per the live register.
-3. The P2 browser-review lot ([#320](https://github.com/JM-Brun/llm-lab/issues/320), [#329](https://github.com/JM-Brun/llm-lab/issues/329), [#337](https://github.com/JM-Brun/llm-lab/issues/337), [#341](https://github.com/JM-Brun/llm-lab/issues/341), [#347](https://github.com/JM-Brun/llm-lab/issues/347)) as one dedicated review session; no learner or visual evidence is claimed until then.
+1. **P1 evidence:** independent subject-matter review of the existing TR-A/B/C answer keys in [#220](https://github.com/JM-Brun/llm-lab/issues/220); no new exercise framework.
+2. **P1 governance:** reconcile asset provenance and project-level licensing under [#156](https://github.com/JM-Brun/llm-lab/issues/156) and [#163](https://github.com/JM-Brun/llm-lab/issues/163), preserving all existing media pending an explicit decision.
+3. **P2 release/accessibility evidence:** [#483](https://github.com/JM-Brun/llm-lab/issues/483) Q/K/V deployed review and media provenance, plus [#584](https://github.com/JM-Brun/llm-lab/issues/584) manual FR/EN screen-reader and breadcrumb checks. The learner pilot [#447](https://github.com/JM-Brun/llm-lab/issues/447) is downstream of #483.
 
 ## Dependency gates
 
-- **Attention and causal masking:** [#80](https://github.com/JM-Brun/llm-lab/issues/80) and [#81](https://github.com/JM-Brun/llm-lab/issues/81) followed the closed #82. #80 owns scaled dot-product attention invariants; #81 owns causal-mask semantics and future-token leakage tests.
-- **Homepage:** [#154](https://github.com/JM-Brun/llm-lab/issues/154) is closed (PR #340); its rendered desktop/mobile and accessibility review is tracked in [#341](https://github.com/JM-Brun/llm-lab/issues/341) (P2).
-- **GPT/pretraining:** the Chapter 5 source audit [#99](https://github.com/JM-Brun/llm-lab/issues/99) is closed and confirms the training gap; any pretraining implementation must follow the prerequisite sequence maintained in #78. Do not treat page existence as readiness.
-- **Curriculum architecture:** #130 coordinates; the curriculum map from #87 (closed, PR #336) is maintained in `docs/content-section-mapping.md`; #78 owns concept-to-code sequencing; page-level reading experience continues under #280/#282 (successors of the closed #61).
-- **LLM overview:** [#95](https://github.com/JM-Brun/llm-lab/issues/95) is the upstream Chapter 1 coverage audit; [#108](https://github.com/JM-Brun/llm-lab/issues/108) delivered the reader-facing bilingual panorama (closed via PR #343; rendered review transferred to [#337](https://github.com/JM-Brun/llm-lab/issues/337), P2). The audit found the gap; the panorama implements the synthesis. They are complementary, not duplicates.
-- **Visual system:** [#190](https://github.com/JM-Brun/llm-lab/issues/190) owns benchmark-derived design decisions; [#191](https://github.com/JM-Brun/llm-lab/issues/191) owns rendered bilingual validation. [PR #189](https://github.com/JM-Brun/llm-lab/pull/189) is merged; that does not complete #191.
-- **Asset governance:** [#156](https://github.com/JM-Brun/llm-lab/issues/156) audits individual asset provenance; [#163](https://github.com/JM-Brun/llm-lab/issues/163) owns the project-level licensing decision.
-
-These are documented dependencies, not native GitHub “blocked by” relations. Do not apply `flow:blocked` to an entire issue when only a subtask is waiting.
+- **G8:** [#656](https://github.com/JM-Brun/llm-lab/issues/656) remains P1 but blocked by the private prerequisite-knowledge review. No backward/optimizer/training-loop implementation before explicit clearance. #78 owns the broader concept-to-code sequence.
+- **Q/K/V learner pilot:** #447 runs only after #483's deployed-page/accessibility prerequisites are met.
+- **Score centering:** #733 waits for actual access to the complete Wolfe article; #742 owns the wider Wolfe corpus. The primary paper and implementation audit are already integrated.
+- **Project portfolio:** #756 is P2; process one project audit at a time, reuse existing scans and do not expand the 17-task allocation without evidence.
+- **Interoperability:** #512 is P2 and later; two-way Wiki Knowledge pilots wait for validated local staged-ingestion/provenance workflows.
+- **Curriculum architecture:** #575 and #225 are closed. #415 route/resource projection is closed. #584 is residual manual accessibility evidence; #416 owns concept-graph visualization semantics. No new registry or route is required.
 
 ## Later
 
-- **P2 — planned:** [#58](https://github.com/JM-Brun/llm-lab/issues/58) corpus-to-training examples; [#79](https://github.com/JM-Brun/llm-lab/issues/79) logits and loss; #80/#81 attention and masking; [#84](https://github.com/JM-Brun/llm-lab/issues/84) generation/evaluation; [#86](https://github.com/JM-Brun/llm-lab/issues/86) resource curation; [#95](https://github.com/JM-Brun/llm-lab/issues/95), [#97](https://github.com/JM-Brun/llm-lab/issues/97), [#102](https://github.com/JM-Brun/llm-lab/issues/102), [#103](https://github.com/JM-Brun/llm-lab/issues/103) chapter/source audits; [#147](https://github.com/JM-Brun/llm-lab/issues/147) complementary pedagogy; [#154](https://github.com/JM-Brun/llm-lab/issues/154) design benchmark. Closed since the 2026-11-02 snapshot: #98, #99, #108, #114, #154.
-- **P3 — deferred/optional:** [#100](https://github.com/JM-Brun/llm-lab/issues/100), [#101](https://github.com/JM-Brun/llm-lab/issues/101), [#104](https://github.com/JM-Brun/llm-lab/issues/104), [#105](https://github.com/JM-Brun/llm-lab/issues/105), [#106](https://github.com/JM-Brun/llm-lab/issues/106) advanced chapter/appendix audits; [#197](https://github.com/JM-Brun/llm-lab/issues/197) optional history timeline.
-- **P1 — cross-cutting risks:** #130 coordination, #156/#163 asset rights, #191 rendered design-system validation. Prioritize actual risk and dependencies rather than starting all P1 issues in parallel.
+- **P2 — planned:** #329/#337/#341/#347 rendered reviews; #416/#417 knowledge-map UX; #472 source-method decision matrix; #742/#756 source audits; #79/#84 content/implementation follow-ups; #449 clean setup; #632 optional multimodal extension.
+- **P3 — deferred:** #652 branch cleanup, #268 browser-executable micro-code, #197 optional history timeline and the later fine-tuning/LoRA chapter audits.
+- **P1 — core owners:** #78, #130, #156, #163, #220 and #656. P1 does not mean parallel execution; #656 is gated.
 
 ## Recently reconciled
 
