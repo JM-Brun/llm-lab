@@ -1119,3 +1119,72 @@ def test_page_details_expose_previous_and_next_steps() -> None:
     assert 'var previousChips = el("div", "map-chips");' in script
     assert '"suggestedPrevious": "Étape précédente suggérée",' in script
     assert '"suggestedPrevious": "Suggested previous step",' in script
+
+
+def _run_sync_state_to_hash(initial_hash: str, state: dict[str, Any]) -> dict[str, Any]:
+    """Execute the generated ``syncStateToHash`` in Node against a fake ``window``."""
+    import shutil
+    import subprocess
+
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("Node.js is required to execute the browser-script URL sync.")
+
+    script = MODULE["render_map_script"]()
+    start = script.index("function syncStateToHash(commit) {")
+    end = script.index("function load() {", start)
+    harness = f"""
+    var calls = [];
+    var window = {{
+      location: {{
+        hash: {json.dumps(initial_hash)},
+        pathname: "/en/learning-map.html",
+        search: ""
+      }},
+      history: {{
+        pushState: function (a, b, url) {{ calls.push(["push", url]); }},
+        replaceState: function (a, b, url) {{ calls.push(["replace", url]); }}
+      }}
+    }};
+    var state = {json.dumps(state)};
+    {script[start:end]}
+    syncStateToHash(false);
+    console.log(JSON.stringify(calls));
+    """
+    result = subprocess.run([node, "-"], input=harness, text=True, capture_output=True, check=False)
+    assert result.returncode == 0, result.stderr
+    calls: list[list[str]] = json.loads(result.stdout)
+    return {"calls": calls}
+
+
+_EMPTY_MAP_STATE: dict[str, Any] = {
+    "mode": "pages",
+    "query": "",
+    "areaId": None,
+    "pageId": None,
+    "relationType": "",
+    "conceptId": None,
+}
+
+
+@pytest.mark.parametrize("anchor", ["#guided-stage-training", "#explore-the-resources"])
+def test_map_url_sync_preserves_in_page_anchors(anchor: str) -> None:
+    """Stage badges deep-link to ``learning-map.html#guided-stage-…``.
+
+    With no map state to record, the URL sync must leave that fragment alone:
+    removing it before the browser scrolls drops the reader at the top of the page.
+    """
+    assert _run_sync_state_to_hash(anchor, _EMPTY_MAP_STATE)["calls"] == []
+
+
+def test_map_url_sync_still_clears_stale_map_state() -> None:
+    """A fragment that holds map state is removed once that state is reset."""
+    calls = _run_sync_state_to_hash("#area=understand", _EMPTY_MAP_STATE)["calls"]
+    assert calls == [["replace", "/en/learning-map.html"]]
+
+
+def test_map_url_sync_replaces_an_anchor_when_state_is_selected() -> None:
+    """Selecting something on the map takes over the fragment, anchor or not."""
+    state = {**_EMPTY_MAP_STATE, "areaId": "understand"}
+    calls = _run_sync_state_to_hash("#guided-stage-training", state)["calls"]
+    assert calls == [["replace", "#area=understand"]]
