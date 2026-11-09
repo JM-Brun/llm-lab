@@ -3,7 +3,7 @@
 **Status:** bilingual page-level pilot implemented on overview, generation, embeddings, Q/K/V and the optional attention-score-scaling deep dive; visual and accessibility review remains pending.  
 **Source of truth:** `data/guided-route.yml`.  
 **Implementation:** `build_guided_route_memberships()`, `render_guided_page_context_markdown()`, and `write_guided_page_context_fragments()` in `site/tools/build_learning_map.py`.  
-**Tests:** `tests/site/test_guided_route_memberships.py`.  
+**Tests:** `tests/knowledge/test_guided_route_memberships.py`.  
 **Coordination:** [#368](https://github.com/JM-Brun/llm-lab/issues/368), [#337](https://github.com/JM-Brun/llm-lab/issues/337). Historical implementation attempts: [closed PR #516](https://github.com/JM-Brun/llm-lab/pull/516) and [closed PR #519](https://github.com/JM-Brun/llm-lab/pull/519).
 
 ## Purpose

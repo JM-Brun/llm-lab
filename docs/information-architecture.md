@@ -205,8 +205,8 @@ The standards profile documents the graph-export and rendered-output checks; use
 | External sources, classification and extraction records | [Source catalogue schema](source-catalogue-schema.md); `data/sources.yml`; `data/source-taxonomy.yml`; `data/extractions/` |
 | Page metadata, tags and page graph | [Page metadata schema](page-metadata-schema.md) |
 | Pedagogical route context and page navigation | [Pedagogical breadcrumb and page-navigation contract](pedagogical-breadcrumb-and-page-navigation-contract.md); [pilot audit](pedagogical-breadcrumb-pilot-audit.md) |
-| Learning-map implementation | `site/tools/build_learning_map.py`, `tests/site/test_learning_map.py` |
-| Metadata validation | `site/tools/check_page_metadata.py`, `tests/site/test_page_metadata.py` |
+| Learning-map implementation | `site/tools/build_learning_map.py`, `tests/knowledge/test_learning_map.py` |
+| Metadata validation | `site/tools/check_page_metadata.py`, `tests/knowledge/test_page_metadata.py` |
 | Curriculum and prerequisites | [Learning path](learning-path.md) |
 | Page composition | [Page-template system](page-template-system.md) |
 | Page type to template mapping | [Site page design system](site-page-design-system.md) |
