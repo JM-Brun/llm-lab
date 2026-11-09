@@ -427,3 +427,36 @@ Revue source FR/EN effectuée. La page d'architecture a été réorganisée sans
 ### Validation
 
 Revue des pages d'entrée et du catalogue FR/EN effectuée. Le workflow Quarto/browser du lot précédent est encore en cours au moment de cette mise à jour ; le nouveau lot doit être validé sur son propre commit. Aucun test utilisateur n'est revendiqué.
+
+
+## 16. Passe I — architecture conceptuelle et approfondissements facultatifs (2026-11-09)
+
+### Pages et ressources relues
+
+- `index` FR/EN : représentation d'ensemble des processus et frontière entre scoring et évaluation.
+- `tensors` FR/EN : rôle de référence technique, place dans le parcours et parité linguistique.
+- `decoding-strategies` FR/EN : transformations de distribution, recherche de séquences et compromis.
+- `llm-limits` FR/EN : limites de l'objectif prédictif, définition de la compréhension et interprétation des capacités émergentes.
+
+### Décisions éditoriales et conceptuelles
+
+1. **Scoring rendu explicite sur la page d'accueil :** le texte d'introduction et un rappel placé après le schéma identifient trois usages frères du calcul prédictif : génération, scoring et apprentissage. Le rappel précise les paramètres fixes pour génération/scoring, la mise à jour pour l'apprentissage et le statut transversal de l'évaluation.
+2. **Pas de quatrième branche « évaluation » :** l'évaluation agrège des mesures sous un protocole ; elle peut réutiliser le scoring sur des données tenues à l'écart et peut aussi porter sur des sorties générées. Elle n'est pas une opération homologue à génération, scoring et apprentissage.
+3. **Schéma d'accueil conservé :** le diagramme interactif existant détaille les boucles de génération, d'apprentissage et le processus d'évaluation. Plutôt que d'étendre le SVG et d'en augmenter fortement la hauteur, le scoring est distingué dans un rappel adjacent. Cette solution évite de surcharger le point d'entrée ; une représentation visuelle intégrée pourra être réévaluée si elle apporte un bénéfice pédagogique démontré.
+4. **Parité `tensors` :** le rappel « Place dans le parcours » est ajouté en français, aligné sur le contenu anglais. La page reste une référence Deepen facultative et n'est pas promue au rang de prérequis général du Build.
+5. **`decoding-strategies` :** ajout d'un rappel FR/EN qui distingue transformation locale de distribution et recherche de séquence, et résume température, top-k/top-p, greedy/beam et limites. Les détails, exemples, implémentation et références sont conservés.
+6. **`llm-limits` :** ajout d'un rappel FR/EN qui sépare vérité, calibration, compétence opérationnelle et émergence mesurée. Les sources et les auto-vérifications existantes sont conservées.
+
+### Cohérence des relations
+
+- La génération sélectionne et réinjecte une prédiction ; le scoring attribue une probabilité à une cible observée à partir de préfixes connus ; l'apprentissage utilise des cibles pour calculer une loss et mettre à jour les paramètres.
+- Le teacher forcing est un mode de conditionnement sur les préfixes de référence pendant l'entraînement ; le fait que le scoring utilise également des préfixes observés ne transforme pas le scoring en entraînement.
+- Le prefill et le decode restent des phases d'inférence ; les stratégies de décodage transforment la distribution ou recherchent des séquences, sans constituer une mise à jour des paramètres.
+- L'évaluation reste une démarche expérimentale transversale, avec choix des données, baselines, métriques, contrôles, incertitude et analyse d'erreurs.
+
+### Validation et limites
+
+- Revue de source FR/EN effectuée pour les pages listées.
+- Le workflow Quarto/browser sur le commit précédent du PR #760 a réussi, y compris la revue Playwright ciblée. Cette réussite ne valide pas automatiquement les modifications de cette passe, qui doivent être testées sur leur propre commit.
+- Rendu Quarto, liens locaux, navigation au clavier et captures de cette nouvelle passe restent à vérifier.
+- Aucun test avec apprenant indépendant n'est revendiqué.
