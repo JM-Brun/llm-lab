@@ -6,6 +6,7 @@
 ## Start here
 
 - **Current handoff and ordered remaining work:** [next-work-handoff-2026-11-09.md](next-work-handoff-2026-11-09.md)
+- **Latest strategic review and proposals awaiting an owner decision:** [adversarial project review 2026-11-09](reviews/adversarial-project-review-2026-11-09.md) (summarised in handoff § 4; no label changed)
 
 - [All open issues](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen)
 - [P0 — active slice](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+label%3AP0)
@@ -14,7 +15,7 @@
 - [P3 — deferred](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+label%3AP3)
 - [Issues needing attention / unclassified](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+-label%3AP0+-label%3AP1+-label%3AP2+-label%3AP3)
 
-Live snapshot 2026-11-09: **62 open issues**; priority labels P0=0, P1=6, P2=49, P3=7; **0 unclassified**. The pre-existing content PR [#760](https://github.com/JM-Brun/llm-lab/pull/760) is diverged from `main` and not mergeable; this dashboard/handoff refresh is proposed in [#778](https://github.com/JM-Brun/llm-lab/pull/778). The dated handoff linked above is the current ordered plan; older sections and snapshots are historical unless refreshed.
+Live snapshot 2026-11-09: **62 open issues**; priority labels P0=0, P1=6, P2=49, P3=7; **0 unclassified**. [#760](https://github.com/JM-Brun/llm-lab/pull/760) and the dashboard/handoff refresh [#778](https://github.com/JM-Brun/llm-lab/pull/778) are merged; the only open PR is [#787](https://github.com/JM-Brun/llm-lab/pull/787). The dated handoff linked above is the current ordered plan; older sections and snapshots are historical unless refreshed.
 
 ## Historical handoff — PR reconciliation (2026-11-04; superseded by the current handoff above)
 
@@ -52,9 +53,9 @@ Do not infer that an entire issue is blocked when only one component is waiting 
 
 ## Now — active
 
-**Current active slice: finish current-head validation of [PR #760](https://github.com/JM-Brun/llm-lab/pull/760).** It is the only pre-existing content PR (the other open PR, #778, is this documentation handoff). The branch is now based on current `main` (35 commits ahead, 0 behind); Python CI passed, while the Quarto/Chromium browser review is still running. Inspect the final artifact and full diff before merge. Do not reuse earlier-head browser evidence.
+**No active slice is selected.** [PR #760](https://github.com/JM-Brun/llm-lab/pull/760) was merged on 2026-11-09, which completes step 1 of the [handoff's ordered sequence](next-work-handoff-2026-11-09.md#3-ordered-execution-sequence). The next step is to choose one P1 evidence slice; the candidates below are unchanged.
 
-There is deliberately no P0 issue. Do not start another implementation or source-ingestion slice while this PR's current-head review is unresolved.
+There is deliberately no P0 issue. Choose one P1 slice at a time before starting implementation or source-ingestion work.
 
 ## Next — at most three follow-up work items
 

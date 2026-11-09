@@ -205,8 +205,8 @@ The standards profile documents the graph-export and rendered-output checks; use
 | External sources, classification and extraction records | [Source catalogue schema](source-catalogue-schema.md); `data/sources.yml`; `data/source-taxonomy.yml`; `data/extractions/` |
 | Page metadata, tags and page graph | [Page metadata schema](page-metadata-schema.md) |
 | Pedagogical route context and page navigation | [Pedagogical breadcrumb and page-navigation contract](pedagogical-breadcrumb-and-page-navigation-contract.md); [pilot audit](pedagogical-breadcrumb-pilot-audit.md) |
-| Learning-map implementation | `site/tools/build_learning_map.py`, `tests/unit/test_learning_map.py` |
-| Metadata validation | `site/tools/check_page_metadata.py`, `tests/unit/test_page_metadata.py` |
+| Learning-map implementation | `site/tools/build_learning_map.py`, `tests/site/test_learning_map.py` |
+| Metadata validation | `site/tools/check_page_metadata.py`, `tests/site/test_page_metadata.py` |
 | Curriculum and prerequisites | [Learning path](learning-path.md) |
 | Page composition | [Page-template system](page-template-system.md) |
 | Page type to template mapping | [Site page design system](site-page-design-system.md) |
@@ -215,4 +215,5 @@ The standards profile documents the graph-export and rendered-output checks; use
 | Contributor process | [Contributing guide](../CONTRIBUTING.md) |
 | Repeatable information-architecture audits | [Knowledge architecture audit skill](../.agents/skills/knowledge-architecture-audit/SKILL.md) |
 | Page review evidence and remaining checks | [Page audit inventory](page-audit-inventory.md) |
+| Strategic and adversarial project reviews | [2026-10-30 site review](high-level-adversarial-site-review-2026-10-30.md); [2026-11-07 site review](reviews/adversarial-site-review-2026-11-07.md); [2026-11-09 project review](reviews/adversarial-project-review-2026-11-09.md). Reviews propose; decisions and priorities stay with the [current handoff](next-work-handoff-2026-11-09.md) and GitHub issues |
 | Editorial ownership and core-route audits | [Editorial boundary audit](editorial-boundary-audit.md); [2026-11-04 core-route audit](editorial-boundary-audit-2026-11-04.md); [repeatable editorial audit skill](../.agents/skills/editorial-boundary-audit/SKILL.md) |
