@@ -570,7 +570,7 @@ Un test direct vérifie, pour chaque fenêtre, que la cible à la position $(k,i
 
 #### Exercice TR-E — Compter les fusions BPE et encoder un nouveau mot
 
-**Préparation :** la section « Exemple pas à pas : fusions BPE sur un petit corpus » de [Stratégies de tokenisation](tokenization-strategies.qmd). On reprend sa convention pédagogique au niveau du mot : caractères initiaux et marqueur de fin `</w>). Ce n'est pas une spécification d'un tokenizer byte-level de production.
+**Préparation :** la section « Exemple pas à pas : fusions BPE sur un petit corpus » de [Stratégies de tokenisation](tokenization-strategies.qmd). On reprend sa convention pédagogique au niveau du mot : caractères initiaux et marqueur de fin `</w>`. Ce n'est pas une spécification d'un tokenizer byte-level de production.
 
 Le corpus d'apprentissage contient les occurrences suivantes :
 
@@ -619,7 +619,7 @@ La première fusion est donc `o + w → ow`, avec quatre occurrences. Elle est s
 
 **Étape 2 — Appliquer la fusion et recompter.**
 
-Remplacez toutes les occurrences non chevauchantes de `o · w` par `ow), puis recomptez les paires. Quelle est la fusion suivante ?
+Remplacez toutes les occurrences non chevauchantes de `o · w` par `ow`, puis recomptez les paires. Quelle est la fusion suivante ?
 
 <details>
 <summary>Afficher les indices</summary>
@@ -637,7 +637,7 @@ Recomptez les frontières entre unités adjacentes ; les anciennes fréquences n
 <details>
 <summary>Afficher le corrigé détaillé</summary>
 
-Après `o + w → ow), la paire `l + ow` apparaît trois fois : deux fois dans `low` et une fois dans `lower`. Les autres paires les plus fréquentes sont `ow + </w>` (deux fois), puis des paires de fréquence 1. La deuxième fusion est donc `l + ow → low`.
+Après `o + w → ow`, la paire `l + ow` apparaît trois fois : deux fois dans `low` et une fois dans `lower`. Les autres paires les plus fréquentes sont `ow + </w>` (deux fois), puis des paires de fréquence 1. La deuxième fusion est donc `l + ow → low`.
 
 Le corpus devient :
 
@@ -656,7 +656,7 @@ Le mot `lowest` n'apparaît pas dans le corpus d'apprentissage. En partant des c
 <details>
 <summary>Afficher le corrigé détaillé</summary>
 
-On applique d'abord `o + w → ow), puis `l + ow → low`. La segmentation obtenue est :
+On applique d'abord `o + w → ow`, puis `l + ow → low`. La segmentation obtenue est :
 
 `low · e · s · t · </w>`
 
