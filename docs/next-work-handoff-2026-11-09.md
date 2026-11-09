@@ -17,11 +17,13 @@
 
 ### PR #760 — current gate, not yet mergeable
 
-The current PR head is `20445c6e9e9c7c4b537be0d345891b93a17ac22e`; its recorded base is `41430cc7a92d1d7a35f4e18971d9506607e88633`, while current `main` is `63ac93264f25da80624a7c1fff7d75a52bc47b7f`. GitHub reports `mergeable_state=dirty`; the comparison is diverged (31 commits ahead, 3 behind). **Do not merge this head as-is.**
+The branch has since been updated against current `main`. Current PR head: `3320fa3a29c13bfa675232b247e0d4ed0cd0fcc2`; base: `63ac93264f25da80624a7c1fff7d75a52bc47b7f`. The comparison is now **ahead by 35, behind by 0** (16 changed files); the earlier divergence is resolved. GitHub reports `mergeable_state=unstable` while the current-head checks are running.
 
-A previous head (`4ca908807e5dd25c5aa4324550922100faff318d`) had successful Python CI and Quarto/browser workflows. Its browser artifact contained 18 Chromium cases across FR/EN desktop/mobile, all HTTP 200, no console/page errors, no horizontal overflow, no unrendered math, and zero Axe violations in the 10 desktop audits. This is useful historical evidence only: the PR head subsequently changed, so it does not validate the current head. No current-head workflow result was exposed at this review.
+On this current head, Python CI run [42641761393](https://github.com/JM-Brun/llm-lab/actions/runs/42641761393) succeeded. The Quarto run [42641761338](https://github.com/JM-Brun/llm-lab/actions/runs/42641761338) has completed site render, registry generation, learning-map/graph/timeline checks and local-link validation; its targeted Playwright/Chromium page review is still in progress and has not produced a final artifact at this snapshot.
 
-**Required next action:** reconcile/rebase #760 against current `main`, inspect the full resulting diff (especially the audit inventory and bilingual lesson edits), preserve the already-merged #767/#777 work, then run fresh Python CI and Quarto/Chromium checks on the new head. Inspect the resulting artifact before considering merge. The previous browser report must not be reused as current-head evidence.
+The earlier 18-case browser artifact from head `4ca908807e5dd25c5aa4324550922100faff318d` is historical only and must not be reused for the current head.
+
+**Required next action:** wait for the current-head browser review, inspect its report and screenshots, then inspect the complete PR diff against `main` (especially the audit inventory and bilingual lesson edits). Merge only if the final checks and review are satisfactory; do not infer success from the earlier head.
 
 ## 2. Priority policy after reconciliation
 
@@ -60,7 +62,7 @@ Keep browser-executable micro-code, optional history expansion, Git branch clean
 
 ## 3. Ordered execution sequence
 
-1. **Resolve PR #760 first.** Reconcile its stale/diverged branch with current `main`; preserve changes already integrated by #767/#777; validate the new head and inspect its browser artifact. No merge based on old-head checks.
+1. **Finish PR #760's current-head validation.** The branch is now based on current `main`; Python CI passed, while the targeted Quarto/Chromium review is still running. Inspect the final artifact and full diff; do not reuse old-head browser evidence.
 2. **Select one P1 evidence slice.** Prefer the independent subject-matter review of the existing TR-A/B/C answer keys (#220), then address the asset-provenance/licensing decisions (#156/#163) according to the evidence and explicit owner decisions.
 3. **Complete the Q/K/V release evidence (#483) and the manual shared-spine accessibility evidence (#584).** Keep the two scopes distinct even if the same reviewer can perform the screen-reader session.
 4. **Run #447 only after #483 is satisfied.** Use the existing protocol; record limitations and avoid collecting identifying data.
