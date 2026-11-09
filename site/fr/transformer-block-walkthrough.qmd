@@ -156,7 +156,7 @@ Ligne par ligne :
 
 ### Contrat de la primitive mono-tête
 
-Chaque paire `(b, h)` appelle la primitive NumPy `scaled_dot_product_attention` pour une tête sans axes batch. Son contrat est :
+Le contrat de cette primitive NumPy, appelée séparément pour chaque paire `(b, h)`, est :
 
 - Q : `(T_q, d_k)`; K : `(T_k, d_k)`; V : `(T_k, d_v)`.
 - Scores et poids : `(T_q, T_k)`; sortie agrégée : `(T_q, d_v)`.
@@ -168,6 +168,7 @@ Chaque paire `(b, h)` appelle la primitive NumPy `scaled_dot_product_attention` 
 Les tests de [`test_attention.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py) vérifient notamment les formes et invariants de normalisation, la somme pondérée calculable à la main, les biais additifs finis, le rejet des masques invalides, le cas d'une ligne entièrement masquée, la polarité du masque causal et l'invariance des préfixes face à une modification des tokens futurs. Ils testent aussi qu'un mauvais axe de softmax viole la normalisation attendue par requête.
 
 Sources maintenues : [primitive NumPy](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/attention.py) · [tests de la primitive et du masque causal](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py).
+
 - [État actuel de l'implémentation et de sa validation](https://github.com/JM-Brun/llm-lab/blob/main/docs/project-status.md)
 - [Critères de vérification prévus](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
 
