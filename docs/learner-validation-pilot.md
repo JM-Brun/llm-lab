@@ -28,7 +28,7 @@ If time permits, use the optional geometry probe: “Let q=(1,0), k₁=(0.1,0), 
 
 ## Lightweight scoring rubric
 
-Score each required conceptual probe independently. Compare the pre-reading Q/K/V baseline with the post-reading counterfactual response, but do not combine scores into a claim of learning effectiveness.
+Score each required conceptual probe independently. Use the token/representation and Q/K/V-role dimensions for the matched baseline/post-reading comparison. Score the V-only counterfactual and causal-mask transfer separately as post-reading application probes; do not combine scores into a claim of learning effectiveness.
 
 | Dimension | 0 — Incorrect / absent | 1 — Partial | 2 — Correct with reasoning |
 |---|---|---|---|
