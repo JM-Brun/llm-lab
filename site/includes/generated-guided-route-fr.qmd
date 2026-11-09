@@ -22,7 +22,7 @@ Comprendre ce qu'est un LLM et suivre une génération complète comme une boît
 
 ### 02 · Du texte aux tokens
 
-Distinguer le texte, la tokenisation, le vocabulaire et les identifiants de tokens qui constituent le contexte discret fourni au modèle.
+Distinguer le texte, les tokens et les identifiants qui constituent l'entrée discrète du modèle, sans devoir connaître les algorithmes de segmentation.
 
 **Pages centrales**
 

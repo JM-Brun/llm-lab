@@ -22,7 +22,7 @@ Understand what an LLM is and follow a complete generation loop as a black box w
 
 ### 02 · From text to tokens
 
-Distinguish text, tokenization, vocabulary, and token IDs that form the discrete context supplied to the model.
+Distinguish text, tokens, and token IDs that form the model's discrete input without needing to study segmentation algorithms.
 
 **Core pages**
 
