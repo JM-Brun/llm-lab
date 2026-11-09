@@ -44,7 +44,7 @@ Deux parcours principaux et indépendants sont proposés : **comprendre théoriq
 <div class="learning-entry-grid">
   <article class="learning-entry learning-entry-primary">
     <p class="learning-entry-kicker">01 · PARCOURS THÉORIQUE</p>
-    <h3>Découvrir le fonctionnement des LLM</h3>
+    <h3>Comprendre le fonctionnement des LLM</h3>
     <p>Construire une vue d'ensemble : données, représentations, Transformer, prédiction et génération.</p>
     <a class="learning-entry-link" href="fr/llm-overview.qmd">Commencer par le panorama <span aria-hidden="true">→</span></a>
   </article>
