@@ -429,7 +429,8 @@ for (const testCase of cases) {
       languageSwitchLinks: [...document.querySelectorAll("a[href]")].filter(a => { const href = a.getAttribute("href") || ""; return href.includes("/en/") || href.includes("/fr/"); }).length,
     }));
 
-    const capturePage = kind !== "route-context" || label === "desktop" || pagePath === "text-data.html";
+    const capturePage = kind !== "route-context" || label === "desktop" ||
+      ["text-data.html", "embedding-space.html", "positional-encoding.html", "tensors.html"].includes(pagePath);
     if (capturePage) {
       const screenshot = path.join(OUT, `${pagePath.replace(".html", "")}-${lang}-${label}-${theme}.png`);
       await page.screenshot({ path: screenshot, fullPage: true, animations: "disabled" });
