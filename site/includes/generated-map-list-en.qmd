@@ -3,7 +3,6 @@
   - How the model computes a prediction
     - From text to token IDs
       - [From text to tokens: representing language](text-data.html)
-      - [Tokenization strategies: granularity, algorithms, and trade-offs](tokenization-strategies.html)
     - From IDs to representations
       - [From token IDs to vectors: embeddings](embedding-space.html)
       - [Positional encoding: giving tokens an order](positional-encoding.html)
@@ -51,6 +50,7 @@
     - [Hybrid LLM architectures: Nemotron 3 and 3.5](hybrid-llm-architectures.html)
     - [Next-Concept Modeling: generation over representation levels](next-concept-modeling.html)
   - Text and tokenization
+    - [Tokenization strategies: granularity, algorithms, and trade-offs](tokenization-strategies.html)
     - [Unicode, UTF-8, and text normalization](unicode-text.html)
     - [Designing and evaluating a tokenizer](tokenizer-design-evaluation.html)
   - Mathematical tools and geometry
