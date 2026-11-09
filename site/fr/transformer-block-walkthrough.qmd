@@ -165,7 +165,7 @@ Ligne par ligne :
 Chaque position passe seule dans `d → mlp_hidden_dim` (souvent `4d`), puis GELU, puis retour vers `d`. L'élargissement intermédiaire donne à chaque position un espace plus grand pour sa transformation non linéaire.
 
 ::: {.callout-warning}
-**Idées reçues.** (1) « Les têtes voient ce que font les autres » : non — chaque tête est isolée jusqu'à `w_o`. (2) « La normalisation est cosmétique » : non — elle est dans la branche pour stabiliser le tronc résiduel quand la pile s'allonge.
+**Idées reçues.** (1) « Les têtes voient ce que font les autres » : non — chaque tête est isolée jusqu'à `w_o`. (2) « La normalisation est cosmétique » : non — son placement dans la branche laisse le chemin résiduel direct. Les effets sur l'optimisation sont étudiés, notamment par Xiong et al. (2020) ; ils ne constituent pas une garantie indépendante de la configuration.
 :::
 
 ## Ce que les tests vérifient
