@@ -16,12 +16,19 @@ def test_matches_the_lesson_worked_example() -> None:
 
 
 def test_every_target_is_the_next_token_in_the_stream() -> None:
-    stream = np.arange(10, dtype=np.int64)
+    # Use token IDs unrelated to their source positions: IDs are not offsets.
+    stream = np.array([17, 4, 22, 9, 3, 31, 8, 14, 6, 27], dtype=np.int64)
+    context_length = 4
+    stride = 3
 
-    inputs, targets = sliding_input_target_pairs(stream, context_length=4, stride=3)
+    inputs, targets = sliding_input_target_pairs(
+        stream, context_length=context_length, stride=stride
+    )
 
     np.testing.assert_array_equal(targets[:, :-1], inputs[:, 1:])
-    np.testing.assert_array_equal(targets[:, -1], stream[inputs[:, -1] + 1])
+    window_starts = np.arange(inputs.shape[0]) * stride
+    next_positions = window_starts + context_length
+    np.testing.assert_array_equal(targets[:, -1], stream[next_positions])
 
 
 def test_targets_are_shifted_not_copied() -> None:
