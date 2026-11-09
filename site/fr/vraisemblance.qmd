@@ -26,6 +26,15 @@ tags: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "
 Pour des paramètres fixés, la vraisemblance indique la probabilité que le modèle attribue aux données observées. Dans un modèle autorégressif, elle se calcule à partir des probabilités conditionnelles des tokens cibles successifs.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+- **Scoring :** le modèle reçoit le préfixe de référence et attribue une probabilité au token observé ; aucun token généré n'est réinjecté et les paramètres restent fixes.
+- **Séquence :** la règle de chaîne donne $P_\theta(x_{1:T})=\prod_t P_\theta(x_t\mid x_{<t})$ ; la log transforme ce produit en somme.
+- **Objectif :** la NLL est $-\log P_\theta(x_{1:T})$. Pour les mêmes observations et positions, maximiser la log-vraisemblance équivaut à minimiser la NLL.
+- **Comparaison :** préciser tokenizer, positions incluses et somme ou moyenne par token ; ces conventions changent l'échelle.
+
+**Question de contrôle :** pourquoi le scoring d'une séquence observée n'est-il ni une génération ni une mise à jour des paramètres ?
+:::
+
 ## Factorisation autorégressive
 
 La dérivation de cette factorisation à partir de la règle de chaîne et l'interprétation des probabilités conditionnelles sont présentées dans la page de [formalisation mathématique de la modélisation du langage](language-modeling-math.qmd). Ici, on se concentre sur la vraisemblance comme critère d'évaluation des séquences observées et sur son lien avec la loss.
