@@ -242,7 +242,7 @@ items:
     locator: {type: section, value: "alphaXiv full-text rendering, pp. 7-9; arXiv:2609.20807", label: "Experimental comparisons and limitations"}
     evidence:
       kind: primary-paper-fulltext-mirror
-      confidence: qualified
+      confidence: context-dependent
       scope: "Selected headline experimental outcomes and explicit qualifications."
       assumptions: ["The paper setup, reward metric and seed counts are preserved when citing values."]
       limitations: ["Complete tables and appendices were not independently transcribed; no result was reproduced."]
