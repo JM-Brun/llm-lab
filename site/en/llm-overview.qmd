@@ -99,13 +99,13 @@ Describing a model requires three distinct questions:
 |---|---|---|
 | **Architecture** | How does the network transform information? | Encoder-only, encoder–decoder, decoder-only — [Transformer architectures](transformer-architectures.qmd) |
 | **Learning** | How are the parameters obtained or adapted? | Pretraining, fine-tuning, SFT, and preference optimization |
-| **Use** | What do we do with the model while its parameters are fixed? | Generation, classification, scoring, prompting, and retrieval-augmented generation (RAG) |
+| **Use** | What do we do with the model while its parameters are fixed? | Generation, classification, scoring, [in-context learning](in-context-learning.qmd), and retrieval-augmented generation (RAG) |
 
 For a GPT, **pretraining** learns to predict the next token from a corpus. It is self-supervised: targets are constructed from the data itself. The model before adaptation is often called a *base model*. A **foundation model** is a broader category: it is trained on broad data at scale and can be adapted to many tasks, including tasks beyond language ([Bommasani et al., 2021](https://crfm.stanford.edu/report)). The terms are therefore not synonymous.
 
 After pretraining, **parameter adaptation** is possible but not mandatory: task fine-tuning, *supervised fine-tuning* (SFT) on instruction–response examples, or preference optimization. A pretrained model can also be used directly.
 
-At inference time, parameters remain fixed. A prompt and documents retrieved by a **RAG** system change the context supplied to the model, not its weights. Evaluation occurs at several stages; test data must remain held out until final evaluation to avoid biased measurements.
+At inference time, parameters remain fixed. The **prompt** (input text), in-context learning, and documents retrieved by a **retrieval-augmented generation** (RAG) system change the context supplied to the model, not its weights. Evaluation occurs at several stages; test data must remain held out until final evaluation to avoid biased measurements.
 
 ## 5. Uses and choosing an approach
 
