@@ -334,8 +334,6 @@ The Build path is a separate course with its own entry point, milestones, implem
 
 The current Build milestones are G0–G9 and retain their established branches:
 
-The implementation-specific data branch is owned here, not by the Theory route: G1b prepares a traceable corpus and fits/freezes the tokenizer; G2 constructs context windows, shifted inputs/targets and batches. It joins the model path at G8. It is not required to follow the Theory route's explanation of inference or learning.
-
 - **Model/inference branch:** define the small GPT scope; prepare prompt tokenization; implement embeddings and positional information; implement attention and Transformer blocks; assemble the model; produce logits and select tokens; demonstrate autoregressive generation with fixed parameters.
 - **Training-data branch:** prepare a traceable corpus and tokenizer (G1b), then construct windows, shifted targets and batches (G2). This branch joins the model path at training; it is not a prerequisite for implementing or understanding inference.
 - **Parameter-learning branch:** combine the implemented model and training examples to compute the objective, gradients, optimizer updates, validation and checkpoints (G8), then verify/evaluate (G9/E1).
