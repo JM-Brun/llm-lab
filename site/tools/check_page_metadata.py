@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+from strict_yaml import load_yaml, parse_yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 MARKER = "LLM-LAB-PAGE-MAP v1"
@@ -101,7 +102,7 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
         errors.append(f"{relative}: missing or malformed YAML front matter")
         return None
     try:
-        front = yaml.safe_load(front_match.group(1))
+        front = parse_yaml(front_match.group(1), source=f"{relative} (front matter)")
     except yaml.YAMLError as exc:
         errors.append(f"{relative}: invalid front matter YAML: {exc}")
         return None
@@ -122,7 +123,7 @@ def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] 
         )
         return None
     try:
-        metadata = yaml.safe_load(comments[0])
+        metadata = parse_yaml(comments[0], source=f"{relative} (page map)")
     except yaml.YAMLError as exc:
         errors.append(f"{relative}: invalid page-map YAML: {exc}")
         return None
@@ -359,7 +360,7 @@ def _validate_render_coverage(site_dir: Path, rendered_paths: set[str], errors: 
         if len(comments) != 1:
             continue
         try:
-            metadata = yaml.safe_load(comments[0])
+            metadata = parse_yaml(comments[0], source=f"{path} (page map)")
         except yaml.YAMLError:
             continue
         if not isinstance(metadata, dict):
@@ -385,7 +386,7 @@ def validate(site_dir: Path) -> list[str]:
     if not config_path.is_file():
         return [f"Missing Quarto configuration: {config_path}"]
     try:
-        config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+        config = load_yaml(config_path)
     except (OSError, yaml.YAMLError) as exc:
         return [f"Cannot parse {config_path}: {exc}"]
     render_list = config.get("project", {}).get("render") if isinstance(config, dict) else None

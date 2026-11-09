@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+from strict_yaml import load_yaml, parse_yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 REGISTRY = ROOT / "data" / "concepts.yml"
@@ -56,7 +57,7 @@ def _published_page_ids() -> set[str]:
             if match is None:
                 continue
             try:
-                metadata = yaml.safe_load(match.group(1))
+                metadata = parse_yaml(match.group(1), source=str(path))
             except yaml.YAMLError:
                 continue
             if not isinstance(metadata, dict):
@@ -359,8 +360,8 @@ def validate_registry(
 def main() -> int:
     """Validate the checked-in concept and domain registries."""
     try:
-        data = yaml.safe_load(REGISTRY.read_text(encoding="utf-8"))
-        domain_data = yaml.safe_load(DOMAINS.read_text(encoding="utf-8"))
+        data = load_yaml(REGISTRY)
+        domain_data = load_yaml(DOMAINS)
     except (OSError, yaml.YAMLError) as exc:
         sys.stderr.write(f"Cannot read concept/domain registry: {exc}\n")
         return 1

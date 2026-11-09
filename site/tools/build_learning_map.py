@@ -21,7 +21,6 @@ from html import escape
 from pathlib import Path
 from typing import Any, Literal
 
-import yaml
 from learning_map_renderers import (
     REPRESENTATIONS,
     escape_markdown_text,
@@ -29,6 +28,7 @@ from learning_map_renderers import (
     render_map_script,
 )
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from strict_yaml import load_yaml, parse_yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
@@ -187,8 +187,8 @@ def load_pages() -> list[dict[str, Any]]:
         comments = COMMENT.findall(source)
         if front_match is None or len(comments) != 1:
             continue
-        front = yaml.safe_load(front_match.group(1))
-        metadata = yaml.safe_load(comments[0])
+        front = parse_yaml(front_match.group(1), source=f"{path} (front matter)")
+        metadata = parse_yaml(comments[0], source=f"{path} (page map)")
         if not isinstance(front, dict) or not isinstance(metadata, dict):
             continue
         tags = {
@@ -273,7 +273,7 @@ def load_navigation(language: str, pages: list[dict[str, Any]]) -> list[dict[str
     sections are preserved so the learning map and its static fallback reflect
     the same hierarchy as the native Quarto navigation.
     """
-    config = yaml.safe_load((SITE / "_quarto.yml").read_text(encoding="utf-8"))
+    config = load_yaml(SITE / "_quarto.yml")
     sidebars = (config or {}).get("website", {}).get("sidebar", [])
     sidebar = next((entry for entry in sidebars if entry.get("id") == language), None)
     if sidebar is None:
@@ -336,7 +336,7 @@ def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[Resolv
         raise ValueError(f"unsupported guided-route language: {language!r}")
 
     source_path = ROOT / "data" / "guided-route.yml"
-    payload = yaml.safe_load(source_path.read_text(encoding="utf-8"))
+    payload = load_yaml(source_path)
     document = GuidedRouteDocument.model_validate(payload)
     page_by_id = {page["id"]: page for page in pages}
     resolved: list[ResolvedGuidedRouteStage] = []
@@ -639,7 +639,7 @@ def load_domain_labels(language: str) -> dict[str, str] | None:
     path = ROOT / "data" / "domains.yml"
     if not path.is_file():
         return None
-    payload = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    payload = load_yaml(path) or {}
     return {
         str(domain["id"]): str(domain["labels"][language]) for domain in payload.get("domains", [])
     }
@@ -650,7 +650,7 @@ def load_concept_graph(
 ) -> dict[str, list[dict[str, Any]]]:
     """Load the reviewed concept registry and resolve language-specific page links."""
     registry_path = ROOT / "data" / "concepts.yml"
-    registry = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
+    registry = load_yaml(registry_path)
     domain_labels = load_domain_labels(language)
     page_by_id = {page["id"]: page for page in pages}
     concepts = []
