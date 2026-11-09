@@ -24,6 +24,8 @@ tags: ["type:guided-build", "destination:build", "topic:build-path", "level:appl
 This path guides you through an existing small decoder-only GPT: inspect its configuration and numerical building blocks, trace the Transformer block and assembled model, then run the generation loop. LLM Lab uses small, inspectable models to teach mechanisms, not to reproduce production-scale capabilities. The tested reference code lives in [`src/llm_lab/foundations/`](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations); each of the five tours includes exercises with worked answers. You can use these tours to guide your own construction, but reading and running the reference is not evidence that you built it independently. Familiarity with Python and basic NumPy is useful; consult the linked concept pages for the mathematics and shapes as needed.
 :::
 
+This path is **independent of the Theory / Understand path**: you can start here without completing its eight stages. Linked concept pages are references to consult when needed, not prerequisites. The progression below follows code dependencies and results you can run and verify.
+
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this path, you will be able to:
 - place the five modules of the reference code and their order of construction;
@@ -76,7 +78,7 @@ print("Sampled IDs:", sampled_ids)
 
 For this configuration, the expected count is **21,426 parameters**. Each output contains the three prompt IDs followed by eight generated IDs; the two calls start from the same prompt. The reference code is pure NumPy (float64): readability first, speed later.
 
-## Understand, build, deepen
+## Build and verify at each milestone
 
 At each milestone:
 
