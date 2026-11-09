@@ -136,6 +136,12 @@ Le même calcul prédictif produit une distribution conditionnelle. À partir de
 <text x="20" y="606" class="flow-note">Les préfixes observés servent à scorer chaque cible ; θ reste fixe et aucune prédiction n'est réinjectée.</text>
 
 <text x="20" y="648" class="flow-kicker">4 · ÉVALUATION — FONCTION TRANSVERSALE</text>
+<g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#flow-arrow-fr)">
+<path d="M240 725 H420"/><path d="M640 725 H820"/>
+</g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/corpus-preparation.html" aria-label="Jeux de validation et de test"><rect x="20" y="680" width="220" height="90" rx="12"/><text x="34" y="702" class="flow-kicker">DONNÉES TENUES À L'ÉCART</text><text x="34" y="728" class="flow-title">Validation / test</text><text x="34" y="750" class="flow-subtitle">séparation sans fuite</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/evaluation-experimentale.html" aria-label="Métriques et analyse des erreurs"><rect x="420" y="680" width="220" height="90" rx="12"/><text x="434" y="702" class="flow-kicker">MESURES</text><text x="434" y="728" class="flow-title">Métriques + erreurs</text><text x="434" y="750" class="flow-subtitle">incertitude et analyse</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/evaluation-experimentale.html" aria-label="Interpréter les résultats de l’évaluation"><rect x="820" y="680" width="220" height="90" rx="12"/><text x="834" y="702" class="flow-kicker">INTERPRÉTATION</text><text x="834" y="728" class="flow-title">Décisions informées</text><text x="834" y="750" class="flow-subtitle">ajuster sans contaminer le test</text></g>
 <text x="20" y="806" class="flow-hint">Les résultats de validation peuvent guider les choix de données, d'entraînement et de décodage ; le jeu de test reste réservé à l'évaluation finale.</text>
 <text x="20" y="830" class="flow-hint">Chaque bloc bordé est cliquable et ouvre une page canonique. Les flèches pleines indiquent le flux de calcul ; les boucles indiquent une répétition ou une mise à jour.</text>
 </svg>
@@ -178,8 +184,8 @@ Pour le programme complet, consultez la [carte du curriculum](https://github.com
 
 ::: {.language-switch}
 [Français](index.qmd) · [English](en/index.qmd)
-:::<text x="20" y="606" class="flow-hint">Les résultats de validation peuvent guider les choix de données, d'entraînement et de décodage ; le jeu de test reste réservé à l'évaluation finale.</text>
-<text x="20" y="630" class="flow-hint">Chaque bloc bordé est cliquable et ouvre une page canonique. Les flèches pleines indiquent le flux de calcul ; les boucles indiquent une répétition ou une mise à jour.</text>
+:::
+
 </svg>
 <script>
 (() => {
