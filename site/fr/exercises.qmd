@@ -34,7 +34,7 @@ Les pages de cours utilisent un composant homogène **« Vérifier sa compréhen
 | Collection | Périmètre | Statut |
 |---|---|---|
 | [Fondations mathématiques](#fondations) | Tenseurs, probabilités, logits, entropie, cross-entropie, vraisemblance, gradients, stabilité numérique | 7 exercices progressifs rédigés ; vérification de gradients et autres thèmes à compléter |
-| [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Auto-vérifications dans les pages texte/embeddings ; quatre exercices formatifs TR-A à TR-D publiés ; BPE et fuites entre partitions à construire |
+| [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Auto-vérifications dans les pages texte/embeddings ; cinq exercices formatifs TR-A à TR-E publiés ; fuites entre partitions à construire |
 | [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Somme pondérée et projections Q/K/V ; CA-A sur le masque causal et l’invariance de préfixe ; trois exercices formatifs AT-A à AT-C publiés (attention multi-têtes) ; variantes avancées à construire |
 | [Transformer](#transformer) | Embeddings, position, résidus, normalisation, MLP et variantes d’architecture | Trois exercices formatifs TF-A à TF-C publiés (formes et normalisation d'un bloc pré-LN, paramètres du bloc, diagnostic et interventions) ; variantes d'architecture à construire |
 | [Préentraînement](#preentrainement) | Objectif, entraînement/validation, perplexité, checkpoints et reproductibilité | Structure à compléter |
@@ -224,7 +224,7 @@ Une comparaison exige notamment de contrôler le tokenizer et sa segmentation, l
 
 **Notions préalables :** [texte et tokenisation](text-data.qmd), [espace des embeddings](embedding-space.qmd) et [exemples d'entraînement et décalage entrée-cible](training-examples.qmd).
 
-**Périmètre actuel :** trois exercices formatifs progressifs, aux identifiants stables TR-A, TR-B et TR-C partagés avec la version anglaise, couvrent la reconstruction de la chaîne texte → représentations, le calcul d'un lookup avec le suivi des formes de tenseurs, puis le diagnostic identité / position / contexte. Les exercices sur BPE, les fenêtres d'entraînement et les fuites entre partitions restent à construire. Ordre conseillé : TR-A, puis TR-B (calculer, compléter un tableau guidé, généraliser au batch), puis TR-C.
+**Périmètre actuel :** cinq exercices formatifs bilingues, aux identifiants stables TR-A à TR-E, couvrent la chaîne texte → représentations (TR-A à TR-C), les fenêtres et le décalage entrée-cible (TR-D), puis le calcul de fusions BPE (TR-E). La fuite entre partitions reste à traiter. Ordre conseillé : TR-A, TR-B, TR-C, puis TR-D et TR-E ; ces deux derniers peuvent être étudiés indépendamment l'un de l'autre après les pages de préparation correspondantes.
 
 #### Exercice TR-A — Reconstruire la chaîne des représentations
 
@@ -566,7 +566,113 @@ Un test direct vérifie, pour chaque fenêtre, que la cible à la position $(k,i
 
 **Critère de réussite :** les paires sont exactes, la fin du corpus est traitée sans token inventé, le nombre de fenêtres est justifié et l'erreur de copie entrée-cible est détectée par un invariant vérifiable.
 
-**Pour aller plus loin :** BPE et les fuites entre partitions restent à construire. Le batching et les masques de perte sont des sujets distincts ; ils ne sont pas implémentés par la fonction de référence utilisée ici.
+**Pour aller plus loin :** les fuites entre partitions restent à traiter dans un exercice distinct. Le batching et les masques de perte sont des sujets séparés ; ils ne sont pas implémentés par la fonction de référence utilisée ici.
+
+#### Exercice TR-E — Compter les fusions BPE et encoder un nouveau mot
+
+**Préparation :** la section « Exemple pas à pas : fusions BPE sur un petit corpus » de [Stratégies de tokenisation](tokenization-strategies.qmd). On reprend sa convention pédagogique au niveau du mot : caractères initiaux et marqueur de fin `</w>). Ce n'est pas une spécification d'un tokenizer byte-level de production.
+
+Le corpus d'apprentissage contient les occurrences suivantes :
+
+| Mot | Nombre d'occurrences |
+|---|---:|
+| `low` | 2 |
+| `lower` | 1 |
+| `owl` | 1 |
+
+**Étape 1 — Compter les paires.**
+
+1. Écrivez les unités initiales de chaque mot.
+2. Comptez les paires adjacentes dans toutes les occurrences du corpus.
+3. Quelle paire est fusionnée en premier ? Justifiez votre choix.
+
+<details>
+<summary>Afficher les indices</summary>
+
+- Une paire est comptée une fois par occurrence où elle apparaît ; les répétitions du même mot contribuent donc plusieurs fois.
+- Le marqueur `</w>` est une unité et peut former une paire avec le dernier caractère.
+- Ne comptez pas seulement les paires distinctes : comptez leurs occurrences.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+Les unités initiales sont :
+
+- `low` (deux occurrences) : `l · o · w · </w>`
+- `lower` : `l · o · w · e · r · </w>`
+- `owl` : `o · w · l · </w>`
+
+Les fréquences sont :
+
+| Paire | Fréquence |
+|---|---:|
+| `o + w` | **4** |
+| `l + o` | 3 |
+| `w + </w>` | 2 |
+| `w + e`, `e + r`, `r + </w>`, `w + l`, `l + </w>` | 1 chacune |
+
+La première fusion est donc `o + w → ow`, avec quatre occurrences. Elle est strictement plus fréquente que `l + o` (trois occurrences) : aucun départage d'égalité n'est nécessaire.
+
+</details>
+
+**Étape 2 — Appliquer la fusion et recompter.**
+
+Remplacez toutes les occurrences non chevauchantes de `o · w` par `ow), puis recomptez les paires. Quelle est la fusion suivante ?
+
+<details>
+<summary>Afficher les indices</summary>
+
+Après la première fusion, les séquences sont :
+
+- deux fois `l · ow · </w>`
+- une fois `l · ow · e · r · </w>`
+- une fois `ow · l · </w>`
+
+Recomptez les frontières entre unités adjacentes ; les anciennes fréquences ne restent pas valides automatiquement.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+Après `o + w → ow), la paire `l + ow` apparaît trois fois : deux fois dans `low` et une fois dans `lower`. Les autres paires les plus fréquentes sont `ow + </w>` (deux fois), puis des paires de fréquence 1. La deuxième fusion est donc `l + ow → low`.
+
+Le corpus devient :
+
+| Mot | Séquence après deux fusions |
+|---|---|
+| `low` (×2) | `low · </w>` |
+| `lower` | `low · e · r · </w>` |
+| `owl` | `ow · l · </w>` |
+
+</details>
+
+**Étape 3 — Transférer les règles à un texte inédit.**
+
+Le mot `lowest` n'apparaît pas dans le corpus d'apprentissage. En partant des caractères `l · o · w · e · s · t · </w>`, appliquez dans l'ordre les deux fusions apprises. Donnez la segmentation finale et expliquez pourquoi il ne faut pas recompter les fréquences sur ce nouveau mot.
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+On applique d'abord `o + w → ow), puis `l + ow → low`. La segmentation obtenue est :
+
+`low · e · s · t · </w>`
+
+À l'encodage, le tokenizer réutilise l'ordre de fusion appris sur le corpus. Il ne réentraîne pas son vocabulaire et ne recalcule pas les fréquences à partir du seul texte à encoder. C'est la distinction entre apprentissage du tokenizer et encodage d'un nouveau texte.
+
+**Erreurs fréquentes :**
+
+- Compter une paire une seule fois par mot distinct, en oubliant les occurrences répétées.
+- Compter des paires non adjacentes ou continuer à utiliser les fréquences d'avant fusion.
+- Fusionner seulement une occurrence alors que toutes les occurrences non chevauchantes de la paire sélectionnée doivent être remplacées selon la convention retenue.
+- Recalculer les fréquences sur `lowest` au moment de l'encodage, comme si le tokenizer était réentraîné à chaque requête.
+- Présenter cet exemple à unités caractères comme une description de tout BPE byte-level.
+
+</details>
+
+**Critère de réussite :** les fréquences initiales sont exactes, les séquences sont mises à jour avant le second comptage, l'ordre des fusions est respecté sur le mot inédit et apprentissage/encodage sont distingués.
 
 ### Attention {#attention}
 

@@ -251,7 +251,7 @@ for (const testCase of cases) {
     if (kind === "exercise-hub") {
       const hub = page.locator("main");
       const visibleText = await hub.innerText();
-      const exerciseIds = ["TR-A", "TR-B", "TR-C", "TR-D", "TF-A", "TF-B", "TF-C", "AT-A", "AT-B", "AT-C"];
+      const exerciseIds = ["TR-A", "TR-B", "TR-C", "TR-D", "TR-E", "TF-A", "TF-B", "TF-C", "AT-A", "AT-B", "AT-C"];
       item.exerciseHub = await page.evaluate(() => {
         const lang = document.documentElement.lang || "en";
         const anchors = lang.startsWith("fr")

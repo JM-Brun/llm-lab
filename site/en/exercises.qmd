@@ -34,7 +34,7 @@ Lesson pages use a consistent **“Check your understanding”** component: shor
 | Collection | Scope | Status |
 |---|---|---|
 | [Mathematical foundations](#foundations) | Tensors, probability, logits, entropy, cross-entropy, likelihood, gradients, numerical stability | 7 progressive exercises drafted; gradient checking and other topics remain to be developed |
-| [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Self-checks in the text/embedding lessons; four formative exercises TR-A–TR-D published; BPE and partition-leakage exercises remain to be developed |
+| [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Self-checks in the text/embedding lessons; five formative exercises TR-A–TR-E published; partition-leakage exercises remain to be developed |
 | [Attention](#attention) | Q/K/V, scores, scaling, causal masks, multi-head attention, invariants | Weighted aggregation and Q/K/V projections; CA-A on causal masking and prefix invariance; three formative multi-head exercises AT-A–AT-C published; advanced variants remain to be developed |
 | [Transformer](#transformer) | Embeddings, position, residuals, normalization, MLP and architecture variants | Three formative exercises TF-A–TF-C published (shapes and normalization of a pre-LN block, block parameter count, diagnosis and interventions); architecture-variant exercises to be developed |
 | [Pretraining](#pretraining) | Objective, train/validation, perplexity, checkpoints and reproducibility | Structure to be filled |
@@ -224,7 +224,7 @@ A comparison requires checking, among other things, the tokenizer and its segmen
 
 **Prerequisites:** [text and tokenization](text-data.qmd), [embedding space](embedding-space.qmd), and [training examples and input-target shifting](training-examples.qmd).
 
-**Current scope:** three progressive formative exercises, with stable IDs TR-A, TR-B and TR-C shared with the French version, cover reconstructing the text → representations pipeline, calculating an embedding lookup with tensor-shape tracing, and diagnosing identity / position / context. Exercises on BPE, training windows and partition leakage remain to be developed. Suggested order: TR-A, then TR-B (calculate, complete a scaffold, generalize to a batch), then TR-C.
+**Current scope:** five bilingual formative exercises, with stable IDs TR-A–TR-E, cover the text → representations pipeline (TR-A–TR-C), windows and input-target shifting (TR-D), and BPE merge counting (TR-E). Partition leakage remains to be addressed. Suggested order: TR-A, TR-B, TR-C, then TR-D and TR-E; the latter two can be studied independently after their corresponding preparation lessons.
 
 #### Exercise TR-A — Reconstruct the representation pipeline
 
@@ -566,7 +566,113 @@ A direct test checks, for every window, that the target at position $(k,i)$ equa
 
 **Success criterion:** the pairs are exact, the corpus tail is handled without an invented token, the window count is justified, and the input-target copy bug is detected by a checkable invariant.
 
-**Further work:** BPE and partition leakage remain to be developed. Batching and loss masks are separate topics; they are not implemented by the reference function used here.
+**Further work:** partition leakage remains for a separate exercise. Batching and loss masks are distinct topics; they are not implemented by the reference function used here.
+
+#### Exercise TR-E — Count BPE merges and encode a new word
+
+**Preparation:** the “Worked example: BPE merges on a tiny corpus” section in [Tokenization strategies](tokenization-strategies.qmd). We reuse its word-level teaching convention: initial characters plus an end-of-word marker `</w>`. This is not a specification of a production byte-level tokenizer.
+
+The training corpus contains these occurrences:
+
+| Word | Number of occurrences |
+|---|---:|
+| `low` | 2 |
+| `lower` | 1 |
+| `owl` | 1 |
+
+**Stage 1 — Count pairs.**
+
+1. Write the initial units for each word.
+2. Count adjacent pairs across all corpus occurrences.
+3. Which pair is merged first? Justify your choice.
+
+<details>
+<summary>Show hints</summary>
+
+- A pair is counted once for each occurrence in which it appears; repeated copies of a word therefore contribute multiple times.
+- The `</w>` marker is a unit and can form a pair with the final character.
+- Do not count only distinct pairs: count their occurrences.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+The initial units are:
+
+- `low` (two occurrences): `l · o · w · </w>`
+- `lower`: `l · o · w · e · r · </w>`
+- `owl`: `o · w · l · </w>`
+
+The frequencies are:
+
+| Pair | Count |
+|---|---:|
+| `o + w` | **4** |
+| `l + o` | 3 |
+| `w + </w>` | 2 |
+| `w + e`, `e + r`, `r + </w>`, `w + l`, `l + </w>` | 1 each |
+
+The first merge is therefore `o + w → ow`, with four occurrences. It is strictly more frequent than `l + o` (three occurrences), so no tie-breaker is needed.
+
+</details>
+
+**Stage 2 — Apply the merge and recount.**
+
+Replace every non-overlapping occurrence of `o · w` with `ow`, then recount the pairs. What is the next merge?
+
+<details>
+<summary>Show hints</summary>
+
+After the first merge, the sequences are:
+
+- twice `l · ow · </w>`
+- once `l · ow · e · r · </w>`
+- once `ow · l · </w>`
+
+Recount the boundaries between adjacent units; the old frequencies do not automatically remain valid.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+After `o + w → ow`, the pair `l + ow` occurs three times: twice in `low` and once in `lower`. The next most frequent pair is `ow + </w>` (twice), followed by pairs with count 1. The second merge is therefore `l + ow → low`.
+
+The corpus becomes:
+
+| Word | Sequence after two merges |
+|---|---|
+| `low` (×2) | `low · </w>` |
+| `lower` | `low · e · r · </w>` |
+| `owl` | `ow · l · </w>` |
+
+</details>
+
+**Stage 3 — Transfer the rules to unseen text.**
+
+The word `lowest` does not occur in the training corpus. Starting from the characters `l · o · w · e · s · t · </w>`, apply the two learned merges in order. Give the final segmentation and explain why frequencies should not be recounted on this new word.
+
+<details>
+<summary>Show the worked solution</summary>
+
+First apply `o + w → ow), then `l + ow → low`. The resulting segmentation is:
+
+`low · e · s · t · </w>`
+
+At encoding time, the tokenizer reuses the merge order learned from the corpus. It does not retrain its vocabulary or recalculate frequencies from the text being encoded. This is the distinction between tokenizer training and encoding new text.
+
+**Common errors:**
+
+- Counting a pair only once per distinct word and ignoring repeated occurrences.
+- Counting non-adjacent pairs or continuing to use frequencies from before a merge.
+- Merging only one occurrence when all non-overlapping occurrences of the selected pair must be replaced under the stated convention.
+- Recounting frequencies on `lowest` at encoding time, as if the tokenizer were retrained for every request.
+- Presenting this character-level example as a description of every byte-level BPE tokenizer.
+
+</details>
+
+**Success criterion:** initial frequencies are exact, sequences are updated before the second count, merge order is respected on the unseen word, and training/encoding are distinguished.
 
 ### Attention {#attention}
 
