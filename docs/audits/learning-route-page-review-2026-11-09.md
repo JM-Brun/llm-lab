@@ -67,8 +67,8 @@ Légende :
 | Entropie | `entropy` | Incertitude de la distribution prédictive ; distinguer entropie et score d'une cible observée | Ajout d'un rappel d'une minute FR/EN distinguant entropie prédictive, surprise observée, bornes et limites d'interprétation ; self-check conservé | Revue FR/EN effectuée + synthèse ajoutée |
 | Génération détaillée | `generation` (réutilisée) | Revenir sur prefill, decode, cache, sélection, feedback et arrêt | Rappel bref et self-check présents ; distingue prefill/decode (phases) de decoding (règle de sélection) et du forward pass | Revue FR/EN effectuée |
 | Stratégies avancées (optionnel) | `decoding-strategies` | Top-k/top-p, beam, contrastif, compromis et reproductibilité | Pas de rappel bref repéré dans le premier relevé ; à examiner après la route centrale | À lire |
-| Vraisemblance | `vraisemblance` / `likelihood` | Scorer une cible observée, factoriser une séquence ; pas de sélection de token | Self-check repéré ; vérifier une distinction synthétique probabilité conditionnelle / log-vraisemblance / NLL | Lecture source partielle |
-| Entropie croisée | `cross-entropy` | Mesurer l'écart entre distribution prédite et cible ; relier au NLL | Self-check repéré ; vérifier la synthèse et le lien vers la réduction de batch | Lecture source partielle |
+| Vraisemblance | `vraisemblance` / `likelihood` | Scorer une cible observée, factoriser une séquence ; pas de sélection de token | Ajout d'un rappel d'une minute FR/EN distinguant scoring, règle de chaîne, log-vraisemblance, NLL et conventions de comparaison | Revue FR/EN effectuée + synthèse ajoutée |
+| Entropie croisée | `cross-entropy` | Mesurer l'écart entre distribution prédite et cible ; relier au NLL | Ajout d'un rappel d'une minute FR/EN sur cible one-hot/générale, alignement, masques et réduction | Revue FR/EN effectuée + synthèse ajoutée |
 | Loss | `loss` | Agréger les pertes token par token avec masque et réduction | Rappel bref et self-check repérés ; vérifier la séparation entre score, objectif et mise à jour | Lecture source partielle |
 | Gradients | `gradients` | Dériver l'objectif et expliquer la mise à jour des paramètres | Rappel bref et self-check repérés ; vérifier la frontière avec l'optimiseur et le training loop | Lecture source partielle |
 | Corpus (branche Build) | `corpus-preparation` | Provenance, filtrage, déduplication, splits, tokenizer figé ; branche de données | Aucun rappel/self-check repéré ; candidate à une fiche opérationnelle de sortie et de contrôle | Lecture source partielle |
@@ -251,3 +251,40 @@ La page `generation` est volontairement réutilisée à deux endroits : d'abord 
 ### Validation
 
 Revue source FR/EN et contrôle des frontières éditoriales effectués. Rendu navigateur, fonctionnement de l'explorateur interactif, accessibilité et validation par apprenant non réalisés dans cette passe.
+
+
+## 11. Passe D — revue du groupe « vraisemblance → objectif de prédiction » (2026-11-09)
+
+### Pages relues en français et en anglais
+
+- `vraisemblance` / `likelihood` : factorisation par règle de chaîne, scoring d'une séquence observée avec préfixes de référence, log-vraisemblance, NLL, moyenne par token et dépendance au tokenizer.
+- `cross-entropy` : cible one-hot et distribution cible générale, alignement logits/labels, masquage des positions invalides, réduction, perplexité et lien avec le gradient.
+
+### Décisions et modifications de cette passe
+
+1. **Vraisemblance :** ajout d'un rappel d'une minute FR/EN. Il distingue explicitement scoring à paramètres fixes, génération avec feedback, et entraînement avec gradients.
+2. **Cross-entropy :** ajout d'un rappel d'une minute FR/EN. Il distingue le cas one-hot du cas cible générale et fixe les contrôles d'alignement et de réduction.
+3. **Pas de nouveau self-check :** les deux pages disposaient déjà de questions avec réponses ; les nouveaux rappels préparent ces questions sans les remplacer.
+4. **Aucune réécriture des exemples ou des dérivations :** les formules existantes et les limites d'implémentation sont conservées.
+
+### Cohérence des transitions observée
+
+`probabilities → entropy / likelihood → cross-entropy → loss → gradients`
+
+- L'entropie prédictive décrit la distribution avant observation ; la vraisemblance attribue une probabilité à une séquence effectivement observée.
+- La règle de chaîne justifie le produit des probabilités conditionnelles sans supposer l'indépendance des tokens.
+- La NLL d'une séquence est une somme de surprises token par token ; la moyenne par token est une réduction distincte.
+- La cross-entropy one-hot est la NLL locale d'une cible ; avec une cible générale, elle compare une distribution cible à la distribution prédite.
+- L'alignement des logits et des labels doit être cohérent avec le décalage autorégressif. Le masque causal protège le forward pass ; le masque de perte exclut des cibles de l'objectif. Aucun ne remplace l'autre.
+- La perplexité est une exponentielle de la cross-entropy moyenne selon une base de logarithme et un protocole donnés ; elle ne résume pas la qualité globale d'un assistant.
+
+### Points de vigilance
+
+- Les pages vraisemblance et cross-entropy contiennent déjà beaucoup de détails ; les synthèses ajoutées restent courtes et ne dupliquent ni les exemples ni les dérivations.
+- La relation entre somme NLL, moyenne par token et réduction de batch doit rester visible dans les pages suivantes (loss) et dans les comparaisons de modèles.
+- La relation exacte entre teacher forcing, scoring à préfixes de référence et entraînement devra être maintenue : même conditionnement observé, mais opérations et effets sur les paramètres distincts.
+- Les variantes à cibles souples et divergence KL restent un approfondissement, pas un prérequis au cas one-hot.
+
+### Validation
+
+Revue source FR/EN et cohérence conceptuelle effectuées. Les vérifications de rendu, d'accessibilité et d'apprentissage restent ouvertes.
