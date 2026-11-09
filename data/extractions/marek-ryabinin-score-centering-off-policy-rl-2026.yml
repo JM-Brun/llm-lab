@@ -207,7 +207,7 @@ items:
       concept_ids: [score-centering]
     candidate_destinations:
       pages: [fr/score-centering, en/score-centering]
-      concepts: [advantage, group-relative-policy-optimization, score-centering]
+      concepts: [score-centering]
       route_ids: []
     disposition: integrate
     disposition_rationale: "Zero-sum group advantages do not cancel the per-prefix sampler-expected score."
