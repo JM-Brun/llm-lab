@@ -53,7 +53,7 @@ A few terms are enough to follow this computation:
 - **Context:** the tokens available to compute a continuation. During generation, it contains the prompt followed by tokens already produced; see [generation](generation.qmd).
 - **Parameters:** learned values — including weights and biases — that determine the network's computation. They remain fixed during ordinary inference; see the [configuration of a small GPT](gpt-config-walkthrough.qmd).
 
-For a GPT, the probability of a sequence factorizes into successive conditional probabilities. The [mathematical formulation of language modeling](language-modeling-math.qmd) presents this factorization. The mathematical tools used throughout the course are collected in the [mathematical foundations](mathematical-foundations.qmd). [Autoregressive generation](generation.qmd) explains how a distribution becomes a continuation, one token at a time.
+These estimates are learned from heterogeneous corpora (domains, languages, styles, and quality levels) and must generalize beyond observed sequences; see [text and data](text-data.qmd).\n\nFor a GPT, the probability of a sequence factorizes into successive conditional probabilities. The [mathematical formulation of language modeling](language-modeling-math.qmd) presents this factorization. The mathematical tools used throughout the course are collected in the [mathematical foundations](mathematical-foundations.qmd). [Autoregressive generation](generation.qmd) explains how a distribution becomes a continuation, one token at a time.
 
 Predicting a plausible continuation is not the same as verifying that it is true. The prediction objective guarantees neither factual outputs nor human-like understanding of the world; these limits are discussed in [The training objective: guarantees and limits](llm-limits.qmd).
 
@@ -111,7 +111,7 @@ At inference time, parameters remain fixed. A prompt and documents retrieved by 
 
 LLMs are commonly used to generate or rewrite text, summarize, translate, extract information, classify, assist with programming, and answer questions.
 
-Choosing between reusing a model, retrieving documents with RAG, or adapting its parameters depends on the task. RAG can provide up-to-date knowledge without retraining the model; adaptation may help with a specific format, domain, or behavior. Compare these options using measured criteria: quality, errors, robustness, cost, latency, confidentiality, data provenance, and maintenance. A demonstration on a few prompts is not an evaluation.
+Reusing a general-purpose model is attractive when it can cover several tasks or when labeled examples are scarce. Choosing between reusing a model, retrieving documents with RAG, or adapting its parameters then depends on the task. RAG can provide up-to-date knowledge without retraining the model; adaptation may help with a specific format, domain, or behavior. Compare these options using measured criteria: quality, errors, robustness, cost, latency, confidentiality, data provenance, and maintenance. A demonstration on a few prompts is not an evaluation.
 
 ::: {.self-check}
 [Exercises and practice](exercises.qmd).
