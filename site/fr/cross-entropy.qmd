@@ -107,7 +107,6 @@ assert targets.shape == (batch_size, seq_len)
 assert targets.dtype == torch.long
 valid = targets.ne(-100)
 in_range = targets.ge(0) & targets.lt(vocab_size)
-assert torch.all(valid | targets.eq(-100))
 assert torch.all(in_range | targets.eq(-100))
 assert valid.any()
 
