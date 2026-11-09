@@ -129,7 +129,7 @@ print("mean:", mean_loss.item())  # 0.860645...
 print("softmax-first:", softmax_first_loss.item())  # 0.946560...
 ```
 
-La dernière position est ignorée par `ignore_index) ; elle ne contribue ni à la somme ni au dénominateur de la moyenne. `reduction="none"` permet d'inspecter les pertes locales, tandis que `reduction="mean"` moyenne les cibles valides (sans poids de classes dans cet exemple). La softmax préalable est incorrecte pour l'usage attendu de cette API : elle transforme les logits en nouvelles entrées de scores et change la loss. Cet exemple illustre l'API et l'agrégation ; il ne remplace ni le masque causal, ni l'alignement des cibles, ni une boucle d'entraînement.
+La dernière position est ignorée par `ignore_index` ; elle ne contribue ni à la somme ni au dénominateur de la moyenne. `reduction="none"` permet d'inspecter les pertes locales, tandis que `reduction="mean"` moyenne les cibles valides (sans poids de classes dans cet exemple). La softmax préalable est incorrecte pour l'usage attendu de cette API : elle transforme les logits en nouvelles entrées de scores et change la loss. Cet exemple illustre l'API et l'agrégation ; il ne remplace ni le masque causal, ni l'alignement des cibles, ni une boucle d'entraînement.
 :::
 
 ## Lien avec la perplexité
