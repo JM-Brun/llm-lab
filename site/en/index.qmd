@@ -31,26 +31,26 @@ Large language models (LLMs) are a family of neural models trained on large amou
 **LLM Lab connects these mechanisms to their mathematical explanations and observable behaviour.** The goal is not to trust an intuition because a diagram looks convincing: it is to understand what a component computes, verify what can be tested, and identify what remains an assumption or limitation.
 
 <div class="hero-actions">
-[Discover how LLMs work](llm-overview.qmd){.btn .btn-primary}
+[Understand how LLMs work](llm-overview.qmd){.btn .btn-primary}
 [Explore the concept map](learning-map.qmd){.btn .btn-outline-primary}
 </div>
 ::::
 
 ## Where to start
 
-Choose an entry point. You can change routes at any time: concepts and their relationships remain accessible through the [resource and concept map](learning-map.qmd).
+Choose between two independent primary paths: **understand LLMs theoretically** or **build a small GPT**. They share canonical concepts, but have distinct goals, progressions, and prerequisites. Neither is a required continuation of the other. The [resource and concept map](learning-map.qmd) lets you navigate freely between them.
 
 <div class="learning-entry-grid">
   <article class="learning-entry learning-entry-primary">
-    <p class="learning-entry-kicker">01 · UNDERSTAND</p>
+    <p class="learning-entry-kicker">01 · THEORY PATH</p>
     <h3>Discover how LLMs work</h3>
     <p>Build a system-level picture: data, representations, Transformer, prediction, and generation.</p>
     <a class="learning-entry-link" href="llm-overview.qmd">Start with the panorama <span aria-hidden="true">→</span></a>
   </article>
   <article class="learning-entry">
-    <p class="learning-entry-kicker">02 · BUILD</p>
+    <p class="learning-entry-kicker">02 · INDEPENDENT BUILD PATH</p>
     <h3>Implement a small GPT</h3>
-    <p>Follow a guided project, from component behavior to assembly. Reference inference is tested; complete training remains to be implemented.</p>
+    <p>Build and verify a small GPT in implementation-dependency order, without completing the Theory path first. Reference inference is tested; complete training remains to be implemented.</p>
     <a class="learning-entry-link" href="build-path.qmd">Explore the build path <span aria-hidden="true">→</span></a>
   </article>
   <article class="learning-entry">
