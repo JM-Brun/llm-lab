@@ -81,7 +81,7 @@ Le calcul du modèle transforme le contexte en **logits** (scores non normalisé
 |---|---|---|
 | **Génération** | On traite le prompt initial (*prefill*), on sélectionne un token, on l'ajoute au contexte, puis on recommence en décodage (*decode*) | Fixes |
 | **Scoring d'une cible observée** | On calcule la probabilité d'un token connu à partir de son préfixe observé, puis la vraisemblance ou la NLL de la séquence | Fixes |
-| **Apprentissage** | On fournit les préfixes de la séquence de référence (*teacher forcing*), compare les distributions aux tokens cibles, calcule la *loss* et ses gradients, puis met à jour les paramètres | Modifiés lors de la mise à jour |
+| **Apprentissage** | On fournit les préfixes de la séquence de référence (*teacher forcing*), on compare les distributions aux tokens cibles, on calcule la *loss* et ses gradients, puis on met à jour les paramètres | Modifiés lors de la mise à jour |
 
 Ces trois usages partagent le même calcul prédictif, mais ne forment pas une seule boucle d'exécution : la génération réinjecte un token sélectionné, le scoring évalue une cible observée et l'apprentissage met à jour les paramètres.
 
