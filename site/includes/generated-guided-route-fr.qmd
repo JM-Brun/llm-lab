@@ -1,3 +1,5 @@
+## Découvrir le système {.guided-route-part #guided-part-discover}
+
 :::: {.guided-route-grid}
 
 ::: {.guided-route-stage #guided-stage-orientation}
@@ -17,6 +19,12 @@ Comprendre ce qu'est un LLM et suivre une génération complète comme une boît
 - [Objectif d'entraînement : garanties et limites](llm-limits.html)
 
 :::
+
+::::
+
+## Comprendre une prédiction {.guided-route-part #guided-part-prediction}
+
+:::: {.guided-route-grid}
 
 ::: {.guided-route-stage #guided-stage-text-input}
 
@@ -88,6 +96,12 @@ Suivre la projection des états finaux vers les logits et la distribution condit
 - [Entropie : incertitude sur le prochain token](entropy.html)
 
 :::
+
+::::
+
+## Comprendre les usages de la prédiction {.guided-route-part #guided-part-usages}
+
+:::: {.guided-route-grid}
 
 ::: {.guided-route-stage #guided-stage-inference}
 
