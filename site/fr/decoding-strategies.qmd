@@ -40,8 +40,8 @@ La page [Générer du texte](generation.qmd) présente le mécanisme indispensab
 - **Chaîne locale :** les logits peuvent être transformés, filtrés puis renormalisés avant la sélection du prochain token.
 - **Température :** elle règle la concentration de la distribution ; elle ne change ni les paramètres ni la qualité intrinsèque du modèle.
 - **Top-k / top-p :** ils limitent les candidats selon un nombre fixe ou une masse cumulée cible ; ils modifient la distribution effective.
-- **Recherche :** greedy optimise une décision locale ; beam search conserve plusieurs hypothèses et compare des séquences selon un score.
-- **Limite :** aucune stratégie ne garantit à elle seule vérité, cohérence globale ou qualité adaptée à la tâche ; le protocole doit être documenté.
+- **Recherche :** greedy optimise une décision locale ; beam search conserve plusieurs hypothèses ; le décodage contrastif compare un modèle expert et un modèle amateur.
+- **Évaluation :** qualité et diversité dépendent de la tâche, des métriques et du protocole ; documenter les paramètres est nécessaire à la reproductibilité. Aucune stratégie ne garantit la vérité ou la cohérence globale.
 
 **Question de contrôle :** savez-vous distinguer une transformation de la distribution à une position d'une recherche qui compare plusieurs séquences ?
 :::
