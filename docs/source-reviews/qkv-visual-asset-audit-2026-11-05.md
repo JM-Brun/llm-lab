@@ -104,3 +104,29 @@ The responsive projection-equation correction in [PR #680](https://github.com/JM
 This is a PR-local Chromium render of the Quarto site, not a fresh check of the deployed Pages host. The keyboard probe is not a complete manual keyboard audit; no touch-device test or screen-reader session was performed. The presence of SVG image alt text does not establish how assistive technology announces the SVG or exposes its internal `<title>`/`<desc>` metadata. Mobile Axe coverage is absent.
 
 The artifact therefore closes the specific responsive-equation defect, and provides rendered FR/EN desktop/mobile evidence for the current PR head. It does **not** close the manual accessibility or deployed-site criteria in #483. Original third-party media identity, bytes, creator metadata and reuse terms remain unresolved; retain the link-only decisions in sections 1–4 and do not copy or trace those assets.
+
+## 9. Rendered-page evidence update — PR #787 (2026-11-09)
+
+The latest Q/K/V page-content revision was included in [PR #787](https://github.com/JM-Brun/llm-lab/pull/787), which adds the canonical reader-facing page summary and learning-map projection. Its Quarto workflow completed successfully and uploaded artifact `site-browser-review-e0098c2e668ff2c604f54fc7d3fc0d633b922be4` (workflow run [42661332708](https://github.com/JM-Brun/llm-lab/actions/runs/42661332708); artifact [13694538026](https://github.com/JM-Brun/llm-lab/actions/runs/42661332708/artifacts/13694538026); tested PR head `ce8db069e13fca3812023487e6e9b5af4712b006`). The run report and four Q/K/V screenshots were downloaded and inspected.
+
+### Q/K/V cases and observations
+
+- Four Q/K/V cases: EN/FR × desktop 1440×1000 and mobile 390×844, light theme.
+- All four returned HTTP 200, with no browser console errors or uncaught page errors.
+- No document-level horizontal overflow or reported overflow candidates.
+- The project-owned bilingual SVG loaded in every case and emitted the localized descriptive image alternative text.
+- All 31/31 MathJax expressions rendered in every case; no unrendered delimiters were reported.
+- Desktop Axe: zero violations in both languages (33 passed rules and one incomplete check per language). Mobile Axe was skipped by the existing audit profile.
+- Desktop keyboard probe: 35 focus targets per language were sampled; visible focus indicators were reported. This is automated coverage, not a complete manual keyboard audit.
+- The route-context probe found one localized learning-path context, one stage link, and a resolving stage anchor in both languages.
+- Desktop and mobile screenshots were inspected. The mobile projection equations remain readable as aligned display blocks; the page layout and diagrams remain within the 390px viewport.
+
+The workflow covered 92 browser cases overall with zero reported browser-script failures. This total is site-wide; the Q/K/V-specific evidence is the four cases listed above.
+
+### Evidence boundary
+
+This is a PR-local Chromium render of the Q/K/V page content at PR #787's tested head. The Q/K/V source page has not changed since that revision, but later main-branch work changed shared site navigation (including PR #818); this artifact therefore does not establish the exact current-main site chrome or a fresh deployed GitHub Pages check. The public Pages URL was not accessible through the available page reader during this review.
+
+The automated keyboard probe does not replace manual keyboard testing. No touch-device or screen-reader session was performed, and mobile Axe was not run. SVG image alt text was observed in the rendered DOM, but assistive-technology announcement of the SVG and its internal `<title>`/`<desc>` remains unverified.
+
+This evidence supersedes the older PR #680 evidence for the Q/K/V page body and provides a more recent render of its one-minute mental model, projection equations and explanatory sections. It does not close #483: deployed-site verification, manual keyboard/touch/screen-reader checks and original third-party media provenance/reuse terms remain open.
