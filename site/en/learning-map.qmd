@@ -36,7 +36,6 @@ You can remember the route in **five movements** before exploring the eight deta
 
 The eight stages below unpack this overview without making every page a strict prerequisite.
 :::
- The **Build path is independent**: it has its own implementation order and entry point. The route is derived from the canonical curriculum; the map starts from the high-level territories, then reveals sections and pages as you click. The reading notes below collapse by default; the map mirrors the search, filter, and selection in the URL, and the "Copy link" button shares that exact view.
 
 ::: {.callout-note collapse="true" title="How to read this map"}
 
