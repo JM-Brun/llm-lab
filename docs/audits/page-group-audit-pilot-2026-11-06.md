@@ -131,7 +131,7 @@ The page-map contracts are aligned: each page names what it covers and delegates
 
 | ID | Priority | Scope | Evidence and impact | Recommendation |
 |---|---|---|---|---|
-| B-01 | P2 | Guided route/depth | site/fr/attention-score-scaling.qmd declares scaled-dot-product-attention as its parent and develops the 1/sqrt(d_k) factor. data/guided-route.yml currently lists cross-attention as the computation stage's optional page but omits attention-score-scaling. The deep dive is discoverable through page hierarchy, but not the stage's optional resources. | Decide explicitly whether the computation stage should expose this mathematical deep dive. If yes, add it to FR and EN optional_pages; otherwise document why it is intentionally outside the stage. |
+| B-01 | Implemented / verified (2026-11-09) | Guided route/depth | The current `data/guided-route.yml` lists `fr/attention-score-scaling` and `en/attention-score-scaling` in the computation stage's `optional_pages`; the page remains a deep dive linked to scaled dot-product attention. | Preserve as optional depth. No further route or page change is required. |
 | B-02 | Verified / no defect | Transition | The FR and EN causal-masking pages contain explicit next-step navigation to logits; page metadata also identifies logits as the next route step. | No additional bridge is justified by the inspected source. |
 | B-03 | Observation | Optional depth | Cross-attention belongs to a different architectural setting and should not be inserted into the core decoder-only GPT sequence. | Preserve its optional status and explain its encoder-decoder/multimodal context where linked. |
 
@@ -259,7 +259,7 @@ This is a useful regression case for sequential audits. Each page establishes th
 | Priority | Action | Affected sources | Acceptance criterion |
 |---|---|---|---|
 | P1 | Preserve role-aware group membership in audits and navigation summaries. | Audit skill and future reports | Every member is marked core, optional, branch or context; sequence is stated separately. |
-| P2 | Decide whether attention-score-scaling belongs in the computation stage's optional resources. | data/guided-route.yml and generated FR/EN contexts | Decision is documented; if included, both languages resolve the same page ID and generated contexts validate. |
+| Verified | Keep attention-score-scaling as an optional computation-stage deep dive in FR and EN. | data/guided-route.yml | Both language IDs are present; it is not promoted to a core prerequisite. |
 | Verified | Retain the explicit text-data → corpus-preparation hand-off. | FR/EN text-data pages | Both pages identify corpus preparation as a separate Build concern, not a conceptual inference prerequisite. |
 | Verified | Retain the causal-mask → logits next-step navigation. | FR/EN causal-masking and logits | Both language versions expose the next-step link; no extra explanatory paragraph is needed. |
 | P2 | Add semantic bilingual parity to the audit procedure. | Audit skill | EN/FR comparison covers metadata, role, examples, scope, links and stage membership, not only file existence. |
@@ -295,3 +295,12 @@ A second, targeted read of the actual transition sections resolved three checks 
 - **Bilingual parity — partially verified:** the text-data boundary and causal-masking → logits navigation were checked in both languages and are semantically aligned in these specific places. This does not establish full semantic parity across all pages in the groups.
 
 **Finding lifecycle correction:** A recommendation phrased as "verify whether X exists" must be closed as verified when the evidence is found. It must not remain in the open action plan as though the project still needs the work. The outstanding action plan is therefore limited to A-01, A-03, B-01, C-01 through C-04 where applicable, and the method-level refinements.
+
+
+## 11. Revalidation — 2026-11-09
+
+The previously open **B-01** decision is resolved in the current `main` source. `data/guided-route.yml` now exposes `fr/attention-score-scaling` and `en/attention-score-scaling` as optional resources in the computation stage. This matches the page's declared deepening role and its parent relation to scaled dot-product attention. The resource is discoverable from the guided stage without becoming a core lesson or prerequisite.
+
+**Disposition:** B-01 is **Implemented / verified**. No additional configuration, page metadata, generator, or test is justified; the existing route validator already checks the bilingual page references. The historical recommendation is retained above for traceability, while the action plan now records the resolved state.
+
+This revalidation is source-level. It does not claim a new rendered browser review or learner study. Pedagogical effectiveness and transfer remain unmeasured; the existing independent learner pilot remains tracked by [#447](https://github.com/JM-Brun/llm-lab/issues/447).
