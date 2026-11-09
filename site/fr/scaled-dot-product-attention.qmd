@@ -134,9 +134,9 @@ On divise d’abord les scores par $\sqrt{4}=2$, ce qui donne $(1,0)$. Le softma
 :::
 
 
-## Du calcul à l'implémentation
+## Complément côté Build (facultatif)
 
-Cette page établit le mécanisme et ses invariants, sans détailler le contrat logiciel de la primitive NumPy. Pour suivre son emploi dans un bloc multi-têtes, les formes intermédiaires et les tests, voir la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd). Les conventions générales sur les axes et les dimensions sont regroupées dans [Tenseurs](tensors.qmd).
+Cette page appartient au parcours conceptuel **Théorie / Understand** : elle explique le mécanisme et ses invariants. Pour voir comment la primitive est appelée dans une implémentation multi-têtes, consultez facultativement la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd), qui appartient au parcours **Build**, indépendant du parcours conceptuel. Les conventions générales sur les axes et les dimensions sont regroupées dans [Tenseurs](tensors.qmd).
 
 {{< include ../includes/generated-suggested-route-fr-scaled-dot-product-attention.qmd >}}
 
