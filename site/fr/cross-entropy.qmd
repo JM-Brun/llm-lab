@@ -145,7 +145,7 @@ PyTorch accepte aussi des cibles sous forme de distributions de probabilité (pa
 
 ### Erreur fréquente de dimension : normaliser sur le temps plutôt que sur le vocabulaire
 
-Pour des logits de forme `(B,T,V)`, chaque position temporelle doit définir une distribution de probabilité sur le **vocabulaire**. La softmax doit donc utiliser `dim=-1` (l'axe (V)). Une normalisation sur `dim=1` répartit au contraire les probabilités dans le temps pour chaque entrée du vocabulaire ; elle ne produit pas une distribution catégorielle sur les tokens à chaque position.
+Pour des logits de forme `(B,T,V)`, chaque position temporelle doit définir une distribution de probabilité sur le **vocabulaire**. La softmax doit donc utiliser `dim=-1` (l'axe du vocabulaire). Une normalisation sur `dim=1` répartit au contraire les probabilités dans le temps pour chaque entrée du vocabulaire ; elle ne produit pas une distribution catégorielle sur les tokens à chaque position.
 
 ```python
 correct_probs = logits.softmax(dim=-1)
@@ -164,7 +164,7 @@ assert not torch.allclose(
 )
 ```
 
-C'est pourquoi l'exemple aplatit d'abord `(B,T,V)` en `(B×T,V)) : la dimension des classes/du vocabulaire devient alors sans ambiguïté la dimension 1 attendue par `CrossEntropyLoss`.
+C'est pourquoi l'exemple aplatit d'abord `(B,T,V)` en `(B×T,V) : la dimension des classes/du vocabulaire devient alors sans ambiguïté la dimension 1 attendue par `CrossEntropyLoss`.
 
 ### Cas numérique extrême : log-softmax stable
 
@@ -188,7 +188,7 @@ assert naive_probability == 0.0
 assert torch.isinf(naive_loss)
 ```
 
-Le résultat infini est un échec du calcul naïf en virgule flottante, pas une perte mathématique infinie : pour ces logits, la perte exacte vaut (2000) nats. En pratique, passer directement les logits à `CrossEntropyLoss` ou utiliser `log_softmax` suivi de l'extraction de la cible ; ne pas calculer soi-même `log(softmax(logits))`.
+Le résultat infini est un échec du calcul naïf en virgule flottante, pas une perte mathématique infinie : pour ces logits, la perte exacte vaut 2000 nats. En pratique, passer directement les logits à `CrossEntropyLoss` ou utiliser `log_softmax` suivi de l'extraction de la cible ; ne pas calculer soi-même `log(softmax(logits))`.
 :::
 
 ## Lien avec la perplexité
