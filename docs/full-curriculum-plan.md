@@ -74,7 +74,7 @@ Use Raschka's *LLMs from Scratch* as an important implementation and coverage re
 
 **Deepen** provides optional advanced mathematical, technical, architectural and research detail relevant to either path. **Practice & experiment** provides exercises, executable experiments and tests that may reinforce either path. Each resource should identify its target path(s); neither destination creates a third or fourth mandatory curriculum.
 
-### Supporting destination — Deepen and open exploration
+#### Deepen — deep dives and open exploration
 
 Purpose: let readers pursue a question without completing the guided path first.
 
