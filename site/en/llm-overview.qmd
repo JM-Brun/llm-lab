@@ -9,8 +9,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-overview"
-scope: "Defines LLMs and GPTs, introduces autoregressive prediction, locates the shared computational spine, and distinguishes architecture, parameter learning, and use. Directs readers to canonical lessons without duplicating their mechanisms."
-purpose: "Enable readers to define an LLM, place GPT within Transformer families, trace computation from context to next-token distribution, and distinguish generation, scoring, training, and adaptation."
+scope: "Defines LLMs and GPTs, illustrates next-token prediction, and distinguishes architecture, parameter learning, and use. Directs readers to canonical lessons without duplicating their mechanisms."
+purpose: "Give readers a first mental model of an LLM: what it predicts, how it maps context to a token distribution, and how that distribution is used for generation, scoring, and training."
 suggested_route:
   previous: "en/index"
   next: "en/generation"
@@ -73,25 +73,17 @@ The figure summarizes generation: text is tokenized, the network computes a dist
 
 ### One shared computation, three uses
 
-The model maps the context to **logits** (unnormalized scores); the *softmax* function converts them into a probability distribution over the vocabulary. This forward pass is shared by the uses below; what changes is what we do with the distribution.
+The model maps the context to **logits** (scores for each vocabulary token). The *softmax* function then converts these scores into **probabilities**. This distribution tells us which tokens could follow the context and how likely each one is.
 
-{{< include ../includes/generated-computational-graph-en-persistent-spine.qmd >}}
+![From context to three uses of the predictive distribution: generation, observed-target scoring, and training.](../images/llm-shared-prediction-uses-en.svg){#fig-llm-shared-prediction-uses fig-alt="The context passes through the model, which produces logits and then a probability distribution over the next token. The distribution is used to select a token during generation, measure the probability of an observed token during scoring, or calculate a loss and update parameters during training."}
 
-| Use | What happens to the distribution | Parameters |
-|---|---|---|
-| **Generation** | Process the initial prompt (*prefill*), select a token, append it to the context, and repeat during *decode* | Fixed |
-| **Observed-target scoring** | Compute the probability of a known token from its observed prefix, then the sequence likelihood or NLL | Fixed |
-| **Training** | Supply prefixes from the reference sequence (*teacher forcing*), compare distributions with target tokens, compute the loss and its gradients, then update parameters | Updated at the update step |
+The predictive computation is shared; **what happens next depends on the question**:
 
-These three uses share the same predictive computation, but they are not one execution loop: generation feeds a selected token back into the context, scoring evaluates an observed target, and training updates the parameters.
+- **Generate:** choose a token using a decoding rule, append it to the context, and repeat. First, *prefill* processes the supplied prompt; *decode* then produces tokens one at a time. These are two inference phases, not training mechanisms. See [generation](generation.qmd).
+- **Score:** inspect the probability the model assigns to the token that actually follows in a known text. This lets us measure how much probability the model assigns to a sequence. See [likelihood](likelihood.qmd).
+- **Learn:** compare probabilities with the expected tokens, calculate a *loss* (a measure of prediction error), and adjust parameters using gradients. During this process, the model receives the true preceding text at each position: this is *teacher forcing*. See [training examples](training-examples.qmd), [loss](loss.qmd), and [gradients](gradients.qmd).
 
-*Prefill* and *decode* are inference execution phases. *Teacher forcing* describes conditioning on reference tokens during scoring or training; it is not a generation phase. When scoring or training on a known sequence, a forward pass produces a distribution at each position. Each distribution is aligned with the next target token; the causal mask prevents the model from accessing future tokens. [Training examples](training-examples.qmd), [loss](loss.qmd), and [gradients](gradients.qmd) explain the training branch; [likelihood](likelihood.qmd) explains scoring.
-
-**Target scoring** and **model evaluation** are not synonyms. Scoring computes probabilities for observed targets; evaluation aggregates scores or metrics under a defined data protocol. It may also assess generated outputs. The following view illustrates evaluation based on scoring, without updating parameters.
-
-{{< include ../includes/generated-computational-graph-en-evaluation.qmd >}}
-
-The [KV cache](generation.qmd) is an optional inference optimization: it stores previously computed attention keys and values to avoid some repeated computation. Its memory/compute trade-off is discussed in the [LLM computational complexity deep dive](llm-computational-complexity.qmd).
+Scoring and evaluation are related but different: scoring computes probabilities for a given text; evaluation compares these results — or other measures — across a defined set of examples. It measures performance without changing the parameters.
 
 ## 4. Architecture, learning, and use
 
