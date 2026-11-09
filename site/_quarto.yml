@@ -150,6 +150,7 @@ website:
             - fr/llm-overview.qmd
             - fr/generation.qmd
             - section: "Comment le modèle calcule sa prédiction"
+              href: fr/text-data.qmd
               contents:
                 - fr/text-data.qmd
                 - section: "Des identifiants aux représentations"
@@ -251,6 +252,7 @@ website:
             - en/llm-overview.qmd
             - en/generation.qmd
             - section: "How the model computes a prediction"
+              href: en/text-data.qmd
               contents:
                 - en/text-data.qmd
                 - section: "From IDs to representations"
