@@ -62,8 +62,9 @@ def test_membership_projection_preserves_core_optional_and_multiple_contexts(
         ("training", "optional"),
     ]
 
-    training_examples = memberships[f"{language}/training-examples"]
-    assert [(item.stage_id, item.role) for item in training_examples] == [("training", "optional")]
+    # Training-example construction belongs to the independent Build path,
+    # not to the conceptual Theory route.
+    assert f"{language}/training-examples" not in memberships
 
     optional_page = f"{language}/transformer-architectures"
     assert [(item.stage_id, item.role) for item in memberships[optional_page]] == [
