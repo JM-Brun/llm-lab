@@ -2700,7 +2700,7 @@ sources:
     identifiers: {}
     canonical_url: "https://www.deeplearning.ai/courses/how-transformer-llms-work"
     publisher: "DeepLearning.AI"
-    publication_date: "2025-02-10"
+    publication_date: null
     updated_date: null
     language: en
     version: "13-lesson short course; official outline checked 2026-11-09"
