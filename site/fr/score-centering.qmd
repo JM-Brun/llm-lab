@@ -17,7 +17,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/gradients", "fr/llm-evolution"]
-tags: ["type:deep-dive", "destination:deepen", "topic:score-centering", "domain:probabilistic-foundations-training", "importance:specialized", "level:advanced", "language:fr", "status:published"]
+tags: ["type:deep-dive", "destination:deepen", "topic:score-centering", "level:advanced", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
