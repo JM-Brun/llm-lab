@@ -622,10 +622,9 @@ relations:
   - {from: attention-score, type: normalized-by, to: softmax}
   - {from: softmax, type: produces, to: attention-weight}
   - {from: causal-mask, type: constrains, to: scaled-dot-product-attention}
-  - {from: causal-mask, type: part-of, to: attention-mask}
-  - {from: padding-mask, type: part-of, to: attention-mask}
-  - {from: document-boundary-mask, type: part-of, to: attention-mask}
   - {from: attention-mask, type: constrains, to: self-attention}
+  - {from: padding-mask, type: constrains, to: self-attention}
+  - {from: document-boundary-mask, type: constrains, to: self-attention}
   - {from: loss-mask, type: constrains, to: training-objective}
   - {from: attention-mask, type: contrasts-with, to: loss-mask}
   - {from: scaled-dot-product-attention, type: applies-to, to: self-attention}
