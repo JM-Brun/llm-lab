@@ -2406,6 +2406,92 @@ sources:
         - docs/source-reviews/jay-joshi-transformer-mathematics-attention-2026-11.md
 
 
+  - id: cameron-wolfe-language-model-training-inference
+    title: "Language Model Training and Inference: From Concept to Code"
+    creators: ["Cameron R. Wolfe"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://cameronrwolfe.substack.com/p/language-model-training-and-inference"
+    publisher: "Cameron R. Wolfe / Deep (Learning) Focus"
+    publication_date: "2023-09-04"
+    updated_date: null
+    language: en
+    version: "published article"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency, architectures-mechanisms]
+      tags:
+        - topic:next-token-prediction
+        - topic:autoregressive-generation
+        - topic:causal-language-model
+        - method:distributed-data-parallel
+        - ecosystem:pytorch
+      concept_ids:
+        - next-token-prediction
+        - conditional-distribution
+        - observed-target
+        - sequence-likelihood
+        - log-likelihood
+        - cross-entropy
+        - training-objective
+        - self-attention
+        - causal-mask
+        - positional-encoding
+        - gradient
+        - optimizer
+        - parameter-update
+        - pretraining
+    metadata:
+      technical_level: mixed
+      contribution_types: [theory, architecture, implementation, pedagogy]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-09"
+        status: scanned
+        inspected_scope:
+          - "Complete author-authored article body: introduction, background, tokenization and vocabulary, pretraining, autoregressive inference, minimal decoder-only implementation, forward pass, NanoGPT training, closing discussion and bibliography"
+          - "All text-accessible figure captions/placements and linked references surfaced in the article"
+          - "Source-local teaching sequence and its relationship to the existing LLM Lab computational spine, concept registry and learning route"
+        limitations:
+          - "The article is a 2023 tutorial; implementation details and statements about typical context lengths are time-bound and must not be treated as current general facts."
+          - "The linked NanoGPT implementation and tutorial video were not independently audited in this ingestion pass."
+          - "Embedded visual assets were not retrieved as reusable files; no figure reuse permission or licence was established."
+          - "The article's PyTorch/NanoGPT implementation is not evidence that the corresponding training workflow exists in LLM Lab."
+    related:
+      pages:
+        - fr/generation
+        - en/generation
+        - fr/training-examples
+        - en/training-examples
+        - fr/transformer
+        - en/transformer
+        - fr/vraisemblance
+        - en/likelihood
+        - fr/probabilites
+        - en/probabilities
+      concepts:
+        - next-token-prediction
+        - conditional-distribution
+        - observed-target
+        - sequence-likelihood
+        - log-likelihood
+        - cross-entropy
+        - training-objective
+        - self-attention
+        - causal-mask
+        - positional-encoding
+        - gradient
+        - optimizer
+        - parameter-update
+        - pretraining
+      audit_records:
+        - docs/source-reviews/language-model-training-inference-cameron-wolfe-2026-11.md
+
   - id: cameron-wolfe-score-centering-substack
     title: "Score Centering"
     creators: ["Cameron R. Wolfe"]
