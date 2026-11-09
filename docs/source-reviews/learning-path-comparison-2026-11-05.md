@@ -1,7 +1,7 @@
 # Comparative audit of LLM learning paths: Raschka, Hugging Face and LLM Lab
 
 **Audit date:** 2026-11-05  
-**Purpose:** record the external curriculum comparison referenced by [#225](https://github.com/JM-Brun/llm-lab/issues/225), and make explicit which design principles are transferable to LLM Lab.  
+**Purpose:** record the external curriculum comparison referenced by [#225](https://github.com/JM-Brun/llm-lab/issues/225), and make explicit which design principles are transferable to LLM Lab. This is an existing, dated project-level baseline and must be reused by the [project-level learning resource audit workflow](../workflows/project-learning-resource-audit.md) and coordinator [#756](https://github.com/JM-Brun/llm-lab/issues/756), not recreated as a new portfolio report.  
 **Scope:** public curriculum structure and stated learning activities, not a full evaluation of lesson quality or learner outcomes. The two external courses evolve; this is a dated snapshot.
 
 ## Executive conclusion

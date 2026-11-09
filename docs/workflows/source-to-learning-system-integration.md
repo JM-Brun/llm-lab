@@ -6,7 +6,7 @@
 
 > Apply the validation protocol to distinguish source inspection, extraction, cross-source synthesis, project integration, resource validation and learner validation. Q/K/V is the first calibration case; it does not by itself establish that the method scales to other concepts.
 
-## 1. Objective
+## Scope boundary: source, topic and project-level work\n\nThis workflow governs source-level extraction and integration, including multi-source synthesis within a topic. When the requested unit is a coherent external book, course, educational site, tutorial series or interactive learning environment, use the complementary [project-level learning resource audit workflow](project-learning-resource-audit.md). That workflow reuses this workflow's source records, extractions, reviews, taxonomy and validation; it does not create a parallel catalogue or replace source-level provenance.\n\nUse the project audit to reconstruct the overall instructional architecture and compare it with LLM Lab. Use this workflow for the constituent sources and the resulting canonical integration. Keep source-local graphs/routes, topic synthesis, project-level teaching model and LLM Lab's canonical graph/routes distinct.\n\n## 1. Objective
 
 Convert external learning resources into a traceable, critically assessed contribution to LLM Lab. The goal is not to summarize every source or maximize page edits. It is to identify what the source adds to the project's knowledge, pedagogy, experimentation, implementation or visual communication, then integrate only what improves the learning system.
 

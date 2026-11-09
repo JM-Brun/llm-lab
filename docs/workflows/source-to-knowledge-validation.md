@@ -23,7 +23,7 @@ This protocol complements:
 
 It does not define new source registries, concepts, controlled vocabularies or a parallel skill system. Reuse the canonical schemas, taxonomies and artifacts.
 
-## 2. Independent completion states
+## Project-level audit boundary\n\nWhen the unit of analysis is a coherent external learning project (book, course, educational site, tutorial series or interactive environment), apply the [project-level learning resource audit workflow](project-learning-resource-audit.md) in addition to this protocol. The project audit is a higher-level synthesis over source-level evidence; it does not replace source inspection, extraction, technical verification or item-level dispositions.\n\nTrack project-model reconstruction and cross-project synthesis separately from source inspection and topic synthesis. A project may have an architecture scan without deep lesson inspection; a source may be fully extracted without the project being audited; and a project audit may produce no LLM Lab changes. Do not infer whole-project coverage or learner effectiveness from source counts, issue completion, CI or a comparison matrix.\n\n## 2. Independent completion states
 
 Never compress these into one "done" flag:
 

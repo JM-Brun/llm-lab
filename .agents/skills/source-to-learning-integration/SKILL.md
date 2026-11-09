@@ -23,7 +23,7 @@ Use this skill to orchestrate both. Run extraction first unless a complete, trus
 
 Apply the [source-to-knowledge validation protocol](../../../docs/workflows/source-to-knowledge-validation.md) across the hand-off: validate extraction fidelity before synthesis, compare contributions before deciding integration, and report resource validation and learner validation as separate evidence states. Q/K/V is a calibration case, not proof of transferability.
 
-## Phase A — extraction
+## Project-level audit routing\n\nIf the request concerns an entire external learning project or coherent resource family, invoke `project-learning-resource-audit` first to reconcile the existing project owner and reconstruct the project model. Then use Phase A below for any constituent sources not already inspected and Phase B for accepted integration decisions. Do not rescan source materials already represented by trustworthy records. For a single article or a multi-source topic collection, stay with this skill's ordinary phases and the existing source/topic comparison templates.\n\n## Phase A — extraction
 
 Input: URLs, documents, repositories, named sources, or a source set.
 
