@@ -27,6 +27,15 @@ tags: ["type:concept-lesson", "destination:understand", "topic:transformer-archi
 Un Transformer peut utiliser un encodeur, un décodeur ou les deux. Ce choix détermine quelles positions peuvent échanger de l'information et comment le modèle traite une séquence. Il ne fixe pas, à lui seul, l'objectif d'entraînement ni la tâche réalisée.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+- **Encodeur seul :** contextualise l'entrée avec une attention généralement bidirectionnelle ; BERT et RoBERTa en sont des exemples.
+- **Encodeur-décodeur :** l'encodeur représente l'entrée ; le décodeur génère la sortie avec une attention causale et une attention croisée vers l'encodeur ; T5 en est un exemple.
+- **Décodeur seul :** utilise une attention causale pour prolonger un préfixe ; GPT en est l'exemple pédagogique central ici.
+- **Trois notions distinctes :** architecture (organisation du calcul), objectif d'entraînement (ce qui est optimisé) et tâche (ce que le système doit accomplir).
+
+**Question de contrôle :** pouvez-vous expliquer quel contexte chaque architecture autorise et pourquoi l'objectif de prédiction ne définit pas à lui seul l'architecture ?
+:::
+
 Cette comparaison est facultative : pour suivre le fil principal, passer directement du [panorama des LLM](llm-overview.qmd) à la [génération](generation.qmd).
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
