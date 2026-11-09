@@ -65,10 +65,10 @@ const cases = [
   ...transformerOverviewResponsiveCases.map(testCase => ({
     ...testCase, page: "transformer.html", kind: "transformer-overview-mobile",
   })),
-  // Focused mobile review for the attention → scoring → training slice.
+  // Focused mobile review for decoding, attention, scoring and training.
   // Desktop/light route-context cases above remain the keyboard/Axe baseline.
   ...visualCases.filter(testCase => testCase.label === "mobile").flatMap(testCase =>
-    ["queries-keys-values.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "causal-masking.html", "attention-score-scaling.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "cross-entropy.html", "loss.html", "gradients.html", "training-examples.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html"].map(page => ({
+    ["decoding-strategies.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "causal-masking.html", "attention-score-scaling.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "cross-entropy.html", "loss.html", "gradients.html", "training-examples.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html"].map(page => ({
       ...testCase, page, kind: "attention-training-mobile",
     }))
   ),
@@ -102,7 +102,7 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
-    const targetedReviewPages = new Set(["exercises.html", "transformer.html", "entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
+    const targetedReviewPages = new Set(["exercises.html", "transformer.html", "decoding-strategies.html", "entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
     // A browser-review script change must exercise the focused lesson pages:
     // they share page-navigation, responsive, and rendered-math assertions.
     const selectedPages = new Set([
