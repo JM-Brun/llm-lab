@@ -45,8 +45,7 @@ def test_linked_sidebar_section_entry_is_projected_once(
 
     def count_page(sections: list[dict[str, Any]], page_id: str) -> int:
         return sum(
-            section["pages"].count(page_id)
-            + count_page(section.get("sections", []), page_id)
+            section["pages"].count(page_id) + count_page(section.get("sections", []), page_id)
             for section in sections
         )
 
