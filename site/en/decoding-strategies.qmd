@@ -40,8 +40,8 @@ By the end of this page, you will be able to:
 - **Local processing:** logits can be transformed, filtered, and renormalized before selecting the next token.
 - **Temperature:** it controls distribution concentration; it changes neither model parameters nor intrinsic model quality.
 - **Top-k / top-p:** they restrict candidates by a fixed count or a target cumulative mass; they change the effective distribution.
-- **Search:** greedy decoding optimizes a local decision; beam search keeps several hypotheses and compares sequences under a score.
-- **Limitation:** no strategy alone guarantees truth, global coherence, or task-appropriate quality; document the protocol.
+- **Search:** greedy decoding optimizes a local decision; beam search keeps several hypotheses; contrastive decoding compares an expert and an amateur model.
+- **Evaluation:** quality and diversity depend on the task, metrics, and protocol; documenting settings is necessary for reproducibility. No strategy guarantees truth or global coherence.
 
 **Check your understanding:** can you distinguish transforming a distribution at one position from searching over multiple sequences?
 :::
