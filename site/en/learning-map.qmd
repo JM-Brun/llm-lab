@@ -25,6 +25,19 @@ tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:ov
 
 This page presents the eight-stage **Theory / Understand path**, followed by a progressive resource map. The **Build path is independent**: it has its own implementation order and entry point. The route is derived from the canonical curriculum; the map starts from the high-level territories, then reveals sections and pages as you click. The reading notes below collapse by default; the map mirrors the search, filter, and selection in the URL, and the "Copy link" button shares that exact view.
 
+::: {.callout-note title="The path in brief"}
+You can remember the route in **five movements** before exploring the eight detailed stages:
+
+1. **Place the system** — understand what an LLM is and what it predicts.
+2. **Observe** — follow a complete generation as a black box, from context to next token.
+3. **Explain the computation** — connect text and tokens, representations, the Transformer, and the predictive distribution.
+4. **Understand the uses** — distinguish generation, scoring an observed target, and parameter learning. These are three uses of predictive computation, not successive steps in one generation loop.
+5. **Explore** — then choose to build, practice, deepen, or consult references.
+
+The eight stages below unpack this overview without making every page a strict prerequisite.
+:::
+ The **Build path is independent**: it has its own implementation order and entry point. The route is derived from the canonical curriculum; the map starts from the high-level territories, then reveals sections and pages as you click. The reading notes below collapse by default; the map mirrors the search, filter, and selection in the URL, and the "Copy link" button shares that exact view.
+
 ::: {.callout-note collapse="true" title="How to read this map"}
 
 - **Territories** — the main parts of the site: Understand, Build, Practice, Deepen, Reference.
