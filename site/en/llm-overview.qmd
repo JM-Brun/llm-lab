@@ -9,6 +9,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-overview"
+summary: "Provides a system-level view of an LLM: next-token prediction, context processing, and the distinct uses of generation, scoring, and training. Directs readers to the pages that explain each mechanism."
 scope: "Defines LLMs and GPTs, illustrates next-token prediction, and distinguishes architecture, parameter learning, and use. Directs readers to canonical lessons without duplicating their mechanisms."
 purpose: "Give readers a first mental model of an LLM: what it predicts, how it maps context to a token distribution, and how that distribution is used for generation, scoring, and training."
 suggested_route:

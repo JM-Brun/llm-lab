@@ -8,6 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/text-data"
+summary: "Suit le passage du texte source au contexte discret fourni au modèle : prétraitement, tokens, identifiants et lookup des embeddings. Distingue l’encodage d’un prompt de la préparation d’un corpus d’entraînement."
 scope: "Présente les étapes et objets qui relient un texte source à l’entrée d’un modèle — prétraitement, tokenisation, IDs et lookup d’embedding — et distingue l’encodage d’un prompt de la préparation d’un corpus d’apprentissage ; les détails Unicode, les algorithmes de segmentation et les calculs du réseau sont délégués aux pages spécialisées."
 purpose: "Le lecteur doit pouvoir retracer la chaîne texte → tokens → IDs → vecteurs initiaux, distinguer les opérations d’encodage d’un prompt de celles de préparation des données d’entraînement, et identifier ce que chaque étape ne permet pas de conclure."
 suggested_route:

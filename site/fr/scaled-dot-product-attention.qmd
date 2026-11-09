@@ -8,6 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/scaled-dot-product-attention"
+summary: "Déroule le calcul d’attention de bout en bout : compatibilité entre Q et K, mise à l’échelle, normalisation des scores et agrégation pondérée de V."
 scope: "Décompose le calcul d’attention à produit scalaire : scores QKᵀ, mise à l’échelle par la dimension des clés, normalisation softmax et combinaison pondérée des valeurs ; la justification du facteur d’échelle est développée dans l’approfondissement dédié, le masque causal est traité séparément et l’architecture multi-tête n’est abordée qu’en complément."
 purpose: "Le lecteur doit pouvoir suivre les étapes du calcul d’attention, expliquer le rôle de la mise à l’échelle et interpréter les poids comme une distribution de pondération conditionnée par les scores et le masque."
 suggested_route:

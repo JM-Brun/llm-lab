@@ -8,6 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/positional-encoding"
+summary: "Explains how positional information lets a Transformer account for token order, and locates the main families of mechanisms in the computation."
 scope: "Introduces why a Transformer needs positional information, distinguishes absolute encodings from relative mechanisms, and situates RoPE as a rotary relative-position method; clarifies the separate role of causal masking. The detailed RoPE derivation and its variants belong in the advanced deep dive."
 purpose: "Readers should be able to explain why a Transformer needs positional information, distinguish several ways of introducing it, and describe where these mechanisms enter the computation."
 suggested_route:

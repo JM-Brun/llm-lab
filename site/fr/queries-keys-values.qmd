@@ -8,6 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/queries-keys-values"
+summary: "Distingue les trois projections apprises de l’auto-attention : Q formule les requêtes, K permet de calculer les compatibilités et V porte le contenu agrégé."
 scope: "Explique les rôles et les projections apprises Q, K et V dans l'auto-attention, leur entrée commune et leurs dimensions ; laisse le calcul des scores et de l'agrégation à l'attention à produit scalaire, la contrainte temporelle au masque causal, l'implémentation au parcours de construction et le contexte historique à la page dédiée."
 purpose: "Le lecteur doit pouvoir distinguer les projections Q/K qui déterminent les poids de la projection V qui fournit le contenu, écrire les trois projections de l'auto-attention, en déduire les dimensions et prévoir l'effet d'une modification de V à Q et K constants."
 suggested_route:

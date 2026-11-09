@@ -8,6 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/logits"
+summary: "Présente les logits comme les scores non normalisés produits pour les tokens du vocabulaire à la sortie du réseau, juste avant leur transformation en distribution."
 scope: "Définit les logits comme scores réels non normalisés associés aux tokens du vocabulaire en sortie du modèle ; explique leur vecteur, leur dimension et leur rôle dans le classement des candidats, sans développer la normalisation en probabilités."
 purpose: "Le lecteur doit pouvoir interpréter un vecteur de logits de dimension V, expliquer pourquoi ses valeurs ne sont pas des probabilités et distinguer le classement par score de la distribution conditionnelle utilisée pour la génération."
 suggested_route:

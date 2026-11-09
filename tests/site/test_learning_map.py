@@ -37,6 +37,7 @@ def _write_page(
     parents: list[str] | None = None,
     related: list[str] | None = None,
     domain: str | None = None,
+    summary: str | None = None,
     headings: tuple[str, ...] = ("## Core idea", "### Query, Key, Value"),
 ) -> None:
     """Create a minimal Quarto page carrying the repository page-map contract."""
@@ -63,6 +64,8 @@ def _write_page(
     }
     if domain is not None:
         metadata["domain"] = domain
+    if summary is not None:
+        metadata["summary"] = summary
     front_yaml = yaml.safe_dump(front, allow_unicode=True, sort_keys=False).strip()
     metadata_yaml = yaml.safe_dump(metadata, allow_unicode=True, sort_keys=False).strip()
     body = "\n".join(headings)
@@ -241,6 +244,7 @@ def test_load_pages_extracts_published_pages_and_section_headings(tmp_path: Path
         page_id="fr/attention",
         language="fr",
         title="Attention",
+        summary="A concise reader-facing description.",
         headings=(
             "## Intuition",
             "### **Query**, Key and Value",
@@ -268,6 +272,7 @@ def test_load_pages_extracts_published_pages_and_section_headings(tmp_path: Path
     assert french["title"] == "Attention"
     assert french["href"] == "attention.html"
     assert french["scope"] == "A concise scope."
+    assert french["summary"] == "A concise reader-facing description."
     assert french["purpose"] == "A concise pedagogical purpose."
     assert french["destination"] == "understand"
     assert french["level"] == "core"
@@ -398,6 +403,8 @@ def test_render_map_script_bakes_bilingual_copy() -> None:
     assert "All territories" in script
     assert "__LEARNING_MAP_COPY__" not in script
     assert "sectionHeadingList.appendChild(item)" in script
+    assert "page.summary" in script
+    assert "map-detail-summary" in script
 
 
 def test_render_territory_map_localizes_the_shell_markup() -> None:
@@ -1097,7 +1104,7 @@ def test_search_results_highlight_matches_with_marks() -> None:
     assert "function appendMarkedText(node, text, query)" in script
     assert 'el("mark", "map-mark"' in script
     assert "appendMarkedText(pageTitle, page.title, query);" in script
-    assert "appendMarkedText(pageSummary, page.purpose, query);" in script
+    assert "appendMarkedText(pageSummary, page.summary || page.purpose, query);" in script
     assert "appendMarkedText(label, concept.label, query);" in script
     assert "appendMarkedText(definition, concept.definition, query);" in script
     assert script.count("grid.appendChild(conceptItemFor(concept, neighbors, query));") == 2

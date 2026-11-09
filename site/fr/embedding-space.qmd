@@ -8,6 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/embedding-space"
+summary: "Présente le lookup qui transforme un identifiant de token en vecteur initial appris, puis distingue ce vecteur des représentations contextualisées produites par le réseau."
 scope: "Explique le lookup qui associe chaque ID de token à un vecteur initial appris, puis distingue ce vecteur des représentations contextualisées produites par les couches du Transformer ; introduit prudemment la géométrie sans en faire un prérequis."
 purpose: "Le lecteur doit pouvoir expliquer comment un ID sélectionne une ligne de la matrice de plongements (embedding), distinguer le vecteur de plongement initial de la représentation contextualisée, et comprendre pourquoi les propriétés géométriques demandent une interprétation dépendante du modèle et de la tâche."
 suggested_route:

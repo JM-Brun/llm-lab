@@ -607,6 +607,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
     function matchesQuery(page, query) {
       var haystack = [
         page.title,
+        page.summary,
         page.purpose,
         page.topic,
         (page.section_headings || []).join(" "),
@@ -788,9 +789,9 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         var pageTitle = el("span", "map-page-title");
         appendMarkedText(pageTitle, page.title, query);
         card.appendChild(pageTitle);
-        if (page.purpose) {
+        if (page.summary || page.purpose) {
           var pageSummary = el("span", "map-page-summary");
-          appendMarkedText(pageSummary, page.purpose, query);
+          appendMarkedText(pageSummary, page.summary || page.purpose, query);
           card.appendChild(pageSummary);
         }
         card.addEventListener("click", function (event) {
@@ -1025,6 +1026,9 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         )
       );
       detailPanel.appendChild(meta);
+      if (page.summary) {
+        detailPanel.appendChild(el("p", "map-detail-summary", page.summary));
+      }
       if (page.purpose) {
         detailPanel.appendChild(el("p", "map-detail-purpose", page.purpose));
       }

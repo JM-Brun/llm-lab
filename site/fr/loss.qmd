@@ -8,6 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/loss"
+summary: "Relie les pénalités calculées sur les tokens cibles à un objectif d’entraînement agrégé. La loss fournit le signal scalaire différencié pour calculer les gradients et mettre à jour les paramètres."
 scope: "Définir l'objectif scalaire d'entraînement obtenu en agrégeant les pénalités par token cible sur les positions et exemples valides, avec des conventions explicites de masquage et de réduction ; distinguer le terme local de cross-entropie de l'objectif agrégé et de son gradient."
 purpose: "Construire une loss de batch à partir des pénalités par token, expliquer comment le masquage et les réductions somme/moyenne/pondérée modifient l'objectif ou l'échelle du gradient, et interpréter la loss comme la quantité scalaire dérivée pendant l'entraînement."
 suggested_route:

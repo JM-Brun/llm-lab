@@ -21,6 +21,7 @@ The `type` tag is the stable editorial classification, not a filename convention
 ```yaml
 id: "fr/tokenization-strategies"
 scope: "Tokenisation : stratégies et conséquences"
+summary: "Description courte, en langue de la page, de son contenu visible pour le lecteur."
 purpose: "Explain what this page covers and why it exists in the learning path."
 suggested_route:
   previous: "fr/unicode-text"
@@ -74,6 +75,7 @@ These fields must not be conflated:
 
 | Field | Meaning | Constraint |
 |---|---|---|
+| `summary` | A compact reader-facing representation of the page content | One or two sentences; describe what the reader will find, not what they will achieve |
 | `scope` | The boundary of the page: what it covers and what it does not own | One concise statement; avoid generic descriptions |
 | `purpose` | The learning job the page performs | State what the reader should understand or be able to connect |
 | `suggested_route.previous` | A useful page to read immediately before this one on the suggested route | A recommendation, not a hard prerequisite |
@@ -99,8 +101,9 @@ When an edge is removed from `hierarchy`, preserve discoverability with a recipr
 
 ## 3.1 Specificity: scope versus learning purpose
 
-The two fields answer different editorial questions and should not paraphrase one another:
+The three fields answer different editorial questions and should not paraphrase one another:
 
+- **Summary (optional):** what a reader will find on the page, in compact natural language. It is suitable for a page card or detail panel; it must not reproduce the whole introduction. Add it when a concise description materially improves discovery or orientation; do not force it onto every page.
 - **Scope:** what this page owns, including the boundary with adjacent pages. Name the object, process, or level of abstraction covered; state important exclusions when a neighbouring page could plausibly claim the same material.
 - **Purpose:** what the learner should be able to explain, distinguish, trace, calculate, or decide after reading. Prefer observable intellectual outcomes over a description of what the page contains.
 

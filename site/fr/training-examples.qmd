@@ -8,6 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/training-examples"
+summary: "Montre comment construire les paires entrée-cible décalées à partir des tokens et comment le teacher forcing utilise le préfixe observé pour conditionner les prédictions pendant l’entraînement."
 scope: "Couvre la transformation d’un flux de tokens en exemples entrée-cible autorégressifs et la stratégie de conditionnement par teacher forcing : décalage d’un token, fenêtres de contexte et stride, packing et frontières de documents, padding, masques d’attention et de loss, et dimensions des tenseurs. La page s’arrête à la construction et à l'interprétation des exemples, sans implémenter la boucle d'entraînement ni dériver les objectifs d'optimisation."
 purpose: "Construire des exemples entrée-cible alignés à partir d’identifiants de tokens, expliquer comment le teacher forcing conditionne les prédictions sur le préfixe observé, distinguer les choix de fenêtrage et de masquage, et diagnostiquer les erreurs d’alignement qui modifieraient l’objectif d’entraînement."
 suggested_route:
