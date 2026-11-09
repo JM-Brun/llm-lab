@@ -1408,7 +1408,7 @@ A prompt contains the token IDs $(A,B,C)$. Assume a causal Transformer with KV c
 <details>
 <summary>Show the solution</summary>
 
-Prefill processes the three prompt positions in one sequence pass. The logits at the final prompt position (the position of $C$) define the distribution from which $D$ is selected. The next decode step supplies $D$ as the new token to predict $E$. This is not teacher forcing: $D$ was selected by the model, not supplied as an observed reference target. Parameters remain fixed during both prefill and decode.
+Prefill processes the three prompt positions in one sequence pass and populates the KV cache. The logits at the final prompt position (the position of $C$) define the distribution from which $D$ is selected. The next decode step supplies $D$ as the new token and reuses the cached keys and values to predict $E$. This is not teacher forcing: $D$ was selected by the model, not supplied as an observed reference target. Parameters remain fixed during both prefill and decode.
 
 </details>
 
