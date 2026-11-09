@@ -47,6 +47,7 @@ Légende :
 | Étape | Page FR / EN | Rôle et transition à contrôler | Synthèse / révision : premier constat | État |
 |---|---|---|---|---|
 | Orientation | `llm-overview` | Définir LLM/GPT/Transformer, situer le modèle pédagogique et annoncer le noyau prédictif ; conduire vers l'aperçu de génération | Ajout d'un rappel d'une minute FR/EN distinguant catégories, distribution conditionnelle, trois usages et architecture/apprentissage/utilisation | Revue FR/EN effectuée + synthèse ajoutée |
+| Comparaison d'architectures (optionnel) | `transformer-architectures` | Comparer encodeur seul, encodeur-décodeur et décodeur seul ; distinguer architecture, objectif et tâche | Ajout d'un rappel d'une minute FR/EN ; le paragraphe de complexité est désormais un approfondissement replié, l'activité pratique reste explicitement facultative | Revue FR/EN effectuée + niveaux clarifiés |
 | Aperçu d'inférence | `generation` | Donner la boucle complète avec paramètres fixes ; transition vers texte/tokens sans exiger les détails internes | Le corps FR contient objectifs, rappel « une minute », boucle, prefill/decode et frontière teacher forcing ; éviter de recopier la même fiche au retour détaillé | Lecture source partielle |
 | Entrée texte | `text-data` | Texte → tokens → IDs → lookup ; distinguer prompt d'inférence et corpus d'entraînement | Rappel bref et self-check présents ; vocabulaire nuancé pour ne pas présenter tout tokenizer comme doté d'un vocabulaire appris | Revue FR/EN effectuée |
 | Stratégies de tokenisation | `tokenization-strategies` | Comparer unités, algorithmes et compromis ; préparer le passage des IDs aux vecteurs | Section « À retenir » et self-check présents ; le Deepen sur l'évaluation évite de surcharger Understand | Revue FR/EN effectuée |
@@ -362,3 +363,30 @@ Revue source FR/EN des pages conceptuelles et Build, vérification des contrats 
 ### Validation
 
 Revue source FR/EN et cohérence avec le noyau computationnel effectuées. Rendu final et navigation générée à vérifier dans le workflow Quarto/browser en cours ; aucune validation apprenant n'est revendiquée.
+
+
+## 14. Passe G — ressource de comparaison des architectures et exercice d'évaluation (2026-11-09)
+
+### Pages relues en français et en anglais
+
+- `transformer-architectures` : tableau comparatif, schéma de flux d'information, encodeur seul, encodeur-décodeur, décodeur seul, distinction architecture/objectif/tâche, architectures hybrides et compromis de complexité.
+- `evaluation-experimentale` / `experimental-evaluation` : exercice de transfert sur le protocole d'évaluation d'un classement de passages scientifiques, avec estimande, dépendances, fuite, sélection de modèle, AP, calibration, incertitude et reproductibilité.
+
+### Décisions et modifications de cette passe
+
+1. **Architectures Transformer :** ajout d'une synthèse FR/EN des trois configurations et de la distinction architecture/objectif/tâche.
+2. **Séparation des niveaux :** le paragraphe sur la complexité asymptotique, le parallélisme et les dépendances séquentielles est conservé intégralement mais placé dans un callout replié « approfondissement ». La comparaison principale reste lisible sans imposer le niveau Deepen.
+3. **Pratique :** la comparaison pratique BERT/GPT-2/T5 reste un renvoi facultatif séparé, explicitement hors du parcours conceptuel et du Build.
+4. **Évaluation expérimentale :** pas de fiche « une minute » ajoutée. La page est un exercice de transfert : l'énoncé, les questions, la grille de correction et l'auto-évaluation forment déjà un dispositif complet de révision active.
+
+### Cohérence
+
+- La page architectures est une ressource facultative liée depuis le panorama ; elle ne devient pas un prérequis avant la génération.
+- Le résumé fixe les distinctions nécessaires avant que le lecteur explore les détails ou l'activité pratique.
+- Le contenu de complexité conserve son lien vers le guide spécialisé, sans interrompre la comparaison des flux d'information.
+- L'exercice d'évaluation intervient après les fondations et les exercices ; il teste le transfert vers un protocole scientifique, pas la construction du GPT pédagogique.
+- L'AP, la calibration et l'incertitude sont traitées comme des dimensions d'évaluation distinctes de la loss d'entraînement.
+
+### Validation
+
+Revue source FR/EN effectuée. La page d'architecture a été réorganisée sans suppression de contenu ; les liens et le rendu responsive du tableau restent à vérifier dans le navigateur. L'exercice d'évaluation est vérifié comme ressource pédagogique, pas comme résultat expérimental.
