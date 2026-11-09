@@ -280,8 +280,6 @@ Generally yes: an ID only has meaning relative to the vocabulary of the tokenize
 You have understood this step if you can distinguish training the tokenizer from encoding at inference, and explain why IDs depend on the vocabulary and its version.
 :::
 
-{{< include ../includes/generated-suggested-route-en-tokenization-strategies.qmd >}}
-
 ::: {.language-switch}
 **Language:** [Français](../fr/tokenization-strategies.qmd) · [English](tokenization-strategies.qmd)
 :::
