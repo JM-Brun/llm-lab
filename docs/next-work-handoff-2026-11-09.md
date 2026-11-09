@@ -7,6 +7,8 @@
 
 ## 1. Live repository state
 
+> **Update (later on 2026-11-09):** [#760](https://github.com/JM-Brun/llm-lab/pull/760) and [#778](https://github.com/JM-Brun/llm-lab/pull/778) are merged, so step 1 of § 3 is complete; the issue counts and labels below are unchanged. The only open PR at this update is [#787](https://github.com/JM-Brun/llm-lab/pull/787).
+
 - **62 open issues:** P0=0, P1=6, P2=49, P3=7, unclassified=0.
 - **One pre-existing content PR:** [#760 — audit loss and training-path continuity](https://github.com/JM-Brun/llm-lab/pull/760). This handoff is now proposed in [#778](https://github.com/JM-Brun/llm-lab/pull/778), so there are two open PRs including this documentation reconciliation.
 - Recent completed work relevant to this handoff:
@@ -75,6 +77,12 @@ Keep browser-executable micro-code, optional history expansion, Git branch clean
 The uploaded `Architecture conceptuelle LLM.txt` is an earlier planning snapshot for #575. Its P0 actions (canonical computational YAML, relation types, validation and graph projection) have since been implemented through the merged #577/#578/#581/#586/#589/#594/#598/#600 work. The eight-stage guided route, typed computational registry and persistent-spine views are in `main`; #415 is closed. The remaining #584 work is manual reader/accessibility evidence, and #416 is the separate concept-graph visualization work. **Do not restart the old P0 architecture plan.**
 
 The 2026-11-03 `work-backlog-status.md`, the 2026-11-07 handoff and the old priority headings in `roadmap.md` are dated snapshots. Use this handoff and live GitHub labels for execution. The curriculum order issue #225 is closed; its residual browser and learner checks remain with their current owners.
+
+The [2026-11-09 adversarial project review](reviews/adversarial-project-review-2026-11-09.md) maps each of its recommendations to an existing owner and **changes no label or step above**. Three proposals await an explicit owner decision:
+
+1. **Reference parity (G9) before training (G8):** loading pretrained GPT-2 small weights into the existing NumPy forward pass needs no backward pass, optimizer or training loop, so it stays outside the #656 gate; it would be a child of #78. The roadmap currently orders reference comparison after pre-training (P5, step 2).
+2. **#268 from P3 to P2:** the review documents the concrete learner need that the P3 deferral asks for (local setup friction before any code runs).
+3. **Clearing the #656 gate as the next P1 learning slice,** ahead of further training-related source audits; the gate itself stays in force until cleared.
 
 ## 5. Operating rules
 
