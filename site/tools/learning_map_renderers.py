@@ -358,7 +358,13 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         params.push("concept=" + state.conceptId);
       }
       var hash = params.length ? "#" + params.join("&") : "";
-      if (window.location.hash !== hash) {
+      var current = window.location.hash;
+      // Map state always contains "="; any other fragment is an in-page
+      // anchor (a guided stage or a heading) that the browser must keep.
+      if (!hash && current && current.indexOf("=") === -1) {
+        return;
+      }
+      if (current !== hash) {
         if (commit) {
           window.history.pushState(
             null,
