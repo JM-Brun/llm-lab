@@ -471,11 +471,12 @@ La page `text-data` indiquait déjà que les détails BPE/WordPiece pouvaient ê
 ### Décision et changements
 
 1. **Parcours central raccourci :** `text-data → embedding-space → positional-encoding → contextualized-representations`. Le lecteur apprend d'abord le minimum nécessaire pour passer du texte aux IDs, puis comment ces IDs sélectionnent des vecteurs.
-2. **Tokenisation spécialisée facultative :** `tokenization-strategies` reste une ressource Understand publiée et utile, mais devient une ressource facultative de l'étape `text-input`. Elle reste accessible depuis la page d'entrée et la sidebar ; ses algorithmes ne sont plus un prérequis artificiel au lookup.
+2. **Tokenisation spécialisée facultative :** `tokenization-strategies` devient une ressource Deepen (`destination:deepen`, domaine `text-tokenization`) et reste une ressource facultative de l'étape `text-input`. Elle demeure accessible depuis la page d'entrée, le parcours guidé et la section existante « Approfondir → Texte et tokenisation » ; ses algorithmes ne sont plus un prérequis artificiel au lookup.
 3. **Stepper simplifié :** le stepper local de `text-data` décrit désormais les transformations essentielles — texte → IDs → vecteurs → position → contexte — sans présenter l'étude des algorithmes de segmentation comme une étape obligatoire.
 4. **Titre de la page embeddings :** le titre français et anglais annonce directement le passage des IDs aux vecteurs ; le premier paragraphe explique le lookup avant d'aborder la géométrie.
 5. **Relations corrigées :** `generation` reste le contexte de lecture précédent de `text-data`, mais n'en est plus le parent conceptuel. Le lien est conservé comme relation associée ; la hiérarchie ne confond plus ordre de lecture et containment.
-6. **Parité FR/EN :** les libellés, les relations, le parcours guidé, les pages et le stepper sont modifiés en parallèle.
+6. **Navigation de page :** la page de stratégies est déplacée hors de la séquence Understand principale vers le groupe Deepen existant. Le bouton Quarto « Suivant » de `text-data` conduit ainsi directement à `embedding-space`, au lieu d'imposer le détour facultatif.
+7. **Parité FR/EN :** les libellés, les relations, le parcours guidé, les pages et le stepper sont modifiés en parallèle.
 
 ### Validation attendue
 
