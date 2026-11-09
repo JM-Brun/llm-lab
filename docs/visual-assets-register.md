@@ -13,9 +13,9 @@ Attribution establishes provenance; it does not by itself grant permission. Conv
 
 ## Repository-level licensing finding
 
-[LICENSE.md](../LICENSE.md) offers project code under MIT and original project-authored prose in Quarto pages and documentation under CC BY-SA 4.0. The CC BY-SA grant explicitly excludes all non-text assets, including all 38 current local SVGs under `site/images/`, until authorship, adaptation history, and rights are confirmed and an asset-level licence is recorded. Externally hosted figures and other third-party material remain subject to their respective rights holders' terms; attribution or a source link is not, by itself, permission to reuse an asset.
+[LICENSE.md](../LICENSE.md) offers project code under MIT and original project-authored prose in Quarto pages and documentation under CC BY-SA 4.0. The CC BY-SA grant explicitly excludes all non-text assets, including all 38 current local SVGs under `site/images/`, unless and until a separate asset-level licence is explicitly recorded. The provenance findings and their evidence are tracked separately below; provenance confirmation does not itself grant a licence. Externally hosted figures and other third-party material remain subject to their respective rights holders' terms; attribution or a source link is not, by itself, permission to reuse an asset.
 
-The licence boundary does not resolve the asset-level questions below, and it does not imply that any unresolved visual asset has been cleared. Do not remove, replace, hide, or disable an existing illustration solely because its rights are uncertain. Preserve it unchanged while provenance and permissions are investigated.
+The licence boundary remains independent of the provenance findings below: no asset-level licence has been declared for the 38 local SVGs. Third-party embeds retain their separate rights assessments. Do not remove, replace, hide, or disable an existing illustration solely because its rights are uncertain.
 
 ## Externally hosted images currently embedded
 
@@ -237,3 +237,42 @@ The existing owner confirmation does **not unambiguously state that these six la
 - **all 38** remain excluded from the project code/prose licence until an asset-level licence is separately and explicitly declared under #163.
 
 This is a provenance-scope clarification only. No image, SVG, licence term, or attribution was changed. Do not remove or replace any asset as a result of this inventory update.
+
+
+## Local SVG provenance reconciliation — 2026-11-09
+
+This section supersedes the provisional provenance status in the 2026-11-08 six-file reconciliation and the earlier statement that the six additions still required a separate owner confirmation. The evidence is based on owner-authored PR descriptions and the explicit owner confirmation already recorded in #156.
+
+### Existing 32-file baseline
+
+The owner confirmation recorded in [#156](https://github.com/JM-Brun/llm-lab/issues/156) and integrated through [PR #573](https://github.com/JM-Brun/llm-lab/pull/573) states that the original 32 local SVGs are project-created diagrams, drawn for this repository, with no adaptation of third-party visual designs. This confirmation is a provenance statement, not an asset-level licence.
+
+### Six additions after the 2026-10-30 baseline
+
+| Files | Creation / adaptation evidence | Provenance assessment |
+|---|---|---|
+| `positional-info-insertion-en.svg`, `positional-info-insertion-fr.svg` | [PR #255](https://github.com/JM-Brun/llm-lab/pull/255) describes both as original diagrams created for the project and adds both files. | Owner-authored creation declaration covers this exact pair. |
+| `transformer-attention-architectures.svg` | [PR #349](https://github.com/JM-Brun/llm-lab/pull/349) describes the architecture comparison SVG as an original project diagram and adds the English source. | Owner-authored creation declaration covers the source diagram. |
+| `transformer-attention-architectures-fr.svg` | [PR #549](https://github.com/JM-Brun/llm-lab/pull/549) describes this file as a project-authored French translation of the existing project-managed diagram, preserving its geometry, colours, layout, and accessible title/description. The source diagram is covered by PR #349 above. | Owner-authored adaptation declaration covers the translation; provenance follows the original project diagram. |
+| `llm-generation-process-en.svg`, `llm-generation-process-fr.svg` | [PR #276](https://github.com/JM-Brun/llm-lab/pull/276) describes both as original vector illustrations created for the project, with no figures reused. [PR #557](https://github.com/JM-Brun/llm-lab/pull/557) later corrects the remaining French labels in the English variant; it does not introduce a new source illustration. | Owner-authored creation declaration covers the pair; the later translation correction does not change its provenance. |
+
+The PR descriptions above were authored by the repository owner and identify the exact files or source/translation relationship. They provide the targeted confirmation missing from the earlier reconciliation; this is stronger evidence than commit-account attribution alone.
+
+### Source-level checks on the six additions
+
+All six current SVG files were fetched from `main` and inspected on 2026-11-09. The checks covered SVG root/title/description, metadata and comments, embedded `image`, `foreignObject` and `script` elements, and explicit external HTTP(S) references in `href`/`xlink:href`.
+
+- All six contain accessible `title` and `desc` elements.
+- None contains an explicit `metadata` block, embedded raster `image`, `foreignObject`, or `script` element.
+- None contains an explicit external HTTP(S) `href` or `xlink:href`.
+- One file contains an SVG source comment; it does not identify a third-party source or rights holder.
+
+These structural checks do not independently prove authorship; the provenance assessment rests on the owner-authored PR declarations and the existing #156 confirmation.
+
+### Current local SVG status
+
+- **38/38 local SVGs:** project-origin provenance is confirmed by the owner (32 via #156/#573; six via the exact PR declarations above).
+- **38/38 local SVGs:** still excluded from the MIT code / CC BY-SA prose grants in `LICENSE.md`.
+- **Asset-level licence:** not selected or applied. A separate explicit owner decision remains necessary before adding an asset licence or changing the licence boundary.
+
+No SVG content, attribution, page reference, or licence was changed by this reconciliation. Preserve all existing assets unchanged unless a separate, explicit decision authorizes a specific change.
