@@ -85,6 +85,55 @@ This reference does **not** implement sequence-level input/target shifting, toke
 The tests check a known value, central finite-difference agreement, stability for large logits, invariance to adding a constant per row, gradient row sums, non-mutation of inputs, and invalid-input handling. These checks support this reference implementation's stated scope; they do not validate masking or sequence alignment, which are not implemented here.
 :::
 
+::: {.callout-note collapse="true" title="PyTorch example: logits, targets, and ignored positions"}
+The following self-contained example uses a common language-model output shape, `(B,T,V)`, then flattens the first two dimensions because `CrossEntropyLoss` expects classes in the second dimension. Targets are assumed to be **already aligned** with the logits: this code does not construct the autoregressive input/target shift.
+
+```python
+import torch
+import torch.nn.functional as F
+
+# B=1 batch, T=3 positions, V=3 vocabulary tokens.
+logits = torch.tensor(
+    [[[2.0, 0.0, -1.0], [0.0, 1.0, 0.0], [1.0, 0.0, 2.0]]],
+    dtype=torch.float64,
+)
+targets = torch.tensor([[0, 2, -100]], dtype=torch.long)
+batch_size, seq_len, vocab_size = logits.shape
+flat_logits = logits.reshape(-1, vocab_size)
+flat_targets = targets.reshape(-1)
+
+per_token_loss = torch.nn.CrossEntropyLoss(
+    ignore_index=-100, reduction="none"
+)(flat_logits, flat_targets).reshape(batch_size, seq_len)
+mean_loss = torch.nn.CrossEntropyLoss(
+    ignore_index=-100, reduction="mean"
+)(flat_logits, flat_targets)
+
+valid = targets.ne(-100)
+manual_loss = -F.log_softmax(logits[valid], dim=-1).gather(
+    1, targets[valid].unsqueeze(1)
+).mean()
+
+# The framework reduction agrees with the mean over valid target positions.
+torch.testing.assert_close(per_token_loss[valid].mean(), mean_loss)
+torch.testing.assert_close(mean_loss, manual_loss)
+
+# Passing probabilities as if they were logits changes the objective.
+softmax_first_loss = torch.nn.CrossEntropyLoss(ignore_index=-100)(
+    logits.softmax(dim=-1).reshape(-1, vocab_size), flat_targets
+)
+assert not torch.isclose(mean_loss, softmax_first_loss)
+
+print("per-token:", per_token_loss.tolist())
+print("mean:", mean_loss.item())  # 0.860645...
+print("softmax-first:", softmax_first_loss.item())  # 0.946560...
+```
+
+The final position is ignored by `ignore_index`; it contributes neither to the sum nor to the mean denominator. `reduction="none"` exposes local losses, while `reduction="mean"` averages valid targets (with no class weights in this example). Applying softmax first is incorrect for the intended API use: it turns probabilities into a new set of input scores and changes the loss. This example demonstrates the API and reduction; it does not replace causal masking, target alignment, or a training loop.
+
+PyTorch also accepts probability-distribution targets (for example with *label smoothing*), but `ignore_index` applies only to class-index targets. This example deliberately uses integer indices.
+:::
+
 ## Connection to perplexity
 
 If \(\bar{\ell}\) is mean cross-entropy in nats over valid tokens, perplexity is:
@@ -136,6 +185,7 @@ The [mathematical foundations collection](exercises.qmd#foundations) includes wo
 ## References
 
 - [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) — API behaviour, not the general mathematical definition.
+- [PyTorch — LogSoftmax](https://docs.pytorch.org/docs/stable/generated/torch.nn.LogSoftmax.html) — log-softmax operation used to compute log-probabilities in a numerically stable way.
 - C. E. Shannon (1948), [*A Mathematical Theory of Communication*](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf).
 - Cover & Thomas, [*Elements of Information Theory*](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X).
 - [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU) — visual intuition complementary to the derivation above.
