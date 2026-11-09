@@ -162,6 +162,23 @@ Le *contrastive decoding* propose de comparer les scores d'un modèle expert plu
 
 Cette méthode illustre un changement de fonction de score, plutôt qu'une simple transformation de la distribution d'un modèle unique. Elle ne nécessite pas nécessairement un nouvel entraînement, mais elle demande plusieurs modèles et augmente le coût d'inférence. Les résultats publiés sont dépendants des modèles, des tâches et des protocoles évalués ; ils ne démontrent pas une supériorité universelle.
 
+<aside>
+**À ne pas confondre : contrastive decoding et contrastive search.**
+
+Le *contrastive search* de Su et al. (2022) est une autre méthode : elle utilise un seul modèle et choisit parmi ses (k) candidats les plus probables. Elle combine la confiance du modèle et une pénalité de dégénérescence fondée sur la similarité cosinus maximale entre la représentation du candidat et celles des tokens du contexte :
+
+\[
+x_t = \arg\max_{v \in V^{(k)}} \left[
+(1-\alpha)\,p_\theta(v\mid x_{<t})
+-\alpha\max_{j<t}\operatorname{sim}(h_v,h_{x_j})
+\right].
+\]
+
+Ici, (k) définit l'ensemble des candidats et (alpha\in[0,1]) règle le compromis entre confiance et pénalité. Lorsque (alpha=0), la méthode se réduit au choix glouton parmi les candidats. Ce (k) ne désigne pas le *top-k sampling* : celui-ci tronque une distribution puis échantillonne, tandis que le *contrastive search* sélectionne le candidat qui optimise un score pénalisé.
+
+Les deux méthodes portent un nom proche mais ne partagent ni le même mécanisme ni les mêmes besoins : deux modèles (expert/amateur) pour le *contrastive decoding* ; un modèle et ses représentations contextualisées pour le *contrastive search*. Voir [Su et al., 2022, §3.2](https://papers.nips.cc/paper_files/paper/2022/file/871cae8f599cb8bbfcb0f58fe1af95ad-Paper-Conference.pdf) et la [documentation Transformers 4.46](https://huggingface.co/docs/transformers/v4.46.0/en/generation_strategies) pour son paramétrage historique. Cette leçon situe le mécanisme sans prétendre l'implémenter dans le GPT pédagogique.
+</aside>
+
 ## 6. Évaluer le compromis qualité-diversité
 
 Il n'existe pas de réglage optimal indépendant de la tâche. Une stratégie adaptée à une complétion créative peut être inadaptée à une extraction factuelle, une traduction ou une génération sous contraintes.
