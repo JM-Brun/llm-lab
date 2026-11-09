@@ -46,9 +46,9 @@ Légende :
 
 | Étape | Page FR / EN | Rôle et transition à contrôler | Synthèse / révision : premier constat | État |
 |---|---|---|---|---|
-| Orientation | `llm-overview` | Définir LLM/GPT/Transformer, situer le modèle pédagogique et annoncer le noyau prédictif ; conduire vers l'aperçu de génération | Ajout d'un rappel d'une minute FR/EN distinguant catégories, distribution conditionnelle, trois usages et architecture/apprentissage/utilisation | Revue FR/EN effectuée + synthèse ajoutée |
+| Entrée du site | `index` | Orienter vers Understand, Build, Deepen et Practice ; rendre visibles les parcours et les preuves attendues | Page d'orientation, pas une leçon : les quatre portes d'entrée et la carte des notions remplissent la fonction de synthèse | Revue FR/EN effectuée |\n| Orientation | `llm-overview` | Définir LLM/GPT/Transformer, situer le modèle pédagogique et annoncer le noyau prédictif ; conduire vers l'aperçu de génération | Ajout d'un rappel d'une minute FR/EN distinguant catégories, distribution conditionnelle, trois usages et architecture/apprentissage/utilisation | Revue FR/EN effectuée + synthèse ajoutée |
 | Comparaison d'architectures (optionnel) | `transformer-architectures` | Comparer encodeur seul, encodeur-décodeur et décodeur seul ; distinguer architecture, objectif et tâche | Ajout d'un rappel d'une minute FR/EN ; le paragraphe de complexité est désormais un approfondissement replié, l'activité pratique reste explicitement facultative | Revue FR/EN effectuée + niveaux clarifiés |
-| Aperçu d'inférence | `generation` | Donner la boucle complète avec paramètres fixes ; transition vers texte/tokens sans exiger les détails internes | Le corps FR contient objectifs, rappel « une minute », boucle, prefill/decode et frontière teacher forcing ; éviter de recopier la même fiche au retour détaillé | Lecture source partielle |
+| Aperçu d'inférence | `generation` | Donner la boucle complète avec paramètres fixes ; transition vers texte/tokens sans exiger les détails internes | Rappel d'une minute et self-check FR/EN ; aperçu du loop puis retour détaillé sur la même page canonique | Revue FR/EN effectuée |
 | Entrée texte | `text-data` | Texte → tokens → IDs → lookup ; distinguer prompt d'inférence et corpus d'entraînement | Rappel bref et self-check présents ; vocabulaire nuancé pour ne pas présenter tout tokenizer comme doté d'un vocabulaire appris | Revue FR/EN effectuée |
 | Stratégies de tokenisation | `tokenization-strategies` | Comparer unités, algorithmes et compromis ; préparer le passage des IDs aux vecteurs | Section « À retenir » et self-check présents ; le Deepen sur l'évaluation évite de surcharger Understand | Revue FR/EN effectuée |
 | Unicode (optionnel) | `unicode-text` | Approfondissement sur encodage, normalisation et texte ; ne pas bloquer la route principale | Une fiche n'est pas requise si une courte conclusion et des liens suffisent | À lire |
@@ -57,10 +57,10 @@ Légende :
 | Représentations contextualisées | `contextualized-representations` | Distinguer lookup initial et états dépendant du contexte ; conduire vers le calcul du Transformer | Ajout d'un rappel « une minute » distinguant ID, embedding initial, position, contexte et masque d'architecture ; self-check existant conservé | Revue FR/EN effectuée + synthèse ajoutée |
 | Tenseurs (optionnel) | `tensors` | Support de formes et opérations ; ne pas en faire un prérequis général | Vérifier que la fiche sert le Build / Deepen sans interrompre Understand | À lire |
 | RoPE (optionnel) | `rope` | Approfondir la géométrie et les variantes positionnelles | Fiche de référence facultative ; vérifier les hypothèses et les conventions | À lire |
-| Vue d'ensemble Transformer | `transformer` | Replacer les opérations dans le bloc et le forward pass, jusqu'aux logits | Self-check repéré ; vérifier une synthèse du flux et la séparation Understand / Build / Deepen | Lecture source partielle |
-| Q/K/V | `queries-keys-values` | Projections depuis les états d'entrée de chaque bloc ; Q/K déterminent les poids, V fournit le contenu | Rappel bref et self-check repérés ; vérifier que les exercices couvrent les rôles, projections, apprentissage des paramètres et transfert | Lecture source partielle |
-| Attention | `scaled-dot-product-attention` | Scores, mise à l'échelle, softmax, agrégation ; réutiliser Q/K/V sans redéfinir leurs rôles | Rappel bref et self-check repérés ; vérifier que le calcul canonique et les limites sont synthétisés | Lecture source partielle |
-| Masque causal | `causal-masking` | Contraindre l'accès au futur ; distinguer masque causal, padding et convention d'API | Rappel bref et self-check repérés ; exemples numériques et invariance de préfixe à vérifier | Lecture source partielle |
+| Vue d'ensemble Transformer | `transformer` | Replacer les opérations dans le bloc et le forward pass, jusqu'aux logits | Ajout d'un rappel d'une minute FR/EN sur entrée, bloc, répétition et logits ; self-check conservé | Revue FR/EN effectuée + synthèse ajoutée |
+| Q/K/V | `queries-keys-values` | Projections depuis les états d'entrée de chaque bloc ; Q/K déterminent les poids, V fournit le contenu | Rappel enrichi FR/EN : projections, apprentissage conjoint, routage/contenu, invariance et périmètre ; self-check conservé | Revue FR/EN effectuée + synthèse renforcée |
+| Attention | `scaled-dot-product-attention` | Scores, mise à l'échelle, softmax, agrégation ; réutiliser Q/K/V sans redéfinir leurs rôles | Rappel d'une minute, exemple numérique et self-check présents ; la page prend le relais exact des projections Q/K/V | Revue FR/EN effectuée |
+| Masque causal | `causal-masking` | Contraindre l'accès au futur ; distinguer masque causal, padding et convention d'API | Rappel d'une minute, micro-vérification d'invariance et self-check ; distingue visibilité et contribution à la loss | Revue FR/EN effectuée |
 | Cross-attention (optionnel) | `cross-attention` | Extension distincte, non requise pour le GPT décodeur seul | Garder l'optionnalité explicite ; pas de fiche imposée | À lire |
 | Mise à l'échelle (optionnel) | `attention-score-scaling` | Dérivation et propriétés de la mise à l'échelle ; approfondissement après attention | Fiche courte facultative, surtout si elle aide à réactiver la dérivation | À lire |
 | Logits | `logits` | Projection vocabulaire et scores non normalisés ; transition vers softmax | Rappel bref et self-check présents ; distingue classement, score et probabilité | Revue FR/EN effectuée |
@@ -72,7 +72,7 @@ Légende :
 | Entropie croisée | `cross-entropy` | Mesurer l'écart entre distribution prédite et cible ; relier au NLL | Ajout d'un rappel d'une minute FR/EN sur cible one-hot/générale, alignement, masques et réduction | Revue FR/EN effectuée + synthèse ajoutée |
 | Loss | `loss` | Agréger les pertes token par token avec masque et réduction | Rappel d'une minute et self-check présents ; distingue perte locale, objectif de batch, masques, réduction et métriques | Revue FR/EN effectuée |
 | Gradients | `gradients` | Dériver l'objectif et expliquer la mise à jour des paramètres | Rappel d'une minute et self-check présents ; distingue sensibilité locale, rétropropagation, SGD et choix d'optimiseur | Revue FR/EN effectuée |
-| Corpus (branche Build) | `corpus-preparation` | Provenance, filtrage, déduplication, splits, tokenizer figé ; branche de données | Fiche de révision et self-check FR/EN ajoutés ; contrat de sortie et séparation corpus/tokenizer/exemples explicites | Revue FR/EN effectuée + fiche ajoutée |
+| Parcours de construction | `build-path` | Ordonner les visites du code, jalons G0–G9, branche de données et preuves attendues | Tableau des jalons et statuts déjà synthétique ; distingue référence, implémentation partielle, plan conceptuel et critères non démontrés | Revue FR/EN effectuée |\n| Corpus (branche Build) | `corpus-preparation` | Provenance, filtrage, déduplication, splits, tokenizer figé ; branche de données | Fiche de révision et self-check FR/EN ajoutés ; contrat de sortie et séparation corpus/tokenizer/exemples explicites | Revue FR/EN effectuée + fiche ajoutée |
 | Exemples d'entraînement (branche Build) | `training-examples` | Fenêtres, cibles décalées, teacher forcing, packing/padding/masks ; rejoint G8 | Fiche de révision et self-check FR/EN ajoutés ; distingue teacher forcing, causal mask et loss mask ; contrat de formes et checklist de débogage | Revue FR/EN effectuée + fiche ajoutée |
 | Évaluation / pratique | `evaluation-experimentale` et collections d'exercices | Évaluer une tâche et un protocole ; ne pas présenter l'exercice existant comme benchmark d'un GPT entraîné | Réutiliser le hub d'exercices et expliciter les limites ; vérifier le renvoi depuis les pages scoring/training | À lire |
 
@@ -390,3 +390,37 @@ Revue source FR/EN et cohérence avec le noyau computationnel effectuées. Rendu
 ### Validation
 
 Revue source FR/EN effectuée. La page d'architecture a été réorganisée sans suppression de contenu ; les liens et le rendu responsive du tableau restent à vérifier dans le navigateur. L'exercice d'évaluation est vérifié comme ressource pédagogique, pas comme résultat expérimental.
+
+
+## 15. Passe H — point d'entrée, catalogue d'exercices et ressources de transfert (2026-11-09)
+
+### Pages relues en français et en anglais
+
+- `index` : portes d'entrée Understand/Build/Deepen/Practice, carte des notions, repères épistémiques, schéma interactif des processus et liens vers les ressources.
+- `exercises` : registre des collections, prérequis, disponibilité, exercices corrigés et séparation entre self-checks courts et exercices approfondis.
+- `evaluation-experimentale` / `experimental-evaluation` : exercice autonome de transfert évaluant la conception d'un protocole, sans implémenter ni rapporter un benchmark.
+
+### Décisions et modifications de cette passe
+
+1. **Point d'entrée :** aucune fiche de révision ajoutée à la page d'accueil. Sa fonction est de choisir un parcours et de rendre visibles les relations et les niveaux de preuve ; un résumé conceptuel y serait redondant avec `llm-overview`.
+2. **Catalogue d'exercices :** clarification de la ligne « Évaluation » FR/EN. Un exercice autonome est déjà publié, tandis que la collection complète (baselines, métriques, contamination, incertitude et analyse d'erreurs) reste à construire.
+3. **Exercice d'évaluation :** pas de fiche additionnelle ; les questions, la grille de correction et l'auto-évaluation constituent déjà un cycle de rappel actif et de transfert.
+4. **Parcours Build :** le tableau G0–G9 est conservé comme synthèse opérationnelle. Il distingue clairement ce qui est testé, partiellement implémenté, planifié ou non démontré.
+
+### Cohérence globale observée
+
+- Le site commence par des portes d'entrée non linéaires, puis le parcours Understand fournit la progression conceptuelle ; Build et Deepen restent des voies complémentaires.
+- Les self-checks intégrés aux pages servent la récupération immédiate ; le catalogue regroupe les exercices multi-étapes et les transferts. Il ne faut pas les fusionner en une seule collection de quiz.
+- La page d'évaluation pratique est accessible depuis l'accueil et l'exercice hub, mais n'est pas présentée comme un benchmark du petit GPT.
+- Les statuts d'implémentation du Build et de disponibilité des exercices restent explicites : la présence d'une page ou d'un exercice ne prouve pas qu'un pipeline complet existe.
+
+### État de couverture à ce stade
+
+- **Revu FR/EN et transitions vérifiées :** entrée, panorama, architectures principales, représentation, Transformer/attention, prédiction, scoring, objectif de perte, gradients, corpus, exemples d'entraînement, Build path et exercice de protocole expérimental.
+- **À poursuivre comme ressources facultatives :** Unicode, tenseurs, RoPE, cross-attention, mise à l'échelle détaillée, variantes de décodage, histoire, limites des LLM, fondements mathématiques, complexité et activité pratique des trois architectures.
+- **À valider techniquement :** rendu final et navigation des pages modifiées, liens générés, interaction des schémas et tableaux responsive, clavier et lecteur d'écran.
+- **À valider pédagogiquement :** test de parcours par un lecteur indépendant, notamment capacité à reconstruire le tronc computationnel et à distinguer génération, scoring et apprentissage sans consulter les fiches.
+
+### Validation
+
+Revue des pages d'entrée et du catalogue FR/EN effectuée. Le workflow Quarto/browser du lot précédent est encore en cours au moment de cette mise à jour ; le nouveau lot doit être validé sur son propre commit. Aucun test utilisateur n'est revendiqué.
