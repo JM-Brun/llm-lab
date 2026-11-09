@@ -270,7 +270,7 @@ Ne comparer que les noms de paramètres (« température 0,7 » ou « top-p 0,9 
 ## Références de recherche
 
 - Holtzman et al. (2020), [*The Curious Case of Neural Text Degeneration*](https://arxiv.org/abs/1904.09751), ICLR — analyse de la dégénérescence en génération ouverte et proposition du nucleus sampling.
-- Hugging Face, [Transformers generation API](https://huggingface.co/docs/transformers/main_classes/text_generation) — implementation-specific beam-search length penalty, stopping policies and generation parameters; consult the version matching the experiment.
+- Hugging Face, [API de génération de Transformers](https://huggingface.co/docs/transformers/main_classes/text_generation) — pénalité de longueur, politiques d’arrêt et paramètres propres à l’implémentation ; consulter la version correspondant à l’expérience.
 - Nadeem et al. (2020), [*A Systematic Characterization of Sampling Algorithms for Open-ended Language Generation*](https://aclanthology.org/2020.aacl-main.36/), AACL-IJCNLP — propriétés communes et compromis qualité-diversité des méthodes d'échantillonnage.
 - Meister et al. (2023), [*On the Efficacy of Sampling Adapters*](https://aclanthology.org/2023.acl-long.80/), ACL — cadre unifié pour analyser les transformations des distributions d'échantillonnage.
 - Li et al. (2023), [*Contrastive Decoding: Open-ended Text Generation as Optimization*](https://aclanthology.org/2023.acl-long.687/), ACL — fonction de score contrastive entre modèle expert et amateur.
