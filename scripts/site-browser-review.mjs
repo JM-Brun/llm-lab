@@ -755,7 +755,7 @@ for (const testCase of cases) {
             sidebarPresent: true,
             entryLinkCount: matches.length,
             entryHref: target?.getAttribute("href") || null,
-            entryText: target?.textContent.trim().replace(/\\s+/g, " ") || null,
+            entryText: target?.textContent.trim().replace(/\s+/g, " ") || null,
             entryAriaCurrent: target?.getAttribute("aria-current") || null,
             currentPageLinkCount: currentLinks.length,
             ancestors,
