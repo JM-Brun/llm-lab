@@ -36,6 +36,16 @@ La page [Générer du texte](generation.qmd) présente le mécanisme indispensab
 - documenter les paramètres nécessaires à une expérience reproductible.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+- **Chaîne locale :** les logits peuvent être transformés, filtrés puis renormalisés avant la sélection du prochain token.
+- **Température :** elle règle la concentration de la distribution ; elle ne change ni les paramètres ni la qualité intrinsèque du modèle.
+- **Top-k / top-p :** ils limitent les candidats selon un nombre fixe ou une masse cumulée cible ; ils modifient la distribution effective.
+- **Recherche :** greedy optimise une décision locale ; beam search conserve plusieurs hypothèses et compare des séquences selon un score.
+- **Limite :** aucune stratégie ne garantit à elle seule vérité, cohérence globale ou qualité adaptée à la tâche ; le protocole doit être documenté.
+
+**Question de contrôle :** savez-vous distinguer une transformation de la distribution à une position d'une recherche qui compare plusieurs séquences ?
+:::
+
 ## 1. Où intervient le décodage ?
 
 À une étape donnée, le modèle produit des logits $z$ pour le prochain token. Une chaîne de traitements peut ensuite :
