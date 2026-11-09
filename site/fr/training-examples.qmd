@@ -22,7 +22,7 @@ tags: ["type:concept-bridge", "destination:build", "topic:training-examples", "l
 -->
 
 ::: {.callout-note}
-**Cette page appartient au parcours Build (préparation des exemples d'entraînement, G2)**, pas aux huit étapes du parcours théorique Understand. Elle peut être consultée indépendamment lorsque vous étudiez la construction des cibles et le teacher forcing. [Revenir au parcours Build](build-path.qmd).
+**Cette page appartient au parcours Build (préparation des exemples d’entraînement, G2)**, pas aux huit étapes du parcours théorique Understand. Elle peut être consultée indépendamment lorsque vous étudiez la construction des cibles et le teacher forcing. [Revenir au parcours Build](build-path.qmd).
 :::
 
 ::: {.chapter-lead}

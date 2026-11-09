@@ -1,3 +1,5 @@
+## Discover the system {.guided-route-part #guided-part-discover}
+
 :::: {.guided-route-grid}
 
 ::: {.guided-route-stage #guided-stage-orientation}
@@ -17,6 +19,12 @@ Understand what an LLM is and follow a complete generation loop as a black box w
 - [The training objective: guarantees and limits](llm-limits.html)
 
 :::
+
+::::
+
+## Understand how a prediction is computed {.guided-route-part #guided-part-prediction}
+
+:::: {.guided-route-grid}
 
 ::: {.guided-route-stage #guided-stage-text-input}
 
@@ -88,6 +96,12 @@ Trace the projection from final hidden states to logits and the conditional next
 - [Entropy: uncertainty over the next token](entropy.html)
 
 :::
+
+::::
+
+## Understand the uses of a prediction {.guided-route-part #guided-part-usages}
+
+:::: {.guided-route-grid}
 
 ::: {.guided-route-stage #guided-stage-inference}
 

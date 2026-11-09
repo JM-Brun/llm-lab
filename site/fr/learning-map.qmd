@@ -1,7 +1,7 @@
 ---
 title: "Parcours guidé et carte des ressources"
-subtitle: "Huit étapes, territoires, rubriques, pages et notions canoniques"
-description: "Parcours guidé en huit étapes conceptuelles, carte progressive des territoires et registre des notions canoniques pour s'orienter dans le site."
+subtitle: "Trois questions, huit étapes, territoires, rubriques, pages et notions canoniques"
+description: "Parcours guidé en trois questions détaillées en huit étapes conceptuelles, carte progressive des territoires et registre des notions canoniques pour s'orienter dans le site."
 keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:fr", "status:published"]
 lang: fr
 toc: true
@@ -40,7 +40,7 @@ Les intitulés de sections affichés dans les détails d'une page sont des repè
 
 ## Parcours théorique — Understand
 
-Huit étapes conceptuelles donnent une progression conseillée pour comprendre le fonctionnement des LLM. Elles ne décrivent pas le parcours Build. Les pages centrales couvrent les idées principales de chaque étape ; les ressources facultatives apportent du contexte ou de la profondeur et peuvent appartenir à toute destination. Les pages d'une même étape sont des ressources complémentaires, pas une liste de prérequis stricts.
+Ce parcours théorique répond d'abord à trois questions : qu'est-ce qu'un LLM, comment calcule-t-il une prédiction, et que fait-on de cette prédiction ? La première partie situe le système ; la deuxième couvre quatre étapes, du texte à la distribution du prochain token ; la troisième présente trois usages frères, générer, scorer une cible observée et apprendre en ajustant les paramètres, qui ne sont pas des prérequis successifs. L'évaluation reste transversale : elle mesure le modèle sur des données tenues à l'écart ([évaluation expérimentale](evaluation-experimentale.qmd)). Les huit étapes détaillées restent la progression conseillée : les pages centrales couvrent les idées principales de chaque étape ; les ressources facultatives apportent du contexte ou de la profondeur et peuvent appartenir à toute destination. Les pages d'une même étape sont des ressources complémentaires, pas une liste de prérequis stricts.
 
 {{< include ../includes/generated-guided-route-fr.qmd >}}
 
