@@ -74,7 +74,7 @@ jobs:
       - name: Type check
         run: |
           uv run mypy src
-          uv run mypy site/tools/strict_yaml.py site/tools/page_index.py
+          uv run mypy site/tools/strict_yaml.py site/tools/page_index.py site/tools/artifact_writer.py
 
       - name: Test
         run: uv run pytest

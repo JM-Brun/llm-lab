@@ -288,14 +288,16 @@ def build_graph() -> dict[str, Any]:
     }
 
 
+def serialize_graph(payload: dict[str, Any]) -> str:
+    """Serialize the graph deterministically."""
+    return json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+
+
 def write_export(output: Path = SITE / "knowledge-graph.jsonld") -> Path:
     """Write the deterministic JSON-LD projection and return its path."""
-    payload = build_graph()
-    output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
+    from artifact_writer import write_artifacts
+
+    write_artifacts({output: serialize_graph(build_graph())})
     return output
 
 
