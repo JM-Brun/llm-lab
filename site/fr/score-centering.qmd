@@ -1,7 +1,7 @@
 ---
 title: "Centrage du score en apprentissage par renforcement hors politique"
 subtitle: "Corriger la dérive induite par le sampler sous décalage entraînement–inférence"
-keywords: ["type:deep-dive", "destination:deepen", "topic:score-centering", "domain:probabilistic-foundations-training", "importance:specialized", "level:advanced", "language:fr", "status:published"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:score-centering", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
 <!--
@@ -11,12 +11,12 @@ scope: "Explique le centrage du score comme correction additive par préfixe de 
 purpose: "Dériver le score de politique centré, expliquer le décalage visé et évaluer la composition avec les corrections par échantillonnage d'importance."
 domain: "probabilistic-foundations-training"
 suggested_route:
-  previous: "fr/gradients"
+  previous: null
   next: null
 hierarchy:
-  parents: ["fr/gradients"]
+  parents: []
   children: []
-related: ["fr/llm-evolution"]
+related: ["fr/gradients", "fr/llm-evolution"]
 tags: ["type:deep-dive", "destination:deepen", "topic:score-centering", "domain:probabilistic-foundations-training", "importance:specialized", "level:advanced", "language:fr", "status:published"]
 -->
 
