@@ -1101,3 +1101,25 @@ This is a **construction dependency**, not a prerequisite chain for the conceptu
 
 No scientific or bilingual correction was justified by this pass. The worked examples, key distinctions and implementation boundaries agree in the inspected FR/EN sources. Continue with the remaining page groups and rendered evidence under the existing #347/#320/#337 reviews; do not create a second data pipeline or duplicate the Build implementation.
 
+## 2026-11-09: practice catalogue and exercise-prerequisite audit
+
+**Scope.** Compared the FR/EN exercise-hub headings, collection-status tables, stable exercise IDs and preparation guidance with the guided route and the canonical lesson ownership. This is a source-level audit of catalogue structure and prerequisites, not a complete solution-by-solution mathematical review or a rendered exercise-hub review.
+
+### Coherence confirmed
+
+- The hub distinguishes short lesson self-checks from longer Practice & experiment exercises; it does not present the hub itself as a lesson or claim every planned collection is complete.
+- Text-data exercises progress from representation reconstruction and embedding lookup (TR-A–TR-C), to shifted windows (TR-D), BPE merge counting (TR-E), and split/tokenizer leakage diagnosis (TR-F).
+- Q/K/V practice progresses from weighted aggregation and projection reconstruction to parameter-change reasoning, learning, and transfer to cross-attention. CA-A introduces causal masking and prefix invariance independently; AT-A–AT-C then cover multi-head calculation, shapes, and intervention reasoning.
+- Transformer exercises TF-A–TF-C use the reference Pre-LN block: shape/normalization tracing, parameter counting, then claim diagnosis and controlled interventions.
+- The hub keeps unfinished pretraining, generation, fine-tuning, evaluation, efficiency and advanced collections explicitly marked as planned or incomplete.
+
+### Correction: do not overstate collection-wide prerequisites
+
+The Text data collection's former summary line listed `training-examples` as a prerequisite for the entire collection, although TR-A–TR-C can be started from the text/embedding lessons and only TR-D requires the training-example construction page. TR-E and TR-F have their own distinct preparation pages.
+
+Updated the FR/EN collection introduction to state that the first exercises can start from text/data and embeddings, while each exercise's preparation line is authoritative for additional prerequisites. This avoids making the Build training-data branch look like a prerequisite for the earlier representation exercises.
+
+### Limits
+
+The exercise IDs and prerequisite descriptions are aligned in the inspected FR/EN source. The contents and numerical solutions of every exercise have not been independently re-derived in this pass. The existing #329 browser review remains responsible for rendered desktop/mobile, keyboard and disclosure checks; no new test suite or workflow was added.
+
