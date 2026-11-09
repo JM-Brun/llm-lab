@@ -17,7 +17,7 @@ const visualCases = [
 ];
 
 const routeContextCases = visualCases.filter(testCase => testCase.theme === "light" && testCase.label === "desktop");
-const textDataResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
+const representationResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
 const transformerOverviewResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
 
 // #329: the bilingual exercise hub contains the TR, TF and AT collections.
@@ -43,11 +43,13 @@ const cases = [
       ...testCase, page, kind: "route-context",
     }))
   ),
-  // The text-input stepper is a local process aid; check its responsive layout
-  // in both languages, not only the desktop keyboard/Axe baseline.
-  ...textDataResponsiveCases.map(testCase => ({
-    ...testCase, page: "text-data.html", kind: "route-context",
-  })),
+  // #320: inspect the complete text → representations entry chain on mobile
+  // in both languages, in addition to the desktop route-context baseline.
+  ...representationResponsiveCases.flatMap(testCase =>
+    ["text-data.html", "embedding-space.html", "positional-encoding.html", "tensors.html"].map(page => ({
+      ...testCase, page, kind: "route-context",
+    }))
+  ),
   // #347: review the Build bridge and desktop training entry without
   // treating either as an additional guided-route stage. Only light is a
   // rendered site theme; color-scheme dark is not dark-theme coverage.
