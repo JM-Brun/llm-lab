@@ -99,10 +99,9 @@ logits = torch.tensor(
     dtype=torch.float64,
 )
 targets = torch.tensor([[0, 2, -100]], dtype=torch.long)
-batch_size, seq_len, vocab_size = logits.shape
-
-# Validate the sequence-level contract before flattening.
+# Validate the sequence-level contract before inspecting dimensions.
 assert logits.ndim == 3
+batch_size, seq_len, vocab_size = logits.shape
 assert targets.shape == (batch_size, seq_len)
 assert targets.dtype == torch.long
 valid = targets.ne(-100)
