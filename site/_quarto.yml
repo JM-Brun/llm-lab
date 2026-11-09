@@ -53,6 +53,8 @@ project:
     - en/loss.qmd
     - fr/gradients.qmd
     - en/gradients.qmd
+    - fr/score-centering.qmd
+    - en/score-centering.qmd
     - fr/llm-overview.qmd
     - fr/deepen.qmd
     - fr/language-modeling-math.qmd
@@ -220,6 +222,7 @@ website:
               contents:
                 - fr/language-modeling-math.qmd
                 - fr/mathematical-foundations.qmd
+                - fr/score-centering.qmd
             - section: "Inférence et efficacité"
               contents:
                 - fr/in-context-learning.qmd
@@ -320,6 +323,7 @@ website:
               contents:
                 - en/language-modeling-math.qmd
                 - en/mathematical-foundations.qmd
+                - en/score-centering.qmd
             - section: "Inference and efficiency"
               contents:
                 - en/in-context-learning.qmd
