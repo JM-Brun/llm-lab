@@ -8,6 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/positional-encoding"
+summary: "Explique comment l’information positionnelle permet au Transformer de tenir compte de l’ordre des tokens, et situe les principales familles de mécanismes dans le calcul."
 scope: "Présente pourquoi un Transformer a besoin d’information positionnelle, distingue les encodages absolus des mécanismes relatifs et situe RoPE comme méthode rotative relative ; précise le rôle distinct du masque causal. La dérivation détaillée de RoPE et ses variantes sont réservées à la page d’approfondissement."
 purpose: "Le lecteur doit pouvoir expliquer pourquoi un Transformer a besoin d’information positionnelle, distinguer plusieurs façons de l’introduire et décrire à quel endroit du calcul elles interviennent."
 suggested_route:

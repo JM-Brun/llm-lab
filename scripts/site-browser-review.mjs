@@ -718,16 +718,18 @@ for (const testCase of cases) {
       }
 
       const context = page.locator(".guided-page-context");
-      const crossCuttingEvaluationPage = [
-        "experimental-evaluation.html", "evaluation-experimentale.html",
+      const contextFreePage = [
+        "experimental-evaluation.html", "evaluation-experimentale.html", "generation.html",
       ].includes(pagePath);
-      if (crossCuttingEvaluationPage) {
+      if (contextFreePage) {
         if (await context.count() !== 0) {
-          throw new Error("cross-cutting evaluation page must not be assigned to a linear guided-route stage");
+          throw new Error("this page must not expose generated guided-route context in its lesson content");
         }
         item.routeContext = {
           expectedAbsent: true,
-          reason: "Evaluation is cross-cutting, not a guided-route stage.",
+          reason: pagePath === "generation.html"
+            ? "Route memberships remain in the learning map, not in learner-facing lesson prose."
+            : "Evaluation is cross-cutting, not a guided-route stage.",
         };
       } else {
         if (await context.count() !== 1) throw new Error("guided-route context is missing");
@@ -759,7 +761,6 @@ for (const testCase of cases) {
         item.routeContext.stageAnchorsResolve = stageFragments.every(id => availableStageAnchors.has(id));
         if (!item.routeContext.stageAnchorsResolve) throw new Error("guided-route stage link points to a missing anchor");
         const multiStagePages = {
-          "generation.html": ["guided-stage-orientation", "guided-stage-inference"],
           "cross-entropy.html": ["guided-stage-scoring", "guided-stage-training"],
         };
         if (multiStagePages[pagePath]) {

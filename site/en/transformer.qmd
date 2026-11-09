@@ -8,6 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer"
+summary: "Traces a GPT forward pass through its representations, Transformer blocks, and attention operations to the logits. Separates network computation from next-token selection and the generation loop."
 scope: "Follows an autoregressive GPT computation inside the network, from input representations to logits, focusing on Transformer blocks, self-attention, the MLP, residual connections, and normalization; text preparation and the generation loop are located but not retaught."
 purpose: "Readers should be able to describe one forward pass, explain the operations in a Transformer block, distinguish depth from width, and identify logits as the network output without conflating that pass with decoding or generation."
 suggested_route:

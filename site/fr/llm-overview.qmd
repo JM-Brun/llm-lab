@@ -9,6 +9,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
+summary: "Donne une vue d’ensemble d’un LLM : prédiction du prochain token, transformation du contexte, puis usages distincts en génération, scoring et apprentissage. Oriente vers les pages qui détaillent chaque mécanisme."
 scope: "Définit les LLM et GPT, illustre la prédiction du prochain token et distingue architecture, apprentissage des paramètres et utilisation. Oriente vers les pages canoniques sans détailler leurs mécanismes."
 purpose: "Donner au lecteur une première représentation mentale d’un LLM : ce qu’il prédit, comment il transforme un contexte en distribution de tokens et comment cette distribution est utilisée en génération, scoring et apprentissage."
 suggested_route:

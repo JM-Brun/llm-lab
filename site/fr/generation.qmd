@@ -8,6 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/generation"
+summary: "Présente la génération comme une boucle autorégressive : contexte, prédiction du prochain token, sélection, réinjection et arrêt. Situe le prefill, le decode incrémental et les stratégies de sélection, puis distingue l’inférence du scoring et de l’apprentissage."
 scope: "Décrit l’inférence autorégressive d’un modèle déjà entraîné : contexte, passe avant, distribution du prochain token, sélection, réinjection et arrêt ; distingue les phases de prefill et de decode des règles de décodage. Les détails internes du Transformer, les stratégies avancées et l’apprentissage des paramètres sont hors périmètre."
 purpose: "Le lecteur doit pouvoir dérouler une génération token par token, distinguer le calcul du modèle, la sélection du token et la boucle complète, expliquer prefill et decode incrémental, et prévoir comment une règle de décodage modifie la sortie sans mettre à jour les paramètres."
 suggested_route:
@@ -20,10 +21,8 @@ related: ["fr/build-path", "fr/decoding-strategies", "fr/gpt-generation-walkthro
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:fr", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-fr-generation.qmd >}}
-
 ::: {.chapter-lead}
-Un LLM génère du texte **un token à la fois**. À partir du contexte disponible, il calcule une distribution sur le prochain token, en sélectionne un, l'ajoute au contexte, puis recommence. Pendant cette inférence, **les paramètres du modèle restent fixes** : générer n'est pas apprendre.
+Un LLM génère du texte **un token à la fois**. À partir du contexte disponible, il estime la probabilité de chacun des tokens du vocabulaire d'apparaître à la position suivante. Ces probabilités forment une **distribution de probabilité conditionnelle sur le prochain token**. Le système sélectionne ensuite un token, l'ajoute au contexte, puis recommence. Pendant cette inférence, **les paramètres du modèle restent fixes** : générer n'est pas apprendre.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
@@ -35,10 +34,10 @@ Un LLM génère du texte **un token à la fois**. À partir du contexte disponib
 - prévoir l'effet de la sélection gloutonne, de l'échantillonnage et de la température.
 :::
 
-::: {.callout-tip title="Le modèle mental à retenir"}
-**Contexte → prédiction du prochain token → sélection → ajout au contexte → répétition.**
+::: {.callout-tip title="Le modèle mental"}
+**Contexte → distribution de probabilité → sélection d'un token → nouveau contexte → répétition.**
 
-La première lecture du parcours (étape **Orientation**) demande seulement de comprendre cette boucle et le fait que les paramètres restent fixes. Cette page sera reprise à l'étape **Inférence** pour étudier ses phases d'exécution et les règles de sélection.
+Le modèle n'effectue pas directement un choix de mot dans le texte : il attribue une probabilité à chaque token possible, compte tenu du contexte. Une règle de sélection transforme ensuite cette distribution en un token concret.
 :::
 
 ## 1. Une étape élémentaire : prédire et sélectionner un token
@@ -55,6 +54,11 @@ Pour **une étape de génération**, le modèle effectue une passe avant à para
 p_\theta(\cdot \mid c_t) = \operatorname{softmax}(z_t).
 \]
 
+Pour un token candidat \(v\), \(p_\theta(v \mid c_t)\) désigne la probabilité qu'il soit le prochain token sachant le contexte courant. Chaque probabilité est comprise entre 0 et 1 et leur somme, sur tout le vocabulaire, vaut 1. La distribution dépend du contexte ; la génération utilise celle de la dernière position du contexte.
+
+Par exemple, avec quatre tokens candidats, le modèle pourrait attribuer les probabilités 0,50, 0,30, 0,15 et 0,05. Leur somme vaut 1 : cette distribution décrit la prochaine position, pas des phrases complètes.
+\]
+
 Une politique de décodage sélectionne ensuite un token à partir de cette distribution :
 
 \[
@@ -65,7 +69,7 @@ La sélection peut être déterministe (par exemple *argmax*) ou stochastique (�
 
 **Le résultat de cette étape est un seul token sélectionné**, pas encore le texte complet. Il faut distinguer la distribution calculée par le modèle du token effectivement choisi par la politique de décodage.
 
-Le détail de la tokenisation et des identifiants appartient à [Du texte aux tokens](text-data.qmd). Le calcul interne qui transforme les représentations en logits est expliqué dans [Vue d'ensemble du Transformer](transformer.qmd), puis dans les pages [Logits](logits.qmd) et [Probabilités de sortie](probabilites.qmd). La présente page se concentre sur ce qui se passe **après que le contexte est fourni au modèle**.
+Si les notions de token et d'identifiant ne sont pas encore familières, commencez par [Du texte aux tokens](text-data.qmd). Pour comprendre **comment le modèle calcule** cette distribution, consultez [Vue d'ensemble du Transformer](transformer.qmd), [Logits](logits.qmd) et [Probabilités de sortie](probabilites.qmd). Ces pages expliquent le calcul interne ; la présente page étudie ce que le système fait de la distribution obtenue.
 
 ## 2. La boucle de génération : répéter cette étape
 
@@ -149,12 +153,11 @@ C'est la distinction centrale avec l'[apprentissage](loss.qmd) : l'inférence ut
 - **Fenêtre de contexte :** le modèle ne traite que le contexte fourni, dans la limite de sa fenêtre maximale. Une information qui n'y figure plus n'influence plus directement la prédiction.
 - **Pas de mémoire intrinsèque entre deux générations :** chaque génération dépend du contexte qui lui est transmis. Une application peut réinjecter un historique ou conserver un état externe, mais cela ne signifie pas que les poids du modèle ont mémorisé la conversation.
 - **Qualité dépendante des paramètres appris :** la boucle de génération peut fonctionner avec un modèle non entraîné, mais ses sorties ne deviennent pas utiles pour autant. La mécanique de génération et la qualité acquise par apprentissage sont deux questions distinctes.
-- **État du projet :** la génération à partir d'un checkpoint local reste un jalon du parcours de construction ; consultez le [parcours Build](build-path.qmd) pour distinguer les composants disponibles des travaux restant à réaliser.
 
 ::: {.self-check}
 ## Vérifier sa compréhension
 
-La [collection d'exercices sur la génération](exercises.qmd#generation) est prévue ; utilisez les vérifications ci-dessous en attendant.
+Répondez aux questions suivantes sans consulter immédiatement les réponses.
 
 1. Pourquoi un même modèle avec un même contexte peut-il produire des textes différents ?
 
@@ -193,10 +196,14 @@ Le prefill est une phase d'exécution qui traite le prompt initial comme une sé
 </details>
 :::
 
-::: {.callout-tip title="Poursuivre le parcours"}
-Le parcours commence volontairement par cette vue d'ensemble, comme une boîte noire. Pour comprendre l'entrée fournie au modèle, passez maintenant à **[Du texte aux tokens](text-data.qmd)**. Vous reviendrez ensuite aux [représentations et au calcul du Transformer](transformer.qmd), puis aux [logits](logits.qmd) et aux [probabilités](probabilites.qmd).
+::: {.callout-tip title="Pour aller plus loin"}
+Ces liens correspondent à trois besoins différents :
 
-Pour approfondir la sélection : [Stratégies avancées de décodage](decoding-strategies.qmd). Pour observer la boucle dans le code : [Visite guidée de `generate.py`](gpt-generation-walkthrough.qmd).
+- **Comprendre les étapes en amont :** [du texte aux tokens](text-data.qmd), puis [les représentations et le calcul du Transformer](transformer.qmd), [les logits](logits.qmd) et [les probabilités](probabilites.qmd).
+- **Étudier d'autres règles de sélection :** [stratégies avancées de décodage](decoding-strategies.qmd).
+- **Voir une implémentation concrète :** [visite guidée de `generate.py`](gpt-generation-walkthrough.qmd).
+
+Pour comparer la génération avec l'apprentissage, consultez [les exemples d'entraînement et le teacher forcing](training-examples.qmd), puis [la fonction de perte](loss.qmd).
 :::
 
 {{< include ../includes/generated-suggested-route-fr-generation.qmd >}}

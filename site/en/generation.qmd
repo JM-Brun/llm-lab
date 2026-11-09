@@ -8,6 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/generation"
+summary: "Presents generation as an autoregressive loop: context, next-token prediction, selection, feedback, and stopping. Introduces prefill, incremental decode, and selection strategies, then distinguishes inference from scoring and training."
 scope: "Describes autoregressive inference for an already trained model: context, forward pass, next-token distribution, selection, feedback, and stopping; distinguishes prefill and decode phases from decoding rules. Transformer internals, advanced strategies, and parameter learning are outside its scope."
 purpose: "Readers should be able to step through token-by-token generation, distinguish model computation, token selection, and the complete loop, explain prefill and incremental decode, and predict how a decoding rule changes output without updating parameters."
 suggested_route:
@@ -20,10 +21,8 @@ related: ["en/build-path", "en/decoding-strategies", "en/gpt-generation-walkthro
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-en-generation.qmd >}}
-
 ::: {.chapter-lead}
-An LLM generates text **one token at a time**. From the available context, it computes a distribution over the next token, selects one, appends it to the context, and repeats. During inference, **the model's parameters remain fixed**: generation is not learning.
+An LLM generates text **one token at a time**. From the available context, it estimates the probability of each vocabulary token appearing at the next position. These probabilities form a **conditional probability distribution over the next token**. The system then selects a token, appends it to the context, and repeats. During inference, **the model's parameters remain fixed**: generation is not learning.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
@@ -35,10 +34,10 @@ By the end of this page, you will be able to:
 - predict the effects of greedy selection, sampling, and temperature.
 :::
 
-::: {.callout-tip title="The mental model to remember"}
-**Context → next-token prediction → selection → append to context → repeat.**
+::: {.callout-tip title="The mental model"}
+**Context → probability distribution → select one token → updated context → repeat.**
 
-The first pass through the route (the **Orientation** stage) requires only this loop and the fact that parameters remain fixed. Return to this page in the **Inference** stage to study execution phases and selection rules.
+The model does not directly choose a word from the text. It assigns a probability to each possible token given the current context. A selection rule then turns that distribution into one concrete token.
 :::
 
 ## 1. One elementary step: predict and select a token
@@ -55,6 +54,11 @@ For **one generation step**, the model runs a forward pass with fixed parameters
 p_\theta(\cdot \mid c_t) = \operatorname{softmax}(z_t).
 \]
 
+For a candidate token \(v\), \(p_\theta(v \mid c_t)\) is the probability that it is the next token given the current context. Each probability lies between 0 and 1, and the probabilities across the vocabulary sum to 1. The distribution depends on the context; generation uses the distribution at the final context position.
+
+For example, with four candidate tokens, the model might assign probabilities of 0.50, 0.30, 0.15, and 0.05. They sum to 1: this distribution describes the next position, not complete sentences.
+\]
+
 A decoding policy then selects a token from this distribution:
 
 \[
@@ -65,7 +69,7 @@ Selection may be deterministic (for example, *argmax*) or stochastic (sampling).
 
 **The result of this step is one selected token**, not the complete text. It is important to distinguish the distribution computed by the model from the token actually selected by the decoding policy.
 
-The details of tokenization and token IDs belong in [From text to tokens](text-data.qmd). The internal computation that transforms representations into logits is explained in the [Transformer overview](transformer.qmd), followed by [Logits](logits.qmd) and [Output probabilities](probabilities.qmd). This page focuses on what happens **after the context has been supplied to the model**.
+If tokens and token IDs are not yet familiar, start with [From text to tokens](text-data.qmd). To understand **how the model computes** this distribution, continue with the [Transformer overview](transformer.qmd), [Logits](logits.qmd), and [Output probabilities](probabilities.qmd). Those pages explain the internal computation; this page studies what the system does with the resulting distribution.
 
 ## 2. The generation loop: repeat this step
 
@@ -149,12 +153,11 @@ This is the central distinction from [learning](loss.qmd): inference uses the av
 - **Context window:** the model processes only the supplied context, up to its maximum window. Information no longer present in that context no longer directly influences the prediction.
 - **No intrinsic memory across generations:** each generation depends on the context it receives. An application may reinsert history or retain external state, but this does not mean the model weights have memorized the conversation.
 - **Quality depends on learned parameters:** the generation loop can run with an untrained model, but that does not make its outputs useful. Generation mechanics and the quality acquired through learning are distinct questions.
-- **Project status:** generation from a local checkpoint remains a milestone in the build path; consult the [Build path](build-path.qmd) to distinguish available components from work still to be done.
 
 ::: {.self-check}
 ## Check your understanding
 
-The [extended generation exercise collection](exercises.qmd#generation) is planned; use the checks below for now.
+Try to answer the following questions before revealing the explanations.
 
 1. Why can the same model with the same context produce different texts?
 
@@ -193,10 +196,14 @@ Prefill is an execution phase that processes the initial prompt as a sequence. T
 </details>
 :::
 
-::: {.callout-tip title="Continue along the learning path"}
-The route deliberately starts with this overview, treating the model as a black box. To understand the input supplied to the model, continue to **[From text to tokens](text-data.qmd)**. You will then return to [representations and Transformer computation](transformer.qmd), followed by [logits](logits.qmd) and [probabilities](probabilities.qmd).
+::: {.callout-tip title="Go further"}
+These links serve three different purposes:
 
-To explore selection in more depth: [Advanced decoding strategies](decoding-strategies.qmd). To inspect the loop in code: [Guided tour of `generate.py`](gpt-generation-walkthrough.qmd).
+- **Understand the preceding computations:** [from text to tokens](text-data.qmd), then [representations and Transformer computation](transformer.qmd), [logits](logits.qmd), and [probabilities](probabilities.qmd).
+- **Study alternative selection rules:** [advanced decoding strategies](decoding-strategies.qmd).
+- **See a concrete implementation:** [guided tour of `generate.py`](gpt-generation-walkthrough.qmd).
+
+To compare generation with learning, read [training examples and teacher forcing](training-examples.qmd), followed by [the loss function](loss.qmd).
 :::
 
 {{< include ../includes/generated-suggested-route-en-generation.qmd >}}

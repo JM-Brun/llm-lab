@@ -8,6 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/contextualized-representations"
+summary: "Shows how Transformer layers turn initial vectors into context-dependent states, allowing the same token to have different representations in different contexts."
 scope: "Explains how Transformer layers turn initial embeddings into context-dependent vectors and why the same ID can therefore have different contextualized states depending on position and context; distinguishes these states from the static vectors in the embedding table."
 purpose: "Readers should be able to explain why two occurrences of the same token share an initial embedding but can have different contextualized representations, and connect this difference to processing by Transformer layers."
 suggested_route:

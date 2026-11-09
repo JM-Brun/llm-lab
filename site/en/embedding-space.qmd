@@ -8,6 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/embedding-space"
+summary: "Introduces the lookup that maps a token ID to an initial learned vector, then distinguishes that vector from the contextualized representations produced by the network."
 scope: "Explains the lookup that maps each token ID to an initial learned vector, then distinguishes this vector from contextualized representations produced by Transformer layers; introduces geometry cautiously without making it a prerequisite."
 purpose: "Readers should be able to explain how an ID selects a row in the embedding matrix, distinguish initial embeddings from contextualized representations, and understand why geometric properties require model- and task-dependent interpretation."
 suggested_route:
