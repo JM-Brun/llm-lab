@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 860" role="img" aria-labelledby="title desc">
-<title id="title">One predictive computation, three uses</title><desc id="desc">Le contexte est traité par le modèle pour produire des logits puis une distribution de probabilités. Cette distribution alimente la génération, le scoring d'une cible observée et l'apprentissage.</desc>
+<title id="title">One predictive computation, three uses</title><desc id="desc">The context is processed by the model to produce logits and then a probability distribution. The distribution is used for generation, scoring an observed target, and training.</desc>
 <defs><marker id="arr" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#405a72" stroke-width="2"/></marker><style>
 text{font-family:Inter,ui-sans-serif,system-ui,sans-serif;fill:#183247}.h{font-size:30px;font-weight:700}.b{font-size:23px}.s{font-size:19px}.tiny{font-size:17px}.box{stroke-width:2.5}
 </style></defs>
