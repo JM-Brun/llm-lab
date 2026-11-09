@@ -273,7 +273,11 @@ def load_navigation(language: str, pages: list[dict[str, Any]]) -> list[dict[str
     def collect_section(entry: dict[str, Any]) -> dict[str, Any] | None:
         """Preserve one sidebar section and all of its nested sections."""
         contents = entry.get("contents", [])
-        pages_in_section = collect(contents)
+        # A linked Quarto section has its own canonical entry page in addition
+        # to its expandable child lessons. Include that page in the resource-map
+        # projection exactly once, before the remaining section contents.
+        page_entries = [entry.get("href"), *contents] if entry.get("href") else contents
+        pages_in_section = collect(page_entries)
         nested = [
             section
             for item in contents

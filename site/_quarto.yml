@@ -153,8 +153,8 @@ website:
               contents:
                 - fr/text-data.qmd
                 - section: "Des identifiants aux représentations"
+                  href: fr/embedding-space.qmd
                   contents:
-                    - fr/embedding-space.qmd
                     - fr/positional-encoding.qmd
                     - fr/contextualized-representations.qmd
                 - section: "Transformer les représentations"
@@ -254,8 +254,8 @@ website:
               contents:
                 - en/text-data.qmd
                 - section: "From IDs to representations"
+                  href: en/embedding-space.qmd
                   contents:
-                    - en/embedding-space.qmd
                     - en/positional-encoding.qmd
                     - en/contextualized-representations.qmd
                 - section: "Transforming representations"

@@ -105,11 +105,18 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
     const targetedReviewPages = new Set(["exercises.html", "transformer.html", "decoding-strategies.html", "entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "text-data.html", "tokenization-strategies.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
-    // A browser-review script change must exercise the focused lesson pages:
+    const sidebarPilotPages = new Set(["embedding-space.html", "positional-encoding.html", "contextualized-representations.html"]);
+    // A Quarto sidebar change must inspect the linked section entry and its children.
     // they share page-navigation, responsive, and rendered-math assertions.
+    // When a sidebar change and this audit script change travel together,
+    // keep the browser run focused on the affected section. A script-only
+    // change still exercises the broader targeted review profile.
+    const reviewScriptOnly = changedFiles.includes("scripts/site-browser-review.mjs")
+      && !changedFiles.includes("site/_quarto.yml");
     const selectedPages = new Set([
       ...smokePages,
-      ...(changedFiles.includes("scripts/site-browser-review.mjs") ? targetedReviewPages : []),
+      ...(reviewScriptOnly ? targetedReviewPages : []),
+      ...(changedFiles.includes("site/_quarto.yml") ? sidebarPilotPages : []),
       ...changedPages,
     ]);
     for (let i = cases.length - 1; i >= 0; i--) {
@@ -723,6 +730,50 @@ for (const testCase of cases) {
     }
 
     if (kind === "route-context") {
+      if (["embedding-space.html", "positional-encoding.html", "contextualized-representations.html"].includes(pagePath)) {
+        item.linkedSidebarSection = await page.evaluate((language) => {
+          const sidebar = document.querySelector("#quarto-sidebar");
+          if (!sidebar) return { sidebarPresent: false };
+          const targetPath = `/${language}/embedding-space.html`;
+          const matches = [...sidebar.querySelectorAll("a[href]")].filter(anchor => {
+            const url = new URL(anchor.getAttribute("href"), document.baseURI);
+            return url.pathname.endsWith(targetPath);
+          });
+          const target = matches[0] || null;
+          const ancestors = [];
+          for (let node = target, depth = 0; node && depth < 6; node = node.parentElement, depth += 1) {
+            ancestors.push({
+              tag: node.tagName.toLowerCase(),
+              className: typeof node.className === "string" ? node.className : "",
+              buttons: [...node.querySelectorAll("button")].map(button => ({
+                label: button.getAttribute("aria-label"),
+                expanded: button.getAttribute("aria-expanded"),
+                className: button.className,
+              })),
+            });
+          }
+          const currentPath = `/${language}/${location.pathname.split("/").pop()}`;
+          const currentLinks = [...sidebar.querySelectorAll("a[href]")].filter(anchor =>
+            new URL(anchor.getAttribute("href"), document.baseURI).pathname.endsWith(currentPath)
+          );
+          return {
+            sidebarPresent: true,
+            entryLinkCount: matches.length,
+            entryHref: target?.getAttribute("href") || null,
+            entryText: target?.textContent.trim().replace(/\s+/g, " ") || null,
+            entryAriaCurrent: target?.getAttribute("aria-current") || null,
+            currentPageLinkCount: currentLinks.length,
+            ancestors,
+          };
+        }, lang);
+        if (!item.linkedSidebarSection.sidebarPresent || item.linkedSidebarSection.entryLinkCount !== 1) {
+          throw new Error("linked Embeddings section must expose exactly one canonical entry link in the Quarto sidebar");
+        }
+        if (item.linkedSidebarSection.currentPageLinkCount !== 1) {
+          throw new Error("the current lesson must remain directly reachable exactly once in the Quarto sidebar");
+        }
+      }
+
       const siteBreadcrumb = page.locator(".quarto-title-breadcrumbs");
       const duplicateBreadcrumb = page.locator(".llm-breadcrumb");
       item.siteBreadcrumb = {
