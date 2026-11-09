@@ -8,6 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/entropy"
+summary: "Defines the entropy of the next-token distribution as predictive dispersion before observing a target, then distinguishes it from the surprisal of the observed token, sequence likelihood, and cross-entropy."
 scope: "Define Shannon entropy of the model's next-token distribution for a fixed context as a measure of predictive dispersion before the next token is observed; distinguish it from the realized token's surprisal, sequence likelihood, and cross-entropy against a target distribution."
 purpose: "Calculate and interpret the entropy of a categorical next-token distribution, state its bounds for a finite vocabulary, and distinguish expected predictive uncertainty from the surprisal of an observed token."
 suggested_route:

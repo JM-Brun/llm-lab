@@ -57,7 +57,6 @@ p_\theta(\cdot \mid c_t) = \operatorname{softmax}(z_t).
 Pour un token candidat \(v\), \(p_\theta(v \mid c_t)\) désigne la probabilité qu'il soit le prochain token sachant le contexte courant. Chaque probabilité est comprise entre 0 et 1 et leur somme, sur tout le vocabulaire, vaut 1. La distribution dépend du contexte ; la génération utilise celle de la dernière position du contexte.
 
 Par exemple, avec quatre tokens candidats, le modèle pourrait attribuer les probabilités 0,50, 0,30, 0,15 et 0,05. Leur somme vaut 1 : cette distribution décrit la prochaine position, pas des phrases complètes.
-\]
 
 Une politique de décodage sélectionne ensuite un token à partir de cette distribution :
 
@@ -73,7 +72,7 @@ Si les notions de token et d'identifiant ne sont pas encore familières, commenc
 
 ## 2. La boucle de génération : répéter cette étape
 
-La génération autoregressive consiste à réutiliser l'étape élémentaire avec un contexte qui s'allonge. Après la sélection de \(x_t\), le contexte devient :
+La génération autorégressive consiste à réutiliser l'étape élémentaire avec un contexte qui s'allonge. Après la sélection de \(x_t\), le contexte devient :
 
 \[
 c_{t+1} = (x_1, \ldots, x_{t-1}, x_t).
