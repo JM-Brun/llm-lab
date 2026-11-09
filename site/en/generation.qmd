@@ -57,7 +57,7 @@ Inference systems often distinguish processing the initial prompt from increment
 - **Incremental decode:** after that selection, the generated token is appended to the context. The model then computes the next distribution, and the process repeats.
 - **KV cache:** an optimized implementation may retain attention keys and values computed during prefill and earlier steps. This avoids recomputing the entire prefix; it is an execution optimization, not a correctness requirement.
 
-In LLM Lab's NumPy reference, `generate.py` processes the full prompt first, then reruns the model on the context window at every step. The code therefore illustrates the logical phases but does not implement a KV cache or an optimized incremental-decode function.
+In LLM Lab's NumPy reference, `generate.py` processes the full prompt first, then reruns the model on the context window at every step. The code therefore illustrates the logical phases but does not implement a KV cache or an optimized incremental-decode function. It also does not stop early on an end-of-sequence token: the loop stops after the requested maximum number of new tokens.
 
 Do not confuse **decode** (the execution phase after prefill) with **decoding** (the next-token selection rule). Prefill is also not [*teacher forcing*](training-examples.qmd): teacher forcing concerns how predictions are conditioned during training.
 
