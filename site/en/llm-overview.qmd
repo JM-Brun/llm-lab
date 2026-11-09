@@ -75,7 +75,10 @@ The figure summarizes generation: text is tokenized, the network computes a dist
 
 The model maps the context to **logits** (scores for each vocabulary token). The *softmax* function then converts these scores into **probabilities**. This distribution tells us which tokens could follow the context and how likely each one is.
 
-![From context to three uses of the predictive distribution: generation, observed-target scoring, and training.](../images/llm-shared-prediction-uses-en.svg){#fig-llm-shared-prediction-uses fig-alt="The context passes through the model, which produces logits and then a probability distribution over the next token. The distribution is used to select a token during generation, measure the probability of an observed token during scoring, or calculate a loss and update parameters during training."}
+<!-- Desktop: three-column view; mobile: stacked view for readable labels. -->
+![From context to three uses of the predictive distribution: generation, observed-target scoring, and training.](../images/llm-shared-prediction-uses-en.svg){.d-none .d-md-block #fig-llm-shared-prediction-uses fig-alt="The context passes through the model, which produces logits and then a probability distribution over the next token. The distribution is used to select a token during generation, measure the probability of an observed token during scoring, or calculate a loss and update parameters during training."}
+
+![From context to the three uses of the predictive distribution: generation, scoring, and training, stacked vertically for readability on small screens.](../images/llm-shared-prediction-uses-en-mobile.svg){.d-md-none fig-alt="Mobile version of the diagram: context passes through the model to produce logits and probabilities. Three blocks then show generation, scoring, and training."}
 
 The predictive computation is shared; **what happens next depends on the question**:
 
