@@ -174,7 +174,7 @@ x_t = \arg\max_{v \in V^{(k)}} \left[
 \right].
 \]
 
-Ici, \(k\) définit l'ensemble des candidats et \(\alpha\in[0,1]\) règle le compromis entre confiance et pénalité. Lorsque \(\\alpha=0\), la méthode se réduit au choix glouton parmi les candidats. Ce \(k\) ne désigne pas le *top-k sampling* : celui-ci tronque une distribution puis échantillonne, tandis que le *contrastive search* sélectionne le candidat qui optimise un score pénalisé.
+Ici, \(k\) définit l'ensemble des candidats et \(\alpha\in[0,1]\) règle le compromis entre confiance et pénalité. Lorsque \(\alpha=0\), la méthode se réduit au choix glouton parmi les candidats. Ce \(k\) ne désigne pas le *top-k sampling* : celui-ci tronque une distribution puis échantillonne, tandis que le *contrastive search* sélectionne le candidat qui optimise un score pénalisé.
 
 Les deux méthodes portent un nom proche mais ne partagent ni le même mécanisme ni les mêmes besoins : deux modèles (expert/amateur) pour le *contrastive decoding* ; un modèle et ses représentations contextualisées pour le *contrastive search*. Voir [Su et al., 2022, §3.2](https://papers.nips.cc/paper_files/paper/2022/file/871cae8f599cb8bbfcb0f58fe1af95ad-Paper-Conference.pdf) et la [documentation Transformers 4.46](https://huggingface.co/docs/transformers/v4.46.0/en/generation_strategies) pour son paramétrage historique. Cette leçon situe le mécanisme sans prétendre l'implémenter dans le GPT pédagogique.
 </aside>
