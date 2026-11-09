@@ -1321,3 +1321,16 @@ The four labels are `[1, 0, 1, 0]`. Score set A is `[0.65, 0.55, 0.45, 0.35]`; s
 A standard-library Python snippet in each language page computes AP and this two-bin ECE and asserts the expected values. The text states that ECE depends on binning and that the four-observation example is illustrative, not a reliable calibration estimate or an empirical LLM evaluation.
 
 **Validation still required:** execute both snippets, verify FR/EN semantic parity, run Python CI and Quarto render/local-link checks, then inspect the exact rendered changes. Mobile layout is intentionally not a gate for this source/content slice and remains a later release-review task.
+
+## 2026-11-09: contrastive decoding versus contrastive search
+
+**Scope.** Audited the terminology used in the FR/EN decoding-strategies lesson against the original methods and the versioned Transformers guide.
+
+- Li et al. (ACL 2023) contrastive decoding contrasts expert/amateur model log-likelihoods under an expert plausibility constraint.
+- Su et al. (NeurIPS 2022, §3.2) contrastive search uses one model, a top-k candidate set, model confidence and a maximum cosine-similarity degeneration penalty over contextual token representations.
+- The candidate-set (k) in contrastive search is not top-k sampling: one selects a candidate by a penalized objective; the other truncates a distribution and samples.
+- The FR/EN lesson now distinguishes the methods and gives the original contrastive-search objective. It explicitly states that the teaching GPT does not implement this method.
+
+**Sources.** Li et al., https://aclanthology.org/2023.acl-long.687/ ; Su et al., https://papers.nips.cc/paper_files/paper/2022/file/871cae8f599cb8bbfcb0f58fe1af95ad-Paper-Conference.pdf ; version-specific Transformers 4.46 guide, https://huggingface.co/docs/transformers/v4.46.0/en/generation_strategies.
+
+**Boundary.** The Transformers reference is explicitly versioned; no claim is made that the same parameterization is present in the current release. This is a conceptual clarification, not a new implementation, concept node, page or dependency.
