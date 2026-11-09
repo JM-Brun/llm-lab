@@ -81,3 +81,26 @@ Do not mark the issue's manual visual-review checkbox complete until screenshot 
 - [Neha KK source review](qkv-neha-kk-medium-2026-11.md)
 - [Codefinity source review](qkv-codefinity-course-2026-11.md)
 - [Pedagogical coverage matrix](../source-syntheses/qkv-pedagogical-coverage-matrix-2026-11.md)
+
+
+## 8. Rendered-page evidence update — PR #680 (2026-11-08)
+
+The responsive projection-equation correction in [PR #680](https://github.com/JM-Brun/llm-lab/pull/680) was validated with the repository's existing Chromium browser-review workflow. The Quarto site run produced artifact `site-browser-review-2bb8564f7ce46a1e2e3a35e9923d100d661f3b68` (workflow run 42483941869; tested head `4e15f3900a8eff9248788541e6eea4f56dc3538b`). The PR was merged as `3ee3f004b8d3c9f8c83f24842c4e35a776c5f1c6`.
+
+### Scope and observations
+
+- Six local-render cases: EN/FR × desktop 1440×1000 (light) and mobile 390×844 (light and dark).
+- All six returned HTTP 200, with no console errors or uncaught page errors.
+- No document-level horizontal overflow was reported in any case.
+- The project-owned Q/K/V SVG loaded in both languages and had descriptive image alt text.
+- Each language/viewport rendered all 28/28 MathJax expressions; no unrendered delimiters were reported.
+- Desktop Axe: zero violations in both languages (33 passed rules and one incomplete check per language). The artifact did not run Axe on mobile.
+- Desktop keyboard probe: visible focus indicators were observed; the disclosure was initially closed and opened with Enter in both languages.
+- Route-context probe found one native breadcrumb trail, no duplicate custom breadcrumb, and resolving previous/next links.
+- The mobile screenshots were inspected. The three position-wise projection equations now appear as an aligned display block; this addresses the narrow-width inline-expression defect identified by the earlier #531 artifact.
+
+### Evidence boundary
+
+This is a PR-local Chromium render of the Quarto site, not a fresh check of the deployed Pages host. The keyboard probe is not a complete manual keyboard audit; no touch-device test or screen-reader session was performed. The presence of SVG image alt text does not establish how assistive technology announces the SVG or exposes its internal `<title>`/`<desc>` metadata. Mobile Axe coverage is absent.
+
+The artifact therefore closes the specific responsive-equation defect, and provides rendered FR/EN desktop/mobile evidence for the current PR head. It does **not** close the manual accessibility or deployed-site criteria in #483. Original third-party media identity, bytes, creator metadata and reuse terms remain unresolved; retain the link-only decisions in sections 1–4 and do not copy or trace those assets.
