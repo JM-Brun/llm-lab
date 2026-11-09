@@ -1274,3 +1274,25 @@ Added a concise explanation and links to the canonical training-example and caus
 ### Validation limits
 
 The correction is bilingual and source-level. The Quarto render and existing metadata/link checks should validate the edited pages; a rendered browser review and an executable padded/packed batch example remain separate work. No new workflow or test harness is introduced.
+
+## 2026-11-09: greedy decoding versus sequence-level maximum — deterministic counterexample
+
+**Scope.** Extended the FR/EN decoding-strategies lesson in response to issue #84. The example is a fixed-horizon, two-step conditional tree; it is a mathematical toy, not a model benchmark.
+
+Used first-step probabilities P(A)=0.60 and P(B)=0.40, followed by P(x|A)=0.51, P(y|A)=0.49, P(z|B)=0.99 and P(w|B)=0.01. Greedy decoding returns A x with probability 0.306, while exhaustive enumeration identifies B z with probability 0.396. The distinction is between locally maximizing each next-token probability and maximizing the product of conditional probabilities over a complete fixed-length sequence.
+
+Added a runnable NumPy snippet in both languages. It uses log-probabilities as logits so that softmax recovers the stated conditional distributions, enumerates the four complete sequences, and prints the greedy and sequence-MAP outcomes. No randomness, external model, download, or training is involved.
+
+Explicitly bounded the conclusion: exhaustive enumeration is feasible here only because the tree is tiny and the horizon fixed. Longer horizons and larger vocabularies make it expensive; beam search is an approximate search over prefixes. Variable-length stopping and length normalization change the comparison objective.
+
+### Validation still required
+
+- Execute the snippet in CI or an equivalent checked environment; verify the four sequence scores and bilingual parity.
+- Quarto render, local-link checks and targeted browser review on the PR head.
+- This example satisfies the issue's greedy-versus-sequence-MAP challenge; it does not claim to implement beam search or establish a general decoding-quality ranking.
+
+### Evaluation metrics: likelihood is not task quality
+
+Extended the evaluation section with explicit bilingual links and a bounded example: likelihood/NLL (and derived perplexity) scores observed tokens on a corpus; it does not directly measure factuality, instruction following or user utility. Task metrics only measure the operationalized property and protocol. The existing experimental-evaluation exercise's Average Precision measures ranking quality, not probability calibration. This reuses existing lessons rather than introducing a new metric or page.
+
+The user-supplied YouTube URL in issue #84 could not be verified through the available source retrieval: the direct page fetch returned a cache miss and exact video-ID search returned no result. It is therefore not cited or incorporated; its title/transcript and timestamps remain unverified.
