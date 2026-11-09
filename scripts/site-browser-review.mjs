@@ -104,7 +104,7 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
-    const targetedReviewPages = new Set(["exercises.html", "transformer.html", "decoding-strategies.html", "entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
+    const targetedReviewPages = new Set(["exercises.html", "transformer.html", "decoding-strategies.html", "entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "text-data.html", "tokenization-strategies.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
     // A browser-review script change must exercise the focused lesson pages:
     // they share page-navigation, responsive, and rendered-math assertions.
     const selectedPages = new Set([
@@ -307,6 +307,20 @@ for (const testCase of cases) {
       };
       return { previous: readLink("previous"), next: readLink("next") };
     });
+    const expectedCoreNavigation = {
+      "text-data.html": { previous: "generation.html", next: "embedding-space.html" },
+      "embedding-space.html": { previous: "text-data.html", next: "positional-encoding.html" },
+    }[pagePath];
+    if (expectedCoreNavigation) {
+      for (const [direction, expectedTarget] of Object.entries(expectedCoreNavigation)) {
+        const actualTarget = item.pageNavigation[direction].href
+          ? new URL(item.pageNavigation[direction].href).pathname.split("/").pop()
+          : null;
+        if (actualTarget !== expectedTarget) {
+          throw new Error(`${pagePath} ${direction} navigation should target ${expectedTarget}, got ${actualTarget}`);
+        }
+      }
+    }
     for (const [direction, navigation] of Object.entries(item.pageNavigation)) {
       const visible = Boolean(navigation.href);
       if (visible) {
