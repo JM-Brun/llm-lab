@@ -92,7 +92,7 @@ L'exemple autonome suivant utilise la forme de sortie courante d'un modèle de l
 import torch
 import torch.nn.functional as F
 
-# B=1, T=3 positions, V=3 tokens.
+# B=1 batch, T=3 positions, V=3 vocabulary tokens.
 logits = torch.tensor(
     [[[2.0, 0.0, -1.0], [0.0, 1.0, 0.0], [1.0, 0.0, 2.0]]],
     dtype=torch.float64,
