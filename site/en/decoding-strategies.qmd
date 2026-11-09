@@ -36,6 +36,16 @@ By the end of this page, you will be able to:
 - document the parameters needed for a reproducible decoding experiment.
 :::
 
+::: {.callout-tip title="Key ideas in one minute"}
+- **Local processing:** logits can be transformed, filtered, and renormalized before selecting the next token.
+- **Temperature:** it controls distribution concentration; it changes neither model parameters nor intrinsic model quality.
+- **Top-k / top-p:** they restrict candidates by a fixed count or a target cumulative mass; they change the effective distribution.
+- **Search:** greedy decoding optimizes a local decision; beam search keeps several hypotheses and compares sequences under a score.
+- **Limitation:** no strategy alone guarantees truth, global coherence, or task-appropriate quality; document the protocol.
+
+**Check your understanding:** can you distinguish transforming a distribution at one position from searching over multiple sequences?
+:::
+
 ## 1. Where decoding happens
 
 At a given step, the model produces logits $z$ for the next token. A processing chain may then:
