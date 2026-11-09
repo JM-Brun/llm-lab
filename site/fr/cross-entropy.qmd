@@ -85,6 +85,53 @@ Cette référence ne met **pas** en œuvre le décalage des entrées/cibles d'un
 Les tests vérifient une valeur connue, l'accord avec des différences finies centrées, la stabilité pour de grands logits, l'invariance à l'ajout d'une constante par ligne, la somme nulle des gradients par ligne, l'absence de mutation des entrées et le rejet des entrées invalides. Ils étayent le périmètre annoncé de cette référence ; ils ne valident ni le masquage ni l'alignement des séquences, qui ne sont pas implémentés ici.
 :::
 
+::: {.callout-note collapse="true" title="Exemple PyTorch : logits, cibles et positions ignorées"}
+L'exemple autonome suivant utilise la forme de sortie courante d'un modèle de langage, `(B,T,V)), puis aplatit les deux premières dimensions car `CrossEntropyLoss` attend les classes dans la deuxième dimension. Les cibles sont supposées **déjà alignées** sur les logits : ce code ne construit pas le décalage autorégressif des entrées et cibles.
+
+```python
+import torch
+import torch.nn.functional as F
+
+# B=1, T=3 positions, V=3 tokens.
+logits = torch.tensor(
+    [[[2.0, 0.0, -1.0], [0.0, 1.0, 0.0], [1.0, 0.0, 2.0]]],
+    dtype=torch.float64,
+)
+targets = torch.tensor([[0, 2, -100]], dtype=torch.long)
+batch_size, seq_len, vocab_size = logits.shape
+flat_logits = logits.reshape(-1, vocab_size)
+flat_targets = targets.reshape(-1)
+
+per_token_loss = torch.nn.CrossEntropyLoss(
+    ignore_index=-100, reduction="none"
+)(flat_logits, flat_targets).reshape(batch_size, seq_len)
+mean_loss = torch.nn.CrossEntropyLoss(
+    ignore_index=-100, reduction="mean"
+)(flat_logits, flat_targets)
+
+valid = targets.ne(-100)
+manual_loss = -F.log_softmax(logits[valid], dim=-1).gather(
+    1, targets[valid].unsqueeze(1)
+).mean()
+
+# The framework reduction agrees with the mean over valid target positions.
+torch.testing.assert_close(per_token_loss[valid].mean(), mean_loss)
+torch.testing.assert_close(mean_loss, manual_loss)
+
+# Passing probabilities as if they were logits changes the objective.
+softmax_first_loss = torch.nn.CrossEntropyLoss(ignore_index=-100)(
+    logits.softmax(dim=-1).reshape(-1, vocab_size), flat_targets
+)
+assert not torch.isclose(mean_loss, softmax_first_loss)
+
+print("per-token:", per_token_loss.tolist())
+print("mean:", mean_loss.item())  # 0.860645...
+print("softmax-first:", softmax_first_loss.item())  # 0.946560...
+```
+
+La dernière position est ignorée par `ignore_index) ; elle ne contribue ni à la somme ni au dénominateur de la moyenne. `reduction="none"` permet d'inspecter les pertes locales, tandis que `reduction="mean"` moyenne les cibles valides (sans poids de classes dans cet exemple). La softmax préalable est incorrecte pour l'usage attendu de cette API : elle transforme les logits en nouvelles entrées de scores et change la loss. Cet exemple illustre l'API et l'agrégation ; il ne remplace ni le masque causal, ni l'alignement des cibles, ni une boucle d'entraînement.
+:::
+
 ## Lien avec la perplexité
 
 Si \(\bar{\ell}\) est la cross-entropie moyenne en nats sur les tokens valides, la perplexité est :
