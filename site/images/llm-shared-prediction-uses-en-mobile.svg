@@ -4,7 +4,7 @@
 text{font-family:Inter,ui-sans-serif,system-ui,sans-serif;fill:#183247}.h{font-size:36px;font-weight:700}.b{font-size:30px;font-weight:600}.s{font-size:26px}.small{font-size:23px}.box{stroke-width:3}
 </style></defs>
 <rect width="720" height="1540" fill="#fff"/>
-<text x="360" y="55" text-anchor="middle" class="h">One predictive computation, three uses</text><text x="360" y="95" text-anchor="middle" class="small">The model produces a probability distribution.</text>
+<text x="360" y="55" text-anchor="middle" class="h">One computation, three uses</text><text x="360" y="95" text-anchor="middle" class="small">The model produces a probability distribution.</text>
 <rect x="90" y="130" width="540" height="125" rx="18" fill="#edf4ff" stroke="#8eb1df" class="box"/><text x="360" y="180" text-anchor="middle" class="h">Context</text><text x="360" y="220" text-anchor="middle" class="s">Tokens already known</text>
 <path d="M360 260 V290" stroke="#405a72" stroke-width="4" marker-end="url(#arr)"/>
 <rect x="90" y="300" width="540" height="125" rx="18" fill="#eaf6ef" stroke="#8fc5a4" class="box"/><text x="360" y="350" text-anchor="middle" class="h">Model</text><text x="360" y="395" text-anchor="middle" class="s">Forward pass</text>
