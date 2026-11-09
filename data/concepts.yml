@@ -521,6 +521,40 @@ concepts:
     domains: [probabilistic-foundations-training]
     resources: [fr/score-centering, en/score-centering]
 
+
+  - id: next-concept-modeling
+    importance: supporting
+    labels: {fr: "Next-Concept Modeling (NCM)", en: "Next-Concept Modeling (NCM)"}
+    definitions:
+      fr: "Cadre de génération non autorégressive qui représente une séquence par une hiérarchie de codes discrets et prédit ces codes niveau par niveau, de grossier à fin, avec parallélisme à l'intérieur de chaque niveau."
+      en: "Non-autoregressive generation framework that represents a sequence as a hierarchy of discrete codes and predicts those codes level by level, coarse to fine, with parallelism within each level."
+    domains: [architectures-mechanisms, inference-efficiency]
+    resources: [fr/next-concept-modeling, en/next-concept-modeling]
+  - id: hierarchical-discrete-codes
+    importance: specialized
+    labels: {fr: "Codes discrets hiérarchiques", en: "Hierarchical discrete codes"}
+    definitions:
+      fr: "Représentation d'une séquence par plusieurs niveaux de codes discrets, les niveaux ultérieurs ajoutant des détails à la reconstruction fournie par les précédents."
+      en: "Representation of a sequence through multiple levels of discrete codes, with later levels adding detail to the reconstruction supplied by earlier ones."
+    domains: [architectures-mechanisms, mathematical-tools-geometry]
+    resources: [fr/next-concept-modeling, en/next-concept-modeling]
+  - id: coarse-to-fine-generation
+    importance: supporting
+    labels: {fr: "Génération du grossier au fin", en: "Coarse-to-fine generation"}
+    definitions:
+      fr: "Stratégie qui génère d'abord une représentation grossière, puis la raffine par étapes successives ; dans NCM, les codes d'un même niveau sont prédits en parallèle."
+      en: "Strategy that first generates a coarse representation and then refines it through successive stages; in NCM, codes within one level are predicted in parallel."
+    domains: [architectures-mechanisms, inference-efficiency]
+    resources: [fr/next-concept-modeling, en/next-concept-modeling]
+  - id: multiscale-residual-vector-quantization
+    importance: specialized
+    labels: {fr: "Quantification vectorielle résiduelle multi-échelle", en: "Multiscale residual vector quantization"}
+    definitions:
+      fr: "Procédé de tokenisation appris qui encode une séquence en plusieurs niveaux de codes discrets résiduels, chaque niveau apportant une information de reconstruction supplémentaire."
+      en: "Learned tokenization procedure that encodes a sequence into multiple levels of residual discrete codes, each level adding further reconstruction information."
+    domains: [architectures-mechanisms, mathematical-tools-geometry]
+    resources: [fr/next-concept-modeling, en/next-concept-modeling]
+
 relation_types:
   represented-by:
     direction: directed
@@ -765,3 +799,7 @@ relations:
   - {from: conditional-distribution, type: evaluated-by, to: held-out-evaluation}
   - {from: conditional-distribution, type: evaluated-by, to: cross-entropy}
 
+  - {from: autoregressive-generation, type: contrasts-with, to: next-concept-modeling}
+  - {from: hierarchical-discrete-codes, type: part-of, to: next-concept-modeling}
+  - {from: coarse-to-fine-generation, type: part-of, to: next-concept-modeling}
+  - {from: multiscale-residual-vector-quantization, type: part-of, to: next-concept-modeling}

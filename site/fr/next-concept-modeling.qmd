@@ -1,0 +1,85 @@
+---
+title: "Next-Concept Modeling : générer par niveaux de représentation"
+description: "Étude avancée d'une génération non autorégressive fondée sur des codes discrets hiérarchiques."
+keywords: ["type:concept-lesson", "destination:deepen", "topic:next-concept-modeling", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/next-concept-modeling"
+scope: "Présente NCM comme une architecture de génération non autorégressive à codes discrets hiérarchiques, en la comparant à la génération autorégressive et aux modèles de diffusion."
+purpose: "Expliquer l'unité prédite, les dépendances entre étapes, le parallélisme intra-niveau et les compromis de représentation et d'entraînement de NCM."
+domain: "architectures-mechanisms"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/deepen"]
+  children: []
+related: ["fr/generation", "fr/decoding-strategies", "fr/llm-computational-complexity", "fr/transformer-architectures"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:next-concept-modeling", "level:advanced", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+La génération autorégressive prédit le prochain token à partir du préfixe déjà produit. **Next-Concept Modeling (NCM)** explore une autre unité de prédiction : une hiérarchie de codes discrets qui représente progressivement une séquence, du grossier au fin. Les codes d'un même niveau sont prédits en parallèle ; les niveaux restent ordonnés.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+À la fin de cette étude, vous pourrez comparer les unités de prédiction de GPT, des modèles de diffusion et de NCM ; décrire les deux phases d'apprentissage de NCM ; expliquer précisément où se situe le parallélisme ; interpréter ses résultats sans généraliser au-delà des protocoles publiés.
+:::
+
+## Trois organisations de la génération
+
+| Dimension | Autorégressif (GPT) | Diffusion de texte | NCM |
+|---|---|---|---|
+| Unité de génération | Token suivant | État ou token à débruiter | Codes discrets d'un niveau |
+| Dépendance principale | Le token suivant dépend du préfixe | Itérations de débruitage | Les niveaux fins dépendent des niveaux précédents |
+| Parallélisme | Positions d'entraînement parallèles avec masquage causal ; génération séquentielle | Plusieurs positions mises à jour par étape de débruitage | Positions d'un même niveau prédites en parallèle |
+| Sortie intermédiaire | Préfixe de tokens | Séquence partiellement débruitée | Reconstruction cumulée des niveaux de codes |
+| Décodage | Un token après l'autre | Plusieurs étapes de débruitage | Un niveau après l'autre, puis décodage des codes |
+
+Ces familles ne se distinguent pas simplement par leur vitesse. Elles organisent différemment la représentation intermédiaire, les dépendances entre prédictions et le coût du décodage. « Non autorégressif » ne signifie donc pas « tout est prédit en une seule opération ».
+
+## Le mécanisme NCM
+
+### 1. Apprendre une représentation hiérarchique
+
+Une première phase entraîne un tokenizer neuronal multi-échelle fondé sur la quantification vectorielle résiduelle. Il encode une séquence en plusieurs niveaux de codes discrets. Les premiers niveaux capturent une reconstruction grossière ; les niveaux suivants apportent des résidus et des détails supplémentaires. Le *nested dropout* encourage les niveaux précoces à rester informatifs.
+
+Le terme *concept* désigne ici une unité latente apprise. Il ne garantit ni interprétabilité humaine, ni correspondance avec des concepts linguistiques identifiables.
+
+### 2. Apprendre à prédire les niveaux
+
+Dans une seconde phase, le tokenizer est gelé et un Transformer de concepts apprend à prédire les codes hiérarchiques. À chaque niveau, les codes sont prédits en parallèle, conditionnellement à la reconstruction cumulée des niveaux précédents. L'entraînement peut corrompre certains codes de conditionnement pour rendre le modèle plus robuste aux erreurs de ses propres prédictions.
+
+### 3. Générer du grossier au fin
+
+À l'inférence, le modèle produit les niveaux successivement. Le parallélisme porte sur les positions d'un niveau, pas sur l'ensemble de la hiérarchie. Une fois les niveaux générés, le décodeur du tokenizer reconstruit la séquence textuelle.
+
+La page du laboratoire Hazy Research fournit le schéma d'ensemble et détaille les deux phases : [présentation du projet](https://hazyresearch.stanford.edu/blog/2026-10-12-ncm).
+
+## Ce que les résultats permettent — et ne permettent pas — de conclure
+
+L'article rapporte des accélérations face à des modèles de diffusion de texte sur plusieurs tâches : environ 21× sur LM1B, 10× sur OpenWebText et jusqu'à 31× sur XSum dans les configurations étudiées. Il rapporte aussi moins de positions de tokens d'entraînement exposées dans certaines comparaisons (environ 4,9× sur LM1B et 4× sur OpenWebText).
+
+Ces chiffres sont des résultats d'expérience, pas des propriétés universelles de NCM. Ils dépendent des tâches, modèles de référence, tailles, matériel et protocoles retenus. Ils ne démontrent pas que NCM dépasse systématiquement les systèmes autorégressifs optimisés en latence, qualité, coût total ou robustesse. Les résultats sur Sudoku restent une évaluation sur une tâche structurée précise, pas une preuve de raisonnement général.
+
+## Compromis et questions ouvertes
+
+- **Représentation apprise séparément :** le tokenizer et le générateur sont entraînés en deux phases ; le tokenizer est gelé pour l'apprentissage du Transformer de concepts.
+- **Hiérarchie imposée :** le nombre et l'organisation des niveaux structurent le calcul ; l'allocation adaptative de calcul reste une question de recherche.
+- **Codes latents :** leur utilité pour la reconstruction ne les rend pas automatiquement interprétables.
+- **Qualité et robustesse :** il faut étudier les erreurs qui se propagent entre niveaux, les compromis débit/qualité et le comportement hors distribution.
+- **Comparaison équitable :** mesurer latence, débit, mémoire, coût d'entraînement et qualité avec des protocoles comparables.
+
+## Expérimenter et lire les sources
+
+La prochaine étape expérimentale pertinente est d'inspecter le code officiel et les checkpoints, puis de reproduire une expérience réduite sur un jeu de données et un protocole documentés. Ne pas présenter une exécution non vérifiée comme une reproduction.
+
+- [Article scientifique : Next-Concept Modeling](https://arxiv.org/abs/2610.14162) — source primaire.
+- [Présentation du laboratoire Hazy Research](https://hazyresearch.stanford.edu/blog/2026-10-12-ncm) — explication et résultats.
+- [Code officiel](https://github.com/HazyResearch/ncm) — implémentation et instructions.
+- [Checkpoints](https://huggingface.co/hazyresearch/ncm-checkpoints) — poids publiés.
+
+**Position dans LLM Lab :** approfondissement avancé et branche architecturale alternative. NCM ne remplace pas la chaîne GPT canonique et n'est pas un prérequis pour construire le petit GPT.

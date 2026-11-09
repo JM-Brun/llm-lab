@@ -72,10 +72,12 @@ project:
     - fr/transformer-architectures.qmd
     - fr/cross-attention.qmd
     - fr/hybrid-llm-architectures.qmd
+    - fr/next-concept-modeling.qmd
     - fr/llm-computational-complexity.qmd
     - en/transformer-architectures.qmd
     - en/cross-attention.qmd
     - en/hybrid-llm-architectures.qmd
+    - en/next-concept-modeling.qmd
     - en/llm-computational-complexity.qmd
     - fr/transformer.qmd
     - fr/transformer-explainer.qmd
@@ -209,6 +211,7 @@ website:
                 - fr/cross-attention.qmd
                 - fr/rope.qmd
                 - fr/hybrid-llm-architectures.qmd
+                - fr/next-concept-modeling.qmd
             - section: "Texte et tokenisation"
               contents:
                 - fr/unicode-text.qmd
@@ -310,6 +313,7 @@ website:
                 - en/cross-attention.qmd
                 - en/rope.qmd
                 - en/hybrid-llm-architectures.qmd
+                - en/next-concept-modeling.qmd
             - section: "Text and tokenization"
               contents:
                 - en/unicode-text.qmd

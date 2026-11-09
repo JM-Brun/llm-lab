@@ -1,0 +1,248 @@
+schema_version: 1
+source_id: bdtech-next-concept-modeling-2026
+
+scan:
+  accessed_at: "2026-11-09"
+  retrieval_method: indexed-text
+  author_text:
+    status: complete
+    coverage: "Full article body: motivation, autoregressive and diffusion limitations, NCM architecture, two-stage training, evaluation, examples, availability and limitations."
+    notes:
+      - "Direct Substack retrieval returned a cache miss; the complete author-attributed text was exposed by indexed search."
+      - "The article is a secondary explanation; technical details and quantitative claims were checked against the primary paper and Stanford project page."
+  figures_media:
+    status: not-inspected
+    coverage: null
+    notes: ["No image or animation asset was independently retrieved or visually inspected; no figure reuse permission was established."]
+  code_data:
+    status: partial
+    coverage: "Official HazyResearch/ncm repository README, task list, checkpoint references, evaluation entry points and MIT licence statement."
+    notes: ["Implementation internals, training scripts, checkpoints and datasets were not run or exhaustively inspected."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Primary arXiv paper, Stanford Hazy Research project page, official GitHub repository and checkpoint collection."
+    notes: ["The full paper PDF and supplementary material were not independently audited."]
+  metadata:
+    status: partial
+    coverage: "Author, title, publisher and publication date exposed in indexed article result."
+    notes: ["Article date: 2026-11-07."]
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["Public access does not establish text or figure reuse rights; retain link-only."]
+  unresolved_questions:
+    - "Inspect the complete paper methodology, appendix and exact benchmark protocols before using NCM as a quantitative teaching case."
+    - "Inspect tokenizer and generator implementation to derive tensor shapes, codebook structure, losses and training targets."
+    - "Run at least one small released inference example before designing a reproducible lab."
+    - "Check how the fixed hierarchy and decoder behave on varied sequence lengths and languages."
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Full indexed article text by Ben Dickson."
+      - "Primary paper abstract and Stanford Hazy Research project page, used to verify architecture and headline results."
+      - "Official repository README, used to verify the public implementation surface and task coverage."
+    inferred_elements:
+      - "A learner-facing comparison should position NCM as a sibling alternative to autoregressive and diffusion generation, not as a stage after a Transformer."
+      - "A useful implementation lab would expose the tokenizer and generator as separate trainable/frozen components, but detailed tensor-level steps require code inspection."
+  source_graph:
+    nodes:
+      - id: src-text-sequence
+        kind: data
+        description: "Input text sequence to be represented."
+        locator: "How Next-Concept Modeling works; Stanford project overview"
+        inferred: false
+      - id: src-multiscale-tokenizer
+        kind: mechanism
+        description: "Multiscale residual VQ tokenizer that maps text to a hierarchy of discrete codes and decodes codes back to text."
+        locator: "Stanford project overview; arXiv abstract"
+        inferred: false
+      - id: src-hierarchical-codes
+        kind: representation
+        description: "Discrete code levels that progressively add reconstruction detail."
+        locator: "How Next-Concept Modeling works"
+        inferred: false
+      - id: src-concept-transformer
+        kind: model
+        description: "Transformer trained to predict each level from the cumulative reconstruction of earlier levels."
+        locator: "How Next-Concept Modeling works; Stanford project overview"
+        inferred: false
+      - id: src-level-parallel-prediction
+        kind: operation
+        description: "All code positions within the current hierarchy level are predicted in parallel."
+        locator: "How Next-Concept Modeling works"
+        inferred: false
+      - id: src-text-decoder
+        kind: mechanism
+        description: "Frozen tokenizer decoder reconstructing text from the completed code hierarchy."
+        locator: "How Next-Concept Modeling works"
+        inferred: false
+    edges:
+      - {from: src-text-sequence, type: encoded-by, to: src-multiscale-tokenizer, inferred: false}
+      - {from: src-multiscale-tokenizer, type: produces, to: src-hierarchical-codes, inferred: false}
+      - {from: src-hierarchical-codes, type: predicted-by, to: src-concept-transformer, inferred: false}
+      - {from: src-concept-transformer, type: predicts-in-parallel, to: src-level-parallel-prediction, inferred: false}
+      - {from: src-hierarchical-codes, type: decoded-by, to: src-text-decoder, inferred: false}
+    interpretation: "Editorial reconstruction of the architecture described by the article and primary project materials; source-local relations are not canonical LLM Lab graph edge types."
+  learning_outcomes:
+    - status: declared
+      outcome: "Distinguish token-by-token autoregressive generation, iterative full-sequence diffusion refinement, and level-wise coarse-to-fine NCM generation."
+      basis: "Article sections on the autoregressive challenge and NCM mechanism."
+    - status: declared
+      outcome: "Explain why NCM is sequential across hierarchy levels but parallel within each level."
+      basis: "Article explanation of inference-time level generation."
+    - status: declared
+      outcome: "Describe the two-stage training design: learn a multiscale discrete tokenizer, freeze it, then train a concept transformer."
+      basis: "Article's two-stage training description; primary Stanford project overview."
+    - status: declared
+      outcome: "Interpret benchmark speedups with their baseline, task, model scale and evaluation protocol."
+      basis: "Article results section and primary paper abstract."
+    - status: inferred
+      outcome: "Trace the encoder/tokenizer, code hierarchy, level predictor and decoder with tensor shapes."
+      basis: "Proposed learning outcome; implementation details require source-code inspection."
+  assumed_prerequisites:
+    - status: inferred
+      topic: "Autoregressive generation, next-token prediction and decoding"
+      basis: "Required to understand the contrast with NCM."
+    - status: inferred
+      topic: "Vector quantization, residual coding and autoencoders"
+      basis: "Required to understand the learned hierarchy of discrete codes."
+    - status: inferred
+      topic: "Transformer forward pass and parallel tensor operations"
+      basis: "Required to understand the concept transformer and within-level parallelism."
+  teaching_route:
+    - order: 1
+      section: "Why token-by-token generation is not the only option"
+      function: motivation
+      moves: ["Identify sequential dependency in autoregressive decoding and compare it with diffusion refinement."]
+    - order: 2
+      section: "Represent a sequence at multiple scales"
+      function: representation
+      moves: ["Understand multiscale residual discrete codes and coarse-to-fine reconstruction."]
+    - order: 3
+      section: "Learn the tokenizer, then the generator"
+      function: training-design
+      moves: ["Separate tokenizer learning from concept-transformer learning and note the frozen boundary."]
+    - order: 4
+      section: "Generate one level at a time, in parallel within a level"
+      function: inference
+      moves: ["Distinguish sequential hierarchy depth from parallel code positions."]
+    - order: 5
+      section: "Decode and evaluate the completed representation"
+      function: evaluation
+      moves: ["Reconstruct text and interpret task-specific quality, latency and compute measurements."]
+  pedagogical_strengths:
+    - "Introduces an alternative prediction unit rather than merely a faster implementation of next-token decoding."
+    - "The coarse-to-fine analogy gives an accessible intuition while explicitly warning that codes are not human-readable outlines."
+    - "Connects architecture to inference efficiency and tasks with global constraints."
+    - "The primary project page supplies generation visualizations and a concrete task/evaluation inventory."
+  pedagogical_limits:
+    - "The article is secondary and simplifies the multiscale residual VQ tokenizer as a VAE."
+    - "The term concept can misleadingly suggest human-interpretable semantic concepts; the codes are learned numerical representations."
+    - "The headline speedups compare mainly with diffusion baselines, not universally with optimized production autoregressive models."
+    - "The fixed number and lengths of hierarchy levels limit adaptive allocation of compute."
+    - "Tokenizer and generator are trained separately; joint learning is a stated future direction."
+    - "Reported Sudoku performance is task-specific and does not establish general reasoning ability."
+    - "No code execution, independent benchmark replication or visual asset inspection was performed."
+  comparison:
+    dossier: "docs/source-reviews/next-concept-modeling-2026-11.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: ["docs/learning-path.md", "data/guided-route.yml"]
+    decision: "Partially integrate as a distinct advanced non-autoregressive architecture. Add stable concepts now; do not alter the shared autoregressive computational spine, the eight-stage core route, or the GPT Build path. A bilingual Deepen-level comparison page and a small code-backed lab require a separate bounded implementation slice."
+    structures_kept_separate:
+      - "NCM source-local hierarchy and generation route"
+      - "LLM Lab canonical concept graph"
+      - "LLM Lab shared autoregressive computational spine"
+      - "LLM Lab guided pedagogical route"
+      - "LLM Lab GPT Build path"
+
+items:
+  - id: bdtech-next-concept-modeling-2026:prediction-unit
+    kind: mechanism
+    summary: "NCM changes the prediction unit from the next text token to a level of learned discrete codes representing the output sequence at a particular scale."
+    locator: {type: section, value: "How Next-Concept Modeling works", label: "Changing the unit of prediction"}
+    evidence:
+      kind: direct-explanation
+      confidence: well-supported
+      scope: "Article explanation cross-checked against the primary paper abstract and Stanford project page."
+      assumptions: []
+      limitations: ["This does not imply that the intermediate codes are interpretable human concepts."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:next-concept-modeling, topic:hierarchical-discrete-codes]
+      concept_ids: [next-concept-modeling, hierarchical-discrete-codes]
+    candidate_destinations:
+      pages: [en/transformer-architectures, fr/transformer-architectures]
+      concepts: [next-concept-modeling, hierarchical-discrete-codes]
+      route_ids: []
+    disposition: integrate
+    disposition_rationale: "Adds a distinct alternative to next-token autoregression; it must be presented as a sibling architecture rather than inserted into the GPT execution sequence."
+  - id: bdtech-next-concept-modeling-2026:two-stage-training
+    kind: mechanism
+    summary: "Training is separated into a multiscale residual VQ tokenizer stage and a concept-transformer stage; after tokenizer training, its parameters are frozen while the transformer learns to predict code levels."
+    locator: {type: section, value: "How Next-Concept Modeling works", label: "Two-stage training"}
+    evidence:
+      kind: direct-explanation
+      confidence: well-supported
+      scope: "Article and Stanford project overview."
+      assumptions: []
+      limitations: ["The exact loss terms, optimizer settings and tensor shapes were not extracted from the full paper or code."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [probabilistic-foundations-training]
+      tags: [topic:next-concept-modeling, method:residual-vector-quantization]
+      concept_ids: [next-concept-modeling, multiscale-residual-vector-quantization]
+    candidate_destinations:
+      pages: [en/transformer-architectures, fr/transformer-architectures]
+      concepts: [next-concept-modeling, multiscale-residual-vector-quantization]
+      route_ids: []
+    disposition: integrate
+    disposition_rationale: "Provides a useful contrast with end-to-end GPT training, but belongs in an advanced architecture comparison, not in the canonical GPT training lesson."
+  - id: bdtech-next-concept-modeling-2026:level-wise-parallelism
+    kind: mechanism
+    summary: "At inference, NCM generates hierarchy levels sequentially, while predicting all code positions within the current level in parallel."
+    locator: {type: section, value: "How Next-Concept Modeling works", label: "Inference-time generation"}
+    evidence:
+      kind: direct-explanation
+      confidence: well-supported
+      scope: "Article explanation cross-checked against the primary paper abstract and official repository summary."
+      assumptions: []
+      limitations: ["Parallelism is bounded by the level's code sequence and does not make the complete hierarchy one simultaneous prediction."]
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:coarse-to-fine-generation, topic:non-autoregressive-generation]
+      concept_ids: [coarse-to-fine-generation, next-concept-modeling]
+    candidate_destinations:
+      pages: [en/transformer-architectures, fr/transformer-architectures]
+      concepts: [coarse-to-fine-generation, next-concept-modeling]
+      route_ids: []
+    disposition: integrate
+    disposition_rationale: "Clarifies that non-autoregressive generation need not mean a single parallel pass; its dependency structure differs from token autoregression."
+  - id: bdtech-next-concept-modeling-2026:benchmark-claims
+    kind: benchmark
+    summary: "The paper reports 21x faster generation than a strong diffusion baseline on LM1B, 10x on OpenWebText and up to 31x on XSum, with approximately 4.9x and 4x fewer training-token positions on LM1B and OpenWebText respectively."
+    locator: {type: section, value: "NCM in action; primary paper abstract and Stanford project evaluation", label: "Efficiency results"}
+    evidence:
+      kind: reported-empirical-result
+      confidence: well-supported
+      scope: "Specific NCM experiments and diffusion baselines reported by the authors."
+      assumptions: []
+      limitations:
+        - "These are not universal speedups over autoregressive Transformers or production serving systems."
+        - "Model scales, hardware and benchmark protocols must accompany any quantitative reuse."
+        - "No independent reproduction was performed."
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [scale-research]
+      tags: [topic:next-concept-modeling, topic:inference-efficiency, topic:training-efficiency]
+      concept_ids: [next-concept-modeling, coarse-to-fine-generation]
+    candidate_destinations:
+      pages: [en/transformer-architectures, fr/transformer-architectures]
+      concepts: [next-concept-modeling]
+      route_ids: []
+    disposition: case-study
+    disposition_rationale: "Retain as a bounded empirical case with explicit baselines and limitations; do not turn the reported speedups into a general architecture claim."
