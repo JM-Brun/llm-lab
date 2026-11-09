@@ -41,7 +41,17 @@ $$
 \frac{\partial\ell}{\partial z_i}=p_i-\mathbb{1}[i=y].
 $$
 
-La formule est un résultat de la combinaison softmax + cross-entropie. Elle ne signifie pas que les paramètres du réseau sont directement les logits : les logits dépendent des paramètres via de nombreuses opérations différentiables.
+Cette formule donne la dérivée de la perte **pour une seule position**. Pour la moyenne non pondérée sur l'ensemble $\mathcal{M}$ des positions cibles valides définie dans [Loss](loss.qmd), le gradient par logit devient :
+
+\[
+\frac{\partial\mathcal{L}}{\partial z_{b,t,i}}=
+\begin{cases}
+\frac{1}{|\mathcal{M}|}\left(p_{b,t,i}-\mathbb{1}[i=y_{b,t}]\right) & (b,t)\in\mathcal{M},\\
+0 & (b,t)\notin\mathcal{M}.
+\end{cases}
+\]
+
+Le facteur $1/|\mathcal{M}|$ vient de la moyenne ; les positions ignorées ont une dérivée nulle par rapport à leurs logits dans cet objectif. Une somme, une pondération ou une autre réduction change le facteur correspondant. La formule locale résulte de la combinaison softmax + cross-entropie ; elle ne signifie pas que les paramètres du réseau sont directement les logits, qui dépendent des paramètres via de nombreuses opérations différentiables.
 
 ## Règle de chaîne
 

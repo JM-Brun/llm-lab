@@ -933,7 +933,7 @@ Les tests existants apportent deux niveaux de preuve complémentaires :
 - **test_scaled_dot_product_attention_causal_invariance** dans **tests/unit/test_attention.py** perturbe une clé et une valeur futures et vérifie que les sorties des positions antérieures restent inchangées. Il teste le primitive d'attention.
 - **test_prefix_invariance_future_tokens_do_not_change_earlier_logits** dans **tests/unit/test_gpt.py** compare les logits d'un préfixe aux logits correspondants d'une séquence prolongée avec le même GPT. Il couvre le chemin complet du modèle pour ce cas.
 
-Ces tests sont des vérifications ciblées, pas une preuve formelle pour toute entrée, architecture ou implémentation. Pour les exécuter :
+Ces tests sont des vérifications ciblées, pas une preuve formelle pour toute entrée, architecture ou implémentation. Ils ne testent ni le masquage du padding ni les frontières de documents. Le GPT de référence construit son masque causal en interne et son interface `forward` n'expose pas de masque de padding ; ces politiques restent hors du périmètre de cette implémentation. Pour les exécuter :
 
 ~~~bash
 uv run --locked pytest --no-cov -q tests/unit/test_attention.py tests/unit/test_gpt.py

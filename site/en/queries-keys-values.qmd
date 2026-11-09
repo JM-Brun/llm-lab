@@ -111,7 +111,7 @@ The matrices $W_Q$, $W_K$, and $W_V$ do not each receive an explicit â€œcorrectâ
 
 In the attention path considered here:
 
-- the gradient reaching **Q and K** passes through the compatibility scores and their normalization;
+- the gradient reaching **Q and K** passes through the compatibility scores and the softmax that normalizes them;
 - the gradient reaching **V** passes through the weighted aggregation: it indicates how the transmitted content contributes to the final error.
 
 For a fixed input $X$, with no bias and the linear projections written above, the derivative rule has the form:

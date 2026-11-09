@@ -1142,3 +1142,113 @@ The exercise IDs and prerequisite descriptions are aligned in the inspected FR/E
 
 The inspected page scopes and headings support their optional/deepening roles in both languages. No optional resource needs to be inserted into the core guided route as a mandatory step. This check does not certify every external citation, equation, figure or rendered layout on these pages; those require their own bounded content/render reviews.
 
+## 2026-11-09: Transformer block and attention — scientific and exercise spot-check
+
+**Scope.** Read the FR/EN source bodies for the Transformer overview, Q/K/V, scaled dot-product attention, causal masking, and the reference pre-LN block walkthrough. Re-derived the displayed one-head attention example, the Q/K/V projection-gradient identities, and the published multi-head exercise calculations AT-A–AT-C. Checked the causal-mask workbench logic against its stated invariant. This remains a bounded source/math audit, not a full certification of every Transformer variant or a rendered accessibility review.
+
+### Conceptual dependency chain
+
+The inspected pages support a coherent division of responsibilities:
+
+1. **Transformer overview:** locates attention, the position-wise MLP, residual paths, normalization, depth/width and the output logits inside the GPT computation. It deliberately does not reteach tokenization or decoding.
+2. **Q/K/V:** starts from the current attention input (X), which is not necessarily a raw embedding: it is the hidden state at that block. It defines learned projections and distinguishes routing (Q/K) from transmitted content (V).
+3. **Scaled dot-product attention:** calculates (QK^T), scales by the key width, applies an optional additive mask before softmax, and aggregates V. It keeps scores, normalized weights and output vectors distinct.
+4. **Causal masking:** specializes the allowed-position relation to (j\leq i), explains why the diagonal is valid under shifted next-token targets, and distinguishes causal, padding, document-boundary and loss masks.
+5. **Reference block walkthrough:** makes one concrete GPT-2-like pre-LN implementation inspectable without presenting it as a universal Transformer specification.
+
+The page sequence is pedagogically defensible: Q/K/V establishes the inputs and their provenance; the attention page performs the calculation with a generic optional mask; the causal-mask page then explains the autoregressive restriction. The attention equation already includes (M), so the next page is a specialization of that slot, not a new operation appended after softmax.
+
+### Numerical and algebraic checks
+
+- **Single-head worked example:** (q=(1,0)), (k_1=(1,0)), (k_2=(0,1)), (d_k=2) gives scaled scores ((1/\sqrt2,0)), weights approximately ((0.6698,0.3302)), and output approximately ((6.698,6.604)). The displayed rounded values ((0.67,0.33)) and ((6.7,6.6)) are consistent.
+- **Attention self-check:** scores ((2,0)) with (d_k=4) become ((1,0)), giving softmax approximately ((0.731,0.269)). Correct.
+- **Projection gradients:** for (Q=XW_Q), (K=XW_K), (V=XW_V), with fixed (X), no bias and the stated matrix orientation, (partial\mathcal L/\partial W_Q=X^T\partial\mathcal L/\partial Q), and analogously for K and V. The page correctly qualifies this as a local linear-projection identity inside the full network.
+- **AT-A:** the two head softmaxes are ((3/4,1/4)) and ((1/4,3/4)); their outputs and concatenated vector are correct. (W_O=I) is correctly identified as a special case that does not mix head channels.
+- **AT-B:** all batch/sequence/head shapes and the (1/\sqrt{d_{head}}) scale are consistent with the reference implementation, where the combined (d\times d) projections are sliced into heads.
+- **AT-C:** the claim classifications and three controlled interventions are consistent with that same reference parameterization. In particular, changing (H) while keeping the packed projection matrices fixed changes the slice width and scaling, not the parameter count or reassembled ((B,T,d)) shape.
+- **Causal-mask workbench:** for each query row the diagonal remains allowed, so the row maximum used by the stable softmax is finite. Modifying future K/V positions cannot affect earlier outputs in the isolated head calculation. The page correctly says this is a test of the example, not a proof that a complete model has no other leakage path.
+
+### Targeted editorial corrections
+
+1. The Build walkthrough described pre-LN as simply “more stable” than post-LN when stacking many blocks. Replaced that categorical comparison in FR/EN with a scoped statement: Xiong et al. (2020) analyze better-behaved gradients at initialization for pre-LN in their theoretical/experimental setting, which can reduce warm-up dependence; this is not a universal guarantee. Added the primary PMLR citation.
+2. The Q/K/V page said the gradient to Q/K passes through “their normalization”. Replaced this ambiguous phrase in FR/EN with “the softmax that normalizes them”, making clear that it means score normalization rather than LayerNorm.
+
+### Remaining checks
+
+- This pass does not certify the full implementation against every modern attention family (MQA/GQA, grouped or latent attention, sliding-window, sparse, multi-latent, etc.); those remain architecture-specific deep dives.
+- The full multi-head causal-mask interaction and padding-query behavior deserve a dedicated bounded exercise/test review before being treated as covered.
+- The main conceptual pages and the Build walkthrough have distinct purposes and should remain distinct. Do not fold code-level initialization details into the core learning route.
+- Rendered diagrams, equation layout, keyboard behavior and screen-reader output still require the existing browser/manual review workflow. No new workflow or registry was added.
+
+### Implementation-contract clarification: fully masked query rows
+
+The source review also compared the causal-mask lesson with `src/llm_lab/foundations/attention.py` and `tests/unit/test_attention.py`. The primitive explicitly handles a fully masked row by returning zero weights and a zero output; its unit test verifies that this avoids invalid floating-point operations. Such weights are **not** a probability distribution, because they sum to zero. The ordinary causal lower-triangular mask avoids this case by retaining the diagonal.
+
+Added this precise implementation contract to the FR/EN causal-masking pages, while retaining the warning that other APIs/implementations may choose a different convention. This connects the mathematical edge case to the reference implementation without presenting its convention as universal.
+
+The CA-A exercise already distinguishes the causal, padding, loss and document-boundary masks and points to both the isolated attention primitive test and the complete-GPT prefix-invariance test. The reference GPT test compares prefix logits with the corresponding logits from a longer sequence; it does not claim to test arbitrary padding or packed-document policies.
+
+## 2026-11-09: output distribution, scoring and inference — page-pair audit
+
+**Scope.** Reviewed the FR/EN source bodies and route metadata for `logits`, `probabilities`, `entropy`, `likelihood`, `cross-entropy` and `generation`. Compared generation statements with `src/llm_lab/foundations/gpt.py` and `src/llm_lab/foundations/generate.py`. This is a bounded source-level and arithmetic review; it is not a rendered review or a certification of every decoding algorithm.
+
+### Coherence of the conceptual chain
+
+- **Logits → probabilities:** logits are correctly presented as unnormalized vocabulary scores; softmax creates a conditional categorical distribution. The distinction between score ranking, probability, calibration and factual truth is preserved.
+- **Probabilities → entropy:** entropy describes the spread of the predictive distribution before observing the next token. The page distinguishes it from the surprisal of the realized target.
+- **Observed token → likelihood:** the chain-rule factorization scores the observed sequence using reference prefixes and fixed parameters. The explanation correctly avoids assuming independence between tokens.
+- **Likelihood → cross-entropy:** for one-hot targets, token NLL is the corresponding cross-entropy term. The pages distinguish total sequence NLL, mean per-token NLL and batch loss with explicit masking/reduction.
+- **Inference loop:** generation repeats context processing, next-token selection, appending and stopping. Prefill and incremental decode are execution phases; decoding is the token-selection/transformation procedure. The page explicitly separates prefill from teacher forcing.
+
+The FR/EN route metadata and the inspected conceptual distinctions align. The canonical sequence does not imply that entropy, likelihood and cross-entropy are interchangeable: they answer different questions about a distribution, an observed sequence and a target distribution.
+
+### Arithmetic and source-contract checks
+
+- The two-logit example ((0,\log 3)) gives probabilities ((0.25,0.75)).
+- The probability example's initial temperature explorer uses logits ((3,1.5,1,0.2)); the displayed initial percentages (about 70.5%, 15.7%, 9.5%, 4.3%) are consistent with softmax at temperature 1.
+- The entropy examples ((0.5,0.5)) and ((0.9,0.1)) give (\log 2) nats (1 bit) and about 0.325 nats (0.469 bit), respectively.
+- The likelihood example ((0.5,0.25,0.8)) gives sequence likelihood (0.1), total NLL about 2.303 nats and mean NLL about 0.768 nat per token.
+- The one-hot cross-entropy formula (-z_y+\log\sum_j e^{z_j}), its gradient (p_i-\mathbf 1[i=y]), and perplexity (\exp(\text{mean NLL in nats})) are consistent with the stated conventions.
+- The reference `generate.py` reprocesses the full available context window at each step; it has no KV cache, optimized incremental decode, or EOS early-stop. It stops after the requested `max_new_tokens`. The page already documented the first two limitations; added the missing stopping detail in FR/EN so the generic conceptual stop criteria are not mistaken for the current code contract.
+
+### Targeted correction: finite temperature is not uniform
+
+The interactive temperature explainer described every (T>1) as producing a “uniform distribution”. For a finite temperature, the distribution becomes flatter relative to (T=1), but is not generally uniform; uniformity is approached as temperature tends to infinity (for finite logits). Reworded the FR/EN explanatory text to say “flatter” and “approaches uniformity as temperature increases”. The surrounding mathematical explanation was already correct.
+
+### Remaining checks
+
+- This pass did not audit top-k/top-p or beam-search algorithms in full; they remain in the optional decoding-strategies lesson.
+- No learner study was conducted to determine whether the distinction between decode, decoding and generation is retained by first-time readers; the wording is now explicit but transfer still needs testing.
+- The interactive temperature component's runtime behavior, keyboard operation and responsive layout remain part of the existing rendered/browser review.
+- The source implementation intentionally differs from a production inference engine. Preserve this distinction rather than adding cache or serving complexity to the pedagogical reference implementation.
+
+### Scope clarification for causal-mask tests and padding
+
+A final cross-check of the reference implementation confirmed that the full-GPT prefix-invariance test exercises causal self-attention only. `GPT.forward` accepts token IDs and the Transformer block constructs its causal mask internally; the reference model does not expose a padding-mask argument or implement packed-document boundary masking. The exercise had already distinguished those mask types conceptually, but its test evidence could be misread as validating them. Added this implementation boundary in FR/EN immediately after the two test descriptions. The test claims now match the actual code surface.
+
+## 2026-11-09: training-example implementation and test-quality check
+
+**Scope.** Compared `training-examples.qmd` and `corpus-preparation.qmd` with `sliding_input_target_pairs` and its unit tests. The implementation's window-count formula, input/target offset, stride semantics and incomplete-tail handling agree with the lesson's examples. The helper intentionally does not implement corpus loading, tokenization, packing, padding, masks or an optimizer/training loop.
+
+**Test defect found and corrected.** `test_every_target_is_the_next_token_in_the_stream` used `np.arange` token IDs and checked the final target with `stream[inputs[:, -1] + 1]`. Because token IDs happened to equal their source positions, this assertion accidentally treated an ID as a position. It would not be valid for an arbitrary token stream and did not independently express the window-offset invariant.
+
+Changed the fixture to non-monotonic token IDs unrelated to positions, then computed each final target's source position from the window start, stride and context length. The within-window shift assertion remains separate. This makes the test verify the actual contract: targets are the next source token at the corresponding position, not the token ID plus one.
+
+The corrected expected final targets for the fixture are `[3, 14]` at source positions 4 and 7. The Python CI run for the updated PR head is required to confirm the change; no local test execution is claimed.
+
+## 2026-11-09: loss-to-gradient aggregation bridge
+
+**Scope.** Compared the FR/EN `loss` and `gradients` pages with `cross_entropy_from_logits`, `cross_entropy_gradient` and their tests.
+
+The reference NumPy loss computes an unweighted mean across batch rows; its gradient correspondingly divides each row's (p-y) vector by the batch size. The lesson on gradients displayed the correct local, one-position derivative (p_i-\mathbf 1[i=y]), then moved to a vector of all batch logits without explicitly showing how the mean-over-valid-positions convention changes that derivative. The preceding loss page defined the denominator, but the hand-off between pages was implicit.
+
+Added the explicit FR/EN formula for the unweighted mean over valid target positions:
+- valid position: ((p_{b,t,i}-\mathbf 1[i=y_{b,t}])/|\mathcal M|);
+- ignored position: zero derivative with respect to that position's logits for this objective.
+
+The text states that sum, weighting and other reductions change the corresponding factor. This connects the local cross-entropy derivative to the actual batch objective without claiming that the reference classification primitive implements sequence masks or a complete LLM loss.
+
+### Checks
+
+For a batch of (B) rows, the implementation returns ((p-y)/B); its unit tests compare this gradient with central finite differences, verify row sums of zero, check invariance to row-wise constant shifts and reject invalid inputs. The conceptual page remains broader than this primitive and keeps sequence shifting/masking outside the implementation's scope.
+
