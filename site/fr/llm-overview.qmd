@@ -53,7 +53,7 @@ Quelques termes suffisent pour suivre ce calcul :
 - **Contexte :** les tokens disponibles pour calculer la suite. En génération, il contient le prompt puis les tokens déjà produits ; voir [génération](generation.qmd).
 - **Paramètres :** les valeurs apprises — poids et biais notamment — qui déterminent le calcul du réseau. Ils restent fixes pendant l'inférence ordinaire ; voir la [configuration d'un petit GPT](gpt-config-walkthrough.qmd).
 
-Pour un GPT, la probabilité d'une séquence se décompose en probabilités conditionnelles successives : la [formalisation mathématique du langage](language-modeling-math.qmd) présente cette factorisation. Les outils mathématiques mobilisés dans le cours sont regroupés dans les [fondements mathématiques](mathematical-foundations.qmd). La [génération autorégressive](generation.qmd) explique comment une distribution devient une continuation, token après token.
+Ces estimations sont apprises à partir de corpus hétérogènes (domaines, langues, styles et niveaux de qualité) et doivent généraliser au-delà des séquences observées ; voir [texte et données](text-data.qmd).\n\nPour un GPT, la probabilité d'une séquence se décompose en probabilités conditionnelles successives : la [formalisation mathématique du langage](language-modeling-math.qmd) présente cette factorisation. Les outils mathématiques mobilisés dans le cours sont regroupés dans les [fondements mathématiques](mathematical-foundations.qmd). La [génération autorégressive](generation.qmd) explique comment une distribution devient une continuation, token après token.
 
 Prédire une continuation plausible ne revient pas à vérifier qu'elle est vraie. L'objectif de prédiction ne garantit ni la factualité des sorties ni une compréhension humaine du monde ; ces limites sont examinées dans [Objectif d'entraînement : garanties et limites](llm-limits.qmd).
 
@@ -111,7 +111,7 @@ Après le pré-entraînement, une **adaptation des paramètres** est possible, m
 
 Les LLM sont notamment utilisés pour générer ou reformuler du texte, résumer, traduire, extraire des informations, classer, assister la programmation et répondre à des questions.
 
-Le choix entre réutiliser un modèle, récupérer des documents avec un RAG ou adapter ses paramètres dépend de la tâche. Le RAG peut fournir des connaissances actualisées sans réentraîner le modèle ; une adaptation peut être utile pour un format, un domaine ou un comportement spécifique. Il faut comparer ces options sur des critères mesurés : qualité, erreurs, robustesse, coût, latence, confidentialité, provenance des données et maintenance. Une démonstration sur quelques prompts ne constitue pas une évaluation.
+Réutiliser un modèle généraliste est intéressant lorsqu'il couvre plusieurs tâches ou lorsque les exemples étiquetés sont rares. Le choix entre réutiliser un modèle, récupérer des documents avec un RAG ou adapter ses paramètres dépend ensuite de la tâche. Le RAG peut fournir des connaissances actualisées sans réentraîner le modèle ; une adaptation peut être utile pour un format, un domaine ou un comportement spécifique. Il faut comparer ces options sur des critères mesurés : qualité, erreurs, robustesse, coût, latence, confidentialité, provenance des données et maintenance. Une démonstration sur quelques prompts ne constitue pas une évaluation.
 
 ::: {.self-check}
 [Exercices et mises en pratique](exercises.qmd).
