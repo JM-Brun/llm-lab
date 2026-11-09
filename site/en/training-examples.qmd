@@ -216,6 +216,54 @@ When loss is unexpectedly low, high, or unstable, check:
 
 To revisit the input stage, see [From text to tokens](text-data.qmd). To continue the conceptual course, see [cross-entropy](cross-entropy.qmd) and [the Transformer](transformer.qmd). The [tensor](tensors.qmd) and [mathematical training-chain](mathematical-foundations.qmd) pages are supporting references, not prerequisites to master before moving on.
 
+::: {.callout-tip title="Revision sheet — constructing autoregressive examples"}
+- **Alignment:** for input \(x=[t_0,\ldots,t_{L-1}]\), the target is shifted by one token, \(y=[t_1,\ldots,t_L]\). Each position predicts its successor.
+- **Teacher forcing:** the observed prefix supplies context; the causal mask prevents access to future tokens. This conditioning strategy is neither the loss nor the optimizer.
+- **Windowing:** length determines the available context; stride determines the displacement between windows and therefore their overlap.
+- **Masks:** the causal mask controls information access; the loss mask controls which targets contribute to the reduction. A document separator does not automatically block attention.
+- **Shapes:** `input_ids` and `targets` have shape \([B,L]\), while logits have shape \([B,L,V]\). Alignment must be preserved through loss calculation.
+:::
+
+::: {.self-check}
+## Check your understanding
+
+1. For stream `[4, 7, 2, 9]` and input length 3, what is the first input-target pair?
+
+<details>
+<summary>Show answer</summary>
+
+Input `[4, 7, 2]`, target `[7, 2, 9]`. Each target is the immediately following token at the corresponding prediction position.
+
+</details>
+
+2. Why does teacher forcing not expose future tokens?
+
+<details>
+<summary>Show answer</summary>
+
+The model receives the observed prefix, but the causal mask restricts each position to previous tokens and the current token. Without that constraint, the target could leak into the computation.
+
+</details>
+
+3. How do attention masks and loss masks differ?
+
+<details>
+<summary>Show answer</summary>
+
+The former determines which positions may be attended to; the latter determines which targets contribute to the objective. They are not interchangeable.
+
+</details>
+
+4. If logits have shape \([B,L,V]\), what do the three axes represent?
+
+<details>
+<summary>Show answer</summary>
+
+Batch, sequence position, and candidate vocabulary token. Each position in each sequence has scores over all \(V\) vocabulary tokens.
+
+</details>
+:::
+
 ## Limitations
 
 This page explains core mechanisms without prescribing a universal strategy for packing, cross-document masking, padding, or loss reduction. Choices depend on the objective, architecture, data, and implementation.
