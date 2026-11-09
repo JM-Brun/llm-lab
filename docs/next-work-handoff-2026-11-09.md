@@ -8,7 +8,7 @@
 ## 1. Live repository state
 
 - **62 open issues:** P0=0, P1=6, P2=49, P3=7, unclassified=0.
-- **One open PR:** [#760 — audit loss and training-path continuity](https://github.com/JM-Brun/llm-lab/pull/760).
+- **One pre-existing content PR:** [#760 — audit loss and training-path continuity](https://github.com/JM-Brun/llm-lab/pull/760). This handoff is now proposed in [#778](https://github.com/JM-Brun/llm-lab/pull/778), so there are two open PRs including this documentation reconciliation.
 - Recent completed work relevant to this handoff:
   - [#744](https://github.com/JM-Brun/llm-lab/pull/744) merged: Raschka Appendix D audit; [#105](https://github.com/JM-Brun/llm-lab/issues/105) closed.
   - [#767](https://github.com/JM-Brun/llm-lab/pull/767) merged: training examples → teacher forcing → loss → gradients audit.
