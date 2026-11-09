@@ -53,6 +53,10 @@ This formula gives the derivative of the loss **at one position**. For the unwei
 
 The factor $1/|\mathcal{M}|$ comes from the mean; ignored positions have zero derivative with respect to their logits in this objective. A sum, weighting, or another reduction changes the corresponding factor. The local formula follows from combining softmax and cross-entropy; it does not mean the network parameters are the logits directly, since logits depend on parameters through many differentiable operations.
 
+::: {.callout-note collapse="true" title="A zero derivative does not necessarily cut off the whole graph (advanced)"}
+A zero derivative with respect to an ignored position's logits means those logits are not directly supervised by this loss term. If that position's representation still participates in computing a valid logit — for example, as an allowed key or value in attention — the valid-position loss can still propagate gradients through that dependency. Inspect the computation graph and attention masks, not only the loss mask.
+:::
+
 ## Chain rule
 
 If logits depend on parameters $z=z(\theta)$, then:
