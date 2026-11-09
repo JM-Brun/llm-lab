@@ -152,7 +152,6 @@ website:
             - section: "Comment le modèle calcule sa prédiction"
               href: fr/text-data.qmd
               contents:
-                - fr/text-data.qmd
                 - section: "Des identifiants aux représentations"
                   href: fr/embedding-space.qmd
                   contents:
@@ -254,7 +253,6 @@ website:
             - section: "How the model computes a prediction"
               href: en/text-data.qmd
               contents:
-                - en/text-data.qmd
                 - section: "From IDs to representations"
                   href: en/embedding-space.qmd
                   contents:
