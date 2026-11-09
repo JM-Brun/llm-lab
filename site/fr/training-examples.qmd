@@ -21,7 +21,9 @@ related: ["fr/tokenization-strategies", "fr/vraisemblance"]
 tags: ["type:concept-bridge", "destination:build", "topic:training-examples", "level:core", "language:fr", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-fr-training-examples.qmd >}}
+::: {.callout-note}
+**Cette page appartient au parcours Build (préparation des exemples d'entraînement, G2)**, pas aux huit étapes du parcours théorique Understand. Elle peut être consultée indépendamment lorsque vous étudiez la construction des cibles et le teacher forcing. [Revenir au parcours Build](build-path.qmd).
+:::
 
 ::: {.chapter-lead}
 Un modèle autorégressif apprend à prédire le prochain token à partir du contexte disponible. Pour l’entraîner, on transforme un flux de tokens en paires entrée-cible alignées. Un décalage d’un seul indice, un masque incorrect ou une frontière de document mal traitée change l’objectif effectivement optimisé.
