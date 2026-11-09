@@ -168,3 +168,44 @@ Aucune information existante ne doit être supprimée sans cartographie de sa de
 ### Validation
 
 Cette passe est une revue de source FR/EN et des transitions déclarées. Elle ne constitue pas une preuve de rendu navigateur, de conformité d'accessibilité ou d'efficacité d'apprentissage auprès d'un lecteur indépendant. Les vérifications Quarto/CI sont à relever sur le commit final de la branche.
+
+
+## 9. Passe B — revue du groupe « Transformer → attention » (2026-11-09)
+
+### Pages relues en français et en anglais
+
+- `transformer` : place le calcul interne du GPT entre représentations d'entrée et logits ; distingue auto-attention, MLP, résidus, normalisation, profondeur/largeur et génération.
+- `queries-keys-values` : définit les projections issues du même flux en auto-attention, leurs paramètres et dimensions, les rôles Q/K vs V, ainsi que les conséquences d'une modification de projection.
+- `scaled-dot-product-attention` : scores \(QK^\top\), mise à l'échelle, masque éventuel, softmax ligne par ligne et agrégation \(AV\), avec exemple numérique.
+- `causal-masking` : contrainte \(j\leq i\), masque additif, convention entrée/cible décalée, distinction des masques causal, padding, frontière documentaire et loss, et test d'invariance.
+
+### Décisions et modifications de cette passe
+
+1. **Transformer :** ajout d'un rappel d'une minute FR/EN pour restituer le forward pass, le rôle des sous-couches, la répétition des blocs et la sortie logits. Il précise que Q/K/V sont internes à l'auto-attention et que softmax/décodage ne sont pas la sortie du réseau.
+2. **Q/K/V :** enrichissement du rappel existant en FR/EN. Il couvre les trois projections, l'apprentissage conjoint, la séparation routage/contenu, l'invariance des poids lorsque V seul change, et la portée de la formulation self-attention standard.
+3. **Attention :** rappel d'une minute et auto-vérification déjà présents dans les deux langues ; pas de duplication ajoutée.
+4. **Masque causal :** rappel d'une minute et auto-vérification déjà présents ; la distinction avec le masque de perte est explicite, ce qui raccorde cette page à `training-examples`.
+5. **Aucune suppression ni déplacement :** les compléments optionnels (géométrie, gradients QKV, variantes MQA/GQA, code et tests) sont conservés dans leurs blocs repliés. Leur emplacement devra être réévalué lors de l'audit Understand/Deepen/Build complet, sans perdre les références ni les exemples.
+
+### Cohérence des transitions observée
+
+`contextualized-representations → transformer → queries-keys-values → scaled-dot-product-attention → causal-masking → logits`
+
+- La page Transformer donne le flux global et s'arrête aux logits ; elle ne réenseigne pas le tokenizer ni la boucle de génération.
+- Q/K/V repartent du flux d'entrée de la sous-couche d'attention : ce n'est pas une étape qui suit les états contextualisés finaux du modèle.
+- La page Q/K/V définit les projections mais délègue les scores et l'agrégation ; la page suivante prend exactement ce relais.
+- La page attention définit le masque additif comme entrée de l'étape softmax, puis délègue à causal-masking le choix des positions interdites et les lignes entièrement masquées.
+- Causal-masking relie la visibilité au décalage entrée/cible : la position \(i\) voit jusqu'à \(i\), puis prédit la cible \(i+1\). Elle distingue ce masque du masque de perte.
+- Le passage vers logits correspond à la sortie du réseau ; la distribution et la génération restent des étapes distinctes.
+
+### Points de vigilance
+
+- **Notion de contextualisation :** éviter toute représentation linéaire qui placerait Q/K/V après la contextualisation finale. Chaque bloc reçoit un état déjà transformé par les blocs précédents et calcule ses propres projections.
+- **Softmax :** les poids sont relatifs aux clés accessibles d'une ligne ; ils ne constituent pas une mesure universelle de pertinence ou de causalité.
+- **Masques :** conserver les distinctions entre visibilité attentionnelle, padding, frontière documentaire et contribution à la loss. Ne pas présenter le masque de perte comme une protection contre la fuite d'information dans le forward pass.
+- **Code et niveau :** les pages Understand contiennent des références à l'implémentation et des micro-ateliers optionnels. Leur présence n'est pas en soi un défaut, mais les contenus de construction détaillés doivent rester dans Build/Practice et les dérivations avancées dans Deepen.
+- **Terminologie :** garder une correspondance stable entre « états cachés / hidden states », « représentations contextualisées », « poids d'attention » et « valeurs » ; ne pas appeler les valeurs des « poids ».
+
+### Validation
+
+Cette passe établit la cohérence de contenu et des transitions à partir des sources FR/EN. Elle ne vérifie pas encore le rendu des diagrammes, la navigation au clavier, les liens générés par les includes, ni la compréhension par un lecteur indépendant.
