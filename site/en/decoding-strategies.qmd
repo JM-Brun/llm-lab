@@ -154,6 +154,8 @@ This example is exhaustive because the tree contains only four sequences of fixe
 
 **Beam search** retains several candidate prefixes and expands the best-scoring continuations according to an accumulated score. It performs approximate search in sequence space; it is not merely an independent argmax at each position. It is useful in some constrained problems (translation, transcription, structured outputs), but likelihood maximization can produce short, generic, or repetitive open-ended text.
 
+In the standard probabilistic formulation, the accumulated score is the sum of token log-probabilities (equivalent to multiplying probabilities for a fixed-length sequence). Practical implementations may, however, normalize this score by length and apply early-stopping rules. These choices change hypothesis ranking and termination; they are not merely optimization details. For example, Transformers documents a `length_penalty` that divides the score by a power of the length, along with several `early_stopping` policies. The A/B counterexample above deliberately compares fixed-length sequences without normalization; it illustrates the difference between a local and a sequence optimum, not every setting of production beam search ([current Transformers documentation](https://huggingface.co/docs/transformers/main_classes/text_generation)).
+
 Holtzman et al. show that maximization methods, including beam search in their open-ended generation experiments, can degenerate despite high local likelihood. This does not mean beam search is always poor: task, score, constraints, and evaluation protocol determine its relevance.
 
 ## 5. Contrastive decoding: comparing an expert and an amateur model
@@ -268,6 +270,7 @@ Parameter labels alone (such as “temperature 0.7” or “top-p 0.9”) are in
 ## Research references
 
 - Holtzman et al. (2020), [*The Curious Case of Neural Text Degeneration*](https://arxiv.org/abs/1904.09751), ICLR — analysis of degeneration in open-ended generation and proposal of nucleus sampling.
+- Hugging Face, [Transformers generation API](https://huggingface.co/docs/transformers/main_classes/text_generation) — implementation-specific beam-search length penalty, stopping policies, and generation parameters; consult the version matching the experiment.
 - Nadeem et al. (2020), [*A Systematic Characterization of Sampling Algorithms for Open-ended Language Generation*](https://aclanthology.org/2020.aacl-main.36/), AACL-IJCNLP — shared properties and quality-diversity trade-offs of sampling methods.
 - Meister et al. (2023), [*On the Efficacy of Sampling Adapters*](https://aclanthology.org/2023.acl-long.80/), ACL — unified framework for analyzing sampling-distribution transformations.
 - Li et al. (2023), [*Contrastive Decoding: Open-ended Text Generation as Optimization*](https://aclanthology.org/2023.acl-long.687/), ACL — contrastive scoring between expert and amateur models.
