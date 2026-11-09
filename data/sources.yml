@@ -2430,9 +2430,9 @@ sources:
         - method:policy-gradient
       concept_ids: []
     metadata:
-      technical_level: advanced
-      contribution_types: [theory, mathematical-derivation, pedagogy]
-      audiences: [learner, practitioner, researcher]
+      technical_level: unspecified
+      contribution_types: [other]
+      audiences: [learner]
     scan_status: partially-scanned
     integration_status: deferred
     scan_history:
@@ -2445,6 +2445,7 @@ sources:
         limitations:
           - "Direct Substack retrieval returned a cache miss; the article body, equations, section structure and examples were not independently inspected."
           - "The primary paper and its official implementation are recorded separately; their contents are not attributed to Wolfe."
+          - "The public author archive inspected on 2026-11-09 does not list a post with this title; the exact post may be unlisted or otherwise inaccessible."
           - "Publication date, linked references, comments, figures and reuse rights remain unverified."
     related:
       pages: []
