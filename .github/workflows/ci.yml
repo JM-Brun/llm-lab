@@ -72,7 +72,9 @@ jobs:
         run: uv run ruff check .
 
       - name: Type check
-        run: uv run mypy src
+        run: |
+          uv run mypy src
+          uv run mypy site/tools/strict_yaml.py
 
       - name: Test
         run: uv run pytest

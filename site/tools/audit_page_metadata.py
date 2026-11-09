@@ -29,6 +29,7 @@ for tools_dir in (SCRIPT_DIR, ROOT / "site" / "tools"):
 
 from check_page_metadata import _load_page  # noqa: E402
 from check_page_metadata import validate as validate_page_metadata  # noqa: E402
+from strict_yaml import load_yaml  # noqa: E402
 
 TOKEN = re.compile(r"[^\W\d_]{3,}", re.UNICODE)
 STOPWORDS = {
@@ -403,7 +404,7 @@ def render_report(result: dict[str, Any]) -> str:
 
 def load_pages(site_dir: Path) -> dict[str, dict[str, Any]]:
     """Load valid page records from the explicit Quarto render list."""
-    config = yaml.safe_load((site_dir / "_quarto.yml").read_text(encoding="utf-8"))
+    config = load_yaml(site_dir / "_quarto.yml")
     render_list = config["project"]["render"]
     pages: dict[str, dict[str, Any]] = {}
     errors: list[str] = []

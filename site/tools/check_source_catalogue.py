@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+from strict_yaml import load_yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE_FILE = ROOT / "data" / "sources.yml"
@@ -34,7 +35,7 @@ VERIFICATION_STATUSES = {"unverified", "corroborated", "contradicted", "not-asse
 def _load_yaml(path: Path, root: Path, errors: list[str]) -> Any:
     """Load YAML and collect a contextual error instead of raising."""
     try:
-        return yaml.safe_load(path.read_text(encoding="utf-8"))
+        return load_yaml(path)
     except (OSError, yaml.YAMLError) as exc:
         errors.append(f"{path.relative_to(root)}: cannot load YAML ({exc})")
         return None

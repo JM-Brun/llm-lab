@@ -10,6 +10,7 @@ from typing import Any
 from urllib.parse import urlsplit
 
 import yaml
+from strict_yaml import load_yaml, parse_yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 REGISTRY = ROOT / "data" / "resources.yml"
@@ -41,7 +42,7 @@ def _published_page_ids(root: Path) -> set[str]:
             if match is None:
                 continue
             try:
-                metadata = yaml.safe_load(match.group(1))
+                metadata = parse_yaml(match.group(1), source=str(path))
             except yaml.YAMLError:
                 continue
             if not isinstance(metadata, dict):
@@ -262,8 +263,8 @@ def validate_resource_registry(
 def main() -> int:
     """Validate resources against the repository's published pages and concepts."""
     try:
-        data = yaml.safe_load(REGISTRY.read_text(encoding="utf-8"))
-        concepts_data = yaml.safe_load(CONCEPTS.read_text(encoding="utf-8"))
+        data = load_yaml(REGISTRY)
+        concepts_data = load_yaml(CONCEPTS)
     except (OSError, yaml.YAMLError) as exc:
         sys.stderr.write(f"Cannot read resource/concept registry: {exc}\n")
         return 1

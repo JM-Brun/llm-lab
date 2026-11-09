@@ -14,7 +14,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-import yaml
+from strict_yaml import load_yaml, parse_yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
@@ -56,8 +56,8 @@ def _page_records() -> dict[str, dict[str, Any]]:
         )
         if match is None or front_match is None:
             continue
-        front = yaml.safe_load(front_match.group(1))
-        metadata = yaml.safe_load(match.group(1))
+        front = parse_yaml(front_match.group(1), source=f"{path} (front matter)")
+        metadata = parse_yaml(match.group(1), source=f"{path} (page map)")
         if not isinstance(metadata, dict):
             continue
         tags = {
@@ -108,9 +108,9 @@ def relation_predicate(kind: str) -> str:
 
 def build_graph() -> dict[str, Any]:
     """Build a stable JSON-LD graph from canonical YAML and published pages."""
-    concepts_data = yaml.safe_load(CONCEPTS.read_text(encoding="utf-8"))
-    domains_data = yaml.safe_load(DOMAINS.read_text(encoding="utf-8"))
-    resources_data = yaml.safe_load(RESOURCES.read_text(encoding="utf-8"))
+    concepts_data = load_yaml(CONCEPTS)
+    domains_data = load_yaml(DOMAINS)
+    resources_data = load_yaml(RESOURCES)
     pages = _page_records()
 
     graph: list[dict[str, Any]] = [
