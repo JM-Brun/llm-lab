@@ -99,13 +99,13 @@ Pour décrire un modèle, il faut distinguer trois questions :
 |---|---|---|
 | **Architecture** | Comment le réseau transforme-t-il l'information ? | Encodeur seul, encodeur-décodeur, décodeur seul — [architectures Transformer](transformer-architectures.qmd) |
 | **Apprentissage** | Comment les paramètres sont-ils obtenus ou adaptés ? | Pré-entraînement, fine-tuning, SFT et optimisation par préférences |
-| **Utilisation** | Que fait-on du modèle avec ses paramètres fixés ? | Génération, classification, scoring, prompt et recherche documentaire (RAG) |
+| **Utilisation** | Que fait-on du modèle avec ses paramètres fixés ? | Génération, classification, scoring, [apprentissage en contexte](in-context-learning.qmd) et recherche documentaire (RAG) |
 
 Pour un GPT, le **pré-entraînement** apprend à prédire le prochain token à partir d'un corpus. Il est auto-supervisé : les cibles sont construites à partir des données elles-mêmes. Le modèle obtenu avant adaptation est souvent appelé *base model*. Un **modèle de fondation** (*foundation model*) est une catégorie plus large : il est entraîné sur des données générales à grande échelle et peut être adapté à plusieurs tâches, y compris hors du langage ([Bommasani et al., 2021](https://crfm.stanford.edu/report)). Les deux termes ne sont donc pas synonymes.
 
 Après le pré-entraînement, une **adaptation des paramètres** est possible, mais pas obligatoire : fine-tuning pour une tâche, *supervised fine-tuning* (SFT) sur des exemples instruction-réponse ou optimisation par préférences. Un modèle pré-entraîné peut aussi être utilisé directement.
 
-À l'inférence, les paramètres restent fixes. Le prompt et les documents récupérés par un système **RAG** modifient le contexte fourni au modèle, pas ses poids. L'évaluation intervient à plusieurs étapes ; les données de test doivent rester tenues à l'écart jusqu'à l'évaluation finale pour éviter de biaiser la mesure.
+À l'inférence, les paramètres restent fixes. Le **prompt** (texte fourni en entrée), l'apprentissage en contexte et les documents récupérés par un système de **génération augmentée par récupération** (*retrieval-augmented generation*, RAG) modifient le contexte fourni au modèle, pas ses poids. L'évaluation intervient à plusieurs étapes ; les données de test doivent rester tenues à l'écart jusqu'à l'évaluation finale pour éviter de biaiser la mesure.
 
 ## 5. Usages et choix d'une approche
 
