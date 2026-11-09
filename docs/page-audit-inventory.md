@@ -1188,3 +1188,37 @@ Added this precise implementation contract to the FR/EN causal-masking pages, wh
 
 The CA-A exercise already distinguishes the causal, padding, loss and document-boundary masks and points to both the isolated attention primitive test and the complete-GPT prefix-invariance test. The reference GPT test compares prefix logits with the corresponding logits from a longer sequence; it does not claim to test arbitrary padding or packed-document policies.
 
+## 2026-11-09: output distribution, scoring and inference — page-pair audit
+
+**Scope.** Reviewed the FR/EN source bodies and route metadata for `logits`, `probabilities`, `entropy`, `likelihood`, `cross-entropy` and `generation`. Compared generation statements with `src/llm_lab/foundations/gpt.py` and `src/llm_lab/foundations/generate.py`. This is a bounded source-level and arithmetic review; it is not a rendered review or a certification of every decoding algorithm.
+
+### Coherence of the conceptual chain
+
+- **Logits → probabilities:** logits are correctly presented as unnormalized vocabulary scores; softmax creates a conditional categorical distribution. The distinction between score ranking, probability, calibration and factual truth is preserved.
+- **Probabilities → entropy:** entropy describes the spread of the predictive distribution before observing the next token. The page distinguishes it from the surprisal of the realized target.
+- **Observed token → likelihood:** the chain-rule factorization scores the observed sequence using reference prefixes and fixed parameters. The explanation correctly avoids assuming independence between tokens.
+- **Likelihood → cross-entropy:** for one-hot targets, token NLL is the corresponding cross-entropy term. The pages distinguish total sequence NLL, mean per-token NLL and batch loss with explicit masking/reduction.
+- **Inference loop:** generation repeats context processing, next-token selection, appending and stopping. Prefill and incremental decode are execution phases; decoding is the token-selection/transformation procedure. The page explicitly separates prefill from teacher forcing.
+
+The FR/EN route metadata and the inspected conceptual distinctions align. The canonical sequence does not imply that entropy, likelihood and cross-entropy are interchangeable: they answer different questions about a distribution, an observed sequence and a target distribution.
+
+### Arithmetic and source-contract checks
+
+- The two-logit example ((0,\log 3)) gives probabilities ((0.25,0.75)).
+- The probability example's initial temperature explorer uses logits ((3,1.5,1,0.2)); the displayed initial percentages (about 70.5%, 15.7%, 9.5%, 4.3%) are consistent with softmax at temperature 1.
+- The entropy examples ((0.5,0.5)) and ((0.9,0.1)) give (\log 2) nats (1 bit) and about 0.325 nats (0.469 bit), respectively.
+- The likelihood example ((0.5,0.25,0.8)) gives sequence likelihood (0.1), total NLL about 2.303 nats and mean NLL about 0.768 nat per token.
+- The one-hot cross-entropy formula (-z_y+\log\sum_j e^{z_j}), its gradient (p_i-\mathbf 1[i=y]), and perplexity (\exp(\text{mean NLL in nats})) are consistent with the stated conventions.
+- The reference `generate.py` reprocesses the full available context window at each step; it has no KV cache, optimized incremental decode, or EOS early-stop. It stops after the requested `max_new_tokens`. The page already documented the first two limitations; added the missing stopping detail in FR/EN so the generic conceptual stop criteria are not mistaken for the current code contract.
+
+### Targeted correction: finite temperature is not uniform
+
+The interactive temperature explainer described every (T>1) as producing a “uniform distribution”. For a finite temperature, the distribution becomes flatter relative to (T=1), but is not generally uniform; uniformity is approached as temperature tends to infinity (for finite logits). Reworded the FR/EN explanatory text to say “flatter” and “approaches uniformity as temperature increases”. The surrounding mathematical explanation was already correct.
+
+### Remaining checks
+
+- This pass did not audit top-k/top-p or beam-search algorithms in full; they remain in the optional decoding-strategies lesson.
+- No learner study was conducted to determine whether the distinction between decode, decoding and generation is retained by first-time readers; the wording is now explicit but transfer still needs testing.
+- The interactive temperature component's runtime behavior, keyboard operation and responsive layout remain part of the existing rendered/browser review.
+- The source implementation intentionally differs from a production inference engine. Preserve this distinction rather than adding cache or serving complexity to the pedagogical reference implementation.
+
