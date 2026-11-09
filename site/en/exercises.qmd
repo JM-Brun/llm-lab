@@ -1397,7 +1397,7 @@ The limit allows at most four new tokens. Since EOS is selected at the second st
 
 #### GE-D — Trace prefill and incremental decode
 
-A prompt contains the token IDs $(A,B,C)$. Assume a causal Transformer and no KV cache for the first pass.
+A prompt contains the token IDs $(A,B,C)$. Assume a causal Transformer with KV caching enabled.
 
 1. During prefill, how many prompt positions are processed?
 2. Which position's logits are used to select the first generated token $D$?
