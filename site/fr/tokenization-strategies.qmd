@@ -1,7 +1,7 @@
 ---
 title: "Stratégies de tokenisation : granularité, algorithmes et compromis"
 subtitle: "Choisir une représentation discrète sans confondre compression, linguistique et qualité"
-keywords: ["type:concept-lesson", "destination:understand", "topic:tokenization-strategies", "level:core", "language:fr", "status:published"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:tokenization-strategies", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -10,6 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/tokenization-strategies"
 scope: "Compare les unités de segmentation et les familles d’algorithmes de tokenisation — notamment BPE, WordPiece et unigramme — ainsi que leurs compromis de couverture, longueur et coût ; suppose la chaîne d’entrée déjà représentée en texte et s’arrête avant le lookup des embeddings."
 purpose: "Le lecteur doit pouvoir décrire le principe des principales stratégies de segmentation, comparer leurs hypothèses et compromis, expliquer pourquoi les tokens et IDs dépendent du tokenizer et de sa version, et montrer les limites d’un découpage fondé uniquement sur les espaces."
+domain: "text-tokenization"
 suggested_route:
   previous: null
   next: null
@@ -17,7 +18,7 @@ hierarchy:
   parents: ["fr/text-data"]
   children: []
 related: ["fr/training-examples"]
-tags: ["type:concept-lesson", "destination:understand", "topic:tokenization-strategies", "level:core", "language:fr", "status:published"]
+tags: ["type:deep-dive", "destination:deepen", "topic:tokenization-strategies", "level:advanced", "language:fr", "status:published"]
 -->
 
 
