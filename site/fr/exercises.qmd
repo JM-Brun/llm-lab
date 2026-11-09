@@ -1397,7 +1397,7 @@ La limite autorise quatre nouveaux tokens au maximum. EOS étant sélectionné �
 
 #### GE-D — Tracer le prefill et le decode incrémental
 
-Un prompt contient les identifiants de tokens $(A,B,C)$. On suppose un Transformer causal et l'absence de cache KV pendant le premier passage.
+Un prompt contient les identifiants de tokens $(A,B,C)$. On suppose un Transformer causal avec activation du cache KV.
 
 1. Pendant le prefill, combien de positions du prompt sont traitées ?
 2. Les logits de quelle position servent-ils à sélectionner le premier token généré $D$ ?
