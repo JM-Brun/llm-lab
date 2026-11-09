@@ -27,6 +27,14 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 A **large language model** (LLM) is a language model trained at scale on large text corpora using a substantial compute budget. There is no agreed parameter-count threshold for the category: the training data and compute also matter ([scaling laws](scaling-laws.qmd); [Zhao et al., 2023](https://arxiv.org/abs/2303.18223); [Hoffmann et al., 2022](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html)). The term LLM does not specify a particular architecture or training objective.
 :::
 
+::: {.callout-tip title="The one-minute mental model"}
+- **Three different notions:** an **LLM** is a language model trained at scale — no agreed parameter-count threshold exists, data and compute matter; a **GPT** is a family of pretrained decoder-only Transformers; the **Transformer** is an architecture family. These three terms are not interchangeable.
+- **What a GPT computes:** given a context, it turns text into logits, then into a conditional distribution over the next token, one token at a time, with parameters fixed during ordinary inference.
+- **One shared computation, three uses:** generation feeds a selected token back, scoring evaluates an observed target, and learning compares distributions with target tokens and updates parameters — these are not branches of a single execution loop.
+
+**Check yourself:** can you state what LLM, GPT, and Transformer each refer to, then separate architecture (the computation), learning (how parameters are obtained), and use (what is done with the model with its parameters fixed)?
+:::
+
 ## 1. LLM, GPT, and Transformer are different concepts
 
 A **language model** assigns a probability or score to token sequences given a context. In an autoregressive model, this computation is repeated one token at a time: the model does not enumerate every possible complete continuation. **GPT** (*Generative Pre-trained Transformer*) is a family of pretrained models based on the Transformer architecture. Classic GPT models are **decoder-only** Transformers pretrained to predict the next token.

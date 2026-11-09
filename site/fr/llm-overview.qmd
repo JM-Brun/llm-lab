@@ -27,6 +27,14 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 Un **grand modèle de langage** (*large language model*, LLM) est un modèle de langage entraîné à grande échelle sur de grands corpus, avec un budget de calcul conséquent. Aucun seuil de paramètres ne fait consensus pour définir cette catégorie : il faut aussi considérer les données et le calcul mobilisés ([lois d'échelle](scaling-laws.qmd) ; [Zhao et al., 2023](https://arxiv.org/abs/2303.18223) ; [Hoffmann et al., 2022](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html)). Le terme LLM ne désigne ni une architecture ni un objectif d'entraînement particuliers.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+- **Trois notions différentes :** un **LLM** est un modèle de langage entraîné à grande échelle — aucun seuil de paramètres ne fait consensus, les données et le calcul comptent ; un **GPT** est une famille de Transformers pré-entraînés décodeur seul ; le **Transformer** est une famille d'architectures. Ces trois termes ne sont pas interchangeables.
+- **Le calcul d'un GPT :** à partir d'un contexte, il transforme le texte en logits puis en distribution conditionnelle sur le prochain token, un token après l'autre, avec des paramètres fixes pendant l'inférence ordinaire.
+- **Un calcul partagé, trois usages :** la génération réinjecte un token sélectionné, le scoring évalue une cible observée, l'apprentissage compare les distributions aux tokens cibles et met à jour les paramètres — ce ne sont pas des branches d'une seule boucle d'exécution.
+
+**Question de contrôle :** pouvez-vous dire ce que désignent LLM, GPT et Transformer, puis séparer l'architecture (le calcul), l'apprentissage (comment les paramètres sont obtenus) et l'utilisation (ce que l'on fait du modèle à paramètres fixés) ?
+:::
+
 ## 1. LLM, GPT et Transformer : trois notions différentes
 
 Un **modèle de langage** attribue une probabilité ou un score à des séquences de tokens en fonction d'un contexte. Dans un modèle autorégressif, ce calcul est répété token après token : le modèle n'énumère pas toutes les continuations complètes possibles. Un **GPT** (*Generative Pre-trained Transformer*) est une famille de modèles pré-entraînés fondés sur l'architecture Transformer. Les GPT classiques sont des Transformers **décodeur seul**, pré-entraînés à prédire le prochain token.

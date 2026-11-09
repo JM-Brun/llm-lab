@@ -26,13 +26,15 @@ tags: ["type:concept-lesson", "destination:understand", "topic:tokenization-stra
 A tokenizer is a representation and engineering choice. It must cover expected inputs while managing vocabulary size and sequence cost. No segmentation—word, character, byte, or subword—is optimal for every corpus and task.
 :::
 
-## Key takeaways
-
+::: {.callout-tip title="The one-minute mental model"}
 - **Granularity**: word, character, byte, or learned fragment.
 - **Algorithm**: BPE, WordPiece, unigram, and variants are not interchangeable.
 - **Pipeline**: normalization, pre-tokenization, vocabulary, and special-token handling affect outputs.
 - **Compatibility**: IDs have operational meaning only with the associated tokenizer and model weights.
 - **Evaluation**: fewer tokens may reduce cost, but do not prove better downstream quality.
+
+**Check yourself:** two tokenizers reduce the token count on the same text; why is that not enough to conclude that one yields a better downstream model?
+:::
 
 ## 1. Concept map
 
