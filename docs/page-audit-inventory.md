@@ -1226,3 +1226,13 @@ The interactive temperature explainer described every (T>1) as producing a “un
 
 A final cross-check of the reference implementation confirmed that the full-GPT prefix-invariance test exercises causal self-attention only. `GPT.forward` accepts token IDs and the Transformer block constructs its causal mask internally; the reference model does not expose a padding-mask argument or implement packed-document boundary masking. The exercise had already distinguished those mask types conceptually, but its test evidence could be misread as validating them. Added this implementation boundary in FR/EN immediately after the two test descriptions. The test claims now match the actual code surface.
 
+## 2026-11-09: training-example implementation and test-quality check
+
+**Scope.** Compared `training-examples.qmd` and `corpus-preparation.qmd` with `sliding_input_target_pairs` and its unit tests. The implementation's window-count formula, input/target offset, stride semantics and incomplete-tail handling agree with the lesson's examples. The helper intentionally does not implement corpus loading, tokenization, packing, padding, masks or an optimizer/training loop.
+
+**Test defect found and corrected.** `test_every_target_is_the_next_token_in_the_stream` used `np.arange` token IDs and checked the final target with `stream[inputs[:, -1] + 1]`. Because token IDs happened to equal their source positions, this assertion accidentally treated an ID as a position. It would not be valid for an arbitrary token stream and did not independently express the window-offset invariant.
+
+Changed the fixture to non-monotonic token IDs unrelated to positions, then computed each final target's source position from the window start, stride and context length. The within-window shift assertion remains separate. This makes the test verify the actual contract: targets are the next source token at the corresponding position, not the token ID plus one.
+
+The corrected expected final targets for the fixture are `[3, 14]` at source positions 4 and 7. The Python CI run for the updated PR head is required to confirm the change; no local test execution is claimed.
+
