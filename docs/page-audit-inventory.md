@@ -1180,3 +1180,11 @@ The page sequence is pedagogically defensible: Q/K/V establishes the inputs and 
 - The main conceptual pages and the Build walkthrough have distinct purposes and should remain distinct. Do not fold code-level initialization details into the core learning route.
 - Rendered diagrams, equation layout, keyboard behavior and screen-reader output still require the existing browser/manual review workflow. No new workflow or registry was added.
 
+### Implementation-contract clarification: fully masked query rows
+
+The source review also compared the causal-mask lesson with `src/llm_lab/foundations/attention.py` and `tests/unit/test_attention.py`. The primitive explicitly handles a fully masked row by returning zero weights and a zero output; its unit test verifies that this avoids invalid floating-point operations. Such weights are **not** a probability distribution, because they sum to zero. The ordinary causal lower-triangular mask avoids this case by retaining the diagonal.
+
+Added this precise implementation contract to the FR/EN causal-masking pages, while retaining the warning that other APIs/implementations may choose a different convention. This connects the mathematical edge case to the reference implementation without presenting its convention as universal.
+
+The CA-A exercise already distinguishes the causal, padding, loss and document-boundary masks and points to both the isolated attention primitive test and the complete-GPT prefix-invariance test. The reference GPT test compares prefix logits with the corresponding logits from a longer sequence; it does not claim to test arbitrary padding or packed-document policies.
+
