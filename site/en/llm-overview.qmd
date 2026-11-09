@@ -83,7 +83,7 @@ The model maps the context to **logits** (unnormalized scores); the *softmax* fu
 | **Observed-target scoring** | Compute the probability of a known token from its observed prefix, then the sequence likelihood or NLL | Fixed |
 | **Training** | Supply prefixes from the reference sequence (*teacher forcing*), compare distributions with target tokens, compute the loss and its gradients, then update parameters | Updated at the update step |
 
-*Prefill* and *decode* are inference execution phases. *Teacher forcing* describes conditioning on reference tokens during scoring or training; it is not a generation phase. For scoring and training on a known sequence, a forward pass produces distributions at each position; the causal mask ensures that each prediction depends only on the preceding prefix. [Training examples](training-examples.qmd), [loss](loss.qmd), and [gradients](gradients.qmd) explain the training branch; [likelihood](likelihood.qmd) explains scoring.
+*Prefill* and *decode* are inference execution phases. *Teacher forcing* describes conditioning on reference tokens during scoring or training; it is not a generation phase. When scoring or training on a known sequence, a forward pass produces a distribution at each position. Each distribution is aligned with the next target token; the causal mask prevents the model from accessing future tokens. [Training examples](training-examples.qmd), [loss](loss.qmd), and [gradients](gradients.qmd) explain the training branch; [likelihood](likelihood.qmd) explains scoring.
 
 **Target scoring** and **model evaluation** are not synonyms. Scoring computes probabilities for observed targets; evaluation aggregates scores or metrics under a defined data protocol. It may also assess generated outputs. The following view illustrates evaluation based on scoring, without updating parameters.
 
@@ -101,7 +101,7 @@ Describing a model requires three distinct questions:
 | **Learning** | How are the parameters obtained or adapted? | Pretraining, fine-tuning, SFT, and preference optimization |
 | **Use** | What do we do with the model while its parameters are fixed? | Generation, classification, scoring, prompting, and retrieval-augmented generation (RAG) |
 
-For a GPT, **pretraining** learns to predict the next token from a corpus. It is self-supervised: targets are constructed from the data itself. The resulting model is often called a *base model*. A **foundation model** is a broader category: it is trained on broad data at scale and can be adapted to many tasks, including tasks beyond language ([Bommasani et al., 2021](https://crfm.stanford.edu/report)). The terms are therefore not synonymous.
+For a GPT, **pretraining** learns to predict the next token from a corpus. It is self-supervised: targets are constructed from the data itself. The model before adaptation is often called a *base model*. A **foundation model** is a broader category: it is trained on broad data at scale and can be adapted to many tasks, including tasks beyond language ([Bommasani et al., 2021](https://crfm.stanford.edu/report)). The terms are therefore not synonymous.
 
 After pretraining, **parameter adaptation** is possible but not mandatory: task fine-tuning, *supervised fine-tuning* (SFT) on instruction–response examples, or preference optimization. A pretrained model can also be used directly.
 
@@ -111,7 +111,7 @@ At inference time, parameters remain fixed. A prompt and documents retrieved by 
 
 LLMs are commonly used to generate or rewrite text, summarize, translate, extract information, classify, assist with programming, and answer questions.
 
-Reusing a general-purpose model is attractive when it can cover several tasks or when labeled examples are scarce. Choosing between reusing a model, retrieving documents with RAG, or adapting its parameters then depends on the task. A RAG system can provide up-to-date information if its document corpus or index is updated, without retraining the model ([Lewis et al., 2020](https://arxiv.org/abs/2005.11401)); adaptation may help with a specific format, domain, or behavior. Compare these options using measured criteria: quality, errors, robustness, cost, latency, confidentiality, data provenance, and maintenance. A demonstration on a few prompts is not an evaluation.
+Reusing a general-purpose model is attractive when it can cover several tasks or when labeled examples are scarce. Choosing between reusing a model, retrieving documents with RAG, or adapting its parameters then depends on the task. A RAG system can provide up-to-date information if its document corpus or index is updated, without retraining the model ([Lewis et al., 2020](https://arxiv.org/abs/2005.11401)). Adaptation may help with a specific format, domain, or behavior. Compare these options using measured criteria: quality, errors, robustness, cost, latency, confidentiality, data provenance, and maintenance. A demonstration on a few prompts is not an evaluation.
 
 ::: {.self-check}
 [Exercises and practice](exercises.qmd).
