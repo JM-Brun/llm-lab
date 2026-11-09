@@ -53,6 +53,10 @@ Cette formule donne la dérivée de la perte **pour une seule position**. Pour l
 
 Le facteur $1/|\mathcal{M}|$ vient de la moyenne ; les positions ignorées ont une dérivée nulle par rapport à leurs logits dans cet objectif. Une somme, une pondération ou une autre réduction change le facteur correspondant. La formule locale résulte de la combinaison softmax + cross-entropie ; elle ne signifie pas que les paramètres du réseau sont directement les logits, qui dépendent des paramètres via de nombreuses opérations différentiables.
 
+::: {.callout-note collapse="true" title="Une dérivée nulle ne coupe pas nécessairement tout le graphe (approfondissement)"}
+Une dérivée nulle par rapport aux logits d'une position ignorée signifie que ces logits ne sont pas directement supervisés par ce terme de perte. Si la représentation de cette position intervient néanmoins dans le calcul d'un logit valide — par exemple comme clé ou valeur autorisée dans l'attention — la perte valide peut encore propager un gradient à travers cette dépendance. Il faut donc examiner le graphe de calcul et les masques d'attention, pas seulement le masque de perte.
+:::
+
 ## Règle de chaîne
 
 Si les logits dépendent des paramètres $z=z(\theta)$, alors :

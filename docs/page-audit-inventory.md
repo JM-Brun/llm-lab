@@ -1252,3 +1252,25 @@ The text states that sum, weighting and other reductions change the correspondin
 
 For a batch of (B) rows, the implementation returns ((p-y)/B); its unit tests compare this gradient with central finite differences, verify row sums of zero, check invariance to row-wise constant shifts and reject invalid inputs. The conceptual page remains broader than this primitive and keeps sequence shifting/masking outside the implementation's scope.
 
+
+## 2026-11-09: loss masking versus attention visibility — gradient-flow clarification
+
+**Scope.** Cross-checked the FR/EN loss and gradients lessons against training-examples.qmd, causal-masking.qmd, and the stated batch objective. This is a conceptual dependency review; the small NumPy classification-loss primitive is not a sequence-loss or masking implementation.
+
+### Finding and correction
+
+The loss pages correctly define the valid target-position set and exclude ignored targets from both numerator and denominator. The gradient pages correctly state that the derivative with respect to logits at an ignored position is zero for this objective. However, those statements could be misread as saying that a loss mask also prevents the corresponding token representation from influencing valid predictions, or that all gradients associated with that position must vanish.
+
+That inference is not generally valid. A loss mask selects supervised target positions. An attention mask controls which positions may influence other position representations. If an ignored position's representation is used in computing a valid-position logit (for example, as an allowed key/value), gradients from that valid loss can still propagate through the dependency. The exact behavior depends on causal direction, padding side, mask semantics and the architecture.
+
+Added a concise explanation and links to the canonical training-example and causal-masking lessons in both loss pages. Added a collapsed advanced note in both gradients pages to distinguish a zero derivative with respect to an ignored position's logits from the possible gradient flow through that position's representation when it contributes to valid logits.
+
+### Boundary retained
+
+- No claim that the current reference GPT implements padding or packed-document masks; its forward interface still exposes only token IDs and internal causal masking.
+- No sequence-loss API, padding policy, or training loop was added to the NumPy foundations.
+- The page prose distinguishes these roles, but the concept registry previously contained only the causal-mask concept and the computational graph represented the loss mask only generically inside loss reduction. Added explicit concepts for attention, padding, document-boundary and loss masks to the existing concept registry, with bilingual definitions, domains, importance and canonical page resources. The computational graph remains unchanged: its documented scope deliberately excludes batching, padding and training-window sampling, and no concrete implementation currently justifies adding those dataflow nodes.
+
+### Validation limits
+
+The correction is bilingual and source-level. The Quarto render and existing metadata/link checks should validate the edited pages; a rendered browser review and an executable padded/packed batch example remain separate work. No new workflow or test harness is introduced.

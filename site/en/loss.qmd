@@ -62,7 +62,7 @@ A sum, per-sequence mean, or weighted mean is also possible. These do not define
 
 ## Masking and shifted targets
 
-In causal language modeling, logits at position $t$ usually predict the token at position $t+1$. The loss must compare logits with the correctly shifted target token. Padding tokens or explicitly ignored positions must be excluded from both the numerator **and** denominator of a mean over valid targets.
+In causal language modeling, logits at position $t$ usually predict the token at position $t+1$. The loss must compare logits with the correctly shifted target token. Padding tokens or explicitly ignored positions must be excluded from both the numerator **and** denominator of a mean over valid targets. The loss mask determines only which targets contribute to the objective; it does not determine which tokens may influence the representations used to predict those targets. That visibility is controlled by the attention mask (causal, padding, or document-boundary masking, as appropriate). Excluding a target from the loss therefore does not, by itself, prevent its information from entering the context. See also [training examples](training-examples.qmd) and [causal masking](causal-masking.qmd).
 
 A one-token alignment error can produce a finite, decreasing loss while training the wrong task.
 
