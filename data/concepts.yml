@@ -655,8 +655,8 @@ relations:
   - {from: off-policy-reinforcement-learning, type: part-of, to: post-training}
   - {from: training-inference-mismatch, type: constrains, to: policy-gradient}
   - {from: score-centering, type: applies-to, to: off-policy-reinforcement-learning}
-  - {from: score-centering, type: contrasts-with, to: attention-score}
-  - {from: score-centering, type: contrasts-with, to: importance-sampling}
+  - {from: attention-score, type: contrasts-with, to: score-centering}
+  - {from: importance-sampling, type: contrasts-with, to: score-centering}
   - {from: importance-sampling, type: applies-to, to: off-policy-reinforcement-learning}
   - {from: post-training, type: contrasts-with, to: pretraining}
   - {from: instruction-tuning, type: part-of, to: post-training}
