@@ -154,6 +154,21 @@ Ligne par ligne :
 - Chaque paire `(b, h)` résout **un problème d'attention mono-tête** `(T, head_dim)` — exactement celui de la fonction testée `scaled_dot_product_attention`. Les boucles explicites rendent chaque forme inspectable (choix de clarté du jalon G4, pas de performance).
 - Les têtes ne se mélangent **jamais** jusqu'à la projection de sortie `w_o`, qui seule mélange l'information entre têtes.
 
+### Contrat de la primitive mono-tête
+
+Chaque paire `(b, h)` appelle la primitive NumPy `scaled_dot_product_attention` pour une tête sans axes batch. Son contrat est :
+
+- Q : `(T_q, d_k)`; K : `(T_k, d_k)`; V : `(T_k, d_v)`.
+- Scores et poids : `(T_q, T_k)`; sortie agrégée : `(T_q, d_v)`.
+- `T_q` et `T_k` peuvent différer ; `d_k` et `d_v` aussi. Les clés et les valeurs doivent toutefois partager la même longueur `T_k`.
+- Le masque additif optionnel a exactement la forme `(T_q, T_k)`. Il accepte des biais finis et `-inf` pour interdire une interaction ; `NaN` et `+inf` sont rejetés.
+
+**Cas limite à ne pas interpréter comme une distribution :** si une ligne est entièrement masquée, la primitive renvoie volontairement des poids nuls et une sortie nulle. Les lignes ayant au moins une clé accessible sont normalisées sur ces seules clés. Cette convention est propre à l'implémentation de référence ; elle ne doit pas être généralisée à toutes les API d'attention.
+
+Les tests de [`test_attention.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py) vérifient notamment les formes et invariants de normalisation, la somme pondérée calculable à la main, les biais additifs finis, le rejet des masques invalides, le cas d'une ligne entièrement masquée, la polarité du masque causal et l'invariance des préfixes face à une modification des tokens futurs. Ils testent aussi qu'un mauvais axe de softmax viole la normalisation attendue par requête.
+
+Sources maintenues : [primitive NumPy](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/attention.py) · [tests de la primitive et du masque causal](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py).
+
 ## Le MLP : élargir, activer, projeter
 
 ```python
