@@ -21,6 +21,7 @@ from html import escape
 from pathlib import Path
 from typing import Any, Literal
 
+from artifact_writer import write_artifacts
 from learning_map_renderers import (
     REPRESENTATIONS,
     escape_markdown_text,
@@ -502,26 +503,30 @@ def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], languag
     return "\n".join(lines)
 
 
-def write_guided_page_context_fragments(
+def prepare_guided_page_context_fragments(
     language: str, stages: list[ResolvedGuidedRouteStage]
-) -> list[Path]:
-    """Write generated context partials for every page in the guided route."""
+) -> dict[Path, str]:
+    """Render generated context partials for every page in the guided route."""
     memberships = build_guided_route_memberships(stages)
     page_by_id = {
         page.id: page for stage in stages for page in [*stage.pages, *stage.optional_pages]
     }
     includes = SITE / "includes"
-    includes.mkdir(parents=True, exist_ok=True)
-    outputs: list[Path] = []
+    outputs: dict[Path, str] = {}
     for page_id, page_memberships in memberships.items():
         page = page_by_id[page_id]
         output = includes / f"generated-guided-context-{page_id.replace('/', '-')}.qmd"
-        output.write_text(
-            render_guided_page_context_markdown(page, page_memberships, language),
-            encoding="utf-8",
-        )
-        outputs.append(output)
+        outputs[output] = render_guided_page_context_markdown(page, page_memberships, language)
     return outputs
+
+
+def write_guided_page_context_fragments(
+    language: str, stages: list[ResolvedGuidedRouteStage]
+) -> list[Path]:
+    """Write generated context partials for every page in the guided route."""
+    artifacts = prepare_guided_page_context_fragments(language, stages)
+    write_artifacts(artifacts)
+    return list(artifacts)
 
 
 def render_suggested_route_markdown(
@@ -572,28 +577,59 @@ def render_suggested_route_markdown(
     return "\n".join(['<div class="route-nav-cards">', *cards, "</div>", ""])
 
 
-def write_suggested_route_fragments(language: str, pages: list[dict[str, Any]]) -> list[Path]:
-    """Write generated local-navigation partials for pages with route metadata."""
+def prepare_suggested_route_fragments(
+    language: str, pages: list[dict[str, Any]]
+) -> dict[Path, str]:
+    """Render generated local-navigation partials for pages with route metadata."""
     page_by_id = {page["id"]: page for page in pages}
     includes = SITE / "includes"
-    includes.mkdir(parents=True, exist_ok=True)
-    outputs: list[Path] = []
+    outputs: dict[Path, str] = {}
     for page in pages:
         rendered = render_suggested_route_markdown(page, page_by_id, language)
         if not rendered:
             continue
         output = includes / (f"generated-suggested-route-{page['id'].replace('/', '-')}.qmd")
-        output.write_text(rendered, encoding="utf-8")
-        outputs.append(output)
+        outputs[output] = rendered
     return outputs
+
+
+def write_suggested_route_fragments(language: str, pages: list[dict[str, Any]]) -> list[Path]:
+    """Write generated local-navigation partials for pages with route metadata."""
+    artifacts = prepare_suggested_route_fragments(language, pages)
+    write_artifacts(artifacts)
+    return list(artifacts)
+
+
+def prepare_guided_route_fragment(
+    language: str, stages: list[ResolvedGuidedRouteStage]
+) -> dict[Path, str]:
+    """Render a generated Quarto Markdown partial for the requested language."""
+    output = SITE / "includes" / f"generated-guided-route-{language}.qmd"
+    return {output: render_guided_route_markdown(stages, language)}
 
 
 def write_guided_route_fragment(language: str, stages: list[ResolvedGuidedRouteStage]) -> Path:
     """Write a generated Quarto Markdown partial for the requested language."""
-    output = SITE / "includes" / f"generated-guided-route-{language}.qmd"
-    output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(render_guided_route_markdown(stages, language), encoding="utf-8")
-    return output
+    artifacts = prepare_guided_route_fragment(language, stages)
+    write_artifacts(artifacts)
+    return next(iter(artifacts))
+
+
+def prepare_map_fragments(
+    language: str,
+    navigation: list[dict[str, Any]],
+    pages: list[dict[str, Any]],
+    payload: dict[str, Any],
+) -> dict[Path, str]:
+    """Render every generated presentation artifact for one language."""
+    page_by_id = {page["id"]: page for page in pages}
+    includes = SITE / "includes"
+    artifacts = {includes / "learning-map.html": render_map_script()}
+    for representation in REPRESENTATIONS.values():
+        fragment = includes / f"generated-{representation.artifact}-{language}.qmd"
+        artifacts[fragment] = representation.render(language, navigation, page_by_id)
+    artifacts[includes / f"generated-map-data-{language}.qmd"] = render_inline_map_data(payload)
+    return artifacts
 
 
 def write_map_fragments(
@@ -603,19 +639,7 @@ def write_map_fragments(
     payload: dict[str, Any],
 ) -> None:
     """Write every generated presentation artifact for one language."""
-    page_by_id = {page["id"]: page for page in pages}
-    includes = SITE / "includes"
-    includes.mkdir(parents=True, exist_ok=True)
-    (includes / "learning-map.html").write_text(render_map_script(), encoding="utf-8")
-    for representation in REPRESENTATIONS.values():
-        fragment = includes / f"generated-{representation.artifact}-{language}.qmd"
-        fragment.write_text(
-            representation.render(language, navigation, page_by_id),
-            encoding="utf-8",
-        )
-    (includes / f"generated-map-data-{language}.qmd").write_text(
-        render_inline_map_data(payload), encoding="utf-8"
-    )
+    write_artifacts(prepare_map_fragments(language, navigation, pages, payload))
 
 
 def load_domain_labels(language: str) -> dict[str, str] | None:
@@ -727,8 +751,8 @@ def assign_route_rank(pages: list[dict[str, Any]], language: str) -> None:
             rank += 1
 
 
-def build(language: str) -> Path:
-    """Write the published page graph and every generated presentation artifact."""
+def prepare_build(language: str) -> dict[Path, str]:
+    """Render the published page graph and every presentation artifact without writing."""
     all_pages = load_pages()
     pages = [
         page for page in all_pages if page["language"] == language or page["language"] == "shared"
@@ -745,9 +769,9 @@ def build(language: str) -> Path:
     concept_graph = load_concept_graph(language, pages)
     guided_route = load_guided_route(language, pages)
     navigation = load_navigation(language, pages)
-    write_guided_route_fragment(language, guided_route)
-    write_guided_page_context_fragments(language, guided_route)
-    write_suggested_route_fragments(language, pages)
+    artifacts = prepare_guided_route_fragment(language, guided_route)
+    artifacts.update(prepare_guided_page_context_fragments(language, guided_route))
+    artifacts.update(prepare_suggested_route_fragments(language, pages))
     payload = {
         "language": language,
         "source": "LLM-LAB-PAGE-MAP v1 + data/guided-route.yml + data/concepts.yml",
@@ -755,23 +779,32 @@ def build(language: str) -> Path:
         "navigation": navigation,
         **concept_graph,
     }
-    write_map_fragments(language, navigation, pages, payload)
-    output.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    return output
+    artifacts.update(prepare_map_fragments(language, navigation, pages, payload))
+    artifacts[output] = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+    return artifacts
+
+
+def build(language: str) -> Path:
+    """Write the published page graph and every generated presentation artifact."""
+    write_artifacts(prepare_build(language))
+    return SITE / f"learning-map-data-{language}.json"
 
 
 def main() -> None:
     """Generate bilingual learning maps and the linked-data export."""
-    for language in ("fr", "en"):
-        output = build(language)
-        sys.stdout.write(f"Generated {output.relative_to(ROOT)}\n")
-    from export_knowledge_graph import write_export
+    from export_knowledge_graph import build_graph, serialize_graph
 
-    export = write_export(SITE / "knowledge-graph.jsonld")
-    sys.stdout.write(f"Generated {export.relative_to(ROOT)}\n")
+    # Render every output before replacing any, so an invalid route, concept or
+    # graph in one language cannot leave the other language half-updated.
+    artifacts: dict[Path, str] = {}
+    outputs = [SITE / f"learning-map-data-{language}.json" for language in ("fr", "en")]
+    for language in ("fr", "en"):
+        artifacts.update(prepare_build(language))
+    export = SITE / "knowledge-graph.jsonld"
+    artifacts[export] = serialize_graph(build_graph())
+    write_artifacts(artifacts)
+    for output in [*outputs, export]:
+        sys.stdout.write(f"Generated {output.relative_to(ROOT)}\n")
 
 
 if __name__ == "__main__":
