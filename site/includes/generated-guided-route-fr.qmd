@@ -122,7 +122,7 @@ Distinguer le prefill du prompt du decode itératif, sélectionner un token selo
 
 ### 08 · Apprendre et mettre à jour les paramètres
 
-Relier les cibles observées à la loss agrégée, aux gradients et aux mises à jour des paramètres ; approfondir le teacher forcing et les exemples décalés via la branche Build, sans en faire un prérequis à l'inférence.
+Relier les cibles observées à la loss agrégée, aux gradients et aux mises à jour des paramètres ; comprendre conceptuellement le teacher forcing, sans faire de la préparation des exemples décalés une étape du parcours théorique.
 
 **Pages centrales**
 
@@ -132,7 +132,6 @@ Relier les cibles observées à la loss agrégée, aux gradients et aux mises à
 **Ressources facultatives**
 
 - [Entropie croisée : l'objectif de prédiction des tokens](cross-entropy.html) *(rappel)*
-- [Du corpus tokenisé aux exemples d’entraînement](training-examples.html)
 - [Lois d'échelle : paramètres, données et calcul](scaling-laws.html)
 
 :::
