@@ -54,6 +54,8 @@ Distinctive contributions:
 
 The lesson uses a **column-vector convention**: Q/K vectors are columns and softmax is column-wise. This is explicitly contrasted with the row-vector convention used in the original paper and common implementations. LLM Lab uses row-wise softmax for Q/K matrices whose rows correspond to query positions. These are compatible conventions, not a contradiction; any cross-reference should show the transpose and normalization axis explicitly.
 
+The public animation source repository contains a scene script for this lesson, `_2024/transformers/attention.py`. Static inspection of its scene classes reveals a deliberate visual sequence: contextualized token updates and a mystery-novel example; geometric Q/K projections into a smaller space; construction of the dot-product attention matrix and scaled-softmax equation; parallel next-token predictions and causal masking; context-size scaling; value aggregation and low-rank value-map factorization; cross-attention; multi-head attention; the shared output matrix; and GPU parallelizability. This code-level inspection clarifies the intended visual progression, but it does not replace watching the rendered video: pacing, animation legibility and the exact visual emphasis remain unreviewed.
+
 Scientific qualifications:
 - The noun/adjective attention-head example is explicitly hypothetical, not an interpretation of a trained head.
 - The intuitive description of adding value vectors to embeddings is later refined by the factorized value map and shared output projection. Do not imply raw head output is simply added to the residual stream.
@@ -156,6 +158,7 @@ MQA/GQA and sparse attention should first be compared as architectural variants 
 - [Jay Alammar — 2025 course announcement](https://newsletter.languagemodels.co/p/how-transformer-llms-work-free-course)
 - [3Blue1Brown — Attention in Transformers, step by step](https://www.3blue1brown.com/lessons/attention/)
 - [3Blue1Brown — video and timestamps](https://www.youtube.com/watch?v=eMlx5fFNoYc)
+- [3Blue1Brown — animation source code for the lesson](https://github.com/3b1b/videos/blob/master/_2024/transformers/attention.py)
 - [Polo Club — Transformer Explainer repository](https://github.com/poloclub/transformer-explainer)
 - [Polo Club — CHI 2026 paper](https://doi.org/10.1145/3772318.3791725)
 - [LLM Lab — existing bilingual experiment guide](../../site/fr/transformer-explainer.qmd)
