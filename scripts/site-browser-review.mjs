@@ -104,8 +104,8 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
-    const targetedReviewPages = new Set(["exercises.html", "transformer.html", "decoding-strategies.html", "entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "text-data.html", "tokenization-strategies.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
-    const sidebarPilotPages = new Set(["text-data.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html"]);
+    const targetedReviewPages = new Set(["exercises.html", "transformer.html", "decoding-strategies.html", "entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "text-data.html", "tokenization-strategies.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html", "queries-keys-values.html"]);
+    const sidebarPilotPages = new Set(["text-data.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "queries-keys-values.html"]);
     // A Quarto sidebar change must inspect the linked section entry and its children.
     // they share page-navigation, responsive, and rendered-math assertions.
     // When a sidebar change and this audit script change travel together,
