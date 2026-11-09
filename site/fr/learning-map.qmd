@@ -25,6 +25,19 @@ tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:ov
 
 Cette page présente le **parcours théorique Understand** en huit étapes, puis une carte progressive pour explorer les ressources. Le **parcours Build est indépendant** : il possède son propre ordre d'implémentation et son propre point d'entrée. Le parcours est dérivé du curriculum canonique ; la carte commence par les territoires de haut niveau, puis révèle rubriques et pages au fil des clics. Les repères de lecture ci-dessous se replient ; la carte reflète la recherche, le filtre et la sélection dans l'URL, et le bouton « Copier le lien » la partage telle quelle.
 
+::: {.callout-note title="Le parcours en bref"}
+Vous pouvez retenir le parcours en **cinq mouvements** avant d'entrer dans les huit étapes détaillées :
+
+1. **Situer** — comprendre ce qu'est un LLM et ce qu'il prédit.
+2. **Observer** — suivre une génération complète comme une boîte noire, du contexte au prochain token.
+3. **Expliquer le calcul** — relier texte et tokens, représentations, Transformer et distribution prédictive.
+4. **Comprendre les usages** — distinguer génération, scoring d'une cible observée et apprentissage des paramètres. Ce sont trois usages du calcul prédictif, pas trois étapes successives d'une génération.
+5. **Explorer** — choisir ensuite de construire, pratiquer, approfondir ou consulter les références.
+
+Les huit étapes ci-dessous détaillent cette vue sans imposer la lecture de chaque page comme un prérequis strict.
+:::
+
+
 ::: {.callout-note collapse="true" title="Comment lire cette carte"}
 
 - **Territoires** — les grandes parties du site : Comprendre, Construire, S'exercer, Approfondir, Références.
