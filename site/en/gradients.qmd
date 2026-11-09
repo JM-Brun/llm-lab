@@ -62,13 +62,13 @@ A zero derivative with respect to an ignored position's logits means those logit
 
 If logits depend on parameters $z=z(\theta)$, then:
 
-Here, $z$ denotes all logits involved in the objective (for example, the logits at every valid position in the batch), not a single scalar score. They can be viewed as a vector obtained by flattening the tensor; the formula below then uses the corresponding Jacobian. Backpropagation computes this Jacobian–vector product without explicitly constructing the full Jacobian.
-
 $$
 \nabla_\theta\mathcal{L}
 =\left(\frac{\partial z}{\partial\theta}\right)^\top
 \nabla_z\mathcal{L}.
 $$
+
+Here, $z$ denotes all logits involved in the objective (for example, the logits at every valid position in the batch), not a single scalar score. They can be viewed as a vector obtained by flattening the tensor; the formula above then uses the corresponding Jacobian. Backpropagation computes this Jacobian–vector product without explicitly constructing the full Jacobian.
 
 In a deep network, backpropagation applies this chain rule efficiently through the computation graph. Shapes must agree: derivatives are vectors or tensors with the same shape as the variable being differentiated.
 
