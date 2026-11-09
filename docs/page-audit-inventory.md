@@ -1296,3 +1296,17 @@ Explicitly bounded the conclusion: exhaustive enumeration is feasible here only 
 Extended the evaluation section with explicit bilingual links and a bounded example: likelihood/NLL (and derived perplexity) scores observed tokens on a corpus; it does not directly measure factuality, instruction following or user utility. Task metrics only measure the operationalized property and protocol. The existing experimental-evaluation exercise's Average Precision measures ranking quality, not probability calibration. This reuses existing lessons rather than introducing a new metric or page.
 
 The user-supplied YouTube URL in issue #84 could not be verified through the available source retrieval: the direct page fetch returned a cache miss and exact video-ID search returned no result. It is therefore not cited or incorporated; its title/transcript and timestamps remain unverified.
+
+## 2026-11-09: targeted browser review — decoding strategies (PR #728)
+
+**Scope.** Reviewed the rendered English and French `decoding-strategies.html` pages on the PR head `c3324c1` using the existing targeted Playwright browser-review job. This is evidence for the changed page pair only, not a site-wide visual certification.
+
+- Both pages returned HTTP 200 at a 1440 × 1000 desktop viewport in the light theme.
+- No horizontal overflow was detected; no unrendered math was detected (15 math spans per page).
+- The learning-path context was present, its navigation landmark and accessible label were exposed, and its stage anchor resolved.
+- All 34 focus targets on each page were reported focus-visible; axe reported zero accessibility violations for these runs.
+- The job generated screenshots and a machine-readable audit report in artifact `site-browser-review-921a135ecf610af84ed4c814c3e140ed1a8e79f0` (run [42599137931](https://github.com/JM-Brun/llm-lab/actions/runs/42599137931)).
+
+**Limit.** This targeted profile selected the two changed language variants at desktop size only. It does not establish mobile layout, dark-theme behavior, screen-reader usability, or learner comprehension. Those remain separate checks; do not describe this as a full manual review.
+
+The YouTube resource supplied in issue #84 remains unverified: direct retrieval previously returned a cache miss and an exact video-ID web search on 2026-11-09 returned no result. No title, transcript, timestamps, or claims are inferred from the URL.
