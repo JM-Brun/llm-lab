@@ -154,6 +154,23 @@ Line by line:
 - Each `(b, h)` pair solves **one single-head attention problem** of shape `(T, head_dim)` — exactly the problem solved by the tested `scaled_dot_product_attention`. The explicit loops keep every intermediate shape inspectable (milestone G4's clarity-over-speed choice).
 - Heads never mix until the output projection `w_o`, which alone blends information across heads.
 
+### Single-head primitive contract
+
+Each `(b, h)` pair calls the NumPy `scaled_dot_product_attention` primitive for one head, without batch axes. Its contract is:
+
+- Q: `(T_q, d_k)`; K: `(T_k, d_k)`; V: `(T_k, d_v)`.
+- Scores and weights: `(T_q, T_k)`; aggregated output: `(T_q, d_v)`.
+- `T_q` and `T_k` may differ; so may `d_k` and `d_v`. Keys and values must share the same key-sequence length `T_k`.
+- The optional additive mask has exactly shape `(T_q, T_k)`. It accepts finite biases and `-inf` to forbid an interaction; `NaN` and `+inf` are rejected.
+
+**An edge case that must not be interpreted as a distribution:** if a row is fully masked, the primitive deliberately returns zero weights and a zero output. Rows with at least one accessible key are normalized over those keys only. This convention belongs to the reference implementation; do not generalize it to every attention API.
+
+The [`test_attention.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py) suite checks, among other things, shapes and normalization invariants, a hand-computable weighted sum, finite additive biases, rejection of invalid masks, the fully masked-row case, causal-mask polarity, and prefix invariance under changes to future tokens. It also checks that a wrong softmax axis violates the expected per-query normalization.
+
+Maintained sources: [NumPy primitive](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/attention.py) · [primitive and causal-mask tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_attention.py).
+- [Current implementation and validation status](https://github.com/JM-Brun/llm-lab/blob/main/docs/project-status.md)
+- [Planned verification criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+
 ## The MLP: widen, activate, project back
 
 ```python
