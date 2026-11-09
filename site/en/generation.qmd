@@ -41,26 +41,58 @@ By the end of this page, you will be able to:
 The first pass through the route (the **Orientation** stage) requires only this loop and the fact that parameters remain fixed. Return to this page in the **Inference** stage to study execution phases and selection rules.
 :::
 
-## 1. One generation, one loop
+## 1. One elementary step: predict and select a token
 
-The model receives a context represented as token IDs. At each iteration, it performs the following operations:
+Consider the current context, consisting of tokens already available from the prompt or previous generation steps. Write it as:
 
-1. **Compute a prediction.** The forward pass processes the current context and produces logits for the vocabulary. Softmax lets us interpret these scores as a conditional distribution over the next token. To continue generation, we use the prediction associated with the final context position.
-2. **Select a token.** A decoding rule uses the logits or distribution to select the next token: for example, the highest-probability token or a random draw.
-3. **Update the context.** The selected token is appended to the sequence. It becomes part of the context that conditions the next prediction.
-4. **Repeat or stop.** The process repeats until an explicit criterion is met: an end-of-sequence token, a maximum length, or a rule imposed by the application. Stopping does not mean that the model has "finished thinking."
+\[
+c_t = (x_1, \ldots, x_{t-1}).
+\]
+
+For **one generation step**, the model runs a forward pass with fixed parameters. It produces logits at every context position; to predict the continuation, we use the logits at the final position, denoted by \(z_t\). Softmax defines the conditional distribution:
+
+\[
+p_\theta(\cdot \mid c_t) = \operatorname{softmax}(z_t).
+\]
+
+A decoding policy then selects a token from this distribution:
+
+\[
+x_t = \operatorname{Dec}\!\left(p_\theta(\cdot \mid c_t)\right).
+\]
+
+Selection may be deterministic (for example, *argmax*) or stochastic (sampling). The selection strategies are explained later.
+
+**The result of this step is one selected token**, not the complete text. It is important to distinguish the distribution computed by the model from the token actually selected by the decoding policy.
 
 The details of tokenization and token IDs belong in [From text to tokens](text-data.qmd). The internal computation that transforms representations into logits is explained in the [Transformer overview](transformer.qmd), followed by [Logits](logits.qmd) and [Output probabilities](probabilities.qmd). This page focuses on what happens **after the context has been supplied to the model**.
+
+## 2. The generation loop: repeat this step
+
+Autoregressive generation reuses the elementary step with an expanding context. After selecting \(x_t\), the context becomes:
+
+\[
+c_{t+1} = (x_1, \ldots, x_{t-1}, x_t).
+\]
+
+The model then computes a new distribution conditioned on this updated context, another token is selected, and the process repeats. The parameters \(\theta\) remain fixed throughout this loop.
+
+Complete generation therefore alternates four operations:
+
+1. **Predict:** compute the next-token distribution from the current context.
+2. **Select:** apply the decoding policy to obtain one token.
+3. **Feed back:** append that token to the context; it will condition the next step.
+4. **Continue or stop:** repeat until an explicit criterion is met, such as an end-of-sequence token, a maximum length, or an application-defined rule. Stopping does not mean that the model has "finished thinking."
 
 ### Three levels not to confuse
 
 - **Forward pass:** network computation, with fixed parameters, from context to logits and the predictive distribution.
-- **Decoding:** the rule that uses model outputs to select the next token, possibly after transforming or filtering the distribution.
-- **Generation:** the complete process that repeats the forward pass, decoding, token appending, and stopping-criterion checks.
+- **Decoding:** the rule that uses model outputs to select one token, possibly after transforming or filtering the distribution.
+- **Generation:** the complete process that repeats prediction and selection, feeds each token back, and checks the stopping criterion.
 
 The word *decoding* is sometimes used more broadly across libraries and publications. Here, it means next-token selection and the processing that prepares it; it does not mean the Transformer's internal computation or the entire generation loop.
 
-## 2. From the initial prompt to subsequent tokens: prefill and decode
+## 3. From the initial prompt to subsequent tokens: prefill and decode
 
 Inference systems generally distinguish processing the initial prompt from generating tokens one by one:
 
@@ -74,7 +106,7 @@ Prefill is not [*teacher forcing*](training-examples.qmd), either. With teacher 
 
 To see how this distinction appears in the reference program, read the [guided tour of the generation code](gpt-generation-walkthrough.qmd). It documents prompt processing, context-window recomputation, and optimizations deliberately absent from this teaching implementation.
 
-## 3. How is the next token selected?
+## 4. How is the next token selected?
 
 The predictive distribution does not by itself determine a unique output. A decoding rule defines how to select the token.
 
@@ -104,7 +136,7 @@ Temperature changes the distribution used to select the next token, **not the mo
 - **"Repetitions are a bug."** Not necessarily: they can result from the behavior of the decoding rule, especially greedy selection.
 :::
 
-## 4. Inference does not update the model
+## 5. Inference does not update the model
 
 During ordinary generation, the model's parameters remain fixed. There is no gradient computation for learning and no weight update. Generating more tokens therefore cannot, by itself, correct a poorly trained model.
 
@@ -112,7 +144,7 @@ With the same context, parameters, and deterministic computation, a deterministi
 
 This is the central distinction from [learning](loss.qmd): inference uses the available parameters, whereas training evaluates predictions against observed targets, computes a loss, and may then update the parameters. The [build path](build-path.qmd) treats these operations separately.
 
-## 5. Limits to keep in mind
+## 6. Limits to keep in mind
 
 - **Context window:** the model processes only the supplied context, up to its maximum window. Information no longer present in that context no longer directly influences the prediction.
 - **No intrinsic memory across generations:** each generation depends on the context it receives. An application may reinsert history or retain external state, but this does not mean the model weights have memorized the conversation.
