@@ -34,7 +34,7 @@ Les pages de cours utilisent un composant homogène **« Vérifier sa compréhen
 | Collection | Périmètre | Statut |
 |---|---|---|
 | [Fondations mathématiques](#fondations) | Tenseurs, probabilités, logits, entropie, cross-entropie, vraisemblance, gradients, stabilité numérique | 7 exercices progressifs rédigés ; vérification de gradients et autres thèmes à compléter |
-| [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Auto-vérifications dans les pages texte/embeddings ; cinq exercices formatifs TR-A à TR-E publiés ; fuites entre partitions à construire |
+| [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Auto-vérifications dans les pages texte/embeddings ; six exercices formatifs TR-A à TR-F publiés |
 | [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Somme pondérée et projections Q/K/V ; CA-A sur le masque causal et l’invariance de préfixe ; trois exercices formatifs AT-A à AT-C publiés (attention multi-têtes) ; variantes avancées à construire |
 | [Transformer](#transformer) | Embeddings, position, résidus, normalisation, MLP et variantes d’architecture | Trois exercices formatifs TF-A à TF-C publiés (formes et normalisation d'un bloc pré-LN, paramètres du bloc, diagnostic et interventions) ; variantes d'architecture à construire |
 | [Préentraînement](#preentrainement) | Objectif, entraînement/validation, perplexité, checkpoints et reproductibilité | Structure à compléter |
@@ -224,7 +224,7 @@ Une comparaison exige notamment de contrôler le tokenizer et sa segmentation, l
 
 **Notions préalables :** [texte et tokenisation](text-data.qmd), [espace des embeddings](embedding-space.qmd) et [exemples d'entraînement et décalage entrée-cible](training-examples.qmd).
 
-**Périmètre actuel :** cinq exercices formatifs bilingues, aux identifiants stables TR-A à TR-E, couvrent la chaîne texte → représentations (TR-A à TR-C), les fenêtres et le décalage entrée-cible (TR-D), puis le calcul de fusions BPE (TR-E). La fuite entre partitions reste à traiter. Ordre conseillé : TR-A, TR-B, TR-C, puis TR-D et TR-E ; ces deux derniers peuvent être étudiés indépendamment l'un de l'autre après les pages de préparation correspondantes.
+**Périmètre actuel :** six exercices formatifs bilingues, aux identifiants stables TR-A à TR-F, couvrent la chaîne texte → représentations (TR-A à TR-C), les fenêtres et le décalage entrée-cible (TR-D), le calcul de fusions BPE (TR-E), puis le diagnostic des fuites entre partitions et de l'ajustement du tokenizer (TR-F). Ordre conseillé : TR-A, TR-B, TR-C, puis TR-D, TR-E et TR-F après les pages de préparation correspondantes.
 
 #### Exercice TR-A — Reconstruire la chaîne des représentations
 
@@ -673,6 +673,61 @@ On applique d'abord `o + w → ow), puis `l + ow → low`. La segmentation obten
 </details>
 
 **Critère de réussite :** les fréquences initiales sont exactes, les séquences sont mises à jour avant le second comptage, l'ordre des fusions est respecté sur le mot inédit et apprentissage/encodage sont distingués.
+
+#### Exercice TR-F — Diagnostiquer les fuites entre partitions
+
+**Préparation :** [Préparer un corpus pour le préentraînement](corpus-preparation.qmd), notamment les sections sur la déduplication, le choix des partitions et l'ajustement du tokenizer ; [fenêtres et stride](training-examples.qmd). Cet exercice distingue la fuite d'évaluation d'un protocole de continuation temporelle explicitement choisi.
+
+On veut mesurer la capacité d'un modèle à prédire des tokens dans des données qui n'ont pas influencé son apprentissage. Pour chaque protocole ci-dessous, identifiez les dépendances possibles entre entraînement et validation, puis proposez la correction minimale.
+
+**Étape 1 — Diagnostiquer trois protocoles.**
+
+**A. Découpage après fenêtrage.** Un document tokenisé est transformé en fenêtres de longueur 4 et stride 2. Les fenêtres sont ensuite réparties aléatoirement entre train et validation.
+
+**B. Découpage par document sans déduplication.** Les documents sont répartis entre train et validation, mais une copie quasi identique d'un document d'entraînement est présente dans validation sous un autre identifiant.
+
+**C. Découpage temporel d'un document.** Pour simuler la prédiction de la suite d'un flux connu, les tokens antérieurs à une coupure sont utilisés pour l'entraînement et les tokens postérieurs pour la validation. Les fenêtres de validation peuvent utiliser le préfixe antérieur comme contexte, mais aucune cible de validation ne participe à l'entraînement.
+
+Pour chaque protocole :
+
+1. La séparation garantit-elle l'indépendance recherchée ?
+2. Quelle information peut être partagée ou réutilisée entre partitions ?
+3. Quelle modification faut-il apporter, ou quelle hypothèse faut-il expliciter ?
+
+<details>
+<summary>Afficher les indices</summary>
+
+- Une fenêtre contient des entrées **et** des cibles : regardez les tokens source, pas seulement les lignes du jeu de données.
+- Des identifiants de documents différents ne garantissent pas des contenus indépendants.
+- Une évaluation de continuation temporelle ne mesure pas la même généralisation qu'une évaluation sur des documents entièrement inconnus.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+- **A — Fuite probable.** Deux fenêtres voisines partagent des tokens de contexte et peuvent aussi réutiliser des tokens comme cibles et comme entrées dans des partitions différentes. Le découpage aléatoire des fenêtres ne sépare donc pas les unités sources. Il faut d'abord définir et séparer les unités indépendantes (documents, groupes ou périodes), puis construire les fenêtres à l'intérieur de chaque partition. Si le protocole autorise explicitement une continuation à partir d'un préfixe connu, il faut la traiter comme le cas C, avec une coupure et des cibles strictement définies.
+- **B — Fuite probable.** La séparation par identifiant ne détecte pas les quasi-doublons. Il faut regrouper les copies et variantes suffisamment proches avant ou après le split, selon une méthode documentée, puis auditer les recouvrements entre partitions. Le seuil et l'unité de déduplication doivent être adaptés au corpus ; supprimer toute répétition n'est pas automatiquement souhaitable.
+- **C — Pas nécessairement une fuite.** C'est un protocole valide de prédiction de continuation si l'objectif opérationnel est bien de prédire la suite d'un flux dont le préfixe est disponible. Le contexte antérieur peut être fourni à la validation, mais les cibles postérieures à la coupure doivent rester exclues de l'entraînement et aucune fenêtre d'entraînement ne doit consommer des tokens postérieurs. Ce protocole ne permet pas de prétendre mesurer la généralisation à des documents indépendants.
+
+</details>
+
+**Étape 2 — Vérifier l'ajustement du tokenizer.**
+
+Dans une expérience held-out classique, un tokenizer BPE est appris sur train + validation, puis le modèle est entraîné uniquement sur les tokens de train. La validation n'est jamais utilisée pour calculer la loss pendant l'entraînement.
+
+1. La validation a-t-elle influencé le protocole d'apprentissage ?
+2. Quelle est la correction attendue si l'objectif est de mesurer la généralisation à des données non vues ?
+3. Pourquoi faut-il figer la version du tokenizer avant d'encoder validation et test ?
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+Oui : le vocabulaire et l'ordre des fusions BPE ont été ajustés à partir de textes de validation. Pour une expérience held-out classique, il faut ajuster le tokenizer sur train uniquement, le figer, puis encoder train, validation et test avec cette même révision. Cela évite que les statistiques ou unités lexicales des textes réservés influencent l'ajustement du tokenizer. La validation reste exclue de l'optimisation des poids du modèle. D'autres conventions existent dans des pipelines de préentraînement à grande échelle ; il faut alors décrire précisément la constitution des données et ne pas revendiquer le même protocole held-out.
+
+</details>
+
+**Critère de réussite :** distinguer chevauchement de fenêtres, doublons documentaires et continuation temporelle ; identifier l'unité pertinente de séparation ; expliquer pourquoi l'ajustement du tokenizer peut lui aussi contaminer une évaluation held-out.
 
 ### Attention {#attention}
 
