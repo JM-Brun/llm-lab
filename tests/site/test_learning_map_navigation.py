@@ -1,5 +1,7 @@
 """Regression tests for Quarto sidebar-to-resource-map navigation projection."""
 
+from typing import Any
+
 import pytest
 
 from build_learning_map import load_navigation
@@ -32,14 +34,21 @@ def test_linked_sidebar_section_entry_is_projected_once(
     pages = [{"id": page_id} for page_id in [entry_page, *child_pages]]
     navigation = load_navigation(language, pages)
 
-    def find_section(sections: list[dict[str, object]]) -> dict[str, object] | None:
+    def find_section(sections: list[dict[str, Any]]) -> dict[str, Any] | None:
         for section in sections:
             if section["title"] == section_title:
                 return section
-            found = find_section(section.get("sections", []))  # type: ignore[arg-type]
+            found = find_section(section.get("sections", []))
             if found is not None:
                 return found
         return None
+
+    def count_page(sections: list[dict[str, Any]], page_id: str) -> int:
+        return sum(
+            section["pages"].count(page_id)
+            + count_page(section.get("sections", []), page_id)
+            for section in sections
+        )
 
     found = None
     for area in navigation:
@@ -49,9 +58,4 @@ def test_linked_sidebar_section_entry_is_projected_once(
 
     assert found is not None
     assert found["pages"] == [entry_page, *child_pages]
-    assert sum(
-        page_id in section["pages"]
-        for area in navigation
-        for section in [*area["sections"]]
-        for page_id in [entry_page]
-    ) == 1
+    assert sum(count_page(area["sections"], entry_page) for area in navigation) == 1
