@@ -59,6 +59,7 @@
   - Probabilistic formalization and the training chain
     - [The mathematics of language modeling](language-modeling-math.html)
     - [The mathematical chain of LLM training](mathematical-foundations.html)
+    - [Score centering in off-policy LLM reinforcement learning](score-centering.html)
   - Inference and efficiency
     - [In-context learning](in-context-learning.html)
     - [Advanced decoding strategies](decoding-strategies.html)

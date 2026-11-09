@@ -77,6 +77,7 @@ These pages provide analytical tools; they are not a prerequisite mathematics co
 
 - [Mathematical formalization of language modeling](language-modeling-math.qmd) — autoregressive factorization, cross-entropy, and KL divergence.
 - [The mathematical chain of LLM training](mathematical-foundations.qmd) — from logits to gradients, distinguishing the mathematical objects involved.
+- [Score centering in off-policy RL](score-centering.qmd) — correcting policy-gradient drift when sampler and trainer distributions differ.
 
 The core route's canonical pages remain responsible for local definitions of likelihood, entropy, cross-entropy, loss, and gradients. These deep dives connect or generalize those concepts without replacing them.
 

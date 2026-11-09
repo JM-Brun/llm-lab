@@ -77,6 +77,7 @@ Ces pages fournissent des outils d'analyse ; elles ne constituent pas un cours d
 
 - [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd) — factorisation autorégressive, entropie croisée et divergence KL.
 - [La chaîne mathématique de l'entraînement d'un LLM](mathematical-foundations.qmd) — des logits aux gradients, en distinguant les objets mathématiques.
+- [Centrage du score en RL hors politique](score-centering.qmd) — correction de la dérive du gradient lorsque les distributions du sampler et du trainer diffèrent.
 
 Les pages canoniques du parcours principal restent propriétaires des définitions locales de vraisemblance, entropie, entropie croisée, loss et gradients. Ces approfondissements les relient ou les généralisent sans les remplacer.
 
