@@ -1340,7 +1340,7 @@ G. Profondeur et largeur décrivent la même dimension du réseau.
 
 **Notions préalables :** [logits](logits.qmd), [probabilités de sortie](probabilites.qmd), [prédiction du prochain token et génération autoregressive](generation.qmd).
 
-**Trois exercices formatifs publiés :** GE-A à GE-C. Ils distinguent une étape élémentaire (distribution puis sélection) de la boucle qui réinjecte le token et recommence.
+**Cinq exercices formatifs publiés :** GE-A à GE-E. Ils couvrent la sélection du prochain token, la boucle autoregressive et l'arrêt, puis le prefill/decode et le rôle ainsi que les limites du cache KV.
 
 #### GE-A — Distribution et sélection
 
@@ -1395,7 +1395,42 @@ La limite autorise quatre nouveaux tokens au maximum. EOS étant sélectionné �
 
 </details>
 
-**Périmètre restant :** température, top-k/top-p, prefill/decode et KV cache.
+#### GE-D — Tracer le prefill et le decode incrémental
+
+Un prompt contient les identifiants de tokens $(A,B,C)$. On suppose un Transformer causal et l'absence de cache KV pendant le premier passage.
+
+1. Pendant le prefill, combien de positions du prompt sont traitées ?
+2. Les logits de quelle position servent-ils à sélectionner le premier token généré $D$ ?
+3. Pour prédire le token suivant $E$, quel token est nouvellement fourni pendant le decode incrémental ?
+4. Pourquoi le prefill n'est-il pas du teacher forcing ?
+5. Les paramètres du modèle sont-ils mis à jour pendant ces phases d'inférence ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Le prefill traite les trois positions du prompt en un passage séquentiel. Les logits de la dernière position du prompt (celle de $C$) définissent la distribution à partir de laquelle $D$ est sélectionné. L'étape de decode suivante fournit $D$ comme nouveau token pour prédire $E$. Il ne s'agit pas de teacher forcing : $D$ a été sélectionné par le modèle, il ne provient pas d'une cible de référence observée. Les paramètres restent fixes pendant le prefill et le decode.
+
+</details>
+
+#### GE-E — Que permet d'économiser le cache KV ?
+
+On considère un prompt de trois tokens $(A,B,C)$ et la génération de trois tokens $D,E,F$. On ignore l'éviction liée à la fenêtre de contexte et on compte uniquement les positions de tokens nouvellement transmises au modèle :
+
+1. Sans cache KV, combien de positions sont traitées au total lors du passage sur le prompt et des deux prédictions suivantes ?
+2. Avec un cache KV, combien de nouvelles positions sont traitées après le prefill ?
+3. Quelles informations sont conservées dans le cache ?
+4. Le cache modifie-t-il les paramètres du modèle ou la distribution conditionnelle calculée ?
+5. Pourquoi le décompte précédent ne représente-t-il pas l'ensemble du calcul d'attention ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Sans cache, le modèle traite des séquences de longueur $3$, puis $4$ (pour prédire $E$), puis $5$ (pour prédire $F$) : $3+4+5=12$ positions de tokens. Avec un cache, le prefill traite les trois tokens du prompt ; les étapes de decode traitent ensuite seulement $D$ et $E$ comme nouvelles positions : $3+1+1=5$ positions nouvellement traitées. Le cache conserve les clés et valeurs déjà calculées à chaque couche du Transformer. Il ne met pas à jour les paramètres et ne modifie pas la prédiction conditionnelle visée ; il évite de recalculer le préfixe. À chaque étape de decode, la nouvelle requête consulte toujours les clés et valeurs en cache : le nombre de nouvelles positions ne compte donc ni toutes les opérations d'attention ni l'ensemble des FLOPs.
+
+</details>
+
+**Périmètre restant :** température, top-k et top-p.
+
 
 ### Fine-tuning {#fine-tuning}
 
