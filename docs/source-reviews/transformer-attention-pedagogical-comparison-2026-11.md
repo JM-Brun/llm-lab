@@ -62,7 +62,7 @@ Scientific qualifications:
 
 ### 2.3 Polo Club: token-centric flow and interactive computation
 
-The CHI 2026 paper describes a token-centric, Sankey-inspired flow visualization, consistent visual encoding, progressive expansion from overview to mathematical detail, learner-provided prompts, live GPT-2 inference, sampling controls and embedded guided-learning cards.
+The CHI 2026 paper describes a token-centric, Sankey-inspired flow visualization, consistent visual encoding, progressive expansion from overview to mathematical detail, learner-provided prompts, live GPT-2 inference, sampling controls and embedded guided-learning cards. The paper states a CC BY 4.0 licence; this does not remove the need to check any separately credited third-party asset. The repository software has a separate MIT licence.
 
 The paper reports a 90-participant between-subjects study of motivated non-experts. Participants studied for up to 45 minutes and completed an immediate seven-question multiple-choice quiz aligned with six learning objectives. The baselines were Jay Alammar's *The Illustrated GPT-2* blog and the 3Blue1Brown video *But what is a GPT?* (not the specific attention lesson reviewed in §2.2).
 
