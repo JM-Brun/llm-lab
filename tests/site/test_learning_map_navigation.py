@@ -2,9 +2,9 @@
 
 from typing import Any
 
-import pytest
-
 from build_learning_map import load_navigation
+
+import pytest
 
 
 @pytest.mark.parametrize(
