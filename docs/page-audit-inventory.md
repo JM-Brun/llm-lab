@@ -1333,3 +1333,16 @@ A standard-library Python snippet in each language page computes AP and this two
 **Rendered/build evidence.** The AP/ECE lesson changes are integrated through PR #740; its final-head Python CI and Quarto site workflows both succeeded. The targeted responsive browser evidence for the FR/EN page pair is separately recorded above from PR #736. It covers desktop/mobile at 390 × 844 and 1440 × 1000 in the light theme; it does not establish dark-theme, screen-reader or learner-comprehension behavior.
 
 **Limits.** The greedy snippet prints its expected values but does not contain assertions; this pass verified the outputs manually. The examples are deterministic teaching counterexamples, not model benchmarks or reliable calibration estimates. This execution does not audit the complete top-k/top-p/beam-search implementations or establish learner transfer.
+
+## 2026-11-09: contrastive decoding versus contrastive search
+
+**Scope.** Audited the terminology used in the FR/EN decoding-strategies lesson against the original methods and the versioned Transformers guide.
+
+- Li et al. (ACL 2023) contrastive decoding contrasts expert/amateur model log-likelihoods under an expert plausibility constraint.
+- Su et al. (NeurIPS 2022, §3.2) contrastive search uses one model, a top-k candidate set, model confidence and a maximum cosine-similarity degeneration penalty over contextual token representations.
+- The candidate-set (k) in contrastive search is not top-k sampling: one selects a candidate by a penalized objective; the other truncates a distribution and samples.
+- The FR/EN lesson now distinguishes the methods and gives the original contrastive-search objective. It explicitly states that the teaching GPT does not implement this method.
+
+**Sources.** Li et al., https://aclanthology.org/2023.acl-long.687/ ; Su et al., https://papers.nips.cc/paper_files/paper/2022/file/871cae8f599cb8bbfcb0f58fe1af95ad-Paper-Conference.pdf ; version-specific Transformers 4.46 guide, https://huggingface.co/docs/transformers/v4.46.0/en/generation_strategies.
+
+**Boundary.** The Transformers reference is explicitly versioned; no claim is made that the same parameterization is present in the current release. This is a conceptual clarification, not a new implementation, concept node, page or dependency.
