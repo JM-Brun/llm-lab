@@ -1002,3 +1002,143 @@ This was an independent calculation/identity check of the displayed values, not 
 **Delegated to the Quarto workflow on the accompanying pull request:** fragment resolution at render time, `check_site_links` over the rendered site, the rendered learning-map and knowledge-graph checks, and the targeted rendered browser review. This slice claims no rendered evidence.
 
 **Still not established:** manual screen-reader behaviour; learner validation (#447); the broader rendered navigation review (#337) and the remaining #584 items.
+
+## 2026-11-09: guided-route page-by-page structural audit
+
+**Scope and method.** Inspected the bilingual page-map metadata, stated scope/purpose, headings and route placement for the 21 core page pairs in the eight stages of `data/guided-route.yml`. Read targeted body excerpts for the system panorama, generation, Transformer overview and output-probability lessons to check the most important cross-page boundaries. This is a route-structure and editorial-contract audit, **not** a line-by-line scientific certification of all 42 files, a rendered review, or learner testing.
+
+### Stage-to-page review
+
+| Guided stage | Core page pairs inspected | Pedagogical role and result |
+|---|---|---|
+| Orientation | `llm-overview`, `generation` | Starts with the problem and a black-box generation loop. The early generation membership is intentional: it previews inference before requiring knowledge of tokenization or Transformer internals. |
+| Text input | `text-data`, `tokenization-strategies` | Moves from raw text to tokens and IDs, then explains segmentation strategies. Unicode and tokenizer design/evaluation remain optional depth rather than gates. |
+| Representations | `embedding-space`, `positional-encoding`, `contextualized-representations` | Separates ID lookup, positional information and context-dependent hidden states. Tensor algebra and RoPE derivations remain optional. |
+| Computation | `transformer`, `queries-keys-values`, `scaled-dot-product-attention`, `causal-masking` | The overview locates the block; Q/K/V are projections from each block's input states; attention computes scores and aggregates values; causal masking constrains visibility. The order does not imply that Q/K/V follow the final contextualized states. |
+| Prediction | `logits`, `probabilities`, `entropy` | Separates unnormalized vocabulary scores, the normalized next-token distribution and uncertainty of that distribution. |
+| Inference | `generation` (second membership) | Returns to the canonical generation lesson for prefill/decode, token selection, context feedback and stopping. It is the same page as the early preview, not a second generation lesson. |
+| Scoring | `likelihood`, `cross-entropy` | Moves from an observed target's conditional probability to sequence likelihood/log-likelihood and the token-level target-distribution penalty. Parameters remain fixed. |
+| Training | `loss`, `gradients` | Aggregates valid per-token penalties into an objective, then differentiates it and discusses parameter updates. Training-example construction remains an optional Build bridge, not an inference prerequisite. |
+
+The route is consistent with the narrative separation in `docs/learning-path.md`: first understand what the model computes and how inference works; then study scoring and learning; follow corpus preparation and shifted training examples through the separate Build branch.
+
+### Cross-page boundaries checked
+
+- **Generation versus training:** the generation lesson defines prefill and incremental decode as inference execution phases and explicitly distinguishes them from teacher forcing. The latter is explained in `training-examples`, where observed-prefix conditioning and shifted targets belong.
+- **Input versus training data:** `text-data` owns prompt encoding at inference; `corpus-preparation` owns provenance, filtering, deduplication, held-out splits and tokenizer fitting; `training-examples` owns windows, shifted targets, document boundaries, padding and masks.
+- **Representations versus block computation:** initial embeddings, positional information and contextualized states have separate concept pages. Q/K/V are internal projections in each Transformer block, not a stage after final contextualization.
+- **Attention versus prediction:** Q/K/V, score/weight/value aggregation and causal visibility have separate explanations; the Transformer overview stops at logits, and the generation loop owns selection and feedback.
+- **Probability versus scoring:** predictive entropy concerns the distribution before observing a target; likelihood scores an observed sequence; cross-entropy compares a target distribution with the prediction; batch loss adds explicit masking/reduction; gradients describe sensitivity and the route to parameter updates.
+- **Evaluation scope:** the linked experimental-evaluation page is explicitly a protocol-design exercise for a scientific-passage ranker. It is not represented as a benchmark of a locally trained language model.
+- **Optional depth:** architecture comparison, Unicode, tokenizer design/evaluation, tensor details, RoPE, cross-attention and advanced attention/decode mechanisms remain optional resources; they do not become prerequisites for the core route.
+
+### Targeted correction: make the two generation readings explicit
+
+The route deliberately places the canonical `generation` page in both Orientation and Inference. Before this pass, the source explained the mechanism but did not tell a first-time reader how to handle this repeated membership. Added a short bilingual instruction to the existing one-minute summary:
+
+- At **Orientation**, read the loop as a black-box preview and retain the fixed-parameter distinction.
+- At **Inference**, return to the same page for prefill, incremental decode and selection strategies.
+
+This clarifies the route without creating a duplicate page, a second route registry, or another visual component.
+
+### Remaining validation and limits
+
+- This pass checked the source-level route and page contracts; it did not independently recompute every equation or execute every code block.
+- The browser reviews remain separate: #320 (text-to-representations), #337 (global map/navigation), #347 (data → loss → generation and Build crosswalk), and #329 (exercise hub). Use their existing workflows and evidence; do not add another browser workflow.
+- Manual screen-reader evidence and native breadcrumb verification remain open under #584. Automated Axe/browser results do not replace them.
+- Learner comprehension and transfer have not been measured; retain the pilot under #447.
+- No content was removed or merged. The next scientific pass should inspect complete page bodies in small vertical slices, beginning with the probability → entropy → likelihood → cross-entropy → loss chain, then the Build data branch, and record only reproducible or evidence-backed corrections.
+
+## 2026-11-09: mathematical spot-check of prediction → scoring → loss → gradients
+
+**Scope.** Checked the bilingual source equations and worked examples for `probabilities`, `entropy`, `likelihood`, `cross-entropy`, `loss` and `gradients`. Recomputed the small numerical examples independently. This is a bounded equation/example check, not a full proof review of every statement or an execution of the code.
+
+| Page pair | Check | Result |
+|---|---|---|
+| Probabilities | `softmax(0, ln 3) = (0.25, 0.75)`; temperature scaling preserves logit order for positive temperature while changing concentration. | Correct in the inspected FR/EN text. The page distinguishes normalized probability from calibration and factual truth. |
+| Entropy | `H(0.5, 0.5) = ln 2 = 1 bit`; `H(0.9, 0.1) ≈ 0.325 nat ≈ 0.469 bit`; finite-vocabulary bounds are `0 ≤ H ≤ ln V` nats. | Values and units are consistent. Predictive entropy is distinguished from the surprisal of the observed target. |
+| Likelihood | `0.5 × 0.25 × 0.8 = 0.1`; total NLL is `−ln(0.1) ≈ 2.303` nats; mean NLL over three targets is about `0.768` nat. | Correct in both languages. The context-window qualification is explicit: one forward pass scores all positions only when the sequence fits the window; longer sequences need an explicit window/stride and target-counting convention. |
+| Cross-entropy | One-hot target gives `−ln p(y)`; general target gives `H(q,p) = −Σ qᵢ ln pᵢ`; perplexity is `exp(mean NLL)` in nats and `2^(mean NLL)` in bits. | Formulae and stated units are consistent. The page distinguishes target-distribution cross-entropy from predictive entropy and batch-level loss. |
+| Loss | Per-token penalty is `−ln pᵧ`; mean over valid positions divides by `|M|`; ignored positions are excluded from numerator and denominator. | Formula and prose agree in both languages. The page also states that the reference NumPy function covers row-wise classification loss, not sequence shifting, token masks or a complete LLM training objective. |
+| Gradients | For one-hot cross-entropy, `∂ℓ/∂zᵢ = pᵢ − 1[i=y]`; chain rule carries this to parameters; gradient descent subtracts the learning-rate-scaled gradient. | The inspected equations and interpretation are consistent in FR/EN. The text does not conflate a gradient with a complete optimizer or guarantee of global improvement. |
+
+### Pedagogical consequence
+
+The progression is mathematically coherent when each question remains distinct:
+
+1. **Before observing a target:** what distribution does the model predict, and how spread out is it? (probabilities, entropy)
+2. **After a target is known:** how much probability did the model assign to it, and to the observed sequence? (target probability, likelihood/log-likelihood)
+3. **For a target distribution:** what penalty does the prediction incur? (cross-entropy)
+4. **Across a batch:** which valid target positions are aggregated, and with what denominator? (loss)
+5. **For learning:** how does that objective vary with logits and parameters? (gradients, then optimizer update)
+
+No mathematical correction was justified by this spot-check. The implementation boundary remains important: the conceptual pages describe sequence-level alignment and masking, while the current NumPy loss primitive is intentionally narrower and does not implement a complete sequence training loop.
+
+## 2026-11-09: Build data branch audit — corpus → tokenizer → training examples
+
+**Scope.** Compared the FR/EN `corpus-preparation` and `training-examples` pages, including the worked input-target examples, teacher-forcing explanation, split/tokenizer protocol, windowing contract, document-boundary discussion, mask distinctions and stated implementation limits.
+
+| Area | Source-level check | Result |
+|---|---|---|
+| Corpus preparation | The page separates source eligibility/provenance, parsing, filtering, deduplication, evaluation splitting, tokenizer fitting/freezing and encoding. | The sequence is presented as a set of decisions, not a universal fixed recipe. It explicitly allows deduplication before splitting or group-aware splitting followed by cross-partition near-duplicate checks, depending on the generalization claim. |
+| Held-out protocol | For a conventional held-out experiment, tokenizer fitting uses the training partition only; the tokenizer is then frozen before validation/test encoding. | Correctly scoped as a conventional protocol, not claimed to describe every industrial pretraining pipeline. |
+| Input-target shift | For `[t0,t1,t2,t3,t4]` with input length 4, the page pairs `[t0,t1,t2,t3]` with `[t1,t2,t3,t4]`. | Alignment is correct: each input position predicts its next token; the final input token is not its own target. |
+| Stride example | For stream `[8,3,3,9,2,7]`, length 3 and stride 1, the first two pairs are `[8,3,3] → [3,3,9]` and `[3,3,9] → [3,9,2]`. | Both FR/EN examples are correct. The prose distinguishes input-window length from stride and states that the last input token needs a successor. |
+| Teacher forcing | Reference tokens form the observed prefix; the causal mask restricts each position to its available prefix; the shifted targets provide the next-token labels. | The page distinguishes this conditioning strategy from the objective, loss, optimizer and inference-time generated-token feedback. |
+| Document boundaries | Packing, boundary markers and cross-document attention masking are listed as separate decisions. | The important caveat is explicit: an end-of-document token does not by itself block attention. Cross-document masking is implementation- and objective-dependent. |
+| Padding and masks | Padding, attention visibility and loss inclusion are treated separately. | The page states that ignored targets should not contribute to the loss, and that flattening/reduction must preserve logits-target-mask alignment. |
+| Implementation evidence | `sliding_input_target_pairs` builds complete sliding windows and shifted targets; incomplete corpus tails are dropped. | Scope is not overstated: tokenizer/corpus loading, packing, padding, masks, batching, train/validation splitting and a training loop are not implemented by this helper. |
+
+### Pedagogical hand-off
+
+The Build branch has a coherent responsibility split:
+
+`corpus-preparation → frozen tokenizer / token stream → training-examples → model forward pass → cross-entropy / loss → gradients`.
+
+This is a **construction dependency**, not a prerequisite chain for the conceptual inference route. The short `text-data` lesson remains the prompt-to-token-IDs entry point; the Build pages own corpus governance and training-example construction.
+
+### Findings and next action
+
+No scientific or bilingual correction was justified by this pass. The worked examples, key distinctions and implementation boundaries agree in the inspected FR/EN sources. Continue with the remaining page groups and rendered evidence under the existing #347/#320/#337 reviews; do not create a second data pipeline or duplicate the Build implementation.
+
+## 2026-11-09: practice catalogue and exercise-prerequisite audit
+
+**Scope.** Compared the FR/EN exercise-hub headings, collection-status tables, stable exercise IDs and preparation guidance with the guided route and the canonical lesson ownership. This is a source-level audit of catalogue structure and prerequisites, not a complete solution-by-solution mathematical review or a rendered exercise-hub review.
+
+### Coherence confirmed
+
+- The hub distinguishes short lesson self-checks from longer Practice & experiment exercises; it does not present the hub itself as a lesson or claim every planned collection is complete.
+- Text-data exercises progress from representation reconstruction and embedding lookup (TR-A–TR-C), to shifted windows (TR-D), BPE merge counting (TR-E), and split/tokenizer leakage diagnosis (TR-F).
+- Q/K/V practice progresses from weighted aggregation and projection reconstruction to parameter-change reasoning, learning, and transfer to cross-attention. CA-A introduces causal masking and prefix invariance independently; AT-A–AT-C then cover multi-head calculation, shapes, and intervention reasoning.
+- Transformer exercises TF-A–TF-C use the reference Pre-LN block: shape/normalization tracing, parameter counting, then claim diagnosis and controlled interventions.
+- The hub keeps unfinished pretraining, generation, fine-tuning, evaluation, efficiency and advanced collections explicitly marked as planned or incomplete.
+
+### Correction: do not overstate collection-wide prerequisites
+
+The Text data collection's former summary line listed `training-examples` as a prerequisite for the entire collection, although TR-A–TR-C can be started from the text/embedding lessons and only TR-D requires the training-example construction page. TR-E and TR-F have their own distinct preparation pages.
+
+Updated the FR/EN collection introduction to state that the first exercises can start from text/data and embeddings, while each exercise's preparation line is authoritative for additional prerequisites. This avoids making the Build training-data branch look like a prerequisite for the earlier representation exercises.
+
+### Limits
+
+The exercise IDs and prerequisite descriptions are aligned in the inspected FR/EN source. The contents and numerical solutions of every exercise have not been independently re-derived in this pass. The existing #329 browser review remains responsible for rendered desktop/mobile, keyboard and disclosure checks; no new test suite or workflow was added.
+
+## 2026-11-09: optional-resource boundary audit
+
+**Scope.** Inspected the FR/EN metadata and section structure of the ten optional page pairs linked from the guided route: `llm-limits`, `transformer-architectures`, `unicode-text`, `tokenizer-design-evaluation`, `tensors`, `rope`, `cross-attention`, `attention-score-scaling`, `decoding-strategies` and `scaling-laws`.
+
+| Optional resource | Boundary checked |
+|---|---|
+| LLM limits | Critical reading of the next-token objective, truth, understanding and emergence; does not replace the evaluation-protocol lesson. |
+| Transformer architectures | Compares encoder-only, encoder–decoder and decoder-only information flow; keeps architecture, objective and task distinct. Hands-on comparison is linked to Practice rather than becoming a code prerequisite. |
+| Unicode text | Covers code points, UTF-8 bytes and normalization before tokenization; does not duplicate tokenization algorithms or embeddings. |
+| Tokenizer design/evaluation | Deepens BPE/WordPiece/Unigram mechanisms, budgets, metrics and multilingual trade-offs beyond the core strategy comparison. |
+| Tensors | Optional reference for shapes and axes, including the warning that shape compatibility does not prove semantic correctness; explicitly not a prerequisite for the Build path. |
+| RoPE | Derives relative-offset dependence and locates rotations in Q/K; does not repeat the general positional-information introduction. |
+| Cross-attention | Explains distinct Q versus K/V provenance across representation streams and encoder–decoder/multimodal contexts; remains outside the core self-attention prerequisite path. |
+| Attention score scaling | Develops the Gaussian variance argument and its assumptions; does not repeat the four-step attention lesson or become a prerequisite for it. |
+| Advanced decoding | Separates distribution transformations from sequence search and discusses reproducibility and quality/diversity; remains optional after core generation. |
+| Scaling laws | Treats empirical parameter/data/compute/loss relationships without defining a universal LLM threshold; remains optional rather than a prerequisite to training mechanics. |
+
+The inspected page scopes and headings support their optional/deepening roles in both languages. No optional resource needs to be inserted into the core guided route as a mandatory step. This check does not certify every external citation, equation, figure or rendered layout on these pages; those require their own bounded content/render reviews.
+

@@ -37,6 +37,8 @@ tags: ["type:concept-lesson", "destination:understand", "topic:inference-generat
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 Un LLM n'écrit pas un texte d'un bloc : il produit **un token à la fois**. À chaque pas, il estime une distribution de probabilités sur le vocabulaire, conditionnée par le contexte courant ; une **règle de décodage** transforme cette distribution en un unique token ; ce token est ajouté au contexte et la boucle recommence. Changer la règle de décodage change le texte produit **sans changer le modèle**.
+
+Pour la première lecture, dans l’étape **Orientation**, retenez cette boucle et le fait que les paramètres restent fixes. Revenez à cette page à l’étape **Inférence** pour étudier en détail le prefill, le decode incrémental et les stratégies de sélection.
 :::
 
 ## La boucle de génération, étape par étape
