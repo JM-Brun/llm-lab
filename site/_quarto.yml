@@ -154,8 +154,6 @@ website:
                 - section: "Du texte aux identifiants"
                   contents:
                     - fr/text-data.qmd
-                    - text: "Approfondir : stratégies de tokenisation (facultatif)"
-                      href: fr/tokenization-strategies.qmd
                 - section: "Des identifiants aux représentations"
                   contents:
                     - fr/embedding-space.qmd
@@ -216,6 +214,7 @@ website:
                 - fr/next-concept-modeling.qmd
             - section: "Texte et tokenisation"
               contents:
+                - fr/tokenization-strategies.qmd
                 - fr/unicode-text.qmd
                 - fr/tokenizer-design-evaluation.qmd
             - section: "Outils mathématiques et géométrie"
@@ -258,8 +257,6 @@ website:
                 - section: "From text to token IDs"
                   contents:
                     - en/text-data.qmd
-                    - text: "Go deeper: tokenization strategies (optional)"
-                      href: en/tokenization-strategies.qmd
                 - section: "From IDs to representations"
                   contents:
                     - en/embedding-space.qmd
@@ -320,6 +317,7 @@ website:
                 - en/next-concept-modeling.qmd
             - section: "Text and tokenization"
               contents:
+                - en/tokenization-strategies.qmd
                 - en/unicode-text.qmd
                 - en/tokenizer-design-evaluation.qmd
             - section: "Mathematical tools and geometry"
