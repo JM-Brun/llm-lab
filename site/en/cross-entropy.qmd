@@ -145,7 +145,7 @@ PyTorch also accepts probability-distribution targets (for example with *label s
 
 ### A common shape bug: normalizing over time instead of vocabulary
 
-For logits shaped `(B,T,V)`, each time position needs a probability distribution over the **vocabulary**. Therefore softmax must use `dim=-1` (the (V) axis). Normalizing over `dim=1` instead makes probabilities sum to one across time for each vocabulary entry; it does not produce a categorical distribution over tokens at each position.
+For logits shaped `(B,T,V)`, each time position needs a probability distribution over the **vocabulary**. Therefore softmax must use `dim=-1` (the vocabulary axis). Normalizing over `dim=1` instead makes probabilities sum to one across time for each vocabulary entry; it does not produce a categorical distribution over tokens at each position.
 
 ```python
 correct_probs = logits.softmax(dim=-1)
@@ -188,7 +188,7 @@ assert naive_probability == 0.0
 assert torch.isinf(naive_loss)
 ```
 
-The infinite result is a floating-point failure of the naïve computation, not an infinite mathematical loss: for these logits, the exact loss is (2000) nats. In practice, pass logits directly to `CrossEntropyLoss` or use `log_softmax` followed by the target gather; do not compute `log(softmax(logits))` yourself.
+The infinite result is a floating-point failure of the naïve computation, not an infinite mathematical loss: for these logits, the exact loss is 2000 nats. In practice, pass logits directly to `CrossEntropyLoss` or use `log_softmax` followed by the target gather; do not compute `log(softmax(logits))` yourself.
 :::
 
 ## Connection to perplexity
