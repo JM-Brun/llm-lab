@@ -46,7 +46,7 @@ Légende :
 
 | Étape | Page FR / EN | Rôle et transition à contrôler | Synthèse / révision : premier constat | État |
 |---|---|---|---|---|
-| Orientation | `llm-overview` | Définir LLM/GPT/Transformer, situer le modèle pédagogique et annoncer le noyau prédictif ; conduire vers l'aperçu de génération | Le corps FR a été parcouru partiellement ; vérifier la présence d'une synthèse qui distingue architecture, objectif, paramètres et usages frères | Lecture source partielle |
+| Orientation | `llm-overview` | Définir LLM/GPT/Transformer, situer le modèle pédagogique et annoncer le noyau prédictif ; conduire vers l'aperçu de génération | Ajout d'un rappel d'une minute FR/EN distinguant catégories, distribution conditionnelle, trois usages et architecture/apprentissage/utilisation | Revue FR/EN effectuée + synthèse ajoutée |
 | Aperçu d'inférence | `generation` | Donner la boucle complète avec paramètres fixes ; transition vers texte/tokens sans exiger les détails internes | Le corps FR contient objectifs, rappel « une minute », boucle, prefill/decode et frontière teacher forcing ; éviter de recopier la même fiche au retour détaillé | Lecture source partielle |
 | Entrée texte | `text-data` | Texte → tokens → IDs → lookup ; distinguer prompt d'inférence et corpus d'entraînement | Rappel bref et self-check présents ; vocabulaire nuancé pour ne pas présenter tout tokenizer comme doté d'un vocabulaire appris | Revue FR/EN effectuée |
 | Stratégies de tokenisation | `tokenization-strategies` | Comparer unités, algorithmes et compromis ; préparer le passage des IDs aux vecteurs | Section « À retenir » et self-check présents ; le Deepen sur l'évaluation évite de surcharger Understand | Revue FR/EN effectuée |
@@ -328,3 +328,37 @@ Revue source FR/EN et cohérence conceptuelle effectuées. Les vérifications de
 ### Validation
 
 Revue source FR/EN des pages conceptuelles et Build, vérification des contrats et des statuts de jalons effectuées. Les tests automatisés du dépôt ne remplacent pas une validation formative par apprenant ; le rendu navigateur et l'accessibilité restent à vérifier sur le dernier commit.
+
+
+## 13. Passe F — revue de la page d'orientation et du noyau partagé (2026-11-09)
+
+### Pages relues en français et en anglais
+
+- `llm-overview` : définition de LLM, distinction LLM/GPT/Transformer, prédiction autorégressive, distribution conditionnelle, tronc computationnel partagé, usages génération/scoring/apprentissage, architecture/apprentissage/utilisation, adaptation et choix RAG/fine-tuning.
+
+### Décisions et modifications de cette passe
+
+1. **Synthèse initiale :** ajout d'un rappel d'une minute FR/EN, qui fixe les distinctions de catégorie, la distribution prédictive, les trois usages du même calcul et les trois dimensions descriptives d'un modèle.
+2. **Teacher forcing :** reformulation FR/EN pour éviter d'en faire une phase d'inférence ou une étiquette indifférenciée du scoring. Le scoring d'une séquence connue et l'entraînement utilisent tous deux des préfixes de référence ; pendant l'entraînement, ce conditionnement est appelé teacher forcing.
+3. **Pas de duplication du graphe :** la page réutilise les fragments générés du graphe computationnel partagé et de l'évaluation. La fiche résume le sens de ce graphe sans reproduire ses détails.
+4. **Auto-vérification :** les deux questions existantes sont conservées ; elles testent déjà le choix RAG/fine-tuning et la distinction entre architecture et adaptation.
+
+### Cohérence de l'entrée du parcours
+
+`llm-overview → generation (aperçu) → text-data → … → generation (retour détaillé)`
+
+- L'aperçu de génération sert de motivation initiale, pas de prérequis aux détails internes.
+- La page d'orientation distingue désormais explicitement le forward pass partagé des trois usages et leurs effets sur les paramètres.
+- Le retour détaillé à `generation` est une réutilisation de la même page canonique, pas une seconde leçon.
+- La branche Build et les approfondissements restent des destinations parallèles ; ils ne sont pas présentés comme des étapes obligatoires avant de comprendre l'inférence.
+
+### Points de vigilance
+
+- La définition de LLM ne doit pas être réduite à un nombre de paramètres ou à une architecture unique.
+- Les modèles de fondation, les GPT et les Transformers sont des catégories qui se recoupent, mais ne sont pas synonymes.
+- L'aperçu du noyau partagé doit rester cohérent avec `docs/canonical-computational-spine.md` et les fragments générés ; ne pas recréer une chaîne linéaire qui fusionnerait génération, scoring et apprentissage.
+- La page d'orientation est une vue d'ensemble : les équations, formes et détails de chaque mécanisme restent dans leurs pages propriétaires.
+
+### Validation
+
+Revue source FR/EN et cohérence avec le noyau computationnel effectuées. Rendu final et navigation générée à vérifier dans le workflow Quarto/browser en cours ; aucune validation apprenant n'est revendiquée.
