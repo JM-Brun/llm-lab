@@ -1,6 +1,6 @@
 # Full LLM curriculum and coverage plan
 
-**Status:** planning only. This document defines scope, dependencies, page ownership, and acceptance criteria. It does not authorize drafting all lessons, adding model implementations, or running new experiments immediately.
+**Status:** planning only. This document defines the independent Theory and Build paths, their scope, dependencies, page ownership, and acceptance criteria. Theory lessons are validated for conceptual/scientific quality; Build milestones are validated for executable implementation and tests. It does not authorize drafting all lessons, adding model implementations, or running new experiments immediately.
 
 **Primary baseline:** Sebastian Raschka, [*Build a Large Language Model (From Scratch)* source repository](https://github.com/rasbt/LLMs-from-scratch). The repository evolves; re-check its README and chapter folders before marking coverage complete. The dated comparison with the [Raschka book path and Hugging Face Course](source-reviews/learning-path-comparison-2026-11-05.md) records transferable principles and explains why LLM Lab does not mirror either curriculum.
 
