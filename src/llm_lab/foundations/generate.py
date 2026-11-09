@@ -21,14 +21,14 @@ Deliberate limitations, documented rather than hidden:
   decoding or repetition penalty.
 
 Line-by-line walkthrough (bilingual site pages):
-- https://jm-brun.github.io/llm-lab/fr/gpt-generation-walkthrough/
-- https://jm-brun.github.io/llm-lab/en/gpt-generation-walkthrough/
+- https://jm-brun.github.io/llm-lab/fr/gpt-generation-walkthrough.html
+- https://jm-brun.github.io/llm-lab/en/gpt-generation-walkthrough.html
 
 Related concept pages:
 - Generation step by step:
-  https://jm-brun.github.io/llm-lab/fr/generation/
-- Logits: https://jm-brun.github.io/llm-lab/fr/logits/
-- Probabilities: https://jm-brun.github.io/llm-lab/fr/probabilites/
+  https://jm-brun.github.io/llm-lab/fr/generation.html
+- Logits: https://jm-brun.github.io/llm-lab/fr/logits.html
+- Probabilities: https://jm-brun.github.io/llm-lab/fr/probabilites.html
 """
 
 import numpy as np

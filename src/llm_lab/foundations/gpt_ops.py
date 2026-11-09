@@ -16,12 +16,12 @@ float64, not float32, keeps results exact enough to hand-check on paper;
 the cost in speed is irrelevant at reference scale.
 
 Line-by-line walkthrough (bilingual site pages):
-- https://jm-brun.github.io/llm-lab/fr/gpt-ops-walkthrough/
-- https://jm-brun.github.io/llm-lab/en/gpt-ops-walkthrough/
+- https://jm-brun.github.io/llm-lab/fr/gpt-ops-walkthrough.html
+- https://jm-brun.github.io/llm-lab/en/gpt-ops-walkthrough.html
 
 Related concept pages (architecture and tensor shapes):
-- https://jm-brun.github.io/llm-lab/fr/transformer/
-- https://jm-brun.github.io/llm-lab/en/transformer/
+- https://jm-brun.github.io/llm-lab/fr/transformer.html
+- https://jm-brun.github.io/llm-lab/en/transformer.html
 """
 
 import math
