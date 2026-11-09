@@ -100,6 +100,17 @@ logits = torch.tensor(
 )
 targets = torch.tensor([[0, 2, -100]], dtype=torch.long)
 batch_size, seq_len, vocab_size = logits.shape
+
+# Validate the sequence-level contract before flattening.
+assert logits.ndim == 3
+assert targets.shape == (batch_size, seq_len)
+assert targets.dtype == torch.long
+valid = targets.ne(-100)
+in_range = targets.ge(0) & targets.lt(vocab_size)
+assert torch.all(valid | targets.eq(-100))
+assert torch.all(in_range | targets.eq(-100))
+assert valid.any()
+
 flat_logits = logits.reshape(-1, vocab_size)
 flat_targets = targets.reshape(-1)
 
@@ -110,7 +121,6 @@ mean_loss = torch.nn.CrossEntropyLoss(
     ignore_index=-100, reduction="mean"
 )(flat_logits, flat_targets)
 
-valid = targets.ne(-100)
 manual_loss = -F.log_softmax(logits[valid], dim=-1).gather(
     1, targets[valid].unsqueeze(1)
 ).mean()
@@ -133,6 +143,53 @@ print("softmax-first:", softmax_first_loss.item())  # 0.946560...
 La dernière position est ignorée par `ignore_index` ; elle ne contribue ni à la somme ni au dénominateur de la moyenne. `reduction="none"` permet d'inspecter les pertes locales, tandis que `reduction="mean"` moyenne les cibles valides (sans poids de classes dans cet exemple). La softmax préalable est incorrecte pour l'usage attendu de cette API : elle transforme les logits en nouvelles entrées de scores et change la loss. Cet exemple illustre l'API et l'agrégation ; il ne remplace ni le masque causal, ni l'alignement des cibles, ni une boucle d'entraînement.
 
 PyTorch accepte aussi des cibles sous forme de distributions de probabilité (par exemple pour le *label smoothing*), mais `ignore_index` ne s'applique qu'aux cibles sous forme d'indices. Cet exemple utilise volontairement des indices entiers.
+
+### Erreur fréquente de dimension : normaliser sur le temps plutôt que sur le vocabulaire
+
+Pour des logits de forme `(B,T,V)`, chaque position temporelle doit définir une distribution de probabilité sur le **vocabulaire**. La softmax doit donc utiliser `dim=-1` (l'axe (V)). Une normalisation sur `dim=1` répartit au contraire les probabilités dans le temps pour chaque entrée du vocabulaire ; elle ne produit pas une distribution catégorielle sur les tokens à chaque position.
+
+```python
+correct_probs = logits.softmax(dim=-1)
+wrong_axis_probs = logits.softmax(dim=1)
+
+# Les probabilités sur le vocabulaire somment à un pour chaque position.
+torch.testing.assert_close(
+    correct_probs.sum(dim=-1),
+    torch.ones((batch_size, seq_len), dtype=logits.dtype),
+)
+# Avec le mauvais axe, les sommes sur le vocabulaire ne valent pas un.
+wrong_sums = wrong_axis_probs.sum(dim=-1)
+assert not torch.allclose(
+    wrong_sums,
+    torch.ones_like(wrong_sums),
+)
+```
+
+C'est pourquoi l'exemple aplatit d'abord `(B,T,V)` en `(B×T,V)) : la dimension des classes/du vocabulaire devient alors sans ambiguïté la dimension 1 attendue par `CrossEntropyLoss`.
+
+### Cas numérique extrême : log-softmax stable
+
+Une opération `softmax` directe peut faire sous-déborder à zéro la probabilité d'une cible très improbable. Son logarithme vaut alors l'infini, même si la cross-entropie mathématique est finie. La cross-entropie fusionnée et numériquement stable calcule l'expression équivalente via log-softmax sans matérialiser d'abord cette probabilité nulle.
+
+```python
+extreme_logits = torch.tensor(
+    [[1000.0, 0.0, -1000.0]], dtype=torch.float64
+)
+extreme_target = torch.tensor([2], dtype=torch.long)
+
+stable_loss = F.cross_entropy(extreme_logits, extreme_target)
+naive_probability = extreme_logits.softmax(dim=-1)[0, 2]
+naive_loss = -torch.log(naive_probability)
+
+torch.testing.assert_close(
+    stable_loss, torch.tensor(2000.0, dtype=torch.float64)
+)
+assert torch.isfinite(stable_loss)
+assert naive_probability == 0.0
+assert torch.isinf(naive_loss)
+```
+
+Le résultat infini est un échec du calcul naïf en virgule flottante, pas une perte mathématique infinie : pour ces logits, la perte exacte vaut (2000) nats. En pratique, passer directement les logits à `CrossEntropyLoss` ou utiliser `log_softmax` suivi de l'extraction de la cible ; ne pas calculer soi-même `log(softmax(logits))`.
 :::
 
 ## Lien avec la perplexité
