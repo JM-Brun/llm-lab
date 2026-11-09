@@ -13,7 +13,7 @@ Attribution establishes provenance; it does not by itself grant permission. Conv
 
 ## Repository-level licensing finding
 
-[LICENSE.md](../LICENSE.md) offers project code under MIT and original project-authored prose in Quarto pages and documentation under CC BY-SA 4.0. The CC BY-SA grant explicitly excludes all non-text assets, including the 32 local SVGs under `site/images/`, until authorship, adaptation history, and rights are confirmed and an asset-level licence is recorded. Externally hosted figures and other third-party material remain subject to their respective rights holders' terms; attribution or a source link is not, by itself, permission to reuse an asset.
+[LICENSE.md](../LICENSE.md) offers project code under MIT and original project-authored prose in Quarto pages and documentation under CC BY-SA 4.0. The CC BY-SA grant explicitly excludes all non-text assets, including all 38 current local SVGs under `site/images/`, until authorship, adaptation history, and rights are confirmed and an asset-level licence is recorded. Externally hosted figures and other third-party material remain subject to their respective rights holders' terms; attribution or a source link is not, by itself, permission to reuse an asset.
 
 The licence boundary does not resolve the asset-level questions below, and it does not imply that any unresolved visual asset has been cleared. Do not remove, replace, hide, or disable an existing illustration solely because its rights are uncertain. Preserve it unchanged while provenance and permissions are investigated.
 
@@ -212,3 +212,28 @@ The rendered-DOM enumeration requested in the workflow remains limited: the publ
 3. **Petrov et al. figure:** the attribution on both language pages now links the declared licence (CC BY-NC-ND 4.0) directly, completing the attribution improvement recorded in the 2026-10-30 follow-up. The NonCommercial applicability question remains documented above; under the owner decision above, the unchanged educational embed with citation is retained.
 
 No illustration was removed, replaced, hidden, disabled, copied locally, or modified during this reconciliation.
+
+
+## Current local SVG inventory and confirmation scope — 2026-11-08
+
+The original source-level inventory and inspection above are a dated baseline, not a count of the current directory. A fresh recursive Git tree check on 2026-11-08 finds **38 local SVG files** under `site/images/`, all represented in the table above.
+
+The original 2026-10-30 inventory covered 32 files. The owner confirmation recorded on 2026-11-06 explicitly confirms the original 32 SVGs as project-created and not adapted from third-party visual designs. Six additional SVG files were introduced after that baseline:
+
+| Additional file | Introduction / follow-up evidence |
+|---|---|
+| `positional-info-insertion-en.svg` | Added with the bilingual RoPE relocation in [PR #255](https://github.com/JM-Brun/llm-lab/pull/255). |
+| `positional-info-insertion-fr.svg` | Added with the bilingual RoPE relocation in [PR #255](https://github.com/JM-Brun/llm-lab/pull/255). |
+| `transformer-attention-architectures.svg` | Added with the architecture diagrams in [PR #349](https://github.com/JM-Brun/llm-lab/pull/349). |
+| `transformer-attention-architectures-fr.svg` | Added as the French-language counterpart in [PR #549](https://github.com/JM-Brun/llm-lab/pull/549). |
+| `llm-generation-process-en.svg` | Added in the generation-process work and registered/translated in [PR #557](https://github.com/JM-Brun/llm-lab/pull/557). |
+| `llm-generation-process-fr.svg` | French counterpart from the same generation-process work; the pair was registered in [PR #557](https://github.com/JM-Brun/llm-lab/pull/557). |
+
+The existing owner confirmation does **not unambiguously state that these six later additions are included**. Repository commit attribution alone is not treated as a substitute for that explicit confirmation. Therefore:
+
+- **38** SVG files are present and registered;
+- **32** are within the explicitly recorded owner confirmation;
+- **6** later additions require a narrow owner confirmation of original creation and absence of third-party adaptation;
+- **all 38** remain excluded from the project code/prose licence until an asset-level licence is separately and explicitly declared under #163.
+
+This is a provenance-scope clarification only. No image, SVG, licence term, or attribution was changed. Do not remove or replace any asset as a result of this inventory update.
