@@ -2736,7 +2736,7 @@ sources:
 
   - id: 3blue1brown-attention-transformers-step-by-step-2024
     title: "Attention in Transformers, step by step — Deep Learning Chapter 6"
-    creators: ["Grant Sanderson", "Justin Sun"]
+    creators: ["Grant Sanderson"]
     source_type: video
     identifiers: {}
     canonical_url: "https://www.3blue1brown.com/lessons/attention/"
@@ -2763,7 +2763,7 @@ sources:
       - accessed_at: "2026-11-09"
         status: partially-scanned
         inspected_scope:
-          - "Full text adaptation, lesson sequence, embedded retrieval questions and mathematical notation"
+          - "Text adaptation by Justin Sun: lesson sequence, embedded retrieval questions and mathematical notation"
           - "Video description and published timestamps"
           - "Column-vector convention, value-map factorization, multi-head output projection and parallel next-token training explanation"
         limitations:
