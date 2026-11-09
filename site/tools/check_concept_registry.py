@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 import yaml
-from strict_yaml import load_yaml, parse_yaml
+from strict_yaml import load_yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 REGISTRY = ROOT / "data" / "concepts.yml"
@@ -44,35 +44,10 @@ RELATION_FAMILIES = {
 
 
 def _published_page_ids() -> set[str]:
-    """Return stable IDs of published FR/EN Quarto pages."""
-    published: set[str] = set()
-    for language in ("fr", "en"):
-        for path in (ROOT / "site" / language).glob("*.qmd"):
-            source = path.read_text(encoding="utf-8")
-            match = re.search(
-                r"<!--\s*\nLLM-LAB-PAGE-MAP v1\n(.*?)\n-->",
-                source,
-                re.DOTALL,
-            )
-            if match is None:
-                continue
-            try:
-                metadata = parse_yaml(match.group(1), source=str(path))
-            except yaml.YAMLError:
-                continue
-            if not isinstance(metadata, dict):
-                continue
-            tags = {
-                key: value
-                for item in metadata.get("tags", [])
-                if isinstance(item, str) and ":" in item
-                for key, value in [item.split(":", maxsplit=1)]
-            }
-            if tags.get("status") == "published":
-                page_id = metadata.get("id")
-                if isinstance(page_id, str):
-                    published.add(page_id)
-    return published
+    """Return stable IDs of every published page, including shared and root pages."""
+    from page_index import load_published_pages
+
+    return {page.page_id for page in load_published_pages(ROOT / "site")}
 
 
 def _has_cycle(edges: dict[str, list[str]]) -> bool:
@@ -366,7 +341,12 @@ def main() -> int:
         sys.stderr.write(f"Cannot read concept/domain registry: {exc}\n")
         return 1
     domain_ids, domain_errors = validate_domains(domain_data)
-    errors = [*domain_errors, *validate_registry(data, _published_page_ids(), domain_ids)]
+    try:
+        published_ids = _published_page_ids()
+    except (OSError, ValueError, yaml.YAMLError) as exc:
+        sys.stderr.write(f"Cannot read published pages: {exc}\n")
+        return 1
+    errors = [*domain_errors, *validate_registry(data, published_ids, domain_ids)]
     if errors:
         sys.stderr.write("\n".join(errors) + "\n")
         return 1

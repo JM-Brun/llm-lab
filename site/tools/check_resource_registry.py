@@ -10,7 +10,7 @@ from typing import Any
 from urllib.parse import urlsplit
 
 import yaml
-from strict_yaml import load_yaml, parse_yaml
+from strict_yaml import load_yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 REGISTRY = ROOT / "data" / "resources.yml"
@@ -29,34 +29,10 @@ PROVENANCE_FIELDS = {"creator", "publisher", "source_url", "license"}
 
 
 def _published_page_ids(root: Path) -> set[str]:
-    """Return stable IDs of published French and English Quarto pages."""
-    published: set[str] = set()
-    for language in ("fr", "en"):
-        for path in (root / "site" / language).glob("*.qmd"):
-            source = path.read_text(encoding="utf-8")
-            match = re.search(
-                r"<!--\s*\nLLM-LAB-PAGE-MAP v1\n(.*?)\n-->",
-                source,
-                re.DOTALL,
-            )
-            if match is None:
-                continue
-            try:
-                metadata = parse_yaml(match.group(1), source=str(path))
-            except yaml.YAMLError:
-                continue
-            if not isinstance(metadata, dict):
-                continue
-            tags = {
-                key: value
-                for item in metadata.get("tags", [])
-                if isinstance(item, str) and ":" in item
-                for key, value in [item.split(":", maxsplit=1)]
-            }
-            page_id = metadata.get("id")
-            if tags.get("status") == "published" and isinstance(page_id, str):
-                published.add(page_id)
-    return published
+    """Return stable IDs of every published page, including shared and root pages."""
+    from page_index import load_published_pages
+
+    return {page.page_id for page in load_published_pages(root / "site")}
 
 
 def _valid_http_url(value: Any) -> bool:
@@ -273,7 +249,12 @@ def main() -> int:
         for item in concepts_data.get("concepts", [])
         if isinstance(item, dict) and isinstance(item.get("id"), str)
     }
-    errors = validate_resource_registry(data, ROOT, _published_page_ids(ROOT), concept_ids)
+    try:
+        published_ids = _published_page_ids(ROOT)
+    except (OSError, ValueError, yaml.YAMLError) as exc:
+        sys.stderr.write(f"Cannot read published pages: {exc}\n")
+        return 1
+    errors = validate_resource_registry(data, ROOT, published_ids, concept_ids)
     if errors:
         sys.stderr.write("\n".join(errors) + "\n")
         return 1
