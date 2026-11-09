@@ -1269,7 +1269,7 @@ Added a concise explanation and links to the canonical training-example and caus
 
 - No claim that the current reference GPT implements padding or packed-document masks; its forward interface still exposes only token IDs and internal causal masking.
 - No sequence-loss API, padding policy, or training loop was added to the NumPy foundations.
-- The existing concept and computational graph already distinguish loss masking from attention visibility; no new concept, graph schema, or route stage is needed.
+- The page prose distinguishes these roles, but the concept registry previously contained only the causal-mask concept and the computational graph represented the loss mask only generically inside loss reduction. Added explicit concepts for attention, padding, document-boundary and loss masks to the existing concept registry, with bilingual definitions, domains, importance and canonical page resources. The computational graph remains unchanged: its documented scope deliberately excludes batching, padding and training-window sampling, and no concrete implementation currently justifies adding those dataflow nodes.
 
 ### Validation limits
 
