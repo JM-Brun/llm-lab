@@ -16,7 +16,7 @@ suggested_route:
   next: "en/generation"
 hierarchy:
   parents: ["en/index"]
-  children: ["en/transformer", "en/transformer-architectures", "en/generation", "en/build-path", "en/language-modeling-math", "en/llm-limits", "en/llm-computational-complexity"]
+  children: ["en/transformer", "en/transformer-architectures", "en/generation", "en/build-path", "en/language-modeling-math", "en/mathematical-foundations", "en/llm-limits", "en/llm-computational-complexity"]
 related: ["en/transformer-history", "en/scaling-laws"]
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 -->
