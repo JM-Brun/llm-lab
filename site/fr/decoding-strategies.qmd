@@ -154,6 +154,8 @@ Cet exemple est exhaustif parce que l'arbre ne contient que quatre séquences de
 
 **Beam search** conserve plusieurs préfixes candidats et développe les continuations les mieux notées selon un score cumulé. Il effectue une recherche approximative dans l'espace des séquences ; ce n'est pas simplement un argmax indépendant à chaque position. Il est utile dans certains problèmes contraints (traduction, transcription, sorties structurées), mais la maximisation de vraisemblance peut produire des textes ouverts courts, génériques ou répétitifs.
 
+Dans une formulation probabiliste standard, le score cumulé est la somme des log-probabilités des tokens (équivalente au produit des probabilités pour une séquence de longueur fixée). Les implémentations pratiques peuvent toutefois normaliser ce score par la longueur et appliquer des règles d'arrêt anticipé. Ces choix modifient le classement des hypothèses et la condition de terminaison : ils ne sont pas de simples détails d'optimisation. Par exemple, Transformers documente un `length_penalty` qui divise le score par une puissance de la longueur, ainsi que plusieurs politiques `early_stopping`. Le contre-exemple A/B présenté plus haut compare volontairement des séquences de longueur fixe, sans normalisation ; il illustre la différence entre optimum local et optimum de séquence, pas tous les réglages d'un beam search de production ([documentation actuelle de Transformers](https://huggingface.co/docs/transformers/main_classes/text_generation)).
+
 Holtzman et al. montrent que les méthodes de maximisation, notamment beam search dans leurs expériences de génération ouverte, peuvent dégénérer malgré une bonne vraisemblance locale. Leur résultat ne signifie pas que beam search est toujours mauvais : la tâche, le score, les contraintes et le protocole d'évaluation déterminent sa pertinence.
 
 ## 5. Décodage contrastif : comparer un modèle expert et un modèle amateur
@@ -268,6 +270,7 @@ Ne comparer que les noms de paramètres (« température 0,7 » ou « top-p 0,9 
 ## Références de recherche
 
 - Holtzman et al. (2020), [*The Curious Case of Neural Text Degeneration*](https://arxiv.org/abs/1904.09751), ICLR — analyse de la dégénérescence en génération ouverte et proposition du nucleus sampling.
+- Hugging Face, [Transformers generation API](https://huggingface.co/docs/transformers/main_classes/text_generation) — implementation-specific beam-search length penalty, stopping policies and generation parameters; consult the version matching the experiment.
 - Nadeem et al. (2020), [*A Systematic Characterization of Sampling Algorithms for Open-ended Language Generation*](https://aclanthology.org/2020.aacl-main.36/), AACL-IJCNLP — propriétés communes et compromis qualité-diversité des méthodes d'échantillonnage.
 - Meister et al. (2023), [*On the Efficacy of Sampling Adapters*](https://aclanthology.org/2023.acl-long.80/), ACL — cadre unifié pour analyser les transformations des distributions d'échantillonnage.
 - Li et al. (2023), [*Contrastive Decoding: Open-ended Text Generation as Optimization*](https://aclanthology.org/2023.acl-long.687/), ACL — fonction de score contrastive entre modèle expert et amateur.
