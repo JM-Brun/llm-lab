@@ -1049,3 +1049,28 @@ This clarifies the route without creating a duplicate page, a second route regis
 - Learner comprehension and transfer have not been measured; retain the pilot under #447.
 - No content was removed or merged. The next scientific pass should inspect complete page bodies in small vertical slices, beginning with the probability → entropy → likelihood → cross-entropy → loss chain, then the Build data branch, and record only reproducible or evidence-backed corrections.
 
+## 2026-11-09: mathematical spot-check of prediction → scoring → loss → gradients
+
+**Scope.** Checked the bilingual source equations and worked examples for `probabilities`, `entropy`, `likelihood`, `cross-entropy`, `loss` and `gradients`. Recomputed the small numerical examples independently. This is a bounded equation/example check, not a full proof review of every statement or an execution of the code.
+
+| Page pair | Check | Result |
+|---|---|---|
+| Probabilities | `softmax(0, ln 3) = (0.25, 0.75)`; temperature scaling preserves logit order for positive temperature while changing concentration. | Correct in the inspected FR/EN text. The page distinguishes normalized probability from calibration and factual truth. |
+| Entropy | `H(0.5, 0.5) = ln 2 = 1 bit`; `H(0.9, 0.1) ≈ 0.325 nat ≈ 0.469 bit`; finite-vocabulary bounds are `0 ≤ H ≤ ln V` nats. | Values and units are consistent. Predictive entropy is distinguished from the surprisal of the observed target. |
+| Likelihood | `0.5 × 0.25 × 0.8 = 0.1`; total NLL is `−ln(0.1) ≈ 2.303` nats; mean NLL over three targets is about `0.768` nat. | Correct in both languages. The context-window qualification is explicit: one forward pass scores all positions only when the sequence fits the window; longer sequences need an explicit window/stride and target-counting convention. |
+| Cross-entropy | One-hot target gives `−ln p(y)`; general target gives `H(q,p) = −Σ qᵢ ln pᵢ`; perplexity is `exp(mean NLL)` in nats and `2^(mean NLL)` in bits. | Formulae and stated units are consistent. The page distinguishes target-distribution cross-entropy from predictive entropy and batch-level loss. |
+| Loss | Per-token penalty is `−ln pᵧ`; mean over valid positions divides by `|M|`; ignored positions are excluded from numerator and denominator. | Formula and prose agree in both languages. The page also states that the reference NumPy function covers row-wise classification loss, not sequence shifting, token masks or a complete LLM training objective. |
+| Gradients | For one-hot cross-entropy, `∂ℓ/∂zᵢ = pᵢ − 1[i=y]`; chain rule carries this to parameters; gradient descent subtracts the learning-rate-scaled gradient. | The inspected equations and interpretation are consistent in FR/EN. The text does not conflate a gradient with a complete optimizer or guarantee of global improvement. |
+
+### Pedagogical consequence
+
+The progression is mathematically coherent when each question remains distinct:
+
+1. **Before observing a target:** what distribution does the model predict, and how spread out is it? (probabilities, entropy)
+2. **After a target is known:** how much probability did the model assign to it, and to the observed sequence? (target probability, likelihood/log-likelihood)
+3. **For a target distribution:** what penalty does the prediction incur? (cross-entropy)
+4. **Across a batch:** which valid target positions are aggregated, and with what denominator? (loss)
+5. **For learning:** how does that objective vary with logits and parameters? (gradients, then optimizer update)
+
+No mathematical correction was justified by this spot-check. The implementation boundary remains important: the conceptual pages describe sequence-level alignment and masking, while the current NumPy loss primitive is intentionally narrower and does not implement a complete sequence training loop.
+
