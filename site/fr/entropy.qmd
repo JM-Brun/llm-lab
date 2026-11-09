@@ -26,6 +26,15 @@ tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:
 Dans un LLM autorégressif, l'entropie décrit la dispersion de la distribution prédite pour le prochain token, dans un contexte donné. Elle caractérise cette distribution : elle ne dit pas si la réponse est vraie, ni si le modèle est fiable.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+- **Entropie prédictive :** $H(p)=-\sum_v p(v)\log p(v)$ résume la dispersion de toute la distribution du prochain token pour un préfixe donné.
+- **Surprise observée :** $-\log p(x_t\mid x_{<t})$ concerne le token effectivement observé ; ce n'est pas l'entropie de la distribution.
+- **Bornes :** pour un vocabulaire fini de taille $V$, $0\leq H(p)\leq\log V$ nats (logarithme naturel).
+- **Interprétation :** faible entropie ne signifie ni vérité ni calibration ; tokenizer, contexte et température influencent la quantité mesurée.
+
+**Question de contrôle :** pouvez-vous distinguer l'incertitude avant observation de la surprise après observation d'une cible ?
+:::
+
 ## Entropie de la distribution du prochain token
 
 Pour un préfixe $x_{<t}$, le modèle produit une distribution catégorielle sur son vocabulaire :
