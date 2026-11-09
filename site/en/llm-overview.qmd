@@ -49,7 +49,7 @@ Given a context, such as “The report indicates that the concentration”, a GP
 
 A few terms are enough to follow this computation:
 
-- **Token and tokenizer:** a token is a discrete unit of text; the tokenizer segments text and maps each token to an integer ID. A token is not necessarily a word. See [text and data](text-data.qmd).
+- **Token and tokenizer:** a token is a discrete unit of text; the tokenizer segments text and maps each token to an integer ID. A token is not necessarily a word. See [text and data](text-data.qmd), then [tokenization strategies](tokenization-strategies.qmd) for segmentation methods.
 - **Context:** the tokens available to compute a continuation. During generation, it contains the prompt followed by tokens already produced; see [generation](generation.qmd).
 - **Parameters:** learned values — including weights and biases — that determine the network's computation. They remain fixed during ordinary inference; see the [configuration of a small GPT](gpt-config-walkthrough.qmd).
 
@@ -68,7 +68,7 @@ The figure summarizes generation: text is tokenized, the network computes a dist
 *The probabilities shown are illustrative; they are not outputs measured from a particular model.*
 
 - **Input:** text, tokens, and token IDs — [text and data](text-data.qmd).
-- **Network computation:** embeddings, positional information, and Transformer blocks — [GPT and Transformers](transformer.qmd), [contextualized representations](contextualized-representations.qmd), and the [Transformer block walkthrough](transformer-block-walkthrough.qmd).
+- **Network computation:** embeddings, positional information, and Transformer blocks — [GPT and Transformers](transformer.qmd), [embeddings](embedding-space.qmd), [positional information](positional-encoding.qmd), [Q/K/V and attention](queries-keys-values.qmd), [contextualized representations](contextualized-representations.qmd), and the [Transformer block walkthrough](transformer-block-walkthrough.qmd).
 - **Output:** logits, a distribution, and token selection — [generation](generation.qmd).
 
 ### One shared computation, three uses
