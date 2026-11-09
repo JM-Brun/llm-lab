@@ -94,6 +94,22 @@ flowchart LR
 
 Le tableau décrit **uniquement les fenêtres d’entrée**. Pour l’entraînement à la prédiction du prochain token, chaque fenêtre a aussi besoin d’une cible décalée d’un token ; le dernier token d’entrée doit donc avoir un successeur dans le flux source. La fin du corpus doit être traitée explicitement (par exemple en supprimant un exemple incomplet ou en appliquant une convention de fin de séquence définie).
 
+### Exemple calculé : ce que le stride fait répéter
+
+Prenons le flux `[0, 1, 2, 3, 4, 5, 6, 7, 8]`, une longueur d’entrée (L=4) et des cibles décalées d’un token.
+
+| Stride | Départ | Entrée (x) | Cible (y) |
+|---:|---:|---|---|
+| 4 | 0 | [0, 1, 2, 3] | [1, 2, 3, 4] |
+| 4 | 4 | [4, 5, 6, 7] | [5, 6, 7, 8] |
+| 2 | 0 | [0, 1, 2, 3] | [1, 2, 3, 4] |
+| 2 | 2 | [2, 3, 4, 5] | [3, 4, 5, 6] |
+| 2 | 4 | [4, 5, 6, 7] | [5, 6, 7, 8] |
+
+Avec un stride de 2, les entrées partagent deux tokens consécutifs et les cibles des fenêtres successives répètent elles aussi des positions (par exemple 3 et 4). Ces répétitions augmentent le nombre d’occurrences d’apprentissage ; elles ne créent pas de nouvelles observations indépendantes. Avec un stride de 4, les fenêtres d’entrée sont adjacentes et les cibles couvrent ici les positions suivantes sans recouvrement.
+
+Ce tableau suppose que le flux fournit un successeur pour chaque position cible. Il illustre le fenêtrage, pas une politique complète de packing ou de batching.
+
 Un stride plus petit augmente généralement le nombre d’exemples et le recouvrement. Il n’existe pas de stride universellement optimal : les choix dépendent du pipeline, du budget de calcul et du traitement de la fin du corpus. Une fenêtre pédagogique glissante n’est pas nécessairement représentative d’un pipeline industriel.
 
 ::: {.callout-note collapse="true" title="Implémentation NumPy et tests (approfondissement)"}
@@ -132,6 +148,28 @@ flowchart TB
     B["Masque de perte : 1 1 1 0 0"] --> C
     C --> D["Seules les positions valides contribuent"]
 ```
+
+### Exemple calculé : exclure le padding de la réduction
+
+Considérons les pertes par position suivantes, données ici à titre **illustratif** :
+
+| Position | Cible | Masque de perte (m_i) | Perte (ell_i) |
+|---:|---|---:|---:|
+| 0 | 12 | 1 | 0,2 |
+| 1 | 8 | 1 | 1,1 |
+| 2 | 4 | 1 | 0,7 |
+| 3 | PAD | 0 | 4,0 |
+| 4 | PAD | 0 | 3,0 |
+
+La moyenne sur les seules positions valides vaut :
+
+[
+\mathcal{L}=\frac{\sum_i m_i\ell_i}{\sum_i m_i}
+=\frac{0{,}2+1{,}1+0{,}7}{3}
+=\frac{2}{3}\approx 0{,}667.
+]
+
+Les pertes illustratives des positions PAD ne contribuent pas. Une moyenne naïve sur les cinq positions donnerait (1{,}8), ce qui modifierait l’objectif en faisant dépendre la perte du nombre de positions de padding. En pratique, la convention exacte de réduction (somme, moyenne par séquence ou moyenne par token valide) doit être explicitée ; cet exemple illustre uniquement la moyenne par token valide.
 
 Le **masque d’attention** détermine quelles positions peuvent être consultées. Le **masque de perte** détermine quelles cibles contribuent à l’objectif d’optimisation. Ils ont des rôles distincts et ne doivent pas être confondus.
 
