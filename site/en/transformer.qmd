@@ -26,6 +26,15 @@ tags: ["type:system-overview", "destination:understand", "topic:transformer", "l
 A **GPT** is a language model built on an autoregressive Transformer: it receives a sequence of tokens — the context — and computes, at each position, an unnormalized score (*logit*) for every token in the vocabulary. A probability distribution can be derived from these scores. This page focuses on the computation performed by the network, from input representations to logits. It distinguishes that computation from the inference loop that selects and appends successive tokens.
 :::
 
+::: {.callout-tip title="The one-minute mental model"}
+- **Input:** token IDs select embeddings; the architecture introduces positional information according to its mechanism.
+- **Transformer block:** self-attention exchanges information across accessible positions; the MLP transforms each position independently. Residual connections and normalization structure the flow between these sublayers.
+- **Repetition:** stacked blocks progressively transform the states; Q/K/V are projections inside self-attention, not a stage after the final contextualized representations.
+- **Output:** the output head produces logits. Softmax, token selection, and feedback into the context are distinct operations covered by the probability and generation lessons.
+
+**Check yourself:** can you trace one forward pass from token IDs to logits and distinguish the network's internal computation from the generation loop?
+:::
+
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 You will be able to:
 - trace the computation from an input token sequence to the logits, identifying embeddings and positional information;
