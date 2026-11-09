@@ -3,7 +3,7 @@
   - Comment le modèle calcule sa prédiction
     - Du texte aux identifiants
       - [Du texte aux tokens : représenter le langage](text-data.html)
-      - [Approfondir : stratégies de tokenisation (facultatif)](tokenization-strategies.html)
+      - [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.html)
     - Des identifiants aux représentations
       - [Des identifiants aux vecteurs : les embeddings](embedding-space.html)
       - [Encodage positionnel : donner un ordre aux tokens](positional-encoding.html)
