@@ -34,7 +34,7 @@ Lesson pages use a consistent **“Check your understanding”** component: shor
 | Collection | Scope | Status |
 |---|---|---|
 | [Mathematical foundations](#foundations) | Tensors, probability, logits, entropy, cross-entropy, likelihood, gradients, numerical stability | 7 progressive exercises drafted; gradient checking and other topics remain to be developed |
-| [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Self-checks in the text/embedding lessons; five formative exercises TR-A–TR-E published; partition-leakage exercises remain to be developed |
+| [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Self-checks in the text/embedding lessons; six formative exercises TR-A–TR-F published |
 | [Attention](#attention) | Q/K/V, scores, scaling, causal masks, multi-head attention, invariants | Weighted aggregation and Q/K/V projections; CA-A on causal masking and prefix invariance; three formative multi-head exercises AT-A–AT-C published; advanced variants remain to be developed |
 | [Transformer](#transformer) | Embeddings, position, residuals, normalization, MLP and architecture variants | Three formative exercises TF-A–TF-C published (shapes and normalization of a pre-LN block, block parameter count, diagnosis and interventions); architecture-variant exercises to be developed |
 | [Pretraining](#pretraining) | Objective, train/validation, perplexity, checkpoints and reproducibility | Structure to be filled |
@@ -224,7 +224,7 @@ A comparison requires checking, among other things, the tokenizer and its segmen
 
 **Prerequisites:** [text and tokenization](text-data.qmd), [embedding space](embedding-space.qmd), and [training examples and input-target shifting](training-examples.qmd).
 
-**Current scope:** five bilingual formative exercises, with stable IDs TR-A–TR-E, cover the text → representations pipeline (TR-A–TR-C), windows and input-target shifting (TR-D), and BPE merge counting (TR-E). Partition leakage remains to be addressed. Suggested order: TR-A, TR-B, TR-C, then TR-D and TR-E; the latter two can be studied independently after their corresponding preparation lessons.
+**Current scope:** six bilingual formative exercises, with stable IDs TR-A–TR-F, cover the text → representations pipeline (TR-A–TR-C), windows and input-target shifting (TR-D), BPE merge counting (TR-E), and finally split-leakage diagnosis and tokenizer fitting (TR-F). Suggested order: TR-A, TR-B, TR-C, then TR-D, TR-E, and TR-F after their corresponding preparation lessons.
 
 #### Exercise TR-A — Reconstruct the representation pipeline
 
@@ -673,6 +673,61 @@ At encoding time, the tokenizer reuses the merge order learned from the corpus. 
 </details>
 
 **Success criterion:** initial frequencies are exact, sequences are updated before the second count, merge order is respected on the unseen word, and training/encoding are distinguished.
+
+#### Exercise TR-F — Diagnose split leakage
+
+**Preparation:** [Preparing a corpus for pretraining](corpus-preparation.qmd), especially its sections on deduplication, split design, and tokenizer fitting; [windows and stride](training-examples.qmd). This exercise distinguishes evaluation leakage from an explicitly chosen temporal-continuation protocol.
+
+We want to measure a model's ability to predict tokens in data that did not influence its fitting. For each protocol below, identify possible dependencies between training and validation, then propose the minimal correction.
+
+**Stage 1 — Diagnose three protocols.**
+
+**A. Split after windowing.** A tokenized document is converted into windows of length 4 and stride 2. The windows are then randomly assigned to train and validation.
+
+**B. Split by document without deduplication.** Documents are assigned to train and validation, but a near-identical copy of a training document appears in validation under a different identifier.
+
+**C. Temporal split within one document.** To simulate predicting the continuation of a known stream, tokens before a cutoff are used for training and tokens after it for validation. Validation windows may use the earlier prefix as context, but no validation target participates in training.
+
+For each protocol:
+
+1. Does the split guarantee the intended independence?
+2. What information may be shared or reused across partitions?
+3. What change is needed, or which assumption must be made explicit?
+
+<details>
+<summary>Show hints</summary>
+
+- A window contains both inputs **and** targets: inspect source tokens, not only dataset rows.
+- Different document identifiers do not guarantee independent content.
+- Temporal-continuation evaluation does not measure the same kind of generalization as evaluation on entirely unseen documents.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+- **A — Likely leakage.** Neighboring windows share context tokens and may reuse tokens as targets in one partition and inputs in another. Randomly splitting windows therefore does not separate the source units. First define and split independent units (documents, groups, or time periods), then construct windows within each partition. If the protocol explicitly permits continuation from a known prefix, treat it as case C, with a clearly defined cutoff and targets.
+- **B — Likely leakage.** Splitting by identifier does not detect near-duplicates. Group sufficiently similar copies and variants before or after splitting, using a documented method, then audit cross-partition overlap. The threshold and deduplication unit must fit the corpus; removing every repetition is not automatically desirable.
+- **C — Not necessarily leakage.** This is a valid continuation-prediction protocol if the operational objective is to predict the continuation of a stream whose prefix is available. Earlier context may be supplied to validation, but post-cutoff targets must remain excluded from training, and no training window may consume post-cutoff tokens. This protocol does not support a claim of generalization to independent documents.
+
+</details>
+
+**Stage 2 — Check tokenizer fitting.**
+
+In a conventional held-out experiment, a BPE tokenizer is fitted on train + validation, then the model is trained only on train tokens. Validation is never used to compute training loss.
+
+1. Did validation influence the fitting protocol?
+2. What correction is expected if the goal is to measure generalization to unseen data?
+3. Why should the tokenizer revision be frozen before encoding validation and test?
+
+<details>
+<summary>Show the worked solution</summary>
+
+Yes: the BPE vocabulary and merge order were fitted using validation text. For a conventional held-out experiment, fit the tokenizer on train only, freeze it, then encode train, validation, and test with that same revision. This prevents statistics or lexical units from held-out text influencing tokenizer fitting. Validation remains excluded from model-weight optimization. Other conventions exist in large-scale pretraining pipelines; in that case, describe the data-construction protocol precisely and do not claim the same held-out setup.
+
+</details>
+
+**Success criterion:** distinguish window overlap, document duplicates, and temporal continuation; identify the relevant split unit; explain why tokenizer fitting can also contaminate a held-out evaluation.
 
 ### Attention {#attention}
 
