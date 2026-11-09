@@ -100,6 +100,17 @@ logits = torch.tensor(
 )
 targets = torch.tensor([[0, 2, -100]], dtype=torch.long)
 batch_size, seq_len, vocab_size = logits.shape
+
+# Validate the sequence-level contract before flattening.
+assert logits.ndim == 3
+assert targets.shape == (batch_size, seq_len)
+assert targets.dtype == torch.long
+valid = targets.ne(-100)
+in_range = targets.ge(0) & targets.lt(vocab_size)
+assert torch.all(valid | targets.eq(-100))
+assert torch.all(in_range | targets.eq(-100))
+assert valid.any()
+
 flat_logits = logits.reshape(-1, vocab_size)
 flat_targets = targets.reshape(-1)
 
@@ -110,7 +121,6 @@ mean_loss = torch.nn.CrossEntropyLoss(
     ignore_index=-100, reduction="mean"
 )(flat_logits, flat_targets)
 
-valid = targets.ne(-100)
 manual_loss = -F.log_softmax(logits[valid], dim=-1).gather(
     1, targets[valid].unsqueeze(1)
 ).mean()
@@ -133,6 +143,53 @@ print("softmax-first:", softmax_first_loss.item())  # 0.946560...
 The final position is ignored by `ignore_index`; it contributes neither to the sum nor to the mean denominator. `reduction="none"` exposes local losses, while `reduction="mean"` averages valid targets (with no class weights in this example). Applying softmax first is incorrect for the intended API use: it turns probabilities into a new set of input scores and changes the loss. This example demonstrates the API and reduction; it does not replace causal masking, target alignment, or a training loop.
 
 PyTorch also accepts probability-distribution targets (for example with *label smoothing*), but `ignore_index` applies only to class-index targets. This example deliberately uses integer indices.
+
+### A common shape bug: normalizing over time instead of vocabulary
+
+For logits shaped `(B,T,V)`, each time position needs a probability distribution over the **vocabulary**. Therefore softmax must use `dim=-1` (the (V) axis). Normalizing over `dim=1` instead makes probabilities sum to one across time for each vocabulary entry; it does not produce a categorical distribution over tokens at each position.
+
+```python
+correct_probs = logits.softmax(dim=-1)
+wrong_axis_probs = logits.softmax(dim=1)
+
+# The vocabulary probabilities sum to one at every batch/time position.
+torch.testing.assert_close(
+    correct_probs.sum(dim=-1),
+    torch.ones((batch_size, seq_len), dtype=logits.dtype),
+)
+# With the wrong axis, the sums over vocabulary are not one per position.
+wrong_sums = wrong_axis_probs.sum(dim=-1)
+assert not torch.allclose(
+    wrong_sums,
+    torch.ones_like(wrong_sums),
+)
+```
+
+This is why the example first flattens `(B,T,V)` to `(B×T,V)`: the class/vocabulary dimension is then unambiguously dimension 1 for `CrossEntropyLoss`.
+
+### A numerical edge case: stable log-softmax
+
+A direct `softmax` can underflow a very small target probability to zero. Taking its logarithm then produces infinity, even though the mathematically correct cross-entropy is finite. The fused, numerically stable cross-entropy computes the equivalent log-softmax expression without first materializing that zero probability.
+
+```python
+extreme_logits = torch.tensor(
+    [[1000.0, 0.0, -1000.0]], dtype=torch.float64
+)
+extreme_target = torch.tensor([2], dtype=torch.long)
+
+stable_loss = F.cross_entropy(extreme_logits, extreme_target)
+naive_probability = extreme_logits.softmax(dim=-1)[0, 2]
+naive_loss = -torch.log(naive_probability)
+
+torch.testing.assert_close(
+    stable_loss, torch.tensor(2000.0, dtype=torch.float64)
+)
+assert torch.isfinite(stable_loss)
+assert naive_probability == 0.0
+assert torch.isinf(naive_loss)
+```
+
+The infinite result is a floating-point failure of the naïve computation, not an infinite mathematical loss: for these logits, the exact loss is (2000) nats. In practice, pass logits directly to `CrossEntropyLoss` or use `log_softmax` followed by the target gather; do not compute `log(softmax(logits))` yourself.
 :::
 
 ## Connection to perplexity
