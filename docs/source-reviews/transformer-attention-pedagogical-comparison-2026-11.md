@@ -158,5 +158,5 @@ MQA/GQA and sparse attention should first be compared as architectural variants 
 - [3Blue1Brown — video and timestamps](https://www.youtube.com/watch?v=eMlx5fFNoYc)
 - [Polo Club — Transformer Explainer repository](https://github.com/poloclub/transformer-explainer)
 - [Polo Club — CHI 2026 paper](https://doi.org/10.1145/3772318.3791725)
-- [LLM Lab — existing bilingual experiment guide](../site/fr/transformer-explainer.qmd)
+- [LLM Lab — existing bilingual experiment guide](../../site/fr/transformer-explainer.qmd)
 
