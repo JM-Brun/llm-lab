@@ -1340,7 +1340,7 @@ G. Depth and width describe the same dimension of the network.
 
 **Prerequisites:** [logits](logits.qmd), [output probabilities](probabilities.qmd), [next-token prediction and autoregressive generation](generation.qmd).
 
-**Three formative exercises published:** GE-A–GE-C. They distinguish one elementary step (distribution then selection) from the loop that feeds the token back and repeats.
+**Five formative exercises published:** GE-A–GE-E. They cover next-token selection, the autoregressive loop and stopping, then prefill/decode and the purpose and limits of the KV cache.
 
 #### GE-A — Distribution and selection
 
@@ -1395,7 +1395,42 @@ The limit allows at most four new tokens. Since EOS is selected at the second st
 
 </details>
 
-**Remaining scope:** temperature, top-k/top-p, prefill/decode, and KV cache.
+#### GE-D — Trace prefill and incremental decode
+
+A prompt contains the token IDs $(A,B,C)$. Assume a causal Transformer and no KV cache for the first pass.
+
+1. During prefill, how many prompt positions are processed?
+2. Which position's logits are used to select the first generated token $D$?
+3. To predict the following token $E$, which token is newly supplied during incremental decode?
+4. Why is prefill not teacher forcing?
+5. Are the model parameters updated during these inference phases?
+
+<details>
+<summary>Show the solution</summary>
+
+Prefill processes the three prompt positions in one sequence pass. The logits at the final prompt position (the position of $C$) define the distribution from which $D$ is selected. The next decode step supplies $D$ as the new token to predict $E$. This is not teacher forcing: $D$ was selected by the model, not supplied as an observed reference target. Parameters remain fixed during both prefill and decode.
+
+</details>
+
+#### GE-E — What does the KV cache save?
+
+Assume a prompt of three tokens $(A,B,C)$ and generate three tokens $D,E,F$. Ignore context-window eviction and count only token positions newly passed through the model:
+
+1. Without a KV cache, how many token positions are processed across the prompt pass and the two subsequent predictions?
+2. With a KV cache, how many new token positions are processed after prefill?
+3. What information is retained in the cache?
+4. Does the cache change the model parameters or the conditional distribution being computed?
+5. Why does the count above not represent the total attention computation?
+
+<details>
+<summary>Show the solution</summary>
+
+Without a cache, the model processes lengths $3$, then $4$ (to predict $E$), then $5$ (to predict $F$): $3+4+5=12$ token positions. With a cache, prefill processes the three prompt tokens; the decode steps then process only $D$ and $E$ as new positions: $3+1+1=5$ newly processed positions. The cache retains previously computed keys and values at each Transformer layer. It does not update parameters or change the intended conditional prediction; it avoids recomputing the prefix. The new query at each decode step still attends to the cached keys and values, so counting new positions is not a count of all attention operations or total FLOPs.
+
+</details>
+
+**Remaining scope:** temperature, top-k and top-p.
+
 
 ### Fine-tuning {#fine-tuning}
 
