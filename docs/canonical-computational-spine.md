@@ -117,15 +117,18 @@ A pedagogical prerequisite relation is not a substitute for a computational rela
 
 ## 5. Reader-facing projections
 
-The existing knowledge architecture remains authoritative by information type: `data/concepts.yml` owns stable concepts and typed semantic relations; `data/domains.yml` owns controlled knowledge domains; `data/resources.yml` owns non-page artifacts; `docs/learning-path.md` owns curriculum modules, scope and pedagogical dependencies; `data/guided-route.yml` is the bilingual reader-facing route projection; page-map metadata owns page hierarchy and suggested page navigation. The computational spine is a crosswalk/projection assembled from these sources, not a replacement registry or a new general-purpose graph. Reader-facing views are projections, not separate competing models:
+The existing knowledge architecture remains authoritative by information type: `data/concepts.yml` owns stable concepts and typed semantic relations; `data/domains.yml` owns controlled knowledge domains; `data/resources.yml` owns non-page artifacts; `docs/learning-path.md` owns curriculum modules, scope and pedagogical dependencies; `data/guided-route.yml` is the bilingual reader-facing route projection; page-map metadata owns page hierarchy and suggested page navigation. The computational spine is a crosswalk/projection assembled from these sources, not a replacement registry or a new general-purpose graph. Reader-facing views are projections, not separate competing models. Their level of detail must match the learning task:
 
-- **Persistent spine:** shared input/forward/logits/distribution path, always visible on relevant pages.
-- **Generation view:** highlights decoding, token feedback, prefill/decode, and KV cache.
-- **Scoring view:** highlights observed targets, target probability, likelihood, log-likelihood, NLL/cross-entropy, reductions and masks.
-- **Training view:** highlights teacher forcing, objective, gradients, optimizer and parameter update.
-- **Evaluation view:** highlights held-out scoring and metrics, explicitly stopping before parameter updates.
+- **Overview diagram:** a deliberately simplified learner-facing view: context → model → logits → probability distribution, followed by three clearly distinguished uses (generation, observed-target scoring, training). It is not a rendering of the full computational registry.
+- **Detailed computational spine:** shared input/forward/logits/distribution path, used only where the reader needs to inspect the actual computation. It should not be inserted automatically into every overview.
+- **Generation view:** highlights decoding, token feedback, prefill/decode, and optional KV-cache optimization in the dedicated inference lesson.
+- **Scoring view:** highlights observed targets, target probability, likelihood, log-likelihood, NLL/cross-entropy, reductions and masks in a scoring-focused lesson or reference.
+- **Training view:** highlights teacher forcing, objective, gradients, optimizer and parameter update in the training lessons.
+- **Evaluation view:** highlights held-out scoring and metrics, explicitly stopping before parameter updates. This is a methodological view, not a required overview diagram.
 - **Guided route:** pedagogical order and reading depth; may preview generation early and revisit its mechanics later.
 - **Build path:** implementation dependency order; must remain distinct from conceptual/dataflow order.
+
+**Presentation rule:** the computational registry and its generated branch overlays are authoritative structural representations for project consistency. They are not automatically good teaching diagrams. A learner-facing page should show only the subset of relations needed to answer its instructional question, use plain-language labels, and avoid exposing internal graph categories as if they were concepts the learner must memorize. The LLM overview therefore uses the simplified three-use diagram and leaves KV-cache detail to the inference/complexity lessons.
 
 Every page should identify its primary node(s), relevant branch(es), and relation to the shared spine. The early generation overview and the later detailed generation lesson are two depths of one canonical topic, not duplicate concepts.
 
@@ -159,7 +162,7 @@ Candidate canonical page IDs already in the route include `contextualized-repres
 
 ## 10. Integration hand-off
 
-The canonical model, eight-stage guided route, teacher-forcing/prefill teaching, concept metadata, and computational registry/first graph views are now integrated on `main` through [PR #578](https://github.com/JM-Brun/llm-lab/pull/578) and the generated-route refresh [PR #586](https://github.com/JM-Brun/llm-lab/pull/586). The persistent-spine and evaluation views are now embedded in the bilingual overview through [PR #589](https://github.com/JM-Brun/llm-lab/pull/589), with text alternatives generated from the same computational registry. PR Quarto rendering and Python CI passed; post-merge publication and browser review remain validation gates. A manual screen-reader review is still required before claiming full accessibility validation. The active hand-off is [computational-spine-integration-plan.md](computational-spine-integration-plan.md) and child issue [#584](https://github.com/JM-Brun/llm-lab/issues/584). Continue reusing the existing registries and validators rather than introducing a parallel graph or workflow framework.
+The canonical model, eight-stage guided route, teacher-forcing/prefill teaching, concept metadata, and computational registry/first graph views are now integrated on `main` through [PR #578](https://github.com/JM-Brun/llm-lab/pull/578) and the generated-route refresh [PR #586](https://github.com/JM-Brun/llm-lab/pull/586). The detailed persistent-spine and evaluation views were embedded in the bilingual overview through [PR #589](https://github.com/JM-Brun/llm-lab/pull/589). The subsequent pedagogical review identified that these structural projections were too metadata-like for the overview's introductory audience. [PR #782](https://github.com/JM-Brun/llm-lab/pull/782) replaces them there with a simpler learner-facing diagram while preserving the canonical registry and this architectural document. The revised PR's Quarto rendering and browser review are pending. A manual screen-reader review is still required before claiming full accessibility validation. The active hand-off is [computational-spine-integration-plan.md](computational-spine-integration-plan.md) and child issue [#584](https://github.com/JM-Brun/llm-lab/issues/584). Continue reusing the existing registries and validators rather than introducing a parallel graph or workflow framework.
 
 ## 9. Adopted curriculum topology
 

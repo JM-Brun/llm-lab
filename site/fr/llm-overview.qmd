@@ -9,8 +9,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
-scope: "Définit les LLM et GPT, présente la prédiction autorégressive, situe le tronc computationnel partagé et distingue architecture, apprentissage des paramètres et utilisation. Oriente vers les pages canoniques sans détailler leurs mécanismes."
-purpose: "Permettre au lecteur de définir un LLM, de situer un GPT dans les familles Transformer, de suivre le calcul du contexte à la distribution du prochain token et de distinguer génération, scoring, apprentissage et adaptation."
+scope: "Définit les LLM et GPT, illustre la prédiction du prochain token et distingue architecture, apprentissage des paramètres et utilisation. Oriente vers les pages canoniques sans détailler leurs mécanismes."
+purpose: "Donner au lecteur une première représentation mentale d’un LLM : ce qu’il prédit, comment il transforme un contexte en distribution de tokens et comment cette distribution est utilisée en génération, scoring et apprentissage."
 suggested_route:
   previous: "fr/index"
   next: "fr/generation"
@@ -25,16 +25,6 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 
 ::: {.chapter-lead}
 Un **grand modèle de langage** (*large language model*, LLM) est un modèle de langage entraîné à grande échelle sur de grands corpus, avec un budget de calcul conséquent. Aucun seuil de paramètres ne fait consensus pour définir cette catégorie : il faut aussi considérer les données et le calcul mobilisés ([lois d'échelle](scaling-laws.qmd) ; [Zhao et al., 2023](https://arxiv.org/abs/2303.18223) ; [Hoffmann et al., 2022](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html)). Le terme LLM ne désigne ni une architecture ni un objectif d'entraînement particuliers.
-:::
-
-::: {.callout-tip title="L'idée à retenir en une minute"}
-- **Catégories :** LLM désigne une catégorie de modèles ; GPT désigne une famille autorégressive ; Transformer désigne une famille d'architectures. Ces termes ne sont pas synonymes.
-- **Prédiction :** un GPT calcule une distribution conditionnelle $p_\theta(x_t\mid x_{<t})$ sur le prochain token à partir du préfixe disponible.
-- **Calcul partagé, usages distincts :** génération sélectionne puis réinjecte un token ; scoring attribue une probabilité à une cible observée ; apprentissage calcule une loss et met à jour les paramètres.
-- **Trois dimensions :** architecture, apprentissage des paramètres et utilisation du modèle répondent à des questions différentes.
-- **Limite :** une distribution probable n'est pas une garantie de vérité factuelle ou de fiabilité.
-
-**Question de contrôle :** pouvez-vous expliquer ce qui est commun à génération, scoring et apprentissage, puis ce qui distingue leurs opérations et leurs effets sur les paramètres ?
 :::
 
 ## 1. LLM, GPT et Transformer : trois notions différentes
@@ -77,31 +67,24 @@ La figure résume la génération : le texte est tokenisé, le réseau calcule u
 
 *Les probabilités représentées sont illustratives ; elles ne proviennent pas d'un modèle particulier.*
 
-- **Entrée :** texte, tokens et identifiants — [texte et données](text-data.qmd).
-- **Calcul du réseau :** embeddings, information positionnelle et blocs Transformer — [GPT et Transformer](transformer.qmd), [embeddings](embedding-space.qmd), [information positionnelle](positional-encoding.qmd), [Q/K/V et attention](queries-keys-values.qmd), [représentations contextualisées](contextualized-representations.qmd) et [parcours d'un bloc Transformer](transformer-block-walkthrough.qmd).
-- **Sortie :** logits, distribution et sélection du token — [génération](generation.qmd).
+Pour approfondir les étapes du schéma : [texte et données](text-data.qmd) pour l'entrée, [GPT et Transformer](transformer.qmd) et le [parcours d'un bloc](transformer-block-walkthrough.qmd) pour le calcul, puis [génération](generation.qmd) pour la distribution et la sélection du token.
 
 ### Un calcul partagé, trois usages
 
-Le calcul du modèle transforme le contexte en **logits** (scores non normalisés), puis la fonction *softmax* convertit ces scores en distribution de probabilités sur le vocabulaire. Ce passage avant (*forward pass*) est commun aux usages ci-dessous ; c'est ce que l'on fait de la distribution qui change.
+Le modèle transforme le contexte en **logits** (scores associés à chaque token du vocabulaire). La fonction *softmax* convertit ensuite ces scores en **probabilités**. Cette distribution indique quels tokens pourraient suivre le contexte et avec quelle probabilité.
 
-{{< include ../includes/generated-computational-graph-fr-persistent-spine.qmd >}}
+<!-- Desktop: three-column view; mobile: stacked view for readable labels. -->
+![Du contexte à trois usages de la distribution prédictive : génération, scoring d'une cible observée et apprentissage.](../images/llm-shared-prediction-uses-fr.svg){.d-none .d-md-block #fig-llm-shared-prediction-uses fig-alt="Le contexte passe dans le modèle, qui produit des logits puis une distribution de probabilités sur le prochain token. Cette distribution sert à choisir un token en génération, à mesurer la probabilité d'un token observé en scoring, ou à calculer une loss et mettre à jour les paramètres pendant l'apprentissage."}
 
-| Usage | Ce que l'on fait de la distribution | Paramètres |
-|---|---|---|
-| **Génération** | On traite le prompt initial (*prefill*), on sélectionne un token, on l'ajoute au contexte, puis on recommence en décodage (*decode*) | Fixes |
-| **Scoring d'une cible observée** | On calcule la probabilité d'un token connu à partir de son préfixe observé, puis la vraisemblance ou la NLL de la séquence | Fixes |
-| **Apprentissage** | On fournit les préfixes de la séquence de référence (*teacher forcing*), on compare les distributions aux tokens cibles, on calcule la *loss* et ses gradients, puis on met à jour les paramètres | Modifiés lors de la mise à jour |
+![Du contexte aux trois usages de la distribution prédictive : génération, scoring et apprentissage, présentés verticalement pour faciliter la lecture sur petit écran.](../images/llm-shared-prediction-uses-fr-mobile.svg){.d-md-none fig-alt="Version mobile du schéma : le contexte traverse le modèle, produit des logits puis des probabilités. Trois blocs présentent ensuite la génération, le scoring et l’apprentissage."}
 
-Ces trois usages partagent le même calcul prédictif, mais ne forment pas une seule boucle d'exécution : la génération réinjecte un token sélectionné, le scoring évalue une cible observée et l'apprentissage met à jour les paramètres.
+Le calcul prédictif est commun ; **la suite dépend de la question posée** :
 
-Le *prefill* et le *decode* sont deux phases d'exécution de l'inférence. Le scoring d'une séquence connue et l'entraînement peuvent tous deux conditionner le calcul sur les préfixes de référence ; pendant l'entraînement, cette stratégie est appelée *teacher forcing*. Ce n'est pas une phase de génération. Pour scorer ou entraîner une séquence connue, un passage avant produit une distribution à chaque position. Chaque distribution est alignée sur le token cible suivant ; le masque causal empêche le modèle d'accéder aux tokens futurs. Les [exemples d'entraînement](training-examples.qmd), la [loss](loss.qmd) et les [gradients](gradients.qmd) détaillent la branche apprentissage ; la [vraisemblance](vraisemblance.qmd) détaille le scoring.
+- **Générer :** choisir un token selon une règle de décodage, l'ajouter au contexte, puis recommencer. Le *prefill* traite le prompt initial en une passe pour préparer la première prédiction ; le *decode* produit ensuite les tokens un par un. Ce sont les deux phases de l'inférence. Voir [génération](generation.qmd).
+- **Scorer :** regarder la probabilité que le modèle attribue au token qui suit réellement dans un texte connu. On peut ainsi mesurer à quel point le modèle attribue une forte probabilité à une séquence. Voir [vraisemblance](vraisemblance.qmd).
+- **Apprendre :** comparer les probabilités aux tokens attendus, calculer une *loss* (mesure de l'erreur de prédiction), puis ajuster les paramètres grâce aux gradients. Pour apprendre sur un texte connu, les préfixes sont construits avec les tokens réels du texte, plutôt qu'avec des tokens générés par le modèle : c'est le *teacher forcing*. Voir les [exemples d'entraînement](training-examples.qmd), la [loss](loss.qmd) et les [gradients](gradients.qmd).
 
-Le **scoring** d'une cible et l'**évaluation** d'un modèle ne sont pas synonymes. Le scoring calcule des probabilités pour des cibles observées ; l'évaluation agrège des scores ou des métriques sur un protocole et des données définis. Elle peut aussi porter sur des sorties générées. La vue suivante illustre une évaluation fondée sur le scoring, sans mise à jour des paramètres.
-
-{{< include ../includes/generated-computational-graph-fr-evaluation.qmd >}}
-
-Le [cache KV](generation.qmd) est une optimisation facultative de l'inférence : il conserve des clés et valeurs d'attention déjà calculées pour éviter certains recalculs. Son compromis entre mémoire et calcul est présenté dans l'[approfondissement sur la complexité des LLM](llm-computational-complexity.qmd).
+Le scoring et l'évaluation sont liés, mais différents : le scoring calcule des probabilités pour un texte donné ; l'évaluation compare ces résultats — ou d'autres mesures — sur un ensemble d'exemples défini. Elle sert à mesurer les performances, sans modifier les paramètres.
 
 ## 4. Architecture, apprentissage et utilisation
 
