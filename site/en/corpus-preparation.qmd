@@ -84,6 +84,54 @@ At the end of this stage, it should be possible to recover:
 
 The prepared corpus can then be encoded into token streams. The [training examples page](training-examples.qmd) covers the next stage: input-target shifting, windows, packing, padding, and masks. The [text and data page](text-data.qmd) retains the shorter inference path from prompt text to initial representations.
 
+::: {.callout-tip title="Revision sheet — preparing a corpus"}
+- **Provenance before volume:** define the objective, eligible sources, rights, dates, and document unit.
+- **Traceable transformations:** version parsing, filtering, deduplication, and retention rules; preserve counts and audit samples.
+- **Splits matched to the question:** separate genuinely independent units (source, family, user, or time period) and check overlap after splitting.
+- **Tokenizer without leakage:** for a conventional held-out evaluation, fit the tokenizer on training data, then freeze its version before encoding validation and test.
+- **Handoff contract:** pass token IDs with provenance, tokenizer version, encoding parameters, useful statistics, and document-boundary rules.
+:::
+
+::: {.self-check}
+## Check your understanding
+
+1. Why does a random split of text chunks not guarantee independence between train and test?
+
+<details>
+<summary>Show answer</summary>
+
+Chunks from the same document, source, or family may appear in multiple partitions. The split unit must match the generalization claim being tested, and overlap must then be audited.
+
+</details>
+
+2. Why freeze the tokenizer after fitting it on the training partition?
+
+<details>
+<summary>Show answer</summary>
+
+To prevent its vocabulary or rules from incorporating information from texts reserved for validation or test in a held-out experiment.
+
+</details>
+
+3. Is deduplication always beneficial?
+
+<details>
+<summary>Show answer</summary>
+
+No. It can reduce over-representation, but it can also alter the corpus distribution or remove legitimate repetitions. The method and its effects should be documented.
+
+</details>
+
+4. What information should accompany the token stream handed to the next stage?
+
+<details>
+<summary>Show answer</summary>
+
+At minimum, corpus provenance, the exact tokenizer revision, encoding parameters, useful statistics, and document-boundary rules.
+
+</details>
+:::
+
 ## Limitations
 
 This page defines a traceability framework and separation of responsibilities, not a legal policy, universal filtering recipe, or ready-made contamination detector. Thresholds, tools, and split units must be justified by the data, applicable rights, and the experimental claim being made.
