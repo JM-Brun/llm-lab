@@ -187,6 +187,23 @@ Le pilote retenu est plus conservateur que l'hypothèse initiale :
 - ne pas dupliquer une page dans deux destinations ;
 - laisser Quarto produire le breadcrumb natif à partir de la hiérarchie simplifiée.
 
-Cette variante réduit un niveau de navigation sans mélanger les niveaux pédagogiques et sans ajouter de JavaScript. Elle est appliquée comme pilote source dans la branche `nav/pilot-flatten-text-data-entry`. Son acceptation dépend du rendu Quarto/Chromium : vérifier les destinations, breadcrumbs, carte générée, contexte pédagogique et parité FR/EN. En cas de régression, revenir au groupe initial plutôt que compenser par du code spécifique.
+Cette variante réduit un niveau de navigation sans mélanger les niveaux pédagogiques et sans ajouter de JavaScript. Elle a été intégrée par [PR #807](https://github.com/JM-Brun/llm-lab/pull/807). Les résultats du rendu et de la revue Chromium finale sont consignés à la section 13 ci-dessous.
 
 Le test porte sur une simplification de hiérarchie, pas sur la fonctionnalité expérimentale « section cliquable + disclosure ». Cette dernière reste non validée et n'est pas nécessaire pour ce groupe à page unique.
+
+
+## 13. Résultats du pilote « texte et tokens » — PR #807 (2026-11-09)
+
+Le pilote source a été intégré par [PR #807](https://github.com/JM-Brun/llm-lab/pull/807), commit `c29777d6d445260838ca6c5c1bc021fa86095dfd`. Les deux workflows du commit final sont réussis : [Quarto site](https://github.com/JM-Brun/llm-lab/actions/runs/42686305076) et [CI](https://github.com/JM-Brun/llm-lab/actions/runs/42686305010).
+
+L'artefact Chromium du workflow Quarto a été inspecté : `site-browser-review-cfbe8c625b445020638314705b48be4c04b97040`.
+
+- [x] 18 cas FR/EN × desktop/mobile sur l'accueil, la carte, le panorama et les pages `text-data` ; les cas desktop/mobile ont tous répondu HTTP 200.
+- [x] Aucun échec rapporté, aucune erreur console ou erreur de page, aucun débordement horizontal.
+- [x] Pour `text-data`, le menu présente un seul lien vers la page canonique directement sous le groupe « Comment le modèle calcule sa prédiction » / « How the model computes a prediction » ; aucun doublon de page n'est visible dans les cibles de navigation inspectées.
+- [x] La navigation de page depuis `text-data` mène à `embedding-space` dans les deux langues ; la page de tokenisation avancée reste dans Deepen.
+- [x] Les contrôles Axe desktop FR/EN des pages auditées ne rapportent aucune violation ; les cas mobiles n'exécutent pas Axe (profil prévu).
+- [x] Sur les pages `text-data` desktop, les 31 cibles clavier observées ont toutes un focus visible et le cycle Tab se termine correctement dans les deux langues.
+- [x] Les captures desktop/mobile FR/EN de l'accueil, du panorama, de la carte et de `text-data` ont été générées et inspectées dans l'artefact.
+
+**Limites :** ce résultat valide le pilote de hiérarchie et les contrôles automatisés ciblés, pas l'ensemble de la sidebar. Il ne couvre pas l'interaction tactile sur appareil réel ni une revue manuelle par lecteur d'écran. Il ne démontre pas non plus une amélioration de la compréhension ou de l'autonomie des apprenants. La généralisation aux groupes Embeddings, Transformer et Logits reste conditionnée à une décision et à une preuve propres à chaque groupe ; Scoring et Loss restent à examiner séparément.
