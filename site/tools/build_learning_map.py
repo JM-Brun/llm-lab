@@ -469,6 +469,56 @@ def render_guided_page_context_markdown(
     return "\n".join(lines)
 
 
+ROUTE_PARTS: tuple[tuple[str, str, str, str], ...] = (
+    (
+        "discover",
+        "orientation",
+        "Découvrir le système",
+        "Discover the system",
+    ),
+    (
+        "prediction",
+        "text-input",
+        "Comprendre une prédiction",
+        "Understand how a prediction is computed",
+    ),
+    (
+        "usages",
+        "inference",
+        "Comprendre les usages de la prédiction",
+        "Understand the uses of a prediction",
+    ),
+)
+ROUTE_PART_BY_FIRST_STAGE: dict[str, tuple[str, str, str]] = {
+    first_stage_id: (part_id, title_fr, title_en)
+    for part_id, first_stage_id, title_fr, title_en in ROUTE_PARTS
+}
+
+
+def validate_route_projection(stages: list[ResolvedGuidedRouteStage]) -> None:
+    """Guard the reader-facing three-part projection of the canonical route.
+
+    The eight-stage registry (data/guided-route.yml) remains the canonical
+    curriculum model; the three parts are the orientation projection
+    recommended by docs/understand-llms-route-audit-2026-11-09.md. Renaming
+    or reordering a boundary stage must update ROUTE_PARTS, not silently
+    drop or shuffle a part heading.
+    """
+    known_stage_ids = {stage.id for stage in stages}
+    missing = [
+        first_stage_id
+        for _, first_stage_id, _, _ in ROUTE_PARTS
+        if first_stage_id not in known_stage_ids
+    ]
+    opening_order = [stage.id for stage in stages if stage.id in ROUTE_PART_BY_FIRST_STAGE]
+    expected_order = [first_stage_id for _, first_stage_id, _, _ in ROUTE_PARTS]
+    if missing or opening_order != expected_order:
+        raise ValueError(
+            "guided-route three-part projection is out of sync with "
+            f"data/guided-route.yml: missing={sorted(missing)}, order={opening_order}"
+        )
+
+
 def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], language: str) -> str:
     """Render the route as native Quarto Markdown; no browser-side route renderer."""
     if language not in {"fr", "en"}:
@@ -484,8 +534,25 @@ def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], languag
         seen_page_ids.add(page.id)
         return f"- [{escape_markdown_text(page.title)}]({page.href}){marker}"
 
-    lines = [":::: {.guided-route-grid}", ""]
+    lines: list[str] = []
+    grid_open = False
     for index, stage in enumerate(stages, start=1):
+        part = ROUTE_PART_BY_FIRST_STAGE.get(stage.id)
+        if part is not None:
+            part_id, part_title_fr, part_title_en = part
+            part_title = part_title_fr if language == "fr" else part_title_en
+            if grid_open:
+                lines.extend(["::::", ""])
+                grid_open = False
+            lines.extend(
+                [
+                    f"## {part_title} {{.guided-route-part #guided-part-{part_id}}}",
+                    "",
+                ]
+            )
+        if not grid_open:
+            lines.extend([":::: {.guided-route-grid}", ""])
+            grid_open = True
         lines.extend(
             [
                 f"::: {{.guided-route-stage #guided-stage-{stage.id}}}",
@@ -503,7 +570,8 @@ def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], languag
             lines.extend(["", f"**{optional_label}**", ""])
             lines.extend(page_line(page) for page in stage.optional_pages)
         lines.extend(["", ":::", ""])
-    lines.extend(["::::", ""])
+    if grid_open:
+        lines.extend(["::::", ""])
     return "\n".join(lines)
 
 
