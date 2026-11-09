@@ -38,7 +38,7 @@ Les pages de cours utilisent un composant homogène **« Vérifier sa compréhen
 | [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Somme pondérée et projections Q/K/V ; CA-A sur le masque causal et l’invariance de préfixe ; trois exercices formatifs AT-A à AT-C publiés (attention multi-têtes) ; variantes avancées à construire |
 | [Transformer](#transformer) | Embeddings, position, résidus, normalisation, MLP et variantes d’architecture | Trois exercices formatifs TF-A à TF-C publiés (formes et normalisation d'un bloc pré-LN, paramètres du bloc, diagnostic et interventions) ; variantes d'architecture à construire |
 | [Préentraînement](#preentrainement) | Objectif, entraînement/validation, perplexité, checkpoints et reproductibilité | Structure à compléter |
-| [Génération](#generation) | Décodage, température, top-k/top-p, arrêt, contexte et cache KV | Structure à compléter |
+| [Génération](#generation) | Prédiction d'un token, décodage, boucle autoregressive, arrêt, contexte et cache KV | Trois exercices GE-A à GE-C publiés ; prefill/decode et KV cache à approfondir |
 | [Fine-tuning](#fine-tuning) | Classification, SFT, masquage de loss, qualité des données et surapprentissage | Structure à compléter |
 | [Évaluation](#evaluation) | Baselines, métriques, contamination, incertitude et analyse d’erreurs | Un exercice de transfert autonome est publié dans [Évaluation expérimentale](evaluation-experimentale.qmd) ; la collection complète reste à construire |
 | [Efficacité](#efficacite) | LoRA/QLoRA, mémoire, coût et compromis | Structure à compléter |
@@ -1338,9 +1338,64 @@ G. Profondeur et largeur décrivent la même dimension du réseau.
 
 ### Génération {#generation}
 
-**Notions préalables :** logits, probabilités, Transformer et objectif autorégressif.
+**Notions préalables :** [logits](logits.qmd), [probabilités de sortie](probabilites.qmd), [prédiction du prochain token et génération autoregressive](generation.qmd).
 
-**À préparer :** comparer des stratégies de décodage et expliquer leurs effets sans confondre probabilité du prochain token et vérité.
+**Trois exercices formatifs publiés :** GE-A à GE-C. Ils distinguent une étape élémentaire (distribution puis sélection) de la boucle qui réinjecte le token et recommence.
+
+#### GE-A — Distribution et sélection
+
+Un modèle produit les logits $z=(0,\ln 2,\ln 3)$ pour le vocabulaire $\{A,B,C\}$.
+
+1. Calculer la distribution softmax.
+2. Quel token sélectionne le décodage glouton ?
+3. Avec l'échantillonnage, le token sélectionné est-il nécessairement celui de probabilité maximale ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Les exponentielles valent $(1,2,3)$ et leur somme vaut $6$. La distribution est $p=(1/6,1/3,1/2)$. Le décodage glouton sélectionne $C$. Avec l'échantillonnage, tout token de probabilité non nulle peut être sélectionné : $C$ est le plus probable, mais pas certain. La distribution est la sortie probabiliste du modèle ; le token est le résultat de la politique de sélection.
+
+</details>
+
+#### GE-B — Tracer la boucle autoregressive
+
+On commence avec $c_1=(A,B)$. Le décodage est glouton et les distributions sont données :
+
+| Contexte courant | Distribution |
+|---|---|
+| $(A,B)$ | $P(C)=0{,}8$, $P(D)=0{,}2$ |
+| $(A,B,C)$ | $P(D)=0{,}7$, $P(E)=0{,}3$ |
+| $(A,B,C,D)$ | $P(\mathrm{EOS})=0{,}9$, $P(E)=0{,}1$ |
+
+1. Donner le token sélectionné à chaque étape.
+2. Écrire le contexte après chaque sélection.
+3. Combien d'étapes élémentaires sont exécutées ?
+4. Qu'est-ce qui est répété et qu'est-ce qui change ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Les sélections sont $C$, puis $D$, puis EOS. Les contextes deviennent $(A,B,C)$, $(A,B,C,D)$, puis $(A,B,C,D,\mathrm{EOS})$ si EOS est représenté explicitement dans la séquence. Trois étapes élémentaires sont exécutées. Le mécanisme de prédiction-sélection est répété ; le contexte change à chaque réinjection. Les paramètres du modèle restent fixes.
+
+</details>
+
+#### GE-C — Critères d'arrêt
+
+Une génération utilise max_new_tokens = 4. EOS est sélectionné à la deuxième étape.
+
+1. Quel est le nombre maximal de nouveaux tokens autorisés ?
+2. Combien sont effectivement générés si EOS est compté ?
+3. Que se passe-t-il si EOS n'est jamais sélectionné ?
+4. Pourquoi EOS et la limite de longueur sont-ils deux critères distincts ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+La limite autorise quatre nouveaux tokens au maximum. EOS étant sélectionné à la deuxième étape, deux tokens sont générés, EOS compris, puis la boucle s'arrête. Sans EOS, la génération s'arrête après quatre nouveaux tokens. EOS est un critère sémantique porté par un token ; la limite est une contrainte externe d'exécution.
+
+</details>
+
+**Périmètre restant :** température, top-k/top-p, prefill/decode et KV cache.
 
 ### Fine-tuning {#fine-tuning}
 
