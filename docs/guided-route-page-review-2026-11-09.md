@@ -33,3 +33,11 @@ The page-level suggested_route chain is continuous over all 18 core pages and ma
 ## Maintenance note
 
 This is a textual and metadata review from the repository sources. It does not substitute for the browser-render, accessibility or learner evidence tracked in #483, #584 and #447, and it modifies neither `data/guided-route.yml` nor `data/concepts.yml`.
+
+## Follow-up: guided-context partial verification (2026-11-09)
+
+Re-inspection confirms that a generated multi-stage partial exists for `generation`, and that the canonical route registry places this page in both stage 1 (orientation) and stage 6 (inference). This is **not** a missing lesson include. Merged PR #787 deliberately keeps `generation` free of the generated `.guided-page-context` panel: the stage-1/stage-6 memberships belong to the guided-route projection in the learning map, not to reader-facing lesson commentary. The existing browser contract in `scripts/site-browser-review.mjs` explicitly checks that this panel is absent on `generation.html`; that assertion must remain.
+
+The route registry and its generated learning-map projection remain the source for both memberships. Do not add the generated partial to `site/fr/generation.qmd` or `site/en/generation.qmd`. The other core and optional route pages (58 pages checked across FR and EN) retain their existing guided-context behavior; optional pages whose suggested route is null correctly omit the suggested-route partial. No change to `data/guided-route.yml`, `data/concepts.yml` or `site/tools/build_learning_map.py` is justified by this inspection.
+
+Unverified follow-up for a separate Build-branch review (not classified as a defect here): `fr/training-examples` and `en/training-examples` declare a non-null `previous` route (`<lang>/corpus-preparation`, `next: null`) but include no suggested-route partial. Verify the intended Build navigation contract before changing either page.
