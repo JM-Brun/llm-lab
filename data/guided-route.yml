@@ -103,11 +103,11 @@ stages:
       fr: "Apprendre et mettre à jour les paramètres"
       en: "Learn and update parameters"
     objective:
-      fr: "Relier les cibles observées à la loss agrégée, aux gradients et aux mises à jour des paramètres ; approfondir le teacher forcing et les exemples décalés via la branche Build, sans en faire un prérequis à l'inférence."
-      en: "Connect observed targets to the aggregated loss, gradients, and parameter updates; deepen teacher forcing and shifted examples through the Build branch without making them prerequisites for inference."
+      fr: "Relier les cibles observées à la loss agrégée, aux gradients et aux mises à jour des paramètres ; comprendre le principe du teacher forcing sans confondre cette explication avec la construction des exemples d'entraînement dans Build."
+      en: "Connect observed targets to the aggregated loss, gradients, and parameter updates; understand teacher forcing without conflating this explanation with constructing training examples in the separate Build path."
     pages:
       fr: [fr/loss, fr/gradients]
       en: [en/loss, en/gradients]
     optional_pages:
-      fr: [fr/cross-entropy, fr/training-examples, fr/scaling-laws]
-      en: [en/cross-entropy, en/training-examples, en/scaling-laws]
+      fr: [fr/cross-entropy, fr/scaling-laws]
+      en: [en/cross-entropy, en/scaling-laws]
