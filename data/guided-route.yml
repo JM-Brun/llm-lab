@@ -61,8 +61,8 @@ stages:
       fr: "Des états à la distribution prédictive"
       en: "From hidden states to the predictive distribution"
     objective:
-      fr: "Suivre la projection des états finaux vers les logits et la distribution conditionnelle du prochain token ; interpréter son entropie avant toute sélection ou observation d'une cible."
-      en: "Trace the projection from final hidden states to logits and the conditional next-token distribution; interpret its entropy before any token selection or observed target."
+      fr: "Atteindre le point de convergence du calcul partagé : la distribution conditionnelle du prochain token. À partir de cette distribution, trois usages distincts sont possibles — générer un token, scorer une cible observée ou apprendre en ajustant les paramètres ; les étapes suivantes sont des branches sœurs, pas une chaîne d'exécution."
+      en: "Reach the convergence point of the shared computation: the conditional next-token distribution. From this distribution, three distinct uses are possible—generate a token, score an observed target, or learn by updating parameters; the following stages are sibling branches, not one execution chain."
     pages:
       fr: [fr/logits, fr/probabilites, fr/entropy]
       en: [en/logits, en/probabilities, en/entropy]
@@ -75,8 +75,8 @@ stages:
       fr: "Exécuter l'inférence et générer du texte"
       en: "Run inference and generate text"
     objective:
-      fr: "Distinguer le prefill du prompt du decode itératif, sélectionner un token selon une politique de décodage, le réinjecter dans le contexte et arrêter la génération sans mettre à jour les paramètres."
-      en: "Distinguish prompt prefill from iterative decode, select a token with a decoding policy, feed it back into the context, and stop generation without updating parameters."
+      fr: "Branche A — Inférence / génération. Distinguer le prefill du prompt du decode itératif, sélectionner un token selon une politique de décodage, le réinjecter dans le contexte et arrêter la génération sans mettre à jour les paramètres."
+      en: "Branch A — Inference / generation. Distinguish prompt prefill from iterative decode, select a token with a decoding policy, feed it back into the context, and stop generation without updating parameters."
     pages:
       fr: [fr/generation]
       en: [en/generation]
@@ -89,8 +89,8 @@ stages:
       fr: "Attribuer un score aux tokens observés"
       en: "Score observed tokens"
     objective:
-      fr: "Évaluer la probabilité attribuée à une cible connue, construire la vraisemblance d'une séquence et relier la log-vraisemblance négative à l'entropie croisée, sans sélectionner de token ni modifier les paramètres."
-      en: "Evaluate the probability assigned to a known target, build a sequence likelihood, and connect negative log-likelihood to cross-entropy without selecting a token or changing parameters."
+      fr: "Branche B — Scoring d'une cible observée. Évaluer la probabilité attribuée à une cible connue, construire la vraisemblance d'une séquence et relier la log-vraisemblance négative à l'entropie croisée, sans sélectionner de token ni modifier les paramètres."
+      en: "Branch B — Observed-target scoring. Evaluate the probability assigned to a known target, build a sequence likelihood, and connect negative log-likelihood to cross-entropy without selecting a token or changing parameters."
     pages:
       fr: [fr/vraisemblance, fr/cross-entropy]
       en: [en/likelihood, en/cross-entropy]
@@ -103,8 +103,8 @@ stages:
       fr: "Apprendre et mettre à jour les paramètres"
       en: "Learn and update parameters"
     objective:
-      fr: "Relier les cibles observées à la loss agrégée, aux gradients et aux mises à jour des paramètres ; approfondir le teacher forcing et les exemples décalés via la branche Build, sans en faire un prérequis à l'inférence."
-      en: "Connect observed targets to the aggregated loss, gradients, and parameter updates; deepen teacher forcing and shifted examples through the Build branch without making them prerequisites for inference."
+      fr: "Branche C — Apprentissage. Relier les cibles observées à la loss agrégée, aux gradients et aux mises à jour des paramètres. Le teacher forcing et les exemples décalés sont approfondis dans la branche Build ; ils ne sont pas des prérequis à l'inférence."
+      en: "Branch C — Training. Connect observed targets to the aggregated loss, gradients, and parameter updates. Teacher forcing and shifted examples are developed in the Build branch; they are not prerequisites for inference."
     pages:
       fr: [fr/loss, fr/gradients]
       en: [en/loss, en/gradients]
