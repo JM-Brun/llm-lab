@@ -53,9 +53,9 @@ items:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [inference-efficiency]
       tags: [topic:off-policy-reinforcement-learning, topic:training-inference-mismatch, topic:rollout-staleness]
-      concept_ids: []
+      concept_ids: [training-inference-mismatch, off-policy-reinforcement-learning]
     candidate_destinations:
-      pages: []
+      pages: [fr/score-centering, en/score-centering]
       concepts: [training-inference-mismatch, off-policy-reinforcement-learning]
       route_ids: []
     disposition: integrate
@@ -78,9 +78,9 @@ items:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:score-function, topic:policy-gradient, method:score-centering]
-      concept_ids: []
+      concept_ids: [score-function, policy-gradient]
     candidate_destinations:
-      pages: []
+      pages: [fr/score-centering, en/score-centering]
       concepts: [score-function, policy-gradient]
       route_ids: []
     disposition: integrate
@@ -103,9 +103,9 @@ items:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [inference-efficiency]
       tags: [method:score-centering, topic:off-policy-reinforcement-learning, topic:policy-drift]
-      concept_ids: []
+      concept_ids: [score-centering, score-function, training-inference-mismatch]
     candidate_destinations:
-      pages: []
+      pages: [fr/score-centering, en/score-centering]
       concepts: [score-centering, training-inference-mismatch]
       route_ids: []
     disposition: integrate
@@ -128,9 +128,9 @@ items:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [inference-efficiency]
       tags: [method:importance-sampling, method:score-centering, topic:off-policy-reinforcement-learning]
-      concept_ids: []
+      concept_ids: [importance-sampling, score-centering]
     candidate_destinations:
-      pages: []
+      pages: [fr/score-centering, en/score-centering]
       concepts: [importance-sampling, score-centering]
       route_ids: []
     disposition: integrate-by-reference
@@ -153,9 +153,9 @@ items:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [inference-efficiency]
       tags: [method:top-k-approximation, topic:log-probabilities, topic:vocabulary-tail]
-      concept_ids: []
+      concept_ids: [score-centering]
     candidate_destinations:
-      pages: []
+      pages: [fr/score-centering, en/score-centering]
       concepts: []
       route_ids: []
     disposition: defer
@@ -179,9 +179,9 @@ items:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [inference-efficiency]
       tags: [topic:score-centering, topic:policy-drift, method:score-function]
-      concept_ids: []
+      concept_ids: [score-centering, score-function, off-policy-reinforcement-learning]
     candidate_destinations:
-      pages: []
+      pages: [fr/score-centering, en/score-centering]
       concepts: [score-function, score-centering, off-policy-reinforcement-learning]
       route_ids: []
     disposition: integrate
@@ -204,9 +204,9 @@ items:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:advantage-estimation, topic:group-relative-policy-optimization, topic:score-centering]
-      concept_ids: []
+      concept_ids: [score-centering]
     candidate_destinations:
-      pages: []
+      pages: [fr/score-centering, en/score-centering]
       concepts: [advantage, group-relative-policy-optimization, score-centering]
       route_ids: []
     disposition: integrate
@@ -229,9 +229,9 @@ items:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [inference-efficiency]
       tags: [method:top-k-approximation, topic:vocabulary-tail, topic:inference-overhead]
-      concept_ids: []
+      concept_ids: [score-centering]
     candidate_destinations:
-      pages: []
+      pages: [fr/score-centering, en/score-centering]
       concepts: [score-centering, log-probability]
       route_ids: []
     disposition: integrate-by-reference
@@ -254,16 +254,16 @@ items:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [inference-efficiency]
       tags: [topic:training-inference-mismatch, topic:quantization, topic:rollout-staleness, topic:rl-evaluation]
-      concept_ids: []
+      concept_ids: [training-inference-mismatch, score-centering]
     candidate_destinations:
-      pages: []
+      pages: [fr/score-centering, en/score-centering]
       concepts: [training-inference-mismatch, score-centering]
       route_ids: []
     disposition: integrate-with-caveats
     disposition_rationale: "Keep metric and seed caveats beside comparisons to prevent overclaiming generalization or universal superiority."
 
 canonical_mapping:
-  proposed_concepts:
+  integrated_concepts:
     - id: policy-gradient
       definition: "Gradient estimator for optimizing expected reward under a parameterized policy."
       rationale: "Prerequisite for understanding the score-function term and its role in RL updates."
