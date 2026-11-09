@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1510" role="img" aria-labelledby="title desc">
-<title id="title">One predictive computation, three uses</title><desc id="desc">The model estimates the next token. The task determines what happens next.</desc>
+<title id="title">One computation, three uses</title><desc id="desc">Same prediction, different goals.</desc>
 <defs><marker id="arr" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#405a72" stroke-width="2"/></marker><style>
 text{font-family:Inter,ui-sans-serif,system-ui,sans-serif;fill:#183247}.h{font-size:36px;font-weight:700}.b{font-size:30px;font-weight:600}.s{font-size:26px}.small{font-size:23px}.box{stroke-width:3}
 </style></defs>
@@ -12,10 +12,11 @@ text{font-family:Inter,ui-sans-serif,system-ui,sans-serif;fill:#183247}.h{font-s
 <rect x="90" y="470" width="540" height="125" rx="18" fill="#fff5e5" stroke="#e3c17d" class="box"/><text x="360" y="520" text-anchor="middle" class="h">Logits</text><text x="360" y="565" text-anchor="middle" class="s">One score per token</text>
 <path d="M360 600 V630" stroke="#405a72" stroke-width="4" marker-end="url(#arr)"/>
 <rect x="90" y="640" width="540" height="125" rx="18" fill="#fff1e9" stroke="#e4ad8d" class="box"/><text x="360" y="690" text-anchor="middle" class="h">Probabilities</text><text x="360" y="735" text-anchor="middle" class="s">Softmax · distribution over vocabulary</text>
-<path d="M360 770 V800" stroke="#8093a4" stroke-width="4" marker-end="url(#arr)"/>
+<path d="M360 770 V790 H28 V1350" fill="none" stroke="#8093a4" stroke-width="4"/>
+<g fill="none" stroke="#405a72" stroke-width="4" marker-end="url(#arr)"><path d="M28 900 H48"/><path d="M28 1125 H48"/><path d="M28 1350 H48"/></g>
 <rect x="55" y="810" width="610" height="180" rx="20" fill="#edf4ff" stroke="#8eb1df" class="box"/><text x="360" y="865" text-anchor="middle" class="h">1. Generation</text><text x="360" y="920" text-anchor="middle" class="b">Choose a token</text><text x="360" y="960" text-anchor="middle" class="s">Append it to the context ↺</text>
-<path d="M360 995 V1025" stroke="#8093a4" stroke-width="4" marker-end="url(#arr)"/>
+
 <rect x="55" y="1035" width="610" height="180" rx="20" fill="#fff6e8" stroke="#e3c17d" class="box"/><text x="360" y="1090" text-anchor="middle" class="h">2. Scoring</text><text x="360" y="1145" text-anchor="middle" class="b">Look at the target token</text><text x="360" y="1185" text-anchor="middle" class="s">What probability is assigned to it?</text>
-<path d="M360 1220 V1250" stroke="#8093a4" stroke-width="4" marker-end="url(#arr)"/>
+
 <rect x="55" y="1260" width="610" height="180" rx="20" fill="#edf7ef" stroke="#8fc5a4" class="box"/><text x="360" y="1315" text-anchor="middle" class="h">3. Training</text><text x="360" y="1370" text-anchor="middle" class="b">Compare with the target</text><text x="360" y="1415" text-anchor="middle" class="s">Loss → gradients → parameter update</text>
 <text x="360" y="1480" text-anchor="middle" class="small">Generation and scoring: fixed parameters. Training: parameters updated.</text></svg>
