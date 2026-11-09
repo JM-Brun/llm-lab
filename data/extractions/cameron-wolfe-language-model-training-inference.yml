@@ -32,12 +32,20 @@ pedagogical_model:
       - {id: src-training-infrastructure, kind: implementation, description: "Mini-batch data loading, DDP/FSDP, gradient accumulation, AMP, gradient clipping and learning-rate scheduling.", locator: "NanoGPT Training"}
     edges:
       - {from: src-raw-text, type: tokenized-by, to: src-tokenization}
-      - {from: src-tokenization, type: produces, to: src-token-embeddings}
+      - {from: src-tokenization, type: produces, to: src-token-ids}
+      - {from: src-token-ids, type: used-for-lookup, to: src-token-embeddings}
+      - {from: src-token-ids, type: forms-prefix, to: src-token-context}
+      - {from: src-token-context, type: embedded-as, to: src-token-embeddings}
       - {from: src-token-embeddings, type: combined-with, to: src-positional-embeddings}
       - {from: src-positional-embeddings, type: processed-by, to: src-causal-attention}
+      - {from: src-model-parameters, type: parameterize, to: src-token-embeddings}
+      - {from: src-model-parameters, type: parameterize, to: src-positional-embeddings}
+      - {from: src-model-parameters, type: parameterize, to: src-causal-attention}
       - {from: src-causal-attention, type: produces, to: src-contextual-states}
       - {from: src-contextual-states, type: projected-to, to: src-vocabulary-logits}
+      - {from: src-model-parameters, type: parameterize, to: src-vocabulary-logits}
       - {from: src-vocabulary-logits, type: normalized-into, to: src-next-token-distribution}
+      - {from: src-token-ids, type: shifted-to-form, to: src-observed-targets}
       - {from: src-next-token-distribution, type: scored-against, to: src-observed-targets}
       - {from: src-observed-targets, type: contributes-to, to: src-token-loss}
       - {from: src-token-loss, type: differentiated-through, to: src-parameter-learning}
