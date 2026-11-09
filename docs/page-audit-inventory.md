@@ -1222,3 +1222,7 @@ The interactive temperature explainer described every (T>1) as producing a “un
 - The interactive temperature component's runtime behavior, keyboard operation and responsive layout remain part of the existing rendered/browser review.
 - The source implementation intentionally differs from a production inference engine. Preserve this distinction rather than adding cache or serving complexity to the pedagogical reference implementation.
 
+### Scope clarification for causal-mask tests and padding
+
+A final cross-check of the reference implementation confirmed that the full-GPT prefix-invariance test exercises causal self-attention only. `GPT.forward` accepts token IDs and the Transformer block constructs its causal mask internally; the reference model does not expose a padding-mask argument or implement packed-document boundary masking. The exercise had already distinguished those mask types conceptually, but its test evidence could be misread as validating them. Added this implementation boundary in FR/EN immediately after the two test descriptions. The test claims now match the actual code surface.
+
