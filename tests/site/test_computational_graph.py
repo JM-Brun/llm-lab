@@ -196,10 +196,16 @@ def test_scoring_and_evaluation_views_include_observed_prefix_conditioning() -> 
     views = {view["id"]: view for view in data["views"]}
 
     expected_nodes = {"teacher-forcing", "observed-prefix-context", "token-context"}
-    expected_edges = {"e-teacher-context", "e-observed-context", "e-observed-prefix-forward"}
+    expected_edges = {"e-teacher-context", "e-observed-prefix-forward"}
     for view_id in ("observed-target-scoring", "evaluation", "training"):
         assert expected_nodes.issubset(views[view_id]["nodes"])
         assert expected_edges.issubset(views[view_id]["edges"])
+        assert "e-observed-context" not in views[view_id]["edges"]
+
+    edges = {edge["id"]: edge for edge in data["edges"]}
+    assert "e-observed-context" not in edges
+    assert edges["e-teacher-context"]["from"] == "teacher-forcing"
+    assert edges["e-teacher-context"]["to"] == "observed-prefix-context"
 
     context = next(node for node in data["nodes"] if node["id"] == "observed-prefix-context")
     assert context["branches"] == ["training", "observed-target-scoring", "evaluation"]
