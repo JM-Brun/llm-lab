@@ -4,7 +4,7 @@
 >
 > **Understand** and **Build** are the two primary pathways. **Deepen** contains optional advanced theory or technical detail; **Practice & experiment** contains activities that reinforce or test either pathway. These are complementary content destinations, not additional linear curricula. The page-level roles and evidence crosswalk remain in [content-section-mapping.md](content-section-mapping.md).
 
-This plan is a sequence of evidence-producing modules, not a promise of mastery after a fixed number of hours. Each module is complete only when its implementation, tests, experiment notes, and limitations are available. See [project status](project-status.md) for the current inventory and the [roadmap](roadmap.md) for priorities and acceptance criteria.
+This plan defines two paths with different completion evidence, not one sequence of paired theory-and-code modules. A Theory lesson is complete when its explanation, assumptions, examples, sources and conceptual checks are sound; a Build milestone is complete when its implementation, tests, expected outputs and limitations are evidenced. Neither path claims learner mastery merely because its materials exist. See [project status](project-status.md) for the current inventory and the [roadmap](roadmap.md) for priorities and acceptance criteria.
 
 ## Theory / Understand guided route — machine-readable map source
 
